@@ -1,27 +1,29 @@
 import { useBackend } from '../backend';
-import { Section, Stack, Flex, Button } from '../components';
+import { Section, Stack, Button } from '../components';
 import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
+import { toTitleCase } from 'common/string';
 
-`type Data = {
-    orderingPrive: BooleanLike; // you will need to import this
-    canOrderCargo: BooleanLike;
-    creditBalance: number;
-    materials: Material[];
+type Data = {
+  orderingPrive: BooleanLike; // you will need to import this
+  canOrderCargo: BooleanLike;
+  creditBalance: number;
+  materials: Material[];
 };
 
 type Material = {
-    name: string;
-    quantity: number;
-    id: string; // correct this if its a number
-    trend: string;
+  name: string;
+  quantity: number;
+  id: string; // correct this if its a number
+  trend: string;
 };
-    
+
 export const MatMarket = (props, context) => {
-  const { act, data } = useBackend<Data>(context);   // this will tell your editor that data is the type listed above
-  
+  const { act, data } = useBackend<Data>(context); // this will tell your editor that data is the type listed above
+
   const { orderingPrive, canOrderCargo, creditBalance, materials = [] } = data; // better to destructure here (style nit)
   return (
-    <Window width={675} height={400}>
+    <Window width={700} height={400}>
       <Window.Content scrollable>
         <Section
           title="Materials for sale"
@@ -29,8 +31,12 @@ export const MatMarket = (props, context) => {
             <Button
               icon="dollar"
               tooltip="Place order from cargo budget."
-              color={!!orderingPrive && !!canOrderCargo ? 'green' : ''}
-              content="Order via Cargo Budget"
+              color={!!orderingPrive && !!canOrderCargo ? '' : 'green'}
+              content={
+                !!orderingPrive && !!canOrderCargo
+                  ? 'Order via Cargo Budget?'
+                  : 'Ordering via Cargo Budget'
+              }
               onClick={() => act('toggle_budget')}
             />
           }>
@@ -41,15 +47,18 @@ export const MatMarket = (props, context) => {
           materials. All minerals sold on the market directly are subject to an
           20% market fee.
           <Section>
-            Current credit balance:{' '}
-            <b>{creditBalance || 'zero'}</b> cr.
+            Current credit balance: <b>{creditBalance || 'zero'}</b> cr.
           </Section>
         </Section>
         {materials.map((material) => (
-          <Section title={material.name} key={material.id}>
-            <Flex grow={1} basis={0}>
-              <Flex.Item width="75%">
+          <Section key={material.id}>
+            <Stack fill>
+              <Stack.Item width="75%">
                 <Stack>
+                  <Stack.Item fontSize="125%" width="15%" pr="3%">
+                    {toTitleCase(material.name)}
+                  </Stack.Item>
+
                   <Stack.Item width="15%" pr="2%">
                     Trading at <b>{material.price}</b> cr.
                   </Stack.Item>
@@ -70,8 +79,8 @@ export const MatMarket = (props, context) => {
                     <b>{material.name}</b> is trending <b>{material.trend}</b>.
                   </Stack.Item>
                 </Stack>
-              </Flex.Item>
-              <Flex.Item>
+              </Stack.Item>
+              <Stack.Item>
                 <Button
                   onClick={() =>
                     act('buy', {
@@ -117,8 +126,8 @@ export const MatMarket = (props, context) => {
                   }>
                   50
                 </Button>
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           </Section>
         ))}
       </Window.Content>
