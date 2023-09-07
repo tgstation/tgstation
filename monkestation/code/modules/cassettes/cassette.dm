@@ -28,6 +28,7 @@
 	var/approved_tape = FALSE
 	///are we random?
 	var/random = FALSE
+	var/cassette_desc_string = "Generic Desc"
 
 /obj/item/device/cassette_tape/Initialize()
 	. = ..()
@@ -40,7 +41,7 @@
 		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
 
 	if(random)
-		if(!length(GLOB.approved_ids))
+		if(length(GLOB.approved_ids))
 			tape.id = pick(GLOB.approved_ids)
 
 	id = tape.id
@@ -51,7 +52,7 @@
 
 	var/list/data = json_decode(file2text(file))
 	name = data["name"]
-	desc = data["desc"]
+	cassette_desc_string = data["desc"]
 	icon_state = data["side1_icon"]
 	side1_icon = data["side1_icon"]
 	side2_icon = data["side2_icon"]
@@ -72,7 +73,7 @@
 
 /obj/item/device/cassette_tape/update_desc(updates)
 	. = ..()
-	desc = initial(desc)
+	desc = cassette_desc_string
 	desc += "\n"
 	if(!approved_tape)
 		desc += span_warning("It appears to be a bootleg tape, quality is not a guarentee!\n")
@@ -108,7 +109,8 @@
 			if(!newdesc)
 				to_chat(user, "<span class='warning'>That description is invalid.</span>")
 				return
-			desc = newdesc
+			cassette_desc_string = newdesc
+			update_appearance()
 		else
 			return
 

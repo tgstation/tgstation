@@ -47,7 +47,7 @@
 		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
 	var/list/data = list()
 	data["name"] = name
-	data["desc"] = desc
+	data["desc"] = cassette_desc_string
 	data["side1_icon"] = side1_icon
 	data["side2_icon"] = side2_icon
 	data["author_ckey"] = ckey_author
