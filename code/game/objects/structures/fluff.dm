@@ -276,10 +276,6 @@
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
 
-/obj/structure/fluff/tram_rail/attack_hand(mob/living/user, list/modifiers)
-	if(user.electrocute_act(75, src))
-		do_sparks(5, TRUE, src)
-
 /obj/structure/fluff/tram_rail/floor
 	name = "tram rail protective cover"
 	icon_state = "rail_floor"
@@ -290,3 +286,7 @@
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
+	if(user.electrocute_act(75, src))
+		do_sparks(5, TRUE, src)
