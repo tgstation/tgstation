@@ -3,7 +3,7 @@
 	desc = "Lets you turn the gaze of the moon on someone \
 			temporarily blinding, muting, deafening and confusing a single target."
 	button_icon_state = "blind"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
 	sound = 'sound/magic/blind.ogg'
 	school = SCHOOL_FORBIDDEN
