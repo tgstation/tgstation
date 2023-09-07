@@ -48,7 +48,7 @@
 		force_unwielded = src.force_unwielded, \
 		force_wielded = src.force_wielded, \
 	)
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_MELEE, force_wielded)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, force_wielded)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -172,7 +172,7 @@
 	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 80, TRUE)
 	destabilizer.fire()
-	destabilizer.AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE, destabilizer.damage) //apply element after on_projectile_fire() in case a trophy modifies it
+	destabilizer.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, destabilizer.damage) //apply element after on_projectile_fire() in case a trophy modifies it
 	charged = FALSE
 	update_appearance()
 	if(charge_time <= 0) //you never know

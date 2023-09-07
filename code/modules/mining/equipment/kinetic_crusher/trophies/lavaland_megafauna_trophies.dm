@@ -32,7 +32,7 @@
 
 /obj/item/crusher_trophy/tail_spike/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL, bonus_value)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_SPELL, bonus_value)
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
@@ -153,4 +153,4 @@
 
 /obj/effect/temp_visual/hierophant/blast/damaging/crusher/Initialize(mapload, new_caster, friendly_fire)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL, damage)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_SPELL, damage)
