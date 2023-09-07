@@ -7,3 +7,9 @@
 	template_width = 30
 	weight = 8
 	station_name = "Tramstation"
+
+/datum/map_template/random_room/random_bar/tramstation_base/biodome
+	name = "Winter Biodome Tram Bar"
+	room_id = "biodome_tram_bar"
+	mappath = "monkestation/_maps/RandomBars/Tram/biodome_tram_bar.dmm"
+	weight = 4
