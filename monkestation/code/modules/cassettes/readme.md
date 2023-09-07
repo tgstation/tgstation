@@ -11,6 +11,9 @@ This pr adds user generated cassettes as a system where you can make temporary c
 ### Included files that are not contained in this module:
 
 - code/__DEFINES/sound.dm
+- code/modules/admin/verbs/playsound.dm
+- code/__DEFINES/~monkestation/misc.dm
+
 <!-- Likewise, be it a non-modular file or a modular one that's not contained within the folder belonging to this specific module, it should be mentioned here -->
 
 ### Credits:

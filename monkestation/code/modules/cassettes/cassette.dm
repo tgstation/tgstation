@@ -47,7 +47,7 @@
 	song_names = data["song_names"]
 	author_name = data["author_name"]
 	ckey_author = data["author_ckey"]
-	approved = data["approved"]
+	approved_tape = data["approved"]
 	qdel(tape)
 
 /obj/item/device/cassette_tape/attack_self(mob/user)
@@ -55,6 +55,13 @@
 	icon_state = flipped ? side1_icon : side2_icon
 	flipped = !flipped
 	to_chat(user,"You flip [src]")
+
+/obj/item/device/cassette_tape/update_desc(updates)
+	. = ..()
+	if(!approved_tape)
+		.+= span_warning("It appears to be a bootleg tape, quality is not a guarentee!")
+	if(author_name)
+		.+= span_notice("Mixed by [author_name]")
 
 /obj/item/device/cassette_tape/attackby(obj/item/item, mob/living/user)
 	if(!istype(item, /obj/item/pen))

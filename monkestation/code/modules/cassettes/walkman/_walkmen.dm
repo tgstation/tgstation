@@ -1,11 +1,5 @@
 #define sound_to(target, sound) target << (sound)
 #define NEXT_SONG_USE_TIMER (5 SECONDS)
-
-//world/proc/shelleo
-#define SHELLEO_ERRORLEVEL 1
-#define SHELLEO_STDOUT 2
-#define SHELLEO_STDERR 3
-
 /obj/item/device/walkman
 	name = "walkman"
 	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
@@ -333,7 +327,7 @@
 */
 
 /datum/action/item_action/walkman
-	icon = 'monkestation/icons/obj/walkman.dmi'
+	button_icon = 'monkestation/icons/obj/walkman.dmi'
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/walkman/New()
