@@ -846,14 +846,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 
 // Various flags for carbon mob vomiting
-/// Flag which makes the mob vomit blood
-#define MOB_VOMIT_BLOOD (1<<0)
+/// Flag which makes a message send about the vomiting.
+#define MOB_VOMIT_MESSAGE (1<<0)
 /// Flag which makes the mob get stunned upon vomiting.
 #define MOB_VOMIT_STUN (1<<1)
-/// Flag which makes a message send about the vomiting.
-#define MOB_VOMIT_MESSAGE (1<<2)
 /// Flag which makes the mob incur damage upon vomiting.
-#define MOB_VOMIT_HARM (1<<3)
+#define MOB_VOMIT_HARM (1<<2)
+/// Flag which makes the mob vomit blood
+#define MOB_VOMIT_BLOOD (1<<3)
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
 #define MOB_VOMIT_FORCE (1<<4)
 /// Flag which makes the mob vomit a green color. This will yield the "default" sprite. Mutually exclusive to the other three colors!
@@ -866,7 +866,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MOB_VOMIT_COLOR_NANITES (1<<8) // yes yes it's not a color but come on man
 
 /// Colorless vomit, just the bare basics of what you might get when you vomit but allows you to pass in a unique color.
-#define VOMIT_CATEGORY_COLORLESS (MOB_VOMIT_STUN | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
+#define VOMIT_CATEGORY_COLORLESS (MOB_VOMIT_MESSAGE | MOB_VOMIT_STUN | MOB_VOMIT_HARM)
 /// The default "vomit" color green, which will ultinately give you might typically expect to happen when you vomit.
 #define VOMIT_CATEGORY_DEFAULT (VOMIT_CATEGORY_COLORLESS | MOB_VOMIT_COLOR_TOXIC)
 /// The green vomit you've all come to know and love, but with a little extra "spice" (blood)
