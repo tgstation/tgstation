@@ -1539,7 +1539,7 @@
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 	..()
 
 /datum/reagent/medicine/silibinin

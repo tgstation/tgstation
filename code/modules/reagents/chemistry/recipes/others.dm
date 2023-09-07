@@ -586,7 +586,7 @@
 		if(ismonkey(M))
 			M.gib()
 		else
-			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
+			M.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 //water electrolysis
