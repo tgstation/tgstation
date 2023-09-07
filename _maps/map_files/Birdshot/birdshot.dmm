@@ -3732,10 +3732,11 @@
 "bzn" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/item/stack/sheet/plasteel/fifty,
 /obj/machinery/firealarm/directional/east,
 /obj/structure/rack,
-/obj/item/stock_parts/cell/emproof,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "bzs" = (
