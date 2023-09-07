@@ -637,26 +637,30 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, vomit_type = VOMIT_TOXIC, purge_ratio = 0.1)
+/turf/proc/add_vomit_floor(mob/living/vomiter, vomit_flags, purge_ratio = 0.1)
+	var/obj/effect/decal/cleanable/vomit/throw_up
 
-	var/obj/effect/decal/cleanable/vomit/vomit
-	if (vomit_type == VOMIT_NEBULA)
-		vomit = new /obj/effect/decal/cleanable/vomit/nebula(src, M.get_static_viruses())
+	if (vomit_flags & MOB_VOMIT_COLOR_NEBULA)
+		throw_up = new /obj/effect/decal/cleanable/vomit/nebula(src, vomiter.get_static_viruses())
 	else
-		vomit = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+		throw_up = new /obj/effect/decal/cleanable/vomit(src, vomiter.get_static_viruses())
 
-	//if the vomit combined, apply toxicity and reagents to the old vomit
-	if (QDELETED(vomit))
-		vomit = locate() in src
-	if(!vomit)
+	// if the vomit combined, apply toxicity and reagents to the old vomit
+	if (QDELETED(throw_up))
+		throw_up = locate() in src
+	if(isnull(throw_up))
 		return
+
 	// Apply the proper icon set based on vomit type
-	if(vomit_type == VOMIT_PURPLE)
-		vomit.icon_state = "vomitpurp_[pick(1,4)]"
-	else if (vomit_type == VOMIT_TOXIC)
-		vomit.icon_state = "vomittox_[pick(1,4)]"
-	if (purge_ratio && iscarbon(M))
-		clear_reagents_to_vomit_pool(M, vomit, purge_ratio)
+	if(vomit_type & MOB_VOMIT_COLOR_PURPLE)
+		throw_up.icon_state = "vomitpurp_[pick(1,4)]"
+	else if (vomit_type & MOB_VOMIT_COLOR_TOXIC)
+		throw_up.icon_state = "vomittox_[pick(1,4)]"
+
+	if(!iscarbon(vomiter) || (purge_ratio == 0))
+		return
+
+	clear_reagents_to_vomit_pool(vomiter, throw_up, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
