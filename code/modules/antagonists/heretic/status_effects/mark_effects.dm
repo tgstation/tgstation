@@ -251,7 +251,7 @@
 // MARK OF MOON
 
 /datum/status_effect/eldritch/moon
-	effect_icon_state = "emark1"
+	effect_icon_state = "emark7"
 
 /datum/status_effect/eldritch/moon/on_effect()
 	if(ishuman(owner))

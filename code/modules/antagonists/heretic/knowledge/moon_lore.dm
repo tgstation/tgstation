@@ -56,10 +56,10 @@
 
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
+	source.apply_status_effect(/datum/status_effect/moon_grasp_hide)
 
 	if(!iscarbon(target))
 		return
-
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by manus grasp")
@@ -80,9 +80,8 @@
 
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
-	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
-		Damage dealt is decreased with each transfer."
+	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Moon Blade. \
+		When triggered, the victim is confused and will be disarmed."
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \
 		but when the night came its smile would dull forced to gaze on the earth."
