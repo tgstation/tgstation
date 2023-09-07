@@ -1,3 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \
 		/area/station/engineering/lobby, \
@@ -17,4 +52,3 @@
 #define iscogscarab(checked) (istype(checked, /mob/living/simple_animal/drone/cogscarab))
 /// is something an eminence
 #define iseminence(checked) (istype(checked, /mob/living/eminence))
-
