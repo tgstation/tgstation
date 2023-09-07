@@ -41,7 +41,6 @@ SUBSYSTEM_DEF(ore_generation)
 	)
 
 /datum/controller/subsystem/ore_generation/Initialize()
-	. = ..()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(ore_vent_minerals.len > 0)
 		for(var/obj/structure/ore_vent/vent in possible_vents)
@@ -49,7 +48,7 @@ SUBSYSTEM_DEF(ore_generation)
 				continue //Ya'll already got your minerals.
 			if(ore_vent_minerals.len <= 0)
 				break
-			vent.generate_mineral_breakdown(max_minerals = 1)
+			vent.generate_mineral_breakdown(max_minerals = 1, map_loading = TRUE)
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
 	available_boulders = list() // reset upon new fire.

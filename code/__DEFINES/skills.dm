@@ -44,8 +44,6 @@
 ///How much exp one would gain per spent playing the fishing minigame at minimum difficulty. the time is multiplied by 0.1 because deciseconds...
 #define FISHING_SKILL_EXP_PER_SECOND (SKILL_EXP_LEGENDARY / (15 MINUTES * 0.1))
 
-///How much exp one would gain per spent playing the fishing minigame at minimum difficulty.
-#define FISHING_SKILL_EXP_PER_SECOND (SKILL_EXP_LEGENDARY / (22 MINUTES))
 ///The maximum amount of experience one can get per fishing minigame. I appreciate the effort though.
 #define FISHING_SKILL_EXP_CAP_PER_GAME (SKILL_EXP_LEGENDARY / 5)
 ///The base modifier a boulder's size grants to the mining skill.

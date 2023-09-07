@@ -110,6 +110,7 @@
 
 /obj/effect/temp_visual/mining_overlay/vent
 	icon = 'icons/effects/vent_overlays.dmi'
+	icon_state = "unknown"
 	duration = 45
 	pixel_x = 0
 	pixel_y = 0

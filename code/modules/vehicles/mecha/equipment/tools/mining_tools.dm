@@ -159,10 +159,11 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
 	var/scanning_time = 0
+	COOLDOWN_DECLARE(area_scan_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
@@ -181,18 +182,27 @@
 	scanning_time = world.time + equip_cooldown
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
-// /obj/item/mecha_parts/mecha_equipment/mining_scanner/set_active(active)
-// 	if(!do_after(src, 4 SECONDS))
-// 		return
-// 	var/vent_found = FALSE
-// 	for(var/obj/structure/ore_vent/vent as anything in range(3, drop_location(src)))
-// 		vent.scan_and_confirm()
-// 		vent_found = TRUE
-// 		break
-// 	if(!vent_found)
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_ORE_SCANNER,
+		"cooldown" = COOLDOWN_TIMELEFT(src, area_scan_cooldown),
+	)
 
-// Alright this will take UI work won't it
-
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/handle_ui_act(action, list/params)
+	switch(action)
+		if("area_scan")
+			if(!COOLDOWN_FINISHED(src, area_scan_cooldown))
+				say("! cooldown")
+				return FALSE
+			COOLDOWN_START(src, area_scan_cooldown, 15 SECONDS)
+			for(var/driver in chassis.return_drivers())
+				if(!isliving(driver))
+					return
+				for(var/obj/structure/ore_vent/vent as anything in range(5, src))
+					if(vent)
+						say("scanning")
+						vent.scan_and_confirm(driver, TRUE)
+			return TRUE
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED

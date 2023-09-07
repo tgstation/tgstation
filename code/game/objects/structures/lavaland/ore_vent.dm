@@ -57,6 +57,7 @@
 
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
+	COOLDOWN_DECLARE(wave_cooldown) //We use a cooldown to prevent the wave defense from being started multiple times.
 
 
 /obj/structure/ore_vent/Initialize(mapload)
@@ -128,20 +129,25 @@
 		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
 
-/obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM)
+/obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	var/iterator = 1
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
 	while(iterator <= max_minerals)
-		if(SSore_generation.ore_vent_minerals.len == 0)
+		if(SSore_generation.ore_vent_minerals.len == 0 && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
-		var/datum/material/material = pick_weight(SSore_generation.ore_vent_minerals)
+		var/datum/material/material
+		if(map_loading)
+			material = pick_weight(SSore_generation.ore_vent_minerals)
+		else
+			material = pick_weight(SSore_generation.ore_vent_minerals_default)
 		if(is_type_in_list(mineral_breakdown, material))
 			continue
 		//We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
-		SSore_generation.ore_vent_minerals[material] -= 1
-		if(SSore_generation.ore_vent_minerals[material] <= 0)
-			SSore_generation.ore_vent_minerals.Remove(material)
+		if(map_loading)
+			SSore_generation.ore_vent_minerals[material] -= 1
+			if(SSore_generation.ore_vent_minerals[material] <= 0)
+				SSore_generation.ore_vent_minerals.Remove(material)
 		mineral_breakdown[material] = rand(1,4)
 		iterator++
 
@@ -174,7 +180,7 @@
 		wave_timer = 90 SECONDS
 	else if(boulder_size == BOULDER_SIZE_LARGE)
 		wave_timer = 150 SECONDS
-
+	COOLDOWN_START(src, wave_cooldown, wave_timer)
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
 /**
@@ -214,25 +220,32 @@
  * Called when the ore vent is tapped by a scanning device.
  * Gives a readout of the ores available in the vent that gets added to the description, then asks the user if they want to start wave defense.
  */
-/obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
+/obj/structure/ore_vent/proc/scan_and_confirm(mob/user, scan_only = FALSE)
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
-			playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 
 			if(ishuman(user))
 				var/mob/living/carbon/human/scanning_miner = user
 				var/obj/item/card/id/user_id_card = scanning_miner.get_idcard(TRUE)
 				if(user_id_card)
 					user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-					user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points vent discovery.")
+					user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 			generate_description(user)
 			return
 		else
 			return
+	if(scan_only)
+		return
+	if(tapped)
+		to_chat(user, span_notice("\The [src] has already been tapped!"))
+		return
+	if(!COOLDOWN_FINISHED(src, wave_cooldown))
+		to_chat(user, span_warning("\The [src] is currently being excavated! Protect the node drone!"))
+		return
 	if(tgui_alert(usr, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
 	//This is where we start spitting out mobs.
@@ -305,7 +318,7 @@
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
 	if(!unique_vent && !mapload)
-		generate_mineral_breakdown() //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
+		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
 	name = "[string_boulder_size] ore vent"
@@ -387,10 +400,12 @@
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
+	COOLDOWN_START(src, wave_cooldown, 999999 SECONDS) //Basically forever
 	boss.say("You dare disturb my slumber?!")
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
+	COOLDOWN_RESET(src, wave_cooldown)
 	. = ..()
 
 /obj/structure/ore_vent/boss/icebox
