@@ -19,7 +19,8 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/ore_vent_minerals = list()
 	/**
 	 * Associated list of minerals to be associated with our ore vents.
-	 * Generally Should be empty by the time initialize ends on lavaland. Each key value is the number of vents that will have this ore as a unique possible choice.
+	 * Generally Should be empty by the time initialize ends on lavaland.
+	 * Each key value is the number of vents that will have this ore as a unique possible choice.
 	 */
 	var/static/list/ore_vent_minerals_default = list(
 		/datum/material/iron = 13,
@@ -56,7 +57,7 @@ SUBSYSTEM_DEF(ore_generation)
 		var/obj/structure/ore_vent/current_vent = vent
 
 		var/local_vent_count = 0
-		for(var/obj/item/old_rock as anything in current_vent.loc) /// This is expensive and bad, I know. Optimize?
+		for(var/obj/item/old_rock as anything in current_vent.loc) // Optimize?
 			if(!isitem(old_rock))
 				continue
 			available_boulders += old_rock

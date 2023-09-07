@@ -5,7 +5,7 @@
 	icon_state = "ore_redemption"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 100 // fuck if I know set this later
+	idle_power_usage = 100
 
 	/// What is the efficiency of minerals produced by the machine?
 	var/refining_efficiency = 1
@@ -130,7 +130,7 @@
 
 		if(!istype(potential_boulder, /obj/item/boulder))
 			potential_boulder.forceMove(drop_location())
-			CRASH("\The [src] had a non-boulder in it!") //This should never happen.
+			CRASH("\The [src] had a non-boulder in it!")
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
@@ -149,10 +149,9 @@
 		else
 			if(prob(25))
 				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
-				balloon_alert_to_viewers("[pick(quips)]")
+				visible_message("[pick(quips)]")
 	if(!stop_processing_check)
 		STOP_PROCESSING(SSmachines, src)
-		balloon_alert_to_viewers("clear!")
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 		return
 

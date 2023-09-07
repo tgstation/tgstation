@@ -6,7 +6,7 @@
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
-	icon = 'icons/obj/mining_zones/terrain.dmi' /// note to self, new sprites. get on it
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "ore_vent"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
@@ -130,6 +130,7 @@
 	return refined_list
 
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
+	say("spawned! [map_loading] called with [max_minerals]")
 	var/iterator = 1
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
@@ -139,13 +140,11 @@
 		var/datum/material/material
 		if(map_loading)
 			material = pick_weight(SSore_generation.ore_vent_minerals)
-		else
-			material = pick_weight(SSore_generation.ore_vent_minerals_default)
 		if(is_type_in_list(mineral_breakdown, material))
 			continue
-		//We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
+
 		if(map_loading)
-			SSore_generation.ore_vent_minerals[material] -= 1
+			SSore_generation.ore_vent_minerals[material] -= 1 //We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals.Remove(material)
 		mineral_breakdown[material] = rand(1,4)
