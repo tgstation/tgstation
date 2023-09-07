@@ -13,7 +13,7 @@
  * Mark of Moon
  * Ritual of Knowledge
  * Lunar Parade
- * Jesters cap
+ * Moons vision
  * > Sidepaths:
  *   Space Phase
  *   Curse of Paralysis
@@ -106,17 +106,17 @@
 
 /datum/heretic_knowledge/spell/moon_lunarparade
 	name = "Lunar Parade"
-	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
-		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target."
+	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
+		when hitting someone they are forced to join the parade and suffer hallucinations \
+		if they are hit by the parade they will also suffer brain damage when it ends."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/jester_hat)
+	next_knowledge = list(/datum/heretic_knowledge/moons_vision)
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	route = PATH_MOON
 
 
-/datum/heretic_knowledge/jester_hat
+/datum/heretic_knowledge/moons_vision
 	name = "Mask of Madness"
 	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \

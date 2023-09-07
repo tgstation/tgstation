@@ -121,6 +121,6 @@
 	name = "\improper moon blade"
 	desc = "A blade of glass, reflecting the utter insanity of the soul. \
 		A troupe bringing joy, carving smiles on their faces if they want one or not."
-	icon_state = "cosmic_blade"
-	inhand_icon_state = "cosmic_blade"
-	after_use_message = "The Ringleader hears your call..."
+	icon_state = "moon_blade"
+	inhand_icon_state = "moon_blade"
+	after_use_message = "The Moon hears your call..."
