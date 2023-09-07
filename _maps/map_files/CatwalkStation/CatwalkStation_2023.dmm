@@ -25,6 +25,12 @@
 "aaS" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "aaV" = (
@@ -1989,6 +1995,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/bureaucracy/paper,
+/obj/structure/fluff/paper/corner,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "aYy" = (
@@ -4682,11 +4689,18 @@
 "clh" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
 	dir = 9
 	},
-/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/folder/yellow,
+/obj/item/hand_labeler_refill{
+	pixel_x = -1
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "clk" = (
@@ -6725,6 +6739,11 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
+"dfO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/openspace,
+/area/space)
 "dfR" = (
 /obj/machinery/power/apc/auto_name/directional/east{
 	pixel_x = -24
@@ -7414,6 +7433,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/paper,
+/obj/item/pen/red{
+	pixel_y = 5;
+	pixel_x = -5
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "dvH" = (
@@ -10908,6 +10931,7 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/spawner/random/bureaucracy/paper,
+/obj/item/camera_film,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "fei" = (
@@ -11586,6 +11610,14 @@
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
+"fwz" = (
+/obj/item/kirbyplants/fern{
+	pixel_y = 18;
+	pixel_x = -3
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/wood,
+/area/station/maintenance/starboard/lesser)
 "fwB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -12096,6 +12128,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"fGT" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/openspace,
+/area/space)
 "fHf" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -15533,6 +15570,14 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
+"hlh" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/filingcabinet,
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/openspace,
+/area/space)
 "hlF" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "revolution";
@@ -15828,6 +15873,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/wood,
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "hra" = (
@@ -18251,6 +18299,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
+"isv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
 "isy" = (
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
@@ -22456,6 +22516,11 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/space)
+"kgi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/station/maintenance/starboard/lesser)
 "kgN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25368,6 +25433,15 @@
 "lBo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/pen/blue{
+	pixel_y = 9;
+	pixel_x = -9
+	},
+/obj/structure/fluff/paper/stack{
+	desc = "A stack of various papers, absolutely unreadable due to scorch marks and aging.";
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lBw" = (
@@ -26603,6 +26677,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
+/obj/item/folder/yellow{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/stack/package_wrap{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "meH" = (
@@ -28928,6 +29010,11 @@
 "nlm" = (
 /turf/open/openspace/airless,
 /area/space)
+"nlo" = (
+/obj/machinery/photocopier,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
 "nlp" = (
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/open/openspace/airless,
@@ -35794,6 +35881,9 @@
 "qAw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/office,
+/obj/structure/fluff/paper/stack{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "qAA" = (
@@ -45985,6 +46075,9 @@
 	},
 /obj/structure/filingcabinet,
 /obj/effect/spawner/random/bureaucracy/paper,
+/obj/item/folder/yellow{
+	pixel_y = -6
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "vhJ" = (
@@ -46017,6 +46110,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
+"viy" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/fluff/paper/stack{
+	desc = "A stack of various papers, absolutely unreadable due to scorch marks and aging."
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/starboard/lesser)
 "viD" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -46124,6 +46227,10 @@
 /obj/structure/fluff/paper/corner,
 /obj/structure/fluff/paper/stack,
 /obj/effect/spawner/random/bureaucracy/paper,
+/obj/structure/fluff/paper/stack{
+	desc = "A stack of various papers, absolutely unreadable due to scorch marks and aging.";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "vkA" = (
@@ -46993,6 +47100,13 @@
 /obj/effect/turf_decal/siding/green,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
+"vGl" = (
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/wood,
+/area/station/maintenance/starboard/lesser)
 "vGm" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -52524,6 +52638,13 @@
 "ybh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
+/obj/item/stamp/granted{
+	pixel_y = 11;
+	pixel_x = -5
+	},
+/obj/item/stamp/denied{
+	pixel_x = 7
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
 "ybF" = (
@@ -88920,7 +89041,7 @@ evO
 evO
 dvu
 agO
-gtd
+nlo
 jtI
 rKA
 rKA
@@ -89175,8 +89296,8 @@ ekK
 jEg
 udf
 evO
-agO
-fGM
+fwz
+aMa
 ybh
 rKA
 heR
@@ -89946,7 +90067,7 @@ atn
 lIk
 jYt
 evO
-agO
+vGl
 agO
 aYq
 rKA
@@ -90460,7 +90581,7 @@ fPi
 guy
 qeW
 evO
-dZs
+viy
 fGM
 men
 oQk
@@ -90717,9 +90838,9 @@ ekK
 sny
 evs
 evO
-mjB
+isv
 agO
-pTX
+jRZ
 oQk
 dcE
 dcE
@@ -90975,7 +91096,7 @@ jvL
 evO
 evO
 clh
-gKL
+kgi
 lBo
 rKA
 dcE
@@ -153678,7 +153799,7 @@ lbN
 fpz
 mjN
 aCL
-daw
+hlh
 mjN
 xjK
 lfT
@@ -154711,7 +154832,7 @@ tiX
 vQq
 pzA
 vQq
-mjN
+dfO
 mjN
 mjN
 aCL
@@ -155482,7 +155603,7 @@ trV
 vQq
 pzA
 vQq
-mjN
+dfO
 pzA
 mjN
 aCL
@@ -155996,7 +156117,7 @@ sXn
 vQq
 pzA
 vQq
-mjN
+fGT
 pzA
 mjN
 trR
@@ -156253,7 +156374,7 @@ tiX
 vQq
 pzA
 vQq
-mjN
+dfO
 pzA
 cto
 aCL
