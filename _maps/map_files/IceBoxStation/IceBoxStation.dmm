@@ -65075,7 +65075,6 @@
 /area/station/engineering/storage)
 "uaI" = (
 /obj/structure/closet/secure_closet/brig,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "uaT" = (

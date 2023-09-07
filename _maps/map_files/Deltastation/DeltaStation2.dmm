@@ -61095,6 +61095,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/item/mod/module/tether,
 /obj/item/mod/module/tether,
+/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "ptC" = (
@@ -78413,7 +78414,6 @@
 /area/station/medical/morgue)
 "tGm" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 50;
 	pixel_x = 2;
