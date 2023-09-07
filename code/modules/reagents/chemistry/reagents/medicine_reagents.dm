@@ -380,7 +380,7 @@
 	. = ..()
 	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
-/datum/reagent/medicine/mine_salve/on_burn_wound_processing((datum/wound/burn/flesh/burn_wound))
+/datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.3
 	burn_wound.flesh_healing += 0.5
 
