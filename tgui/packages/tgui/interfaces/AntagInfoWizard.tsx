@@ -1,7 +1,8 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const teleportstyle = {
   color: 'yellow',
@@ -44,14 +45,15 @@ type GrandRitual = {
 type Info = {
   objectives: Objective[];
   ritual: GrandRitual;
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoWizard = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { ritual, objectives } = data;
+  const { data, act } = useBackend<Info>(context);
+  const { ritual, objectives, can_change_objective } = data;
 
   return (
-    <Window width={620} height={620} theme="wizard">
+    <Window width={620} height={630} theme="wizard">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -64,8 +66,17 @@ export const AntagInfoWizard = (props, context) => {
                   <ObjectivePrintout
                     objectives={objectives}
                     titleMessage="The Space Wizard Federation has given you the following tasks:"
-                    objectiveFollowup={<RitualPrintout ritual={ritual} />}
+                    objectiveFollowup={
+                      <ReplaceObjectivesButton
+                        can_change_objective={can_change_objective}
+                        button_title={'Declare Personal Quest'}
+                        button_colour={'violet'}
+                      />
+                    }
                   />
+                </Stack.Item>
+                <Stack.Item>
+                  <RitualPrintout ritual={ritual} />
                 </Stack.Item>
               </Stack>
             </Section>
