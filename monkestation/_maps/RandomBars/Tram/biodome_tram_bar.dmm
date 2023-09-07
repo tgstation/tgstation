@@ -376,6 +376,10 @@
 	pixel_x = -5;
 	pixel_y = 8
 	},
+/obj/item/clothing/head/costume/ushanka/frosty{
+	pixel_y = 16;
+	pixel_x = 8
+	},
 /turf/open/misc/snow/actually_safe,
 /area/station/service/bar)
 "kn" = (
@@ -791,7 +795,7 @@
 /area/station/service/theater)
 "sx" = (
 /obj/structure/table/wood/fancy/orange,
-/obj/structure/window/spawner,
+/obj/structure/window/reinforced/tinted/frosted,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/bar)
 "sK" = (
@@ -1118,7 +1122,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/navigate_destination/kitchen,
 /obj/structure/table/wood,
-/obj/item/food/piedough,
+/obj/item/food/pie/frostypie,
 /turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen)
 "Bs" = (
@@ -1681,9 +1685,11 @@
 "Na" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/light/dim/directional/west,
-/obj/structure/window/spawner/directional/north,
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
 	},
 /turf/open/misc/snow/actually_safe,
 /area/station/service/bar)
@@ -1937,7 +1943,7 @@
 /turf/open/misc/snow/actually_safe,
 /area/station/service/theater)
 "Ud" = (
-/turf/open/misc/snow/actually_safe,
+/turf/open/misc/asteroid,
 /area/station/asteroid)
 "Ul" = (
 /obj/structure/chair/sofa/corp/corner{
