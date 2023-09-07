@@ -53,11 +53,20 @@ and your disease can spread via people walking on vomit.
 		else
 			vomit(M)
 
-/datum/symptom/vomit/proc/vomit(mob/living/carbon/M)
+/datum/symptom/vomit/proc/vomit(mob/living/carbon/vomiter)
+	var/deductable_nutrition = 0
+	var/constructed_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
 	if(vomit_nebula)
-		M.vomit(lost_nutrition = 10, blood = vomit_blood, vomit_type = VOMIT_NEBULA, stun = FALSE, distance = proj_vomit)
+		constructed_flags |= MOB_VOMIT_COLOR_NEBULA
+		deductable_nutrition = 10
 	else
-		M.vomit(lost_nutrition = 20, blood = vomit_blood, distance = proj_vomit)
+		constructed_flags |= (MOB_VOMIT_COLOR_TOXIC | MOB_VOMIT_STUN)
+		deductable_nutrition = 20
+
+	if(vomit_blood)
+		constructed_flags |= MOB_VOMIT_BLOOD
+
+	vomiter.vomit(vomit_flags = constructed_flags, lost_nutrition = 10, distance = proj_vomit)
 
 /datum/symptom/vomit/nebula
 	name = "Nebula Vomiting"

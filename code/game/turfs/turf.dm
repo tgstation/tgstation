@@ -654,7 +654,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Apply the proper icon set based on vomit type
 	if(vomit_type & MOB_VOMIT_COLOR_PURPLE)
 		throw_up.icon_state = "vomitpurp_[pick(1,4)]"
-	else if (vomit_type & MOB_VOMIT_COLOR_TOXIC)
+	else // catch-all for anything else, including MOB_VOMIT_COLOR_TOXIC
 		throw_up.icon_state = "vomittox_[pick(1,4)]"
 
 	if(!iscarbon(vomiter) || (purge_ratio == 0))
