@@ -5,6 +5,7 @@ import { Window } from '../layouts';
 
 type Data = {
   materials: Material[];
+  boulders: number;
 };
 
 type Material = {
@@ -18,7 +19,7 @@ mining stachel on your belt or in a pocket while dragging the ore box.`;
 
 export const OreBox = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { materials } = data;
+  const { materials, boulders } = data;
 
   return (
     <Window width={335} height={415}>
@@ -43,6 +44,16 @@ export const OreBox = (props, context) => {
                 </Table.Cell>
               </Table.Row>
             ))}
+            {boulders > 0 ? (
+              <Table.Row>
+                <Table.Cell>Boulders</Table.Cell>
+                <Table.Cell collapsing textAlign="right">
+                  <Box color="label" inline>
+                    {boulders}
+                  </Box>
+                </Table.Cell>
+              </Table.Row>
+            ) : null}
           </Table>
         </Section>
         <Section>

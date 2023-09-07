@@ -192,7 +192,6 @@
 	switch(action)
 		if("area_scan")
 			if(!COOLDOWN_FINISHED(src, area_scan_cooldown))
-				say("! cooldown")
 				return FALSE
 			COOLDOWN_START(src, area_scan_cooldown, 15 SECONDS)
 			for(var/driver in chassis.return_drivers())
@@ -200,7 +199,6 @@
 					return
 				for(var/obj/structure/ore_vent/vent as anything in range(5, src))
 					if(vent)
-						say("scanning")
 						vent.scan_and_confirm(driver, TRUE)
 			return TRUE
 

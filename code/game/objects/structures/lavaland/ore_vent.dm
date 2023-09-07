@@ -200,11 +200,12 @@
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
 		return FALSE //Bad end, try again.
 
-	for(var/mob/living/carbon/human/potential_miner as anything in range(9, src)) //Give the miners who are near the vent points and xp.
+	for(var/mob/living/carbon/human/potential_miner as anything in range(7, src)) //Give the miners who are near the vent points and xp.
 		if(ishuman(potential_miner))
 			var/mob/living/carbon/human/true_miner = potential_miner
 			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
-			true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
+			if(true_miner && true_miner.mind)
+				true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 			if(!user_id_card)
 				continue
 			if(user_id_card)

@@ -65,7 +65,9 @@
 		if(spawn_distance == 1)
 			created = new chosen_mob_type(spawner.loc)
 		else if(spawn_distance >= 1 && spawn_distance_exclude >= 1)
-			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc))
+			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc, view_based = TRUE))
+			if(!picked_spot)
+				picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
 			created = new chosen_mob_type(picked_spot)
 		else if (spawn_distance >= 1)
 			picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
@@ -118,10 +120,16 @@
  * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
  * Can't think of a better place to put this.
  */
-/proc/turf_peel(outer_range, inner_range, center)
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
 	var/list/peel = list()
-	var/list/outer = circle_range_turfs(center, outer_range)
-	var/list/inner = circle_range_turfs(center, inner_range)
+	var/list/outer
+	var/list/inner
+	if(view_based)
+		outer = circle_view_turfs(center, outer_range)
+		inner = circle_view_turfs(center, inner_range)
+	else
+		outer = circle_range_turfs(center, outer_range)
+		inner = circle_range_turfs(center, inner_range)
 	for(var/turf/possible_spawn in outer)
 		if(possible_spawn in inner)
 			continue
