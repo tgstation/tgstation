@@ -112,9 +112,9 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trends[mat] = MARKET_TREND_STABLE
 			materials_trend_life[mat] = 1
 			circumstance = pick(list(
-				"[pick(company_name)] has been bought out by a private investment firm. As a result, <b>[mat.name]</b> is now stable at <b>[materials_prices[mat]] cr</b>.",
-				"Due to a corporate restructuring, the largest supplier of <b>[mat.name]</b> has had the price changed to <b>[materials_prices[mat]] cr</b>.",
-				"<b>[mat.name]</b> is now under a monopoly by [pick(company_name)]. The price has been changed to <b>[materials_prices[mat]] cr</b> accordingly."
+				"[pick(company_name)] has been bought out by a private investment firm. As a result, <b>[initial(mat.name)]</b> is now stable at <b>[materials_prices[mat]] cr</b>.",
+				"Due to a corporate restructuring, the largest supplier of <b>[initial(mat.name)]</b> has had the price changed to <b>[materials_prices[mat]] cr</b>.",
+				"<b>[initial(mat.name)]</b> is now under a monopoly by [pick(company_name)]. The price has been changed to <b>[materials_prices[mat]] cr</b> accordingly."
 			))
 		if(2) //Big boost
 			materials_prices[mat] += round(gaussian(price_units * 0.5, 0.1 * price_units))
@@ -122,9 +122,9 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trends[mat] = MARKET_TREND_UPWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
-				"[pick(company_name)] has just released a new product that uses <b>[mat.name]</b>! As a result, the price has been raised to <b>[materials_prices[mat]] cr</b>.",
-				"Due to [pick(company_name)] finding a new property of <b>[mat.name]</b>, its price has been raised to <b>[materials_prices[mat]] cr</b>.",
-				"A study has found that <b>[mat.name]</b> may run out within the next 100 years. The price has raised to <b>[materials_prices[mat]] cr</b> due to panic."
+				"[pick(company_name)] has just released a new product that uses <b>[initial(mat.name)]</b>! As a result, the price has been raised to <b>[materials_prices[mat]] cr</b>.",
+				"Due to [pick(company_name)] finding a new property of <b>[initial(mat.name)]</b>, its price has been raised to <b>[materials_prices[mat]] cr</b>.",
+				"A study has found that <b>[initial(mat.name)]</b> may run out within the next 100 years. The price has raised to <b>[materials_prices[mat]] cr</b> due to panic."
 			))
 		if(3) //Big drop
 			materials_prices[mat] -= round(gaussian(price_units * 1.5, 0.1 * price_units))
@@ -132,8 +132,8 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trends[mat] = MARKET_TREND_DOWNWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
-				"[pick(company_name)]'s latest product has seen major controversy, and as a result, the price of <b>[mat.name]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
-				"Due to a new competitor, the price of <b>[mat.name]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
-				"<b>[mat.name]</b> has been found to be a carcinogen. The price has dropped to <b>[materials_prices[mat]] cr</b> due to panic."
+				"[pick(company_name)]'s latest product has seen major controversy, and as a result, the price of <b>[initial(mat.name)]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
+				"Due to a new competitor, the price of <b>[initial(mat.name)]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
+				"<b>[initial(mat.name)]</b> has been found to be a carcinogen. The price has dropped to <b>[materials_prices[mat]] cr</b> due to panic."
 			))
 	news_string += circumstance + "<br>" // Add the event to the news_string, formatted for newscasters.
