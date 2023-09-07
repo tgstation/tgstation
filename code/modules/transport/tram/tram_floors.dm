@@ -90,9 +90,9 @@
 	audible_message(
 		span_hear("You hear an electric crackle when you step on the plate...")
 	)
-	if(tram.travel_direction & WEST && inbound < tram.idle_platform.platform_code)
+	if((tram.travel_direction & WEST) && inbound < tram.idle_platform.platform_code)
 		return FALSE
-	if(tram.travel_direction & EAST && outbound > tram.idle_platform.platform_code)
+	if((tram.travel_direction & EAST) && outbound > tram.idle_platform.platform_code)
 		return FALSE
 	if(approach_distance >= AMBER_THRESHOLD_NORMAL)
 		return FALSE
