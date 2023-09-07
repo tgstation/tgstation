@@ -125,19 +125,19 @@
 	return ..()
 
 /// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
-/// by qdeleting any existing modifier. 
+/// by qdeleting any existing modifier.
 /datum/wound/proc/update_actionspeed_modifier()
 	if (should_have_actionspeed_modifier())
 		if (!actionspeed_mod)
 			generate_actionspeed_modifier()
 		actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
-		victim.update_actionspeed()
+		victim?.update_actionspeed()
 	else
 		remove_actionspeed_modifier()
 
 /// Returns TRUE if we have an interaction_efficiency_penalty, FALSE otherwise.
 /datum/wound/proc/should_have_actionspeed_modifier()
-	return (interaction_efficiency_penalty != 0)
+	return (limb && victim && interaction_efficiency_penalty != 0)
 
 /// If we have no actionspeed_mod, generates a new one with our unique ID, sets actionspeed_mod to it, then returns it.
 /datum/wound/proc/generate_actionspeed_modifier()
@@ -148,6 +148,7 @@
 
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
 	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
+	victim.add_actionspeed_modifier(new_modifier)
 
 	actionspeed_mod = new_modifier
 	return actionspeed_mod
@@ -157,8 +158,8 @@
 	if (!actionspeed_mod)
 		return
 
+	victim.remove_actionspeed_modifier(actionspeed_mod)
 	QDEL_NULL(actionspeed_mod)
-	victim.update_actionspeed()
 
 /// Generates the ID we use for [unique_id], which is also set as our actionspeed mod's ID
 /datum/wound/proc/generate_unique_id()
@@ -261,7 +262,7 @@
 		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
-		victim.remove_actionspeed_modifier(actionspeed_mod)
+		remove_actionspeed_modifier()
 
 	remove_wound_from_victim()
 	victim = new_victim
@@ -303,10 +304,12 @@
 		update_inefficiencies()
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
-	if(victim.get_active_hand() == limb)
-		victim.add_actionspeed_modifier(actionspeed_mod, TRUE)
-	else
-		victim.remove_actionspeed_modifier(actionspeed_mod)
+	update_actionspeed_modifier()
+	if (actionspeed_mod)
+		if(victim.get_active_hand() == limb)
+			victim.add_actionspeed_modifier(actionspeed_mod, TRUE)
+		else
+			victim.remove_actionspeed_modifier(actionspeed_mod)
 
 /datum/wound/proc/start_limping_if_we_should()
 	if ((limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG) && limp_slowdown > 0 && limp_chance > 0)

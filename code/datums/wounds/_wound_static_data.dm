@@ -40,10 +40,6 @@
 	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
-	/// The type of this wound within our [wound_series], determines what kind of wound we are. WOUND_SPECIFIC_TYPE_BASIC is mainline, will be picked in general rolls -
-	/// though special defines can be used via get_corresponding_wound_type() to only get special wounds in a series.
-	var/specific_type = WOUND_SPECIFIC_TYPE_BASIC
-
 	/// If true, we will attempt to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using [competition_mode] and [overpower_wounds_of_even_severity].
 	var/compete_for_wounding = TRUE
 	/// The competition mode with which we will remove other wounds from a possible wound roll assuming [compete_for_wounding] is TRUE. See wounds.dm, the defines file, for more information on what these do.

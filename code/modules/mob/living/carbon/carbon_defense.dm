@@ -134,8 +134,8 @@
 
 		var/bio_status = hit_bodypart.get_bio_state_status()
 
-		var/has_exterior = ((bio_status & BIO_EXTERIOR))
-		var/has_interior = ((bio_status & BIO_INTERIOR))
+		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 
 		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))

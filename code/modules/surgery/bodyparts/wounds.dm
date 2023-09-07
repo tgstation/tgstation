@@ -10,8 +10,8 @@
 
 	var/bio_status = get_bio_state_status()
 
-	var/has_exterior = ((bio_status & BIO_EXTERIOR))
-	var/has_interior = ((bio_status & BIO_INTERIOR))
+	var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 
 	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 
@@ -171,8 +171,6 @@
  * * min_severity: The minimum severity that will be considered.
  * * max_severity: The maximum severity that will be considered.
  * * severity_pick_mode: The "pick mode" to be used. See get_corresponding_wound_type's documentation
- * * series_type: See get_corresponding_wound_type's documentation
- * * specific_type: See get_corresponding_wound_type's documentation
  * * wound_source: The source of the wound to be applied. Nullable.
  *
  * For the rest of the args, refer to get_corresponding_wound_type().
@@ -180,7 +178,7 @@
  * Returns:
  * A new wound instance if the application was successful, null otherwise.
 */
-/mob/living/carbon/proc/cause_wound_of_type_and_severity(wound_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+/mob/living/carbon/proc/cause_wound_of_type_and_severity(wound_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
@@ -188,19 +186,19 @@
 	if (!islist(type_list))
 		type_list = list(type_list)
 
-	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode, series_type = series_type, specific_type = specific_type)
+	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode)
 	if (corresponding_typepath)
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
 /// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
-/mob/living/carbon/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, obj/item/bodypart/limb, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+/mob/living/carbon/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, obj/item/bodypart/limb, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
 	if (!limb)
 		return default
 
-	return limb.get_wound_threshold_of_wound_type(wound_type, severity, default, series_type, specific_type, wound_source)
+	return limb.get_wound_threshold_of_wound_type(wound_type, severity, default, wound_source)
 
 /**
  * A simple proc that gets the best wound to fit the criteria laid out, then returns its wound threshold.
@@ -209,19 +207,17 @@
  * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
  * * severity: The severity that will be considered.
  * * return_value_if_no_wound: If no wound is found, we will return this instead. (It is reccomended to use named args for this one, as its unclear what it is without)
- * * series_type: See get_corresponding_wound_type's documentation
- * * specific_type: See get_corresponding_wound_type's documentation
  * * wound_source: The theoretical source of the wound. Nullable.
  *
  * Returns:
  * return_value_if_no_wound if no wound is found - if one IS found, the wound threshold for that wound.
  */
-/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, return_value_if_no_wound, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, return_value_if_no_wound, wound_source)
 	var/list/type_list = wound_type
 	if (!islist(type_list))
 		type_list = list(type_list)
 
-	var/datum/wound/wound_path = get_corresponding_wound_type(type_list, src, severity, series_type = series_type, specific_type = specific_type, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
+	var/datum/wound/wound_path = get_corresponding_wound_type(type_list, src, severity, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
 	if (wound_path)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_path]
 		return pregen_data.get_threshold_for(src, damage_source = wound_source)

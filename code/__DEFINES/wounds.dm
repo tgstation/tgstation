@@ -94,20 +94,20 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 // A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
 // Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
 /// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
-#define BIO_INTERIOR (1<<0)
+#define ANATOMY_INTERIOR (1<<0)
 /// The given biostate is on the "exterior" of the limb - soft shit, protects interior
-#define BIO_EXTERIOR (1<<1)
-#define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
+#define ANATOMY_EXTERIOR (1<<1)
+#define ANATOMY_EXTERIOR_AND_INTERIOR (ANATOMY_EXTERIOR|ANATOMY_INTERIOR)
 
 /// A assoc list of BIO_ define to EXTERIOR/INTERIOR defines.
 /// This is where the interior/exterior state of a given biostate is set.
 /// Note that not all biostates are guaranteed to be one of these - and in fact, many are not
 /// IMPORTANT NOTE: All keys are stored as text and must be converted via text2num
-GLOBAL_LIST_INIT(bio_state_states, list(
-	"[BIO_WIRED]" = BIO_EXTERIOR,
-	"[BIO_METAL]" = BIO_INTERIOR,
-	"[BIO_FLESH]" = BIO_EXTERIOR,
-	"[BIO_BONE]" = BIO_INTERIOR,
+GLOBAL_LIST_INIT(bio_state_anatomy, list(
+	"[BIO_WIRED]" = ANATOMY_EXTERIOR,
+	"[BIO_METAL]" = ANATOMY_INTERIOR,
+	"[BIO_FLESH]" = ANATOMY_EXTERIOR,
+	"[BIO_BONE]" = ANATOMY_INTERIOR,
 ))
 
 // Wound series
@@ -124,28 +124,6 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
-
-// SERIES TYPES
-// A series type is basically our way of declaring how "mainstream" a series is.
-// WOUND_SERIES_TYPE_BASIC is totally mainline, and will be picked for random generations
-// However, anything else needs to be specifically picked out
-// This can be used to create a secondary series of wounds that only show up under specific circumstances
-
-/// The "mainline" wound series. Bleed wounds for slash, broken bones for blunt, etc.
-#define WOUND_SERIES_TYPE_BASIC "wound_series_type_basic"
-/// A generic alternate wound series. Unused, currently.
-#define WOUND_SERIES_TYPE_ALTERNATE_GENERIC "wound_series_type_alternate_generic"
-
-// SPECIFIC TYPES
-// A specific type is a individual wound's version of a series type
-// While they still occupy the same series as mainstream wounds, you can make any wound a alternate specific type
-// to do the same thing as above: A secondary series of wounds within a given series, but a series that operates on the same
-// severity overridding rules despite having different effects
-
-// Both series and specific types are unused but exist for future extension
-
-/// A "mainline" wound of a series. Ex. a bleeding slash for a flesh slash wound.
-#define WOUND_SPECIFIC_TYPE_BASIC "wound_specific_type_basic"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
@@ -174,15 +152,14 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 // A wound series "collection" is merely a way for us to track what is in what series, and what their types are.
 // Without this, we have no centralized way to determine what type is in what series outside of iterating over every pregen data.
 
-/// A branching assoc list of (series -> list(severity -> list(specific type -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
-/// then "Of severity 2", then "normal type", and get a wound of that description - via get_corresponding_wound_type()
+/// A branching assoc list of (series -> list(severity -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
+/// then "Of severity 2", and get a wound of that description - via get_corresponding_wound_type()
 /// Series: A generic wound_series, such as WOUND_SERIES_BONE_BLUNT_BASIC
 /// Severity: Any wounds held within this will be of this severity.
-/// Specific type: Any wounds held within this will be of this "specific type". See wound_pregen_data.specific_type for more info.
 /// Typepath, Weight: Merely a pairing of a given typepath to its weight, held for convenience in pickweight.
 GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 
-// Series -> severity -> specific type -> type -> weight
+// Series -> severity -> type -> weight
 /// Generates [wound_series_collections] by iterating through all pregen_data. Refer to the mentioned list for documentation
 /proc/generate_wound_series_collection()
 	RETURN_TYPE(/list/datum/wound)
@@ -211,39 +188,24 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 			series_list[severity] = list()
 			severity_list = series_list[severity]
 
-		var/specific_type = pregen_data.specific_type
-		var/list/datum/specific_type_list = severity_list[specific_type]
-		if (isnull(specific_type_list))
-			severity_list[specific_type] = list()
-			specific_type_list = severity_list[specific_type]
-
-		var/weight = pregen_data.weight
-		specific_type_list[wound_type] = weight
+		severity_list[wound_type] = pregen_data.weight
 
 	return wound_collection
 
-/// A branching assoc list of (wound_type -> (wound_series_type -> (wound_series))).
-/// Allows for determining of which wound series are caused by what, and in that list, which of those series are "mainline" and which are not.
+/// A branching assoc list of (wound_type -> list(wound_series)).
+/// Allows for determining of which wound series are caused by what.
 GLOBAL_LIST_INIT(wound_types_to_series, list(
 	WOUND_BLUNT = list(
-		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_BONE_BLUNT_BASIC
-		),
+		WOUND_SERIES_BONE_BLUNT_BASIC
 	),
 	WOUND_SLASH = list(
-		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_FLESH_SLASH_BLEED,
-		),
+		WOUND_SERIES_FLESH_SLASH_BLEED,
 	),
 	WOUND_BURN = list(
-		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_FLESH_BURN_BASIC,
-		),
+		WOUND_SERIES_FLESH_BURN_BASIC,
 	),
 	WOUND_PUNCTURE = list(
-		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_FLESH_PUNCTURE_BLEED
-		),
+		WOUND_SERIES_FLESH_PUNCTURE_BLEED
 	),
 ))
 
@@ -253,7 +215,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 #define WOUND_PICK_LOWEST_SEVERITY 2
 
 /**
- * Searches through all wounds for any of proper type, series, specific type, and biostate, and then returns a single one via pickweight.
+ * Searches through all wounds for any of proper type, series, and biostate, and then returns a single one via pickweight.
  * Is able to discern between, say, a flesh slash wound, and a metallic slash wound, and will return the respective one for the provided limb.
  *
  * The severity_max and severity_pick_mode args mostly exist in case you want a wound in a series that may not have your ideal severity wound, as it lets you
@@ -269,8 +231,6 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * * severity_min: The minimum wound severity we will search for.
  * * severity_max = severity_min: The maximum wound severity we will search for.
  * * severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY: The "pick mode" we will use when considering multiple wounds of acceptable severity. See the above defines.
- * * series_type = WOUND_SERIES_TYPE_BASIC: The type of wound series we are searching for. Defaults to basic, that being the mainline series, like hairline fractures if looking for blunt bone wounds.
- * * specific_type = WOUND_SPECIFIC_TYPE_BASIC: The individual "specific type" of wounds we are searching for. See wound_pregen_data.specific_type for more documentation.
  * * random_roll = TRUE: If this is considered a "random" consideration. If true, only wounds that can be randomly generated will be considered.
  * * duplicates_allowed = FALSE: If exact duplicates of a given wound on part are tolerated. Useful for simply getting a path and not instantiating.
  * * care_about_existing_wounds = TRUE: If we iterate over wounds to see if any are above or at a given wounds severity, and disregard it if any are. Useful for simply getting a path and not instantiating.
@@ -278,7 +238,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * Returns:
  * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
-/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
 	var/list/wound_type_list = list()
@@ -287,12 +247,8 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 	if (!length(wound_type_list))
 		return null
 
-	var/list/series_list = wound_type_list[series_type]
-	if (!length(series_list))
-		return null
-
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(series_list))
+	for (var/series as anything in shuffle(wound_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
@@ -306,11 +262,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 			if (isnull(picked_severity) || ((severity_pick_mode == WOUND_PICK_HIGHEST_SEVERITY && severity > picked_severity) || (severity_pick_mode == WOUND_PICK_LOWEST_SEVERITY && severity < picked_severity)))
 				picked_severity = severity
 
-		var/list/specific_types = severity_list["[picked_severity]"]
-		if (!length(specific_types))
-			continue
-
-		var/list/datum/wound/wound_typepaths = specific_types[specific_type]
+		var/list/wound_typepaths = severity_list["[picked_severity]"]
 		if (!length(wound_typepaths))
 			continue
 
@@ -357,7 +309,7 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 // 1. Exterior is mangled: A critical slash or pierce wound on that limb
 // 2. Interior is mangled: At least a severe bone wound on that limb
 // Lack of exterior or interior count as mangled exterior/interior respectively
-// see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_states
+// see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_anatomy
 #define BODYPART_MANGLED_NONE NONE
 #define BODYPART_MANGLED_INTERIOR (1<<0)
 #define BODYPART_MANGLED_EXTERIOR (1<<1)
