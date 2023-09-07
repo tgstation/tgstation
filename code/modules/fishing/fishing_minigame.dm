@@ -342,11 +342,11 @@
 	RegisterSignal(user.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_reeling))
 	RegisterSignal(user.client, COMSIG_CLIENT_MOUSEUP, PROC_REF(stop_reeling))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(on_user_logout))
-	SSfishing.begin_minigame_process(src)
+	START_PROCESSING(SSfishing, src)
 
 ///Stop processing and remove references to the minigame hud
 /datum/fishing_challenge/proc/remove_minigame_hud()
-	SSfishing.end_minigame_process(src)
+	STOP_PROCESSING(SSfishing, src)
 	QDEL_NULL(fishing_hud)
 
 ///While the mouse button is held down, the bait will be reeling up (or down on r-click if the bidirectional rule is enabled)
@@ -368,7 +368,7 @@
 /datum/fishing_challenge/process(seconds_per_tick)
 	move_fish(seconds_per_tick)
 	move_bait(seconds_per_tick)
-	if(!QDELETED(src))
+	if(!QDELETED(fishing_hud))
 		update_visuals()
 
 ///The proc that moves the fish around, just like in the old TGUI, mostly.

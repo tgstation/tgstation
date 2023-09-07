@@ -1,17 +1,8 @@
-///Super fast to minimize output lag, but it doesn't fire unless someone is actually fishing.
+/**
+ * So far, used only by the fishing minigame. Feel free to rename it to something like veryfastprocess
+ * if you need one that fires 10 times a second
+ */
 PROCESSING_SUBSYSTEM_DEF(fishing)
 	name = "Fishing"
-	wait = 0.05 SECONDS
+	wait = 0.1 SECONDS
 	can_fire = FALSE
-
-/datum/controller/subsystem/processing/fishing/proc/begin_minigame_process(datum/fishing_challenge/minigame)
-	if(!length(processing))
-		can_fire = TRUE
-		//Prevents the subsystem from rapid firing since it must have been a while since it last fired.
-		update_nextfire(reset_time = TRUE)
-	START_PROCESSING(src, minigame)
-
-/datum/controller/subsystem/processing/fishing/proc/end_minigame_process(datum/fishing_challenge/minigame)
-	STOP_PROCESSING(src, minigame)
-	if(!length(processing))
-		can_fire = FALSE
