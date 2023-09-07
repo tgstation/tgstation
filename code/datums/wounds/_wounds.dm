@@ -148,7 +148,7 @@
 
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
 	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
-	victim.add_actionspeed_modifier(new_modifier)
+	victim?.add_actionspeed_modifier(new_modifier)
 
 	actionspeed_mod = new_modifier
 	return actionspeed_mod
@@ -158,7 +158,7 @@
 	if (!actionspeed_mod)
 		return
 
-	victim.remove_actionspeed_modifier(actionspeed_mod)
+	victim?.remove_actionspeed_modifier(actionspeed_mod)
 	QDEL_NULL(actionspeed_mod)
 
 /// Generates the ID we use for [unique_id], which is also set as our actionspeed mod's ID
