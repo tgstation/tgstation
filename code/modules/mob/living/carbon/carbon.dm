@@ -471,7 +471,7 @@
 				adjustBruteLoss(3)
 		else
 			if(location)
-				location.add_vomit_floor(src, vomit_flags, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+				location.add_vomit_floor(src, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
 
 		location = get_step(location, starting_dir)
 		if (location?.is_blocked_turf())
