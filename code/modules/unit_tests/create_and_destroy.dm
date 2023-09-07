@@ -43,7 +43,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/turf/closed/mineral/random/regrowth,
 		/datum/weather_event,
 		/datum/particle_weather,
-		/obj/item/device/cassette_tape,
 
 	)
 	//Say it with me now, type template
@@ -116,7 +115,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
 	///we generate mobs in these and create destroy does this in null space
-	ignore += typesof(/obj/item/loot_table_maker,)
+	ignore += typesof(/obj/item/loot_table_maker)
+	///we need to use json_decode to run randoms properly
+	ignore += typesof(/obj/item/device/cassette_tape)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
