@@ -149,6 +149,7 @@
 				var/mob/living/carbon/human/user = usr
 				tape.author_name = user.real_name
 				tape.ckey_author = user.client?.ckey
+			tape.update_appearance()
 
 			playsound(src,'sound/weapons/handcuffs.ogg',20,1)
 

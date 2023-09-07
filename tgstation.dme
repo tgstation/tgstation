@@ -5686,6 +5686,8 @@
 #include "monkestation\code\modules\cargoborg\code\cargo_teleporter.dm"
 #include "monkestation\code\modules\cargoborg\code\cargoborg_items.dm"
 #include "monkestation\code\modules\cassettes\cassette.dm"
+#include "monkestation\code\modules\cassettes\cassette_approval.dm"
+#include "monkestation\code\modules\cassettes\random_cassette_selection.dm"
 #include "monkestation\code\modules\cassettes\machines\portable_mixer.dm"
 #include "monkestation\code\modules\cassettes\machines\stationary_mixer.dm"
 #include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"

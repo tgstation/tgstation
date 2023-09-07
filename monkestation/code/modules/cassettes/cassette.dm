@@ -26,14 +26,19 @@
 	var/datum/cassette/cassette_tape/tape
 	///are we an approved tape?
 	var/approved_tape = FALSE
+	///are we random?
+	var/random = FALSE
 
 /obj/item/device/cassette_tape/Initialize()
 	. = ..()
-
 	if(!tape)
 		return
 
 	tape = new tape
+
+	if(random)
+		tape.id = pick(GLOB.approved_ids)
+
 	id = tape.id
 	var/file = file("data/cassette_storage/[id].json")
 	if(!fexists(file))
@@ -52,6 +57,8 @@
 	approved_tape = data["approved"]
 	qdel(tape)
 
+	update_appearance()
+
 /obj/item/device/cassette_tape/attack_self(mob/user)
 	..()
 	icon_state = flipped ? side1_icon : side2_icon
@@ -60,10 +67,12 @@
 
 /obj/item/device/cassette_tape/update_desc(updates)
 	. = ..()
+	desc = initial(desc)
+	desc += "\n"
 	if(!approved_tape)
-		.+= span_warning("It appears to be a bootleg tape, quality is not a guarentee!")
+		desc += span_warning("It appears to be a bootleg tape, quality is not a guarentee!\n")
 	if(author_name)
-		.+= span_notice("Mixed by [author_name]")
+		desc += span_notice("Mixed by [author_name]\n")
 
 /obj/item/device/cassette_tape/attackby(obj/item/item, mob/living/user)
 	if(!istype(item, /obj/item/pen))
@@ -125,3 +134,6 @@
 
 /obj/item/device/cassette_tape/friday
 	tape = /datum/cassette/cassette_tape/friday
+
+/datum/cassette/cassette_tape/random
+	id ="not_randomized"
