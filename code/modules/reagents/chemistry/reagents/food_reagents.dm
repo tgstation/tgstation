@@ -444,7 +444,7 @@
 			if(prob(10))
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
-				victim.vomit()
+				victim.vomit(VOMIT_CATEGORY_DEFAULT)
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
