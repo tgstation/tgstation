@@ -36,6 +36,7 @@
 	can_select = FALSE
 	can_charge = FALSE
 	var/owner_dna = null
+	var/was_emagged = FALSE //used for tracking emagging for voice lines, is set to false after being re-owned.
 
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
@@ -105,6 +106,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	playsound(src, "monkestation/sound/weapons/gun/lawbringer/[shot.select_name].ogg", 50, FALSE, -2)
 	if (shot.select_name && selector)
 		balloon_alert(selector, "set to [shot.select_name]")
 	chambered = null
@@ -114,6 +116,7 @@
 /obj/item/gun/energy/e_gun/lawbringer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	balloon_alert(user, "biometric lock reset")
 	user.visible_message(span_warning("[user] swipes the [emag_card] in the lawbringer's authenticator"))
+	was_emagged = TRUE
 	src.name = "Lawbringer"
 	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
@@ -141,6 +144,13 @@
 			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
 			updatepin(user)
 			nametag(user)
+			if(was_emagged)
+				//random emag voice lines
+				was_emagged = FALSE
+				playsound(src, "monkestation/sound/weapons/gun/lawbringer/initemag[rand(1,5)].ogg", 50, FALSE, -2)
+			else
+				//normal voice lines
+				playsound(src, "monkestation/sound/weapons/gun/lawbringer/init[rand(1,5)].ogg", 50, FALSE, -2)
 		return
 
 
