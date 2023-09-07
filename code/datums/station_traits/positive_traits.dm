@@ -374,7 +374,7 @@
 
 /datum/station_trait/shuttle_sale
 	name = "Shuttle Firesale"
-	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Check your shuttle purchase list for discounted options."
+	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Some of your emergency shuttle options have been discounted!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
@@ -393,8 +393,11 @@
 
 	var/obj/structure/closet/locker_to_fill
 	var/list/locker_list = GLOB.all_closets.Copy()
-	while(!is_station_level(locker_to_fill) && length(locker_list))
-		locker_to_fill = pick_n_take(locker_list)
+	for(var/obj/structure/closet in locker_list)
+		if(!is_station_level(closet.z))
+			locker_list -= closet
+
+	locker_to_fill = pick(locker_list)
 
 	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)
 
@@ -403,9 +406,12 @@
 		new /obj/item/stack/spacecash/c1000(new_wallet)
 
 	new /obj/item/card/id/advanced/technician_id(new_wallet)
+	new_wallet.refreshID()
 
 	if(prob(35))
 		report_message += " The technician reports they last remember having their wallet around [get_area_name(new_wallet)]."
+
+	message_admins("A missing wallet has been placed in the [locker_to_fill] locker, in the [get_area_name(locker_to_fill)] area.")
 
 /obj/item/card/id/advanced/technician_id
 	name = "Repair Technician ID"
