@@ -180,11 +180,11 @@
 /obj/structure/tram/attackby(obj/item/item, mob/user, params)
 	. = ..()
 
-	if(istype(item, /obj/item/wallframe/icts))
+	if(istype(item, /obj/item/wallframe/tram))
 		try_wallmount(item, user)
 
 /obj/structure/tram/proc/try_wallmount(obj/item/wallmount, mob/user)
-	if(!istype(wallmount, /obj/item/wallframe/icts))
+	if(!istype(wallmount, /obj/item/wallframe/tram))
 		return
 
 	var/obj/item/wallframe/frame = wallmount

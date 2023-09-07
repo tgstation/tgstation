@@ -130,7 +130,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/wallframe/icts/try_build(obj/structure/tram/on_tram, mob/user)
+/obj/item/wallframe/tram/try_build(obj/structure/tram/on_tram, mob/user)
 	if(get_dist(on_tram,user) > 1)
 		balloon_alert(user, "you are too far!")
 		return
@@ -152,7 +152,7 @@
 
 	return TRUE
 
-/obj/item/wallframe/icts/attach(obj/structure/tram/on_tram, mob/user)
+/obj/item/wallframe/tram/attach(obj/structure/tram/on_tram, mob/user)
 	if(result_path)
 		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 		user.visible_message(span_notice("[user.name] installs [src] on the tram."),

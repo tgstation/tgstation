@@ -767,7 +767,7 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(disassembled)
-		new /obj/item/wallframe/icts/tram_controller(drop_location())
+		new /obj/item/wallframe/tram/controller(drop_location())
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
 		new /obj/item/stack/sheet/iron(drop_location(), 1)
@@ -1007,7 +1007,7 @@
 			else
 				controller_datum.set_status_code(BYPASS_SENSORS, TRUE)
 
-/obj/item/wallframe/icts/tram_controller
+/obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"
 	desc = "A box that makes the tram go, or something. Just secure to the tram."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
