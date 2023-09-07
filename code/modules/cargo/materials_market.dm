@@ -48,13 +48,13 @@
 	if(is_type_in_list(O, exportable_material_items))
 		var/amount = 0
 		var/value = 0
-		var/mat_name = ""
+		var/material_to_export
 		var/obj/item/stack/exportable = O
 		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
 			if(exportable.has_material_type(mat))
 				amount = exportable.amount
 				value = SSstock_market.materials_prices[mat]
-				mat_name = mat.name
+				material_to_export = mat
 				break //This is only for trading non-alloys, so we can break here
 
 		if(!amount)
@@ -64,7 +64,8 @@
 		qdel(exportable)
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 		new_block.export_value = amount * value * MARKET_PROFIT_MODIFIER
-		new_block.export_name = mat_name
+		new_block.export_mat = material_to_export
+		new_block.quantity = amount
 		playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 		return TRUE
 	return ..()
@@ -186,7 +187,6 @@
 			if(!can_buy_via_budget)
 				return
 			ordering_private = !ordering_private
-			to_chat(usr, "Ordering via budget: [ordering_private? "Engaged":"Disengaged"].")
 
 
 /obj/item/stock_block
@@ -197,8 +197,10 @@
 	/// How many credits was this worth when created?
 	var/export_value = 0
 	/// What is the name of the material this was made from?
-	var/export_name = "stuff"
+	var/datum/material/export_mat
+	/// Quantity of export material
+	var/quantity = 0
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] is worth [export_value] cr, from selling sheets of [export_name].")
+	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [export_mat?.name].")

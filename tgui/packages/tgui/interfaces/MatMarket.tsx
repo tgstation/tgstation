@@ -76,7 +76,8 @@ export const MatMarket = (props, context) => {
                           ? 'red'
                           : 'white'
                     }>
-                    <b>{material.name}</b> is trending <b>{material.trend}</b>.
+                    <b>{toTitleCase(material.name)}</b> is trending{' '}
+                    <b>{material.trend}</b>.
                   </Stack.Item>
                 </Stack>
               </Stack.Item>

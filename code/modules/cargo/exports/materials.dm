@@ -139,7 +139,7 @@
 		return
 	if(!dry_run)
 		SSstock_market.materials_quantity[material_id] += amount
-		SSstock_market.materials_prices[material_id] = (price) - round((price) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
+		SSstock_market.materials_prices[material_id] -= round((price) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
 		//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
 
 
@@ -153,4 +153,12 @@
 	var/obj/item/stock_block/block = O
 	return block.export_value
 
-
+/datum/export/stock_block/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
+	. = ..()
+	if(dry_run)
+		return
+	var/obj/item/stock_block/sold_block = sold_item
+	var/sale_value = sold_block.export_value
+	SSstock_market.materials_quantity[sold_block.export_mat] += sold_block.quantity
+	SSstock_market.materials_prices[sold_block.export_mat] -= round((sale_value) * (sold_block.quantity / (sold_block.quantity + SSstock_market.materials_quantity[sold_block.export_mat])))
+	SSstock_market.materials_prices[sold_block.export_mat] = round(clamp(SSstock_market.materials_prices[sold_block.export_mat], sold_block.export_mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5 , sold_block.export_mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3))
