@@ -38,13 +38,3 @@ endmap
 
 map multiz_debug
 endmap
-
-##EFFIGY MAPS##
-
-map foxholestation
-	maxplayers 25
-	votable
-endmap
-
-map effigy_liquids
-endmap
