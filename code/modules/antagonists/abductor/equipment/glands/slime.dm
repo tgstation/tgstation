@@ -19,7 +19,7 @@
 
 /obj/item/organ/internal/heart/gland/slime/activate()
 	to_chat(owner, span_warning("You feel nauseated!"))
-	owner.vomit(20)
+	owner.vomit(MOB_DEFAULT_VOMIT, lost_nutrition = 20)
 
 	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
 	Slime.set_friends(list(owner))
