@@ -46,9 +46,9 @@ SUBSYSTEM_DEF(stock_market)
 	var/trend_life = materials_trend_life[mat]
 
 	var/price_units = materials_prices[mat]
-	var/price_minimum = mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5
-	var/price_maximum = mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3
-	var/price_baseline = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
+	var/price_minimum = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5
+	var/price_maximum = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3
+	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
 
 	var/stock_quantity = materials_quantity[mat]
 
