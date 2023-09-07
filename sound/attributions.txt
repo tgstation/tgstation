@@ -100,5 +100,5 @@ https://freesound.org/people/FunWithSound/sounds/456965/
 beeps_jingle.ogg is adapted from Eponn's "Achievement happy Beeps Jingle", which is public domain (CC 0):
 https://freesound.org/people/Eponn/sounds/619838/
 
-Every OGG file in "tgstation/sound/runtime/complionator" (except for emag.ogg) are heavily modified lines using free voice TTS by elevenlabs.io:
+Every OGG file in 'tgstation/sound/runtime/complionator' (except for emag.ogg) are heavily modified lines using free voice TTS by elevenlabs.io
 https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform/
