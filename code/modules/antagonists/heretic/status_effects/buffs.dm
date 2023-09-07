@@ -241,6 +241,7 @@
 	id = "Moon Grasp Hide Identity"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 
 /datum/status_effect/moon_grasp_hide/on_apply()
 	ADD_TRAIT(owner, TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS)
