@@ -45,6 +45,7 @@
 		new /obj/effect/temp_visual/fire(get_turf(victim))
 		addtimer(CALLBACK(src, PROC_REF(pushback), victim, user), 1) //no free backstabs, we push AFTER module stuff is done
 		victim.adjustFireLoss(bonus_value, forced = TRUE)
+		log_combat(user, target, "repelled with a trophy ", src, "crusher damage")
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, user, bonus_value)
 
 ///Pushes the victim away from the user a single tile

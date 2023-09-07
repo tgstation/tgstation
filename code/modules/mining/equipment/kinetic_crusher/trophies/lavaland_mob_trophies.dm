@@ -31,6 +31,7 @@
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
 		target.adjustBruteLoss(missing_health) //and do that much damage
+		log_combat(user, target, "struck for bonus damage with a trophy ", src, "crusher damage")
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, missing_health)
 
 /**

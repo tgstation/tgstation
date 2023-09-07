@@ -53,6 +53,8 @@
 		visible_message(span_danger("[src] grabs hold of [victim]!"))
 		var/damage_dealt = rand(min_damage, max_damage)
 		victim.adjustBruteLoss(damage_dealt)
+		if(caster)
+			log_combat(caster, victim, "grabbed with a ", src, trophy_spawned ? "crusher-spawned" : "")
 		if(trophy_spawned)
 			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, caster, damage_dealt)
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
@@ -60,6 +62,8 @@
 			SEND_SIGNAL(victim, COMSIG_GOLIATH_TENTACLED_GRABBED)
 	for (var/obj/vehicle/sealed/mecha/mech in loc)
 		mech.take_damage(rand(min_damage, max_damage), damage_type = BRUTE, damage_flag = MELEE, sound_effect = TRUE)
+		if(caster)
+			log_combat(caster, mech, "damaged with a ", src, trophy_spawned ? "crusher-spawned" : "")
 	if (!has_buckled_mobs())
 		retract()
 		return
