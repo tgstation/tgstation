@@ -46,9 +46,11 @@
 	if (!snack_type.can_consume(target))
 		source.balloon_alert(user, "can't consume!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if (!golem_snack)
+	if (isnull(golem_snack))
 		golem_snack = new(
 			/* loc = */ null,
+			/* starting_reagent_purity = */ null,
+			/* no_base_reagents = */ FALSE,
 			/* name = */ source.name,
 			/* consume_food = */ consume_on_eat,
 			/* food_buff = */ snack_type,
@@ -84,7 +86,15 @@
 	/// Golem food buff to apply on consumption
 	var/datum/golem_food_buff/food_buff
 
-/obj/item/food/golem_food/Initialize(mapload, name, consume_food, datum/golem_food_buff/food_buff, atom/owner)
+/obj/item/food/golem_food/Initialize(
+	mapload,
+	starting_reagent_purity,
+	no_base_reagents = FALSE,
+	name,
+	consume_food,
+	datum/golem_food_buff/food_buff,
+	atom/owner,
+)
 	. = ..()
 	src.name = name
 	src.consume_food = consume_food
