@@ -569,6 +569,7 @@
 /datum/transport_controller/linear/tram/proc/power_restored()
 	set_operational(TRUE)
 	log_transport("TC: [specific_transport_id] power restored.")
+	cycle_doors(CYCLE_OPEN)
 	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
@@ -743,7 +744,7 @@
 	. = ..()
 	. += span_notice("The door appears to be [cover_locked ? "locked" : "unlocked"].")
 	if(panel_open)
-		. += span_notice("It is secured to the tram wall with <b>bolts</b>.")
+		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)

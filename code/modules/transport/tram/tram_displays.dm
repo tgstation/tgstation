@@ -77,7 +77,7 @@
 	. = ..()
 
 	if(panel_open)
-		. += span_notice("It is secured to the tram wall with <b>bolts</b>.")
+		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
 /obj/machinery/transport/destination_sign/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)

@@ -183,14 +183,16 @@
  * take a chunk of skin, people have places to be!
  */
 /obj/machinery/door/airlock/tram/proc/verify_status()
+	if(airlock_state == AIRLOCK_CLOSED)
+		return
+
 	if(retry_counter < 3)
 		close()
 		return
 
-	if(airlock_state != AIRLOCK_CLOSED && retry_counter == 3)
-		playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
-		close(forced = BYPASS_DOOR_CHECKS)
+	playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
+	close(forced = BYPASS_DOOR_CHECKS)
 
 /**
  * Set the weakref for the tram we're attached to
@@ -220,7 +222,7 @@
  */
 /obj/machinery/door/airlock/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("It has an emergency mechanism to open using <b>just your hands</b> in the event of an emergency.")
+	. += span_notice("It has an emergency mechanism to open using [EXAMINE_HINT("just your hands")] in the event of an emergency.")
 
 /**
  * Tram doors can be opened with hands when unpowered

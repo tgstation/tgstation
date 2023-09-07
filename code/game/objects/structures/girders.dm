@@ -160,7 +160,7 @@
 				balloon_alert(user, "need [amount] sheets!")
 				return
 			balloon_alert(user, "adding panel...")
-			if (do_after(user, 4 SECONDS, target = src))
+			if (do_after(user, 2 SECONDS, target = src))
 				if(sheets.get_amount() < amount)
 					return
 				sheets.use(amount)

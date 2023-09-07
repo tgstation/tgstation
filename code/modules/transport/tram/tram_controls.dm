@@ -7,8 +7,9 @@
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE
-	max_integrity = 100
-	armor_type = /datum/armor/tram_structure
+	max_integrity = 400
+	integrity_failure = 0.1
+	armor_type = /datum/armor/transport_machinery
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement

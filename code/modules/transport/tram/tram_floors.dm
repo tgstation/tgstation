@@ -117,14 +117,20 @@
 	icon_state = "tram_dark"
 	density = FALSE
 	anchored = TRUE
-	armor_type = /datum/armor/tram_structure
-	max_integrity = 750
+	armor_type = /datum/armor/tram_floor
 	layer = TRAM_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
+
+/datum/armor/tram_floor
+	melee = 40
+	bullet = 10
+	laser = 10
+	fire = 90
+	acid = 100
 
 /obj/structure/thermoplastic/light
 	icon_state = "tram_light"

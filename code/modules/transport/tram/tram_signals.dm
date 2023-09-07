@@ -149,7 +149,7 @@
 	. = ..()
 	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(panel_open)
-		. += span_notice("It can be flipped or rotated with a <b>wrench</b>.")
+		. += span_notice("It can be flipped or rotated with a [EXAMINE_HINT("wrench.")]")
 
 /obj/machinery/transport/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -535,7 +535,7 @@
 	. = ..()
 	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(panel_open)
-		. += span_notice("It can be rotated with a <b>wrench</b>.")
+		. += span_notice("It can be rotated with a [EXAMINE_HINT("wrench.")]")
 
 /obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)

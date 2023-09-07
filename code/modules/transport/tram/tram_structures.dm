@@ -58,10 +58,11 @@
 	base_icon_state = "tram-split"
 
 /datum/armor/tram_structure
-	melee = 80
-	bullet = 5
-	bomb = 75
-	fire = 99
+	melee = 40
+	bullet = 10
+	laser = 10
+	bomb = 45
+	fire = 90
 	acid = 100
 
 /obj/structure/tram/Initialize(mapload)
@@ -71,19 +72,29 @@
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
+	register_context()
 
 /obj/structure/tram/examine(mob/user)
 	. = ..()
 	switch(state)
-		if(WINDOW_SCREWED_TO_FRAME)
-			. += span_notice("The panel is <b>screwed</b> to the frame.")
-		if(WINDOW_IN_FRAME)
-			. += span_notice("The panel is <i>unscrewed</i> but <b>pried</b> into the frame.")
-		if(WINDOW_OUT_OF_FRAME)
-			if (anchored)
-				. += span_notice("The panel is <b>screwed</b> to the frame.")
-			else
-				. += span_notice("The panel is <i>unscrewed</i> from the frame, and could be deconstructed by <b>wrenching</b>.")
+		if(TRAM_SCREWED_TO_FRAME)
+			. += span_notice("The panel is [EXAMINE_HINT("screwed.")] to the frame.")
+		if(TRAM_IN_FRAME)
+			. += span_notice("The panel is [EXAMINE_HINT("unscrewed,")] but [EXAMINE_HINT("pried")] into the frame.")
+		if(TRAM_OUT_OF_FRAME)
+			. += span_notice("The panel is [EXAMINE_HINT("pried")] out of the frame, but still[EXAMINE_HINT("wired.")]")
+
+/obj/structure/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity < max_integrity)
+		context[SCREENTIP_CONTEXT_LMB] = "repair"
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && state == TRAM_SCREWED_TO_FRAME)
+		context[SCREENTIP_CONTEXT_RMB] = "unscrew panel"
+	if(held_item?.tool_behaviour == TOOL_CROWBAR && state == TRAM_IN_FRAME)
+		context[SCREENTIP_CONTEXT_RMB] = "remove panel"
+	if(held_item?.tool_behaviour == TOOL_WIRECUTTER && state == TRAM_OUT_OF_FRAME)
+		context[SCREENTIP_CONTEXT_RMB] = "disconnect panel"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/tram/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -136,35 +147,46 @@
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
-										span_notice("You begin to unscrew the tram panel from the frame..."))
-				if(tool.use_tool(src, user, 50, volume = 50))
+				span_notice("You begin to unscrew the tram panel from the frame..."))
+				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_IN_FRAME
 					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
-			else if (tool.tool_behaviour)
+					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+			if(tool.tool_behaviour)
 				to_chat(user, span_warning("The security screws need to be removed first!"))
 
 		if(TRAM_IN_FRAME)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
 				user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
-										span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
-				if(tool.use_tool(src, user, 40, volume = 50))
+				span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_OUT_OF_FRAME
 					to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The panel to be pried first!"))
+					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
+				user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
+				span_notice("You resecure the tram panel to the frame..."))
+				state = TRAM_SCREWED_TO_FRAME
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(TRAM_OUT_OF_FRAME)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
-										span_notice("You start cutting the connective cabling on \the [src]"))
-				if(tool.use_tool(src, user, 20, volume = 50))
+				span_notice("You start cutting the connective cabling on \the [src]"))
+				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
 					deconstruct(disassembled = TRUE)
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The cabling need to be cut first!"))
 
-	if (tool.tool_behaviour)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			if(tool.tool_behaviour == TOOL_CROWBAR)
+				user.visible_message(span_notice("[user] snaps the tram panel into place."),
+				span_notice("You snap the tram panel into place..."))
+				state = TRAM_IN_FRAME
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+			if(tool.tool_behaviour)
+				to_chat(user, span_warning("The cabling need to be cut first!"))
 
 	return ..()
 
@@ -422,6 +444,7 @@
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
 	icon_state = "tram-spoiler-retracted"
 	opacity = TRUE
+	max_integrity = 400
 	///Position of the spoiler
 	var/deployed = FALSE
 	///Weakref to the tram piece we control
@@ -442,6 +465,13 @@
 /obj/structure/tram/spoiler/LateInitialize()
 	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+
+/obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL && (obj_flags & EMAGGED))
+		context[SCREENTIP_CONTEXT_LMB] = "repair"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER

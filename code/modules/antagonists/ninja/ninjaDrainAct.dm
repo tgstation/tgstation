@@ -445,7 +445,8 @@
 	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
 	malfunction_event.end_when *= 2
 	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
-		if(prob(50))
+		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
+		if(prob(rand(15, 30)))
 			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN

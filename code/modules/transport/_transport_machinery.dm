@@ -1,4 +1,7 @@
 /obj/machinery/transport
+	armor_type = /datum/armor/transport_machinery
+	max_integrity = 400
+	integrity_failure = 0.1
 	/// ID of the transport we're associated with for filtering commands
 	var/configured_transport_id = TRAMSTATION_LINE_1
 	/// weakref of the transport we're associated with
@@ -16,6 +19,14 @@
 		"cut some excess wires" = TOOL_WIRECUTTER,
 	)
 	var/malfunctioning = FALSE
+
+/datum/armor/transport_machinery
+	melee = 40
+	bullet = 10
+	laser = 10
+	bomb = 45
+	fire = 90
+	acid = 100
 
 /obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
@@ -83,7 +94,7 @@
 		for(var/tool_method as anything in methods_to_fix)
 			. += span_info("It needs someone to [tool_method].")
 	if(panel_open)
-		. += span_notice("It can be deconstructed with a <b>crowbar</b>.")
+		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machinery.
