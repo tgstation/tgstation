@@ -262,7 +262,8 @@
 		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
-		remove_actionspeed_modifier()
+		if (actionspeed_mod)
+			victim.remove_actionspeed_modifier(actionspeed_mod) // no need to qdelete it, just remove it from our victim
 
 	remove_wound_from_victim()
 	victim = new_victim
