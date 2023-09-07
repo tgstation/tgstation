@@ -36,6 +36,9 @@
 	tape = new tape
 	id = tape.id
 	var/file = file("data/cassette_storage/[id].json")
+	if(!fexists(file))
+		qdel(tape)
+		return
 	file = file2text(file)
 	var/list/data = json_decode(file)
 	name = data["name"]
