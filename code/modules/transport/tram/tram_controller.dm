@@ -318,7 +318,6 @@
 	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
@@ -335,7 +334,6 @@
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
-	set_lights(estop = TRUE)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
@@ -366,7 +364,6 @@
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
 
-	set_lights(estop = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null
@@ -433,12 +430,6 @@
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		transport_module.set_travelling(FALSE)
 	set_active(FALSE)
-
-/**
- * Send a signal to any lights associated with the tram so they can change based on the status and direction.
- */
-/datum/transport_controller/linear/tram/proc/set_lights(estop = FALSE)
-	SEND_SIGNAL(src, COMSIG_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction, estop)
 
 /**
  * Sets the active status for the controller and sends a signal to listeners.

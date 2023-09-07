@@ -113,7 +113,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		request_flags |= BYPASS_SENSORS
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
-	transport_controller.set_lights()
 	log_transport("Sub: [transport_controller.specific_transport_id] requested door close. Info: [SUB_TS_STATUS].")
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS || transport_controller.controller_status & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		transport_controller.cycle_doors(CYCLE_CLOSED, BYPASS_DOOR_CHECKS)

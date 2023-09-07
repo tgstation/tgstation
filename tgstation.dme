@@ -5338,7 +5338,6 @@
 #include "code\modules\transport\tram\tram_displays.dm"
 #include "code\modules\transport\tram\tram_doors.dm"
 #include "code\modules\transport\tram\tram_floors.dm"
-#include "code\modules\transport\tram\tram_lighting.dm"
 #include "code\modules\transport\tram\tram_machinery.dm"
 #include "code\modules\transport\tram\tram_remote.dm"
 #include "code\modules\transport\tram\tram_signals.dm"
