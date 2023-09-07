@@ -385,6 +385,7 @@
 #include "code\__DEFINES\~monkestation\status_effects.dm"
 #include "code\__DEFINES\~monkestation\traits.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_atom.dm"
+#include "code\__DEFINES\~monkestation\dcs\signals\signals_traitor.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
