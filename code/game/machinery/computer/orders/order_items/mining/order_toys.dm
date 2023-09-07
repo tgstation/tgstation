@@ -14,7 +14,7 @@
 	cost_per_order = 300
 
 /datum/orderable_item/toys_drones/mining_drone
-	item_path = /mob/living/simple_animal/hostile/mining_drone
+	item_path = /mob/living/basic/mining_drone
 	cost_per_order = 800
 
 /datum/orderable_item/toys_drones/drone_health
