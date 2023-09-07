@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(stock_market)
 			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_units * 0.05))
 			quantity_change = round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
-	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, mat.tradable_base_quantity * 2))
+	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, initial(mat.tradable_base_quantity) * 2))
 
 /**
  * Market events are a way to spice up the market and make it more interesting.
