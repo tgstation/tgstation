@@ -23,6 +23,8 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Turn a department into a testament for your dark knowledge."
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -110,6 +112,7 @@
 	var/list/data = list()
 
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()
@@ -144,6 +147,19 @@
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
 			return TRUE
+
+/datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
+	if (isnull(owner) || isnull(owner.current))
+		return
+	var/confirmed = tgui_alert(
+		owner.current,
+		message = "Are you sure? You will no longer be able to Ascend.",
+		title = "Reject the call?",
+		buttons = list("Yes", "No"),
+	) == "Yes"
+	if (!confirmed)
+		return
+	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
 	if(user.stat == DEAD)
@@ -454,11 +470,9 @@
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				succeeded = FALSE
+			parts += "<b>Objective #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 
 	if(ascended)
@@ -654,6 +668,8 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
+	if(!can_assign_self_objectives)
+		return FALSE // We spurned the offer of the Mansus :(
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return FALSE

@@ -225,3 +225,30 @@
   - bugfix: Fixed all-in-one grinders not giving all the correct reagents when grinding.
   - spellcheck: Improved phrasing and syntax on dismemberment mood messages.
   - bugfix: Snow legions now drop only one corpse, and no longer drop Lavaland corpses.
+2023-09-07:
+  Ben10Omintrix:
+  - bugfix: basic mobs can now use ranged burst attacks
+  Dmeto:
+  - bugfix: Machine frames in NorthStar Cyto are now functional.
+  - qol: Minor cable/pipe changes to NorthStar the xeno containment.
+  - qol: Adds cables under birdshot xeno containment shielding.
+  Eronymun:
+  - bugfix: The Birdshot Gaming Den now has arcade circuit boards and computer frames
+      that actually work.
+  Melbert:
+  - rscadd: '[Icebox] Remaps arrivals and the maintenance around it. Aux base out,
+      mass driver into a plasma lake in.'
+  Sealed101:
+  - bugfix: fixed mirrors not breaking when a curse effect is triggered
+  Thunder12345:
+  - bugfix: Public mining storage's camera is now on the mining network instead of
+      the gulag.
+  dieamond13:
+  - image: adds special sprites for lungs when you use the smoker quirk
+  norsvenska:
+  - qol: NorthStar's departmental head offices have had their respective PDA & ID
+      imprinters added!
+  - qol: The NorthStar Head of Security office has gotten a small expansion.
+  vinylspiders:
+  - bugfix: leash unit test will time out less often and increases the timer until
+      it is considered 'timed out', to reduce false CI failures

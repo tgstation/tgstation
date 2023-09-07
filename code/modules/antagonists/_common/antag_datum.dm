@@ -1,3 +1,6 @@
+/// Max length of custom objective text
+#define CUSTOM_OBJECTIVE_MAX_LENGTH 300
+
 GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
@@ -52,6 +55,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/preview_outfit
 	/// Flags for antags to turn on or off and check!
 	var/antag_flags = FLAG_ANTAG_CAN_BE_INDUCTED
+	/// If true, this antagonist can assign themself a new objective
+	var/can_assign_self_objectives = FALSE
+	/// Default to fill in when entering a custom objective.
+	var/default_custom_objective = "Cause chaos on the space station."
 
 	//ANTAG UI
 
@@ -117,6 +124,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
+/datum/antagonist/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("change_objectives")
+			submit_player_objective()
+			return TRUE
+
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
 
@@ -124,6 +140,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/data = list()
 	data["antag_name"] = name
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 //button for antags to review their descriptions/info
@@ -524,3 +541,56 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Used to create objectives for the antagonist.
 /datum/antagonist/proc/forge_objectives()
 	return
+
+/**
+ * Allows player to replace their objectives with a new one they wrote themselves.
+ * * retain_existing - If true, will just be added as a new objective instead of replacing existing ones.
+ * * retain_escape - If true, will retain specifically 'escape alive' objectives (or similar)
+ * * force - Skips the check about whether this antagonist is supposed to set its own objectives, for badminning
+ */
+/datum/antagonist/proc/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
+	if (isnull(owner) || isnull(owner.current))
+		return
+	var/mob/living/owner_mob = owner.current
+	if (!force && !can_assign_self_objectives)
+		owner_mob.balloon_alert(owner_mob, "can't do that!")
+		return
+	var/custom_objective_text = tgui_input_text(
+		owner_mob,
+		message = "Specify your new objective.",
+		title = "Custom Objective",
+		default = default_custom_objective,
+		max_length = CUSTOM_OBJECTIVE_MAX_LENGTH,
+	)
+	if (QDELETED(src) || QDELETED(owner_mob) || isnull(custom_objective_text))
+		return // Some people take a long-ass time to type maybe they got dusted
+
+	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
+	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
+
+	var/datum/objective/custom/custom_objective = new()
+	custom_objective.owner = owner
+	custom_objective.explanation_text = custom_objective_text
+	custom_objective.completed = TRUE
+
+	if (retain_existing)
+		objectives.Insert(1, custom_objective)
+	else if (!retain_escape)
+		objectives = list(custom_objective)
+	else
+		var/static/list/escape_objectives = list(
+			/datum/objective/escape,
+			/datum/objective/survive,
+			/datum/objective/martyr,
+			/datum/objective/exile,
+		)
+		for (var/datum/objective/check_objective in objectives)
+			if (is_type_in_list(check_objective, escape_objectives))
+				continue
+			objectives -= check_objective
+		objectives.Insert(1, custom_objective)
+
+	can_assign_self_objectives = FALSE
+	owner.announce_objectives()
+
+#undef CUSTOM_OBJECTIVE_MAX_LENGTH
