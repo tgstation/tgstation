@@ -5684,6 +5684,8 @@
 #include "monkestation\code\modules\cargoborg\code\cargo_module.dm"
 #include "monkestation\code\modules\cargoborg\code\cargo_teleporter.dm"
 #include "monkestation\code\modules\cargoborg\code\cargoborg_items.dm"
+#include "monkestation\code\modules\cassettes\cassette.dm"
+#include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"
 #include "monkestation\code\modules\client\preference_savefile.dm"
 #include "monkestation\code\modules\client\preferences.dm"
 #include "monkestation\code\modules\client\verbs.dm"
