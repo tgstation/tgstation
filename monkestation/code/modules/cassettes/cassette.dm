@@ -39,8 +39,7 @@
 	if(!fexists(file))
 		qdel(tape)
 		return
-	file = file2text(file)
-	var/list/data = json_decode(file)
+	var/list/data = json_decode(file2text(file))
 	name = data["name"]
 	desc = data["desc"]
 	icon_state = data["side1_icon"]
