@@ -845,12 +845,23 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 
-/// The mob will vomit a green color
-#define VOMIT_TOXIC 1
-/// The mob will vomit a purple color
-#define VOMIT_PURPLE 2
-/// The mob will vomit a nebula color
-#define VOMIT_NEBULA 3
+// Various flags for carbon mob vomiting
+/// Flag which makes the mob vomit blood
+#define MOB_VOMIT_BLOOD (1<<0)
+/// Flag which makes the mob get stunned upon vomiting.
+#define MOB_VOMIT_STUN (1<<1)
+/// Flag which makes a message send about the vomiting.
+#define MOB_VOMIT_MESSAGE (1<<2)
+/// Flag which makes the mob incur damage upon vomiting.
+#define MOB_VOMIT_HARM (1<<3)
+/// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
+#define MOB_VOMIT_FORCE (1<<4)
+/// Flag which makes the mob vomit a green color. Mutually exclusive to the other two colors!
+#define MOB_VOMIT_COLOR_TOXIC (1<<5)
+/// Flag which makes the mob vomit a purple color. Mutually exclusive to the other two colors!
+#define MOB_VOMIT_COLOR_PURPLE (1<<6)
+/// Flag which makes the mob vomit a nebula color. Mutually exclusive to the other two colors!
+#define MOB_VOMIT_COLOR_NEBULA (1<<7)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
