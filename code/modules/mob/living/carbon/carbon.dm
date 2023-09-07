@@ -426,7 +426,7 @@
 	var/stun = (vomit_flags & MOB_VOMIT_STUN)
 	var/blood = (vomit_flags & MOB_VOMIT_BLOOD)
 
-	if(!force && (nutrition < 100) && !(vomit_flags & MOB_VOMIT_BLOOD))
+	if(!force && !blood && (nutrition < 100))
 		if(message)
 			visible_message(
 				span_warning("[src] dry heaves!"),
@@ -466,7 +466,7 @@
 	for(var/i = 0 to distance)
 		if(blood)
 			if(location)
-				add_splatter_floor(T)
+				add_splatter_floor(location)
 			if(vomit_flags & MOB_VOMIT_HARM)
 				adjustBruteLoss(3)
 		else
