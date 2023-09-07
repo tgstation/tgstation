@@ -35,6 +35,28 @@
 	var/mob/living/beam_debuff_target
 	var/solar_beam_identifier = 0
 
+/mob/living/basic/seedling
+	name = "seedling"
+	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon, and it will not die until its hidden vital organs are sliced out. \
+		The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
+	icon = 'icons/mob/simple/jungle/seedling.dmi'
+	icon_state = "seedling"
+	icon_living = "seedling"
+	icon_dead = "seedling_dead"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
+	maxHealth = 100
+	health = 100
+	melee_damage_lower = 30
+	melee_damage_upper = 30
+	var/combatant_state = SEEDLING_STATE_NEUTRAL
+	var/mob/living/beam_debuff_target
+	var/solar_beam_identifier = 0
+
+/mob/living/basic/seedling/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		)
 /obj/projectile/seedling
 	name = "solar energy"
 	icon_state = "seedling"
@@ -43,15 +65,19 @@
 	light_range = 2
 	armor_flag = ENERGY
 	light_color = LIGHT_COLOR_DIM_YELLOW
+	speed = 1.6
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
-	if(isliving(A))
-		var/mob/living/L = A
-		if(FACTION_JUNGLE in L.faction)
-			return FALSE
+/obj/projectile/seedling/on_hit(atom/target)
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/living_target = target
+	if(faction_check_mob(living_target, exact_match = TRUE))
+		return
+
 	return ..()
 
 /obj/effect/temp_visual/solarbeam_killsat
@@ -62,61 +88,6 @@
 	layer = LIGHTING_PRIMARY_LAYER
 	duration = 5
 	randomdir = FALSE
-
-/datum/status_effect/seedling_beam_indicator
-	id = "seedling beam indicator"
-	duration = 3 SECONDS
-	status_type = STATUS_EFFECT_MULTIPLE
-	alert_type = null
-	tick_interval = 0.2 SECONDS
-	var/atom/movable/screen/seedling/seedling_screen_object
-	var/atom/target
-
-
-/datum/status_effect/seedling_beam_indicator/on_creation(mob/living/new_owner, target_plant)
-	. = ..()
-	if(.)
-		target = target_plant
-		tick()
-
-/datum/status_effect/seedling_beam_indicator/on_apply()
-	if(owner.client)
-		seedling_screen_object = new /atom/movable/screen/seedling()
-		owner.client.screen += seedling_screen_object
-	tick()
-	return ..()
-
-/datum/status_effect/seedling_beam_indicator/Destroy()
-	if(owner)
-		if(owner.client)
-			owner.client.screen -= seedling_screen_object
-	return ..()
-
-/datum/status_effect/seedling_beam_indicator/tick(seconds_between_ticks)
-	var/target_angle = get_angle(owner, target)
-	var/matrix/final = matrix()
-	final.Turn(target_angle)
-	seedling_screen_object.transform = final
-
-/atom/movable/screen/seedling
-	icon = 'icons/mob/simple/jungle/arachnid.dmi'
-	icon_state = "seedling_beam_indicator"
-	screen_loc = "CENTER:-16,CENTER:-16"
-
-/mob/living/simple_animal/hostile/jungle/seedling/Goto()
-	if(combatant_state != SEEDLING_STATE_NEUTRAL)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/jungle/seedling/AttackingTarget()
-	if(isliving(target))
-		if(ranged_cooldown <= world.time && combatant_state == SEEDLING_STATE_NEUTRAL)
-			OpenFire(target)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/jungle/seedling/OpenFire()
-	WarmupAttack()
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
