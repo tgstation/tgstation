@@ -44,6 +44,10 @@
 	if(!fexists(file))
 		qdel(tape)
 		return
+
+	if(!length(GLOB.approved_ids))
+		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
+
 	var/list/data = json_decode(file2text(file))
 	name = data["name"]
 	desc = data["desc"]

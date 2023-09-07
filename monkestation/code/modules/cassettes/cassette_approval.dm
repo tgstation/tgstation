@@ -43,6 +43,8 @@
 /obj/item/device/cassette_tape/proc/generate_cassette_json()
 	if(approved_tape)
 		return
+	if(!length(GLOB.approved_ids))
+		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
 	var/list/data = list()
 	data["name"] = name
 	data["desc"] = desc
