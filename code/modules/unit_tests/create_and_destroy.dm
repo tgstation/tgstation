@@ -43,6 +43,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/turf/closed/mineral/random/regrowth,
 		/datum/weather_event,
 		/datum/particle_weather,
+		/obj/item/device/cassette_tape,
 
 	)
 	//Say it with me now, type template
