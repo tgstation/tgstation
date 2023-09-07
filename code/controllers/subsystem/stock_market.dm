@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trend_life[possible_market] = rand(1,10)
 
 			materials_quantity += possible_market
-			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-possible_market.tradable_base_quantity * 0.5, possible_market.tradable_base_quantity * 0.5))
+			materials_quantity[possible_market] = initial(possible_market.tradable_base_quantity) + (rand(-initial(possible_market.tradable_base_quantity) * 0.5, initial(possible_market.tradable_base_quantity) * 0.5))
 
 /datum/controller/subsystem/stock_market/fire(resumed)
 	for(var/datum/material/market as anything in materials_prices)
@@ -107,8 +107,8 @@ SUBSYSTEM_DEF(stock_market)
 	var/event = rand(1,3)
 	switch(event)
 		if(1) //Reset to stable
-			materials_prices[mat] = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
-			materials_prices[mat] = clamp(materials_prices[mat], mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5, mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
+			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 			materials_trends[mat] = MARKET_TREND_STABLE
 			materials_trend_life[mat] = 1
 			circumstance = pick(list(
@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(stock_market)
 			))
 		if(2) //Big boost
 			materials_prices[mat] += round(gaussian(price_units * 0.5, 0.1 * price_units))
-			materials_prices[mat] = clamp(materials_prices[mat], mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5, mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 			materials_trends[mat] = MARKET_TREND_UPWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(stock_market)
 			))
 		if(3) //Big drop
 			materials_prices[mat] -= round(gaussian(price_units * 1.5, 0.1 * price_units))
-			materials_prices[mat] = clamp(materials_prices[mat], mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5, mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 			materials_trends[mat] = MARKET_TREND_DOWNWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
