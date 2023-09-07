@@ -82,9 +82,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && !magical_mirror)
 		return TRUE //no tele-grooming (if nonmagical)
 
-	return what_is_your_wish_masta(user)
+	return display_radial_menu(user)
 
-/obj/structure/mirror/proc/what_is_your_wish_masta(mob/living/carbon/human/user)
+/obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE)
 	if(!pick)
 		return TRUE //get out
@@ -103,23 +103,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		if(CHANGE_EYES)
 			change_eyes(user)
 
-	return what_is_your_wish_masta(user)
+	return display_radial_menu(user)
 
-/obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beardresser)
-	if(beardresser.physique != FEMALE && !magical_mirror)
-		var/new_style = tgui_input_list(beardresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+/obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
+	if(beard_dresser.physique != FEMALE && !magical_mirror)
+		var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 		if(isnull(new_style))
 			return TRUE
-		if(HAS_TRAIT(beardresser, TRAIT_SHAVED))
-			to_chat(beardresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
-			beardresser.add_mood_event("bald_hair_day", /datum/mood_event/bald)
+		if(HAS_TRAIT(beard_dresser, TRAIT_SHAVED))
+			to_chat(beard_dresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
+			beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald)
 			return TRUE
-		beardresser.set_facial_hairstyle(new_style, update = TRUE)
+		beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 	else
-		if(beardresser.facial_hairstyle == "Shaved")
-			to_chat(beardresser, span_notice("You look towards your facial hair for a make-up and realize you don't have any."))
+		if(beard_dresser.facial_hairstyle == "Shaved")
+			to_chat(beard_dresser, span_notice("You realize you don't have any facial hair."))
 			return
-		beardresser.set_facial_hairstyle("Shaved", update = TRUE)
+		beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
@@ -144,69 +144,69 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		user.mind.name = newname
 
 // Erm ackshually the proper term is species. Get it right??
-/obj/structure/mirror/proc/change_race(mob/living/carbon/human/racist)
-	var/racechoice = tgui_input_list(racist, "What are we again?", "Race change", selectable_races)
+/obj/structure/mirror/proc/change_race(mob/living/carbon/human/race_changer)
+	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
 	if(isnull(racechoice))
 		return TRUE
 	if(!selectable_races[racechoice])
 		return TRUE
 
 	var/datum/species/newrace = selectable_races[racechoice]
-	racist.set_species(newrace, icon_update = FALSE)
-	if(HAS_TRAIT(racist, TRAIT_USES_SKINTONES))
-		var/new_s_tone = tgui_input_list(racist, "Choose your skin tone", "Race change", GLOB.skin_tones)
+	race_changer.set_species(newrace, icon_update = FALSE)
+	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
+		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
 		if(new_s_tone)
-			racist.skin_tone = new_s_tone
-			racist.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
-	else if(HAS_TRAIT(racist, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(racist, TRAIT_FIXED_MUTANT_COLORS))
-		var/new_mutantcolor = input(racist, "Choose your skin color:", "Race change", racist.dna.features["mcolor"]) as color|null
+			race_changer.skin_tone = new_s_tone
+			race_changer.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
+		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
 		if(new_mutantcolor)
 			var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
 			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-				racist.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-				racist.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 
 			else
-				to_chat(racist, span_notice("Invalid color. Your color is not bright enough."))
+				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
 
-		racist.update_body(is_creating = TRUE)
-		racist.update_mutations_overlay() // no hulk lizard
+		race_changer.update_body(is_creating = TRUE)
+		race_changer.update_mutations_overlay() // no hulk lizard
 
 // possible Genders: MALE, FEMALE, PLURAL, NEUTER
 // possible Physique: MALE, FEMALE
 // saved you a click (many)
-/obj/structure/mirror/proc/change_sex(mob/living/carbon/human/sexist)
+/obj/structure/mirror/proc/change_sex(mob/living/carbon/human/sexy)
 
-	var/isekai = tgui_input_list(sexist, "Become a..", "Confirmation", list("Warlock", "Witch", "Wizard", "Itzard")) // YOU try coming up with the 'it' version of wizard
+	var/chosen_sex = tgui_input_list(sexy, "Become a..", "Confirmation", list("Warlock", "Witch", "Wizard", "Itzard")) // YOU try coming up with the 'it' version of wizard
 
-	switch(isekai)
+	switch(chosen_sex)
 		if("Warlock")
-			sexist.gender = MALE
-			to_chat(sexist, span_notice("Man, you feel like a man!"))
+			sexy.gender = MALE
+			to_chat(sexy, span_notice("Man, you feel like a man!"))
 		if("Witch")
-			sexist.gender = FEMALE
-			to_chat(sexist, span_notice("Man, you feel like a woman!"))
+			sexy.gender = FEMALE
+			to_chat(sexy, span_notice("Man, you feel like a woman!"))
 		if("Wizard")
-			sexist.gender = PLURAL
-			to_chat(sexist, span_notice("Woah dude, you feel like a dude!"))
+			sexy.gender = PLURAL
+			to_chat(sexy, span_notice("Woah dude, you feel like a dude!"))
 		if("Itzard")
-			sexist.gender = NEUTER
-			to_chat(sexist, span_notice("Woah dude, you feel like something else!"))
+			sexy.gender = NEUTER
+			to_chat(sexy, span_notice("Woah dude, you feel like something else!"))
 
-	var/bodysekai = tgui_input_list(sexist, "Alter your physique as well?", "Confirmation", list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
+	var/chosen_physique = tgui_input_list(sexy, "Alter your physique as well?", "Confirmation", list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
 
-	if(bodysekai && bodysekai != "Wizards Don't Need Gender")
-		sexist.physique = (bodysekai == "Warlock Physique") ? MALE : FEMALE
+	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender")
+		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
 
-	sexist.dna.update_ui_block(DNA_GENDER_BLOCK)
-	sexist.update_body()
-	sexist.update_mutations_overlay() //(hulk male/female)
+	sexy.dna.update_ui_block(DNA_GENDER_BLOCK)
+	sexy.update_body()
+	sexy.update_mutations_overlay() //(hulk male/female)
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
-	if(!new_eye_color)
+	if(isnull(new_eye_color))
 		return TRUE
 	user.eye_color_left = sanitize_hexcolor(new_eye_color)
 	user.eye_color_right = sanitize_hexcolor(new_eye_color)
