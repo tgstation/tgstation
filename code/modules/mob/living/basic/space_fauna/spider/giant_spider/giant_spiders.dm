@@ -37,6 +37,7 @@
 	maxHealth = 125
 	health = 125
 	obj_damage = 45
+
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	speed = 5
@@ -289,7 +290,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 25
 	sharpness = SHARP_EDGED
-	bare_wound_bonus = 50
+	bare_wound_bonus = 100
 	obj_damage = 50
 	speed = 5
 	player_speed_modifier = -4
