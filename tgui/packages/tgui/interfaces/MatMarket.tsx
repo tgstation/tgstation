@@ -16,6 +16,7 @@ type Material = {
   quantity: number;
   id: string; // correct this if its a number
   trend: string;
+  price: number;
 };
 
 export const MatMarket = (props, context) => {

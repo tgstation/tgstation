@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(stock_market)
 
 /datum/controller/subsystem/stock_market/Initialize()
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
-		if(possible_market.tradable)
+		if(initial(possible_market.tradable))
 			materials_prices += possible_market
 			materials_prices[possible_market] = (possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT)
 
