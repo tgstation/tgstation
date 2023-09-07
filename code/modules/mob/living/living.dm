@@ -329,16 +329,23 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
+			var/resilience_mult = get_grab_resilience_mult()
+			var/resilience_text = ""
+			if (resilience_mult > 1)
+				resilience_text = "<b><i>tightly </i></b>"
+			else if (resilience_mult < 1)
+				resilience_text = "<i>weakly </i>"
+
 			if(ishuman(M))
 				var/mob/living/carbon/human/grabbed_human = M
 				var/grabbed_by_hands = (zone_selected == "l_arm" || zone_selected == "r_arm") && grabbed_human.usable_hands > 0
-				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
-								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
-				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				M.visible_message(span_warning("[src] [resilience_text]grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
+								span_warning("[src] [resilience_text]grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
+				to_chat(src, span_notice("You [resilience_text]grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
 			else
-				M.visible_message(span_warning("[src] grabs [M] passively!"), \
-								span_warning("[src] grabs you passively!"), null, null, src)
-				to_chat(src, span_notice("You grab [M] passively!"))
+				M.visible_message(span_warning("[src] [resilience_text]grabs [M] passively!"), \
+								span_warning("[src] [resilience_text]grabs you passively!"), null, null, src)
+				to_chat(src, span_notice("You [resilience_text]grab [M] passively!"))
 
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -1145,7 +1152,7 @@
 	var/base_hand_mult = ((max(num_hands, 2) - 2) * GRAB_RESILIENCE_PER_HAND) + 1 // the -2 ensures at 2 hands you have x1 resilience
 
 	var/occupied_hands = num_hands - usable_hands // disabled hands are "occupied"
-	for (var/obj/item/held_item as anything in held_items)
+	for (var/obj/item/held_item in held_items)
 		// items like slappers/zombie claws/etc. should be ignored
 		if (held_item.item_flags & HAND_ITEM)
 			continue
@@ -1154,9 +1161,9 @@
 
 	if (occupied_hands >= num_hands) // its a little different if you literally have NOTHING to hold them with
 		base_hand_mult = BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT
-	else // 0.7x at one hand occupied, 0.3x at both hands occupied because of ^
-		var/occupied_hand_mult_decrement = -(occupied_hands * GRAB_RESILIENCE_PER_HAND)
-		base_hand_mult += occupied_hand_mult_decrement
+	else // 0.8x at one hand occupied, 0.4x at both hands occupied because of ^
+		var/occupied_hand_mult_decrement = (occupied_hands * (GRAB_RESILIENCE_PER_HAND - 1))
+		base_hand_mult -= occupied_hand_mult_decrement
 
 	. *= base_hand_mult
 

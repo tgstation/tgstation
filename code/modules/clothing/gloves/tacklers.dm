@@ -23,7 +23,7 @@
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
 
-	grab_resilience_mult = 1.35
+	grab_resilience_mult = 1.3
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
@@ -58,7 +58,7 @@
 	min_distance = 2
 	skill_mod = -2
 
-	grab_resilience_mult = 1.15
+	grab_resilience_mult = 1.2
 
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
@@ -78,7 +78,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
-	grab_resilience_mult = 1.8
+	grab_resilience_mult = 2
 
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
@@ -104,7 +104,7 @@
 	tackle_speed = 6
 	skill_mod = 7
 
-	grab_resilience_mult = 1.25
+	grab_resilience_mult = 1.2
 
 /obj/item/clothing/gloves/tackler/offbrand
 	name = "improvised gripper gloves"
@@ -117,7 +117,7 @@
 	min_distance = 2
 	skill_mod = -1
 
-	grab_resilience_mult = 1.25
+	grab_resilience_mult = 1.2
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"

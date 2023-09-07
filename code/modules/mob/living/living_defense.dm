@@ -211,25 +211,31 @@
 		if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 			return FALSE
 	user.setGrabState(user.grab_state + 1)
+	var/resilience_mult = user.get_grab_resilience_mult()
+	var/resilience_text = ""
+	if (resilience_mult > 1)
+		resilience_text = "<b><i>tightly </i></b>"
+	else if (resilience_mult < 1)
+		resilience_text = "<i>weakly </i>"
 	switch(user.grab_state)
 		if(GRAB_AGGRESSIVE)
 			var/add_log = ""
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
-				visible_message(span_danger("[user] firmly grips [src]!"),
-								span_danger("[user] firmly grips you!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You firmly grip [src]!"))
+				visible_message(span_danger("[user] [resilience_text]firmly grips [src]!"),
+								span_danger("[user] [resilience_text]firmly grips you!"), span_hear("You hear aggressive shuffling!"), null, user)
+				to_chat(user, span_danger("You [resilience_text]firmly grip [src]!"))
 				add_log = " (pacifist)"
 			else
-				visible_message(span_danger("[user] grabs [src] aggressively!"), \
-								span_userdanger("[user] grabs you aggressively!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You grab [src] aggressively!"))
+				visible_message(span_danger("[user] [resilience_text]grabs [src] aggressively!"), \
+								span_userdanger("[user] [resilience_text]grabs you aggressively!"), span_hear("You hear aggressive shuffling!"), null, user)
+				to_chat(user, span_danger("You [resilience_text]grab [src] aggressively!"))
 			stop_pulling()
 			log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 		if(GRAB_NECK)
 			log_combat(user, src, "grabbed", addition="neck grab")
-			visible_message(span_danger("[user] grabs [src] by the neck!"),\
-							span_userdanger("[user] grabs you by the neck!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You grab [src] by the neck!"))
+			visible_message(span_danger("[user] [resilience_text]grabs [src] by the neck!"),\
+							span_userdanger("[user] [resilience_text]grabs you by the neck!"), span_hear("You hear aggressive shuffling!"), null, user)
+			to_chat(user, span_danger("You [resilience_text]grab [src] by the neck!"))
 			if(!buckled && !density)
 				Move(user.loc)
 		if(GRAB_KILL)
