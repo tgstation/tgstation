@@ -183,13 +183,14 @@
  * take a chunk of skin, people have places to be!
  */
 /obj/machinery/door/airlock/tram/proc/verify_status()
-	if(airlock_state != 1)
-		if(retry_counter == 3)
-			playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-			say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
-			close(forced = BYPASS_DOOR_CHECKS)
-		else
-			close()
+	if(retry_counter < 3)
+		close()
+		return
+
+	if(airlock_state != AIRLOCK_CLOSED && retry_counter == 3)
+		playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
+		close(forced = BYPASS_DOOR_CHECKS)
 
 /**
  * Set the weakref for the tram we're attached to

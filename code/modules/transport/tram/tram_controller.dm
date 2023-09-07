@@ -316,14 +316,14 @@
 
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(CYCLE_OPEN)
-	log_transport("TC: [specific_transport_id] trip completed.")
+	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
-	if(controller_status & SYSTEM_FAULT)
+	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-		log_transport("TC: [specific_transport_id] position data successfully reset. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+		log_transport("TC: [specific_transport_id] position data successfully reset.")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -333,14 +333,14 @@
 	speed_limiter = initial(speed_limiter)
 
 /datum/transport_controller/linear/tram/proc/degraded_stop()
-	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS]")
+	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	set_lights(estop = TRUE)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-		log_transport("TC: [specific_transport_id] position data successfully reset. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+		log_transport("TC: [specific_transport_id] position data successfully reset. ")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)

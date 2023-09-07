@@ -406,7 +406,7 @@
 						if(get_dist(my_spoiler, victim_living) != 1)
 							continue
 
-						if(my_spoiler.obj_flags & EMAGGED)
+						if(my_spoiler.deployed)
 							extra_ouch = TRUE
 							break
 

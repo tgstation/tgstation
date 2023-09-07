@@ -1,6 +1,3 @@
-#define TRAMCTRL_FAST 1
-#define TRAMCTRL_SAFE 0
-
 /obj/item/assembly/control/transport/remote
 	icon_state = "tramremote_nis"
 	inhand_icon_state = "electronic"
@@ -13,8 +10,7 @@
 	options = RAPID_MODE
 	///desired tram destination
 	var/destination
-	///current tram direction
-	var/direction
+	COOLDOWN_DECLARE(tram_remote)
 
 /obj/item/assembly/control/transport/remote/Initialize(mapload)
 	. = ..()
@@ -32,30 +28,20 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change tram"
 	return CONTEXTUAL_SCREENTIP_SET
 
-///set tram control direction
+//set tram destination
 /obj/item/assembly/control/transport/remote/attack_self_secondary(mob/user)
-	//var/datum/transport_controller/linear/tram/tram_controller = tram_ref?.resolve()
-	if(!specific_transport_id)
-		balloon_alert(user, "no tram linked!")
-		return
+	var/list/available_platforms = list()
+	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/platform as anything in SStransport.nav_beacons[specific_transport_id])
+		LAZYADD(available_platforms, platform.name)
 
-	destination = null
-	var/list/potential_destinations = get_destinations()
-	var/list/requested_destination = list()
-	requested_destination = tgui_input_list(user, "Available destinations", "Where to?", potential_destinations)
-	destination = requested_destination["platform_code"]
-	update_appearance()
-	// balloon_alert(user, "[direction ? "< inbound" : "outbound >"]")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/selected_platform = tgui_input_list(user, "Available destinations", "Where to?", available_platforms)
+	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/potential_platform as anything in SStransport.nav_beacons[specific_transport_id])
+		if(potential_platform.name == selected_platform)
+			destination = potential_platform.platform_code
+			break
 
-/obj/item/assembly/control/transport/proc/get_destinations()
-	. = list()
-	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
-		var/list/this_destination = list()
-		this_destination["name"] = destination.name
-		this_destination["dest_icons"] = destination.tgui_icons
-		this_destination["id"] = destination.platform_code
-		. += list(this_destination)
+	balloon_alert(user, "set [selected_platform]")
+	to_chat(user, span_notice("You change the platform ID on [src] to [selected_platform]."))
 
 ///set safety bypass
 /obj/item/assembly/control/transport/remote/CtrlClick(mob/user)
@@ -73,7 +59,6 @@
 		. += "There is an X showing on the display."
 		. += "Left-click to link to a tram."
 		return
-	. += "The arrow on the display is pointing [direction ? "inbound" : "outbound"]."
 	. += "The rapid mode light is [options ? "on" : "off"]."
 	if(cooldown)
 		. += "The number on the display shows [DisplayTimeText(cooldown, 1)]."
@@ -82,6 +67,7 @@
 	. += "Left-click to dispatch tram."
 	. += "Right-click to set destination."
 	. += "Ctrl-click to toggle safety bypass."
+	. += "Alt-click to change configured tram."
 
 /obj/item/assembly/control/transport/remote/update_icon_state()
 	. = ..()
@@ -89,11 +75,8 @@
 	if(!specific_transport_id)
 		icon_state = "tramremote_nis"
 		return
-	switch(direction)
-		if(INBOUND)
-			icon_state = "tramremote_ib"
-		if(OUTBOUND)
-			icon_state = "tramremote_ob"
+
+	icon_state = "tramremote_ob"
 
 /obj/item/assembly/control/transport/remote/update_overlays()
 	. = ..()
@@ -110,7 +93,7 @@
 		return
 
 	activate(user)
-	//	COOLDOWN_START(src, tram_remote, 2 MINUTES)
+	COOLDOWN_START(src, tram_remote, 2 MINUTES)
 
 ///send our selected commands to the tram
 /obj/item/assembly/control/transport/remote/activate(mob/user)
@@ -140,6 +123,3 @@
 		balloon_alert(user, "link failed!")
 
 	update_appearance()
-
-#undef TRAMCTRL_FAST
-#undef TRAMCTRL_SAFE
