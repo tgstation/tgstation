@@ -135,9 +135,9 @@
 	else
 		remove_actionspeed_modifier()
 
-/// Returns TRUE if we have an interaction_efficiency_penalty, FALSE otherwise.
+/// Returns TRUE if we have an interaction_efficiency_penalty, and if we are on the arms, FALSE otherwise.
 /datum/wound/proc/should_have_actionspeed_modifier()
-	return (limb && victim && interaction_efficiency_penalty != 0)
+	return (limb && victim && (limb.body_zone == BODY_ZONE_L_ARM || limb.body_zone == BODY_ZONE_R_ARM) && interaction_efficiency_penalty != 0)
 
 /// If we have no actionspeed_mod, generates a new one with our unique ID, sets actionspeed_mod to it, then returns it.
 /datum/wound/proc/generate_actionspeed_modifier()
