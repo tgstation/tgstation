@@ -28,6 +28,7 @@
 /datum/round_event/tram_malfunction
 	announce_when = 1
 	end_when = TRAM_MALFUNCTION_TIME_LOWER
+	/// The ID of the tram we're going to malfunction
 	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /datum/round_event/tram_malfunction/setup()

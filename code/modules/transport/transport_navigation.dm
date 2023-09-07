@@ -5,9 +5,9 @@
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
 
-	///the id of the tram we're linked to.
+	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
-	/// The ID of that particular destination.
+	/// The ID of that particular destination
 	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()

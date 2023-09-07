@@ -16,15 +16,10 @@
 	var/static/list/available_faces = list()
 	/// The sign face we're displaying
 	var/sign_face
-
-	///Weakref to the tram piece we control
+	/// Weakref to the tram piece we control
 	var/datum/weakref/transport_ref
-
+	/// The ID of the tram we're controlling
 	var/specific_transport_id = TRAMSTATION_LINE_1
-
-/obj/machinery/computer/tram_controls/Initialize(mapload, obj/item/circuitboard/C)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()

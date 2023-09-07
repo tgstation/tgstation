@@ -10,12 +10,11 @@
 	name = "tram remote"
 	desc = "A remote control that can be linked to a tram. This can only go well."
 	w_class = WEIGHT_CLASS_TINY
+	options = RAPID_MODE
 	///desired tram destination
 	var/destination
 	///current tram direction
 	var/direction
-	///fast and fun, or safe and boring
-	options = RAPID_MODE
 
 /obj/item/assembly/control/transport/remote/Initialize(mapload)
 	. = ..()

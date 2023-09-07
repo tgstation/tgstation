@@ -1,7 +1,7 @@
 /obj/item/assembly/control/transport
-	///the transport ID we're making requests about
+	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
-	///options to be passed with the requests
+	/// Options to be passed with the requests to the transport subsystem
 	var/options = NONE
 
 /obj/item/assembly/control/transport/multitool_act(mob/living/user)
@@ -86,8 +86,9 @@
 	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/transport/call_button
 	req_access = list()
-	var/specific_transport_id = TRAMSTATION_LINE_1
 	id = 0
+	/// The ID of the tram we're linked to
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /obj/machinery/button/transport/tram/setup_device()
 	var/obj/item/assembly/control/transport/call_button/tram_device = device
