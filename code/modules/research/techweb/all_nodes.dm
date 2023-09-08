@@ -50,6 +50,7 @@
 		"extinguisher",
 		"fax",
 		"fishing_rod",
+		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
 		"foam_dart",

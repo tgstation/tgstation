@@ -7,9 +7,14 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	anchored = FALSE
 	density = TRUE
+	circuit = /obj/item/circuitboard/machine/fishing_portal
 
 	///The current fishing spot loaded in
 	var/datum/component/fishing_spot/active
+
+/obj/machinery/fishing_portal_generator/on_set_panel_open()
+	update_appearance()
+	return ..()
 
 /obj/machinery/fishing_portal_generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -37,6 +42,8 @@
 
 /obj/machinery/fishing_portal_generator/update_overlays()
 	. = ..()
+	if(panel_open)
+		. += "portal_open"
 	if(!active)
 		return
 	. += "portal_on"
