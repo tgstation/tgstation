@@ -55,7 +55,8 @@
 			scannable_fishes++
 	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
 		fish_scan = new fish_scan
-		if(fish_scan.required_atoms[1] > scannable_fishes)
+		var/scan_key = fish_scan.required_atoms[1]
+		if(fish_scan.required_atoms[scan_key] > scannable_fishes)
 			TEST_FAIL("[fish_scan.type] has requirements higher than the number of scannable fish types in the game: [scannable_fishes]")
 
 ///dummy fish item used for the tests, as well with related subtypes and datums.
