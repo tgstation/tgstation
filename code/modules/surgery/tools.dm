@@ -259,8 +259,7 @@
 	)
 	//saws are very accurate and fast at butchering
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/stack/sheet/plasteel,\
-			slapcraft_recipe = /datum/crafting_recipe/chainsaw,\
+			slapcraft_recipes = list(/datum/crafting_recipe/chainsaw)\
 	)
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)

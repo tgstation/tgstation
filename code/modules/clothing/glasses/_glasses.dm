@@ -352,22 +352,11 @@
 
 /obj/item/clothing/glasses/sunglasses/Initialize(mapload)
 	. = ..()
-	// Yeah okay we need to refacor tihs
+	add_glasses_slapcraft_component()
+
+/obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
-			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
-	)
-	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/clothing/glasses/hud/health,\
-			slapcraft_recipe = /datum/crafting_recipe/hudsunhealth,\
-	)
-	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
-			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
-	)
-	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
-			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
+			slapcraft_recipes = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)\
 	)
 
 /obj/item/clothing/glasses/sunglasses/reagent
@@ -381,6 +370,11 @@
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+
+/obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/scienceglassesremoval)\
+	)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"

@@ -93,6 +93,12 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
+/obj/item/clothing/glasses/hud/health/sunglasses/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/hudsunmedremoval)\
+	)
+
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
@@ -118,6 +124,12 @@
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
+
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/hudsundiagremoval)\
+	)
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -152,6 +164,12 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/hudsunsecremoval)\
+	)
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"

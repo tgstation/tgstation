@@ -16,6 +16,16 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
+	. = ..()
+	// Only actual KAs can be converted
+	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
+		return
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/ebow)\
+	)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
 	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)

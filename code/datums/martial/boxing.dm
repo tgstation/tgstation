@@ -63,12 +63,7 @@
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/bodypart/arm/left/robot,\
-			slapcraft_recipe = /datum/crafting_recipe/extendohand_l,\
-	)
-	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/bodypart/arm/right/robot,\
-			slapcraft_recipe = /datum/crafting_recipe/extendohand_r,\
+			slapcraft_recipes = list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r)\
 	)
 
 /obj/item/clothing/gloves/boxing/equipped(mob/user, slot)

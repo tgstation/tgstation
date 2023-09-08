@@ -1,5 +1,6 @@
 /// Slapcrafting component!
 /datum/component/slapcrafting
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/slapcraft_recipes = list()
 
 /**
@@ -8,8 +9,9 @@
  * Slap it onto a item to be able to slapcraft with it
  *
  * args:
- * * item_to_slap_with (required) = When the item is slapped by this, it will attempt the slapcraft
- * * slapcraft_recipe (required) = The recipe to attempt crafting. It will check the area near the user for the rest of the ingredients.
+ * * slapcraft_recipes (required) = The recipe to attempt crafting.
+ * Hit it with an ingredient of the recipe to attempt crafting.
+ * It will check the area near the user for the rest of the ingredients and tools.
  * *
 **/
 /datum/component/slapcrafting/Initialize(
@@ -19,11 +21,22 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/obj/item/parent_item = parent
+
+	if(parent_item.item_flags & ABSTRACT|DROPDEL)
+		return COMPONENT_INCOMPATIBLE
+
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
+	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handler))
 
-	src.slapcraft_recipes = slapcraft_recipes
+	src.slapcraft_recipes += slapcraft_recipes
+
+/datum/component/slapcrafting/InheritComponent(datum/component/slapcrafting/new_comp, original, slapcraft_recipes)
+	if(!original)
+		return
+	src.slapcraft_recipes += slapcraft_recipes
 
 /datum/component/slapcrafting/Destroy(force, silent)
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE))
@@ -35,9 +48,15 @@
 		CRASH("NULL SLAPCRAFT RECIPES?")
 
 	var/list/valid_recipes
-	for(var/datum/crafting_recipe/recipe in slapcraft_recipes)
-		// For our purposes, they're the same thing in the end
-		var/list/type_ingredient_list = initial(recipe.parts) + initial(recipe.reqs)
+	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
+		var/list/type_ingredient_list = initial(recipe.reqs)
+		if(length(type_ingredient_list) == 1) // No ingredients besides itself? We use one of the tools then
+			type_ingredient_list = initial(recipe.tool_paths)
+			// Check the tool behaviours differently as they aren't types
+			for(var/behaviour in initial(recipe.tool_behaviors))
+				if(slapper.tool_behaviour == behaviour)
+					LAZYADD(valid_recipes, recipe)
+					break
 		if(is_type_in_list(slapper, type_ingredient_list))
 			LAZYADD(valid_recipes, recipe)
 
@@ -70,9 +89,12 @@
 	var/actual_recipe
 
 	if(istype(actual_recipe, /datum/crafting_recipe/food))
-		actual_recipe = locate(slapcraft_recipe) in GLOB.cooking_recipes
+		actual_recipe = locate(final_recipe) in GLOB.cooking_recipes
 	else
-		actual_recipe = locate(slapcraft_recipe) in GLOB.crafting_recipes
+		actual_recipe = locate(final_recipe) in GLOB.crafting_recipes
+
+	if(!actual_recipe)
+		CRASH("Recipe not located in cooking or crafting recipes: [final_recipe]")
 
 	craft_sheet.construct_item(user, actual_recipe)
 
@@ -91,56 +113,60 @@
 /datum/component/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/atom/result = initial(slapcraft_recipe.result)
-
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='?src=[REF(src)];check_recipe=[recipe]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='?src=[REF(src)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
 
-/datum/element/weapon_description/proc/topic_handler(atom/source, user, href_list)
+/datum/component/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
 
-	if(href_list["check_recipe"])
-		switch(href_list["member_action"])
-			if("remove")
-				remove_member(user,ckey,team)
-		to_chat(user, span_notice(examine_block("[build_label_text(source)]")))
+	var/datum/crafting_recipe/cur_recipe = locate(href_list["check_recipe"]) in slapcraft_recipes
 
-	examine_list += span_notice("You could craft a [initial(result.name)] by applying a [item_to_slap_with] to it!")
+	if(isnull(cur_recipe))
+		CRASH("null recipe!")
+
+	var/atom/result = initial(cur_recipe.result)
+
+	var/list/examine_list = span_notice("You could craft a [initial(result.name)] by applying one of these ingredients to it!")
 
 	// For our purposes, they're the same thing in the end
-	var/list/type_ingredient_list = initial(slapcraft_recipe.parts)
-	type_ingredient_list += initial(slapcraft_recipe.reqs)
+	var/list/type_ingredient_list = initial(cur_recipe.reqs)
 
 	// Final return string list!
 	var/list/string_ingredient_list
 
+	// Check the ingredients of the crafting recipe.
 	for(var/valid_type in type_ingredient_list)
+		// Check if they're datums, specifically reagents.
 		if(isdatum(valid_type))
 			var/datum/reagent/reagent_ingredient = valid_type
 			if(!istype(reagent_ingredient))
 				stack_trace("Ingredient is datum but not reagent? [reagent_ingredient]")
-			var/amount = initial(slapcraft_recipe.parts[reagent_ingredient])
+			var/amount = initial(cur_recipe.reqs[reagent_ingredient])
 			string_ingredient_list += "[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]"
 
+		// Check if they're atoms.
 		var/atom/ingredient = valid_type
-		if(!istype(ingredient, item_to_slap_with)) // redundant
-			var/amount = initial(slapcraft_recipe.parts[ingredient])
-			string_ingredient_list += "[amount > 1 ? (amount + "of") : "a"] [initial(ingredient.name)]"
+		var/amount = initial(cur_recipe.reqs[ingredient])
+		string_ingredient_list += "[amount > 1 ? (amount + "of") : "a"] [initial(ingredient.name)]"
 
+	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		examine_list += span_boldnotice("Additional Ingredients:")
+		examine_list += span_boldnotice("Ingredients:")
 		examine_list += span_notice(string_ingredient_list)
 
 	var/tool_list = ""
 
-	for(var/valid_type in initial(slapcraft_recipe.tool_paths))
+	// Paste the required tools.
+	for(var/valid_type in initial(cur_recipe.tool_paths))
 		var/atom/tool = valid_type
 		tool_list += "\a [initial(tool.name)]"
 
-	for(var/string in initial(slapcraft_recipe.tool_behaviors))
+	for(var/string in initial(cur_recipe.tool_behaviors))
 		tool_list += "\a [string]"
 
 	if(length(tool_list))
 		examine_list += span_boldnotice("Required Tools:")
 		examine_list += span_notice(tool_list)
+
+	to_chat(user, span_notice(examine_block("[examine_list.Join()]")))

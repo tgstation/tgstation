@@ -60,8 +60,7 @@
 // I dunno man
 /obj/item/spear/proc/add_headpike_component()
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/bodypart/head,\
-			slapcraft_recipe = /datum/crafting_recipe/headpike,\
+			slapcraft_recipes = list(/datum/crafting_recipe/headpike)\
 	)
 
 /obj/item/spear/update_icon_state()
@@ -233,8 +232,7 @@
 
 /obj/item/spear/bonespear/add_headpike_component()
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/bodypart/head,\
-			slapcraft_recipe = /datum/crafting_recipe/headpikebone,\
+			slapcraft_recipes = list(/datum/crafting_recipe/headpikebone)\
 	)
 
 /*
@@ -255,6 +253,5 @@
 
 /obj/item/spear/bamboospear/add_headpike_component()
 	AddComponent(/datum/component/slapcrafting,\
-			item_to_slap_with = /obj/item/bodypart/head,\
-			slapcraft_recipe = /datum/crafting_recipe/headpikebamboo,\
+			slapcraft_recipes = list(/datum/crafting_recipe/headpikebamboo)\
 	)
