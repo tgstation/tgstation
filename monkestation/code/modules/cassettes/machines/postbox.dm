@@ -17,17 +17,16 @@
 
 	var/obj/item/device/cassette_tape/attacked_tape = weapon
 	if(attacked_tape.approved_tape)
+		to_chat(user, span_notice("This tape has already been approved by the Board, it would be a waste of money to send it in again."))
 		return
 
 	///these two parts here should be commented out for local testing without a db
-	/*
 	if(user.client.prefs.metacoins < 5000)
 		to_chat(user, span_notice("Sorry you don't have enough Monkecoins to submit a cassette for review."))
 		return
 
 	if(!living_user.client.prefs.adjust_metacoins(user.client.ckey, -5000, donator_multipler = FALSE))
 		return
-	*/
 	/// this is where it ends
 	attacked_tape.moveToNullspace()
 	submit_cassette_for_review(attacked_tape, user)
