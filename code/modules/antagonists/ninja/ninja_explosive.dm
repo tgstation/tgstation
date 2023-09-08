@@ -1,14 +1,14 @@
 /**
  * # Spider Charge
  *
- * A unique version of c4 possessed only by the space ninja.  Has a stronger blast radius.
- * Can only be detonated by space ninjas with the bombing objective.  Can only be set up where the objective says it can.
+ * A unique version of c4 possessed only by the space ninja. Has a stronger blast radius.
+ * Can only be detonated by space ninjas with the bombing objective. Can only be set up where the objective says it can.
  * When it primes, the space ninja responsible will have their objective set to complete.
  *
  */
 /obj/item/grenade/c4/ninja
 	name = "spider charge"
-	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
+	desc = "A modified C-4 charge supplied by the Spider Clan. It has great explosive power, but is keyed to only work in one specific area."
 	icon_state = "ninja-explosive0"
 	inhand_icon_state = "ninja-explosive"
 	boom_sizes = list(4, 8, 12)
@@ -21,6 +21,15 @@
 	detonator = null
 	detonation_area = null
 	return ..()
+
+/obj/item/grenade/c4/ninja/examine(mob/user)
+	. = ..()
+	if (!IS_SPACE_NINJA(user))
+		return
+	if (isnull(detonation_area))
+		. += span_notice("This one was provided with no destination set, and cannot be used.")
+	else
+		. += span_notice("This device will only function in [detonation_area].")
 
 /**
  * set_detonation_area
@@ -38,9 +47,9 @@
 		return
 	detonation_area = objective.detonation_location
 
-/obj/item/grenade/c4/ninja/afterattack(atom/movable/AM, mob/ninja, flag)
+/obj/item/grenade/c4/ninja/afterattack(atom/movable/target, mob/ninja, flag)
 	if(!IS_SPACE_NINJA(ninja))
-		to_chat(ninja, span_notice("While it appears normal, you can't seem to detonate the charge."))
+		say("Access denied.")
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	if (!check_loc(ninja))
@@ -59,15 +68,15 @@
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return
-	var/mob/ninja = detonator.resolve()
 	. = ..()
 	if(!.)
 		return
+	var/mob/ninja = detonator.resolve()
 	if (isnull(ninja))
 		return
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
-	objective.completed = TRUE
+	objective?.completed = TRUE
 
 /**
  * check_loc
@@ -78,11 +87,11 @@
  * * mob/user - The planter of the c4
  */
 /obj/item/grenade/c4/ninja/proc/check_loc(mob/user)
-	if(!detonation_area)
-		to_chat(user, span_notice("You can't seem to activate the charge.  It's location-locked, but you don't know where to detonate it."))
+	if(isnull(detonation_area))
+		balloon_alert(user, "no location set!")
 		return FALSE
 	if((get_area(target) != detonation_area) && (get_area(src) != detonation_area))
 		if (!active)
-			to_chat(user, span_notice("This isn't the location you're supposed to use this!"))
+			balloon_alert(user, "wrong location!")
 		return FALSE
 	return TRUE

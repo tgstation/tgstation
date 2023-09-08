@@ -20,7 +20,7 @@
 
 //Transform into a monkey.
 /datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
-	if(!user || user.notransform)
+	if(!user || HAS_TRAIT(user, TRAIT_NO_TRANSFORM))
 		return FALSE
 	..()
 	return ismonkey(user) ? unmonkey(user) : become_monkey(user)
