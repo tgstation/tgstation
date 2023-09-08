@@ -307,7 +307,7 @@
 	..()
 	. = TRUE
 
-// Different handling, different name
+// Different handling, different name.
 // Returns FALSE by default so broken bones and 'loss' wounds don't give a false message
 /datum/wound/proc/tea_life_process()
 	return FALSE
