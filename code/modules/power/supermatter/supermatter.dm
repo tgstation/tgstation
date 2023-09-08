@@ -277,7 +277,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
 		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
-		var/delta_time = min((world.time - last_power_zap) / 10, 16)
+		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
