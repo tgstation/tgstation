@@ -24,6 +24,7 @@ GLOBAL_VAR(dj_booth)
 	var/current_song_duration = 0
 	var/list/people_with_signals = list()
 	var/list/active_listeners = list()
+	var/waiting_for_yield = FALSE
 
 	//tape stuff goes here
 	var/pl_index = 0
@@ -39,8 +40,10 @@ GLOBAL_VAR(dj_booth)
 	STOP_PROCESSING(SSprocessing, src)
 
 /obj/machinery/cassette/dj_station/process()
+	if(waiting_for_yield)
+		return
 	time_left--
-	if(time_left <= 0)
+	if(time_left <= 0 && broadcasting)
 		next_song()
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
@@ -181,6 +184,8 @@ GLOBAL_VAR(dj_booth)
 	if(!(source.z in viable_z) || !source.client)
 		return
 
+	active_listeners |= source.client
+	GLOB.youtube_exempt["dj-station"] |= source.client
 	INVOKE_ASYNC(src, PROC_REF(start_playing),list(source.client))
 
 /obj/machinery/cassette/dj_station/proc/stop_solo_broadcast(mob/living/carbon/source)
@@ -199,6 +204,7 @@ GLOBAL_VAR(dj_booth)
 			stop_broadcast(TRUE)
 		return
 
+	waiting_for_yield = TRUE
 	if(findtext(current_playlist[pl_index], GLOB.is_http_protocol))
 		///invoking youtube-dl
 		var/ytdl = CONFIG_GET(string/invoke_youtubedl)
@@ -267,6 +273,7 @@ GLOBAL_VAR(dj_booth)
 			anything.tgui_panel?.play_music(web_sound_url, music_extra_data)
 			GLOB.youtube_exempt["dj-station"] |= anything
 		broadcasting = TRUE
+	waiting_for_yield = FALSE
 
 /obj/machinery/cassette/dj_station/proc/add_new_player(mob/living/carbon/new_player)
 	if(!(new_player in people_with_signals))
@@ -294,6 +301,7 @@ GLOBAL_VAR(dj_booth)
 		start_playing(list(new_player.client))
 
 /obj/machinery/cassette/dj_station/proc/next_song()
+	waiting_for_yield = TRUE
 	if(pl_index + 1 > length(current_playlist))
 		pl_index = 0
 		time_left = 0

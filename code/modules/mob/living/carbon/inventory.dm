@@ -148,10 +148,6 @@
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
 		if(!QDELETED(src))
 			head_update(I)
-	//monkestation edit start
-	if(ITEM_SLOT_EARS)
-		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_EARS, I, force, newloc, no_move, invdrop, silent)
-	//monkestation edit end
 	else if(I == back)
 		back = null
 		if(!QDELETED(src))
@@ -174,6 +170,11 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
+
+	//monkestation edit start
+	if(I == ears)
+		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_EARS, I, force, newloc, no_move, invdrop, silent)
+	//monkestation edit end
 
 	// Not an else-if because we're probably equipped in another slot
 	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
