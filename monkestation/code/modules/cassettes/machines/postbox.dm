@@ -19,7 +19,9 @@
 	if(attacked_tape.approved_tape)
 		to_chat(user, span_notice("This tape has already been approved by the Board, it would be a waste of money to send it in again."))
 		return
-
+	var/choice = tgui_alert(user, "Are you sure this Costs 5k Monkecoins", "Mailbox", list("Yes", "No"))
+	if(choice != "Yes")
+		return
 	///these two parts here should be commented out for local testing without a db
 	if(user.client.prefs.metacoins < 5000)
 		to_chat(user, span_notice("Sorry you don't have enough Monkecoins to submit a cassette for review."))

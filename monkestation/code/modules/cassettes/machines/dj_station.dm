@@ -30,6 +30,8 @@ GLOBAL_VAR(dj_booth)
 	var/pl_index = 0
 	var/list/current_playlist = list()
 
+	COOLDOWN_DECLARE(next_song_timer)
+
 /obj/machinery/cassette/dj_station/Initialize(mapload)
 	. = ..()
 	GLOB.dj_booth = src
@@ -46,31 +48,27 @@ GLOBAL_VAR(dj_booth)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
 		if(!broadcasting)
 			context[SCREENTIP_CONTEXT_ALT_LMB] = "Play Tape"
-		else
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Pause Tape"
-			context[SCREENTIP_CONTEXT_SHIFT_LMB] = "Skip Song"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
 		return
-
-	if(time_left <= 0 && broadcasting)
-		next_song()
-
 	time_left -= round(seconds_per_tick)
+	if(time_left < 0)
+		time_left = 0
+		if(COOLDOWN_FINISHED(src, next_song_timer))
+			COOLDOWN_START(src, next_song_timer, 2 MINUTES)
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
 	if(!inserted_tape)
 		return
-	if(broadcasting)
-		stop_broadcast(TRUE)
-	else
-		start_broadcast()
+	start_broadcast()
 
 /obj/machinery/cassette/dj_station/ShiftClick(mob/user)
 	. = ..()
+	if(!isliving(user) || !user.Adjacent(src))
+		return
 	if(!inserted_tape)
 		return
 	if(broadcasting)
@@ -79,7 +77,7 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station/CtrlClick(mob/user)
 	. = ..()
-	if(!inserted_tape)
+	if(!inserted_tape || broadcasting)
 		return
 	if(Adjacent(user) && !issiliconoradminghost(user))
 		if(!user.put_in_hands(inserted_tape))
@@ -103,19 +101,20 @@ GLOBAL_VAR(dj_booth)
 	if(!inserted_tape)
 		insert_tape(attacked)
 	else
-		if(Adjacent(user) && !issiliconoradminghost(user))
-			if(!user.put_in_hands(inserted_tape))
+		if(!broadcasting)
+			if(Adjacent(user) && !issiliconoradminghost(user))
+				if(!user.put_in_hands(inserted_tape))
+					inserted_tape.forceMove(drop_location())
+			else
 				inserted_tape.forceMove(drop_location())
-		else
-			inserted_tape.forceMove(drop_location())
-		inserted_tape = null
-		time_left = 0
-		current_song_duration = 0
-		pl_index = 0
-		current_playlist = list()
-		insert_tape(attacked)
-		if(broadcasting)
-			stop_broadcast(TRUE)
+			inserted_tape = null
+			time_left = 0
+			current_song_duration = 0
+			pl_index = 0
+			current_playlist = list()
+			insert_tape(attacked)
+			if(broadcasting)
+				stop_broadcast(TRUE)
 
 /obj/machinery/cassette/dj_station/proc/insert_tape(obj/item/device/cassette_tape/CTape)
 	if(inserted_tape || !istype(CTape))
@@ -152,8 +151,11 @@ GLOBAL_VAR(dj_booth)
 		people_with_signals = list()
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
+	var/choice = tgui_input_number(usr, "Choose which song number to play.", "[src]", 1, length(current_playlist), 1)
+	if(!choice)
+		return
 	GLOB.dj_broadcast = TRUE
-	var/list/new_listeners = list()
+	pl_index = choice
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	for(var/mob/living/carbon/anything as anything in GLOB.mob_living_list)
 		if(!(anything in people_with_signals))
@@ -184,17 +186,14 @@ GLOBAL_VAR(dj_booth)
 				continue
 
 			active_listeners |=	anything.client
-			new_listeners |= anything.client
 
 	for(var/mob/dead/observer/observe as anything in GLOB.current_observers_list)
 		if(!(observe.client in active_listeners))
 			active_listeners |=	observe.client
-			new_listeners |= observe.client
-
 	if(!length(active_listeners))
 		return
 
-	start_playing(new_listeners)
+	start_playing(active_listeners)
 	START_PROCESSING(SSprocessing, src)
 
 
@@ -333,11 +332,13 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station/proc/next_song()
 	waiting_for_yield = TRUE
-	if(pl_index + 1 > length(current_playlist))
-		pl_index = 0
-		time_left = 0
-		current_song_duration = 0
-		stop_broadcast(TRUE)
+	var/choice = tgui_input_number(usr, "Choose which song number to play.", "[src]", 1, length(current_playlist), 1)
+	if(!choice)
+		waiting_for_yield = FALSE
+		stop_broadcast()
+		return
+	GLOB.dj_broadcast = TRUE
+	pl_index = choice
 
 	pl_index++
 	start_playing(active_listeners)
