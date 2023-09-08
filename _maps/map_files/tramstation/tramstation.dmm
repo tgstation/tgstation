@@ -15308,7 +15308,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/bedsheet/black,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "emK" = (
@@ -20265,7 +20264,6 @@
 	},
 /obj/effect/landmark/start/prisoner,
 /obj/machinery/light/small/directional/east,
-/obj/item/bedsheet/black,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "gjb" = (
@@ -27404,9 +27402,6 @@
 /obj/effect/landmark/start/prisoner,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
-/obj/item/bedsheet/black{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "iUw" = (
@@ -27485,7 +27480,6 @@
 	},
 /obj/effect/landmark/start/prisoner,
 /obj/machinery/light/small/directional/east,
-/obj/item/bedsheet/black,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "iVy" = (
@@ -42986,7 +42980,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/item/bedsheet/black,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "onl" = (
@@ -48708,9 +48701,6 @@
 	},
 /obj/effect/landmark/start/prisoner,
 /obj/machinery/light/small/directional/west,
-/obj/item/bedsheet/black{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "qvF" = (
