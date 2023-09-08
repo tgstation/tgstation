@@ -547,10 +547,10 @@ class FishingMinigame extends Component<
     const posToStyle = (value: number) => (value / this.area_height) * 100;
     const background_image = resolveAsset(this.used_background);
 	const bait_position = this.effect === ActiveEffect.Flip ?
-	  Math.abs(bait.position - (area_height - bait.height)) :
+	  Math.abs(bait.position - (this.area_height - bait.height)) :
 	  bait.position;
 	const fish_position = this.effect === ActiveEffect.Flip ?
-	  Math.abs(fish.position - (area_height - fish.height)) :
+	  Math.abs(fish.position - (this.area_height - fish.height)) :
 	  fish.position;
     return (
       <div class="fishing">
