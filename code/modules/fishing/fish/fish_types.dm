@@ -524,7 +524,7 @@
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
 
-/obj/item/fish/starfish/Initialize()
+/obj/item/fish/starfish/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
