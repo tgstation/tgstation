@@ -5,6 +5,8 @@
 	icon = 'monkestation/code/modules/cassettes/icons/radio_station.dmi'
 	icon_state = "postbox"
 
+	max_integrity = 100000 //lol
+
 
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/device/cassette_tape) || !user.client)
