@@ -18,7 +18,7 @@
 	doorClose = 'sound/machines/tramclose.ogg'
 	autoclose = FALSE
 	/// Weakref to the tram we're attached
-	var/datum/weakref/tram_ref
+	var/datum/weakref/transport_ref
 	var/retry_counter
 	var/crushing_in_progress = FALSE
 	bound_width = 64
@@ -200,7 +200,7 @@
 /obj/machinery/door/airlock/tram/proc/find_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id == transport_linked_id)
-			tram_ref = WEAKREF(tram)
+			transport_ref = WEAKREF(tram)
 
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
@@ -240,7 +240,7 @@
 /obj/machinery/door/airlock/tram/bumpopen(mob/user, forced = BYPASS_DOOR_CHECKS)
 	if(operating || !density)
 		return
-	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram_part = transport_ref?.resolve()
 	add_fingerprint(user)
 	if((tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH) && tram_part.controller_active)
 		return // we're already animating, don't reset that

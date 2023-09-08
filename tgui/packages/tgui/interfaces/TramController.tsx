@@ -24,10 +24,6 @@ type TransportData = {
   destinations: TramDestination[];
 };
 
-type Props = {
-  context: any;
-};
-
 type TramDestination = {
   name: string;
   dest_icons: string[];

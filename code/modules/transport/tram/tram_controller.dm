@@ -55,8 +55,11 @@
 
 	var/datum/tram_mfg_info/tram_registration
 
+	var/list/tram_history
+
 /datum/tram_mfg_info
 	var/serial_number
+	var/active = TRUE
 	var/mfg_date
 	var/install_location
 	var/distance_travelled = 0
@@ -77,27 +80,23 @@
 	mfg_date = world.realtime
 	install_location = specific_transport_id
 
-/**
- * Loads persistent tram data from the JSON save file on initialization.
- */
-/datum/tram_mfg_info/proc/load_data(list/tram_data)
-	serial_number = text2path(tram_data["serial_number"])
-	mfg_date = text2path(tram_data["mfg_date"])
-	install_location = text2path(tram_data["install_location"])
-	distance_travelled = text2path(tram_data["distance_travelled"])
-	collisions = text2path(tram_data["collisions"])
-	return TRUE
+/datum/tram_mfg_info/proc/load_from_json(list/json_data)
+	serial_number = json_data["serial_number"]
+	active = json_data["active"]
+	mfg_date = json_data["mfg_date"]
+	install_location = json_data["install_location"]
+	distance_travelled = json_data["distance_travelled"]
+	collisions = json_data["collisions"]
 
-/**
- * Provide JSON formatted data to the persistence subsystem to save at round end.
- */
-/datum/transport_controller/linear/tram/proc/get_json_data()
-	. = list()
-	.["serial_number"] = tram_registration.serial_number
-	.["mfg_date"] = tram_registration.mfg_date
-	.["install_location"] = tram_registration.install_location
-	.["distance_travelled"] = tram_registration.distance_travelled
-	.["collisions"] = tram_registration.collisions
+/datum/tram_mfg_info/proc/export_to_json()
+	var/list/new_data = list()
+	new_data["serial_number"] = serial_number
+	new_data["active"] = active
+	new_data["mfg_date"] = mfg_date
+	new_data["install_location"] = install_location
+	new_data["distance_travelled"] = distance_travelled
+	new_data["collisions"] = collisions
+	return new_data
 
 /**
  * Make sure all modules have matching speed limiter vars, pull save data from persistence
@@ -109,9 +108,11 @@
 	. = ..()
 	speed_limiter = transport_module.speed_limiter
 	base_speed_limiter = transport_module.speed_limiter
-	tram_registration = SSpersistence.load_tram_stats(specific_transport_id)
-
-	if(!tram_registration)
+	tram_history = SSpersistence.load_tram_history(specific_transport_id)
+	var/datum/tram_mfg_info/previous_tram = peek(tram_history)
+	if(!isnull(previous_tram) && previous_tram.active)
+		tram_registration = pop(tram_history)
+	else
 		tram_registration = new /datum/tram_mfg_info(specific_transport_id)
 
 	check_starting_landmark()
