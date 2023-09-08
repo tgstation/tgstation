@@ -15,6 +15,8 @@
 	COOLDOWN_DECLARE(spawn_delay)
 
 /datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, faction = list(FACTION_MINING), spawn_text = null)
+	if (!islist(spawn_types))
+		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
 	src.spawn_types = spawn_types
 	src.faction = faction
