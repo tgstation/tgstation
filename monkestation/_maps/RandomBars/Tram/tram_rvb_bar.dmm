@@ -769,6 +769,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/wood,
+/obj/item/clothing/head/costume/irs,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -2073,10 +2075,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"GX" = (
-/obj/structure/table/reinforced,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/asteroid)
 "He" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
@@ -3486,7 +3484,7 @@ QC
 zk
 zk
 zk
-GX
+zk
 zk
 zk
 zk
