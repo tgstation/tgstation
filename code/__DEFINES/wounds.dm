@@ -12,7 +12,8 @@
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
 
-/// The default pick_weight of all wounds. See _wound_pregen_data.dm for more details
+/// If there are multiple possible and valid wounds for the same type and severity, weight will be used to pick among them. See _wound_pregen_data.dm for more details
+/// This is used in pick_weight, so use integers
 #define WOUND_DEFAULT_WEIGHT 50
 
 // ~wound severities
@@ -81,12 +82,12 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_JOINTED (1<<5)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
-/// Self explanatory
+/// Has flesh and bone - See BIO_BONE and BIO_FLESH
 #define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
-/// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
-#define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
-/// Standard humanoid limbs - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated
-#define BIO_STANDARD_LIMB (BIO_STANDARD|BIO_JOINTED)
+/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations. Think human heads/chests
+#define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
+/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
+#define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones

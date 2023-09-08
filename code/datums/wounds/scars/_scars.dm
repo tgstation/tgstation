@@ -103,7 +103,7 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD, char_slot, check_any_biostates = FALSE)
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD_UNJOINTED, char_slot, check_any_biostates = FALSE)
 	if(!BP.scarrable)
 		qdel(src)
 		return
