@@ -53,8 +53,9 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	save_tram_history(TRAMSTATION_LINE_1)
 	if(SStransport.can_fire)
+		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+			save_tram_history(transport.specific_transport_id)
 		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
@@ -609,11 +610,12 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/package_tram_data(datum/transport_controller/linear/tram/tram_controller)
 	var/list/packaged_data = list()
 	var/list/tram_list = tram_controller.tram_history
-	while(tram_list.len > MAX_TRAM_SAVES)
-		tram_list.Cut(1,2)
+	if(!isnull(tram_list))
+		while(tram_list.len > MAX_TRAM_SAVES)
+			tram_list.Cut(1,2)
 
-	for(var/datum/tram_mfg_info/data as anything in tram_list)
-		packaged_data += data
+		for(var/datum/tram_mfg_info/data as anything in tram_list)
+			packaged_data += data
 
 	packaged_data += tram_controller.tram_registration
 	return packaged_data

@@ -89,7 +89,6 @@
 
 	data["currentTram"] = current_tram
 	data["previousTrams"] = previous_trams
-
 	return data
 
 // Commission plaques, to give a little backstory to the stations. Commission dates are date of merge (or best approximation, in the case of Meta) + 540 years to convert to SS13 dates.

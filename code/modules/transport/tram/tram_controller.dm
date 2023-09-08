@@ -6,7 +6,6 @@
  * A controller manages a list of transport modules (individual tiles) which together make up a transport unit (in this case a tram)
  */
 /datum/transport_controller/linear/tram
-
 	///whether this controller is active (any state we don't accept new orders, not nessecarily moving)
 	var/controller_active = FALSE
 	///whether all required parts of the tram are considered operational
@@ -77,7 +76,8 @@
 		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, 0)]"
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
-	mfg_date = world.realtime
+
+	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD")]"
 	install_location = specific_transport_id
 
 /datum/tram_mfg_info/proc/load_from_json(list/json_data)
@@ -128,7 +128,8 @@
 /datum/transport_controller/linear/tram/Destroy()
 	paired_cabinet = null
 	set_status_code(SYSTEM_FAULT, TRUE)
-
+	tram_registration.active = FALSE
+	SSpersistence.save_tram_history(specific_transport_id)
 	..()
 
 /**
