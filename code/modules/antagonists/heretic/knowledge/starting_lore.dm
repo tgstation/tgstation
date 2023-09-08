@@ -254,3 +254,4 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 		selected_atoms += body
 		return TRUE
+	return FALSE
