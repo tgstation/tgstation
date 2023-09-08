@@ -409,7 +409,7 @@
 	return ..()
 
 /// Proc that compels the mob to throw up. Returns TRUE if the mob actually threw up.
-/mob/living/carbon/proc/vomit(vomit_flags, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
+/mob/living/carbon/proc/vomit(vomit_flags = NONE, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
 	if(vomit_flags == NONE)
 		stack_trace("Called vomit() on [src] with no vomit flags. Please add them in when you invoke this proc!")
 		return
