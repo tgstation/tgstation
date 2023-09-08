@@ -16,11 +16,12 @@
 	. = ..()
 	frequency = FREQ_RADIO
 	broadcasting = TRUE
+	use_command = TRUE
 
 	perform_update_icon = FALSE
 	should_update_icon = FALSE
 
-	set_on(TRUE)
+	set_broadcasting(TRUE)
 
 /obj/item/radio/radio_mic/ui_interact(mob/user, datum/tgui/ui, datum/ui_state/state)
 	return

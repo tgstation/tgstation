@@ -33,11 +33,23 @@ GLOBAL_VAR(dj_booth)
 /obj/machinery/cassette/dj_station/Initialize(mapload)
 	. = ..()
 	GLOB.dj_booth = src
+	register_context()
 
-/obj/machinery/cassette/Destroy()
+/obj/machinery/cassette/dj_station/Destroy()
 	. = ..()
 	GLOB.dj_booth = null
 	STOP_PROCESSING(SSprocessing, src)
+
+/obj/machinery/cassette/dj_station/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(inserted_tape)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
+		if(!broadcasting)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Play Tape"
+		else
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Pause Tape"
+			context[SCREENTIP_CONTEXT_SHIFT_LMB] = "Skip Song"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
@@ -56,6 +68,14 @@ GLOBAL_VAR(dj_booth)
 		stop_broadcast(TRUE)
 	else
 		start_broadcast()
+
+/obj/machinery/cassette/dj_station/ShiftClick(mob/user)
+	. = ..()
+	if(!inserted_tape)
+		return
+	if(broadcasting)
+		next_song()
+
 
 /obj/machinery/cassette/dj_station/CtrlClick(mob/user)
 	. = ..()
