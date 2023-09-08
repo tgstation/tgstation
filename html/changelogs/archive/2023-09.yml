@@ -123,3 +123,171 @@
   - bugfix: Slash wounds are now compatable with pierce wounds
   xPokee:
   - bugfix: Fixed the air inside of a penguin pen being way too cold
+2023-09-04:
+  CoiledLamb:
+  - rscadd: adds medical carts and surgery trays
+  - image: gives the surgery razor a unique sprite
+  - image: resprites the genesploicer.
+  DaydreamIQ:
+  - rscadd: Adds the medbeam module for nukies, don't cross the damn beams. (Also
+      removes the handheld one from the uplink)
+  DrDiasyl:
+  - sound: 'Adds/modifies next sound files: airraid.ogg, bloblarm.ogg, alert.ogg,
+      notice3.ogg, announce_syndi.ogg'
+  - sound: Code Red, Delta, and other extreme emergencies now possess more unique
+      alarm sound effect
+  - sound: Captain's arrival now is announced by Captain's announcement sound, but
+      not for Acting Captain's
+  - sound: Making Captain announcement through emagged console; hijacking or fully
+      corrupting evacuation shuttle now plays more ominous sound
+  - sound: Making announcements through Requests Console now plays a more noticeable
+      sound
+  - image: Status Displays sprites have been fully changed. Now they include displays
+      for every Security Level
+  - qol: The "Red Alert" button in the Communications console status display menu
+      has been replaced with a "Current Alert" button showing the current station
+      Security Level display on Status Displays
+  - qol: Communications console status display menu got a new "Radiation" button which
+      shows radiation symbol on Status Displays
+  FernandoJ8:
+  - bugfix: boiled rice doesn't burn instantly after being baked
+  - code_imp: simplifies the way burning food is handled, grilled/baked food now turns
+      to a burnt mess rather than being set on fire, unless they have a baking/grilling
+      recipe
+  Fikou:
+  - bugfix: kinesis plus properly lets you move again when grabbed once
+  Guillaume Prata:
+  - rscadd: Atmos Tech now have new drip and will spawn with Atmos Overalls to protect
+      their clothing from gas leaks! (It will actually not protect you against fire
+      or leaks, but hey! It's the thought that counts!!)
+  Sealed101:
+  - bugfix: fixed basic mobs not dropping their butcher results when gibbed
+  Time-Green:
+  - rscdel: Removes the swarmer beacon achievements from the game (no one ever got
+      them, and they haven't been obtainable for years)
+  Whoneedspacee:
+  - bugfix: Multi-z Icebox ruins including the Demonic Frost Miner can now be placed
+      again
+  carlarctg:
+  - sound: Adds a sound effect for hypospray/medipen injections. Doesn't affect sleepy
+      pens or HMS injectors
+  distributivgesetz:
+  - code_imp: Moved some job-related achievements from the misc category to the jobs
+      category.
+  vinylspiders:
+  - bugfix: '''meat product'' and imitation carp meat are now considered synthetic
+      meats for the purposes of reagent purity'
+2023-09-05:
+  Ben10Omintrix:
+  - qol: pollinating bees will now only attack players that are standing near the
+      beehive
+  Eronymun:
+  - bugfix: You can no longer walk into Birdshot's secure tech storage like you own
+      the place - unless you do own the place.
+  Ghommie:
+  - bugfix: It's now humanly possible to reach the legendary fisherman rank, get the
+      achievement and the hat.
+  - bugfix: fixed fishing skeleton mob spawners that immediately crumble back into
+      the void of whatever chasm you fished them from.
+  - balance: The fishing minigame should be easier now.
+  Iamgoofball:
+  - bugfix: Updates the changelog link for the pre-4407 changelog as it was moved
+  JohnFulpWillard:
+  - bugfix: PDAs being on silent no longer prevents PDAs from being sent to your chat,
+      again.
+  - rscadd: pAIs inserted into a PDA can now control the PDA, and will receive PDA
+      messages sent to it (and can respond under the PDA's name).
+  LT3:
+  - image: New medical bed and emergency roller bed
+  - code_imp: Added context hints for beds
+  Sealed101:
+  - bugfix: fixed bileworm evolution deleting anything they devoured; they will now
+      eject their contents upon evolution to vileworms
+  mc-oofert:
+  - bugfix: emissive appearances on glowy eyes and such now properly rotate
+2023-09-06:
+  Acantharctia:
+  - rscadd: Added the Numb quirk, that makes you (almost) unable to perceive how much
+      your injuries hurt.
+  Ben10Omintrix:
+  - refactor: the minebots have been refactored please report any bugs
+  - rscadd: minebots can now mine walls and collect ores automatically and they will
+      alert everyone if they find u dead
+  CoiledLamb:
+  - image: cleans up the engineering emergency internals sprite slightly
+  Jackal-boop:
+  - spellcheck: re-writes cosmic heretic lore
+  Krysonism:
+  - image: resprites the noticeboard
+  carlarctg:
+  - bugfix: Fixed walking into grilles to destroy them
+  lizardqueenlexi:
+  - bugfix: Fixed all-in-one grinders not giving all the correct reagents when grinding.
+  - spellcheck: Improved phrasing and syntax on dismemberment mood messages.
+  - bugfix: Snow legions now drop only one corpse, and no longer drop Lavaland corpses.
+2023-09-07:
+  Ben10Omintrix:
+  - bugfix: basic mobs can now use ranged burst attacks
+  Dmeto:
+  - bugfix: Machine frames in NorthStar Cyto are now functional.
+  - qol: Minor cable/pipe changes to NorthStar the xeno containment.
+  - qol: Adds cables under birdshot xeno containment shielding.
+  Eronymun:
+  - bugfix: The Birdshot Gaming Den now has arcade circuit boards and computer frames
+      that actually work.
+  Melbert:
+  - rscadd: '[Icebox] Remaps arrivals and the maintenance around it. Aux base out,
+      mass driver into a plasma lake in.'
+  Sealed101:
+  - bugfix: fixed mirrors not breaking when a curse effect is triggered
+  Thunder12345:
+  - bugfix: Public mining storage's camera is now on the mining network instead of
+      the gulag.
+  dieamond13:
+  - image: adds special sprites for lungs when you use the smoker quirk
+  norsvenska:
+  - qol: NorthStar's departmental head offices have had their respective PDA & ID
+      imprinters added!
+  - qol: The NorthStar Head of Security office has gotten a small expansion.
+  vinylspiders:
+  - bugfix: leash unit test will time out less often and increases the timer until
+      it is considered 'timed out', to reduce false CI failures
+2023-09-08:
+  Deadgebert:
+  - balance: gas mixer output now accurate to set ratio regardless of input temperatures
+  Ghommie:
+  - image: The glow shoes from the ClothesMate now actually glow and can be recolored,
+      even with a spraycan.
+  - spellcheck: Corrected the name of the telescopic fishing rod to "telescopic fishing
+      rod" from the more generic "fishing rod"
+  Jacquerel:
+  - rscadd: Traitors, Changelings, Heretics, Wizards, Malfunctioning AIs, and Ninjas
+      can now all reject their original objectives and provide one of their own in
+      its place. A Heretic doing this will no longer be able to ascend.
+  - rscadd: '"Custom" objectives which aren''t mechanically tracked will no longer
+      report success or failure upon round end.'
+  - qol: Space Ninja spider charges will now display where they can be detonated when
+      examined, if you are a ninja.
+  JohnFulpWillard:
+  - bugfix: Getting a node researched now properly makes it no longer hidden.
+  - bugfix: Ninjas draining RD servers now drains it from the connected techweb, rather
+      than sniping Science.
+  - balance: Machines will first try to connect to a techweb with servers on their
+      z-level, with the Science techweb remaining as fallback.
+  - rscadd: Oldstation RND, comes with their own Techweb and special surgery to gain
+      research points through dissecting Xenomorphs.
+  LT3:
+  - bugfix: Meteors no longer take damage from crossing certain unoccupied turfs
+  Sealed101:
+  - balance: colossus' near-death attack now starts after a 0.5 seconds delay
+  carlarctg:
+  - bugfix: Cauteries now have 'heat', like lighters, welders, etc.
+  - qol: You can smoke with a space helmet as long as you have internals on.
+  cnleth:
+  - bugfix: Megafauna now correctly prints the victim's name after a kill
+  san7890:
+  - refactor: If you transform into another mob and notice bugs with interacting with
+      the game world, please create a bug report as this framework was recently refactored.
+  vinylspiders:
+  - bugfix: fixes creamatorium not producing any suspicious ice cream, and fixes a
+      dead mouse related harrdel

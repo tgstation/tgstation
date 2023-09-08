@@ -25,7 +25,7 @@
 /datum/computer_file/program/scipaper_program/on_start(mob/living/user)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 /datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))
