@@ -37,6 +37,10 @@
 	can_charge = FALSE
 	var/owner_dna = null
 	var/was_emagged = FALSE //used for tracking emagging for voice lines, is set to false after being re-owned.
+	/*
+	var/locked = FALSE
+	var/anger = 0
+	*/
 
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
@@ -66,47 +70,65 @@
 	var/fixed_message = "[lowertext(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN)
-		say("Generating detain lens")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:execute|kill|lethal)")))
 		selectammo(EXECUTE)
-		say("Fabricating lethal bullets")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:bigshot|breach)")))
 		selectammo(BIGSHOT)
-		say("Fabricating protomatter shell")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:smoke|fog)")))
 		selectammo(SMOKESHOT)
-		say("Compressing Smoke")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:clown)")))
 		selectammo(CLOWNSHOT)
-		say("Honk")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:pulse|throw|push)")))
 		selectammo(PULSE)
-		say("Compressing air")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:grey|tide)")))
 		selectammo(TIDESHOT)
-		say("Greytide inversion active")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:ion)")))
 		selectammo(ION)
-		say("Generating ionized gas")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:hot|burn|fire)"))) //hot is a part of shot
 		selectammo(HOTSHOT)
-		say("Forming proto-plasma")
 		return TRUE
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
 	select = shotnum
+	switch(shotnum) //i promise this is in another proc for a reason
+		if(DETAIN)
+			say("Generating detain lens")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/detain.ogg', 50, FALSE, -2)
+		if(EXECUTE)
+			say("Fabricating lethal bullets")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/execute.ogg', 50, FALSE, -2)
+		if(HOTSHOT)
+			say("Forming proto-plasma")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/hotshot.ogg', 50, FALSE, -2)
+		if(SMOKESHOT)
+			say("Compressing Smoke")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/smokeshot.ogg', 50, FALSE, -2)
+		if(BIGSHOT)
+			say("Fabricating protomatter shell")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/bigshot.ogg', 50, FALSE, -2)
+		if(CLOWNSHOT)
+			say("Honk")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/clownshot.ogg', 50, FALSE, -2)
+		if(PULSE)
+			say("Compressing air")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/pulse.ogg', 50, FALSE, -2)
+		if(TIDESHOT)
+			say("Greytide inversion active")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/tideshot.ogg', 50, FALSE, -2)
+		if(ION)
+			say("Generating ionized gas")
+			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/ion.ogg', 50, FALSE, -2)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-	playsound(src, "monkestation/sound/weapons/gun/lawbringer/[shot.select_name].ogg", 50, FALSE, -2)
 	if (shot.select_name && selector)
 		balloon_alert(selector, "set to [shot.select_name]")
 	chambered = null
@@ -136,6 +158,7 @@
 		balloon_alert(user, "invalid organism")
 		return
 	var/mob/living/carbon/C = user
+	var/voice = null
 	if(C.dna && C.dna.unique_enzymes)
 		if(!owner_dna)
 			owner_dna = C.dna.unique_enzymes
@@ -144,13 +167,14 @@
 			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
 			updatepin(user)
 			nametag(user)
-			if(was_emagged)
-				//random emag voice lines
+			if(was_emagged) // there has to be a better way
 				was_emagged = FALSE
-				playsound(src, "monkestation/sound/weapons/gun/lawbringer/initemag[rand(1,5)].ogg", 50, FALSE, -2)
+				voice = pick('monkestation/sound/weapons/gun/lawbringer/initemag1.ogg','monkestation/sound/weapons/gun/lawbringer/initemag2.ogg','monkestation/sound/weapons/gun/lawbringer/initemag3.ogg','monkestation/sound/weapons/gun/lawbringer/initemag4.ogg','monkestation/sound/weapons/gun/lawbringer/initemag5.ogg')
+
 			else
-				//normal voice lines
-				playsound(src, "monkestation/sound/weapons/gun/lawbringer/init[rand(1,5)].ogg", 50, FALSE, -2)
+				voice = pick('monkestation/sound/weapons/gun/lawbringer/init1.ogg','monkestation/sound/weapons/gun/lawbringer/init2.ogg','monkestation/sound/weapons/gun/lawbringer/init3.ogg','monkestation/sound/weapons/gun/lawbringer/init4.ogg','monkestation/sound/weapons/gun/lawbringer/init5.ogg')
+
+			playsound(src, voice, 50, FALSE, -2)
 		return
 
 
