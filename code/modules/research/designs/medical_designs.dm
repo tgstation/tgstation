@@ -1113,3 +1113,10 @@
 	id = "surgery_wing_reconstruction"
 	surgery = /datum/surgery/advanced/wing_reconstruction
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/experimental_dissection
+	name = "Experimental Dissection"
+	desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
+	id = "surgery_oldstation_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection
+	research_icon_state = "surgery_chest"

@@ -357,6 +357,41 @@
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
+	else if(href_list["obj_prompt_custom"])
+		var/datum/antagonist/target_antag
+		if(href_list["target_antag"])
+			var/datum/antagonist/found_datum = locate(href_list["target_antag"]) in antag_datums
+			if(found_datum)
+				target_antag = found_datum
+		if(isnull(target_antag))
+			switch(length(antag_datums))
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sort_list(antag_datums) + "(new custom antag)"
+					if (QDELETED(target))
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
+		var/replace_existing = input("Replace existing objectives?","Replace objectives?") in list("Yes", "No")
+		if (isnull(replace_existing))
+			return
+		replace_existing = replace_existing == "Yes"
+		var/replace_escape
+		if (!replace_existing)
+			replace_escape = FALSE
+		else
+			replace_escape = input("Replace survive/escape/martyr objectives?","Replace objectives?") in list("Yes", "No")
+			if (isnull(replace_escape))
+				return
+			replace_escape = replace_escape == "Yes"
+		target_antag.submit_player_objective(retain_existing = !replace_existing, retain_escape = !replace_escape, force = TRUE)
+		log_admin("[key_name(usr)] prompted [current] to enter their own objectives for [target_antag].")
+
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")

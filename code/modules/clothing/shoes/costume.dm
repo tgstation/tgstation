@@ -71,6 +71,24 @@
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
 	icon_state = "glow_shoes"
 	inhand_icon_state = null
+	greyscale_colors = "#4A3A40#8EEEEE"
+	greyscale_config = /datum/greyscale_config/glow_shoes
+	greyscale_config_worn = /datum/greyscale_config/glow_shoes/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/glow/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/shoes/glow/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(DEFAULT_SHOES_FILE, "glow_shoes_emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/shoes/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/obj/clothing/shoes.dmi', "glow_shoes_emissive", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
