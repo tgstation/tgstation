@@ -39,7 +39,6 @@ GLOBAL_VAR(dj_booth)
 	STOP_PROCESSING(SSprocessing, src)
 
 /obj/machinery/cassette/dj_station/process()
-	. = ..()
 	time_left--
 	if(time_left <= 0)
 		next_song()
@@ -171,12 +170,11 @@ GLOBAL_VAR(dj_booth)
 	if(!istype(source))
 		return
 
-	var/obj/item/ear_slot = source.get_item_by_slot(ITEM_SLOT_EARS)
-	if(istype(ear_slot, /obj/item/clothing/ears))
+	if(istype(ear_item, /obj/item/clothing/ears))
 		var/obj/item/clothing/ears/worn
 		if(!worn || !worn?.radio_compat)
 			return
-	else if(!istype(ear_slot, /obj/item/radio/headset))
+	else if(!istype(ear_item, /obj/item/radio/headset))
 		return
 
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))
