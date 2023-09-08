@@ -39,10 +39,11 @@ GLOBAL_VAR(dj_booth)
 	GLOB.dj_booth = null
 	STOP_PROCESSING(SSprocessing, src)
 
-/obj/machinery/cassette/dj_station/process()
+/obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
 		return
-	time_left--
+
+	time_left -= FLOOR(seconds_per_tick)
 	if(time_left <= 0 && broadcasting)
 		next_song()
 

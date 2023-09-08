@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 		var/mob/living/carbon/human/player = loc
 		player.regenerate_icons()
 
-/obj/item/device/walkman/process()
+/obj/item/device/walkman/process(seconds_per_tick)
 	time_left--
 	if(time_left <= 0)
 		next_song(current_listener)
