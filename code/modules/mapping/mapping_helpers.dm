@@ -116,7 +116,7 @@
 		log_mapping("[src] spawned outside of mapload!")
 		return
 
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(!airlock)
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
@@ -124,7 +124,7 @@
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	. = ..()
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(!airlock)
 		qdel(src)
 		return
@@ -257,18 +257,18 @@
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
 
-	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
+	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(isnull(target))
 		var/area/target_area = get_area(target)
 		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
-	
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/apc/LateInitialize()
 	. = ..()
-	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
+	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 
 	if(isnull(target))
 		qdel(src)
@@ -408,7 +408,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/LateInitialize()
 	if(!check_validity())
 		return
-	var/turf/target_turf = get_turf(src)
+	var/turf/target_turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	var/matches_found = 0
 	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
 		if(atom_on_turf == src)
@@ -848,7 +848,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/note_path //if you already have something wrote up in a paper subtype, put the path here
 
 /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
-	var/turf/turf = get_turf(src)
+	var/turf/turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
@@ -892,7 +892,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "trapdoor"
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
-	var/turf/component_target = get_turf(src)
+	var/turf/component_target = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
 
@@ -977,7 +977,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/broken_floor/LateInitialize()
-	var/turf/open/floor/floor = get_turf(src)
+	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.break_tile()
 	qdel(src)
 
@@ -993,6 +993,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/burnt_floor/LateInitialize()
-	var/turf/open/floor/floor = get_turf(src)
+	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.burn_tile()
 	qdel(src)

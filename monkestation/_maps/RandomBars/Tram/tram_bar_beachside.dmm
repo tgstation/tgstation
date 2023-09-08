@@ -1,0 +1,1199 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/machinery/door/airlock/sandstone,
+/turf/open/misc/beach/sand,
+/area/space)
+"aB" = (
+/obj/structure/ladder,
+/obj/machinery/door/window/left/directional/north{
+	name = "Bar backroom Access";
+	req_one_access = list("bar")
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/misc/beach/sand,
+/area/space)
+"aY" = (
+/obj/structure/railing,
+/turf/open/misc/beach/coastline_t{
+	dir = 9
+	},
+/area/space)
+"bi" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/space)
+"ce" = (
+/obj/structure/closet/crate,
+/turf/open/misc/beach/sand,
+/area/space)
+"cp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/space)
+"cu" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/beach/coastline_t{
+	dir = 10
+	},
+/area/space)
+"ds" = (
+/obj/structure/table/reinforced,
+/turf/open/misc/beach/sand,
+/area/space)
+"dK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/misc/beach/coastline_t,
+/area/space)
+"fe" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"fm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/space)
+"gq" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 5
+	},
+/area/space)
+"gY" = (
+/obj/structure/mineral_door/sandstone,
+/turf/open/space/basic,
+/area/space)
+"hh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/space)
+"hj" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/space)
+"km" = (
+/obj/machinery/door/window/left/directional/south{
+	req_one_access = list("kitchen");
+	name = "Kitchen"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/space)
+"kR" = (
+/obj/structure/table/reinforced,
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 4
+	},
+/area/space)
+"lF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/space)
+"mW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/misc/beach/sand,
+/area/space)
+"om" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/space)
+"qn" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 10
+	},
+/area/space)
+"qt" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/space)
+"sr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/space)
+"uo" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/space)
+"vd" = (
+/turf/open/floor/wood,
+/area/space)
+"vK" = (
+/turf/closed/wall/mineral/sandstone,
+/area/space)
+"vW" = (
+/obj/structure/table/reinforced,
+/turf/open/misc/beach/coastline_t{
+	dir = 8
+	},
+/area/space)
+"wn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/space)
+"xd" = (
+/turf/open/misc/beach/sand,
+/area/space)
+"yD" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"yJ" = (
+/obj/structure/railing,
+/turf/open/space/basic,
+/area/space)
+"yO" = (
+/turf/template_noop,
+/area/template_noop)
+"zS" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/space)
+"Bd" = (
+/obj/structure/railing/corner,
+/turf/open/space/basic,
+/area/space)
+"BQ" = (
+/obj/effect/turf_decal/siding/wood/end,
+/obj/machinery/door/window/left/directional/south{
+	req_one_access = list("kitchen");
+	name = "Kitchen"
+	},
+/turf/open/floor/wood/large,
+/area/space)
+"Cz" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"CA" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 4
+	},
+/area/space)
+"Fv" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Dumbwaiter Pier Safety Door"
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/space)
+"Gx" = (
+/turf/open/openspace,
+/area/space)
+"HQ" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"LC" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 4
+	},
+/area/space)
+"LR" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"LU" = (
+/obj/machinery/button/door/directional/east{
+	id = "toilet1";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/sink/directional/south,
+/turf/open/misc/beach/sand,
+/area/space)
+"Mi" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 6
+	},
+/area/space)
+"NL" = (
+/turf/open/space/basic,
+/area/space)
+"Pa" = (
+/turf/open/misc/beach/coastline_t,
+/area/space)
+"Ru" = (
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 1
+	},
+/area/space)
+"RJ" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Bar";
+	req_one_access = list("bar")
+	},
+/turf/open/floor/wood,
+/area/space)
+"RT" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"ST" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/space)
+"TG" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/wood/large,
+/area/space)
+"TJ" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/space)
+"TS" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/landmark/start/mime,
+/turf/open/misc/beach/sand,
+/area/space)
+"Uh" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space)
+"Uo" = (
+/obj/structure/closet/crate,
+/obj/item/fishing_rod/telescopic,
+/turf/open/misc/beach/sand,
+/area/space)
+"Vd" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/space/basic,
+/area/space)
+"VK" = (
+/obj/structure/table/reinforced,
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/space)
+"VR" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 1
+	},
+/area/space)
+"Wb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/space)
+"WV" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/wood,
+/area/space)
+"XD" = (
+/obj/machinery/door/airlock/sandstone{
+	id_tag = "toilet1";
+	name = "Restroom Stall"
+	},
+/turf/open/misc/beach/sand,
+/area/space)
+"XJ" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/coastline_t/sandwater_inner{
+	dir = 8
+	},
+/area/space)
+"YJ" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 9
+	},
+/area/space)
+"YK" = (
+/turf/open/misc/beach/coastline_t{
+	dir = 8
+	},
+/area/space)
+"ZB" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/directional/east,
+/turf/open/misc/beach/sand,
+/area/space)
+"ZT" = (
+/obj/structure/ladder,
+/obj/effect/turf_decal/sand,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/misc/beach/sand,
+/area/space)
+
+(1,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VK
+Wb
+bi
+wn
+ST
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+vK
+vK
+yO
+yO
+yO
+yO
+"}
+(2,1,1) = {"
+NL
+YJ
+YK
+qn
+NL
+NL
+NL
+VK
+fe
+Uh
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+vK
+TS
+ZB
+vK
+yO
+yO
+yO
+yO
+"}
+(3,1,1) = {"
+NL
+VR
+xd
+Pa
+NL
+NL
+NL
+VK
+fe
+Uh
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+vK
+LU
+xd
+vK
+yO
+yO
+yO
+yO
+"}
+(4,1,1) = {"
+NL
+VR
+xd
+Pa
+NL
+NL
+NL
+VK
+fe
+qt
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+XD
+vK
+yO
+yO
+yO
+yO
+"}
+(5,1,1) = {"
+NL
+VR
+xd
+Pa
+NL
+NL
+NL
+VK
+fe
+Uh
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+yO
+"}
+(6,1,1) = {"
+NL
+VR
+xd
+Pa
+NL
+NL
+NL
+VK
+fe
+WV
+vd
+zS
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+yO
+"}
+(7,1,1) = {"
+NL
+gq
+LC
+Mi
+NL
+NL
+NL
+VK
+fe
+Uh
+vd
+zS
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+yO
+"}
+(8,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VK
+fe
+Uh
+vd
+zS
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+yO
+yO
+yO
+"}
+(9,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VK
+cp
+hh
+TJ
+fm
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(10,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VK
+ds
+ds
+RJ
+ds
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+vK
+vK
+"}
+(11,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+"}
+(12,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(13,1,1) = {"
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+gq
+LC
+Ru
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+vK
+vK
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(14,1,1) = {"
+NL
+NL
+Bd
+HQ
+HQ
+HQ
+HQ
+HQ
+yD
+VR
+xd
+xd
+xd
+xd
+xd
+vK
+xd
+Uo
+vK
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(15,1,1) = {"
+NL
+NL
+yJ
+Gx
+Fv
+lF
+BQ
+ZT
+LR
+VR
+xd
+xd
+xd
+xd
+xd
+ac
+xd
+aB
+vK
+xd
+xd
+xd
+xd
+xd
+vK
+"}
+(16,1,1) = {"
+NL
+NL
+yJ
+TG
+om
+Vd
+Cz
+Cz
+RT
+VR
+xd
+xd
+xd
+xd
+xd
+vK
+xd
+ce
+vK
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(17,1,1) = {"
+NL
+NL
+yJ
+hj
+Vd
+RT
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+vK
+vK
+vK
+vK
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(18,1,1) = {"
+NL
+NL
+yJ
+hj
+LR
+NL
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+gY
+"}
+(19,1,1) = {"
+NL
+NL
+yJ
+hj
+LR
+NL
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+"}
+(20,1,1) = {"
+NL
+NL
+aY
+hj
+cu
+NL
+NL
+NL
+NL
+VR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(21,1,1) = {"
+vW
+vW
+CA
+hj
+XJ
+vW
+vW
+vW
+vW
+kR
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(22,1,1) = {"
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+ST
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(23,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(24,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+vK
+yO
+yO
+yO
+"}
+(25,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Pa
+NL
+NL
+NL
+"}
+(26,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Pa
+NL
+NL
+NL
+"}
+(27,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Pa
+NL
+NL
+NL
+"}
+(28,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Pa
+NL
+NL
+NL
+"}
+(29,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+uo
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Pa
+NL
+NL
+NL
+"}
+(30,1,1) = {"
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+vd
+sr
+km
+xd
+xd
+xd
+xd
+xd
+mW
+xd
+xd
+xd
+xd
+xd
+dK
+NL
+NL
+NL
+"}

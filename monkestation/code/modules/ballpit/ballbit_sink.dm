@@ -6,11 +6,14 @@
 	var/filter_name = "sinkable"
 	var/current_size = 0
 
-/datum/component/player_sink/Initialize(...)
+/datum/component/player_sink/Initialize(max_sinkage)
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, TYPE_PROC_REF(/datum/component/player_sink, recheck_state))
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/datum/component/player_sink,remove_state))
 	START_PROCESSING(SSobj, src)
-	max_sinkage = rand(16,20)
+	if(max_sinkage)
+		src.max_sinkage = max_sinkage
+	else
+		max_sinkage = rand(16,20)
 
 /datum/component/player_sink/UnregisterFromParent()
 	. = ..()
