@@ -1,11 +1,11 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
-	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
+	desc = "A levitating swarm of tiny creatures which act as a single individual. When threatened or hunting they rapidly replicate additional short-lived bodies."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "Hivelord"
-	icon_living = "Hivelord"
-	icon_aggro = "Hivelord_alert"
-	icon_dead = "Hivelord_dead"
+	icon_state = "hivelord"
+	icon_living = "hivelord"
+	icon_aggro = "hivelord_alert"
+	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC
 	move_to_delay = 14
@@ -18,11 +18,11 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attack_verb_continuous = "lashes out at"
-	attack_verb_simple = "lash out at"
+	attack_verb_continuous = "weakly tackles"
+	attack_verb_simple = "weakly tackles"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
-	throw_message = "falls right through the strange body of the"
+	throw_message = "passes between the bodies of the"
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
 	obj_damage = 0
@@ -40,14 +40,14 @@
 		AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	if(world.time >= ranged_cooldown)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
-
-		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-		A.GiveTarget(target)
-		A.friends = friends
-		A.faction = faction.Copy()
-		ranged_cooldown = world.time + ranged_cooldown_time
+	if(world.time < ranged_cooldown)
+		return
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/brood = new brood_type(src.loc)
+	brood.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+	brood.GiveTarget(target)
+	brood.friends = friends
+	brood.faction = faction.Copy()
+	ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -55,17 +55,17 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = MOUSE_OPACITY_ICON
-	..(gibbed)
+	return ..()
 
 //A fragile but rapidly produced creature
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
-	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
+	desc = "Short-lived attack form of the hivelord. One isn't much of a threat, but..."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "Hivelordbrood"
-	icon_living = "Hivelordbrood"
-	icon_aggro = "Hivelordbrood"
-	icon_dead = "Hivelordbrood"
+	icon_state = "hivelord_brood"
+	icon_living = "hivelord_brood"
+	icon_aggro = "hivelord_brood"
+	icon_dead = "hivelord_brood"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 1
 	friendly_verb_continuous = "buzzes near"
@@ -93,10 +93,15 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(death)), 100)
+	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death(gibbed)
+	if (!gibbed)
+		new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
+	return ..()
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
