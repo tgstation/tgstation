@@ -23,7 +23,7 @@
 /obj/item/beacon/proc/turn_off()
 	icon_state = "beacon-off"
 	GLOB.teleportbeacons -= src
-	src.weak_reference = null
+	SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
 
 /obj/item/beacon/attack_self(mob/user)
 	enabled = !enabled
