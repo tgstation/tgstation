@@ -29,7 +29,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
 	desc = "Opens up the Path of Moon to you. \
-		Allows you to transmute 2 sheets of glass and a knife into an Lunar Blade. \
+		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
 		You can only create two at a time."
 	gain_text = "Under the light of the moon the laughter echoes."
 	next_knowledge = list(/datum/heretic_knowledge/moon_grasp)
@@ -42,7 +42,8 @@
 
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
-	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass."
+	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass, \
+		and hides your identity for a short duration."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
