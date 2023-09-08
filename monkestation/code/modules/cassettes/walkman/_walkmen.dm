@@ -1,5 +1,10 @@
 GLOBAL_LIST_INIT(parsed_audio, list())
 
+GLOBAL_LIST_INIT(youtube_exempt, list(
+	"walkman" = list(),
+	"dj-station" = list()
+))
+
 #define sound_to(target, sound) target << (sound)
 #define NEXT_SONG_USE_TIMER (5 SECONDS)
 /obj/item/device/walkman
@@ -96,6 +101,11 @@ GLOBAL_LIST_INIT(parsed_audio, list())
 /obj/item/device/walkman/proc/break_sound()
 	if(link_play)
 		listener.tgui_panel?.stop_music()
+		GLOB.youtube_exempt["walkman"] -= listener
+		if(GLOB.dj_booth && GLOB.dj_broadcast)
+			var/obj/machinery/cassette/dj_station/dj = GLOB.dj_booth
+			if(iscarbon(current_listener))
+				dj.check_solo_broadcast(current_listener)
 		return
 	var/sound/break_sound = sound(null, 0, 0, CHANNEL_WALKMAN)
 	break_sound.priority = 255
@@ -175,6 +185,7 @@ GLOBAL_LIST_INIT(parsed_audio, list())
 							current_song_duration = data["duration"]
 
 						GLOB.parsed_audio["[web_sound_input]"] = data
+					GLOB.youtube_exempt["walkman"] |= listener
 					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					START_PROCESSING(SSprocessing, src)
 					link_play = TRUE
@@ -199,6 +210,7 @@ GLOBAL_LIST_INIT(parsed_audio, list())
 					if(time_left > 0)
 						music_extra_data["start"] = music_extra_data["duration"] - time_left
 
+					GLOB.youtube_exempt["walkman"] |= listener
 					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					START_PROCESSING(SSprocessing, src)
 					link_play = TRUE
