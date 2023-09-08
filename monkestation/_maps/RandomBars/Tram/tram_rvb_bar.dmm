@@ -1,14 +1,21 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ax" = (
-/obj/structure/table,
-/obj/item/storage/bag/tray,
-/obj/item/kitchen/rollingpin,
-/obj/item/clothing/head/utility/chefhat{
-	color = "#AF2020";
-	name = "blood-red chef's hat"
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
 	},
-/turf/open/floor/iron/kitchen/small,
-/area/station/service/kitchen)
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "aG" = (
 /obj/machinery/vending/snack,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -186,8 +193,8 @@
 	dir = 8
 	},
 /obj/machinery/atm{
-	pixel_y = 0;
-	pixel_x = 30
+	pixel_x = 30;
+	pixel_y = 0
 	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
@@ -744,50 +751,22 @@
 /obj/effect/turf_decal/trimline/white/corner,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"mJ" = (
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "mO" = (
-/obj/structure/chair/stool/bar/directional/south{
-	color = "#0000FF";
-	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/rollingpin,
+/obj/item/clothing/head/utility/chefhat{
+	color = "#AF2020";
+	name = "blood-red chef's hat"
 	},
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"mP" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/dark{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/commons/lounge)
-"mP" = (
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/clothing/head/cowboy/white{
-	color = "#2020AF";
-	name = "the blue bartender's ten-gallon" "
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/side{
@@ -805,9 +784,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
-"mX" = (
-/turf/closed/wall,
-/area/space)
 "mZ" = (
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
@@ -2057,8 +2033,8 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_w = 8
+	pixel_w = 8;
+	pixel_x = 7
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2301,8 +2277,8 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/duct,
 /obj/machinery/atm{
-	pixel_y = 0;
-	pixel_x = -30
+	pixel_x = -30;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3590,7 +3566,6 @@ QC
 (9,1,1) = {"
 zk
 zk
-mX
 TH
 TH
 TH
@@ -3600,7 +3575,8 @@ TH
 TH
 TH
 TH
-mJ
+TH
+mZ
 sj
 Ul
 XP
@@ -3631,7 +3607,7 @@ IB
 Di
 rV
 CD
-ax
+mO
 xX
 Co
 ib
@@ -3981,7 +3957,7 @@ Zu
 By
 MO
 ml
-mO
+ax
 pb
 yu
 NM
@@ -4008,7 +3984,7 @@ Zu
 Gi
 Tb
 RP
-mO
+ax
 OG
 tT
 Jp
@@ -4035,7 +4011,7 @@ cZ
 LW
 bo
 oc
-mO
+ax
 OG
 ox
 Ww
