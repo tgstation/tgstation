@@ -39035,6 +39035,7 @@
 	dir = 8;
 	id = "mining"
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
 "mPe" = (
