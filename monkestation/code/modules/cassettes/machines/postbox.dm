@@ -6,6 +6,9 @@
 	icon_state = "postbox"
 
 	max_integrity = 100000 //lol
+	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE
+	density = TRUE
 
 
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
