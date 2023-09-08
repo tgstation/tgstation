@@ -364,7 +364,7 @@
 
 /datum/station_trait/random_event_weight_modifier/wise_cows
 	name = "Wise Cow Invasion"
-	report_message = "Bluespace harmonic readings show unusual interpolative readings between your sector and agricultural sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
+	report_message = "Bluespace harmonic readings show unusual interpolative signals between your sector and agricultural sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
 	event_control_path = /datum/round_event_control/wisdomcow
