@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(parsed_audio, list())
+
 #define sound_to(target, sound) target << (sound)
 #define NEXT_SONG_USE_TIMER (5 SECONDS)
 /obj/item/device/walkman
@@ -140,44 +142,68 @@
 				///all extra data from the youtube-dl really want the name
 				var/list/music_extra_data = list()
 				web_sound_input = trim(current_playlist[pl_index])
-				if(time_left > 0)
-					web_sound_input = "[web_sound_input]&t=[current_song_duration - time_left]s"
-				///scrubbing the input before putting it in the shell
-				var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-				///putting it in the shell
-				var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
-				///any errors
-				var/errorlevel = output[SHELLEO_ERRORLEVEL]
-				///the standard output
-				var/stdout = output[SHELLEO_STDOUT]
-				if(!errorlevel)
-					///list for all the output data to go to
-					var/list/data
-					try
-						data = json_decode(stdout)
-					catch(var/exception/error) ///catch errors here
-						to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>", confidential = TRUE)
-						to_chat(src, "<span class='warning'>[error]: [stdout]</span>", confidential = TRUE)
-						return
+				if(!(web_sound_input in GLOB.parsed_audio))
+					///scrubbing the input before putting it in the shell
+					var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
+					///putting it in the shell
+					var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
+					///any errors
+					var/errorlevel = output[SHELLEO_ERRORLEVEL]
+					///the standard output
+					var/stdout = output[SHELLEO_STDOUT]
+					if(!errorlevel)
+						///list for all the output data to go to
+						var/list/data
+						try
+							data = json_decode(stdout)
+						catch(var/exception/error) ///catch errors here
+							to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>", confidential = TRUE)
+							to_chat(src, "<span class='warning'>[error]: [stdout]</span>", confidential = TRUE)
+							return
 
-					if (data["url"])
-						web_sound_url = data["url"]
-						music_extra_data["start"] = data["start_time"]
-						music_extra_data["end"] = data["end_time"]
-						music_extra_data["link"] = data["webpage_url"]
-						music_extra_data["title"] = data["title"]
+						if (data["url"])
+							web_sound_url = data["url"]
+							music_extra_data["start"] = data["start_time"]
+							music_extra_data["end"] = data["end_time"]
+							music_extra_data["link"] = data["webpage_url"]
+							music_extra_data["title"] = data["title"]
+							if(music_extra_data["start"])
+								time_left = data["duration"] - music_extra_data["start"]
+							else
+								time_left = data["duration"]
+
+							current_song_duration = data["duration"]
+
+						GLOB.parsed_audio["[web_sound_input]"] = data
+					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					START_PROCESSING(SSprocessing, src)
+					link_play = TRUE
+					paused = FALSE
+					return
+				else
+					var/list/data = GLOB.parsed_audio["[web_sound_input]"]
+					web_sound_url = data["url"]
+					music_extra_data["start"] = data["start_time"]
+					music_extra_data["end"] = data["end_time"]
+					music_extra_data["link"] = data["webpage_url"]
+					music_extra_data["title"] = data["title"]
+					if(time_left <= 0)
 						if(music_extra_data["start"])
 							time_left = data["duration"] - music_extra_data["start"]
 						else
 							time_left = data["duration"]
 
-						current_song_duration = data["duration"]
+					current_song_duration = data["duration"]
+					music_extra_data["duration"] = data["duration"]
 
-				listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
-				START_PROCESSING(SSprocessing, src)
-				link_play = TRUE
-				paused = FALSE
-				return
+					if(time_left > 0)
+						music_extra_data["start"] = music_extra_data["duration"] - time_left
+
+					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					START_PROCESSING(SSprocessing, src)
+					link_play = TRUE
+					paused = FALSE
+					return
 
 			else
 				current_song = sound(current_playlist[pl_index], 0, 0, CHANNEL_WALKMAN, volume)
@@ -225,7 +251,7 @@
 	current_playlist.Cut()
 	current_songnames.Cut()
 	user.put_in_hands(tape)
-	paused = TRUE
+	pause()
 	tape = null
 	time_left = 0
 	current_song_duration = 0

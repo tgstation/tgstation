@@ -93,6 +93,7 @@
 		if("url")
 			///the input of the videos ID
 			var/url = stripped_input(usr, "Insert the ID of the video in question (characters after the =):", no_trim = TRUE)
+			var/list/data
 			///the REGEX used for determining if its a valid ID or not
 			var/static/regex/link_check = regex(@"^[a-zA-Z0-9_.-]{11}$")
 			if(!link_check.Find(url))
@@ -106,23 +107,26 @@
 			var/list/music_extra_data = list()
 			///trimming the url to prevent any missed errors
 			var/url2 = trim(url_stuck)
-			///scrub the url before passing it through a shell
-			var/shell_scrubbed_input = shell_url_scrub(url2)
-			///the command being sent to the shell after being scrubbed
-			var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
-			///any errors
-			var/errorlevel = output[SHELLEO_ERRORLEVEL]
-			///the standard output
-			var/stdout = output[SHELLEO_STDOUT]
-			///list for all the youtube-dl data
-			var/list/data
-			if(!errorlevel)
-				try
-					data = json_decode(stdout)
-				catch(var/exception/error) /// any errors are caught here
-					CRASH("<span class='warning'>[error]: [stdout]</span>")
-				if (data["url"])
-					music_extra_data["title"] = data["title"]
+			if(!(url2 in GLOB.parsed_audio))
+				///scrub the url before passing it through a shell
+				var/shell_scrubbed_input = shell_url_scrub(url2)
+				///the command being sent to the shell after being scrubbed
+				var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
+				///any errors
+				var/errorlevel = output[SHELLEO_ERRORLEVEL]
+				///the standard output
+				var/stdout = output[SHELLEO_STDOUT]
+				if(!errorlevel)
+					try
+						data = json_decode(stdout)
+					catch(var/exception/error) /// any errors are caught here
+						CRASH("<span class='warning'>[error]: [stdout]</span>")
+					if (data["url"])
+						music_extra_data["title"] = data["title"]
+					GLOB.parsed_audio["[url2]"] = data
+			else
+				data = GLOB.parsed_audio["[url2]"]
+
 			if(tape.flipped == FALSE)
 				if(length(tape.songs["side1"]) >= 7)
 					return
