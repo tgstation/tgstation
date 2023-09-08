@@ -43,7 +43,7 @@ GLOBAL_VAR(dj_booth)
 	if(waiting_for_yield)
 		return
 
-	time_left -= FLOOR(seconds_per_tick)
+	time_left -= FLOOR(seconds_per_tick, 1)
 	if(time_left <= 0 && broadcasting)
 		next_song()
 
