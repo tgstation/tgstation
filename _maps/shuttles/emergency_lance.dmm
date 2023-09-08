@@ -370,7 +370,7 @@
 /area/shuttle/escape)
 "kx" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side{
@@ -387,7 +387,7 @@
 	},
 /area/shuttle/escape/brig)
 "kN" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
@@ -967,8 +967,8 @@
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray,
+/obj/item/surgery_tray{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1250,7 +1250,7 @@
 "MC" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -1577,7 +1577,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Xz" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)

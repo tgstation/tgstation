@@ -116,7 +116,7 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc, src)
+		var/obj/item/food/deadmouse/mouse = new(loc, /* starting_reagent_purity = */ null, /* no_base_reagents = */ FALSE, /* dead_critter = */ src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -301,7 +301,7 @@
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload, mob/living/basic/mouse/dead_critter)
+/obj/item/food/deadmouse/Initialize(mapload, starting_reagent_purity, no_base_reagents, mob/living/basic/mouse/dead_critter)
 	. = ..()
 	if(dead_critter)
 		body_color = dead_critter.body_color
