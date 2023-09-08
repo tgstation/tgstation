@@ -188,8 +188,8 @@ GLOBAL_VAR(dj_booth)
 
 	for(var/mob/dead/observer/observe as anything in GLOB.current_observers_list)
 		if(!(observe.client in active_listeners))
-			active_listeners |=	anything.client
-			new_listeners |= anything.client
+			active_listeners |=	observe.client
+			new_listeners |= observe.client
 
 	if(!length(active_listeners))
 		return
