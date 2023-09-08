@@ -642,6 +642,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if (vomit_flags & MOB_VOMIT_COLOR_NEBULA)
 		throw_up = new /obj/effect/decal/cleanable/vomit/nebula(src, vomiter.get_static_viruses())
+	else if(vomit_flags & MOB_VOMIT_COLOR_NANITES)
+		throw_up = new /obj/effect/decal/cleanable/vomit/nanites(src, vomiter.get_static_viruses())
+	else if(vomit_flags & MOB_VOMIT_COLOR_PURPLE)
+		throw_up = new /obj/effect/decal/cleanable/vomit/purple(src, vomiter.get_static_viruses())
+	else if (vomit_flags & MOB_VOMIT_COLOR_TOXIC)
+		throw_up = new /obj/effect/decal/cleanable/vomit/toxic(src, vomiter.get_static_viruses())
 	else
 		throw_up = new /obj/effect/decal/cleanable/vomit(src, vomiter.get_static_viruses())
 
@@ -650,16 +656,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		throw_up = locate() in src
 	if(isnull(throw_up))
 		return
-
-	// Apply the proper icon set based on vomit type
-	if(vomit_flags & MOB_VOMIT_COLOR_PURPLE)
-		throw_up.icon_state = "vomitpurp_[pick(1,4)]"
-	else if (vomit_flags * MOB_VOMIT_COLOR_NANITES)
-		throw_up.icon_state = "vomitnanite_[pick(1,4)]"
-	else if (vomit_flags & MOB_VOMIT_COLOR_TOXIC)
-		throw_up.icon_state = "vomittox_[pick(1,4)]"
-
-	// otherwise, our initial icon state will take care of the rest.
 
 	if(!iscarbon(vomiter) || (purge_ratio == 0))
 		return

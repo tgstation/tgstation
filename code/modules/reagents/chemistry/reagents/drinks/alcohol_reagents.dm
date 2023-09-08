@@ -2143,7 +2143,7 @@
 		if(SPT_PROB(5, seconds_per_tick))
 			stored_teleports += rand(2, 6)
 			if(prob(70))
-				drinker.vomit(vomit_flags = (VOMIT_CATEGORY_COLORLESS | MOB_VOMIT_COLOR_PURPLE))
+				drinker.vomit(vomit_flags = (VOMIT_CATEGORY_COLOR_AGNOSTIC | MOB_VOMIT_COLOR_PURPLE))
 	return ..()
 
 /datum/reagent/consumable/ethanol/planet_cracker
