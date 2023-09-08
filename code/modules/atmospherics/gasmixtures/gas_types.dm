@@ -86,7 +86,7 @@
 	purchaseable = TRUE
 	base_value = 0.1
 	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
-	primary_color = "#d41010"
+	primary_color = "#ce4949"
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = GAS_CO2
@@ -109,7 +109,7 @@
 	rarity = 800
 	base_value = 1.5
 	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
-	primary_color = "#a75db6"
+	primary_color = "#76008e"
 
 /datum/gas/water_vapor
 	id = GAS_WATER_VAPOR
@@ -303,7 +303,7 @@
 	rarity = 1
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
-	primary_color = "#000000"
+	primary_color = "#969696"
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
