@@ -12,6 +12,17 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 
+	/// overlay when speaker is on
+	overlay_speaker_idle = null
+	/// overlay when recieving a message
+	overlay_speaker_active = null
+
+	/// overlay when mic is on
+	overlay_mic_idle = null
+	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
+	overlay_mic_active = null
+
+
 /obj/item/radio/radio_mic/Initialize(mapload)
 	. = ..()
 	frequency = FREQ_RADIO
