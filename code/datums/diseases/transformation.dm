@@ -58,9 +58,9 @@
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
 			return
-		if(affected_mob.notransform)
+		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
-		affected_mob.notransform = 1
+		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)

@@ -457,14 +457,14 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		entered_light.end_processing()
 	. = ..()
 	if(ismob(arrived))
-		var/mob/M = arrived
-		M.notransform = TRUE
+		var/mob/target = arrived
+		ADD_TRAIT(target, TRAIT_NO_TRANSFORM, REF(src))
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(ismob(gone))
-		var/mob/M = gone
-		M.notransform = FALSE
+		var/mob/target = gone
+		REMOVE_TRAIT(target, TRAIT_NO_TRANSFORM, REF(src))
 	if(istype(gone, /obj/machinery/light))
 		var/obj/machinery/light/exited_light = gone
 		exited_light.begin_processing()

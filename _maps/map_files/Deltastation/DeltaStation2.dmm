@@ -6286,8 +6286,8 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bBG" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -7909,7 +7909,9 @@
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
 	},
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9197,7 +9199,7 @@
 /area/station/medical/psychology)
 "ckB" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/clothing/suit/costume/ianshirt,
+/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian,
 /obj/item/bedsheet/ian,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
@@ -14308,7 +14310,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "dxo" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
@@ -15844,7 +15846,7 @@
 /area/station/cargo/lobby)
 "dRQ" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
@@ -22258,7 +22260,7 @@
 /area/station/security/checkpoint/supply)
 "fym" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -30041,7 +30043,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "huR" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
@@ -38906,7 +38908,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "jFJ" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -39889,10 +39893,10 @@
 "jRJ" = (
 /obj/machinery/defibrillator_mount/directional/south,
 /obj/item/radio/intercom/directional/west,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 11
 	},
 /obj/structure/table/reinforced/rglass,
@@ -47732,8 +47736,8 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lQj" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
@@ -48383,7 +48387,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "mbA" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/directional/south,
@@ -52504,7 +52508,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -58813,7 +58817,7 @@
 /area/station/commons/locker)
 "oOz" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/restraints/handcuffs,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -59358,7 +59362,7 @@
 	},
 /area/station/service/chapel)
 "oVI" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -59413,7 +59417,7 @@
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
@@ -64488,7 +64492,7 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
 "qgp" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/bot_assembly/medbot,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
@@ -68167,9 +68171,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "rff" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -70229,7 +70232,7 @@
 /area/station/engineering/atmos/pumproom)
 "rFm" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
@@ -77237,7 +77240,7 @@
 /area/station/engineering/atmos)
 "tsx" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -81533,7 +81536,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "uue" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron,
@@ -85138,7 +85141,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vnB" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Operating Room";
@@ -85556,7 +85559,7 @@
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
 "vtt" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -93154,7 +93157,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xqc" = (
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
@@ -93291,7 +93296,7 @@
 "xsj" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1

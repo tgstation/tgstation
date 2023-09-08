@@ -172,6 +172,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
 	var/list/datum/weakref/saviors = null
 
+	/// Cooldown for sending emergency alerts to the common radio channel
+	COOLDOWN_DECLARE(common_radio_cooldown)
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	gas_percentage = list()
@@ -322,7 +325,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/mob/living/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
 				continue
-			savior.client?.give_award(/datum/award/achievement/misc/theoretical_limits, savior)
+			savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
 		LAZYNULL(saviors)
 
 	if(prob(15))
@@ -523,7 +526,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			message = "[i*0.1]..."
 
-		radio.talk_into(src, message, emergency_channel)
+		radio.talk_into(src, message, emergency_channel, list(SPAN_COMMAND))
 
 		if(healed)
 			final_countdown = FALSE
@@ -949,6 +952,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count > 1)
 			child_targets_hit = targets_hit.Copy() //Pass by ref begone
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
+
+// For /datum/sm_delam to check if it should be sending an alert on common radio channel
+/obj/machinery/power/supermatter_crystal/proc/should_alert_common()
+	if(!COOLDOWN_FINISHED(src, common_radio_cooldown))
+		return FALSE
+
+	COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
+	return TRUE
 
 #undef BIKE
 #undef COIL

@@ -124,3 +124,6 @@
 	merge_type = /obj/item/stack/sticky_tape/surgical
 	greyscale_colors = "#70BAE7#BD6A62"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
+
+/obj/item/stack/sticky_tape/surgical/get_surgery_tool_overlay(tray_extended)
+	return "tape" + (tray_extended ? "" : "_out")

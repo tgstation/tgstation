@@ -65,7 +65,7 @@
 
 			if(shell && eyes && tongue && SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.set_species(/datum/species/snail)
-				affected_mob.client?.give_award(/datum/award/achievement/misc/snail, affected_mob)
+				affected_mob.client?.give_award(/datum/award/achievement/jobs/snail, affected_mob)
 				affected_mob.visible_message(span_warning("[affected_mob] turns into a snail!"), \
 				span_boldnotice("You turned into a snail person! You feel an urge to cccrrraaawwwlll..."))
 				cure()
