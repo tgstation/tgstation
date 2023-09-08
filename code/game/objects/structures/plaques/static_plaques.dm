@@ -69,8 +69,26 @@
 /obj/structure/plaque/static_plaque/tram/ui_static_data(mob/user)
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	var/list/data = list()
-	data["currentTram"] = tram.tram_registration
-	data["previousTram"] = tram.tram_history
+	var/list/current_tram = list()
+	var/list/previous_trams = list()
+
+	current_tram += list(list(
+		"serialNumber" = tram.tram_registration.serial_number,
+		"mfgDate" = tram.tram_registration.mfg_date,
+		"distanceTravelled" = tram.tram_registration.distance_travelled,
+		"tramCollisions" = tram.tram_registration.collisions,
+	))
+
+	for(var/datum/tram_mfg_info/previous_tram as anything in tram.tram_history)
+		previous_trams += list(list(
+		"serialNumber" = previous_tram.serial_number,
+		"mfgDate" = previous_tram.mfg_date,
+		"distanceTravelled" = previous_tram.distance_travelled,
+		"tramCollisions" = previous_tram.collisions,
+	))
+
+	data["currentTram"] = current_tram
+	data["previousTrams"] = previous_trams
 
 	return data
 
