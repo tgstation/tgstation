@@ -47,18 +47,22 @@
 		source.balloon_alert(user, "can't consume!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (isnull(golem_snack))
-		golem_snack = new(
-			/* loc = */ null,
-			/* starting_reagent_purity = */ null,
-			/* no_base_reagents = */ FALSE,
-			/* name = */ source.name,
-			/* consume_food = */ consume_on_eat,
-			/* food_buff = */ snack_type,
-			/* owner = */ parent,
-		)
-		RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
+		create_golem_snack(source)
 	golem_snack.attack(target, user, click_parameters)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Creates our golem snack atom instance
+/datum/component/golem_food/proc/create_golem_snack(atom/source)
+	golem_snack = new(
+		/* loc = */ null,
+		/* starting_reagent_purity = */ null,
+		/* no_base_reagents = */ FALSE,
+		/* name = */ source.name,
+		/* consume_food = */ consume_on_eat,
+		/* food_buff = */ snack_type,
+		/* owner = */ parent,
+	)
+	RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 
 /// Reference handling for abstract food object
 /datum/component/golem_food/proc/on_food_destroyed()
