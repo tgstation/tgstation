@@ -1,4 +1,4 @@
-#comment Repathing for ICTS
+#comment Repathing for Transport Subsystem
 
 /obj/structure/industrial_lift : /obj/structure/transport/linear{@OLD}
 /obj/structure/industrial_lift/public : /obj/structure/transport/linear/public{@OLD}

@@ -27,27 +27,7 @@
  * Generates the airlock's wire layout.
  */
 /obj/machinery/door/airlock/tram/get_wires()
-	return new /datum/wires/airlock/tram(src)
-
-/datum/wires/airlock/tram
-	dictionary_key = /datum/wires/airlock/tram
-	proper_name = "Tram Door"
-
-/datum/wires/airlock/tram/New(atom/holder)
-	. = ..()
-	wires = list(
-		WIRE_AI,
-		WIRE_BACKUP1,
-		WIRE_BACKUP2,
-		WIRE_OPEN,
-		WIRE_POWER1,
-		WIRE_POWER2,
-		WIRE_SAFETY,
-		WIRE_SHOCK,
-		WIRE_ZAP1,
-		WIRE_ZAP2,
-	)
-	add_duds(2)
+	return new /datum/wires/tram_door(src)
 
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
