@@ -43,9 +43,10 @@ GLOBAL_VAR(dj_booth)
 	if(waiting_for_yield)
 		return
 
-	time_left -= FLOOR(seconds_per_tick, 1)
 	if(time_left <= 0 && broadcasting)
 		next_song()
+
+	time_left -= round(seconds_per_tick)
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
@@ -68,6 +69,8 @@ GLOBAL_VAR(dj_booth)
 	inserted_tape = null
 	time_left = 0
 	current_song_duration = 0
+	pl_index = 0
+	current_playlist = list()
 	stop_broadcast(TRUE)
 
 /obj/machinery/cassette/dj_station/attackby(obj/item/weapon, mob/user, params)
@@ -88,6 +91,8 @@ GLOBAL_VAR(dj_booth)
 		inserted_tape = null
 		time_left = 0
 		current_song_duration = 0
+		pl_index = 0
+		current_playlist = list()
 		insert_tape(attacked)
 		if(broadcasting)
 			stop_broadcast(TRUE)
@@ -129,7 +134,7 @@ GLOBAL_VAR(dj_booth)
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
 	GLOB.dj_broadcast = TRUE
 	var/list/new_listeners = list()
-	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))
+	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	for(var/mob/living/carbon/anything as anything in GLOB.mob_living_list)
 		if(!(anything in people_with_signals))
 			if(!istype(anything))
@@ -161,6 +166,7 @@ GLOBAL_VAR(dj_booth)
 			active_listeners |=	anything.client
 			new_listeners |= anything.client
 
+	for(var/mob/dead/observer as anything in GLOB.current_observers_list)
 	if(!length(active_listeners))
 		return
 
@@ -181,7 +187,7 @@ GLOBAL_VAR(dj_booth)
 	else if(!istype(ear_item, /obj/item/radio/headset))
 		return
 
-	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))
+	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	if(!(source.z in viable_z) || !source.client)
 		return
 
@@ -293,7 +299,7 @@ GLOBAL_VAR(dj_booth)
 			return
 	else if(!istype(ear_slot, /obj/item/radio/headset))
 		return
-	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))
+	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	if(!(new_player.z in viable_z))
 		return
 

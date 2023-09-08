@@ -133,7 +133,7 @@
 				tape.songs["side1"] += url_stuck
 				tape.song_names["side1"] += data["title"]
 			else
-				if(length(tape.songs["side1"]) >= 7)
+				if(length(tape.songs["side2"]) >= 7)
 					return
 				tape.songs["side2"] += url_stuck
 				tape.song_names["side2"] += data["title"]

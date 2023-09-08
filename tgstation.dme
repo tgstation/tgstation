@@ -5692,6 +5692,7 @@
 #include "monkestation\code\modules\cassettes\machines\dj_station.dm"
 #include "monkestation\code\modules\cassettes\machines\portable_mixer.dm"
 #include "monkestation\code\modules\cassettes\machines\postbox.dm"
+#include "monkestation\code\modules\cassettes\machines\radio_mic.dm"
 #include "monkestation\code\modules\cassettes\machines\stationary_mixer.dm"
 #include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"
 #include "monkestation\code\modules\client\preference_savefile.dm"
