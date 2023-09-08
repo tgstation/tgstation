@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes creamatorium not producing any suspicious ice cream, and fixes a dead mouse related harrdel"

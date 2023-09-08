@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Traitors, Changelings, Heretics, Wizards, Malfunctioning AIs, and Ninjas can now all reject their original objectives and provide one of their own in its place. A Heretic doing this will no longer be able to ascend."
-  - rscadd: "\"Custom\" objectives which aren't mechanically tracked will no longer report success or failure upon round end."
-  - qol: "Space Ninja spider charges will now display where they can be detonated when examined, if you are a ninja."

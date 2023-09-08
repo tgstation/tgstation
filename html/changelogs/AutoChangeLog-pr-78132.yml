@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Getting a node researched now properly makes it no longer hidden."
-  - bugfix: "Ninjas draining RD servers now drains it from the connected techweb, rather than sniping Science."
-  - balance: "Machines will first try to connect to a techweb with servers on their z-level, with the Science techweb remaining as fallback."
-  - rscadd: "Oldstation RND, comes with their own Techweb and special surgery to gain research points through dissecting Xenomorphs."

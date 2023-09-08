@@ -252,3 +252,42 @@
   vinylspiders:
   - bugfix: leash unit test will time out less often and increases the timer until
       it is considered 'timed out', to reduce false CI failures
+2023-09-08:
+  Deadgebert:
+  - balance: gas mixer output now accurate to set ratio regardless of input temperatures
+  Ghommie:
+  - image: The glow shoes from the ClothesMate now actually glow and can be recolored,
+      even with a spraycan.
+  - spellcheck: Corrected the name of the telescopic fishing rod to "telescopic fishing
+      rod" from the more generic "fishing rod"
+  Jacquerel:
+  - rscadd: Traitors, Changelings, Heretics, Wizards, Malfunctioning AIs, and Ninjas
+      can now all reject their original objectives and provide one of their own in
+      its place. A Heretic doing this will no longer be able to ascend.
+  - rscadd: '"Custom" objectives which aren''t mechanically tracked will no longer
+      report success or failure upon round end.'
+  - qol: Space Ninja spider charges will now display where they can be detonated when
+      examined, if you are a ninja.
+  JohnFulpWillard:
+  - bugfix: Getting a node researched now properly makes it no longer hidden.
+  - bugfix: Ninjas draining RD servers now drains it from the connected techweb, rather
+      than sniping Science.
+  - balance: Machines will first try to connect to a techweb with servers on their
+      z-level, with the Science techweb remaining as fallback.
+  - rscadd: Oldstation RND, comes with their own Techweb and special surgery to gain
+      research points through dissecting Xenomorphs.
+  LT3:
+  - bugfix: Meteors no longer take damage from crossing certain unoccupied turfs
+  Sealed101:
+  - balance: colossus' near-death attack now starts after a 0.5 seconds delay
+  carlarctg:
+  - bugfix: Cauteries now have 'heat', like lighters, welders, etc.
+  - qol: You can smoke with a space helmet as long as you have internals on.
+  cnleth:
+  - bugfix: Megafauna now correctly prints the victim's name after a kill
+  san7890:
+  - refactor: If you transform into another mob and notice bugs with interacting with
+      the game world, please create a bug report as this framework was recently refactored.
+  vinylspiders:
+  - bugfix: fixes creamatorium not producing any suspicious ice cream, and fixes a
+      dead mouse related harrdel
