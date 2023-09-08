@@ -166,7 +166,7 @@
  *  A simple proc to force a type of wound onto this mob. If you just want to force a specific mainline (fractures, bleeding, etc.) wound, you only need to care about the first 3 args.
  *
  * Args:
- * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
+ * * wounding_type: The wounding_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
  * * obj/item/bodypart/limb: The limb we wil be applying the wound to. If null, a random bodypart will be picked.
  * * min_severity: The minimum severity that will be considered.
  * * max_severity: The maximum severity that will be considered.
@@ -178,11 +178,11 @@
  * Returns:
  * A new wound instance if the application was successful, null otherwise.
 */
-/mob/living/carbon/proc/cause_wound_of_type_and_severity(wound_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source)
+/mob/living/carbon/proc/cause_wound_of_type_and_severity(wounding_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
-	var/list/type_list = wound_type
+	var/list/type_list = wounding_type
 	if (!islist(type_list))
 		type_list = list(type_list)
 
@@ -191,20 +191,20 @@
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
 /// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
-/mob/living/carbon/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, obj/item/bodypart/limb, wound_source)
+/mob/living/carbon/proc/get_wound_threshold_of_wound_type(wounding_type, severity, default, obj/item/bodypart/limb, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
 	if (!limb)
 		return default
 
-	return limb.get_wound_threshold_of_wound_type(wound_type, severity, default, wound_source)
+	return limb.get_wound_threshold_of_wound_type(wounding_type, severity, default, wound_source)
 
 /**
  * A simple proc that gets the best wound to fit the criteria laid out, then returns its wound threshold.
  *
  * Args:
- * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
+ * * wounding_type: The wounding_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list of wounding_types.
  * * severity: The severity that will be considered.
  * * return_value_if_no_wound: If no wound is found, we will return this instead. (It is reccomended to use named args for this one, as its unclear what it is without)
  * * wound_source: The theoretical source of the wound. Nullable.
@@ -212,8 +212,8 @@
  * Returns:
  * return_value_if_no_wound if no wound is found - if one IS found, the wound threshold for that wound.
  */
-/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, return_value_if_no_wound, wound_source)
-	var/list/type_list = wound_type
+/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wounding_type, severity, return_value_if_no_wound, wound_source)
+	var/list/type_list = wounding_type
 	if (!islist(type_list))
 		type_list = list(type_list)
 

@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 	"[WOUND_SEVERITY_CRITICAL]"
 ))
 
-// ~wound categories
+// ~wound categories: wounding_types
 /// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
 #define WOUND_BLUNT "wound_blunt"
 /// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
@@ -166,8 +166,8 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 
 	var/list/datum/wound/wound_collection = list()
 
-	for (var/datum/wound/wound_type as anything in typecacheof(/datum/wound, FALSE, TRUE))
-		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+	for (var/datum/wound/wound_typepath as anything in typecacheof(/datum/wound, FALSE, TRUE))
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_typepath]
 		if (!pregen_data)
 			continue
 
@@ -182,19 +182,19 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 			wound_collection[series] = list()
 			series_list = wound_collection[series]
 
-		var/severity = "[(initial(wound_type.severity))]"
+		var/severity = "[(initial(wound_typepath.severity))]"
 		var/list/datum/wound/severity_list = series_list[severity]
 		if (isnull(severity_list))
 			series_list[severity] = list()
 			severity_list = series_list[severity]
 
-		severity_list[wound_type] = pregen_data.weight
+		severity_list[wound_typepath] = pregen_data.weight
 
 	return wound_collection
 
-/// A branching assoc list of (wound_type -> list(wound_series)).
+/// A branching assoc list of (wounding_type -> list(wound_series)).
 /// Allows for determining of which wound series are caused by what.
-GLOBAL_LIST_INIT(wound_types_to_series, list(
+GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	WOUND_BLUNT = list(
 		WOUND_SERIES_BONE_BLUNT_BASIC
 	),
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * severity_max to the highest wound you're willing to tolerate, and severity_pick_mode to WOUND_PICK_LOWEST_SEVERITY.
  *
  * Args:
- * * list/wound_types: A list of wound_types. Only wounds that accept these wound types will be considered.
+ * * list/wounding_types: A list of wounding_types. Only wounds that accept these wound types will be considered.
  * * obj/item/bodypart/part: The limb we are considering. Extremely important for biostates.
  * * severity_min: The minimum wound severity we will search for.
  * * severity_max = severity_min: The maximum wound severity we will search for.
@@ -238,17 +238,17 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * Returns:
  * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
-/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+/proc/get_corresponding_wound_type(list/wounding_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
-	var/list/wound_type_list = list()
-	for (var/wound_type as anything in wound_types)
-		wound_type_list += GLOB.wound_types_to_series[wound_type]
-	if (!length(wound_type_list))
+	var/list/wounding_type_list = list()
+	for (var/wounding_type as anything in wounding_types)
+		wounding_type_list += GLOB.wounding_types_to_series[wounding_types]
+	if (!length(wounding_type_list))
 		return null
 
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(wound_type_list))
+	for (var/series as anything in shuffle(wounding_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 
 		for (var/datum/wound/iterated_path as anything in wound_typepaths)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-			if (pregen_data.can_be_applied_to(part, wound_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
+			if (pregen_data.can_be_applied_to(part, wounding_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
 				paths_to_pick_from[iterated_path] = wound_typepaths[iterated_path]
 
 	return pick_weight(paths_to_pick_from) // we found our winners!
