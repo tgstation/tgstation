@@ -3528,6 +3528,7 @@
 #include "code\modules\events\ghost_role\nightmare.dm"
 #include "code\modules\events\ghost_role\operative.dm"
 #include "code\modules\events\ghost_role\revenant_event.dm"
+#include "code\modules\events\ghost_role\scrap_cyborg.dm"
 #include "code\modules\events\ghost_role\sentience.dm"
 #include "code\modules\events\ghost_role\sentient_disease.dm"
 #include "code\modules\events\ghost_role\slaughter_event.dm"
