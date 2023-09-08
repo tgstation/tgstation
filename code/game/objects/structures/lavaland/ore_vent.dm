@@ -275,9 +275,9 @@
 	for(var/mineral_count in 1 to mineral_breakdown.len)
 		var/datum/material/resource = mineral_breakdown[mineral_count]
 		if(mineral_count == mineral_breakdown.len)
-			ore_string += "and " + span_bold(resource.name) + "."
+			ore_string += "and " + span_bold(initial(resource.name)) + "."
 		else
-			ore_string += span_bold(resource.name) + ", "
+			ore_string += span_bold(initial(resource.name)) + ", "
 	if(user)
 		ore_string += "\nThis vent was first discovered by [user]."
 /**
