@@ -7,7 +7,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	anchored = FALSE
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/fishing_portal
+	circuit = /obj/item/circuitboard/machine/fishing_portal_generator
 
 	///The current fishing spot loaded in
 	var/datum/component/fishing_spot/active
