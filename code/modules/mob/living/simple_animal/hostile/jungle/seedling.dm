@@ -46,17 +46,33 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
+	pixel_x = -16
+	pixel_y = -14
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
-	var/mob/living/beam_debuff_target
-	var/solar_beam_identifier = 0
 
 /mob/living/basic/seedling/Initialize(mapload)
 	. = ..()
-	AddComponent(\
-		/datum/component/ranged_attacks,\
-		)
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/seed_attack = new(src)
+	seed_attack.Grant(src)
+
+/mob/living/basic/seedling/proc/change_combatant_state(state)
+	combatant_state = state
+	update_appearance(UPDATE_ICON)
+
+/mob/living/basic/seedling/update_icon_state()
+	. = ..()
+	if(stat == DEAD)
+		return
+	switch(combatant_state)
+		if(SEEDLING_STATE_NEUTRAL)
+			icon_state = "seedling"
+		if(SEEDLING_STATE_WARMUP)
+			icon_state = "seedling_charging"
+		if(SEEDLING_STATE_ACTIVE)
+			icon_state = "seedling_fire"
+
 /obj/projectile/seedling
 	name = "solar energy"
 	icon_state = "seedling"
@@ -75,7 +91,7 @@
 		return ..()
 
 	var/mob/living/living_target = target
-	if(faction_check_mob(living_target, exact_match = TRUE))
+	if(FACTION_JUNGLE in living_target.faction)
 		return
 
 	return ..()
@@ -86,29 +102,14 @@
 	icon = 'icons/effects/beam.dmi'
 	plane = LIGHTING_PLANE
 	layer = LIGHTING_PRIMARY_LAYER
-	duration = 5
+	duration = 5 SECONDS
 	randomdir = FALSE
 
-/mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
-	if(combatant_state == SEEDLING_STATE_NEUTRAL)
-		combatant_state = SEEDLING_STATE_WARMUP
-		SSmove_manager.stop_looping(src)
-		update_icons()
-		var/target_dist = get_dist(src,target)
-		var/living_target_check = isliving(target)
-		if(living_target_check)
-			if(target_dist > 7)//Offscreen check
-				SolarBeamStartup(target)
-				return
-			if(get_dist(src,target) >= 4 && prob(40))
-				SolarBeamStartup(target)
-				return
-		addtimer(CALLBACK(src, PROC_REF(Volley)), 5)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/SolarBeamStartup(mob/living/living_target)//It's more like requiem than final spark
 	if(combatant_state == SEEDLING_STATE_WARMUP && target)
 		combatant_state = SEEDLING_STATE_ACTIVE
-		living_target.apply_status_effect(/datum/status_effect/seedling_beam_indicator, src)
+//		living_target.apply_status_effect(/datum/status_effect/seedling_beam_indicator, src)
 		beam_debuff_target = living_target
 		playsound(src,'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 		if(get_dist(src,living_target) > 7)
@@ -138,26 +139,6 @@
 			return
 	AttackRecovery()
 
-/mob/living/simple_animal/hostile/jungle/seedling/proc/Volley()
-	if(combatant_state == SEEDLING_STATE_WARMUP && target)
-		combatant_state = SEEDLING_STATE_ACTIVE
-		update_icons()
-		var/datum/callback/cb = CALLBACK(src, PROC_REF(InaccurateShot))
-		for(var/i in 1 to 13)
-			addtimer(cb, i)
-		addtimer(CALLBACK(src, PROC_REF(AttackRecovery)), 14)
-
-/mob/living/simple_animal/hostile/jungle/seedling/proc/InaccurateShot()
-	if(!QDELETED(target) && combatant_state == SEEDLING_STATE_ACTIVE && !stat)
-		if(get_dist(src,target) <= 3)//If they're close enough just aim straight at them so we don't miss at point blank ranges
-			Shoot(target)
-			return
-		var/turf/our_turf = get_turf(src)
-		var/obj/projectile/seedling/readied_shot = new /obj/projectile/seedling(our_turf)
-		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
-		readied_shot.fire()
-		playsound(src, projectilesound, 100, TRUE)
-
 /mob/living/simple_animal/hostile/jungle/seedling/proc/AttackRecovery()
 	if(combatant_state == SEEDLING_STATE_ACTIVE)
 		combatant_state = SEEDLING_STATE_RECOVERY
@@ -176,7 +157,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(combatant_state == SEEDLING_STATE_ACTIVE && beam_debuff_target)
-		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)
+//		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)
 		beam_debuff_target = null
 		solar_beam_identifier = 0
 		AttackRecovery()
@@ -191,19 +172,45 @@
 				icon_state = "seedling_charging"
 			if(SEEDLING_STATE_ACTIVE)
 				icon_state = "seedling_fire"
-			if(SEEDLING_STATE_RECOVERY)
-				icon_state = "seedling"
 
-/mob/living/simple_animal/hostile/jungle/seedling/GiveTarget()
-	if(target)
-		if(combatant_state == SEEDLING_STATE_WARMUP || combatant_state == SEEDLING_STATE_ACTIVE)//So it doesn't 180 and blast you in the face while it's firing at someone else
-			return
-	return ..()
 
-/mob/living/simple_animal/hostile/jungle/seedling/LoseTarget()
-	if(combatant_state == SEEDLING_STATE_WARMUP || combatant_state == SEEDLING_STATE_ACTIVE)
-		return
-	return ..()
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling
+	name = "Solar Energy"
+	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	button_icon_state = "seedling"
+	desc = "Fire small beams of solar energy."
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/seedling
+	default_projectile_spread = 10
+	shot_count = 10
+	shot_delay = 0.2 SECONDS
+	///how long we must charge up before firing off
+	var/charge_up_timer = 3 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/basic/seedling/seed_owner = owner
+	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
+		if(feedback)
+			seed_owner.balloon_alert(seed_owner, "charging!")
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/Activate(atom/target)
+	var/mob/living/basic/seedling/seed_owner = owner
+	seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
+	addtimer(CALLBACK(src, PROC_REF(attack_sequence), owner, target), charge_up_timer)
+	StartCooldown()
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/attack_sequence(mob/living/firer, atom/target)
+	var/mob/living/basic/seedling/seed_owner = owner
+	seed_owner.change_combatant_state(state = SEEDLING_STATE_ACTIVE)
+	. = ..()
+	addtimer(CALLBACK(seed_owner, TYPE_PROC_REF(/mob/living/basic/seedling, change_combatant_state), SEEDLING_STATE_NEUTRAL), charge_up_timer)
 
 #undef SEEDLING_STATE_NEUTRAL
 #undef SEEDLING_STATE_WARMUP
