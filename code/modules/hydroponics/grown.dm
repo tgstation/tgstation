@@ -45,8 +45,8 @@
 
 /obj/item/food/grown/Initialize(
 		mapload,
-		/* starting_reagent_purity = */ null,
-		/* no_base_reagents = */ TRUE,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
 		obj/item/seeds/new_seed,
 	)
 	if(!tastes)
