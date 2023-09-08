@@ -227,7 +227,7 @@
 				output_loc,
 				/* starting_reagent_purity = */ null,
 				/* no_base_reagents = */ TRUE,
-				/* new_seed = */ mutated_seed
+				/* new_seed = */ mutated_seed,
 			)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
@@ -237,7 +237,12 @@
 				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
-			t_prod = new product(output_loc, /* starting_reagent_purity = */ null, /* no_base_reagents = */ FALSE, /* new_seed = */ src)
+			t_prod = new product(
+				output_loc,
+				/* starting_reagent_purity = */ null,
+				/* no_base_reagents = */ TRUE,
+				/* new_seed = */ src,
+			)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
