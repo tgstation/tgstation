@@ -17,6 +17,10 @@
 GLOBAL_LIST_EMPTY(exodrones)
 /// All exodrone launchers.
 GLOBAL_LIST_EMPTY(exodrone_launchers)
+// Blacklist for exodrones
+GLOBAL_LIST_INIT(blacklisted_exodrone_types, typecacheof(list(
+	/obj/item/bodybag/bluespace
+	)))
 
 /// Exploration drone
 /obj/item/exodrone
@@ -72,7 +76,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	GLOB.exodrones += src
 	/// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types)
+	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types + GLOB.blacklisted_exodrone_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
