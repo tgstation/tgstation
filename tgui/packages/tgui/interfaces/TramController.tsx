@@ -253,7 +253,7 @@ export const TramController = (props, context) => {
                 content="RQST"
               />
               <Button
-                color={statusDR ? 'blue' : 'transparent'}
+                color={statusDR ? 'transparent' : 'blue'}
                 my={1}
                 lineHeight={2}
                 minWidth={6}
