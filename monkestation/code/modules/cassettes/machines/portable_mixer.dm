@@ -1,7 +1,7 @@
 /obj/item/device/cassette_deck
 	name = "Dual Cassette Deck"
 	desc = "A Dual Cassette Deck, popular for its ability to copy songs from a cassette. A relic of the old times"
-	icon = 'monkestation/icons/obj/walkman.dmi'
+	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
 	///The cassette that is being copied from

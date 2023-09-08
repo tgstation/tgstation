@@ -5689,6 +5689,7 @@
 #include "monkestation\code\modules\cassettes\cassette_approval.dm"
 #include "monkestation\code\modules\cassettes\random_cassette_selection.dm"
 #include "monkestation\code\modules\cassettes\machines\portable_mixer.dm"
+#include "monkestation\code\modules\cassettes\machines\postbox.dm"
 #include "monkestation\code\modules\cassettes\machines\stationary_mixer.dm"
 #include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"
 #include "monkestation\code\modules\client\preference_savefile.dm"

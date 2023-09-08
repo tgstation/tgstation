@@ -12,12 +12,12 @@ export const CassetteDeck = (props, context) => {
     <Window width={370} height={313}>
       <Window.Content>
         <Section
-          title="Song Selector"
+          title="Song Remover"
           buttons={
             <Button
               icon={'play'}
-              content={'Add Song to Cassette'}
-              onClick={() => act('toggle')}
+              content={'Remove Song From Cassette'}
+              onClick={() => act('remove')}
             />
           }>
           <LabeledList>
@@ -25,7 +25,7 @@ export const CassetteDeck = (props, context) => {
               <Dropdown
                 overflow-y="scroll"
                 width="240px"
-                options={songs.map((song) => song.name)}
+                options={songs.map((song) => song)}
                 disabled={active}
                 selected={track_selected || 'Select a Track'}
                 onSelected={(value) =>

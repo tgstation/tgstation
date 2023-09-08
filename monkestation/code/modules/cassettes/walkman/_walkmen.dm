@@ -3,7 +3,7 @@
 /obj/item/device/walkman
 	name = "walkman"
 	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
-	icon = 'monkestation/icons/obj/walkman.dmi'
+	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/walkman/play_pause,/datum/action/item_action/walkman/next_song,/datum/action/item_action/walkman/restart_song)
@@ -327,7 +327,7 @@
 */
 
 /datum/action/item_action/walkman
-	button_icon = 'monkestation/icons/obj/walkman.dmi'
+	button_icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/walkman/New()

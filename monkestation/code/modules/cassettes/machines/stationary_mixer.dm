@@ -1,14 +1,14 @@
 /obj/machinery/cassette/adv_cassette_deck
 	name = "Advanced Cassette Deck"
 	desc = "A more advanced less portable Cassette Deck. Useful for recording songs from our generation, or customizing the style of your cassettes."
-	icon = 'monkestation/icons/obj/machines/adv_cassette_deck.dmi'
+	icon ='monkestation/code/modules/cassettes/icons/adv_cassette_deck.dmi'
 	icon_state = "cassette_deck"
 	density = TRUE
 	pass_flags = PASSTABLE
 	///cassette tape used in adding songs or customizing
 	var/obj/item/device/cassette_tape/tape
-	///Selection used to add the jukebox as a song to a cassette
-	var/datum/track/selection = null
+	///Selection used to remove songs
+	var/selection
 
 /obj/machinery/cassette/adv_cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
 	..()
@@ -57,9 +57,13 @@
 	///all data for the tgui
 	var/list/data = list()
 	data["songs"] = list()
+	if(tape)
+		var/text = "[tape.flipped ? "side2" : "side1"]"
+		for(var/song_name in tape.song_names["[text]"])
+			data["songs"] += song_name
 	data["track_selected"] = null
 	if(selection)
-		data["track_selected"] = selection.song_name
+		data["track_selected"] = selection
 	return data
 
 /obj/machinery/cassette/adv_cassette_deck/ui_act(action, list/params)
@@ -68,31 +72,17 @@
 		return
 
 	switch(action)
-		if("toggle")
-			if(QDELETED(src))
-				return
+		if("remove")
 			if(!tape)
-				to_chat(usr,"Error: No Cassette Inserted Please Insert a Cassette!")
 				return
-			if(!selection)
-				to_chat(usr,"Error: No Song Selected, Please select a song")
-				return
-			if(tape.flipped == FALSE)
-				if(length(tape.songs["side1"]) >= 7)
-					to_chat(usr, "Error: Cassette full please flip or insert a new cassette")
-				tape.songs["side1"] += selection.song_path
-				tape.song_names["side1"] += selection.song_name
-			else
-				if(length(tape.songs["side2"]) >= 7)
-					to_chat(usr, "Error: Cassette full please flip or insert a new cassette")
-				tape.songs["side2"] += selection.song_path
-				tape.song_names["side2"] += selection.song_name
+			var/text = "[tape.flipped ? "side2" : "side1"]"
+			var/list/found_list = tape.song_names["[text]"]
+			var/number = found_list.Find(selection)
+			tape.song_names["[text]"] -= tape.song_names["[text]"][number]
+			tape.songs["[text]"] -= tape.songs["[text]"][number]
+
 		if("select_track")
-			///list of available songs
-			var/list/available = list()
-			///the selected song from the jukebox
-			var/selected = params["track"]
-			selection = available[selected]
+			selection = params["track"]
 			return TRUE
 		if("eject")
 			if(!tape)
