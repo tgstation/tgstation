@@ -213,9 +213,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!lighting_text)
 		return ..()
 
+	var/mob/living/carbon/carbuser = user
+
+	if(!istype(carbuser))
+		carbuser = null
+
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!air || !air.has_gas(/datum/gas/oxygen, 1) || !carbuser?.can_breathe_helmet()) //or oxygen on a tile to burn
 			to_chat(user, span_notice("Your [name] needs a source of oxygen to burn."))
 			return ..()
 
@@ -348,9 +353,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/process(seconds_per_tick)
 	var/mob/living/user = isliving(loc) ? loc : null
 	user?.ignite_mob()
+
+	var/mob/living/carbon/carbuser
+	if(user)
+		carbuser = user
+
+	if(carbuser && !istype(carbuser))
+		carbuser = null
+
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!air || !air.has_gas(/datum/gas/oxygen, 1) || !carbuser?.can_breathe_helmet())  //or oxygen on a tile to burn
 			extinguish()
 			return
 
