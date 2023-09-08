@@ -5,3 +5,4 @@
 /obj/structure/industrial_lift/debug : /obj/structure/transport/linear/debug{@OLD}
 /obj/structure/industrial_lift/tram : /obj/structure/transport/linear/tram{@OLD}
 /obj/effect/landmark/lift_id : /obj/effect/landmark/transport/transport_id{@OLD}
+/obj/effect/landmark/tram/nav/immovable_rod : /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod{@OLD}
