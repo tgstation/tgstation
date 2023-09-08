@@ -127,7 +127,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L || L.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
-	celebrate_kill()
+	celebrate_kill(L)
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)

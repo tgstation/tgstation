@@ -19,5 +19,5 @@
 	custom_materials = null
 
 /obj/item/disk/tech_disk/debug/Initialize(mapload)
-	stored_research = SSresearch.admin_tech
+	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
 	return ..()
