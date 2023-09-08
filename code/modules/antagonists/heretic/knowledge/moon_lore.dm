@@ -35,7 +35,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/moon_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/iron = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	route = PATH_MOON
@@ -82,7 +82,7 @@
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
 	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Moon Blade. \
-		When triggered, the victim is confused and will be disarmed."
+		When triggered, the victim is confused, slowed and pacified for a short duration."
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \
 		but when the night came its smile would dull forced to gaze on the earth."

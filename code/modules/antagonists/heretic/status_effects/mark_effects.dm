@@ -257,4 +257,6 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.adjust_confusion(30 SECONDS)
+		carbon_owner.add_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
+		carbon_owner.reagents.add_reagent(/datum/reagent/pax, 3)
 	return ..()
