@@ -227,7 +227,7 @@
 				output_loc,
 				/* starting_reagent_purity = */ null,
 				/* no_base_reagents = */ TRUE,
-				mutated_seed
+				/* new_seed = */ mutated_seed
 			)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5

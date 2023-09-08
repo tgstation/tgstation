@@ -171,7 +171,7 @@
 		mapload,
 		/* starting_reagent_purity = */ null,
 		/* no_base_reagents = */ TRUE,
-		obj/item/seeds/new_seed,
+		/* new_seed = */ obj/item/seeds/new_seed,
 	)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
