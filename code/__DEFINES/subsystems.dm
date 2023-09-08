@@ -119,8 +119,11 @@
 /// Subsystem initialized sucessfully.
 #define SS_INIT_SUCCESS 2
 
-/// Successful, but don't print anything. Useful if subsystem was disabled.
+/// If your system doesn't need to be initialized (by being disabled or something)
 #define SS_INIT_NO_NEED 3
+
+/// Succesfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
+#define SS_INIT_NO_MESSAGE 4
 
 //! ### SS initialization load orders
 // Subsystem init_order, from highest priority to lowest priority

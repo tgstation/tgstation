@@ -57128,7 +57128,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/item/clothing/suit/costume/nerdshirt,
+/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/gamer,
 /obj/item/clothing/head/fedora,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)

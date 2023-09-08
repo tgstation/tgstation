@@ -367,7 +367,7 @@
 	 */
 	var/list/prefill_flavours
 
-/obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
+/obj/item/food/icecream/Initialize(mapload, starting_reagent_purity, no_base_reagents, list/prefill_flavours)
 	if(prefill_flavours)
 		src.prefill_flavours = prefill_flavours
 	return ..()
