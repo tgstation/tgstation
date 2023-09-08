@@ -169,8 +169,8 @@
 
 /obj/item/food/grown/banana/bunch/Initialize(
 		mapload,
-		/* starting_reagent_purity = */ null,
-		/* no_base_reagents = */ TRUE,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
 		obj/item/seeds/new_seed,
 	)
 	. = ..()
