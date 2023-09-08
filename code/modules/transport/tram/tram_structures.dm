@@ -156,6 +156,7 @@
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
+		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, params)

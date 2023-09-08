@@ -82,6 +82,7 @@
 	desc = "A lightweight thermoplastic flooring."
 	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_dark"
+	base_icon_state = "tram_dark"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 150
@@ -105,6 +106,7 @@
 
 /obj/structure/thermoplastic/light
 	icon_state = "tram_light"
+	base_icon_state = "tram_light"
 	floor_tile = /obj/item/stack/thermoplastic/light
 
 /obj/structure/thermoplastic/examine(mob/user)
@@ -121,16 +123,15 @@
 	if(.) //received damage
 		update_appearance()
 
-/obj/structure/thermoplastic/update_overlays(updates = ALL)
+/obj/structure/thermoplastic/update_icon_state()
 	. = ..()
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio * 4, 1) * 25
-	cut_overlay(damage_overlay)
 	if(ratio > 75)
+		icon_state = base_icon_state
 		return
 
-	damage_overlay = mutable_appearance('icons/turf/tram.dmi', "damage[ratio]", (layer + 0.1))
-	. += damage_overlay
+	icon_state = "[base_icon_state]_damage[ratio]"
 
 /obj/structure/thermoplastic/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
