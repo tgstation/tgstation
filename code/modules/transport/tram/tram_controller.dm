@@ -326,7 +326,7 @@
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
-	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -342,7 +342,7 @@
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
-	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -369,7 +369,7 @@
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null
 	log_transport("TC: [specific_transport_id] Transport Controller needs new position data from the tram.")
-	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -689,6 +689,7 @@
 	var/cover_open = FALSE
 	/// If the cover is locked
 	var/cover_locked = TRUE
+	COOLDOWN_DECLARE(manual_command_cooldown)
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
@@ -967,6 +968,9 @@
 	if (.)
 		return
 
+	if(!COOLDOWN_FINISHED(src, manual_command_cooldown))
+		return
+
 	switch(action)
 
 		if("dispatch")
@@ -999,6 +1003,8 @@
 				controller_datum.set_status_code(BYPASS_SENSORS, FALSE)
 			else
 				controller_datum.set_status_code(BYPASS_SENSORS, TRUE)
+
+	COOLDOWN_START(src, manual_command_cooldown, 3 SECONDS)
 
 /obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"
