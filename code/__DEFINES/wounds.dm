@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 
 	var/list/wounding_type_list = list()
 	for (var/wounding_type as anything in wounding_types)
-		wounding_type_list += GLOB.wounding_types_to_series[wounding_types]
+		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 
