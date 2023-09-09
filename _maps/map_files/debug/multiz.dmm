@@ -137,7 +137,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "aW" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
@@ -683,9 +683,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1054,7 +1054,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "lT" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
@@ -1079,7 +1079,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "mG" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -1108,7 +1108,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "nS" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
@@ -1166,9 +1166,9 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /turf/open/floor/iron/edge{
 	dir = 4
@@ -1333,7 +1333,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "xK" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
@@ -1358,18 +1358,18 @@
 	preset_destination_names = list("2"="Bottom Floor","3"="Middle Floor","4"="Top Floor");
 	linked_elevator_id = "test_vator"
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "test_vator"
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "test_vator"
 	},
 /obj/machinery/light/floor,
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "zb" = (
@@ -1417,7 +1417,7 @@
 /area/station/engineering/storage)
 "Bm" = (
 /obj/structure/sign/warning/directional/east,
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
@@ -1881,9 +1881,9 @@
 /area/station/engineering/storage)
 "Vo" = (
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1929,9 +1929,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "test_vator";
 	elevator_mode = 1;
-	name = "Industrial Lift"
+	name = "Industrial Lift";
+	transport_linked_id = "test_vator"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1996,7 +1996,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "Zk" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
