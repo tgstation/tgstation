@@ -21931,9 +21931,7 @@
 /area/station/engineering/gravity_generator)
 "hYz" = (
 /obj/structure/transport/linear/tram,
-/obj/machinery/transport/tram_controller{
-	specific_transport_id = "bird_1"
-	},
+/obj/machinery/transport/tram_controller,
 /obj/structure/tram/solid,
 /turf/open/floor/tram,
 /area/station/security/tram)
@@ -35271,9 +35269,7 @@
 	specific_transport_id = "bird_1";
 	id = 1
 	},
-/obj/machinery/transport/destination_sign/indicator/directional/north{
-	specific_transport_id = "bird_1"
-	},
+/obj/machinery/transport/destination_sign/indicator/directional/north,
 /turf/open/floor/noslip,
 /area/station/security/tram)
 "mIg" = (
@@ -68045,9 +68041,7 @@
 	specific_transport_id = "bird_1";
 	id = 2
 	},
-/obj/machinery/transport/destination_sign/indicator/directional/north{
-	specific_transport_id = "bird_1"
-	},
+/obj/machinery/transport/destination_sign/indicator/directional/north,
 /turf/open/floor/noslip,
 /area/station/security/tram)
 "xrk" = (
