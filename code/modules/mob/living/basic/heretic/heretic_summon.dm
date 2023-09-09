@@ -22,7 +22,7 @@
 	response_harm_simple = "tear"
 	death_message = "implodes into itself."
 
-	combat_mode = TRUE
+	istate = ISTATE_HARM
 	ai_controller = null
 	speak_emote = list("screams")
 	gold_core_spawnable = NO_SPAWN

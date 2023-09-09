@@ -7,20 +7,24 @@
 /datum/wound/burn
 	name = "Burn Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
-	processes = TRUE
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
-	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
+
+/datum/wound/burn/flesh
+	name = "Burn (Flesh) Wound"
+	a_or_from = "from"
+	processes = TRUE
+
+	default_scar_file = FLESH_SCAR_FILE
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 
-		// Flesh damage vars
+	// Flesh damage vars
 	/// How much damage to our flesh we currently have. Once both this and infestation reach 0, the wound is considered healed
 	var/flesh_damage = 5
 	/// Our current counter for how much flesh regeneration we have stacked from regenerative mesh/synthflesh/whatever, decrements each tick and lowers flesh_damage
 	var/flesh_healing = 0
 
-		// Infestation vars (only for severe and critical)
+	// Infestation vars (only for severe and critical)
 	/// How quickly infection breeds on this burn if we don't have disinfectant
 	var/infestation_rate = 0
 	/// Our current level of infection
@@ -256,6 +260,17 @@
 /datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 
+/datum/wound_pregen_data/flesh_burn
+	abstract = TRUE
+
+	required_wounding_types = list(WOUND_BURN)
+	required_limb_biostate = BIO_FLESH
+
+	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
+
+/datum/wound/burn/get_limb_examine_description()
+	return span_warning("The flesh on this limb appears badly cooked.")
+
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate
 	name = "Second Degree Burns"
@@ -265,13 +280,19 @@
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_mulitplier_penalty = 1.1
-	threshold_minimum = 40
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/moderate
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
 
-/datum/wound/burn/severe
+/datum/wound_pregen_data/flesh_burn/second_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/moderate
+
+	threshold_minimum = 40
+
+/datum/wound/burn/flesh/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
 	treat_text = "Recommended immediate disinfection and excision of any infected skin, followed by bandaging and ointment."
@@ -279,7 +300,6 @@
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_mulitplier_penalty = 1.2
-	threshold_minimum = 80
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/severe
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
@@ -287,7 +307,14 @@
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
 
-/datum/wound/burn/critical
+/datum/wound_pregen_data/flesh_burn/third_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/severe
+
+	threshold_minimum = 80
+
+/datum/wound/burn/flesh/critical
 	name = "Catastrophic Burns"
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
 	treat_text = "Immediate surgical debriding of any infected skin, followed by potent tissue regeneration formula and bandaging."
@@ -296,7 +323,6 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_mulitplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
-	threshold_minimum = 140
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/critical
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
@@ -304,9 +330,38 @@
 	flesh_damage = 20
 	scar_keyword = "burncritical"
 
+/datum/wound_pregen_data/flesh_burn/fourth_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/critical
+
+	threshold_minimum = 140
+
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/severe/brand
 	name = "Holy Brand"
 	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+
+/datum/wound_pregen_data/flesh_burn/third_degree/holy
+	abstract = FALSE
+	can_be_randomly_generated = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/severe/brand
+/// special severe wound caused by the cursed slot machine.
+
+/datum/wound/burn/flesh/severe/cursed_brand
+	name = "Ancient Brand"
+	desc = "Patient is suffering extreme burns with oddly ornate brand markings, creating serious risk of infection and greatly reduced limb integrity."
+	examine_desc = "appears to have ornate symbols painfully branded into their flesh, leaving severe burns"
+	occur_text = "chars rapidly into a pattern that can only be described as an agglomeration of several financial symbols, burned into the flesh"
+
+/datum/wound/burn/flesh/severe/cursed_brand/get_limb_examine_description()
+	return span_warning("The flesh on this limb has several ornate symbols burned into it, with pitting throughout.")
+
+/datum/wound_pregen_data/flesh_burn/third_degree/cursed_brand
+	abstract = FALSE
+	can_be_randomly_generated = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/severe/cursed_brand

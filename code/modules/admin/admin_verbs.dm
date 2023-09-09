@@ -1081,7 +1081,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		if (QDELETED(segment)) // ffs mobs which replace themselves with other mobs
 			i--
 			continue
-		ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment

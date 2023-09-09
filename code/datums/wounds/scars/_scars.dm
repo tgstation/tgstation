@@ -47,6 +47,19 @@
  * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
  */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
+
+	if (!W.can_scar)
+		qdel(src)
+		return
+
+	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[W.type]
+	if (!pregen_data)
+		qdel(src)
+		return
+
+	required_limb_biostate = pregen_data.required_limb_biostate
+	check_any_biostates = pregen_data.require_any_biostate
+
 	limb = BP
 	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 
@@ -86,8 +99,8 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE, char_slot)
-	if(!IS_ORGANIC_LIMB(BP))
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD_UNJOINTED, char_slot, check_any_biostates = FALSE)
+	if(!BP.scarrable)
 		qdel(src)
 		return
 
