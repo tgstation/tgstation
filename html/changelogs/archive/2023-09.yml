@@ -291,3 +291,17 @@
   vinylspiders:
   - bugfix: fixes creamatorium not producing any suspicious ice cream, and fixes a
       dead mouse related harrdel
+2023-09-09:
+  CoiledLamb:
+  - image: updates medigel sprites
+  Jacquerel:
+  - balance: Traitors who are activated as sleeper agents or arrive late on the arrivals
+      shuttle will begin with more reputation and likely be able to immediately access
+      most of the uplink catalogue.
+  LT3:
+  - qol: Supermatter common channel alerts are less frequent if the crystal's integrity
+      is rising rapidly
+  Majkl-J:
+  - bugfix: The messenger app can now be used when laying down.
+  san7890:
+  - rscadd: Ever see a robot yawn? Don't worry, it makes sense now.
