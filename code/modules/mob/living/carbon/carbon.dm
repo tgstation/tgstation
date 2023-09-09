@@ -438,23 +438,26 @@
 		Stun(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+	var/need_mob_update
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		adjustToxLoss(-3)
+		need_mob_update = adjustToxLoss(-3, updating_health = FALSE)
 
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
 			if(harm)
-				adjustBruteLoss(3)
+				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
 		else
 			if(T)
 				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, starting_dir)
 		if (T?.is_blocked_turf())
 			break
+	if(need_mob_update) // so we only have to call updatehealth() once as opposed to n times
+		updatehealth()
 	return TRUE
 
 /**

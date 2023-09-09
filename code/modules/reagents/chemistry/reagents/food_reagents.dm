@@ -70,10 +70,10 @@
 	mytray.adjust_plant_health(round(volume * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(30, seconds_per_tick))
-		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		. = TRUE
-	..()
+		if(M.heal_bodypart_damage(brute = brute_heal * REM * seconds_per_tick, burn = burn_heal * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC))
+			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	. = ..()
@@ -125,9 +125,9 @@
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(M.satiety < MAX_SATIETY)
 		M.satiety += 30 * REM * seconds_per_tick
-	. = ..()
 
 /// The basic resource of vat growing.
 /datum/reagent/consumable/nutriment/protein
@@ -235,10 +235,10 @@
 	var/delayed_satiety_drain = 2 * CLOTHING_NUTRITION_GAIN
 
 /datum/reagent/consumable/nutriment/cloth_fibers/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(M.satiety < MAX_SATIETY)
 		M.adjust_nutrition(CLOTHING_NUTRITION_GAIN)
 		delayed_satiety_drain += CLOTHING_NUTRITION_GAIN
-	return ..()
 
 /datum/reagent/consumable/nutriment/cloth_fibers/on_mob_delete(mob/living/carbon/M)
 	M.adjust_nutrition(-delayed_satiety_drain)
@@ -252,14 +252,14 @@
 	brute_heal = 0
 	burn_heal = 0
 
-/datum/reagent/consumable/nutriment/mineral/on_mob_life(mob/living/carbon/eater, delta_time, times_fired)
-	current_cycle++
-	if (HAS_TRAIT(eater, TRAIT_ROCK_EATER) && !HAS_TRAIT(eater, TRAIT_NOHUNGER) && ishuman(eater))
-		var/mob/living/carbon/human/golem_eater = eater
-		golem_eater.adjust_nutrition(get_nutriment_factor() * REM * delta_time)
-	if(length(reagent_removal_skip_list))
-		return
-	holder.remove_reagent(type, metabolization_rate * delta_time)
+/datum/reagent/consumable/nutriment/mineral/on_mob_life(mob/living/carbon/eater, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(eater, TRAIT_ROCK_EATER)) // allow mobs who can eat rocks to do so
+		return ..()
+	else // otherwise just let them pass through the system
+		current_cycle++
+		if(length(reagent_removal_skip_list))
+			return
+		holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -284,10 +284,10 @@
 	M.AdjustSleeping(600)
 	. = TRUE
 
-/datum/reagent/consumable/sugar/overdose_process(mob/living/M, seconds_per_tick, times_fired)
-	M.AdjustSleeping(40 * REM * seconds_per_tick)
-	..()
-	. = TRUE
+/datum/reagent/consumable/sugar/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.AdjustSleeping(40 * REM * seconds_per_tick))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -328,6 +328,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	var/heating = 0
 	switch(current_cycle)
 		if(2 to 16)
@@ -349,7 +350,6 @@
 			if(isslime(M))
 				heating = rand(20, 25)
 	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
-	..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -363,32 +363,32 @@
 	default_container = /obj/item/reagent_containers/cup/bottle/frostoil
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	var/cooling = 0
 	switch(current_cycle)
-		if(1 to 15)
+		if(2 to 16)
 			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
 			if(isslime(M))
 				cooling = -rand(5, 20)
-		if(15 to 25)
+		if(16 to 266)
 			cooling = -20
 			if(isslime(M))
 				cooling = -rand(10, 20)
-		if(25 to 35)
+		if(26 to 36)
 			cooling = -30
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(15, 20)
-		if(35 to INFINITY)
+		if(36 to INFINITY)
 			cooling = -40
 			if(prob(5))
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(20, 25)
 	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
-	..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -447,10 +447,10 @@
 				victim.vomit()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(SPT_PROB(5, seconds_per_tick))
 			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
-	..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -502,19 +502,20 @@
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
 
-/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
-		if(SPT_PROB((min(current_cycle-1)/2, 12.5), seconds_per_tick))
-			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
-			M.Paralyze(10)
-			M.set_jitter_if_lower(20 SECONDS)
+	if(isvampire(affected_mob)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+		if(SPT_PROB(min((current_cycle-1)/2, 12.5), seconds_per_tick))
+			to_chat(affected_mob, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
+			if(affected_mob.Paralyze(10))
+				. = UPDATE_MOB_HEALTH
+			affected_mob.set_jitter_if_lower(20 SECONDS)
 	else
-		var/obj/item/organ/internal/liver/liver = M.get_organ_slot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				M.heal_bodypart_damage(brute = 1, burn = 1)
-				. = TRUE
+				if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
+					. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
@@ -544,11 +545,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	var/obj/item/organ/internal/liver/liver = M.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick, 0)
-		. = TRUE
-	..()
+		if(M.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
+			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
@@ -597,8 +598,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, seconds_per_tick, times_fired)
+	. = ..()
 	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
-	..()
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -683,8 +684,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
-	..()
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -754,9 +755,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.adjust_nutrition(-3 * REM * get_nutriment_factor() * seconds_per_tick)
-	..()
 
 ////Lavaland Flora Reagents////
 
@@ -770,17 +771,19 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(current_cycle >= 10)
-		M.Unconscious(40 * REM * seconds_per_tick, FALSE)
-		. = TRUE
+	. = ..()
+	var/need_mob_update
+	if(current_cycle > 10)
+		need_mob_update = M.Unconscious(40 * REM * seconds_per_tick, FALSE)
 	if(SPT_PROB(10, seconds_per_tick))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
 		M.adjustToxLoss(3*REM, updating_health = FALSE, required_biotype = affected_biotype)
 		M.adjustStaminaLoss(10*REM, updating_health = FALSE, required_biotype = affected_biotype)
 		M.set_eye_blur_if_lower(10 SECONDS)
-		. = TRUE
-	..()
+		need_mob_update = TRUE
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 
 /datum/reagent/consumable/tinlux
@@ -818,11 +821,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	if(SPT_PROB(55, seconds_per_tick))
-		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
-		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
-		. = TRUE
-	..()
+		need_mob_update = M.adjustBruteLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += M.adjustFireLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"
@@ -846,12 +851,12 @@
 		stomach.adjust_charge(reac_volume * 30)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(isethereal(M))
 		M.blood_volume += 1 * seconds_per_tick
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	return ..()
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
@@ -866,10 +871,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(M.disgust < 80)
 		M.adjust_disgust(10 * REM * seconds_per_tick)
-	..()
-	. = TRUE
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"
@@ -915,10 +919,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/char/overdose_process(mob/living/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(13, seconds_per_tick))
 		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/char)
-	..()
-	return
 
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"
@@ -1029,10 +1032,10 @@
 	default_container = /obj/item/reagent_containers/condiment/peanut_butter
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired) //ET loves peanut butter
+	. = ..()
 	if(isabductor(M))
 		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
 		M.set_drugginess(30 SECONDS * REM * seconds_per_tick)
-	..()
 
 /datum/reagent/consumable/vinegar
 	name = "Vinegar"
