@@ -235,7 +235,7 @@
 
 /**
  * lawbringer execute mode:
- * shoots a standard lethal laser projectile
+ * It fires a paco bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
@@ -401,7 +401,7 @@
 
 /**
  * lawbringer tideshot mode:
- * EXTREMELLY fucks up assistants. stuns them, applies negative mood to them and more
+ * Taser that only effects assistants
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
