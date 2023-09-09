@@ -60,7 +60,6 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 25
 	var/lastfire = 0
-	///The last mouse parameters, stored
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
