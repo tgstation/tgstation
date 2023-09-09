@@ -664,7 +664,6 @@
 	set_active(TRUE)
 	set_status_code(CONTROLS_LOCKED, TRUE)
 	dispatch_transport(destination_platform = push_destination)
-	set_operational(FALSE)
 	return push_destination
 
 /**

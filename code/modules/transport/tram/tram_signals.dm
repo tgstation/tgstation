@@ -203,8 +203,9 @@
 
 /obj/machinery/transport/crossing_signal/proc/link_sensor()
 	linked_sensor = find_closest_valid_sensor()
-	RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
-	update_appearance()
+	if(!isnull(linked_sensor))
+		RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
+		update_appearance()
 
 /obj/machinery/transport/crossing_signal/proc/unlink_sensor()
 	SIGNAL_HANDLER

@@ -17,15 +17,15 @@
 	. = ..()
 
 	if(isnull(plate_inbound))
-		return COMPONENT_INCOMPATIBLE
+		return
 
 	inbound = plate_inbound
 	if(isnull(plate_outbound))
-		return COMPONENT_INCOMPATIBLE
+		return
 
 	outbound = plate_outbound
 	if(isnull(plate_transport_id))
-		return COMPONENT_INCOMPATIBLE
+		return
 
 	specific_transport_id = plate_transport_id
 	find_tram()

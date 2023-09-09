@@ -30,11 +30,13 @@
 
 	switch(reset_type)
 		if("Controller")
+			broken_controller.set_operational(TRUE)
 			broken_controller.reset_position()
 			message_admins("[key_name_admin(usr)] performed a controller reset of tram ID [selected_transport_id].")
 
 		if("Full")
 			broken_controller.reset_lift_contents()
+			broken_controller.set_operational(TRUE)
 			broken_controller.reset_position()
 			message_admins("[key_name_admin(usr)] performed a controller and contents reset of tram ID [selected_transport_id].")
 

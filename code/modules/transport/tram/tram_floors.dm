@@ -190,7 +190,7 @@
 	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
 	icon_state = "tile_textured_white_large"
-	inhand_icon_state = "tile-tile_textured_white_large"
+	inhand_icon_state = "tile-neon-glow"
 	color = COLOR_TRAM_BLUE
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
