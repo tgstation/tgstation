@@ -34,7 +34,9 @@ export const TramPlaque = (props, context) => {
           }>
           <LabeledList>
             <LabeledList.Item label="Distance Travelled">
-              {currentTram.map((serialNumber) => serialNumber.tramCollisions)}
+              {currentTram.map(
+                (serialNumber) => serialNumber.distanceTravelled
+              )}
             </LabeledList.Item>
             <LabeledList.Item label="Collisions">
               {currentTram.map((serialNumber) => serialNumber.tramCollisions)}
