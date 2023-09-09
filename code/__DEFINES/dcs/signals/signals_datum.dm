@@ -35,10 +35,6 @@
 /// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
 #define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
 
-// Pipeline signals
-/// From /datum/pipeline/proc/calculate_gasmix_color(): (new_color, old_color)
-#define COMSIG_PIPELINE_GAS_COLOR_CHANGED "comsig_pipeline_gas_color_changed"
-
 // Gas mixture signals
 /// From /datum/gas_mixture/proc/merge: ()
 #define COMSIG_GASMIX_MERGED "comsig_gasmix_merged"

@@ -356,4 +356,3 @@
 		var/old_color = gasmix_color
 		gasmix_color = current_color
 		UpdateGasVisuals()
-		SEND_SIGNAL(src, COMSIG_PIPELINE_GAS_COLOR_CHANGED, gasmix_color, old_color)
