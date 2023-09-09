@@ -15,7 +15,6 @@
 /obj/item/assembly/control/transport/remote/Initialize(mapload)
 	. = ..()
 	SStransport.hello(src, name, cached_ref)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	register_context()
 
 /obj/item/assembly/control/transport/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)

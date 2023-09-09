@@ -51,7 +51,7 @@
 	if(isnull(tram) || isnull(tram.tram_registration))
 		return
 
-	tram_serial = tram.tram_registration["serial_number"]
+	tram_serial = tram.tram_registration.serial_number
 	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk VI, serial number [tram_serial].<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
 	Using the tram carries inherent risks, and we cannot guarantee the safety of all passengers. By using the tram, you assume, acknowledge, and accept all the risks and responsibilities. <br><br>\
 	Please be aware that riding the tram can cause a variety of injuries, including but not limited to: slips, trips, and falls; collisions with other passengers or objects; strains, sprains, and other musculoskeletal injuries; \
