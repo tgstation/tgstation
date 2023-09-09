@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/swapper,
 		/obj/docking_port,
 		/obj/machinery/launchpad,
+		/obj/machinery/exodrone_launcher,
 		/obj/machinery/disposal,
 		/obj/structure/disposalpipe,
 		/obj/item/mail,
