@@ -64,7 +64,7 @@ jobs:
           tools/bootstrap/python -m define_sanity.check
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker 2>&1 | tools/ci/annotate_dm.sh ; (exit ${PIPESTATUS[0]})
+          ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh ; (exit ${PIPESTATUS[0]})
 
   compile_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
