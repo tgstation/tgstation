@@ -29,7 +29,7 @@
 	if(!is_type_in_typecache(gotten_turf, effect_turf_typecache))
 		return
 
-	if(!QDELETED(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if((!QDELETED(target) && (!ismob(target) || (ismob(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY)))))
 		hit_effect(target, user)
 
 
