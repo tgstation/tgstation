@@ -1,0 +1,6 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - refactor: "Refactored wounds yet again"
+  - bugfix: "Wounds are now picked from the most severe down again, meaning eswords can jump to avulsions"
+  - bugfix: "Scar descs are now properly applied"
