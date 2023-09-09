@@ -147,6 +147,7 @@
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi'
 	worn_icon_state = "PKHammer0"
+	slot_flags = NONE
 	name = "proto-kinetic claws"
 	desc = "Truely the most compact version of the crusher ever made, its small enough to fit in your backpack and still function as a crusher. Due to the lack of space \
 	for stronger power, most of the space is used to make the claws effecient, giving it a much faster recharge, and due to its small size, its very easy to swing. \
