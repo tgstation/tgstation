@@ -22,6 +22,9 @@
 			M.istate |= ISTATE_HARM
 			M.istate |= ISTATE_BLOCKING
 
+	if(!UI)
+		return
+
 	UI.icon_state = "[intent]"
 
 /datum/interaction_mode/intents3/procure_hud(mob/M, datum/hud/H)

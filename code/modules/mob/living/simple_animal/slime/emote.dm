@@ -35,10 +35,6 @@
 	slime_user.current_mood = mood_key
 	slime_user.regenerate_icons()
 
-/datum/emote/slime/mood/sneaky
-	key = "moodsneaky"
-	mood_key = "mischievous"
-
 /datum/emote/slime/mood/smile
 	key = "moodsmile"
 	mood_key = ":3"

@@ -44,6 +44,16 @@
 			this["amount_left"] += 1
 		if(this["amount_left"] > 0)
 			data["spawners"] += list(this)
+	for(var/mob_type in GLOB.joinable_mobs)
+		var/list/this = list()
+		this["name"] = mob_type
+		this["amount_left"] = 0
+		for(var/mob/joinable_mob as anything in GLOB.joinable_mobs[mob_type])
+			this["amount_left"] += 1
+			if(!this["desc"])
+				this["desc"] = initial(joinable_mob.desc)
+		if(this["amount_left"] > 0)
+			data["spawners"] += list(this)
 	return data
 
 /datum/spawners_menu/ui_act(action, params, datum/tgui/ui)
@@ -52,16 +62,25 @@
 		return
 
 	var/group_name = params["name"]
-	if(!group_name || !(group_name in GLOB.mob_spawners))
+	if(!group_name)
 		return
-	var/list/spawnerlist = GLOB.mob_spawners[group_name]
-	for(var/obj/effect/mob_spawn/ghost_role/current_spawner as anything in spawnerlist)
-		if(!current_spawner.allow_spawn(usr, silent = TRUE))
-			spawnerlist -= current_spawner
-	if(!spawnerlist.len)
+
+	var/list/spawnerlist = list()
+
+	if (group_name in GLOB.mob_spawners)
+		spawnerlist = GLOB.mob_spawners[group_name]
+		if(!length(spawnerlist))
+			return
+		for(var/obj/effect/mob_spawn/ghost_role/current_spawner as anything in spawnerlist)
+			if(!current_spawner.allow_spawn(usr, silent = TRUE))
+				spawnerlist -= current_spawner
+	else if (group_name in GLOB.joinable_mobs)
+		spawnerlist = GLOB.joinable_mobs[group_name]
+
+	if(!length(spawnerlist))
 		return
-	var/obj/effect/mob_spawn/mob_spawner = pick(spawnerlist)
-	if(!istype(mob_spawner) || !SSpoints_of_interest.is_valid_poi(mob_spawner))
+	var/atom/mob_spawner = pick(spawnerlist)
+	if(!SSpoints_of_interest.is_valid_poi(mob_spawner))
 		return
 
 	switch(action)

@@ -467,7 +467,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ua" = (
-/mob/living/simple_animal/hostile/lizard/space{
+/mob/living/basic/lizard/space{
 	desc = "How are you ALIVE?!";
 	name = "Blarpo"
 	},

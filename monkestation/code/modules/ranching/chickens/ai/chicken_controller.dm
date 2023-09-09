@@ -1,23 +1,21 @@
 /datum/ai_controller/chicken
 	movement_delay = 0.4 SECONDS
-	planning_subtrees = list(/datum/ai_planning_subtree/chicken_tree)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/flee_target/low_health,
+		)
 	idle_behavior = /datum/idle_behavior/chicken
 	blackboard = list(
-		BB_CHICKEN_SHITLIST = list(),
-		BB_CHICKEN_AGGRESSIVE = FALSE,
-		BB_CHICKEN_RETALIATE = FALSE,
-		BB_CHICKEN_CURRENT_ATTACK_TARGET = null,
-		BB_CHICKEN_ABILITY = null,
-		BB_CHICKEN_PROJECTILE = null,
+		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CHICKEN_TARGETED_ABILITY = null,
+		BB_CHICKEN_SELF_ABILITY = null,
 		BB_CHICKEN_RECRUIT_COOLDOWN = null,
-		BB_CHICKEN_COMBAT_ABILITY = FALSE,
-		BB_CHICKEN_ABILITY_COOLDOWN = null,
-		BB_CHICKEN_SHOOT_PROB = 10,
-		BB_CHICKEN_HONKS_SORROW = FALSE,
 		BB_CHICKEN_SPECALITY_ABILITY = null,
-		BB_CHICKEN_CURRENT_LEADER = null,
-		BB_CHICKEN_READY_LAY = FALSE,
-		BB_CHICKEN_ATTEMPT_TRACKING = 0,
+		BB_CHICKEN_NESTING_BOX = null,
+		BB_CHICKEN_FEED = null,
+
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -27,60 +25,96 @@
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 	var/mob/living/basic/chicken/living_pawn = new_pawn
-	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_paw))
-	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(on_attack_animal))
-	RegisterSignal(new_pawn, COMSIG_MOB_ATTACK_ALIEN, PROC_REF(on_attack_alien))
-	RegisterSignal(new_pawn, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
-	RegisterSignal(new_pawn, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
 	movement_delay = living_pawn.cached_multiplicative_slowdown
-
-	blackboard[BB_CHICKEN_ABILITY] = living_pawn.unique_ability
-	blackboard[BB_CHICKEN_COMBAT_ABILITY] = living_pawn.combat_ability
-	blackboard[BB_CHICKEN_PROJECTILE] = living_pawn.projectile_type
-	blackboard[BB_CHICKEN_SHOOT_PROB] = living_pawn.shoot_prob
 
 	AddComponent(/datum/component/connect_loc_behalf, new_pawn, loc_connections)
 	return ..() //Run parent at end
 
 /datum/ai_controller/chicken/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOB_MOVESPEED_UPDATED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN))
+	UnregisterSignal(pawn, list(COMSIG_MOB_MOVESPEED_UPDATED))
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	return ..()//Run parent at end
 
 //HOSTILE
 /datum/ai_controller/chicken/hostile
+	blackboard = list(
+		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CHICKEN_TARGETED_ABILITY = null,
+		BB_CHICKEN_SELF_ABILITY = null,
+		BB_CHICKEN_RECRUIT_COOLDOWN = null,
+		BB_CHICKEN_SPECALITY_ABILITY = null,
+		BB_CHICKEN_NESTING_BOX = null,
+		BB_CHICKEN_FEED = null,
+
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/chicken,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		)
 
 /datum/ai_controller/chicken/hostile/TryPossessPawn(atom/new_pawn)
 	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	blackboard[BB_CHICKEN_AGGRESSIVE] = TRUE
+	new_pawn.AddComponent(/datum/component/ai_target_timer)
 
 //RETALIATE
 /datum/ai_controller/chicken/retaliate
+	blackboard = list(
+		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CHICKEN_TARGETED_ABILITY = null,
+		BB_CHICKEN_SELF_ABILITY = null,
+		BB_CHICKEN_RECRUIT_COOLDOWN = null,
+		BB_CHICKEN_SPECALITY_ABILITY = null,
+		BB_CHICKEN_NESTING_BOX = null,
+		BB_CHICKEN_FEED = null,
 
-/datum/ai_controller/chicken/retaliate/TryPossessPawn(atom/new_pawn)
-	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	blackboard[BB_CHICKEN_RETALIATE] = TRUE
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+	)
 
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/flee_target/low_health,
+		)
 
-//CLOWN AIS
-
-
-/datum/ai_controller/chicken/clown/sad
-
-/datum/ai_controller/chicken/clown/sad/TryPossessPawn(atom/new_pawn)
-	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	blackboard[BB_CHICKEN_HONKS_SORROW] = TRUE // honk but sad
 ///Start of ai calls
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/chicken
+	operational_datums = list(/datum/component/ai_target_timer)
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/chicken
+
+/// Go for the tentacles if they're available
+/datum/ai_behavior/basic_melee_attack/chicken
+
+/datum/ai_behavior/basic_melee_attack/chicken/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
+	if (time_on_target < 5 SECONDS)
+		return ..()
+	var/mob/living/target = controller.blackboard[target_key]
+	// Interrupt attack chain to use tentacles, unless the target is already tentacled
+	if (isliving(target))
+		var/datum/action/cooldown/using_action = controller.blackboard[BB_CHICKEN_TARGETED_ABILITY]
+		if (using_action?.IsAvailable())
+			finish_action(controller, succeeded = FALSE)
+			return
+	return ..()
+
+/datum/ai_planning_subtree/flee_target/low_health/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+		return
+	if(living_pawn.health > CHICKEN_FLEE_HEALTH) //Time to skeddadle
+		return
+	. = ..()
 
 // Stops sentient chickens from being knocked over like weak dunces.
 /datum/ai_controller/chicken/on_sentience_gained()
@@ -98,99 +132,21 @@
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
 
-//hit signals
-/datum/ai_controller/chicken/proc/on_attackby(datum/source, obj/item/hitby_item, mob/user)
-	SIGNAL_HANDLER
-	if(hitby_item.force && hitby_item.damtype != STAMINA)
-		retaliate(user)
-
-/datum/ai_controller/chicken/proc/on_attack_hand(datum/source, mob/living/user)
-	SIGNAL_HANDLER
-	if((user.istate & ISTATE_HARM) && prob(CHICKEN_RETALIATE_PROB))
-		retaliate(user)
-
-/datum/ai_controller/chicken/proc/on_attack_paw(datum/source, mob/living/user)
-	SIGNAL_HANDLER
-	if(prob(CHICKEN_RETALIATE_PROB))
-		retaliate(user)
-
-/datum/ai_controller/chicken/proc/on_attack_animal(datum/source, mob/living/user)
-	SIGNAL_HANDLER
-	if(prob(CHICKEN_RETALIATE_PROB))
-		retaliate(user)
-
-/datum/ai_controller/chicken/proc/on_attack_alien(datum/source, mob/living/user)
-	SIGNAL_HANDLER
-	if(prob(CHICKEN_RETALIATE_PROB))
-		retaliate(user)
-
-/datum/ai_controller/chicken/proc/on_bullet_act(datum/source, obj/projectile/Proj)
-	SIGNAL_HANDLER
-	var/mob/living/living_pawn = pawn
-	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.damage < living_pawn.health && isliving(Proj.firer))
-				retaliate(Proj.firer)
-
-/datum/ai_controller/chicken/proc/on_hitby(datum/source, atom/movable/movable_hitter, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	SIGNAL_HANDLER
-	if(istype(movable_hitter, /obj/item))
-		var/mob/living/basic/chicken/living_pawn = pawn
-		var/obj/item/hitby_item = movable_hitter
-		var/mob/thrown_by = hitby_item.thrownby?.resolve()
-		var/mob/living/carbon/human/human_target = thrown_by
-		if(hitby_item.throwforce < living_pawn.health && ishuman(thrown_by) && living_pawn.Friends[human_target] >= CHICKEN_FRIENDSHIP_ATTACK)
-			retaliate(human_target)
-
 /datum/ai_controller/chicken/proc/update_movespeed(mob/living/pawn)
 	SIGNAL_HANDLER
 	movement_delay = pawn.cached_multiplicative_slowdown
-
-///Reactive events to being hit
-/datum/ai_controller/chicken/proc/retaliate(mob/living/living_retaliate)
-	var/list/enemies = blackboard[BB_CHICKEN_SHITLIST]
-	enemies[living_retaliate] += CHICKEN_HATRED_AMOUNT
 
 //When idle just kinda fuck around.
 /datum/idle_behavior/chicken/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/basic/chicken/living_pawn = controller.pawn
-	var/list/blackboard = controller.blackboard
 
-	if((!blackboard[BB_CHICKEN_READY_LAY]&& SPT_PROB(10, seconds_per_tick) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
-		blackboard[BB_CHICKEN_READY_LAY] = TRUE
-
-	if(blackboard[BB_CHICKEN_READY_LAY])
-		controller.queue_behavior(/datum/ai_behavior/find_and_lay)
-
-	if(SPT_PROB(10, seconds_per_tick) && controller.behavior_cooldowns[/datum/ai_behavior/eat_ground_food] < world.time)
-		if(locate(/obj/item/food) in view(5, controller.pawn))
-			controller.queue_behavior(/datum/ai_behavior/eat_ground_food)
-
-	if(blackboard[BB_CHICKEN_SPECALITY_ABILITY] && SPT_PROB(living_pawn.ability_prob, seconds_per_tick) && blackboard[BB_CHICKEN_ABILITY_COOLDOWN] < world.time)
-		// this will be expanded in the future its just easier to leave it like this now
-		switch(blackboard[BB_CHICKEN_SPECALITY_ABILITY])
-			if(CHICKEN_REV)
-				controller.queue_behavior(/datum/ai_behavior/revolution)
-			if(CHICKEN_SUGAR_RUSH)
-				controller.queue_behavior(/datum/ai_behavior/sugar_rush)
-			if(CHICKEN_HONK)
-				controller.queue_behavior(/datum/ai_behavior/chicken_honk_target)
+	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
+		return
 
 	if(SPT_PROB(25, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
-
-	if(blackboard[BB_CHICKEN_SHITLIST] && SPT_PROB(50, seconds_per_tick))
-		var/list/enemies = blackboard[BB_CHICKEN_SHITLIST]
-		if(enemies.len)
-			var/mob/living/picked = pick(enemies)
-			enemies[picked]--
-			if(enemies[picked] <= 0)
-				enemies.Remove(picked)
-				blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = null
-				controller.queue_behavior(/datum/ai_behavior/chicken_flee)
-
 
 /datum/ai_controller/chicken/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
