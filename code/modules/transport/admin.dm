@@ -14,9 +14,9 @@
 
 	var/datum/transport_controller/linear/tram/broken_controller
 	var/selected_transport_id = tgui_input_list(usr, "Which tram?", "Off the rails", debug_tram_list)
-	var/reset_type = tgui_input_list(usr, "How hard of a reset?", "How bad is it screwed up", list("Controller", "Full", "Delete Datum", "Cancel"))
+	var/reset_type = tgui_input_list(usr, "How hard of a reset?", "How bad is it screwed up", list("Controller", "Controller and Contents", "Delete Datum", "Cancel"))
 
-	if(isnull(reset_type))
+	if(isnull(reset_type) || reset_type == "Cancel")
 		return
 
 	for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
@@ -34,7 +34,7 @@
 			broken_controller.reset_position()
 			message_admins("[key_name_admin(usr)] performed a controller reset of tram ID [selected_transport_id].")
 
-		if("Full")
+		if("Controller and Contents")
 			broken_controller.reset_lift_contents()
 			broken_controller.set_operational(TRUE)
 			broken_controller.reset_position()

@@ -23,7 +23,7 @@
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
 	/// the sensor we use
-	var/obj/machinery/transport/guideway_sensor/linked_sensor
+	var/datum/weakref/sensor_ref
 	/// Inbound station
 	var/inbound
 	/// Outbound station
@@ -202,15 +202,11 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/crossing_signal/proc/link_sensor()
-	linked_sensor = find_closest_valid_sensor()
-	if(!isnull(linked_sensor))
-		RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
-		update_appearance()
+	sensor_ref = WEAKREF(find_closest_valid_sensor())
+	update_appearance()
 
 /obj/machinery/transport/crossing_signal/proc/unlink_sensor()
-	SIGNAL_HANDLER
-
-	linked_sensor = null
+	sensor_ref = null
 	if(operating_status < TRANSPORT_REMOTE_WARNING)
 		operating_status = TRANSPORT_REMOTE_WARNING
 		degraded_response()
@@ -221,7 +217,8 @@
 		degraded_response()
 		return
 
-	if(!linked_sensor)
+	var/obj/machinery/transport/guideway_sensor/linked_sensor = sensor_ref?.resolve()
+	if(isnull(linked_sensor))
 		operating_status = TRANSPORT_REMOTE_WARNING
 		degraded_response()
 
@@ -262,11 +259,12 @@
 	operating_status = TRANSPORT_SYSTEM_NORMAL
 
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	var/obj/machinery/transport/guideway_sensor/linked_sensor = sensor_ref?.resolve()
 
-	if(!tram || tram.controller_status & COMM_ERROR)
+	if(isnull(tram) || tram.controller_status & COMM_ERROR)
 		operating_status = TRANSPORT_REMOTE_FAULT
 
-	if(!linked_sensor)
+	if(isnull(linked_sensor))
 		link_sensor()
 	wake_sensor()
 	update_operating()
@@ -716,9 +714,15 @@
 						outbound_candidates += beacon
 
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/selected_inbound = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram/platform, inbound_candidates, src)
+	if(isnull(selected_inbound))
+		return FALSE
+
 	inbound = selected_inbound.platform_code
 
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/selected_outbound = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram/platform, outbound_candidates, src)
+	if(isnull(selected_outbound))
+		return FALSE
+
 	outbound = selected_outbound.platform_code
 
 	update_appearance()
