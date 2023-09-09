@@ -39,16 +39,6 @@
 #define TRAM_NAV_BEACONS "tram_nav"
 #define IMMOVABLE_ROD_DESTINATIONS "immovable_rod"
 
-// Elevator IDs
-#define ELEVATOR_1 "elev_1"
-#define ELEVATOR_2 "elev_2"
-#define ELEVATOR_3 "elev_3"
-#define ELEVATOR_4 "elev_4"
-#define ELEVATOR_5 "elev_5"
-#define ELEVATOR_6 "elev_6"
-#define ELEVATOR_7 "elev_7"
-#define ELEVATOR_8 "elev_8"
-
 // The lift's controls are currently locked from user input
 #define LIFT_PLATFORM_LOCKED 1
 // The lift's controls are currently unlocked so user's can direct it

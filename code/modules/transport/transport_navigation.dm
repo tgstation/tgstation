@@ -106,30 +106,3 @@
 /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod
 	name = "DESTINATION/NOT/FOUND"
 	specific_transport_id = IMMOVABLE_ROD_DESTINATIONS
-
-//elevators
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_1
-	specific_transport_id = ELEVATOR_1
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_2
-	specific_transport_id = ELEVATOR_2
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_3
-	specific_transport_id = ELEVATOR_3
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_4
-	specific_transport_id = ELEVATOR_4
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_5
-	specific_transport_id = ELEVATOR_5
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_6
-	specific_transport_id = ELEVATOR_6
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_7
-	specific_transport_id = ELEVATOR_7
-
-/obj/effect/landmark/transport/transport_id/elevators/elev_8
-	specific_transport_id = ELEVATOR_8
-
