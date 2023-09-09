@@ -179,28 +179,7 @@
 	else //Turned on
 		begin_processing()
 
-
 /obj/machinery/atmospherics/components/unary/chem_dispenser/process(seconds_per_tick)
-	var/datum/gas_mixture/port = airs[1]
-	if(!port.total_moles() || port.gases[/datum/gas/plasma][MOLES] < MINIMUM_MOLE_COUNT)
-		return
-
-
-
-	if (recharge_counter >= 8)
-		if(port.has_gas(/datum/gas/plasma, recharge_amount * 0.5))
-			port.remove_specific(/datum/gas/plasma, recharge_amount * 0.5)
-		else
-			recharge_counter = 0
-			return
-		var/usedpower = cell.give(recharge_amount)
-		if(usedpower)
-			use_power(active_power_usage + recharge_amount)
-		recharge_counter = 0
-		return
-	recharge_counter += seconds_per_tick
-
-/obj/machinery/chem_dispenser/process(seconds_per_tick)
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
