@@ -71,7 +71,6 @@
 	petal_dead.color = petal_color
 
 	AddElement(/datum/element/wall_smasher)
-	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(tamer)
