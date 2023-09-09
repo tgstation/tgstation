@@ -19,13 +19,14 @@
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/simple_animal/butterfly)
+	access_view = ACCESS_THEATRE
+	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
 /datum/supply_pack/critter/butterfly/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+		new /mob/living/basic/butterfly(.)
 
 /datum/supply_pack/critter/cat
 	name = "Cat Crate"
@@ -101,14 +102,14 @@
 		EEEEEEEEEEEEEEEEEEEEEEEEE EEEETTTTTTTTTTTTAAAAAAAAA AAAHHHHHHHHHHHHH. CRAB ROCKET. CRAAAB \
 		ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/mob/living/simple_animal/crab)
+	contains = list(/mob/living/basic/crab)
 	crate_name = "look sir free crabs"
 	drop_pod_only = TRUE
 
 /datum/supply_pack/critter/crab/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/crab(.)
+		new /mob/living/basic/crab(.)
 
 /datum/supply_pack/critter/corgis/exotic
 	name = "Exotic Corgi Crate"
@@ -124,9 +125,10 @@
 	name = "Fox Crate"
 	desc = "The fox goes...? Contains one fox. Comes with a collar!"//what does the fox say
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/mob/living/simple_animal/pet/fox,
-					/obj/item/clothing/neck/petcollar,
-				)
+	contains = list(
+		/mob/living/basic/pet/fox,
+		/obj/item/clothing/neck/petcollar,
+	)
 	crate_name = "fox crate"
 
 /datum/supply_pack/critter/goat
@@ -201,7 +203,8 @@
 	name = "Lizard Crate"
 	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/mob/living/simple_animal/hostile/lizard)
+	access_view = ACCESS_JANITOR
+	contains = list(/mob/living/basic/lizard)
 	crate_name = "lizard crate"
 
 /datum/supply_pack/critter/garden_gnome

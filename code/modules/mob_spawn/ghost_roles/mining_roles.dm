@@ -225,13 +225,6 @@
 	eggshell = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/human/ash_walker/allow_spawn(mob/user, silent = FALSE)
-	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
-		return TRUE
-	if(!silent)
-		to_chat(user, span_warning("You have exhausted your usefulness to the Necropolis."))
-	return FALSE
-
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	spawned_human.fully_replace_character_name(null,random_unique_lizard_name(gender))

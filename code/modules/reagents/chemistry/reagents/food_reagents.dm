@@ -60,6 +60,10 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
+/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume)
+	. = ..()
+	target.fertility_boosting += min(25, volume * 0.5)
+
 /datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))

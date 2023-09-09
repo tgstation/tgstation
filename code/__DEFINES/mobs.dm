@@ -129,6 +129,7 @@
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
 #define SPECIES_SIMIAN "simian"
+#define SPECIES_GOBLIN "goblin"//monkestation addition
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -650,7 +651,9 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 33
+#define TOTAL_LAYERS 34
+/// Mutant race multiparts - Lbelly
+#define ACCESSORIES_LAYER 34
 /// Mutations layer - Tk headglows, cold resistance glow, etc
 #define MUTATIONS_LAYER 33
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
@@ -922,3 +925,5 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 // Reagent type flags, defines the types of mobs this reagent will affect
 #define ORGANIC 1
 #define SYNTHETIC 2
+/// Types of bullets that mining mobs take full damage from
+#define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)

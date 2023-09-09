@@ -20,7 +20,7 @@
 	/// Significant figures to round cooldown to
 	var/cooldown_rounding = 0.1
 	/// Shares cooldowns with other abiliies, bitflag
-	var/shared_cooldown
+	var/shared_cooldown = NONE
 	/// List of prerequisite actions that are used in this sequenced ability, you cannot put other sequenced abilities in this
 	var/list/sequence_actions
 	/// List of prerequisite actions that have been initialized
@@ -154,7 +154,7 @@
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	// "Shared cooldowns" covers actions which are not the same type,
 	// but have the same cooldown group and are on the same mob
-	if(shared_cooldown)
+	if(shared_cooldown != NONE)
 		StartCooldownOthers(override_cooldown_time)
 
 	StartCooldownSelf(override_cooldown_time)
@@ -238,7 +238,7 @@
 
 /// For signal calling
 /datum/action/cooldown/proc/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src, target) & COMPONENT_BLOCK_ABILITY_START)
 		return
 	// Note, that PreActivate handles no cooldowns at all by default.
 	// Be sure to call StartCooldown() in Activate() where necessary.

@@ -19,7 +19,7 @@
 	dir = 2;
 	shuttle_id = "whiteship";
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "NT Frigate";
 	port_direction = 8;
 	preferred_direction = 4
@@ -461,7 +461,20 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/basic/giant_spider/hunter/scrawny,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/spider/giant/hunter/scrawny,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/spider/giant/hunter/scrawny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
@@ -938,24 +951,22 @@
 	pixel_y = 12
 	},
 /obj/item/camera,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/gun/energy/laser/retro,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
+/obj/item/gun/energy/laser/retro,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/mob/living/basic/giant_spider/tarantula/scrawny,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/spider/giant/tarantula/scrawny,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cg" = (
@@ -1521,7 +1532,18 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/giant_spider/nurse/scrawny,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/spider/giant/nurse/scrawny,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/spider/giant/nurse/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
 "dx" = (
@@ -1593,9 +1615,11 @@
 /turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "dG" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/mob/living/basic/giant_spider/hunter/scrawny,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/spider/giant/hunter/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dH" = (

@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	//monkestation edit start: add dept sec outfits
 	if(suit)
-		for(var/obj/item/gun/energy/disabler/stored in spawning.contents)
+		for(var/obj/item/gun/ballistic/automatic/pistol/paco/no_mag/stored in spawning.contents)
 			if(spawning.wear_suit)
 				qdel(spawning.wear_suit)
 			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
