@@ -18,7 +18,7 @@ raw_output = ""
 
 if len(sys.argv) > 1:
     if not path.exists(sys.argv[1]):
-        print(f"Error: Annotations file '{sys.argv[1]}' does not exist")
+        print(red(f"Error: Annotations file '{sys.argv[1]}' does not exist"))
         sys.exit(1)
     with open(sys.argv[1], 'r') as f:
         raw_output = f.read()
