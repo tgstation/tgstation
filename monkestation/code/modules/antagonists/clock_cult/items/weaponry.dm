@@ -17,6 +17,7 @@
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore")
 	sharpness = SHARP_EDGED
+	wound_bonus = -10 //wounds are really strong for clock cult, so im making their weapons slightly worse then normal at wounding
 	/// Typecache of valid turfs to have the weapon's special effect on
 	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
@@ -150,7 +151,7 @@
 	attack_verb_simple = list("bash", "hammer", "attack", "smash")
 	attack_verb_continuous = list("bashes", "hammers", "attacks", "smashes")
 	clockwork_desc = "Enemies hit by this will be flung back while you are on bronze tiles."
-	sharpness = 0
+	sharpness = FALSE
 	hitsound = 'sound/weapons/smash.ogg'
 	block_chance = 10
 
@@ -315,7 +316,7 @@
 	name = "energy bolt"
 	icon = 'monkestation/icons/obj/clock_cult/projectiles.dmi'
 	icon_state = "arrow_energy"
-	damage = 30
+	damage = 25
 	damage_type = BURN
 
 #undef HAMMER_FLING_DISTANCE

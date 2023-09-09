@@ -83,6 +83,7 @@
 		parcel.base_icon_state = "deliverypackage5"
 		parcel.update_icon()
 		user.forceMove(parcel)
+		parcel.contains_mobs = TRUE //monkestation edit
 		parcel.add_fingerprint(user)
 		return OXYLOSS
 	else
@@ -109,6 +110,10 @@
 		return
 	if(target.anchored)
 		return
+	//monkestation edit start
+	if(!amount)
+		return
+	//monkestation edit end
 
 	if(isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
@@ -151,6 +156,12 @@
 			closet.forceMove(parcel)
 			parcel.add_fingerprint(user)
 			closet.add_fingerprint(user)
+			//monkestation edit start
+			for(var/item in closet.get_all_contents())
+				if(istype(item, /mob))
+					parcel.contains_mobs = TRUE
+					break
+			//monkestation edit end
 		else
 			balloon_alert(user, "not enough paper!")
 			return

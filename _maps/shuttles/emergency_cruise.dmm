@@ -2136,7 +2136,7 @@
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "Of" = (
-/mob/living/simple_animal/crab/coffee{
+/mob/living/basic/crab/coffee{
 	desc = "It's Coffee, the party crab!"
 	},
 /turf/open/floor/eighties,

@@ -526,3 +526,29 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon_state = "seafloor_heavy"
 	base_icon_state = "seafloor_heavy"
 	baseturfs = /turf/open/floor/plating/ocean/rock/heavy
+
+GLOBAL_VAR_INIT(lavaland_points_generated, 0)
+/turf/closed/mineral/random/regrowth
+	turf_transforms = FALSE
+	color = "#58606b"
+
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+	
+
+/turf/closed/mineral/random/regrowth/New(loc, _mineral_increase)
+	mineralChance += _mineral_increase
+	. = ..()
+
+/turf/closed/mineral/random/regrowth/Destroy(force)
+	. = ..()
+	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / 1000), 5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(regrow_mineral), get_turf(src)), timer)
+
+/proc/regrow_mineral(turf/location)
+	var/mineral_increase = 0
+	if(GLOB.lavaland_points_generated > 55000)
+		mineral_increase = min(87, (GLOB.lavaland_points_generated - 55000) / 1000)
+	new /turf/closed/mineral/random/regrowth(location , mineral_increase)
