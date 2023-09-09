@@ -322,10 +322,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
 	switch(current_cycle)
-		if(1 to 10)//same delay as chloral hydrate
+		if(2 to 11)//same delay as chloral hydrate
 			if(prob(50))
 				owner.emote("yawn")
-		if(10 to INFINITY)
+		if(11 to INFINITY)
 			owner.Sleeping(40)
 			. = 1
 			if(owner.IsSleeping())

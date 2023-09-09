@@ -330,21 +330,21 @@
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/heating = 0
 	switch(current_cycle)
-		if(1 to 15)
+		if(2 to 16)
 			heating = 5
 			if(holder.has_reagent(/datum/reagent/cryostylane))
 				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
 			if(isslime(M))
 				heating = rand(5, 20)
-		if(15 to 25)
+		if(16 to 26)
 			heating = 10
 			if(isslime(M))
 				heating = rand(10, 20)
-		if(25 to 35)
+		if(26 to 36)
 			heating = 15
 			if(isslime(M))
 				heating = rand(15, 20)
-		if(35 to INFINITY)
+		if(36 to INFINITY)
 			heating = 20
 			if(isslime(M))
 				heating = rand(20, 25)
@@ -503,8 +503,9 @@
 	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
-		if(SPT_PROB(min(current_cycle/2, 12.5), seconds_per_tick))
+		if(SPT_PROB((min(current_cycle-1)/2, 12.5), seconds_per_tick))
 			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)
 			M.set_jitter_if_lower(20 SECONDS)
@@ -514,7 +515,6 @@
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				M.heal_bodypart_damage(brute = 1, burn = 1)
 				. = TRUE
-	..()
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"

@@ -1182,12 +1182,12 @@
 /datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	switch(current_cycle)
-		if(10 to 20)
+		if(11 to 21)
 			drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
-		if(20 to 30)
+		if(21 to 31)
 			if(SPT_PROB(15, seconds_per_tick))
 				drinker.adjust_confusion(4 SECONDS * REM * seconds_per_tick)
-		if(30 to 200)
+		if(31 to 201)
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/t_letter

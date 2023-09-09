@@ -245,14 +245,15 @@
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/oxycalc = 2.5 * REM * current_cycle
+	var/oxycalc = 2.5 * REM * (current_cycle-1)
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	var/need_mob_update
 	need_mob_update |= affected_mob.adjustOxyLoss(-oxycalc * seconds_per_tick * normalise_creation_purity(), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update |= affected_mob.adjustToxLoss(oxycalc * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
-	if(SPT_PROB(current_cycle / 2, seconds_per_tick) && affected_mob.losebreath)
+	if(SPT_PROB((current_cycle-1) / 2, seconds_per_tick) && affected_mob.losebreath)
 		affected_mob.losebreath--
+		need_mob_update = TRUE
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 

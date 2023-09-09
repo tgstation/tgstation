@@ -599,7 +599,7 @@
 #define MUT_MSG_ABOUT2TURN 3
 
 /// the current_cycle threshold / iterations needed before one can transform
-#define CYCLES_TO_TRANSFORM 21
+#define CYCLES_TO_TURN 21
 /// the cycle at which 'immediate' mutation text begins displaying
 #define CYCLES_MSG_IMMEDIATE 7
 /// the cycle at which 'extended' mutation text begins displaying
@@ -642,7 +642,7 @@
 				pick_ur_fav += i
 		to_chat(affected_mob, span_warning("[pick(pick_ur_fav)]"))
 
-	if(current_cycle > CYCLES_TO_TRANSFORM)
+	if(current_cycle >= CYCLES_TO_TURN)
 		var/datum/species/species_type = race
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
@@ -710,7 +710,7 @@
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		return UPDATE_MOB_HEALTH
-	if(current_cycle >= CYCLES_TO_TRANSFORM) //overwrite since we want subtypes of jelly
+	if(current_cycle >= CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
 		var/datum/species/species_type = pick(subtypesof(race))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
@@ -788,7 +788,7 @@
 #undef MUT_MSG_EXTENDED
 #undef MUT_MSG_ABOUT2TURN
 
-#undef CYCLES_TO_TRANSFORM
+#undef CYCLES_TO_TURN
 #undef CYCLES_MSG_IMMEDIATE
 #undef CYCLES_MSG_EXTENDED
 
@@ -2146,7 +2146,7 @@
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(current_cycle > 20 / creation_purity)
+	if(current_cycle > 21 / creation_purity)
 		if(!ishuman(affected_mob))
 			return
 		var/mob/living/carbon/human/human_mob = affected_mob
