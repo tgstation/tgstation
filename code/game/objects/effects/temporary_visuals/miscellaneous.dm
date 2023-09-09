@@ -659,6 +659,9 @@
 	duration = 1 SECONDS
 
 /obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+	if (isnull(copy_from))
+		. = ..()
+		return INITIALIZE_HINT_QDEL
 	icon = copy_from.icon
 	icon_state = copy_from.icon_state
 	pixel_x = copy_from.pixel_x
