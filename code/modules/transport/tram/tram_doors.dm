@@ -52,8 +52,9 @@
 
 	set_opacity(FALSE)
 	set_density(FALSE)
-	filler.set_opacity(FALSE)
-	filler.set_density(FALSE)
+	if(!isnull(filler))
+		filler.set_opacity(FALSE)
+		filler.set_density(FALSE)
 	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
@@ -112,8 +113,9 @@
 	sleep(TRAM_DOOR_CRUSH_TIME)
 	set_density(TRUE)
 	set_opacity(TRUE)
-	filler.set_density(TRUE)
-	filler.set_opacity(TRUE)
+	if(!isnull(filler))
+		filler.set_density(TRUE)
+		filler.set_opacity(TRUE)
 	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)

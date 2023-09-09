@@ -575,6 +575,9 @@
 	update_appearance()
 
 	var/obj/machinery/transport/guideway_sensor/new_partner = paired_sensor?.resolve()
+	if(isnull(new_partner))
+		return
+
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()

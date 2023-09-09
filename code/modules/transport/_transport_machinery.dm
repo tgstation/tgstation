@@ -7,7 +7,7 @@
 	/// weakref of the transport we're associated with
 	var/datum/weakref/transport_ref
 	var/list/methods_to_fix = list()
-	var/list/repair_signals = list()
+	var/list/repair_signals
 	var/static/list/how_do_we_fix_it = list(
 		"try turning it off and on again" = TOOL_MULTITOOL,
 		"try forcing an unexpected reboot" = TOOL_MULTITOOL,
@@ -43,6 +43,8 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+GLOBAL_VAR(last_breakdown_time)
+GLOBAL_VAR_INIT(total_breakdowns, 0)
 /**
  * Finds the tram
  *
@@ -56,9 +58,12 @@
 		break
 
 /obj/machinery/transport/proc/local_fault()
-	if(malfunctioning || repair_signals)
+	if(malfunctioning || !isnull(repair_signals))
 		return
 
+	GLOB.total_breakdowns++
+	message_admins("[src] broke down at [DisplayTimeText(world.time - SSticker.round_start_time)]. It's been [DisplayTimeText(world.time - GLOB.last_breakdown_time)] since last breakdown. Total breakdowns is [GLOB.total_breakdowns].")
+	GLOB.last_breakdown_time = world.time
 	generate_repair_signals()
 	malfunctioning = TRUE
 	set_is_operational(FALSE)
