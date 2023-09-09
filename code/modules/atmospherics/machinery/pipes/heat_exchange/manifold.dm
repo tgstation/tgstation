@@ -16,6 +16,8 @@
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/set_init_directions()
 	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir

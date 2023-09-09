@@ -14,6 +14,9 @@
 
 	paintable = TRUE
 
+	/// Determines if this pipe will be given gas visuals
+	var/has_gas_visuals = TRUE
+
 	//Buckling
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
@@ -95,12 +98,12 @@
 	return parent
 
 /obj/machinery/atmospherics/pipe/replace_pipenet(datum/pipeline/old_pipenet, datum/pipeline/new_pipenet)
-	if(parent)
+	if(parent && has_gas_visuals)
 		vis_contents -= parent.GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
 
 	parent = new_pipenet
 
-	if(parent) // null is a valid argument here
+	if(parent && has_gas_visuals) // null is a valid argument here
 		vis_contents += parent.GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
 
 /obj/machinery/atmospherics/pipe/return_pipenets()

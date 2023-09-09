@@ -295,13 +295,18 @@
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
 
-/// Used to create and/or get the gas visual overlay created using the given icon file.
-/// The color is automatically kept up to date and expected to be used as a vis_contents object.
-/datum/pipeline/proc/GetGasVisual(icon/icon_file)
-	// If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here
-	// so that only a single overlay object needs to exist for all pipelines per icon file. It shouldn't be too
-	// hard to switch over to that if it becomes possible in the future or some other equivalent feature is added.
+/////////////////////
+// GAS VISUALS STUFF
+//
+// If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here
+// so that only a single overlay object needs to exist for all pipelines per icon file. It shouldn't be too
+// hard to switch over to that if it becomes possible in the future or some other equivalent feature is added.
 
+/**
+ * Used to create and/or get the gas visual overlay created using the given icon file.
+ * The color is automatically kept up to date and expected to be used as a vis_contents object.
+ */
+/datum/pipeline/proc/GetGasVisual(icon/icon_file)
 	if(gas_visuals[icon_file])
 		return gas_visuals[icon_file]
 

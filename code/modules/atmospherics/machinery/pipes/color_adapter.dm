@@ -16,6 +16,8 @@
 	paintable = FALSE
 	hide = FALSE
 
+	has_gas_visuals = FALSE
+
 	///cache for the icons
 	var/static/list/mutable_appearance/center_cache = list()
 
