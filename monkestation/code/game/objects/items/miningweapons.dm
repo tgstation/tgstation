@@ -140,6 +140,10 @@
 		var/whack_speed = (2)
 		target.throw_at(throw_target, 2, whack_speed, user, gentle = TRUE)
 
+/obj/item/kinetic_crusher/hammer/update_icon_state()
+	inhand_icon_state = "PKHammer[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
+	return ..()
+
 /obj/item/kinetic_crusher/claw
 	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "PKClaw"
