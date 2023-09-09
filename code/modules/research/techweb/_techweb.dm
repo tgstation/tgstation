@@ -315,8 +315,8 @@
 	var/points_rewarded
 	if(completed_experiment.points_reward)
 		add_point_list(completed_experiment.points_reward)
-		points_rewarded = ",[refund ? " and" : ""] rewarding"
-		var/list/english_list_keys
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding"
+		var/list/english_list_keys = list()
 		for(var/points_type in completed_experiment.points_reward)
 			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
 		points_rewarded += "[english_list(english_list_keys)] points"

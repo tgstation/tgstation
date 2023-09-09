@@ -65,6 +65,7 @@
 	if(old_value)
 		deactivate()
 
+///Create a radial menu from a list of available fish sources. If only the default is available, activate it right away.
 /obj/machinery/fishing_portal_generator/proc/select_fish_source(mob/user)
 	var/datum/fish_source/portal/default = GLOB.preset_fish_sources[/datum/fish_source/portal]
 	var/list/available_fish_sources = list(default.radial_name = default)
@@ -80,7 +81,10 @@
 			break
 		if(!get_fish_sources)
 			continue
-		for(var/datum/experiment/scanning/fish/experiment in techweb.completed_experiments)
+		for(var/experiment_type in typesof(/datum/experiment/scanning/fish))
+			var/datum/experiment/scanning/fish/experiment = techweb.completed_experiments[experiment_type]
+			if(!experiment)
+				continue
 			var/datum/fish_source/portal/reward = GLOB.preset_fish_sources[experiment.fish_source_reward]
 			available_fish_sources[reward.radial_name] = reward
 

@@ -83,7 +83,7 @@
 		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
 	else
 		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
-	. += "<b>Right-Click</b> in your active hand to access its slots UI"
+	. += span_notice("<b>Right-Click</b> in your active hand to access its slots UI")
 
 /**
  * Catch weight modifier for the given fish_type (or FISHING_DUD)
@@ -530,6 +530,8 @@
 	var/static/list/fishing_signals = list(
 		COMSIG_FISHING_ROD_HOOKED_ITEM = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
 		COMSIG_FISHING_ROD_CAUGHT_FISH = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_PRE_ATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),
 	)
 	AddComponent(/datum/component/experiment_handler, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
@@ -544,7 +546,7 @@
 
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
-	. += "<b>Alt-Click</b> to access the Experiment Configuration UI"
+	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
 
 /obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
 	return
