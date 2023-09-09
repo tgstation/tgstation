@@ -60,8 +60,8 @@
 	if (!isanimal_or_basicmob(target_mob))
 		balloon_alert(user, "target too complex!")
 		return TRUE
-	if (!(target_mob.mob_biotypes & MOB_ORGANIC))
-		balloon_alert(user, "organic life only!")
+	if (target_mob.mob_biotypes & (MOB_UNDEAD|MOB_HUMANOID|MOB_EPIC|MOB_ROBOTIC|MOB_SPIRIT))
+		balloon_alert(user, "incompatible!")
 		return TRUE
 	if (isanimal_or_basicmob(target_mob))
 		if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
