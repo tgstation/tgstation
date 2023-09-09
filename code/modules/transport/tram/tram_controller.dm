@@ -519,6 +519,7 @@
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		reset_position()
+	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null
@@ -927,12 +928,6 @@
 	if(!ui)
 		ui = new(user, src, "TramController")
 		ui.open()
-
-/obj/machinery/transport/tram_controller/ui_status(mob/user)
-	if(!allowed(user))
-		return UI_UPDATE
-
-	return ..()
 
 /obj/machinery/transport/tram_controller/ui_data(mob/user)
 	var/list/data = list()

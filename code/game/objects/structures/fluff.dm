@@ -283,7 +283,14 @@
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
 
+/obj/structure/fluff/tram_rail/electric
+	desc = "Great for trams, not so great for skating. This one is a power rail."
+
 /obj/structure/fluff/tram_rail/anchor
+	name = "tram rail anchor"
+	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
 
