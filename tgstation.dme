@@ -207,6 +207,7 @@
 #include "code\__DEFINES\species_clothing_paths.dm"
 #include "code\__DEFINES\speech_channels.dm"
 #include "code\__DEFINES\sprite_accessories.dm"
+#include "code\__DEFINES\stack.dm"
 #include "code\__DEFINES\stack_trace.dm"
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\stat_tracking.dm"

@@ -3,10 +3,6 @@
 #define STACK_CHECK_CARDINALS (1<<0)
 /// Checks if there is an object of the result type within one tile
 #define STACK_CHECK_ADJACENT (1<<1)
-/// Checks if this is banned from being built on the tram
-#define STACK_CHECK_TRAM_FORBIDDEN (1<<2)
-/// Checks if this can only built on the tram
-#define STACK_CHECK_TRAM_EXCLUSIVE (1<<3)
 
 /* Stack type objects!
  * Contains:
@@ -713,5 +709,3 @@
 
 #undef STACK_CHECK_CARDINALS
 #undef STACK_CHECK_ADJACENT
-#undef STACK_CHECK_TRAM_FORBIDDEN
-#undef STACK_CHECK_TRAM_EXCLUSIVE
