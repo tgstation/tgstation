@@ -5,7 +5,7 @@
 	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -23,14 +23,14 @@
 	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 
-	if (wound_type)
-		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wound_type)
+	if (wounding_type)
+		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
-	if(wound_type != WOUND_BURN && istype(owner_location) && can_bleed())
+	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
 		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
@@ -55,7 +55,7 @@
 
 	return TRUE
 
-/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner
@@ -64,7 +64,7 @@
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
-	if(wound_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
+	if(wounding_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/obj/item/organ/organ as anything in chest_owner.organs)
@@ -472,8 +472,8 @@
 		if (LAZYLEN(dismembered_by_copy))
 			var/datum/scar/scaries = new
 			var/datum/wound/loss/phantom_loss = new // stolen valor, really
-			phantom_loss.loss_wound_type = dismembered_by_copy?[limb_zone]
-			if (phantom_loss.loss_wound_type)
+			phantom_loss.loss_wounding_type = dismembered_by_copy?[limb_zone]
+			if (phantom_loss.loss_wounding_type)
 				scaries.generate(limb, phantom_loss)
 				LAZYREMOVE(dismembered_by_copy, limb_zone) // in case we're using a passed list
 			else

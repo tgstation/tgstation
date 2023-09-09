@@ -6,12 +6,14 @@
 /datum/wound/slash
 	name = "Slashing (Cut) Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
-	wound_type = WOUND_SLASH
 
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
 
+	required_wounding_types = list(WOUND_SLASH)
 	required_limb_biostate = BIO_FLESH
+
+	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
 
 /datum/wound/slash/flesh
 	name = "Slashing (Cut) Flesh Wound"
@@ -20,11 +22,9 @@
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
-	scar_file = FLESH_SCAR_FILE
-
-	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
+	default_scar_file = FLESH_SCAR_FILE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -41,6 +41,11 @@
 
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
+
+/datum/wound/slash/flesh/Destroy()
+	highest_scar = null
+
+	return ..()
 
 /datum/wound/slash/flesh/wound_injury(datum/wound/slash/flesh/old_wound = null, attack_direction = null)
 	if(old_wound)
@@ -283,7 +288,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -316,13 +321,15 @@
 	scar_keyword = "slashmoderate"
 
 /datum/wound/slash/flesh/moderate/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is cut open"
 
 /datum/wound_pregen_data/flesh_slash/abrasion
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/moderate
+
+	threshold_minimum = 20
 
 /datum/wound/slash/flesh/severe
 	name = "Open Laceration"
@@ -345,8 +352,10 @@
 
 	wound_path_to_generate = /datum/wound/slash/flesh/severe
 
+	threshold_minimum = 50
+
 /datum/wound/slash/flesh/severe/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is ripped open"
 
 /datum/wound/slash/flesh/critical
@@ -364,12 +373,18 @@
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
+
+/datum/wound/slash/flesh/critical/update_descriptions()
+	if (!limb.can_bleed())
+		occur_text = "is torn open"
 
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/critical
+
+	threshold_minimum = 80
 
 /datum/wound/slash/flesh/moderate/many_cuts
 	name = "Numerous Small Slashes"
@@ -377,7 +392,7 @@
 	examine_desc = "has a ton of small cuts"
 	occur_text = "is cut numerous times, leaving many small slashes."
 
-/datum/wound_pregen_data/flesh_slash/cuts
+/datum/wound_pregen_data/flesh_slash/abrasion/cuts
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 
@@ -390,10 +405,10 @@
 	clot_rate = 0.01
 
 /datum/wound/slash/flesh/critical/cleave/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is ruptured"
 
-/datum/wound_pregen_data/flesh_slash/cleave
+/datum/wound_pregen_data/flesh_slash/avulsion/clear
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 

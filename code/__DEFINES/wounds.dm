@@ -59,6 +59,11 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
 
+/// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll. In most cases, you dont want to use this.
+#define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
+/// Wounds using this competition mode will remove any wounds of a lower severity than itself in a random wound roll. Used for ensuring the worse case scenario of a given injury_roll.
+#define WOUND_COMPETITION_OVERPOWER_LESSERS "wound_dominate"
+
 // ~biology defines
 // What kind of biology a limb has, and what wounds it can suffer
 /// Has absolutely fucking nothing, no wounds
@@ -67,36 +72,43 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_BONE (1<<0)
 /// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
 #define BIO_FLESH (1<<1)
-/// Self explanatory
-#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
 /// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
 #define BIO_WIRED (1<<3)
-/// Robotic: shit like cyborg limbs, mostly
-#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
 #define BIO_BLOODED (1<<4)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
 #define BIO_JOINTED (1<<5)
-/// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
-#define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
+/// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
+#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
+/// Has flesh and bone - See BIO_BONE and BIO_FLESH
+#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
+/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations. Think human heads/chests
+#define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
+/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
+#define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
 
-// "Where" a specific "bio" feature is within a given limb
-// Exterior is hard shit, the last line, shit lines bones
-// Interior is soft shit, targetted by slashes and pierces (usually), protects exterior
-// Yes, it makes no sense
-/// The given biostate is on the "exterior" of the limb - hard shit, protected by interior
-#define BIO_EXTERIOR (1<<0)
-/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
-#define BIO_INTERIOR (1<<1)
-#define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
+// "Where" a specific biostate is within a given limb
+// Interior is hard shit, the last line, shit like bones
+// Exterior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
+// Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
+/// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
+#define ANATOMY_INTERIOR (1<<0)
+/// The given biostate is on the "exterior" of the limb - soft shit, protects interior
+#define ANATOMY_EXTERIOR (1<<1)
+#define ANATOMY_EXTERIOR_AND_INTERIOR (ANATOMY_EXTERIOR|ANATOMY_INTERIOR)
 
-GLOBAL_LIST_INIT(bio_state_states, list(
-	"[BIO_WIRED]" = BIO_INTERIOR,
-	"[BIO_METAL]" = BIO_EXTERIOR,
-	"[BIO_FLESH]" = BIO_INTERIOR,
-	"[BIO_BONE]" = BIO_EXTERIOR,
+/// A assoc list of BIO_ define to EXTERIOR/INTERIOR defines.
+/// This is where the interior/exterior state of a given biostate is set.
+/// Note that not all biostates are guaranteed to be one of these - and in fact, many are not
+/// IMPORTANT NOTE: All keys are stored as text and must be converted via text2num
+GLOBAL_LIST_INIT(bio_state_anatomy, list(
+	"[BIO_WIRED]" = ANATOMY_EXTERIOR,
+	"[BIO_METAL]" = ANATOMY_INTERIOR,
+	"[BIO_FLESH]" = ANATOMY_EXTERIOR,
+	"[BIO_BONE]" = ANATOMY_INTERIOR,
 ))
 
 // Wound series
@@ -104,13 +116,169 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 // Multiple wounds in a single series cannot be on a limb - the highest severity will always be prioritized, and lower ones will be skipped
 
 /// T1-T3 Bleeding slash wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: slash.dm
-#define WOUND_SERIES_FLESH_SLASH_BLEED 1
+#define WOUND_SERIES_FLESH_SLASH_BLEED "wound_series_flesh_slash_bled"
 /// T1-T3 Basic blunt wounds. T1 requires jointed, but 2-3 require bone. From: bone.dm
-#define WOUND_SERIES_BONE_BLUNT_BASIC 2
+#define WOUND_SERIES_BONE_BLUNT_BASIC "wound_series_bone_blunt_basic"
 /// T1-T3 Basic burn wounds. Requires flesh. From: burns.dm
-#define WOUND_SERIES_FLESH_BURN_BASIC 3
-/// T1-3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
-#define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
+#define WOUND_SERIES_FLESH_BURN_BASIC "wound_series_flesh_burn_basic"
+/// T1-T3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
+#define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
+/// Generic loss wounds. See loss.dm
+#define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+
+/// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
+GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
+
+/// Constructs [GLOB.all_wound_pregen_data] by iterating through a typecache of pregen data, ignoring abstract types, and instantiating the rest.
+/proc/generate_wound_static_data()
+	RETURN_TYPE(/list/datum/wound_pregen_data)
+
+	var/list/datum/wound_pregen_data/all_pregen_data = list()
+
+	for (var/datum/wound_pregen_data/iterated_path as anything in typecacheof(path = /datum/wound_pregen_data, ignore_root_path = TRUE))
+		if (initial(iterated_path.abstract))
+			continue
+
+		if (!isnull(all_pregen_data[initial(iterated_path.wound_path_to_generate)]))
+			stack_trace("pre-existing pregen data for [initial(iterated_path.wound_path_to_generate)] when [iterated_path] was being considered: [all_pregen_data[initial(iterated_path.wound_path_to_generate)]]. \
+						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [iterated_path] will not be instantiated")
+
+			continue
+
+		var/datum/wound_pregen_data/pregen_data = new iterated_path
+		all_pregen_data[pregen_data.wound_path_to_generate] = pregen_data
+
+	return all_pregen_data
+
+// A wound series "collection" is merely a way for us to track what is in what series, and what their types are.
+// Without this, we have no centralized way to determine what type is in what series outside of iterating over every pregen data.
+
+/// A branching assoc list of (series -> list(severity -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
+/// then "Of severity 2", and get a wound of that description - via get_corresponding_wound_type()
+/// Series: A generic wound_series, such as WOUND_SERIES_BONE_BLUNT_BASIC
+/// Severity: Any wounds held within this will be of this severity.
+/// Typepath, Weight: Merely a pairing of a given typepath to its weight, held for convenience in pickweight.
+GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
+
+// Series -> severity -> type -> weight
+/// Generates [wound_series_collections] by iterating through all pregen_data. Refer to the mentioned list for documentation
+/proc/generate_wound_series_collection()
+	RETURN_TYPE(/list/datum/wound)
+
+	var/list/datum/wound/wound_collection = list()
+
+	for (var/datum/wound/wound_typepath as anything in typecacheof(/datum/wound, FALSE, TRUE))
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_typepath]
+		if (!pregen_data)
+			continue
+
+		if (pregen_data.abstract)
+			stack_trace("somehow, a abstract wound_pregen_data instance ([pregen_data.type]) was instantiated and made it to generate_wound_series_collection()! \
+						i literally have no idea how! please fix this!")
+			continue
+
+		var/series = pregen_data.wound_series
+		var/list/datum/wound/series_list = wound_collection[series]
+		if (isnull(series_list))
+			wound_collection[series] = list()
+			series_list = wound_collection[series]
+
+		var/severity = "[(initial(wound_typepath.severity))]"
+		var/list/datum/wound/severity_list = series_list[severity]
+		if (isnull(severity_list))
+			series_list[severity] = list()
+			severity_list = series_list[severity]
+
+		severity_list[wound_typepath] = pregen_data.weight
+
+	return wound_collection
+
+/// A branching assoc list of (wounding_type -> list(wound_series)).
+/// Allows for determining of which wound series are caused by what.
+GLOBAL_LIST_INIT(wounding_types_to_series, list(
+	WOUND_BLUNT = list(
+		WOUND_SERIES_BONE_BLUNT_BASIC
+	),
+	WOUND_SLASH = list(
+		WOUND_SERIES_FLESH_SLASH_BLEED,
+	),
+	WOUND_BURN = list(
+		WOUND_SERIES_FLESH_BURN_BASIC,
+	),
+	WOUND_PUNCTURE = list(
+		WOUND_SERIES_FLESH_PUNCTURE_BLEED
+	),
+))
+
+/// Used in get_corresponding_wound_type(): Will pick the highest severity wound out of severity_min and severity_max
+#define WOUND_PICK_HIGHEST_SEVERITY 1
+/// Used in get_corresponding_wound_type(): Will pick the lowest severity wound out of severity_min and severity_max
+#define WOUND_PICK_LOWEST_SEVERITY 2
+
+/**
+ * Searches through all wounds for any of proper type, series, and biostate, and then returns a single one via pickweight.
+ * Is able to discern between, say, a flesh slash wound, and a metallic slash wound, and will return the respective one for the provided limb.
+ *
+ * The severity_max and severity_pick_mode args mostly exist in case you want a wound in a series that may not have your ideal severity wound, as it lets you
+ * essentially set a "fallback", where if your ideal wound doesnt exist, it'll still return something, trying to get closest to your ideal severity.
+ *
+ * Generally speaking, if you want a critical/severe/moderate wound, you should set severity_min to WOUND_SEVERITY_MODERATE, severity_max to your ideal wound,
+ * and severity_pick_mode to WOUND_PICK_HIGHEST_SEVERITY - UNLESS you for some reason want the LOWEST severity, in which case you should set
+ * severity_max to the highest wound you're willing to tolerate, and severity_pick_mode to WOUND_PICK_LOWEST_SEVERITY.
+ *
+ * Args:
+ * * list/wounding_types: A list of wounding_types. Only wounds that accept these wound types will be considered.
+ * * obj/item/bodypart/part: The limb we are considering. Extremely important for biostates.
+ * * severity_min: The minimum wound severity we will search for.
+ * * severity_max = severity_min: The maximum wound severity we will search for.
+ * * severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY: The "pick mode" we will use when considering multiple wounds of acceptable severity. See the above defines.
+ * * random_roll = TRUE: If this is considered a "random" consideration. If true, only wounds that can be randomly generated will be considered.
+ * * duplicates_allowed = FALSE: If exact duplicates of a given wound on part are tolerated. Useful for simply getting a path and not instantiating.
+ * * care_about_existing_wounds = TRUE: If we iterate over wounds to see if any are above or at a given wounds severity, and disregard it if any are. Useful for simply getting a path and not instantiating.
+ *
+ * Returns:
+ * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
+ */
+/proc/get_corresponding_wound_type(list/wounding_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
+
+	var/list/wounding_type_list = list()
+	for (var/wounding_type as anything in wounding_types)
+		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
+	if (!length(wounding_type_list))
+		return null
+
+	var/list/datum/wound/paths_to_pick_from = list()
+	for (var/series as anything in shuffle(wounding_type_list))
+		var/list/severity_list = GLOB.wound_series_collections[series]
+		if (!length(severity_list))
+			continue
+
+		var/picked_severity
+		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+			var/severity = text2num(severity_text)
+			if (severity > severity_min || severity < severity_max)
+				continue
+
+			if (isnull(picked_severity) || ((severity_pick_mode == WOUND_PICK_HIGHEST_SEVERITY && severity > picked_severity) || (severity_pick_mode == WOUND_PICK_LOWEST_SEVERITY && severity < picked_severity)))
+				picked_severity = severity
+
+		var/list/wound_typepaths = severity_list["[picked_severity]"]
+		if (!length(wound_typepaths))
+			continue
+
+		for (var/datum/wound/iterated_path as anything in wound_typepaths)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
+			if (pregen_data.can_be_applied_to(part, wounding_types, random_roll = random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
+				paths_to_pick_from[iterated_path] = wound_typepaths[iterated_path]
+
+	return pick_weight(paths_to_pick_from) // we found our winners!
+
+/// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
+GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
+	"[BIO_FLESH]" = FLESH_SCAR_FILE,
+	"[BIO_BONE]" = BONE_SCAR_FILE
+))
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
@@ -149,13 +317,14 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 #define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_INTERIOR | BODYPART_MANGLED_EXTERIOR)
 
 // ~wound flag defines
-/// If having this wound counts as mangled flesh for dismemberment
-#define MANGLES_FLESH (1<<0)
-/// If having this wound counts as mangled bone for dismemberment
-#define MANGLES_BONE (1<<1)
+/// If having this wound counts as mangled exterior for dismemberment
+#define MANGLES_EXTERIOR (1<<0)
+/// If having this wound counts as mangled interior for dismemberment
+#define MANGLES_INTERIOR (1<<1)
 /// If this wound marks the limb as being allowed to have gauze applied
 #define ACCEPTS_GAUZE (1<<2)
-
+/// If this wound allows the victim to grasp it
+#define CAN_BE_GRASPED (1<<3)
 
 // ~scar persistence defines
 // The following are the order placements for persistent scar save formats

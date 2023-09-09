@@ -3,7 +3,6 @@
 	Piercing wounds
 */
 /datum/wound/pierce
-	wound_type = WOUND_PIERCE
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
@@ -12,11 +11,9 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
 
-	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
-
-	scar_file = FLESH_SCAR_FILE
+	default_scar_file = FLESH_SCAR_FILE
 
 
 	/// How much blood we start losing when this wound is first applied
@@ -37,7 +34,7 @@
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || no_bleeding || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	if(limb.current_gauze?.splint_factor)
 		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
@@ -128,7 +125,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -174,6 +171,9 @@
 	abstract = TRUE
 
 	required_limb_biostate = (BIO_FLESH)
+	required_wounding_types = list(WOUND_PIERCE)
+
+	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
@@ -207,8 +207,10 @@
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate
 
+	threshold_minimum = 30
+
 /datum/wound/pierce/bleed/moderate/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
 
@@ -233,8 +235,10 @@
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/severe
 
+	threshold_minimum = 50
+
 /datum/wound/pierce/bleed/severe/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "tears a hole open"
 
 /datum/wound/pierce/bleed/critical
@@ -252,9 +256,11 @@
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/critical
+
+	threshold_minimum = 100

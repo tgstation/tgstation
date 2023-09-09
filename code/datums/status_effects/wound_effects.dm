@@ -165,31 +165,7 @@
 	if(W == linked_wound)
 		qdel(src)
 
-
-// bones
-/datum/status_effect/wound/blunt/bone
-
-/datum/status_effect/wound/blunt/bone/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
-	on_swap_hands()
-
-/datum/status_effect/wound/blunt/bone/on_remove()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
-	var/mob/living/carbon/wound_owner = owner
-	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
-
-/datum/status_effect/wound/blunt/bone/proc/on_swap_hands()
-	SIGNAL_HANDLER
-
-	var/mob/living/carbon/wound_owner = owner
-	if(wound_owner.get_active_hand() == linked_limb)
-		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
-	else
-		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
-
-/datum/status_effect/wound/blunt/bone/nextmove_modifier()
+/datum/status_effect/wound/nextmove_modifier()
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)

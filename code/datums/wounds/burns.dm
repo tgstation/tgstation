@@ -7,18 +7,14 @@
 /datum/wound/burn
 	name = "Burn Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
 /datum/wound/burn/flesh
 	name = "Burn (Flesh) Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	processes = TRUE
 
-	scar_file = FLESH_SCAR_FILE
-
-	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
+	default_scar_file = FLESH_SCAR_FILE
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 
@@ -272,7 +268,10 @@
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
 
+	required_wounding_types = list(WOUND_BURN)
 	required_limb_biostate = BIO_FLESH
+
+	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
 
 /datum/wound/burn/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly cooked.")
@@ -296,6 +295,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/flesh/moderate
 
+	threshold_minimum = 40
+
 /datum/wound/burn/flesh/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
@@ -315,6 +316,8 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/burn/flesh/severe
+
+	threshold_minimum = 80
 
 /datum/wound/burn/flesh/critical
 	name = "Catastrophic Burns"
@@ -337,6 +340,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/flesh/critical
 
+	threshold_minimum = 140
+
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/flesh/severe/brand
 	name = "Holy Brand"
@@ -344,7 +349,7 @@
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
 
-/datum/wound_pregen_data/flesh_burn/holy
+/datum/wound_pregen_data/flesh_burn/third_degree/holy
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 
@@ -360,7 +365,7 @@
 /datum/wound/burn/flesh/severe/cursed_brand/get_limb_examine_description()
 	return span_warning("The flesh on this limb has several ornate symbols burned into it, with pitting throughout.")
 
-/datum/wound_pregen_data/flesh_burn/cursed_brand
+/datum/wound_pregen_data/flesh_burn/third_degree/cursed_brand
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 

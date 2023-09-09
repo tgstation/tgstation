@@ -8,11 +8,15 @@
 	abstract = TRUE
 	required_limb_biostate = BIO_BONE
 
+	required_wounding_types = list(WOUND_BLUNT)
+
+	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
+
 /datum/wound/blunt/bone
 	name = "Blunt (Bone) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
-	scar_file = BONE_SCAR_FILE
+	default_scar_file = BONE_SCAR_FILE
 
 	/// Have we been bone gel'd?
 	/// If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default
@@ -28,8 +32,6 @@
 	var/trauma_cycle_cooldown
 	/// If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest
 	var/internal_bleeding_chance = 0
-
-	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
 
 /*
 	Overwriting of base procs
@@ -58,14 +60,6 @@
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
-
-	return ..()
-
-/datum/wound/blunt/bone/set_limb(obj/item/bodypart/new_value)
-	if (limb)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
-	if (new_value)
-		RegisterSignals(new_value, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
 
 	return ..()
 
@@ -173,11 +167,6 @@
 	New common procs for /datum/wound/blunt/bone/
 */
 
-/datum/wound/blunt/bone/proc/update_inefficiencies()
-	SIGNAL_HANDLER
-
-	return ..()
-
 /datum/wound/blunt/bone/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	if (scarred_limb.biological_state & BIO_BONE && (!(scarred_limb.biological_state & BIO_FLESH))) // only bone
 		return BONE_SCAR_FILE
@@ -198,9 +187,9 @@
 	limp_slowdown = 3
 	limp_chance = 50
 	threshold_penalty = 15
-	treatable_tool = TOOL_BONESET
+	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
-	scar_keyword = "bluntmoderate"
+	scar_keyword = "dislocate"
 
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
@@ -208,6 +197,8 @@
 	wound_path_to_generate = /datum/wound/blunt/bone/moderate
 
 	required_limb_biostate = BIO_JOINTED
+
+	threshold_minimum = 35
 
 /datum/wound/blunt/bone/moderate/Destroy()
 	if(victim)
@@ -332,13 +323,15 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
 /datum/wound_pregen_data/bone/hairline
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/bone/severe
+
+	threshold_minimum = 60
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
@@ -361,13 +354,15 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/bone/critical
+
+	threshold_minimum = 115
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")

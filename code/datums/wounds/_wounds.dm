@@ -16,6 +16,11 @@
 
 #define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
 
+// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
+#define TRAIT_WOUND_SCANNED "wound_scanned"
+// I dunno lol
+#define ANALYZER_TRAIT "analyzer_trait"
+
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
@@ -29,8 +34,8 @@
 	/// If this wound can generate a scar.
 	var/can_scar = TRUE
 
-	/// The file we take our scar descriptions from.
-	var/scar_file
+	/// The default file we take our scar descriptions from, if we fail to get the ideal file.
+	var/default_scar_file
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
@@ -43,10 +48,6 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The type of attack that can generate this wound. E.g. WOUND_SLASH = A sword can cause us, or WOUND_BLUNT = a hammer can cause us/a sword attacking mangled flesh.
-	var/wound_type
-	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
-	var/wound_series
 
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
@@ -115,10 +116,12 @@
 	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
-	if(attached_surgery)
-		QDEL_NULL(attached_surgery)
+	QDEL_NULL(attached_surgery)
 	if (limb)
 		remove_wound()
+
+	QDEL_NULL(actionspeed_mod)
+
 	return ..()
 
 /// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
@@ -223,7 +226,7 @@
 	// We assume we aren't being randomly applied - we have no reason to believe we are
 	// And, besides, if we were, you could just as easily check our pregen data rather than run this proc
 	// Generally speaking this proc is called in apply_wound, which is called when the caller is already confidant in its ability to be applied
-	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
+	return pregen_data.can_be_applied_to(L, old_wound = old_wound)
 
 /// Returns the zones we can be applied to.
 /datum/wound/proc/get_viable_zones()
@@ -322,6 +325,8 @@
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
 
+	remove_actionspeed_modifier()
+
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
@@ -358,28 +363,6 @@
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
-
-/// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
-	if(limb == new_value)
-		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
-	. = limb
-	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, COMSIG_QDELETING)
-		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
-		if (disabling)
-			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
-	limb = new_value
-
-	// POST-CHANGE
-
-	if (limb)
-		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-	if(limb)
-		if(disabling)
-			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 /// Proc called to change the variable `disabling` and react to the event.
 /datum/wound/proc/set_disabling(new_value)
@@ -503,9 +486,9 @@
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
-	if(potential_treater.tool_behaviour == treatable_tool)
+	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
-	if(treatable_tool == TOOL_CAUTERY && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
+	if(TOOL_CAUTERY in treatable_tools && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
@@ -675,7 +658,17 @@
 
 /// Getter proc for our scar_file, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
-	return scar_file
+	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
+	// basically we iterate over biotypes until we find the one we want
+	// fleshy burns will look for flesh then bone
+	// dislocations will look for flesh, then bone, then metal
+	var/file = default_scar_file
+	for (var/biotype as anything in pregen_data.scar_priorities)
+		if (scarred_limb.biological_state & text2num(biotype))
+			file = GLOB.biotypes_to_scar_file[biotype]
+			break
+
+	return file
 
 /// Returns what string is displayed when a limb that has sustained this wound is examined
 /// (This is examining the LIMB ITSELF, when it's not attached to someone.)
@@ -686,7 +679,17 @@
 /datum/wound/proc/get_dismember_chance_bonus(existing_chance)
 	SHOULD_BE_PURE(TRUE)
 
-	if (wound_type == WOUND_BLUNT && severity >= WOUND_SEVERITY_CRITICAL)
+	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
+
+	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
+
+/// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.
+/// In fact, since it's RETURN_TYPEd to wound_pregen_data, you can even directly access the variables without having to store the value of this proc in a typed variable.
+/// Ex. get_pregen_data().wound_series
+/datum/wound/proc/get_pregen_data()
+	RETURN_TYPE(/datum/wound_pregen_data)
+
+	return GLOB.all_wound_pregen_data[type]
 
 #undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS
