@@ -11648,10 +11648,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"evf" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/central)
 "evg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
@@ -100582,7 +100578,7 @@ vTG
 dLd
 gwh
 wfH
-evf
+sSQ
 blb
 blb
 blb
