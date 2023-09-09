@@ -1293,7 +1293,7 @@
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.wash(clean_types)
 
-/datum/reagent/space_cleaner/on_burn_wound_processing((datum/wound/burn/flesh/burn_wound))
+/datum/reagent/space_cleaner/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.3
 	if(prob(5))
 		to_chat(burn_wound.victim, span_notice("Your [burn_wound] stings and burns from the [src] covering it! It does look pretty clean though."))
