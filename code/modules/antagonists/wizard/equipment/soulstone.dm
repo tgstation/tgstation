@@ -494,6 +494,11 @@
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, target, creator, cultoverride, loc_override)
+		if(CONSTRUCT_HARVESTER)
+			if(IS_CULTIST(creator))
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, target, creator, cultoverride, loc_override)
+			else
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/heretic, target, creator, cultoverride, loc_override)
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
 	if(QDELETED(target))

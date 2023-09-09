@@ -9,6 +9,59 @@
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 
+/obj/item/clothing/neck/heretic_focus/crimson_focus
+	name = "Crimson Focus"
+	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
+	icon_state = "bleeding_necklace"
+
+#define COMSIG_CULT_EMPOWER "gingus"
+#define TRAIT_WEARING_FOCUS "gingus"
+
+/obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_NECK))
+		return
+	ADD_TRAIT(user, TRAIT_WEARING_FOCUS, REF(src))
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 1, \
+		brute_heal = 0.2, \
+		burn_heal = 0.2, \
+		blood_heal = 0.2, \
+		simple_heal = 0.6, \
+		requires_visibility = FALSE, \
+		limit_to_trait = TRAIT_WEARING_FOCUS, \
+		healing_color = COLOR_CULT_RED, \
+		)
+	if(IS_CULTIST(user))
+		RegisterSignal(user, COMSIG_CULT_EMPOWER, PROC_REF(buff_empower))
+	if(IS_HERETIC_OR_MONSTER(user))
+		RegisterSignal(user, COMSIG_ACTION_START_COOLDOWN, PROC_REF(halve_cooldowns))
+
+/obj/item/clothing/neck/heretic_focus/crimson_focus/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
+	REMOVE_TRAIT(user, TRAIT_WEARING_FOCUS, REF(src))
+
+/obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
+	SIGNAL_HANDLER
+
+	signal_return_list["limit_data"] += 1
+	signal_return_list["speed_data"] *= 0.5
+
+/obj/item/clothing/neck/heretic_focus/crimson_focus/proc/halve_cooldowns(mob/user, signal_return_list)
+	SIGNAL_HANDLER
+
+	signal_return_list["cd_data"] = signal_return_list["override_data"] ? signal_return_list["override_data"] * 0.5 : signal_return_list["cd_data"] * 0.5
+
+/obj/item/clothing/neck/heretic_focus/crimson_focus/examine(mob/user)
+	. = ..()
+
+	if(IS_CULTIST(user))
+		to_chat(user, span_cultboldtalic("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect."))
+	if(IS_HERETIC_OR_MONSTER(user))
+		to_chat(user, span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect."))
+
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
 	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."

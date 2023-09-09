@@ -22,7 +22,7 @@
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/list/position_list = list()
-		for(var/possible_position in 1 to MAX_BLOODCHARGE)
+		for(var/possible_position in 1 to MAX_POSSIBLE_BLOODCHARGE)
 			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
 			if(blood_spell.positioned)
@@ -36,6 +36,8 @@
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
 			blood_spell.positioned = first_available_slot
 
+#define COMSIG_CULT_EMPOWER "gingus"
+
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
@@ -44,6 +46,11 @@
 		break
 	if(rune)
 		limit = MAX_BLOODCHARGE
+	var/empowering_channel_time = 10 SECONDS - (rune ? 6 SECONDS : 0 SECONDS)
+	var/list/signal_return_list = list("limit_data" = limit, "rune_data" = rune, "speed_data" = empowering_channel_time)
+	signal_return_list = SEND_SIGNAL(owner, COMSIG_CULT_EMPOWER, signal_return_list)
+	limit = signal_return_list["limit_data"]
+	empowering_channel_time = signal_return_list["speed_data"]
 	if(length(spells) >= limit)
 		if(rune)
 			to_chat(owner, span_cultitalic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
@@ -79,7 +86,7 @@
 	else
 		to_chat(owner, span_cultitalic("You are already invoking blood magic!"))
 		return
-	if(do_after(owner, 100 - rune*60, target = owner))
+	if(do_after(owner, empowering_channel_time, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			human_owner.bleed(40 - rune*32)

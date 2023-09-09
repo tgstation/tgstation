@@ -154,6 +154,10 @@
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	// "Shared cooldowns" covers actions which are not the same type,
 	// but have the same cooldown group and are on the same mob
+	var/list/signal_return_list = list("cd_data" = cooldown_time, "override_data" = override_cooldown_time)
+	var/new_cd = SEND_SIGNAL(owner, COMSIG_ACTION_START_COOLDOWN, signal_return_list)
+	if(!isnull(new_cd))
+		override_cooldown_time = signal_return_list["cd_data"]
 	if(shared_cooldown != NONE)
 		StartCooldownOthers(override_cooldown_time)
 
