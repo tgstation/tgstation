@@ -29,9 +29,11 @@
 	var/datum/round_event_control/scrubber_overflow/every_vent/overflow_control
 
 /obj/effect/rune/beer/Destroy(force)
-    if(src == GLOB.narsie_breaching_rune)
-        GLOB.narsie_breaching_rune = TRUE //we still want to summon even if destroyed
-    return ..()
+	if(!force)
+		return QDEL_HINT_LETMELIVE
+	if(src == GLOB.narsie_breaching_rune)
+		GLOB.narsie_breaching_rune = TRUE //we still want to summon even if destroyed
+	return ..()
 
 /obj/effect/rune/beer/Initialize(mapload)
 	. = ..()
