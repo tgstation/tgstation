@@ -321,8 +321,7 @@
 		to_chat(exposed_mob, span_userdanger("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.blood_volume)
-		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
+	. = ..()
 	if(!data)
 		data = list("misc" = 0)
 
@@ -417,23 +416,26 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, 0)
-		affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
+		need_mob_update = affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
+		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
-		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, 0)
-	..()
+		need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
+		need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
+	if(need_mob_update)
+	 . = UPDATE_MOB_HEALTH
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -443,12 +445,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
-	affected_mob.adjustToxLoss(0.5*seconds_per_tick, 0)
-	affected_mob.adjustFireLoss(0.5*seconds_per_tick, 0) //Hence the other damages... ain't I a bastard?
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustToxLoss(0.5*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjustFireLoss(0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	holder.remove_reagent(type, 0.5*seconds_per_tick)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
@@ -560,8 +566,8 @@
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_mob, span_notice("That tasted horrible."))
 
-
 /datum/reagent/spraytan/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 
 	if(ishuman(affected_mob))
@@ -587,12 +593,17 @@
 				affected_mob.visible_message("<b>[affected_mob]</b> flexes [affected_mob.p_their()] arms.")
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don???t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = /datum/reagent/spraytan)
-	..()
-	return
 
 #define MUT_MSG_IMMEDIATE 1
 #define MUT_MSG_EXTENDED 2
 #define MUT_MSG_ABOUT2TURN 3
+
+/// the current_cycle threshold / iterations needed before one can transform
+#define CYCLES_TO_TRANSFORM 21
+/// the cycle at which 'immediate' mutation text begins displaying
+#define CYCLES_MSG_IMMEDIATE 7
+/// the cycle at which 'extended' mutation text begins displaying
+#define CYCLES_MSG_EXTENDED 17
 
 /datum/reagent/mutationtoxin
 	name = "Stable Mutation Toxin"
@@ -606,21 +617,22 @@
 									"Your limbs begin to take on a different shape." = MUT_MSG_EXTENDED,
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
-	var/cycles_to_turn = 20 //the current_cycle threshold / iterations needed before one can transform
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	. = TRUE
+	. = ..()
 	if(!istype(affected_mob))
 		return
-	if(!(affected_mob.dna?.species) || !(affected_mob.mob_biotypes & MOB_ORGANIC))
+	if(!(affected_mob.dna?.species) || !(affected_mob.mob_biotypes & affected_biotype))
 		return
+
+	. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(5, seconds_per_tick))
 		var/list/pick_ur_fav = list()
 		var/filter = NONE
-		if(current_cycle <= (cycles_to_turn*0.3))
+		if(current_cycle <= CYCLES_MSG_IMMEDIATE)
 			filter = MUT_MSG_IMMEDIATE
-		else if(current_cycle <= (cycles_to_turn*0.8))
+		else if(current_cycle <= CYCLES_MSG_EXTENDED)
 			filter = MUT_MSG_EXTENDED
 		else
 			filter = MUT_MSG_ABOUT2TURN
@@ -630,13 +642,12 @@
 				pick_ur_fav += i
 		to_chat(affected_mob, span_warning("[pick(pick_ur_fav)]"))
 
-	if(current_cycle >= cycles_to_turn)
+	if(current_cycle > CYCLES_TO_TRANSFORM)
 		var/datum/species/species_type = race
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		to_chat(affected_mob, span_warning("You've become \a [lowertext(initial(species_type.name))]!"))
 		return
-	..()
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -698,13 +709,13 @@
 		var/species_type = pick(subtypesof(/datum/species/jelly))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
-		return TRUE
-	if(current_cycle >= cycles_to_turn) //overwrite since we want subtypes of jelly
+		return UPDATE_MOB_HEALTH
+	if(current_cycle >= CYCLES_TO_TRANSFORM) //overwrite since we want subtypes of jelly
 		var/datum/species/species_type = pick(subtypesof(race))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		to_chat(affected_mob, span_warning("You've become \a [initial(species_type.name)]!"))
-		return TRUE
+		return UPDATE_MOB_HEALTH
 	return ..()
 
 /datum/reagent/mutationtoxin/golem
@@ -777,6 +788,10 @@
 #undef MUT_MSG_EXTENDED
 #undef MUT_MSG_ABOUT2TURN
 
+#undef CYCLES_TO_TRANSFORM
+#undef CYCLES_MSG_IMMEDIATE
+#undef CYCLES_MSG_EXTENDED
+
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	description = "This toxin will rapidly change the DNA of humanoid beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
@@ -786,7 +801,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	..()
+	. = ..()
 	if (!istype(affected_mob))
 		return
 	to_chat(affected_mob, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
@@ -828,10 +843,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(ishuman(affected_mob))
 		if(SPT_PROB(3.5, seconds_per_tick))
 			affected_mob.emote(pick("twitch","drool","moan","gasp"))
-	..()
 
 /datum/reagent/oxygen
 	name = "Oxygen"
@@ -906,12 +921,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. =	..()
 	if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan"))
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick)
-	..()
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -979,9 +995,9 @@
 	mytray.adjust_weedlevel(-rand(1, 4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
-	. = TRUE
-	..()
+	. = ..()
+	if(affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, updating_health = FALSE))
+		. = TRUE
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -1017,11 +1033,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !isspaceturf(affected_mob.loc) && isturf(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(2.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan"))
-	..()
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -1058,9 +1074,9 @@
 	ph = 6
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 		affected_mob.blood_volume += 0.25 * seconds_per_tick
-	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -1094,8 +1110,9 @@
 	var/tox_damage = 0.5
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM)
-	..()
+	. = ..()
+	if(affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1139,12 +1156,12 @@
 		do_teleport(exposed_mob, get_turf(exposed_mob), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //4 tiles per crystal
 
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(current_cycle > 10 && SPT_PROB(7.5, seconds_per_tick))
 		to_chat(affected_mob, span_warning("You feel unstable..."))
 		affected_mob.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
 		addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/living, bluespace_shuffle)), 30)
-	..()
 
 /mob/living/proc/bluespace_shuffle()
 	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -1191,9 +1208,9 @@
 		exposed_mob.adjust_fire_stacks(reac_volume / 10)
 
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, seconds_per_tick, times_fired)
-	victim.adjustToxLoss(0.5 * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	..()
-	return TRUE
+	. = ..()
+	if(victim.adjustToxLoss(0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1253,10 +1270,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustBruteLoss(1.665*seconds_per_tick)
-	affected_mob.adjustFireLoss(1.665*seconds_per_tick)
-	affected_mob.adjustToxLoss(1.665*seconds_per_tick)
-	..()
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustBruteLoss(1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjustFireLoss(1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjustToxLoss(1.665*seconds_per_tick, updating_health = FALSE)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1274,6 +1294,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_dizzy_if_lower(2 SECONDS)
 
 	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
@@ -1285,8 +1306,6 @@
 	else if(confusion_left > 20 SECONDS)
 		affected_mob.set_confusion(20 SECONDS)
 
-	..()
-
 /datum/reagent/impedrezene
 	name = "Impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
@@ -1297,6 +1316,7 @@
 	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjust_jitter(-5 SECONDS * seconds_per_tick)
 	if(SPT_PROB(55, seconds_per_tick))
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
@@ -1304,7 +1324,6 @@
 		affected_mob.adjust_drowsiness(6 SECONDS)
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.emote("drool")
-	..()
 
 /datum/reagent/cyborg_mutation_nanomachines
 	name = "Nanomachines"
@@ -1619,10 +1638,10 @@
 	ph = 3
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(tox_prob, seconds_per_tick))
-		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
-		. = TRUE
-	..()
+		if(affected_mob.adjustToxLoss(1, updating_health = FALSE, required_biotype = affected_biotype))
+			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
 	name = "E-Z Nutrient"
@@ -2275,9 +2294,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(1, seconds_per_tick))
 		affected_mob.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."), forced = "royal bee jelly")
-	..()
 
 //Misc reagents
 
@@ -2309,8 +2328,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	..()
-	if((ishuman(affected_mob)) && current_cycle >= 10)
+	. = ..()
+	if((ishuman(affected_mob)) && current_cycle > 10)
 		affected_mob.gorillize()
 
 /datum/reagent/growthserum
@@ -2322,6 +2341,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/newsize = current_size
 	switch(volume)
 		if(0 to 19)
@@ -2337,7 +2357,6 @@
 
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
-	..()
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
@@ -2428,11 +2447,11 @@
 	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
+	. = ..()
 	if(target.mind)
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.adjust_chemicals(-2 * REM * seconds_per_tick)
-	return ..()
 
 /datum/reagent/pax/peaceborg
 	name = "Synthpax"
@@ -2463,12 +2482,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(affected_mob.getStaminaLoss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick)
+		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
+			. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(16, seconds_per_tick))
 		to_chat(affected_mob, "You should sit down and take a rest...")
-	..()
 
 /datum/reagent/gondola_mutation_toxin
 	name = "Tranquility"
@@ -2666,6 +2686,7 @@
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
 		affected_mob.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
@@ -2677,8 +2698,8 @@
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
 			wounded_part.heal_damage(0.25 * REM * seconds_per_tick, 0.25 * REM * seconds_per_tick)
-		affected_mob.adjustStaminaLoss(-0.25 * REM * seconds_per_tick) // the more wounds, the more stamina regen
-	..()
+		if(affected_mob.adjustStaminaLoss(-0.25 * REM * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
+			. = UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.
 // why couldn't they have both just used the same reagent?
@@ -2695,24 +2716,27 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	if(IS_HERETIC(drinker))
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, FALSE)
-		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, forced = TRUE)
-		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_health = FALSE)
+		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
+		need_mob_update = TRUE
 	else
-		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
-		drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
-		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
-	..()
-	return TRUE
+		need_mob_update = drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
+		need_mob_update += drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjustFireLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjustOxyLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjustBruteLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"
@@ -2758,10 +2782,11 @@
 	desc = "Bottoms up...?"
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick)
+	. = ..()
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
 	ant_damage++
 	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
-		return ..()
+		return
 	if(SPT_PROB(5, seconds_per_tick))
 		if(SPT_PROB(5, seconds_per_tick)) //Super rare statement
 			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
@@ -2771,7 +2796,6 @@
 		victim.emote("scream")
 	if(SPT_PROB(2, seconds_per_tick)) // Stuns, but purges ants.
 		victim.vomit(rand(5,10), FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 1)
-	return ..()
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	ant_damage = 0
@@ -2822,7 +2846,8 @@
 
 /datum/reagent/lead/on_mob_life(mob/living/carbon/victim)
 	. = ..()
-	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
+	if(victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5))
+		. = UPDATE_MOB_HEALTH
 
 //The main feedstock for kronkaine production, also a shitty stamina healer.
 /datum/reagent/kronkus_extract
@@ -2835,8 +2860,11 @@
 
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
 	. = ..()
-	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
+	var/need_mob_update
+	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+	need_mob_update += kronkus_enjoyer.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust
 	name = "Brimdust"
@@ -2848,7 +2876,8 @@
 
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1) * seconds_per_tick)
+	if(affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_weedlevel(-1)
@@ -2884,6 +2913,7 @@
 	deleted_from.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
 
 /datum/reagent/love/overdose_process(mob/living/metabolizer, seconds_per_tick, times_fired)
+	. = ..()
 	var/mob/living/carbon/carbon_metabolizer = metabolizer
 	if(!istype(carbon_metabolizer) || !carbon_metabolizer.can_heartattack() || carbon_metabolizer.undergoing_cardiac_arrest())
 		metabolizer.reagents.del_reagent(type)
@@ -2917,16 +2947,18 @@
 		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
 
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
-		..()
+		need_mob_update = affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
+		need_mob_update |= affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
+		need_mob_update |= affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
+		need_mob_update |= affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
+		need_mob_update |= affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
 	else
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
+		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
-		..()
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH

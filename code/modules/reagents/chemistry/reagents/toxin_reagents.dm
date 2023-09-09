@@ -23,10 +23,10 @@
 	mytray.adjust_toxic(round(volume * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
-		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		. = TRUE
-	..()
+		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -215,7 +215,7 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_mob, span_danger("Your insides are burning!"))
-		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(rand(20, 60), updating_health = FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
 		affected_mob.heal_bodypart_damage(5)
@@ -374,8 +374,8 @@
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
 		// spray bottle emits 5u so it's dealing ~15 dmg per spray
-		exposed_mob.adjustToxLoss(damage * 20, required_biotype = affected_biotype)
-		return
+		if(exposed_mob.adjustToxLoss(damage * 20, required_biotype = affected_biotype))
+			return
 
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
 		return
@@ -481,7 +481,7 @@
 			. = TRUE
 		if(51 to INFINITY)
 			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
-			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			. = TRUE
 	..()
 
@@ -512,7 +512,7 @@
 			affected_mob.Sleeping(40 * REM * seconds_per_tick)
 		if(51 to INFINITY)
 			affected_mob.Sleeping(40 * REM * seconds_per_tick)
-			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/toxin/coffeepowder
@@ -622,9 +622,9 @@
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE, FALSE, BODYTYPE_ORGANIC)
-	affected_mob.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustBruteLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	affected_mob.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -645,7 +645,7 @@
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //mmmm, the forbidden pickle juice
-		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype) //it counteracts its own toxin damage.
+		affected_mob.adjustToxLoss(-1, updating_health = FALSE, required_biotype = affected_biotype) //it counteracts its own toxin damage.
 		. = TRUE
 		return ..()
 	else if(SPT_PROB(2.5, seconds_per_tick))
@@ -700,10 +700,10 @@
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * seconds_per_tick, 150)
 	if(affected_mob.toxloss <= 60)
-		affected_mob.adjustToxLoss(1 * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	if(current_cycle >= 4)
+		affected_mob.adjustToxLoss(1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	if(current_cycle > 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
-	if(current_cycle >= 18)
+	if(current_cycle > 18)
 		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 	..()
 	return TRUE
@@ -726,7 +726,7 @@
 	if(SPT_PROB(4, seconds_per_tick))
 		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
 		affected_mob.Stun(40)
-		affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/toxin/bad_food
@@ -816,7 +816,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 10)
+	if(current_cycle > 10)
 		affected_mob.Stun(40 * REM * seconds_per_tick)
 		. = TRUE
 	if(SPT_PROB(10, seconds_per_tick))
@@ -842,7 +842,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_ANTICONVULSANT, name)
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 10)
+	if(current_cycle > 10)
 		affected_mob.Sleeping(40 * REM * seconds_per_tick)
 	affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, 0)
 	..()
@@ -862,7 +862,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 22)
+	if(current_cycle > 22)
 		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 	return ..()
 
@@ -903,7 +903,7 @@
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)
-		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_nutrition(-3 * REM * normalise_creation_purity() * seconds_per_tick) // making the chef more valuable, one meme trap at a time
 	affected_mob.overeatduration = 0
 	return ..()
@@ -934,8 +934,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	.=..()
-	if(current_cycle >= 11 && SPT_PROB(min(30, current_cycle), seconds_per_tick))
+	. = ..()
+	if(current_cycle > 10 && SPT_PROB(min(30, current_cycle), seconds_per_tick))
 		affected_mob.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
 		for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
 			if(R != src)
@@ -943,7 +943,7 @@
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(current_cycle >= 33 && SPT_PROB(7.5, seconds_per_tick))
+	if(current_cycle > 33 && SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.spew_organ()
 		affected_mob.vomit(0, TRUE, TRUE, 4)
 		to_chat(affected_mob, span_userdanger("You feel something lumpy come up as you vomit."))
@@ -958,7 +958,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 11)
+	if(current_cycle > 11)
 		affected_mob.Paralyze(60 * REM * seconds_per_tick)
 	affected_mob.adjustOxyLoss(0.5*REM*seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	. = TRUE
@@ -1142,7 +1142,7 @@
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(current_cycle > delay)
 		holder.remove_reagent(type, actual_metaboliztion_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
-		affected_mob.adjustToxLoss(actual_toxpwr * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(actual_toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if(SPT_PROB(5, seconds_per_tick))
 			affected_mob.Paralyze(20)
 		. = TRUE
@@ -1369,5 +1369,5 @@
 
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	if(current_cycle >= 28)
+	if(current_cycle > 28)
 		return COMSIG_CARBON_BLOCK_BREATH

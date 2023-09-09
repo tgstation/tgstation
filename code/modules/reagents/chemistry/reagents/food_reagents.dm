@@ -708,10 +708,10 @@
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 	if(SPT_PROB(33, seconds_per_tick))
-		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
-		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
-		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
-		M.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		M.adjustBruteLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
+		M.adjustFireLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
+		M.adjustOxyLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
+		M.adjustToxLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -776,8 +776,8 @@
 	if(SPT_PROB(10, seconds_per_tick))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
-		M.adjustToxLoss(3*REM, FALSE, required_biotype = affected_biotype)
-		M.adjustStaminaLoss(10*REM, FALSE, required_biotype = affected_biotype)
+		M.adjustToxLoss(3*REM, updating_health = FALSE, required_biotype = affected_biotype)
+		M.adjustStaminaLoss(10*REM, updating_health = FALSE, required_biotype = affected_biotype)
 		M.set_eye_blur_if_lower(10 SECONDS)
 		. = TRUE
 	..()

@@ -41,7 +41,7 @@
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)
 			stagedamage++
-			affected_mob.adjustToxLoss(1 * stage * seconds_per_tick, FALSE) //should, normally, do about 30 toxin damage.
+			affected_mob.adjustToxLoss(1 * stage * seconds_per_tick, updating_health = FALSE) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(SPT_PROB(25, seconds_per_tick))
 			affected_mob.adjustStaminaLoss(stage, FALSE)

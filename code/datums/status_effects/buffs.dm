@@ -47,7 +47,7 @@
 	var/grace_heal = bloodlust * 0.05
 	owner.adjustBruteLoss(-grace_heal)
 	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
+	owner.adjustToxLoss(-grace_heal, forced = TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
 	owner.adjustCloneLoss(-grace_heal)
 

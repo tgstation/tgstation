@@ -60,9 +60,9 @@
 	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
-	owner.adjustToxLoss(-amount, FALSE, TRUE)
-	owner.adjustOxyLoss(-amount, FALSE)
-	owner.adjustBruteLoss(-amount, FALSE)
+	owner.adjustToxLoss(-amount, updating_health = FALSE, TRUE)
+	owner.adjustOxyLoss(-amount, updating_health = FALSE)
+	owner.adjustBruteLoss(-amount, updating_health = FALSE)
 	owner.adjustFireLoss(-amount)
 
 /*

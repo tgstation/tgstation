@@ -221,7 +221,7 @@
 			if(health_ratio > 0.8) // only heals minor physical damage
 				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
+				owner.adjustToxLoss(-1 * healing * 0.5, forced = TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -309,7 +309,7 @@
 		return
 	owner.adjustBruteLoss(0.1)
 	owner.adjustFireLoss(0.1)
-	owner.adjustToxLoss(0.2, TRUE, TRUE)
+	owner.adjustToxLoss(0.2, forced = TRUE)
 
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"

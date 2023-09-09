@@ -152,13 +152,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	if(drinker.AdjustSleeping(-40 * REM * seconds_per_tick))
+		. = UPDATE_MOB_HEALTH
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
-	..()
-	. = TRUE
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -201,13 +201,15 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
-	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
+	var/need_mob_update
+	need_mob_update = drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	need_mob_update |= drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
-	..()
-	return TRUE
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker)
 	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
@@ -499,10 +501,10 @@
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/cubano, seconds_per_tick, times_fired)
 	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		cubano.adjustBruteLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		cubano.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		cubano.adjustToxLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		cubano.adjustOxyLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		cubano.adjustBruteLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		cubano.adjustFireLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		cubano.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		cubano.adjustOxyLoss(-5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	return ..() || .
 
@@ -1078,8 +1080,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
 	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, T0C) //310.15 is the normal bodytemp.
-	return ..()
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
@@ -1291,11 +1293,11 @@
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.health <= 0)
-		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustCloneLoss(-5 * REM * seconds_per_tick, 0)
-		drinker.adjustOxyLoss(-4 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	return ..() || .
 
@@ -1318,20 +1320,23 @@
 	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.adjust_confusion(2 SECONDS * REM * seconds_per_tick)
 	drinker.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
+	var/need_mob_update
 	switch(current_cycle)
 		if(51 to 200)
-			drinker.Sleeping(100 * REM * seconds_per_tick)
+			need_mob_update = drinker.Sleeping(100 * REM * seconds_per_tick)
 			. = TRUE
 		if(201 to INFINITY)
-			drinker.AdjustSleeping(40 * REM * seconds_per_tick)
-			drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+			need_mob_update = drinker.AdjustSleeping(40 * REM * seconds_per_tick)
+			need_mob_update |= drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			. = TRUE
-	..()
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"
@@ -1354,7 +1359,7 @@
 		if(55 to 200)
 			drinker.set_drugginess(110 SECONDS * REM * seconds_per_tick)
 		if(200 to INFINITY)
-			drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+			drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			. = TRUE
 	..()
 
@@ -1441,7 +1446,7 @@
 			if(SPT_PROB(23, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 			if(SPT_PROB(16, seconds_per_tick))
-				drinker.adjustToxLoss(2, FALSE, required_biotype = affected_biotype)
+				drinker.adjustToxLoss(2, updating_health = FALSE, required_biotype = affected_biotype)
 				. = TRUE
 	..()
 
@@ -1792,7 +1797,7 @@
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
-		drinker.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 	return ..()
@@ -1808,7 +1813,7 @@
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
-		drinker.adjustToxLoss(0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		drinker.adjustToxLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 	return ..()
@@ -1999,8 +2004,8 @@
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
-		drinker.adjustOxyLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustToxLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		drinker.adjustStaminaLoss(-1  * REM * seconds_per_tick, required_biotype = affected_biotype)
 	return ..()
 
@@ -2012,6 +2017,7 @@
 	quality = DRINK_GOOD
 	taste_description = "the pain of ten thousand slain mosquitos"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	affected_biotype = MOB_BUG
 
 /datum/reagent/consumable/ethanol/bug_spray/on_new(data)
 	. = ..()
@@ -2019,7 +2025,7 @@
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	// Does some damage to bug biotypes
-	var/did_damage = drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	var/did_damage = drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	// Random chance of causing a screm if we did some damage
 	if(did_damage && SPT_PROB(2, seconds_per_tick))
 		drinker.emote("scream")

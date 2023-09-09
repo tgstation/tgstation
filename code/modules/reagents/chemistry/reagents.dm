@@ -46,8 +46,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/color = "#000000" // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
-	/// appears unused
-	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.

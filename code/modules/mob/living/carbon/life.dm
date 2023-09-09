@@ -718,7 +718,7 @@
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
 		return
 
-	adjustToxLoss(0.6 * seconds_per_tick, TRUE,  TRUE)
+	adjustToxLoss(0.6 * seconds_per_tick, forced = TRUE)
 	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
@@ -775,6 +775,7 @@
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
-		return
+		return FALSE
 
 	heart.beating = !status
+	return TRUE

@@ -192,7 +192,7 @@
 	var/keep_going = FALSE
 	owner.vomit(0, TRUE, FALSE, 3, FALSE, FALSE, FALSE, TRUE)
 	owner.Stun(15)
-	owner.adjustToxLoss(-15, TRUE, TRUE)
+	owner.adjustToxLoss(-15, forced = TRUE)
 
 	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)

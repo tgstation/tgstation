@@ -126,10 +126,10 @@
 		return
 
 	// Heals all damage + Stamina
-	source.adjustBruteLoss(-2, FALSE)
-	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
+	source.adjustBruteLoss(-2, updating_health = FALSE)
+	source.adjustFireLoss(-2, updating_health = FALSE)
+	source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people to
+	source.adjustOxyLoss(-0.5, updating_health = FALSE)
 	source.adjustStaminaLoss(-2)
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
@@ -295,10 +295,10 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
+	source.adjustBruteLoss(-4, updating_health = FALSE)
+	source.adjustFireLoss(-4, updating_health = FALSE)
+	source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
+	source.adjustOxyLoss(-4, updating_health = FALSE)
 	source.adjustStaminaLoss(-20)
 
 /**

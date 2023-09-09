@@ -810,13 +810,13 @@
 	var/oxy_to_heal = heal_to - getOxyLoss()
 	var/tox_to_heal = heal_to - getToxLoss()
 	if(brute_to_heal < 0)
-		adjustBruteLoss(brute_to_heal, FALSE)
+		adjustBruteLoss(brute_to_heal, updating_health = FALSE)
 	if(burn_to_heal < 0)
-		adjustFireLoss(burn_to_heal, FALSE)
+		adjustFireLoss(burn_to_heal, updating_health = FALSE)
 	if(oxy_to_heal < 0)
-		adjustOxyLoss(oxy_to_heal, FALSE)
+		adjustOxyLoss(oxy_to_heal, updating_health = FALSE)
 	if(tox_to_heal < 0)
-		adjustToxLoss(tox_to_heal, FALSE, TRUE)
+		adjustToxLoss(tox_to_heal, updating_health = FALSE, forced = TRUE)
 
 	// Run updatehealth once to set health for the revival check
 	updatehealth()

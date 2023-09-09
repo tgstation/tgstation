@@ -36,17 +36,20 @@
 
 //Random healing of the 4 main groups
 /datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			owner.adjustBruteLoss(-0.5, required_bodytype = affected_bodytype)
+			need_mob_update = owner.adjustBruteLoss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("burn")
-			owner.adjustFireLoss(-0.5, required_bodytype = affected_bodytype)
+			need_mob_update += owner.adjustFireLoss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("tox")
-			owner.adjustToxLoss(-0.5, required_biotype = affected_biotype)
+			need_mob_update += owner.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
 		if("oxy")
-			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	..()
+			need_mob_update += owner.adjustOxyLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 // C2 medications
 // Helbital
@@ -81,6 +84,7 @@ I take the 2s interval period and divide it by the number of hands I want to mak
 Basically, we fill the time between now and 2s from now with hands based off the current lag.
 */
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	. = ..()
 	spawn_hands(owner)
 	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
 	seconds_per_tick = FLOOR(seconds_per_tick, 1)
@@ -92,7 +96,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	while(hands < seconds_per_tick) //we already made a hand now so start from 1
 		LAZYADD(timer_ids, addtimer(CALLBACK(src, PROC_REF(spawn_hands), owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
 		hands += time
-	return ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	if(!owner && iscarbon(holder.my_atom))//Catch timer
@@ -196,9 +199,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 2.1
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170)
-	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 	. = ..()
+	if(owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170))
+		. = UPDATE_MOB_HEALTH
+	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 
 //Lenturi
 //impure
@@ -232,17 +236,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //Just the removed itching mechanism - omage to it's origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	. = ..()
 	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
 		if(spammer < world.time)
 			to_chat(owner,span_warning("You can't help but itch yourself."))
 			spammer = world.time + (10 SECONDS)
 		var/scab = rand(1,7)
-		owner.adjustBruteLoss(scab*REM)
+		if(owner.adjustBruteLoss(scab*REM, updating_health = FALSE))
+			. = UPDATE_MOB_HEALTH
 		owner.bleed(scab)
 		resetting_probability = 0
-	resetting_probability += (5*(current_cycle/10) * seconds_per_tick) // 10 iterations = >51% to itch
-	..()
-	return TRUE
+	resetting_probability += (5*((current_cycle-1)/10) * seconds_per_tick) // 10 iterations = >51% to itch
 
 //Aiuri
 //impure
@@ -297,7 +301,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	if(owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+		. = UPDATE_MOB_HEALTH
 	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
@@ -315,6 +320,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
 /datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	. = ..()
 	switch(current_cycle)
 		if(1 to 10)//same delay as chloral hydrate
 			if(prob(50))
@@ -337,7 +343,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 						continue
 					reagent.creation_purity *= 0.8
 				cached_reagent_list = list()
-	..()
 
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
 	if(owner.IsSleeping())
@@ -437,12 +442,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/poison_interval = (9 SECONDS)
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	. = ..()
 	time_until_next_poison -= seconds_per_tick * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
-		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
-
-	..()
+		if(owner.adjustToxLoss(creation_purity * 1, updating_health = FALSE, required_biotype = affected_biotype))
+			. = UPDATE_MOB_HEALTH
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
@@ -490,12 +495,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/need_mob_update
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
-		return ..()
-	affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	..()
-	return TRUE
+		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
+	else
+		need_mob_update = affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 ///Can bring a corpse back to life temporarily (if heart is intact)
 ///Makes wounds bleed more, if it brought someone back, they take additional brute and heart damage
@@ -544,15 +550,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!back_from_the_dead)
-		return ..()
+		return
 	//Following is for those brought back from the dead only
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
-	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -560,7 +568,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(affected_mob)
-	..()
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/affected_mob)
 	remove_buffs(affected_mob)
@@ -646,7 +655,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/datum/brain_trauma/temp_trauma
 
 /datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	.=..()
+	. = ..()
 	if(temp_trauma)
 		return
 	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
@@ -773,9 +782,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 
 /datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, seconds_per_tick, times_fired)
+	. = ..()
 	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
 		alcohol.boozepwr += seconds_per_tick
-	..()
 
 /datum/reagent/inverse/oculine
 	name = "Oculater"
@@ -792,13 +801,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/headache = FALSE
 
 /datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(headache)
 		return ..()
 	if(SPT_PROB(100 * creation_purity, seconds_per_tick))
 		affected_mob.become_blind(IMPURE_OCULINE)
 		to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
-	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.cure_blind(IMPURE_OCULINE)
