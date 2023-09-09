@@ -6103,7 +6103,8 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
 /obj/machinery/computer/tram_controls{
-	specific_transport_id = "bird_2"
+	specific_transport_id = "bird_2";
+	icon_screen = "bird_2"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -27325,7 +27326,8 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
 /obj/machinery/computer/tram_controls{
-	specific_transport_id = "bird_1"
+	specific_transport_id = "bird_1";
+	icon_screen = "bird_1"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -89793,7 +89795,7 @@ gEe
 bbU
 knJ
 fAr
-qVz
+cwd
 qOv
 eEl
 qfw
@@ -90050,7 +90052,7 @@ vUf
 vAU
 caE
 trp
-cwd
+qVz
 sdC
 eEl
 oXh

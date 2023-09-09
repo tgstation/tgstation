@@ -3,7 +3,7 @@
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
 	icon_state = "tram_controls"
 	base_icon_state = "tram"
-	icon_screen = "tram_1014"
+	icon_screen = TRAMSTATION_LINE_1
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE

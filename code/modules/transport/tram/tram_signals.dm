@@ -1,7 +1,7 @@
 /// Pedestrian crossing signal for tram
 /obj/machinery/transport/crossing_signal
 	name = "crossing signal"
-	desc = "Indicates to pedestrians if it's safe to cross the tracks. Connects to sensors down the track.
+	desc = "Indicates to pedestrians if it's safe to cross the tracks. Connects to sensors down the track."
 	icon = 'icons/obj/tram/crossing_signal.dmi'
 	icon_state = "crossing-inbound"
 	base_icon_state = "crossing-inbound"
@@ -17,7 +17,6 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
-	//subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
