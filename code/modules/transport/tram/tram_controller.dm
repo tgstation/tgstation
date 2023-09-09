@@ -693,6 +693,10 @@
 	var/cover_locked = TRUE
 	COOLDOWN_DECLARE(manual_command_cooldown)
 
+/obj/machinery/transport/tram_controller/hilbert
+	configured_transport_id = HILBERT_LINE_1
+	flags_1 = NODECONSTRUCT_1
+
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -833,6 +837,18 @@
 		return
 
 	controller_datum = tram_structure.transport_controller_datum
+	if(!controller_datum)
+		return
+
+	controller_datum.notify_controller(src)
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+
+/obj/machinery/transport/tram_controller/hilbert/find_controller()
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(tram.specific_transport_id == configured_transport_id)
+			controller_datum = tram
+			break
+
 	if(!controller_datum)
 		return
 
