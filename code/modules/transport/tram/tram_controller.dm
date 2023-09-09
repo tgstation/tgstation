@@ -778,6 +778,8 @@
 
 	if(!cover_open)
 		. += mutable_appearance(icon, "controller-closed")
+		if(cover_locked)
+			. += mutable_appearance(icon, "controller-locked")
 
 	else
 		var/mutable_appearance/controller_door = mutable_appearance(icon, "controller-open")
