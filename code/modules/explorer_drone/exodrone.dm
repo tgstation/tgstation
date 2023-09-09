@@ -17,10 +17,6 @@
 GLOBAL_LIST_EMPTY(exodrones)
 /// All exodrone launchers.
 GLOBAL_LIST_EMPTY(exodrone_launchers)
-// Blacklist for exodrones
-GLOBAL_LIST_INIT(blacklisted_exodrone_types, typecacheof(list(
-	/obj/item/bodybag/bluespace
-	)))
 
 /// Exploration drone
 /obj/item/exodrone
@@ -76,7 +72,7 @@ GLOBAL_LIST_INIT(blacklisted_exodrone_types, typecacheof(list(
 	GLOB.exodrones += src
 	/// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types + GLOB.blacklisted_exodrone_types)
+	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -91,6 +87,15 @@ GLOBAL_LIST_INIT(blacklisted_exodrone_types, typecacheof(list(
 			return "Exploring [location?.display_name() || "ERROR"]." // better safe than sorry.
 		if(EXODRONE_IDLE)
 			return "Idle."
+
+// Search for blacklisted items hidden inside other containers
+/obj/item/exodrone/proc/check_blacklist()
+	for(var/obj/item/contained_item in contents)
+		if(contained_item.contents)
+			for(var/subcontained_object in contained_item.get_all_contents())
+				if(is_type_in_typecache(subcontained_object, GLOB.blacklisted_cargo_types))
+					return FALSE
+	return TRUE
 
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
