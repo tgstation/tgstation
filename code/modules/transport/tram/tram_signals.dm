@@ -497,8 +497,6 @@
 	layer = TRAM_RAIL_LAYER
 	use_power = 0
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
-	/// Keeps track of the signal's scanning equipment
-	var/obj/item/stock_parts/scanning_module/attached_scanner = new /obj/item/stock_parts/scanning_module/adv()
 	/// Sensors work in a married pair
 	var/datum/weakref/paired_sensor
 	/// If us or anything else in the operation chain is broken

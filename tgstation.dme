@@ -5338,6 +5338,7 @@
 #include "code\modules\tgui_panel\tgui_panel.dm"
 #include "code\modules\tooltip\tooltip.dm"
 #include "code\modules\transport\_transport_machinery.dm"
+#include "code\modules\transport\admin.dm"
 #include "code\modules\transport\linear_controller.dm"
 #include "code\modules\transport\transport_module.dm"
 #include "code\modules\transport\transport_navigation.dm"
