@@ -292,14 +292,43 @@
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 100
 	obj_damage = 50
+	minbodytemp = 0
+	maxbodytemp = 1500
+	pressure_resistance = 200
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+
+	var/tearing_wall = FALSE
 
 /mob/living/basic/giant_spider/guard/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+
+/mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
+	if(using_special)
+		return
+	if(target == src)
+		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
+		return
+	if(iswallturf(target))
+		if(tearing_wall)
+			return
+		tearing_wall = TRUE
+		var/turf/closed/wall/thewall = target
+		to_chat(src, span_warning("You begin tearing through the wall..."))
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		var/timetotear = 40
+		if(istype(target, /turf/closed/wall/r_wall))
+			timetotear = 120
+		if(do_after(src, timetotear, target = thewall))
+			if(isopenturf(thewall))
+				return
+			thewall.dismantle_wall(1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		tearing_wall = FALSE
+
 /**
  * ### Tarantula
  *
