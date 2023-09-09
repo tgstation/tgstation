@@ -783,7 +783,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("chicken" = 1, "coconut" = 1, "curry" = 1)
-	foodtypes = MEAT | VEGETABLES | DAIRY //should the coconut milk count as dairy?
+	foodtypes = MEAT | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/huoxing_tofu
