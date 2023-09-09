@@ -10,6 +10,7 @@ type Data = {
   command_report_content: string;
   custom_name: string;
   played_sound: string;
+  print_report: string;
 };
 
 export const CommandReport = () => {
@@ -94,7 +95,7 @@ const AnnouncementSound = (props, context) => {
 /** Creates the report textarea with a submit button. */
 const ReportText = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { announce_contents, command_report_content } = data;
+  const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
     context,
     'textArea',
@@ -116,6 +117,18 @@ const ReportText = (props, context) => {
             checked={announce_contents}
             onClick={() => act('toggle_announce')}>
             Announce Contents
+          </Button.Checkbox>
+          <Button.Checkbox
+            fluid
+            checked={print_report || !announce_contents}
+            disabled={!announce_contents}
+            onClick={() => act('toggle_printing')}
+            tooltip={
+              !announce_contents &&
+              "Printing the report is required since we aren't announcing its contents."
+            }
+            tooltipPosition="top">
+            Print Report
           </Button.Checkbox>
         </Stack.Item>
         <Stack.Item>
