@@ -293,6 +293,22 @@
 		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
 		new_mat.icon_state = selected_mat.name
 
+/**
+ * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
+ * Returns the boulder produced.
+ */
+/obj/structure/ore_vent/proc/produce_boulder()
+	var/obj/item/boulder/new_rock
+	if(prob(artifact_chance))
+		new_rock = new /obj/item/boulder/artifact(loc)
+	else
+		new_rock = new (loc)
+	var/list/mats_list = create_mineral_contents()
+	Shake(duration = 1.5 SECONDS)
+	new_rock.set_custom_materials(mats_list)
+	new_rock.flavor_boulder(src)
+	return new_rock
+
 
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources

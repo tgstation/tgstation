@@ -76,6 +76,14 @@
 	if(istype(attack_target, /obj/item/stack/ore))
 		consume_ore(attack_target)
 
+	if(istype(attack_target, /obj/item/boulder))
+		var/obj/item/boulder/boulder = attack_target
+		boulder.manual_process(user = src, override_speed = 1)
+
+	if(istype(attack_target, /obj/structure/ore_vent))
+		var/obj/structure/ore_vent/ore_vent = attack_target
+		ore_vent.produce_boulder()
+
 /mob/living/basic/mining/goldgrub/bullet_act(obj/projectile/bullet)
 	if(stat == DEAD)
 		return BULLET_ACT_FORCE_PIERCE

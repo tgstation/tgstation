@@ -1,5 +1,3 @@
-/// How many boulders can a single ore vent have on it's tile before it stops producing more?
-#define MAX_BOULDERS_PER_VENT 10
 
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore_generation"
@@ -65,16 +63,7 @@ SUBSYSTEM_DEF(ore_generation)
 
 		if(local_vent_count >= MAX_BOULDERS_PER_VENT)
 			continue //We don't want to be accountable for literally hundreds of unprocessed boulders for no reason.
-		var/obj/item/boulder/new_rock
-		if(prob(current_vent.artifact_chance))
-			new_rock = new /obj/item/boulder/artifact(current_vent.loc)
-		else
-			new_rock = new (current_vent.loc)
-		available_boulders += new_rock
-		var/list/mats_list = current_vent.create_mineral_contents()
-		current_vent.Shake(duration = 1.5 SECONDS)
-		new_rock.set_custom_materials(mats_list)
-		new_rock.flavor_boulder(current_vent)
+
+		var/obj/item/boulder/new_rock = current_vent.produce_boulder()
 		available_boulders += new_rock
 
-#undef MAX_BOULDERS_PER_VENT
