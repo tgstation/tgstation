@@ -56,12 +56,15 @@ GLOBAL_VAR(dj_booth)
 	time_left -= round(seconds_per_tick)
 	if(time_left < 0)
 		time_left = 0
+		broadcasting = 0
 		if(COOLDOWN_FINISHED(src, next_song_timer))
 			COOLDOWN_START(src, next_song_timer, 3 MINUTES)
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
 	if(!inserted_tape)
+		return
+	if((!COOLDOWN_FINISHED(src, next_song_timer)) || !broadcasting)
 		return
 	start_broadcast()
 
