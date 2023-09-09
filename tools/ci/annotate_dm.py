@@ -23,9 +23,25 @@ annotation_regex = r'(?P<filename>.*?), line (?P<line>\d+), column (?P<column>\d
 
 has_issues = False
 
+def red(text):
+    return "\033[31m" + str(text) + "\033[0m"
+
+def green(text):
+    return "\033[32m" + str(text) + "\033[0m"
+
+def yellow(text):
+    return "\033[33m" + str(text) + "\033[0m"
+
 for annotation in re.finditer(annotation_regex, raw_output):
-    print(f"::{annotation['type']} file={annotation['filename']},line={annotation['line']},col={annotation['column']}::{annotation['message']}")
+    annotatation_type = annotation['type']
+
+    if(annotation['type'] == "error"):
+        annotation_type = red(annotation['type'])
+    elif(annotation['type'] == "warning"):
+        annotation_type = yellow(annotation['type'])
+
+    print(f"::{annotatation_type} file={annotation['filename']},line={annotation['line']},col={annotation['column']}::{annotation['message']}")
     has_issues = True
 
 if not has_issues:
-    print("No DM issues found")
+    print(green("No DM issues found"))
