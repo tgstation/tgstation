@@ -16,6 +16,7 @@
 
 /obj/machinery/bouldertech/brm/Initialize(mapload)
 	. = ..()
+	STOP_PROCESSING(SSmachines, src) // Don't start processing until flipped on.
 	set_wires(new /datum/wires/brm(src))
 
 /obj/machinery/bouldertech/brm/Destroy()
