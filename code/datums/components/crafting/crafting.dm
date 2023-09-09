@@ -206,7 +206,11 @@
 			if(ispath(recipe.result, /obj/item/stack))
 				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
 			else if (ispath(recipe.result, /obj/item/food))
-				result = new recipe.result(get_turf(crafter.loc), no_base_reagents = TRUE)
+				result = new recipe.result(
+					get_turf(crafter.loc),
+					/* starting_reagent_purity = */ null,
+					/* no_base_reagents = */ TRUE,
+				)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
 				if(result.atom_storage && recipe.delete_contents)

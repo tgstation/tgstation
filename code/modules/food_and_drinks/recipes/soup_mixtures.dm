@@ -1950,7 +1950,7 @@
 	name = "\improper New Osaka Sunrise soup"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "new_osaka_sunrise"
-	drink_type = MEAT | GRAIN | DAIRY | VEGETABLES
+	drink_type = VEGETABLES | BREAKFAST
 
 /datum/chemical_reaction/food/soup/new_osaka_sunrise
 	required_reagents = list(
@@ -2079,7 +2079,7 @@
 	name = "\improper Hong Kong macaroni soup"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "hong_kong_macaroni"
-	drink_type = MEAT | VEGETABLES
+	drink_type = MEAT | VEGETABLES | GRAIN 
 
 /datum/chemical_reaction/food/soup/hong_kong_macaroni
 	required_reagents = list(
@@ -2137,7 +2137,7 @@
 	name = "secret noodle soup"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "secret_noodle_soup"
-	drink_type = MEAT | VEGETABLES
+	drink_type = MEAT | VEGETABLES | GRAIN
 
 /datum/chemical_reaction/food/soup/secret_noodle_soup
 	required_reagents = list(

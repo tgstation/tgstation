@@ -279,6 +279,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -498,6 +499,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
+/datum/techweb_node/oldstation_surgery
+	id = "oldstation_surgery"
+	display_name = "Experimental Dissection"
+	description = "Grants access to experimental dissections, which allows generation of research points."
+	design_ids = list(
+		"surgery_oldstation_dissection",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	hidden = TRUE
+	show_on_wiki = FALSE
 
 /datum/techweb_node/adv_surgery
 	id = "adv_surgery"
@@ -731,6 +742,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_servo",
 		"quantum_keycard",
 		"swapper",
@@ -2117,8 +2129,8 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	hidden = TRUE
 
-/datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
-		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
+/datum/techweb_node/alientech/on_station_research()
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

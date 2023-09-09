@@ -46,7 +46,7 @@
 		var/atom/location = holder.my_atom.drop_location()
 		for(var/i in 1 to created_volume)
 			if(ispath(resulting_food_path, /obj/item/food) && !isnull(resulting_reagent_purity))
-				new resulting_food_path(location, starting_reagent_purity = resulting_reagent_purity)
+				new resulting_food_path(location, resulting_reagent_purity)
 			else
 				new resulting_food_path(location)
 

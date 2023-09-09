@@ -7,28 +7,24 @@
 /datum/wound/burn
 	name = "Burn Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
 /datum/wound/burn/flesh
 	name = "Burn (Flesh) Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	processes = TRUE
 
-	scar_file = FLESH_SCAR_FILE
-
-	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
+	default_scar_file = FLESH_SCAR_FILE
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 
-		// Flesh damage vars
+	// Flesh damage vars
 	/// How much damage to our flesh we currently have. Once both this and infestation reach 0, the wound is considered healed
 	var/flesh_damage = 5
 	/// Our current counter for how much flesh regeneration we have stacked from regenerative mesh/synthflesh/whatever, decrements each tick and lowers flesh_damage
 	var/flesh_healing = 0
 
-		// Infestation vars (only for severe and critical)
+	// Infestation vars (only for severe and critical)
 	/// How quickly infection breeds on this burn if we don't have disinfectant
 	var/infestation_rate = 0
 	/// Our current level of infection
@@ -270,7 +266,10 @@
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
 
+	required_wounding_types = list(WOUND_BURN)
 	required_limb_biostate = BIO_FLESH
+
+	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
 
 /datum/wound/burn/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly cooked.")
@@ -284,7 +283,6 @@
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_multiplier_penalty = 1.1
-	threshold_minimum = 40
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/flesh/moderate
 	flesh_damage = 5
@@ -299,6 +297,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/flesh/moderate
 
+	threshold_minimum = 40
+
 /datum/wound/burn/flesh/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
@@ -307,7 +307,6 @@
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_multiplier_penalty = 1.2
-	threshold_minimum = 80
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
@@ -324,6 +323,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/flesh/severe
 
+	threshold_minimum = 80
+
 /datum/wound/burn/flesh/critical
 	name = "Catastrophic Burns"
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
@@ -333,7 +334,6 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
-	threshold_minimum = 140
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/flesh/critical
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
@@ -350,6 +350,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/flesh/critical
 
+	threshold_minimum = 140
+
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/flesh/severe/brand
 	name = "Holy Brand"
@@ -359,7 +361,7 @@
 
 	simple_desc = "Patient's skin has had strange markings burned onto it, significantly weakening the limb and compounding further damage!!"
 
-/datum/wound_pregen_data/flesh_burn/holy
+/datum/wound_pregen_data/flesh_burn/third_degree/holy
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 
@@ -375,7 +377,7 @@
 /datum/wound/burn/flesh/severe/cursed_brand/get_limb_examine_description()
 	return span_warning("The flesh on this limb has several ornate symbols burned into it, with pitting throughout.")
 
-/datum/wound_pregen_data/flesh_burn/cursed_brand
+/datum/wound_pregen_data/flesh_burn/third_degree/cursed_brand
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 

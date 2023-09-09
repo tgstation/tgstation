@@ -1,4 +1,0 @@
-author: "xPokee"
-delete-after: True
-changes:
-  - bugfix: "Fixed the air inside of a penguin pen being way too cold"
