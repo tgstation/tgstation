@@ -60006,7 +60006,7 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "utz" = (
-/obj/structure/fluff/tram_rail/electric,
+/obj/structure/fluff/tram_rail/electric/anchor,
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/left)

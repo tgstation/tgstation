@@ -483,10 +483,10 @@
 	if(!is_operational)
 		return
 
-	. += mutable_appearance(icon, "crossing-0")
-	. += mutable_appearance(icon, "status-0")
-	. += emissive_appearance(icon, "crossing-0", offset_spokesman = src, alpha = src.alpha)
-	. += emissive_appearance(icon, "status-0", offset_spokesman = src, alpha = src.alpha)
+	. += mutable_appearance(icon, "[base_icon_state]-l0")
+	. += mutable_appearance(icon, "[base_icon_state]-s0")
+	. += emissive_appearance(icon, "[base_icon_state]-l0", offset_spokesman = src, alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-s0", offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/transport/guideway_sensor
 	name = "guideway sensor"
