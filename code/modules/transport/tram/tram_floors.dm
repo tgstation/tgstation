@@ -11,9 +11,6 @@
 	icon_state = "tram_platform"
 	base_icon_state = "tram_platform"
 	floor_tile = /obj/item/stack/tile/tram
-	thermal_conductivity = 0.025
-	heat_capacity = INFINITY
-	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_CATWALK
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -28,6 +25,7 @@
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
 	flags_1 = NONE
+
 /turf/open/floor/tram/plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."
 	/// Inbound station
@@ -40,6 +38,13 @@
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
 	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place.")
+
+/turf/open/floor/tram/attackby(obj/item/object, mob/living/user, params)
+	. = ..()
+	if(istype(object, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(object, user)
+	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(object, user)
 
 /turf/open/floor/tram/make_plating(force = FALSE)
 	if(force)
@@ -119,8 +124,30 @@
 	if(broken || burnt)
 		. += span_danger("It looks damaged and the electrical components exposed!")
 
-/turf/open/floor/tram/plate/energized/proc/bad_omen(mob/living/unlucky)
-	return
+// Resetting the tram contents to its original state needs the turf to be there
+/turf/open/indestructible/tram
+	name = "tram guideway"
+	icon = 'icons/turf/tram.dmi'
+	icon_state = "tram_platform"
+	base_icon_state = "tram_platform"
+	footstep = FOOTSTEP_CATWALK
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/indestructible/tram/attackby(obj/item/object, mob/living/user, params)
+	. = ..()
+	if(istype(object, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(object, user)
+	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(object, user)
+
+/turf/open/indestructible/tram/plate
+	name = "linear induction plate"
+	desc = "The linear induction plate that powers the tram."
+	icon_state = "tram_plate"
+	base_icon_state = "tram_plate"
+	flags_1 = NONE
 
 /turf/open/floor/glass/reinforced/tram/Initialize(mapload)
 	. = ..()

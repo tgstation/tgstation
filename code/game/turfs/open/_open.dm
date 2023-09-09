@@ -394,7 +394,7 @@
 /turf/open/proc/build_with_transport_tiles(obj/item/stack/thermoplastic/used_tiles, user)
 	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
 	if(!platform)
-		to_chat(user, span_warning("There is no transport frame to attach the tile!"))
+		balloon_alert(user, "no tram base!")
 		return
 	if(!used_tiles.use(1))
 		balloon_alert(user, "no tile!")
