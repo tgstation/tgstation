@@ -31672,7 +31672,6 @@
 	name = "Prison Garden"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -41672,12 +41671,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/service/greenroom)
-"pca" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "pcb" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 4
@@ -57601,6 +57594,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ugb" = (
@@ -58346,6 +58340,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/landmark/navigate_destination/chapel,
+/obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "uth" = (
@@ -85872,7 +85867,7 @@ tdg
 wBm
 wXk
 bVv
-pca
+xOS
 rQC
 von
 vRe
