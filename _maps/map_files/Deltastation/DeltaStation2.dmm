@@ -18766,9 +18766,9 @@
 "eFU" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/conveyor/inverted{
-	dir = 8;
-	id = "mining"
+/obj/machinery/conveyor{
+	id = "mining";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -83251,9 +83251,9 @@
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/machinery/bouldertech/brm,
-/obj/machinery/conveyor/inverted{
-	dir = 8;
-	id = "mining"
+/obj/machinery/conveyor{
+	id = "mining";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
