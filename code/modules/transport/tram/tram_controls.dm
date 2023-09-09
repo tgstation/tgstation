@@ -126,7 +126,7 @@
 		return
 
 	if(isnull(destination_platform))
-		icon_screen = "[base_icon_state]_00"
+		icon_screen = "[specific_transport_id]"
 		update_appearance()
 		return
 

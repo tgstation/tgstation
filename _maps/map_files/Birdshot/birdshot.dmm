@@ -6103,8 +6103,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
 /obj/machinery/computer/tram_controls{
-	specific_transport_id = "bird_2";
-	icon_screen = "bird_2"
+	specific_transport_id = "bird_2"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -22987,9 +22986,6 @@
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
 	},
-/obj/machinery/computer/tram_controls/directional/east{
-	specific_lift_id = "maint_tram"
-	},
 /obj/structure/transport/linear/tram,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -27326,8 +27322,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
 /obj/machinery/computer/tram_controls{
-	specific_transport_id = "bird_1";
-	icon_screen = "bird_1"
+	specific_transport_id = "bird_1"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -28960,9 +28955,6 @@
 /area/station/hallway/primary/central/fore)
 "kyS" = (
 /obj/effect/turf_decal/stripes/white/corner,
-/obj/machinery/computer/tram_controls/directional/south{
-	specific_lift_id = "prison_tram"
-	},
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
@@ -42954,9 +42946,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pxs" = (
-/obj/machinery/computer/tram_controls/directional/west{
-	specific_lift_id = "maint_tram"
-	},
 /obj/structure/transport/linear/tram,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -62725,9 +62714,6 @@
 "vNj" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
-	},
-/obj/machinery/computer/tram_controls/directional/north{
-	specific_lift_id = "prison_tram"
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
