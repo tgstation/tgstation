@@ -1822,7 +1822,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/tram/plate,
+/turf/open/floor/tram/plate/energized{
+	inbound = 1;
+	outbound = 2
+	},
 /area/station/hallway/primary/tram/right)
 "afT" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -4320,7 +4323,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/tram/plate,
+/turf/open/floor/tram/plate/energized{
+	inbound = 1;
+	outbound = 2
+	},
 /area/station/hallway/primary/tram/center)
 "aCX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -6087,6 +6093,12 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
+"aTA" = (
+/obj/structure/fluff/tram_rail/electric/anchor{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "aTY" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/solar{
@@ -17416,7 +17428,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "ffh" = (
-/obj/structure/fluff/tram_rail/electric,
+/obj/structure/fluff/tram_rail/electric/anchor,
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -25019,7 +25031,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hZg" = (
-/obj/structure/fluff/tram_rail/electric{
+/obj/structure/fluff/tram_rail/electric/anchor{
 	dir = 1
 	},
 /obj/structure/lattice,
@@ -31757,7 +31769,7 @@
 /turf/open/misc/asteroid,
 /area/station/medical/chemistry)
 "krm" = (
-/obj/structure/fluff/tram_rail/electric{
+/obj/structure/fluff/tram_rail/electric/anchor{
 	dir = 1
 	},
 /obj/structure/lattice,
@@ -37123,7 +37135,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/tram/plate,
+/turf/open/floor/tram/plate/energized{
+	inbound = 1;
+	outbound = 2
+	},
 /area/station/hallway/primary/tram/center)
 "mgG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -38436,6 +38451,10 @@
 "mHc" = (
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
+"mHu" = (
+/obj/structure/fluff/tram_rail/electric/anchor,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "mHw" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
@@ -55731,7 +55750,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "sXj" = (
-/obj/structure/fluff/tram_rail/electric,
+/obj/structure/fluff/tram_rail/electric/anchor,
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/right)
@@ -59867,7 +59886,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "urn" = (
-/obj/structure/fluff/tram_rail/electric{
+/obj/structure/fluff/tram_rail/electric/anchor{
 	dir = 1
 	},
 /obj/structure/lattice,
@@ -61855,7 +61874,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/tram/plate,
+/turf/open/floor/tram/plate/energized{
+	inbound = 1;
+	outbound = 2
+	},
 /area/station/hallway/primary/tram/left)
 "uXv" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -160435,9 +160457,9 @@ afC
 vFt
 oNG
 cFs
-lNP
+bEt
 jWQ
-vVY
+rib
 cFs
 lgK
 yiM
@@ -162234,9 +162256,9 @@ afC
 izU
 oNG
 eSz
-tCl
+mHu
 wJq
-wvE
+aTA
 eSz
 lgK
 qas
@@ -174056,9 +174078,9 @@ afC
 qas
 oNG
 eSz
-tCl
+mHu
 wJq
-wvE
+aTA
 eSz
 lgK
 izU
@@ -175855,9 +175877,9 @@ afC
 bMb
 oNG
 brm
-iOd
+puY
 lMF
-vPi
+bTT
 brm
 lgK
 bMb
