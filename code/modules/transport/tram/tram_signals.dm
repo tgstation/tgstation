@@ -1,7 +1,7 @@
 /// Pedestrian crossing signal for tram
 /obj/machinery/transport/crossing_signal
 	name = "crossing signal"
-	desc = "Indicates to pedestrians if it's safe to cross the tracks."
+	desc = "Indicates to pedestrians if it's safe to cross the tracks. Connects to sensors down the track.
 	icon = 'icons/obj/tram/crossing_signal.dmi'
 	icon_state = "crossing-inbound"
 	base_icon_state = "crossing-inbound"
@@ -494,6 +494,7 @@
 	name = "guideway sensor"
 	icon = 'icons/obj/tram/tram_sensor.dmi'
 	icon_state = "sensor-base"
+	desc = "Uses an infrared beam to detect passing trams. Works when paired with a sensor on the other side of the track."
 	layer = TRAM_RAIL_LAYER
 	use_power = 0
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
