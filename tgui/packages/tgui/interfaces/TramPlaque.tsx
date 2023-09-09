@@ -35,8 +35,9 @@ export const TramPlaque = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Distance Travelled">
               {currentTram.map(
-                (serialNumber) => serialNumber.distanceTravelled
-              )}
+                (serialNumber) => serialNumber.distanceTravelled / 1000
+              )}{' '}
+              km
             </LabeledList.Item>
             <LabeledList.Item label="Collisions">
               {currentTram.map((serialNumber) => serialNumber.tramCollisions)}
@@ -69,7 +70,7 @@ export const TramPlaque = (props, context) => {
                     {tram_entry.mfgDate}
                   </Stack.Item>
                   <Stack.Item m={1} grow>
-                    {tram_entry.distanceTravelled} km
+                    {tram_entry.distanceTravelled / 1000} km
                   </Stack.Item>
                   <Stack.Item m={1} grow>
                     {tram_entry.tramCollisions}
