@@ -353,6 +353,5 @@
 	current_color = HSVtoRGB(current_color)
 
 	if(gasmix_color != current_color)
-		var/old_color = gasmix_color
 		gasmix_color = current_color
 		UpdateGasVisuals()
