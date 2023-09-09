@@ -551,7 +551,7 @@
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
 /datum/transport_controller/linear/tram/proc/register_collision()
-	tram_registration["collisions"] += 1
+	tram_registration.collisions += 1
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 /datum/transport_controller/linear/tram/proc/power_lost()
