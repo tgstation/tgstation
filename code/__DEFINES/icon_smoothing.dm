@@ -147,6 +147,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_AIRLOCK S_OBJ(41) ///obj/machinery/door/airlock
 
+#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(46) ///obj/structure/transport/linear
+#define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(47) //obj/structure/tram
+
 #define SMOOTH_GROUP_TABLES S_OBJ(51) ///obj/structure/table
 #define SMOOTH_GROUP_WOOD_TABLES S_OBJ(52) ///obj/structure/table/wood
 #define SMOOTH_GROUP_FANCY_WOOD_TABLES S_OBJ(53) ///obj/structure/table/wood/fancy
@@ -168,11 +171,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(71) ///obj/structure/transport/linear
-
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
 
-#define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(74) ///obj/structure/tram
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.

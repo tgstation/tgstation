@@ -41,6 +41,7 @@
 	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
 			transport_ref = WEAKREF(transport)
+			return
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -105,7 +106,7 @@
 					destination_platform = destination
 					break
 
-			if(!destination_platform)
+			if(isnull(destination_platform))
 				return FALSE
 
 			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
@@ -119,13 +120,13 @@
 		update_appearance()
 		return
 
-	if(!controller || !controller.controller_operational)
+	if(isnull(controller) || !controller.controller_operational)
 		icon_screen = "[base_icon_state]_broken"
 		update_appearance()
 		return
 
 	if(isnull(destination_platform))
-		icon_screen = "[base_icon_state]_NIS"
+		icon_screen = "[base_icon_state]_00"
 		update_appearance()
 		return
 
@@ -145,7 +146,7 @@
 
 	update_appearance()
 
-/obj/machinery/computer/tram_controls/update_icon_state()
+/obj/machinery/computer/tram_controls/split/update_icon_state()
 	. = ..()
 	switch(dir)
 		if(NORTH)
@@ -168,7 +169,9 @@
 /obj/machinery/computer/tram_controls/power_change()
 	..()
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
-	if(!tram)
+	if(isnull(tram))
+		icon_screen = "[base_icon_state]_broken"
+		update_appearance()
 		return
 
 	update_display(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
@@ -194,3 +197,4 @@
 					return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls/split, 32)

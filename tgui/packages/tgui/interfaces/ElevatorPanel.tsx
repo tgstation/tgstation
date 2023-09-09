@@ -17,7 +17,7 @@ type ElevatorPanelData = {
   // State: Is the station in red or delta alert?
   is_emergency: BooleanLike;
   // State: Are the doors emergency opened?
-  doors_ready: BooleanLike;
+  doors_open: BooleanLike;
   // State: Does the lift exist?
   lift_exists: BooleanLike;
   // State: Is the lift moving?
@@ -35,7 +35,7 @@ export const ElevatorPanel = (props, context) => {
     current_floor,
     emergency_level,
     is_emergency,
-    doors_ready,
+    doors_open,
     lift_exists,
     currently_moving,
     all_floor_data,
@@ -89,7 +89,7 @@ export const ElevatorPanel = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section>
-              {doors_ready ? (
+              {doors_open ? (
                 <Button
                   width="65%"
                   icon="door-closed"

@@ -21242,7 +21242,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/left,
-/obj/machinery/computer/tram_controls/directional/north,
+/obj/machinery/computer/tram_controls/split/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "gBr" = (
@@ -58445,7 +58445,7 @@
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 1
 	},
-/obj/machinery/computer/tram_controls/directional/south,
+/obj/machinery/computer/tram_controls/split/directional/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "tTJ" = (
