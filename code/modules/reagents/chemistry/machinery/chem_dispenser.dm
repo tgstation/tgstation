@@ -200,6 +200,15 @@
 		return
 	recharge_counter += seconds_per_tick
 
+/obj/machinery/chem_dispenser/process(seconds_per_tick)
+	if (recharge_counter >= 8)
+		var/usedpower = cell.give(recharge_amount)
+		if(usedpower)
+			use_power(active_power_usage + recharge_amount)
+		recharge_counter = 0
+		return
+	recharge_counter += seconds_per_tick
+
 /obj/machinery/atmospherics/components/unary/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
@@ -347,10 +356,17 @@
 
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
-					if(!cell?.use(to_dispense / powerefficiency))
+					var/datum/gas_mixture/port = airs[1]
+					var/power_multiplier = 1
+					var/plasma_purity = base_reagent_purity
+					if(port.has_gas(/datum/gas/plasma, recharge_amount * 0.5))
+						port.remove_specific(/datum/gas/plasma, recharge_amount * 0.5)
+						power_multiplier = 0.5
+						plasma_purity = 1
+					if(!cell?.use((to_dispense / powerefficiency) * power_multiplier))
 						say("Not enough energy to complete operation!")
 						return
-					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature, added_purity = base_reagent_purity)
+					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature, added_purity = plasma_purity)
 
 					work_animation()
 			else
