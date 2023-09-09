@@ -422,8 +422,7 @@
 	access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS)
 	assignment = "Repair Technician"
 	trim_state = "trim_stationengineer"
-	department_color = COLOR_ENGINEERING_ORANGE
-	subdepartment_color = COLOR_ENGINEERING_ORANGE
+	department_color = COLOR_ASSISTANT_GRAY
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
