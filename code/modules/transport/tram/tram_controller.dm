@@ -302,12 +302,13 @@
 				speed_limiter = base_speed_limiter
 				recovery_mode = FALSE
 				recovery_clear_count = 0
+				log_transport("TC: [specific_transport_id] removing speed limiter, performance issue resolved. Last tick was [duration]ms.")
 
 		else if(duration > SStransport.max_time)
 			recovery_activate_count++
-
 			if(recovery_activate_count >= SStransport.max_exceeding_moves)
-				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking more than [SStransport.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams transport_controller_datum to reset it to its original state and clear added objects")
+				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking [duration] ms which is more than [SStransport.max_time] ms per movement for [recovery_activate_count] ticks. Reducing its movement speed until it recovers. If this continues to be a problem you can reset the tram contents to its original state, and clear added objects on the Debug tab.")
+				log_transport("TC: [specific_transport_id] activating speed limiter due to poor performance.  Last tick was [duration]ms.")
 				speed_limiter = base_speed_limiter * 2 //halves its speed
 				recovery_mode = TRUE
 				recovery_activate_count = 0
@@ -1016,7 +1017,7 @@
 			else
 				controller_datum.set_status_code(BYPASS_SENSORS, TRUE)
 
-	COOLDOWN_START(src, manual_command_cooldown, 3 SECONDS)
+	COOLDOWN_START(src, manual_command_cooldown, 2 SECONDS)
 
 /obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"

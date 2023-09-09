@@ -43,8 +43,6 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-GLOBAL_VAR(last_breakdown_time)
-GLOBAL_VAR_INIT(total_breakdowns, 0)
 /**
  * Finds the tram
  *
@@ -61,9 +59,6 @@ GLOBAL_VAR_INIT(total_breakdowns, 0)
 	if(malfunctioning || !isnull(repair_signals))
 		return
 
-	GLOB.total_breakdowns++
-	message_admins("[src] broke down at [DisplayTimeText(world.time - SSticker.round_start_time)]. It's been [DisplayTimeText(world.time - GLOB.last_breakdown_time)] since last breakdown. Total breakdowns is [GLOB.total_breakdowns].")
-	GLOB.last_breakdown_time = world.time
 	generate_repair_signals()
 	malfunctioning = TRUE
 	set_is_operational(FALSE)

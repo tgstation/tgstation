@@ -1,21 +1,34 @@
 /turf/open/floor/noslip/tram
-	name = "high-traction platform"
+	name = "high-traction tram platform"
 	icon = 'icons/turf/tram.dmi'
 	icon_state = "noslip_tram"
 	base_icon_state = "noslip_tram"
 	floor_tile = /obj/item/stack/tile/noslip/tram
 
-/turf/open/floor/noslip/tram_plate
+/turf/open/floor/tram
+	name = "tram guideway"
+	icon = 'icons/turf/tram.dmi'
+	icon_state = "tram_platform"
+	base_icon_state = "tram_platform"
+	floor_tile = /obj/item/stack/tile/tram
+	thermal_conductivity = 0.025
+	heat_capacity = INFINITY
+	floor_tile = /obj/item/stack/rods
+	footstep = FOOTSTEP_CATWALK
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
+	rcd_proof = TRUE
+
+/turf/open/floor/tram/plate
 	name = "linear induction plate"
 	desc = "The linear induction plate that powers the tram."
 	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
-	floor_tile = /obj/item/stack/tile/noslip/tram_plate
-	slowdown = 0
 	flags_1 = NONE
-
-/turf/open/floor/noslip/tram_plate/energized
+/turf/open/floor/tram/plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."
 	/// Inbound station
 	var/inbound
@@ -24,49 +37,89 @@
 	/// Transport ID of the tram
 	var/specific_transport_id = TRAMSTATION_LINE_1
 
-/turf/open/floor/noslip/tram_platform
-	name = "tram platform"
-	icon = 'icons/turf/tram.dmi'
-	icon_state = "tram_platform"
-	base_icon_state = "tram_platform"
-	floor_tile = /obj/item/stack/tile/noslip/tram_platform
-	slowdown = 0
+/turf/open/floor/tram/examine(mob/user)
+	. += ..()
+	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place.")
 
-/turf/open/floor/noslip/tram_plate/broken_states()
+/turf/open/floor/tram/make_plating(force = FALSE)
+	if(force)
+		return ..()
+	return //unplateable
+
+/turf/open/floor/tram/try_replace_tile(obj/item/stack/tile/replacement_tile, mob/user, params)
+	return
+
+/turf/open/floor/tram/crowbar_act(mob/living/user, obj/item/item)
+	return
+
+/turf/open/floor/tram/wrench_act(mob/living/user, obj/item/item)
+	..()
+	to_chat(user, span_notice("You begin removing the plate..."))
+	if(item.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/floor/tram))
+			return TRUE
+		if(floor_tile)
+			new floor_tile(src, 2)
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
+
+/turf/open/floor/tram/ex_act(severity, target)
+	if(target == src)
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
+	if(severity < EXPLODE_DEVASTATE && is_shielded())
+		return FALSE
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(prob(80))
+				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+					attempt_lattice_replacement()
+				else
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+			else if(prob(50))
+				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+			else
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			else
+				break_tile()
+		if(EXPLODE_LIGHT)
+			if(prob(30))
+				break_tile()
+
+	return TRUE
+
+/turf/open/floor/tram/plate/broken_states()
 	return list("tram_plate-damaged1","tram_plate-damaged2")
 
-/turf/open/floor/noslip/tram_plate/burnt_states()
+/turf/open/floor/tram/plate/burnt_states()
 	return list("tram_plate-scorched1","tram_plate-scorched2")
 
-/turf/open/floor/noslip/tram_plate/energized/broken_states()
+/turf/open/floor/tram/plate/energized/broken_states()
 	return list("energized_plate_damaged")
 
-/turf/open/floor/noslip/tram_plate/energized/burnt_states()
+/turf/open/floor/tram/plate/energized/burnt_states()
 	return list("energized_plate_damaged")
 
-/turf/open/floor/noslip/tram_platform/broken_states()
+/turf/open/floor/tram/broken_states()
 	return list("tram_platform-damaged1","tram_platform-damaged2")
 
-/turf/open/floor/noslip/tram_platform/burnt_states()
+/turf/open/floor/tram/tram_platform/burnt_states()
 	return list("tram_platform-scorched1","tram_platform-scorched2")
 
-/turf/open/floor/noslip/attackby(obj/item/object, mob/living/user, params)
-	. = ..()
-	if(istype(object, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(object, user)
-	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(object, user)
-
-/turf/open/floor/noslip/tram_plate/energized/Initialize(mapload)
+/turf/open/floor/tram/plate/energized/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/energized, inbound, outbound, specific_transport_id)
 
-/turf/open/floor/noslip/tram_plate/energized/examine(mob/user)
+/turf/open/floor/tram/plate/energized/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
 		. += span_danger("It looks damaged and the electrical components exposed!")
 
-/turf/open/floor/noslip/tram_plate/energized/proc/bad_omen(mob/living/unlucky)
+/turf/open/floor/tram/plate/energized/proc/bad_omen(mob/living/unlucky)
 	return
 
 /turf/open/floor/glass/reinforced/tram/Initialize(mapload)

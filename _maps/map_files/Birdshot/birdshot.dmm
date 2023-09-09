@@ -87,7 +87,7 @@
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "acS" = (
 /obj/structure/disposalpipe/segment{
@@ -1160,7 +1160,7 @@
 "ays" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/frame/machine,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "ayu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1900,7 +1900,7 @@
 /obj/structure/thermoplastic,
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/sec_wing,
 /obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/prison,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "aPh" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
@@ -2422,7 +2422,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "aYY" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -4144,7 +4144,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "bFM" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -4623,7 +4623,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "bQU" = (
 /obj/structure/cable,
@@ -4780,7 +4780,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "bUr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5936,7 +5936,7 @@
 	dir = 6
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "crE" = (
 /obj/structure/window/spawner/directional/north,
@@ -6053,7 +6053,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "cuS" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -6105,7 +6105,7 @@
 /obj/machinery/computer/tram_controls{
 	specific_transport_id = "bird_2"
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "cwf" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -6829,7 +6829,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "cIE" = (
 /obj/structure/cable,
@@ -6858,7 +6858,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "cJz" = (
 /obj/structure/cable,
@@ -7340,7 +7340,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "cSR" = (
 /obj/structure/chair{
@@ -7753,7 +7753,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "dbR" = (
 /obj/structure/disposalpipe/segment{
@@ -8062,7 +8062,7 @@
 /area/station/maintenance/department/engine)
 "dhX" = (
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "dim" = (
 /obj/structure/disposalpipe/segment{
@@ -8921,7 +8921,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "dyp" = (
 /obj/effect/turf_decal/sand/plating,
@@ -9159,7 +9159,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "dBH" = (
 /turf/open/floor/iron/white/corner{
@@ -9610,7 +9610,7 @@
 	dir = 10
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "dLf" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -10671,7 +10671,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "edW" = (
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "eeb" = (
 /obj/structure/disposalpipe/segment{
@@ -12161,7 +12161,7 @@
 "eEl" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "eEq" = (
 /obj/effect/turf_decal/bot_white,
@@ -12186,7 +12186,7 @@
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "eFi" = (
 /obj/structure/frame/machine,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "eFk" = (
 /obj/structure/cable/layer3,
@@ -12988,7 +12988,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "eTr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13114,7 +13114,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "eVu" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -13305,7 +13305,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "fay" = (
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "faB" = (
 /obj/structure/table/wood,
@@ -14127,7 +14127,7 @@
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "frf" = (
 /obj/structure/table/glass,
@@ -14366,7 +14366,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "fun" = (
 /obj/structure/cable/layer3,
@@ -16074,7 +16074,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "fWr" = (
 /obj/structure/closet/crate,
@@ -16758,7 +16758,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/random/structure/girder,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "gjL" = (
 /obj/structure/cable,
@@ -16818,7 +16818,7 @@
 /obj/structure/rack,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "glb" = (
 /obj/structure/cable,
@@ -17375,7 +17375,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "gwo" = (
 /obj/structure/cable,
@@ -18695,13 +18695,13 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "gTC" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "gTH" = (
 /obj/structure/cable,
@@ -18946,7 +18946,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "gXf" = (
 /obj/effect/turf_decal/sand/plating,
@@ -19911,7 +19911,7 @@
 /area/station/science/ordnance/storage)
 "hmB" = (
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_right,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "hmQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21939,7 +21939,7 @@
 	specific_transport_id = "bird_1"
 	},
 /obj/structure/tram/solid,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "hYC" = (
 /turf/closed/wall,
@@ -22085,7 +22085,7 @@
 /obj/machinery/door/airlock/tram{
 	transport_linked_id = "bird_2"
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "ibe" = (
 /obj/effect/turf_decal/bot_white,
@@ -22805,7 +22805,7 @@
 /area/station/command/meeting_room)
 "ipn" = (
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "ips" = (
 /obj/structure/cable,
@@ -22992,7 +22992,7 @@
 	},
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "isi" = (
 /obj/structure/table,
@@ -23063,7 +23063,7 @@
 	dir = 1
 	},
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "itw" = (
 /obj/structure/disposalpipe/segment{
@@ -23155,7 +23155,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "iut" = (
 /obj/structure/disposalpipe/segment{
@@ -23381,7 +23381,7 @@
 "iyk" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "iym" = (
 /obj/structure/cable,
@@ -23540,7 +23540,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "iBZ" = (
 /obj/structure/disposalpipe/segment{
@@ -24334,7 +24334,7 @@
 /obj/structure/transport/linear/tram,
 /obj/effect/landmark/transport/transport_id/birdshot/line_1,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "iRv" = (
 /obj/structure/cable,
@@ -25149,7 +25149,7 @@
 	dir = 6
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "jfZ" = (
 /obj/structure/cable,
@@ -25919,7 +25919,7 @@
 /obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/maint,
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_left,
 /obj/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "jxd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
@@ -26454,7 +26454,7 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "jEZ" = (
 /obj/structure/hedge,
@@ -27324,7 +27324,7 @@
 /obj/machinery/computer/tram_controls{
 	specific_transport_id = "bird_1"
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "jVe" = (
 /obj/structure/cable,
@@ -27357,7 +27357,7 @@
 	dir = 1
 	},
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "jWd" = (
 /obj/structure/cable,
@@ -27510,7 +27510,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "jYr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -27853,7 +27853,7 @@
 	dir = 5
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kel" = (
 /obj/machinery/light/cold/directional/south,
@@ -28114,7 +28114,7 @@
 	dir = 4
 	},
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kjw" = (
 /obj/effect/turf_decal/tile/blue,
@@ -28534,7 +28534,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "krc" = (
 /obj/structure/disposalpipe/segment{
@@ -28676,7 +28676,7 @@
 	dir = 5
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "ksN" = (
 /obj/structure/transit_tube/station/dispenser,
@@ -28786,7 +28786,7 @@
 "kvb" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kvf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -28915,7 +28915,7 @@
 /area/station/maintenance/fore/lesser)
 "kye" = (
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/prison_wing,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kyr" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -28958,7 +28958,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kyT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -29610,7 +29610,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kKB" = (
 /obj/structure/window/spawner/directional/west,
@@ -29681,7 +29681,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kLS" = (
 /turf/open/floor/iron/stairs{
@@ -29737,7 +29737,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kND" = (
 /turf/closed/wall/r_wall,
@@ -29987,7 +29987,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "kSr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31038,7 +31038,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "ljk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -35222,7 +35222,7 @@
 	dir = 1
 	},
 /obj/structure/frame/machine,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "mGT" = (
 /obj/structure/cable,
@@ -36389,7 +36389,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "ndM" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -38168,7 +38168,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "nJx" = (
 /obj/structure/cable,
@@ -38982,7 +38982,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "oaV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39040,7 +39040,7 @@
 	dir = 1
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "ocs" = (
 /obj/structure/cable,
@@ -40610,7 +40610,7 @@
 	dir = 4
 	},
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "oHa" = (
 /obj/structure/table,
@@ -40911,7 +40911,7 @@
 /obj/machinery/transport/tram_controller{
 	configured_transport_id = "bird_2"
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "oNX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41431,7 +41431,7 @@
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "oXs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -41913,7 +41913,7 @@
 	dir = 4
 	},
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "pgh" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -42505,7 +42505,7 @@
 /turf/open/space/basic,
 /area/space)
 "pqf" = (
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "pqm" = (
 /turf/closed/wall/r_wall,
@@ -42587,7 +42587,7 @@
 "prT" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "prW" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -42945,7 +42945,7 @@
 	},
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "pxw" = (
 /obj/structure/cable,
@@ -43359,7 +43359,7 @@
 /obj/structure/frame/computer{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "pDQ" = (
 /obj/structure/cable,
@@ -43941,7 +43941,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "pNy" = (
 /obj/structure/disposalpipe/segment{
@@ -43979,7 +43979,7 @@
 	dir = 1
 	},
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "pOb" = (
 /obj/structure/cable,
@@ -45114,7 +45114,7 @@
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "qfz" = (
 /obj/item/kirbyplants/organic/applebush,
@@ -46115,7 +46115,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "quS" = (
 /obj/structure/cable,
@@ -46685,7 +46685,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "qDK" = (
 /obj/machinery/light_switch/directional/west,
@@ -47272,7 +47272,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "qOG" = (
 /obj/structure/cable,
@@ -47309,7 +47309,7 @@
 /area/station/cargo/drone_bay)
 "qOO" = (
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "qOT" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -47317,7 +47317,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "qPc" = (
 /obj/effect/turf_decal/tile/green/opposingcorners{
@@ -47722,7 +47722,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "qVK" = (
 /obj/machinery/firealarm/directional/west,
@@ -47749,7 +47749,7 @@
 /area/station/cargo/boutique)
 "qWd" = (
 /obj/structure/frame/machine,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "qWh" = (
 /obj/structure/cable,
@@ -48730,7 +48730,7 @@
 /obj/structure/frame/computer{
 	dir = 4
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "rma" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
@@ -49023,7 +49023,7 @@
 /obj/structure/transport/linear/tram,
 /obj/effect/landmark/transport/transport_id/birdshot/line_2,
 /obj/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "rrC" = (
 /obj/structure/disposalpipe/segment,
@@ -49437,7 +49437,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "ryk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50588,7 +50588,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "rQN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50909,7 +50909,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "rVH" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -51132,7 +51132,7 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "rZn" = (
 /obj/structure/cable,
@@ -51413,7 +51413,7 @@
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/solo,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "sdQ" = (
 /obj/structure/cable,
@@ -54591,7 +54591,7 @@
 	},
 /obj/structure/thermoplastic,
 /obj/structure/rack,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "tgj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57458,7 +57458,7 @@
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "udI" = (
 /obj/structure/closet{
@@ -57673,7 +57673,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "uhe" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -58175,7 +58175,7 @@
 "upR" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "uqc" = (
 /obj/structure/cable,
@@ -59678,7 +59678,7 @@
 	dir = 8
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "uRF" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -59982,7 +59982,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "uWv" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -60461,7 +60461,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "veA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
@@ -62715,7 +62715,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "vNo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -63745,7 +63745,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "wfa" = (
 /obj/structure/cable,
@@ -63800,7 +63800,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "wfP" = (
 /obj/machinery/door/firedoor,
@@ -65272,7 +65272,7 @@
 /area/station/medical/medbay/central)
 "wDu" = (
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "wDA" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -65515,7 +65515,7 @@
 	dir = 9
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "wIc" = (
 /obj/structure/window/spawner/directional/west,
@@ -68952,7 +68952,7 @@
 	dir = 10
 	},
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "xDW" = (
 /obj/structure/cable,
@@ -69117,7 +69117,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/security/tram)
 "xGc" = (
 /obj/structure/cable,
@@ -70859,7 +70859,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/floor/tram,
 /area/station/maintenance/department/medical/central)
 "ycz" = (
 /obj/effect/turf_decal/sand/plating,

@@ -6,7 +6,6 @@
 	base_icon_state = "desto"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
-	flags_1 = NODECONSTRUCT_1
 	anchored = TRUE
 	density = FALSE
 	layer = SIGN_LAYER
@@ -27,6 +26,7 @@
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	icon_state = "indi_blank"
 	base_icon_state = "indi"
+	max_integrity = 50
 	light_range = 2
 	light_power = 0.7
 	light_angle = 115
