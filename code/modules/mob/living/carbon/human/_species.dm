@@ -1667,19 +1667,26 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Lets pick a random body part and check for an existing burn
 	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
-	var/datum/wound/burn/flesh/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
-
+	var/datum/wound/existing_burn
+	for (var/datum/wound/iterated_wound as anything in bodypart.wounds)
+		var/datum/wound_pregen_data/pregen_data = iterated_wound.get_pregen_data()
+		if (pregen_data.wound_series in GLOB.wounding_types_to_series[WOUND_BURN])
+			existing_burn = iterated_wound
+			break
 	// If we have an existing burn try to upgrade it
+	var/severity
 	if(existing_burn)
 		switch(existing_burn.severity)
 			if(WOUND_SEVERITY_MODERATE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400) // 800k
-					bodypart.force_wound_upwards(/datum/wound/burn/flesh/severe, wound_source = "hot temperatures")
+					severity = WOUND_SEVERITY_SEVERE
 			if(WOUND_SEVERITY_SEVERE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800) // 3200k
-					bodypart.force_wound_upwards(/datum/wound/burn/flesh/critical, wound_source = "hot temperatures")
+					severity = WOUND_SEVERITY_CRITICAL
 	else // If we have no burn apply the lowest level burn
-		bodypart.force_wound_upwards(/datum/wound/burn/flesh/moderate, wound_source = "hot temperatures")
+		severity = WOUND_SEVERITY_MODERATE
+
+	humi.cause_wound_of_type_and_severity(WOUND_BURN, bodypart, severity, wound_source = "hot temperatures")
 
 	// always take some burn damage
 	var/burn_damage = HEAT_DAMAGE_LEVEL_1
