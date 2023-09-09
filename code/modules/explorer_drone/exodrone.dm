@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		if(EXODRONE_IDLE)
 			return "Idle."
 
-// Searches for blacklisted items hidden inside other containers
+// Searches for blacklisted items hidden inside containers
 /obj/item/exodrone/proc/check_blacklist()
 	for(var/obj/item/contained_item in contents)
 		if(contained_item.contents)
