@@ -166,7 +166,7 @@
 
 
 /obj/item/clockwork/weapon/brass_battlehammer/hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
-	if(!thrown && !HAS_TRAIT(src, TRAIT_WIELDED))
+	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
 		return
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
