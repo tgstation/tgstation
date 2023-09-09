@@ -1,4 +1,4 @@
- /// Make a sticky web under yourself for area fortification
+/// Make a sticky web under yourself for area fortification
 /datum/action/cooldown/mob_cooldown/lay_web
 	name = "Spin Web"
 	desc = "Spin a web to slow down potential prey."
@@ -118,18 +118,6 @@
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/passage(target_turf)
 
-/datum/action/cooldown/mob_cooldown/lay_web/web_floor
-	name = "Spin Web Floor"
-	desc = "Spin a web floor to protect the hive from the great vacuum."
-	button_icon_state = "lay_web_floor"
-	cooldown_time = 0 SECONDS
-	webbing_time = 2 SECONDS
-
-/datum/action/cooldown/mob_cooldown/lay_web/web_passage/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
-
-/datum/action/cooldown/mob_cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/passage(target_turf)
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web
 	name = "Spin Sticky Web"

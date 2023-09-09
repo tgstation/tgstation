@@ -133,16 +133,6 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
-/obj/structure/spider/floor
-	name = "web floor"
-	icon = 'icons/effects/effects.dmi'
-	desc = "A messy connection of webs blocking the other side, but not solid enough to prevent passage."
-	icon_state = "webfloor"
-	can_atmos_pass = ATMOS_PASS_NO
-	max_integrity = 180
-	alpha = 50
-	resistance_flags = FIRE_PROOF | FREEZE_PROOF
-
 /obj/structure/spider/passage/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
