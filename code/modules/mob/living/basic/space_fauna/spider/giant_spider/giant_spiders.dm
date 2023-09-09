@@ -252,7 +252,7 @@
  * A subtype of the giant spider which is similar on every single way,
  * This spider is only slightly slower than a human.
  */
-/mob/living/basic/giant_spider/tank
+/mob/living/basic/spider/giant/tank
 	name = "tank spider"
 	desc = "Furry and Purple with a white top, it makes you shudder to look at it. This one has bright yellow eyes."
 	icon_state = "tank"
@@ -268,7 +268,7 @@
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
 
-/mob/living/basic/giant_spider/guard/Initialize(mapload)
+/mob/living/basic/giant_spider/tank/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
@@ -279,7 +279,7 @@
  * A subtype of the giant spider which is similar on every single way,
  * This spider is only slightly slower than a human.
  */
-/mob/living/basic/giant_spider/breacher
+/mob/living/basic/spider/giant/breacher
 	name = "breacher spider"
 	desc = "Furry and light brown with a white dark brown highlights, it makes you shudder to look at it. This one has bright red eyes."
 	icon_state = "breacher"
@@ -292,16 +292,13 @@
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 100
 	obj_damage = 50
-	minbodytemp = 0
-	maxbodytemp = 1500
-	pressure_resistance = 200
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
 
 	var/tearing_wall = FALSE
 
-/mob/living/basic/giant_spider/guard/Initialize(mapload)
+/mob/living/basic/giant_spider/breacher/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
