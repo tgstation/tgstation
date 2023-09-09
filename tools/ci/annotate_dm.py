@@ -21,5 +21,11 @@ raw_output = re.sub(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]', '', raw_output)
 
 annotation_regex = r'(?P<filename>.*?), line (?P<line>\d+), column (?P<column>\d+):\s{1,2}(?P<type>error|warning): (?P<message>.*)'
 
+has_issues = False
+
 for annotation in re.finditer(annotation_regex, raw_output):
     print(f"::{annotation['type']} file={annotation['filename']},line={annotation['line']},col={annotation['column']}::{annotation['message']}")
+    has_issues = True
+
+if not has_issues:
+    print("No DM issues found")
