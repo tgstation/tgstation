@@ -69,7 +69,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/chem_dispenser{
+/obj/machinery/atmospherics/components/unary/chem_dispenser{
 	layer = 2.7
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -114,7 +114,7 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 8
 	},
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 4;
 	pixel_y = 0
 	},
@@ -306,7 +306,7 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 10
 	},
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 4;
 	pixel_y = 0
 	},

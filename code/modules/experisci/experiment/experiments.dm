@@ -268,9 +268,9 @@
 		/obj/machinery/mech_bay_recharge_port = 1,
 		/obj/machinery/recharger = 2,
 		/obj/machinery/power/smes = 2,
-		/obj/machinery/chem_dispenser = 3,
-		/obj/machinery/chem_dispenser/drinks = 3, /*actually having only the chem dispenser works for scanning soda/booze dispensers but im not quite sure how would i go about actually pointing that out w/o these two lines*/
-		/obj/machinery/chem_dispenser/drinks/beer = 3
+		/obj/machinery/atmospherics/components/unary/chem_dispenser = 3,
+		/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks = 3, /*actually having only the chem dispenser works for scanning soda/booze dispensers but im not quite sure how would i go about actually pointing that out w/o these two lines*/
+		/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer = 3
 	)
 	required_stock_part = /obj/item/stock_parts/capacitor/adv
 
@@ -293,9 +293,9 @@
 	required_points = 8
 	required_atoms = list(
 		/obj/machinery/recharge_station = 1,
-		/obj/machinery/chem_dispenser = 1,
-		/obj/machinery/chem_dispenser/drinks = 1,
-		/obj/machinery/chem_dispenser/drinks/beer = 1,
+		/obj/machinery/atmospherics/components/unary/chem_dispenser = 1,
+		/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks = 1,
+		/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer = 1,
 		/obj/machinery/power/smes = 2
 	)
 	required_stock_part = /obj/item/stock_parts/cell/hyper

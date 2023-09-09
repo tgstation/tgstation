@@ -240,7 +240,7 @@
 "az" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,

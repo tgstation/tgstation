@@ -284,7 +284,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aR" = (

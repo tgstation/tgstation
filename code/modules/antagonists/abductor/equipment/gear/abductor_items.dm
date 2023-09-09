@@ -550,7 +550,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
-	spawned_machine = /obj/machinery/chem_dispenser/abductor
+	spawned_machine = /obj/machinery/atmospherics/components/unary/chem_dispenser/abductor
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"

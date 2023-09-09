@@ -2342,7 +2342,7 @@
 "yd" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 2
@@ -2514,7 +2514,7 @@
 "AT" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 0

@@ -1795,7 +1795,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "wu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wK" = (

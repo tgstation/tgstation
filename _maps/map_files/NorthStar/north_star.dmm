@@ -3604,7 +3604,7 @@
 /area/station/security/prison/safe)
 "aWj" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -34493,7 +34493,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/bar)
 "jdp" = (
@@ -43882,7 +43882,7 @@
 /obj/effect/turf_decal/siding/wideplating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "lzf" = (
@@ -48629,7 +48629,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/fore)
 "mIK" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/chemistry)
 "mIO" = (
@@ -71991,7 +71991,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "sTG" = (
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks,
 /obj/structure/table/glass,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
@@ -74696,7 +74696,7 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "tBY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/structure/sign/poster/official/periodic_table/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
@@ -75155,7 +75155,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/bar)
@@ -80809,7 +80809,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "vjC" = (
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer,
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,

@@ -58,7 +58,7 @@
 /area/shuttle/escape)
 "fB" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -237,7 +237,7 @@
 /area/shuttle/escape)
 "qI" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /turf/open/floor/wood,

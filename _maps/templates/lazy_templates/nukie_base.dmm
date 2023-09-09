@@ -1063,7 +1063,7 @@
 /obj/machinery/camera/autoname/directional/east{
 	network = list("nukie")
 	},
-/obj/machinery/chem_dispenser/mutagensaltpeter,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "my" = (
@@ -1897,7 +1897,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "wN" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/andromeda_bitters/directional/south,
@@ -2503,7 +2503,7 @@
 /area/centcom/syndicate_mothership/control)
 "EL" = (
 /obj/structure/sign/poster/contraband/masked_men/directional/east,
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "EM" = (
@@ -2928,7 +2928,7 @@
 /area/centcom/syndicate_mothership/control)
 "Jc" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/space_cube/directional/south,

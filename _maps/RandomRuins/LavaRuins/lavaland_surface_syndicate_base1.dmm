@@ -10,7 +10,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "ai" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -71,7 +71,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/chemistry)
 "aO" = (
@@ -544,7 +544,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/chemistry)
@@ -2765,7 +2765,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "AJ" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
 /obj/machinery/barsign/all_access/directional/south{

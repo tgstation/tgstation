@@ -880,7 +880,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "mo" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "mp" = (

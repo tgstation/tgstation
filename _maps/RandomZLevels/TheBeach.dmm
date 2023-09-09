@@ -626,7 +626,7 @@
 /area/awaymission/beach)
 "co" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade,
 /obj/structure/sign/picture_frame{
 	pixel_y = 32
 	},
@@ -634,7 +634,7 @@
 /area/awaymission/beach)
 "cp" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cq" = (

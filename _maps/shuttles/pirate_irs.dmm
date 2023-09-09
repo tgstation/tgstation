@@ -531,7 +531,7 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "qj" = (
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1;
 	pixel_y = -16
 	},
@@ -700,7 +700,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "uy" = (
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 1;
 	pixel_y = -18
 	},

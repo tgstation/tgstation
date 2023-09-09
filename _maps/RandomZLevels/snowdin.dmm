@@ -1399,13 +1399,13 @@
 /area/awaymission/snowdin/post)
 "er" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/messhall)
 "es" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/messhall)

@@ -191,7 +191,7 @@
 /area/awaymission/cabin)
 "aP" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	desc = "Contains a large reservoir of soft drinks so that you can refill your cup. For free.";
 	name = "free refill dispenser"
 	},
@@ -383,7 +383,7 @@
 /area/awaymission/cabin)
 "bv" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -5145,7 +5145,7 @@
 /area/awaymission/cabin/caves/mountain)
 "TK" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/wood,

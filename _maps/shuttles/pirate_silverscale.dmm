@@ -386,7 +386,7 @@
 /area/shuttle/pirate)
 "zB" = (
 /obj/structure/table/glass,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
@@ -546,7 +546,7 @@
 /area/shuttle/pirate)
 "Ig" = (
 /obj/structure/table/glass,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,

@@ -885,7 +885,7 @@
 /area/shuttle/escape)
 "Aw" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -1096,7 +1096,7 @@
 /area/shuttle/escape)
 "KN" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade,
 /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,

@@ -185,7 +185,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aM" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)

@@ -2754,7 +2754,7 @@
 "bfI" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/brown/full,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
@@ -38684,7 +38684,7 @@
 /area/station/hallway/secondary/dock)
 "nTz" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/machinery/chem_dispenser{
+/obj/machinery/atmospherics/components/unary/chem_dispenser{
 	layer = 2.7
 	},
 /obj/machinery/light/small/directional/south,
@@ -51758,7 +51758,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/chem_dispenser{
+/obj/machinery/atmospherics/components/unary/chem_dispenser{
 	layer = 2.7
 	},
 /obj/machinery/camera/autoname/directional/west,
@@ -52780,7 +52780,7 @@
 "szS" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_large,
@@ -61141,7 +61141,7 @@
 /area/station/commons/storage/tools)
 "voF" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks,
 /obj/machinery/light/cold/directional/north,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/cafeteria,
@@ -64932,7 +64932,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser{
+/obj/machinery/atmospherics/components/unary/chem_dispenser{
 	layer = 2.7
 	},
 /obj/effect/decal/cleanable/cobweb,

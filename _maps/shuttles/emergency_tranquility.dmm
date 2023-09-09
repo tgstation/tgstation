@@ -98,7 +98,7 @@
 /area/shuttle/escape)
 "cD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 4;
 	pixel_y = 4
 	},
@@ -1528,7 +1528,7 @@
 /area/shuttle/escape)
 "CV" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 4;
 	pixel_y = 4
 	},

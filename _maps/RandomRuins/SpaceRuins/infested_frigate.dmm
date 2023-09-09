@@ -446,7 +446,7 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/item/bodypart/head,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2900,7 +2900,7 @@
 	pixel_y = 7
 	},
 /obj/structure/cable,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/tiled/white,

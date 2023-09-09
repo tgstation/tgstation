@@ -4293,7 +4293,7 @@
 /area/station/security/prison)
 "bpZ" = (
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/glass/reinforced,
 /area/station/medical/treatment_center)
 "bqe" = (
@@ -24763,7 +24763,7 @@
 /turf/open/cliff/snowrock,
 /area/icemoon/surface/outdoors/nospawn)
 "hHI" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow/full,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pharmacy)
@@ -39265,7 +39265,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "meF" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/no_smoking/directional/north,
@@ -53887,7 +53887,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54855,7 +54855,7 @@
 /area/station/medical/medbay/central)
 "qPw" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -63459,7 +63459,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

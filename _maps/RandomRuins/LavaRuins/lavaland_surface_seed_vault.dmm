@@ -349,7 +349,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bd" = (
-/obj/machinery/chem_dispenser/mutagensaltpeter,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/mutagensaltpeter,
 /obj/effect/turf_decal/trimline/green/corner,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 9

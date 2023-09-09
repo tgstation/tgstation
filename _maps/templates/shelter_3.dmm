@@ -25,12 +25,12 @@
 /area/misc/survivalpod)
 "f" = (
 /obj/structure/table/wood/fancy/black,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "g" = (
 /obj/structure/table/wood/fancy/black,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer,
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)

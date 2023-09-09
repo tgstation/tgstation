@@ -385,7 +385,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "pI" = (
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
@@ -542,7 +542,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "wY" = (
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xb" = (
@@ -563,7 +563,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "yt" = (
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 8
 	},
 /obj/structure/table/reinforced,
@@ -685,7 +685,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "DP" = (
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 8
 	},
 /obj/structure/cable,

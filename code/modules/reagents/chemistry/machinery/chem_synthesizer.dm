@@ -1,4 +1,4 @@
-/obj/machinery/chem_dispenser/chem_synthesizer //formerly SCP-294 made by mrty, but now only for testing purposes
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer //formerly SCP-294 made by mrty, but now only for testing purposes
 	name = "\improper debug chemical synthesizer"
 	desc = "If you see this, yell at adminbus."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -14,13 +14,13 @@
 	///The purity of the created reagent in % (purity uses 0-1 values)
 	var/purity = 100
 
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDebugSynthesizer", name)
 		ui.open()
 
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -57,16 +57,16 @@
 				purity = input
 	update_appearance()
 
-/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer/Destroy()
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer/ui_data(mob/user)
 	. = ..()
 	.["purity"] = purity
 	return .
 
-/obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
 		return input

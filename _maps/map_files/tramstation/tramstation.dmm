@@ -19820,7 +19820,7 @@
 /area/station/commons/vacant_room/office)
 "fZR" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -32390,7 +32390,7 @@
 /area/station/service/kitchen)
 "kFf" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
@@ -48199,7 +48199,7 @@
 /area/station/engineering/atmos)
 "qkP" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
@@ -51402,7 +51402,7 @@
 /area/station/security/courtroom/holding)
 "rro" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -67786,7 +67786,7 @@
 /area/station/science/research)
 "xiP" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)

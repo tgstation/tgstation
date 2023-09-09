@@ -110,7 +110,7 @@
 /area/centcom/basketball)
 "fu" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -420,7 +420,7 @@
 /area/centcom/basketball)
 "AU" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
 /turf/open/floor/wood,

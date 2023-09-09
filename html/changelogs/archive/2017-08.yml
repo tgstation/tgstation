@@ -164,7 +164,7 @@
   - balance: Lowers the chance for monkeys to become gorillas
   - rscadd: Holoparasite prompts now have a "Never For This Round" option
   Naksu:
-  - spellcheck: fixed inconsistent grammar between machines that derive from /obj/machinery/chem_dispenser
+  - spellcheck: fixed inconsistent grammar between machines that derive from /obj/machinery/atmospherics/components/unary/chem_dispenser
   - spellcheck: touched up some chat messages to include references to objects instead
       of "that" or "the machine" etc., also removed references to beakers being loaded
       in machines that can accept any container

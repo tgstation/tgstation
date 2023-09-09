@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "ad" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -46,7 +46,7 @@
 /area/shuttle/escape)
 "aj" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,

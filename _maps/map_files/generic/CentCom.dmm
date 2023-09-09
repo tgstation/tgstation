@@ -816,7 +816,7 @@
 /area/centcom/central_command_areas/control)
 "dG" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
@@ -1762,7 +1762,7 @@
 /area/centcom/central_command_areas/prison/cells)
 "iC" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -6208,7 +6208,7 @@
 /area/centcom/central_command_areas/control)
 "Cy" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 8;
 	pixel_x = 4;
 	pixel_y = 4
@@ -7347,7 +7347,7 @@
 /area/centcom/central_command_areas/evacuation)
 "JV" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

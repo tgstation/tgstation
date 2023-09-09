@@ -1188,7 +1188,7 @@
 /area/ruin/pizzeria)
 "UJ" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners{

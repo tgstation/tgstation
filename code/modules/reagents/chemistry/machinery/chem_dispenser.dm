@@ -11,7 +11,7 @@
 		else
 			return ckey(id)
 
-/obj/machinery/chem_dispenser
+/obj/machinery/atmospherics/components/unary/chem_dispenser
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
@@ -87,7 +87,9 @@
 
 	var/list/saved_recipes = list()
 
-/obj/machinery/chem_dispenser/Initialize(mapload)
+	var/pipe_color_index = 1
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/Initialize(mapload)
 	. = ..()
 	dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(emagged_reagents)
@@ -98,12 +100,12 @@
 		begin_processing()
 	update_appearance()
 
-/obj/machinery/chem_dispenser/Destroy()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/chem_dispenser/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/examine(mob/user)
 	. = ..()
 	if(panel_open)
 		. += span_notice("[src]'s maintenance hatch is open!")
@@ -113,16 +115,84 @@
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
+/obj/machinery/atmospherics/components/unary/chem_dispenser/is_connectable()
+	if(!anchored || panel_open)
+		return FALSE
+	. = ..()
 
-/obj/machinery/chem_dispenser/on_set_is_operational(old_value)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/on_construction(mob/user, obj_color, set_layer)
+	var/obj/item/circuitboard/machine/chem_dispenser/board = circuit
+	if(board)
+		piping_layer = board.pipe_layer
+		set_layer = piping_layer
+
+	..() //Skipping the rest of on_construction() would be a bad idea so we clean up after it instead.
+
+	if(check_pipe_on_turf())
+		set_anchored(FALSE)
+		set_panel_open(TRUE)
+		change_pipe_connection(TRUE)
+		mutable_appearance(icon, "[base_icon_state]_panel-o")
+		balloon_alert(user, "the port is already in use!")
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/default_change_direction_wrench(mob/user, obj/item/I)
+	if(!..())
+		return FALSE
+	set_init_directions()
+	update_appearance()
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	pipe_color_index = (pipe_color_index >= GLOB.pipe_paint_colors.len) ? (pipe_color_index = 1) : (pipe_color_index = 1 + pipe_color_index)
+	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[pipe_color_index]])
+	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
+	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/proc/check_pipe_on_turf()
+	for(var/obj/machinery/atmospherics/device in get_turf(src))
+		if(device == src)
+			continue
+		if(device.piping_layer == piping_layer)
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/chem_dispenser/on_set_is_operational(old_value)
 	if(old_value) //Turned off
 		end_processing()
 	else //Turned on
 		begin_processing()
 
 
-/obj/machinery/chem_dispenser/process(seconds_per_tick)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/process(seconds_per_tick)
+	var/datum/gas_mixture/port = airs[1]
+	if(!port.total_moles() || port.gases[/datum/gas/plasma][MOLES] < MINIMUM_MOLE_COUNT)
+		return
+
+
+
 	if (recharge_counter >= 8)
+		if(port.has_gas(/datum/gas/plasma, recharge_amount * 0.5))
+			port.remove_specific(/datum/gas/plasma, recharge_amount * 0.5)
+		else
+			recharge_counter = 0
+			return
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
 			use_power(active_power_usage + recharge_amount)
@@ -130,21 +200,21 @@
 		return
 	recharge_counter += seconds_per_tick
 
-/obj/machinery/chem_dispenser/proc/display_beaker()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7
 	return b_o
 
-/obj/machinery/chem_dispenser/proc/work_animation()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/proc/work_animation()
 	if(working_state)
 		flick(working_state,src)
 
-/obj/machinery/chem_dispenser/update_icon_state()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/update_icon_state()
 	icon_state = "[(nopower_state && !powered()) ? nopower_state : base_icon_state]"
 	return ..()
 
-/obj/machinery/chem_dispenser/update_overlays()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/update_overlays()
 	. = ..()
 	if(has_panel_overlay && panel_open)
 		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
@@ -154,7 +224,7 @@
 		. += beaker_overlay
 
 
-/obj/machinery/chem_dispenser/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "already emagged!")
 		return FALSE
@@ -163,12 +233,12 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/chem_dispenser/ex_act(severity, target)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
 		return FALSE
 	return ..()
 
-/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/contents_explosion(severity, target)
 	..()
 	if(!beaker)
 		return
@@ -181,13 +251,13 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/chem_dispenser/Exited(atom/movable/gone, direction)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == beaker)
 		beaker = null
 		cut_overlays()
 
-/obj/machinery/chem_dispenser/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDispenser", name)
@@ -202,7 +272,7 @@
 
 		ui.open()
 
-/obj/machinery/chem_dispenser/ui_data(mob/user)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/ui_data(mob/user)
 	var/data = list()
 	data["amount"] = amount
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
@@ -254,7 +324,7 @@
 			data["recipeReagents"] += ckey(reagent.name)
 	return data
 
-/obj/machinery/chem_dispenser/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -365,13 +435,17 @@
 			if(beaker)
 				beaker.reagents.ui_interact(usr)
 
-/obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/atmospherics/components/unary/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
+	if(check_pipe_on_turf())
+		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(default_unfasten_wrench(user, tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
 
-/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		change_pipe_connection(panel_open)
 		update_appearance()
 		return
 	if(default_deconstruction_crowbar(I))
@@ -390,10 +464,10 @@
 	else
 		return ..()
 
-/obj/machinery/chem_dispenser/get_cell()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/get_cell()
 	return cell
 
-/obj/machinery/chem_dispenser/emp_act(severity)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -413,7 +487,7 @@
 	work_animation()
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
-/obj/machinery/chem_dispenser/RefreshParts()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/RefreshParts()
 	. = ..()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
@@ -434,7 +508,7 @@
 		parts_rating += servo.tier
 	powerefficiency = round(newpowereff, 0.01)
 
-/obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
 	if(beaker)
@@ -445,14 +519,14 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/chem_dispenser/on_deconstruction()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/on_deconstruction()
 	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
 	return ..()
 
-/obj/machinery/chem_dispenser/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -461,16 +535,16 @@
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/chem_dispenser/attack_robot_secondary(mob/user, list/modifiers)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/attack_robot_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_dispenser/AltClick(mob/user)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/machinery/chem_dispenser/drinks
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -521,17 +595,17 @@
 	)
 	base_reagent_purity = 0.5
 
-/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/chem_dispenser/drinks/setDir()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/setDir()
 	var/old = dir
 	. = ..()
 	if(dir != old)
 		update_appearance()  // the beaker needs to be re-positioned if we rotate
 
-/obj/machinery/chem_dispenser/drinks/display_beaker()
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
 		if(NORTH)
@@ -548,17 +622,17 @@
 			b_o.pixel_x = rand(-9, 9)
 	return b_o
 
-/obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
-/obj/machinery/chem_dispenser/drinks/beer
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -602,17 +676,17 @@
 		/datum/reagent/consumable/ethanol/fernet
 	)
 
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of the good stuff. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
-/obj/machinery/chem_dispenser/mutagen
+/obj/machinery/atmospherics/components/unary/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
@@ -620,7 +694,7 @@
 	emagged_reagents = list(/datum/reagent/toxin/plasma)
 
 
-/obj/machinery/chem_dispenser/mutagensaltpeter
+/obj/machinery/atmospherics/components/unary/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
 	flags_1 = NODECONSTRUCT_1
@@ -643,17 +717,17 @@
 		/datum/reagent/diethylamine)
 	upgrade_reagents = null
 
-/obj/machinery/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Creates and dispenses chemicals. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
 
-/obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
-/obj/machinery/chem_dispenser/abductor
+/obj/machinery/atmospherics/components/unary/chem_dispenser/abductor
 	name = "reagent synthesizer"
 	desc = "Synthesizes a variety of reagents using proto-matter."
 	icon = 'icons/obj/antags/abductor.dmi'

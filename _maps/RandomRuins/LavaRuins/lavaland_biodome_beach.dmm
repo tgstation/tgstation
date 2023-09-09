@@ -326,7 +326,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hS" = (
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
 /obj/structure/table/wood,
@@ -411,7 +411,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "mE" = (
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /obj/structure/table/wood,

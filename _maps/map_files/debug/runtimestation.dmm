@@ -410,7 +410,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "bS" = (
-/obj/machinery/chem_dispenser/fullupgrade,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "bT" = (
@@ -2220,7 +2220,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "Ly" = (
-/obj/machinery/chem_dispenser/chem_synthesizer,
+/obj/machinery/atmospherics/components/unary/chem_dispenser/chem_synthesizer,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "LH" = (

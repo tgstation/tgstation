@@ -65,7 +65,7 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser/drinks/beer{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /turf/open/floor/bamboo,
@@ -92,7 +92,7 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/atmospherics/components/unary/chem_dispenser/drinks{
 	dir = 1
 	},
 /turf/open/floor/bamboo,
@@ -101,7 +101,7 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/atmospherics/components/unary/chem_dispenser,
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "DW" = (

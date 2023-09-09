@@ -718,7 +718,7 @@
 /obj/item/circuitboard/machine/chem_dispenser
 	name = "Chem Dispenser"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/chem_dispenser
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/capacitor = 1,
@@ -727,9 +727,19 @@
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
+	var/pipe_layer = PIPING_LAYER_DEFAULT
+
+/obj/item/circuitboard/machine/chem_dispenser/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	. = ..()
+	pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
+	to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
+
+/obj/item/circuitboard/machine/chem_dispenser/examine()
+	. = ..()
+	. += span_notice("It is set to layer [pipe_layer].")
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
-	build_path = /obj/machinery/chem_dispenser/fullupgrade
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/fullupgrade
 	specific_parts = TRUE
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 2,
@@ -740,7 +750,7 @@
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
-	build_path = /obj/machinery/chem_dispenser/mutagensaltpeter
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/mutagensaltpeter
 	specific_parts = TRUE
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 2,
@@ -754,7 +764,7 @@
 	name = "Reagent Synthesizer"
 	name_extension = "(Abductor Machine Board)"
 	icon_state = "abductor_mod"
-	build_path = /obj/machinery/chem_dispenser/abductor
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/abductor
 	specific_parts = TRUE
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 2,
@@ -1118,10 +1128,10 @@
 /obj/item/circuitboard/machine/chem_dispenser/drinks
 	name = "Soda Dispenser"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/machinery/chem_dispenser/drinks
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/drinks
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
-	build_path = /obj/machinery/chem_dispenser/drinks/fullupgrade
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/fullupgrade
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 2,
 		/datum/stock_part/capacitor/tier4 = 2,
@@ -1133,10 +1143,10 @@
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	name = "Booze Dispenser"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/machinery/chem_dispenser/drinks/beer
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
-	build_path = /obj/machinery/chem_dispenser/drinks/beer/fullupgrade
+	build_path = /obj/machinery/atmospherics/components/unary/chem_dispenser/drinks/beer/fullupgrade
 	req_components = list(
 		/datum/stock_part/matter_bin/tier4 = 2,
 		/datum/stock_part/capacitor/tier4 = 2,
