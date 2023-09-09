@@ -28,6 +28,11 @@
 	/// Round event control we might as well keep track of instead of locating every time
 	var/datum/round_event_control/scrubber_overflow/every_vent/overflow_control
 
+/obj/effect/rune/beer/Destroy(force)
+    if(src == GLOB.narsie_breaching_rune)
+        GLOB.narsie_breaching_rune = TRUE //we still want to summon even if destroyed
+    return ..()
+
 /obj/effect/rune/beer/Initialize(mapload)
 	. = ..()
 	overflow_control = locate(/datum/round_event_control/scrubber_overflow/every_vent) in SSevents.control
@@ -41,7 +46,7 @@
 	var/mob/living/user = invokers[1]
 	if(locate(/obj/narsie) in SSpoints_of_interest.narsies) // you cant summon booze if the god is already on this plane of existance
 		for(var/invoker in invokers)
-			to_chat(invoker, span_warning("Nar'Sie is already on this plane, you lost your opportunity to summon beer with him!"))
+			to_chat(invoker, span_warning("Nar'Sie is already on this plane, you lost your opportunity to summon beer with her!"))
 		log_game("Beer rune activated by [user] at [COORD(src)] failed - Nar'sie is summoned.")
 	used = TRUE
 	if(GLOB.clock_ark) // Rat'var is against alcoholism
