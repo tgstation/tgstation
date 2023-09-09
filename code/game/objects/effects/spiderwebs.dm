@@ -141,7 +141,6 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	max_integrity = 180
 	alpha = 50
-	plane = GAME_PLANE_LOWER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/spider/passage/Initialize(mapload)
