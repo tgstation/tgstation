@@ -370,7 +370,6 @@
 	event_control_path = /datum/round_event_control/wisdomcow
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
-	trait_to_give = STATION_TRAIT_WISE_COWS
 
 /datum/station_trait/shuttle_sale
 	name = "Shuttle Firesale"
@@ -385,7 +384,6 @@
 	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
-	trait_to_give = STATION_TRAIT_MISSING_WALLET
 	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet/on_round_start()
