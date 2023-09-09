@@ -2480,6 +2480,7 @@
 #include "code\modules\actionspeed\modifiers\drugs.dm"
 #include "code\modules\actionspeed\modifiers\mood.dm"
 #include "code\modules\actionspeed\modifiers\status_effects.dm"
+#include "code\modules\actionspeed\modifiers\wound.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_fax_panel.dm"
 #include "code\modules\admin\admin_investigate.dm"
