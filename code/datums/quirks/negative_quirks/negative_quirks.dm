@@ -3,7 +3,6 @@
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
 	icon = FA_ICON_HIKING
-	value = -8
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("Your back REALLY hurts!")
 	lose_text = span_notice("Your back feels better.")
@@ -54,7 +53,6 @@
 	name = "Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
 	icon = FA_ICON_TINT
-	value = -8
 	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = span_danger("You feel your vigor slowly fading away.")
 	lose_text = span_notice("You feel vigorous again.")
@@ -94,7 +92,6 @@
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
 	icon = FA_ICON_EYE_SLASH
-	value = -16
 	gain_text = span_danger("You can't see anything.")
 	lose_text = span_notice("You miraculously gain back your vision.")
 	medical_record_text = "Patient has permanent blindness."
@@ -120,7 +117,6 @@
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	icon = FA_ICON_BRAIN
-	value = -12
 	gain_text = span_danger("You feel smooth.")
 	lose_text = span_notice("You feel wrinkled again.")
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
@@ -153,7 +149,6 @@
 	name = "Deaf"
 	desc = "You are incurably deaf."
 	icon = FA_ICON_DEAF
-	value = -8
 	mob_trait = TRAIT_DEAF
 	gain_text = span_danger("You can't hear anything.")
 	lose_text = span_notice("You're able to hear again!")
@@ -169,7 +164,6 @@
 	desc = "You sometimes just hate life."
 	icon = FA_ICON_FROWN
 	mob_trait = TRAIT_DEPRESSION
-	value = -3
 	gain_text = span_danger("You start feeling depressed.")
 	lose_text = span_notice("You no longer feel depressed.") //if only it were that easy!
 	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
@@ -181,7 +175,6 @@
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	icon = FA_ICON_TOOLBOX
-	value = -2
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
@@ -254,7 +247,6 @@
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
 	icon = FA_ICON_HAND_FIST
-	value = -4
 	gain_text = span_danger("Your jaw feels loose.")
 	lose_text = span_notice("Your jaw feels fitting again.")
 	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
@@ -307,7 +299,6 @@
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
 	icon = FA_ICON_SKULL
-	value = -6
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = span_danger("You feel frail.")
 	lose_text = span_notice("You feel sturdy again.")
@@ -319,7 +310,6 @@
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
 	icon = FA_ICON_BED
-	value = -2
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = span_danger("You feel sleepy.")
 	lose_text = span_notice("You feel awake again.")
@@ -339,7 +329,6 @@
 	name = "Hypersensitive"
 	desc = "For better or worse, everything seems to affect your mood more than it should."
 	icon = FA_ICON_FLUSHED
-	value = -2
 	gain_text = span_danger("You seem to make a big deal out of everything.")
 	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
@@ -358,7 +347,6 @@
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
 	icon = FA_ICON_COCKTAIL
-	value = -2
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = span_notice("Just the thought of drinking alcohol makes your head spin.")
 	lose_text = span_danger("You're no longer severely affected by alcohol.")
@@ -371,7 +359,6 @@
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
 	icon = FA_ICON_GLASSES
-	value = -4
 	gain_text = span_danger("Things far away from you start looking blurry.")
 	lose_text = span_notice("You start seeing faraway things normally again.")
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
@@ -402,7 +389,6 @@
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
 	icon = FA_ICON_LIGHTBULB
-	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 5
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
@@ -451,7 +437,6 @@
 	name = "Photophobia"
 	desc = "Bright lights seem to bother you more than others. Maybe it's a medical condition."
 	icon = FA_ICON_ARROWS_TO_EYE
-	value = -4
 	gain_text = span_danger("The safety of light feels off...")
 	lose_text = span_notice("Enlightening.")
 	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
@@ -525,7 +510,6 @@
 	name = "Soft-Spoken"
 	desc = "You are soft-spoken, and your voice is hard to hear."
 	icon = FA_ICON_COMMENT
-	value = -2
 	mob_trait = TRAIT_SOFTSPOKEN
 	gain_text = span_danger("You feel like you're speaking more quietly.")
 	lose_text = span_notice("You feel like you're speaking louder.")
@@ -535,7 +519,6 @@
 	name = "Clumsy"
 	desc = "You're clumsy, a goofball, a silly dude. You big loveable himbo/bimbo you! Hope you weren't planning on using your hands for anything that takes even a LICK of dexterity."
 	icon = FA_ICON_FACE_DIZZY
-	value = -8
 	mob_trait = TRAIT_CLUMSY
 	gain_text = span_danger("You feel your IQ sink like your brain is liquid.")
 	lose_text = span_notice("You feel like your IQ went up to at least average.")
@@ -545,7 +528,6 @@
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
 	icon = FA_ICON_PEACE
-	value = -8
 	mob_trait = TRAIT_PACIFISM
 	gain_text = span_danger("You feel repulsed by the thought of violence!")
 	lose_text = span_notice("You think you can defend yourself again.")
@@ -557,7 +539,6 @@
 	name = "Big Hands"
 	desc = "You have big hands, it sure does make it hard to use a lot of things."
 	icon = FA_ICON_HAND_DOTS
-	value = -6
 	mob_trait = TRAIT_CHUNKYFINGERS
 	gain_text = span_danger("Your hands are huge! You can't use small things anymore!")
 	lose_text = span_notice("Your hands are back to normal.")
@@ -568,7 +549,6 @@
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
 	icon = FA_ICON_WHEELCHAIR
-	value = -12
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
@@ -610,7 +590,6 @@
 	name = "Hemiplegic"
 	desc = "Half of your body doesn't work. Nothing will ever fix this."
 	icon = FA_ICON_CIRCLE_HALF_STROKE
-	value = -10 // slightly more bearable than paraplegic but not by much
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
@@ -633,7 +612,6 @@
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
 	icon = FA_ICON_BULLSEYE
-	value = -4
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/cardboard_cutout) // for target practice
@@ -653,7 +631,6 @@
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
 	icon = FA_ICON_USER_SECRET
-	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 	hardcore_value = 5
@@ -663,7 +640,6 @@
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a surplus prosthetic!"
 	icon = "tg-prosthetic-leg"
-	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic limb."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it's randomized at roundstart
@@ -706,7 +682,6 @@
 	name = "Quadruple Amputee"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been replaced with surplus prosthetics."
 	icon = "tg-prosthetic-full"
-	value = -6
 	medical_record_text = "During physical examination, patient was found to have all low-budget prosthetic limbs."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
@@ -727,7 +702,6 @@
 	name = "Prosthetic Organ"
 	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
 	icon = FA_ICON_LUNGS
-	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 3
@@ -791,7 +765,6 @@
 	name = "Tin Man"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
 	icon = FA_ICON_ROBOT
-	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 6
@@ -829,7 +802,6 @@
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
 	icon = FA_ICON_HANDSHAKE
-	value = -8
 	mob_trait = TRAIT_GRABWEAKNESS
 	gain_text = span_danger("You feel like a pushover.")
 	lose_text = span_notice("You feel like standing up for yourself.")
@@ -843,7 +815,6 @@
 		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
 		THIS IS NOT A LICENSE TO GRIEF."
 	icon = FA_ICON_GRIN_TONGUE_WINK
-	value = -8
 	gain_text = span_userdanger("...")
 	lose_text = span_notice("You feel in tune with the world again.")
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
@@ -883,7 +854,6 @@
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
 	icon = FA_ICON_COMMENT_SLASH
-	value = -3
 	gain_text = span_danger("You start worrying about what you're saying.")
 	lose_text = span_notice("You feel easier about talking again.") //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
@@ -998,7 +968,6 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	icon = FA_ICON_PILLS
-	value = -6
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
@@ -1088,7 +1057,6 @@
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
 	icon = FA_ICON_SMOKING
-	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
@@ -1147,7 +1115,6 @@
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
-	value = -4
 	gain_text = span_danger("You really need a drink.")
 	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
 	medical_record_text = "Patient is an alcoholic."
@@ -1215,7 +1182,6 @@
 	name = "Chronic Illness"
 	desc = "You have a chronic illness that requires constant medication to keep under control."
 	icon = FA_ICON_DISEASE
-	value = -12
 	gain_text = span_danger("You feel a bit off today.")
 	lose_text = span_notice("You feel a bit better today.")
 	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
@@ -1232,7 +1198,6 @@
 	name = "Unstable"
 	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
 	icon = FA_ICON_ANGRY
-	value = -10
 	mob_trait = TRAIT_UNSTABLE
 	gain_text = span_danger("There's a lot on your mind right now.")
 	lose_text = span_notice("Your mind finally feels calm.")
@@ -1244,7 +1209,6 @@
 	name = "Extreme Medicine Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
 	icon = FA_ICON_PRESCRIPTION_BOTTLE
-	value = -6
 	gain_text = span_danger("You feel your immune system shift.")
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
@@ -1316,7 +1280,6 @@
 	desc = "You don't like hugs. You'd really prefer if people just left you alone."
 	icon = "tg-bad-touch"
 	mob_trait = TRAIT_BADTOUCH
-	value = -1
 	gain_text = span_danger("You just want people to leave you alone.")
 	lose_text = span_notice("You could use a big hug.")
 	medical_record_text = "Patient has disdain for being touched. Potentially has undiagnosed haphephobia."
@@ -1347,7 +1310,6 @@
 	name = "Claustrophobia"
 	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
 	icon = FA_ICON_BOX_OPEN
-	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
@@ -1402,7 +1364,6 @@
 	name = "Illiterate"
 	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
 	icon = FA_ICON_GRADUATION_CAP
-	value = -8
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
@@ -1413,7 +1374,6 @@
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
 	icon = FA_ICON_VOLUME_XMARK
-	value = -4
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
 	lose_text = span_notice("You feel a growing strength in your vocal chords.")
@@ -1424,7 +1384,6 @@
 	name = "Body Purist"
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
 	icon = FA_ICON_PERSON_RAYS
-	value = -2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("You now begin to hate the idea of having cybernetic implants.")
 	lose_text = span_notice("Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.")
@@ -1494,7 +1453,6 @@
 	name = "Cursed"
 	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
 	icon = FA_ICON_CLOUD_SHOWERS_HEAVY
-	value = -8
 	mob_trait = TRAIT_CURSED
 	gain_text = span_danger("You feel like you're going to have a bad day.")
 	lose_text = span_notice("You feel like you're going to have a good day.")
@@ -1509,7 +1467,6 @@
 	desc = "Bad life decisions, medical bills, student loans, whatever it may be, you've incurred quite the debt. A portion of all you receive will go towards extinguishing it."
 	icon = FA_ICON_DOLLAR
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_HIDE_FROM_SCAN
-	value = -2
 	medical_record_text = "Alas, the patient struggled to scrape together enough money to pay the checkup bill."
 	hardcore_value = 2
 
@@ -1549,7 +1506,6 @@
 	name = "Numb"
 	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
-	value = -4
 	gain_text = "You feel your body becoming numb."
 	lose_text = "The numbness subsides."
 	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."

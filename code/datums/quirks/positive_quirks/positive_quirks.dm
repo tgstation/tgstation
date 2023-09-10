@@ -5,7 +5,6 @@
 	name = "Alcohol Tolerance"
 	desc = "You become drunk more slowly and suffer fewer drawbacks from alcohol."
 	icon = FA_ICON_BEER
-	value = 4
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = span_notice("You feel like you could drink a whole keg!")
 	lose_text = span_danger("You don't feel as resistant to alcohol anymore. Somehow.")
@@ -16,7 +15,6 @@
 	name = "Apathetic"
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	icon = FA_ICON_MEH
-	value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 	mail_goodies = list(/obj/item/hourglass)
@@ -31,7 +29,6 @@
 	name = "Drunken Resilience"
 	desc = "Nothing like a good drink to make you feel on top of the world. Whenever you're drunk, you slowly recover from injuries."
 	icon = FA_ICON_WINE_BOTTLE
-	value = 8
 	gain_text = span_notice("You feel like a drink would do you good.")
 	lose_text = span_danger("You no longer feel like drinking would ease your pain.")
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
@@ -54,7 +51,6 @@
 	name = "Empath"
 	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
 	icon = FA_ICON_SMILE_BEAM
-	value = 8
 	mob_trait = TRAIT_EMPATH
 	gain_text = span_notice("You feel in tune with those around you.")
 	lose_text = span_danger("You feel isolated from others.")
@@ -65,7 +61,6 @@
 	name = "Clown Enjoyer"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
 	icon = FA_ICON_MAP_PIN
-	value = 2
 	mob_trait = TRAIT_CLOWN_ENJOYER
 	gain_text = span_notice("You are a big enjoyer of clowns.")
 	lose_text = span_danger("The clown doesn't seem so great.")
@@ -97,7 +92,6 @@
 	name = "Mime Fan"
 	desc = "You're a fan of mime antics and get a mood boost from wearing your mime pin."
 	icon = FA_ICON_THUMBTACK
-	value = 2
 	mob_trait = TRAIT_MIME_FAN
 	gain_text = span_notice("You are a big fan of the Mime.")
 	lose_text = span_danger("The mime doesn't seem so great.")
@@ -127,7 +121,6 @@
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
 	icon = FA_ICON_RUNNING
-	value = 8
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = span_notice("You feel lithe on your feet!")
 	lose_text = span_danger("You feel clumsy again.")
@@ -138,7 +131,6 @@
 	name = "Friendly"
 	desc = "You give the best hugs, especially when you're in the right mood."
 	icon = FA_ICON_HANDS_HELPING
-	value = 2
 	mob_trait = TRAIT_FRIENDLY
 	gain_text = span_notice("You want to hug someone.")
 	lose_text = span_danger("You no longer feel compelled to hug others.")
@@ -150,7 +142,6 @@
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
 	icon = FA_ICON_GRIN
-	value = 4
 	mob_trait = TRAIT_JOLLY
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
@@ -160,7 +151,6 @@
 	name = "Light Step"
 	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful. Also, your hands and clothes will not get messed in case of stepping in blood."
 	icon = FA_ICON_SHOE_PRINTS
-	value = 4
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = span_notice("You walk with a little more litheness.")
 	lose_text = span_danger("You start tromping around like a barbarian.")
@@ -171,7 +161,6 @@
 	name = "Musician"
 	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."
 	icon = FA_ICON_GUITAR
-	value = 2
 	mob_trait = TRAIT_MUSICIAN
 	gain_text = span_notice("You know everything about musical instruments.")
 	lose_text = span_danger("You forget how musical instruments work.")
@@ -185,7 +174,6 @@
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
 	icon = FA_ICON_MOON
-	value = 4
 	mob_trait = TRAIT_NIGHT_VISION
 	gain_text = span_notice("The shadows seem a little less dark.")
 	lose_text = span_danger("Everything seems a little darker.")
@@ -214,7 +202,6 @@
 	name = "Bilingual"
 	desc = "Over the years you've picked up an extra language!"
 	icon = FA_ICON_GLOBE
-	value = 4
 	gain_text = span_notice("Some of the words of the people around you certainly aren't common. Good thing you studied for this.")
 	lose_text = span_notice("You seem to have forgotten your second language.")
 	medical_record_text = "Patient speaks multiple languages."
@@ -239,7 +226,6 @@
 	name = "Poster Boy"
 	desc = "You have some great posters! Hang them up and make everyone have a great time."
 	icon = FA_ICON_TAPE
-	value = 4
 	mob_trait = TRAIT_POSTERBOY
 	medical_record_text = "Patient reports a desire to cover walls with homemade objects."
 	mail_goodies = list(/obj/item/poster/random_official)
@@ -271,7 +257,6 @@
 	name = "Self-Aware"
 	desc = "You know your body well, and can accurately assess the extent of your wounds."
 	icon = FA_ICON_BONE
-	value = 8
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
 	mail_goodies = list(/obj/item/clothing/neck/stethoscope, /obj/item/skillchip/entrails_reader)
@@ -280,7 +265,6 @@
 	name = "Skittish"
 	desc = "You're easy to startle, and hide frequently. Run into a closed locker to jump into it, as long as you have access. You can walk to avoid this."
 	icon = FA_ICON_TRASH
-	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 	mail_goodies = list(/obj/structure/closet/cardboard)
@@ -289,7 +273,6 @@
 	name = "Spiritual"
 	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others. Being in the chapel makes you happy."
 	icon = FA_ICON_BIBLE
-	value = 4
 	mob_trait = TRAIT_SPIRITUAL
 	gain_text = span_notice("You have faith in a higher power.")
 	lose_text = span_danger("You lose faith!")
@@ -310,7 +293,6 @@
 	name = "Tagger"
 	desc = "You're an experienced artist. People will actually be impressed by your graffiti, and you can get twice as many uses out of drawing supplies."
 	icon = FA_ICON_SPRAY_CAN
-	value = 4
 	mob_trait = TRAIT_TAGGER
 	gain_text = span_notice("You know how to tag walls efficiently.")
 	lose_text = span_danger("You forget how to tag walls properly.")
@@ -331,7 +313,6 @@
 	name = "Throwing Arm"
 	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
 	icon = FA_ICON_BASEBALL
-	value = 7
 	mob_trait = TRAIT_THROWINGARM
 	gain_text = span_notice("Your arms are full of energy!")
 	lose_text = span_danger("Your arms ache a bit.")
@@ -342,7 +323,6 @@
 	name = "Voracious"
 	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine."
 	icon = FA_ICON_DRUMSTICK_BITE
-	value = 4
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = span_notice("You feel HONGRY.")
 	lose_text = span_danger("You no longer feel HONGRY.")
@@ -352,7 +332,6 @@
 	name = "Signer"
 	desc = "You possess excellent communication skills in sign language."
 	icon = FA_ICON_HANDS
-	value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
@@ -374,7 +353,6 @@
 	gain_text = span_bold("You feel like the world is your oyster!")
 	lose_text = span_danger("You think you might stay home today.")
 	icon = FA_ICON_HOUSE
-	value = 4
 	mob_trait = TRAIT_SETTLER
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	medical_record_text = "Patient appears to be abnormally stout."

@@ -5,7 +5,6 @@
 	name = "Extrovert"
 	desc = "You are energized by talking to others, and enjoy spending your free time in the bar."
 	icon = FA_ICON_USERS
-	value = 0
 	mob_trait = TRAIT_EXTROVERT
 	gain_text = span_notice("You feel like hanging out with other people.")
 	lose_text = span_danger("You feel like you're over the bar scene.")
@@ -16,7 +15,6 @@
 	name = "Introvert"
 	desc = "You are energized by having time to yourself, and enjoy spending your free time in the library."
 	icon = FA_ICON_BOOK_READER
-	value = 0
 	mob_trait = TRAIT_INTROVERT
 	gain_text = span_notice("You feel like reading a good book quietly.")
 	lose_text = span_danger("You feel like libraries are boring.")
@@ -27,7 +25,6 @@
 	name = "Ageusia"
 	desc = "You can't taste anything! Toxic food will still poison you."
 	icon = FA_ICON_MEH_BLANK
-	value = 0
 	mob_trait = TRAIT_AGEUSIA
 	gain_text = span_notice("You can't taste anything!")
 	lose_text = span_notice("You can taste again!")
@@ -38,7 +35,6 @@
 	name = "Foreigner"
 	desc = "You're not from around here. You don't know Galactic Common!"
 	icon = FA_ICON_LANGUAGE
-	value = 0
 	gain_text = span_notice("The words being spoken around you don't make any sense.")
 	lose_text = span_notice("You've developed fluency in Galactic Common.")
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
@@ -60,7 +56,6 @@
 	name = "Vegetarian"
 	desc = "You find the idea of eating meat morally and physically repulsive."
 	icon = FA_ICON_CARROT
-	value = 0
 	gain_text = span_notice("You feel repulsion at the idea of eating meat.")
 	lose_text = span_notice("You feel like eating meat isn't that bad.")
 	medical_record_text = "Patient reports a vegetarian diet."
@@ -84,7 +79,6 @@
 	name = "Snob"
 	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
 	icon = FA_ICON_USER_TIE
-	value = 0
 	gain_text = span_notice("You feel like you understand what things should look like.")
 	lose_text = span_notice("Well who cares about deco anyways?")
 	medical_record_text = "Patient seems to be rather stuck up."
@@ -95,7 +89,6 @@
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	icon = FA_ICON_THUMBS_UP
-	value = 0
 	gain_text = span_notice("You feel an intense craving for pineapple.")
 	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
@@ -117,7 +110,6 @@
 	name = "Ananas Aversion"
 	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
 	icon = FA_ICON_THUMBS_DOWN
-	value = 0
 	gain_text = span_notice("You find yourself pondering what kind of idiot actually enjoys pineapples...")
 	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
 	medical_record_text = "Patient is correct to think that pineapple is disgusting."
@@ -145,7 +137,6 @@
 	name = "Deviant Tastes"
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
 	icon = FA_ICON_GRIN_TONGUE_SQUINT
-	value = 0
 	gain_text = span_notice("You start craving something that tastes strange.")
 	lose_text = span_notice("You feel like eating normal food again.")
 	medical_record_text = "Patient demonstrates irregular nutrition preferences."
@@ -171,7 +162,6 @@
 	desc = "One of your eyes is a different color than the other!"
 	icon = FA_ICON_EYE_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
-	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 
 // Only your first eyes are heterochromatic
@@ -225,7 +215,6 @@
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
 	icon = FA_ICON_ADJUST
-	value = 0
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
 	mail_goodies = list( // Noir detective wannabe
 		/obj/item/clothing/suit/jacket/det_suit/noir,
@@ -249,7 +238,6 @@
 	name = "Phobia"
 	desc = "You are irrationally afraid of something."
 	icon = FA_ICON_SPIDER
-	value = 0
 	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 
@@ -270,7 +258,6 @@
 	name = "Shifty Eyes"
 	desc = "Your eyes tend to wander all over the place, whether you mean to or not, causing people to sometimes think you're looking directly at them when you aren't."
 	icon = FA_ICON_EYE
-	value = 0
 	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
 	mob_trait = TRAIT_SHIFTY_EYES
 	mail_goodies = list(/obj/item/clothing/head/costume/papersack, /obj/item/clothing/head/costume/papersack/smiley)
@@ -279,7 +266,6 @@
 	name = "Smooth-Headed"
 	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
 	icon = FA_ICON_EGG
-	value = 0
 	mob_trait = TRAIT_BALD
 	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
 	lose_text = span_notice("Your head itches, could it be... growing hair?!")
@@ -333,7 +319,6 @@
 	name = "Photographer"
 	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
 	icon = FA_ICON_CAMERA
-	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = span_notice("You know everything about photography.")
 	lose_text = span_danger("You forget how photo cameras work.")
@@ -363,7 +348,6 @@
 	name = "Colorist"
 	desc = "You like carrying around a hair dye spray to quickly apply color patterns to your hair."
 	icon = FA_ICON_FILL_DRIP
-	value = 0
 	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
 	mail_goodies = list(/obj/item/dyespray)
 
@@ -375,7 +359,6 @@
 	name = "Gamer"
 	desc = "You are a hardcore gamer, and you have a need to game. You love winning and hate losing. You only like gamer food."
 	icon = FA_ICON_GAMEPAD
-	value = 0
 	gain_text = span_notice("You feel the sudden urge to game.")
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
@@ -466,7 +449,6 @@
 	name = "Pride Pin"
 	desc = "Show off your pride with this changing pride pin!"
 	icon = FA_ICON_RAINBOW
-	value = 0
 	gain_text = span_notice("You feel fruity.")
 	lose_text = span_danger("You feel only slightly less fruity than before.")
 	medical_record_text = "Patient appears to be fruity."

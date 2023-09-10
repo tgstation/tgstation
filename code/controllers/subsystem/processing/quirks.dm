@@ -65,7 +65,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	return quirks
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
-	// Sort by Positive, Negative, Neutral; and then by name
+	// Sort by name
 	var/list/quirk_list = sort_list(subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_quirk_asc))
 
 	for(var/type in quirk_list)

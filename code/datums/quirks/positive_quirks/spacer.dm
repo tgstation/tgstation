@@ -9,7 +9,6 @@
 	gain_text = span_notice("You feel at home in space.")
 	lose_text = span_danger("You feel homesick.")
 	icon = FA_ICON_USER_ASTRONAUT
-	value = 7
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(
 		/obj/item/storage/pill_bottle/ondansetron,
