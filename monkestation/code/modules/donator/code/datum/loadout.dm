@@ -3,14 +3,11 @@
 /datum/loadout_item/suit/cirno_outfit
 	name = "Cirno Outfit"
 	item_path = /obj/item/clothing/suit/costume/cirno
-	requires_purchase = FALSE
-	ckeywhitelist = list("bidlink2")
+
 
 /datum/loadout_item/head/cirno
 	name = "Cirno Wig"
 	item_path = /obj/item/clothing/head/costume/cirno
-	requires_purchase = FALSE
-	ckeywhitelist = list("bidlink2")
 
 /datum/loadout_item/pocket_items/donator/cirno
 	name = "Pet Delivery Beacon"
@@ -23,8 +20,7 @@
 /datum/loadout_item/head/pot
 	name = "Dented Pot"
 	item_path = /obj/item/clothing/head/costume/pot
-	requires_purchase = FALSE
-	ckeywhitelist = list("unknown")
+
 
 /datum/loadout_item/pocket_items/donator/spycrab
 	name = "Pet Delivery Beacon"
@@ -52,7 +48,6 @@
 /datum/loadout_item/mask/zoro
 	name = "Zoro Mask"
 	item_path = /obj/item/clothing/mask/zoro
-	requires_purchase = FALSE
-	ckeywhitelist = list("happiestplane")
+
 
 
