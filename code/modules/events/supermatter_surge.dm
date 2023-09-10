@@ -75,7 +75,7 @@
 	end_when = rand(SUPERMATTER_SURGE_DURATION_MIN + (surge_class * 45 EVENT_SECONDS), SUPERMATTER_SURGE_DURATION_MAX)
 
 /datum/round_event/supermatter_surge/announce()
-	priority_announce("CIMS has detected that energy output from the supermatter crystal has shown a significant and unanticipated increase. Engineering intervention may be required to stabilize the crystal.", "Supermatter Surge Alert: Class [surge_class]", 'sound/machines/engine_alert3.ogg')
+	priority_announce("CIMS has detected that energy output from the supermatter crystal has shown a significant and unanticipated increase. Engineering intervention is required to stabilize the crystal.", "Supermatter Surge Alert: Class [surge_class]", 'sound/machines/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
 	engine.bullet_energy = SUPERMATTER_SURGE_BULLET_ENERGY_ADDITION + surge_class
