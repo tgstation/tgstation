@@ -10,7 +10,7 @@
 	item_path = /obj/item/clothing/head/costume/cirno
 
 /datum/loadout_item/pocket_items/donator/cirno
-	name = "Pet Delivery Beacon"
+	name = "Pet Delivery Beacon - Cirno"
 	item_path = /obj/item/choice_beacon/pet/donator/cirno
 	requires_purchase = FALSE
 	ckeywhitelist = list("bidlink2")
@@ -23,7 +23,7 @@
 
 
 /datum/loadout_item/pocket_items/donator/spycrab
-	name = "Pet Delivery Beacon"
+	name = "Pet Delivery Beacon - Spycrab"
 	item_path = /obj/item/choice_beacon/pet/donator/spycrab
 	requires_purchase = FALSE
 	ckeywhitelist = list("unknown")
@@ -31,7 +31,7 @@
 //spinnermaster
 
 /datum/loadout_item/pocket_items/donator/void_mothroach
-	name = "Pet Delivery Beacon"
+	name = "Pet Delivery Beacon - Void Mothroach"
 	item_path = /obj/item/choice_beacon/pet/donator/void_mothroach
 	requires_purchase = FALSE
 	ckeywhitelist = list("spinnermaster")
@@ -39,7 +39,7 @@
 //ruby_flamewing
 
 /datum/loadout_item/pocket_items/donator/blahaj
-	name = "Pet Delivery Beacon"
+	name = "Pet Delivery Beacon - Blahaj"
 	item_path = /obj/item/choice_beacon/pet/donator/blahaj
 	requires_purchase = FALSE
 	ckeywhitelist = list("ruby_flamewing")
