@@ -26,7 +26,7 @@
 	processes = TRUE
 
 	/// If our wiring is safe to manually manipultae. If false, attempts to use sutures/coils will shock the helper.
-	var/wiring_reset = FALSE
+	var/wiring_reset = TRUE
 
 	/// How many sparks do we spawn when we're gained?
 	var/initial_sparks_amount = 1
@@ -172,12 +172,6 @@
 
 	var/damage_mult = get_base_mult()
 
-	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE)) // itd be a bit cheesy to just become immune to this, so it only makes it a lot lot better
-		if (target == victim)
-			damage_mult *= shock_immunity_self_damage_reduction
-		else
-			return 0
-
 	if (!limb_essential())
 		damage_mult *= limb_unimportant_damage_mult
 
@@ -197,6 +191,9 @@
 
 	if (victim.has_status_effect(/datum/status_effect/determined))
 		base_mult *= WOUND_DETERMINATION_BLEED_MOD
+
+	if (HAS_TRAIT(victim, TRAIT_SHOCKIMMUNE)) // itd be a bit cheesy to just become immune to this, so it only makes it a lot lot better
+		base_mult *= shock_immunity_self_damage_reduction
 
 	var/splint_mult = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
 	base_mult *= splint_mult

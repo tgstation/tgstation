@@ -138,6 +138,9 @@
 	/// Multiplies the camera shake by this for the purposes of deciding if we should override dizziness.
 	var/head_movement_shake_dizziness_overtake_mult = 1
 
+	/// The percent our limb must get to max damage by burn damage alone to count as malleable if it has no T2 burn wound.
+	var/limb_burn_percent_to_max_threshold_for_malleable = 0.8 // must be 75% to max damage by burn damage alone
+
 /datum/wound_pregen_data/blunt_metal
 	abstract = TRUE
 
@@ -211,7 +214,12 @@
 
 /// If true, allows our superstructure to be modified if we are T3. RCDs can always fix our superstructure.
 /datum/wound/blunt/robotic/proc/limb_malleable()
-	return (!isnull(get_overheat_wound()))
+	if (!isnull(get_overheat_wound()))
+		return TRUE
+	var/burn_damage_to_max = (limb.burn / limb.max_damage) // only exists for the weird case where it cant get a overheat wound
+	if (burn_damage_to_max >= limb_burn_percent_to_max_threshold_for_malleable)
+		return TRUE
+	return FALSE
 
 /// If we have one, returns a robotic overheat wound of severe severity or higher. Null otherwise.
 /datum/wound/blunt/robotic/proc/get_overheat_wound()
@@ -283,6 +291,12 @@
 		chance_mult *= 1.5
 	if (isatom(attacking_item))
 		var/atom/attacking_atom = attacking_item
+
+		if (isliving(attacking_atom.loc))
+			var/mob/living/living_user = attacking_atom.loc
+			if (HAS_TRAIT(living_user, TRAIT_DIAGNOSTIC_HUD))
+				chance_mult *= 1.5
+
 		if (attacking_atom.loc != victim)
 			chance_mult *= 3 // encourages people to get other people to beat the shit out of their limbs
 	if (prob(percussive_maintenance_repair_chance * chance_mult))
@@ -689,7 +703,6 @@
 		return TRUE
 
 	victim.visible_message(span_green("[user] finishes re-soldering [their_or_other] [limb.plaintext_zone]!"))
-	limb.receive_damage(burn = 5, damage_source = src) // not a proper fix
 	remove_wound()
 	return TRUE
 
