@@ -245,12 +245,11 @@ Charged extracts:
 		if(initial(try_species.changesource_flags) & SLIME_EXTRACT)
 			allowed_species += stype
 
-	// var/datum/species/changed = pick(allowed_species)
-	var/datum/species/changed = /datum/species/monkey
+	var/datum/species/changed = pick(allowed_species)
 	if(isnull(changed))
 		visible_message(span_notice("[src] fizzes uselessly."))
 		return
-	experiment_subject.set_species(changed, icon_update = 1)
+	experiment_subject.set_species(changed, icon_update = TRUE)
 	to_chat(experiment_subject, span_danger("You feel very different!"))
 	return ..()
 
