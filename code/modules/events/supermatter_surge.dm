@@ -2,8 +2,11 @@
 #define SUPERMATTER_SURGE_DURATION_MAX 360 EVENT_SECONDS
 #define SUPERMATTER_SURGE_SEVERITY_MIN 1
 #define SUPERMATTER_SURGE_SEVERITY_MAX 4
+/// The amount of bullet energy we add for the duration of the SM surge
 #define SUPERMATTER_SURGE_BULLET_ENERGY_ADDITION 7
+/// The amount of powerloss inhibition (energy retention) we add for the duration of the SM surge
 #define SUPERMATTER_SURGE_POWERLOSS_INHIBITION 0.3125
+/// The amount of heat resistance we reduce for the duration of the SM surge
 #define SUPERMATTER_SURGE_HEAT_MODIFIER 0.5
 
 /**
