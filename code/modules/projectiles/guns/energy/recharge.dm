@@ -138,7 +138,7 @@
 
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
-	name = "\improper SC/FISHER lightbreaker"
+	name = "\improper SC/FISHER disruptor"
 	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything except light fixtures and cameras. \
 	Can fire twice before requiring a recharge, with bolts passing through machinery, but demands precision."
 	icon_state = "fisher"

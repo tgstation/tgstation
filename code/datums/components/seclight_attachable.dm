@@ -299,5 +299,5 @@
 /// Signal proc for [COMSIG_HIT_BY_SABOTEUR] that turns the light off for a few seconds.
 /datum/component/seclite_attachable/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
-	light.on_saboteur(source, disrupt_duration)
+	. = light.on_saboteur(source, disrupt_duration)
 	update_light()

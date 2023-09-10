@@ -30,12 +30,6 @@
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
 	var/in_use_lights = 0
-
-	/// Number of consecutive disruptions on this camera.
-	var/disrupted = FALSE
-	/// What was the view range we had before disruption?
-	var/disrupted_range = 0
-
 	// Upgrades bitflag
 	var/upgrades = 0
 
@@ -186,6 +180,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
+	return TRUE
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))

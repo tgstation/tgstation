@@ -293,6 +293,7 @@
 /obj/machinery/power/floodlight/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
 	atom_break(ENERGY) // technically,
+	return TRUE
 
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()

@@ -69,15 +69,17 @@
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
+	var/disrupted = FALSE
 	playsound(src, on ? sound_on : sound_off, 40, TRUE)
+	on = !on
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		if(user)
 			balloon_alert(user, "disrupted!")
-		return FALSE
-	on = !on
+			on = FALSE
+			disrupted = TRUE
 	update_brightness()
 	update_item_action_buttons()
-	return TRUE
+	return !disrupted
 
 /obj/item/flashlight/attack_self(mob/user)
 	toggle_light(user)
@@ -268,6 +270,7 @@
 	if(on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
+	return TRUE
 
 /obj/item/flashlight/pen
 	name = "penlight"
