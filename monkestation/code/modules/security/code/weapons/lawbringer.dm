@@ -8,14 +8,19 @@
 #define TIDESHOT 8
 #define ION 9
 
+/**
+ * This gun replaces the TG's HoS gun, it has 9 modes and instead of specializing its a swiss army knife of guns
+ * to anyone reading this code, im sorry for you - Gboster
+ */
+
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
 	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
-	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon = 'monkestation/code/modules/security/icons/lawbringer.dmi'
 	icon_state = "lawbringer"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	verb_say = "states"
 	force = 10
@@ -224,6 +229,10 @@
 
 // holds 3000 charges 100
 
+/**
+ * lawbringer detain mode:
+ * shoots 4 disabler projectiles that richoshet into a nearby human when hitting an object
+ */
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
@@ -258,6 +267,10 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLUE
 
+/**
+ * lawbringer execute mode:
+ * It fires a paco bullet
+ */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
@@ -275,6 +288,10 @@
 	wound_bonus = -5
 	wound_falloff_tile = -5
 
+/**
+ * lawbringer hotshot mode:
+ * ignites the target on hit and adds firestacks
+ */
 /obj/item/ammo_casing/energy/lawbringer/hotshot
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
@@ -296,6 +313,10 @@
 		M.adjust_fire_stacks(2)
 		M.ignite_mob()
 
+/**
+ * lawbringer smokeshot mode:
+ * makes smoke in the air when it hits anything
+ */
 /obj/item/ammo_casing/energy/lawbringer/smokeshot
 	projectile_type = /obj/projectile/lawbringer/smokeshot
 	select_name = "smokeshot"
@@ -315,6 +336,10 @@
 	smoke.set_up(3, holder = src, location = get_turf(target))
 	smoke.start()
 
+/**
+ * lawbringer bigshot mode:
+ * explodes any cyborg and structure it comes across, also deals a good chunk of damage to mechs
+ */
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
@@ -356,6 +381,10 @@
 			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			target.take_damage(anti_material_damage/2)
 
+/**
+ * lawbringer clownshot mode:
+ * if the target is a clown it takes their shoes and sends them off with the speed of 100km/h
+ */
 /obj/item/ammo_casing/energy/lawbringer/clownshot
 	projectile_type = /obj/projectile/lawbringer/clownshot
 	select_name = "clownshot"
@@ -364,7 +393,7 @@
 	harmful = TRUE
 
 /obj/projectile/lawbringer/clownshot
-	name = "bannanium bullet"
+	name = "bananium bullet"
 	damage = 4
 	damage_type = BRUTE
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -385,7 +414,10 @@
 			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
 			target.throw_at(throw_target, 200, 8)
 
-
+/**
+ * lawbringer pulse mode:
+ * despite being named pulse, it just throws the target without damaging it by itself
+ */
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
 	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -406,7 +438,10 @@
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
 		target.throw_at(throw_target, 4, 1)
 
-
+/**
+ * lawbringer tideshot mode:
+ * Taser that only effects assistants
+ */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
 	fire_sound = 'sound/weapons/laser.ogg'
@@ -445,6 +480,10 @@
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
 
+/**
+ * lawbringer ion mode:
+ * the only mode that explains itself
+ */
 /obj/item/ammo_casing/energy/lawbringer/ion
 	projectile_type = /obj/projectile/ion/weak
 	fire_sound = 'sound/weapons/ionrifle.ogg'
