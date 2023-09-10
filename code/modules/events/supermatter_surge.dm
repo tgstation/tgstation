@@ -30,6 +30,12 @@
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
 
+/datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE)
+	. = ..()
+
+	if(SSjob.is_skeleton_engineering(crew_threshold = 2))
+		return FALSE
+
 /datum/round_event/supermatter_surge
 	announce_when = 1
 	end_when = SUPERMATTER_SURGE_DURATION_MIN

@@ -912,4 +912,28 @@ SUBSYSTEM_DEF(job)
 
 	return JOB_AVAILABLE
 
+/**
+ * Check if the station manifest has at least a certain amount of this staff type
+ *
+ * Arguments:
+ * * crew_threshold - amount of crew before it's no longer considered a skeleton crew
+ *
+*/
+/datum/controller/subsystem/job/proc/is_skeleton_engineering(crew_threshold)
+	var/engineers = 0
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		if(target.trim == JOB_CHIEF_ENGINEER)
+			return FALSE
+
+		if(target.trim == JOB_STATION_ENGINEER)
+			engineers++
+
+		if(target.trim == JOB_ATMOSPHERIC_TECHNICIAN)
+			engineers++
+
+	if(engineers > crew_threshold)
+		return FALSE
+
+	return TRUE
+
 #undef VERY_LATE_ARRIVAL_TOAST_PROB
