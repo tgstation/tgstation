@@ -14,7 +14,9 @@
 
 /obj/item/assembly/control/transport/remote/Initialize(mapload)
 	. = ..()
-	SStransport.hello(src, name, cached_ref)
+	if(!id_tag)
+		id_tag = assign_random_name()
+	SStransport.hello(src, name, id_tag)
 	register_context()
 
 /obj/item/assembly/control/transport/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)

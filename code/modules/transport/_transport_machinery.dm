@@ -28,6 +28,11 @@
 	fire = 90
 	acid = 100
 
+/obj/machinery/transport/Initialize(mapload)
+	. = ..()
+	if(!id_tag)
+		id_tag = assign_random_name()
+
 /obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"

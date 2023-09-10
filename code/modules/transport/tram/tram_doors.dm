@@ -23,6 +23,11 @@
 	var/crushing_in_progress = FALSE
 	bound_width = 64
 
+/obj/machinery/door/airlock/tram/Initialize(mapload)
+	. = ..()
+	if(!id_tag)
+		id_tag = assign_random_name()
+
 /**
  * Generates the airlock's wire layout.
  */

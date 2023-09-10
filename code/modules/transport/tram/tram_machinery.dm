@@ -39,7 +39,9 @@
 
 /obj/item/assembly/control/transport/call_button/LateInitialize(mapload)
 	. = ..()
-	SStransport.hello(src, name, cached_ref)
+	if(!id_tag)
+		id_tag = assign_random_name()
+	SStransport.hello(src, name, id_tag)
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 
 /obj/item/assembly/control/transport/proc/call_response(controller, list/relevant, response_code, response_info)

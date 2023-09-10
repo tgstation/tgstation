@@ -490,7 +490,7 @@
 		if(door.transport_linked_id != specific_transport_id)
 			continue
 		if(door.crushing_in_progress)
-			log_transport("TC: [specific_transport_id] door [door.cached_ref] failed crush status check.")
+			log_transport("TC: [specific_transport_id] door [door.id_tag] failed crush status check.")
 			set_status_code(DOORS_READY, FALSE)
 			return
 
@@ -699,6 +699,8 @@
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
 	register_context()
+	if(!id_tag)
+		id_tag = assign_random_name()
 	return INITIALIZE_HINT_LATELOAD
 
 /**
@@ -706,7 +708,7 @@
  */
 /obj/machinery/transport/tram_controller/LateInitialize(mapload)
 	. = ..()
-	SStransport.hello(src, name, cached_ref)
+	SStransport.hello(src, name, id_tag)
 	find_controller()
 	update_appearance()
 

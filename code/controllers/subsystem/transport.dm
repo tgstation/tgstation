@@ -29,17 +29,17 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 	)
 
-/datum/controller/subsystem/processing/transport/proc/hello(atom/new_unit, ref_name, ref_info)
+/datum/controller/subsystem/processing/transport/proc/hello(atom/new_unit, unit_name, id_tag)
 	RegisterSignal(new_unit, COMSIG_TRANSPORT_REQUEST, PROC_REF(incoming_request))
-	log_transport("Sub: Registered new transport component [ref_name] [ref_info].")
+	log_transport("Sub: Registered new transport component [unit_name] [id_tag].")
 
 /datum/controller/subsystem/processing/transport/Recover()
 	_listen_lookup = SStransport._listen_lookup
 
-/datum/controller/subsystem/processing/transport/proc/incoming_request(atom/source, obj/effect/landmark/transport/nav_beacon/tram/transport_network, platform, options)
+/datum/controller/subsystem/processing/transport/proc/incoming_request(obj/source, obj/effect/landmark/transport/nav_beacon/tram/transport_network, platform, options)
 	SIGNAL_HANDLER
 
-	log_transport("Sub: Received request from [source.name] [source.cached_ref]. Contents: [transport_network] [platform] [options]")
+	log_transport("Sub: Received request from [source.name] [source.id_tag]. Contents: [transport_network] [platform] [options]")
 	var/relevant
 	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
@@ -54,22 +54,22 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	if(isnull(transport_controller))
 		log_transport("Sub: Transport [transport_network] has no controller datum! Someone deleted it or something catastrophic happened.")
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, BROKEN_BEYOND_REPAIR)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
 
 	if(!transport_controller || !transport_controller.controller_operational || !transport_controller.paired_cabinet)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [NOT_IN_SERVICE]. Info: TC-[!transport_controller][!transport_controller.controller_operational][!transport_controller.paired_cabinet].")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [NOT_IN_SERVICE]. Info: TC-[!transport_controller][!transport_controller.controller_operational][!transport_controller.paired_cabinet].")
 		return
 
 	if(transport_controller.controller_status & SYSTEM_FAULT || transport_controller.controller_status & EMERGENCY_STOP)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
 
 	if(transport_controller.controller_active) //in use
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [TRANSPORT_IN_USE]. Info: [TC_TA_INFO].")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [TRANSPORT_IN_USE]. Info: [TC_TA_INFO].")
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
@@ -80,21 +80,21 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	if(!destination)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INVALID_PLATFORM]. Info: RD0.")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INVALID_PLATFORM]. Info: RD0.")
 		return
 
 	if(transport_controller.idle_platform == destination) //did you even look?
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NO_CALL_REQUIRED)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [NO_CALL_REQUIRED]. Info: RD1.")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [NO_CALL_REQUIRED]. Info: RD1.")
 		return
 
 	if(!transport_controller.calculate_route(destination))
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: NV0.")
+		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: NV0.")
 		return
 
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_SUCCESS, destination.name)
-	log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_SUCCESS] [destination.name].")
+	log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_SUCCESS] [destination.name].")
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)
 
