@@ -26,5 +26,5 @@
 		span_warning("A wreath of gentle light passes over [cast_on]!"),
 		span_notice("You wreath yourself in healing light!"),
 	)
-	cast_on.adjustBruteLoss(-brute_to_heal, FALSE)
+	cast_on.adjustBruteLoss(-brute_to_heal, updating_health = FALSE)
 	cast_on.adjustFireLoss(-burn_to_heal)

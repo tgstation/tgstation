@@ -44,12 +44,13 @@
 		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
-	var/grace_heal = bloodlust * 0.05
-	owner.adjustBruteLoss(-grace_heal)
-	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal, forced = TRUE)
-	owner.adjustOxyLoss(-(grace_heal * 2))
-	owner.adjustCloneLoss(-grace_heal)
+	var/grace_heal = bloodlust * 0.02
+	owner.adjustBruteLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	owner.adjustFireLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	owner.adjustToxLoss(-grace_heal * seconds_between_ticks, forced = TRUE)
+	owner.adjustOxyLoss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	owner.adjustCloneLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	owner.updatehealth()
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
@@ -140,9 +141,9 @@
 	if(owner.on_fire)
 		return
 
-	owner.adjustBruteLoss(-10, FALSE)
-	owner.adjustFireLoss(-5, FALSE)
-	owner.adjustOxyLoss(-10)
+	owner.adjustBruteLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks)
 
 /datum/status_effect/fleshmend/proc/on_ignited(datum/source)
 	SIGNAL_HANDLER
@@ -254,13 +255,14 @@
 			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
-			itemUser.adjustBruteLoss(-1.5)
-			itemUser.adjustFireLoss(-1.5)
-			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
-			itemUser.adjustStaminaLoss(-1.5)
-			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
-			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
+			itemUser.adjustBruteLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			itemUser.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			itemUser.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
+			itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
+			itemUser.adjustCloneLoss(-0.2 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Becasue apparently clone damage is the bastion of all health
+			itemUser.updatehealth()
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
