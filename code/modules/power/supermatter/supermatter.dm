@@ -109,7 +109,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
 	var/zap_cutoff = 1500
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
-	var/bullet_energy = 2
+	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
 
