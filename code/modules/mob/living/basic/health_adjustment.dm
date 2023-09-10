@@ -5,18 +5,18 @@
  * * amount The amount that will be used to adjust the mob's health
  * * updating_health If the mob's health should be immediately updated to the new value
  * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
+ * returns the net change in bruteloss after applying the damage amount. negative values mean healing
  */
 /mob/living/basic/proc/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = FALSE
 	if(forced || !(status_flags & GODMODE))
+		. = bruteloss // bruteloss value before applying damage
 		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 		if(updating_health)
 			updatehealth()
-		. = amount
+		. -= bruteloss
 	if(ckey || stat)
-		return
-	//if(AIStatus == AI_IDLE)
-	//	toggle_ai(AI_ON)
+		return FALSE
 
 /mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(forced)

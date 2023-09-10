@@ -27,7 +27,7 @@
 
 /datum/status_effect/unholy_determination/tick(seconds_between_ticks)
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
-	var/healing_amount = 1 + (2 - owner.usable_legs)
+	var/healing_amount = (1 + (2 - owner.usable_legs)) / 2.5
 
 	// In softcrit you're, strong enough to stay up.
 	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
@@ -48,22 +48,22 @@
 	if(prob(2))
 		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
 
-	adjust_all_damages(healing_amount)
+	adjust_all_damages(healing_amount, seconds_between_ticks)
 	adjust_temperature()
 	adjust_bleed_wounds()
 
 /*
  * Heals up all the owner a bit, fire stacks and losebreath included.
  */
-/datum/status_effect/unholy_determination/proc/adjust_all_damages(amount)
+/datum/status_effect/unholy_determination/proc/adjust_all_damages(amount, seconds_between_ticks)
 
 	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
-	owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
-	owner.adjustOxyLoss(-amount, updating_health = FALSE)
-	owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	owner.adjustFireLoss(-amount, updating_health = FALSE)
+	owner.adjustToxLoss(-amount * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	owner.adjustOxyLoss(-amount * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustBruteLoss(-amount * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-amount * seconds_between_ticks, updating_health = FALSE)
 	owner.updatehealth()
 
 /*
