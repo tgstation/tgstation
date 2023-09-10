@@ -64,7 +64,7 @@
 	///How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm. Doesn't matter for roundstart gasses.
 	var/base_value = 0
 	var/desc
-	///RGB code for use when a generic color representing the gas is needed
+	///RGB code for use when a generic color representing the gas is needed. Colors taken from contants.ts
 	var/primary_color
 
 
@@ -76,7 +76,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "The gas most life forms need to be able to survive. Also an oxidizer."
-	primary_color = "#2786e5"
+	primary_color = "#0000ff"
 
 /datum/gas/nitrogen
 	id = GAS_N2
@@ -86,7 +86,7 @@
 	purchaseable = TRUE
 	base_value = 0.1
 	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
-	primary_color = "#ce4949"
+	primary_color = "#ff0000"
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = GAS_CO2
@@ -97,7 +97,7 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
-	primary_color = "#4e4c48"
+	primary_color = "#808080"
 
 /datum/gas/plasma
 	id = GAS_PLASMA
@@ -109,7 +109,7 @@
 	rarity = 800
 	base_value = 1.5
 	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
-	primary_color = "#76008e"
+	primary_color = "#ffc0cb"
 
 /datum/gas/water_vapor
 	id = GAS_WATER_VAPOR
@@ -122,7 +122,7 @@
 	purchaseable = TRUE
 	base_value = 0.5
 	desc = "Water, in gas form. Makes things slippery."
-	primary_color = "#89b1c2"
+	primary_color = "#b0c4de"
 
 /datum/gas/hypernoblium
 	id = GAS_HYPER_NOBLIUM
@@ -134,7 +134,7 @@
 	rarity = 50
 	base_value = 2.5
 	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
-	primary_color = "#6399fc"
+	primary_color = "#008080"
 
 /datum/gas/nitrous_oxide
 	id = GAS_N2O
@@ -148,7 +148,7 @@
 	purchaseable = TRUE
 	base_value = 1.5
 	desc = "Causes drowsiness, euphoria, and eventually unconsciousness."
-	primary_color = "#f7d5d3"
+	primary_color = "#ffe4c4"
 
 /datum/gas/nitrium
 	id = GAS_NITRIUM
@@ -161,7 +161,7 @@
 	rarity = 1
 	base_value = 6
 	desc = "An experimental performance enhancing gas. Nitrium can have amplified effects as more of it gets into your bloodstream."
-	primary_color = "#7b4732"
+	primary_color = "#a52a2a"
 
 /datum/gas/tritium
 	id = GAS_TRITIUM
@@ -174,7 +174,7 @@
 	rarity = 300
 	base_value = 2.5
 	desc = "A highly flammable and radioctive gas."
-	primary_color = "#3fcd40"
+	primary_color = "#32cd32"
 
 /datum/gas/bz
 	id = GAS_BZ
@@ -186,7 +186,7 @@
 	purchaseable = TRUE
 	base_value = 1.5
 	desc = "A powerful hallucinogenic nerve agent able to induce cognitive damage."
-	primary_color = "#9b5d7f"
+	primary_color = "#9370db"
 
 /datum/gas/pluoxium
 	id = GAS_PLUOXIUM
@@ -196,7 +196,7 @@
 	rarity = 200
 	base_value = 2.5
 	desc = "A gas that could supply even more oxygen to the bloodstream when inhaled, without being an oxidizer."
-	primary_color = "#2786e5"
+	primary_color = "#7b68ee"
 
 /datum/gas/miasma
 	id = GAS_MIASMA
@@ -208,7 +208,7 @@
 	rarity = 250
 	base_value = 1
 	desc = "Not necessarily a gas, miasma refers to biological pollutants found in the atmosphere."
-	primary_color = "#009823"
+	primary_color = "#808000"
 
 /datum/gas/freon
 	id = GAS_FREON
@@ -221,7 +221,7 @@
 	rarity = 10
 	base_value = 5
 	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
-	primary_color = "#6696ee"
+	primary_color = "#afeeee"
 
 /datum/gas/hydrogen
 	id = GAS_HYDROGEN
@@ -232,7 +232,7 @@
 	rarity = 600
 	base_value = 1
 	desc = "A highly flammable gas."
-	primary_color = "#bdc2c0"
+	primary_color = "#ffffff"
 
 /datum/gas/healium
 	id = GAS_HEALIUM
@@ -244,7 +244,7 @@
 	rarity = 300
 	base_value = 5.5
 	desc = "Causes deep, regenerative sleep."
-	primary_color = "#009823"
+	primary_color = "#fa8072"
 
 /datum/gas/proto_nitrate
 	id = GAS_PROTO_NITRATE
@@ -256,7 +256,7 @@
 	rarity = 200
 	base_value = 2.5
 	desc = "A very volatile gas that reacts differently with various gases."
-	primary_color = "#bbcc33"
+	primary_color = "#adff2f"
 
 /datum/gas/zauker
 	id = GAS_ZAUKER
@@ -268,7 +268,7 @@
 	rarity = 1
 	base_value = 7
 	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
-	primary_color = "#006600"
+	primary_color = "#006400"
 
 /datum/gas/halon
 	id = GAS_HALON
@@ -280,7 +280,7 @@
 	rarity = 300
 	base_value = 4
 	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
-	primary_color = "#9b5d7f"
+	primary_color = "#800080"
 
 /datum/gas/helium
 	id = GAS_HELIUM
@@ -290,7 +290,7 @@
 	rarity = 50
 	base_value = 3.5
 	desc = "A very inert gas produced by the fusion of hydrogen and it's derivatives."
-	primary_color = "#368bff"
+	primary_color = "#f0f8ff"
 
 /datum/gas/antinoblium
 	id = GAS_ANTINOBLIUM
@@ -303,7 +303,7 @@
 	rarity = 1
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
-	primary_color = "#969696"
+	primary_color = "#800000"
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
