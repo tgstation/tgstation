@@ -23,19 +23,15 @@ export const MedicalRecordView = (props, context) => {
     crew_ref,
     dna,
     gender,
-    major_disabilities,
-    minor_disabilities,
+    player_quirks,
     physical_status,
     mental_status,
     name,
-    quirk_notes,
     rank,
     species,
   } = foundRecord;
 
-  const minor_disabilities_array = getQuirkStrings(minor_disabilities);
-  const major_disabilities_array = getQuirkStrings(major_disabilities);
-  const quirk_notes_array = getQuirkStrings(quirk_notes);
+  const player_quirks_array = getQuirkStrings(player_quirks);
 
   return (
     <Stack fill vertical>
@@ -170,18 +166,8 @@ export const MedicalRecordView = (props, context) => {
                 {mental_status}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Minor Disabilities">
-              {minor_disabilities_array.map((disability, index) => (
-                <Box key={index}>&#8226; {disability}</Box>
-              ))}
-            </LabeledList.Item>
-            <LabeledList.Item label="Major Disabilities">
-              {major_disabilities_array.map((disability, index) => (
-                <Box key={index}>&#8226; {disability}</Box>
-              ))}
-            </LabeledList.Item>
             <LabeledList.Item label="Quirks">
-              {quirk_notes_array.map((quirk, index) => (
+              {player_quirks_array.map((quirk, index) => (
                 <Box key={index}>&#8226; {quirk}</Box>
               ))}
             </LabeledList.Item>

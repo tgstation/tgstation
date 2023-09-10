@@ -56,13 +56,12 @@
 			crew_ref = REF(target),
 			dna = target.dna_string,
 			gender = target.gender,
-			major_disabilities = target.major_disabilities_desc,
-			minor_disabilities = target.minor_disabilities_desc,
+			player_quirks = target.player_quirks,
+			player_quirks_desc = target.player_quirks_desc,
 			physical_status = target.physical_status,
 			mental_status = target.mental_status,
 			name = target.name,
 			notes = notes,
-			quirk_notes = target.quirk_notes,
 			rank = target.rank,
 			species = target.species,
 		))
@@ -143,15 +142,12 @@
 	target.blood_type = pick(list("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"))
 	target.dna_string = "Unknown"
 	target.gender = "Unknown"
-	target.major_disabilities = ""
-	target.major_disabilities_desc = ""
+	target.player_quirks = ""
+	target.player_quirks_desc = ""
 	target.medical_notes.Cut()
-	target.minor_disabilities = ""
-	target.minor_disabilities_desc = ""
 	target.physical_status = ""
 	target.mental_status = ""
 	target.name = "Unknown"
-	target.quirk_notes = ""
 	target.rank = "Unknown"
 	target.species = "Unknown"
 	target.trim = "Unknown"

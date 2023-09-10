@@ -60,22 +60,16 @@
 	var/list/crimes = list()
 	/// Unique ID generated that is used to fetch lock record
 	var/lock_ref
-	/// Names of major disabilities
-	var/major_disabilities
-	/// Fancy description of major disabilities
-	var/major_disabilities_desc
+	/// Names of this person's quirks
+	var/player_quirks
+	/// Fancy description of this person's quirks
+	var/player_quirks_desc
 	/// List of medical notes
 	var/list/medical_notes = list()
-	/// Names of minor disabilities
-	var/minor_disabilities
-	/// Fancy description of minor disabilities
-	var/minor_disabilities_desc
 	/// Physical status of this person in medical records.
 	var/physical_status
 	/// Mental status of this person in medical records.
 	var/mental_status
-	/// Positive and neutral quirk strings
-	var/quirk_notes
 	/// Security note
 	var/security_note
 	/// Current arrest status
@@ -95,23 +89,17 @@
 	trim = "Unassigned",
 	/// Crew specific
 	lock_ref,
-	major_disabilities = "None",
-	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
-	minor_disabilities = "None",
-	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
+	player_quirks = "None",
+	player_quirks_desc = "No quirks have been diagnosed at the moment.",
 	physical_status = PHYSICAL_ACTIVE,
 	mental_status = MENTAL_STABLE,
-	quirk_notes,
 )
 	. = ..()
 	src.lock_ref = lock_ref
-	src.major_disabilities = major_disabilities
-	src.major_disabilities_desc = major_disabilities_desc
-	src.minor_disabilities = minor_disabilities
-	src.minor_disabilities_desc = minor_disabilities_desc
+	src.player_quirks = player_quirks
+	src.player_quirks_desc = player_quirks_desc
 	src.physical_status = physical_status
 	src.mental_status = mental_status
-	src.quirk_notes = quirk_notes
 
 	GLOB.manifest.general += src
 

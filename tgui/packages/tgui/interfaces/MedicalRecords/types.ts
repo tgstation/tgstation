@@ -17,13 +17,11 @@ export type MedicalRecord = {
   crew_ref: string;
   dna: string;
   gender: string;
-  major_disabilities: string;
-  minor_disabilities: string;
+  player_quirks: string;
   physical_status: string;
   mental_status: string;
   name: string;
   notes: MedicalNote[];
-  quirk_notes: string;
   rank: string;
   species: string;
 };
