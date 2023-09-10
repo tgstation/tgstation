@@ -10,7 +10,8 @@
 	usage_flags = PROGRAM_TABLET
 
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
-		bringing you the best in electronics and software since 2467!"
+		bringing you the best in electronics and software since 2467!\n\
+		To help with navigation, we have provided the following definitions: Fore - Front of ship\nAft - Back\nPort - Left\nStarboard\nRight\nQuarter - Either sides of Aft"
 
 /datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
