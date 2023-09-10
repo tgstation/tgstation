@@ -760,8 +760,8 @@
  */
 /mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		adjustOxyLoss(-excess_healing, FALSE)
-		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
+		adjustOxyLoss(-excess_healing, updating_health = FALSE)
+		adjustToxLoss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly
 		updatehealth()
 
 	grab_ghost(force_grab_ghost)

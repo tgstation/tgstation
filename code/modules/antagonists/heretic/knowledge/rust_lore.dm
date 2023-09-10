@@ -128,9 +128,10 @@
 	// Heals all damage + Stamina
 	source.adjustBruteLoss(-2, updating_health = FALSE)
 	source.adjustFireLoss(-2, updating_health = FALSE)
-	source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people to
+	source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	source.adjustOxyLoss(-0.5, updating_health = FALSE)
-	source.adjustStaminaLoss(-2)
+	source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	source.updatehealth()
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
@@ -299,7 +300,8 @@
 	source.adjustFireLoss(-4, updating_health = FALSE)
 	source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
 	source.adjustOxyLoss(-4, updating_health = FALSE)
-	source.adjustStaminaLoss(-20)
+	source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	source.updatehealth()
 
 /**
  * #Rust spread datum

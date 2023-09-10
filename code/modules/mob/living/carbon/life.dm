@@ -374,10 +374,13 @@
 
 	//-- NITRIUM --//
 	if(nitrium_pp)
+		var/need_mob_update = FALSE
 		if(nitrium_pp > 0.5)
-			adjustFireLoss(nitrium_pp * 0.15)
+			need_mob_update += adjustFireLoss(nitrium_pp * 0.15, updating_health = FALSE)
 		if(nitrium_pp > 5)
-			adjustToxLoss(nitrium_pp * 0.05)
+			need_mob_update += adjustToxLoss(nitrium_pp * 0.05, updating_health = FALSE)
+		if(need_mob_update)
+			updatehealth()
 
 	// Handle chemical euphoria mood event, caused by N2O.
 	if (n2o_euphoria == EUPHORIA_ACTIVE)

@@ -50,7 +50,8 @@
 	caster.adjustFireLoss(-10, updating_health = FALSE)
 	caster.adjustToxLoss(-10, updating_health = FALSE)
 	caster.adjustOxyLoss(-10, updating_health = FALSE)
-	caster.adjustStaminaLoss(-10)
+	caster.adjustStaminaLoss(-10, updating_stamina = FALSE)
+	caster.updatehealth()
 
 /obj/effect/temp_visual/eldritch_smoke
 	icon = 'icons/effects/eldritch.dmi'

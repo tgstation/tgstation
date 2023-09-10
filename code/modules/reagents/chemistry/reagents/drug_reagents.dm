@@ -439,10 +439,13 @@
 		return
 	var/mob/living/carbon/carbie = affected_mob
 	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
-	carbie.adjustToxLoss(1 * REM * seconds_per_tick, required_biotype = affected_biotype)
+	var/need_mob_update
+	need_mob_update = carbie.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(5, seconds_per_tick))
-		carbie.adjustToxLoss(5, required_biotype = affected_biotype)
+		need_mob_update += carbie.adjustToxLoss(5, required_biotype = affected_biotype, updating_health = FALSE)
 		carbie.vomit()
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/tar
 	name = "Maintenance Tar"

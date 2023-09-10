@@ -60,10 +60,11 @@
 	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
-	owner.adjustToxLoss(-amount, updating_health = FALSE, TRUE)
+	owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
 	owner.adjustOxyLoss(-amount, updating_health = FALSE)
 	owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	owner.adjustFireLoss(-amount)
+	owner.adjustFireLoss(-amount, updating_health = FALSE)
+	owner.updatehealth()
 
 /*
  * Adjust the owner's temperature up or down to standard body temperatures.

@@ -119,10 +119,11 @@
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
-		return
+		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
-		return
+		return FALSE
 	affected_organ.apply_organ_damage(amount, maximum)
+	return amount
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
@@ -136,11 +137,12 @@
 /mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
-		return
+		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
-		return
+		return FALSE
 	if(affected_organ.damage == amount)
-		return
+		return FALSE
+	. = affected_organ.damage || amount
 	affected_organ.set_organ_damage(amount)
 
 /**
