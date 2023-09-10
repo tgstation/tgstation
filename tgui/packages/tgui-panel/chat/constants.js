@@ -31,7 +31,7 @@ export const MESSAGE_TYPE_OOC = 'ooc';
 export const MESSAGE_TYPE_ADMINPM = 'adminpm';
 export const MESSAGE_TYPE_COMBAT = 'combat';
 export const MESSAGE_TYPE_ADMINCHAT = 'adminchat';
-export const MESSAGE_TYPE_MENTORCHAT = 'mentorchat';
+export const MESSAGE_TYPE_MODCHAT = 'modchat';
 export const MESSAGE_TYPE_PRAYER = 'prayer';
 export const MESSAGE_TYPE_EVENTCHAT = 'eventchat';
 export const MESSAGE_TYPE_ADMINLOG = 'adminlog';
@@ -101,10 +101,10 @@ export const MESSAGE_TYPES = [
     selector: '.danger',
   },
   {
-    type: MESSAGE_TYPE_MENTORCHAT,
+    type: MESSAGE_TYPE_MODCHAT,
     name: 'Mentor Chat',
     description: 'MSAY (Mentor) chat',
-    selector: '.mentorsay',
+    selector: '.modchat',
   },
   {
     type: MESSAGE_TYPE_UNKNOWN,

@@ -54,3 +54,12 @@
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_POST, webhook_url, json_encode(webhook_info), headers, "tmp/response.json")
 	request.begin_async()
+
+/datum/world_topic/reply_mentor
+	keyword = "status"
+	require_comms_key = TRUE
+
+/datum/world_topic/reply_mentor/Run(list/input)
+	var/id = input["ID"]
+	if(!id)
+		return
