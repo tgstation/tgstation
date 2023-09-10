@@ -4,17 +4,17 @@
 	damage = 0
 	damage_type = BRUTE
 	armor_flag = BOMB
-	range = 7
+	range = 14
 	projectile_phasing = PASSTABLE | PASSMOB | PASSMACHINE | PASSSTRUCTURE
 	hitscan = TRUE
 	var/disrupt_duration = 2 SECONDS
 
 /obj/projectile/energy/fisher/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
-	var/list/things_to_disrupt = list()
+	SEND_SIGNAL(target, COMSIG_HIT_BY_SABOTEUR, disrupt_duration)
 	if(!isliving(target))
-		SEND_SIGNAL(target, COMSIG_DISRUPTED_LIGHTS, disrupt_duration) // we just send this through if it's not something living
 		return
+	var/list/things_to_disrupt = list()
 	var/lights_flickered = 0
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
@@ -25,12 +25,17 @@
 	for(var/obj/item/thingy as anything in things_to_disrupt)
 		if(istype(thingy, /obj/item/flashlight))
 			var/obj/item/flashlight/light = thingy
-			SEND_SIGNAL(light, COMSIG_DISRUPTED_LIGHTS, disrupt_duration)
+			SEND_SIGNAL(light, COMSIG_HIT_BY_SABOTEUR, disrupt_duration)
 			lights_flickered++
 			continue
 		var/datum/component/seclite_attachable/attached = thingy.GetComponent(/datum/component/seclite_attachable)
 		if(attached?.light)
-			SEND_SIGNAL(attached.parent, COMSIG_DISRUPTED_LIGHTS, disrupt_duration)
+			SEND_SIGNAL(attached.parent, COMSIG_HIT_BY_SABOTEUR, disrupt_duration)
 			lights_flickered++
 	if(lights_flickered)
 		to_chat(target, span_warning("Your light [lights_flickered > 1 ? "sources flick" : "source flicks"] off."))
+
+/obj/projectile/energy/fisher/melee
+	range = 1
+	suppressed = SUPPRESSED_VERY
+	disrupt_duration = 5 SECONDS

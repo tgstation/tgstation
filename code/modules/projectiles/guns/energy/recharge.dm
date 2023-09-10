@@ -139,7 +139,7 @@
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
 	name = "\improper SC/FISHER lightbreaker"
-	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything but light fixtures and held flashlights. \
+	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything except light fixtures and cameras. \
 	Can fire twice before requiring a recharge, with bolts passing through machinery, but demands precision."
 	icon_state = "fisher"
 	base_icon_state = "fisher"
@@ -153,5 +153,11 @@
 /obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
 	. = ..()
 	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
-	attenuated to launch kinetic bolts that resonate with glass in light fixtures and power connections in human-held flashlights - and <i>only</i> those. \
+	attenuated to launch kinetic bolts that <b>disrupt flashlights and cameras, if only temporarily</b>. This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
 	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
+
+/obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
+	if(user.Adjacent(target))
+		var/obj/projectile/energy/fisher/melee/simulated_hit = new
+		simulated_hit.on_hit(target)
