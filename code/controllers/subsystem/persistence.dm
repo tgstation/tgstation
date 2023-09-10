@@ -161,6 +161,13 @@ SUBSYSTEM_DEF(persistence)
 
 	// /obj/effect/spawner/random/decoration/statue
 
+statues fixes:
+- pixel offsets
+- direction
+- animation
+- lighting
+
+
 	var/list/engraving_entries = json["entries"]
 
 	if(engraving_entries.len)
