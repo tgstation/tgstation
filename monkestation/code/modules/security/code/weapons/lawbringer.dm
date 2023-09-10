@@ -72,35 +72,35 @@
 	//ammo selector v8
 	var/fixed_message = "[lowertext(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
-		selectammo(DETAIN)
+		selectammo(DETAIN, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:execute|kill|lethal)")))
-		selectammo(EXECUTE)
+		selectammo(EXECUTE, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:bigshot|breach)")))
-		selectammo(BIGSHOT)
+		selectammo(BIGSHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:smoke|fog)")))
-		selectammo(SMOKESHOT)
+		selectammo(SMOKESHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:clown)")))
-		selectammo(CLOWNSHOT)
+		selectammo(CLOWNSHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:pulse|throw|push)")))
-		selectammo(PULSE)
+		selectammo(PULSE, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:grey|tide)")))
-		selectammo(TIDESHOT)
+		selectammo(TIDESHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:ion)")))
-		selectammo(ION)
+		selectammo(ION, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:hot|burn|fire)"))) //hot is a part of shot
-		selectammo(HOTSHOT)
+		selectammo(HOTSHOT, speaker)
 		return TRUE
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
-	if(locked)
+/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector, override)
+	if(locked && !override)
 		//anger_management()
 		return
 	select = shotnum
@@ -178,7 +178,7 @@
 
 			playsound(src, voice, 50, FALSE, -2)
 			return
-		if(C.dna.unique_enzymes = owner_dna)
+		if(C.dna.unique_enzymes == owner_dna)
 			if(locked)
 				balloon_alert(user, "firing mode lock disengaged")
 				locked = FALSE
@@ -413,7 +413,7 @@
 	harmful = TRUE
 
 /obj/projectile/lawbringer/clownshot
-	name = "bannanium bullet"
+	name = "bananium bullet"
 	damage = 4
 	damage_type = BRUTE
 	icon = 'icons/obj/hydroponics/harvest.dmi'
