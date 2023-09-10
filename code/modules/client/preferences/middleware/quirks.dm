@@ -41,7 +41,7 @@
 		)
 
 	return list(
-		"max_positive_quirks" = MAX_QUIRKS,
+		"max_quirks" = MAX_QUIRKS,
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = GLOB.quirk_string_blacklist,
 	)
