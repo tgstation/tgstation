@@ -27,7 +27,8 @@
 			H.adjust_nutrition(get_nutriment_factor() * REM * seconds_per_tick)
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
+	if(holder)
+		holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -259,7 +260,8 @@
 		current_cycle++
 		if(length(reagent_removal_skip_list))
 			return
-		holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
+		if(holder)
+			holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"

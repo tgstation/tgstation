@@ -158,7 +158,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+	if(holder)
+		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /*
 Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
@@ -196,7 +197,8 @@ Primarily used in reagents/reaction_agents
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
+	if(holder)
+		holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
