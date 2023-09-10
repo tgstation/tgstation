@@ -292,7 +292,8 @@
 	var/mob/living/L = target
 
 	if(blocked != 100) // not completely blocked
-		if(damage && L.blood_volume && damage_type == BRUTE)
+		var/limb_hit = hit_limb
+		if(damage && L.blood_volume && damage_type == BRUTE && (isnull(hit_limb) || !hit_limb.can_bleed()))
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
@@ -306,7 +307,6 @@
 			new impact_effect_type(target_loca, hitx, hity)
 
 		var/organ_hit_text = ""
-		var/limb_hit = hit_limb
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed == SUPPRESSED_VERY)
