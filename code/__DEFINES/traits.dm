@@ -552,6 +552,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Whether we're sneaking, from the creature sneak ability.
 #define TRAIT_SNEAK "sneaking_creatures"
 
+/// Whether we're reflecting, from the creature reflect ability.
+#define TRAIT_REFLECTION "creatures_reflecting"
+
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
 
