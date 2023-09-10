@@ -42,10 +42,8 @@
 	can_charge = FALSE
 	var/owner_dna = null
 	var/was_emagged = FALSE //used for tracking emagging for voice lines, is set to false after being re-owned.
-	/*
 	var/locked = FALSE
-	var/anger = 0
-	*/
+	//var/anger = 0
 
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
@@ -102,35 +100,38 @@
 		return TRUE
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
+	if(locked)
+		//anger_management()
+		return
 	select = shotnum
 	switch(shotnum) //i promise this is in another proc for a reason
 		if(DETAIN)
 			say("Generating detain lens")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/detain.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/detain.ogg', 50, FALSE, -2)
 		if(EXECUTE)
 			say("Fabricating lethal bullets")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/execute.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/execute.ogg', 50, FALSE, -2)
 		if(HOTSHOT)
 			say("Forming proto-plasma")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/hotshot.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/hotshot.ogg', 50, FALSE, -2)
 		if(SMOKESHOT)
 			say("Compressing Smoke")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/smokeshot.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/smokeshot.ogg', 50, FALSE, -2)
 		if(BIGSHOT)
 			say("Fabricating protomatter shell")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/bigshot.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/bigshot.ogg', 50, FALSE, -2)
 		if(CLOWNSHOT)
 			say("Honk")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/clownshot.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/clownshot.ogg', 50, FALSE, -2)
 		if(PULSE)
 			say("Compressing air")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/pulse.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/pulse.ogg', 50, FALSE, -2)
 		if(TIDESHOT)
 			say("Greytide inversion active")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/tideshot.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/tideshot.ogg', 50, FALSE, -2)
 		if(ION)
 			say("Generating ionized gas")
-			playsound(src, 'monkestation/sound/weapons/gun/lawbringer/ion.ogg', 50, FALSE, -2)
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/ion.ogg', 50, FALSE, -2)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
@@ -144,18 +145,14 @@
 	balloon_alert(user, "biometric lock reset")
 	user.visible_message(span_warning("[user] swipes the [emag_card] in the lawbringer's authenticator"))
 	was_emagged = TRUE
-	src.name = "Lawbringer"
-	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
-	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 	owner_dna = null
+	update_id(user)
 
-/obj/item/gun/energy/e_gun/lawbringer/attackby(obj/item/weapon, mob/user, params)
+/obj/item/gun/energy/e_gun/lawbringer/attackby(obj/item/weapon, mob/user)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		user.visible_message(span_notice("[user] swipes the [weapon] in the lawbringer's authenticator"))
-		src.name = "Lawbringer"
-		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
-		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 		owner_dna = null
+		update_id(user)
 		return TRUE
 
 /obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
@@ -171,24 +168,47 @@
 			new /obj/item/paper/guides/lawbringer(get_turf(src))
 			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
 			updatepin(user)
-			nametag(user)
+			update_id(user)
 			if(was_emagged) // there has to be a better way
 				was_emagged = FALSE
-				voice = pick('monkestation/sound/weapons/gun/lawbringer/initemag1.ogg','monkestation/sound/weapons/gun/lawbringer/initemag2.ogg','monkestation/sound/weapons/gun/lawbringer/initemag3.ogg','monkestation/sound/weapons/gun/lawbringer/initemag4.ogg','monkestation/sound/weapons/gun/lawbringer/initemag5.ogg')
+				voice = pick('monkestation/code/modules/security/sound/lawbringer/initemag1.ogg','monkestation/code/modules/security/sound/lawbringer/initemag2.ogg','monkestation/code/modules/security/sound/lawbringer/initemag3.ogg','monkestation/code/modules/security/sound/lawbringer/initemag4.ogg','monkestation/code/modules/security/sound/lawbringer/initemag5.ogg')
 
 			else
-				voice = pick('monkestation/sound/weapons/gun/lawbringer/init1.ogg','monkestation/sound/weapons/gun/lawbringer/init2.ogg','monkestation/sound/weapons/gun/lawbringer/init3.ogg','monkestation/sound/weapons/gun/lawbringer/init4.ogg','monkestation/sound/weapons/gun/lawbringer/init5.ogg')
+				voice = pick('monkestation/code/modules/security/sound/lawbringer/init1.ogg','monkestation/code/modules/security/sound/lawbringer/init2.ogg','monkestation/code/modules/security/sound/lawbringer/init3.ogg','monkestation/code/modules/security/sound/lawbringer/init4.ogg','monkestation/code/modules/security/sound/lawbringer/init5.ogg')
 
 			playsound(src, voice, 50, FALSE, -2)
+			return
+		if(C.dna.unique_enzymes = owner_dna)
+			if(locked)
+				balloon_alert(user, "firing mode lock disengaged")
+				locked = FALSE
+				update_id(user)
+				return
+			balloon_alert(user, "firing mode lock engaged")
+			locked = TRUE
+			update_id(user)
 		return
 
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/nametag(mob/living/user)
+/obj/item/gun/energy/e_gun/lawbringer/proc/update_id(mob/living/user)
+	if (!owner_dna)
+		src.name = "Lawbringer"
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
+		if(locked)
+			src.desc += span_boldnotice(" It's firing mode lock is on.")
+			return
+		src.desc += span_boldnotice(" It's firing mode lock is off.")
+		return
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		src.name = "[H.real_name]'s Lawbringer"
 		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 		src.desc += span_boldnotice(" It's biometrically linked to [H.real_name].")
+		if(locked)
+			src.desc += span_boldnotice(" It's firing mode lock is on.")
+			return
+		src.desc += span_boldnotice(" It's firing mode lock is off.")
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
 	var/obj/item/firing_pin/lawbringer/lawpin = pin
