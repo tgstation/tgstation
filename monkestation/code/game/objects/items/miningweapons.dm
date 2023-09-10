@@ -110,8 +110,8 @@
 	armour_penetration = 0
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	attack_verb_continuous = list("pierces", "stabs", "impales", "pokes", "jabs")
-	attack_verb_simple = list("imaple", "stab", "pierce", "jab", "poke")
+	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
+	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
 	sharpness = NONE
 	actions_types = NONE
 	obj_flags = UNIQUE_RENAME
@@ -164,8 +164,8 @@
 	armour_penetration = 0
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/pierce.ogg'
-	attack_verb_continuous = list("pierces", "stabs", "impales", "pokes", "jabs")
-	attack_verb_simple = list("imaple", "stab", "pierce", "jab", "poke")
+	attack_verb_continuous = list("swipes", "slashes", "cuts", "slaps")
+	attack_verb_simple = list("swipe", "slash", "cut", "slap")
 	sharpness = SHARP_POINTY
 	actions_types = NONE
 	obj_flags = UNIQUE_RENAME
