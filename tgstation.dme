@@ -1620,7 +1620,6 @@
 #include "code\datums\wires\suit_storage_unit.dm"
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\tesla_coil.dm"
-#include "code\datums\wires\tram.dm"
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wounds\_wound_static_data.dm"
 #include "code\datums\wounds\_wounds.dm"

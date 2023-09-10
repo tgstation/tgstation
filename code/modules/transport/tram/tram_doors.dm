@@ -28,12 +28,6 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 
-/**
- * Generates the airlock's wire layout.
- */
-/obj/machinery/door/airlock/tram/get_wires()
-	return new /datum/wires/tram_door(src)
-
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
 		return FALSE
