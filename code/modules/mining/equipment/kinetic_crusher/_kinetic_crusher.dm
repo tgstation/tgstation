@@ -34,8 +34,6 @@
 	var/detonation_damage = 50
 	///List of trophies attached to the crusher
 	var/list/trophies = list()
-	var/force_unwielded = 0
-	var/force_wielded = 20
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()

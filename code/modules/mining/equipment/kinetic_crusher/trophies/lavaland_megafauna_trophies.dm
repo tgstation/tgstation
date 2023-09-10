@@ -76,7 +76,7 @@
 	if(.)
 		target_crusher.force += bonus_value * 0.2
 		target_crusher.detonation_damage += bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = (20 + bonus_value * 0.2))
+		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20 + bonus_value * 0.2)
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
