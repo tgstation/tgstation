@@ -767,7 +767,7 @@
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
-	reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
+	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
@@ -824,7 +824,7 @@
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
@@ -851,7 +851,7 @@
 					holder.update_clothing(target_item.slot_flags)
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)

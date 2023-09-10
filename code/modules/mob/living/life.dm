@@ -34,9 +34,7 @@
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
 
-	if (notransform)
-		return
-	if(!loc)
+	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(!IS_IN_STASIS(src))
@@ -116,7 +114,7 @@
 	for(var/bile in reagents.reagent_list)
 		var/datum/reagent/consumable/bits = bile
 		if(bits)
-			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+			fullness += bits.get_nutriment_factor() * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**

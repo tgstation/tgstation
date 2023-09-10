@@ -1,5 +1,5 @@
 /mob/living/carbon/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(damageoverlaytemp)
@@ -683,7 +683,7 @@
 		var/datum/reagent/bits = bile
 		if(istype(bits, /datum/reagent/consumable))
 			var/datum/reagent/consumable/goodbit = bile
-			fullness += goodbit.nutriment_factor * goodbit.volume / goodbit.metabolization_rate
+			fullness += goodbit.get_nutriment_factor() * goodbit.volume / goodbit.metabolization_rate
 			continue
 		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
 

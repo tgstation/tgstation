@@ -21,7 +21,6 @@
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
-
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
@@ -794,6 +793,9 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+#define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
+#define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
+
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -803,6 +805,14 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
+
+/obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+	name = "smoker plasma filter"
+	desc = "A plasma filter that look discolored, a result from smoking a lot."
+	icon_state = "lungs_plasma_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
@@ -815,6 +825,14 @@
 	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+
+/obj/item/organ/internal/lungs/smoker_lungs
+	name = "smoker lungs"
+	desc = "A pair of lungs that look sickly, a result from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
@@ -937,6 +955,14 @@
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
 
+/obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+	name = "smoker aeration reticulum"
+	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
+	icon_state = "lungs_ethereal_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/ethereal/Initialize(mapload)
 	. = ..()
 	add_gas_reaction(/datum/gas/water_vapor, while_present = PROC_REF(consume_water))
@@ -953,3 +979,5 @@
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER
+#undef SMOKER_ORGAN_HEALTH
+#undef SMOKER_LUNG_HEALING

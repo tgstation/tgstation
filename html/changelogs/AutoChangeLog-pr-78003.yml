@@ -1,5 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes:
-  - bugfix: "Fixes Star Gazer getting buckled"
-  - image: "Removes Star Gazer alpha pixels"

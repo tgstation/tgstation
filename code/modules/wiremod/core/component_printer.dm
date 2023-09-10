@@ -22,21 +22,27 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
-		connect_techweb(SSresearch.science_tech)
-
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
 
+/obj/machinery/component_printer/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
+	if(techweb)
+		on_connected_techweb()
+
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
 		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
-
 	techweb = new_techweb
+	if(!isnull(techweb))
+		on_connected_techweb()
 
+/obj/machinery/component_printer/proc/on_connected_techweb()
 	for (var/researched_design_id in techweb.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
