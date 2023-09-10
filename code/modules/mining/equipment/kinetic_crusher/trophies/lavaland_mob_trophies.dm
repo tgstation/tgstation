@@ -102,7 +102,7 @@
 	bonus_value = 3
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
-	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
+	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> seconds faster"
 
 /obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
@@ -127,7 +127,7 @@
 	bonus_value = 1 SECONDS
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
-	return "mark detonation to briefly stagger the target for [bonus_value * 0.1] seconds"
+	return "mark detonation to briefly stagger the target for <b>[bonus_value * 0.1]</b> seconds"
 
 /obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
 	target.apply_status_effect(/datum/status_effect/stagger, bonus_value)
@@ -145,7 +145,7 @@
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation to create visual and audiosensory effects on the target"
+	return "mark detonation to create <b>visual and audiosensory effects</b> on the target"
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	var/turf/victim_turf = get_turf(target)
@@ -166,7 +166,7 @@
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
 /obj/item/crusher_trophy/bileworm_spewlet/effect_desc()
-	return "mark detonation to launch projectiles in cardinal directions on a 10 second cooldown"
+	return "mark detonation to <b>launch projectiles</b> in cardinal directions on a <b>10</b> second cooldown"
 
 /obj/item/crusher_trophy/bileworm_spewlet/Initialize(mapload)
 	. = ..()

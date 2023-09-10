@@ -69,7 +69,7 @@
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
-	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>4X</b> effect on mark detonation"
+	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b> health, with <b>4X</b> effect on mark detonation"
 
 /obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
@@ -138,7 +138,7 @@
 	bonus_value = 3
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
-	return "mark detonation to create a homing hierophant chaser"
+	return "mark detonation to create a <b>homing hierophant chaser</b>"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
 	new /obj/effect/temp_visual/hierophant/chaser/crusher(get_turf(user), user, target, bonus_value, TRUE)

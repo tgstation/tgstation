@@ -22,7 +22,7 @@
 
 ///Returns a string describing the special effect to add into the trophy/crusher's description
 /obj/item/crusher_trophy/proc/effect_desc()
-	return "errors"
+	return "<b>errors</b>"
 
 ///Applies the trophy to the crusher, as well as applying any special properties
 /obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)

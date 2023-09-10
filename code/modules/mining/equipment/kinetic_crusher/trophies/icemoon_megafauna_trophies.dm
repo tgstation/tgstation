@@ -11,12 +11,13 @@
 	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_trap_talisman"
 	denied_type = /obj/item/crusher_trophy/ice_block_talisman
+	bonus_value = 4 SECONDS
 
 /obj/item/crusher_trophy/ice_block_talisman/effect_desc()
-	return "mark detonation to freeze a creature in a block of ice for a period, preventing them from moving"
+	return "mark detonation to <b>freeze a creature</b> in a block of ice for <b>[bonus_value * 0.1] seconds</b>, preventing them from moving"
 
 /obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	target.apply_status_effect(/datum/status_effect/ice_block_talisman)
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman, bonus_value)
 
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"

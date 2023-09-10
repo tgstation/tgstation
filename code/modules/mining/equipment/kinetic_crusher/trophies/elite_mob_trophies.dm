@@ -22,7 +22,7 @@
 	var/use_cooldown = 1 MINUTES
 
 /obj/item/crusher_trophy/broodmother_tongue/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
+	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a <b>patch of goliath tentacles</b> at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
 	if(prob(bonus_value) && target.stat != DEAD)
@@ -73,7 +73,7 @@
 	var/use_cooldown = 4 SECONDS
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
+	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a <b>loyal legion skull</b>"
 
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
 	if(!prob(bonus_value) || target.stat == DEAD)

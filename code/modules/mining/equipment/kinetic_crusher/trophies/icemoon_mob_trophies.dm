@@ -13,7 +13,7 @@
 	denied_type = /obj/item/crusher_trophy/bear_paw
 
 /obj/item/crusher_trophy/bear_paw/effect_desc()
-	return "mark detonation to attack twice if you are below half your life"
+	return "mark detonation to <b>attack twice</b> if you are below half your life"
 
 /obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
 	if(user.health / user.maxHealth > 0.5)
@@ -35,7 +35,7 @@
 	bonus_value = 1 SECONDS
 
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
-	return "mark detonation to gain a <b>2X</b> speed boost for [bonus_value * 0.1] seconds"
+	return "mark detonation to gain a <b>2X</b> speed boost for <b>[bonus_value * 0.1]</b> seconds"
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, bonus_value)
