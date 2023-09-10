@@ -216,7 +216,7 @@
 /datum/wound/blunt/robotic/proc/limb_malleable()
 	if (!isnull(get_overheat_wound()))
 		return TRUE
-	var/burn_damage_to_max = (limb.burn / limb.max_damage) // only exists for the weird case where it cant get a overheat wound
+	var/burn_damage_to_max = (limb.burn_dam / limb.max_damage) // only exists for the weird case where it cant get a overheat wound
 	if (burn_damage_to_max >= limb_burn_percent_to_max_threshold_for_malleable)
 		return TRUE
 	return FALSE
