@@ -1,4 +1,0 @@
-author: "leaKsi"
-delete-after: True
-changes:
-  - bugfix: "Exploration drones can't be used to reach Centcom anymore."
