@@ -820,11 +820,14 @@
 
 	safe_plasma_max = 0 //We breathe this to gain POWER.
 
-/obj/item/organ/internal/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
+/obj/item/organ/internal/lungs/slime/Initialize(mapload)
 	. = ..()
-	if (breath?.gases[/datum/gas/plasma])
-		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
-		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+	add_gas_reaction(/datum/gas/plasma, while_present = PROC_REF(consume_plasma))
+
+/obj/item/organ/internal/lungs/slime/proc/consume_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, plasma_pp, old_plasma_pp)
+	var/plasma_breathed = breath.gases[/datum/gas/plasma][MOLES]
+	breath.gases[/datum/gas/plasma][MOLES] -= plasma_breathed
+	breather.blood_volume += min(plasma_breathed * 30, 10) // ~10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
