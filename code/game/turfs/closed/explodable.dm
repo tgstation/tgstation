@@ -9,8 +9,12 @@
 	ScrapeAway()
 	return TRUE
 
+/turf/closed/indestructible/explodable/Initialize(mapload)
+	. = ..()
+	add_overlay(mutable_appearance('icons/turf/overlays.dmi', "explodable", layer+0.1))
+
 /turf/closed/indestructible/explodable/riveted
-	icon = 'icons/turf/walls/riveted_weak.dmi'
+	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted-0"
 	base_icon_state = "riveted"
 	smoothing_flags = SMOOTH_BITMASK
