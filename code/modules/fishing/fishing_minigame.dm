@@ -510,39 +510,20 @@
 	appearance_flags = APPEARANCE_UI|KEEP_TOGETHER
 	alpha = 230
 	///The fish as shown in the minigame
-	var/atom/movable/screen/hud_fish
+	var/atom/movable/screen/hud_fish/hud_fish
 	///The bait as shown in the minigame
-	var/atom/movable/screen/hud_bait
+	var/atom/movable/screen/hud_bait/hud_bait
 	///The completion bar as shown in the minigame
-	var/atom/movable/screen/hud_completion
+	var/atom/movable/screen/hud_completion/hud_completion
 
 ///Initialize bait, fish and completion bar and add them to the visual appearance of this screen object.
 /atom/movable/screen/fishing_hud/proc/prepare_minigame(datum/fishing_challenge/challenge)
-	var/static/icon_height
-	if(!icon_height)
-		var/list/icon_dimensions = get_icon_dimensions(icon)
-		icon_height = icon_dimensions["height"]
 	icon_state = challenge.background
 	add_overlay("frame")
-	hud_bait = new
-	hud_bait.icon = icon
-	hud_bait.icon_state = "bait"
-	if(challenge.bait_pixel_height != MINIGAME_BAIT_HEIGHT)
-		var/height_percent_diff = challenge.bait_pixel_height/MINIGAME_BAIT_HEIGHT
-		hud_bait.transform = hud_bait.transform.Scale(1, height_percent_diff)
-		hud_bait.pixel_z = -icon_height * (1 - height_percent_diff) * 0.5
-	hud_bait.vis_flags = VIS_INHERIT_ID
-	vis_contents += hud_bait
+	hud_bait = new(null, null, challenge)
 	hud_fish = new
-	hud_fish.icon = icon
-	hud_fish.icon_state = "fish"
-	hud_fish.vis_flags = VIS_INHERIT_ID
-	vis_contents += hud_fish
-	hud_completion = new
-	hud_completion.icon = icon
-	hud_completion.icon_state = "completion_[FLOOR(challenge.completion, 5)]"
-	hud_completion.vis_flags = VIS_INHERIT_ID
-	vis_contents += hud_completion
+	hud_completion = new(null, null, challenge)
+	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
 
 /atom/movable/screen/fishing_hud/Destroy()
@@ -550,6 +531,38 @@
 	QDEL_NULL(hud_bait)
 	QDEL_NULL(hud_completion)
 	return ..()
+
+/atom/movable/screen/hud_bait
+	icon = 'icons/hud/fishing_hud.dmi'
+	icon_state = "bait"
+	vis_flags = VIS_INHERIT_ID
+
+/atom/movable/screen/hud_bait/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
+	. = ..()
+	if(!challenge || challenge.bait_pixel_height == MINIGAME_BAIT_HEIGHT)
+		return
+	var/static/icon_height
+	if(!icon_height)
+		var/list/icon_dimensions = get_icon_dimensions(icon)
+		icon_height = icon_dimensions["height"]
+	var/height_percent_diff = challenge.bait_pixel_height/MINIGAME_BAIT_HEIGHT
+	transform = transform.Scale(1, height_percent_diff)
+	pixel_z = -icon_height * (1 - height_percent_diff) * 0.5
+
+/atom/movable/screen/hud_fish
+	icon = 'icons/hud/fishing_hud.dmi'
+	icon_state = "fish"
+	vis_flags = VIS_INHERIT_ID
+
+/atom/movable/screen/hud_completion
+	icon = 'icons/hud/fishing_hud.dmi'
+	icon_state = "completion_0"
+	vis_flags = VIS_INHERIT_ID
+
+/atom/movable/screen/hud_completion/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
+	. = ..()
+	if(challenge)
+		icon_state = "completion_[FLOOR(challenge.completion, 5)]"
 
 /// The visual that appears over the fishing spot
 /obj/effect/fishing_lure
