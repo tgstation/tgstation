@@ -26,6 +26,8 @@
 	max_occurrences = 1
 	earliest_start = 20 MINUTES
 	description = "The supermatter will increase in power and heat by a random amount, and announce it."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 	admin_setup = list(
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
