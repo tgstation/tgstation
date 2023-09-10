@@ -15,7 +15,7 @@
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
-	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v8 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon = 'monkestation/code/modules/security/icons/lawbringer.dmi'
 	icon_state = "lawbringer"
@@ -71,7 +71,7 @@
 		return FALSE
 
 	//placeholder code for figuring out a way of making this not an if string
-	//ammo selector v7
+	//ammo selector v8
 	var/fixed_message = "[lowertext(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN)
@@ -225,19 +225,19 @@
 /////PROJECTILES AND AMMO/////
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
-	maxcharge = 3000 //300
+	maxcharge = 3000
 
 // holds 3000 charges 100
 
 /**
  * lawbringer detain mode:
- * shoots 4 disabler projectiles that richoshet into a nearby human when hitting an object
+ * shoots 4 20 damage disabler projectiles that ricochet into a nearby human when hitting an object
  */
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
 	fire_sound = 'sound/weapons/laser.ogg'
-	e_cost = 600 //50 + 10
+	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
 	harmful = FALSE
@@ -269,13 +269,13 @@
 
 /**
  * lawbringer execute mode:
- * It fires a paco bullet
+ * It fires a 15 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
 	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	e_cost = 300 //30
+	e_cost = 300 //10%, 10 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/execute
@@ -296,7 +296,7 @@
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
 	fire_sound = 'sound/weapons/fwoosh.ogg'
-	e_cost = 600 //60
+	e_cost = 600 //20%, 5 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
@@ -321,7 +321,7 @@
 	projectile_type = /obj/projectile/lawbringer/smokeshot
 	select_name = "smokeshot"
 	fire_sound = 'sound/items/syringeproj.ogg'
-	e_cost = 500 //50
+	e_cost = 500 //16%, 6 shots
 	harmful = FALSE
 
 /obj/projectile/lawbringer/smokeshot
@@ -338,13 +338,13 @@
 
 /**
  * lawbringer bigshot mode:
- * explodes any cyborg and structure it comes across, also deals a good chunk of damage to mechs
+ * explodes any cyborg and structure it hits, also deals a good chunk of damage to mechs
  */
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
-	e_cost = 1700 //170
+	e_cost = 1700 //56%, 1 shot
 	harmful = TRUE
 
 /obj/projectile/lawbringer/bigshot
@@ -383,17 +383,17 @@
 
 /**
  * lawbringer clownshot mode:
- * if the target is a clown it takes their shoes and sends them off with the speed of 100km/h
+ * low damage(4) bullet that drops clown's shoes, then launches them at high speed.
  */
 /obj/item/ammo_casing/energy/lawbringer/clownshot
 	projectile_type = /obj/projectile/lawbringer/clownshot
 	select_name = "clownshot"
 	fire_sound = 'sound/items/bikehorn.ogg'
-	e_cost = 150 //15
+	e_cost = 150 //5%, 20 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/clownshot
-	name = "bananium bullet"
+	name = "bannanium bullet"
 	damage = 4
 	damage_type = BRUTE
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -416,13 +416,13 @@
 
 /**
  * lawbringer pulse mode:
- * despite being named pulse, it just throws the target without damaging it by itself
+ * launches someone 4 tiles away from the direction of impact, does no direct damage
  */
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
 	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
-	e_cost = 350 //35
+	e_cost = 350 //12%, 8 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/pulse
@@ -440,13 +440,13 @@
 
 /**
  * lawbringer tideshot mode:
- * Taser that only effects assistants
+ * taser that only effects assistants
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
 	fire_sound = 'sound/weapons/laser.ogg'
 	select_name = "tideshot"
-	e_cost = 250 //25
+	e_cost = 250 //8%, 12 shots
 	harmful = FALSE
 
 /obj/projectile/lawbringer/tideshot
@@ -482,13 +482,13 @@
 
 /**
  * lawbringer ion mode:
- * the only mode that explains itself
+ * creates a weak emp on impact
  */
 /obj/item/ammo_casing/energy/lawbringer/ion
 	projectile_type = /obj/projectile/ion/weak
 	fire_sound = 'sound/weapons/ionrifle.ogg'
 	select_name = "ion"
-	e_cost = 1400 //140
+	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
 //LOCKER OVERRIDES//
