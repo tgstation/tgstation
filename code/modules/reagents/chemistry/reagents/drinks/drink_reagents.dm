@@ -8,8 +8,8 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getOxyLoss() && SPT_PROB(16, seconds_per_tick))
-		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	if(affected_mob.getOxyLoss())
+		affected_mob.adjustOxyLoss(-0.3, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	..()
 
@@ -22,8 +22,8 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getFireLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(0, 1)
+	if(affected_mob.getFireLoss())
+		affected_mob.heal_bodypart_damage(0, 0.2)
 		. = TRUE
 	..()
 
@@ -37,8 +37,8 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-0.2, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 
@@ -218,8 +218,8 @@
 	myseed.adjust_potency(-round(volume * 0.5))
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1,0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2,0)
 		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * seconds_per_tick)
@@ -234,8 +234,8 @@
 	default_container = /obj/item/reagent_containers/condiment/soymilk
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2, 0)
 		. = TRUE
 	..()
 
@@ -248,8 +248,8 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2, 0)
 		. = TRUE
 	..()
 
@@ -294,8 +294,8 @@
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_jitter(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-0.2, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
@@ -371,8 +371,8 @@
 	affected_mob.adjust_dizzy(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-0.2, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
@@ -682,8 +682,8 @@
 	affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1,0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2,0)
 	..()
 	. = TRUE
 
@@ -702,8 +702,8 @@
 	affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2, 0)
 	..()
 	. = TRUE
 
@@ -878,8 +878,8 @@
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
+	if(affected_mob.getBruteLoss())
+		affected_mob.heal_bodypart_damage(0.2, 0)
 		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * seconds_per_tick)
@@ -1023,8 +1023,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getToxLoss() && SPT_PROB(16, seconds_per_tick))
-		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-0.3, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -1038,8 +1038,8 @@
 
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-0.1, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/mushroom_tea
@@ -1138,8 +1138,8 @@
 
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
-	if(doll.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		doll.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	if(doll.getToxLoss())
+		doll.adjustToxLoss(-0.1, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/mississippi_queen
@@ -1174,8 +1174,8 @@
 	affected_mob.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
-		affected_mob.adjustToxLoss(-2, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getToxLoss())
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/hakka_mate

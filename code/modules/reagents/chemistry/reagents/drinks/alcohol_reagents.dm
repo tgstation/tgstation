@@ -1290,7 +1290,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(drinker.health <= 0)
+	if(drinker.health > 0)
+		drinker.adjustBruteLoss(-0.3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustFireLoss(-0.3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustOxyLoss(-0.2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-0.1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		. = TRUE
+	else if(drinker.health <= 0)
 		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustCloneLoss(-5 * REM * seconds_per_tick, 0)
