@@ -79,11 +79,11 @@
 	return
 
 /datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!helbent)
 		affected_mob.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
-	..()
-	return TRUE
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/L)
 	if(helbent)
@@ -100,10 +100,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
-	..()
-	return TRUE
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital
 	name = "Probital"
@@ -117,7 +119,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
@@ -126,20 +130,22 @@
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * seconds_per_tick)
-	..()
-	. = TRUE
+	need_mob_update += affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * seconds_per_tick, updating_stamina = FALSE)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(affected_mob.getStaminaLoss() >= 80)
 		affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getStaminaLoss() >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
-		affected_mob.adjustStaminaLoss(-100, updating_stamina = TRUE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
-		affected_mob.Sleeping(10 SECONDS)
-	..()
-	. = TRUE
+		need_mob_update += affected_mob.adjustStaminaLoss(-100, updating_stamina = FALSE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
+		need_mob_update += affected_mob.Sleeping(10 SECONDS)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
 	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/internal/stomach)) )
@@ -179,10 +185,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustFireLoss(-2 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	..()
-	return TRUE
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustFireLoss(-2 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/hercuri
 	name = "Hercuri"
@@ -197,18 +205,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
 	if(affected_mob.getFireLoss() > 50)
-		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick * normalise_creation_purity(), FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		affected_mob.adjustFireLoss(-1.25 * REM * seconds_per_tick * normalise_creation_purity(), FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-1.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	affected_mob.reagents?.chem_temp += (-10 * REM * seconds_per_tick)
 	affected_mob.adjust_fire_stacks(-1 * REM * seconds_per_tick)
-	..()
-	. = TRUE
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
@@ -221,11 +231,11 @@
 		exposed_mob.extinguish_mob()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50) //chilly chilly
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
-	..()
 
 
 /******OXY******/
@@ -249,8 +259,8 @@
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	var/need_mob_update
-	need_mob_update |= affected_mob.adjustOxyLoss(-oxycalc * seconds_per_tick * normalise_creation_purity(), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update |= affected_mob.adjustToxLoss(oxycalc * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjustOxyLoss(-oxycalc * seconds_per_tick * normalise_creation_purity(), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjustToxLoss(oxycalc * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB((current_cycle-1) / 2, seconds_per_tick) && affected_mob.losebreath)
 		affected_mob.losebreath--
 		need_mob_update = TRUE
@@ -259,8 +269,7 @@
 
 /datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	metabolization_rate += 2.5 * REAGENTS_METABOLISM
-	..()
-	return TRUE
+	return ..()
 
 #undef CONVERMOL_RATIO
 
@@ -278,13 +287,16 @@
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, required_biotype = affected_biotype)
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/tirimol/on_mob_end_metabolize(mob/living/L)
 	if(current_cycle > 20)

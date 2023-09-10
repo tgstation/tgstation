@@ -514,7 +514,7 @@
 			need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
 		if(52 to INFINITY)
 			need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
-			need_mob_update |= affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -739,7 +739,7 @@
 	if(SPT_PROB(4, seconds_per_tick))
 		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
 		need_mob_update = affected_mob.Stun(40)
-		need_mob_update |= affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -986,8 +986,8 @@
 	. = ..()
 	var/need_mob_update = FALSE
 	if(current_cycle > 11)
-		need_mob_update |= affected_mob.Paralyze(60 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjustOxyLoss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += affected_mob.Paralyze(60 * REM * seconds_per_tick)
+	need_mob_update += affected_mob.adjustOxyLoss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 

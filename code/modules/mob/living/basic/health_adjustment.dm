@@ -5,7 +5,7 @@
  * * amount The amount that will be used to adjust the mob's health
  * * updating_health If the mob's health should be immediately updated to the new value
  * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
- * returns the net change in bruteloss after applying the damage amount. negative values mean healing
+ * returns the net change in bruteloss after applying the damage amount
  */
 /mob/living/basic/proc/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = FALSE

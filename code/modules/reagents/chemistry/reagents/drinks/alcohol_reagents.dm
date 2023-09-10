@@ -204,13 +204,11 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	var/need_mob_update
-	need_mob_update = drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
-	need_mob_update |= drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
+	if(drinker.AdjustSleeping(-40 * REM * seconds_per_tick))
+		. = UPDATE_MOB_HEALTH
+	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
-	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker)
 	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
@@ -1341,11 +1339,9 @@
 	switch(current_cycle)
 		if(51 to 200)
 			need_mob_update = drinker.Sleeping(100 * REM * seconds_per_tick)
-			. = TRUE
 		if(201 to INFINITY)
 			need_mob_update = drinker.AdjustSleeping(40 * REM * seconds_per_tick)
-			need_mob_update |= drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-			. = TRUE
+			need_mob_update += drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 

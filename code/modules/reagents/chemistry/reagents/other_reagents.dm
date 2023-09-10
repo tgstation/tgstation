@@ -421,11 +421,12 @@
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		need_mob_update = affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
+		affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = TRUE
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
@@ -2948,14 +2949,15 @@
 
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+
 	var/need_mob_update
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		need_mob_update = affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-		need_mob_update |= affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-		need_mob_update |= affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-		need_mob_update |= affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-		need_mob_update |= affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+		need_mob_update += affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
+		need_mob_update += affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
+		need_mob_update += affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
+		need_mob_update += affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
 	else
 		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
 		if(SPT_PROB(10, seconds_per_tick))

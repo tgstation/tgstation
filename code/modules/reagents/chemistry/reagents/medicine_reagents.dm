@@ -617,7 +617,7 @@
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
 	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
-	affected_mob.adjustStaminaLoss(-1 * REM * seconds_per_tick * normalise_creation_purity(), FALSE)
+	affected_mob.adjustStaminaLoss(-1 * REM * seconds_per_tick * normalise_creation_purity(), updating_stamina = FALSE)
 	. = UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -1382,7 +1382,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
-	need_mob_update |= metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, 0)
+	need_mob_update += metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, 0)
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	if(need_mob_update)
@@ -1533,8 +1533,8 @@
 		if(82 to INFINITY)
 			REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
 			need_mob_update = affected_mob.Sleeping(100 * REM * seconds_per_tick)
-			need_mob_update |= affected_mob.adjustOxyLoss(1.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-			need_mob_update |= affected_mob.adjustStaminaLoss(1.5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+			need_mob_update += affected_mob.adjustOxyLoss(1.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjustStaminaLoss(1.5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 

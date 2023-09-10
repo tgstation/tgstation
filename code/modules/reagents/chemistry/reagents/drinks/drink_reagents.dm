@@ -275,14 +275,12 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	var/need_mob_update
-	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	if(affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick))
+		. = UPDATE_MOB_HEALTH
 	//310.15 is the normal bodytemp.
-	need_mob_update |= affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * seconds_per_tick)
-	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tea
 	name = "Tea"
@@ -302,8 +300,8 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		need_mob_update |= affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update |= affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+		need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -342,12 +340,10 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	var/need_mob_update
-	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
-	if(need_mob_update)
+	if(affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
+	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/hot_ice_coffee
 	name = "Hot Ice Coffee"
@@ -363,9 +359,9 @@
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	need_mob_update = affected_mob.AdjustSleeping(-60 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -384,8 +380,8 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		need_mob_update |= affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+		need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -437,11 +433,9 @@
 	affected_mob.set_drugginess(1 MINUTES * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(3 SECONDS * REM * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
-	var/need_mob_update
-	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(need_mob_update)
+	if(affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
+	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/rootbeer
 	name = "root beer"
@@ -501,11 +495,9 @@
 	affected_mob.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(2 SECONDS * REM * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
-	var/need_mob_update
-	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(need_mob_update)
+	if(affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
+	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
@@ -517,12 +509,10 @@
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	var/need_mob_update
-	need_mob_update = affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
-	if(need_mob_update)
+	if(affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
+	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
@@ -707,7 +697,7 @@
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		need_mob_update |= affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
+		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -729,7 +719,7 @@
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		need_mob_update |= affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
+		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -1206,7 +1196,7 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
-		need_mob_update |= affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 

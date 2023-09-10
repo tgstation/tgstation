@@ -236,6 +236,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
+	. = ..()
 	if(prob(15))
 		to_chat(C, span_notice("You feel queasy!"))
 		C.adjust_disgust(3)
@@ -244,7 +245,6 @@
 		C.adjust_disgust(5)
 	else if(prob(5))
 		C.vomit()
-	return ..()
 
 /datum/pet_command/protect_owner/glockroach
 	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
