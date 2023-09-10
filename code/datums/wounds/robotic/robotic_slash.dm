@@ -8,7 +8,7 @@
 #define ELECTRICAL_DAMAGE_DEAD_PROGRESS_MULT 0.2 // they'll be resting to, so this is more like 0.1
 
 /// Base time for a wirecutter being used.
-#define ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY 4 SECONDS
+#define ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY 5 SECONDS
 /// Base time for a cable coil being used.
 #define ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY 1.5 SECONDS
 
@@ -357,7 +357,7 @@
 	var/change = (processing_full_shock_threshold * wirecut_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
-		delay_mult *= 2.4
+		delay_mult *= 2.5
 	if (is_retractor)
 		delay_mult *= 2
 		change *= 0.8
@@ -491,8 +491,8 @@
 	intensity = 10 SECONDS
 	processing_full_shock_threshold = 3 MINUTES
 
-	processing_shock_power_per_second_max = 0.2
-	processing_shock_power_per_second_min = 0.1
+	processing_shock_power_per_second_max = 0.5
+	processing_shock_power_per_second_min = 0.4
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 30
@@ -501,7 +501,7 @@
 	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.085 // not even faster at this point
-	wire_repair_percent = 0.08
+	wire_repair_percent = 0.075
 
 	wiring_reset = TRUE
 
@@ -538,8 +538,8 @@
 	intensity = 10 SECONDS
 	processing_full_shock_threshold = 2 MINUTES
 
-	processing_shock_power_per_second_max = 0.4
-	processing_shock_power_per_second_min = 0.2
+	processing_shock_power_per_second_max = 0.7
+	processing_shock_power_per_second_min = 0.6
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 60
@@ -547,8 +547,8 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.095
-	wire_repair_percent = 0.075
+	wirecut_repair_percent = 0.085
+	wire_repair_percent = 0.07
 
 	initial_sparks_amount = 3
 
@@ -585,8 +585,8 @@
 	intensity = 10 SECONDS
 	processing_full_shock_threshold = 1 MINUTES
 
-	processing_shock_power_per_second_max = 1
-	processing_shock_power_per_second_min = 0.8
+	processing_shock_power_per_second_max = 1.3
+	processing_shock_power_per_second_min = 1
 
 	processing_shock_stun_chance = 5
 	processing_shock_spark_chance = 90
@@ -594,8 +594,8 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.11
-	wire_repair_percent = 0.07
+	wirecut_repair_percent = 0.1
+	wire_repair_percent = 0.065
 
 	initial_sparks_amount = 8
 

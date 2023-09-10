@@ -232,7 +232,7 @@
 	var/cool_fahrenheit = round(cooling_threshold * 1.8-459.67, 0.1)
 
 	var/heat_celcius = round(heating_threshold - T0C, 0.1)
-	var/heat_fahrenheit = round(cooling_threshold * 1.8-459.67, 0.1)
+	var/heat_fahrenheit = round(heating_threshold * 1.8-459.67, 0.1)
 
 	. += "\nIts current temperature is [span_blue("[current_temp_celcius ] &deg;C ([current_temp_fahrenheit] &deg;F)")], \
 	and needs to cool to [span_nicegreen("[cool_celcius] &deg;C ([cool_fahrenheit] &deg;F)")], but \

@@ -35,8 +35,8 @@
 	intensity = 10 SECONDS
 	processing_full_shock_threshold = 8 MINUTES
 
-	processing_shock_power_per_second_max = 1.2
-	processing_shock_power_per_second_min = 0.9
+	processing_shock_power_per_second_max = 1.3
+	processing_shock_power_per_second_min = 1.2
 
 	processing_shock_stun_chance = 0.5
 	processing_shock_spark_chance = 35
@@ -44,7 +44,7 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.075 // not even faster at this point
+	wirecut_repair_percent = 0.07 // not even faster at this point
 	wire_repair_percent = 0.065
 
 	interaction_efficiency_penalty = 2
@@ -86,8 +86,8 @@
 	intensity = 20 SECONDS
 	processing_full_shock_threshold = 7 MINUTES
 
-	processing_shock_power_per_second_max = 1.4
-	processing_shock_power_per_second_min = 1.2
+	processing_shock_power_per_second_max = 1.6
+	processing_shock_power_per_second_min = 1.5
 
 	processing_shock_stun_chance = 2.5
 	processing_shock_spark_chance = 60
@@ -95,7 +95,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.07
+	wirecut_repair_percent = 0.06
 	wire_repair_percent = 0.05
 
 	interaction_efficiency_penalty = 2.5
@@ -137,10 +137,10 @@
 	threshold_penalty = 60
 
 	intensity = 40 SECONDS
-	processing_full_shock_threshold = 6.5 MINUTES
+	processing_full_shock_threshold = 6 MINUTES
 
-	processing_shock_power_per_second_max = 2.1
-	processing_shock_power_per_second_min = 1.9
+	processing_shock_power_per_second_max = 2.3
+	processing_shock_power_per_second_min = 2.2
 
 	processing_shock_stun_chance = 1
 	processing_shock_spark_chance = 90
@@ -148,7 +148,7 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.065
+	wirecut_repair_percent = 0.06
 	wire_repair_percent = 0.04
 
 	interaction_efficiency_penalty = 3

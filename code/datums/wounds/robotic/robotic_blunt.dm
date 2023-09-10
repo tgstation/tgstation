@@ -627,12 +627,12 @@
 		chance *= 8
 		delay_mult *= 0.85
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
-		chance *= 5
-	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		chance *= 3
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 2
 		delay_mult *= 0.8
 
-	var/confused = (chance < 50) // generate chance beforehand, so we can use this var
+	var/confused = (chance < 25) // generate chance beforehand, so we can use this var
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
@@ -653,7 +653,7 @@
 	else
 		if (user)
 			user.visible_message(span_warning("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
-		limb.receive_damage(brute = 2, damage_source = securing_item)
+		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
 
 	return TRUE
 
@@ -868,14 +868,14 @@
 		set_superstructure_status(TRUE)
 	else
 		user.visible_message(span_warning("[user] screws up, damaging [their_or_other] [limb.plaintext_zone] in their efforts to help!"))
-		limb.receive_damage(brute = 5, damage_source = user)
+		limb.receive_damage(brute = 5, damage_source = user, wound_bonus = CANT_WOUND)
 
 	if (HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		return
 
 	to_chat(user, span_warning("You burn your hand on [victim]'s [limb.plaintext_zone]!"))
 	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-	affecting?.receive_damage(burn = 10)
+	affecting?.receive_damage(burn = 5)
 
 // T2 burn wounds are required to mold metal, which finished the first step of treatment. Aggrograb someone and use a welder on them for a guaranteed wound with no damage
 /datum/wound/blunt/robotic/critical/proc/heat_metal(obj/item/welder, mob/living/user)
@@ -942,7 +942,7 @@
 	else
 		if (user)
 			user.visible_message(span_warning("[user] screws up and accidentally damages more than they replaced with [treating_rcd]!"))
-		limb.receive_damage(brute = 5, damage_source = treating_rcd)
+		limb.receive_damage(brute = 5, damage_source = treating_rcd, wound_bonus = CANT_WOUND)
 	return TRUE
 
 // A bit goofy but practical - you can use a plunger on a mallable limb instead of molding it or hitting it
@@ -996,7 +996,7 @@
 
 /datum/wound/blunt/robotic/critical/handle_percussive_maintenance_failure(attacking_item)
 	to_chat(victim, span_warning("Your [limb.plaintext_zone] only deforms more from the impact..."))
-	limb.receive_damage(brute = 1, damage_source = src)
+	limb.receive_damage(brute = 1, damage_source = attacking_item, wound_bonus = CANT_WOUND)
 
 /datum/wound/blunt/robotic/critical/uses_percussive_maintenance()
 	return (!superstructure_remedied && limb_malleable())
