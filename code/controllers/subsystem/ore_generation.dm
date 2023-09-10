@@ -48,6 +48,7 @@ SUBSYSTEM_DEF(ore_generation)
 			if(ore_vent_minerals.len <= 0)
 				break
 			vent.generate_mineral_breakdown(max_minerals = 1, map_loading = TRUE)
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
 	available_boulders = list() // reset upon new fire.
