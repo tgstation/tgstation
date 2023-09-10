@@ -18,7 +18,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	mob_biotypes = MOB_ORGANIC|MOB_UNDEAD
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_CREATURE)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE

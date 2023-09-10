@@ -56,8 +56,8 @@
 #define MOB_BUG (1 << 5)
 ///The mob is a wild animal. Domestication may apply.
 #define MOB_BEAST (1 << 6)
-///The mob is of jaw-dropping stature, which usually means it's a megafauna.
-#define MOB_EPIC (1 << 7)
+///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+#define MOB_SPECIAL (1 << 7)
 ///The mob is some kind of a scaly reptile creature
 #define MOB_REPTILE (1 << 8)
 ///The mob is a spooky phantasm or an evil ghast of such nature.

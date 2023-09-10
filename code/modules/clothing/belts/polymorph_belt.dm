@@ -60,7 +60,7 @@
 	if (!isanimal_or_basicmob(target_mob))
 		balloon_alert(user, "target too complex!")
 		return TRUE
-	if (target_mob.mob_biotypes & (MOB_UNDEAD|MOB_HUMANOID|MOB_EPIC|MOB_ROBOTIC|MOB_SPIRIT))
+	if (target_mob.mob_biotypes & (MOB_HUMANOID|MOB_ROBOTIC|MOB_SPECIAL|MOB_SPIRIT|MOB_UNDEAD))
 		balloon_alert(user, "incompatible!")
 		return TRUE
 	if (isanimal_or_basicmob(target_mob))
