@@ -115,8 +115,6 @@
 	/// Time needed for gel to secure internals.
 	var/regen_time_needed = 30 SECONDS
 
-	/// If we can use bone gel to secure internals.
-	var/gellable = FALSE
 	/// If we have used bone gel to secure internals.
 	var/gelled = FALSE
 	/// Total brute damage taken over the span of [regen_time_needed] deciseconds when we gel our limb.
@@ -146,7 +144,10 @@
 	required_limb_biostate = BIO_METAL
 
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
-	required_wound_types = list(WOUND_BLUNT)
+	required_wounding_types = list(WOUND_BLUNT)
+
+/datum/wound_pregen_data/blunt_metal/generate_scar_priorities()
+	return list("[BIO_METAL]")
 
 /datum/wound/blunt/robotic/set_victim(new_victim)
 	if (victim)
@@ -208,10 +209,13 @@
 /datum/wound/blunt/robotic/get_xadone_progress_to_qdel()
 	return INFINITY
 
+/// If true, allows our superstructure to be modified if we are T3. RCDs can always fix our superstructure.
 /datum/wound/blunt/robotic/proc/limb_malleable()
 	return (!isnull(get_overheat_wound()))
 
+/// If we have one, returns a robotic overheat wound of severe severity or higher. Null otherwise.
 /datum/wound/blunt/robotic/proc/get_overheat_wound()
+	RETURN_TYPE(/datum/wound/burn/robotic/overheat)
 	for (var/datum/wound/found_wound as anything in limb.wounds)
 		var/datum/wound_pregen_data/pregen_data = found_wound.get_pregen_data()
 		if (pregen_data.wound_series == WOUND_SERIES_METAL_BURN_OVERHEAT && found_wound.severity >= WOUND_SEVERITY_SEVERE) // meh solution but whateva
@@ -221,13 +225,7 @@
 /datum/wound/blunt/robotic/treat(obj/item/item, mob/user)
 	if (ready_to_secure_internals)
 		if (istype(item, /obj/item/stack/medical/bone_gel))
-			if (gellable)
-				return apply_gel(item, user)
-			else
-				var/victim_or_not = (victim ? "[victim]'s " : "")
-				var/limb_text = (victim ? "[limb.plaintext_zone]" : "[limb]")
-				to_chat(user, span_warning("[victim_or_not][limb_text] cannot be mended with [item]!"))
-				return TRUE
+			return apply_gel(item, user)
 		else if (item_can_secure_internals(item))
 			return secure_internals_normally(item, user)
 	else if (ready_to_ghetto_weld && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
@@ -292,11 +290,13 @@
 	else
 		handle_percussive_maintenance_failure(attacking_item)
 
+/// Called when percussive maintenance succeeds at its random roll.
 /datum/wound/blunt/robotic/proc/handle_percussive_maintenance_success(attacking_item)
 	victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), \
 		span_green("Your [limb.plaintext_zone] rattles into place!"))
 	remove_wound()
 
+/// Called when percussive maintenance faisl at its random roll.
 /datum/wound/blunt/robotic/proc/handle_percussive_maintenance_failure(attacking_item)
 	to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around, but you don't sense any sign of improvement."))
 
@@ -359,17 +359,23 @@
 
 	return FALSE
 
+/// Merely a wrapper proc for adjust_disgust that sends a to_chat.
 /datum/wound/blunt/robotic/proc/shake_organs_for_nausea(score, max)
 	victim.adjust_disgust(score, max)
 	to_chat(victim, span_warning("You feel a wave of nausea as your [limb.plaintext_zone]'s internals jostle..."))
 
+/// Iterates through all our limb's organs and applies randomized damage to them, and sends a to_chat.
 /datum/wound/blunt/robotic/proc/attack_random_organs(total_damage, max_damage_per_organ)
 	var/list/obj/item/organ/picked_organs = assign_damage_to_organs(total_damage, max_damage_per_organ)
 	for (var/obj/item/organ/organ as anything in picked_organs)
 		organ.apply_organ_damage(picked_organs[organ])
 	to_chat(victim, span_warning("You feel your [limb.plaintext_zone]'s internals jostle painfully!"))
 
+/// Randomly iterates through all our organs to assign damage to them.
+/// Returns a assoc list of (organ -> damage), where damage is capped at max_damage_per_organ, unless theres not enough organs to take all the damage.
 /datum/wound/blunt/robotic/proc/assign_damage_to_organs(damage_to_distribute, max_damage_per_organ)
+	RETURN_TYPE(/list)
+
 	var/obj/item/organ/picked_organs = list()
 	var/remaining_damage_distribution = damage_to_distribute
 
@@ -390,9 +396,11 @@
 
 	return picked_organs
 
+/// Allows us to shake the camera of our victim/give them dizziness.
 /datum/wound/blunt/robotic/proc/can_daze()
 	return (limb.body_zone == BODY_ZONE_HEAD)
 
+/// Returns a multiplier to our movement effects based on what our victim is buckled to.
 /datum/wound/blunt/robotic/proc/get_buckled_movement_consequence_mult(atom/movable/buckled_to)
 	if (!buckled_to)
 		return 1
@@ -405,7 +413,10 @@
 /datum/wound/blunt/robotic/proc/get_chest_movement_organ_damage()
 	return rand(chest_movement_organ_damage_min, chest_movement_organ_damage_max)
 
+/// Returns the dizziness status effect that our victim possesses. Nullable.
 /datum/wound/blunt/robotic/proc/get_dizzy_effect()
+	RETURN_TYPE(/datum/status_effect/dizziness)
+
 	for (var/datum/status_effect/effect as anything in victim.status_effects)
 		if (istype(effect, /datum/status_effect/dizziness))
 			return effect
@@ -484,6 +495,9 @@
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		delay_mult *= 0.5
 
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.5
+
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	victim.visible_message(span_notice("[user] begins fastening the screws of [their_or_other] [limb.plaintext_zone]..."))
 
@@ -551,8 +565,6 @@
 
 	scar_keyword = "bluntsevere"
 
-	gellable = TRUE
-
 /datum/wound_pregen_data/blunt_metal/fastenings
 	abstract = FALSE
 
@@ -578,11 +590,11 @@
 
 	return ..()
 
+/// Returns TRUE if the item can be used in our 1st step (2nd if T3) of repairs.
 /datum/wound/blunt/robotic/proc/item_can_secure_internals(obj/item/potential_treater)
 	return (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
 
-
-// Only really relevant for T2/T3 wounds
+// Only really relevant for T2/T3 wounds: The primary way to secure internals, best done by someone else
 /datum/wound/blunt/robotic/proc/secure_internals_normally(obj/item/securing_item, mob/user)
 	if (!securing_item.tool_start_check())
 		return TRUE
@@ -591,7 +603,7 @@
 	var/delay_mult = 1
 
 	if (user == victim)
-		chance *= 0.25
+		chance *= 0.2
 		delay_mult *= 2
 
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
@@ -631,6 +643,7 @@
 
 	return TRUE
 
+// If we dont want to use a wrench/screwdriver, we can just use bone gel
 /datum/wound/blunt/robotic/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
 
 	if (gelled)
@@ -658,6 +671,7 @@
 	processes = TRUE
 	return TRUE
 
+// The final step - T2 and T3 end at this
 /datum/wound/blunt/robotic/proc/resolder(obj/item/welding_item, mob/user)
 	if (!welding_item.tool_start_check())
 		return TRUE
@@ -679,6 +693,7 @@
 	remove_wound()
 	return TRUE
 
+/// If we've past the next allowed time to shake our movement, we set variables accordingly.
 /datum/wound/blunt/robotic/proc/update_next_movement_shake()
 	if (!isnull(time_til_next_movement_shake_allowed) || world.time < time_til_next_movement_shake_allowed)
 		return
@@ -819,6 +834,7 @@
 	mold_metal(user)
 	return TRUE
 
+// Once our superstructure is heated (T2 robotic burn or 125% burn damage) we can aggro grab and start pushing the metal around
 /datum/wound/blunt/robotic/critical/proc/mold_metal(mob/living/carbon/human/user)
 	var/chance = 40
 
@@ -848,6 +864,7 @@
 	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 	affecting?.receive_damage(burn = 10)
 
+// T2 burn wounds are required to mold metal, which finished the first step of treatment. Aggrograb someone and use a welder on them for a guaranteed wound with no damage
 /datum/wound/blunt/robotic/critical/proc/heat_metal(obj/item/welder, mob/living/user)
 	if (!welder.tool_use_check())
 		return TRUE
@@ -875,6 +892,7 @@
 	to_chat(victim, span_green("Your [limb.plaintext_zone] is now heated, allowing it to be molded! Your next step is to have someone physically reset the superstructure with their hands."))
 	return TRUE
 
+// An RCD can be used on a T3 wound to finish its 1st treatment step with little risk and no burn wound
 /datum/wound/blunt/robotic/critical/proc/rcd_superstructure(obj/item/construction/rcd/treating_rcd, mob/user)
 	if (!treating_rcd.tool_use_check() || treating_rcd.get_matter(user) < ROBOTIC_T3_BLUNT_WOUND_RCD_COST)
 		return TRUE
@@ -908,13 +926,15 @@
 			user.visible_message(span_green("[treating_rcd] lets out a small ping as it finishes replacing the superstructure of [victim]'s [limb.plaintext_zone]."))
 		to_chat(victim, span_green("[treating_rcd] has finished replacing your [limb.plaintext_zone]'s superstructure! Your next step is to secure it with a screwdriver/wrench, though bone gel would also work."))
 		set_superstructure_status(TRUE)
-
 	else
 		if (user)
 			user.visible_message(span_warning("[user] screws up and accidentally damages more than they replaced with [treating_rcd]!"))
 		limb.receive_damage(brute = 5, damage_source = treating_rcd)
 	return TRUE
 
+// A bit goofy but practical - you can use a plunger on a mallable limb instead of molding it or hitting it
+// Far less punishing than other forms of ghetto self-tending but a lot less "proper" meaning you get worse bonuses from diag hud and such
+// The "superior" ghetto self-tend compared to percussive maintenance
 /datum/wound/blunt/robotic/critical/proc/plunge(obj/item/plunger/treating_plunger, mob/user)
 	if (!treating_plunger.tool_use_check())
 		return TRUE
@@ -934,7 +954,7 @@
 
 	var/chance = 80
 	if (victim == user)
-		chance *= 0.5
+		chance *= 0.6
 
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 1.25
@@ -970,7 +990,6 @@
 
 /datum/wound/blunt/robotic/critical/proc/set_superstructure_status(remedied)
 	superstructure_remedied = remedied
-	gellable = remedied
 	ready_to_secure_internals = remedied
 
 #undef BLUNT_ATTACK_DAZE_MULT

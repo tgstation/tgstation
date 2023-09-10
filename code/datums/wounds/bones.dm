@@ -193,7 +193,7 @@
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_penalty = 15
+	series_threshold_penalty = 15 // synths can get this AND their usual wounds, so a series penalty is best
 	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"

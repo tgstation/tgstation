@@ -4,9 +4,12 @@
 	abstract = TRUE
 
 	required_limb_biostate = BIO_METAL
-	required_wound_types = list(WOUND_BURN)
+	required_wounding_types = list(WOUND_BURN)
 
 	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
+
+/datum/wound_pregen_data/burnt_metal/generate_scar_priorities()
+	return list("[BIO_METAL]")
 
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
@@ -101,12 +104,7 @@
 	return ..()
 
 /datum/wound/burn/robotic/overheat/proc/get_random_starting_temperature()
-	return LERP(starting_temperature_min, starting_temperature_max, rand())
-
-/datum/wound/burn/robotic/overheat/proc/generate_initial_glow(obj/item/bodypart/limb)
-	RETURN_TYPE(/obj/effect/dummy/lighting_obj)
-
-	return new /obj/effect/dummy/lighting_obj(limb, light_range, light_power, light_color)
+	return LERP(starting_temperature_min, starting_temperature_max, rand()) // LERP since we deal with decimals
 
 /datum/wound/burn/robotic/get_limb_examine_description()
 	return span_warning("The metal on this limb is glowing radiantly.")
@@ -120,7 +118,7 @@
 	if (outgoing_bodytemp_coeff <= 0)
 		return
 	var/statis_mult = 1
-	if (IS_IN_STASIS(victim))
+	if (IS_IN_STASIS(victim)) // stasis heavily reduces the ingoing and outgoing transfer of heat
 		statis_mult *= OVERHEAT_ON_STASIS_HEAT_MULT
 
 	var/difference_from_average = max((BODYTEMP_NORMAL - victim.bodytemperature), 0)
@@ -132,6 +130,7 @@
 		mult *= important_outgoing_mult
 	victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick * statis_mult)
 
+// Increase our temp based on burn damage it receives
 /datum/wound/burn/robotic/overheat/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 
@@ -153,6 +152,10 @@
 
 	expose_temperature((chassis_temperature + effective_damage), incoming_damage_heat_coeff)
 
+// Alternate method of cooling
+// Can do it quickly, can do it anywhere, just have a fire extinguisher/shower
+// The caveat is that this does a ton of brute damage if you're not gauzed up
+// Clothes block a lot of the reagents so its not a really effective weapon against most people
 /datum/wound/burn/robotic/overheat/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 
@@ -168,6 +171,8 @@
 		expose_temperature(source.chem_temp, (10 * volume_modifier * reagent_coeff), TRUE)
 		return
 
+/// Adjusts chassis_temperature by the delta between temperature and itself, multiplied by coeff.
+/// If heat_shock is TRUE, limb will receive brute damage based on the delta.
 /datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
 	var/heating_temp_delta_mult = 1
@@ -201,6 +206,7 @@
 
 	return check_temperature()
 
+// Removes, demotes, or promotes ourself to a new wound type if our temperature is past a heating/cooling threshold.
 /datum/wound/burn/robotic/overheat/proc/check_temperature()
 	if (chassis_temperature < cooling_threshold)
 		if (demotes_to)
@@ -305,7 +311,7 @@
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
 
-	damage_mulitplier_penalty = 1.3 // 1.3x damage taken
+	damage_mulitplier_penalty = 1.25 // 1.25x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 550)
 	starting_temperature_max = (BODYTEMP_NORMAL + 600)
@@ -354,7 +360,7 @@
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
 
-	damage_mulitplier_penalty = 1.5 //1.5x damage taken
+	damage_mulitplier_penalty = 1.4 //1.4x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 1050)
 	starting_temperature_max = (BODYTEMP_NORMAL + 1100)

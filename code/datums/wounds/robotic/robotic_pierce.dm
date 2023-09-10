@@ -1,13 +1,17 @@
 #define ELECTRICAL_DAMAGE_REPAIR_WELD_BASE_DELAY 3 SECONDS
 #define ELECTRICAL_DAMAGE_REPLACE_METALS_BASE_DELAY 4 SECONDS
 
+// Pierce
+// Slow to rise but high damage overall
+// Hard-ish to fix
 /datum/wound/electrical_damage/pierce
+	heat_differential_healing_mult = 0.01
 
 /datum/wound_pregen_data/electrical_damage/pierce
 	abstract = TRUE
 
 	wound_series = WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
-	required_wound_types = list(WOUND_PIERCE)
+	required_wounding_types = list(WOUND_PIERCE)
 
 /datum/wound/burn/electrical_damage/pierce/get_limb_examine_description()
 	return span_warning("The metal on this limb is pierced open.")
@@ -40,8 +44,8 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.1
-	wire_repair_percent = 0.07
+	wirecut_repair_percent = 0.075 // not even faster at this point
+	wire_repair_percent = 0.065
 
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 2
@@ -91,7 +95,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.08
+	wirecut_repair_percent = 0.07
 	wire_repair_percent = 0.05
 
 	interaction_efficiency_penalty = 2.5
@@ -144,7 +148,7 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.07
+	wirecut_repair_percent = 0.065
 	wire_repair_percent = 0.04
 
 	interaction_efficiency_penalty = 3

@@ -4,6 +4,8 @@
 #define ELECTRICAL_DAMAGE_GRASPED_MULT 0.7
 /// How much damage and progress is reduced when our victim lies down.
 #define ELECTRICAL_DAMAGE_LYING_DOWN_MULT 0.5
+/// How much progress is reduced when our victim is dead.
+#define ELECTRICAL_DAMAGE_DEAD_PROGRESS_MULT 0.2 // they'll be resting to, so this is more like 0.1
 
 /// Base time for a wirecutter being used.
 #define ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY 4 SECONDS
@@ -15,7 +17,7 @@
 
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
-	treatable_tools = list(TOOL_WIRECUTTER)
+	treatable_tools = list(TOOL_WIRECUTTER, TOOL_RETRACTOR)
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/stack/cable_coil)
 
@@ -66,8 +68,10 @@
 	/// How many sparks we spawn if a shock sparks. Upper bound
 	var/process_shock_spark_count_max = 1
 
+	// Generally should be less fast than wire, but its effectiveness should increase with severity
 	/// The percent, in decimal, a successful wirecut use will reduce intensity by.
 	var/wirecut_repair_percent
+	// Generally should be lower than wirecut
 	/// The percent, in decimal, a successful wire use will reduce intensity by.
 	var/wire_repair_percent
 
@@ -75,7 +79,7 @@
 	var/overall_effect_mult = 1
 
 	/// The bodyheat our victim must be at or above to start getting passive healing.
-	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
+	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 30)
 	/// The mult that heat differences between normal and bodytemp thresh is multiplied against. Controls passive heat healing.
 	var/heat_differential_healing_mult = 0.02
 
@@ -89,9 +93,12 @@
 	abstract = TRUE
 
 	required_limb_biostate = (BIO_WIRED)
-	required_wound_types = list(WOUND_SLASH)
+	required_wounding_types = list(WOUND_SLASH)
 
 	wound_series = WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE
+
+/datum/wound_pregen_data/electrical_damage/generate_scar_priorities()
+	return list("[BIO_METAL]") // wire scars dont exist so we can just use metal
 
 /datum/wound/burn/electrical_damage/slash/get_limb_examine_description()
 	return span_warning("The wiring on this limb is slashed open.")
@@ -102,7 +109,7 @@
 	var/base_mult = get_base_mult()
 
 	var/seconds_per_tick_for_intensity = seconds_per_tick * get_progress_mult()
-	seconds_per_tick_for_intensity = modify_seconds_for_intensity_after_mult(seconds_per_tick_for_intensity)
+	seconds_per_tick_for_intensity = modify_progress_after_progress_mult(seconds_per_tick_for_intensity, seconds_per_tick)
 
 	adjust_intensity(seconds_per_tick_for_intensity SECONDS)
 
@@ -142,6 +149,7 @@
 	)
 	processing_shock_power_this_tick = 0
 
+/// Returns the multiplier used by our intensity progress. Intensity increment is multiplied against this.
 /datum/wound/electrical_damage/proc/get_progress_mult()
 	var/progress_mult = get_base_mult() * seconds_per_intensity_mult
 
@@ -153,14 +161,18 @@
 		if (living_puller.grab_state >= GRAB_AGGRESSIVE && living_puller.zone_selected == limb.body_zone)
 			progress_mult *= 0.5 // theyre holding it down
 
+	if (victim.stat == DEAD)
+		progress_mult *= ELECTRICAL_DAMAGE_DEAD_PROGRESS_MULT // doesnt totally stop it but slows it down a lot
+
 	return get_base_mult() * seconds_per_intensity_mult
 
+/// Returns the multiplier used by the damage we deal.
 /datum/wound/electrical_damage/proc/get_damage_mult(mob/living/target)
 	SHOULD_BE_PURE(TRUE)
 
 	var/damage_mult = get_base_mult()
 
-	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
+	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE)) // itd be a bit cheesy to just become immune to this, so it only makes it a lot lot better
 		if (target == victim)
 			damage_mult *= shock_immunity_self_damage_reduction
 		else
@@ -171,6 +183,7 @@
 
 	return damage_mult
 
+/// Returns the global multiplier used by both progress and damage.
 /datum/wound/electrical_damage/proc/get_base_mult()
 	var/base_mult = 1
 
@@ -190,16 +203,22 @@
 
 	return overall_effect_mult * base_mult
 
-/datum/wound/electrical_damage/proc/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
+/// Is called after seconds_for_intensity is modified by get_progress_mult().
+/datum/wound/electrical_damage/proc/modify_progress_after_progress_mult(seconds_for_intensity, seconds_per_tick)
 	if (!victim)
 		return seconds_for_intensity
 
+	return seconds_for_intensity - (get_heat_healing() * seconds_per_tick)
+
+/// Returns how many deciseconds progress should be reduced by, based on the current heat of our victim's body.
+/datum/wound/electrical_damage/proc/get_heat_healing(do_message = prob(heat_heal_message_chance))
 	var/healing_amount = max((victim.bodytemperature - heat_thresh_to_heal), 0) * heat_differential_healing_mult
-	if (healing_amount != 0 && prob(heat_heal_message_chance))
+	if (do_message && healing_amount)
 		to_chat(victim, span_notice("You feel the solder within your [limb.plaintext_zone] reform and repair your [name]..."))
 
-	return seconds_for_intensity - healing_amount
+	return healing_amount
 
+/// Changes intensity by the given amount, and then updates our status, removing ourselves if fixed.
 /datum/wound/electrical_damage/proc/adjust_intensity(to_adjust)
 	intensity = clamp((intensity + to_adjust), 0, processing_full_shock_threshold)
 
@@ -256,9 +275,6 @@
 	return INFINITY
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
-	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)
-		return TRUE
-
 	if (istype(potential_treater, /obj/item/stack/cable_coil) && ((user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE) || (limb.burn_dam <= 5)))
 		return TRUE
 
@@ -273,6 +289,10 @@
 
 	return ..()
 
+// Ideally done with cables but sutures work with reduced efficiency
+// Intended to be the quick and inefficient way of doing it
+// High heal per second but also high resource use
+// Notably lower self-tend penalty than wirecutting
 /datum/wound/electrical_damage/proc/suture_wires(obj/item/stack/suturing_item, mob/living/carbon/human/user)
 	if (!suturing_item.tool_start_check())
 		return TRUE
@@ -282,7 +302,7 @@
 	var/change = (processing_full_shock_threshold * wire_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
-		delay_mult *= 1.5
+		delay_mult *= 1.25
 	if (is_suture)
 		delay_mult *= 2
 		var/obj/item/stack/medical/suture/suture_item = suturing_item
@@ -327,6 +347,10 @@
 			return TRUE
 	return TRUE
 
+// Ideally done with wirecutters but retractors work with reduced efficiency
+// Intended to be the slower but more efficient treatment option
+// Only moderate heal per second and slow use time but zero resource use
+// High self-tend penalty
 /datum/wound/electrical_damage/proc/wirecut(obj/item/wirecutting_tool, mob/living/carbon/human/user)
 	if (!wirecutting_tool.tool_start_check())
 		return TRUE
@@ -446,6 +470,9 @@
 
 	return TRUE
 
+// Slash
+// Fast to rise, but lower damage overall
+// Also a bit easy to treat
 /datum/wound/electrical_damage/slash
 
 /datum/wound/electrical_damage/slash/moderate
@@ -476,7 +503,7 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.1
+	wirecut_repair_percent = 0.085 // not even faster at this point
 	wire_repair_percent = 0.08
 
 	wiring_reset = TRUE
@@ -523,7 +550,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.09
+	wirecut_repair_percent = 0.095
 	wire_repair_percent = 0.075
 
 	initial_sparks_amount = 3
@@ -570,7 +597,7 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.08
+	wirecut_repair_percent = 0.11
 	wire_repair_percent = 0.07
 
 	initial_sparks_amount = 8
@@ -591,6 +618,7 @@
 #undef ELECTRICAL_DAMAGE_ON_STASIS_MULT
 #undef ELECTRICAL_DAMAGE_GRASPED_MULT
 #undef ELECTRICAL_DAMAGE_LYING_DOWN_MULT
+#undef ELECTRICAL_DAMAGE_DEAD_PROGRESS_MULT
 
 #undef ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY
 #undef ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY
