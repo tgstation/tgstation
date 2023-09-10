@@ -91,9 +91,7 @@ export const NtosRecords = (props, context) => {
               <br />
               Bloodtype: {record.bloodtype}
               <br />
-              Minor Disabilities: {record.mi_dis}
-              <br />
-              Major Disabilities: {record.ma_dis}
+              Quirks: {record.quirk_dis}
               <br />
               <br />
               Notes: {record.notes}
