@@ -134,13 +134,13 @@
 
 		var/bio_status = hit_bodypart.get_bio_state_status()
 
-		var/has_exterior = ((bio_status & BIO_EXTERIOR))
-		var/has_interior = ((bio_status & BIO_INTERIOR))
+		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 
 		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
 
-		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_alternate())
+		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_by_total_damage())
 		if (dismemberable)
 			extra_wound_details = ", threatening to sever it entirely"
 		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && I.get_sharpness()))

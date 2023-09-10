@@ -445,6 +445,7 @@
 	category = CAT_TOOLS
 
 /obj/item/fishing_rod/telescopic
+	name = "telescopic fishing rod"
 	icon_state = "fishing_rod_telescopic"
 	desc = "A lightweight, ergonomic, easy to store telescopic fishing rod. "
 	inhand_icon_state = null

@@ -66,7 +66,11 @@
 /datum/component/bakeable/proc/finish_baking(atom/used_oven)
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
-	var/atom/baked_result = new bake_result(used_tray, no_base_reagents = TRUE)
+	var/atom/baked_result = new bake_result(
+		used_tray,
+		/* starting_reagent_purity = */ null,
+		/* no_base_reagents = */ TRUE,
+	)
 	original_object.reagents?.trans_to(baked_result, original_object.reagents.total_volume)
 
 	if(who_baked_us)

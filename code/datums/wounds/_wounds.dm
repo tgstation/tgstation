@@ -113,7 +113,7 @@
 	. = ..()
 
 	unique_id = generate_unique_id()
-	actionspeed_mod = generate_actionspeed_modifier()
+	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
 	QDEL_NULL(attached_surgery)
@@ -124,13 +124,42 @@
 
 	return ..()
 
-/// Should generate a actionspeed modifier and return it, giving it our unique ID so it can stack with other wounds.
+/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
+/// by qdeleting any existing modifier.
+/datum/wound/proc/update_actionspeed_modifier()
+	if (should_have_actionspeed_modifier())
+		if (!actionspeed_mod)
+			generate_actionspeed_modifier()
+		actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
+		victim?.update_actionspeed()
+	else
+		remove_actionspeed_modifier()
+
+/// Returns TRUE if we have an interaction_efficiency_penalty, and if we are on the arms, FALSE otherwise.
+/datum/wound/proc/should_have_actionspeed_modifier()
+	return (limb && victim && (limb.body_zone == BODY_ZONE_L_ARM || limb.body_zone == BODY_ZONE_R_ARM) && interaction_efficiency_penalty != 0)
+
+/// If we have no actionspeed_mod, generates a new one with our unique ID, sets actionspeed_mod to it, then returns it.
 /datum/wound/proc/generate_actionspeed_modifier()
 	RETURN_TYPE(/datum/actionspeed_modifier)
 
+	if (actionspeed_mod)
+		return actionspeed_mod
+
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
 	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
-	return new_modifier
+	victim?.add_actionspeed_modifier(new_modifier)
+
+	actionspeed_mod = new_modifier
+	return actionspeed_mod
+
+/// If we have an actionspeed_mod, qdels it and sets our ref of it to null.
+/datum/wound/proc/remove_actionspeed_modifier()
+	if (!actionspeed_mod)
+		return
+
+	victim?.remove_actionspeed_modifier(actionspeed_mod)
+	QDEL_NULL(actionspeed_mod)
 
 /// Generates the ID we use for [unique_id], which is also set as our actionspeed mod's ID
 /datum/wound/proc/generate_unique_id()
@@ -233,7 +262,8 @@
 		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
-		victim.remove_actionspeed_modifier(actionspeed_mod)
+		if (actionspeed_mod)
+			victim.remove_actionspeed_modifier(actionspeed_mod) // no need to qdelete it, just remove it from our victim
 
 	remove_wound_from_victim()
 	victim = new_victim
@@ -275,10 +305,12 @@
 		update_inefficiencies()
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
-	if(victim.get_active_hand() == limb)
-		victim.add_actionspeed_modifier(actionspeed_mod, TRUE)
-	else
-		victim.remove_actionspeed_modifier(actionspeed_mod)
+	update_actionspeed_modifier()
+	if (actionspeed_mod)
+		if(victim.get_active_hand() == limb)
+			victim.add_actionspeed_modifier(actionspeed_mod, TRUE)
+		else
+			victim.remove_actionspeed_modifier(actionspeed_mod)
 
 /datum/wound/proc/start_limping_if_we_should()
 	if ((limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG) && limp_slowdown > 0 && limp_chance > 0)
@@ -299,6 +331,8 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
+
+	remove_actionspeed_modifier()
 
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
@@ -353,19 +387,12 @@
 
 /// Setter for [interaction_efficiency_penalty]. Updates the actionspeed of our actionspeed mod.
 /datum/wound/proc/set_interaction_efficiency_penalty(new_value)
-
 	var/should_update = (new_value != interaction_efficiency_penalty)
 
 	interaction_efficiency_penalty = new_value
 
 	if (should_update)
-		update_actionspeed()
-
-/// Updates both our action mod's multiplicative_slowdown and our victim's actionspeed.
-/datum/wound/proc/update_actionspeed()
-	actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
-
-	victim.update_actionspeed()
+		update_actionspeed_modifier()
 
 /// Returns a "adjusted" interaction_efficiency_penalty that will be used for the actionspeed mod.
 /datum/wound/proc/get_effective_actionspeed_modifier()
@@ -667,11 +694,15 @@
 
 	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
 
-	if (WOUND_BLUNT in pregen_data.required_wound_types && severity >= WOUND_SEVERITY_CRITICAL)
+	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.
+/// In fact, since it's RETURN_TYPEd to wound_pregen_data, you can even directly access the variables without having to store the value of this proc in a typed variable.
+/// Ex. get_pregen_data().wound_series
 /datum/wound/proc/get_pregen_data()
+	RETURN_TYPE(/datum/wound_pregen_data)
+
 	return GLOB.all_wound_pregen_data[type]
 
 #undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS

@@ -28,9 +28,9 @@
 	/**
 	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
 	 * as well as how easily it will happen.
-	 * Set to BIO_STANDARD because most species have both flesh bone and blood in their limbs.
+	 * Set to BIO_STANDARD_UNJOINTED because most species have both flesh bone and blood in their limbs.
 	 */
-	var/biological_state = BIO_STANDARD
+	var/biological_state = BIO_STANDARD_UNJOINTED
 	///A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
@@ -196,8 +196,6 @@
 	var/any_existing_wound_can_mangle_our_exterior
 	/// If false, no wound that can be applied to us can mangle our interior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
 	var/any_existing_wound_can_mangle_our_interior
-	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
-	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -496,8 +494,8 @@
 
 		var/bio_status = get_bio_state_status()
 
-		var/has_exterior = ((bio_status & BIO_EXTERIOR))
-		var/has_interior = ((bio_status & BIO_INTERIOR))
+		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 
 		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 
@@ -518,7 +516,7 @@
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_alternate()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
@@ -552,24 +550,24 @@
 			owner.updatehealth()
 	return update_bodypart_damage_state() || .
 
-/// Returns a bitflag using BIO_EXTERIOR or BIO_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
+/// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
 /obj/item/bodypart/proc/get_bio_state_status()
 	SHOULD_BE_PURE(TRUE)
 
 	var/bio_status = NONE
 
-	for (var/state as anything in GLOB.bio_state_states)
+	for (var/state as anything in GLOB.bio_state_anatomy)
 		var/flag = text2num(state)
 		if (!(biological_state & flag))
 			continue
 
-		var/value = GLOB.bio_state_states[state]
-		if (value & BIO_EXTERIOR)
-			bio_status |= BIO_EXTERIOR
-		if (value & BIO_INTERIOR)
-			bio_status |= BIO_INTERIOR
+		var/value = GLOB.bio_state_anatomy[state]
+		if (value & ANATOMY_EXTERIOR)
+			bio_status |= ANATOMY_EXTERIOR
+		if (value & ANATOMY_INTERIOR)
+			bio_status |= ANATOMY_INTERIOR
 
-		if ((bio_status & BIO_EXTERIOR_AND_INTERIOR) == BIO_EXTERIOR_AND_INTERIOR)
+		if ((bio_status & ANATOMY_EXTERIOR_AND_INTERIOR) == ANATOMY_EXTERIOR_AND_INTERIOR)
 			break
 
 	return bio_status
@@ -582,8 +580,8 @@
 
 	var/bio_status = get_bio_state_status()
 
-	var/has_exterior = ((bio_status & BIO_EXTERIOR))
-	var/has_interior = ((bio_status & BIO_INTERIOR))
+	var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 
 	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
@@ -591,13 +589,13 @@
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
 /// Returns TRUE if our total percent damage is more or equal to our dismemberable percentage, but FALSE if a wound can cause us to be dismembered.
-/obj/item/bodypart/proc/dismemberable_alternate()
+/obj/item/bodypart/proc/dismemberable_by_total_damage()
 
 	update_wound_theory()
 
 	var/bio_status = get_bio_state_status()
 
-	var/has_interior = ((bio_status & BIO_INTERIOR))
+	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
 	var/can_theoretically_be_dismembered_by_wound = (any_existing_wound_can_mangle_our_interior || (any_existing_wound_can_mangle_our_exterior && has_interior))
 
 	var/wound_dismemberable = dismemberable_by_wound()

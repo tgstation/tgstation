@@ -5,7 +5,7 @@
 	required_limb_biostate = NONE
 	require_any_biostate = TRUE
 
-	required_wound_types = list(WOUND_ALL)
+	required_wounding_types = list(WOUND_ALL)
 
 	wound_series = WOUND_SERIES_LOSS_BASIC
 
@@ -22,8 +22,8 @@
 	wound_flags = null
 	already_scarred = TRUE // We manually assign scars for dismembers through endround missing limbs and aheals
 
-	/// The wound_type of the attack that caused us. Used to generate the description of our scar. Currently unused, but primarily exists in case non-biological wounds are added.
-	var/loss_wound_type
+	/// The wounding_type of the attack that caused us. Used to generate the description of our scar. Currently unused, but primarily exists in case non-biological wounds are added.
+	var/loss_wounding_type
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type = WOUND_SLASH, outright = FALSE, attack_direction)
@@ -44,14 +44,14 @@
 
 	victim.visible_message(msg, span_userdanger("Your [dismembered_part.plaintext_zone] [self_msg ? self_msg : occur_text]"))
 
-	loss_wound_type = wounding_type
+	loss_wounding_type = wounding_type
 
 	set_limb(dismembered_part)
 	second_wind()
 	log_wound(victim, src)
 	if(dismembered_part.can_bleed() && wounding_type != WOUND_BURN && victim.blood_volume)
 		victim.spray_blood(attack_direction, severity)
-	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE, wound_type = wounding_type)
+	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE, wounding_type = wounding_type)
 	qdel(src)
 	return TRUE
 
