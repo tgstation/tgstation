@@ -9,6 +9,7 @@
 	held_lh = 'monkestation/code/modules/donator/icons/mob/pets_held_lh.dmi'
 	held_rh = 'monkestation/code/modules/donator/icons/mob/pets_held_rh.dmi'
 	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/spycrab
 	name = "spy crab"
@@ -17,14 +18,14 @@
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
-
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/spycrab/Initialize(mapload)
 	. = ..()
 	var/random_icon = pick("crab_red","crab_blue")
 	icon_state = random_icon
 	icon_dead = "[random_icon]_dead"
-
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/lizard/blahaj
 	name = "\improper Blåhaj"
@@ -34,6 +35,7 @@
 	icon_living = "blahaj"
 	icon_dead = "blahaj_dead"
 	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/lizard/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
@@ -43,3 +45,4 @@
 	icon_living = "cirno-happy"
 	icon_dead = ""
 	icon_gib = null
+	gold_core_spawnable = NO_SPAWN

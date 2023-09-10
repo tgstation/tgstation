@@ -21,13 +21,13 @@
 /datum/loadout_item/head/pot
 	name = "Dented Pot"
 	item_path = /obj/item/clothing/head/costume/pot
-	ckeywhitelist = list("unkown")
+	ckeywhitelist = list("unknown")
 
 /datum/loadout_item/pocket_items/donator/spycrab
 	name = "Pet Delivery Beacon"
 	item_path = /obj/item/choice_beacon/pet/donator/spycrab
 	requires_purchase = FALSE
-	ckeywhitelist = list("unkown")
+	ckeywhitelist = list("unknown")
 
 //spinnermaster
 
@@ -49,5 +49,6 @@
 /datum/loadout_item/mask/zoro
 	name = "Zoro Mask"
 	item_path = /obj/item/clothing/mask/zoro
+	ckeywhitelist = list("happiestplane")
 
 
