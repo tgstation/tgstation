@@ -345,11 +345,16 @@
 		explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		return
 	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that shit
-		if(target.density) //Dense objects get blown up a bit harder
+		if(isclosedturf(target)) //walls get blasted
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			return
+		if(target.density) //Dense objects get blown up a bit harder
+			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage*2)
 			return
 		else
 			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage/2)
 
 /obj/item/ammo_casing/energy/lawbringer/clownshot
 	projectile_type = /obj/projectile/lawbringer/clownshot
