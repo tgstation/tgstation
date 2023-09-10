@@ -5,6 +5,7 @@
 	remove_on_fullheal = TRUE
 	/// Is this status effect currently manipulating the screen of the victim?
 	var/applying_dizziness = FALSE
+	/// The duration of our camera manipulation in deciseconds.
 	var/base_duration = DIZZINESS_BASE_CAMERA_SHAKE_DURATION
 
 /datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
@@ -54,11 +55,11 @@
 	// Want to be able to offset things by the time the animation should be "playing" at
 	var/time = world.time
 	var/delay = 0
-	var/delay_increment = DIZZINESS_BASE_CAMERA_SHAKE_DURATION/DIZZINESS_AMOUNT_OF_CAMERA_SHAKES
+	var/delay_increment = base_duration/DIZZINESS_AMOUNT_OF_CAMERA_SHAKES
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 
-	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), DIZZINESS_BASE_CAMERA_SHAKE_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), base_duration)
 	// This shit is annoying at high strengthvar/pixel_x_diff = 0
 	var/list/view_range_list = getviewsize(owner.client.view)
 	var/view_range = view_range_list[1]
