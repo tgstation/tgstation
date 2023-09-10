@@ -31,6 +31,9 @@
 /// Options datatype. Derivative of string.
 #define PORT_TYPE_OPTION "option"
 
+/// Used when a port has no list, specifically for checking what type of list it's set as.
+#define PORT_LIST_NONE "none"
+
 // Composite datatypes
 #define PORT_COMPOSITE_TYPE_LIST "list"
 /// List datatype

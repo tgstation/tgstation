@@ -4,7 +4,8 @@ import { Window } from '../layouts';
 
 export const CircuitModule = (props, context) => {
   const { act, data } = useBackend(context);
-  const { input_ports, output_ports, global_port_types } = data;
+  const { input_ports, output_ports, global_port_types, global_list_types } =
+    data;
   return (
     <Window width={600} height={300}>
       <Window.Content scrollable>
@@ -27,7 +28,9 @@ export const CircuitModule = (props, context) => {
                         key={index}
                         name={val.name}
                         datatype={val.type}
+                        listtype={val.listtype}
                         datatypeOptions={global_port_types}
+                        datalistOptions={global_list_types}
                         onRemove={() =>
                           act('remove_input_port', {
                             port_id: index + 1,
@@ -45,6 +48,13 @@ export const CircuitModule = (props, context) => {
                             port_id: index + 1,
                             is_input: true,
                             port_name: value,
+                          })
+                        }
+                        onSetListType={(type) =>
+                          act('set_port_list_type', {
+                            port_id: index + 1,
+                            is_input: true,
+                            port_list_type: type,
                           })
                         }
                       />
@@ -69,7 +79,9 @@ export const CircuitModule = (props, context) => {
                         key={index}
                         name={val.name}
                         datatype={val.type}
+                        listtype={val.listtype}
                         datatypeOptions={global_port_types}
+                        datalistOptions={global_list_types}
                         onRemove={() =>
                           act('remove_output_port', {
                             port_id: index + 1,
@@ -87,6 +99,13 @@ export const CircuitModule = (props, context) => {
                             port_id: index + 1,
                             is_input: false,
                             port_name: value,
+                          })
+                        }
+                        onSetListType={(type) =>
+                          act('set_port_list_type', {
+                            port_id: index + 1,
+                            is_input: false,
+                            port_list_type: type,
                           })
                         }
                       />
@@ -116,9 +135,12 @@ const PortEntry = (props, context) => {
     onRemove,
     onEnter,
     onSetType,
+    onSetListType,
     name,
     datatype,
+    listtype,
     datatypeOptions = [],
+    datalistOptions = [],
     ...rest
   } = props;
 
@@ -133,6 +155,13 @@ const PortEntry = (props, context) => {
             displayText={datatype}
             options={datatypeOptions}
             onSelected={onSetType}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Dropdown
+            displayText={listtype}
+            options={datalistOptions}
+            onSelected={onSetListType}
           />
         </Stack.Item>
         <Stack.Item>

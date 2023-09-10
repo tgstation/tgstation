@@ -215,19 +215,22 @@
 	for(var/datum/port/input/input_port as anything in input_ports)
 		.["input_ports"] += list(list(
 			"name" = input_port.name,
-			"type" = input_port.datatype,
+			"type" = input_port.get_core_datatype(),
+			"listtype" = input_port.get_list_type()
 		))
 
 	.["output_ports"] = list()
 	for(var/datum/port/output/output_port as anything in output_ports)
 		.["output_ports"] += list(list(
 			"name" = output_port.name,
-			"type" = output_port.datatype,
+			"type" = output_port.get_core_datatype(),
+			"listtype" = output_port.get_list_type()
 		))
 
 /obj/item/circuit_component/module/ui_static_data(mob/user)
 	. = list()
 	.["global_port_types"] = GLOB.wiremod_basic_types
+	.["global_list_types"] = GLOB.wiremod_list_types
 
 /obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/circuit_component))
@@ -275,7 +278,7 @@
 			remove_output_port(output_ports[port_id])
 			output_component.remove_input_port(removed_port)
 			. = TRUE
-		if("set_port_name", "set_port_type")
+		if("set_port_name", "set_port_type", "set_port_list_type")
 			var/port_id = text2num(params["port_id"])
 			var/is_input = params["is_input"]
 
@@ -294,19 +297,50 @@
 			var/datum/port/component_port = ports_to_use[port_id]
 			var/datum/port/internal_component_port = internal_ports_to_use[port_id]
 
-			if(action == "set_port_type")
-				var/type = params["port_type"]
-				if(!(type in GLOB.wiremod_basic_types))
-					return
-				component_port.set_datatype(type)
-				internal_component_port.set_datatype(type)
-			else
-				var/port_name = params["port_name"]
-				if(!port_name)
-					return
-				port_name = strip_html(port_name, PORT_MAX_NAME_LENGTH)
-				component_port.name = port_name
-				internal_component_port.name = port_name
+			var/type = params["port_type"]
+			switch (action)
+				if("set_port_type")
+					if(!(type in GLOB.wiremod_basic_types))
+						return
+					var/list_type = component_port.get_list_type()
+					switch (list_type)
+						if (PORT_LIST_NONE)
+							component_port.set_datatype(type)
+							internal_component_port.set_datatype(type)
+						if (PORT_COMPOSITE_TYPE_LIST)
+							component_port.set_datatype(PORT_TYPE_LIST(type))
+							internal_component_port.set_datatype(PORT_TYPE_LIST(type))
+						if (PORT_COMPOSITE_TYPE_ASSOC_LIST)
+							component_port.set_datatype(PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, type))
+							internal_component_port.set_datatype(PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, type))
+				if("set_port_name")
+					var/port_name = params["port_name"]
+					if(!port_name)
+						return
+					port_name = strip_html(port_name, PORT_MAX_NAME_LENGTH)
+					component_port.name = port_name
+					internal_component_port.name = port_name
+				if("set_port_list_type")
+					var/port_list_type = params["port_list_type"]
+					if (!port_list_type)
+						return
+					var/base_datatype = component_port.datatype
+					if (istype(component_port.datatype_handler, /datum/circuit_datatype/composite_instance))
+						var/datum/circuit_datatype/composite_instance/list_datatype = component_port.datatype_handler
+						base_datatype = list_datatype.primary_composited_datatype
+					var/list_type = component_port.get_list_type()
+					if (list_type != port_list_type)
+						switch (port_list_type)
+							if (PORT_LIST_NONE)
+								component_port.set_datatype(base_datatype)
+								internal_component_port.set_datatype(base_datatype)
+							if (PORT_COMPOSITE_TYPE_LIST)
+								component_port.set_datatype(PORT_TYPE_LIST(base_datatype))
+								internal_component_port.set_datatype(PORT_TYPE_LIST(base_datatype))
+							if (PORT_COMPOSITE_TYPE_ASSOC_LIST)
+								component_port.set_datatype(PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, base_datatype))
+								internal_component_port.set_datatype(PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, base_datatype))
+
 			. = TRUE
 
 	if(.)

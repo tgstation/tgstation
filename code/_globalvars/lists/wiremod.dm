@@ -18,3 +18,10 @@ GLOBAL_LIST_INIT(wiremod_fundamental_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
 ))
+
+/// All possible types of list something can be.
+GLOBAL_LIST_INIT(wiremod_list_types, list(
+	PORT_NO_LIST,
+	PORT_COMPOSITE_TYPE_LIST,
+	PORT_COMPOSITE_TYPE_ASSOC_LIST
+))

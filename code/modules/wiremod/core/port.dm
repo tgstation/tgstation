@@ -115,6 +115,20 @@
 /datum/port/proc/datatype_ui_data(mob/user)
 	return datatype_handler.datatype_ui_data(src)
 
+/// Returns the type of list this port is set as, from assoc, to list, to none.
+/datum/port/proc/get_list_type()
+	if (istype(datatype_handler, /datum/circuit_datatype/composite_instance))
+		var/datum/circuit_datatype/composite_instance/list_datatype = datatype_handler
+		return list_datatype.base_datatype
+	return PORT_LIST_NONE
+
+/// Returns the datatype of this port if not a list - however, if it IS a list, it will return whatever the list is typed as/whatever the assoc list's values are typed as.
+/datum/port/proc/get_core_datatype()
+	if (istype(datatype_handler, /datum/circuit_datatype/composite_instance))
+		var/datum/circuit_datatype/composite_instance/list_datatype = datatype_handler
+		return list_datatype.primary_composited_datatype
+	return datatype
+
 /**
  * # Output Port
  *

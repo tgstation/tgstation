@@ -77,6 +77,9 @@
 	/// A list composed of the composite datatypes sent to the UI.
 	var/list/composite_datatypes_style
 
+	/// The primary datatype aside from list used in this datatype, e.g. entity for entity list, number for string -> number assoc list
+	var/primary_composited_datatype
+
 /datum/circuit_datatype/composite_instance/New(datatype, base_datatype, list/composite_datatypes)
 	. = ..()
 	if(!datatype || !composite_datatypes)
@@ -85,11 +88,18 @@
 	src.datatype = datatype
 	src.base_datatype = base_datatype
 	src.composite_datatypes = composite_datatypes
+	src.primary_composited_datatype = generate_primary_composite()
 	abstract = FALSE
 
 	composite_datatypes_style += list()
 	for(var/datatype_to_check in composite_datatypes)
 		composite_datatypes_style += GLOB.circuit_datatypes[datatype_to_check].color
+
+/datum/circuit_datatype/composite_instance/proc/generate_primary_composite()
+	if (base_datatype == PORT_COMPOSITE_TYPE_LIST)
+		return composite_datatypes[1]
+	else
+		return composite_datatypes[2] // assoc, the 2nd is our non-key
 
 /datum/circuit_datatype/composite_instance/can_receive_from_datatype(datatype_to_check)
 	. = ..()
