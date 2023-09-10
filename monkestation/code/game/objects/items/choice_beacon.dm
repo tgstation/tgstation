@@ -20,7 +20,6 @@
 			/mob/living/simple_animal/parrot,
 			/mob/living/basic/butterfly,
 			/mob/living/simple_animal/crab,
-			/mob/living/simple_animal/crab/evil,
 			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
 			/mob/living/simple_animal/pet/cat,
