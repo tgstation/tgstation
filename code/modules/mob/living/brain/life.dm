@@ -1,8 +1,6 @@
 
 /mob/living/brain/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if (notransform)
-		return
-	if(!loc)
+	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(!isnull(container))

@@ -8,11 +8,15 @@
 	abstract = TRUE
 	required_limb_biostate = BIO_BONE
 
+	required_wounding_types = list(WOUND_BLUNT)
+
+	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
+
 /datum/wound/blunt/bone
 	name = "Blunt (Bone) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
-	scar_file = BONE_SCAR_FILE
+	default_scar_file = BONE_SCAR_FILE
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -32,8 +36,6 @@
 	var/trauma_cycle_cooldown
 	/// If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest
 	var/internal_bleeding_chance = 0
-
-	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
 
 /*
 	Overwriting of base procs
@@ -62,14 +64,6 @@
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
-
-	return ..()
-
-/datum/wound/blunt/bone/set_limb(obj/item/bodypart/new_value)
-	if (limb)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
-	if (new_value)
-		RegisterSignals(new_value, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
 
 	return ..()
 
@@ -180,28 +174,6 @@
 	New common procs for /datum/wound/blunt/bone/
 */
 
-/datum/wound/blunt/bone/proc/update_inefficiencies()
-	SIGNAL_HANDLER
-
-	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(limb.current_gauze?.splint_factor)
-			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-			limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
-		else
-			limp_slowdown = initial(limp_slowdown)
-			limp_chance = initial(limp_chance)
-		victim.apply_status_effect(/datum/status_effect/limp)
-	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(limb.current_gauze?.splint_factor)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
-		else
-			interaction_efficiency_penalty = initial(interaction_efficiency_penalty)
-
-	if(initial(disabling))
-		set_disabling(!limb.current_gauze)
-
-	limb.update_wounds()
-
 /datum/wound/blunt/bone/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	if (scarred_limb.biological_state & BIO_BONE && (!(scarred_limb.biological_state & BIO_FLESH))) // only bone
 		return BONE_SCAR_FILE
@@ -221,11 +193,10 @@
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_minimum = 35
 	threshold_penalty = 15
-	treatable_tool = TOOL_BONESET
+	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
-	scar_keyword = "bluntmoderate"
+	scar_keyword = "dislocate"
 
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
@@ -233,6 +204,8 @@
 	wound_path_to_generate = /datum/wound/blunt/bone/moderate
 
 	required_limb_biostate = BIO_JOINTED
+
+	threshold_minimum = 35
 
 /datum/wound/blunt/bone/moderate/Destroy()
 	if(victim)
@@ -350,7 +323,6 @@
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_minimum = 60
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
@@ -358,13 +330,15 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
 /datum/wound_pregen_data/bone/hairline
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/bone/severe
+
+	threshold_minimum = 60
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
@@ -379,7 +353,6 @@
 	limp_slowdown = 7
 	limp_chance = 70
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
@@ -388,13 +361,15 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/bone/critical
+
+	threshold_minimum = 115
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")

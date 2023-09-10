@@ -824,6 +824,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	alpha = 255
 	opaque_closed = TRUE
 
+/obj/structure/curtain/bounty/start_closed
+	icon_state = "bounty-closed"
+
+/obj/structure/curtain/bounty/start_closed/Initialize(mapload)
+	. = ..()
+	if(open)
+		toggle()
+
 /obj/structure/curtain/cloth
 	color = null
 	alpha = 255
