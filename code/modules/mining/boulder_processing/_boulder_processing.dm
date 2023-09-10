@@ -5,7 +5,6 @@
 	icon_state = "ore_redemption"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 100
 
 	/// What is the efficiency of minerals produced by the machine?
 	var/refining_efficiency = 1
@@ -55,6 +54,28 @@
 	boulders_contained = null
 	silo_materials = null
 
+/obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
+	..()
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			icon_state ="[initial(icon_state)]"
+		else
+			icon_state ="[initial(icon_state)]-off"
+		update_appearance(UPDATE_ICON_STATE)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
@@ -63,7 +84,7 @@
 		if(!accept_boulder(my_boulder))
 			visible_message(span_warning("[my_boulder] is rejected!"))
 			return
-		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
+		visible_message(span_notice("[my_boulder] is accepted into \the [src]"))
 		START_PROCESSING(SSmachines, src)
 		return
 	if(istype(attacking_item, /obj/item/card/id))
@@ -90,6 +111,9 @@
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return
 	if(holds_minerals)
 		if(!boulders_contained.len)
 			visible_message(span_warning("No boulders to remove!"))
@@ -105,19 +129,9 @@
 		for(var/obj/item/boulder/boulder in contents)
 			remove_boulder(boulder)
 
-/obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/bouldertech/process()
+	if(!anchored)
+		return
 	var/stop_processing_check = FALSE
 	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
 	for(var/obj/item/potential_boulder as anything in boulders_contained)
@@ -158,6 +172,8 @@
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+	if(!anchored)
+		return FALSE
 	if(boulders_contained.len >= boulders_held_max)
 		return FALSE
 	if(istype(mover, /obj/item/boulder))
@@ -208,7 +224,7 @@
 	if(!tripped)
 		remove_boulder(chosen_boulder)
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
-	use_power(100)
+	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
 	var/is_artifact = istype(chosen_boulder, /obj/item/boulder/artifact) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/potential_contents
@@ -222,7 +238,6 @@
 		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
 		context = src \
 	)
-	balloon_alert_to_viewers("Boulder processed!")
 	var/old_size = chosen_boulder.boulder_size
 	if(!remaining_ores.len)
 		chosen_boulder.break_apart()

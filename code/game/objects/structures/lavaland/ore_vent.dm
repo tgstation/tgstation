@@ -23,7 +23,24 @@
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
 
-	/// A list of mobs that can be spawned by this vent during a wave defense event.
+	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
+	var/list/mineral_breakdown = list()
+	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
+	var/minerals_per_boulder = 3
+	/// How many minerals are picked to be in the ore vent? These are added to the mineral_breakdown list.
+	var/minerals_per_breakdown = MINERAL_TYPE_OPTIONS_RANDOM
+	/// What size boulders does this vent produce?
+	var/boulder_size = BOULDER_SIZE_SMALL
+	/// Reference to this ore vent's NODE drone, to track wave success.
+	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
+	/// String of ores that this vent can produce.
+	var/ore_string = ""
+
+	/// What string do we use to warn the player about the excavation event?
+	var/excavation_warning = "Are you ready to excavate this ore vent?"
+	///Are we currently spawning mobs?
+	var/spawning_mobs = FALSE
+		/// A list of mobs that can be spawned by this vent during a wave defense event.
 	var/list/defending_mobs = list(
 		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -38,23 +55,8 @@
 		/obj/item/mining_scanner
 	)
 
-	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
-	var/list/mineral_breakdown = list()
-	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
-	var/minerals_per_boulder = 3
-	/// How many minerals are picked to be in the ore vent? These are added to the mineral_breakdown list.
-	var/minerals_per_breakdown = MINERAL_TYPE_OPTIONS_RANDOM
-	/// What size boulders does this vent produce?
-	var/boulder_size = BOULDER_SIZE_SMALL
-	/// Reference to this ore vent's NODE drone, to track wave success.
-	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
-	/// String of ores that this vent can produce.
-	var/ore_string = ""
-	/// What string do we use to warn the player about the excavation event?
-	var/excavation_warning = "Are you ready to excavate this ore vent?"
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
-
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
 	COOLDOWN_DECLARE(wave_cooldown) //We use a cooldown to prevent the wave defense from being started multiple times.
@@ -165,12 +167,11 @@
  * Will summon a number of waves of mobs, ending in the vent being tapped after the final wave.
  */
 /obj/structure/ore_vent/proc/start_wave_defense()
-	//faction = FACTION_MINING,	//todo: is there some reason I can't sanity check mob faction?
 	AddComponent(/datum/component/spawner,\
 		spawn_types = defending_mobs,\
-		spawn_time = 15 SECONDS,\
+		spawn_time = (10 SECONDS + (5 SECONDS * (boulder_size/5))),\
 		max_spawned = 10,\
-		spawn_per_attempt = (1 + (boulder_size/5)),\
+		max_spawn_per_attempt = (1 + (boulder_size/5)),\
 		spawn_text = "emerges to assault",\
 		spawn_distance = 4,\
 		spawn_distance_exclude = 3)
@@ -181,6 +182,7 @@
 		wave_timer = 150 SECONDS
 	COOLDOWN_START(src, wave_cooldown, wave_timer)
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
+	spawning_mobs = TRUE
 
 /**
  * Called when the wave defense event ends, after a variable amount of time in start_wave_defense.

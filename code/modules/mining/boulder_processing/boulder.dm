@@ -53,6 +53,12 @@
 		return manual_process(null, user, 1.5)
 
 
+/obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(istype(mover, /obj/item/boulder)) //This way, boulders can only go one at a time on conveyor belts, but everyone else can go through.
+		return FALSE
+	return TRUE
+
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(weapon.tool_behaviour == TOOL_MINING)

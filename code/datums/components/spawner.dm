@@ -11,15 +11,15 @@
 	var/list/faction
 	/// List of weak references to things we have already created
 	var/list/spawned_things = list()
-	/// How many mobs do we spawn each time we try to spawn
-	var/spawn_per_attempt
+	/// How many mobs can we spawn maximum each time we try to spawn? (1 - max)
+	var/max_spawn_per_attempt
 	/// Distance from the spawner to spawn mobs
 	var/spawn_distance
 	/// Distance from the spawner to exclude mobs from spawning
 	var/spawn_distance_exclude
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, spawn_per_attempt = 2 , faction = list(FACTION_MINING), spawn_text = null, spawn_distance = 1, spawn_distance_exclude = 0)
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 2 , faction = list(FACTION_MINING), spawn_text = null, spawn_distance = 1, spawn_distance_exclude = 0)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -27,7 +27,7 @@
 	src.faction = faction
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
-	src.spawn_per_attempt = spawn_per_attempt
+	src.max_spawn_per_attempt = max_spawn_per_attempt
 	src.spawn_distance = spawn_distance
 	src.spawn_distance_exclude = spawn_distance_exclude
 
@@ -56,8 +56,8 @@
 	COOLDOWN_START(src, spawn_delay, spawn_time)
 	var/chosen_mob_type = pick(spawn_types)
 	var/adjusted_spawn_count = 1
-	if (spawn_per_attempt > 1)
-		adjusted_spawn_count = rand(1, spawn_per_attempt)
+	if (max_spawn_per_attempt > 1)
+		adjusted_spawn_count = rand(1, max_spawn_per_attempt)
 	for(var/i in 1 to adjusted_spawn_count)
 		var/atom/created
 		var/turf/picked_spot
