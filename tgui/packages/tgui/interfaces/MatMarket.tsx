@@ -17,6 +17,7 @@ type Material = {
   id: string; // correct this if its a number
   trend: string;
   price: number;
+  color: string;
 };
 
 export const MatMarket = (props, context) => {
@@ -43,10 +44,13 @@ export const MatMarket = (props, context) => {
           }>
           Buy orders for material sheets placed here will be ordered on the next
           cargo shipment.
-          <br />
-          To sell materials, please insert sheets or similar stacks of
+          <br /> <br />
+          To <b>sell materials</b>, please insert sheets or similar stacks of
           materials. All minerals sold on the market directly are subject to an
           20% market fee.
+          <br /> <br />
+          All new purchases will <b>include the cost of the shipped crate</b>,
+          which may be recycled afterwards.
           <Section>
             Current credit balance: <b>{creditBalance || 'zero'}</b> cr.
           </Section>
@@ -56,7 +60,11 @@ export const MatMarket = (props, context) => {
             <Stack fill>
               <Stack.Item width="75%">
                 <Stack>
-                  <Stack.Item fontSize="125%" width="15%" pr="3%">
+                  <Stack.Item
+                    textColor={material.color ? material.color : 'white'}
+                    fontSize="125%"
+                    width="15%"
+                    pr="3%">
                     {toTitleCase(material.name)}
                   </Stack.Item>
 
@@ -84,6 +92,7 @@ export const MatMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
+                  tooltip={material.price * 1}
                   onClick={() =>
                     act('buy', {
                       quantity: 1,
@@ -93,6 +102,7 @@ export const MatMarket = (props, context) => {
                   Buy 1
                 </Button>
                 <Button
+                  tooltip={material.price * 5}
                   onClick={() =>
                     act('buy', {
                       quantity: 5,
@@ -102,6 +112,7 @@ export const MatMarket = (props, context) => {
                   5
                 </Button>
                 <Button
+                  tooltip={material.price * 10}
                   onClick={() =>
                     act('buy', {
                       quantity: 10,
@@ -111,6 +122,7 @@ export const MatMarket = (props, context) => {
                   10
                 </Button>
                 <Button
+                  tooltip={material.price * 25}
                   onClick={() =>
                     act('buy', {
                       quantity: 25,
@@ -120,6 +132,7 @@ export const MatMarket = (props, context) => {
                   25
                 </Button>
                 <Button
+                  tooltip={material.price * 50}
                   onClick={() =>
                     act('buy', {
                       quantity: 50,

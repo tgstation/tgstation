@@ -90,11 +90,18 @@
 			trend_string = "up"
 		else if(SSstock_market.materials_trends[traded_mat] == -1)
 			trend_string = "down"
+		var/color_string = ""
+		if(traded_mat.color)
+			color_string = traded_mat.color
+		else if (traded_mat.greyscale_colors)
+			///We need to cut this string down to 7 characters, no transparency
+			color_string = splicetext(traded_mat.greyscale_colors, 6, length(traded_mat.greyscale_colors), "") //slice it to a standard 6 char hex
 		material_data += list(list(
 			"name" = traded_mat.name,
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
+			"color" = color_string,
 			))
 
 	can_buy_via_budget = FALSE
@@ -112,10 +119,11 @@
 	else
 		balance = used_id_card?.registered_account?.account_balance
 
-	data["materials"] = material_data //+
-	data["creditBalance"] = balance //+
+	data["materials"] = material_data
+	data["creditBalance"] = balance
 	data["orderingPrive"] = ordering_private
 	data["canOrderCargo"] = can_buy_via_budget
+	data["eventString"] = SSstock_market.news_string
 	return data
 
 /obj/machinery/materials_market/ui_act(action, params)
@@ -156,10 +164,16 @@
 			if(cost > account_payable.account_balance)
 				to_chat(living_user, span_warning("You don't have enough money to buy that!"))
 				return
-			account_payable.adjust_money(-cost, "Materials Market Purchase")
 			var/list/things_to_order = list()
 			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
+			//If we already have a custom order on SSshuttle, we should add the things to order to that order
+			for(var/datum/supply_order/order in SSshuttle.shopping_list)
+				if(order.orderer == living_user && order.orderer_rank == "Galactic Materials Market")
+					order.append_order(things_to_order, cost)
+					account_payable.adjust_money(-(cost) , "Materials Market Purchase") //Add the extra price to the total
+					return
+			account_payable.adjust_money(-(CARGO_CRATE_VALUE) , "Materials Market Purchase") //Here is where we factor in the base cost of a crate
 			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
 			var/datum/supply_pack/custom/minerals/mineral_pack = new(
 				purchaser = living_user, \

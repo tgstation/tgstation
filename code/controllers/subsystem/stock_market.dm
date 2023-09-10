@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(stock_market)
 
 			materials_quantity += possible_market
 			materials_quantity[possible_market] = initial(possible_market.tradable_base_quantity) + (rand(-initial(possible_market.tradable_base_quantity) * 0.5, initial(possible_market.tradable_base_quantity) * 0.5))
-
+	return SS_INIT_SUCCESS
 /datum/controller/subsystem/stock_market/fire(resumed)
 	for(var/datum/material/market as anything in materials_prices)
 		handle_trends_and_price(market)
