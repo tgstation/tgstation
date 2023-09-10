@@ -81,12 +81,9 @@
 		qdel(src)
 		return
 
-	var/file = W.get_scar_file(BP, add_to_scars)
-	var/keyword = W.get_scar_keyword(BP, add_to_scars)
-
-	description = pick_list(W.get_scar_file(BP, add_to_scars), W.get_scar_keyword(BP, add_to_scars))
+	description = pick_list(scar_file, scar_keyword)
 	if (!description)
-		stack_trace("no valid description found for scar! file: [file] keyword: [keyword] wound: [W.type]")
+		stack_trace("no valid description found for scar! file: [scar_file] keyword: [scar_keyword] wound: [W.type]")
 		description = "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
