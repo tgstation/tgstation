@@ -56,7 +56,8 @@
 
 /obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
 	. = ..()
-	trophies -= gone
+	if(istype(gone, /obj/item/crusher_trophy))
+		trophies -= gone
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
@@ -67,18 +68,33 @@
 
 /obj/item/kinetic_crusher/attackby(obj/item/attack_item, mob/living/user)
 	if(attack_item.tool_behaviour == TOOL_CROWBAR)
-		if(LAZYLEN(trophies))
-			to_chat(user, span_notice("You remove [src]'s trophies."))
-			attack_item.play_tool_sound(src)
-			for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
-				found_trophy.remove_from(src, user)
-		else
-			to_chat(user, span_warning("There are no trophies on [src]."))
-	else if(istype(attack_item, /obj/item/crusher_trophy))
+		if(!LAZYLEN(trophies))
+			balloon_alert(user, "nothing to remove!")
+			return
+		//setup options for the radial menu
+		var/trophy_options = list()
+		var/trophy_instances = list()
+		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
+			var/datum/radial_menu_choice/new_choice = new()
+			new_choice.name = capitalize(found_trophy.name)
+			new_choice.image = image(icon = found_trophy.icon, icon_state = found_trophy.icon_state)
+			new_choice.info = "Causes [found_trophy.effect_desc()]."
+			trophy_options += list("[new_choice.name]" = new_choice)
+			trophy_instances[new_choice.name] = found_trophy
+		//show the radial menu and pick the trophy to remove
+		var/picked_trophy = show_radial_menu(user, src, trophy_options, radius = 40, custom_check = CALLBACK(src, PROC_REF(trophy_removal_check), user), require_near = TRUE, tooltips = TRUE)
+		if(!picked_trophy)
+			return
+		//handle removing the trophy
+		var/obj/item/crusher_trophy/trophy_to_remove = trophy_instances[picked_trophy]
+		attack_item.play_tool_sound(src)
+		trophy_to_remove.remove_from(src, user)
+		return
+	if(istype(attack_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/trophy_to_attach = attack_item
 		trophy_to_attach.add_to(src, user)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
@@ -88,8 +104,8 @@
 	return ..()
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
-	//if(!HAS_TRAIT(src, TRAIT_WIELDED))
-	//	return //it's already dropped by this point, so no feedback/dropping is required
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return //it's already dropped by this point, so no feedback/dropping is required
 
 	//handle trophy attack effects
 	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
@@ -164,6 +180,16 @@
 		charged = TRUE
 		update_appearance()
 		playsound(get_turf(src), 'sound/weapons/kinetic_reload.ogg', 80, TRUE)
+
+///Callback proc to check we're still holding a crowbar to be able to remove a trophy.
+/obj/item/kinetic_crusher/proc/trophy_removal_check(mob/living/user)
+	var/obj/item/held_item = user.get_active_held_item()
+	if(isnull(held_item))
+		return FALSE
+	if(held_item.tool_behaviour != TOOL_CROWBAR)
+		balloon_alert(user, "wield a crowbar!")
+		return FALSE
+	return TRUE
 
 ///Normal-sized crusher for admemery (used in a combat-ready miner outfit)
 /obj/item/kinetic_crusher/compact

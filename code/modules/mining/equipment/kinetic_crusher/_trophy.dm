@@ -34,11 +34,16 @@
 		return
 	crusher.trophies += src
 	crusher.balloon_alert(user, "trophy attached")
+	playsound(crusher, 'sound/items/deconstruct.ogg', 40)
 	return TRUE
 
-///Removes the trophy from the crusher, as well as removing any special properties granted by that trophy
+/**
+ * Removes the trophy from the crusher, as well as removing any special properties granted by that trophy.
+ * Removing the trophy from the crusher's `trophies` is handled by the crusher's `Exited()`
+ */
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	forceMove(get_turf(crusher))
+	balloon_alert(user, "trophy removed")
+	forceMove(drop_location(crusher))
 	return TRUE
 
 ///Special effect to execute upon hitting an enemy in melee with the crusher
