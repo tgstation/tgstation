@@ -119,7 +119,7 @@
 // Path of Knock's blade
 /obj/item/melee/sickly_blade/knock
 	name = "\improper key blade"
-	desc = "A blade, and a key, a key to what?. \
+	desc = "A blade and a key, a key to what? \
 		What grand gates does it open?"
 	icon_state = "key_blade"
 	inhand_icon_state = "key_blade"
