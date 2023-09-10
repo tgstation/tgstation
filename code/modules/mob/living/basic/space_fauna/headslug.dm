@@ -40,10 +40,11 @@
 
 /mob/living/basic/headslug/examine(mob/user)
 	. = ..()
-	if(stat != DEAD && isnull(client))
-		. += span_notice("It appears to be moving around listlessly.")
-	else
-		. += span_warning("It's moving around intelligently!")
+	if(stat != DEAD)
+		if(isnull(client))
+			. += span_notice("It appears to be moving around listlessly.")
+		else
+			. += span_warning("It's moving around intelligently!")
 	if (egg_lain)
 		. += span_notice("Its reproductive equipment appears to have withered.")
 
