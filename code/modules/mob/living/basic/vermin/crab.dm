@@ -1,15 +1,14 @@
 //Look Sir, free crabs!
-/mob/living/simple_animal/crab
+/mob/living/basic/crab
 	name = "crab"
 	desc = "Free crabs!"
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
+
 	speak_emote = list("clicks")
-	emote_hear = list("clicks.")
-	emote_see = list("clacks.")
-	speak_chance = 1
-	turns_per_move = 5
+	melee_damage_lower = 2
+	melee_damage_upper = 2
 	butcher_results = list(/obj/item/food/meat/slab/rawcrab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -17,49 +16,39 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "stomps"
 	response_harm_simple = "stomp"
-	stop_automated_movement = 1
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	var/obj/item/inventory_head
-	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
+	mob_size = MOB_SIZE_SMALL
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	ai_controller = /datum/ai_controller/basic_controller/crab
 
-/mob/living/simple_animal/crab/Initialize(mapload)
+/mob/living/basic/crab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/simple_animal/crab/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
-	//CRAB movement
-	if(!ckey && !stat)
-		if(isturf(loc) && !resting && !buckled) //This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				var/east_vs_west = pick(4, 8)
-				if(Process_Spacemove(east_vs_west))
-					Move(get_step(src,east_vs_west), east_vs_west)
-					turns_since_move = 0
-	regenerate_icons()
+	AddElement(/datum/element/sideway_movement)
+	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_flee_while_injured)
 
 //COFFEE! SQUEEEEEEEEE!
-/mob/living/simple_animal/crab/coffee
+/mob/living/basic/crab/coffee
 	name = "Coffee"
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/crab/jon //holodeck crab
+/mob/living/basic/crab/jon //holodeck crab
 	name = "Jon"
 	real_name = "Jon"
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/crab/evil
+/mob/living/basic/crab/evil
 	name = "Evil Crab"
 	real_name = "Evil Crab"
 	desc = "Unnerving, isn't it? It has to be planning something nefarious..."
@@ -68,7 +57,7 @@
 	icon_dead = "evilcrab_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/kreb
+/mob/living/basic/crab/kreb
 	name = "Kreb"
 	desc = "This is a real crab. The other crabs are simply gubbucks in disguise!"
 	real_name = "Kreb"
@@ -77,10 +66,30 @@
 	icon_dead = "kreb_dead"
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/crab/evil/kreb
+/mob/living/basic/crab/evil/kreb
 	name = "Evil Kreb"
 	real_name = "Evil Kreb"
 	icon_state = "evilkreb"
 	icon_living = "evilkreb"
 	icon_dead = "evilkreb_dead"
 	gold_core_spawnable = NO_SPAWN
+
+///The basic ai controller for crabs
+/datum/ai_controller/basic_controller/crab
+	blackboard = list(
+		BB_BASIC_MOB_FLEEING = FALSE,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/crab,
+	)

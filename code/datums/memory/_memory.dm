@@ -236,7 +236,7 @@
 		/mob/living/basic/carp/magic/chaos,
 		/mob/living/basic/cow,
 		/mob/living/basic/cow/wisdom,
-		/mob/living/simple_animal/crab,
+		/mob/living/basic/crab,
 		/mob/living/basic/spider/giant,
 		/mob/living/basic/spider/giant/hunter,
 		/mob/living/basic/mining/goliath,

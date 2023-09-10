@@ -84,7 +84,7 @@
 	mobtype = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/rabbit,
-		/mob/living/simple_animal/chick/holo,
+		/mob/living/basic/chick/permanent,
 		/mob/living/basic/pet/fox/docile,
 	)
 	mobtype += pick(
@@ -115,4 +115,4 @@
 	mobtype = /mob/living/basic/pet/penguin/baby/permanent
 
 /obj/effect/holodeck_effect/mobspawner/crab/jon
-	mobtype = /mob/living/simple_animal/crab/jon
+	mobtype = /mob/living/basic/crab/jon

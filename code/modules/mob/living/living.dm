@@ -15,6 +15,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
+	voice_type = pick(voice_type2sound) //monkestation edit
 
 /mob/living/prepare_huds()
 	..()
@@ -330,6 +331,7 @@
 		stop_pulling()
 
 	changeNext_move(CLICK_CD_GRABBING)
+	animate_interact(AM, INTERACT_PULL) //monkestatione dit
 
 	if(AM.pulledby)
 		if(!supress_message)
@@ -444,6 +446,7 @@
 		stop_pulling()
 
 /mob/living/stop_pulling()
+	animate_interact(pulling, INTERACT_UNPULL)//monkestation edit
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
 	..()
@@ -662,6 +665,7 @@
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3)
 
 
 /// Proc to append behavior related to lying down.
@@ -1417,7 +1421,7 @@
 				/mob/living/basic/carp/magic/chaos,
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
-				/mob/living/simple_animal/crab,
+				/mob/living/basic/crab,
 				/mob/living/basic/spider/giant,
 				/mob/living/basic/spider/giant/hunter,
 				/mob/living/basic/mining/goliath,

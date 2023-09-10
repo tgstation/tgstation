@@ -395,3 +395,27 @@
   epochayur, mrmelbert:
   - bugfix: RDS no longer tells you when you are rolling a delayed antag.
   - bugfix: You can no longer hear the voice of people using sign language.
+2023-08-27:
+  Glyphee:
+  - rscadd: Goblin Roundstart Race
+  - rscadd: Gobbish Language
+  KittyNoodle:
+  - rscadd: The Lawbringer, a brand new(kinda), replacement to the multiphasic energy
+      gun the hos starts with.
+  MomoBerri:
+  - rscadd: PTL directional signs for the future PTL
+  Salted-Zen:
+  - rscadd: Added new mothlet grenade for Moth traitors at the cost of 4tc. They love
+      to undo your gear with their tiny hands.
+  SeeBeeSee:
+  - rscadd: Added "Girl", "Boy", "Yes-Man", "Boxfort", "Hotdog", and "Terminal" AI
+      sprites from /vg/ as per a PR we had prior to the tgcode rebase
+2023-08-30:
+  Gboster-0:
+  - bugfix: interaction components finally work
+2023-08-31:
+  Gboster-0:
+  - rscadd: Added PTL lasers to all maps
+  - rscadd: Added SMES units to all maps
+  - qol: Deltastations engine no longer loses power 1 nanosecond into the shift
+  - bugfix: fixed north star's engine being hot-wired round-start

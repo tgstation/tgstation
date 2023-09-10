@@ -150,7 +150,7 @@
 			return
 
 	//Call back for item being equipped to drone
-	I.equipped(src, slot)
+	I.on_equipped(src, slot)
 
 /mob/living/basic/possession_holder/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())

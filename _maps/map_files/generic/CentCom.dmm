@@ -6216,7 +6216,7 @@
 /area/centcom/central_command_areas/control)
 "yl" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /turf/open/indestructible/dark,
 /area/centcom/central_command_areas/prison/cells)
 "yn" = (

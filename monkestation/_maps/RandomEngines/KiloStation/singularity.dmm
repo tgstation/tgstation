@@ -208,6 +208,7 @@
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/plasma,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "or" = (
@@ -332,10 +333,6 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
-"xr" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "xs" = (
 /obj/structure/cable,
@@ -508,6 +505,7 @@
 /area/station/engineering/supermatter/room)
 "JC" = (
 /obj/structure/window/plasma,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "JH" = (
@@ -543,6 +541,7 @@
 	},
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "LZ" = (
@@ -590,6 +589,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"NS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/directions/ptl/directional/east,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "OT" = (
 /obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating,
@@ -725,7 +729,6 @@
 "WU" = (
 /obj/structure/cable,
 /obj/machinery/light/blacklight/directional/north,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "WZ" = (
@@ -1205,7 +1208,7 @@ xG
 xG
 kI
 re
-Ii
+NS
 oe
 RN
 tB
@@ -1227,8 +1230,8 @@ Qn
 nb
 dq
 mS
-xr
-xr
+zs
+zs
 fx
 Ar
 zs

@@ -90,6 +90,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["frills"] = "None"
 	target.dna.features["horns"] = "None"
 	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
+	target.dna.features["mcolor_secondary"] = COLOR_VIBRANT_LIME
 	target.dna.features["moth_antennae"] = "Plain"
 	target.dna.features["moth_markings"] = "None"
 	target.dna.features["moth_wings"] = "Plain"
@@ -107,6 +108,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["anime_bottom"] = "None" //Monkestation Addition
 	target.dna.features["arachnid_appendages"] = "Long" //Monkestation Addition
 	target.dna.features["arachnid_chelicerae"] = "Basic" //Monkestation Addition
+	target.dna.features["goblin_ears"] = "Normal" //Monkestation Addition
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
@@ -192,3 +194,5 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /mob/living/carbon/human/dummy/extra_tall
 	bound_height = 64
+
+	var/list/extra_bodyparts = list()

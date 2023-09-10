@@ -85,6 +85,12 @@
 		"Hmm mmm mmm!",
 	)
 
+/datum/ai_planning_subtree/random_speech/chick
+	speech_chance = 4
+	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
+	emote_hear = list("cheeps.")
+	emote_see = list("pecks at the ground.","flaps her tiny wings.")
+
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
@@ -98,6 +104,12 @@
 /datum/ai_planning_subtree/random_speech/cow/wisdom/New()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
+
+/datum/ai_planning_subtree/random_speech/deer
+	speech_chance = 1
+	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
 
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
@@ -149,6 +161,11 @@
 	emote_hear = list("howls.", "barks.", "screams.")
 	emote_see = list("shakes their head.", "shivers.")
 	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
 
 /datum/ai_planning_subtree/random_speech/penguin
 	speech_chance = 5

@@ -14,3 +14,9 @@
 ## Servers that do not match this network-name will have their messages discarded.
 ## Leaving this commented will allow all messages through, regardless of network.
 #CROSS_COMMS_NETWORK default_network
+
+## Github Fine-Grained API Key with AT LEAST `issue.write` scope for the target repository.
+#ISSUE_KEY github_pat_EXAMPLE
+
+##Github API 'slug' for issue reporting, format owner/repo
+ISSUE_SLUG Monkestation/Monkestation2.0

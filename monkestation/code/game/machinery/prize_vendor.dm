@@ -149,7 +149,7 @@
 								  /mob/living/basic/pet/fox = 3,
 								  /mob/living/simple_animal/pet/gondola = 1,
 								  /mob/living/basic/pet/penguin/emperor = 2,
-								  /mob/living/simple_animal/crab = 2,
+								  /mob/living/basic/crab = 2,
 								  /mob/living/basic/axolotl = 2,
 								  /mob/living/basic/frog = 2,
 								  /mob/living/basic/mothroach = 3,
