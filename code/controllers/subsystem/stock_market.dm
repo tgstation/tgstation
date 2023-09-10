@@ -46,11 +46,18 @@ SUBSYSTEM_DEF(stock_market)
 	var/trend_life = materials_trend_life[mat]
 
 	var/price_units = materials_prices[mat]
-	var/price_minimum = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5
-	var/price_maximum = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3
+	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
+	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
 
 	var/stock_quantity = materials_quantity[mat]
+
+	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)) //We hardset to the worst possible price and lowest possible impact if sold
+		materials_prices[mat] =  price_minimum
+		materials_quantity[mat] = stock_quantity * 2
+		materials_trends[mat] = MARKET_TREND_DOWNWARD
+		trend_life = materials_trend_life[mat] = 1
+		return
 
 	if(trend_life == 0)
 		///We want to scale our trend so that if we're closer to our minimum or maximum price, we're more likely to trend the other way.

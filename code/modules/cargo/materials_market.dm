@@ -94,7 +94,6 @@
 		if(traded_mat.color)
 			color_string = traded_mat.color
 		else if (traded_mat.greyscale_colors)
-			///We need to cut this string down to 7 characters, no transparency
 			color_string = splicetext(traded_mat.greyscale_colors, 6, length(traded_mat.greyscale_colors), "") //slice it to a standard 6 char hex
 		material_data += list(list(
 			"name" = traded_mat.name,
@@ -119,11 +118,15 @@
 	else
 		balance = used_id_card?.registered_account?.account_balance
 
+	var/market_crashing = FALSE
+	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
+		market_crashing = TRUE
+
+	data["catastrophe"] = market_crashing
 	data["materials"] = material_data
 	data["creditBalance"] = balance
 	data["orderingPrive"] = ordering_private
 	data["canOrderCargo"] = can_buy_via_budget
-	data["eventString"] = SSstock_market.news_string
 	return data
 
 /obj/machinery/materials_market/ui_act(action, params)

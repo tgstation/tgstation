@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Stack, Button } from '../components';
+import { Section, Stack, Button, Modal } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
@@ -9,6 +9,7 @@ type Data = {
   canOrderCargo: BooleanLike;
   creditBalance: number;
   materials: Material[];
+  catastrophe: BooleanLike;
 };
 
 type Material = {
@@ -23,10 +24,17 @@ type Material = {
 export const MatMarket = (props, context) => {
   const { act, data } = useBackend<Data>(context); // this will tell your editor that data is the type listed above
 
-  const { orderingPrive, canOrderCargo, creditBalance, materials = [] } = data; // better to destructure here (style nit)
+  const {
+    orderingPrive,
+    canOrderCargo,
+    creditBalance,
+    materials = [],
+    catastrophe,
+  } = data; // better to destructure here (style nit)
   return (
     <Window width={700} height={400}>
       <Window.Content scrollable>
+        {!!catastrophe && <MarketCrashModal />}
         <Section
           title="Materials for sale"
           buttons={
@@ -92,6 +100,7 @@ export const MatMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
+                  disabled={catastrophe === 1}
                   tooltip={material.price * 1}
                   onClick={() =>
                     act('buy', {
@@ -102,6 +111,7 @@ export const MatMarket = (props, context) => {
                   Buy 1
                 </Button>
                 <Button
+                  disabled={catastrophe === 1}
                   tooltip={material.price * 5}
                   onClick={() =>
                     act('buy', {
@@ -112,6 +122,7 @@ export const MatMarket = (props, context) => {
                   5
                 </Button>
                 <Button
+                  disabled={catastrophe === 1}
                   tooltip={material.price * 10}
                   onClick={() =>
                     act('buy', {
@@ -122,6 +133,7 @@ export const MatMarket = (props, context) => {
                   10
                 </Button>
                 <Button
+                  disabled={catastrophe === 1}
                   tooltip={material.price * 25}
                   onClick={() =>
                     act('buy', {
@@ -132,6 +144,7 @@ export const MatMarket = (props, context) => {
                   25
                 </Button>
                 <Button
+                  disabled={catastrophe === 1}
                   tooltip={material.price * 50}
                   onClick={() =>
                     act('buy', {
@@ -147,5 +160,20 @@ export const MatMarket = (props, context) => {
         ))}
       </Window.Content>
     </Window>
+  );
+};
+
+const MarketCrashModal = (props, context) => {
+  const { act, data } = useBackend(context);
+  return (
+    <Modal textAlign="center" mr={1.5}>
+      ATTENTION! THE MARKET HAS CRASHED
+      <br /> <br />
+      ALL MATERIALS ARE NOW WORTHLESS
+      <br /> <br />
+      TRADING CIRCUIT BREAKER HAS BEEN ENGAGED FOR ALL TRADERS
+      <br /> <br />
+      <b>DO NOT PANIC, WE ARE FIXING THIS</b>
+    </Modal>
   );
 };
