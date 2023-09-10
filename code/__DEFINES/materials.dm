@@ -76,9 +76,25 @@
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of alien alloy.
 #define MATERIAL_SLOWDOWN_ALIEN_ALLOY (0.1)
 
-// rarity values.
+// Rarity values of the max 15 vents per map.
+/// The quantity of vents that can spawn with a common material. (Iron and Glass)
 #define MATERIAL_RARITY_COMMON 12
+/// The quantity of vents that can spawn with a semiprecious material. (Silver and Titanium)
 #define MATERIAL_RARITY_SEMIPRECIOUS 8
+/// The quantity of vents that can spawn with a precious material. (Gold and Uranium)
 #define MATERIAL_RARITY_PRECIOUS 5
+/// The quantity of vents that can spawn with a rare material. (Diamond and Bluespace Crystal)
 #define MATERIAL_RARITY_RARE 3
+/// The quantity of vents that can spawn with an exotic material. (Plastic, as oil has not been discovered on lavaland yet)
 #define MATERIAL_RARITY_UNDISCOVERED 1
+
+
+//Stock market stock values.
+/// How much quantity of a material stock exists for common materials like iron & glass.
+#define MATERIAL_QUANTITY_COMMON 25000
+/// How much quantity of a material stock exists for uncommon materials like silver & titanium.
+#define MATERIAL_QUANTITY_UNCOMMON 10000
+/// How much quantity of a material stock exists for rare materials like gold, & diamond.
+#define MATERIAL_QUANTITY_RARE 2500
+/// How much quantity of a material stock exists for exotic materials like diamond & bluespace crystals.
+#define MATERIAL_QUANTITY_EXOTIC 500
