@@ -40,7 +40,7 @@
 
 /datum/loadout_item/pocket_items/donator/blahaj
 	name = "Pet Delivery Beacon"
-	item_path = /mob/living/basic/lizard/blahaj
+	item_path = /obj/item/choice_beacon/pet/donator/blahaj
 	requires_purchase = FALSE
 	ckeywhitelist = list("ruby_flamewing")
 

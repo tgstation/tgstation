@@ -5727,6 +5727,7 @@
 #include "monkestation\code\modules\displacement\displacements\assets.dm"
 #include "monkestation\code\modules\displacement\displacements\large\apply_large.dm"
 #include "monkestation\code\modules\donator\code\datum\loadout.dm"
+#include "monkestation\code\modules\donator\code\datum\store_items.dm"
 #include "monkestation\code\modules\donator\code\item\choice_beacon.dm"
 #include "monkestation\code\modules\displacement\displacements\large\assets.dm"
 #include "monkestation\code\modules\donator\code\item\clothing.dm"
