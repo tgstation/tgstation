@@ -302,7 +302,8 @@
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
-	new /obj/item/light/tube(loc)
+	var/obj/item/light/tube/our_light = new(loc)
+	our_light.shatter()
 
 	qdel(src)
 
