@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - admin: "The \"Create Command Report\" verb now has the option to not print report papers at communications consoles."
