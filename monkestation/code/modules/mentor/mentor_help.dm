@@ -104,7 +104,6 @@
 			var/datum/discord_embed/embed = format_mhelp_embed(msg, id)
 			embed.content = extra_message
 			send2mentorchat_webhook(embed, key)
-
 	return
 
 /proc/key_name_mentor(whom, include_link = null, include_name = TRUE, include_follow = TRUE, char_name_only = TRUE)
@@ -112,7 +111,6 @@
 	var/client/chosen_client
 	var/key
 	var/ckey
-
 	if(!whom)
 		return "*null*"
 
@@ -132,6 +130,8 @@
 		chosen_client = GLOB.directory[ckey]
 		if(chosen_client)
 			user = chosen_client.mob
+	else if(findtext(whom, "Discord"))
+		return "<a href='?_src_=mentor;mentor_msg=[whom];[MentorHrefToken(TRUE)]'>"
 	else
 		return "*invalid*"
 
