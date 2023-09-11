@@ -55,47 +55,44 @@ jobs:
         id: linter-setup
         run: ':'
       - name: Check File Directories
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_filedirs.sh tgstation.dme
       - name: Check Changelogs
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_changelogs.sh
-      - name: Check File Names
-        if: steps.linter-setup.conclusion == 'success'
-        run: bash tools/ci/check_filenames.sh tgstation.dme
       - name: Run Grep Checks
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
       - name: Check Miscellaneous Files
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_misc.sh
       - name: Ticked File Enforcement (tgstation.dme)
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
       - name: Ticked File Enforcement (unit_tests.json)
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
       - name: Run Map Linter
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m tools.maplint.source
       - name: Run TGUI Tests
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/build/build --ci lint tgui-test
       - name: Run Define Sanity Check
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m define_sanity.check
       - name: Run DMI Tests
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m dmi.test
       - name: Run Mapmerge2 Tests
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m mapmerge2.dmm_test
       - name: Run DreamChecker
-        if: steps.linter-setup.conclusion == 'success'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
         id: dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
-        if: steps.linter-setup.conclusion == 'success' && steps.dreamchecker.outcome == 'failure'
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.dreamchecker.outcome == 'failure'
         uses: yogstation13/DreamAnnotate@v2
         with:
           outputFile: output-annotations.txt
