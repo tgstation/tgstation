@@ -49,6 +49,16 @@
 	unsync_ship()
 	return ..()
 
+/obj/machinery/power/shuttle_engine/examine(mob/user)
+	. = ..()
+	switch(engine_state)
+		if(ENGINE_UNWRENCHED)
+			. += span_notice("\The [src] is unbolted from the floor. It needs to be wrenched to the floor to be installed.")
+		if(ENGINE_WRENCHED)
+			. += span_notice("\The [src] is bolted to the floor. It needs to be welded to the floor to finish installation.")
+		if(ENGINE_WELDED)
+			. += span_notice("\The [src] is welded to the floor. It is ready to be used.")
+
 /**
  * Called on destroy and when we need to unsync an engine from their ship.
  */
