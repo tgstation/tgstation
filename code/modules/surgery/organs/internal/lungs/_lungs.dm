@@ -827,7 +827,7 @@
 /obj/item/organ/internal/lungs/slime/proc/consume_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, plasma_pp, old_plasma_pp)
 	var/plasma_breathed = breath.gases[/datum/gas/plasma][MOLES]
 	breath.gases[/datum/gas/plasma][MOLES] -= plasma_breathed
-	breather.blood_volume += min(plasma_breathed * 30, 10) // ~10/s when breathing literally nothing but plasma, which will suffocate you.
+	breather.blood_volume += min(plasma_breathed * 30, 50)
 
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
