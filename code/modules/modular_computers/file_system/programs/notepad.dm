@@ -13,8 +13,8 @@
 		bringing you the best in electronics and software since 2467!\n\To help with navigation, we have provided the following definitions:\n\
 		Fore - Toward front of ship\n\
 		Aft - Toward back of ship\n\
-		Port - Left\n\
-		Starboard - Right\n\
+		Port - Left side of ship\n\
+		Starboard - Right side of ship\n\
 		Quarter - Either sides of Aft\n\
 		Bow - Either sides of Fore"
 
