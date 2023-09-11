@@ -31,6 +31,14 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	/// Simple description, shortened for clarity if defined. Otherwise just takes the normal desc in the analyzer proc.
+	var/simple_desc
+	/// Simple analyzer's wound description, which focuses less on the clinical aspect of the wound and more on easily readable treatment instructions.
+	var/simple_treat_text = "Go to medbay idiot"
+	/// Improvised remedies indicated by the first aid analyzer only.
+	var/homemade_treat_text = "Remember to drink lots of water!"
+
+
 	/// If this wound can generate a scar.
 	var/can_scar = TRUE
 
@@ -66,7 +74,7 @@
 	/// Using this limb in a do_after interaction will multiply the length by this duration (arms)
 	var/interaction_efficiency_penalty = 1
 	/// Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).
-	var/damage_mulitplier_penalty = 1
+	var/damage_multiplier_penalty = 1
 	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
 	/// If this wound has a limp_slowdown and is applied to a leg, it has this chance to limp each step
@@ -547,7 +555,7 @@
 	return base_xadone_progress_to_qdel * severity
 
 /// When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future
-/datum/wound/proc/on_synthflesh(power)
+/datum/wound/proc/on_synthflesh(reac_volume)
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
@@ -641,18 +649,21 @@
 	return "[desc]."
 
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
-/datum/wound/proc/severity_text()
+/datum/wound/proc/get_simple_scanner_description(mob/user)
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+/datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate"
+			return "Moderate" + (simple ? "!" : "")
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe"
+			return "Severe" + (simple ? "!!" : "")
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical"
+			return "Critical" + (simple ? "!!!" : "")
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".

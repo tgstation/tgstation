@@ -35,8 +35,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_EXPLOSIVE
 
 /datum/chemical_reaction/sodiumchloride
-	results = list(/datum/reagent/consumable/salt = 3)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
+	results = list(/datum/reagent/consumable/salt = 2)
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD
 
 /datum/chemical_reaction/stable_plasma
@@ -769,6 +769,11 @@
 	required_reagents = list(/datum/reagent/water/hollowwater = 1)
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_PLANT | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/saltwater
+	results = list(/datum/reagent/water/salt = 2)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/consumable/salt = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRINK | REACTION_TAG_ORGAN
 
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
