@@ -41,8 +41,6 @@ SUBSYSTEM_DEF(security_level)
 
 	announce_security_level(selected_level) // We want to announce BEFORE updating to the new level
 
-	var/old_shuttle_call_time_mod = current_security_level.shuttle_call_time_mod // Need this before we set the new one
-
 	SSsecurity_level.current_security_level = selected_level
 
 	if(selected_level.looping_sound)
