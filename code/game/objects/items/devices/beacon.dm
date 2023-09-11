@@ -31,7 +31,7 @@
 		icon_state = "beacon"
 		GLOB.teleportbeacons += src
 	else
-		src.turn_off()
+		turn_off()
 	to_chat(user, span_notice("You [enabled ? "enable" : "disable"] the beacon."))
 	return
 
