@@ -210,7 +210,7 @@
 	var/probability = 5
 
 /obj/effect/step_trigger/sound_effect/something_wicked/Trigger(mob/A)
-	if(!A.client || !QDELETED(src))
+	if(!A.client || QDELETED(src))
 		return
 	if(!prob(probability))
 		qdel(src)
