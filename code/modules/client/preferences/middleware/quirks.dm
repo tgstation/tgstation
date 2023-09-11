@@ -37,7 +37,6 @@
 			"description" = initial(quirk.desc),
 			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
-			"value" = initial(quirk.value),
 		)
 
 	return list(

@@ -48,7 +48,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	wait = 1 SECONDS
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
-	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
@@ -75,7 +74,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 
 		quirks[initial(quirk_type.name)] = quirk_type
-		quirk_points[initial(quirk_type.name)] = initial(quirk_type.value)
 
 		var/hardcore_value = initial(quirk_type.hardcore_value)
 
@@ -101,55 +99,20 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
  *Randomises the quirks for a specified mob
  */
 /datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user)
-	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
+	var/total_quirks_we_want_to_add = rand(1, MAX_QUIRKS) //How many quirks we want to add
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
-	var/good_count = 0 //Maximum of 6 good perks
-	var/score //What point score we're at
 	///Cached list of possible quirks
 	var/list/possible_quirks = quirks.Copy()
 	//Create a random list of stuff to start with
-	while(bonus_quirks > added_quirk_count)
+	while(total_quirks_we_want_to_add > added_quirk_count)
 		var/quirk = pick(possible_quirks) //quirk is a string
 		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
 			possible_quirks -= quirk
 			continue
-		if(quirk_points[quirk] > 0)
-			good_count++
-		score += quirk_points[quirk]
 		quirks_to_add += quirk
 		possible_quirks -= quirk
 		added_quirk_count++
-
-	//But lets make sure we're balanced
-	while(score > 0)
-		if(!length(possible_quirks))//Lets not get stuck
-			break
-		var/quirk = pick(quirks)
-		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
-			possible_quirks -= quirk
-			continue
-		if(!quirk_points[quirk] < 0)//negative only
-			possible_quirks -= quirk
-			continue
-		good_count++
-		score += quirk_points[quirk]
-		quirks_to_add += quirk
-
-	//And have benefits too
-	while(score < 0 && good_count <= MAX_QUIRKS)
-		if(!length(possible_quirks))//Lets not get stuck
-			break
-		var/quirk = pick(quirks)
-		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
-			possible_quirks -= quirk
-			continue
-		if(!quirk_points[quirk] > 0) //positive only
-			possible_quirks -= quirk
-			continue
-		good_count++
-		score += quirk_points[quirk]
-		quirks_to_add += quirk
 
 	for(var/datum/quirk/quirk as anything in user.quirks)
 		if(quirk.name in quirks_to_add) //Don't delete ones we keep
@@ -166,8 +129,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// Expects all quirk names to be unique, but makes no other expectations.
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
-	var/list/positive_quirks = list()
-	var/balance = 0
+	var/list/total_quirks = list()
 
 	var/list/all_quirks = get_quirks()
 
@@ -196,26 +158,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if (blacklisted)
 			continue
 
-		var/value = initial(quirk.value)
-		if (value > 0)
-			if (positive_quirks.len == MAX_QUIRKS)
-				continue
+		if (total_quirks.len == MAX_QUIRKS)
+			continue
 
-			positive_quirks[quirk_name] = value
-
-		balance += value
+		total_quirks += quirk_name
 		new_quirks += quirk_name
-
-	if (balance > 0)
-		var/balance_left_to_remove = balance
-
-		for (var/positive_quirk in positive_quirks)
-			var/value = positive_quirks[positive_quirk]
-			balance_left_to_remove -= value
-			new_quirks -= positive_quirk
-
-			if (balance_left_to_remove <= 0)
-				break
 
 	// It is guaranteed that if no quirks are invalid, you can simply check through `==`
 	if (new_quirks.len == quirks.len)

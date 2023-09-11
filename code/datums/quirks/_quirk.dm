@@ -5,8 +5,6 @@
 	var/name = "Test Quirk"
 	/// The description of the quirk
 	var/desc = "This is a test quirk."
-	/// What the quirk is worth in preferences, zero = neutral / free
-	var/value = 0
 	/// Flags related to this quirk.
 	var/quirk_flags = QUIRK_HUMAN_ONLY
 	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
