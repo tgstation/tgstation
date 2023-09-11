@@ -48,15 +48,15 @@
 		if(!ismob(nearby))
 			. += nearby
 			continue
-			var/mob/living/nearby_mob = nearby
-			if(!isturf(nearby_mob.loc))
-				continue
-			if(IS_HERETIC_OR_MONSTER(nearby_mob))
-				continue
-			if(nearby_mob.can_block_magic(antimagic_flags))
-				continue
+		var/mob/living/nearby_mob = nearby
+		if(!isturf(nearby_mob.loc))
+			continue
+		if(IS_HERETIC_OR_MONSTER(nearby_mob))
+			continue
+		if(nearby_mob.can_block_magic(antimagic_flags))
+			continue
 
-		. += nearby
+		. += nearby_mob
 
 /datum/action/cooldown/spell/aoe/wave_of_desperation/cast_on_thing_in_aoe(atom/victim, atom/caster)
 	if(!ismob(victim))

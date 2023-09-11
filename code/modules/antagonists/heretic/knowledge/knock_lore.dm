@@ -104,7 +104,7 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/riteofpassage)
+	next_knowledge = list(/datum/heretic_knowledge/limited_amount/rite_of_passage)
 	cost = 1
 	route = PATH_KNOCK
 
