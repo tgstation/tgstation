@@ -383,7 +383,7 @@
 /// No default message is sent from the shock
 #define SHOCK_SUPPRESS_MESSAGE (1 << 4)
 /// No skeleton animation if a human was shocked
-#define SHOCK_NOHUMANANIM (1 << 5)
+#define SHOCK_NO_HUMAN_ANIM (1 << 5)
 /// Ignores TRAIT_STUNIMMUNE
 #define SHOCK_IGNORE_IMMUNITY (1 << 6)
 /// Prevents the immediate stun, instead only gives the delay

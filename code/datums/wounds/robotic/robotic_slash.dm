@@ -430,7 +430,7 @@
 	if (!stun)
 		flags |= SHOCK_NOSTUN
 	if (!animation)
-		flags |= SHOCK_NOHUMANANIM
+		flags |= SHOCK_NO_HUMAN_ANIM
 	if (!message)
 		flags |= SHOCK_SUPPRESS_MESSAGE
 		if (tell_victim_if_no_message && target == victim)
