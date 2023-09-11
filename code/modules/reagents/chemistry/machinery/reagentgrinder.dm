@@ -329,7 +329,7 @@
 	operate_for(60)
 	warn_of_dust() // don't breathe this.
 	for(var/i in holdingitems)
-		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+		if(beaker.reagents.holder_full())
 			break
 		var/obj/item/I = i
 		if(I.grind_results)
@@ -337,7 +337,10 @@
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
 	if(!I.grind(beaker.reagents, user))
-		to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
+		if(isstack(I))
+			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [I] as possible."))
+		else
+			to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
 		return
 	remove_object(I)
 
