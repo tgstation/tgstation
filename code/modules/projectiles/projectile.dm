@@ -293,7 +293,8 @@
 
 	if(blocked != 100) // not completely blocked
 		var/limb_hit = hit_limb
-		if(damage && L.blood_volume && damage_type == BRUTE && (isnull(hit_limb) || !hit_limb.can_bleed()))
+		var/obj/item/bodypart/hit_bodypart = L.get_bodypart(hit_limb)
+		if(damage && L.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
