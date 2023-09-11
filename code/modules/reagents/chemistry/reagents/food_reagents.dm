@@ -269,6 +269,7 @@
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	creation_purity = 1 // impure base reagents are a big no-no
 	overdose_threshold = 100 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

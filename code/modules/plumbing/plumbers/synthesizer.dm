@@ -51,7 +51,7 @@
 		return
 	if(reagents.total_volume >= amount*seconds_per_tick*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
-	reagents.add_reagent(reagent_id, amount*seconds_per_tick*0.5, added_purity = 1)
+	reagents.add_reagent(reagent_id, amount*seconds_per_tick*0.5)
 	use_power(active_power_usage * amount * seconds_per_tick * 0.5)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
