@@ -44,7 +44,7 @@
 /**
  * Grinds/Juices the atom
  * Arguments
- * * [AM][atom] - the atom to grind
+ * * [AM][atom] - the atom to grind or juice
  */
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)
 	if(machine_stat & NOPOWER)
