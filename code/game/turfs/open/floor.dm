@@ -306,7 +306,7 @@
 					continue
 				balloon_alert(user, "there's already a door!")
 				return FALSE
-			var/obj/structure/door_assembly/assembly = new(src)
+			var/obj/structure/door_assembly/assembly = new (src)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/airlock/glass))
 				assembly.glass = TRUE
 				assembly.glass_type = the_rcd.airlock_type
