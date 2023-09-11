@@ -5462,7 +5462,7 @@
 #include "monkestation\code\game\objects\items\effects\washing_machine.dm"
 #include "monkestation\code\game\objects\items\food\spaghetti.dm"
 #include "monkestation\code\game\objects\items\grenades\monkey_barrel.dm"
-#include "monkestation\code\game\objects\items\guns\pistol.dm"
+#include "monkestation\code\game\objects\items\guns\crank_guns.dm"
 #include "monkestation\code\game\objects\items\guns\shotguns.dm"
 #include "monkestation\code\game\objects\items\guns\SRN.dm"
 #include "monkestation\code\game\objects\items\implants\hardlight.dm"
