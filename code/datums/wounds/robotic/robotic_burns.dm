@@ -14,6 +14,11 @@
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
 
+	simple_desc = "Metals are overheated, increasing damage taken significantly and raising body temperature!"
+	simple_treat_text = "Ideally <b>cryogenics</b>, but any source of <b>low body temperature</b> can work. <b>Fire exinguishers</b> and <b>showers</b> can quickly reduce \
+	the temperature, but <b>will damage the limb</b>. <b>Clothing</b> reduces the water that makes it to the metal, and <b>gauze</b> binds it and <b>reduces</b> the damage taken."
+	homemade_treat_text = "<b>Coffee vendors</b>, when hacked, dispense <b>ice water</b>, which can be used to lower your body temperature!"
+
 	default_scar_file = METAL_SCAR_FILE
 
 	wound_flags = (ACCEPTS_GAUZE) // gauze binds the metal and makes it resistant to thermal shock
@@ -222,9 +227,7 @@
 		replace_wound(new promotes_to(heating_threshold + heating_promote_buffer))
 		return TRUE
 
-/datum/wound/burn/robotic/overheat/get_scanner_description(mob/user)
-	. = ..()
-
+/datum/wound/burn/robotic/overheat/get_wound_status_info()
 	var/current_temp_celcius = round(chassis_temperature - T0C, 0.1)
 	var/current_temp_fahrenheit = round(chassis_temperature * 1.8-459.67, 0.1)
 
@@ -234,14 +237,9 @@
 	var/heat_celcius = round(heating_threshold - T0C, 0.1)
 	var/heat_fahrenheit = round(heating_threshold * 1.8-459.67, 0.1)
 
-	. += "\nIts current temperature is [span_blue("[current_temp_celcius ] &deg;C ([current_temp_fahrenheit] &deg;F)")], \
+	return "Its current temperature is [span_blue("[current_temp_celcius ] &deg;C ([current_temp_fahrenheit] &deg;F)")], \
 	and needs to cool to [span_nicegreen("[cool_celcius] &deg;C ([cool_fahrenheit] &deg;F)")], but \
 	will worsen if heated to [span_purple("[heat_celcius] &deg;C ([heat_fahrenheit] &deg;F)")]."
-
-/datum/wound/burn/robotic/overheat/get_extra_treatment_text()
-	return "Wearing clothing reduces the effects of being sprayed with reagents. \n\
-	Gauze reduces the damage taken from thermal shock. \n\
-	Bodytemp/Cryogenics do not cause thermal shock, only extinguishers/showers."
 
 /datum/wound/burn/robotic/overheat/get_xadone_progress_to_qdel()
 	return INFINITY
@@ -255,7 +253,7 @@
 	treat_text = "Reduction of body temperature to expedite the passive heat dissipation - or, if thermal shock is to be risked, application of a fire extinguisher/shower."
 	severity = WOUND_SEVERITY_MODERATE
 
-	damage_mulitplier_penalty = 1.1 //1.1x damage taken
+	damage_multiplier_penalty = 1.1 //1.1x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 350)
 	starting_temperature_max = (BODYTEMP_NORMAL + 400)
@@ -310,8 +308,7 @@
 	threshold_penalty = 65
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
-
-	damage_mulitplier_penalty = 1.25 // 1.25x damage taken
+	damage_multiplier_penalty = 1.25 // 1.25x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 550)
 	starting_temperature_max = (BODYTEMP_NORMAL + 600)
@@ -360,7 +357,7 @@
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
 
-	damage_mulitplier_penalty = 1.4 //1.4x damage taken
+	damage_multiplier_penalty = 1.4 //1.4x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 1050)
 	starting_temperature_max = (BODYTEMP_NORMAL + 1100)

@@ -649,16 +649,20 @@
 	return "[desc]."
 
 /datum/wound/proc/get_scanner_description(mob/user)
-	var/treatment_text = get_extra_treatment_text()
-	var/treatment_notes = (treatment_text ? "\n\nTreatment notes: [treatment_text]" : "")
-	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text][treatment_notes]"
+	var/wound_status_info = get_wound_status_info()
+	var/wound_status_notes = (wound_status_info ? "\nWound status: [wound_status_info]" : "")
 
-/// An extra bit of treatment text that is only shown on a analyzer's woundscan mode. Lets you put little bits of misc knowledge in without clogging chat on most scans.
-/datum/wound/proc/get_extra_treatment_text()
+	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text][wound_status_notes]"
+
+/// If applicable, should return info relevant to the wound's current state. E.g. burn necrosis
+/datum/wound/proc/get_wound_status_info()
 	return
 
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+	var/wound_status_info = get_wound_status_info()
+	var/wound_status_notes = (wound_status_info ? "\nWound status: [wound_status_info]" : "")
+
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc][wound_status_notes]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>[wound_status_notes]"
 
 /datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)

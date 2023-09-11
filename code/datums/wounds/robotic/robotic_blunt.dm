@@ -448,6 +448,11 @@
 	occur_text = "jostles awkwardly and seems to slightly unfasten"
 	severity = WOUND_SEVERITY_MODERATE
 
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce the impact until it's <b>screws are secured</b> - which is <b>faster</b> if done by \
+	<b>someone else</b>, a <b>roboticist</b>, an <b>engineer</b>, or with a <b>diagnostic HUD</b>."
+	homemade_treat_text = "In a pinch, <b>percussive maintenance</b> can reset the screws - the chance of which is increased if done by <b>someone else</b> or \
+	with a <b>diagnostic HUD</b>!"
+
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
 	treatable_tools = list(TOOL_SCREWDRIVER)
 
@@ -529,6 +534,10 @@
 	examine_desc = "jostles with every move, solder visibly broken"
 	occur_text = "visibly cracks open, solder flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
+
+	simple_treat_text = "<b>Bandage it</b>, <b>walk slowly</b>, or <b>use a roller bed/wheelchair</b> to reduce movement effects, then have a \
+	<b>roboticist/engineer screwdriver/wrench</b> it and then <b>re-solder</b> it. <b>Diagnostic huds</b> make this all easier, and <b>robos/engis</b> have a <b>large boost</b> as well!"
+	homemade_treat_text = "<b>Bone gel</b> can be used instead of a <b>screwdriver/wrench</b> and is <b>guaranteed to work</b> - but it takes <b>time</b> and <b>damage</b>!"
 
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
@@ -714,21 +723,22 @@
 	time_til_next_movement_shake_allowed = null
 	can_do_movement_shake = TRUE
 
-/datum/wound/blunt/robotic/get_extra_treatment_text()
-	return "Walking instead of running, buckling yourself to something, resting, or having no gravity all reduce consequences of movement. \n\
-	Having a diagnostic hud or knowing robo/engi wires increases treatment quality, but self-tending reduces it."
-
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
 	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
 	treat_text = "Reforming of superstructure via either RCD or manual molding, followed by typical treatment of loosened internals. \
 				To manually mold, the limb must be aggressively grabbed and welded held to it to make it malleable (though attacking it til thermal overload may be adequate) \
-				followed by application of a plunger or another aggressive grab to mold the metal, though percussive maintenance may suffice as well at this stage."
+				followed by firmly grasping and molding the limb with heat-resistant gloves."
 	occur_text = "caves in on itself, damaged solder and shrapnel flying out in a miniature explosion"
 	examine_desc = "has caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL
 
 	disabling = TRUE
+
+	simple_treat_text = "<b>Bandaging</b> is useful for reducing <b>dysfunction</b>, and if on the head/chest, <b>walking slowly</b> or <b>using a chair/roller bed</b>. \
+	The superstructure will need to be <b>RCDed</b> or <b>firmly grasped and molded</b> while <b>severely heated</b> \
+	(can be done by firmly grasping and <b>using a heating instrument</b>), then <b>screwed/wrenched</b> or <b>bone gelled</b> and <b>re-soldered</b>."
+	homemade_treat_text = "When the limb is <b>heated</b>, a <b>plunger</b> or <b>percussive maintenance</b> can reform the superstructure!"
 
 	interaction_efficiency_penalty = 2.8
 	limp_slowdown = 8

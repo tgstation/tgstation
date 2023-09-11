@@ -7,6 +7,8 @@
 /datum/wound/electrical_damage/pierce
 	heat_differential_healing_mult = 0.01
 
+	simple_desc = "Electrical conduits have been pierced open, resulting in a fault that <b>slowly</b> intensifies, but with <b>extreme</b> maximum voltage!"
+
 /datum/wound_pregen_data/electrical_damage/pierce
 	abstract = TRUE
 

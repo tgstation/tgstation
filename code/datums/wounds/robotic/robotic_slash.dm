@@ -15,6 +15,10 @@
 /datum/wound/electrical_damage
 	name = "Electrical (Wires) Wound"
 
+	simple_treat_text = "<b>Replacing</b> of broken wiring, or <b>repairing</b> via a wirecutter. <b>Bandaging</b> binds the wiring and reduces intensity buildup, \
+	as does <b>firmly grasping</b> the limb - both the victim and someone else can do this. <b>Roboticists/Engineers</b> get a bonus to treatment, as do <b>diagnostic HUDs</b>."
+	homemade_treat_text = "<b>Sutures</b> can repair the wiring at reduced efficiency, as can <b>retractors</b>. In a pinch, <b>high temperatures</b> can repair the wiring!"
+
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
 	treatable_tools = list(TOOL_WIRECUTTER, TOOL_RETRACTOR)
@@ -258,15 +262,8 @@
 
 	. += extra
 
-/datum/wound/electrical_damage/get_scanner_description(mob/user)
-	. = ..()
-
-	. += "\nFault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("[0]")]% to remove the wound."
-
-/datum/wound/electrical_damage/get_extra_treatment_text()
-	return "Being aggressively grabbed on the afflicted limb halves fault progress. You can also grab it yourself to reduce it a bit less. \n\
-	Lying down halves fault progress. \n\
-	Having a diagnostic hud or knowing robo/engi wires increases treatment quality, but self-tending reduces it."
+/datum/wound/electrical_damage/get_wound_status_info()
+	return "Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("<b>0</b>")]% to remove the wound."
 
 /datum/wound/electrical_damage/get_xadone_progress_to_qdel()
 	return INFINITY
@@ -471,6 +468,7 @@
 // Fast to rise, but lower damage overall
 // Also a bit easy to treat
 /datum/wound/electrical_damage/slash
+	simple_desc = "Wiring has been slashed open, resulting in a fault that <b>quickly</b> intensifies!"
 
 /datum/wound/electrical_damage/slash/moderate
 	name = "Frayed Wiring"
