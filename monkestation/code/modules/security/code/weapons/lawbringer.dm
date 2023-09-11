@@ -337,7 +337,7 @@
 
 /**
  * lawbringer detain mode:
- * shoots 4 20 damage disabler projectiles that ricochet into a nearby human when hitting an object
+ * shoots 4 40 damage disabler projectiles that ricochet into a nearby human when hitting an object
  */
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
