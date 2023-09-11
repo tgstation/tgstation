@@ -397,6 +397,7 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	// At lower pop levels we run a Liner Interpolation against the max threat based proportionally on the number
 	// of players ready. This creates a balanced lorentz curve within a smaller range than 0 to max_threat_level.
 	var/calculated_max_threat = (SSticker.totalPlayersReady < low_pop_player_threshold) ? LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold) : max_threat_level
+	log_dynamic("Calculated maximum threat level based on player count of [SSticker.totalPlayersReady]: [calculated_max_threat]")
 
 	threat_level = lorentz_to_amount(threat_curve_centre, threat_curve_width, calculated_max_threat)
 
