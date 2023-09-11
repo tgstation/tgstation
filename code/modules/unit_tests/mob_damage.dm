@@ -332,7 +332,7 @@
 
 	verify_damage(gusgus, 0)
 
-/datum/unit_test/mob_damage/basic/test_sanity_simple(mob/living/basic/mouse/gray/gusgus)
+/datum/unit_test/mob_damage/basic/test_sanity_complex(mob/living/basic/mouse/gray/gusgus)
 	var/damage_returned
 	// overall damage procs
 
