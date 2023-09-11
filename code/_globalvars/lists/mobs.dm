@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 /proc/get_crewmember_minds()
 	var/list/minds = list()
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind = target.mind_ref
+		var/datum/mind/mind = target.mind_ref.resolve()
 		if(mind)
 			minds += mind
 	return minds
