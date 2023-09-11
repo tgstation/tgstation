@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/pointed/apetra_vulnera
 	name = "Apetra Vulnera"
-	desc = "Causes severe bleeding on a limb of a target that has above 15 brute. If there are no such parts, applies a random wound."
+	desc = "Causes severe bleeding on every limb of a target which has more than 15 brute damage. \
+		Wounds a random limb if no limb is sufficiently damaged."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

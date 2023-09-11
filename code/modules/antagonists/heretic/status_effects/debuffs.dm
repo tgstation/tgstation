@@ -203,7 +203,7 @@
 
 /atom/movable/screen/alert/status_effect/heretic_lastresort
 	name = "Last Resort"
-	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground, run to safety!"
+	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
 	icon_state = "lastresort"
 
 /datum/status_effect/heretic_lastresort/on_apply()

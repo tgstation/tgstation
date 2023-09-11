@@ -1,8 +1,9 @@
 /datum/action/cooldown/spell/caretaker
 	name = "Caretaker’s Last Refuge"
-	desc = "Makes you transparent and not dense.  Cannot be used near living sentient beings. \
-		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
-		You are also invincible, but pretty much cannot hurt anyone. Cancelled by being hit with an antimagic item."
+	desc = "Shifts you into the Caretaker's Refuge, rendering you translucent and intangible. \
+		While in the Refuge your movement is unrestricted, but you cannot use your hands or cast any spells. \
+		You cannot enter the Refuge while near other sentient beings, \
+		and you can be removed from it upon contact with antimagical artifacts."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -15,7 +16,6 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	
-	var/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
 	var/caretaking = FALSE
 
 /datum/action/cooldown/spell/caretaker/Remove(mob/living/remove_from)
@@ -30,7 +30,7 @@
 	. = ..()
 	for(var/mob/living/alive in orange(5, owner))
 		if(alive.stat != DEAD && alive.client)
-			owner.balloon_alert(owner, "there are heathens!")
+			owner.balloon_alert(owner, "other minds nearby!")
 			return FALSE
 
 	if(caretaking)

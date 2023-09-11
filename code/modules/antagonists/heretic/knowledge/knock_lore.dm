@@ -26,8 +26,8 @@
 /datum/heretic_knowledge/limited_amount/starting/base_knock
 	name = "A Locksmith’s Secret"
 	desc = "Opens up the Path of Knock to you. \
-		Allows you to transmute a knife and a crowbar a Key Blade. \
-		You can only create two at a time, and they function as fast crowbars."
+		Allows you to transmute a knife and a crowbar into a Key Blade. \
+		You can only create two at a time and they function as fast crowbars."
 	gain_text = "The Knock permits no seal and no isolation. It thrusts us gleefully out of the safety of ignorance."
 	next_knowledge = list(/datum/heretic_knowledge/knock_grasp)
 	required_atoms = list(
@@ -41,13 +41,13 @@
 /datum/heretic_knowledge/knock_grasp
 	name = "Grasp of Knock"
 	desc = "Your mansus grasp allows you to access anything! Right click on an airlock or a locker to force it open. \
-		DNA locked mechs will remove the lock and force the pilot out. Works on consoles. \
+		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
 	next_knowledge = list(
-	/datum/heretic_knowledge/key_ring,
-	/datum/heretic_knowledge/medallion,
-	/datum/heretic_knowledge/codex_cicatrix,
+		/datum/heretic_knowledge/key_ring,
+		/datum/heretic_knowledge/medallion,
+		/datum/heretic_knowledge/codex_cicatrix,
 	)
 	cost = 1
 	route = PATH_KNOCK
@@ -108,9 +108,9 @@
 	cost = 1
 	route = PATH_KNOCK
 
-/datum/heretic_knowledge/limited_amount/riteofpassage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
+/datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create Consecrated Lintel. \
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Lintel. \
 		It can materialize a barricade at range, that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
@@ -125,9 +125,9 @@
 
 /datum/heretic_knowledge/mark/knock_mark
 	name = "Mark of Knock"
-	desc = "Your Mansus Grasp now applies the Mark of Knock. Attack a marked person to corrupt access on \
-		all of their keycards for the duration of the mark. \
-		This will make it so that they have no access whatsoever, and even public access doors will deny their passage."
+	desc = "Your Mansus Grasp now applies the Mark of Knock. \
+		Attack a marked person to bar them from all passages for the duration of the mark. \
+		This will make it so that they have no access whatsoever, even public access doors will reject them."
 	gain_text = "Their requests for passage will remain unheeded."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/knock)
 	route = PATH_KNOCK
@@ -168,7 +168,7 @@
 	name = "Caretaker’s Last Refuge"
 	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
-		You are also invincible, but pretty much cannot hurt anyone. Cancelled by being hit with an anti-magic item."
+		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
 	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
 	route = PATH_KNOCK
@@ -180,12 +180,10 @@
 	desc = "The ascension ritual of the Path of Knock. \
 		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
 		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Spider Door. \
-		That means where this rune is completed, a big tear is placed. \
-		All spirits will be asked to be summoned as an eldritch being. \
-		Additionally, this tear can spew infinite amounts of eldritch monsters, \
-		and can create smaller Flesh Worms. \
-		Also, these monsters should be bound to you, but dont expect much."
+		and in addition, create a tear to the Spider Door; \
+		a tear in reality located at the site of this ritual. \
+		Eldritch creatures will endlessly pour from this rift \
+		who are bound to obey your instructions."
 	gain_text = "With her knowledge, and what I had seen, I knew what to do. \
 		I had to open the gates, with the holes in my foes as Ways! \
 		Reality will soon be torn, the Spider Gate opened! WITNESS ME!"

@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/burglar_finesse
 	name = "Burglar's Finesse"
-	desc = "Steal a random item from the victims backpack, or any other storage item if not found."
+	desc = "Steal a random item from the victim's backpack, or any other storage item if they are not wearing a backpack."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -26,10 +26,10 @@
 		return FALSE
 
 	var/obj/storage_item = cast_on.get_item_by_slot(ITEM_SLOT_BACK)
-	if(!storage_item)
+	if(isnull(storage_item))
 		storage_item = locate(/obj/item/storage) in cast_on.contents
 	
-	if(!storage_item) //if we still didnt find one
+	if(isnull(storage_item)) //if we still didnt find one
 		return FALSE
 
 	var/item = pick(storage_item.contents)

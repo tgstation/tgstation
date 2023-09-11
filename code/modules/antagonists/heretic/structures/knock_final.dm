@@ -23,6 +23,7 @@
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - /mob/living/simple_animal/hostile/heretic_summon/armsy/prime
 	if(ascendant)
 		ascendee = ascendant
+	SSpoints_of_interest.make_point_of_interest(src)
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
 /obj/structure/knock_tear/proc/poll_ghosts()

@@ -241,11 +241,10 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
 	alert_type = null
-	var/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
 
 /datum/status_effect/caretaker_refuge/on_apply()
-	for(var/trait in caretaking_traits)
-		ADD_TRAIT(owner, trait, MAGIC_TRAIT)
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	owner.status_flags |= GODMODE
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
@@ -255,8 +254,7 @@
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
-	for(var/trait in caretaking_traits)
-		REMOVE_TRAIT(owner, trait, MAGIC_TRAIT)
+	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	owner.status_flags &= ~GODMODE
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
@@ -264,9 +262,9 @@
 	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
 	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
 	owner.visible_message(
-			span_warning("The haze around [owner] disappears, leaving them materialized!"),
-			span_notice("You exit the refuge."),
-		)
+		span_warning("The haze around [owner] disappears, leaving them materialized!"),
+		span_notice("You exit the refuge."),
+	)
 
 /datum/status_effect/caretaker_refuge/get_examine_text()
 	return span_warning("[owner.p_Theyre()] enveloped in an unholy haze!")

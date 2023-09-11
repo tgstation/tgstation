@@ -1,6 +1,6 @@
 /obj/effect/knock_portal
 	name = "crack in reality"
-	desc = "A crack, seeing how deep it is is beyond your comprehension and your eyes hurt by looking at it. Definently not safe."
+	desc = "A crack in space, impossibly deep and painful to the eyes. Definitely not safe."
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "realitycrack"
 	light_system = STATIC_LIGHT
@@ -41,7 +41,7 @@
 	return ..()
 
 /obj/effect/knock_portal/proc/teleport(mob/living/teleportee)
-	if(!destination) //dumbass
+	if(isnull(destination)) //dumbass
 		qdel(src)
 
 	var/list/turf/possible_destinations = list()
@@ -57,7 +57,7 @@
 	if(do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
 		if(!IS_HERETIC_OR_MONSTER(teleportee))
 			teleportee.adjustBruteLoss(20) //so they dont roll it like a jackpot machine to see if they can land in the armory
-			to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing in anywhere but where you thought you were going."))
+			to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing anywhere but where you thought you were going."))
 		INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
 
 /obj/effect/knock_portal/proc/async_opendoor(obj/machinery/door/door)
@@ -74,21 +74,22 @@
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)
 	. = ..()
-	if(IS_HERETIC_OR_MONSTER(user))
-		. += span_hypnophrase("The forces of the mansus are attached!")
-		. += span_hypnophrase("Using an ID on it adds its access to it.")
-		. += span_hypnophrase("<b>Using it inhand</b> allows you to pick what fused card to resemble.")
-		. += span_hypnophrase("<b>Hitting it a door, then another</b>, allows you to link them together, which if you cross the door, you get teleported to the other, heathens get teleported to a random airlock.")
+	if(!IS_HERETIC_OR_MONSTER(user))
+		return
+		. += span_hypnophrase("Enchanted by the Mansus!")
+		. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
+		. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
+		. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
 
 /obj/item/card/id/advanced/heretic/attack_self(mob/user)
-	if(IS_HERETIC(user))
+	if(!IS_HERETIC(user))
+		return ..()
 		var/cardname = tgui_input_list(user, "Shapeshift into?", "Shapeshift", fused_ids)
 		if(!cardname)
 			balloon_alert(user, "no options!")
 			return ..()
 		var/obj/item/card/id/card = fused_ids[cardname]
 		shapeshift(card)
-		balloon_alert(user, "now [cardname]")
 	else
 		return ..()
 
@@ -132,7 +133,11 @@
 	. = ..()
 	if(!proximity_flag || !IS_HERETIC(user) || target == link)
 		return
-	if(istype(target, /obj/machinery/door))
+	if(istype(target, /obj/effect/knock_portal))
+		clear_portals()
+		return
+	if(!istype(target, /obj/machinery/door))
+		return
 		if(link)
 			make_portal(user, link, target)
 			to_chat(user, span_notice("You use [src], to link [link] and [target] together."))

@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/aoe/knock_blast
 	name = "Wave Of Desperation"
-	desc = "Removes your restraints, and repels and knocks down adjacent people, casts secondary mansus grasp on everything nearby. Cannot be casted unrestrained, and you go unconscious 12 seconds later!"
+	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
+	Cannot be cast unless you are restrained, and the stress renders you unconscious 12 seconds later!"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -44,7 +45,9 @@
 	for(var/atom/nearby in orange(center, radius_override ? radius_override : aoe_radius))
 		if(nearby == owner || nearby == center || isarea(nearby))
 			continue
-		if(ismob(nearby))
+		if(!ismob(nearby))
+			. += nearby
+			continue
 			var/mob/living/nearby_mob = nearby
 			if(!isturf(nearby_mob.loc))
 				continue
@@ -62,7 +65,8 @@
 	if(!istype(victim, /atom/movable))
 		return
 	var/atom/movable/mover = victim
-	if(!mover.anchored)
+	if(mover.anchored)
+		return
 		var/our_turf = get_turf(caster)
 		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(mover, our_turf)))
 		mover.safe_throw_at(throwtarget, 3, 1, force = MOVE_FORCE_STRONG)
