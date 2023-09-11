@@ -53,23 +53,23 @@ jobs:
           tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
-          bash tools/ci/check_filedirs.sh tgstation.dme
-          bash tools/ci/check_changelogs.sh
-          bash tools/ci/check_grep.sh
-          bash tools/ci/check_misc.sh
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
-          tools/bootstrap/python -m tools.maplint.source --github
-          tools/build/build --ci lint tgui-test
-          tools/bootstrap/python -m define_sanity.check
-          tools/bootstrap/python -m dmi.test
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          tools/ci/group_logs.sh "Check File Directories" "bash tools/ci/check_filedirs.sh tgstation.dme"
+          tools/ci/group_logs.sh "Check Changelogs" "bash tools/ci/check_changelogs.sh"
+          tools/ci/group_logs.sh "Run Grep Checks" bash tools/ci/check_grep.sh"
+          tools/ci/group_logs.sh "Check Miscellaneous" bash tools/ci/check_misc.sh"
+          tools/ci/group_logs.sh "Ticked File Enforcement (tgstation.dme)" "tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json"
+          tools/ci/group_logs.sh "Ticked File Enforcement (unit tests)" "tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json"
+          tools/ci/group_logs.sh "Run MapLint" "tools/bootstrap/python -m tools.maplint.source --github"
+          tools/ci/group_logs.sh "Run TGUI Tests" "tools/build/build --ci lint tgui-test"
+          tools/ci/group_logs.sh "Check Defines" "tools/bootstrap/python -m define_sanity.check"
+          tools/ci/group_logs.sh "Check DM Icon files" "tools/bootstrap/python -m dmi.test"
+          tools/ci/group_logs.sh "Run MapMerge2" "tools/bootstrap/python -m mapmerge2.dmm_test"
+          tools/ci/group_logs.sh "Check DM Code" "~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1"
       - name: Annotate Lints
         uses: yogstation13/DreamAnnotate@v2
         if: success() || failure()
         with:
-          outputFile: output-annotations.txt
+          outputFile: output-annotations.txt"
 
   compile_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
