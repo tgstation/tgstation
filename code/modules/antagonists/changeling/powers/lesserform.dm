@@ -40,7 +40,6 @@
 	user.humanize(species = chosen_species, instant = transform_instantly)
 
 	changeling.transform(user, chosen_form)
-	user.regenerate_icons()
 	return TRUE
 
 /// Returns the form to transform back into, automatically selects your only profile if you only have one
