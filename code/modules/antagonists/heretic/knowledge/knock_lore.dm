@@ -27,7 +27,8 @@
 	name = "A Locksmith’s Secret"
 	desc = "Opens up the Path of Knock to you. \
 		Allows you to transmute a knife and a crowbar into a Key Blade. \
-		You can only create two at a time and they function as fast crowbars."
+		You can only create two at a time and they function as fast crowbars. \
+		In addition, they can fit into utility belts."
 	gain_text = "The Knock permits no seal and no isolation. It thrusts us gleefully out of the safety of ignorance."
 	next_knowledge = list(/datum/heretic_knowledge/knock_grasp)
 	required_atoms = list(

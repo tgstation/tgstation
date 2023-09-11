@@ -6,11 +6,13 @@
 
 /obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
 	. = ..()
-	if(istype(bumpee) && !IS_HERETIC_OR_MONSTER(bumpee))
-		var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
-		bumpee.safe_throw_at(throwtarget, 10, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-		visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
+	if(!istype(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
+		return
+	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
+	bumpee.safe_throw_at(throwtarget, 10, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
+///A heretic item that spawns a barrier at the clicked turf, 3 uses
 /obj/item/heretic_lintel
 	name = "consecrated book"
 	desc = "Some kind of book, its contents make your head hurt. The material is not known to you and it seems to shift and twist unnaturally."
@@ -27,7 +29,9 @@
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
+	///what type of barrier do we spawn when used
 	var/barrier_type = /obj/effect/forcefield/wizard/heretic
+	///how many uses do we have left
 	var/uses = 3
 
 /obj/item/heretic_lintel/examine(mob/user)

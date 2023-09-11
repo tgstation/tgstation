@@ -11,7 +11,9 @@
 	opacity = TRUE
 	density = FALSE //so we dont block doors closing
 	layer = OBJ_LAYER //under doors
+	///The knock portal we teleport to
 	var/obj/effect/knock_portal/destination
+	///The airlock we are linked to, we delete if it is destroyed
 	var/obj/machinery/door/our_airlock
 
 /obj/effect/knock_portal/Initialize(mapload, target)
@@ -25,11 +27,13 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+///Deletes us and our destination portal if our_airlock is destroyed
 /obj/effect/knock_portal/proc/delete_on_door_delete(datum/source)
 	SIGNAL_HANDLER
 	qdel(destination)
 	qdel(src)
 
+///Signal handler for when our location is entered, calls teleport on the victim, if their old_loc didnt contain a portal already (to prevent loops)
 /obj/effect/knock_portal/proc/on_entered(datum/source, mob/living/loser, atom/old_loc)
 	SIGNAL_HANDLER
 	if(istype(loser) && !(locate(type) in old_loc))
@@ -40,6 +44,7 @@
 	our_airlock = null
 	return ..()
 
+///Teleports the teleportee, to a random airlock if the teleportee isnt a heretic, or the other portal if they are one
 /obj/effect/knock_portal/proc/teleport(mob/living/teleportee)
 	if(isnull(destination)) //dumbass
 		qdel(src)
@@ -56,6 +61,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
 
+///Returns a random airlock on the same Z level as our portal, that isnt our airlock
 /obj/effect/knock_portal/proc/find_random_airlock()
 	var/list/turf/possible_destinations = list()
 	for(var/obj/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
@@ -66,16 +72,22 @@
 		possible_destinations += airlock
 	return pick(possible_destinations)
 
+///Asynchronous proc to unbolt, then open the passed door
 /obj/effect/knock_portal/proc/async_opendoor(obj/machinery/door/door)
 	if(istype(door, /obj/machinery/door/airlock)) //they can create portals on ANY door, but we should unlock airlocks so they can actually open
 		var/obj/machinery/door/airlock/as_airlock = door
 		as_airlock.unbolt()
 	door.open()
 
+///An ID card capable of shapeshifting to other IDs given by the Key Keepers Burden knowledge
 /obj/item/card/id/advanced/heretic
+	///List of IDs this card consumed
 	var/list/obj/item/card/id/fused_ids = list()
+	///The first portal in the portal pair, so we can clear it later
 	var/obj/effect/knock_portal/portal_one
+	///The second portal in the portal pair, so we can clear it later
 	var/obj/effect/knock_portal/portal_two
+	///The first door we are linking in the pair, so we can create a portal pair
 	var/link
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)
@@ -98,6 +110,7 @@
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
 
+///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
 	trim = card.trim
 	assignment = card.assignment
@@ -109,10 +122,12 @@
 	name = card.name //not update_label because of the captains spare moment
 	update_icon()
 
+///Deletes and nulls our portal pair
 /obj/item/card/id/advanced/heretic/proc/clear_portals()
 	QDEL_NULL(portal_one)
 	QDEL_NULL(portal_two)	
 
+///Creates a portal pair at door1 and door2, displays a balloon alert to user
 /obj/item/card/id/advanced/heretic/proc/make_portal(mob/user, obj/machinery/door/door1, obj/machinery/door/door2)
 	var/message = "linked"
 	if(portal_one || portal_two)

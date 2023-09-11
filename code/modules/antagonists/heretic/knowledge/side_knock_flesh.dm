@@ -3,7 +3,8 @@
 /datum/heretic_knowledge/spell/apetra_vulnera
 	name = "Apetra Vulnera"
 	desc = "Grants you Apetra Vulnera, a spell \
-		which causes heavy bleeding on all bodyparts of the victim that have more than 15 brute damage."
+		which causes heavy bleeding on all bodyparts of the victim that have more than 15 brute damage. \
+		Wounds a random limb if no limb is sufficiently damaged."
 	gain_text = "Flesh opens, and blood spills. My master seeks sacrifice, and I shall appease."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/blood_siphon,

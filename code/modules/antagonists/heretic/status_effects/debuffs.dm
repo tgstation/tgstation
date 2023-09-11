@@ -207,10 +207,10 @@
 	icon_state = "lastresort"
 
 /datum/status_effect/heretic_lastresort/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, MAGIC_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_userdanger("You are on the brink of losing consciousness, run!"))
 	return TRUE
 
 /datum/status_effect/heretic_lastresort/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, MAGIC_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)

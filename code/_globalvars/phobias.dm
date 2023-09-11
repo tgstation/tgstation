@@ -373,7 +373,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/effect/visible_heretic_influence,
 		/obj/item/ammo_box/strilka310/lionhunter,
 		/obj/item/ammo_casing/strilka310/lionhunter,
-		/obj/item/card/id/advanced/heretic,
 		/obj/item/clothing/mask/madness_mask,
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/fake_heretic_amulet,

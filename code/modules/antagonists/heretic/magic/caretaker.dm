@@ -18,7 +18,7 @@
 
 /datum/action/cooldown/spell/caretaker/Remove(mob/living/remove_from)
 	if(remove_from.has_status_effect(/datum/status_effect/caretaker_refuge))
-		stop_caretaking()
+		remove_from.remove_status_effect(/datum/status_effect/caretaker_refuge)
 	return ..()
 
 /datum/action/cooldown/spell/caretaker/is_valid_target(atom/cast_on)
