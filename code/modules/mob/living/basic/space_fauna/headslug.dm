@@ -18,6 +18,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_CREATURE)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -39,10 +40,11 @@
 
 /mob/living/basic/headslug/examine(mob/user)
 	. = ..()
-	if(isnull(client))
-		. += span_notice("It appears to be moving around listlessly.")
-	else
-		. += span_warning("It's moving around intelligently!")
+	if(stat != DEAD)
+		if(isnull(client))
+			. += span_notice("It appears to be moving around listlessly.")
+		else
+			. += span_warning("It's moving around intelligently!")
 	if (egg_lain)
 		. += span_notice("Its reproductive equipment appears to have withered.")
 
