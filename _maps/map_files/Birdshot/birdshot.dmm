@@ -54595,7 +54595,7 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/hop)
 "tgJ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -59360,7 +59360,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "uMl" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
