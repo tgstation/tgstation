@@ -87,13 +87,13 @@ jobs:
       - name: Run Mapmerge2 Tests
         if: "!cancelled()"
         run: tools/bootstrap/python -m mapmerge2.dmm_test
-      - name: Run Dreamchecker
-        id: dreamchecker
+      - name: Run DreamChecker
         if: "!cancelled()"
+        id: dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
+        if: steps.dreamchecker.outcome == 'failure' && !cancelled()
         uses: yogstation13/DreamAnnotate@v2
-        if: steps.dreamchecker.outcome == 'failure'
         with:
           outputFile: output-annotations.txt
 
