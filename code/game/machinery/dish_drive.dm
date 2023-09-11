@@ -35,7 +35,7 @@
 	var/transmit_enabled = TRUE
 	/// List of dishes currently inside
 	var/list/dish_drive_contents
-	/// Distance this is capable of sucking dishes up over. (3 + servo tier)
+	/// Distance this is capable of sucking dishes up over. (2 + servo tier)
 	var/suck_distance = 0
 
 	COOLDOWN_DECLARE(time_since_dishes)
@@ -124,7 +124,7 @@
 		do_the_dishes()
 	if(!suction_enabled)
 		return
-	for(var/obj/item/dish in view(3 + suck_distance, src))
+	for(var/obj/item/dish in view(2 + suck_distance, src))
 		if(is_type_in_list(dish, collectable_items) && dish.loc != src && (!dish.reagents || !dish.reagents.total_volume) && (dish.contents.len < 1))
 			if(dish.Adjacent(src))
 				LAZYADD(dish_drive_contents, dish)
