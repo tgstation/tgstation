@@ -249,7 +249,7 @@
 /datum/component/embedded/proc/checkTweeze(mob/living/carbon/victim, obj/item/possible_tweezers, mob/user)
 	SIGNAL_HANDLER
 
-	if(!istype(victim) || possible_tweezers.tool_behaviour != TOOL_HEMOSTAT || user.zone_selected != limb.body_zone)
+	if(!istype(victim) || (possible_tweezers.tool_behaviour != TOOL_HEMOSTAT && possible_tweezers.tool_behaviour != TOOL_WIRECUTTER) || user.zone_selected != limb.body_zone)
 		return
 
 	if(weapon != limb.embedded_objects[1]) // just pluck the first one, since we can't easily coordinate with other embedded components affecting this limb who is highest priority
@@ -266,18 +266,25 @@
 /// The actual action for pulling out an embedded object with a hemostat
 /datum/component/embedded/proc/tweezePluck(obj/item/possible_tweezers, mob/user)
 	var/mob/living/carbon/victim = parent
-
 	var/self_pluck = (user == victim)
+	// quality of the tool we're using
+	var/tool_quality = 1
+	// if we're NOT using a proper hemostat, suffer accordingly
+	if(possible_tweezers.tool_behaviour != TOOL_HEMOSTAT)
+		tool_quality = 2 * possible_tweezers.toolspeed
+	else
+	// if we're using a hemostat that doesn't suck, good job
+		tool_quality = possible_tweezers.toolspeed
+	var/pluck_time = rip_time * (weapon.w_class * 0.5) * (self_pluck ? 2 : 1) * tool_quality
 
 	if(self_pluck)
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]"), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]..."),\
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]..."), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)].)"),\
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
 	else
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone]"),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone]..."), \
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone]..."),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)]."), \
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]..."))
+		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)]."))
 
-	var/pluck_time = 2.5 SECONDS * weapon.w_class * (self_pluck ? 2 : 1)
 	if(!do_after(user, pluck_time, victim))
 		if(self_pluck)
 			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.plaintext_zone]."))
