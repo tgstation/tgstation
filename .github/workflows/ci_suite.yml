@@ -51,23 +51,49 @@ jobs:
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           cargo install ripgrep --features pcre2
           tools/bootstrap/python -c ''
-      - name: Run Linters
-        run: |
-          bash tools/ci/check_filedirs.sh tgstation.dme
-          bash tools/ci/check_changelogs.sh
-          bash tools/ci/check_grep.sh
-          bash tools/ci/check_misc.sh
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
-          tools/bootstrap/python -m tools.maplint.source --github
-          tools/build/build --ci lint tgui-test
-          tools/bootstrap/python -m define_sanity.check
-          tools/bootstrap/python -m dmi.test
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Check File Directories
+        if: "!cancelled()"
+        run: bash tools/ci/check_filedirs.sh tgstation.dme
+      - name: Check Changelogs
+        if: "!cancelled()"
+        run: bash tools/ci/check_changelogs.sh
+      - name: Check File Names
+        if: "!cancelled()"
+        run: bash tools/ci/check_filenames.sh tgstation.dme
+      - name: Run Grep Checks
+        if: "!cancelled()"
+        run: bash tools/ci/check_grep.sh
+      - name: Check Miscellaneous Files
+        if: "!cancelled()"
+        run: bash tools/ci/check_misc.sh
+      - name: Ticked File Enforcement (tgstation.dme)
+        if: "!cancelled()"
+        run: tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
+      - name: Ticked File Enforcement (unit_tests.json)
+        if: "!cancelled()"
+        run: tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
+      - name: Run Map Linter
+        if: "!cancelled()"
+        run: tools/bootstrap/python -m tools.maplint.source
+      - name: Run TGUI Tests
+        if: "!cancelled()"
+        run: tools/build/build --ci lint tgui-test
+      - name: Run Define Sanity Check
+        if: "!cancelled()"
+        run: tools/bootstrap/python -m define_sanity.check
+      - name: Run DMI Tests
+        if: "!cancelled()"
+        run: tools/bootstrap/python -m dmi.test
+      - name: Run Mapmerge2 Tests
+        if: "!cancelled()"
+        run: tools/bootstrap/python -m mapmerge2.dmm_test
+      - name: Run Dreamchecker
+        id: dreamchecker
+        if: "!cancelled()"
+        run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
         uses: yogstation13/DreamAnnotate@v2
-        if: success() || failure()
+        if: steps.dreamchecker.outcome == 'failure'
         with:
           outputFile: output-annotations.txt
 
