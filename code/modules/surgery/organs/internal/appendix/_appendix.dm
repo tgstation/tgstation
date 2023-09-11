@@ -65,7 +65,7 @@
 				organ_owner.adjustToxLoss(1, updating_health = TRUE, forced = TRUE)
 		if(3)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				organ_owner.vomit(95)
+				organ_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
 

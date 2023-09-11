@@ -2582,7 +2582,10 @@
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
 			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 				holder.remove_reagent(type, 5)
-			affected_mob.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
+			var/passable_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
+			if(yuck_cycles >= (YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN))
+				passable_flags |= MOB_VOMIT_STUN
+			affected_mob.vomit(vomit_flags = passable_flags, lost_nutrition = rand(14, 26))
 	if(holder)
 		return ..()
 #undef YUCK_PUKE_CYCLES
@@ -2827,7 +2830,7 @@
 	if(SPT_PROB(15, seconds_per_tick))
 		victim.emote("scream")
 	if(SPT_PROB(2, seconds_per_tick)) // Stuns, but purges ants.
-		victim.vomit(rand(5,10), FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 1)
+		victim.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = rand(5,10), purge_ratio = 1)
 	return ..()
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)

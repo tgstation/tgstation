@@ -174,6 +174,20 @@
 			reagents.trans_to(H, reagents.total_volume, transferred_by = user, methods = INGEST)
 			qdel(src)
 
+/obj/effect/decal/cleanable/vomit/toxic // this has a more toned-down color palette, which may be why it's used as the default in so many spots
+	icon_state = "vomittox_1"
+	random_icon_states = list("vomittox_1", "vomittox_2", "vomittox_3", "vomittox_4")
+
+/obj/effect/decal/cleanable/vomit/purple // ourple
+	icon_state = "vomitpurp_1"
+	random_icon_states = list("vomitpurp_1", "vomitpurp_2", "vomitpurp_3", "vomitpurp_4")
+
+/obj/effect/decal/cleanable/vomit/nanites
+	name = "nanite-infested vomit"
+	desc = "Gosh, you can see something moving in there."
+	icon_state = "vomitnanite_1"
+	random_icon_states = list("vomitnanite_1", "vomitnanite_2", "vomitnanite_3", "vomitnanite_4")
+
 /obj/effect/decal/cleanable/vomit/nebula
 	name = "nebula vomit"
 	desc = "Gosh, how... beautiful."

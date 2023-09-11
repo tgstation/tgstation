@@ -1,3 +1,5 @@
+#define REJECTION_VOMIT_FLAGS (MOB_VOMIT_BLOOD | MOB_VOMIT_STUN | MOB_VOMIT_FORCE)
+
 /obj/item/organ/internal/heart/gland/heal
 	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
 	cooldown_low = 200
@@ -78,19 +80,19 @@
 
 /obj/item/organ/internal/heart/gland/heal/proc/reject_implant(obj/item/implant/implant)
 	owner.visible_message(span_warning("[owner] vomits up a tiny mangled implant!"), span_userdanger("You suddenly vomit up a tiny mangled implant!"))
-	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+	owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 	implant.removed(owner)
 	qdel(implant)
 
 /obj/item/organ/internal/heart/gland/heal/proc/reject_cyberimp(obj/item/organ/internal/cyberimp/implant)
 	owner.visible_message(span_warning("[owner] vomits up his [implant.name]!"), span_userdanger("You suddenly vomit up your [implant.name]!"))
-	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+	owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 	implant.Remove(owner)
 	implant.forceMove(owner.drop_location())
 
 /obj/item/organ/internal/heart/gland/heal/proc/replace_appendix(obj/item/organ/internal/appendix/appendix)
 	if(appendix)
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		appendix.Remove(owner)
 		appendix.forceMove(owner.drop_location())
 		owner.visible_message(span_warning("[owner] vomits up his [appendix.name]!"), span_userdanger("You suddenly vomit up your [appendix.name]!"))
@@ -106,7 +108,7 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_liver(obj/item/organ/internal/liver/liver)
 	if(liver)
 		owner.visible_message(span_warning("[owner] vomits up his [liver.name]!"), span_userdanger("You suddenly vomit up your [liver.name]!"))
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		liver.Remove(owner)
 		liver.forceMove(owner.drop_location())
 	else
@@ -121,7 +123,7 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_lungs(obj/item/organ/internal/lungs/lungs)
 	if(lungs)
 		owner.visible_message(span_warning("[owner] vomits up his [lungs.name]!"), span_userdanger("You suddenly vomit up your [lungs.name]!"))
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		lungs.Remove(owner)
 		lungs.forceMove(owner.drop_location())
 	else
@@ -136,7 +138,7 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_stomach(obj/item/organ/internal/stomach/stomach)
 	if(stomach)
 		owner.visible_message(span_warning("[owner] vomits up his [stomach.name]!"), span_userdanger("You suddenly vomit up your [stomach.name]!"))
-		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
+		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		stomach.Remove(owner)
 		stomach.forceMove(owner.drop_location())
 	else
@@ -190,7 +192,7 @@
 
 /obj/item/organ/internal/heart/gland/heal/proc/keep_replacing_blood()
 	var/keep_going = FALSE
-	owner.vomit(0, TRUE, FALSE, 3, FALSE, FALSE, FALSE, TRUE)
+	owner.vomit(vomit_flags = (MOB_VOMIT_BLOOD | MOB_VOMIT_FORCE), lost_nutrition = 0, distance = 3)
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 
@@ -226,3 +228,5 @@
 	var/obj/item/bodypart/chest/new_chest = new(null)
 	new_chest.replace_limb(owner, TRUE)
 	qdel(chest)
+
+#undef REJECTION_VOMIT_FLAGS

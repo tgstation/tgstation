@@ -1232,7 +1232,7 @@
 /datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) //wtb flavortext messages that hint that you're vomitting up robots
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(type, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
-		affected_mob.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
+		affected_mob.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/nanites, lost_nutrition = 20) // nanite safety protocols make your body expel them to prevent harmies
 	..()
 	. = TRUE
 
@@ -1543,7 +1543,7 @@
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 	..()
 
 /datum/reagent/medicine/silibinin
