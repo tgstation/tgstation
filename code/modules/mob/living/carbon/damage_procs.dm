@@ -208,10 +208,10 @@
 		return
 
 	var/obj/item/bodypart/picked = pick(parts)
-	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
+	var/damage_calculator = picked.get_damage() //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
 	if(picked.heal_damage(brute, burn, required_bodytype))
 		update_damage_overlays()
-	return (damage_calculator - picked.get_damage(TRUE))
+	return (damage_calculator - picked.get_damage())
 
 
 /**
@@ -230,10 +230,10 @@
 		return
 
 	var/obj/item/bodypart/picked = pick(parts)
-	var/damage_calculator = picked.get_damage(TRUE)
+	var/damage_calculator = picked.get_damage()
 	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
-	return (damage_calculator - picked.get_damage(TRUE))
+	return (damage_calculator - picked.get_damage())
 
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	. = FALSE
@@ -245,17 +245,16 @@
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-		. += picked.get_damage(TRUE)
+		. += picked.get_damage()
 
 		update |= picked.heal_damage(brute, burn, required_bodytype, FALSE)
 
-		. -= picked.get_damage(TRUE) // return the net amount of damage healed
+		. -= picked.get_damage() // return the net amount of damage healed
 
 		brute = round(brute - (brute_was - picked.brute_dam), DAMAGE_PRECISION)
 		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
 
 		parts -= picked
-
 
 	if(updating_health)
 		updatehealth()
@@ -276,11 +275,11 @@
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-		. += picked.get_damage(TRUE)
+		. += picked.get_damage()
 
 		update |= picked.receive_damage(brute_per_part, burn_per_part, FALSE, updating_health, required_bodytype, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
 
-		. -= picked.get_damage(TRUE) // return the net amount of damage taken
+		. -= picked.get_damage() // return the net amount of damage healed
 
 		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

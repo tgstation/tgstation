@@ -714,7 +714,7 @@
 	if(current_cycle > 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle > 18)
-		need_mob_update |= affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
+		need_mob_update += affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -866,7 +866,7 @@
 	var/need_mob_update
 	if(current_cycle > 10)
 		need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
-	need_mob_update |= affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -1173,7 +1173,7 @@
 		var/need_mob_update
 		need_mob_update = affected_mob.adjustToxLoss(actual_toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if(SPT_PROB(5, seconds_per_tick))
-			need_mob_update |= affected_mob.Paralyze(20)
+			need_mob_update += affected_mob.Paralyze(20)
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
 

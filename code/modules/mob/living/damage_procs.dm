@@ -53,7 +53,7 @@
 			return adjustStaminaLoss(damage)
 
 /// return the damage amount for the type given
-/mob/living/proc/get_damage_amount(damagetype = BRUTE)
+/mob/living/proc/get_current_damage_of_type(damagetype = BRUTE)
 	switch(damagetype)
 		if(BRUTE)
 			return getBruteLoss()
@@ -184,7 +184,7 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	if(!forced)
 		if(status_flags & GODMODE)
 			return FALSE
@@ -202,7 +202,7 @@
 		updatehealth()
 	. -= oxyloss
 
-/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	if(!forced)
 		if(status_flags & GODMODE)
 			return FALSE
@@ -332,7 +332,6 @@
  */
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
 	if(brute < 0 || burn < 0)
-		stack_trace("[src] got negative brute or burn argument passed to heal_bodypart_damage()! Positive values only.")
 		return FALSE
 	. = (adjustBruteLoss(-brute, updating_health = FALSE) + adjustFireLoss(-burn, updating_health = FALSE))
 	if(updating_health)
@@ -341,17 +340,14 @@
 /// damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	if(brute < 0 || burn < 0)
-		stack_trace("[src] got negative brute or burn argument passed to take_bodypart_damage()! Positive values only.")
 		return FALSE
 	. = (adjustBruteLoss(brute, updating_health = FALSE) + adjustFireLoss(burn, updating_health = FALSE))
-	adjustFireLoss(burn, FALSE)
 	if(updating_health)
 		updatehealth()
 
 /// heal MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	if(brute < 0 || burn < 0)
-		stack_trace("[src] got negative brute or burn argument passed to heal_overall_damage()! Positive values only.")
 		return FALSE
 	. = (adjustBruteLoss(-brute, updating_health = FALSE) + adjustFireLoss(-burn, updating_health = FALSE) + adjustStaminaLoss(-stamina, updating_stamina = FALSE))
 	if(updating_health)
@@ -360,7 +356,6 @@
 /// damage MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
 	if(brute < 0 || burn < 0)
-		stack_trace("[src] got negative brute or burn argument passed to take_overall_damage()! Positive values only.")
 		return FALSE
 	. = (adjustBruteLoss(brute, updating_health = FALSE) + adjustFireLoss(burn, updating_health = FALSE) + adjustStaminaLoss(stamina, updating_stamina = FALSE))
 	if(updating_health)
@@ -368,12 +363,11 @@
 
 ///heal up to amount damage, in a given order
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)
-	. = amount //we'll return the amount of damage healed
-	for(var/i in damage_types)
-		var/amount_to_heal = min(amount, get_damage_amount(i)) //heal only up to the amount of damage we have
+	. = FALSE //we'll return the amount of damage healed
+	for(var/damagetype in damage_types)
+		var/amount_to_heal = min(amount, get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			apply_damage_type(-amount_to_heal, i)
+			. += apply_damage_type(-amount_to_heal, damagetype)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break
-	. -= amount //if there's leftover healing, remove it from what we return

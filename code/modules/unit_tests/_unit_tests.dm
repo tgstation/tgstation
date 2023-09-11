@@ -175,6 +175,7 @@
 #include "metabolizing.dm"
 #include "mindbound_actions.dm"
 #include "missing_icons.dm"
+#include "mob_damage.dm"
 #include "mob_faction.dm"
 #include "mob_spawn.dm"
 #include "modify_fantasy_variable.dm"
