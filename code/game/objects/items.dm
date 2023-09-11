@@ -962,11 +962,11 @@
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
-/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user, container_volume)
 	if(on_grind() == -1)
 		return FALSE
 	if(!reagents)
-		reagents = new()
+		reagents = new(container_volume)
 	target_holder.add_reagent_list(grind_results)
 	if(reagents && target_holder)
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
