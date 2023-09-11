@@ -40,7 +40,6 @@
  color = "#000032"
  start = 20 HOURS //8:00:00 PM
 
-
 GLOBAL_VAR_INIT(GLOBAL_LIGHT_RANGE, 5)
 GLOBAL_LIST_EMPTY(SUNLIGHT_QUEUE_WORK)   /* turfs to be stateChecked */
 GLOBAL_LIST_EMPTY(SUNLIGHT_QUEUE_UPDATE) /* turfs to have their colors updated via corners (filter out the unroofed dudes) */
@@ -74,7 +73,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return ..()
 
 /datum/controller/subsystem/outdoor_effects/proc/fullPlonk()
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
 		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
 			var/area/TArea = T.loc
 			if (TArea.static_lighting)
@@ -86,10 +85,21 @@ SUBSYSTEM_DEF(outdoor_effects)
 		InitializeTurfs()
 		initialized = TRUE
 	fire(FALSE, TRUE)
+
+	var/daylight = FALSE
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
+		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
+			daylight = TRUE
+			continue
+
+	if(!daylight)
+		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
+			listed_time.color = GLOB.starlight_color
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs(list/targets)
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
 		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
 			var/area/TArea = T.loc
 			if (TArea.static_lighting || istype(TArea, /area/space))
@@ -226,11 +236,16 @@ SUBSYSTEM_DEF(outdoor_effects)
 			transition_sunlight_color(SP)
 
 //Transition from our last color to our current color (i.e if it is going from daylight (white) to sunset (red), we transition to red in the first hour of sunset)
-/datum/controller/subsystem/outdoor_effects/proc/transition_sunlight_color(atom/movable/screen/fullscreen/lighting_backdrop/sunlight/SP)
+/datum/controller/subsystem/outdoor_effects/proc/transition_sunlight_color(atom/movable/screen/fullscreen/lighting_backdrop/sunlight/SP, time_given)
 	/* transistion in an hour or time diff from now to our next step, whichever is smaller */
+	if(!next_step_datum)
+		get_time_of_day()
+
 	if(!weather_light_affecting_event)
 		var/time = station_time()
-		var/time_to_animate = min((1 HOURS / SSticker.station_time_rate_multiplier), daytimeDiff(time, next_step_datum.start))
+		var/time_to_animate = time_given
+		if(!time_given)
+			time_to_animate = min((1 HOURS / SSticker.station_time_rate_multiplier), daytimeDiff(time, next_step_datum.start))
 		var/blend_amount = (time - current_step_datum.start) / (next_step_datum.start - current_step_datum.start)
 		current_color = BlendRGB(current_step_datum.color, next_step_datum.color, blend_amount)
 
@@ -239,32 +254,29 @@ SUBSYSTEM_DEF(outdoor_effects)
 // Updates overlays and vis_contents for outdoor effects
 /datum/controller/subsystem/outdoor_effects/proc/update_outdoor_effect_overlays(atom/movable/outdoor_effect/OE)
 	var/turf/source = get_turf(OE)
-	if(!SSmapping.level_trait(OE.z, ZTRAIT_DAYCYCLE))
-		OE.overlays = OE.weatherproof ? list() : list(get_weather_overlay())
-	else
-		var/mutable_appearance/MA
-		if (OE.state != SKY_BLOCKED)
-			MA = get_sunlight_overlay(1,1,1,1, GET_TURF_PLANE_OFFSET(source)) /* fully lit */
-		else //Indoor - do proper corner checks
-			/* check if we are globally affected or not */
-			var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+	var/mutable_appearance/MA
+	if (OE.state != SKY_BLOCKED)
+		MA = get_sunlight_overlay(1,1,1,1, GET_TURF_PLANE_OFFSET(source)) /* fully lit */
+	else //Indoor - do proper corner checks
+		/* check if we are globally affected or not */
+		var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-			var/datum/lighting_corner/cr = OE.source_turf.lighting_corner_SW || dummy_lighting_corner
-			var/datum/lighting_corner/cg = OE.source_turf.lighting_corner_SE || dummy_lighting_corner
-			var/datum/lighting_corner/cb = OE.source_turf.lighting_corner_NW || dummy_lighting_corner
-			var/datum/lighting_corner/ca = OE.source_turf.lighting_corner_NE || dummy_lighting_corner
+		var/datum/lighting_corner/cr = OE.source_turf.lighting_corner_SW || dummy_lighting_corner
+		var/datum/lighting_corner/cg = OE.source_turf.lighting_corner_SE || dummy_lighting_corner
+		var/datum/lighting_corner/cb = OE.source_turf.lighting_corner_NW || dummy_lighting_corner
+		var/datum/lighting_corner/ca = OE.source_turf.lighting_corner_NE || dummy_lighting_corner
 
-			var/fr = cr.sun_falloff
-			var/fg = cg.sun_falloff
-			var/fb = cb.sun_falloff
-			var/fa = ca.sun_falloff
+		var/fr = cr.sun_falloff
+		var/fg = cg.sun_falloff
+		var/fb = cb.sun_falloff
+		var/fa = ca.sun_falloff
 
-			MA = get_sunlight_overlay(fr, fg, fb, fa, GET_TURF_PLANE_OFFSET(source))
+		MA = get_sunlight_overlay(fr, fg, fb, fa, GET_TURF_PLANE_OFFSET(source))
 
-		OE.sunlight_overlay = MA
-		//Get weather overlay if not weatherproof
-		OE.overlays = OE.weatherproof ? list(OE.sunlight_overlay) : list(OE.sunlight_overlay, get_weather_overlay())
-		OE.luminosity = MA.luminosity
+	OE.sunlight_overlay = MA
+	//Get weather overlay if not weatherproof
+	OE.overlays = OE.weatherproof ? list(OE.sunlight_overlay) : list(OE.sunlight_overlay, get_weather_overlay())
+	OE.luminosity = MA.luminosity
 
 //Retrieve an overlay from the list - create if necessary
 /datum/controller/subsystem/outdoor_effects/proc/get_sunlight_overlay(fr, fg, fb, fa, offset)

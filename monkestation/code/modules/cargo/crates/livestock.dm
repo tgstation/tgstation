@@ -17,14 +17,14 @@
 	for(var/i in 1 to 3)
 		var/item = pick(
 			prob (20);
-				/mob/living/simple_animal/hostile/bear,
+				/mob/living/basic/bear,
 			prob (20);
-				/mob/living/simple_animal/hostile/bear/snow,
+				/mob/living/basic/bear/snow,
 			prob (20);
-				/mob/living/simple_animal/hostile/bear/russian,
+				/mob/living/basic/bear/russian,
 			prob (20);
-				/mob/living/simple_animal/hostile/bear/butter,
+				/mob/living/basic/bear/butter,
 			prob (20);
-				/mob/living/simple_animal/hostile/bear/hudson
+				/mob/living/basic/bear/hudson
 		)
 		new item(C)

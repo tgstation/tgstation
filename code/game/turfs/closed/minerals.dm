@@ -215,6 +215,7 @@
 
 /turf/closed/mineral/random
 	var/mineralChance = 13
+	var/turf_transforms
 
 /// Returns a list of the chances for minerals to spawn.
 /// Will only run once, and will then be cached.
@@ -243,21 +244,25 @@
 			spawn_chance_list = mineral_chances_by_type[type]
 		var/path = pick(spawn_chance_list)
 		if(ispath(path, /turf))
-			var/stored_flags = 0
-			if(turf_flags & NO_RUINS)
-				stored_flags |= NO_RUINS
-			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
-			T.flags_1 |= stored_flags
+			if(turf_transforms)
+				var/stored_flags = 0
+				if(turf_flags & NO_RUINS)
+					stored_flags |= NO_RUINS
+				var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
+				T.flags_1 |= stored_flags
 
-			if(ismineralturf(T))
-				var/turf/closed/mineral/M = T
-				M.turf_type = src.turf_type
-				M.mineralAmt = rand(1, 5)
-				src = M
-				M.levelupdate()
+				if(ismineralturf(T))
+					var/turf/closed/mineral/M = T
+					M.turf_type = src.turf_type
+					M.mineralAmt = rand(1, 5)
+					src = M
+					M.levelupdate()
+				else
+					src = T
+					T.levelupdate()
 			else
-				src = T
-				T.levelupdate()
+				Change_Ore(/obj/item/stack/ore/iron, 1)
+				Spread_Vein(/obj/item/stack/ore/iron)
 
 		else
 			Change_Ore(path, 1)

@@ -107,9 +107,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
-	if (hippie_client_procs(href_list))
-		return
-
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
 		return
@@ -595,6 +592,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(tooltips)
 	seen_messages = null
 	Master.UpdateTickRate()
+	if(cam_screen)
+		qdel(cam_screen)
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 

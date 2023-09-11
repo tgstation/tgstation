@@ -92,10 +92,10 @@ GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 #define PARSE_LIGHT_COLOR(source) \
 do { \
 	if (source.light_color != COLOR_WHITE) { \
-		var/__light_color = source.light_color; \
-		source.lum_r = GETREDPART(__light_color) / 255; \
-		source.lum_g = GETGREENPART(__light_color) / 255; \
-		source.lum_b = GETBLUEPART(__light_color) / 255; \
+		var/list/color_map = rgb2num(source.light_color); \
+		source.lum_r = color_map[1] / 255; \
+		source.lum_g = color_map[2] / 255; \
+		source.lum_b = color_map[3] / 255; \
 	} else { \
 		source.lum_r = 1; \
 		source.lum_g = 1; \

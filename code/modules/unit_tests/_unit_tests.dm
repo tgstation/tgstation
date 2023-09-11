@@ -112,6 +112,7 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "emoting.dm"
+#include "fish_unit_tests.dm"
 #include "focus_only_tests.dm"
 #include "food_edibility_check.dm"
 #include "full_heal.dm"

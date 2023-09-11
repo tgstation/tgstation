@@ -200,6 +200,11 @@
 		return FALSE
 	riding_offsets["[index]"] = offsets
 
+/datum/component/riding/proc/set_vehicle_offsets(list/offsets)
+	if(!islist(offsets))
+		return FALSE
+	directional_vehicle_offsets = offsets
+
 /**
  * This proc is used to see if we have the appropriate key to drive this atom, if such a key is needed. Returns FALSE if we don't have what we need to drive.
  *

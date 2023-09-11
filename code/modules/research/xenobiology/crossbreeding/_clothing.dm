@@ -54,6 +54,9 @@ Slimecrossing Armor
 
 /obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
+	#if DM_VERSION < 515
+	newcolor ||= COLOR_WHITE // If you're reading this and developing on 515 or later, you can remove this line
+	#endif
 	color = newcolor
 	set_light_color(newcolor)
 	set_light(5)

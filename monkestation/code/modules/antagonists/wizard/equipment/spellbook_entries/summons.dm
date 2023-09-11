@@ -4,7 +4,7 @@
 	cost = 0
 	can_random = FALSE
 
-/datum/spellbook_entry/summon/message/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
+/datum/spellbook_entry/summon/message/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	var/message = tgui_input_text(user, "Tell the station whats on your mind.", "Tell them All")
 	if(!message)
 		return FALSE

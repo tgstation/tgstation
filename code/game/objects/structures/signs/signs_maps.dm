@@ -25,6 +25,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering, 32)
 
+/obj/structure/sign/directions/ptl
+	name = "power transmission laser sign"
+	desc = "A direction sign, pointing out which way the Power Transmission Laser is."
+	icon_state = "direction_ptl"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/ptl, 32)
+
 /obj/structure/sign/directions/security
 	name = "security department sign"
 	desc = "A direction sign, pointing out which way the Security department is."
@@ -94,3 +101,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland, 32)
 	icon_state = "direction_arrival"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival, 32)
+
+/obj/structure/sign/directions/cryo
+	name = "cryogenics sign"
+	desc = "A direction sign, pointing out which way the cryogenic pods are."
+	icon_state = "direction_cryo"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/cryo, 32)
