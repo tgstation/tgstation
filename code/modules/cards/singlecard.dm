@@ -151,7 +151,7 @@
 
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
-		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED) // recycle card into deck (if unwielded)
+		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle card into deck (if unwielded)
 			dealer_deck.insert(src)
 			user.balloon_alert_to_viewers("puts card in deck")
 			return
