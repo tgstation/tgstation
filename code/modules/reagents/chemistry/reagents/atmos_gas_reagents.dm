@@ -52,7 +52,8 @@
 	breather.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	breather.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	breather.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
@@ -90,7 +91,8 @@
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
 	breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	breather.adjustToxLoss(0.1 * current_cycle * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/nitrium_low_metabolization
 	name = "Nitrium"
@@ -120,6 +122,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = FALSE
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return ..()
 
@@ -128,8 +131,10 @@
 			continue
 
 		organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
+		. = TRUE
 
-	return ..()
+	..()
+	return .
 
 /datum/reagent/zauker
 	name = "Zauker"
@@ -147,4 +152,5 @@
 	breather.adjustOxyLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	breather.adjustFireLoss(2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	breather.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	return ..()
+	..()
+	return TRUE
