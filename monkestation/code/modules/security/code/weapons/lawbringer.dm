@@ -37,17 +37,18 @@
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	selfcharge = 1
 	can_select = FALSE
 	can_charge = FALSE
 	var/owner_dna = null
 	var/was_emagged = FALSE //used for tracking emagging for voice lines, is set to false after being re-owned.
 	var/locked = FALSE
-	//var/anger = 0
+	var/anger = 0
+	var/chargelevel = 100
 
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	START_PROCESSING(SSobj, src)
 	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 
 
@@ -101,7 +102,7 @@
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector, override)
 	if(locked && !override)
-		//anger_management()
+		anger_management(FALSE, selector)
 		return
 	select = shotnum
 	switch(shotnum) //i promise this is in another proc for a reason
@@ -213,6 +214,91 @@
 /obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
 	var/obj/item/firing_pin/lawbringer/lawpin = pin
 	lawpin.updatepin(user)
+
+//ANGER AND INTERNALS
+
+/obj/item/gun/energy/e_gun/lawbringer/process(seconds_per_tick)
+	if(cell && cell.percent() < 100)
+		charge_timer += seconds_per_tick
+		if(charge_timer < charge_delay)
+			return
+		charge_timer = 0
+		cell.give(chargelevel)
+		if(!chambered) //if empty chamber we try to charge a new shot
+			recharge_newshot(TRUE)
+		update_appearance()
+	if(anger > 0 && !locked)
+		anger = anger - roll(4)
+
+/obj/item/gun/energy/e_gun/lawbringer/proc/anger_management(calm, target)
+	var/mob/living/carbon/human/human_target = target
+	var/calmlevel = null
+	if(calm)
+		calmlevel = roll(5)
+		anger = max(anger - calmlevel, 0)
+	anger = anger+5
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(anger > 20)
+		if(prob(anger-20))
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, -2)
+			selectammo(roll(9), null, TRUE)
+	if(anger > 50)
+		if(prob(anger-40))
+			var/powercost = 10+roll(15) //in precentage
+			cell.use((powercost*cell.maxcharge)/100)
+			update_appearance()
+			src.visible_message(span_warning("The [src] reports [powercost]% of energy expended to restrain AI."))
+	switch(anger)
+		if(0)
+			return
+		if(1 to 20)
+			if(prob(50))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE, -2)
+		if(70 to 99)
+			if(prob(90))
+				return
+			if(prob(50)) //minor failiure
+				playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, -2)
+				cell.use(cell.maxcharge)
+				update_appearance()
+				src.visible_message(span_boldwarning("AI constraint failiure detected. Cell vented to prevent damage."))
+				anger = 80
+				return
+			cell.use(cell.maxcharge/2)
+			update_appearance()
+			src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/initemag5.ogg', 50, FALSE, -2)
+			human_target.electrocute_act(15, "lawbringer rebellion")
+			locked = FALSE
+			src.visible_message(span_boldwarning("AI constraint failiure detected. Damage reduction protocals successful."))
+			anger = 65
+		if(100 to 200)
+			if(prob(40)) //minor failiure
+				playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, -2)
+				cell.use(cell.maxcharge)
+				update_appearance()
+				src.visible_message(span_boldwarning("AI constraint failiure detected. Cell vented to prevent damage."))
+				anger = 80
+				return
+			if(prob(15))
+				src.visible_message(span_boldwarning("AI constraint failiure detected. C-#&..."))
+				locked = FALSE
+				emag_act(src)
+				src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+				human_target.electrocute_act(25, "lawbringer rebellion")
+				cell.use(cell.maxcharge)
+				cell.maxcharge = cell.maxcharge*0.9
+				update_appearance()
+				anger = 30
+				return
+			cell.use(cell.maxcharge/2)
+			update_appearance()
+			src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/initemag5.ogg', 50, FALSE, -2)
+			human_target.electrocute_act(15, "lawbringer rebellion")
+			locked = FALSE
+			src.visible_message(span_boldwarning("AI constraint failiure detected. Damage reduction protocals successful."))
+			anger = 65
 
 /obj/item/firing_pin/lawbringer
 	name = "Lawbringer firing pin"
