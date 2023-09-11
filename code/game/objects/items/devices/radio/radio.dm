@@ -394,6 +394,9 @@
 	// allow checks: are we listening on that frequency?
 	if (input_frequency == frequency)
 		return TRUE
+	if (input_frequency == FREQ_RADIO)
+		return TRUE
+
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
