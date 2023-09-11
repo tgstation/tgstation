@@ -157,7 +157,7 @@
 		return FALSE
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
@@ -172,7 +172,7 @@
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()
-	target = null
+	set_target(null)
 	dropoff_area = null
 
 /datum/traitor_objective/target_player/kidnapping/on_objective_taken(mob/user)
