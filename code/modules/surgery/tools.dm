@@ -66,6 +66,7 @@
 	attack_verb_simple = list("burn")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+	heat = 500
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "cautery_normal"
 

@@ -215,8 +215,8 @@
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
-		if(chest)
-			chest.force_wound_upwards(/datum/wound/blunt/bone/severe, wound_source = "human force to the chest")
+		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
+
 	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 

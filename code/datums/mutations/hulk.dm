@@ -63,13 +63,19 @@
  *arg1 is the arm to evaluate damage of and possibly break.
  */
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
+	var/severity
 	switch(arm.brute_dam)
 		if(45 to 50)
-			arm.force_wound_upwards(/datum/wound/blunt/bone/critical, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_CRITICAL
 		if(41 to 45)
-			arm.force_wound_upwards(/datum/wound/blunt/bone/severe, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_SEVERE
 		if(35 to 41)
-			arm.force_wound_upwards(/datum/wound/blunt/bone/moderate, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_MODERATE
+
+	if (isnull(severity))
+		return
+
+	owner.cause_wound_of_type_and_severity(WOUND_BLUNT, arm, severity, wound_source = "hulk smashing")
 
 /datum/mutation/human/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)

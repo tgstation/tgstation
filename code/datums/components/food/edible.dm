@@ -46,7 +46,7 @@ Behavior that's still missing from this component that original food items had t
 	food_flags = NONE,
 	foodtypes = NONE,
 	volume = 50,
-	eat_time = 10,
+	eat_time = 1 SECONDS,
 	list/tastes,
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
 	bite_consumption = 2,
@@ -350,7 +350,7 @@ Behavior that's still missing from this component that original food items had t
 			time_to_eat *= (fullness / NUTRITION_LEVEL_FAT) * EAT_TIME_VORACIOUS_FULL_MULT // takes longer to eat the more well fed you are
 
 	if(eater == feeder)//If you're eating it yourself.
-		if(eat_time && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+		if(eat_time > 0 && !do_after(feeder, time_to_eat, eater, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -431,7 +431,7 @@ Behavior that's still missing from this component that original food items had t
 	TakeBite(eater, feeder)
 
 	//If we're not force-feeding and there's an eat delay, try take another bite
-	if(eater == feeder && eat_time)
+	if(eater == feeder && eat_time > 0)
 		INVOKE_ASYNC(src, PROC_REF(TryToEat), eater, feeder)
 
 #undef EAT_TIME_FORCE_FEED
@@ -580,9 +580,10 @@ Behavior that's still missing from this component that original food items had t
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		food_quality += isjellyperson(eater) ? 2 : -4
 
-	food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())
-	food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
-	food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
+	if (ishuman(eater))
+		food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())
+		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
+		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
 	return food_quality
 
