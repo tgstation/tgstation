@@ -9,8 +9,9 @@
 	name = "proto-kinetic machete"
 	desc = "Recent breakthroughs with proto-kinetic technology have led to improved designs for the early proto-kinetic crusher, namely the ability to pack all \
 	the same technology into a smaller more portable package. The machete design was chosen as to make a much easier to handle and less cumbersome frame. Of course \
-	the smaller package means that the power is not as high as the original crusher design, but it still excels at pacifying threats quickly."
+	the smaller package means that the power is not as high as the original crusher design, but it the different shell makes it capable of blocking basic attacks."
 	force = 15
+	block_chance = 50
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 5
@@ -71,7 +72,7 @@
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 15
-	detonation_damage = 25
+	detonation_damage = 45
 	backstab_bonus = 20
 	reach = 2
 	overrides_main = TRUE
@@ -120,7 +121,7 @@
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 25
-	detonation_damage = 60
+	detonation_damage = 70
 	backstab_bonus = 0
 	overrides_main = TRUE
 	overrides_twohandrequired = FALSE
@@ -153,11 +154,10 @@
 	worn_icon_state = "PKHammer0"
 	slot_flags = NONE
 	name = "proto-kinetic claws"
-	desc = "Truely the most compact version of the crusher ever made, its small enough to fit in your backpack and still function as a crusher. Due to the lack of space \
-	for stronger power, most of the space is used to make the claws effecient, giving it a much faster recharge, and due to its small size, its very easy to swing. \
-	The shell is made to fit over gloves, so dont try to wear it that way."
+	desc = "Truely the most compact version of the crusher ever made, its small enough to fit in your backpack and still function as a crusher. \
+	Best used when attacking from behind, rewarding those capable of landing what we call a 'critical hit' \
+	(DISCLAIMER) The shell is made to fit over gloves, so dont try to wear it like a glove."
 	force = 5
-	attack_speed = CLICK_CD_RANGE
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 4
@@ -174,8 +174,8 @@
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 2
-	detonation_damage = 25
-	backstab_bonus = 20
+	detonation_damage = 40
+	backstab_bonus = 120
 	overrides_main = TRUE
 	overrides_twohandrequired = TRUE
 	override_twohandedsprite = TRUE
