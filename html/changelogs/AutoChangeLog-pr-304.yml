@@ -1,7 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "Added handcuffing via the security holographic projector"
-  - qol: "changed PACO to TACO in terms of names"
-  - spellcheck: "fixed bananium bullets being called \"bannanium bullets\" on HoS's swiss army knife"
-  - code_imp: "added a lot of comments for HoS's swiss army knifne"

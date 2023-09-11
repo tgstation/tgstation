@@ -13,3 +13,15 @@
   - rscadd: Added the syndicate lootbox
   NanoCats:
   - bugfix: fixed a few things, mostly that I fucked up MASSIVELY
+2023-09-11:
+  Gboster-0:
+  - rscadd: Added handcuffing via the security holographic projector
+  - qol: changed PACO to TACO in terms of names
+  - spellcheck: fixed bananium bullets being called "bannanium bullets" on HoS's swiss
+      army knife
+  - code_imp: added a lot of comments for HoS's swiss army knifne
+  JohnFulpWillard:
+  - refactor: mentor code to support discord replies
+  lmenvs:
+  - rscadd: Fulfills rewards for pets and clothing items for patrons.  Thank you so
+      much for your donations!
