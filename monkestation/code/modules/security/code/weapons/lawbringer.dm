@@ -355,7 +355,7 @@
 	light_system = MOVABLE_LIGHT
 	damage = 0
 	damage_type = STAMINA
-	stamina = 20
+	stamina = 40
 	paralyze_timer = 5 SECONDS
 	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
 	hitsound = 'sound/weapons/tap.ogg'
