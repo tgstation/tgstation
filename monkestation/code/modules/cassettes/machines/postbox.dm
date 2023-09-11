@@ -16,8 +16,19 @@
 		return
 
 	var/obj/item/device/cassette_tape/attacked_tape = weapon
-	if(attacked_tape.name == initial(attacked_tape.name))
+	if(attacked_tape.name == "A blank cassette")
 		to_chat(user, span_notice("Please name your tape before submitting it you can't change this later!"))
+		return
+
+	if(attacked_tape.cassette_desc_string == "Generic Desc")
+		to_chat(user, span_notice("Please add a description to your tape before submitting it you can't change this later!"))
+		return
+
+	var/list/side1 = attacked_tape.songs["side1"]
+	var/list/side2 = attacked_tape.songs["side2"]
+
+	if(!length(side1) && !length(side2))
+		to_chat(user, span_notice("Please add some songs to your tape before submitting it you can't change this later!"))
 		return
 
 	if(attacked_tape.approved_tape)
