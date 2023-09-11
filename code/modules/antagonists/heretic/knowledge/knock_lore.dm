@@ -110,8 +110,8 @@
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Book. \
-		It can materialize a barricade at range, that only you and people resistant to magic can pass. 3 uses."
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Lintel. \
+		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
 		/obj/item/toy/crayon/white = 1,
