@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Your clothes and such should correctly reposition themselves if a black charged slime extract turns you into a monkey."

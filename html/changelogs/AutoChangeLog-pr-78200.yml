@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Changeling tentacle and bloodchiller from xenobio will no longer stop working if you have antimagic"
