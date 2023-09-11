@@ -153,7 +153,7 @@
 
 /obj/item/stack/grind(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
-	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return suceess
+	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
 		return TRUE
 	if(on_grind() == -1)
 		return FALSE
@@ -182,7 +182,7 @@
 		/**
 		 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
 		 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
-		 * this stack when grinding if successfull
+		 * this stack if grinding was successfull
 		 */
 		use(available_amount, check = FALSE)
 		return available_amount == current_amount
