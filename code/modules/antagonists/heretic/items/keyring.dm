@@ -43,7 +43,20 @@
 /obj/effect/knock_portal/proc/teleport(mob/living/teleportee)
 	if(isnull(destination)) //dumbass
 		qdel(src)
+		return
 
+	//get it?
+	var/obj/machinery/door/doorstination = IS_HERETIC_OR_MONSTER(teleportee) ? destination.our_airlock : find_random_airlock()
+	if(!do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
+		return
+
+	if(!IS_HERETIC_OR_MONSTER(teleportee))
+		teleportee.apply_damage(damage = 20, BRUTE) //so they dont roll it like a jackpot machine to see if they can land in the armory
+		to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing anywhere but where you thought you were going."))
+
+	INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
+
+/obj/effect/knock_portal/proc/find_random_airlock()
 	var/list/turf/possible_destinations = list()
 	for(var/obj/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(airlock.z != z)
@@ -51,14 +64,7 @@
 		if(airlock.loc == loc)
 			continue
 		possible_destinations += airlock
-
-	//get it?
-	var/obj/machinery/door/doorstination = IS_HERETIC_OR_MONSTER(teleportee) ? destination.our_airlock : pick(possible_destinations)
-	if(do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
-		if(!IS_HERETIC_OR_MONSTER(teleportee))
-			teleportee.adjustBruteLoss(20) //so they dont roll it like a jackpot machine to see if they can land in the armory
-			to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing anywhere but where you thought you were going."))
-		INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
+	return pick(possible_destinations)
 
 /obj/effect/knock_portal/proc/async_opendoor(obj/machinery/door/door)
 	if(istype(door, /obj/machinery/door/airlock)) //they can create portals on ANY door, but we should unlock airlocks so they can actually open
