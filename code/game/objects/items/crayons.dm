@@ -30,6 +30,7 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
+	item_flags = NOBLUDGEON
 	attack_style_path = null
 
 	/// Icon state to use when capped

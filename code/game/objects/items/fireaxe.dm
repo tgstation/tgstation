@@ -53,9 +53,6 @@
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
-
 /*
  * Bone Axe
  */

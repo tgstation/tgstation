@@ -526,15 +526,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
-	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/scythe
+	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc
 
 /obj/item/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 9 SECONDS, \
-	effectiveness = 105, \
-	)
+	AddComponent(/datum/component/butchering, speed = 9 SECONDS, effectiveness = 105)
 	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
+	AddElement(/datum/element/scythes_plants)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -542,31 +540,6 @@
 	if(lose_your_head?.dismember())
 		return BRUTELOSS
 	return SHAME
-
-/datum/attack_style/melee_weapon/swing/wider_arc/scythe
-	/// Typecache of all structures we can attack in our swing in addition to people.
-	var/static/list/scythe_attackables = typecacheof(list(
-		/obj/structure/spacevine,
-		/obj/structure/alien/resin/flower_bud,
-	))
-
-/datum/attack_style/melee_weapon/swing/wider_arc/scythe/get_swing_description(has_alt_style)
-	. = ..()
-	. += " Also effective at clearing out wild vines."
-
-/datum/attack_style/melee_weapon/swing/wider_arc/scythe/swing_enters_turf(
-	mob/living/attacker,
-	obj/item/weapon,
-	turf/hitting,
-	list/mob/living/already_hit,
-	atom/priority_target,
-	right_clicking,
-)
-	. = ..()
-	for(var/atom/movable/to_hit as anything in typecache_filter_list(hitting.contents, scythe_attackables))
-		if(attacker.CanReach(to_hit, weapon))
-			to_hit.attacked_by(weapon, attacker)
-			. |= ATTACK_SWING_HIT
 
 /obj/item/secateurs
 	name = "secateurs"

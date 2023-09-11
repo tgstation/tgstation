@@ -74,13 +74,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	weapon?.add_fingerprint(attacker)
-	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && check_pacifism(attacker, weapon))
-		attacker.balloon_alert(attacker, "you don't want to attack!")
-		attacker.changeNext_move(cd * 0.66)
-		return FALSE
 
-	if(IS_BLOCKING(attacker))
-		attacker.balloon_alert(attacker, "can't act while blocking!")
+	if(!can_attack(attacker, weapon, right_clicking))
 		attacker.changeNext_move(0.25 SECONDS)
 		return FALSE
 
@@ -110,8 +105,26 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(cd > 0)
 			attacker.changeNext_move(cd)
 
-	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
+	SEND_SIGNAL(attacker, COMSIG_LIVING_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
+	SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_PROCESESD, attacker, attack_result, src)
 	return attack_result
+
+/// Check if the attacker can execute this attack style
+/datum/attack_style/proc/can_attack(mob/living/attacker, obj/item/weapon, right_clicking)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && check_pacifism(attacker, weapon, right_clicking))
+		attacker.balloon_alert(attacker, "you don't want to attack!")
+		return FALSE
+
+	if(IS_BLOCKING(attacker))
+		attacker.balloon_alert(attacker, "can't act while blocking!")
+		return FALSE
+
+	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_CHECK, attacker) & ATTACK_SWING_CANCEL)
+		return FALSE
+
+	return TRUE
 
 /datum/attack_style/proc/execute_attack(
 	mob/living/attacker,
@@ -162,6 +175,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(attack_result & ATTACK_SWING_CANCEL)
 			// Cancel attacks stop outright
 			return attack_result
+
+		attack_result |= SEND_SIGNAL(weapon, COMSIG_ITEM_SWING_ENTERS_TURF, attack_result, attacker, hitting, affected_turfs, already_hit, priority_target, right_clicking)
 		if(attack_result & ATTACK_SWING_BLOCKED)
 			// Blocked attacks do not continue to the next turf
 			break
@@ -288,7 +303,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * Return TRUE to stop the attack
  * Return FALSE to allow the attack
  */
-/datum/attack_style/proc/check_pacifism(mob/living/attacker, obj/item/weapon)
+/datum/attack_style/proc/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)
 	return FALSE
 
 /**
@@ -369,7 +384,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	left_click_params = list2params(list(LEFT_CLICK = TRUE, BUTTON = LEFT_CLICK))
 	right_click_params = list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
 
-/datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
+/datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)
 	return weapon.force > 0 && weapon.damtype != STAMINA
 
 /datum/attack_style/melee_weapon/proc/get_swing_description(has_alt_style)
@@ -378,8 +393,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	ASSERT(istype(weapon))
 	var/params_to_use = right_clicking ? right_click_params : left_click_params
-	if(!weapon.can_attack_with(attacker, params_to_use))
-		return ATTACK_SWING_CANCEL
 
 	var/turf/midpoint = affected_turfs[ROUND_UP(length(affected_turfs) / 2)]
 	var/call_pre_attack = !right_clicking
@@ -480,7 +493,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// Whether martial arts triggers off of these attacks
 	var/martial_arts_compatible = TRUE
 
-/datum/attack_style/unarmed/check_pacifism(mob/living/attacker, obj/item/weapon)
+/datum/attack_style/unarmed/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)
 	return FALSE
 
 /// Important to ntoe for unarmed attacks:

@@ -57,9 +57,8 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
-
-/obj/item/dualsaber/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
+	AddElement(/datum/element/active_swing)
+	RegisterSignal(src, COMSIG_ITEM_ATTACK_STYLE_PROCESESD, PROC_REF(attack_spin))
 
 /obj/item/dualsaber/describe_blocking()
 	var/all_blockables = english_list(bitfield_to_list(can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
@@ -161,7 +160,14 @@
 		impale(user)
 		return
 
+/obj/item/dualsaber/proc/attack_spin(obj/item/source, mob/living/attacker, attack_result, datum/attack_style/style)
+	SIGNAL_HANDLER
+
+	if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT|ATTACK_SWING_MISSED))
+		jedi_spin(attacker)
+
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
+	set waitfor = FALSE
 	dance_rotate(user, CALLBACK(user, TYPE_PROC_REF(/mob, dance_flip)))
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
@@ -195,7 +201,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
+	jedi_spin(user)
 
 /obj/item/dualsaber/green
 	possible_colors = list("green")
@@ -275,15 +281,6 @@
 	turfs_in_order |= get_step(attacker, attack_direction)
 	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, -90), reversed = TRUE)
 	return turfs_in_order
-
-/datum/attack_style/melee_weapon/swing/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
-	. = ..()
-	if(!istype(weapon))
-		return
-	if(. & ATTACK_SWING_CANCEL)
-		return
-	if(prob(50))
-		INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item/dualsaber, jedi_spin), attacker)
 
 /datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	if(length(affected_turfs) < 3)

@@ -46,6 +46,7 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	AddElement(/datum/element/active_swing)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -56,9 +57,6 @@
 		return null // if we're right clicking, don't swing: shoot
 
 	return ..()
-
-/obj/item/kinetic_crusher/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
 	. = ..()

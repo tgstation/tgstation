@@ -1808,18 +1808,6 @@
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
 
-/// Determines if the passed mob can attack with this item
-/obj/item/proc/can_attack_with(mob/living/attacker, params)
-	if(item_flags & NOBLUDGEON)
-		// not really an attack but just clicking on a dude
-		return TRUE
-
-	if(attacker.combat_mode && damtype != STAMINA && force && HAS_TRAIT(attacker, TRAIT_PACIFISM))
-		to_chat(attacker, span_warning("You don't want to harm other living beings!"))
-		return FALSE
-
-	return TRUE
-
 //automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
 /obj/item/proc/get_all_tool_behaviours()
 	if (!isnull(tool_behaviour))

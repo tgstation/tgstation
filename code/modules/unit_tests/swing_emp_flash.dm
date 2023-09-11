@@ -10,7 +10,7 @@
 	RegisterSignal(victim, COMSIG_ATOM_EMP_ACT, PROC_REF(sig_caught))
 
 	click_wrapper(flashlighter, victim)
-	TEST_ASSERT_EQUAL(sig_caught, 1, "EMP flashlight did not EMP the target on click")
+	TEST_ASSERT(sig_caught > 1, "EMP flashlight did not EMP the target on click")
 
 /datum/unit_test/emp_flashlight/proc/sig_caught()
 	SIGNAL_HANDLER

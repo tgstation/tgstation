@@ -293,16 +293,12 @@
 	var/damage = get_final_damage_for_weapon(attacking_item)
 	var/damage_type = attacking_item.damtype
 
-	if(user == src)
-		// 100% hitrate for self harm
-		affecting = get_attacked_bodypart(user)
+	var/zone_hit_chance = 80
+	if(body_position == LYING_DOWN)
+		// bonus to accuracy for lying down
+		zone_hit_chance += 10
 
-	else
-		var/zone_hit_chance = 80
-		if(body_position == LYING_DOWN)
-			// bonus to accuracy for lying down
-			zone_hit_chance += 10
-		affecting = get_attacked_bodypart(user, zone_hit_chance)
+	affecting = get_attacked_bodypart(user, zone_hit_chance)
 
 	var/hit_zone = parse_zone(affecting?.body_zone) || "body"
 	send_item_attack_message(attacking_item, user, hit_zone, affecting)

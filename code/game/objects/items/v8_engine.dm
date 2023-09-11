@@ -29,9 +29,6 @@
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 
-/obj/item/v8_engine/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
-
 /obj/item/v8_engine/examine_more(mob/user)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(start_learning_recipe), user)
@@ -74,9 +71,6 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
-
-/obj/item/house_edge/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

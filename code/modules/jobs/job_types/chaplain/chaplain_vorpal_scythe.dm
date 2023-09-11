@@ -29,7 +29,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
-/datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
+/datum/attack_style/melee_weapon/swing/wider_arc/vorpal
 	cd = CLICK_CD_MELEE * 1.5
 	slowdown = 0.8
 
@@ -52,7 +52,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 10 //a lot worse than most nullrods initially. Why did you invest so much into making it vorpal, you dork.
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
-	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
+	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/vorpal
 	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/vorpal_scythe
 	slot_flags = null
 	sharpness = SHARP_EDGED
@@ -102,6 +102,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		effectiveness = 125, \
 	)
 	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
+	AddElement(/datum/element/scythes_plants)
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, params)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.

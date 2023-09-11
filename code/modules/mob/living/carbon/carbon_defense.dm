@@ -702,7 +702,14 @@
 	return .
 
 /mob/living/carbon/get_attacked_bodypart(mob/living/user, hit_chance = 100)
-	return get_bodypart(user == src ? check_zone(user.zone_selected) : get_random_valid_zone(user.zone_selected, hit_chance)) || bodyparts[1]
+	var/final_zone
+	if(user == src)
+		final_zone = check_zone(user.zone_selected)
+	else
+		final_zone = get_random_valid_zone(user.zone_selected, hit_chance)
+
+	// default to first hit if we couldn't find a valid zone
+	return get_bodypart(final_zone || bodyparts[1])
 
 /mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
 	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb) || !hit_limb.can_bleed())

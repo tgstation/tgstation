@@ -12,7 +12,7 @@
 	/// Having less armor than this on the hit bodypart will result in diseases being spread by the attacker.
 	var/disease_armor_thresold = 2
 
-/datum/attack_style/unarmed/generic_damage/limb_based/bite/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
+/datum/attack_style/unarmed/generic_damage/limb_based/bite/can_attack(mob/living/attacker, obj/item/weapon)
 	if(attacker.is_muzzled() || attacker.is_mouth_covered())
 		attacker.balloon_alert(attacker, "mouth covered, can't bite!")
 		return FALSE

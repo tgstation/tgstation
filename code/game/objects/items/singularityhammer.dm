@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	armor_type = /datum/armor/item_magichammer
-	attack_style_path = /datum/attack_style/melee_weapon/swing/singularity_hammer
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
 	/// AOE radius if the suck. Don't VV this too high, you have been warned
 	var/suck_radius = 5
@@ -33,30 +33,36 @@
 		force_multiplier = 4, \
 		icon_wielded = "[base_icon_state]1", \
 	)
-
-/obj/item/singularityhammer/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
+	RegisterSignal(src, COMSIG_ITEM_SWING_ENTERS_TURF, PROC_REF(suck_in))
 
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/datum/attack_style/melee_weapon/swing/singularity_hammer
+/obj/item/singularityhammer/proc/suck_in(obj/item/source, attack_flags, mob/living/attacker, turf/hitting, list/turf/affected_turfs, atom/priority_target, ...)
+	SIGNAL_HANDLER
 
-/datum/attack_style/melee_weapon/swing/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
-	. = ..()
-	if(!istype(weapon) || !(. & (ATTACK_SWING_HIT|ATTACK_SWING_BLOCKED)))
+	. = NONE
+	if(!(attack_flags & (ATTACK_SWING_HIT|ATTACK_SWING_BLOCKED)))
 		return
-	if(!COOLDOWN_FINISHED(weapon, suck_cooldown))
+	if(!COOLDOWN_FINISHED(src, suck_cooldown))
 		return
 
-	// Grab the middle turf of the swing
-	var/turf/middle_turf = affected_turfs[ROUND_UP(length(affected_turfs) / 2)]
-	var/mob/living/bonus_damage_target = (isliving(priority_target) && (priority_target in middle_turf)) ? priority_target : locate() in middle_turf
+	// Only procs on middle turf
+	var/numturfs = length(affected_turfs)
+	if(numturfs > 1 && hitting != affected_turfs[ROUND_UP(numturfs / 2)])
+		return
+
 	// Apply some bonus damage to anyone (prioritizing the clicked atom) in the middle turf
+	var/mob/living/bonus_damage_target
+	if(isliving(priority_target) && (priority_target in hitting))
+		bonus_damage_target = priority_target
+	else
+		bonus_damage_target = locate() in hitting
+
 	bonus_damage_target?.apply_damage(20, BRUTE, BODY_ZONE_CHEST, wound_bonus = 5)
 	// And suck in all non-anchored movables nearby
-	for(var/atom/movable/suck_in in orange(weapon.suck_radius, attacker))
+	for(var/atom/movable/suck_in in orange(suck_radius, attacker))
 		if(suck_in == attacker)
 			continue
 		if(suck_in.move_resist >= MOVE_FORCE_OVERPOWERING || suck_in.anchored)
@@ -68,12 +74,12 @@
 
 			vortexed_mob.Paralyze(2 SECONDS)
 
-		step_towards(suck_in, middle_turf)
-		step_towards(suck_in, middle_turf)
-		step_towards(suck_in, middle_turf)
+		step_towards(suck_in, hitting)
+		step_towards(suck_in, hitting)
+		step_towards(suck_in, hitting)
 
-	playsound(weapon, 'sound/weapons/marauder.ogg', 50, TRUE)
-	COOLDOWN_START(weapon, suck_cooldown, weapon.suck_cooldown_duration)
+	playsound(src, 'sound/weapons/marauder.ogg', 50, TRUE)
+	COOLDOWN_START(src, suck_cooldown, suck_cooldown_duration)
 
 /obj/item/mjollnir
 	name = "Mjolnir"
@@ -103,9 +109,6 @@
 		icon_wielded = "[base_icon_state]1", \
 		attacksound = SFX_SPARKS, \
 	)
-
-/obj/item/mjollnir/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"

@@ -23,7 +23,7 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	bare_wound_bonus = 15
-	attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear // Should proably make it so spears only stab 2 tiles if wielded.
 	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 45
 
@@ -59,9 +59,6 @@
 		icon_wielded = "[icon_prefix]1", \
 	)
 	update_appearance()
-
-/obj/item/spear/can_attack_with(mob/living/attacker, params)
-	return ..() && (HAS_TRAIT(src, TRAIT_WIELDED) || attacker.get_inactive_held_item())
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"

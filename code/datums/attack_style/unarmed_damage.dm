@@ -23,7 +23,7 @@
 	attacker.resolve_unarmed_attack(blocking_us)
 	return ATTACK_SWING_BLOCKED
 
-/datum/attack_style/unarmed/generic_damage/check_pacifism(mob/living/attacker, obj/item/weapon)
+/datum/attack_style/unarmed/generic_damage/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)
 	return TRUE
 
 /// Gets how much damage this attack will actually end up doing.

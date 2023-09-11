@@ -353,6 +353,9 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
+	item_flags = NONE
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/fast
 	/// whether this is in fake swordplay mode or not
 	var/fake_swordplay = FALSE
 

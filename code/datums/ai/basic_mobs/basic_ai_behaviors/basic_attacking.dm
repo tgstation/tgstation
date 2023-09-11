@@ -65,13 +65,13 @@
 		return
 
 	var/atom/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
-	var/atom/final_target = hiding_target ? hiding_target : target
+	var/atom/final_target = hiding_target || target
 
 	if(!can_see(basic_mob, final_target, required_distance))
 		return
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
-	basic_mob.click_on_without_item_at_range(final_target)
+	basic_mob.ai_controller_click(final_target)
 	return ..() //only start the cooldown when the shot is shot
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)

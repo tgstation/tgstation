@@ -14,7 +14,7 @@
 	var/times_to_bite = round(light_snack.max_integrity / MOTH_EATING_CLOTHING_DAMAGE) + 1
 	for (var/i in 1 to times_to_bite)
 		TEST_ASSERT(!QDELETED(light_snack), "Moth finished eating clothes faster than expected.")
-		light_snack.attack(gourmet, gourmet)
+		light_snack.attack_wrapper(gourmet, gourmet)
 	TEST_ASSERT(QDELETED(light_snack), "Moth failed to finish eating clothing.")
 
 /// Unit test to ensure that golems can eat rocks successfully
@@ -35,6 +35,6 @@
 	var/times_to_bite = dinner.amount
 	for (var/i in 1 to times_to_bite)
 		TEST_ASSERT(!QDELETED(dinner), "Golem finished eating rocks faster than expected.")
-		dinner.attack(rock_enjoyer, rock_enjoyer)
+		dinner.attack_wrapper(rock_enjoyer, rock_enjoyer)
 	TEST_ASSERT(QDELETED(dinner), "Golem failed to finish eating rocks.")
 	TEST_ASSERT(rock_enjoyer.has_status_effect(status_applied), "Golem didn't gain a food buff from eating its rocks.")

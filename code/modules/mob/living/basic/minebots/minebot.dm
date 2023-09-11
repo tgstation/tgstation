@@ -28,6 +28,9 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
+	default_harm_style = null
+	default_help_style = null
+	default_disarm_style = null
 	///the access card we use to access mining
 	var/obj/item/card/id/access_card
 	///the gun we use to kill
@@ -126,21 +129,24 @@
 	set_combat_mode(!combat_mode)
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 
-/mob/living/basic/mining_drone/RangedAttack(atom/target)
+/mob/living/basic/mining_drone/click_on_without_item_at_range(atom/A, modifiers)
+	. = ..()
+	if(.)
+		return
 	if(!combat_mode)
 		return
-	stored_gun.afterattack(target, src)
+	stored_gun.afterattack(A, src, FALSE, list2params(modifiers))
 
-
-/mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-
-	if(!. || !proximity_flag || combat_mode)
-		return
+/mob/living/basic/mining_drone/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
+	if(!proximity_flag || combat_mode)
+		return ..()
 
 	if(istype(attack_target, /obj/item/stack/ore))
 		var/obj/item/target_ore = attack_target
 		target_ore.forceMove(src)
+		return TRUE
+
+	return ..()
 
 /mob/living/basic/mining_drone/proc/drop_ore()
 	to_chat(src, span_notice("You dump your stored ore."))
@@ -172,4 +178,3 @@
 	QDEL_NULL(stored_gun)
 	QDEL_NULL(access_card)
 	return ..()
-

@@ -121,10 +121,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	if(!living_pawn.combat_mode)
-		living_pawn.set_combat_mode(TRUE)
-
-	living_pawn.RangedAttack(target)
+	living_pawn.ai_controller_click(target, combat_mode = TRUE)
 	finish_action(controller, TRUE, target_key)
 	return
 

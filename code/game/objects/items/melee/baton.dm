@@ -1,7 +1,10 @@
 /datum/attack_style/melee_weapon/baton
 
-/datum/attack_style/melee_weapon/baton/check_pacifism(mob/living/attacker, obj/item/weapon)
-	return FALSE // Assume pacifism is fine, check it later in the chain depending on whether it's harmbatonning
+/datum/attack_style/melee_weapon/baton/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)
+	if(right_clicking) // harmbatonning
+		return ..()
+
+	return FALSE // stunning (always okay)
 
 /datum/attack_style/melee_weapon/baton/get_hit_sound(obj/item/melee/baton/weapon, attack_result)
 	return (attack_result & ATTACK_SWING_SKIPPED) ? null : ..() // no hitsound if we skipped. TODO, make this better.
@@ -86,26 +89,32 @@
 	stamina_damage = reset_fantasy_variable("stamina_damage", stamina_damage)
 	return ..()
 
-/obj/item/melee/baton/can_attack_with(mob/living/attacker, params)
-	if(!chunky_finger_usable && ishuman(attacker))
-		var/mob/living/carbon/human/potential_chunky_finger_human = attacker
-		if(potential_chunky_finger_human.check_chunky_fingers() && attacker.is_holding(src) && !HAS_MIND_TRAIT(attacker, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
-			balloon_alert(attacker, "fingers are too big!")
-			return FALSE
+/obj/item/melee/baton/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return TRUE // cancel attack
+	if(!isliving(A))
+		return FALSE // continue chain
+
+	if(!chunky_finger_usable && ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_finger_human = user
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
+			balloon_alert(user, "fingers are too big!")
+			return TRUE // cancel attack
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		return ..()
+		return FALSE // continue chain
 
 	else if(active && !COOLDOWN_FINISHED(src, cooldown_check))
 		if (cooldown_balloon_message)
-			balloon_alert(attacker, cooldown_balloon_message)
-		return FALSE
+			balloon_alert(user, cooldown_balloon_message)
+		return TRUE // cancel attack
 
-	if(clumsy_check(attacker))
-		return FALSE
+	if(clumsy_check(user))
+		return TRUE // cancel attack
 
-	return TRUE
+	return FALSE // continue chain
 
 /// Signal proc for [COMSIG_MOVABLE_HITTING_BLOCK]
 /// When a baton hits someone blocking, and they successfully block the attack, follow up with a stun that they must also block.

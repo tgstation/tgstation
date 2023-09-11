@@ -2,14 +2,16 @@
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 
-/datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
+/datum/attack_style/unarmed/disarm/can_attack(mob/living/attacker, obj/item/weapon)
 	if(attacker.body_position != STANDING_UP)
-		return ATTACK_SWING_CANCEL
+		return FALSE
+
+	return ..()
+
+/datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
+	// We can't shove people under ourself
 	if(attacker.loc in affected_turfs)
 		return ATTACK_SWING_CANCEL
-	// Maybe shove requires combat mode?
-	// if(!attacker.combat_mode)
-	// 	return ATTACK_SWING_CANCEL
 
 	return ..()
 
