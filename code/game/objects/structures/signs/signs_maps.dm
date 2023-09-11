@@ -101,3 +101,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland, 32)
 	icon_state = "direction_arrival"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival, 32)
+
+/obj/structure/sign/directions/cryo
+	name = "cryogenics sign"
+	desc = "A direction sign, pointing out which way the cryogenic pods are."
+	icon_state = "direction_cryo"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/cryo, 32)

@@ -293,7 +293,7 @@
 		layed_egg.production_type = production_type
 
 	if(eggs_fertile)
-		if(prob(40) || layed_egg.possible_mutations.len) //25
+		if(prob(20 + (fertility_boosting * 0.1)) || layed_egg.possible_mutations.len) //25
 			START_PROCESSING(SSobj, layed_egg)
 			layed_egg.is_fertile = TRUE
 			flop_animation(layed_egg)
@@ -437,6 +437,15 @@
 
 	if(age > max_age)
 		src.death()
+
+	if(instability > initial(instability))
+		instability = max(initial(instability), instability - 2)
+
+	if(fertility_boosting > initial(fertility_boosting))
+		fertility_boosting = max(initial(fertility_boosting), fertility_boosting - 2)
+
+	if(egg_laying_boosting > initial(egg_laying_boosting))
+		egg_laying_boosting = max(initial(egg_laying_boosting), egg_laying_boosting - 2)
 
 	var/animal_count = 0
 	for(var/mob/living/basic/animals in view(1, src))
@@ -587,12 +596,12 @@
 	chicken_owner.visible_message("[chicken_owner] [pick(chicken_owner.layMessage)]")
 
 	var/passes_minimum_checks = FALSE
-	if(chicken_owner.total_times_eaten > 4 && prob(25))
+	if(chicken_owner.total_times_eaten > 4 && prob(25 + chicken_owner.instability))
 		passes_minimum_checks = TRUE
 
 	SEND_SIGNAL(chicken_owner, COMSIG_MUTATION_TRIGGER, get_turf(chicken_owner), passes_minimum_checks)
 	chicken_owner.eggs_left--
-	StartCooldown()
+	StartCooldown(cooldown_time / max(1, (chicken_owner.egg_laying_boosting * 0.02)))
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/chicken/feed

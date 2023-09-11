@@ -41,6 +41,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
+		/datum/weather_event,
+		/datum/particle_weather,
+
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
