@@ -204,7 +204,6 @@
 		parent_item.force += sharpened_increase
 	parent_item.name = "[parent_item.name] (Wielded)"
 	parent_item.update_appearance()
-	SEND_SIGNAL(parent, COMSIG_TWOHANDED_FORCE_UPDATED, parent_item.force)
 
 	if(iscyborg(user))
 		to_chat(user, span_notice("You dedicate your module to [parent]."))
@@ -223,6 +222,8 @@
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(offhand_item, COMSIG_QDELETING, PROC_REF(on_destroy))
 	user.put_in_inactive_hand(offhand_item)
+
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_POST_WIELD, user, parent_item.force, sharpened_increase, require_twohands)
 
 /**
  * Unwield the two handed item
@@ -251,7 +252,6 @@
 		parent_item.force /= force_multiplier
 	else if(!isnull(force_unwielded))
 		parent_item.force = force_unwielded
-	SEND_SIGNAL(parent, COMSIG_TWOHANDED_FORCE_UPDATED, parent_item.force)
 
 	// update the items name to remove the wielded status
 	var/sf = findtext(parent_item.name, " (Wielded)", -10) // 10 == length(" (Wielded)")
@@ -292,6 +292,8 @@
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
+
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_POST_UNWIELD, user, parent_item.force, sharpened_increase, require_twohands)
 
 /**
  * on_attack triggers on attack with the parent item

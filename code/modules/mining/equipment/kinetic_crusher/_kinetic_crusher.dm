@@ -43,10 +43,10 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, \
-		force_unwielded = src.force_unwielded, \
-		force_wielded = src.force_wielded, \
+		force_unwielded = 0, \
+		force_wielded = 20, \
 	)
-	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, force_wielded)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, 20)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)

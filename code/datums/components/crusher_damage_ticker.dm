@@ -22,7 +22,7 @@
 	switch(apply_with)
 		if(APPLY_WITH_MELEE)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_melee_attack))
-			RegisterSignal(parent, COMSIG_TWOHANDED_FORCE_UPDATED, PROC_REF(on_melee_wield))
+			RegisterSignals(parent, list(COMSIG_TWOHANDED_POST_WIELD, COMSIG_TWOHANDED_POST_UNWIELD), PROC_REF(on_melee_wield))
 		if(APPLY_WITH_PROJECTILE)
 			RegisterSignal(parent, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 		if(APPLY_WITH_MOB_ATTACK)
@@ -31,7 +31,7 @@
 			RegisterSignal(parent, COMSIG_CRUSHER_SPELL_HIT, PROC_REF(on_applied_spell))
 
 /datum/component/crusher_damage_ticker/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_TWOHANDED_FORCE_UPDATED, COMSIG_PROJECTILE_ON_HIT, COMSIG_CRUSHER_SPELL_HIT, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(parent, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_TWOHANDED_POST_WIELD, COMSIG_TWOHANDED_POST_UNWIELD, COMSIG_PROJECTILE_ON_HIT, COMSIG_CRUSHER_SPELL_HIT, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
 /datum/component/crusher_damage_ticker/proc/try_apply_damage_tracker(mob/living/living_target)
@@ -51,7 +51,7 @@
 	target_tracker.total_damage += damage_to_increment
 	to_chat(world, span_cult("[target] has received [damage_to_increment] crusher damage via [parent], total damage: [target_tracker.total_damage]")) //debug
 
-/datum/component/crusher_damage_ticker/proc/on_melee_wield(datum/source, force)
+/datum/component/crusher_damage_ticker/proc/on_melee_wield(datum/source, mob/living/carbon/user, force, sharpened_increase, require_twohands)
 	SIGNAL_HANDLER
 
 	src.damage_to_increment = force
