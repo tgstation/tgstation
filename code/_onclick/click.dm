@@ -75,7 +75,7 @@
 
 	// -- At the very start, divert into click intercepts first --
 	// Notably, you can use click intercepts while you are notransform'd
-	if(check_click_intercept(params, clicked_on) || notransform)
+	if(check_click_intercept(params, clicked_on) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	var/list/modifiers = params2list(params)

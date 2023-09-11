@@ -105,6 +105,9 @@
 	greyscale_config_inhand_right = null
 	weapon_sprite_angle = 270
 
+/obj/item/screwdriver/power/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
 	AddComponent( \

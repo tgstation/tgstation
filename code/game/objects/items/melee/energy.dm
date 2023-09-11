@@ -39,6 +39,9 @@
 	fire = 100
 	acid = 30
 
+/obj/item/melee/energy/get_all_tool_behaviours()
+	return list(TOOL_SAW)
+
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()

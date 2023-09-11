@@ -145,7 +145,7 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	obj_damage = 200
 	ranged_cooldown_time = 5
 	ranged = TRUE

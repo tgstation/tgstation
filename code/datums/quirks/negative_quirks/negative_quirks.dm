@@ -1118,10 +1118,19 @@
 	. = ..()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
-	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(smoker_lungs && IS_ORGANIC_ORGAN(smoker_lungs)) // robotic lungs aren't affected
-		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
-		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	var/obj/item/organ/internal/lungs/smoker_lungs = null
+	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
+		if(isplasmaman(carbon_holder))
+			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+		else if(isethereal(carbon_holder))
+			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+		else
+			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
+	if(!isnull(smoker_lungs))
+		smoker_lungs = new smoker_lungs
+		smoker_lungs.Insert(carbon_holder, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/quirk/item_quirk/junkie/smoker/process(seconds_per_tick)
 	. = ..()
@@ -1535,3 +1544,20 @@
 	SIGNAL_HANDLER
 	quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
 	UnregisterSignal(source, COMSIG_MOB_LOGIN)
+
+/datum/quirk/numb
+	name = "Numb"
+	desc = "You can't feel pain at all."
+	icon = FA_ICON_STAR_OF_LIFE
+	value = -4
+	gain_text = "You feel your body becoming numb."
+	lose_text = "The numbness subsides."
+	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."
+	hardcore_value = 4
+
+/datum/quirk/numb/add(client/client_source)
+	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/quirk/numb/remove(client/client_source)
+	quirk_holder.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
