@@ -67,7 +67,7 @@ and your disease can spread via people walking on vomit.
 	if(vomit_blood)
 		constructed_flags |= MOB_VOMIT_BLOOD
 
-	vomiter.vomit(vomit_flags = constructed_flags,  vomit_type = type_of_vomit, lost_nutrition = deductable_nutrition, distance = proj_vomit)
+	vomiter.vomit(vomit_flags = constructed_flags, vomit_type = type_of_vomit, lost_nutrition = deductable_nutrition, distance = proj_vomit)
 
 /datum/symptom/vomit/nebula
 	name = "Nebula Vomiting"
