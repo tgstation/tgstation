@@ -1,7 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - balance: "polymorph belt now blacklists mobs that are undead, humanoid, robotic or spiritual (in nature, not religiously), as well as megafauna"
-  - balance: "however, this means that it works with more mobs that it should logically work with, like slimes/bugs/lightgeists etc"
-  - bugfix: "fixed headslug shenanigans with the polymorph belt hopefully for good this time"
-  - bugfix: "fixed headslug description mentioning its movement despite the slug being dead"

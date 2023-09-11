@@ -1,4 +1,0 @@
-author: "Vincent983"
-delete-after: True
-changes:
-  - rscadd: "Added the service borg \"drink apparatus\" upgrade, which adds an extra drinking apparatus to the borg, up to a maximum of 5 extra.\n:cl:"

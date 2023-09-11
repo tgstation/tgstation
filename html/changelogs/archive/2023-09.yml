@@ -330,3 +330,45 @@
   - bugfix: Wounds are now picked from the most severe down again, meaning eswords
       can jump to avulsions
   - bugfix: Scar descs are now properly applied
+2023-09-11:
+  Jacquerel:
+  - image: Hivelords have a new sprite.
+  - image: Hivelord and Legion brood have a death animation.
+  - bugfix: Your clothes and such should correctly reposition themselves if a black
+      charged slime extract turns you into a monkey.
+  Melbert:
+  - rscdel: Spacers are slightly shorter. They're still taller than other people,
+      just not as much.
+  - qol: Haunted 8-ball no longer requires the ghost orbit the petitioner to submit
+      votes
+  - qol: Haunted 8-ball ghosts can now change their vote after submitting it
+  - bugfix: Haunted 8-ball no longer always reports "yes"
+  - bugfix: Haunted 8-ball no longer always reports default "yes", "no", or "maybe"
+      and now gives a proper eight ball response
+  - bugfix: Haunted 8-ball can be picked up via the stat panel
+  Profakos:
+  - bugfix: Mortar and pestle can grind stuff again
+  Sealed101:
+  - balance: polymorph belt now blacklists mobs that are undead, humanoid, robotic
+      or spiritual (in nature, not religiously), as well as megafauna
+  - balance: however, this means that it works with more mobs that it should logically
+      work with, like slimes/bugs/lightgeists etc
+  - bugfix: fixed headslug shenanigans with the polymorph belt hopefully for good
+      this time
+  - bugfix: fixed headslug description mentioning its movement despite the slug being
+      dead
+  Vincent983:
+  - rscadd: 'Added the service borg "drink apparatus" upgrade, which adds an extra
+      drinking apparatus to the borg, up to a maximum of 5 extra.
+
+      :cl:'
+  Wallem, MTandi:
+  - image: Updates chem factory tank sprites
+  blueDev2:
+  - qol: Rice Dough may be made in beaker instead of being crafted, but the rice and
+      flour must be added first
+  cnleth:
+  - bugfix: Changeling tentacle and bloodchiller from xenobio will no longer stop
+      working if you have antimagic
+  mc-oofert:
+  - rscadd: humpback emergency shuttle
