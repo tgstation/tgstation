@@ -16,6 +16,10 @@
 		return
 
 	var/obj/item/device/cassette_tape/attacked_tape = weapon
+	if(attacked_tape.name == initial(attacked_tape.name))
+		to_chat(user, span_notice("Please name your tape before submitting it you can't change this later!"))
+		return
+
 	if(attacked_tape.approved_tape)
 		to_chat(user, span_notice("This tape has already been approved by the Board, it would be a waste of money to send it in again."))
 		return
