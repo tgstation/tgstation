@@ -291,3 +291,84 @@
   vinylspiders:
   - bugfix: fixes creamatorium not producing any suspicious ice cream, and fixes a
       dead mouse related harrdel
+2023-09-09:
+  CoiledLamb:
+  - image: updates medigel sprites
+  Jacquerel:
+  - balance: Traitors who are activated as sleeper agents or arrive late on the arrivals
+      shuttle will begin with more reputation and likely be able to immediately access
+      most of the uplink catalogue.
+  LT3:
+  - qol: Supermatter common channel alerts are less frequent if the crystal's integrity
+      is rising rapidly
+  Majkl-J:
+  - bugfix: The messenger app can now be used when laying down.
+  san7890:
+  - rscadd: Ever see a robot yawn? Don't worry, it makes sense now.
+2023-09-10:
+  Jacquerel:
+  - bugfix: It is now possible to smoke cigarettes even if you aren't wearing a safety
+      helmet
+  - bugfix: Golems can eat
+  - bugfix: Cooked and crafted food should be edible
+  - bugfix: Medborgs can now spawn vanilla ice cream instead of nothing ice cream
+  - bugfix: Ghosts can examine food
+  - admin: Admins can add/remove the spawner component from arbitrary items again.
+  Rhials:
+  - qol: adds some more traitor objective brainwashing default objectives.
+  - spellcheck: fixes the double-punctuation on traitor objective brainwashing broadcasts.
+  - spellcheck: brainwashing deadchat broadcasts will now auto-punctuate.
+  carshalash:
+  - bugfix: ' Corrects various food types from the martian food expansion'
+  distributivgesetz:
+  - admin: The "Create Command Report" verb now has the option to not print report
+      papers at communications consoles.
+  leaKsi:
+  - bugfix: Exploration drones can't be used to reach Centcom anymore.
+  nikothedude:
+  - refactor: Refactored wounds yet again
+  - bugfix: Wounds are now picked from the most severe down again, meaning eswords
+      can jump to avulsions
+  - bugfix: Scar descs are now properly applied
+2023-09-11:
+  Jacquerel:
+  - image: Hivelords have a new sprite.
+  - image: Hivelord and Legion brood have a death animation.
+  - bugfix: Your clothes and such should correctly reposition themselves if a black
+      charged slime extract turns you into a monkey.
+  Melbert:
+  - rscdel: Spacers are slightly shorter. They're still taller than other people,
+      just not as much.
+  - qol: Haunted 8-ball no longer requires the ghost orbit the petitioner to submit
+      votes
+  - qol: Haunted 8-ball ghosts can now change their vote after submitting it
+  - bugfix: Haunted 8-ball no longer always reports "yes"
+  - bugfix: Haunted 8-ball no longer always reports default "yes", "no", or "maybe"
+      and now gives a proper eight ball response
+  - bugfix: Haunted 8-ball can be picked up via the stat panel
+  Profakos:
+  - bugfix: Mortar and pestle can grind stuff again
+  Sealed101:
+  - balance: polymorph belt now blacklists mobs that are undead, humanoid, robotic
+      or spiritual (in nature, not religiously), as well as megafauna
+  - balance: however, this means that it works with more mobs that it should logically
+      work with, like slimes/bugs/lightgeists etc
+  - bugfix: fixed headslug shenanigans with the polymorph belt hopefully for good
+      this time
+  - bugfix: fixed headslug description mentioning its movement despite the slug being
+      dead
+  Vincent983:
+  - rscadd: 'Added the service borg "drink apparatus" upgrade, which adds an extra
+      drinking apparatus to the borg, up to a maximum of 5 extra.
+
+      :cl:'
+  Wallem, MTandi:
+  - image: Updates chem factory tank sprites
+  blueDev2:
+  - qol: Rice Dough may be made in beaker instead of being crafted, but the rice and
+      flour must be added first
+  cnleth:
+  - bugfix: Changeling tentacle and bloodchiller from xenobio will no longer stop
+      working if you have antimagic
+  mc-oofert:
+  - rscadd: humpback emergency shuttle

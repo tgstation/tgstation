@@ -356,7 +356,7 @@
 		var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
 		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
-			new /obj/item/food/butter(drop_location(), purity)
+			new /obj/item/food/butter(/* loc = */ drop_location(), /* starting_reagent_purity = */ purity)
 		//Recipe to make Mayonnaise
 		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
 			beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
