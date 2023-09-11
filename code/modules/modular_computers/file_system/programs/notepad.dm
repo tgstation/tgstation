@@ -10,7 +10,8 @@
 	usage_flags = PROGRAM_TABLET
 
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
-		bringing you the best in electronics and software since 2467!\n\To help with navigation, we have provided the following definitions:\n\
+		bringing you the best in electronics and software since 2467!\n\
+		To help with navigation, we have provided the following definitions:\n\
 		Fore - Toward front of ship\n\
 		Aft - Toward back of ship\n\
 		Port - Left side of ship\n\
