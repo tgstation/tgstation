@@ -110,7 +110,7 @@
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Lintel. \
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Book. \
 		It can materialize a barricade at range, that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
@@ -212,15 +212,15 @@
 
 /datum/heretic_knowledge/ultimate/knock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	priority_announce("Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]", "Centra[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
-	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
+	user.client?.give_award(/datum/award/achievement/misc/knock_ascension, user)
 
 	// buffs
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)
 
 	user.client?.give_award(/datum/award/achievement/misc/knock_ascension, user)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/flesh/knock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/knock)
 	blade_upgrade.chance += 30
 	new /obj/structure/knock_tear(loc, user.mind)

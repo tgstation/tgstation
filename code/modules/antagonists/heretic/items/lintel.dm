@@ -1,5 +1,5 @@
 /obj/effect/forcefield/wizard/heretic
-	name = "consecrated lintel passage"
+	name = "consecrated lintel"
 	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
 	icon_state = "lintel"
 	initial_duration = 8 SECONDS
@@ -12,7 +12,7 @@
 		visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
 /obj/item/heretic_lintel
-	name = "consecrated lintel"
+	name = "consecrated book"
 	desc = "Some kind of book, its contents make your head hurt. The material is not known to you and it seems to shift and twist unnaturally."
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "hereticlintel"
@@ -32,10 +32,10 @@
 
 /obj/item/heretic_lintel/examine(mob/user)
 	. = ..()
-	if(I!S_HERETIC_OR_MONSTER(user))
+	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-		. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
-		. += span_hypnophrase("It has <b>[uses]</b> uses left.")
+	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
+	. += span_hypnophrase("It has <b>[uses]</b> uses left.")
 
 /obj/item/heretic_lintel/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()

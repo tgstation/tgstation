@@ -22,6 +22,6 @@
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/void_cloak,
 	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/knock_blast
+	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
 	route = PATH_SIDE

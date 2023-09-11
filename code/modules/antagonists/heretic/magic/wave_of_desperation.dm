@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/aoe/knock_blast
+/datum/action/cooldown/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
 	Cannot be cast unless you are restrained, and the stress renders you unconscious 12 seconds later!"
@@ -17,11 +17,11 @@
 
 	aoe_radius = 3
 
-/datum/action/cooldown/spell/aoe/knock_blast/is_valid_target(mob/living/carbon/cast_on)
+/datum/action/cooldown/spell/aoe/wave_of_desperation/is_valid_target(mob/living/carbon/cast_on)
 	return ..() && istype(cast_on) && (cast_on.handcuffed || cast_on.legcuffed)
 
 // Before the cast, we do some small AOE damage around the caster
-/datum/action/cooldown/spell/aoe/knock_blast/before_cast(mob/living/carbon/cast_on)
+/datum/action/cooldown/spell/aoe/wave_of_desperation/before_cast(mob/living/carbon/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -40,7 +40,7 @@
 		victim.AdjustKnockdown(3 SECONDS)
 		victim.AdjustParalyzed(0.5 SECONDS)
 
-/datum/action/cooldown/spell/aoe/knock_blast/get_things_to_cast_on(atom/center, radius_override)
+/datum/action/cooldown/spell/aoe/wave_of_desperation/get_things_to_cast_on(atom/center, radius_override)
 	. = list()
 	for(var/atom/nearby in orange(center, radius_override ? radius_override : aoe_radius))
 		if(nearby == owner || nearby == center || isarea(nearby))
@@ -58,18 +58,19 @@
 
 		. += nearby
 
-/datum/action/cooldown/spell/aoe/knock_blast/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/datum/action/cooldown/spell/aoe/wave_of_desperation/cast_on_thing_in_aoe(atom/victim, atom/caster)
 	if(!ismob(victim))
 		SEND_SIGNAL(owner, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim)
-	
-	if(!istype(victim, /atom/movable))
-		return
+
 	var/atom/movable/mover = victim
+	if(!istype(mover))
+		return
+
 	if(mover.anchored)
 		return
-		var/our_turf = get_turf(caster)
-		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(mover, our_turf)))
-		mover.safe_throw_at(throwtarget, 3, 1, force = MOVE_FORCE_STRONG)
+	var/our_turf = get_turf(caster)
+	var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(mover, our_turf)))
+	mover.safe_throw_at(throwtarget, 3, 1, force = MOVE_FORCE_STRONG)
 
 /obj/effect/temp_visual/knockblast
 	icon = 'icons/effects/effects.dmi'

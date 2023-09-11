@@ -76,22 +76,21 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-		. += span_hypnophrase("Enchanted by the Mansus!")
-		. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
-		. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
-		. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
+	. += span_hypnophrase("Enchanted by the Mansus!")
+	. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
+	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
+	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
 
 /obj/item/card/id/advanced/heretic/attack_self(mob/user)
+	. = ..()
 	if(!IS_HERETIC(user))
+		return
+	var/cardname = tgui_input_list(user, "Shapeshift into?", "Shapeshift", fused_ids)
+	if(!cardname)
+		balloon_alert(user, "no options!")
 		return ..()
-		var/cardname = tgui_input_list(user, "Shapeshift into?", "Shapeshift", fused_ids)
-		if(!cardname)
-			balloon_alert(user, "no options!")
-			return ..()
-		var/obj/item/card/id/card = fused_ids[cardname]
-		shapeshift(card)
-	else
-		return ..()
+	var/obj/item/card/id/card = fused_ids[cardname]
+	shapeshift(card)
 
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
 	trim = card.trim
@@ -136,19 +135,18 @@
 	if(istype(target, /obj/effect/knock_portal))
 		clear_portals()
 		return
+
 	if(!istype(target, /obj/machinery/door))
 		return
-		if(link)
-			make_portal(user, link, target)
-			to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
-			link = null
-			balloon_alert(user, "link 2/2")
-		else
-			link = target
-			balloon_alert(user, "link 1/2")
-	else if(istype(target, /obj/effect/knock_portal))
-		clear_portals()
 
+	if(link)
+		make_portal(user, link, target)
+		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
+		link = null
+		balloon_alert(user, "link 2/2")
+	else
+		link = target
+		balloon_alert(user, "link 1/2")
 
 /obj/item/card/id/advanced/heretic/Destroy()
 	QDEL_LIST_ASSOC(fused_ids)
