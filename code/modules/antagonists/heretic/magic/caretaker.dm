@@ -15,11 +15,9 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
-	
-	var/caretaking = FALSE
 
 /datum/action/cooldown/spell/caretaker/Remove(mob/living/remove_from)
-	if(caretaking)
+	if(remove_from.has_status_effect(/datum/status_effect/caretaker_refuge))
 		stop_caretaking()
 	return ..()
 
@@ -33,18 +31,9 @@
 			owner.balloon_alert(owner, "other minds nearby!")
 			return FALSE
 
-	if(caretaking)
-		stop_caretaking()
+	var/mob/living/carbon/carbon_user = owner
+	if(carbon_user.has_status_effect(/datum/status_effect/caretaker_refuge))
+		carbon_user.remove_status_effect(/datum/status_effect/caretaker_refuge)
 	else
-		start_caretaking()
+		carbon_user.apply_status_effect(/datum/status_effect/caretaker_refuge)
 	return TRUE
-
-/datum/action/cooldown/spell/caretaker/proc/start_caretaking()
-	var/mob/living/carbon/carbon_user = owner
-	carbon_user.apply_status_effect(/datum/status_effect/caretaker_refuge)
-	caretaking = TRUE
-
-/datum/action/cooldown/spell/caretaker/proc/stop_caretaking()
-	var/mob/living/carbon/carbon_user = owner
-	carbon_user.remove_status_effect(/datum/status_effect/caretaker_refuge)
-	caretaking = FALSE
