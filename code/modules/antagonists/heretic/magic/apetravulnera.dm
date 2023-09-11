@@ -50,8 +50,8 @@
 		crit_wound.apply_wound(pick(cast_on.bodyparts))
 	else
 		cast_on.visible_message(
-			span_danger("[cast_on]'s [bodypart]'s scratches and bruises are torn open by an unholy force!"),
-			span_danger("Your [bodypart]'s scratches and bruises are torn open by some horrible unholy force!")
+			span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),
+			span_danger("Your scratches and bruises are torn open by some horrible unholy force!")
 		)
 	
 	new /obj/effect/temp_visual/cleave(get_turf(cast_on))
