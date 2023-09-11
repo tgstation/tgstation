@@ -200,10 +200,7 @@
 		return TRUE
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -414,7 +411,7 @@
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
-		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -713,12 +710,7 @@
 			return
 
 	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(attacking_item, /obj/item/pai_card) && insert_pai(user, attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
@@ -792,7 +784,7 @@
 	internal_cell?.forceMove(drop_location())
 	computer_id_slot?.forceMove(drop_location())
 	inserted_disk?.forceMove(drop_location())
-	inserted_pai?.forceMove(drop_location())
+	remove_pai()
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
@@ -840,3 +832,30 @@
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
+
+/obj/item/modular_computer/proc/insert_pai(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return FALSE
+	if(!user.transferItemToLoc(card, src))
+		return FALSE
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	var/datum/action/innate/pai/messenger/messenger_ability = new(inserted_pai.pai)
+	messenger_ability.Grant(inserted_pai.pai)
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+/obj/item/modular_computer/proc/remove_pai(mob/user)
+	if(!inserted_pai)
+		return FALSE
+	var/datum/action/innate/pai/messenger/messenger_ability = locate() in inserted_pai.pai.actions
+	messenger_ability.Remove(inserted_pai.pai)
+	qdel(messenger_ability)
+	if(user)
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+	else
+		inserted_pai.forceMove(drop_location())
+	inserted_pai = null
+	update_appearance(UPDATE_ICON)
+	return TRUE

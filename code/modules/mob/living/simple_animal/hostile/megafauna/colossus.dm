@@ -588,8 +588,7 @@
 	. = ..()
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/possessor = arrived
-		possessor.notransform = TRUE
-		ADD_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
 		possessor.status_flags |= GODMODE
 		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
@@ -598,9 +597,8 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	for(var/mob/living/possessor in src)
-		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
 		possessor.status_flags &= ~GODMODE
-		possessor.notransform = FALSE
 		if(kill || !isanimal_or_basicmob(loc))
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)

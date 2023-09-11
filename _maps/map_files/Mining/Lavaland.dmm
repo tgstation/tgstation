@@ -69,7 +69,7 @@
 /area/mine/maintenance/living/south)
 "aq" = (
 /obj/machinery/camera/autoname/directional/east{
-	network = list("labor")
+	network = list("mine")
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -358,7 +358,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/production)
 "cy" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -3724,7 +3724,7 @@
 /turf/open/floor/plating,
 /area/mine/hydroponics)
 "vu" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,

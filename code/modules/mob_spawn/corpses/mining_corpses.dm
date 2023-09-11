@@ -59,7 +59,7 @@
 			outfit = /datum/outfit/consumed_shadowperson
 	. = ..()
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/snow/Initialize(mapload)
+/obj/effect/mob_spawn/corpse/human/snowlegioninfested/Initialize(mapload)
 	var/corpse_theme = pick_weight(list(
 		"Miner" = 64,
 		"Clown" = 5,
