@@ -643,6 +643,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/rice
 
+/datum/reagent/consumable/rice_flour
+	name = "Rice Flour"
+	description = "Flour mixed with Rice"
+	reagent_state = SOLID
+	color = "#FFFFFF" // rgb: 0, 0, 0
+	taste_description = "chalky wheat with rice"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."

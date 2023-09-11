@@ -249,7 +249,7 @@
  * * strongman - the suplexer of the rod.
  */
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
-	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
+	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("You suplex [src] into the ground!")

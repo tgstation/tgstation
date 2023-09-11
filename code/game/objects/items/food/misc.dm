@@ -58,7 +58,7 @@
 
 /obj/item/food/popcorn/caramel
 	name = "caramel popcorn"
-	icon_state = "сaramel_popcorn"
+	icon_state = "caramel_popcorn"
 	desc = "Caramel-covered popcorn. Sweet!"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -98,6 +98,12 @@
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 	if(stink_particles)
 		particles = new stink_particles
+
+// We override the parent procs here to prevent burned messes from cooking into burned messes.
+/obj/item/food/badrecipe/make_grillable()
+	return
+/obj/item/food/badrecipe/make_bakeable()
+	return
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -365,7 +371,6 @@
 	)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pierogi
@@ -622,8 +627,6 @@
 	tastes = list("pita bread" = 2)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
-	burns_on_grill = TRUE
-	burns_in_oven = TRUE
 
 /obj/item/food/tzatziki_sauce
 	name = "tzatziki sauce"

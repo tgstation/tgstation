@@ -160,6 +160,7 @@
 	desc = "A slab of station reclaimed and chemically processed meat product."
 	tastes = list("meat flavoring" = 2, "modified starches" = 2, "natural & artificial dyes" = 1, "butyric acid" = 1)
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/meatproduct/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -346,7 +347,6 @@
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/slab/gondola
@@ -409,7 +409,6 @@
 	)
 	tastes = list("crab" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/slab/chicken
@@ -468,7 +467,6 @@
 	)
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/steak/Initialize(mapload)
@@ -684,7 +682,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
