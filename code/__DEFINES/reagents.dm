@@ -93,6 +93,8 @@
 #define REAGENT_NO_RANDOM_RECIPE (1<<7)
 ///Does this reagent clean things?
 #define REAGENT_CLEANS (1<<8)
+///Does this reagent affect wounds? Used to check if some procs should be ran.
+#define REAGENT_AFFECTS_WOUNDS (1<<9)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
