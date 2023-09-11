@@ -86,7 +86,7 @@
 
 /datum/mood_event/jolly
 	description = "I feel happy for no particular reason."
-	mood_change = 6
+	mood_change = 2
 	timeout = 2 MINUTES
 
 /datum/mood_event/focused

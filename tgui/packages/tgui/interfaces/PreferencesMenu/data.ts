@@ -81,7 +81,6 @@ export type Quirk = {
   description: string;
   icon: string;
   name: string;
-  value: number;
 };
 
 export type QuirkInfo = {
