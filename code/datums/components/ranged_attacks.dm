@@ -8,6 +8,10 @@
 	var/projectile_type
 	/// Sound to play when we fire our projectile
 	var/projectile_sound
+	/// how many shots we will fire
+	var/burst_shots
+	/// intervals between shots
+	var/burst_intervals
 	/// Time to wait between shots
 	var/cooldown_time
 	/// Tracks time between shots
@@ -17,6 +21,8 @@
 	casing_type,
 	projectile_type,
 	projectile_sound = 'sound/weapons/gun/pistol/shot.ogg',
+	burst_shots,
+	burst_intervals = 0.2 SECONDS,
 	cooldown_time = 3 SECONDS,
 )
 	. = ..()
@@ -32,6 +38,10 @@
 		CRASH("Set both casing type and projectile type in [parent]'s ranged attacks component! uhoh! stinky!")
 	if (!casing_type && !projectile_type)
 		CRASH("Set neither casing type nor projectile type in [parent]'s ranged attacks component! What are they supposed to be attacking with, air?")
+	if(burst_shots <= 1)
+		return
+	src.burst_shots = burst_shots
+	src.burst_intervals = burst_intervals
 
 /datum/component/ranged_attacks/RegisterWithParent()
 	. = ..()
@@ -49,12 +59,16 @@
 		return
 	COOLDOWN_START(src, fire_cooldown, cooldown_time)
 	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
-	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
+	if(isnull(burst_shots))
+		return
+	for(var/i in 1 to (burst_shots - 1))
+		addtimer(CALLBACK(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers), i * burst_intervals)
 
 /// Actually fire the damn thing
 /datum/component/ranged_attacks/proc/async_fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
 	if(projectile_type)
 		firer.fire_projectile(projectile_type, target, projectile_sound)
+		SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 		return
 	playsound(firer, projectile_sound, 100, TRUE)
 	var/turf/startloc = get_turf(firer)
@@ -66,6 +80,8 @@
 	else
 		target_zone = ran_zone()
 	casing.fire_casing(target, firer, null, null, null, target_zone, 0,  firer)
+	casing.update_appearance()
 	casing.AddElement(/datum/element/temporary_atom, 30 SECONDS)
+	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 	return
 

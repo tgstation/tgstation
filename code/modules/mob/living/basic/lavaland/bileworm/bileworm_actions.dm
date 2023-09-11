@@ -117,7 +117,7 @@
 		to_chat(devourer, span_warning("Someone stole your dinner!"))
 		return
 	to_chat(target, span_userdanger("You are consumed by [devourer]!"))
-	devourer.visible_message("[devourer] consumes [target]!")
+	devourer.visible_message(span_warning("[devourer] consumes [target]!"))
 	devourer.fully_heal()
 	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
 	//to be recieved on death

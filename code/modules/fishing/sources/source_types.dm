@@ -6,7 +6,8 @@
 		/obj/item/fish/pufferfish = 15,
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
-		/obj/item/fish/lanternfish = 5
+		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/clownfish/lube = 3,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
@@ -23,14 +24,13 @@
 		/obj/item/fish/guppy = 10,
 	)
 	catalog_description = "Fish dimension (Fishing portal generator)"
-
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
 	background = "fishing_background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
-		/obj/item/chasm_detritus = 30,
+		/datum/chasm_detritus = 30,
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
@@ -38,7 +38,7 @@
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
-	if(!rod.hook || !ispath(rolled_reward, /obj/item/chasm_detritus))
+	if(!rod.hook || !ispath(rolled_reward, /datum/chasm_detritus))
 		return rolled_reward
 
 	return rod.hook.chasm_detritus_type
@@ -75,7 +75,8 @@
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,
 		/obj/effect/decal/remains/plasma = 1,
-
+		/obj/item/stack/sheet/mineral/mythril = 1,
+		/obj/item/stack/sheet/mineral/adamantine = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
@@ -98,6 +99,7 @@
 		FISHING_DUD = 18,
 		/obj/item/fish/sludgefish = 18,
 		/obj/item/fish/slimefish = 2,
+		/obj/item/storage/wallet/money = 2,
 	)
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
@@ -130,7 +132,7 @@
 	if(!istype(get_area(user), /area/station/holodeck))
 		interrupt_challenge("exited holodeck")
 
-/datum/fish_source/holographic/on_challenge_completed(datum/fishing_challenge/source, mob/user, success, perfect)
+/datum/fish_source/holographic/on_challenge_completed(datum/fishing_challenge/source, mob/user, success)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
@@ -140,6 +142,9 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/boned = 10,
 		/obj/item/stack/sheet/bone = 2,
+		/obj/item/clothing/gloves/bracer = 2,
+		/obj/effect/decal/remains/human = 2,
+		/obj/item/fish/mastodon = 1,
 	)
 	fish_counts = list(
 		/obj/item/clothing/gloves/bracer = 1,

@@ -145,8 +145,7 @@
 	if(materials.silo && !materials.on_hold())
 		var/matlist = inp.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.mat_container.insert_item(inp)
-			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			materials.mat_container.insert_item(inp, context = src)
 			return
 
 	// No silo attached process to internal storage

@@ -584,3 +584,9 @@ TOAST_NOTIFICATION_ON_INIT
 
 ## Causes configuration errors to spit out runtimes
 CONFIG_ERRORS_RUNTIME
+
+## Restricts client uploads to the server, defined in bytes, default is 0.5MB
+UPLOAD_LIMIT 524288
+
+## Restricts admin client uploads to the server, defined in bytes, default is 5MB
+UPLOAD_LIMIT_ADMIN 5242880

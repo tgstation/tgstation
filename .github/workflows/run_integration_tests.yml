@@ -60,6 +60,7 @@ jobs:
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
       - name: Run Tests
         run: |
+          cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests

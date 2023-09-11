@@ -19,7 +19,7 @@
 	DL_source = null
 	return ..()
 
-/datum/computer_file/program/borg_monitor/kill_program()
+/datum/computer_file/program/borg_monitor/kill_program(mob/user)
 	loglist = null //Not everything is saved if you close an app
 	DL_source = null
 	DL_progress = 0
@@ -99,9 +99,9 @@
 		)
 		data["cyborgs"] += list(cyborg_data)
 		data["DL_progress"] = DL_progress
-	
+
 	data["borglog"] = loglist
-	
+
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)

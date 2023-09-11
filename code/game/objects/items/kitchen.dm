@@ -115,6 +115,9 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	tool_behaviour = TOOL_KNIFE
 
+/obj/item/knife/kitchen/silicon/get_all_tool_behaviours()
+	return list(TOOL_ROLLINGPIN, TOOL_KNIFE)
+
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
 	. += " It's fitted with a [tool_behaviour] head."

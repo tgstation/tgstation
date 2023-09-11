@@ -1,4 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes:
-  - bugfix: "healing holoparas will no longer kill slime people"

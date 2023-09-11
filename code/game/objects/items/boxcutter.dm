@@ -18,6 +18,9 @@
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = null
 
+/obj/item/boxcutter/get_all_tool_behaviours()
+	return list(TOOL_KNIFE)
+
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)

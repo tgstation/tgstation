@@ -762,7 +762,7 @@
 		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
-			COMSIG_MATCONTAINER_SHEETS_RETRIVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
+			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \
 	)
 
@@ -835,7 +835,7 @@
 	balloon_alert(mod.wearer, "not enough material")
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 
-/obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets)
+/obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets, atom/context)
 	SIGNAL_HANDLER
 
 	attempt_insert_storage(sheets)
