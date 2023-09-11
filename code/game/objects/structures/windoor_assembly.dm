@@ -271,51 +271,32 @@
 					set_density(TRUE) //Shouldn't matter but just incase
 					to_chat(user, span_notice("You finish the windoor."))
 
+					var/obj/machinery/door/window/windoor
 					if(secure)
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(loc)
+						windoor = new /obj/machinery/door/window/brigdoor(loc)
 						if(facing == "l")
 							windoor.icon_state = "leftsecureopen"
 							windoor.base_state = "leftsecure"
 						else
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
-
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
 
 					else
-						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(loc)
+						windoor = new /obj/machinery/door/window(loc)
 						if(facing == "l")
 							windoor.icon_state = "leftopen"
 							windoor.base_state = "left"
 						else
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
 
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
+					windoor.setDir(dir)
+					windoor.set_density(FALSE)
+					windoor.set_electronics(electronics)
+					if(created_name)
+						windoor.name = created_name
+					qdel(src)
+					windoor.close()
 
 			else
 				return ..()
