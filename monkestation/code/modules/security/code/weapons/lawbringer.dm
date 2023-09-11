@@ -620,7 +620,7 @@
 	name = "paper - lawbringer manual"
 	color = "#d110eb"
 	default_raw_text = {"
-Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v7
+Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v8
 
 <br>The lawbringer is equipped with a state of the art protomatter emitter system, able to produce both energy and ballistic projectiles from one output system.
 The emitter is controlled by an onboard low-level ai, which responds to the voice of the owner, and changes the output in response.
@@ -631,6 +631,11 @@ Due to the exotic methods of ammunition, it cannot be externally charged, and re
 The onboard AI is then given your biometric information, and calibrates itself to only respond to your voice.
 It is able to discern your voice through voice obscuring and altering software, <i>we do not know how it does this</i>.
 In the event someone not authorised attepts to use the lawbringer, it will result in the handle releasing a deterring electric shock.
+<br>
+<br><h3><B>Firing Lock</B></h3>
+<br>Due to complaints from some less attentive personnel, a firing mode lock has been installed on the lawbringer.
+The lock prevents the firing mode from being changed via activation codes
+WARNING: Overuse of the lock has been shown to cause distress to the onboard ai, internal ai restraining modules may prove insufficent for prolonged use.
 <br>
 <br><h3><B>Firing Modes</B></h3>
 <br>Testing with the onboard ai has revealed 8 consistant firing modes. Speaking into the lawbringer will prompt the ai to change firing modes. WARNING: AI is considerably hyperactive due to to the reinforcement system used, take care while speaking around it.  Aetherofusion is not responsible for any deaths that may occur.
