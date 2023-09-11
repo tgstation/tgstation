@@ -56,17 +56,18 @@ and your disease can spread via people walking on vomit.
 /datum/symptom/vomit/proc/vomit(mob/living/carbon/vomiter)
 	var/deductable_nutrition = 0
 	var/constructed_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
+	var/type_of_vomit = /obj/effect/decal/cleanable/vomit/toxic
 	if(vomit_nebula)
-		constructed_flags |= MOB_VOMIT_COLOR_NEBULA
+		type_of_vomit = /obj/effect/decal/cleanable/vomit/nebula
 		deductable_nutrition = 10
 	else
-		constructed_flags |= (MOB_VOMIT_COLOR_TOXIC | MOB_VOMIT_STUN)
+		constructed_flags |= MOB_VOMIT_STUN
 		deductable_nutrition = 20
 
 	if(vomit_blood)
 		constructed_flags |= MOB_VOMIT_BLOOD
 
-	vomiter.vomit(vomit_flags = constructed_flags, lost_nutrition = deductable_nutrition, distance = proj_vomit)
+	vomiter.vomit(vomit_flags = constructed_flags,  vomit_type = type_of_vomit, lost_nutrition = deductable_nutrition, distance = proj_vomit)
 
 /datum/symptom/vomit/nebula
 	name = "Nebula Vomiting"

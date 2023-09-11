@@ -637,19 +637,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/vomiter, vomit_flags, purge_ratio = 0.1)
-	var/obj/effect/decal/cleanable/vomit/throw_up
-
-	if (vomit_flags & MOB_VOMIT_COLOR_NEBULA)
-		throw_up = new /obj/effect/decal/cleanable/vomit/nebula(src, vomiter.get_static_viruses())
-	else if(vomit_flags & MOB_VOMIT_COLOR_NANITES)
-		throw_up = new /obj/effect/decal/cleanable/vomit/nanites(src, vomiter.get_static_viruses())
-	else if(vomit_flags & MOB_VOMIT_COLOR_PURPLE)
-		throw_up = new /obj/effect/decal/cleanable/vomit/purple(src, vomiter.get_static_viruses())
-	else if (vomit_flags & MOB_VOMIT_COLOR_TOXIC)
-		throw_up = new /obj/effect/decal/cleanable/vomit/toxic(src, vomiter.get_static_viruses())
-	else
-		throw_up = new /obj/effect/decal/cleanable/vomit(src, vomiter.get_static_viruses())
+/turf/proc/add_vomit_floor(mob/living/vomiter, vomit_type = /obj/effect/decal/cleanable/vomit, vomit_flags, purge_ratio = 0.1)
+	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter.get_static_viruses())
 
 	// if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(throw_up))
