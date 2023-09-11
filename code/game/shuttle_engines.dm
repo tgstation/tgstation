@@ -59,9 +59,9 @@
 		if(ENGINE_UNWRENCHED)
 			. += span_notice("\The [src] is unbolted from the floor. It needs to be wrenched to the floor to be installed.")
 		if(ENGINE_WRENCHED)
-			. += span_notice("\The [src] is bolted to the floor. It needs to be welded to the floor to finish installation.")
+			. += span_notice("\The [src] is bolted to the floor and can be unbolted with a wrench. It needs to be welded to the floor to finish installation.")
 		if(ENGINE_WELDED)
-			. += span_notice("\The [src] is welded to the floor. It is ready to be used.")
+			. += span_notice("\The [src] is welded to the floor and can be unwelded. It is currently fully installed.")
 
 /obj/machinery/power/shuttle_engine/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WRENCHED)
