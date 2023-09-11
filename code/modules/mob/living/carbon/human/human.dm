@@ -698,16 +698,17 @@
 	return ..()
 
 /mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
-	if((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
-		if(vomit_flags & MOB_VOMIT_MESSAGE)
-			visible_message(
-				span_warning("[src] dry heaves!"),
-				span_userdanger("You try to throw up, but there's nothing in your stomach!"),
-			)
-		if(vomit_flags & MOB_VOMIT_STUN)
-			Stun(20 SECONDS)
-		return TRUE
-	return ..()
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+		return ..()
+
+	if(vomit_flags & MOB_VOMIT_MESSAGE)
+		visible_message(
+			span_warning("[src] dry heaves!"),
+			span_userdanger("You try to throw up, but there's nothing in your stomach!"),
+		)
+	if(vomit_flags & MOB_VOMIT_STUN)
+		Stun(20 SECONDS)
+	return TRUE
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
