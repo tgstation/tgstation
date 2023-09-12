@@ -51,8 +51,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 	return pick(chasm_stuff)
 
 /// Returns an objected which is currently inside of a nearby chasm.
-/datum/chasm_detritus/proc/find_chasm_contents(datum/source, turf/fishing_spot, turf/fisher_turf)
-	SIGNAL_HANDLER
+/datum/chasm_detritus/proc/find_chasm_contents(turf/fishing_spot, turf/fisher_turf)
 	var/list/chasm_contents = get_chasm_contents(fishing_spot)
 
 	if (!length(chasm_contents))
@@ -64,8 +63,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()
 	for (var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
-		for (var/thing as anything in storage.contents)
-			. += thing
+		. += storage.contents
 
 /// Variant of the chasm detritus that allows for an easier time at fishing out
 /// bodies, and sometimes less desireable monsters too.
