@@ -1,6 +1,6 @@
 /**
  * Allows ghosts to eat this by orbiting it
- * They do this by consuming
+ * They do this by consuming the reagents in the object, so if it doesn't have any then it won't work
  */
 /datum/component/ghost_edible
 	/// Amount of reagents which will be consumed by each bite
