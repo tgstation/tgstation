@@ -280,7 +280,7 @@
 	reagents.remove_any(bite_consumption)
 	if (reagents.total_volume <= 0)
 		visible_message(span_notice("[src] disappears completely!"))
-		new /obj/effect/decal/cleanable/greenglow/ecto(loc)
+		new /obj/item/ectoplasm(loc)
 		qdel(src)
 		return
 
