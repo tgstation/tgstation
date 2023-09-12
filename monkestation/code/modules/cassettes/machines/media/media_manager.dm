@@ -8,7 +8,7 @@
  ***********************/
 
 // Uncomment to test the mediaplayer
-#define DEBUG_MEDIAPLAYER
+// #define DEBUG_MEDIAPLAYER
 
 #ifdef DEBUG_MEDIAPLAYER
 #define MP_DEBUG(x) to_chat(owner,x)
@@ -74,6 +74,13 @@
 		client.media.update_music()
 		if(!client.media.signal_synced && !istype(client.mob, /mob/dead/new_player))
 			client.media.RegisterSignal(client.mob, COMSIG_MOB_CLIENT_MOVED, PROC_REF(recalc_volume))
+			client.media.signal_synced = TRUE
+		else if (!istype(client.mob, /mob/dead/new_player) && client.media.signal_synced)
+			var/area/A = get_area(src)
+			var/obj/machinery/media/M = A?.media_source
+			if(!M)
+				client.media.signal_synced = FALSE
+				client.media.UnregisterSignal(client.mob, COMSIG_MOB_CLIENT_MOVED)
 
 /mob/proc/stop_all_music()
 	client?.media.stop_music()
@@ -232,7 +239,7 @@
 	if(!owner.is_preference_enabled(/datum/client_preference/play_jukebox) && url != "")
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 	*/
-	MP_DEBUG("<span class='good'>Sending update to mediapanel ([url], [(world.time - start_time) / 10], [volume * source_volume])...</span>")
+	MP_DEBUG("<span class='good'>Sending volume update to mediapanel ([volume * source_volume], [balance])...</span>")
 	owner << output(list2params(list(volume * source_volume, balance)), "[WINDOW_ID]:SetVolume")
 
 /datum/media_manager/proc/return_eastwest(mob/source, obj/machinery/media/target)
