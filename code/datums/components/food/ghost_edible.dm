@@ -26,11 +26,9 @@
 	notify_ghosts("[parent] is edible by ghosts!", source = parent, action = NOTIFY_ORBIT, header="Something Tasty!")
 
 /datum/component/ghost_edible/RegisterWithParent()
-	. = ..()
 	START_PROCESSING(SSdcs, src)
 
 /datum/component/ghost_edible/UnregisterFromParent()
-	. = ..()
 	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/ghost_edible/Destroy(force, silent)
