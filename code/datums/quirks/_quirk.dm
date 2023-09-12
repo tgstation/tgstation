@@ -207,7 +207,7 @@
 			continue
 		switch(category)
 			if(CAT_QUIRK_MAJOR_DISABILITY)
-				if(candidate.value >= 4)
+				if(candidate.value <= 4)
 					continue
 			if(CAT_QUIRK_MINOR_DISABILITY)
 				if(!ISINRANGE(candidate.value, 4, 1))
