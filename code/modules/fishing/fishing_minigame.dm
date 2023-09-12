@@ -148,6 +148,8 @@
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/complete(win = FALSE, perfect_win = FALSE)
+	if(completed)
+		return
 	deltimer(next_phase_timer)
 	completed = TRUE
 	ui?.close()
