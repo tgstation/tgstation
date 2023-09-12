@@ -297,7 +297,7 @@
 	to_chat(victim, span_notice("[user] [tweezer_safe ? "safely" : span_warning("painfully")] plucks [weapon] from your [limb.plaintext_zone]."))
 	if(!tweezer_safe)
 		// sure it still hurts but it sucks less
-		damaging_removal(victim, weapon, limb, 0.3)
+		damaging_removal(victim, weapon, limb, (0.4 * possible_tweezers.w_class))
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
