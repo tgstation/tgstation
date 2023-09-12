@@ -85,7 +85,7 @@ export type Quirk = {
 };
 
 export type QuirkInfo = {
-  max_positive_quirks: number;
+  max_costs_points_quirks: number;
   quirk_info: Record<string, Quirk>;
   quirk_blacklist: string[][];
 };

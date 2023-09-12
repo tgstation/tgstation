@@ -5,10 +5,10 @@ import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {
-  if (value > 0) {
-    return 'positive';
-  } else if (value < 0) {
-    return 'negative';
+  if (value < 0) {
+    return 'costsPoints';
+  } else if (value > 0) {
+    return 'givesPoints';
   } else {
     return 'neutral';
   }
@@ -143,7 +143,7 @@ export const QuirksPage = (props, context) => {
         }
 
         const {
-          max_positive_quirks: maxPositiveQuirks,
+          max_costs_points_quirks: maxtotalCostsPointsQuirks,
           quirk_blacklist: quirkBlacklist,
           quirk_info: quirkInfo,
         } = data.quirks;
@@ -153,12 +153,12 @@ export const QuirksPage = (props, context) => {
           if (quirkA.value === quirkB.value) {
             return quirkA.name > quirkB.name ? 1 : -1;
           } else {
-            return quirkA.value - quirkB.value;
+            return quirkB.value - quirkA.value;
           }
         });
 
         let balance = 0;
-        let positiveQuirks = 0;
+        let totalCostsPointsQuirks = 0;
 
         for (const selectedQuirkName of selectedQuirks) {
           const selectedQuirk = quirkInfo[selectedQuirkName];
@@ -166,8 +166,8 @@ export const QuirksPage = (props, context) => {
             continue;
           }
 
-          if (selectedQuirk.value > 0) {
-            positiveQuirks += 1;
+          if (selectedQuirk.value < 0) {
+            totalCostsPointsQuirks += 1;
           }
 
           balance += selectedQuirk.value;
@@ -176,11 +176,11 @@ export const QuirksPage = (props, context) => {
         const getReasonToNotAdd = (quirkName: string) => {
           const quirk = quirkInfo[quirkName];
 
-          if (quirk.value > 0) {
-            if (positiveQuirks >= maxPositiveQuirks) {
-              return "You can't have any more positive quirks!";
-            } else if (balance + quirk.value > 0) {
-              return 'You need a negative quirk to balance this out!';
+          if (quirk.value < 0) {
+            if (totalCostsPointsQuirks >= maxtotalCostsPointsQuirks) {
+              return "You can't have any more quirks that cost points!";
+            } else if (balance + quirk.value < 0) {
+              return 'You need a more points to pick this quirk!';
             }
           }
 
@@ -209,8 +209,8 @@ export const QuirksPage = (props, context) => {
         const getReasonToNotRemove = (quirkName: string) => {
           const quirk = quirkInfo[quirkName];
 
-          if (balance - quirk.value > 0) {
-            return 'You need to remove a positive quirk first!';
+          if (balance - quirk.value < 0) {
+            return 'You need to remove a quirk that gives you points first!!';
           }
 
           return undefined;
@@ -221,12 +221,12 @@ export const QuirksPage = (props, context) => {
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
-                  <Box fontSize="1.3em">Positive Quirks</Box>
+                  <Box fontSize="1.3em">Maximum Green Quirks:</Box>
                 </Stack.Item>
 
                 <Stack.Item>
                   <StatDisplay>
-                    {positiveQuirks} / {maxPositiveQuirks}
+                    {totalCostsPointsQuirks} / {maxtotalCostsPointsQuirks}
                   </StatDisplay>
                 </Stack.Item>
 

@@ -426,7 +426,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/bal = 0
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
-		bal -= initial(T.value)
+		bal += initial(T.value)
 	return bal
 
 /datum/preferences/proc/GetPositiveQuirkCount()

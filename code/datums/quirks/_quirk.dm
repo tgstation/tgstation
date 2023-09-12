@@ -5,7 +5,7 @@
 	var/name = "Test Quirk"
 	/// The description of the quirk
 	var/desc = "This is a test quirk."
-	/// What the quirk is worth in preferences, zero = neutral / free
+	/// How many points the quirk is worth in preferences, zero = neutral / free
 	var/value = 0
 	/// Flags related to this quirk.
 	var/quirk_flags = QUIRK_HUMAN_ONLY
@@ -20,7 +20,6 @@
 	/// if applicable, apply and remove this mob trait
 	var/mob_trait
 	/// Amount of points this trait is worth towards the hardcore character mode.
-	/// Minus points implies a positive quirk, positive means its hard.
 	/// This is used to pick the quirks assigned to a hardcore character.
 	//// 0 means its not available to hardcore draws.
 	var/hardcore_value = 0
@@ -208,13 +207,13 @@
 			continue
 		switch(category)
 			if(CAT_QUIRK_MAJOR_DISABILITY)
-				if(candidate.value >= -4)
+				if(candidate.value >= 4)
 					continue
 			if(CAT_QUIRK_MINOR_DISABILITY)
-				if(!ISINRANGE(candidate.value, -4, -1))
+				if(!ISINRANGE(candidate.value, 4, 1))
 					continue
 			if(CAT_QUIRK_NOTES)
-				if(candidate.value < 0)
+				if(candidate.value > 0)
 					continue
 		dat += medical ? candidate.medical_record_text : candidate.name
 

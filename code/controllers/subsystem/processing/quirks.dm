@@ -48,7 +48,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	wait = 1 SECONDS
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
-	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
+	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost";
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
@@ -65,7 +65,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	return quirks
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
-	// Sort by Positive, Negative, Neutral; and then by name
+	// Sort by quirks that give points, cost points, and neutral
 	var/list/quirk_list = sort_list(subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_quirk_asc))
 
 	for(var/type in quirk_list)
@@ -104,7 +104,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
-	var/good_count = 0 //Maximum of 6 good perks
+	var/quirks_that_cost_points_given //Maximum of 6
 	var/score //What point score we're at
 	///Cached list of possible quirks
 	var/list/possible_quirks = quirks.Copy()
@@ -115,39 +115,39 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			possible_quirks -= quirk
 			continue
 		if(quirk_points[quirk] > 0)
-			good_count++
+			quirks_that_cost_points_given++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
 		possible_quirks -= quirk
 		added_quirk_count++
 
 	//But lets make sure we're balanced
-	while(score > 0)
+	while(score < 0)
 		if(!length(possible_quirks))//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
 		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
 			possible_quirks -= quirk
 			continue
-		if(!quirk_points[quirk] < 0)//negative only
+		if(!quirk_points[quirk] > 0)//Only add points
 			possible_quirks -= quirk
 			continue
-		good_count++
+		quirks_that_cost_points_given++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
 
 	//And have benefits too
-	while(score < 0 && good_count <= MAX_QUIRKS)
+	while(score > 0 && quirks_that_cost_points_given <= MAX_COSTS_POINTS_QUIRKS)
 		if(!length(possible_quirks))//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
 		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
 			possible_quirks -= quirk
 			continue
-		if(!quirk_points[quirk] > 0) //positive only
+		if(!quirk_points[quirk] < 0) //Only subtract points
 			possible_quirks -= quirk
 			continue
-		good_count++
+		quirks_that_cost_points_given++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
 
@@ -166,7 +166,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// Expects all quirk names to be unique, but makes no other expectations.
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
-	var/list/positive_quirks = list()
+	var/list/quirks_that_cost_points = list()
 	var/balance = 0
 
 	var/list/all_quirks = get_quirks()
@@ -197,22 +197,22 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 
 		var/value = initial(quirk.value)
-		if (value > 0)
-			if (positive_quirks.len == MAX_QUIRKS)
+		if (value < 0)
+			if (quirks_that_cost_points.len == MAX_COSTS_POINTS_QUIRKS)
 				continue
 
-			positive_quirks[quirk_name] = value
+			quirks_that_cost_points[quirk_name] = value
 
 		balance += value
 		new_quirks += quirk_name
 
-	if (balance > 0)
-		var/balance_left_to_remove = balance
+	if (balance < 0)
+		var/balance_left_to_remove = -balance
 
-		for (var/positive_quirk in positive_quirks)
-			var/value = positive_quirks[positive_quirk]
-			balance_left_to_remove -= value
-			new_quirks -= positive_quirk
+		for (var/costs_points_quirk in quirks_that_cost_points)
+			var/value = quirks_that_cost_points[costs_points_quirk]
+			balance_left_to_remove += value
+			new_quirks -= costs_points_quirk
 
 			if (balance_left_to_remove <= 0)
 				break

@@ -208,9 +208,9 @@ $department_map: (
         transition: background-color 0.1s ease-in;
 
         $quality_map: (
-          'positive': colors.$green,
+          'costsPoints': colors.$green,
           'neutral': colors.$white,
-          'negative': colors.$red,
+          'givesPoints': colors.$blue,
         );
 
         @each $quality, $color-value in $quality_map {
