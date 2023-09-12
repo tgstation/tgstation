@@ -1256,6 +1256,7 @@
 		/datum/reagent/medicine/c2,
 		/datum/reagent/medicine/epinephrine,
 		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/adminordrazine/quantum_heal,
 		/datum/reagent/medicine/omnizine/godblood,
 		/datum/reagent/medicine/cordiolis_hepatico,
 		/datum/reagent/medicine/synaphydramine,
