@@ -178,15 +178,12 @@
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
 		var/dist = get_dist(owner.mob, M)
-		var/dir = return_eastwest(owner.mob, M)
+		var/x_dist = (owner.mob.x - M.x) * 10
 
 		targetURL = M.media_url
 		targetStartTime = M.media_start_time
 		targetVolume = max(0, M.volume - (dist * 0.1))
-		if(dir == WEST)
-			targetBalance = -10 * dist
-		else if (dir == EAST)
-			targetBalance = 10 * dist
+		targetBalance = x_dist
 
 		//MP_DEBUG("Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s.")
 	push_music(targetURL, targetStartTime, targetVolume, targetBalance)
@@ -203,7 +200,7 @@
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
 	var/targetVolume = 0
-	var/targetBalance = 0
+	var/x_dist = (owner.mob.x - M.x) * 10
 
 	if (forced || !owner || !owner.mob)
 		return
@@ -220,10 +217,7 @@
 		var/dir = return_eastwest(owner.mob, M)
 
 		targetVolume = max(0, M.volume - (dist * 0.1))
-		if(dir == WEST)
-			targetBalance = -10 * dist
-		else if (dir == EAST)
-			targetBalance = 10 * dist
+		targetBalance = x_dist
 	push_volume_recalc(targetVolume, targetBalance)
 
 /datum/media_manager/proc/push_volume_recalc(var/targetVolume, var/targetBalance)
