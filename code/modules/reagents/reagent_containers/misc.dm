@@ -141,7 +141,7 @@
 	if(!iscarbon(target_mob) || reagents.total_volume <= 0)
 		return FALSE
 
-	var/mob/living/carbon/carbon_target = target
+	var/mob/living/carbon/carbon_target = target_mob
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if(!carbon_target.is_mouth_covered())
