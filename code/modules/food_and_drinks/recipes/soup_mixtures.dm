@@ -86,7 +86,7 @@
 		return
 
 	// If a food item is supposed to be made, remove relevant ingredients from the pot, then make the item 
-	if(resulting_food_path)
+	if(!isnull(resulting_food_path))
 		var/list/tracked_ingredients
 		LAZYINITLIST(tracked_ingredients)
 		var/ingredient_max_multiplier = INFINITY
