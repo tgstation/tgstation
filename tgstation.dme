@@ -4207,6 +4207,7 @@
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher_gaze.dm"
+#include "code\modules\mob\living\basic\lavaland\watcher\watcher_overwatch.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher_projectiles.dm"
 #include "code\modules\mob\living\basic\minebots\minebot.dm"
 #include "code\modules\mob\living\basic\minebots\minebot_abilities.dm"
