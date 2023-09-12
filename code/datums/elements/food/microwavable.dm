@@ -36,7 +36,11 @@
 		var/obj/item/stack/stack_source = source
 		result = new result_typepath(result_loc, stack_source.amount)
 	else
-		result = new result_typepath(result_loc, no_base_reagents = TRUE)
+		result = new result_typepath(
+			result_loc,
+			/* starting_reagent_purity = */ null,
+			/* no_base_reagents = */ TRUE,
+		)
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)

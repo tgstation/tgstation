@@ -187,6 +187,10 @@
 /datum/emote/proc/select_message_type(mob/user, msg, intentional)
 	// Basically, we don't care that the others can use datum variables, because they're never going to change.
 	. = msg
+	if(!isliving(user))
+		return .
+	var/mob/living/living_user = user
+
 	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && message_mime)
@@ -195,14 +199,16 @@
 		. = message_alien
 	else if(islarva(user) && message_larva)
 		. = message_larva
-	else if(iscyborg(user) && message_robot)
-		. = message_robot
 	else if(isAI(user) && message_AI)
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+	else if((iscyborg(user) || (living_user.mob_biotypes & MOB_ROBOTIC)) && message_robot)
+		. = message_robot
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
+
+	return .
 
 /**
  * Replaces the %t in the message in message_param by params.

@@ -12,7 +12,6 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
@@ -21,7 +20,6 @@
 
 /obj/item/food/pizza/raw
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -66,7 +64,6 @@
 	name = "raw pizza margherita"
 	icon_state = "pizzamargherita_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/margherita/raw/make_bakeable()
@@ -112,7 +109,6 @@
 	name = "raw meatpizza"
 	icon_state = "meatpizza_raw"
 	foodtypes = GRAIN | VEGETABLES| DAIRY | MEAT | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/meat/raw/make_bakeable()
@@ -145,7 +141,6 @@
 	name = "raw mushroom pizza"
 	icon_state = "mushroompizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/mushroom/raw/make_bakeable()
@@ -179,7 +174,6 @@
 	name = "raw vegetable pizza"
 	icon_state = "vegetablepizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -215,7 +209,6 @@
 	name = "raw donkpocket pizza"
 	icon_state = "donkpocketpizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/donkpocket/raw/make_bakeable()
@@ -248,7 +241,6 @@
 	name = "raw dank pizza"
 	icon_state = "dankpizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/dank/raw/make_bakeable()
@@ -281,7 +273,6 @@
 	name = "raw sassysage pizza"
 	icon_state = "sassysagepizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/sassysage/raw/make_bakeable()
@@ -316,7 +307,6 @@
 	name = "raw Hawaiian pizza"
 	icon_state = "pineapplepizza_raw"
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/pineapple/raw/make_bakeable()
@@ -377,7 +367,6 @@
 	name = "raw Arnold pizza"
 	icon_state = "arnoldpizza_raw"
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/arnold/raw/make_bakeable()
@@ -461,7 +450,6 @@
 	name = "raw energy pizza"
 	icon_state = "energypizza_raw"
 	foodtypes = TOXIC
-	burns_in_oven = FALSE
 	slice_type = null
 
 /obj/item/food/pizza/energy/raw/make_bakeable()
@@ -504,7 +492,6 @@
 	tastes = list("baked dough" = 1, "juicy meat" = 1, "melted cheese" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_vegetarian_calzone
@@ -534,5 +521,4 @@
 	tastes = list("baked dough" = 1, "baked vegetables" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3

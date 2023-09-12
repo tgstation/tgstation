@@ -171,7 +171,8 @@
 	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
-	var/tool_behaviour = NONE
+	var/tool_behaviour = null
+
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -241,7 +242,6 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
-
 	actions_types = null
 
 	if(force_string)
@@ -845,6 +845,13 @@
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
+/**
+ * Extend this to give the item an appearance when placed in a surgical tray. Uses an icon state in `medicart.dmi`.
+ * * tray_extended - If true, the surgical tray the item is placed on is in "table mode"
+ */
+/obj/item/proc/get_surgery_tool_overlay(tray_extended)
+	return null
+
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
 		return
@@ -960,7 +967,7 @@
 		return FALSE
 	if(!reagents)
 		reagents = new()
-	reagents.add_reagent_list(grind_results)
+	target_holder.add_reagent_list(grind_results)
 	if(reagents && target_holder)
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
@@ -1311,7 +1318,7 @@
 		// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)
-			victim.vomit(5, FALSE, FALSE, distance = 0)
+			victim.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = 5, distance = 0)
 			forceMove(drop_location())
 			to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
 		else
@@ -1630,3 +1637,9 @@
 	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
+
+//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+/obj/item/proc/get_all_tool_behaviours()
+	if (!isnull(tool_behaviour))
+		return list(tool_behaviour)
+	return null

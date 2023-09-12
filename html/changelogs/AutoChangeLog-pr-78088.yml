@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Operative MODsuits now have an attached \"jump jet\" which sends you upwards and allows you to use your jetpack under gravity for a few seconds, perfect for navigating the pits and valleys of Icebox Station."
