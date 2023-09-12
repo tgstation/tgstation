@@ -124,6 +124,12 @@
 	hunt_targets = list(/obj/structure/sink, /obj/structure/reagent_dispensers)
 	hunt_range = 7
 
+/datum/ai_planning_subtree/find_and_hunt_target/fill_watercan/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(!locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn)
+		return
+	return ..()
+
 /datum/ai_behavior/find_hunt_target/suitable_dispenser
 
 /datum/ai_behavior/find_hunt_target/suitable_dispenser/valid_dinner(mob/living/source, obj/structure/water_source, radius)
