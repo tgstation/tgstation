@@ -58,13 +58,14 @@ GLOBAL_VAR(dj_booth)
 		time_left = 0
 		broadcasting = 0
 		if(COOLDOWN_FINISHED(src, next_song_timer))
-			COOLDOWN_START(src, next_song_timer, 3 MINUTES)
+			COOLDOWN_START(src, next_song_timer, 10 MINUTES)
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
 	if(!inserted_tape)
 		return
 	if((!COOLDOWN_FINISHED(src, next_song_timer)) || !broadcasting)
+		to_chat(user, span_notice("The [src] feels hot to the touch and needs time to cooldown."))
 		return
 	start_broadcast()
 
