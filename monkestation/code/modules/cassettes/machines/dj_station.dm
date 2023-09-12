@@ -160,7 +160,7 @@ GLOBAL_VAR(dj_booth)
 	GLOB.dj_broadcast = TRUE
 	pl_index = choice
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
-	for(var/mob/living/carbon/anything as anything in GLOB.mob_living_list)
+	for(var/mob/living/carbon/anything as anything in GLOB.player_list)
 		if(!(anything in people_with_signals))
 			if(!istype(anything))
 				continue
@@ -190,9 +190,6 @@ GLOBAL_VAR(dj_booth)
 
 			active_listeners |=	anything.client
 
-	for(var/mob/dead/observer/observe as anything in GLOB.current_observers_list)
-		if(!(observe.client in active_listeners))
-			active_listeners |=	observe.client
 	if(!length(active_listeners))
 		return
 
