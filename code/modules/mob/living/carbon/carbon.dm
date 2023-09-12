@@ -432,7 +432,7 @@
 		if(stun)
 			Stun(20 SECONDS)
 		if(knockdown)
-			Paralyze(20 SECONDS)
+			Knockdown(20 SECONDS)
 		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -455,8 +455,7 @@
 	if(stun)
 		Stun(8 SECONDS)
 	if(knockdown)
-		Paralyze(8 SECONDS)
-
+		Knockdown(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 
