@@ -22,6 +22,11 @@
 	SSair.start_processing_machine(connected_machine)
 	register_with_machine()
 
+/obj/machinery/atmospherics/components/unary/machine_connector/Destroy()
+	if(connected_machine)
+		connected_machine = null
+	return ..()
+
 /**
  * Register various signals that are required for the proper work of the connector
  */
