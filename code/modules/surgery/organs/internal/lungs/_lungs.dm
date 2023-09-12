@@ -840,7 +840,9 @@
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+	/// What percentage of the lungs' max health an emp immediatley does
+	var/emp_percent_damage = 0.9
 
 /obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
 	. = ..()
@@ -849,8 +851,8 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	apply_organ_damage(damage_amount = emp_percent_damage * maxHealth) //Do damage to the organ
 
 /obj/item/organ/internal/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -858,7 +860,6 @@
 	icon_state = "lungs-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
-	emp_vulnerability = 40
 
 /obj/item/organ/internal/lungs/cybernetic/tier3
 	name = "upgraded cybernetic lungs"
@@ -868,7 +869,6 @@
 	safe_co2_max = 20
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
-	emp_vulnerability = 20
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
@@ -880,7 +880,6 @@
 		Offer no protection against EMPs."
 	icon_state = "lungs-c-s"
 	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
-	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)

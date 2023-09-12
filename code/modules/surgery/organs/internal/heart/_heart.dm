@@ -207,7 +207,8 @@
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+	/// What percentage of the heart's max health an emp immediatley does
+	var/emp_percent_damage = 0.9
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
@@ -221,15 +222,15 @@
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
-		Stop()
-		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
-		if(owner_needs_us)
-			owner.visible_message(
-				span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"),
-				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
-			)
+	organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	apply_organ_damage(damage_amount = emp_percent_damage * maxHealth) //Do damage to the organ
+	Stop()
+	addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
+	if(owner_needs_us)
+		owner.visible_message(
+			span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"),
+			span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
+		)
 
 /obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -247,7 +248,6 @@
 	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	dose_available = TRUE
-	emp_vulnerability = 40
 
 /obj/item/organ/internal/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -256,7 +256,6 @@
 	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	dose_available = TRUE
-	emp_vulnerability = 20
 
 /obj/item/organ/internal/heart/cybernetic/tier3/used_dose()
 	. = ..()
@@ -269,7 +268,6 @@
 	icon_state = "heart-c-s-on"
 	base_icon_state = "heart-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
-	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)

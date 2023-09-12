@@ -292,7 +292,9 @@
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	metabolism_efficiency = 0.035 // not as good at digestion
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+	/// What percentage of the stomach's max health an emp immediatley does
+	var/emp_percent_damage = 0.9
 
 /obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
 	. = ..()
@@ -301,8 +303,8 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM))
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	apply_organ_damage(damage_amount = emp_percent_damage * maxHealth) //Do damage to the organ
 
 /obj/item/organ/internal/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -310,7 +312,6 @@
 	icon_state = "stomach-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2
-	emp_vulnerability = 40
 	metabolism_efficiency = 0.07
 
 /obj/item/organ/internal/stomach/cybernetic/tier3
@@ -319,7 +320,6 @@
 	icon_state = "stomach-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 3
-	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
 /obj/item/organ/internal/stomach/cybernetic/surplus
@@ -329,7 +329,6 @@
 		Offers no protection against EMPs."
 	icon_state = "stomach-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
-	emp_vulnerability = 100
 	metabolism_efficiency = 0.025
 
 //surplus organs are so awful that they explode when removed, unless failing

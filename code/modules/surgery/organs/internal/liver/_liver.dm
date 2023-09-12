@@ -250,7 +250,9 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+	/// What percentage of the liver's max health an emp immediatley does
+	var/emp_percent_damage = 0.9
 
 /obj/item/organ/internal/liver/cybernetic/emp_act(severity)
 	. = ..()
@@ -259,8 +261,8 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.adjustToxLoss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	apply_organ_damage(damage_amount = emp_percent_damage * maxHealth) //Do damage to the organ
 
 /obj/item/organ/internal/liver/cybernetic/tier2
 	name = "cybernetic liver"
@@ -269,7 +271,6 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 //can shrug off up to 5u of toxins
 	liver_resistance = 1.2 * LIVER_DEFAULT_TOX_RESISTANCE // +20%
-	emp_vulnerability = 40
 
 /obj/item/organ/internal/liver/cybernetic/tier3
 	name = "upgraded cybernetic liver"
@@ -279,7 +280,6 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins
 	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE // +50%
-	emp_vulnerability = 20
 
 /obj/item/organ/internal/liver/cybernetic/surplus
 	name = "surplus prosthetic liver"
@@ -292,7 +292,6 @@
 	alcohol_tolerance = ALCOHOL_RATE * 2 // can barely handle alcohol
 	toxTolerance = 1 //basically can't shrug off any toxins
 	liver_resistance = 0.75 * LIVER_DEFAULT_TOX_RESISTANCE // -25%
-	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/internal/liver/cybernetic/surplus/Initialize(mapload)

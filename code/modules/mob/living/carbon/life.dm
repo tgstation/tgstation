@@ -743,7 +743,7 @@
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || IS_ROBOTIC_ORGAN(heart))
+	if(!heart)
 		return FALSE
 	return TRUE
 
