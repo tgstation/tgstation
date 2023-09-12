@@ -236,7 +236,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(create_blade)), blade_recharge_time)
 
-// Path Of Moon Grasp status effect which hides the identity of the heretic
+// Path Of Moon status effect which hides the identity of the heretic
 /datum/status_effect/moon_grasp_hide
 	id = "Moon Grasp Hide Identity"
 	status_type = STATUS_EFFECT_REFRESH

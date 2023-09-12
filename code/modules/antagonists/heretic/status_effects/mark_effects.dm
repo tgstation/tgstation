@@ -252,11 +252,38 @@
 
 /datum/status_effect/eldritch/moon
 	effect_icon_state = "emark7"
+	///Used for checking if the pacifism effect should end early
+	var/damage_sustained = 0
+
+/datum/status_effect/eldritch/moon/on_apply()
+	.=..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	return TRUE
+
+/// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will remove the PACIFISM trait
+/datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// Add incoming damage to the total damage sustained
+	damage_sustained += damage
+
+	// If the player has taken less than 10 damage total the effect is not cancelled
+	if(damage_sustained < 10)
+		return
+
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
 
 /datum/status_effect/eldritch/moon/on_effect()
 	if(ishuman(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.adjust_confusion(30 SECONDS)
-		carbon_owner.add_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
-		carbon_owner.reagents.add_reagent(/datum/reagent/pax, 3)
+		carbon_owner.emote(pick("giggle", "laugh"))
+		carbon_owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()
+
+/datum/status_effect/eldritch/moon/on_remove()
+	.=..()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+
