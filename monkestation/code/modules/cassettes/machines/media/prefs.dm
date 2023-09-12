@@ -7,6 +7,8 @@
 
 /datum/preference/toggle/hear_music/apply_to_client(client/client, value)
 	. = ..()
+	if(istype(client, /datum/client_interface))
+		return
 	if(client.media)
 		if(!value)
 			var/area/A = get_area(client.mob)
