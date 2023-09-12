@@ -33,11 +33,6 @@
 /// If a incoming attack is blunt, we increase the daze amount by this amount
 #define BLUNT_ATTACK_DAZE_MULT 1.5
 
-/// Percent chance for any hit to repair a wound with percussive maintenance
-#define PERCUSSIVE_MAINTENANCE_REPAIR_CHANCE 20
-/// Any incoming attacks must be below this value to count as percussive maintenance
-#define PERCUSSIVE_MAINTENANCE_DAMAGE_THRESHOLD 8
-
 /// Cost of an RCD to quickly fix our broken superstructure
 #define ROBOTIC_T3_BLUNT_WOUND_RCD_COST 25
 
@@ -127,8 +122,10 @@
 
 	/// % chance for hitting our limb to fix something.
 	var/percussive_maintenance_repair_chance = 10
+	/// Damage must be under this to proc percussive maintenance.
+	var/percussive_maintenance_damage_max = 7
 	/// Damage must be over this to proc percussive maintenance.
-	var/percussive_maintenance_damage_threshold = 7
+	var/percussive_maintenance_damage_min = 0
 
 	/// If true, when we move, we can attempt to shake the camera of our victim.
 	var/can_do_movement_shake = TRUE
@@ -284,7 +281,7 @@
 	if (limb_essential() && (effective_damage >= attacked_organ_damage_minimum_score) && prob(attacked_organ_damage_chance))
 		attack_random_organs((effective_damage * attacked_organ_damage_mult), attacked_organ_damage_individual_max)
 
-	if (!uses_percussive_maintenance() || damage <= 0 || damage > percussive_maintenance_damage_threshold || damagetype != BRUTE || sharpness)
+	if (!uses_percussive_maintenance() || damage < percussive_maintenance_damage_min || damage > percussive_maintenance_damage_max || damagetype != BRUTE || sharpness)
 		return
 	var/chance_mult = 1
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
@@ -372,6 +369,14 @@
 		return TRUE
 
 	return FALSE
+
+/// If we've past the next allowed time to shake our movement, we set variables accordingly.
+/datum/wound/blunt/robotic/proc/update_next_movement_shake()
+	if (!isnull(time_til_next_movement_shake_allowed) || world.time < time_til_next_movement_shake_allowed)
+		return
+
+	time_til_next_movement_shake_allowed = null
+	can_do_movement_shake = TRUE
 
 /// Merely a wrapper proc for adjust_disgust that sends a to_chat.
 /datum/wound/blunt/robotic/proc/shake_organs_for_nausea(score, max)
@@ -646,7 +651,7 @@
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
 	if (user)
-		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone] internals..."))
+		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."))
 	if (confused)
 		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
 
@@ -715,14 +720,6 @@
 	remove_wound()
 	return TRUE
 
-/// If we've past the next allowed time to shake our movement, we set variables accordingly.
-/datum/wound/blunt/robotic/proc/update_next_movement_shake()
-	if (!isnull(time_til_next_movement_shake_allowed) || world.time < time_til_next_movement_shake_allowed)
-		return
-
-	time_til_next_movement_shake_allowed = null
-	can_do_movement_shake = TRUE
-
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
 	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
@@ -783,7 +780,7 @@
 	a_or_from = "a"
 
 	percussive_maintenance_repair_chance = 3
-	percussive_maintenance_damage_threshold = 6
+	percussive_maintenance_damage_max = 6
 
 	regen_time_needed = 60 SECONDS
 	gel_damage = 60
@@ -1017,8 +1014,7 @@
 
 #undef BLUNT_ATTACK_DAZE_MULT
 
-#undef PERCUSSIVE_MAINTENANCE_REPAIR_CHANCE
-#undef PERCUSSIVE_MAINTENANCE_DAMAGE_THRESHOLD
+#undef percussive_maintenance_damage_max
 
 #undef ROBOTIC_T3_BLUNT_WOUND_RCD_COST
 
