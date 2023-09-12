@@ -137,8 +137,8 @@
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/cup/rag/attack(mob/living/target_mob, mob/living/user, obj/target)
-	if(!iscarbon(target) || reagents.total_volume <= 0)
+/obj/item/reagent_containers/cup/rag/attack(mob/living/target_mob, mob/living/user, params)
+	if(!iscarbon(target_mob) || reagents.total_volume <= 0)
 		return FALSE
 
 	var/mob/living/carbon/carbon_target = target

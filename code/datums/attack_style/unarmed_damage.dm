@@ -197,23 +197,22 @@
 	datum/apply_damage_packet/packet,
 )
 	. = ..()
-	if(smacked.stat == DEAD)
+	if(smacked.stat == DEAD || smacked.check_stun_immunity(CANKNOCKDOWN) || smacked.body_position == LYING_DOWN)
 		return
-	if(hitting_with.unarmed_stun_threshold < 0)
+	if(hitting_with.unarmed_stun_threshold < 0 || packet.damage < hitting_with.unarmed_stun_threshold)
 		return
 
-	if(packet.damage >= hitting_with.unarmed_stun_threshold)
-		smacked.visible_message(
-			span_danger("[attacker] knocks [smacked] down!"),
-			span_userdanger("You're knocked down by [attacker]!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_danger("You knock [smacked] down!"))
-		var/knockdown_duration = (4 SECONDS) + (smacked.getStaminaLoss() + (smacked.getBruteLoss() * 0.5)) * 0.8
-		smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, packet.blocked)
-		. += "(knockdown attack, [DisplayTimeText(knockdown_duration)] duration)"
+	smacked.visible_message(
+		span_danger("[attacker] knocks [smacked] down!"),
+		span_userdanger("You're knocked down by [attacker]!"),
+		span_hear("You hear aggressive shuffling followed by a loud thud!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		ignored_mobs = attacker,
+	)
+	to_chat(attacker, span_danger("You knock [smacked] down!"))
+	var/knockdown_duration = (4 SECONDS) + (smacked.getStaminaLoss() + (smacked.getBruteLoss() * 0.5)) * 0.8
+	smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, packet.blocked)
+	. += "(knockdown attack, [DisplayTimeText(knockdown_duration)] duration)"
 
 /**
  * Mob attack unarmed style

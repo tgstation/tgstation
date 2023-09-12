@@ -686,34 +686,34 @@
 	if(charge_timer < charge_delay)
 		return FALSE
 	charge_timer -= charge_delay
-	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
+	emp_cur_charges = min(emp_cur_charges + 1, emp_max_charges)
 	return TRUE
 
-/obj/item/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))) // call original attack when examining organs
-		..()
-	return
-
-/obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/emp/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if(!proximity)
+	if(.)
 		return
+	if(ismob(A) && on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) && !user.combat_mode)
+		return FALSE // continue chain (do normal "flashlight examining organs" bit)
 
-	if(emp_cur_charges > 0)
-		emp_cur_charges -= 1
+	if(emp_cur_charges <= 0)
+		balloon_alert(user, "needs time to recharge!")
+		return TRUE // cancel chain
 
-		if(ismob(A))
-			var/mob/M = A
-			log_combat(user, M, "attacked", "EMP-light")
-			M.visible_message(span_danger("[user] blinks \the [src] at \the [A]."), \
-								span_userdanger("[user] blinks \the [src] at you."))
-		else
-			A.visible_message(span_danger("[user] blinks \the [src] at \the [A]."))
-		to_chat(user, span_notice("\The [src] now has [emp_cur_charges] charge\s."))
-		A.emp_act(EMP_HEAVY)
+	emp_cur_charges -= 1
+	if(ismob(A))
+		var/mob/M = A
+		log_combat(user, M, "attacked", "EMP-light")
+		M.visible_message(
+			span_danger("[user] blinks \the [src] at \the [A]."),
+			span_userdanger("[user] blinks \the [src] at you."),
+		)
 	else
-		to_chat(user, span_warning("\The [src] needs time to recharge!"))
-	return
+		A.visible_message(span_danger("[user] blinks \the [src] at \the [A]."))
+
+	balloon_alert(user, "[emp_cur_charges]/[emp_max_charges] charge\s left")
+	A.emp_act(EMP_HEAVY)
+	return TRUE // cancel chain
 
 /obj/item/flashlight/emp/debug //for testing emp_act()
 	name = "debug EMP flashlight"

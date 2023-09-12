@@ -164,7 +164,8 @@
 	SIGNAL_HANDLER
 
 	if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT|ATTACK_SWING_MISSED))
-		jedi_spin(attacker)
+		if(prob(50))
+			jedi_spin(attacker)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
 	set waitfor = FALSE

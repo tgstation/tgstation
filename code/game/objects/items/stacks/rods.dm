@@ -38,6 +38,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/rods
+	item_flags = NONE
+	attack_style_path = /datum/attack_style/melee_weapon/overhead
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum

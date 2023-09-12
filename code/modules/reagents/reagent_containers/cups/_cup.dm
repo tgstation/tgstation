@@ -56,7 +56,7 @@
 			gourmand.adjust_disgust(-5 + -2.5 * fraction)
 			gourmand.add_mood_event("fav_food", /datum/mood_event/favorite_food)
 
-/obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
+/obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, params)
 	if(user.combat_mode)
 		return FALSE // no after attack, no sip
 

@@ -4,11 +4,13 @@
 	return "Comes down over the tile in the direction you are attacking. Always targets the head."
 
 /datum/attack_style/melee_weapon/overhead/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	// Future todo : When we decouple more of attack chain this can be passed via proc args
 	var/old_zone = attacker.zone_selected
 	attacker.zone_selected = BODY_ZONE_HEAD
 	. = ..()
 	attacker.zone_selected = old_zone
 
+/*
 /datum/attack_style/melee_weapon/overhead/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/side_angle = prob(50) ? -15 : 15 // so it slightly goes either left -> right or right -> left
 	var/start_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[1]) + side_angle
@@ -53,3 +55,4 @@
 		pixel_y = 0,
 		easing = CIRCULAR_EASING|EASE_OUT,
 	)
+*/

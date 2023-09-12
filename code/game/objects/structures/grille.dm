@@ -261,14 +261,13 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
-		return
-
 	return ..()
 
 /obj/structure/grille/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
 	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	if((attacking_item.flags_1 & CONDUCT_1) && shock(user, 70))
 		return
 	// future todo: dehardcode
 	if(!istype(attacking_item, /obj/item/fireaxe))

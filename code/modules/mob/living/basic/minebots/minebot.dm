@@ -28,9 +28,6 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
-	default_harm_style = null
-	default_help_style = null
-	default_disarm_style = null
 	///the access card we use to access mining
 	var/obj/item/card/id/access_card
 	///the gun we use to kill
@@ -130,12 +127,12 @@
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 
 /mob/living/basic/mining_drone/click_on_without_item_at_range(atom/A, modifiers)
-	. = ..()
-	if(.)
-		return
 	if(!combat_mode)
-		return
-	stored_gun.afterattack(A, src, FALSE, list2params(modifiers))
+		return ..()
+
+	if(stored_gun.afterattack(A, src, FALSE, list2params(modifiers)) & AFTERATTACK_PROCESSED_ITEM)
+		return TRUE
+	return FALSE
 
 /mob/living/basic/mining_drone/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(!proximity_flag || combat_mode)

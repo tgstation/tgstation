@@ -15,7 +15,8 @@
 	var/valid_species = list()
 
 /obj/item/debug/human_spawner/afterattack(atom/target, mob/user, proximity)
-	..()
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(isturf(target))
 		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
 		if(selected_species)

@@ -255,5 +255,5 @@
 	var/datum/attack_style/unarmed/default_harm_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack
 	var/datum/attack_style/unarmed/default_harm_style
 	/// Default attack style to use when right clicking
-	var/datum/attack_style/unarmed/default_disarm_style_path = /datum/attack_style/unarmed/disarm
+	var/datum/attack_style/unarmed/default_disarm_style_path
 	var/datum/attack_style/unarmed/default_disarm_style

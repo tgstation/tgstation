@@ -457,7 +457,7 @@
 /obj/item/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	item_flags = ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL // melbert todo : you can't block with this due to it being abstract. find a better way
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "ling_shield"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'

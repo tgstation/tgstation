@@ -18,7 +18,6 @@
 
 	default_help_style_path = null
 	default_harm_style_path = null
-	default_disarm_style_path = null
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0

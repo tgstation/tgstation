@@ -314,14 +314,14 @@
 		for(var/i in 1 to rapid_melee)
 			addtimer(cb, (i - 1)*delay)
 	else
-		click_on_without_item(target)
+		ai_controller_click(target, TRUE)
 	if(patience)
 		GainPatience()
 
 /mob/living/simple_animal/hostile/proc/CheckAndAttack()
 	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(target && isturf(target_from.loc) && target.Adjacent(target_from) && !incapacitated())
-		click_on_without_item(target)
+		ai_controller_click(target)
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
 	stop_automated_movement = 1
@@ -409,12 +409,14 @@
 	if(target && emote_taunt.len && prob(taunt_chance))
 		manual_emote("[pick(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
-
+	set_combat_mode(TRUE)
 
 /mob/living/simple_animal/hostile/proc/LoseAggro()
 	stop_automated_movement = 0
 	vision_range = initial(vision_range)
 	taunt_chance = initial(taunt_chance)
+	if(initial(combat_mode) == FALSE)
+		set_combat_mode(FALSE)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	GiveTarget(null)
