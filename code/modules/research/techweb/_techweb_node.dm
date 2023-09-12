@@ -36,8 +36,6 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
-	/// A list of experiments unlocked by this node, not tied to node requirements or discounts.
-	var/list/unlock_experiments
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
 

@@ -348,9 +348,6 @@
 	//Add to our researched list
 	researched_nodes[node.id] = TRUE
 
-	if(node.unlock_experiments)
-		add_experiments(node.unlock_experiments)
-
 	// Track any experiments we skipped relating to this
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
