@@ -55,16 +55,16 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(istype(source, /obj/item/stack/conveyor))
+	if(istype(held_item, /obj/item/stack/conveyor))
 		context[SCREENTIP_CONTEXT_LMB] = "Extend current conveyor belt"
-		return screentip_change = TRUE
-	if(held_item.tool_behavior == TOOL_WRENCH)
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt"
-		return screentip_change = TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
 		context[SCREENTIP_CONTEXT_RMB] = "Flip conveyor belt"
-		return screentip_change = TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
