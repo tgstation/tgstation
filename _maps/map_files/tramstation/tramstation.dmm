@@ -5110,9 +5110,7 @@
 /area/station/security/checkpoint/escape)
 "aDQ" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 9
-	},
+/obj/machinery/cassette/adv_cassette_deck,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/vaporwave,
@@ -7525,8 +7523,7 @@
 /area/station/service/barber)
 "bcu" = (
 /obj/item/radio/radio_mic{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_y = 7
 	},
 /obj/structure/table/wood,
 /turf/open/floor/iron/vaporwave,
