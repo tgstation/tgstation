@@ -170,9 +170,17 @@
 			var/list/things_to_order = list()
 			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
+			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			//If we already have a custom order on SSshuttle, we should add the things to order to that order
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.orderer == living_user && order.orderer_rank == "Galactic Materials Market")
+					var/prior_stacks = 0
+					for(var/obj/item/stack/sheet/sheet as anything in order.pack.contains)
+						prior_stacks += ROUND_UP(order.pack.contains[sheet] / 50)
+						if(prior_stacks >= 10)
+							to_chat(usr, span_notice("You already have 10 stacks of sheets on order! Please wait for them to arrive before ordering more."))
+							playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
+							return
 					order.append_order(things_to_order, cost)
 					account_payable.adjust_money(-(cost) , "Materials Market Purchase") //Add the extra price to the total
 					return

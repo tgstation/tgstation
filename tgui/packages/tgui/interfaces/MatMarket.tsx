@@ -55,7 +55,8 @@ export const MatMarket = (props, context) => {
           <br /> <br />
           To <b>sell materials</b>, please insert sheets or similar stacks of
           materials. All minerals sold on the market directly are subject to an
-          20% market fee.
+          20% market fee. To prevent market manipulation, all registered traders
+          can buy a total of <b>10 full stacks of materials at a time</b>.
           <br /> <br />
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
