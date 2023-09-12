@@ -200,7 +200,7 @@
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
 	var/targetVolume = 0
-	var/x_dist = (owner.mob.x - M.x) * 10
+	var/targetBalance = 0
 
 	if (forced || !owner || !owner.mob)
 		return
@@ -214,7 +214,7 @@
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
 		var/dist = get_dist(owner.mob, M)
-		var/dir = return_eastwest(owner.mob, M)
+		var/x_dist = (owner.mob.x - M.x) * 10
 
 		targetVolume = max(0, M.volume - (dist * 0.1))
 		targetBalance = x_dist
