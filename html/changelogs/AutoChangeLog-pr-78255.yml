@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Shuttle engines now tell you how to install them in their screentips and their examine text."

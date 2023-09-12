@@ -1,0 +1,5 @@
+author: "blueDev2"
+delete-after: True
+changes:
+  - bugfix: "Soup recipes, that make items, spawn the correct number of items per reaction instead of just one item"
+  - bugfix: "Soup recipes, that make items, consumes the correct number of reagents instead of the largest multiple of the reagents"
