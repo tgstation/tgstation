@@ -39,10 +39,10 @@
 
 	var/ids_exist = file("data/cassette_storage/ids.json")
 
-	if(!length(GLOB.approved_ids) && ids_exist)
+	if(!length(GLOB.approved_ids) && fexists(ids_exist))
 		GLOB.approved_ids = json_decode(file2text("data/cassette_storage/ids.json"))
 
-	if(random && ids_exist)
+	if(random && fexists(ids_exist))
 		if(length(GLOB.approved_ids))
 			tape.id = pick(GLOB.approved_ids)
 
