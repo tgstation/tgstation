@@ -5699,6 +5699,7 @@
 #include "monkestation\code\modules\cassettes\machines\media\HTML5_player.dm"
 #include "monkestation\code\modules\cassettes\machines\media\jukebox.dm"
 #include "monkestation\code\modules\cassettes\machines\media\media_manager.dm"
+#include "monkestation\code\modules\cassettes\machines\media\prefs.dm"
 #include "monkestation\code\modules\cassettes\machines\media\track.dm"
 #include "monkestation\code\modules\cassettes\machines\media\subsystem\media_track_manager.dm"
 #include "monkestation\code\modules\cassettes\walkman\_walkmen.dm"

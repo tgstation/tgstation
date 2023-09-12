@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 
 	GLOB.cassette_reviews["[new_review.id]"] = new_review
 
-	var/message = "[span_admin("[span_prefix("MUSIC APPROVAL:")] <EM>[key_name(user)]</EM> [ADMIN_OPEN_REVIEW(new_review.id)] has requested a review on their cassette.")]"
+	var/message = "[span_big(span_admin("[span_prefix("MUSIC APPROVAL:")] <EM>[key_name(user)]</EM> [ADMIN_OPEN_REVIEW(new_review.id)] has requested a review on their cassette."))]"
 
 	for(var/client/X in GLOB.admins)
 		X << 'sound/items/bikehorn.ogg'

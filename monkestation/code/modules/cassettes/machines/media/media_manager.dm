@@ -8,7 +8,7 @@
  ***********************/
 
 // Uncomment to test the mediaplayer
-// #define DEBUG_MEDIAPLAYER
+//#define DEBUG_MEDIAPLAYER
 
 #ifdef DEBUG_MEDIAPLAYER
 #define MP_DEBUG(x) to_chat(owner,x)
@@ -128,13 +128,6 @@
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
-	if(!owner.prefs)
-		return
-	/*
-	if(isnum(owner.prefs.media_volume))
-		volume = owner.prefs.media_volume
-	*/
-
 	playerstyle = PLAYER_WMP_HTML
 	owner << browse(null, "window=[WINDOW_ID]")
 	owner << browse(playerstyle, "window=[WINDOW_ID]")
@@ -144,10 +137,10 @@
 /datum/media_manager/proc/send_update()
 	if(!(owner.prefs))
 		return
-	/*
-	if(!owner.is_preference_enabled(/datum/client_preference/play_jukebox) && url != "")
+
+	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
-	*/
+
 	MP_DEBUG("<span class='good'>Sending update to mediapanel ([url], [(world.time - start_time) / 10], [volume * source_volume])...</span>")
 	owner << output(list2params(list(url, (world.time - start_time) / 10, volume * source_volume, balance)), "[WINDOW_ID]:SetMusic")
 
@@ -202,6 +195,12 @@
 		client.media.recalc_volume()
 
 /datum/media_manager/proc/recalc_volume()
+	if(!(owner.prefs))
+		return
+
+	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
+
 	var/targetVolume = 0
 	var/targetBalance = 0
 

@@ -189,6 +189,9 @@ GLOBAL_VAR(dj_booth)
 			else if(!istype(ear_slot, /obj/item/radio/headset))
 				continue
 
+			if(!anything.client.prefs?.read_preference(/datum/preference/toggle/hear_music))
+				continue
+
 			active_listeners |=	anything.client
 
 	if(!length(active_listeners))
@@ -213,6 +216,9 @@ GLOBAL_VAR(dj_booth)
 
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	if(!(source.z in viable_z) || !source.client)
+		return
+
+	if(!source.client.prefs?.read_preference(/datum/preference/toggle/hear_music))
 		return
 
 	active_listeners |= source.client

@@ -16,6 +16,12 @@
 		return
 
 	var/obj/item/device/cassette_tape/attacked_tape = weapon
+
+	var/list/admin_count = length(get_admin_counts(R_FUN))
+	if(!length(admin_count["present"]))
+		to_chat(user, span_notice("The postbox refuses your cassette, it seems the Space Board is out for lunch."))
+		return
+
 	if(attacked_tape.name == "A blank cassette")
 		to_chat(user, span_notice("Please name your tape before submitting it you can't change this later!"))
 		return
