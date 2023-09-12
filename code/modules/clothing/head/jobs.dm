@@ -255,7 +255,6 @@
 
 	if(wearer.put_in_active_hand(result))
 		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
-		items_by_phrase -= the_phrase
 	else
 		balloon_alert(wearer, "cant put in hands!")
 
@@ -263,19 +262,24 @@
 
 /obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
 	. = ..()
+
 	if(LAZYLEN(contents) >= max_items)
 		to_chat(user, span_warning("[src] is full!"))
 		return
 	if(item.w_class > max_weight)
 		to_chat(user, span_warning("[item] is too big!"))
 		return
+
 	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
 	if(!input)
 		return
 	if(input in items_by_phrase)
 		to_chat(user, "[input] is already used!")
+		return
+
 	if(item.loc != user || !user.transferItemToLoc(item, src))
 		return
+
 	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
 	playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 	items_by_phrase[input] = item
@@ -285,8 +289,7 @@
 	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
 	if(!phrase)
 		return
-	if(user.put_in_inactive_hand(items_by_phrase[phrase]))
-		items_by_phrase -= phrase
+	user.put_in_inactive_hand(items_by_phrase[phrase])
 
 /obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
 	. = ..()
@@ -294,7 +297,15 @@
 	if(!new_prefix)
 		return
 	prefix = new_prefix
-	
+
+/obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/phrase in items_by_phrase)
+		var/obj/item/result = items_by_phrase[phrase]
+		if(gone == result)
+			items_by_phrase -= phrase
+			return
+
 /obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
 	for(var/phrase in items_by_phrase)
 		var/obj/item/result = items_by_phrase[phrase]
