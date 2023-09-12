@@ -13551,13 +13551,10 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ffD" = (
-/obj/machinery/disposal/delivery_chute{
-	dir = 8
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "garbage"
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "ffO" = (
@@ -27164,10 +27161,7 @@
 /area/station/cargo/warehouse)
 "jPq" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/centcom{
-	name = "Disposals Access:"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/service/janitor,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "jQo" = (
@@ -27716,13 +27710,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/auxlab/firing_range)
 "kaF" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/end{
+/obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/mineral/stacking_unit_console{
-	pixel_x = 32
-	},
+/obj/machinery/disposal/delivery_chute,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "kaI" = (
@@ -29190,7 +29182,9 @@
 	dir = 1
 	},
 /obj/structure/mop_bucket/janitorialcart,
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/left/directional/north{
+	name = "Trash Chute"
+	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "kCT" = (
@@ -35134,6 +35128,9 @@
 	id = "garbage"
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_y = 27
+	},
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "mEB" = (
@@ -42179,6 +42176,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
+"pke" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Disposals Access:"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/janitor,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "pkh" = (
 /obj/effect/spawner/random/decoration/showcase,
 /obj/structure/window/spawner/directional/south,
@@ -55620,7 +55624,6 @@
 	dir = 8;
 	id = "garbage"
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "tzF" = (
@@ -104338,7 +104341,7 @@ kCW
 xID
 xmO
 sHs
-nFW
+pke
 tzD
 cqS
 kCN
@@ -105368,9 +105371,9 @@ jsn
 sIS
 nFW
 sRL
+sRL
 xVV
-xVV
-xVV
+sRL
 xVV
 sRL
 bFg
