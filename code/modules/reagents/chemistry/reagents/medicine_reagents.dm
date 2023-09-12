@@ -355,7 +355,7 @@
 	color = "#6D6374"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -390,6 +390,10 @@
 /datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
 	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.3
+	burn_wound.flesh_healing += 0.5
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -1267,7 +1271,7 @@
 	. = ..()
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(type, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
-		affected_mob.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
+		affected_mob.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/nanites, lost_nutrition = 20) // nanite safety protocols make your body expel them to prevent harmies
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1590,7 +1594,7 @@
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 
 /datum/reagent/medicine/silibinin
 	name = "Silibinin"

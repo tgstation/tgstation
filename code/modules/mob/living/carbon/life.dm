@@ -339,13 +339,13 @@
 				if(prob(5))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-					vomit()
+					vomit(VOMIT_CATEGORY_DEFAULT)
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-					vomit()
+					vomit(VOMIT_CATEGORY_DEFAULT)
 			else
 				clear_mood_event("smell")
 

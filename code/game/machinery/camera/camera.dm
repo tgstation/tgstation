@@ -30,7 +30,6 @@
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
 	var/in_use_lights = 0
-
 	// Upgrades bitflag
 	var/upgrades = 0
 
@@ -105,6 +104,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
@@ -155,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		if(!status && powered())
 			. += span_info("It can reactivated with <b>wirecutters</b>.")
 
-/obj/machinery/camera/emp_act(severity)
+/obj/machinery/camera/emp_act(severity, reset_time = 90 SECONDS)
 	. = ..()
 	if(!status)
 		return
@@ -168,13 +169,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), 90 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
+
+/obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
+	return TRUE
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -188,7 +194,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
-	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)

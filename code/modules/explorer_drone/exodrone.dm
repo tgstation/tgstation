@@ -88,6 +88,15 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		if(EXODRONE_IDLE)
 			return "Idle."
 
+// Searches for blacklisted items hidden inside containers
+/obj/item/exodrone/proc/check_blacklist()
+	for(var/obj/item/contained_item in contents)
+		if(contained_item.contents)
+			for(var/subcontained_object in contained_item.get_all_contents())
+				if(is_type_in_typecache(subcontained_object, GLOB.blacklisted_cargo_types))
+					return FALSE
+	return TRUE
+
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
 	if(!location) //We're launching from station, fuel up

@@ -443,7 +443,7 @@
 	need_mob_update = carbie.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(5, seconds_per_tick))
 		need_mob_update += carbie.adjustToxLoss(5, required_biotype = affected_biotype, updating_health = FALSE)
-		carbie.vomit()
+		carbie.vomit(VOMIT_CATEGORY_DEFAULT)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
