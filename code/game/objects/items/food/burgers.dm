@@ -209,6 +209,11 @@
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/// How likely is a ghost to take a little bite of this burger?
+#define GHOST_BITE_CHANCE 20
+/// How small does a burger get while ghosts are eating it
+#define MIN_GHOST_BURGER_SCALE 0.6
+
 /obj/item/food/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
@@ -226,10 +231,17 @@
 	verb_yell = "wails"
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
+	preserved_food = TRUE // It's made of ghosts
+	/// How many reagents did we contain when created?
+	var/initial_volume = 0
 
 /obj/item/food/burger/ghost/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	initial_volume = reagents.total_volume
+
+/obj/item/food/burger/ghost/make_germ_sensitive()
+	return // This burger moves itself so it shouldn't pick up germs from walking onto the floor
 
 /obj/item/food/burger/ghost/process()
 	if(!isturf(loc)) //no floating out of bags
@@ -256,11 +268,33 @@
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
 			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
 
-		//If i was less lazy i would make the burger forcefeed itself to a nearby mob here.
+	// Ghosts can eat this burger
+	var/munch_chance = 0
+	for(var/mob/dead/observer/ghost in orbiters?.orbiter_list)
+		munch_chance += GHOST_BITE_CHANCE
+		if (munch_chance >= 100)
+			break
+	if (!prob(munch_chance))
+		return
+	playsound(loc,'sound/items/eatfood.ogg', vol = rand(10,50), vary = TRUE)
+	reagents.remove_any(bite_consumption)
+	if (reagents.total_volume <= 0)
+		visible_message(span_notice("[src] disappears completely!"))
+		new /obj/effect/decal/cleanable/greenglow/ecto(loc)
+		qdel(src)
+		return
+
+	var/final_transform = matrix().Scale(LERP(MIN_GHOST_BURGER_SCALE, 1, reagents.total_volume / initial_volume))
+	var/animate_transform = matrix(final_transform).Scale(0.8)
+	animate(src, transform = animate_transform, time = 0.1 SECONDS)
+	animate(transform = final_transform, time = 0.1 SECONDS)
 
 /obj/item/food/burger/ghost/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+#undef GHOST_BITE_CHANCE
+#undef MIN_GHOST_BURGER_SCALE
 
 /obj/item/food/burger/red
 	name = "red burger"
