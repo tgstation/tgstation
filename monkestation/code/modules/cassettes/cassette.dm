@@ -71,6 +71,7 @@
 	. = ..()
 	if(tape) //huh how
 		qdel(tape)
+	tape = null
 
 /obj/item/device/cassette_tape/attack_self(mob/user)
 	..()
