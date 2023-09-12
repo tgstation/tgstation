@@ -57,10 +57,6 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/solarbeam/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	controller.behavior_cooldowns[src] = world.time + action_cooldown //use the action cooldown
-	return ..()
-
 /datum/ai_behavior/treat_hydroplants
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 2 SECONDS

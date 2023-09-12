@@ -18,6 +18,7 @@
 	maxHealth = 100
 	health = 100
 	pixel_y = -14
+	pixel_x = -14
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	melee_damage_lower = 30
@@ -263,7 +264,7 @@
 	button_icon = 'icons/effects/beam.dmi'
 	button_icon_state = "solar_beam"
 	desc = "Concenrtate the power of the sun onto your target!"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 30 SECONDS
 	var/beam_charge_up = 3 SECONDS
 
 /datum/action/cooldown/mob_cooldown/solarbeam/IsAvailable(feedback)
