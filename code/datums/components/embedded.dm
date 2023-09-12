@@ -207,13 +207,17 @@
 		qdel(src)
 		return
 	if(harmful)
-		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
-		victim.adjustStaminaLoss(pain_stam_pct * damage)
-		victim.emote("scream")
+		damaging_removal(victim, I, limb)
 
 	victim.visible_message(span_notice("[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You successfully remove [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(victim)
+
+/// Proc that actually does the damage associated with ripping something out of yourself. Call this before safeRemove.
+/datum/component/embedded/proc/damaging_removal(mob/living/carbon/victim, obj/item/removed, obj/item/bodypart/limb, ouch_multiplier = 1)
+	var/damage = weapon.w_class * remove_pain_mult * ouch_multiplier
+	limb.receive_damage(brute=(1-pain_stam_pct) * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+	victim.adjustStaminaLoss(pain_stam_pct * damage)
+	victim.emote("scream")
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// If you want the thing to go into someone's hands rather than the floor, pass them in to_hands
@@ -268,14 +272,10 @@
 	var/mob/living/carbon/victim = parent
 	var/self_pluck = (user == victim)
 	// quality of the tool we're using
-	var/tool_quality = 1
-	// if we're NOT using a proper hemostat, suffer accordingly
-	if(possible_tweezers.tool_behaviour != TOOL_HEMOSTAT)
-		tool_quality = 2 * possible_tweezers.toolspeed
-	else
-	// if we're using a hemostat that doesn't suck, good job
-		tool_quality = possible_tweezers.toolspeed
-	var/pluck_time = rip_time * (weapon.w_class * 0.5) * (self_pluck ? 2 : 1) * tool_quality
+	var/tweezer_speed = possible_tweezers.toolspeed
+	// is this an actual piece of medical equipment
+	var/tweezer_safe = (possible_tweezers.tool_behaviour == TOOL_HEMOSTAT)
+	var/pluck_time = rip_time * (weapon.w_class * 0.3) * (self_pluck ? 1.5 : 1) * tweezer_speed * (tweezer_safe ? 1 : 1.5)
 
 	if(self_pluck)
 		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]..."), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)].)"),\
@@ -293,8 +293,11 @@
 			to_chat(victim, span_danger("[user] fails to pluck [weapon] from your [limb.plaintext_zone]."))
 		return
 
-	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
-	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone]."))
+	to_chat(user, span_notice("You [tweezer_safe ? "safely" : "unsafely, but"] successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
+	to_chat(victim, span_notice("[user] [tweezer_safe ? "safely" : span_warning("painfully")] plucks [weapon] from your [limb.plaintext_zone]."))
+	if(!tweezer_safe)
+		// sure it still hurts but it sucks less
+		damaging_removal(victim, weapon, limb, 0.3)
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
