@@ -570,7 +570,7 @@
 	var/area/newarea = get_area(destination)
 
 	if(oldarea != newarea)
-		newarea.Entered(src, loc)
+		newarea.Entered(src, oldarea)
 
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return

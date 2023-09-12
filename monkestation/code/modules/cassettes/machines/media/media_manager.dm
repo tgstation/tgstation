@@ -214,7 +214,7 @@
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
 		var/dist = get_dist(owner.mob, M)
-		var/x_dist = (owner.mob.x - M.x) * 10
+		var/x_dist = -(owner.mob.x - M.x) * 10
 
 		targetVolume = max(0, M.volume - (dist * 0.1))
 		targetBalance = x_dist
