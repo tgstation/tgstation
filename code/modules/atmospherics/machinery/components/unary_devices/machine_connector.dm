@@ -19,6 +19,8 @@
 	dir = direction
 	. = ..()
 	connected_machine = connecting_machine
+	if(!connected_machine)
+		return
 	SSair.start_processing_machine(connected_machine)
 	register_with_machine()
 
