@@ -43,7 +43,12 @@
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 
-/obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/Initialize(
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
 
