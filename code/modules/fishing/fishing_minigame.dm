@@ -86,6 +86,7 @@
 		QDEL_NULL(fishing_line)
 	if(lure)
 		QDEL_NULL(lure)
+	SStgui.close_uis(src)
 	user = null
 	used_rod = null
 	return ..()
@@ -152,7 +153,6 @@
 		return
 	deltimer(next_phase_timer)
 	completed = TRUE
-	ui?.close()
 	if(user)
 		REMOVE_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 		if(start_time)
