@@ -30,7 +30,6 @@
 ///Deletes us and our destination portal if our_airlock is destroyed
 /obj/effect/knock_portal/proc/delete_on_door_delete(datum/source)
 	SIGNAL_HANDLER
-	qdel(destination)
 	qdel(src)
 
 ///Signal handler for when our location is entered, calls teleport on the victim, if their old_loc didnt contain a portal already (to prevent loops)
@@ -40,7 +39,7 @@
 		teleport(loser)
 
 /obj/effect/knock_portal/Destroy()
-	destination = null
+	QDEL_NULL(destination)
 	our_airlock = null
 	return ..()
 
@@ -88,7 +87,7 @@
 	///The second portal in the portal pair, so we can clear it later
 	var/obj/effect/knock_portal/portal_two
 	///The first door we are linking in the pair, so we can create a portal pair
-	var/link
+	var/datum/weakref/link
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)
 	. = ..()
@@ -127,6 +126,12 @@
 	QDEL_NULL(portal_one)
 	QDEL_NULL(portal_two)	
 
+///Clears portal references
+/obj/item/card/id/advanced/heretic/proc/clear_portal_refs()
+	SIGNAL_HANDLER
+	portal_one = null
+	portal_two = null
+
 ///Creates a portal pair at door1 and door2, displays a balloon alert to user
 /obj/item/card/id/advanced/heretic/proc/make_portal(mob/user, obj/machinery/door/door1, obj/machinery/door/door2)
 	var/message = "linked"
@@ -137,6 +142,7 @@
 	portal_one = new(get_turf(door2), door2)
 	portal_two = new(get_turf(door1), door1)
 	portal_one.destination = portal_two
+	RegisterSignal(portal_one, COMSIG_QDELETING, PROC_REF(clear_portal_refs))  //we only really need to register one because they already qdel both portals if one is destroyed
 	portal_two.destination = portal_one
 	balloon_alert(user, "[message]")
 
@@ -151,7 +157,7 @@
 
 /obj/item/card/id/advanced/heretic/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag || !IS_HERETIC(user) || target == link)
+	if(!proximity_flag || !IS_HERETIC(user))
 		return
 	if(istype(target, /obj/effect/knock_portal))
 		clear_portals()
@@ -160,13 +166,17 @@
 	if(!istype(target, /obj/machinery/door))
 		return
 
-	if(link)
-		make_portal(user, link, target)
+	var/reference_resolved = link?.resolve()
+	if(reference_resolved == target)
+		return
+
+	if(reference_resolved)
+		make_portal(user, reference_resolved, target)
 		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
 		link = null
 		balloon_alert(user, "link 2/2")
 	else
-		link = target
+		link = WEAKREF(target)
 		balloon_alert(user, "link 1/2")
 
 /obj/item/card/id/advanced/heretic/Destroy()
