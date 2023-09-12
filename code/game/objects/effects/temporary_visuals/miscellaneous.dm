@@ -653,6 +653,13 @@
 	. = ..()
 	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
 
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS
+
 /// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
 /obj/effect/temp_visual/hive_spawn_wither
 	name = "withering spawn"
