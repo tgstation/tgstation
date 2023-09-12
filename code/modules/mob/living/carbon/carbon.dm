@@ -1180,7 +1180,7 @@
 /mob/living/carbon/proc/hypnosis_vulnerable()
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		return FALSE
-	if(has_status_effect(/datum/status_effect/hallucination))
+	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
 	if(IsSleeping() || IsUnconscious())
 		return TRUE
