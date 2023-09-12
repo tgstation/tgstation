@@ -31,13 +31,13 @@
 	///the colors our petals can have
 	var/list/possible_colors = list(COLOR_RED, COLOR_YELLOW, COLOR_OLIVE, COLOR_CYAN)
 	///appearance when we are in our normal state
-	var/static/mutable_appearance/petal_neutral
+	var/mutable_appearance/petal_neutral
 	///appearance when we are in our warmup state
-	var/static/mutable_appearance/petal_warmup
+	var/mutable_appearance/petal_warmup
 	///appearance when we are in the firing state
-	var/static/mutable_appearance/petal_active
+	var/mutable_appearance/petal_active
 	///appearance when we are dead
-	var/static/mutable_appearance/petal_dead
+	var/mutable_appearance/petal_dead
 	///the bucket we carry
 	var/obj/item/reagent_containers/cup/held_can
 	///commands we follow
@@ -96,11 +96,11 @@
 /mob/living/basic/seedling/proc/treat_hydro_tray(obj/machinery/hydroponics/hydro)
 
 	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD)
-		src.balloon_alert(src, "dead plant removed!")
+		balloon_alert(src, "dead plant removed")
 		hydro.set_seed(null)
 
 	if(hydro.weedlevel > 0)
-		src.balloon_alert(src, "weeds uprooted!")
+		balloon_alert(src, "weeds uprooted")
 		hydro.set_weedlevel(0)
 		return
 
@@ -140,13 +140,12 @@
 	switch(combatant_state)
 		if(SEEDLING_STATE_NEUTRAL)
 			. += petal_neutral
+			if(held_can)
+				. +=  mutable_appearance(icon, "seedling_can_overlay")
 		if(SEEDLING_STATE_WARMUP)
 			. += petal_warmup
 		if(SEEDLING_STATE_ACTIVE)
 			. += petal_active
-
-	if(combatant_state == SEEDLING_STATE_NEUTRAL && held_can)
-		. +=  mutable_appearance(icon, "seedling_can_overlay")
 
 /mob/living/basic/seedling/update_icon_state()
 	. = ..()
@@ -160,12 +159,18 @@
 		if(SEEDLING_STATE_ACTIVE)
 			icon_state = "seedling_fire"
 
+/mob/living/basic/seedling/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != held_can)
+		return
+	held_can = null
+	update_appearance()
+
 /mob/living/basic/seedling/death(gibbed)
 	. = ..()
 	if(isnull(held_can))
 		return
-	held_can.forceMove(get_turf(src))
-	held_can = null
+	held_can.forceMove(drop_location())
 
 /mob/living/basic/seedling/meanie
 	maxHealth = 400
@@ -276,7 +281,7 @@
 	var/mob/living/basic/seedling/seed_owner = owner
 	seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
 
-	var/turf/target_turf = isturf(target) ? target : get_turf(target)
+	var/turf/target_turf = get_turf(target)
 	playsound(owner, 'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 
 	var/obj/effect/temp_visual/solarbeam_killsat/owner_beam = new(get_turf(owner))
@@ -291,7 +296,7 @@
 
 ///the solarbeam will damage people, otherwise it will heal plants
 /datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/basic/seedling/firer, turf/target)
-	for(var/atom/target_atom in target)
+	for(var/atom/target_atom as anything in target)
 
 		if(istype(target, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/hydro = target_atom
