@@ -150,6 +150,7 @@
 /datum/fishing_challenge/proc/complete(win = FALSE, perfect_win = FALSE)
 	deltimer(next_phase_timer)
 	completed = TRUE
+	ui?.close()
 	if(user)
 		REMOVE_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 		if(start_time)
