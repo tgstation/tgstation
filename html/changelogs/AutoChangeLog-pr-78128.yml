@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "The SC/FISHER disruptor pistol, a very compact, permanently silenced energy gun, is now stocked in Nanotrasen-accessible black markets with a price generally somewhere between 400 and 800 credits. Aspiring users are warned that it's really bad for trying to actually kill people. Caveat emptor."
+  - rscadd: "Guns now have a dry_fire_sound_volume variable, allowing for guns to be less loud when trying to fire while empty."
+  - bugfix: "Closets and crates now properly count as structures for pass flags again."

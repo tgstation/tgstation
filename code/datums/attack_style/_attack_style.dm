@@ -106,7 +106,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			attacker.changeNext_move(cd)
 
 	SEND_SIGNAL(attacker, COMSIG_LIVING_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
-	SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_PROCESESD, attacker, attack_result, src)
+	if(!isnull(weapon)) // wepaon can be null (mob attack). it can also be a bodypart if an unarmed attack.
+		SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_PROCESESD, attacker, attack_result, src)
 	return attack_result
 
 /// Check if the attacker can execute this attack style
@@ -121,7 +122,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.balloon_alert(attacker, "can't act while blocking!")
 		return FALSE
 
-	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_CHECK, attacker) & ATTACK_SWING_CANCEL)
+	var/sigreturn = NONE
+	if(!isnull(weapon))
+		sigreturn |= SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_STYLE_CHECK, attacker)
+
+	if(sigreturn & ATTACK_SWING_CANCEL)
 		return FALSE
 
 	return TRUE
@@ -176,7 +181,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			// Cancel attacks stop outright
 			return attack_result
 
-		attack_result |= SEND_SIGNAL(weapon, COMSIG_ITEM_SWING_ENTERS_TURF, attack_result, attacker, hitting, affected_turfs, already_hit, priority_target, right_clicking)
+		if(!isnull(weapon))
+			attack_result |= SEND_SIGNAL(weapon, COMSIG_ITEM_SWING_ENTERS_TURF, attack_result, attacker, hitting, affected_turfs, already_hit, priority_target, right_clicking)
 		if(attack_result & ATTACK_SWING_BLOCKED)
 			// Blocked attacks do not continue to the next turf
 			break

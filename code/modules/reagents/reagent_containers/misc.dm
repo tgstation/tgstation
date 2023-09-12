@@ -137,15 +137,14 @@
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/cup/rag/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
-	if(!iscarbon(target) || !reagents?.total_volume)
-		return ..()
+/obj/item/reagent_containers/cup/rag/attack(mob/living/target_mob, mob/living/user, obj/target)
+	if(!iscarbon(target) || reagents.total_volume <= 0)
+		return FALSE
+
 	var/mob/living/carbon/carbon_target = target
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
-	if(user.combat_mode && !carbon_target.is_mouth_covered())
+	if(!carbon_target.is_mouth_covered())
 		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
@@ -154,7 +153,11 @@
 		reagents.clear_reagents()
 		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
 		log_combat(user, carbon_target, "touched", src, log_object)
+	return TRUE
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
+	if(reagents.total_volume > 0 && iscarbon(atom_to_clean))
+		return DO_NOT_CLEAN_ALLOW_ATTACK
+
 	return (src in cleaner)

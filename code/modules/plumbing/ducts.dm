@@ -354,6 +354,7 @@ All the important duct code:
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/machinery/duct))
 		var/obj/machinery/duct/duct = target
 		if(duct.anchored)

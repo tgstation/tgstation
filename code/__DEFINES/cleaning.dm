@@ -1,8 +1,10 @@
 
 // Cleaning flags
 
-///Whether we should not attempt to clean.
+/// Return from clean callbacks to stop cleaning and also cancel attack chain
 #define DO_NOT_CLEAN "do_not_clean"
+/// Return from clean callbacks to stop cleaning but allow attack chain to continue (IE, to bash them instead of cleaning)
+#define DO_NOT_CLEAN_ALLOW_ATTACK "bash_not_clean"
 
 // Different kinds of things that can be cleaned.
 // Use these when overriding the wash proc or registering for the clean signals to check if your thing should be cleaned

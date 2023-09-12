@@ -38,21 +38,24 @@
 	if(isbot(parent))
 		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 		return
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
 
 /datum/component/cleaner/UnregisterFromParent()
 	if(isbot(parent))
 		UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
 		return
-	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
 
 /**
  * Handles the COMSIG_LIVING_UNARMED_ATTACK signal used for cleanbots
  * Redirects to afterattack, while setting parent (the bot) as user.
  */
-/datum/component/cleaner/proc/on_unarmed_attack(datum/source, atom/target, proximity_flags, modifiers)
+/datum/component/cleaner/proc/on_unarmed_attack(datum/source, atom/target, proximity_flag, ...)
 	SIGNAL_HANDLER
-	return on_afterattack(source, target, parent, proximity_flags, modifiers)
+	if(!proximity_flag)
+		return
+
+	return on_preattack(source, target, source)
 
 /**
  * Handles the COMSIG_ITEM_AFTERATTACK signal by calling the clean proc.
@@ -63,18 +66,20 @@
  * * user the person doing the cleaning
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
-/datum/component/cleaner/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/cleaner/proc/on_preattack(datum/source, atom/target, mob/living/user, ...)
 	SIGNAL_HANDLER
-	if(!proximity_flag)
-		return
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
+
 	var/clean_target
 	if(pre_clean_callback)
 		clean_target = pre_clean_callback?.Invoke(source, target, user)
-		if(clean_target == DO_NOT_CLEAN)
-			return .
+		switch(clean_target)
+			if(DO_NOT_CLEAN_ALLOW_ATTACK)
+				return NONE
+			if(DO_NOT_CLEAN)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
-	return .
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
  * Cleans something using this cleaner.

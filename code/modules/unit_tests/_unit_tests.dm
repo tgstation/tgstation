@@ -260,6 +260,7 @@
 #include "swing_holofans.dm"
 #include "swing_load_syringe.dm"
 #include "swing_pistol_whip.dm"
+#include "swing_rag.dm"
 #include "swing_silicon_interactions.dm"
 #include "swing_spraycan.dm"
 #include "swing_swings.dm"
