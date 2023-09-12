@@ -157,7 +157,14 @@
 	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
 
 /obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
+	// you should just shoot them, but in case you can't/wont
 	. = ..()
 	if(user.Adjacent(target))
 		var/obj/projectile/energy/fisher/melee/simulated_hit = new
 		simulated_hit.on_hit(target)
+
+/obj/item/gun/energy/recharge/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	// ...you reeeeeally just shoot them, but in case you can't/won't
+	. = ..()
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.on_hit(hit_atom)
