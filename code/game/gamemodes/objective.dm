@@ -94,6 +94,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/check_completion()
 	return completed
 
+/// Provides a string describing what a good job you did or did not do
+/datum/objective/proc/get_roundend_success_suffix()
+	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
+
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
 	if(!islist(dupe_search_range))
 		stack_trace("Non-list passed as duplicate objective search range")
@@ -942,6 +946,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
+
+/datum/objective/custom/get_roundend_success_suffix()
+	return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
 
 //Ideally this would be all of them but laziness and unusual subtypes
 /proc/generate_admin_objective_list()

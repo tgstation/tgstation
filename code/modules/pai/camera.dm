@@ -1,10 +1,8 @@
 /mob/living/silicon/pai/ClickOn(atom/target, params)
-	..()
-	if(!camera?.in_camera_mode)
-		return FALSE
-	//pAI picture taking
-	camera.toggle_camera_mode(sound = FALSE)
-	camera.captureimage(target, usr, camera.picture_size_x - 1, camera.picture_size_y - 1)
+	. = ..()
+	if(aicamera && aicamera.in_camera_mode)
+		aicamera.toggle_camera_mode(sound = FALSE)
+		aicamera.captureimage(target, usr)
 	return TRUE
 
 /obj/item/camera/siliconcam/pai_camera
@@ -46,13 +44,14 @@
  * @returns {boolean} - TRUE if the camera worked.
  */
 /mob/living/silicon/pai/proc/use_camera(mob/user, mode)
-	if(!camera || isnull(mode))
+	if(!aicamera || isnull(mode))
 		return FALSE
 	switch(mode)
 		if(PAI_PHOTO_MODE_CAMERA)
-			camera.toggle_camera_mode(user)
+			aicamera.toggle_camera_mode(user)
 		if(PAI_PHOTO_MODE_PRINTER)
-			camera.pai_print(user)
+			var/obj/item/camera/siliconcam/pai_camera/paicam = aicamera
+			paicam.pai_print(user)
 		if(PAI_PHOTO_MODE_ZOOM)
-			camera.adjust_zoom(user)
+			aicamera.adjust_zoom(user)
 	return TRUE

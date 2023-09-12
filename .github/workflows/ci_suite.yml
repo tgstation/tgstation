@@ -64,12 +64,7 @@ jobs:
           tools/bootstrap/python -m define_sanity.check
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-      - name: Annotate Lints
-        uses: yogstation13/DreamAnnotate@v2
-        if: success() || failure()
-        with:
-          outputFile: output-annotations.txt
+          ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh
 
   compile_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

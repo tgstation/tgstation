@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed grown food items not getting the right seed type passed to them upon creation"
