@@ -111,7 +111,7 @@
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Lintel. \
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Book. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
@@ -141,7 +141,7 @@
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
-		that puts a random item from the victims storage into your hand."
+		that puts a random item from the victims backpack into your hand."
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,

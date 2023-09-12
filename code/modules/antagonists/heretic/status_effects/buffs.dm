@@ -283,6 +283,6 @@
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER
-	if(spell != src)
+	if(!istype(spell, /datum/action/cooldown/spell/caretaker))
 		owner.balloon_alert(owner, "may not cast spells in refuge!")
 		return SPELL_CANCEL_CAST
