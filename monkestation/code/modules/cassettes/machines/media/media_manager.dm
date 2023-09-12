@@ -139,6 +139,7 @@
 		return
 
 	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+		owner << output(list2params(list("", (world.time - 0) / 10, volume * 1, 0)), "[WINDOW_ID]:SetMusic")
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
 	MP_DEBUG("<span class='good'>Sending update to mediapanel ([url], [(world.time - start_time) / 10], [volume * source_volume])...</span>")
