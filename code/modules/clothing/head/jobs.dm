@@ -213,7 +213,6 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
