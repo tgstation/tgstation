@@ -263,10 +263,10 @@
 
 /obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
 	. = ..()
-	if(LAZYLEN(contents) >= max_weight)
+	if(LAZYLEN(contents) >= max_items)
 		to_chat(user, span_warning("[src] is full!"))
 		return
-	if(item.w_class > WEIGHT_CLASS_NORMAL)
+	if(item.w_class > max_weight)
 		to_chat(user, span_warning("[item] is too big!"))
 		return
 	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
