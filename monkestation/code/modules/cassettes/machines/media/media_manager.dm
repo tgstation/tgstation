@@ -73,14 +73,14 @@
 	if (client?.media && !client.media.forced)
 		client.media.update_music()
 		if(!client.media.signal_synced && !istype(client.mob, /mob/dead/new_player))
-			client.media.RegisterSignal(client.mob, COMSIG_MOB_CLIENT_MOVED, PROC_REF(recalc_volume))
+			client.media.RegisterSignal(client, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, PROC_REF(recalc_volume))
 			client.media.signal_synced = TRUE
 		else if (!istype(client.mob, /mob/dead/new_player) && client.media.signal_synced)
 			var/area/A = get_area(src)
 			var/obj/machinery/media/M = A?.media_source
-			if(!M)
+			if(!M || !M.playing)
 				client.media.signal_synced = FALSE
-				client.media.UnregisterSignal(client.mob, COMSIG_MOB_CLIENT_MOVED)
+				client.media.UnregisterSignal(client, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND)
 
 /mob/proc/stop_all_music()
 	client?.media.stop_music()
