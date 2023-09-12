@@ -264,17 +264,17 @@
 	. = ..()
 
 	if(LAZYLEN(contents) >= max_items)
-		to_chat(user, span_warning("[src] is full!"))
+		to_chat(user, span_warning("full!"))
 		return
 	if(item.w_class > max_weight)
-		to_chat(user, span_warning("[item] is too big!"))
+		balloon_alert(user, span_warning("too big!"))
 		return
 
 	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
 	if(!input)
 		return
 	if(input in items_by_phrase)
-		to_chat(user, "[input] is already used!")
+		balloon_alert(user, "already used!")
 		return
 
 	if(item.loc != user || !user.transferItemToLoc(item, src))
