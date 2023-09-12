@@ -1,0 +1,19 @@
+ALL
+    convert everything to use base_treat_time * some mult
+    standardize spans
+    use the 2nd arg of visible message everywhere its applicable
+    cross reference this with base wounds and use everything there as an example
+
+    convince ryll its actually okay to have treatments tell you the next step
+
+BLUNT 
+    replace dizziness, nausea, organ damage from blunt
+    retype blunt T2/T3 so we can remove unneeded vars and procs from T1
+    maybe find some alternative to bone gel?
+    maybe remove determination effect? not sure honestly i like that one maybe i can convince ryll
+
+    change next movement shake to be sane
+
+    add a better ghetto treatment to securing internals, bone gel is too hard to get and too bad to use
+
+

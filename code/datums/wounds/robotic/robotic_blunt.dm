@@ -1,35 +1,3 @@
-/**
- * Level 1:
- * Easy to get, relatively easy to treat, low impact
- *
- * Head: If attacked, cause modest shake. No movement shake, or very rare/weak movement shake.
- * Arms: Interaction delay. No drop chance/Rare drop chance.
- * Legs: Slight limp. Low knockdown chance, low knockdown duration.
- * Chest: Quite low chance to gain nausea when moving, modest chance when hit, and either no or very rare organ damage.
- *
- * Screw the limb, or hit it with low force attacks
- *
- * Level 2:
- * Hard-ish to get, and not easy to get rid of (Ghetto a bad solution, or go in for surgery. No self surgery)
- *
- * Head: If attacked, severe shake. Somewhat disruptive movement shake.
- * Arms: Large interaction delay. Moderate drop chance.
- * Legs: Strong limp. Medium knockdown chance, low/medium duration
- * Chest: Low/Medium chance to gain nausea when moving, High chance when hit, medium chance for organ damage when hit, low/very low when moving
- *
- * Secure internals via screwdriver/wrench or by pouring in bone gel and waiting a while, then weld
- *
- * Level 3:
- * Quite hard to get, hard to get rid of (You need a long-ish surgery)
- *
- * Head: If attacked, extreme shake. Very disruptive movement shake.
- * Arms: Extreme interaction delay. High drop chance.
- * Legs: Extreme limp/Unusable. Large knockdown chance, medium duration.
- * Chest: High chance to gain nausea when moving, and high chance when hit. High chance for organ damage when hit, low/medium when moving.
- *
- * Heat limb (Or use RCD), then mold it with blunt damage, aggrograb, or plunger, then secure internals as T2
- */
-
 /// If a incoming attack is blunt, we increase the daze amount by this amount
 #define BLUNT_ATTACK_DAZE_MULT 1.5
 
@@ -105,21 +73,6 @@
 	/// Minimum score required to damage random organs on hit
 	var/attacked_organ_damage_minimum_score = 5
 
-	/// Our current counter for gel + gauze regeneration
-	var/regen_time_elapsed = 0 SECONDS
-	/// Time needed for gel to secure internals.
-	var/regen_time_needed = 30 SECONDS
-
-	/// If we have used bone gel to secure internals.
-	var/gelled = FALSE
-	/// Total brute damage taken over the span of [regen_time_needed] deciseconds when we gel our limb.
-	var/gel_damage = 40 // brute in total
-
-	/// If we are ready to begin screwdrivering or gelling our limb.
-	var/ready_to_secure_internals = FALSE
-	/// If internals are secured, and we are ready to weld our limb closed and end the wound
-	var/ready_to_ghetto_weld = TRUE
-
 	/// % chance for hitting our limb to fix something.
 	var/percussive_maintenance_repair_chance = 10
 	/// Damage must be under this to proc percussive maintenance.
@@ -159,50 +112,6 @@
 
 	return ..()
 
-/datum/wound/blunt/robotic/handle_process(seconds_per_tick, times_fired)
-	. = ..() // this is all only really relevant for T1-T2 since they can get gelled
-
-	if (!victim || IS_IN_STASIS(victim))
-		return
-
-	if (!gelled)
-		processes = FALSE
-		CRASH("handle_process called when gelled was false!")
-
-	update_next_movement_shake()
-
-	regen_time_elapsed += ((seconds_per_tick SECONDS) / 2)
-	if(victim.body_position == LYING_DOWN)
-		if(SPT_PROB(30, seconds_per_tick))
-			regen_time_elapsed += 1 SECONDS
-		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
-			regen_time_elapsed += 1 SECONDS
-
-	var/effective_damage = ((gel_damage / (regen_time_needed / 10)) * seconds_per_tick)
-	var/obj/item/stack/gauze = limb.current_gauze
-	if (gauze)
-		effective_damage *= gauze.splint_factor
-	limb.receive_damage(effective_damage, wound_bonus = CANT_WOUND, damage_source = src)
-	if(effective_damage && prob(33))
-		var/gauze_text = (gauze?.splint_factor ? ", although the [gauze] helps to prevent some of the leakage" : "")
-		to_chat(victim, span_danger("Your [limb.plaintext_zone] sizzles as some gel leaks and warps the exterior metal[gauze_text]..."))
-
-	if(regen_time_elapsed > regen_time_needed)
-		if(!victim || !limb)
-			qdel(src)
-			return
-		to_chat(victim, span_notice("The gel within your [limb.plaintext_zone] has fully hardened, allowing you to re-solder it!"))
-		processes = FALSE
-		ready_to_ghetto_weld = TRUE
-		ready_to_secure_internals = FALSE
-		set_disabling(FALSE)
-
-/datum/wound/blunt/robotic/modify_desc_before_span(desc)
-	. = ..()
-
-	if (!limb.current_gauze && gelled)
-		. += ", [span_notice("with fizzling blue surgical gel holding them in place")]!"
-
 /datum/wound/blunt/robotic/get_limb_examine_description()
 	return span_warning("This limb looks loosely held together.")
 
@@ -233,7 +142,7 @@
 			return apply_gel(item, user)
 		else if (item_can_secure_internals(item))
 			return secure_internals_normally(item, user)
-	else if (ready_to_ghetto_weld && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
+	else if (ready_to_resolder && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
 		return resolder(item, user)
 
 /datum/wound/blunt/robotic/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
@@ -283,20 +192,20 @@
 
 	if (!uses_percussive_maintenance() || damage < percussive_maintenance_damage_min || damage > percussive_maintenance_damage_max || damagetype != BRUTE || sharpness)
 		return
-	var/chance_mult = 1
+	var/success_chance_mult = 1
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		chance_mult *= 1.5
+		success_chance_mult *= 1.5
 	if (isatom(attacking_item))
 		var/atom/attacking_atom = attacking_item
 
 		if (isliving(attacking_atom.loc))
 			var/mob/living/living_user = attacking_atom.loc
 			if (HAS_TRAIT(living_user, TRAIT_DIAGNOSTIC_HUD))
-				chance_mult *= 1.5
+				success_chance_mult *= 1.5
 
 		if (attacking_atom.loc != victim)
-			chance_mult *= 3 // encourages people to get other people to beat the shit out of their limbs
-	if (prob(percussive_maintenance_repair_chance * chance_mult))
+			success_chance_mult *= 3 // encourages people to get other people to beat the shit out of their limbs
+	if (prob(percussive_maintenance_repair_chance * success_chance_mult))
 		handle_percussive_maintenance_success(attacking_item)
 	else
 		handle_percussive_maintenance_failure(attacking_item)
@@ -531,6 +440,176 @@
 	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!"))
 	remove_wound()
 
+/// Placeholder documentation
+/datum/wound/blunt/robotic/secures_internals
+	/// Our current counter for gel + gauze regeneration
+	var/regen_time_elapsed = 0 SECONDS
+	/// Time needed for gel to secure internals.
+	var/regen_time_needed = 30 SECONDS
+
+	/// If we have used bone gel to secure internals.
+	var/gelled = FALSE
+	/// Total brute damage taken over the span of [regen_time_needed] deciseconds when we gel our limb.
+	var/gel_damage = 40 // brute in total
+
+	/// If we are ready to begin screwdrivering or gelling our limb.
+	var/ready_to_secure_internals = FALSE
+	/// If internals are secured, and we are ready to weld our limb closed and end the wound
+	var/ready_to_resolder = TRUE
+
+/datum/wound/blunt/robotic/secures_internals/handle_process(seconds_per_tick, times_fired)
+	. = ..()
+
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
+	update_next_movement_shake()
+
+	regen_time_elapsed += ((seconds_per_tick SECONDS) / 2)
+	if(victim.body_position == LYING_DOWN)
+		if(SPT_PROB(30, seconds_per_tick))
+			regen_time_elapsed += 1 SECONDS
+		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
+			regen_time_elapsed += 1 SECONDS
+
+	var/effective_damage = ((gel_damage / (regen_time_needed / 10)) * seconds_per_tick)
+	var/obj/item/stack/gauze = limb.current_gauze
+	if (gauze)
+		effective_damage *= gauze.splint_factor
+	limb.receive_damage(effective_damage, wound_bonus = CANT_WOUND, damage_source = src)
+	if(effective_damage && prob(33))
+		var/gauze_text = (gauze?.splint_factor ? ", although the [gauze] helps to prevent some of the leakage" : "")
+		to_chat(victim, span_danger("Your [limb.plaintext_zone] sizzles as some gel leaks and warps the exterior metal[gauze_text]..."))
+
+	if(regen_time_elapsed > regen_time_needed)
+		if(!victim || !limb)
+			qdel(src)
+			return
+		to_chat(victim, span_green("The gel within your [limb.plaintext_zone] has fully hardened, allowing you to re-solder it!"))
+		processes = FALSE
+		ready_to_resolder = TRUE
+		ready_to_secure_internals = FALSE
+		set_disabling(FALSE)
+
+/datum/wound/blunt/robotic/modify_desc_before_span(desc)
+	. = ..()
+
+	if (!limb.current_gauze && gelled)
+		. += ", [span_notice("with fizzling blue surgical gel holding them in place")]!"
+
+/datum/wound/blunt/robotic/secures_internals/item_can_treat(obj/item/potential_treater, mob/user)
+	if (potential_treater.tool_behaviour == TOOL_WELDER || potential_treater.tool_behaviour == TOOL_CAUTERY)
+		if (ready_to_resolder)
+			return TRUE
+
+	if (ready_to_secure_internals)
+		if (item_can_secure_internals(potential_treater))
+			return TRUE
+
+	return ..()
+
+/// Returns TRUE if the item can be used in our 1st step (2nd if T3) of repairs.
+/datum/wound/blunt/robotic/secures_internals/proc/item_can_secure_internals(obj/item/potential_treater)
+	return (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
+
+/// The primary way to secure internals, with a screwdriver/wrench, very hard to do by yourself
+/datum/wound/blunt/robotic/secures_internals/proc/secure_internals_normally(obj/item/securing_item, mob/user)
+	if (!securing_item.tool_start_check())
+		return TRUE
+
+	var/chance = 10
+	var/delay_mult = 1
+
+	if (user == victim)
+		chance *= 0.2
+		delay_mult *= 2
+
+	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		chance *= 15 // almost guaranteed if its not self surgery
+		delay_mult *= 0.5
+	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+		chance *= 8
+		delay_mult *= 0.85
+	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
+		chance *= 3
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 2
+		delay_mult *= 0.8
+
+	var/confused = (chance < 25) // generate chance beforehand, so we can use this var
+
+	var/their_or_other = (user == victim ? "their" : "[user]'s")
+	var/your_or_other = (user == victim ? "your" : "[user]'s")
+	if (user)
+		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."))
+	if (confused)
+		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
+
+	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	if (prob(chance))
+		if (user)
+			user.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"))
+		to_chat(victim, span_green("Your [limb.plaintext_zone]'s internals are now secure! Your next step is to weld/cauterize it."))
+		ready_to_secure_internals = FALSE
+		ready_to_resolder = TRUE
+	else
+		if (user)
+			user.visible_message(span_warning("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
+		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
+
+	return TRUE
+
+// If we dont want to use a wrench/screwdriver, we can just use bone gel
+/datum/wound/blunt/robotic/secures_internals/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
+	if (gelled)
+		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already filled with bone gel!"))
+		return TRUE
+
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
+	user.visible_message(span_warning("[user] begins hastily applying [gel] to [victim]'s [limb.plaintext_zone]..."), span_warning("You begin hastily applying [gel] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone], disregarding the almost acidic effect it seems to have on the metal..."))
+
+	if (!do_after(user, (base_treat_time * 2 * (user == victim ? 1.5 : 1)) * delay_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	gel.use(1)
+	if(user != victim)
+		user.visible_message(span_notice("[user] finishes applying [gel] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [gel] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		to_chat(victim, span_userdanger("[user] finishes applying [gel] to your [limb.plaintext_zone], and you can almost hear the sizzling of the metal..."))
+	else
+		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone], emitting a funny fizzing sound!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone], and you can almost hear the sizzling of the metal..."))
+
+	gelled = TRUE
+	set_disabling(TRUE)
+	processes = TRUE
+	return TRUE
+
+// The final step - T2 and T3 end at this
+/datum/wound/blunt/robotic/proc/resolder(obj/item/welding_item, mob/user)
+	if (!welding_item.tool_start_check())
+		return TRUE
+
+	var/their_or_other = (user == victim ? "their" : "[user]'s")
+	victim.visible_message(span_notice("[user] begins re-soldering [their_or_other] [limb.plaintext_zone]..."))
+
+	var/delay_mult = 1
+	if (welding_item.tool_behaviour == TOOL_CAUTERY)
+		delay_mult *= 3
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
+	if (!welding_item.use_tool(target = victim, user = user, delay = 7 SECONDS * delay_mult, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	victim.visible_message(span_green("[user] finishes re-soldering [their_or_other] [limb.plaintext_zone]!"))
+	remove_wound()
+	return TRUE
+
+
 /datum/wound/blunt/robotic/severe
 	name = "Detached Fastenings"
 	desc = "Various fastening devices are extremely loose and solder has disconnected at multiple points, causing significant jostling of internal components and \
@@ -589,7 +668,7 @@
 	a_or_from = "from"
 
 	ready_to_secure_internals = TRUE
-	ready_to_ghetto_weld = FALSE
+	ready_to_resolder = FALSE
 
 	scar_keyword = "bluntsevere"
 
@@ -599,126 +678,6 @@
 	wound_path_to_generate = /datum/wound/blunt/robotic/severe
 
 	threshold_minimum = 65
-
-/datum/wound/blunt/robotic/severe/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
-	var/turf/limb_turf = get_turf(L)
-	if (limb_turf)
-		new /obj/effect/decal/cleanable/oil(limb_turf)
-
-	return ..()
-
-/datum/wound/blunt/robotic/item_can_treat(obj/item/potential_treater, mob/user)
-	if (potential_treater.tool_behaviour == TOOL_WELDER || potential_treater.tool_behaviour == TOOL_CAUTERY)
-		if (ready_to_ghetto_weld)
-			return TRUE
-
-	if (ready_to_secure_internals)
-		if (item_can_secure_internals(potential_treater))
-			return TRUE
-
-	return ..()
-
-/// Returns TRUE if the item can be used in our 1st step (2nd if T3) of repairs.
-/datum/wound/blunt/robotic/proc/item_can_secure_internals(obj/item/potential_treater)
-	return (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
-
-// Only really relevant for T2/T3 wounds: The primary way to secure internals, best done by someone else
-/datum/wound/blunt/robotic/proc/secure_internals_normally(obj/item/securing_item, mob/user)
-	if (!securing_item.tool_start_check())
-		return TRUE
-
-	var/chance = 10
-	var/delay_mult = 1
-
-	if (user == victim)
-		chance *= 0.2
-		delay_mult *= 2
-
-	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
-		chance *= 15 // almost guaranteed if its not self surgery
-		delay_mult *= 0.5
-	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
-		chance *= 8
-		delay_mult *= 0.85
-	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
-		chance *= 3
-	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		chance *= 2
-		delay_mult *= 0.8
-
-	var/confused = (chance < 25) // generate chance beforehand, so we can use this var
-
-	var/their_or_other = (user == victim ? "their" : "[user]'s")
-	var/your_or_other = (user == victim ? "your" : "[user]'s")
-	if (user)
-		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."))
-	if (confused)
-		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
-
-	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return TRUE
-
-	if (prob(chance))
-		if (user)
-			user.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"))
-		to_chat(victim, span_green("Your [limb.plaintext_zone]'s internals are now secure! Your next step is to weld/cauterize it."))
-		ready_to_secure_internals = FALSE
-		ready_to_ghetto_weld = TRUE
-	else
-		if (user)
-			user.visible_message(span_warning("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
-		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
-
-	return TRUE
-
-// If we dont want to use a wrench/screwdriver, we can just use bone gel
-/datum/wound/blunt/robotic/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
-
-	if (gelled)
-		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already filled with bone gel!"))
-		return TRUE
-
-	var/delay_mult = 1
-	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		delay_mult *= 0.75
-
-	user.visible_message(span_danger("[user] begins hastily applying [gel] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin hastily applying [gel] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone], disregarding the almost acidic effect it seems to have on the metal..."))
-
-	if (!do_after(user, (base_treat_time * 2 * (user == victim ? 1.5 : 1)) * delay_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return TRUE
-
-	gel.use(1)
-	if(user != victim)
-		user.visible_message(span_notice("[user] finishes applying [gel] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [gel] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] finishes applying [gel] to your [limb.plaintext_zone], and you can almost hear the sizzling of the metal..."))
-	else
-		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone], emitting a funny fizzing sound!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone], and you can almost hear the sizzling of the metal..."))
-
-	gelled = TRUE
-	set_disabling(TRUE)
-	processes = TRUE
-	return TRUE
-
-// The final step - T2 and T3 end at this
-/datum/wound/blunt/robotic/proc/resolder(obj/item/welding_item, mob/user)
-	if (!welding_item.tool_start_check())
-		return TRUE
-
-	var/their_or_other = (user == victim ? "their" : "[user]'s")
-	victim.visible_message(span_notice("[user] begins re-soldering [their_or_other] [limb.plaintext_zone]..."))
-
-	var/delay_mult = 1
-	if (welding_item.tool_behaviour == TOOL_CAUTERY)
-		delay_mult *= 3
-	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		delay_mult *= 0.75
-
-	if (!welding_item.use_tool(target = victim, user = user, delay = 7 SECONDS * delay_mult, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return TRUE
-
-	victim.visible_message(span_green("[user] finishes re-soldering [their_or_other] [limb.plaintext_zone]!"))
-	remove_wound()
-	return TRUE
 
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
@@ -786,7 +745,7 @@
 	gel_damage = 60
 
 	ready_to_secure_internals = FALSE
-	ready_to_ghetto_weld = FALSE
+	ready_to_resolder = FALSE
 
 	/// Has the first stage of our treatment been completed? E.g. RCDed, manually molded...
 	var/superstructure_remedied = FALSE
