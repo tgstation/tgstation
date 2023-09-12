@@ -67,6 +67,11 @@
 
 	update_appearance()
 
+/obj/item/device/cassette_tape/Destroy(force)
+	. = ..()
+	if(tape) //huh how
+		qdel(tape)
+
 /obj/item/device/cassette_tape/attack_self(mob/user)
 	..()
 	icon_state = flipped ? side1_icon : side2_icon
