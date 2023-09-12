@@ -215,17 +215,17 @@
 			if(ingredient.resistance_flags & INDESTRUCTIBLE)
 				continue
 
-			// Things that had reagents or ingredients in the soup will get deleted
-			else if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
-				LAZYREMOVE(pot.added_ingredients, ingredient)
-				// Send everything left behind
-				transfer_ingredient_reagents(ingredient, holder)
-				// Delete, it's done
-				qdel(ingredient)
-
 			// Everything else will just get fried
-			else
+			if(isnull(ingredient.reagents) && !is_type_in_list(ingredient, required_ingredients))
 				ingredient.AddElement(/datum/element/fried_item, 30)
+				continue
+
+			// Things that had reagents or ingredients in the soup will get deleted
+			LAZYREMOVE(pot.added_ingredients, ingredient)
+			// Send everything left behind
+			transfer_ingredient_reagents(ingredient, holder)
+			// Delete, it's done
+			qdel(ingredient)
 
 	// Anything left in the ingredient list will get dumped out
 	pot.dump_ingredients(get_turf(pot), y_offset = 8)
