@@ -498,7 +498,7 @@
 /area/shuttle/escape)
 "sF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 5
 	},
 /obj/structure/rack,

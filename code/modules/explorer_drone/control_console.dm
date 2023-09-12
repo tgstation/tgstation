@@ -131,6 +131,9 @@
 					target_site = locate(params["target_site"]) in GLOB.exploration_sites
 					if(!target_site)
 						return TRUE
+					if(!controlled_drone.check_blacklist())
+						say("Error - An unauthorized object was found inside the cargo!")
+						return TRUE
 				controlled_drone.launch_for(target_site)
 			return TRUE
 		if("explore")

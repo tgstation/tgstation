@@ -34,36 +34,18 @@
 	if(!ishuman(user))
 		return
 
-	var/mob/living/carbon/human/human_user = user
-
-	if(in_use)
-		balloon_alert(human_user, "already spinning!")
-		return
-
-	if(!COOLDOWN_FINISHED(src, spin_cooldown))
-		to_chat(human_user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
-		return
-
-	in_use = TRUE
-
-	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
-
-	if(signal_value & SLOT_MACHINE_USE_POSTPONE)
-		return
-
-	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
-		say("We're sorry, but we can no longer serve you at this establishment.")
+	if(!check_and_set_usage(user))
 		return
 
 	user.visible_message(
-		span_warning("[human_user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
+		span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
 		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
 	)
 
 	icon_screen = "slots_screen_working"
 	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
-	addtimer(CALLBACK(src, PROC_REF(determine_victor), human_user), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 5 SECONDS)
 
 /obj/structure/cursed_slot_machine/update_overlays()
 	. = ..()
@@ -71,11 +53,32 @@
 	. += mutable_appearance(icon, overlay_state)
 	. += emissive_appearance(icon, overlay_state, src)
 
-/obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
+/// Validates that the user can use the cursed slot machine. User is the person using the slot machine. Returns TRUE if we can, FALSE otherwise.
+/obj/structure/cursed_slot_machine/proc/check_and_set_usage(mob/living/carbon/human/user)
+	if(in_use)
+		balloon_alert_to_viewers("already spinning!")
+		return FALSE
+
+	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
+
+	if(!COOLDOWN_FINISHED(src, spin_cooldown) || (signal_value & SLOT_MACHINE_USE_POSTPONE))
+		to_chat(user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
+		return FALSE
+
+	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
+		say("We're sorry, but we can no longer serve you at this establishment.")
+		return FALSE
+
+	in_use = TRUE
+	return TRUE
+
+/obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/carbon/human/user)
 	icon_screen = initial(icon_screen)
 	update_appearance()
+
 	in_use = FALSE
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
+
 	if(!prob(win_prob))
 		if(status_effect_on_roll && isnull(user.has_status_effect(/datum/status_effect/grouped/cursed)))
 			user.apply_status_effect(/datum/status_effect/grouped/cursed)

@@ -130,6 +130,7 @@
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
+		/obj/item/clothing/suit/atmos_overalls = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		/obj/item/storage/backpack/satchel/eng = 3,

@@ -36,6 +36,11 @@
 
 #define SUPERMATTER_WARNING_DELAY (60 SECONDS)
 
+/// If the crystal is healing faster than this per damage check, we suppress the Common radio notification for the cooldown
+#define SUPERMATTER_FAST_HEALING_RATE 0.025
+
+#define SUPERMATTER_COMMON_RADIO_DELAY (6 MINUTES)
+
 #define SM_HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"

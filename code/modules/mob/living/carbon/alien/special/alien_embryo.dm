@@ -111,8 +111,7 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
-	new_xeno.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), type) //so we don't move during the bursting animation
-	new_xeno.notransform = 1
+	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(0.6 SECONDS)
@@ -121,10 +120,8 @@
 		qdel(new_xeno)
 		CRASH("AttemptGrow failed due to the early qdeletion of source or owner.")
 
-	if(new_xeno)
-		REMOVE_TRAIT(new_xeno, TRAIT_IMMOBILIZED, type)
-		REMOVE_TRAIT(new_xeno, TRAIT_HANDS_BLOCKED, type)
-		new_xeno.notransform = 0
+	if(!isnull(new_xeno))
+		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
 		new_xeno.invisibility = 0
 
 	if(gib_on_success)

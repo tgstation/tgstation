@@ -232,7 +232,7 @@
 		set_messages("shutl","not in service")
 		return PROCESS_KILL
 	else if(shuttle.timer)
-		var/line1 = "<<< [shuttle.getModeStr()]"
+		var/line1 = shuttle.getModeStr()
 		var/line2 = shuttle.getTimerStr()
 
 		set_messages(line1, line2)
@@ -397,7 +397,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			line1 = ""
 			line2 = ""
 	else
-		line1 = "<<< [SSshuttle.supply.getModeStr()]"
+		line1 = SSshuttle.supply.getModeStr()
 		line2 = SSshuttle.supply.getTimerStr()
 	set_messages(line1, line2)
 
@@ -494,9 +494,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	var/static/list/picture_options = list(
 		"Default" = "default",
+		"Delta Alert" = "deltaalert",
 		"Red Alert" = "redalert",
+		"Blue Alert" = "bluealert",
+		"Green Alert" = "greenalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
+		"Radiation" = "radiation",
 		"Happy" = "ai_happy",
 		"Neutral" = "ai_neutral",
 		"Very Happy" = "ai_veryhappy",

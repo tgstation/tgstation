@@ -192,6 +192,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
+/// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
+/// Will block movement, `Life()` (!!!), and other stuff based on the mob.
+#define TRAIT_NO_TRANSFORM "block_transformations"
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
 /// This mob is immune to stun causing status effects and stamcrit.
@@ -1136,7 +1139,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-
+/// Trait given by [/datum/status_effect/blessing_of_insanity]
+#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

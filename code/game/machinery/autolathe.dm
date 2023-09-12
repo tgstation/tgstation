@@ -24,7 +24,7 @@
 
 	///The container to hold materials
 	var/datum/component/material_container/materials
-	
+
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 
@@ -145,7 +145,7 @@
 		if(busy)
 			say("The autolathe is busy. Please wait for completion of previous operation.")
 			return
-		
+
 		if(isclosedturf(get_step(src, drop_direction)))
 			say("Output is obstructed.")
 			return
@@ -210,8 +210,8 @@
 		update_static_data_for_all_viewers()
 		//print item
 		icon_state = "autolathe_n"
-		var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-		make_items(custom_materials, multiplier, is_stack, usr, time / multiplier)
+		var/time_per_item = is_stack ? 32 : ((32 * coeff * multiplier) ** 0.8) / multiplier
+		make_items(custom_materials, multiplier, is_stack, usr, time_per_item)
 
 		return TRUE
 
@@ -311,30 +311,36 @@
 /obj/machinery/autolathe/proc/make_items(list/picked_materials, multiplier, is_stack, mob/user, time_per_item)
 	var/atom/our_loc = drop_location()
 	var/atom/drop_loc = get_step(src, drop_direction)
+	var/client_awarded = FALSE
 
 	busy = TRUE
+	SStgui.update_uis(src) //so ui immediatly knows its busy
 	while(multiplier > 0)
 		if(!busy)
 			break
-		if(!multiplier)
-			continue
 		stoplag(time_per_item)
 		var/obj/item/new_item
 		if(is_stack)
-			new_item = new being_built.build_path(our_loc, multiplier, FALSE)
-			var/obj/item/stack/stack_item = new_item
-			stack_item.update_appearance()
+			new_item = new being_built.build_path(our_loc, multiplier)
 		else
 			new_item = new being_built.build_path(our_loc)
 
+			//custom materials for toolboxes
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
-				for(var/x in picked_materials)
-					var/datum/material/M = x
-					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
-						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
-		if(drop_direction) //no need to call if ontop of us
+				if(!client_awarded) //so we dont award the medal multiple times
+					for(var/datum/material/mat in picked_materials)
+						if(!istype(mat, /datum/material/glass) && !istype(mat, /datum/material/iron))
+							user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
+							client_awarded = TRUE
+
+		//no need to call if ontop of us
+		if(drop_direction)
 			new_item.Move(drop_loc)
+		//multiplier already applied in stack initialization. work done
+		if(is_stack)
+			break
+
 		multiplier--
 
 	icon_state = "autolathe"

@@ -91,10 +91,8 @@
 		log_combat(user, H, "wounded via throat slitting", source)
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
-		if(slit_throat)
-			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
-			screaming_through_a_slit_throat.apply_wound(slit_throat, wound_source = "throat slit")
-		H.apply_status_effect(/datum/status_effect/neck_slice)
+		if (H.cause_wound_of_type_and_severity(WOUND_SLASH, slit_throat, WOUND_SEVERITY_CRITICAL))
+			H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /**
  * Handles a user butchering a target

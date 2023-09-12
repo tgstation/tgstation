@@ -6,7 +6,7 @@
 	icon_living = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
-	mob_biotypes = MOB_HUMANOID | MOB_EPIC
+	mob_biotypes = MOB_HUMANOID | MOB_SPECIAL
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	speed = -0.2
@@ -30,6 +30,7 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
+	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
