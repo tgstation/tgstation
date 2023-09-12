@@ -23,6 +23,7 @@
 	src.bite_chance = bite_chance
 	src.minimum_scale = minimum_scale
 	initial_reagent_volume = atom_parent.reagents.total_volume
+	notify_ghosts("[parent] is edible by ghosts!", source = parent, action = NOTIFY_ORBIT, header="Something Tasty!")
 
 /datum/component/ghost_edible/RegisterWithParent()
 	. = ..()
