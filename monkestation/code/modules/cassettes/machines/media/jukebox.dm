@@ -302,7 +302,7 @@
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 127
 
-	icon_state = "jukebox2-virtual"
+	icon_state = "jukebox"
 
 	density = FALSE
 	hacked = TRUE

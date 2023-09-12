@@ -22,8 +22,6 @@
 	var/ckey_author
 	///the authors name displayed in examine text
 	var/author_name
-	//the cassette_tape type datum
-	var/datum/cassette/cassette_tape/tape
 	///are we an approved tape?
 	var/approved_tape = FALSE
 	///are we random?
@@ -32,11 +30,6 @@
 
 /obj/item/device/cassette_tape/Initialize()
 	. = ..()
-	if(!tape)
-		return
-
-	tape = new tape
-
 	var/ids_exist = file("data/cassette_storage/ids.json")
 
 	if(!length(GLOB.approved_ids) && fexists(ids_exist))
@@ -44,12 +37,10 @@
 
 	if(random && fexists(ids_exist))
 		if(length(GLOB.approved_ids))
-			tape.id = pick(GLOB.approved_ids)
+			id = pick(GLOB.approved_ids)
 
-	id = tape.id
 	var/file = file("data/cassette_storage/[id].json")
 	if(!fexists(file))
-		qdel(tape)
 		return
 
 	var/list/data = json_decode(file2text(file))
@@ -63,15 +54,8 @@
 	author_name = data["author_name"]
 	ckey_author = data["author_ckey"]
 	approved_tape = data["approved"]
-	qdel(tape)
 
 	update_appearance()
-
-/obj/item/device/cassette_tape/Destroy(force)
-	. = ..()
-	if(tape) //huh how
-		qdel(tape)
-	tape = null
 
 /obj/item/device/cassette_tape/attack_self(mob/user)
 	..()
@@ -138,17 +122,8 @@
 	var/list/songs = list("side1" = list(),
 						  "side2" = list())
 
-/datum/cassette/cassette_tape/blank
+/obj/item/device/cassette_tape/blank
 	id = "blank"
 
-/obj/item/device/cassette_tape/blank
-	tape = /datum/cassette/cassette_tape/blank
-
-/datum/cassette/cassette_tape/friday
-	id = "friday"
-
 /obj/item/device/cassette_tape/friday
-	tape = /datum/cassette/cassette_tape/friday
-
-/datum/cassette/cassette_tape/random
-	id ="not_randomized"
+	id = "friday"
