@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "Medicine allergy can no longer roll quantum medicine"
