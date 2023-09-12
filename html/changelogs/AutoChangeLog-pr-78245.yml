@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "The message sent to admins when a new admin has been added via the Permissions Panel will now properly show the new admin's ckey."
