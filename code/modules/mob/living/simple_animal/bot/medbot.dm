@@ -222,7 +222,9 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
+	var/advanced_bot_trait = HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA)
+
+	if(advanced_bot_trait && mapload && is_station_level(z))
 		skin = "advanced"
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
