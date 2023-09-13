@@ -58,8 +58,6 @@
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
 	. = ..()
-	if(food_reagents)
-		food_reagents = string_assoc_list(food_reagents)
 	if(tastes)
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
