@@ -58,12 +58,12 @@
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 		sensor.outlet_id = id_tag
-		multi_tool.set_buffer(null)
+		multi_tool.clear_buffer()
 		balloon_alert(user, "output linked to sensor")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	balloon_alert(user, "saved in buffer")
 	multi_tool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()

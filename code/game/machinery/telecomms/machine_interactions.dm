@@ -156,7 +156,7 @@
 			heldmultitool.set_buffer(src)
 			. = TRUE
 		if("flush")
-			heldmultitool.set_buffer(null)
+			heldmultitool.clear_buffer()
 			. = TRUE
 
 	add_act(action, params)

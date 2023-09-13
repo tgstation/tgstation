@@ -91,7 +91,7 @@
 	if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/outlet_injector))
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = multi_tool.buffer
 		inlet_id = input.id_tag
-		multi_tool.set_buffer(null)
+		multi_tool.clear_buffer()
 		balloon_alert(user, "connected to input")
 
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
@@ -105,12 +105,12 @@
 		output.external_pressure_bound = 0
 		//finally assign it to this sensor
 		outlet_id = output.id_tag
-		multi_tool.set_buffer(null)
+		multi_tool.clear_buffer()
 		balloon_alert(user, "connected to output")
 
 	else
 		multi_tool.set_buffer(src)
-		balloon_alert(user, "added to multitool buffer")
+		balloon_alert(user, "saved to multitool buffer")
 
 	return TRUE
 
