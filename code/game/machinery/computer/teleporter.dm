@@ -12,8 +12,6 @@
 	var/calibrating
 	///Weakref to the target atom we're pointed at currently
 	var/datum/weakref/target_ref
-	///Boolean just to make sure we won't accidently register 2 signals at once.
-	var/has_registered_signal = FALSE
 
 /obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
@@ -35,8 +33,6 @@
 		return
 	if (target.weak_reference != target_ref)
 		return
-	UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
-	has_registered_signal = FALSE
 	turn_off()
 	set_teleport_target(null)
 
@@ -118,18 +114,18 @@
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
+	var/datum/old_target
 	var/datum/weakref/new_target_ref = WEAKREF(new_target)
 	if (target_ref == new_target_ref)
 		return
+	if (target_ref)
+		old_target = target_ref.resolve()
 	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, new_target)
 	target_ref = new_target_ref
-
-	if (!istype(new_target, /obj/item/beacon))
-		return
-	if (has_registered_signal)
-		UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
-	RegisterSignal(new_target, COMSIG_BEACON_DISABLED, PROC_REF(check_for_disabled_beacon))
-	has_registered_signal = TRUE
+	if (istype(old_target, /obj/item/beacon))
+		UnregisterSignal(old_target, COMSIG_BEACON_DISABLED)
+	if (istype(new_target, /obj/item/beacon))
+		RegisterSignal(new_target, COMSIG_BEACON_DISABLED, PROC_REF(check_for_disabled_beacon))
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE
