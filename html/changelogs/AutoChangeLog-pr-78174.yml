@@ -1,8 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - balance: "Supermatter zap power generation scales with the delta time between its last zaps, preventing faster zapping from scaling power generation to extreme levels."
-  - bugfix: "Fixes supermatter zap rate not scaling properly. It should zap much faster at higher energy levels as intended."
-  - qol: "Changeling chemical generation scales with the world's delta time, making its rate independent of subsystem lag."
-  - qol: "Revenant essence generation scales with the world's delta time, making its rate independent of subsystem lag."
-  - qol: "Xenomorph plasma generation and resin healing scales with the world's delta time, making their rates independent of subsystem lag."

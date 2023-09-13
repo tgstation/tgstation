@@ -279,7 +279,7 @@
 
 	lastpuke += SPT_PROB(30, seconds_per_tick)
 	if(lastpuke >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
-		vomit(20)
+		vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 		lastpuke = 0
 
 
