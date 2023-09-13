@@ -212,6 +212,13 @@
 		skin = new_skin
 	update_appearance()
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
+		skin = "advanced"
+		update_appearance(UPDATE_OVERLAYS)
+		damagetype_healer = "all"
+		if(prob(50))
+			name += ", PhD."
+
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
