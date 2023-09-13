@@ -232,7 +232,7 @@
 		set_messages("shutl","not in service")
 		return PROCESS_KILL
 	else if(shuttle.timer)
-		var/line1 = "<<< [shuttle.getModeStr()]"
+		var/line1 = shuttle.getModeStr()
 		var/line2 = shuttle.getTimerStr()
 
 		set_messages(line1, line2)
@@ -397,7 +397,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			line1 = ""
 			line2 = ""
 	else
-		line1 = "<<< [SSshuttle.supply.getModeStr()]"
+		line1 = SSshuttle.supply.getModeStr()
 		line2 = SSshuttle.supply.getTimerStr()
 	set_messages(line1, line2)
 

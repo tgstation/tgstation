@@ -468,7 +468,7 @@
 	name = "Cybernetic Implants Bundle"
 	desc = "A box containing x-ray eyes, a CNS Rebooter and Reviver implant. Comes with an autosurgeon for each."
 	item = /obj/item/storage/box/cyber_implants
-	cost = 25 //worth around 32 TC
+	cost = 20 //worth 24 TC
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/medical
@@ -730,13 +730,6 @@
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun
-	cost = 8
-
-/datum/uplink_item/implants/nuclear/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This implant will keep you from dropping things from your hands. Be sure to hold onto the item before activating, and \
-		activate it again to turn it off. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/anti_drop
 	cost = 8
 
 // Badass (meme items)

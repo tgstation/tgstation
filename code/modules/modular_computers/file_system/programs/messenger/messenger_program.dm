@@ -554,7 +554,7 @@
 	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
 /datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer))
+	if(!sender.can_perform_action(computer, ALLOW_RESTING))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))

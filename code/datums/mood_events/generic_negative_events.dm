@@ -43,12 +43,12 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/delam //SM delamination
-	description = "Those goddamn engineers can't do anything right..."
+	description = "Ever since that supermatter delamination, my head has been killing me..."
 	mood_change = -2
 	timeout = 4 MINUTES
 
 /datum/mood_event/cascade // Big boi delamination
-	description = "The engineers have finally done it, we are all going to die..."
+	description = "I never thought I'd see a resonance cascade, let alone be near one..."
 	mood_change = -8
 	timeout = 5 MINUTES
 
