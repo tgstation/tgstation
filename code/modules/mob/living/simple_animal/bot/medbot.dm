@@ -231,9 +231,6 @@
 		if(prob(50))
 			name += ", PhD."
 
-	if(mapload)
-		to_chat(src, "wa la")
-
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
 	patient = null
