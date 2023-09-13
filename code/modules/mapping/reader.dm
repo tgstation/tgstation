@@ -164,14 +164,11 @@
 	x_upper = INFINITY,
 	y_lower = -INFINITY,
 	y_upper = INFINITY,
-	z_lower = 1,
+	z_lower = -INFINITY,
 	z_upper = INFINITY,
 	place_on_top = FALSE,
 	new_z = FALSE,
 )
-	if(z_lower < 1)
-		CRASH("Attempted to call load_map with a z_lower less than 1, this will not work")
-
 	if(!(dmm_file in GLOB.cached_maps))
 		GLOB.cached_maps[dmm_file] = new /datum/parsed_map(dmm_file)
 
@@ -182,7 +179,7 @@
 	return parsed_map
 
 /// Parse a map, possibly cropping it.
-/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = 1, z_upper=INFINITY, measureOnly=FALSE)
+/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = INFINITY, z_upper=INFINITY, measureOnly=FALSE)
 	// This proc sleeps for like 6 seconds. why?
 	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
 	// Love ya :)
@@ -300,8 +297,19 @@
 	src.key_len = key_len
 	src.line_len = line_len
 
+/// Iterates over all grid sets and returns ones with z values within the given bounds. Inclusive
+/datum/parsed_map/proc/filter_grid_sets_based_on_z_bounds(lower_z, upper_z)
+	var/list/filtered_sets = list()
+	for(var/datum/grid_set/grid_set as anything in gridSets)
+		if(grid_set.zcrd < lower_z)
+			continue
+		if(grid_set.zcrd > upper_z)
+			continue
+		filtered_sets += grid_set
+	return filtered_sets
+
 /// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
-/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = 1, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
+/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	. = _load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
@@ -390,9 +398,9 @@
 	if(!crop_map && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
-			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - z_lower)
+			world.increase_max_y(highest_y, map_load_z_cutoff = z_offset - 1)
 		else
-			world.increaseMaxY(highest_y)
+			world.increase_max_y(highest_y)
 		expanded_y = TRUE
 
 	// Skip Y coords that are above the smallest of the three params
@@ -426,9 +434,9 @@
 	if(final_x > world.maxx && !crop_map)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
-			world.increaseMaxX(final_x, max_zs_to_load = z_offset - z_lower)
+			world.increase_max_x(final_x, map_load_z_cutoff = z_offset - 1)
 		else
-			world.increaseMaxX(final_x)
+			world.increase_max_x(final_x)
 		expanded_x = TRUE
 
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
@@ -442,10 +450,11 @@
 		if(!no_changeturf)
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
-	for(var/datum/grid_set/gset as anything in gridSets)
-		if(gset.zcrd > z_upper || gset.zcrd < z_lower)
-			continue // skip z levels we dont want
+	var/list/target_grid_sets = gridSets
+	if(z_lower > -INFINITY || z_upper < INFINITY) // bounds are set, filter out gridsets for z levels we don't want
+		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
 
+	for(var/datum/grid_set/gset as anything in target_grid_sets)
 		var/true_xcrd = gset.xcrd + x_relative_to_absolute
 
 		// any cutoff of x means we just shouldn't iterate this gridset
@@ -514,10 +523,12 @@
 	var/y_relative_to_absolute = y_offset - 1
 	var/x_relative_to_absolute = x_offset - 1
 	var/line_len = src.line_len
-	for(var/datum/grid_set/gset as anything in gridSets)
-		if(gset.zcrd > z_upper || gset.zcrd < z_lower)
-			continue // skip z levels we dont want
 
+	var/list/target_grid_sets = gridSets
+	if(z_lower > -INFINITY || z_upper < INFINITY) // bounds are set, filter out gridsets for z levels we don't want
+		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
+
+	for(var/datum/grid_set/gset as anything in target_grid_sets)
 		var/relative_x = gset.xcrd
 		var/relative_y = gset.ycrd
 		var/true_xcrd = relative_x + x_relative_to_absolute
@@ -526,9 +537,9 @@
 		if(!crop_map && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
-				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - z_lower)
+				world.increase_max_y(ycrd, map_load_z_cutoff = z_offset - 1)
 			else
-				world.increaseMaxY(ycrd)
+				world.increase_max_y(ycrd)
 			expanded_y = TRUE
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
@@ -582,9 +593,9 @@
 		if(final_x > world.maxx && !crop_map)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
-				world.increaseMaxX(final_x, max_zs_to_load = z_offset - z_lower)
+				world.increase_max_x(final_x, map_load_z_cutoff = z_offset - 1)
 			else
-				world.increaseMaxX(final_x)
+				world.increase_max_x(final_x)
 			expanded_x = TRUE
 
 		// We're gonna track the first and last pairs of coords we find
