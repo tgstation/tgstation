@@ -32,7 +32,7 @@
 #define GAS_HEAT_POWER_SCALING_COEFFICIENT (1/6)
 
 /// The base zap power transmission of the supermatter crystal in W/MeV.
-#define BASE_POWER_TRANSMISSION_RATE 520
+#define BASE_POWER_TRANSMISSION_RATE 1040
 
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_HALLUCINATION (20 MINUTES)

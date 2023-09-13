@@ -107,7 +107,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/external_damage_immediate = 0
 
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
-	var/zap_cutoff = 6e5
+	var/zap_cutoff = 1.2e6
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
@@ -284,7 +284,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			range = 3,
 			zap_str = internal_energy * zap_transmission_rate * delta_time,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 1.2e5 * delta_time,
+			zap_cutoff = 2.4e5 * delta_time,
 			power_level = internal_energy,
 			color = zap_color,
 		)
@@ -419,13 +419,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Add high energy bonus to the zap transmission data so we can accurately measure our power generation from zaps.
 	var/high_energy_bonus = 0
-	var/high_energy_bonus_multiplier = 1
-	if(internal_energy >= POWER_PENALTY_THRESHOLD) //Supermatter zaps multiply power internally under some conditions for some reason, so we'll snowflake this for now.
-		///Power multiplier bonus applied to all zaps. Zap power generation doubles when it reaches 5GeV, 7GeV and 9GeV.
-		high_energy_bonus_multiplier = 2 ** clamp(round(INVERSE_LERP(3000, POWER_PENALTY_THRESHOLD, internal_energy)), 1, 3) - 1
+	var/zap_transmission = zap_transmission_rate * internal_energy
+	var/zap_power_multiplier = 1
+	if(internal_energy > POWER_PENALTY_THRESHOLD) //Supermatter zaps multiply power internally under some conditions for some reason, so we'll snowflake this for now.
+		///Power multiplier bonus applied to all zaps. Zap power generation doubles when it reaches 7GeV and 9GeV.
+		zap_power_multiplier *= 2 ** clamp(round((internal_energy - POWER_PENALTY_THRESHOLD) / 2000), 0, 2)
 		///The supermatter releases additional zaps after 5GeV, with more at 7GeV and 9GeV.
-		var/additional_zap_bonus = clamp(internal_energy * 1600, 3.2e6, 1.6e7) * round(INVERSE_LERP(1000, 3000, internal_energy))
-		high_energy_bonus = (zap_transmission_rate * internal_energy + additional_zap_bonus) * high_energy_bonus_multiplier
+		var/additional_zap_bonus = clamp(internal_energy * 1600, 3.2e6, 1.6e7) * clamp(round(INVERSE_LERP(1000, 3000, internal_energy)), 1, 4)
+		high_energy_bonus = (zap_transmission + additional_zap_bonus) * zap_power_multiplier - zap_transmission
 		var/list/zap_factor_si_derived_data = siunit_isolated(high_energy_bonus, "W", 2)
 		data["zap_transmission_factors"] += list(list(
 			"name" = "High Energy Bonus",
@@ -433,8 +434,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			"unit" = zap_factor_si_derived_data["unit"],
 		))
 
-	var/list/zap_transmission_si_derived_data = siunit_isolated(zap_transmission_rate * internal_energy * high_energy_bonus_multiplier + high_energy_bonus, "W", 2)
-	data["zap_transmission"] = zap_transmission_rate * internal_energy
+	var/list/zap_transmission_si_derived_data = siunit_isolated(zap_transmission + high_energy_bonus, "W", 2)
+	data["zap_transmission"] = zap_transmission + high_energy_bonus
 	data["zap_transmission_coefficient"] = zap_transmission_si_derived_data["coefficient"]
 	data["zap_transmission_unit"] = zap_transmission_si_derived_data["unit"]
 
@@ -848,7 +849,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 1.6e6, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 6e5, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2e6, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2e6, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir
@@ -943,16 +944,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Going boom should be rareish
 	if(prob(80))
 		zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
-	if(target_type == COIL)
-		var/multi = 2
-		switch(power_level)//Between 7k and 9k it's 4, above that it's 8
+	if(target_type == COIL || target_type == ROD)
+		var/multi = 1
+		switch(power_level)//Between 7k and 9k it's 2, above that it's 4
 			if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
-				multi = 4
+				multi = 2
 			if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
-				multi = 8
+				multi = 4
 		if(zap_flags & ZAP_SUPERMATTER_FLAGS)
 			var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
-			zap_str = remaining_power * 0.5 //Coils should take a lot out of the power of the zap
+			zap_str = remaining_power / multi //Coils should take a lot out of the power of the zap
 		else
 			zap_str /= 3
 

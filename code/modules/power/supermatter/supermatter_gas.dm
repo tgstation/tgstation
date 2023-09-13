@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	sm.supermatter_zap(
 		sm,
 		range = 6,
-		zap_str = clamp(sm.internal_energy * 2, 4000, 20000),
+		zap_str = clamp(sm.internal_energy * 1600, 3.2e6, 1.6e7),
 		zap_flags = ZAP_MOB_STUN,
 		zap_cutoff = sm.zap_cutoff,
 		power_level = sm.internal_energy,
