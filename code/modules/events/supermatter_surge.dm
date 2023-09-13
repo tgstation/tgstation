@@ -39,7 +39,7 @@
 /datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 
-	if(SSjob.is_skeleton_engineering(crew_threshold = 2))
+	if(SSjob.is_skeleton_engineering(crew_threshold = 3))
 		return FALSE
 
 /datum/round_event/supermatter_surge
