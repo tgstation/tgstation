@@ -1,0 +1,7 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "walkman, can play cassettes"
+  - rscadd: "cassette mixer, you can mix premade cassettes in a portable cassette mixer"
+  - rscadd: "stationary cassette mixer, you can add your own songs to these cassettes. WARNING: these are not approved so they can only be played in walkman and not over the stations radio"
+  - code_imp: "changes youtube-dl for the faster yt-dlp"
