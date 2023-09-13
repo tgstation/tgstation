@@ -50,6 +50,8 @@
 	required_distance = 3
 	/// range we will try chasing the target before giving up
 	var/chase_range = 9
+	///do we care about avoiding friendly fire?
+	var/avoid_friendly_fire =  FALSE
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -74,6 +76,10 @@
 	if(!can_see(basic_mob, final_target, required_distance))
 		return
 
+	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targetting_datum))
+		adjust_position(basic_mob, target)
+		return ..()
+
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 	basic_mob.RangedAttack(final_target)
 	return ..() //only start the cooldown when the shot is shot
@@ -82,3 +88,32 @@
 	. = ..()
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/basic_ranged_attack/proc/check_friendly_in_path(mob/living/source, atom/target, datum/targetting_datum/targetting_datum)
+	var/list/turfs_list = get_line(source, target) - get_turf(source)
+	for(var/turf/possible_turf in turfs_list)
+
+		for(var/mob/living/potential_friend in possible_turf)
+			if(!targetting_datum.can_attack(source, potential_friend))
+				return TRUE
+
+	return FALSE
+
+/datum/ai_behavior/basic_ranged_attack/proc/adjust_position(mob/living/living_pawn, atom/target)
+	var/list/possible_directions = GLOB.alldirs.Copy()
+	var/turf/our_turf = get_turf(living_pawn)
+	var/list/possible_turfs = list()
+
+	for(var/direction in possible_directions)
+		var/turf/target_turf = get_step(our_turf, direction)
+		if(isnull(target_turf))
+			continue
+		if(target_turf.is_blocked_turf() || get_dist(target_turf, target) > required_distance)
+			continue
+		possible_turfs += target_turf
+
+	if(!length(possible_turfs))
+		return
+
+	var/turf/picked_turf = get_closest_atom(/turf, possible_turfs, target)
+	step(living_pawn, get_dir(living_pawn, picked_turf))
