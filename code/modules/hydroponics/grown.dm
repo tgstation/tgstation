@@ -43,7 +43,12 @@
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 
-/obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/Initialize(
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
 
@@ -149,7 +154,7 @@
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
 	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER

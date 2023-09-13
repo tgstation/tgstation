@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /**
  * points is any type of currency this machine accepts(money, mining points etc) which is displayed on the ui
  * Args:
- * card - The ID card we retrive these points from
+ * card - The ID card we retrieve these points from
  */
 /obj/machinery/computer/order_console/proc/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account?.account_balance)

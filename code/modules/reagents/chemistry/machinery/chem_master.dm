@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			adjust_item_drop_location(item)
 			item.name = item_name
 			item.reagents.clear_reagents()
-			reagents.trans_to(item, volume_in_each, transfered_by = src)
+			reagents.trans_to(item, volume_in_each, transferred_by = src)
 			printing_progress++
 			item_count--
 		update_appearance(UPDATE_ICON)
