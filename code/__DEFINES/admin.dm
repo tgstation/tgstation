@@ -75,6 +75,7 @@
 #define ADMIN_PLAY_INTERNET(text) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];play_internet=[url_encode(text)]'>PLAY</a>)"
 #define ADMIN_APPROVE_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token=[REF(user)]'>Yes</a>)"
 #define ADMIN_REJECT_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token=[REF(user)]'>No</a>)"
+#define ADMIN_OPEN_REVIEW(id) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];open_music_review=[id]'>Open Review</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()

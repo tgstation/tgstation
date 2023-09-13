@@ -4064,6 +4064,8 @@
 /area/station/service/kitchen)
 "bpL" = (
 /obj/structure/noticeboard/directional/west,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/obj/item/book/codex_gigas,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "bpR" = (
@@ -9891,6 +9893,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"dbj" = (
+/turf/open/floor/glass,
+/area/station/service/library)
 "dbm" = (
 /obj/machinery/door/airlock{
 	name = "Private Restroom"
@@ -14358,6 +14363,73 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/virology)
+"ezF" = (
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/friday{
+	pixel_y = 2;
+	pixel_x = 9
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "ezJ" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/glass/reinforced,
@@ -16240,6 +16312,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"feW" = (
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "ffe" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/lesser)
@@ -20532,6 +20610,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"gBr" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "gBs" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
@@ -22843,10 +22928,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
 "hrd" = (
-/obj/structure/destructible/cult/item_dispenser/archives/library,
-/obj/item/book/codex_gigas,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "hro" = (
@@ -25646,6 +25729,14 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"inm" = (
+/obj/structure/table/wood,
+/obj/structure/cassette_rack{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "inw" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Port Bow Solar Access"
@@ -41633,14 +41724,12 @@
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
 "nuw" = (
-/obj/structure/chair/comfy/black{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/cassette/mailbox,
 /turf/open/floor/wood,
 /area/station/service/library)
 "nuH" = (
@@ -46036,6 +46125,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"oKE" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/glass,
+/area/station/service/library)
 "oKJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48680,6 +48773,13 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"pDt" = (
+/obj/machinery/door/morgue{
+	name = "Curator's Study";
+	req_access = list("library")
+	},
+/turf/open/floor/engine/cult,
+/area/station/service/library)
 "pDy" = (
 /obj/structure/table,
 /obj/structure/cable,
@@ -52871,6 +52971,14 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/hos)
+"qWd" = (
+/obj/structure/table/wood,
+/obj/item/radio/radio_mic{
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "qWh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -68702,6 +68810,13 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/station/command/heads_quarters/rd)
+"wgh" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck{
+	pixel_y = 9
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "wgr" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -252185,7 +252300,7 @@ hUe
 hUD
 hUD
 hUD
-hUD
+pDt
 hUD
 hUD
 hUD
@@ -252440,10 +252555,10 @@ prg
 prg
 caY
 iQQ
-gEE
-oNC
-gEE
-gEE
+gBr
+oKE
+dbj
+hUD
 gEE
 gEE
 oNC
@@ -252697,10 +252812,10 @@ spW
 kVE
 goi
 iQQ
-gEE
-gEE
-gEE
-gEE
+inm
+feW
+dbj
+hUD
 gEE
 gEE
 gEE
@@ -252954,10 +253069,10 @@ hUD
 hUD
 hUD
 hUD
-gEE
-gEE
-gEE
-gEE
+qWd
+ezF
+wgh
+hUD
 gEE
 gEE
 gEE
@@ -253210,11 +253325,11 @@ oxV
 oxV
 jbG
 gEE
-gEE
-gEE
-gEE
-gEE
-gEE
+hUD
+hUD
+hUD
+hUD
+hUD
 gEE
 gEE
 gEE

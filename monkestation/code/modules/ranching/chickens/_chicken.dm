@@ -261,12 +261,12 @@
 /mob/living/basic/chicken/update_overlays()
 	. = ..()
 	if(is_marked)
-		.+= mutable_appearance('monkestation/icons/effects/ranching.dmi', "marked", FLOAT_LAYER, plane = src.plane)
+		.+= mutable_appearance('monkestation/icons/effects/ranching.dmi', "marked", FLOAT_LAYER, src, plane = src.plane)
 
 /mob/living/basic/chicken/proc/add_visual(method)
 	if(applied_visual)
 		return
-	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, plane = src.plane)
+	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, src, plane = src.plane)
 	add_overlay(applied_visual)
 	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 
