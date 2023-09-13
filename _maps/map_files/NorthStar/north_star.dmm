@@ -1972,6 +1972,17 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/port/fore)
+"azj" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/trunk/multiz,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/maintenance/floor1/starboard/fore)
 "azu" = (
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
@@ -5555,7 +5566,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "brN" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/disposalpipe/segment,
@@ -5577,15 +5588,11 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "bsq" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/machinery/computer/order_console/bitrunning{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/shieldgen,
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse)
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "bsu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -7230,24 +7237,6 @@
 /obj/effect/turf_decal/trimline/green/warning,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/aft)
-"bOa" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/cigbutt/cigarbutt{
-	pixel_x = 7
-	},
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron/dark/smooth_half,
-/area/station/bitrunning/den)
 "bOg" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/trimline/brown/warning,
@@ -10244,7 +10233,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "cBU" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/sunny/style_random,
@@ -10358,7 +10347,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_corner,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "cDh" = (
 /obj/item/broken_bottle,
 /turf/open/floor/carpet/neon/simple/pink/nodots,
@@ -10392,14 +10381,6 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"cDD" = (
-/obj/machinery/netpod,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
 "cEb" = (
 /obj/effect/turf_decal/tile/green/half{
 	dir = 8
@@ -17024,7 +17005,7 @@
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/trimline/brown/line,
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "erY" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
@@ -17156,12 +17137,23 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard)
 "eul" = (
-/obj/machinery/quantum_server,
-/obj/effect/turf_decal/bot/left,
-/turf/open/floor/iron/dark/smooth_corner{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = 8
 	},
-/area/station/bitrunning/den)
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 7
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark/smooth_half,
+/area/station/maintenance/floor1/starboard/fore)
 "euu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -21025,7 +21017,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "fCx" = (
 /obj/structure/rack,
 /turf/open/floor/pod/dark,
@@ -24128,6 +24120,19 @@
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
+"gso" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "gsp" = (
 /obj/machinery/door/airlock/medical{
 	id_tag = "asylum_airlock_exterior";
@@ -28096,9 +28101,11 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port/fore)
 "htK" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/leather,
-/turf/open/floor/plating,
+/obj/machinery/netpod,
+/obj/structure/railing{
+	layer = 3.1
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/floor1/starboard/fore)
 "htW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30525,7 +30532,7 @@
 /obj/item/radio/intercom/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "iaO" = (
 /obj/structure/rack,
 /obj/structure/sign/nanotrasen{
@@ -31503,16 +31510,12 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ioi" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/machinery/quantum_server,
+/obj/effect/turf_decal/bot/left,
+/turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/arrows{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/disposalpipe/trunk/multiz,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "iom" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32705,8 +32708,10 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/starboard/fore)
 "iDJ" = (
-/turf/closed/wall,
-/area/station/bitrunning/den)
+/obj/structure/rack,
+/obj/item/stack/sheet/leather,
+/turf/open/floor/plating,
+/area/station/maintenance/floor1/starboard/fore)
 "iDP" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -34833,7 +34838,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "jhU" = (
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -36184,18 +36189,21 @@
 /turf/open/floor/carpet/royalblack,
 /area/station/service/kitchen/diner)
 "jAr" = (
-/obj/structure/railing{
+/obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Bitrunning Den"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/drone_bay)
 "jAB" = (
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark/side{
@@ -42619,7 +42627,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "lgv" = (
 /obj/structure/rack,
 /obj/item/book/manual/nuclear,
@@ -50949,7 +50957,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 8
 	},
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "nla" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -55608,7 +55616,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "owo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -59684,6 +59692,14 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
+"pBA" = (
+/obj/machinery/netpod,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/maintenance/floor1/starboard/fore)
 "pBJ" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=1-7";
@@ -67261,12 +67277,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine/air,
 /area/station/engineering/supermatter/waste)
-"rBO" = (
-/obj/machinery/computer/order_console/bitrunning{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "rBP" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/lobby)
@@ -71549,7 +71559,7 @@
 /obj/machinery/light/directional/north,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "sLE" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Entrance"
@@ -78456,7 +78466,7 @@
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "uDr" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -81496,13 +81506,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/engineering/atmos)
-"vqH" = (
-/obj/machinery/netpod,
-/obj/structure/railing{
-	layer = 3.1
-	},
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
 "vqN" = (
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/plating,
@@ -84745,7 +84748,7 @@
 "whN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitrunning/den)
+/area/station/maintenance/floor1/starboard/fore)
 "whR" = (
 /turf/closed/wall,
 /area/station/service/bar)
@@ -91246,21 +91249,15 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/starboard/fore)
 "xOd" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Bitrunning Den"
-	},
-/turf/open/floor/pod/dark,
-/area/station/bitrunning/den)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/shieldgen,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/cargo/warehouse)
 "xOe" = (
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/engine,
@@ -115359,13 +115356,13 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
-iDJ
-iDJ
-iDJ
+oic
+oic
+oic
+oic
+oic
 bAh
-htK
+iDJ
 oic
 oic
 oic
@@ -115616,14 +115613,14 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
+oic
+oic
 cDe
-eul
-iDJ
-iDJ
-iDJ
-iDJ
+ioi
+oic
+oic
+oic
+oic
 gUS
 nOj
 dzo
@@ -115873,14 +115870,14 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
+oic
+oic
 lgs
 fCw
 brL
 erV
 uDm
-iDJ
+oic
 rGF
 yiZ
 yiZ
@@ -116130,10 +116127,10 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
+oic
+oic
 sLq
-ioi
+azj
 cBT
 owk
 jhP
@@ -116387,13 +116384,13 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
+oic
+oic
 iaJ
-cDD
-vqH
+pBA
+htK
 nkT
-bOa
+eul
 whN
 rYA
 eEB
@@ -116644,15 +116641,15 @@ owI
 owI
 owI
 owI
-iDJ
-iDJ
-iDJ
-iDJ
-iDJ
+oic
+oic
+oic
+oic
+aQK
+jAr
+gfn
+aQK
 xOd
-whN
-iDJ
-bsq
 fve
 aSL
 iCn
@@ -117682,7 +117679,7 @@ aQK
 aQK
 cfO
 jWJ
-rBO
+bsq
 mnk
 mnR
 aHb
@@ -117936,8 +117933,8 @@ xsL
 sqK
 rqB
 prm
-jAr
-jAr
+gso
+gso
 qOr
 eoo
 myW
