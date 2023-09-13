@@ -270,7 +270,7 @@
 	if(on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/flashlight/pen
 	name = "penlight"

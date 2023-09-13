@@ -678,7 +678,7 @@
 /obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
 	break_light_tube()
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
