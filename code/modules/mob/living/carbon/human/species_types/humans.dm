@@ -20,7 +20,10 @@
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
 		if(prob(1))
-			return 'sound/voice/human/wilhelm_scream.ogg'
+			return pick(
+				'sound/voice/human/wilhelm_scream.ogg',
+				'sound/voice/human/yoda_scream.ogg',
+			)
 		return pick(
 			'sound/voice/human/malescream_1.ogg',
 			'sound/voice/human/malescream_2.ogg',

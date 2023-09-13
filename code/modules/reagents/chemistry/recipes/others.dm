@@ -628,6 +628,7 @@
 		'sound/voice/human/malescream_5.ogg',
 		'sound/voice/human/malescream_6.ogg',
 		'sound/voice/human/wilhelm_scream.ogg',
+		'sound/voice/human/yoda_scream.ogg',
 	)
 
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
