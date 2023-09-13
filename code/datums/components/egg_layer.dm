@@ -50,6 +50,7 @@
 /datum/component/egg_layer/Destroy(force, silent)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	egg_laid_callback = null
 
 /datum/component/egg_layer/proc/feed_food(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER

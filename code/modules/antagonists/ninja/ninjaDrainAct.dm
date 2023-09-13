@@ -133,7 +133,7 @@
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 30 SECONDS, target = src))
 		return
-	SSresearch.science_tech.modify_points_all(0)
+	stored_research.modify_points_all(0)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
@@ -318,10 +318,14 @@
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		spark_system.start()
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
-		Knockdown(3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(ninja_knockdown)), 0.3 SECONDS)
 	return NONE
+
+/mob/living/carbon/proc/ninja_knockdown()
+	Knockdown(3 SECONDS)
+	set_jitter_if_lower(3 SECONDS)
 
 //CAMERAS//
 /obj/machinery/camera/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)

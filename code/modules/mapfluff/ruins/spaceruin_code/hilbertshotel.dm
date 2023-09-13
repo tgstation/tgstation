@@ -457,14 +457,14 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		entered_light.end_processing()
 	. = ..()
 	if(ismob(arrived))
-		var/mob/M = arrived
-		M.notransform = TRUE
+		var/mob/target = arrived
+		ADD_TRAIT(target, TRAIT_NO_TRANSFORM, REF(src))
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(ismob(gone))
-		var/mob/M = gone
-		M.notransform = FALSE
+		var/mob/target = gone
+		REMOVE_TRAIT(target, TRAIT_NO_TRANSFORM, REF(src))
 	if(istype(gone, /obj/machinery/light))
 		var/obj/machinery/light/exited_light = gone
 		exited_light.begin_processing()
@@ -507,19 +507,23 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/effect/landmark/lift_id/hilbert
 	specific_lift_id = HILBERT_TRAM
 
-/obj/effect/landmark/tram/hilbert/left
+/obj/effect/landmark/tram/nav/hilbert
+	name = HILBERT_TRAM
+	specific_lift_id = TRAM_NAV_BEACONS
+
+/obj/effect/landmark/tram/platform/hilbert/left
 	name = "Port"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
-/obj/effect/landmark/tram/hilbert/middle
+/obj/effect/landmark/tram/platform/hilbert/middle
 	name = "Central"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
-/obj/effect/landmark/tram/hilbert/right
+/obj/effect/landmark/tram/platform/hilbert/right
 	name = "Starboard"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_STARBOARD

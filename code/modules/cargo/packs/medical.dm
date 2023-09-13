@@ -129,7 +129,7 @@
 	contains = list(
 		/obj/item/storage/backpack/duffelbag/med/surgery,
 		/obj/item/reagent_containers/medigel/sterilizine,
-		/obj/item/roller,
+		/obj/item/emergency_bed,
 	)
 	crate_name = "surgical supplies crate"
 

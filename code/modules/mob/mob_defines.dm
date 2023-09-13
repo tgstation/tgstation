@@ -84,14 +84,6 @@
 	/// Tick time the mob can next move
 	var/next_move = null
 
-	/**
-	  * Magic var that stops you moving and interacting with anything
-	  *
-	  * Set when you're being turned into something else and also used in a bunch of places
-	  * it probably shouldn't really be
-	  */
-	var/notransform = null //Carbon
-
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -116,9 +108,6 @@
 
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0 // How long this guy is overeating //Carbon
-
-	/// The movement intent of the mob (run/wal)
-	var/m_intent = MOVE_INTENT_RUN//Living
 
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null

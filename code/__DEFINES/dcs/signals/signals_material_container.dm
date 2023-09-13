@@ -8,4 +8,4 @@
 /// Called from datum/component/material_container/proc/insert_item() : (target, last_inserted_id, mats_consumed, material_amount, context)
 #define COMSIG_MATCONTAINER_ITEM_CONSUMED "matcontainer_item_consumed"
 /// Called from datum/component/material_container/proc/retrieve_sheets() : (sheets, context)
-#define COMSIG_MATCONTAINER_SHEETS_RETRIVED "matcontainer_sheets_retrived"
+#define COMSIG_MATCONTAINER_SHEETS_RETRIEVED "matcontainer_sheets_retrieved"

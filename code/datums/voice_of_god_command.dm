@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/vomit/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/target in listeners)
-		target.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
+		target.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = (power_multiplier * 10), distance = power_multiplier)
 
 /// This command silences the listeners. Thrice as effective is the user is a mime or curator.
 /datum/voice_of_god_command/silence
@@ -348,7 +348,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_WALK)
+		if(target.move_intent != MOVE_INTENT_WALK)
 			target.toggle_move_intent()
 
 /// This command forces the listeners to switch to run intent.
@@ -358,7 +358,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.m_intent != MOVE_INTENT_RUN)
+		if(target.move_intent != MOVE_INTENT_RUN)
 			target.toggle_move_intent()
 
 /// This command turns the listeners' throw mode on.

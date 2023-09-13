@@ -42,8 +42,8 @@
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 /obj/item/multitool/proc/set_buffer(datum/buffer)
-	if(buffer)
-		UnregisterSignal(buffer, COMSIG_QDELETING)
+	if(src.buffer)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
 	if(QDELETED(buffer))
 		return
 	src.buffer = buffer

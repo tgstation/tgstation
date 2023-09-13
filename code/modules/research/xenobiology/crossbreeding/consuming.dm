@@ -355,7 +355,7 @@ Consuming extracts:
 /obj/item/slime_cookie/green/do_effect(mob/living/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit(25)
+		H.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 25)
 	M.reagents.remove_all()
 
 /obj/item/slimecross/consuming/pink

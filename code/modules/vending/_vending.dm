@@ -954,11 +954,9 @@
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
-				if(IS_ORGANIC_LIMB(squish_part))
-					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
-				else
-					squish_part.receive_damage(brute=30)
+				var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
+				if (!carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, squish_part, severity, wound_source = "crushed by [src]"))
+					squish_part.receive_damage(brute = 30)
 			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
 			return TRUE
 		if(CRUSH_CRIT_HEADGIB) // skull squish!

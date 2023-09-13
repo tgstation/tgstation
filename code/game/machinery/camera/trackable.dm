@@ -21,7 +21,7 @@
 	///List of all non-humans trackable by cameras, split so humans take priority.
 	VAR_PRIVATE/static/list/others = list()
 
-/datum/trackable/New(mob/source)
+/datum/trackable/New(atom/source)
 	. = ..()
 	tracking_holder = source
 	RegisterSignal(tracking_holder, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(cancel_target_tracking))

@@ -83,6 +83,8 @@
 /datum/greyscale_modify_menu/Destroy()
 	target = null
 	user = null
+	apply_callback = null
+	config = null
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
@@ -241,7 +243,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
 	var/list/new_split_colors = list()
 	var/list/colors = splittext(colorString, "#")
-	for(var/index in 2 to length(colors))
+	for(var/index in 2 to min(length(colors), config.expected_colors + 1))
 		var/color = "#[colors[index]]"
 		if(!findtext(color, GLOB.is_color) && (!unlocked || !findtext(color, GLOB.is_alpha_color)))
 			return FALSE

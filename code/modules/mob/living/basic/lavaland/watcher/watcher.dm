@@ -70,6 +70,8 @@
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
+	if (stat == DEAD)
+		return
 	. += emissive_appearance(icon, "watcher_emissive", src)
 
 /// I love eating diamonds yum
