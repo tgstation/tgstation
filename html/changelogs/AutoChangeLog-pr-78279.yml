@@ -1,0 +1,5 @@
+author: "IHateGeese"
+delete-after: True
+changes:
+  - bugfix: "Nightmares can no longer receive wounds"
+  - bugfix: "Nightmares can no longer have limbs dismembered"
