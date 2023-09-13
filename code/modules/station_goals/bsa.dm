@@ -94,11 +94,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		if(istype(M.buffer, /obj/machinery/bsa/back))
 			back_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.clear_buffer()
+			M.set_buffer(null)
 		else if(istype(M.buffer, /obj/machinery/bsa/front))
 			front_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.clear_buffer()
+			M.set_buffer(null)
 	else
 		to_chat(user, span_warning("[I]'s data buffer is empty!"))
 	return TRUE

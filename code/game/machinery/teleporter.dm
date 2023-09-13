@@ -171,7 +171,7 @@
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
-					M.clear_buffer()
+					M.set_buffer(null)
 					balloon_alert(user, "data uploaded from buffer")
 				else
 					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
