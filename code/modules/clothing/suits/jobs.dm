@@ -219,6 +219,7 @@
 	allowed = list(
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
 	)
 
 // Quartermaster
@@ -232,6 +233,7 @@
 	allowed = list(
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
 	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale

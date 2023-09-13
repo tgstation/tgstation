@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "Public mining storage's camera is now on the mining network instead of the gulag."

@@ -117,7 +117,7 @@
 		return
 
 	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
-		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
+		user.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))

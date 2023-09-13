@@ -38,7 +38,11 @@
 		return
 	else if(istype(source, /obj/item/food) && ispath(dry_result, /obj/item/food))
 		var/obj/item/food/source_food = source
-		var/obj/item/food/resulting_food = new dry_result(source.drop_location(), no_base_reagents = TRUE)
+		var/obj/item/food/resulting_food = new dry_result(
+			source.drop_location(),
+			/* starting_reagent_purity = */ null,
+			/* no_base_reagents = */ TRUE,
+		)
 		source_food.reagents.trans_to(resulting_food, source_food.reagents.total_volume)
 		ADD_TRAIT(resulting_food, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		qdel(source)
