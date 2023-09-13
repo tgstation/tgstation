@@ -68,6 +68,7 @@ jobs:
         run: tools/bootstrap/python -m define_sanity.check
       - name: Run DreamChecker
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        shell: bash
         run: ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh
       - name: Run Map Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
