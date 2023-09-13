@@ -53,7 +53,7 @@
 		/obj/item/food/grown/wheat,
 	))
 
-/obj/item/grown/log/Initialize(mapload)
+/obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	register_context()
 
