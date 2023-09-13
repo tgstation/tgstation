@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Conveyor belts now have screentips and a better examine tip to teach you how to set one up properly."
+  - qol: "Using a conveyor belt stack on a placed conveyor belt will extend the conveyor belt to the output of that conveyor belt.. You can use this to place fully integrated conveyor belts much easier now."
