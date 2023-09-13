@@ -237,7 +237,6 @@
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
 			t_prod.desc = productdesc
-		t_prod.reagents?.clear_reagents()
 		t_prod.seed.name = parent.myseed.name
 		t_prod.seed.desc = parent.myseed.desc
 		t_prod.seed.plantname = parent.myseed.plantname
