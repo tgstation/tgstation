@@ -74,6 +74,7 @@
 	AddElement(/datum/element/wall_smasher)
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))
 	if(tamer)
 		befriend(tamer)
 	update_appearance()
@@ -159,6 +160,14 @@
 			icon_state = "seedling_charging"
 		if(SEEDLING_STATE_ACTIVE)
 			icon_state = "seedling_fire"
+
+/mob/living/basic/seedling/proc/drop_can(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(isnull(held_can))
+		return
+	dropItemToGround(held_can)
+	return COMSIG_KB_ACTIVATED
 
 /mob/living/basic/seedling/Exited(atom/movable/gone, direction)
 	. = ..()
