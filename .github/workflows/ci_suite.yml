@@ -36,6 +36,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Restore Node cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.nvm
+          key: ${{ runner.os }}-nodeBREAKING-${{ hashFiles('dependencies.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Restore Bootstrap cache
+        uses: actions/cache@v3
+        with:
+          path: tools/bootstrap/.cache
+          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Restore Rust cache
         uses: actions/cache@v3
         with:
