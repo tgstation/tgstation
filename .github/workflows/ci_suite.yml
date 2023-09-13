@@ -40,7 +40,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.nvm
-          key: ${{ runner.os }}-nodeBREAKING-${{ hashFiles('dependencies.sh') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
