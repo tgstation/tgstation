@@ -39,7 +39,7 @@
 		return FALSE
 
 /datum/round_event/supermatter_surge
-	announce_when = 1
+	announce_when = 4
 	end_when = SUPERMATTER_SURGE_DURATION_MIN
 	/// How powerful is the supermatter surge going to be?
 	var/surge_class = SUPERMATTER_SURGE_SEVERITY_MIN
