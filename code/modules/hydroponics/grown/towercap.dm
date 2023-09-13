@@ -53,7 +53,12 @@
 		/obj/item/food/grown/wheat,
 	))
 
-/obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/grown/log/Initialize(
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	. = ..()
 	register_context()
 

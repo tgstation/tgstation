@@ -11,7 +11,12 @@
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 
-/obj/item/grown/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/grown/Initialize( // the constructor has to match that of /obj/item/grown/food or it will NOT WORK, because we assume they are the same when creating the product seed (in hydroponics.dm)
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	. = ..()
 	create_reagents(100)
 

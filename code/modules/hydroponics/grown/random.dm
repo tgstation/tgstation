@@ -28,7 +28,12 @@
 	desc = "What could this even be?"
 	icon_state = "crunchy"
 
-/obj/item/food/grown/random/Initialize(mapload)
+/obj/item/food/grown/random/Initialize(
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	. = ..()
 	wine_power = rand(10,150)
 	if(prob(1))

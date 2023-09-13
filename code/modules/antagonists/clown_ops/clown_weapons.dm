@@ -209,7 +209,12 @@
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
-/obj/item/grown/bananapeel/bombanana/Initialize(mapload)
+/obj/item/grown/bananapeel/bombanana/Initialize(
+		mapload,
+		starting_reagent_purity = null,
+		no_base_reagents = TRUE,
+		obj/item/seeds/new_seed,
+	)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
