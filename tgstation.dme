@@ -5431,6 +5431,7 @@
 #include "monkestation\code\game\machinery\exp_cloner.dm"
 #include "monkestation\code\game\machinery\player_hologram.dm"
 #include "monkestation\code\game\machinery\prize_vendor.dm"
+#include "monkestation\code\game\machinery\suit_storage_unit.dm"
 #include "monkestation\code\game\machinery\computer\cloning.dm"
 #include "monkestation\code\game\machinery\computer\orders\order_veggies.dm"
 #include "monkestation\code\game\machinery\power\ptl.dm"
