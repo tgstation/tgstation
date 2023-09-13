@@ -77,12 +77,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/grown/bananapeel/Initialize(
-		mapload,
-		starting_reagent_purity = null,
-		no_base_reagents = TRUE,
-		obj/item/seeds/new_seed,
-	)
+/obj/item/grown/bananapeel/Initialize(mapload)
 	. = ..()
 	if(prob(40))
 		if(prob(60))
@@ -161,12 +156,7 @@
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-/obj/item/grown/bananapeel/specialpeel/Initialize(
-		mapload,
-		starting_reagent_purity = null,
-		no_base_reagents = TRUE,
-		obj/item/seeds/new_seed,
-	)
+/obj/item/grown/bananapeel/specialpeel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
 
