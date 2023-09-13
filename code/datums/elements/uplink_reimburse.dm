@@ -23,7 +23,8 @@
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
 
 /datum/element/uplink_reimburse/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
+
 
 	return ..()
 

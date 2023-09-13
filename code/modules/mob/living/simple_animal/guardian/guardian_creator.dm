@@ -80,7 +80,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			return
 	used = TRUE
 	to_chat(user, use_message)
-	RemoveElement(/datum/element/uplink_reimburse)
 	var/guardian_type_name = "a random"
 	if(!random)
 		guardian_type_name = "the " + lowertext(initial(guardian_path.creator_name))
@@ -88,9 +87,11 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
+		used = TRUE
+		RemoveElement(/datum/element/uplink_reimburse)
 	else
 		to_chat(user, failure_message)
-		used = FALSE
+		
 
 /obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
 	if(QDELETED(user) || user.stat == DEAD)
