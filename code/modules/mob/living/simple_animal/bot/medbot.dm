@@ -216,14 +216,6 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
 
-	AddComponent(/datum/component/tippable, \
-		tip_time = 3 SECONDS, \
-		untip_time = 3 SECONDS, \
-		self_right_time = 3.5 MINUTES, \
-		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
-		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
-		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
-
 	var/advanced_bot_trait = HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA)
 
 	if(is_roundstart && advanced_bot_trait && is_station_level(z))
@@ -232,6 +224,14 @@
 		damagetype_healer = "all"
 		if(prob(50))
 			name += ", PhD."
+
+	AddComponent(/datum/component/tippable, \
+		tip_time = 3 SECONDS, \
+		untip_time = 3 SECONDS, \
+		self_right_time = 3.5 MINUTES, \
+		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
+		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
