@@ -181,6 +181,13 @@
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
 		equip_to_slot_or_del(I, ITEM_SLOT_DEX_STORAGE)
+
+	for(var/holidayname in GLOB.holidays)
+		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
+
+		if(holiday_today.holiday_hat && !default_hatmask) //If we don't already have a hat (no secret syndiedrones), we take the holiday one.
+			default_hatmask = holiday_today.holiday_hat
+
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)

@@ -18,8 +18,8 @@
 	var/year_offset = 0
 	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
 	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
-	///If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
-	var/obj/item/drone_hat
+	///If this is defined, drones/assistants without a default hat will spawn with this one during the holiday.
+	var/obj/item/holiday_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
 	var/poster_name = "generic celebration poster"
@@ -155,7 +155,7 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/costume/festive
+	holiday_hat = /obj/item/clothing/head/costume/festive
 	poster_name = "station birthday poster"
 	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
 	poster_icon = "holiday_cake" // is a lie
@@ -220,7 +220,7 @@
 	name = "St. Patrick's Day"
 	begin_day = 17
 	begin_month = MARCH
-	drone_hat = /obj/item/clothing/head/soft/green
+	holiday_hat = /obj/item/clothing/head/soft/green
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
@@ -252,7 +252,7 @@
 	name = "Cosmonautics Day"
 	begin_day = 12
 	begin_month = APRIL
-	drone_hat = /obj/item/clothing/head/syndicatefake
+	holiday_hat = /obj/item/clothing/head/syndicatefake
 
 /datum/holiday/spess/greet()
 	return "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!"
@@ -283,7 +283,7 @@
 	timezones = list(TIMEZONE_TKT, TIMEZONE_TOT, TIMEZONE_NZST, TIMEZONE_NFT, TIMEZONE_LHST, TIMEZONE_AEST, TIMEZONE_ACST, TIMEZONE_ACWST, TIMEZONE_AWST, TIMEZONE_CXT, TIMEZONE_CCT, TIMEZONE_CKT, TIMEZONE_NUT)
 	begin_day = 25
 	begin_month = APRIL
-	drone_hat = /obj/item/food/grown/poppy
+	holiday_hat = /obj/item/food/grown/poppy
 
 /datum/holiday/anz/getStationPrefix()
 	return pick("Australian","New Zealand","Poppy", "Southern Cross")
@@ -294,7 +294,7 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/utility/hardhat
+	holiday_hat = /obj/item/clothing/head/utility/hardhat
 	mail_holiday = TRUE
 
 //Draconic Day is celebrated on May 3rd, the date on which the Draconic language was merged (#26780)
@@ -313,7 +313,7 @@
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/utility/hardhat/red
+	holiday_hat = /obj/item/clothing/head/utility/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -322,7 +322,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/animal/small/bee
+	holiday_hat = /obj/item/clothing/mask/animal/small/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -377,13 +377,13 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/head/costume/nursehat
+	holiday_hat = /obj/item/clothing/head/costume/nursehat
 
 /datum/holiday/ufo
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/mask/facehugger/dead
+	holiday_hat = /obj/item/clothing/mask/facehugger/dead
 
 /datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
@@ -408,7 +408,7 @@
 	timezones = list(TIMEZONE_CEST)
 	begin_day = 14
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/head/beret
+	holiday_hat = /obj/item/clothing/head/beret
 	mail_holiday = TRUE
 
 /datum/holiday/france/getStationPrefix()
@@ -430,7 +430,7 @@
 	name = "Wizard's Day"
 	begin_month = JULY
 	begin_day = 27
-	drone_hat = /obj/item/clothing/head/wizard
+	holiday_hat = /obj/item/clothing/head/wizard
 
 /datum/holiday/wizards_day/getStationPrefix()
 	return pick("Dungeon", "Elf", "Magic", "D20", "Edition")
@@ -493,7 +493,7 @@
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
-	drone_hat = /obj/item/clothing/head/costume/pirate
+	holiday_hat = /obj/item/clothing/head/costume/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -523,13 +523,13 @@
 	name = "Smiling Day"
 	begin_day = 7
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/costume/papersack/smiley
+	holiday_hat = /obj/item/clothing/head/costume/papersack/smiley
 
 /datum/holiday/boss
 	name = "Boss' Day"
 	begin_day = 16
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/hats/tophat
+	holiday_hat = /obj/item/clothing/head/hats/tophat
 
 /datum/holiday/un_day
 	name = "Anniversary of the Foundation of the United Nations"
@@ -578,7 +578,7 @@
 	name = "Remembrance Day"
 	begin_month = NOVEMBER
 	begin_day = 11
-	drone_hat = /obj/item/food/grown/poppy
+	holiday_hat = /obj/item/food/grown/poppy
 
 /datum/holiday/remembrance_day/getStationPrefix()
 	return pick("Peace", "Armistice", "Poppy")
@@ -600,7 +600,7 @@
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
-	drone_hat = /obj/item/food/grown/moonflower
+	holiday_hat = /obj/item/food/grown/moonflower
 
 /datum/holiday/hello
 	name = "Saying-'Hello' Day"
@@ -629,7 +629,7 @@
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
-	drone_hat = /obj/item/clothing/head/costume/santa
+	holiday_hat = /obj/item/clothing/head/costume/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -643,20 +643,20 @@
 	name = MONKEYDAY
 	begin_day = 14
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/gas/monkeymask
+	holiday_hat = /obj/item/clothing/mask/gas/monkeymask
 
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/animal/small/tribal
+	holiday_hat = /obj/item/clothing/mask/animal/small/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
-	drone_hat = /obj/item/clothing/head/costume/santa
+	holiday_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
 
 /datum/holiday/xmas/getStationPrefix()
@@ -693,7 +693,7 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	drone_hat = /obj/item/clothing/head/costume/festive
+	holiday_hat = /obj/item/clothing/head/costume/festive
 	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
@@ -808,7 +808,7 @@
 
 /datum/holiday/easter
 	name = EASTER
-	drone_hat = /obj/item/clothing/head/costume/rabbitears
+	holiday_hat = /obj/item/clothing/head/costume/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 

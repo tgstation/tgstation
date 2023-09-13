@@ -45,6 +45,11 @@ Assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()
+	for(var/holidayname in GLOB.holidays)
+		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
+		if(holiday_today.holiday_hat)
+			head = holiday_today.holiday_hat
+
 	give_jumpsuit(target)
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
