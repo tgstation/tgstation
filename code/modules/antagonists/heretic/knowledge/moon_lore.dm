@@ -82,7 +82,7 @@
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
 	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Moon Blade. \
-		When triggered, the victim is confused, and when the mark is applied they are pacified\
+		When triggered, the victim is confused, and when the mark is applied they are pacified \
 		until attacked."
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \

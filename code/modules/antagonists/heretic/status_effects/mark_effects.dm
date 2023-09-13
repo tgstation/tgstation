@@ -258,7 +258,7 @@
 /datum/status_effect/eldritch/moon/on_apply()
 	.=..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
-	carbon_owner.emote(pick("giggle", "laugh"))
+	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
@@ -267,13 +267,18 @@
 /datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
 	SIGNAL_HANDLER
 
-	// Add incoming damage to the total damage sustained
-	damage_sustained += damage
-
-	// If the player has taken less than 10 damage total the effect is not cancelled
-	if(damage_sustained < 10)
+	// The grasp itself deals stamina damage so we will ignore it
+	if(damagetype == STAMINA)
 		return
 
+	// Adds damage to the damage sustained
+	damage_sustained += damage
+
+	// If the damage_sustained is equal or below 15 don't remove the trait
+	if(damage_sustained<15)
+		return
+
+	// Remove the pacifism and give them a balloon alert
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
@@ -287,6 +292,7 @@
 
 /datum/status_effect/eldritch/moon/on_remove()
 	.=..()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
+	// Incase the trait was not removed earlier
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
