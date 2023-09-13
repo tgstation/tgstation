@@ -18,7 +18,9 @@
 	maxHealth = 100
 	health = 100
 	pixel_y = -14
+	base_pixel_y = -14
 	pixel_x = -14
+	base_pixel_x = -14
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	melee_damage_lower = 30
@@ -128,12 +130,24 @@
 
 	var/obj/item/can_target = attack_target
 	can_target.forceMove(src)
-	held_can = can_target
-	update_appearance()
 
 /mob/living/basic/seedling/proc/change_combatant_state(state)
 	combatant_state = state
 	update_appearance()
+
+/mob/living/basic/seedling/attackby(obj/item/can, mob/living/carbon/human/user, list/modifiers)
+	if(istype(can, /obj/item/reagent_containers/cup/watering_can) && isnull(held_can))
+		can.forceMove(src)
+		return
+
+	return ..()
+
+/mob/living/basic/seedling/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/watering_can))
+		held_can = arrived
+		update_appearance()
+
+	return ..()
 
 /mob/living/basic/seedling/update_overlays()
 	. = ..()
@@ -307,13 +321,13 @@
 	return TRUE
 
 ///the solarbeam will damage people, otherwise it will heal plants
-/datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/basic/seedling/firer, turf/target)
-	for(var/atom/target_atom as anything in target)
+/datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/basic/seedling/firer, turf/target_turf)
+	for(var/atom/target_atom as anything in target_turf)
 
-		if(istype(target, /obj/machinery/hydroponics))
+		if(istype(target_atom, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/hydro = target_atom
-			hydro.adjust_plant_health(-10)
-			new /obj/effect/temp_visual/heal(get_turf(hydro), COLOR_VIBRANT_LIME)
+			hydro.adjust_plant_health(10)
+			new /obj/effect/temp_visual/heal(target_turf, COLOR_HEALING_CYAN)
 
 		if(!isliving(target_atom))
 			continue
@@ -323,7 +337,7 @@
 		living_target.ignite_mob()
 		living_target.adjustFireLoss(30)
 
-	playsound(target, 'sound/magic/lightningbolt.ogg', 50, TRUE)
+	playsound(target_turf, 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	firer.change_combatant_state(state = SEEDLING_STATE_NEUTRAL)
 
 #undef SEEDLING_STATE_NEUTRAL

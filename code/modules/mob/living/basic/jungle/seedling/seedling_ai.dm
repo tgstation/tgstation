@@ -43,7 +43,6 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	controller.queue_behavior(/datum/ai_behavior/treat_hydroplants, BB_HYDROPLANT_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/solarbeam
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -59,7 +58,7 @@
 
 /datum/ai_behavior/treat_hydroplants
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 2 SECONDS
+	action_cooldown = 3 SECONDS
 
 /datum/ai_behavior/treat_hydroplants/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -122,8 +121,13 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/fill_watercan/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(!locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn)
+	var/obj/item/reagent_containers/can = locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn
+
+	if(isnull(can))
 		return
+	if(locate(/datum/reagent/water) in can.reagents.reagent_list)
+		return
+
 	return ..()
 
 /datum/ai_behavior/find_hunt_target/suitable_dispenser
@@ -136,7 +140,7 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/water_source
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	hunt_cooldown = 30 SECONDS
+	hunt_cooldown = 5 SECONDS
 
 /datum/ai_controller/basic_controller/seedling/meanie
 	blackboard = list(
