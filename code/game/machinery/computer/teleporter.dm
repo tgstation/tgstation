@@ -33,11 +33,12 @@
 /obj/machinery/computer/teleporter/proc/check_for_disabled_beacon(datum/target)
 	if (!target)
 		return
-	if (target.weak_reference == target_ref)
-		UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
-		has_registered_signal = FALSE
-		turn_off()
-		set_teleport_target(null)
+	if (target.weak_reference != target_ref)
+		return
+	UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
+	has_registered_signal = FALSE
+	turn_off()
+	set_teleport_target(null)
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -122,11 +123,13 @@
 		return
 	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, new_target)
 	target_ref = new_target_ref
-	if (istype(new_target, /obj/item/beacon))
-		if (has_registered_signal)
-			UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
-		RegisterSignal(new_target, COMSIG_BEACON_DISABLED, PROC_REF(check_for_disabled_beacon))
-		has_registered_signal = TRUE
+
+	if (!istype(new_target, /obj/item/beacon))
+		return
+	if (has_registered_signal)
+		UnregisterSignal(target_ref.resolve(), COMSIG_BEACON_DISABLED)
+	RegisterSignal(new_target, COMSIG_BEACON_DISABLED, PROC_REF(check_for_disabled_beacon))
+	has_registered_signal = TRUE
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE
