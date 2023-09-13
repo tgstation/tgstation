@@ -1383,6 +1383,12 @@
 			return round(cached_reagent.purity, 0.01)
 	return 0
 
+/// Directly set the purity of all contained reagents to a new value
+/datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		cached_reagent.purity = max(0, new_purity)
+
 /// Get the average purity of all reagents (or all subtypes of provided typepath)
 /datum/reagents/proc/get_average_purity(parent_type = null)
 	var/total_amount
