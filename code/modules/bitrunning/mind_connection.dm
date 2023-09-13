@@ -1,31 +1,23 @@
 /// Sets the pilot to the occupant in the chair, linking damage. Represents the start of the avatar process
 /datum/mind/proc/initial_avatar_connection(
-	mob/living/carbon/human/avatar,
+	mob/living/carbon/human/pilot,
 	obj/machinery/netpod/hosting_netpod,
 	obj/machinery/quantum_server/server,
 	help_text,
 )
-	var/mob/living/carbon/human/pilot_mob = current
-
-	if(!locate(/datum/action/avatar_domain_info) in avatar.actions)
+	if(!locate(/datum/action/avatar_domain_info) in current.actions)
 		var/datum/avatar_help_text/help_datum = new(help_text)
 		var/datum/action/avatar_domain_info/action = new(help_datum)
-		action.Grant(avatar)
+		action.Grant(current)
 
-	pilot_ref = WEAKREF(pilot_mob)
 	netpod_ref = WEAKREF(hosting_netpod)
+	pilot_ref = WEAKREF(pilot)
 
-	// Begin the swap - use a fake mind so it isn't cata
-	var/datum/mind/fake_mind = new(key + " (pilot)")
-	transfer_to(avatar)
-	fake_mind.active = TRUE
-	fake_mind.transfer_to(pilot_mob)
+	current.playsound_local(current, "sound/magic/blink.ogg", 25, TRUE)
+	current.set_static_vision(2 SECONDS)
+	current.set_temp_blindness(1 SECONDS)
 
-	avatar.playsound_local(avatar, "sound/magic/blink.ogg", 25, TRUE)
-	avatar.set_static_vision(2 SECONDS)
-	avatar.set_temp_blindness(1 SECONDS)
-
-	connect_avatar_signals(avatar)
+	connect_avatar_signals(current)
 	RegisterSignal(hosting_netpod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(hosting_netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
 	RegisterSignal(hosting_netpod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
@@ -35,6 +27,8 @@
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
 	RegisterSignal(src, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
+
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED, WEAKREF(src))
 
 /// Links mob damage & death as long as the netpod is there
 /datum/mind/proc/connect_avatar_signals(mob/living/target)
@@ -61,7 +55,11 @@
 /datum/mind/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
 	var/mob/living/pilot = pilot_ref?.resolve()
 	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
-	if(isnull(pilot) || isnull(hosting_netpod))
+	if(isnull(hosting_netpod) || isnull(pilot))
+		return
+
+	var/datum/component/temporary_body/temp = current.GetComponent(/datum/component/temporary_body)
+	if(isnull(temp))
 		return
 
 	disconnect_avatar_signals()
@@ -73,6 +71,8 @@
 
 	netpod_ref = null
 	pilot_ref = null
+
+	temp.return_to_old_body()
 
 	hosting_netpod.disconnect_occupant(src, forced)
 

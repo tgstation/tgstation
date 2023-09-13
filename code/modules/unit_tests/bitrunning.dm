@@ -121,12 +121,6 @@
 	pod.disconnect_occupant(labrat.mind)
 	TEST_ASSERT_NULL(pod.server_ref, "Should've prevented disconnect with no occupant")
 
-	var/datum/mind/wrong_mind = new("wrong_mind") // 'another player'
-	pod.occupant_mind_ref = real_mind
-	pod.set_occupant(labrat)
-	pod.disconnect_occupant(wrong_mind)
-	TEST_ASSERT_NULL(pod.server_ref, "Should've prevented disconnect with wrong mind destination")
-
 	pod.server_ref = null
 	pod.set_occupant(labrat)
 	pod.disconnect_occupant(labrat.mind)
@@ -194,7 +188,16 @@
 	pod.occupant_mind_ref = labrat_mind_ref
 	pod.occupant = labrat
 
-	labrat.mind.initial_avatar_connection(avatar = target, hosting_netpod = pod, server = server)
+	target.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = labrat.mind, \
+		old_body = labrat, \
+	)
+	target.mind.initial_avatar_connection(
+		pilot = labrat,
+		hosting_netpod = pod,
+		server = server,
+	)
 	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
 	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
 	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
@@ -233,9 +236,16 @@
 	pod.occupant_mind_ref = WEAKREF(pincushion.mind)
 	pod.occupant = pincushion
 
-	pincushion.mind.initial_avatar_connection(avatar = to_gib, hosting_netpod = pod, server = server)
-	TEST_ASSERT_EQUAL(to_gib.mind, pincushion_mind, "Pincushion mind should have been transferred to the gib target")
-
+	to_gib.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = pincushion.mind, \
+		old_body = pincushion, \
+	)
+	to_gib.mind.initial_avatar_connection(
+		pilot = pincushion,
+		hosting_netpod = pod,
+		server = server,
+	)
 	to_gib.gib()
 	TEST_ASSERT_EQUAL(pincushion_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
 	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Pilot should have taken brain dmg on gib disconnect")

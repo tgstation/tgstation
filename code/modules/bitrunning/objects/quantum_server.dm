@@ -273,6 +273,10 @@
 	if(outfit_id)
 		outfit_id.assignment = "Bit Avatar"
 		outfit_id.registered_name = avatar.real_name
+
+		outfit_id.registered_account = new()
+		outfit_id.registered_account.replaceable = FALSE
+
 		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
 	return avatar
@@ -468,14 +472,21 @@
 	score += points
 	score += randomized ? 1 : 0
 
-	if(completion_time <= 2 MINUTES)
-		score += difficulty * 4
+	var/base = difficulty + 1
+	var/time_score = 1
+
+	if(completion_time <= 1 MINUTES)
+		time_score = 10
+	else if(completion_time <= 2 MINUTES)
+		time_score = 5
 	else if(completion_time <= 5 MINUTES)
-		score += difficulty * 3
-	else if (completion_time <= 10 MINUTES)
-		score += difficulty * 2
+		time_score = 3
+	else if(completion_time <= 10 MINUTES)
+		time_score = 2
 	else
-		score += 1
+		time_score = 1
+
+	score += time_score * base
 
 	switch(score)
 		if(1 to 4)

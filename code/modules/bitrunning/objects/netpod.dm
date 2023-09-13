@@ -249,13 +249,8 @@
  */
 /obj/machinery/netpod/proc/disconnect_occupant(datum/mind/receiving, forced = FALSE)
 	var/mob/living/mob_occupant = occupant
-	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
-	if(!isliving(occupant) || receiving != hosted_mind)
+	if(isnull(occupant) || !isliving(occupant))
 		return
-
-	mob_occupant.mind.key = null
-	mob_occupant.key = null
-	receiving.transfer_to(mob_occupant)
 
 	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
@@ -336,14 +331,20 @@
 	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
-	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
-	occupant_mind_ref = neo_mind_ref
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED, neo_mind_ref)
-	neo.mind.initial_avatar_connection(
-		avatar = current_avatar,
+	occupant_mind_ref = WEAKREF(neo.mind)
+
+	current_avatar.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = neo.mind, \
+		old_body = neo, \
+	)
+	current_avatar.key = neo.key
+
+	current_avatar.mind.initial_avatar_connection(
+		pilot = neo,
 		hosting_netpod = src,
 		server = server,
-		help_text = generated_domain.help_text
+		help_text = generated_domain.help_text,
 	)
 
 /// Finds a server and sets the server_ref
