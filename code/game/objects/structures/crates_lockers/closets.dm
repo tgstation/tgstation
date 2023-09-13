@@ -1,6 +1,6 @@
 #define LOCKER_FULL -1
 
-///A comprehensive list of all closets in the game world
+///A comprehensive list of all closets (NOT CRATES) in the game world
 GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 
@@ -124,8 +124,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(access_choices)
 		access_choices = card_reader_choices
 
-	if(is_station_level(z))
-		GLOB.roundstart_station_closets += src
+	if(is_station_level(z) && mapload)
+		add_to_roundstart_list()
 
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
@@ -1149,5 +1149,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/preopen
 	opened = TRUE
+
+///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
+/obj/structure/closet/proc/add_to_roundstart_list()
+	GLOB.roundstart_station_closets += src
 
 #undef LOCKER_FULL
