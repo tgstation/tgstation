@@ -143,7 +143,7 @@ export const QuirksPage = (props, context) => {
         }
 
         const {
-          max_costs_points_quirks: maxtotalCostsPointsQuirks,
+          max_costs_points_quirks: maxTotalCostsPointsQuirks,
           quirk_blacklist: quirkBlacklist,
           quirk_info: quirkInfo,
         } = data.quirks;
@@ -177,7 +177,7 @@ export const QuirksPage = (props, context) => {
           const quirk = quirkInfo[quirkName];
 
           if (quirk.value < 0) {
-            if (totalCostsPointsQuirks >= maxtotalCostsPointsQuirks) {
+            if (totalCostsPointsQuirks >= maxTotalCostsPointsQuirks) {
               return "You can't have any more quirks that cost points!";
             } else if (balance + quirk.value < 0) {
               return 'You need a more points to pick this quirk!';
@@ -226,7 +226,7 @@ export const QuirksPage = (props, context) => {
 
                 <Stack.Item>
                   <StatDisplay>
-                    {totalCostsPointsQuirks} / {maxtotalCostsPointsQuirks}
+                    {totalCostsPointsQuirks} / {maxTotalCostsPointsQuirks}
                   </StatDisplay>
                 </Stack.Item>
 
