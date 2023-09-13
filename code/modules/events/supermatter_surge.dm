@@ -1,13 +1,17 @@
-#define SUPERMATTER_SURGE_DURATION_MIN 180 EVENT_SECONDS
-#define SUPERMATTER_SURGE_DURATION_MAX 360 EVENT_SECONDS
-#define SUPERMATTER_SURGE_SEVERITY_MIN 1
-#define SUPERMATTER_SURGE_SEVERITY_MAX 4
+#define SURGE_DURATION_MIN 240 EVENT_SECONDS
+#define SURGE_DURATION_MAX 270 EVENT_SECONDS
+#define SURGE_SEVERITY_MIN 1
+#define SURGE_SEVERITY_MAX 4
 /// The amount of bullet energy we add for the duration of the SM surge
-#define SUPERMATTER_SURGE_BULLET_ENERGY_ADDITION 7
+#define SURGE_BULLET_ENERGY_ADDITION 5
 /// The amount of powerloss inhibition (energy retention) we add for the duration of the SM surge
-#define SUPERMATTER_SURGE_POWERLOSS_INHIBITION 0.3125
-/// The amount of heat resistance we reduce for the duration of the SM surge
-#define SUPERMATTER_SURGE_HEAT_MODIFIER 0.5
+#define SURGE_BASE_POWERLOSS_INHIBITION 0.55
+/// The powerloss inhibition scaling based on surge severity
+#define SURGE_POWERLOSS_INHIBITION_MODIFIER 0.175
+/// The power generation scaling based on surge severity
+#define SURGE_POWER_GENERATION_MODIFIER 0.075
+/// The heat modifier scaling based on surge severity
+#define SURGE_HEAT_MODIFIER 0.25
 
 /**
  * Supermatter Surge
@@ -40,15 +44,9 @@
 
 /datum/round_event/supermatter_surge
 	announce_when = 4
-	end_when = SUPERMATTER_SURGE_DURATION_MIN
+	end_when = SURGE_DURATION_MIN
 	/// How powerful is the supermatter surge going to be?
-	var/surge_class = SUPERMATTER_SURGE_SEVERITY_MIN
-	/// The default bullet energy of the crystal
-	var/starting_bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
-	/// The default heat modifier of nitrogen
-	var/starting_heat_modifier = -2.5
-	/// The default powerloss inhibition of nitrogen
-	var/starting_powerloss_inhibition = 0
+	var/surge_class =  SURGE_SEVERITY_MIN
 	/// Typecasted reference to the supermatter chosen at event start
 	var/obj/machinery/power/supermatter_crystal/engine
 	/// Typecasted reference to the nitrogen properies in the SM chamber
@@ -77,34 +75,36 @@
 		stack_trace("SM surge event failed to find gas properties for [engine].")
 		return
 
-	starting_bullet_energy = engine.bullet_energy
-	starting_heat_modifier = sm_gas.heat_modifier
-	starting_powerloss_inhibition = sm_gas.powerloss_inhibition
 	if(isnull(surge_class))
-		surge_class = rand(SUPERMATTER_SURGE_SEVERITY_MIN, SUPERMATTER_SURGE_SEVERITY_MAX)
+		surge_class = rand(SURGE_SEVERITY_MIN, SURGE_SEVERITY_MAX)
 
-	end_when = rand(SUPERMATTER_SURGE_DURATION_MIN + (surge_class * 45 EVENT_SECONDS), SUPERMATTER_SURGE_DURATION_MAX)
+	end_when = rand(SURGE_DURATION_MIN, SURGE_DURATION_MAX)
 
 /datum/round_event/supermatter_surge/announce()
 	priority_announce("CIMS has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has shown a significant and unanticipated increase. Engineering intervention is required to stabilize the crystal.", "Supermatter Surge Alert: Class [surge_class]", 'sound/machines/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
-	engine.bullet_energy = SUPERMATTER_SURGE_BULLET_ENERGY_ADDITION + surge_class
-	sm_gas.heat_modifier += clamp(SUPERMATTER_SURGE_HEAT_MODIFIER * surge_class, 0.5, 2) // letting this get to 0 or higher will be a Bad Time
-	sm_gas.powerloss_inhibition = SUPERMATTER_SURGE_POWERLOSS_INHIBITION * surge_class
+	engine.bullet_energy = surge_class + SURGE_BULLET_ENERGY_ADDITION
+	sm_gas.powerloss_inhibition = (surge_class * SURGE_POWERLOSS_INHIBITION_MODIFIER) + SURGE_BASE_POWERLOSS_INHIBITION
+	sm_gas.heat_power_generation = (surge_class * SURGE_POWER_GENERATION_MODIFIER) - 1
+	sm_gas.heat_modifier = (surge_class * SURGE_HEAT_MODIFIER) - 1
+
 
 /datum/round_event/supermatter_surge/end()
-	engine.bullet_energy = starting_bullet_energy
-	sm_gas.heat_modifier = starting_heat_modifier
-	sm_gas.powerloss_inhibition = starting_powerloss_inhibition
+	engine.bullet_energy = initial(engine.bullet_energy)
+	sm_gas.powerloss_inhibition = initial(sm_gas.powerloss_inhibition)
+	sm_gas.heat_power_generation = initial(sm_gas.heat_power_generation)
+	sm_gas.heat_modifier = initial(sm_gas.heat_modifier)
 	priority_announce("The supermatter surge has dissipated, crystal output readings have normalized.", "Anomaly Cleared")
 	engine = null
 	sm_gas = null
 
-#undef SUPERMATTER_SURGE_DURATION_MIN
-#undef SUPERMATTER_SURGE_DURATION_MAX
-#undef SUPERMATTER_SURGE_SEVERITY_MIN
-#undef SUPERMATTER_SURGE_SEVERITY_MAX
-#undef SUPERMATTER_SURGE_BULLET_ENERGY_ADDITION
-#undef SUPERMATTER_SURGE_POWERLOSS_INHIBITION
-#undef SUPERMATTER_SURGE_HEAT_MODIFIER
+#undef SURGE_DURATION_MIN
+#undef SURGE_DURATION_MAX
+#undef SURGE_SEVERITY_MIN
+#undef SURGE_SEVERITY_MAX
+#undef SURGE_BULLET_ENERGY_ADDITION
+#undef SURGE_BASE_POWERLOSS_INHIBITION
+#undef SURGE_POWERLOSS_INHIBITION_MODIFIER
+#undef SURGE_POWER_GENERATION_MODIFIER
+#undef SURGE_HEAT_MODIFIER
