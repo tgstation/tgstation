@@ -1,5 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes:
-  - qol: "Examine a Dish Drive to see all the items inside of it, as well as the item you'll pull out when you interact with it."
-  - qol: "Dish Drive servo tier increases suction range"
