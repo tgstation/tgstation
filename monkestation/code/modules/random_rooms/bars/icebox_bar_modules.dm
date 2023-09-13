@@ -109,3 +109,14 @@
 	desc = "Used for, something. You're not sure what."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
+
+///////////////
+//ARCAEDE BAR//
+///////////////
+
+/obj/machinery/computer/arcade/amputation/bar
+	circuit = /obj/item/circuitboard/computer/arcade/amputation/bar
+	works_with_slimes = FALSE
+
+/obj/item/circuitboard/computer/arcade/amputation/bar
+	build_path = /obj/machinery/computer/arcade/amputation/bar
