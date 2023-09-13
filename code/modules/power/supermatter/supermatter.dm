@@ -433,7 +433,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			"unit" = zap_factor_si_derived_data["unit"],
 		))
 
-	var/list/zap_transmission_si_derived_data = siunit_isolated(zap_transmission_rate * internal_energy * high_energy_bonus + high_energy_bonus, "W", 2)
+	var/list/zap_transmission_si_derived_data = siunit_isolated(zap_transmission_rate * internal_energy * high_energy_bonus_multiplier + high_energy_bonus, "W", 2)
 	data["zap_transmission"] = zap_transmission_rate * internal_energy
 	data["zap_transmission_coefficient"] = zap_transmission_si_derived_data["coefficient"]
 	data["zap_transmission_unit"] = zap_transmission_si_derived_data["unit"]
