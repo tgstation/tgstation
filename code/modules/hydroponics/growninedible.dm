@@ -10,8 +10,10 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
+	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
+	var/distill_reagent
 
-/obj/item/grown/Initialize( // the constructor has to match that of /obj/item/grown/food or it will NOT WORK, because we assume they are the same when creating the product seed (in hydroponics.dm)
+/obj/item/grown/Initialize( // the constructor has to match that of /obj/item/food/grown or it will NOT WORK, because we assume they are the same when creating the product seed (in hydroponics.dm)
 		mapload,
 		starting_reagent_purity = null,
 		no_base_reagents = TRUE,
