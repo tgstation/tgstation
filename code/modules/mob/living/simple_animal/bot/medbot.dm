@@ -203,8 +203,6 @@
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
 
-	var/is_roundstart = mapload
-
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
 	access_card.add_access(para_trim.access + para_trim.wildcard_access)
@@ -216,9 +214,7 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
 
-	var/advanced_bot_trait = HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA)
-
-	if(is_roundstart && advanced_bot_trait && is_station_level(z))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
 		skin = "advanced"
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
