@@ -1,7 +1,7 @@
 /**
  * # Janicart
  */
-/obj/vehicle/ridden/janicart
+/obj/vehicle/ridden/janicart // melbert todo check this out.
 	name = "janicart (pimpin' ride)"
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"

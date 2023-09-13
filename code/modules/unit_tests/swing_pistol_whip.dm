@@ -38,3 +38,21 @@
 	click_wrapper(attacker, victim)
 	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being bayonet stabbed.")
 	victim.fully_heal()
+
+/datum/unit_test/bayonet_butchering
+
+/datum/unit_test/bayonet_butchering/Run()
+	var/mob/living/carbon/human/species/monkey/meat = allocate(/mob/living/carbon/human/species/monkey)
+	meat.death()
+
+	var/mob/living/carbon/human/butcher = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/gun/energy/recharge/kinetic_accelerator/gun = allocate(/obj/item/gun/energy/recharge/kinetic_accelerator)
+	var/obj/item/knife/combat/knife = allocate(/obj/item/knife/combat)
+	gun.bayonet = knife
+	var/datum/component/butchering/butcher_comp = knife.GetComponent(/datum/component/butchering)
+	butcher_comp.speed = 0.2 SECONDS
+
+	butcher.put_in_active_hand(gun, forced = TRUE)
+	click_wrapper(butcher, meat)
+	sleep(butcher_comp.speed + 0.1 SECONDS) // wait for the do_after, since it's invoked async.
+	TEST_ASSERT(QDELETED(meat), "The butcher did not butcher the monkey when using a bayonetted weapon.")

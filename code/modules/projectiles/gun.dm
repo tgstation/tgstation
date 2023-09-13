@@ -123,6 +123,7 @@
 		clear_suppressor()
 	if(gone == bayonet)
 		bayonet = null
+		weapon_sprite_angle = initial(weapon_sprite_angle)
 		if(!QDELING(src))
 			update_appearance()
 
@@ -476,6 +477,12 @@
 
 	return ..()
 
+/obj/item/gun/attack(mob/living/target_mob, mob/living/user, params)
+	if(bayonet)
+		return bayonet.attack_wrapper(target_mob, user, params)
+
+	return ..()
+
 /obj/item/gun/attackby(obj/item/I, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
@@ -489,6 +496,7 @@
 		to_chat(user, span_notice("You attach [K] to [src]'s bayonet lug."))
 		bayonet = K
 		update_appearance()
+		weapon_sprite_angle = 90
 
 	else
 		return ..()

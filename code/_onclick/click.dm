@@ -319,29 +319,21 @@
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
-	if(close_enough && (!combat_mode || !isliving(clicked_on)))
+	if(close_enough && (!combat_mode || !isliving(clicked_on) || (clicked_with_what.item_flags & NOBLUDGEON)))
 		// Only stop the swing attempt if the attack chain return TRUE (or AFTERATTACK_PROCESSED_ITEM) at any point
 		if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
 			return
 
-	if(swing_at_target(clicked_with_what, clicked_on, right_clicking))
-		return
+	if(combat_mode)
+		var/datum/attack_style/swing = clicked_with_what.select_attacking_style(src, clicked_on, right_clicking)
+		if(swing)
+			swing.process_attack(src, clicked_with_what, clicked_on, right_clicking)
+			return TRUE
 
 	// Handle afterattack, called regardless of if an attack was done, allowing "ranged click on" interactions for items
 	if(!right_clicking || clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params) == SECONDARY_ATTACK_CALL_NORMAL)
 		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
-/// Swings at the target with the passed item.
-/mob/living/proc/swing_at_target(obj/item/weapon, atom/swing_at, right_clicking = FALSE)
-	if(!combat_mode || (weapon.item_flags & NOBLUDGEON))
-		return FALSE
-
-	var/datum/attack_style/swing = weapon.select_attacking_style(src, swing_at, right_clicking)
-	if(swing)
-		swing.process_attack(src, weapon, swing_at, right_clicking)
-		return TRUE
-
-	return FALSE
 
 /// Selects what attack style this item is going to use when being used in a swing
 /obj/item/proc/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)

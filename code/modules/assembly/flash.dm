@@ -248,7 +248,7 @@
 		if(flashed_borgo.flash_act(affect_silicon = TRUE))
 			if(flashed_borgo.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
-				flashed_borgo.Paralyze(flash_duration)
+				flashed_borgo.Stun(flash_duration)
 				flashed_borgo.set_temp_blindness_if_lower(flash_duration)
 				user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors and computing with the flash!"), span_danger("You overload [flashed_borgo]'s sensors and computing with the flash!"))
 			else

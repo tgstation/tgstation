@@ -2,6 +2,7 @@
  * Unarmed attacks which generically apply damage to the mob it hits.
  */
 /datum/attack_style/unarmed/generic_damage
+	can_hit_self = TRUE
 	/// Type damage this attack does. If null, uses the attacker's [get_attack_type]/
 	var/attack_type
 	/// The verb used for an unarmed attack when using this limb, "punch".

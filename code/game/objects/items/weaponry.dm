@@ -124,7 +124,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
 	slot_flags = null
-	blocking_ability = 2.4 // YOU ONLY GET ONE SHOT, ONE OPPORTUNITY
+	blocking_ability = 2.4 // YOU ONLY GET ONE SHOT, ONE OPPORTUNITY (2 HITS = STAMCRIT)
 	light_range = 3
 	attack_verb_continuous = list("brutalizes", "eviscerates", "disembowels", "hacks", "carves", "cleaves") //ONLY THE MOST VISCERAL ATTACK VERBS
 	attack_verb_simple = list("brutalize", "eviscerate", "disembowel", "hack", "carve", "cleave")
@@ -146,29 +146,24 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
+		//NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		var/mob/living/carbon/human/holder = loc
-		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
-	else
-		if(!(flags_1 & ADMIN_SPAWNED_1))
-			qdel(src)
+		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
 
+	else if(!(flags_1 & ADMIN_SPAWNED_1))
+		qdel(src)
 
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	. = ..()
-	to_chat(user, span_notice("The power of Scotland protects you! You are shielded from all stuns and knockdowns."))
 	user.ignore_slowdown(HIGHLANDER_TRAIT)
-	user.add_stun_absorption(
-		source = HIGHLANDER_TRAIT,
-		message = span_warning("%EFFECT_OWNER is protected by the power of Scotland!"),
-		self_message = span_boldwarning("The power of Scotland absorbs the stun!"),
-		examine_message = span_warning("%EFFECT_OWNER_THEYRE protected by the power of Scotland!"),
-	)
+	user.status_flags &= ~(CANSTUN|CANPUSH|CANUNCONSCIOUS) // CANNOT BE STUNNED BUT CAN BE KNOCKED OVER (FROM STAMCRIT) (FROM BLOCKING)
+	user.add_traits(list(TRAIT_NO_SLIP_ALL, TRAIT_NOBLOOD), HIGHLANDER_TRAIT) // AND WE WON'T BLEED OUT LIKE COWARDS
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	. = ..()
 	user.unignore_slowdown(HIGHLANDER_TRAIT)
-	user.remove_stun_absorption(HIGHLANDER_TRAIT)
+	user.status_flags = initial(user.status_flags) // EASIER TO RESET THESE COMPLETELY. FUCK YOU GODMODE USERS
+	user.remove_traits(list(TRAIT_NO_SLIP_ALL, TRAIT_NOBLOOD), HIGHLANDER_TRAIT)
 
 /obj/item/claymore/highlander/examine(mob/user)
 	. = ..()
