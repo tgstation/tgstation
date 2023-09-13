@@ -24,7 +24,7 @@
 			 as well as [GLOB.main_clock_cult?.members.len] servants all together.<br>"
 
 	if(GLOB.clock_ark?.charging_for)
-		desc += "The Ark will open in [10 MINUTES - GLOB.clock_ark?.charging_for] seconds!<br>"
+		desc += "The Ark will open in [600 - GLOB.clock_ark?.charging_for] seconds!<br>"
 		return //we dont care about anchoring crystals at this point
 
 	if(get_charged_anchor_crystals()) //only put this here if we need to use it

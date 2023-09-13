@@ -52,3 +52,8 @@
 		/obj/item/clock_module/vanguard,
 		/obj/item/clock_module/ocular_warden,
 		/obj/item/clock_module/sentinels_compromise)
+
+/obj/item/robot_model/cargo
+	clock_modules = list(/obj/item/clock_module/abscond,
+		/obj/item/gun/ballistic/bow/clockwork,
+		/obj/item/clock_module/stargazer)

@@ -36,9 +36,9 @@
 
 /obj/structure/destructible/clockwork/eminence_beacon/proc/vote_succeed(mob/eminence)
 	vote_active = FALSE
-	//this should not happen, but if it does then tell the admins
 	if(GLOB.current_eminence)
 		message_admins("[type] calling vote_succeed() with a set GLOB.current_eminence, this should not be happening.")
+		return
 
 	if(!eminence)
 		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the eminence?", ROLE_CLOCK_CULTIST, poll_time = 10 SECONDS)
