@@ -13613,7 +13613,9 @@
 	},
 /area/icemoon/underground/explored)
 "ebC" = (
-/obj/machinery/recycler,
+/obj/machinery/recycler{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "garbage"
