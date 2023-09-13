@@ -725,26 +725,26 @@
 	restore_eyesight(prev_affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = FALSE
 	var/normalized_purity = normalise_creation_purity()
 	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		. = TRUE
-		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
-		eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
-		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
-			// While healing, gives some eye blur
-			if(affected_mob.is_blind_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
-				affected_mob.adjust_eye_blur(20 SECONDS)
-			else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
-				affected_mob.adjust_eye_blur(5 SECONDS)
+	if(isnull(eyes))
+		return ..()
 
-	return ..()
+	// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+	eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
+	// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+	if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		// While healing, gives some eye blur
+		if(affected_mob.is_blind_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
+			affected_mob.adjust_eye_blur(20 SECONDS)
+		else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+			affected_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..() || TRUE
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
@@ -857,8 +857,7 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
 		..()
-		. = FALSE
-		return .
+		return FALSE
 	if(affected_mob.health <= affected_mob.crit_threshold)
 		affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -874,8 +873,7 @@
 	affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
-	..()
-	return .
+	return ..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
@@ -1736,9 +1734,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	..()
 	if(SPT_PROB(8, seconds_per_tick))
-		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
+	. = ..()
 	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
 		M.adjustStaminaLoss(10)
 		. = TRUE

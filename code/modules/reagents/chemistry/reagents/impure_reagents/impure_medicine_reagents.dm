@@ -446,7 +446,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
 		. = TRUE
 	..()
-	return TRUE
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
