@@ -81,6 +81,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
+	flags_1 = PREVENT_CLICK_UNDER_1
 
 	var/autoeject = TRUE
 	var/volume = 100

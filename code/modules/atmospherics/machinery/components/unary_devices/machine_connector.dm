@@ -11,11 +11,12 @@
 	shift_underlay_only = FALSE
 
 	pipe_flags = PIPING_ONE_PER_TURF
+	resistance_flags = INDESTRUCTIBLE
 
 	///Reference to the machine we are connected to
 	var/obj/machinery/connected_machine
 
-/obj/machinery/atmospherics/components/unary/machine_connector/Initialize(mapload, connecting_machine, direction)
+/obj/machinery/atmospherics/components/unary/machine_connector/Initialize(mapload, process = TRUE, setdir, init_dir = ALL_CARDINALS, obj/machinery/connecting_machine, direction)
 	dir = direction
 	. = ..()
 	connected_machine = connecting_machine
