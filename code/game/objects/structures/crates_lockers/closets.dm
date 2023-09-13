@@ -1,5 +1,9 @@
 #define LOCKER_FULL -1
 
+///A comprehensive list of all closets in the game world
+GLOBAL_LIST_EMPTY(roundstart_station_closets)
+
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -120,7 +124,8 @@
 	if(access_choices)
 		access_choices = card_reader_choices
 
-	GLOB.all_closets += src
+	if(is_station_level(z))
+		GLOB.roundstart_station_closets += src
 
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
@@ -157,7 +162,7 @@
 /obj/structure/closet/Destroy()
 	id_card = null
 	QDEL_NULL(door_obj)
-	GLOB.all_closets -= src
+	GLOB.roundstart_station_closets -= src
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)

@@ -389,13 +389,7 @@
 /datum/station_trait/missing_wallet/on_round_start()
 	. = ..()
 
-	var/obj/structure/closet/locker_to_fill
-	var/list/locker_list = GLOB.all_closets.Copy()
-	for(var/obj/structure/closet in locker_list)
-		if(!is_station_level(closet.z))
-			locker_list -= closet
-
-	locker_to_fill = pick(locker_list)
+	var/obj/structure/closet/locker_to_fill = pick(GLOB.roundstart_station_closets)
 
 	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)
 
