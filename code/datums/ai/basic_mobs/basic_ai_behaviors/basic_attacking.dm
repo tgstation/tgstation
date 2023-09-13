@@ -100,11 +100,10 @@
 	return FALSE
 
 /datum/ai_behavior/basic_ranged_attack/proc/adjust_position(mob/living/living_pawn, atom/target)
-	var/list/possible_directions = GLOB.alldirs.Copy()
 	var/turf/our_turf = get_turf(living_pawn)
 	var/list/possible_turfs = list()
 
-	for(var/direction in possible_directions)
+	for(var/direction in GLOB.alldirs)
 		var/turf/target_turf = get_step(our_turf, direction)
 		if(isnull(target_turf))
 			continue
