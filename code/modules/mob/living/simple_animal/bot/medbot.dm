@@ -224,12 +224,15 @@
 
 	var/advanced_bot_trait = HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA)
 
-	if(advanced_bot_trait && mapload && is_station_level(z))
+	if(advanced_bot_trait && is_station_level(z))
 		skin = "advanced"
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
 		if(prob(50))
 			name += ", PhD."
+
+	if(mapload)
+		to_chat(src, "wa la")
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
