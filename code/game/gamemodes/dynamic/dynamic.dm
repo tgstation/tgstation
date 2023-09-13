@@ -841,7 +841,7 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
  */
 /datum/game_mode/dynamic/proc/lorentz_to_amount(centre = 0, scale = 1.8, max_threat = 100, interval = 1)
-	var/location = rand(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
+	var/location = RANDOM_DECIMAL(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
 	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, location, scale)
 	var/std_threat = lorentz_result * max_threat
 	///Without these, the amount won't come close to hitting 0% or 100% of the max threat.
