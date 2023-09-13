@@ -1,0 +1,10 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Shuttle Firesale positive station trait. Some emergency shuttle options have been put on sale!"
+  - rscadd: "Misplaced Wallet positive station trait. You wouldn't steal from a missing wallet, would you??"
+  - rscadd: "Wisdom Cow Invasion positive station trait."
+  - rscadd: "Advanced Medbots positive station trait. Better roundstart medbots!"
+  - rscadd: "Loaner Shuttle positive station trait. More shuttle loan offers and more payout!"
+  - qol: "Station Trait titles are now italicized for easier reading."
+  - spellcheck: "Fixes a \"prerequisites\" typo in the shuttle purchase menu."
