@@ -1,8 +1,6 @@
 /datum/ai_behavior/basic_melee_attack
-	action_cooldown = 2 SECONDS
+	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	/// If this is set to true, we will update our AI action cooldown to match the melee attack cooldown on our assigned mob
-	var/cooldown_from_mob = TRUE
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -18,9 +16,10 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	if (cooldown_from_mob && isbasicmob(controller.pawn))
-		var/mob/living/basic/basic_pawn = controller.pawn
-		action_cooldown = basic_pawn.melee_attack_cooldown
+	if (isliving(controller.pawn))
+		var/mob/living/pawn = controller.pawn
+		if (world.time < pawn.next_move)
+			return
 
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
@@ -37,9 +36,9 @@
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	if(hiding_target) //Slap it! We ignore the cooldown because the action cooldown should handle that
-		basic_mob.melee_attack(hiding_target, ignore_cooldown = TRUE)
+		basic_mob.melee_attack(hiding_target)
 	else
-		basic_mob.melee_attack(target, ignore_cooldown = TRUE)
+		basic_mob.melee_attack(target)
 
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)

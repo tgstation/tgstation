@@ -36,7 +36,6 @@
 	return ..()
 
 /datum/ai_behavior/basic_melee_attack/lobster
-	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	var/mob/living/target = controller.blackboard[target_key]
