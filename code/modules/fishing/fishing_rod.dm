@@ -119,7 +119,7 @@
 
 /obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
 	// catching things that aren't fish or alive mobs doesn't consume baits.
-	if(!reward || !bait)
+	if(isnull(reward) || isnull(bait))
 		return
 	if(isliving(reward))
 		var/mob/living/caught_mob = reward
@@ -211,7 +211,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!CheckToolReach(src, source.target, cast_range))
+	if(!isturf(source.origin) || !isturf(source.target) || !CheckToolReach(src, source.target, cast_range))
 		SEND_SIGNAL(source, COMSIG_FISHING_LINE_SNAPPED) //Stepped out of range or los interrupted
 		return BEAM_CANCEL_DRAW
 
@@ -585,11 +585,6 @@
 /datum/beam/fishing_line/Destroy()
 	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
 	. = ..()
-
-/datum/beam/fishing_line/redrawing(atom/movable/mover, atom/oldloc, direction)
-	if(!isturf(mover))
-		qdel(src)
-	return ..()
 
 /datum/beam/fishing_line/proc/handle_dir_change(atom/movable/source, olddir, newdir)
 	SIGNAL_HANDLER
