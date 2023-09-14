@@ -1319,6 +1319,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"aRb" = (
+/obj/machinery/announcement_system,
+/turf/open/floor/circuit,
+/area/station/tcommsat/server)
 "aRd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -7618,6 +7622,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "exZ" = (
@@ -9768,6 +9773,7 @@
 "fJF" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "fKl" = (
@@ -11432,6 +11438,7 @@
 	},
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/bot_red,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gMi" = (
@@ -22019,6 +22026,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "nck" = (
@@ -34998,6 +35006,7 @@
 	dir = 4;
 	color = "#486091"
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/cyan,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "uPb" = (
@@ -35079,6 +35088,12 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
+"uRq" = (
+/obj/structure/toilet/secret{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/dorms)
 "uRv" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
@@ -37463,6 +37478,11 @@
 "wqs" = (
 /turf/open/floor/holofloor/beach/water,
 /area/station/maintenance/starboard/aft)
+"wqA" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/weightmachine/stacklifter,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "wqB" = (
 /obj/machinery/vending/security,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -39545,6 +39565,13 @@
 /obj/machinery/conveyor/auto,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"xzg" = (
+/obj/effect/turf_decal/stripes,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/weightmachine/stacklifter,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "xzj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/sign/poster/quirk/festive{
@@ -56550,7 +56577,7 @@ pVn
 vwP
 bmW
 bmW
-bmW
+uRq
 vwP
 rnM
 rnM
@@ -56864,7 +56891,7 @@ aKV
 pug
 qGs
 lqa
-dik
+xzg
 rYQ
 rYQ
 dwx
@@ -57378,7 +57405,7 @@ aKV
 kmY
 exP
 lqa
-ekZ
+wqA
 vtb
 rYQ
 dwx
@@ -61261,7 +61288,7 @@ xhY
 aXp
 dfM
 ctS
-ctS
+aRb
 bNX
 ctS
 hCB
@@ -84619,7 +84646,7 @@ meJ
 meJ
 meJ
 meJ
-meJ
+pSy
 meJ
 meJ
 meJ
@@ -84875,9 +84902,9 @@ aah
 meJ
 meJ
 meJ
-meJ
-meJ
-meJ
+pSy
+pSy
+pSy
 meJ
 aah
 aah

@@ -89,6 +89,11 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	var/rand_variants = 0
 	var/rand_chance = 30
 
+	/// Itemstack to drop when dug by a shovel
+	var/obj/item/stack/dig_result = /obj/item/stack/ore/glass
+	/// Whether the turf has been dug or not
+	var/dug = FALSE
+
 /turf/open/floor/plating/ocean/dark
 	has_starlight = FALSE
 
@@ -117,6 +122,19 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	SSliquids.ocean_turfs -= src
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
+
+/// Drops itemstack when dug and changes icon
+/turf/open/floor/plating/ocean/proc/getDug()
+	dug = TRUE
+	new dig_result(src, 5)
+
+/// If the user can dig the turf
+/turf/open/floor/plating/ocean/proc/can_dig(mob/user)
+	if(!dug)
+		return TRUE
+	if(user)
+		to_chat(user, span_warning("Looks like someone has dug here already!"))
+
 
 /// Updates starlight. Called when we're unsure of a turf's starlight state
 /// Returns TRUE if we succeed, FALSE otherwise
@@ -212,6 +230,22 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	if(istype(C, /obj/item/dousing_rod))
 		var/obj/item/dousing_rod/attacking_rod = C
 		attacking_rod.deploy(src)
+
+	if(C.tool_behaviour == TOOL_SHOVEL || C.tool_behaviour == TOOL_MINING)
+		if(!can_dig(user))
+			return TRUE
+
+		if(!isturf(user.loc))
+			return
+
+		balloon_alert(user, "digging...")
+
+		if(C.use_tool(src, user, 40, volume=50))
+			if(!can_dig(user))
+				return TRUE
+			getDug()
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, C.type)
+			return TRUE
 
 	if(istype(C, /obj/item/vent_package))
 		if(captured)
@@ -536,7 +570,7 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-	
+
 
 /turf/closed/mineral/random/regrowth/New(loc, _mineral_increase)
 	mineralChance += _mineral_increase
@@ -552,3 +586,7 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	if(GLOB.lavaland_points_generated > 55000)
 		mineral_increase = min(87, (GLOB.lavaland_points_generated - 55000) / 1000)
 	new /turf/closed/mineral/random/regrowth(location , mineral_increase)
+
+/turf/closed/mineral/random/regrowth/underwater
+	turf_type = /turf/open/floor/plating/ocean/dark
+	baseturfs = /turf/open/floor/plating/ocean/dark

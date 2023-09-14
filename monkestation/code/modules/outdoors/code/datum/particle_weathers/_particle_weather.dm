@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			color_animating = pick(affecting_value)
 			animate_flags = ELASTIC_EASING | EASE_IN | EASE_OUT
 			spawn(duration - rand(0, duration*10)/10)
-				playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50, mixer_channel = CHANNEL_WEATHER)
+				playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
 		if(GLE_STAGE_THIRD)
 			color_animating = SSoutdoor_effects.current_color
 			animate_flags = CIRCULAR_EASING | EASE_IN
