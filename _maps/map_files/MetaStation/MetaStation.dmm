@@ -3129,6 +3129,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/directions/upload/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "bec" = (
@@ -5814,11 +5815,12 @@
 /area/station/security/prison)
 "chZ" = (
 /obj/structure/sign/directions/engineering{
-	dir = 4
+	dir = 4;
+	pixel_y = 1
 	},
 /obj/structure/sign/directions/security{
 	dir = 1;
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/command{
 	dir = 8;
@@ -5936,6 +5938,7 @@
 /area/station/security/detectives_office)
 "clA" = (
 /obj/structure/sign/departments/cargo,
+/obj/structure/sign/directions/vault/directional/north,
 /turf/closed/wall,
 /area/station/cargo/warehouse)
 "clE" = (
@@ -8041,6 +8044,7 @@
 "daz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atm,
+/obj/structure/sign/directions/cryo/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
 "daC" = (
@@ -14095,10 +14099,11 @@
 "fmS" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 4
+	dir = 4;
+	pixel_y = 1
 	},
 /obj/structure/sign/directions/command{
 	dir = 1;
@@ -15902,9 +15907,11 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "gaV" = (
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /obj/structure/sign/directions/medical{
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -30249,10 +30256,11 @@
 	},
 /obj/structure/sign/directions/security{
 	dir = 1;
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 4
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/closed/wall,
 /area/station/hallway/secondary/command)
@@ -32404,6 +32412,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"lLO" = (
+/obj/structure/sign/directions/cryo/directional/north,
+/turf/closed/wall,
+/area/station/commons/toilet/restrooms)
 "lLR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 8
@@ -33893,9 +33905,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "mnx" = (
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /obj/structure/sign/directions/medical{
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -34433,9 +34447,11 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "myG" = (
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /obj/structure/sign/directions/medical{
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -35637,9 +35653,11 @@
 "mST" = (
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	pixel_y = 8
+	pixel_y = 10
 	},
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /obj/structure/sign/directions/science{
 	dir = 4;
 	pixel_y = -8
@@ -40347,6 +40365,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/directions/cryo/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "oAj" = (
@@ -45595,9 +45614,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "qwR" = (
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /obj/structure/sign/directions/medical{
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -55928,9 +55949,11 @@
 	pixel_y = -8
 	},
 /obj/structure/sign/directions/medical{
-	pixel_y = 8
+	pixel_y = 10
 	},
-/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/evac{
+	pixel_y = 1
+	},
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/storage/eva)
 "ubl" = (
@@ -58737,10 +58760,11 @@
 "uZj" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 4
+	dir = 4;
+	pixel_y = 1
 	},
 /obj/structure/sign/directions/command{
 	pixel_y = -8
@@ -64344,6 +64368,10 @@
 	},
 /turf/open/floor/grass,
 /area/station/science/research)
+"wZi" = (
+/obj/structure/sign/directions/arrival/directional/west,
+/turf/closed/wall,
+/area/station/command/heads_quarters/qm)
 "wZk" = (
 /obj/machinery/light_switch/directional/north,
 /obj/structure/showcase/cyborg/old{
@@ -66814,10 +66842,11 @@
 "xUB" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	pixel_y = 8
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 4
+	dir = 4;
+	pixel_y = 1
 	},
 /obj/structure/sign/directions/command{
 	pixel_y = -8
@@ -85907,7 +85936,7 @@ cjJ
 cjJ
 cLc
 vkR
-kQP
+wZi
 dWF
 xOw
 mux
@@ -102593,7 +102622,7 @@ fbg
 dIO
 dIO
 dIO
-dIO
+lLO
 tTT
 vLA
 qsK
