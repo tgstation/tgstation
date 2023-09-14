@@ -70,8 +70,8 @@
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
 	var/disrupted = FALSE
-	playsound(src, on ? sound_on : sound_off, 40, TRUE)
 	on = !on
+	playsound(src, on ? sound_on : sound_off, 40, TRUE)
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		if(user)
 			balloon_alert(user, "disrupted!")
