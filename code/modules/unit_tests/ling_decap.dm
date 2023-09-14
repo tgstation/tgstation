@@ -22,3 +22,24 @@
 	qdel(noggin)
 	for(var/obj/item/organ/leftover in ling.loc)
 		qdel(leftover)
+
+/// Tests people get decapitated properly.
+/datum/unit_test/normal_decap
+
+/datum/unit_test/normal_decap/Run()
+	var/mob/living/carbon/human/normal_guy = allocate(/mob/living/carbon/human/consistent)
+	normal_guy.mind_initialize()
+	var/my_guys_mind = normal_guy.mind
+
+	var/obj/item/bodypart/head/noggin = normal_guy.get_bodypart(BODY_ZONE_HEAD)
+	noggin.dismember()
+	TEST_ASSERT_EQUAL(noggin.mind, my_guys_mind, "Dummy's mind was not moved to their head after decapitation.")
+
+	var/obj/item/organ/internal/brain/oldbrain = noggin.brain
+	noggin.drop_organs()
+	TEST_ASSERT_EQUAL(oldbrain.brainmob.mind, my_guys_mind, "Dummy's mind was not moved to their brain after being removed from their head.")
+
+	// Cleanup
+	qdel(noggin)
+	for(var/obj/item/organ/leftover in ling.loc)
+		qdel(leftover)
