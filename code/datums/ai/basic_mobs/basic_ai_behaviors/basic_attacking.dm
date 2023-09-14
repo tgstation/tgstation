@@ -117,6 +117,5 @@
 	var/turf/picked_turf = get_closest_atom(/turf, possible_turfs, target)
 	step(living_pawn, get_dir(living_pawn, picked_turf))
 
-
 /datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
