@@ -197,26 +197,6 @@
 		var/spawned_something = FALSE
 
 		///Spawning isn't done in procs to save on overhead on the 60k turfs we're going through.
-		//FLORA SPAWNING HERE
-		if(flora_allowed && prob(flora_spawn_chance))
-			var/flora_type = pick(flora_spawn_list)
-			new flora_type(gen_turf)
-			spawned_something = TRUE
-
-		//FEATURE SPAWNING HERE
-		if(feature_allowed && prob(feature_spawn_chance))
-			var/can_spawn = TRUE
-
-			var/atom/picked_feature = pick(feature_spawn_list)
-
-			for(var/obj/structure/existing_feature in range(7, gen_turf))
-				if(istype(existing_feature, picked_feature))
-					can_spawn = FALSE
-					break
-
-			if(can_spawn)
-				new picked_feature(gen_turf)
-				spawned_something = TRUE
 
 		//MOB SPAWNING HERE
 		if(mobs_allowed && !spawned_something && prob(mob_spawn_chance))
