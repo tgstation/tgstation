@@ -32,3 +32,34 @@
 	icon_state = "zoro"
 	inhand_icon_state = null
 	flags_inv = HIDEFACE
+
+/obj/item/clothing/suit/hooded/shark_costume
+	name = "shark costume"
+	desc = "A costume from Space Sweden"
+	icon_state = "blahaj_costume"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	inhand_icon_state = "blahaj_costume"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	cold_protection = CHEST|GROIN|ARMS
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
+	hoodtype = /obj/item/clothing/head/hooded/shark_hood
+
+/obj/item/clothing/head/hooded/shark_hood
+	name = "shark hood"
+	desc = "A hood attached to a shark costume."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "blahaj_hood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/under/costume/gold
+	name = "gold navy suit"
+	desc = "A immaculate navy suit studded with gold."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "navy_gold"
+	can_adjust = FALSE
+
