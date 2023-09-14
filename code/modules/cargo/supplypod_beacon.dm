@@ -7,11 +7,16 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	armor_type = /datum/armor/supplypod_beacon
 	resistance_flags = FIRE_PROOF
 	var/obj/machinery/computer/cargo/express/express_console
 	var/linked = FALSE
 	var/ready = FALSE
 	var/launched = FALSE
+
+/datum/armor/supplypod_beacon
+		bomb = 100
+		fire = 100
 
 /obj/item/supplypod_beacon/proc/update_status(consoleStatus)
 	switch(consoleStatus)
@@ -60,9 +65,6 @@
 	if(express_console)
 		express_console.beacon = null
 	return ..()
-
-/obj/item/supplypod_beacon/ex_act()
-	return FALSE
 
 /obj/item/supplypod_beacon/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
