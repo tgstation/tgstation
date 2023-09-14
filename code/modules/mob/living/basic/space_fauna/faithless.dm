@@ -18,6 +18,7 @@
 	attack_verb_continuous = "grips"
 	attack_verb_simple = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	melee_attack_cooldown = 1 SECONDS
 	speak_emote = list("growls")
 
 	unsuitable_atmos_damage = 0
