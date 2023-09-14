@@ -61,7 +61,7 @@
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in SSliquids.ocean_turfs)
 		if(!rebuilt)
 			listed_ocean.ocean_reagents = list()
-			listed_ocean.ocean_reagents[chosen_reagent] = 100
+			listed_ocean.ocean_reagents[chosen_reagent] = 10
 			listed_ocean.static_overlay.mix_colors(listed_ocean.ocean_reagents)
 			for(var/area/ocean/ocean_types in GLOB.initalized_ocean_areas)
 				ocean_types.base_lighting_color = listed_ocean.static_overlay.color

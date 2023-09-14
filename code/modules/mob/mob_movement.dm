@@ -79,7 +79,7 @@
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
-		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct, new_loc)
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()

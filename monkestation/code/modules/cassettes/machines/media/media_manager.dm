@@ -192,7 +192,7 @@
 	if (client?.media && !client.media.forced)
 		client.media.recalc_volume()
 
-/datum/media_manager/proc/recalc_volume()
+/datum/media_manager/proc/recalc_volume(datum/source, direction, turf/new_loc)
 	if(!(owner.prefs))
 		return
 
@@ -213,8 +213,8 @@
 
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
-		var/dist = get_dist(owner.mob, M)
-		var/x_dist = -(owner.mob.x - M.x) * 10
+		var/dist = get_dist(new_loc, M)
+		var/x_dist = -(new_loc.x - M.x) * 10
 
 		targetVolume = max(0, M.volume - (dist * 0.1))
 		targetBalance = x_dist

@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	light_power = 0.75
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
-	var/static/list/ocean_reagents = list(/datum/reagent/water = 100)
+	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C
 	var/list/ocean_turfs = list()
 	var/list/open_turfs = list()
