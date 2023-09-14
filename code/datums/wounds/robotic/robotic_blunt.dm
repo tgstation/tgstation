@@ -80,10 +80,8 @@
 	/// Damage must be over this to proc percussive maintenance.
 	var/percussive_maintenance_damage_min = 0
 
-	/// If true, when we move, we can attempt to shake the camera of our victim.
-	var/can_do_movement_shake = TRUE
 	/// The time, in world time, that we will be allowed to do another movement shake. Useful because it lets us prioritize attacked shakes over movement shakes.
-	var/time_til_next_movement_shake_allowed // nulled by default
+	var/time_til_next_movement_shake_allowed = 0
 
 	/// Multiplies the camera shake by this for the purposes of deciding if we should override dizziness.
 	var/head_movement_shake_dizziness_overtake_mult = 1
@@ -136,15 +134,6 @@
 			return found_wound
 	return null
 
-/datum/wound/blunt/robotic/treat(obj/item/item, mob/user)
-	if (ready_to_secure_internals)
-		if (istype(item, /obj/item/stack/medical/bone_gel))
-			return apply_gel(item, user)
-		else if (item_can_secure_internals(item))
-			return secure_internals_normally(item, user)
-	else if (ready_to_resolder && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
-		return resolder(item, user)
-
 /datum/wound/blunt/robotic/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 
@@ -173,7 +162,7 @@
 			var/duration = (daze_damage * head_attacked_shake_duration_ratio)
 			if (can_shake_camera(strength, duration))
 				shake_camera(victim, duration = duration, strength = strength)
-				time_til_next_movement_shake_allowed = (world.time + (duration SECONDS))
+				time_til_next_movement_shake_allowed = (world.time + (duration SECONDS)) // not sure why, but seconds seems to be a necessity here
 				victim.adjust_dizzy_up_to(daze_damage * head_attacked_dizzy_duration_ratio, daze_dizziness_maximum_duration)
 
 		if (BODY_ZONE_CHEST)
@@ -248,7 +237,7 @@
 		var/duration = (daze_mult * head_movement_base_shake_duration)
 		var/strength = (daze_mult * head_movement_base_shake_intensity)
 
-		if (can_do_movement_shake && can_shake_camera(duration, strength * head_movement_shake_dizziness_overtake_mult) && prob(shake_chance))
+		if ((time_til_next_movement_shake_allowed <= world.time)) && can_shake_camera(duration, strength * head_movement_shake_dizziness_overtake_mult) && prob(shake_chance))
 			shake_camera(victim, duration = duration, strength = strength)
 
 		if (prob(dizzy_chance))
@@ -274,18 +263,10 @@
 	var/total_dizziness_strength = max((amount - (dizziness_strength * initial(dizzy_effect.tick_interval) * 0.1)), 0)
 
 	// 0.6 deciseconds is approx how long a dizzy proc lasts
-	if ((total_dizziness_strength * DIZZINESS_BASE_CAMERA_SHAKE_DURATION) < (strength * duration))
+	if ((total_dizziness_strength * dizzy_effect.base_duration) < (strength * duration))
 		return TRUE
 
 	return FALSE
-
-/// If we've past the next allowed time to shake our movement, we set variables accordingly.
-/datum/wound/blunt/robotic/proc/update_next_movement_shake()
-	if (!isnull(time_til_next_movement_shake_allowed) || world.time < time_til_next_movement_shake_allowed)
-		return
-
-	time_til_next_movement_shake_allowed = null
-	can_do_movement_shake = TRUE
 
 /// Merely a wrapper proc for adjust_disgust that sends a to_chat.
 /datum/wound/blunt/robotic/proc/shake_organs_for_nausea(score, max)
@@ -431,13 +412,17 @@
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		delay_mult *= 0.5
 
-	var/their_or_other = (user == victim ? "their" : "[user]'s")
-	victim.visible_message(span_notice("[user] begins fastening the screws of [their_or_other] [limb.plaintext_zone]..."))
+	var/their_or_other = (user == victim ? "[user.p_their()]]" : "[user]'s")
+	var/your_or_other = (user == victim ? "your" : "[user]'s")
+	victim.visible_message(span_notice("[user] begins fastening the screws of [their_or_other] [limb.plaintext_zone]..."), \
+		span_notice("You begin fastening the screws of [your_or_other] [limb.plaintext_zone]..."))
 
 	if (!screwdriver_tool.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!"))
+	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!", \
+		span_green("You finish fastening [your_or_other] [limb.plaintext_zone]!")))
+
 	remove_wound()
 
 /// Placeholder documentation
@@ -462,8 +447,6 @@
 
 	if (!victim || IS_IN_STASIS(victim))
 		return
-
-	update_next_movement_shake()
 
 	regen_time_elapsed += ((seconds_per_tick SECONDS) / 2)
 	if(victim.body_position == LYING_DOWN)
@@ -491,11 +474,22 @@
 		ready_to_secure_internals = FALSE
 		set_disabling(FALSE)
 
-/datum/wound/blunt/robotic/modify_desc_before_span(desc)
+/datum/wound/blunt/robotic/secures_internals/treat(obj/item/item, mob/user)
+	if (ready_to_secure_internals)
+		if (istype(item, /obj/item/stack/medical/bone_gel))
+			return apply_gel(item, user)
+		else if (item_can_secure_internals(item))
+			return secure_internals_normally(item, user)
+	else if (ready_to_resolder && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
+		return resolder(item, user)
+
+	return ..()
+
+/datum/wound/blunt/robotic/secures_internals/modify_desc_before_span(desc)
 	. = ..()
 
 	if (!limb.current_gauze && gelled)
-		. += ", [span_notice("with fizzling blue surgical gel holding them in place")]!"
+		. += ", [span_notice("with fizzling blue surgical gel leaking out of the cracks")]!"
 
 /datum/wound/blunt/robotic/secures_internals/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_WELDER || potential_treater.tool_behaviour == TOOL_CAUTERY)
@@ -543,7 +537,7 @@
 	if (user)
 		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."))
 	if (confused)
-		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
+		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! A diagnostic hud would help, as would knowing robo/engi wires!"))
 
 	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
