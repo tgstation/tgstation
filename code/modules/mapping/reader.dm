@@ -441,11 +441,16 @@
 
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
 
+	var/z_upper_parsed = last_column.zcrd + z_offset - 1
+	if(z_upper < INFINITY)
+		z_upper_parsed -= z_upper
+	if(z_lower > -INFINITY)
+		z_upper_parsed -= z_lower
+
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
-	var/highest_z = last_column.zcrd + z_offset - z_lower // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
-	if(highest_z > z_threshold && crop_map)
-		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
+	if(z_upper_parsed > z_threshold && crop_map)
+		for(var/i in z_threshold + 1 to z_upper_parsed) //create a new z_level if needed
 			world.incrementMaxZ()
 		if(!no_changeturf)
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
@@ -461,7 +466,7 @@
 		if(final_x < true_xcrd || lowest_x > gset.xcrd)
 			continue
 
-		var/zcrd = gset.zcrd + z_offset - z_lower
+		var/zcrd = gset.zcrd + z_offset - 1
 		// If we're using changeturf, we disable it if we load into a z level we JUST created
 		var/no_afterchange = no_changeturf || zcrd > z_threshold
 
