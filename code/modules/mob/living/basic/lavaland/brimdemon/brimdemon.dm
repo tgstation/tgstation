@@ -1,7 +1,7 @@
 /// Lavaland mob which tries to line up with its target and fire a laser
 /mob/living/basic/mining/brimdemon
 	name = "brimdemon"
-	desc = "An unstable creature resembling an enormous horned skull. Its response to almost any stimulus is to unleash a beam of infernal energy."
+	desc = "A volatile creature resembling an enormous horned skull. Its response to almost any stimulus is to unleash a beam of infernal energy."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "brimdemon"
 	icon_living = "brimdemon"
@@ -46,3 +46,39 @@
 
 /mob/living/basic/mining/brimdemon/RangedAttack(atom/target, modifiers)
 	beam.Trigger(target = target)
+
+/mob/living/basic/mining/brimdemon/death(gibbed)
+	. = ..()
+	if (gibbed)
+		return
+	var/obj/effect/temp_visual/brim_burst/bang = new(loc)
+	forceMove(bang)
+
+/// Show a funny animation before doing an explosion
+/obj/effect/temp_visual/brim_burst
+	name = "bursting brimdemon"
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "brimdemon_dead"
+	duration = 1.9 SECONDS
+
+/obj/effect/temp_visual/brim_burst/Initialize(mapload)
+	addtimer(CALLBACK(src, PROC_REF(bang)), duration - 1, TIMER_DELETE_ME)
+	. = ..()
+	animate(src, color = "#ff8888", transform = matrix().Scale(1.1), time = 0.7 SECONDS)
+	animate(color = "#ffffff", transform = matrix(), time = 0.2 SECONDS)
+	animate(color = "#ff4444", transform = matrix().Scale(1.3), time = 0.5 SECONDS)
+	animate(color = "#ffffff", transform = matrix(), time = 0.2 SECONDS)
+	animate(color = "#ff0000", transform = matrix().Scale(1.5), time = 0.3 SECONDS)
+
+/// Make an explosion
+/obj/effect/temp_visual/brim_burst/proc/bang()
+	var/turf/origin_turf = get_turf(src)
+	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 50)
+	new /obj/effect/temp_visual/explosion/fast(origin_turf)
+	var/list/possible_targets = range(1, origin_turf)
+	for(var/mob/living/target in possible_targets)
+		var/armor = target.run_armor_check(attack_flag = BOMB)
+		target.apply_damage(20, damagetype = BURN, blocked = armor, spread_damage = TRUE)
+
+	for (var/atom/movable/thing as anything in contents)
+		thing.forceMove(loc)
