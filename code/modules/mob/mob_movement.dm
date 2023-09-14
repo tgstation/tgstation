@@ -156,7 +156,7 @@
 		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
 		// as a result of player input and not because they were pulled or any other magic.
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED, direct, old_dir)
-		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct, new_loc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
