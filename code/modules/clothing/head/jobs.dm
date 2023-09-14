@@ -231,8 +231,7 @@
 /obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
-	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!")
-	. += ""
+	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
 	for(var/phrase in items_by_phrase)
 		var/obj/item/item = items_by_phrase[phrase]
 		. += span_notice("[icon2html(item, user)] You can remove [item] by saying <b>\"[prefix] [phrase]\"</b>!")
