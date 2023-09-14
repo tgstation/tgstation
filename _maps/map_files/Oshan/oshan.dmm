@@ -291,6 +291,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/lone/star,
 /area/station/command/heads_quarters/qm)
+"afY" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "agf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/computer/scan_consolenew{
@@ -3263,6 +3267,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
+"bSK" = (
+/obj/machinery/vending/wardrobe/curator_wardrobe,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "bST" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -4171,6 +4179,11 @@
 /obj/effect/base_turf_modifier/pit,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai)
+"cBs" = (
+/obj/item/radio/radio_mic,
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "cBt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -8243,6 +8256,30 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"ePE" = (
+/obj/structure/table/wood,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "ePQ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -11303,6 +11340,11 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"gKb" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/turf/open/floor/wood,
+/area/station/service/library)
 "gKd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11640,6 +11682,15 @@
 "gXb" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/central)
+"gXc" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/turf/open/floor/iron,
+/area/station/service/library)
 "gXl" = (
 /obj/machinery/computer/mechpad{
 	dir = 1
@@ -17494,6 +17545,20 @@
 	},
 /turf/open/floor/plating/ocean,
 /area/ocean)
+"kuO" = (
+/obj/structure/table/wood,
+/obj/structure/cassette_rack,
+/obj/item/device/cassette_tape/friday,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/obj/item/device/cassette_tape/random,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "kuQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -19521,6 +19586,7 @@
 /obj/structure/cable,
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/west,
 /obj/effect/decal/cleanable/oil/streak,
+/obj/effect/landmark/start/librarian,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
 "lCF" = (
@@ -22580,6 +22646,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"nvY" = (
+/obj/machinery/cassette/dj_station,
+/obj/structure/table/wood,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "nwz" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -23778,6 +23850,11 @@
 	},
 /turf/open/floor/iron/dark/textured_edge/airless,
 /area/station/science/lobby)
+"ojo" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "ojq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -29870,14 +29947,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"rLZ" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/vending/wardrobe/curator_wardrobe,
-/turf/open/floor/iron,
-/area/station/service/library)
 "rMw" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
@@ -39375,6 +39444,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
+"xCE" = (
+/obj/structure/table/wood,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/obj/item/device/walkman,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/library)
 "xCP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -79254,7 +79337,7 @@ pDq
 oPd
 wur
 wQf
-wQf
+gKb
 rZh
 xbU
 qzb
@@ -80281,7 +80364,7 @@ kDS
 mHQ
 kgV
 wur
-gky
+gXc
 les
 qfa
 bTl
@@ -81057,10 +81140,10 @@ les
 gky
 tVS
 fAx
-rLZ
+bTl
 xQD
-uqC
-uqC
+bSK
+xCE
 xQD
 meJ
 meJ
@@ -81825,7 +81908,7 @@ meJ
 meJ
 meJ
 uVL
-uqC
+nvY
 uqC
 uqC
 uqC
@@ -82082,7 +82165,7 @@ meJ
 meJ
 meJ
 uVL
-uqC
+kuO
 uqC
 uqC
 uqC
@@ -82339,12 +82422,12 @@ aah
 meJ
 meJ
 uVL
+cBs
 uqC
 uqC
-uqC
-uqC
-uqC
-uqC
+ojo
+ePE
+afY
 xQD
 xQD
 meJ
