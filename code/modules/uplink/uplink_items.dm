@@ -128,7 +128,8 @@
 	else
 		A = spawn_path
 	if(refundable)
-		A.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
+		var/tc_refund = new /datum/element/uplink_reimburse
+		A.AddElement(tc_refund, (refund_amount ? refund_amount : cost))
 	if(ishuman(user) && isitem(A))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))

@@ -23,7 +23,7 @@
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
 
 /datum/element/uplink_reimburse/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
+	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE))
 
 
 	return ..()
@@ -48,3 +48,4 @@
 	do_sparks(2, source = uplink_comp.uplink_handler)
 	uplink_comp.add_telecrystals(refundable_tc)
 	qdel(refund_item)
+a

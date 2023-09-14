@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
 		used = TRUE
-		guardiancreator.RemoveElement(/datum/element/uplink_reimburse)
+		RemoveElement(/datum/element/uplink_reimburse, tc_refund.refundable_tc)
 	else
 		to_chat(user, failure_message)
 		
