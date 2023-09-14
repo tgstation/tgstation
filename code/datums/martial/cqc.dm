@@ -85,7 +85,7 @@
 
 	var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
 	var/knockout_prob = rand(-15,15) + defender.getStaminaLoss() - helmet_protection
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() !&& prob(knockout_prob))
+	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && prob(knockout_prob))
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"), \
 						span_userdanger("You're knocked unconscious by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
