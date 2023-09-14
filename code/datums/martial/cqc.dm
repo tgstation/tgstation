@@ -171,7 +171,7 @@
 	if(!can_use(attacker))
 		return FALSE
 
-	if(attacker.resting && !defender.stat && defender.body_position == STANDING_UP)
+	if(attacker.resting && defender.stat != DEAD && defender.body_position == STANDING_UP)
 		defender.visible_message(span_danger("[attacker] leg sweeps [defender]!"), \
 						span_userdanger("Your legs are sweeped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You leg sweep [defender]!"))
@@ -180,6 +180,7 @@
 		defender.apply_damage(10, BRUTE)
 		defender.Knockdown(5 SECONDS)
 		log_combat(attacker, defender, "sweeped (CQC)")
+		reset_streak()
 		return TRUE
 
 	add_to_streak("H", defender)
