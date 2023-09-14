@@ -61,6 +61,7 @@
 	qdel(src)
 	target.Bumped(B)
 
+// melbert todo
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
 
 	if(!target || !isliving(target))

@@ -13,6 +13,7 @@
 	check_results(attacker, victim)
 
 /datum/unit_test/flash_click/proc/ready_subjects(mob/living/carbon/human/attacker, mob/living/carbon/human/victim)
+	victim.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
 	attacker.face_atom(victim)
 	victim.face_atom(attacker)
 
