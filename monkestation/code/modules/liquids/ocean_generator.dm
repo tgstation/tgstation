@@ -221,19 +221,19 @@
 
 			// prevents tendrils spawning in each other's collapse range
 			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, gen_turf))
+				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, new_turf))
 					can_spawn = FALSE
 					break
 			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
 			else
-				var/list/things_in_range = range(12, gen_turf)
+				var/list/things_in_range = range(12, new_turf)
 				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
-				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, gen_turf))
+				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, new_turf))
 					can_spawn = FALSE
 					break
 
@@ -242,7 +242,7 @@
 					weighted_megafauna_spawn_list.Remove(picked_mob)
 					megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
 					megas_allowed = megas_allowed && length(megafauna_spawn_list)
-				new picked_mob(gen_turf)
+				new picked_mob(new_turf)
 				spawned_something = TRUE
 
 		CHECK_TICK
