@@ -85,6 +85,9 @@
  * - [eater][/datum]: The light eater eating the morsel. This is the datum that the element is attached to that started this chain.
  */
 /datum/element/light_eater/proc/devour(atom/morsel, datum/eater)
+	var/undevourable = typecacheof(list(/turf/open/space))
+	if(morsel in undevourable)
+		return FALSE
 	if(morsel.light_power <= 0 || morsel.light_range <= 0 || !morsel.light_on)
 		return FALSE
 	if(SEND_SIGNAL(morsel, COMSIG_LIGHT_EATER_ACT, eater) & COMPONENT_BLOCK_LIGHT_EATER)
