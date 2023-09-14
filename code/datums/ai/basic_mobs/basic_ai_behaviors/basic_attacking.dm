@@ -90,7 +90,9 @@
 		controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/basic_ranged_attack/proc/check_friendly_in_path(mob/living/source, atom/target, datum/targetting_datum/targetting_datum)
-	var/list/turfs_list = get_line(source, target) - get_turf(source)
+	var/list/turfs_list = get_line(source, target)
+	turfs_list -= get_turf(source)
+	turfs_list -= get_turf(target)
 	for(var/turf/possible_turf in turfs_list)
 
 		for(var/mob/living/potential_friend in possible_turf)

@@ -63,7 +63,6 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/minebot
 
 /datum/ai_behavior/basic_ranged_attack/minebot
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	avoid_friendly_fire = TRUE
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
