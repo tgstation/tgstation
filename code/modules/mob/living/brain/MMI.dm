@@ -57,7 +57,7 @@
 		if(newbrain.suicided)
 			to_chat(user, span_warning("[newbrain] is completely useless."))
 			return
-		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+		if(!newbrain.brainmob)
 			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
 			if(install != "Yes")
 				return
@@ -73,7 +73,7 @@
 		if(!user.transferItemToLoc(O, src))
 			return
 		var/mob/living/brain/B = newbrain.brainmob
-		if(!B.key)
+		if(!B.key && !newbrain.decoy_override)
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
 		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
 
@@ -259,6 +259,12 @@
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
 		return FALSE
+	if(istype(B.loc, /obj/item/organ/internal/brain))
+		var/obj/item/organ/internal/brain/real_brain = B.loc
+		if(real_brain.decoy_override)
+			if(user)
+				to_chat(user, span_warning("This [real_brain.name] does not seem to fit!"))
+			return FALSE
 	if(!B.key || !B.mind)
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
