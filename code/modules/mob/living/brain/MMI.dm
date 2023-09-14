@@ -268,12 +268,10 @@
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
 		return FALSE
-	if(istype(B.loc, /obj/item/organ/internal/brain))
-		var/obj/item/organ/internal/brain/real_brain = B.loc
-		if(real_brain.decoy_override)
-			if(user)
-				to_chat(user, span_warning("This [name] does not seem to fit!"))
-			return FALSE
+	if(brain.decoy_override)
+		if(user)
+			to_chat(user, span_warning("This [name] does not seem to fit!"))
+		return FALSE
 	if(!B.key || !B.mind)
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))

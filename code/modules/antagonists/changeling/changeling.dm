@@ -166,8 +166,6 @@
 	// This is automatically cleared if the ling is.
 	our_ling_brain.AddComponent(/datum/component/ling_decoy_brain, src)
 
-/datum/antagonist/changeling/proc/entered_mmi()
-
 /datum/antagonist/changeling/proc/generate_name()
 	var/honorific
 	if(owner.current.gender == FEMALE)

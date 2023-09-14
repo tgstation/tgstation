@@ -57,7 +57,7 @@
 	if(brainmob)
 		// If it's a ling decoy brain, nothing to transfer, just throw it out
 		if(decoy_override)
-			if(brain_owner.key)
+			if(brainmob?.key)
 				stack_trace("Decoy override brain with a key assigned - This should never happen.")
 
 		// Not a ling - assume direct control
