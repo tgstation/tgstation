@@ -322,7 +322,6 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	holiday_hat = /obj/item/clothing/mask/animal/small/bee //change off of mask
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -383,7 +382,6 @@
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
-	holiday_hat = /obj/item/clothing/mask/facehugger/dead
 
 /datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
@@ -470,6 +468,7 @@
 	name = "Tiziran Unification Day"
 	begin_month = SEPTEMBER
 	begin_day = 1
+	holiday_hat = /obj/item/clothing/head/costume/lizard
 
 /datum/holiday/tiziran_unification/greet()
 	return "On this day over 400 years ago, Lizardkind first united under a single banner, ready to face the stars as one unified people."
@@ -643,13 +642,11 @@
 	name = MONKEYDAY
 	begin_day = 14
 	begin_month = DECEMBER
-	holiday_hat = /obj/item/clothing/mask/gas/monkeymask
 
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	holiday_hat = /obj/item/clothing/mask/animal/small/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
