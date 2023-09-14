@@ -46,8 +46,8 @@
 		force_unwielded = 0, \
 		force_wielded = 20, \
 	)
-	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, 20
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur)))
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, 20)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
