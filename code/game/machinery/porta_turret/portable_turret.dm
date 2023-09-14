@@ -886,6 +886,17 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
+/obj/machinery/porta_turret/centcom_shuttle/kilo_whiteship
+	name = "Old Mining Turret"
+	desc = "A worn-down mining stationary mount, equipped with a prototype of the proto-kinetic accelerator widely used in mining today. \
+		Still packs a punch, but its lifespan has already exceeded its warranty ten times over, and it has become structurally weak."
+	max_integrity = 120
+	integrity_failure = 0.5
+	lethal_projectile = /obj/projectile/kinetic/miner
+	lethal_projectile_sound = 'sound/weapons/kinetic_accel.ogg'
+	stun_projectile = /obj/projectile/kinetic/miner
+	stun_projectile_sound = 'sound/weapons/kinetic_accel.ogg'
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////

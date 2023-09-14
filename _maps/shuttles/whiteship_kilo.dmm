@@ -126,9 +126,8 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "gL" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4;
-	name = "Old Mining Turret"
+/obj/machinery/porta_turret/centcom_shuttle/kilo_whiteship{
+	dir = 4
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/abandoned/engine)
@@ -399,13 +398,8 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ry" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4;
-	name = "Old Mining Turret";
-	lethal_projectile = /obj/projectile/kinetic/miner;
-	lethal_projectile_sound = 'sound/weapons/kenetic_accel.ogg';
-	stun_projectile = /obj/projectile/kinetic/miner;
-	stun_projectile_sound = 'sound/weapons/kenetic_accel.ogg'
+/obj/machinery/porta_turret/centcom_shuttle/kilo_whiteship{
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
@@ -493,9 +487,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "uA" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4;
-	name = "Old Mining Turret"
+/obj/machinery/porta_turret/centcom_shuttle/kilo_whiteship{
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
@@ -1018,9 +1011,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "SM" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4;
-	name = "Old Mining Turret"
+/obj/machinery/porta_turret/centcom_shuttle/kilo_whiteship{
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/cargo)
