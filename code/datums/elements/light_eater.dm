@@ -51,7 +51,9 @@
 
 	. = 0
 	for(var/morsel in buffet)
-		. += devour(morsel, eater)
+		// You can't eat space, silly
+		if(!istype(morsel, /turf/open/space))
+			. += devour(morsel, eater)
 
 	if(!.)
 		return
