@@ -9,7 +9,7 @@
 	name = "proto-kinetic machete"
 	desc = "Recent breakthroughs with proto-kinetic technology have led to improved designs for the early proto-kinetic crusher, namely the ability to pack all \
 	the same technology into a smaller more portable package. The machete design was chosen as to make a much easier to handle and less cumbersome frame. Of course \
-	the smaller package means that the power is not as high as the original crusher design, but it the different shell makes it capable of blocking basic attacks."
+	the smaller package means that the power is not as high as the original crusher design, but the different shell makes it capable of blocking basic attacks."
 	force = 15
 	block_chance = 50
 	w_class = WEIGHT_CLASS_BULKY
