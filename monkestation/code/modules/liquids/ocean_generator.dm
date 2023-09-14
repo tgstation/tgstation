@@ -181,6 +181,8 @@
 		CHECK_TICK
 
 
+	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+
 	// Area var pullouts to make accessing in the loop faster
 	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
@@ -188,8 +190,17 @@
 	for(var/i in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i
 
-		if(isclosedturf(gen_turf))
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		if(!closed)
 			continue
+		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
+
+		// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
+		// The old tile hasn't got the chance to init yet
+		new_turf = new new_turf(gen_turf)
+
+		if(gen_turf.turf_flags & NO_RUINS)
+			new_turf.turf_flags |= NO_RUINS
 
 		// If we've spawned something yet
 		var/spawned_something = FALSE
