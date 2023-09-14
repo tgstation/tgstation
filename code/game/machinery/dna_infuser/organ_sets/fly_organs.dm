@@ -106,7 +106,7 @@
 	var/mob/living/carbon/body = owner
 	ASSERT(istype(body))
 	// we do not lose any nutrition as a fly when vomiting out food
-	body.vomit(lost_nutrition = 0, stun = FALSE, distance = 2, force = TRUE, purge_ratio = 0.67)
+	body.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE | MOB_VOMIT_HARM), lost_nutrition = 0, distance = 2, purge_ratio = 0.67)
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	body.visible_message(
 		span_danger("[body] vomits on the floor!"),

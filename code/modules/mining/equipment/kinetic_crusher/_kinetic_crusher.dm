@@ -46,7 +46,8 @@
 		force_unwielded = 0, \
 		force_wielded = 20, \
 	)
-	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, 20)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MELEE, 20
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur)))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -187,6 +188,12 @@
 	if(held_item.tool_behaviour != TOOL_CROWBAR)
 		balloon_alert(user, "wield a crowbar!")
 		return FALSE
+	return TRUE
+
+///Disables the crusher's in-built flashlight when it's been shot with a disruptor pistol.
+/obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
+	set_light_on(FALSE)
+	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
 	return TRUE
 
 ///Normal-sized crusher for admemery (used in a combat-ready miner outfit)

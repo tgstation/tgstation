@@ -24,7 +24,7 @@
 /datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))
@@ -194,7 +194,7 @@
 	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
+		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
 			computer.say("Successfully researched [tech_node.display_name].")

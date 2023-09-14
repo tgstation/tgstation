@@ -330,7 +330,7 @@
 	},
 /obj/structure/industrial_lift/tram/purple,
 /obj/effect/landmark/tram/platform/hilbert/middle,
-/obj/effect/landmark/tram/nav/hilbert/research,
+/obj/effect/landmark/tram/nav/hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iY" = (

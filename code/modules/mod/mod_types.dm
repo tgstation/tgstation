@@ -231,12 +231,14 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
 
 /obj/item/mod/control/pre_equipped/nuclear
@@ -249,12 +251,20 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
+
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman
+
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)
+	applied_modules += /obj/item/mod/module/plasma_stabilizer
+	return ..()
 
 /obj/item/mod/control/pre_equipped/nuclear/unrestricted
 	req_access = null
@@ -269,11 +279,13 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
 
 /obj/item/mod/control/pre_equipped/elite/flamethrower
@@ -283,12 +295,14 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/thermal_regulator,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/flamethrower,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flamethrower,
 	)
 
