@@ -60,7 +60,12 @@
 		if(DISPENSE_LOLLIPOP_MODE)
 			food_item = new /obj/item/food/lollipop/cyborg(turf_to_dispense_to)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(turf_to_dispense_to, list(ICE_CREAM_VANILLA))
+			food_item = new /obj/item/food/icecream(
+				/* loc = */ turf_to_dispense_to,
+				/* starting_reagent_purity = */ null,
+				/* no_base_reagents = */ FALSE,
+				/* prefill_flavours = */ list(ICE_CREAM_VANILLA),
+			)
 			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
