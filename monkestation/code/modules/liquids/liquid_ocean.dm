@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 /area/ocean/dark
 	base_lighting_alpha = 0
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+
 /area/ruin/ocean
 	has_gravity = TRUE
 
