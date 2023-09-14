@@ -35,7 +35,7 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(hiding_target) //Slap it! We ignore the cooldown because the action cooldown should handle that
+	if(hiding_target) //Slap it!
 		basic_mob.melee_attack(hiding_target)
 	else
 		basic_mob.melee_attack(target)
