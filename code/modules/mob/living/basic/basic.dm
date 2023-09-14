@@ -37,8 +37,6 @@
 	var/attacked_sound = SFX_PUNCH //This should be an element
 	/// How often can you melee attack?
 	var/melee_attack_cooldown = 2 SECONDS
-	/// Timer tracking when we can next perform a melee attack
-	COOLDOWN_DECLARE(melee_attack_cooldown_timer)
 
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -196,16 +194,12 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	if (!ignore_cooldown && !COOLDOWN_FINISHED(src, melee_attack_cooldown_timer))
-		return FALSE
 	face_atom(target)
 	if (!ignore_cooldown)
-		COOLDOWN_START(src, melee_attack_cooldown_timer, melee_attack_cooldown)
+		changeNext_move(melee_attack_cooldown)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	var/result = target.attack_basic_mob(src, modifiers)
-	if (melee_attack_cooldown < CLICK_CD_MELEE)
-		changeNext_move(melee_attack_cooldown)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 
