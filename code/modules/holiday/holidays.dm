@@ -109,6 +109,7 @@
 	name = "Fleet Day"
 	begin_month = JANUARY
 	begin_day = 19
+	holiday_hat = /obj/item/clothing/head/mothcap
 
 /datum/holiday/fleet_day/greet()
 	return "This day commemorates another year of successful survival aboard the Mothic Grand Nomad Fleet. Moths galaxywide are encouraged to eat, drink, and be merry."
@@ -235,6 +236,7 @@
 	begin_month = APRIL
 	begin_day = 1
 	end_day = 2
+	holiday_hat = /obj/item/clothing/head/chameleon/broken
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
@@ -261,6 +263,7 @@
 	name = "Four-Twenty"
 	begin_day = 20
 	begin_month = APRIL
+	holiday_hat = /obj/item/clothing/head/rasta
 
 /datum/holiday/fourtwenty/getStationPrefix()
 	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
@@ -354,6 +357,7 @@
 	name = "Summer Solstice"
 	begin_day = 21
 	begin_month = JUNE
+	holiday_hat = /obj/item/clothing/head/costume/garland
 
 /datum/holiday/pride_week
 	name = PRIDE_WEEK
@@ -382,6 +386,7 @@
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
+	holiday_hat = /obj/item/clothing/head/collectable/xenom
 
 /datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
@@ -647,6 +652,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
+	holiday_hat = /obj/item/clothing/head/costume/garland
 
 /datum/holiday/xmas
 	name = CHRISTMAS
