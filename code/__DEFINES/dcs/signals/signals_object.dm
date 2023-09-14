@@ -246,6 +246,8 @@
 
 /// Called on component/uplink/OnAttackBy(..)
 #define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+///Called when a traitor item is used and no longer refundable.
+#define COMSIG_ITEM_TC_USED "item_tc_used"
 
 // /obj/item/clothing signals
 

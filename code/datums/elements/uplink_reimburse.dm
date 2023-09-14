@@ -1,5 +1,5 @@
 /**
- * Uplinik Reimburse element.
+ * Uplink Reimburse element.
  * When element is applied onto items, it allows them to be reimbursed if an user pokes an item with a uplink component with them.
  *
  * Element is only compatible with items.
@@ -21,9 +21,10 @@
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
-
+	RegisterSignal(target,COMSIG_ITEM_TC_USED, PROC_REF(used))
+	
 /datum/element/uplink_reimburse/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTEMPT_TC_USED, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, COMSIG_ATOM_EXAMINE))
 
 
 	return ..()
@@ -48,4 +49,6 @@
 	do_sparks(2, source = uplink_comp.uplink_handler)
 	uplink_comp.add_telecrystals(refundable_tc)
 	qdel(refund_item)
-a
+/// The item was used, it needs to no longer be refundable
+/datum/element/uplink_reimburse/proc/used(datum/target)
+ src.Detach(target)
