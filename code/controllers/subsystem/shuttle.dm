@@ -262,8 +262,8 @@ SUBSYSTEM_DEF(shuttle)
 		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
 		emergency_no_recall = TRUE
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-		if(emergency.timeLeft(1) > emergency_call_time * 0.4)
-			emergency.request(null, set_coefficient = 0.4)
+		if(emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
+			emergency.request(null, set_coefficient = ALERT_COEFF_AUTOEVAC_CRITICAL)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
 	if(admin_emergency_no_recall)
@@ -457,7 +457,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
-			emergency.request(null, set_coefficient = 2.5)
+			emergency.request(null, set_coefficient = ALERT_COEFF_AUTOEVAC_NORMAL)
 			log_shuttle("There is no means of calling the emergency shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 

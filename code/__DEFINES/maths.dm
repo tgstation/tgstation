@@ -240,6 +240,9 @@
 #define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
 // )
 
+// This value per these many units. Very unnecessary but helpful for readability (For example wanting 30 units of synthflesh to heal 50 damage - VALUE_PER(50, 30))
+#define VALUE_PER(value, per) (value / per)
+
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
@@ -248,3 +251,6 @@
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
+
+/// Returns a random decimal between x and y.
+#define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())
