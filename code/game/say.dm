@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(client && radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE)
+			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 //MONKESTATION EDIT END
 /**
  * Checks if our movable can speak the provided message, passing it through filters

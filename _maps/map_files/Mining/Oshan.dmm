@@ -55,6 +55,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"dI" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron,
+/area/mine/production)
 "dR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -113,6 +117,7 @@
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "hC" = (
@@ -258,6 +263,8 @@
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/oxygen,
+/obj/item/shovel,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "lH" = (
@@ -310,6 +317,8 @@
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/oxygen,
+/obj/item/shovel,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "nU" = (
@@ -593,6 +602,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison)
+"AB" = (
+/turf/closed/mineral/random/regrowth/underwater,
+/area/ocean/dark)
 "Bb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -617,6 +629,10 @@
 "BF" = (
 /turf/open/floor/iron/dark,
 /area/station/security/prison/rec)
+"Cj" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/dark,
+/area/station/security/prison)
 "Cl" = (
 /obj/machinery/shower/directional/north,
 /turf/open/floor/iron/freezer,
@@ -831,6 +847,7 @@
 	id = "mining_internal"
 	},
 /obj/structure/fans/tiny/forcefield,
+/obj/structure/plasticflaps,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "LF" = (
@@ -882,6 +899,8 @@
 /obj/item/clothing/glasses/meson,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
+/obj/item/tank/internals/oxygen,
+/obj/item/shovel,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "OD" = (
@@ -18768,11 +18787,11 @@ qu
 qu
 ab
 qu
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
 ke
 qu
 Yw
@@ -19024,12 +19043,12 @@ wE
 qu
 qu
 ab
-Hh
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
+AB
 ke
 qu
 Yw
@@ -19281,12 +19300,12 @@ Wa
 qu
 qu
 ab
-Hh
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
+AB
 ke
 qu
 Yw
@@ -19538,12 +19557,12 @@ Wa
 qu
 qu
 ab
-Hh
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
+AB
 ke
 Yw
 Yw
@@ -19795,11 +19814,11 @@ Wa
 qu
 qu
 ab
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
 qu
 ke
 Yw
@@ -21080,10 +21099,10 @@ Wa
 qu
 qu
 qu
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
 qu
 qu
 qu
@@ -21337,10 +21356,10 @@ Wa
 qu
 qu
 qu
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
 qu
 qu
 qu
@@ -21595,10 +21614,10 @@ qu
 qu
 qu
 qu
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
 qu
 qu
 qu
@@ -21853,9 +21872,9 @@ qu
 qu
 qu
 qu
-Hh
-Hh
-Hh
+AB
+AB
+AB
 qu
 qu
 qu
@@ -22370,8 +22389,8 @@ qu
 qu
 qu
 qu
-Hh
-Hh
+AB
+AB
 qu
 qu
 Yw
@@ -22626,9 +22645,9 @@ qu
 qu
 qu
 qu
-Hh
-Hh
-Hh
+AB
+AB
+AB
 qu
 qu
 Yw
@@ -22882,11 +22901,11 @@ qu
 qu
 qu
 qu
-Hh
-Hh
-Hh
-Hh
-Hh
+AB
+AB
+AB
+AB
+AB
 qu
 qu
 Yw
@@ -23142,7 +23161,7 @@ qu
 qu
 qu
 qu
-Hh
+AB
 qu
 qu
 qu
@@ -25129,7 +25148,7 @@ hP
 nW
 nW
 nW
-bE
+dI
 Jq
 QE
 Hv
@@ -25952,7 +25971,7 @@ qu
 Ew
 ki
 wY
-Zo
+Cj
 oD
 oD
 EW
