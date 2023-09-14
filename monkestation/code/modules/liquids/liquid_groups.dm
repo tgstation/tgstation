@@ -723,6 +723,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/expose_atom(atom/target, modifier = 0, method)
 	if(!turf_reagents)
 		return
+	if(HAS_TRAIT(target, LIQUID_PROTECTION))
+		return
 	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
