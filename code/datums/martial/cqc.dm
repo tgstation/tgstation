@@ -166,6 +166,18 @@
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
 		return FALSE
+
+	if(attacker.resting && !defender.stat && defender.body_position == STANDING_UP)
+		defender.visible_message(span_danger("[attacker] leg sweeps [defender]!"), \
+						span_userdanger("Your legs are sweeped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
+		to_chat(attacker, span_danger("You leg sweep [defender]!"))
+		playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+		attacker.do_attack_animation(defender)
+		defender.apply_damage(10, BRUTE)
+		defender.Knockdown(5 SECONDS)
+		log_combat(attacker, defender, "sweeped (CQC)")
+		return TRUE
+
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
 		return TRUE
@@ -185,14 +197,7 @@
 					span_userdanger("You're [picked_hit_type]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You [picked_hit_type] [defender]!"))
 	log_combat(attacker, defender, "[picked_hit_type]s (CQC)")
-	if(attacker.resting && !defender.stat && !defender.IsParalyzed())
-		defender.visible_message(span_danger("[attacker] leg sweeps [defender]!"), \
-						span_userdanger("Your legs are sweeped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
-		to_chat(attacker, span_danger("You leg sweep [defender]!"))
-		playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-		defender.apply_damage(10, BRUTE)
-		defender.Paralyze(6 SECONDS)
-		log_combat(attacker, defender, "sweeped (CQC)")
+
 	return TRUE
 
 /datum/martial_art/cqc/disarm_act(mob/living/attacker, mob/living/defender)
