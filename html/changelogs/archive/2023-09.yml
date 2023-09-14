@@ -478,3 +478,49 @@
   vinylspiders:
   - bugfix: fixed grown food items not getting the right seed type passed to them
       upon creation
+2023-09-14:
+  ArcaneMusic:
+  - qol: Conveyor belts now have screentips and a better examine tip to teach you
+      how to set one up properly.
+  - qol: Using a conveyor belt stack on a placed conveyor belt will extend the conveyor
+      belt to the output of that conveyor belt.. You can use this to place fully integrated
+      conveyor belts much easier now.
+  Das15:
+  - bugfix: You can no longer teleport to disabled beacon if the teleporter was previously
+      locked-on to it.
+  IHateGeese:
+  - bugfix: Nightmares can no longer receive wounds
+  - bugfix: Nightmares can no longer have limbs dismembered
+  Jacquerel:
+  - bugfix: Roundstart medbots and cleanbots are now more likely to be able to be
+      possessed by observers.
+  - admin: It's easier to modify the properties of bots to stop them from being possessed
+      or depossessed.
+  LT3:
+  - bugfix: Emergency shuttle should correctly scale timer up/down when changing security
+      levels
+  Mothblocks:
+  - bugfix: Dynamic now biases less heavily towards the exact average.
+  Rhials:
+  - rscadd: Shuttle Firesale positive station trait. Some emergency shuttle options
+      have been put on sale!
+  - rscadd: Misplaced Wallet positive station trait. You wouldn't steal from a missing
+      wallet, would you??
+  - rscadd: Wisdom Cow Invasion positive station trait.
+  - rscadd: Advanced Medbots positive station trait. Better roundstart medbots!
+  - rscadd: Loaner Shuttle positive station trait. More shuttle loan offers and more
+      payout!
+  - qol: Station Trait titles are now italicized for easier reading.
+  - spellcheck: Fixes a "prerequisites" typo in the shuttle purchase menu.
+  Seven:
+  - balance: The supermatter delamination countdown has been lowered from 30 to 13
+      seconds
+  - balance: Removing a sliver from the supermatter further lowers that down to 3
+      seconds
+  - balance: The supermatter crystal uses bigger text on its final countdown
+  - spellcheck: Some supermatter delamination related mood descriptions have been
+      edited to explain the mood effect better
+  Timberpoes:
+  - bugfix: Fix poor dynamic threat distribution at lower population levels, causing
+      dynamic to generate better threat curves at lower population levels than it
+      did before.

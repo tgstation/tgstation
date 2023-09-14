@@ -1,4 +1,0 @@
-author: "Das15"
-delete-after: True
-changes:
-  - bugfix: "You can no longer teleport to disabled beacon if the teleporter was previously locked-on to it."
