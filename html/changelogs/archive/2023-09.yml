@@ -28,3 +28,39 @@
 2023-09-12:
   MomoBerri:
   - rscadd: New directional Signs!
+2023-09-14:
+  Aeri, Moberry, Glyphee, lolc4n:
+  - rscadd: completelly re-furnished and changed a load of stuff in oshan
+  Gboster-0:
+  - bugfix: delta once again has the PTL
+  KittyNoodle:
+  - balance: The engineers and atmos techs have had their modsuits returned
+  dwasint:
+  - rscadd: walkman, can play cassettes
+  - rscadd: cassette mixer, you can mix premade cassettes in a portable cassette mixer
+  - rscadd: 'stationary cassette mixer, you can add your own songs to these cassettes.
+      WARNING: these are not approved so they can only be played in walkman and not
+      over the stations radio'
+  - code_imp: changes youtube-dl for the faster yt-dlp
+  wraith-54321:
+  - rscadd: Gods now make explosions while fighting.
+  - balance: Reebe now starts with 2 stargazers and tinkerer's cache's.
+  - bugfix: Adds a recall where there should be one in slab_recall.
+  - balance: Makes max clock cultists scale slower.
+  - bugfix: Improved borg clockwork conversion.
+  - bugfix: Fixed the clock cultist ruleset reebe loading.
+  - balance: Discousages wall spam on reebe by making walls and windows build slower
+      on reebe.
+  - bugfix: Makes soul vessels automatically add clock cultist on being entered as
+      well as improves their checking.
+  - bugfix: Fixes clockwork weapons being able to be used by pacifists to apply effects
+      but not damage.
+  - balance: Nerfs brass spear recall cooldown from 10 to 15 seconds.
+  - bugfix: Adds clockwork modules for cargo borgs.
+  - bugfix: Makes marauders actually be clock cultists.
+  - balance: Nerfs ocular warden minimum placement distance from 3 to 4.
+  - balance: Makes anchoring crystals take 6 instead of 5 minutes to charge.
+  - balance: Nerfs ocular warden base damage from 10 to 8 and minimum from 5 to 4.
+  - bugfix: Makes prosperity prisms no longer spam runtimes on reagentless mobs.
+  - bugfix: Vitality sigils will no longer put borg or clock cult banned players into
+      soul vessels.
