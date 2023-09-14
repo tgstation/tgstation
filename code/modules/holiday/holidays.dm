@@ -322,7 +322,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	holiday_hat = /obj/item/clothing/mask/animal/small/bee
+	holiday_hat = /obj/item/clothing/mask/animal/small/bee //change off of mask
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")

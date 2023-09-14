@@ -74,7 +74,7 @@
 	/// Default [/mob/living/simple_animal/drone/var/internal_storage] item
 	var/obj/item/default_storage = /obj/item/storage/drone_tools
 	/// Default [/mob/living/simple_animal/drone/var/head] item
-	var/obj/item/default_hatmask
+	var/obj/item/default_headwear
 	/**
 	  * icon_state of drone from icons/mobs/drone.dmi
 	  *
@@ -185,11 +185,11 @@
 	for(var/holidayname in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
 
-		if(holiday_today.holiday_hat && !default_hatmask) //If we don't already have a hat (no secret syndiedrones), we take the holiday one.
-			default_hatmask = holiday_today.holiday_hat
+		if(holiday_today.holiday_hat && !default_headwear) //If we don't already have a hat (no secret syndiedrones), we take the holiday one.
+			default_headwear = holiday_today.holiday_hat
 
-	if(default_hatmask)
-		var/obj/item/I = new default_hatmask(src)
+	if(default_headwear)
+		var/obj/item/I = new default_headwear(src)
 		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
