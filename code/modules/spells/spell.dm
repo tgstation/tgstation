@@ -398,15 +398,29 @@
 	if(invoke_sig_return & SPELL_INVOCATION_FAIL)
 		return FALSE
 
-	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(invoker, TRAIT_EMOTEMUTE))
-		if(feedback)
-			to_chat(invoker, span_warning("You can't position your hands correctly to invoke [src]!"))
-		return FALSE
+	if(invocation_type == INVOCATION_EMOTE)
+		if(HAS_TRAIT(invoker, TRAIT_EMOTEMUTE))
+			if(feedback)
+				to_chat(invoker, span_warning("You can't position your hands correctly to invoke [src]!"))
+			return FALSE
+		if(ishuman(invoker) && invoker.usable_hands <= 0)
+			if(feedback)
+				to_chat(invoker, span_warning("You don't have the usable hands to invoke [src]!"))
+			return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !invoker.can_speak())
-		if(feedback)
-			to_chat(invoker, span_warning("You can't get the words out to invoke [src]!"))
-		return FALSE
+		return TRUE
+
+	if(invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT)
+		if(!invoker.can_speak())
+			if(feedback)
+				to_chat(invoker, span_warning("You can't get the words out to invoke [src]!"))
+			return FALSE
+
+		if(ishuman(invoker) && !invoker.get_organ_slot(ORGAN_SLOT_TONGUE))
+			if(feedback)
+				to_chat(invoker, span_warning("You can't get correct words out to invoke [src]!"))
+			return FALSE
+		return TRUE
 
 	return TRUE
 
