@@ -39,14 +39,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)
 	AddComponent(/datum/component/pry_open_door)
 
 /mob/living/basic/faithless/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if (!.)
-		return FALSE
-
-	if (!isliving(target))
+	if (!. || !isliving(target))
 		return
 
 	var/mob/living/living_target = target
@@ -54,12 +52,6 @@
 		living_target.Paralyze(paralyze_duration)
 		living_target.visible_message(span_danger("\The [src] knocks \the [target] down!"), \
 			span_userdanger("\The [src] knocks you down!"))
-
-	if(!Adjacent(living_target) || !isturf(living_target.loc) || living_target.stat != SOFT_CRIT)
-		return
-	if(HAS_AI_CONTROLLER_TYPE(living_target.pulledby, /datum/ai_controller/basic_controller/faithless))
-		return // Don't steal from my pals!
-	start_pulling(living_target)
 
 /datum/ai_controller/basic_controller/faithless
 	blackboard = list(
