@@ -1,7 +1,10 @@
 /datum/action/changeling/mmi_talk
 	name = "MMI Talk"
 	desc = "Our decoy brain has been implanted into a Man-Machine Interface. \
-		In order to maintain our secrecy, we can speak through the decoy as if a normal brain."
+		In order to maintain our secrecy, we can speak through the decoy as if a normal brain. \
+		The decoy brain will relay speech it hears to you in purple."
+	button_icon = 'icons/obj/assemblies/assemblies.dmi'
+	button_icon_state = "mmi_off"
 	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 	ignores_fakedeath = TRUE // Can be used while fake dead
 	req_stat = DEAD // Can be used while real dead too
@@ -127,9 +130,11 @@
 /datum/action/changeling/mmi_talk/proc/relay_hearing(obj/item/mmi/source, list/hear_args)
 	SIGNAL_HANDLER
 
+	// We can likely already hear them, so do not bother
+	if(can_see(owner, hear_args[HEARING_SPEAKER], 7))
+		return
+
 	var/list/new_args = hear_args.Copy()
 	new_args[HEARING_SPANS] |= "purple"
 	new_args[HEARING_RANGE] = INFINITY // so we can hear it from any distance away
-
-	to_chat(owner, span_purple("Relayed from MMI:"))
 	owner.Hear(arglist(new_args))

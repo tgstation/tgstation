@@ -30,7 +30,7 @@ export const LingMMITalk = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Stack width="100%">
-              <Stack.Item width="80%">
+              <Stack.Item width="85%">
                 <TextArea
                   height="60px"
                   placeholder="Send a message to have our decoy brain speak."

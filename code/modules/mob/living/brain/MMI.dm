@@ -272,7 +272,7 @@
 		var/obj/item/organ/internal/brain/real_brain = B.loc
 		if(real_brain.decoy_override)
 			if(user)
-				to_chat(user, span_warning("This [real_brain.name] does not seem to fit!"))
+				to_chat(user, span_warning("This [name] does not seem to fit!"))
 			return FALSE
 	if(!B.key || !B.mind)
 		if(user)
