@@ -238,10 +238,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
 
-/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item, number_of_things)
-	if(item.type == /obj/item/pen)
+/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
+	if(item_path == /obj/item/pen)
 		return "unique type of pen"
-	else return ..()
+	return ..()
 
 /datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()

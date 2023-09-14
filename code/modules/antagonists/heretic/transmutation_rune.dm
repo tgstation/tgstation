@@ -114,12 +114,7 @@
 				continue
 			// if list has items, check if the strict type is banned.
 			if(length(banned_atom_types))
-				var/bad_item = FALSE
-				for(var/banned_type in banned_atom_types) // the loop pile doesn't stop from getting taller
-					if(nearby_atom.type == banned_type)
-						bad_item = TRUE
-						break
-				if(bad_item)
+				if(nearby_atom.type in banned_atom_types)
 					continue
 
 			// This item is a valid type. Add it to our selected atoms list.
@@ -147,8 +142,10 @@
 		var/formatted_thing = "[number_of_things] "
 		if(islist(req_type))
 			var/list/req_type_list = req_type
+			var/list/req_text_list = list()
 			for(var/atom/possible_type as anything in req_type_list)
-				formatted_thing += ritual.parse_required_item(possible_type)
+				req_text_list += ritual.parse_required_item(possible_type)
+			formatted_thing += english_list(req_text_list, and_text = "or")
 
 		else
 			formatted_thing = ritual.parse_required_item(req_type)
