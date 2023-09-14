@@ -80,9 +80,21 @@
 		return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/attacker, mob/living/defender)
-	if(!can_use(attacker))
+	if(!can_use(attacker) || defender.stat == DEAD)
 		return FALSE
-	if(!defender.stat || !defender.IsParalyzed())
+
+	var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
+	var/knockout_prob = rand(-15,15) + defender.getStaminaLoss() - helmet_protection
+	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() !&& prob(knockout_prob))
+		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
+		defender.visible_message(span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"), \
+						span_userdanger("You're knocked unconscious by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
+		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
+		playsound(get_turf(attacker), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
+		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, helmet_protection)
+		defender.SetUnconscious(10 SECONDS)
+		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+	else
 		defender.visible_message(span_danger("[attacker] kicks [defender] back!"), \
 						span_userdanger("You're kicked back by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You kick [defender] back!"))
@@ -91,16 +103,8 @@
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
 		log_combat(attacker, defender, "kicked (CQC)")
-		. = TRUE
-	if(defender.IsParalyzed() && !defender.stat)
-		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
-		defender.visible_message(span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"), \
-						span_userdanger("You're knocked unconscious by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
-		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
-		playsound(get_turf(attacker), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
-		defender.SetSleeping(30 SECONDS)
-		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
-		. = TRUE
+
+	. = TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
