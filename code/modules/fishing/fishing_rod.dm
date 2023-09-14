@@ -211,7 +211,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!isturf(source.origin) || !isturf(source.target) || !CheckToolReach(src, source.target, cast_range))
+	if(!isturf(source.origin.loc) || !isturf(source.target.loc) || !CheckToolReach(src, source.target, cast_range))
 		SEND_SIGNAL(source, COMSIG_FISHING_LINE_SNAPPED) //Stepped out of range or los interrupted
 		return BEAM_CANCEL_DRAW
 
