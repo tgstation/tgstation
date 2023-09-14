@@ -33,7 +33,7 @@
 	var/perlin_zoom = 65
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/ocean_generator/generate_terrain(list/turfs)
+/datum/map_generator/ocean_generator/generate_terrain(list/turfs, area/generate_in)
 	. = ..()
 	var/height_seed = rand(0, 50000)
 	var/humidity_seed = rand(0, 50000)
@@ -136,7 +136,7 @@
 	var/perlin_zoom = 65
 
 
-/datum/map_generator/cave_generator/trench/generate_terrain(list/turfs)
+/datum/map_generator/cave_generator/trench/generate_terrain(list/turfs, area/generate_in)
 
 	var/humidity_seed = rand(0, 50000)
 	var/heat_seed = rand(0, 50000)
