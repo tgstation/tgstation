@@ -22,8 +22,9 @@
 /// Try and grab something we attacked
 /datum/element/mob_grabber/proc/grab_mob(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
-	if (!isliving(target) || !source.Adjacent(target) || target.stat > minimum_stat)
+	if (!isliving(target) || !source.Adjacent(target) || target.stat < minimum_stat)
 		return
-	if (!steal_from_others && !isnull(target.pulledby))
+	var/atom/currently_pulled = target.pulledby
+	if (!isnull(currently_pulled) && (!steal_from_others || currently_pulled == source))
 		return
-	INVOKE_ASYNC(source, TYPE_PROC_REF(/atom/movable, start_pulling), target)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob/living, grabbedby), source)

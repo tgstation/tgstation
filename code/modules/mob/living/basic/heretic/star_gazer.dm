@@ -42,7 +42,6 @@
 /mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
-	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
