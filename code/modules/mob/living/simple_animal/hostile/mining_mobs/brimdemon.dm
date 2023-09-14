@@ -159,33 +159,6 @@
 		QDEL_IN(beam, 0.5 SECONDS)
 		beamparts -= beam
 
-/obj/effect/brimbeam
-	name = "brimbeam"
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "brimbeam_mid"
-	layer = ABOVE_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	light_color = LIGHT_COLOR_BLOOD_MAGIC
-	light_power = 3
-	light_range = 2
-
-/obj/effect/brimbeam/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/effect/brimbeam/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
-
-/obj/effect/brimbeam/process()
-	for(var/mob/living/hit_mob in get_turf(src))
-		damage(hit_mob)
-
-/obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
-	hit_mob.adjustFireLoss(5)
-	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
-
 /obj/item/crusher_trophy/brimdemon_fang
 	name = "brimdemon's fang"
 	icon_state = "brimdemon_fang"

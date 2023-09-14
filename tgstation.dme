@@ -4194,6 +4194,8 @@
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_instrument.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_loot.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_vileworm.dm"
+#include "code\modules\mob\living\basic\lavaland\brimdemon\brimbeam.dm"
+#include "code\modules\mob\living\basic\lavaland\brimdemon\brimdemon.dm"
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub.dm"
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub_abilities.dm"
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub_ai.dm"
