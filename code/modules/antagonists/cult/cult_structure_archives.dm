@@ -12,6 +12,7 @@
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
+	mansus_conversion_path = /obj/item/codex_cicatrix
 
 /obj/structure/destructible/cult/item_dispenser/archives/setup_options()
 	var/static/list/archive_items = list(
@@ -29,7 +30,16 @@
 			),
 	)
 
-	options = archive_items
+	options = archive_items + extra_options()
+
+/obj/structure/destructible/cult/item_dispenser/archives/extra_options()
+	if(cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED] == FALSE)
+		return
+	return list(CRIMSON_FOCUS = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "bleeding_necklace"),
+			OUTPUT_ITEMS = list(/obj/item/clothing/neck/heretic_focus/crimson_focus),
+			),
+	)
 
 /obj/structure/destructible/cult/item_dispenser/archives/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cultitalic("You summon [spawned_item] from [src]!"))

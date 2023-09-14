@@ -1,7 +1,7 @@
 /// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
 	name = "transmutation rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
+	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
 	icon_state = ""
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND

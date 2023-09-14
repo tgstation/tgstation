@@ -149,6 +149,8 @@
 		// [ability] = delay
 		initialized_actions[ability] = sequence_actions[type_path]
 
+#define COMSIG_ACTION_START_COOLDOWN "gingus"
+
 /// Starts a cooldown time to be shared with similar abilities
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time, override_melee_cooldown_time)

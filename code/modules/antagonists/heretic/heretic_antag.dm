@@ -74,6 +74,13 @@
 		PATH_COSMIC = COLOR_PURPLE,
 	)
 
+	// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
+	var/list/unlocked_heretic_items = list(
+		/obj/item/melee/sickly_blade/cursed = 0,
+		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
+		/mob/living/simple_animal/hostile/construct/harvester/heretic = 0,
+	)
+
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
 	return ..()
@@ -385,7 +392,19 @@
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
 	SIGNAL_HANDLER
 
-	new /obj/item/cult_bastard(source.loc)
+	//new /obj/item/cult_bastard(source.loc)
+	var/obj/item/melee/cultblade/haunted/evil_in_a_jar = new(source.loc)
+
+	//evil_in_a_jar.trapped_heretic_soul.mind?.antag_datums |= source.mind?.antag_datums
+	source.mind.transfer_to(evil_in_a_jar.trapped_heretic_soul)
+	evil_in_a_jar.heretic_path = heretic_path
+	evil_in_a_jar.activate_path_abilities()
+
+	evil_in_a_jar.trapped_heretic_soul.faction = source.faction.Copy()
+	evil_in_a_jar.trapped_heretic_soul.copy_languages(source, LANGUAGE_MIND)
+
+	//make it dust heretic
+
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
 	return SILENCE_SACRIFICE_MESSAGE

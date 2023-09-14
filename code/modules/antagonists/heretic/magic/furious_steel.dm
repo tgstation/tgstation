@@ -96,6 +96,10 @@
 	blade_effect = null
 	on_deactivation()
 
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
+	projectile_amount = 1
+	projectile_type = /obj/projectile/floating_blade/haunted
+
 /obj/projectile/floating_blade
 	name = "blade"
 	icon = 'icons/obj/service/kitchen.dmi'
@@ -106,10 +110,11 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 15
 	pass_flags = PASSTABLE | PASSFLAPS
+	var/outline_color = "#f8f8ff"
 
 /obj/projectile/floating_blade/Initialize(mapload)
 	. = ..()
-	add_filter("knife", 2, list("type" = "outline", "color" = "#f8f8ff", "size" = 1))
+	add_filter("knife", 2, list("type" = "outline", "color" = outline_color, "size" = 1))
 
 /obj/projectile/floating_blade/prehit_pierce(atom/hit)
 	if(isliving(hit) && isliving(firer))
@@ -128,3 +133,11 @@
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	return ..()
+
+/obj/projectile/floating_blade/haunted
+	name = "ritual blade"
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "render"
+	damage = 35
+	wound_bonus = 25
+	outline_color = "#D7CBCA"

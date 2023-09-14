@@ -318,6 +318,14 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
+/obj/machinery/door/window/rust_heretic_act()
+	add_atom_colour("#917c65", FIXED_COLOUR_PRIORITY)
+	armor = null
+	max_integrity *= 0.5
+	atom_integrity *= 0.5
+	if(!HAS_TRAIT(src, TRAIT_RUSTY))
+		AddElement(/datum/element/rust)
+
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
 

@@ -10,6 +10,7 @@
 	cult_examine_tip = "Can be used to create eldritch whetstones, construct shells, and flasks of unholy water."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
+	mansus_conversion_path = /obj/effect/heretic_rune
 
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(
@@ -27,7 +28,16 @@
 			),
 	)
 
-	options = altar_items
+	options = altar_items + extra_options()
+
+/obj/structure/destructible/cult/item_dispenser/altar/extra_options()
+	if(cult_team?.unlocked_heretic_items[HARVESTER_SHELL_UNLOCKED] == FALSE)
+		return
+	return list(HARVESTER_SHELL = list(
+			PREVIEW_IMAGE = image(icon = 'icons/mob/shells.dmi', icon_state = "construct_cult"),
+			OUTPUT_ITEMS = list(/obj/structure/constructshell/harvester),
+			),
+	)
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cultitalic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))

@@ -68,7 +68,7 @@
 	SIGNAL_HANDLER
 
 	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
-	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
+	// This is a bit of a hack, but fixing this would require the entire wire cut/pulse system to be reworked.
 	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()

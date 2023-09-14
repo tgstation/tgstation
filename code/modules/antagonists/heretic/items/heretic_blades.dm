@@ -148,17 +148,23 @@
 	if(IS_HERETIC_OR_MONSTER(user) || IS_CULTIST(user))
 		return TRUE
 	var/mob/living/carbon/human/human_user = user
-	if(prob(50))
-		to_chat(user, span_cultlarge(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\", \"You'll be mine soon enough.\"")))
+	if(prob(15))
+		to_chat(user, span_cultlarge(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
+		var/obj/item/bodypart/affecting = user.get_active_hand()
+		if(!affecting)
+			return
+		affecting.receive_damage(burn = 5)
+		playsound(source, SFX_SEAR, 25, TRUE)
+		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
 		to_chat(user, span_danger("Horrible, unintelligible utterances flood your mind!"))
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
 	return TRUE
 
 /obj/item/melee/sickly_blade/cursed/equipped(mob/user, slot)
 	. = ..()
-	if(ISHERETIC(user))
+	if(IS_HERETIC_OR_MONSTER(user))
 		after_use_message = "The Mansus hears your call..."
-	else if(ISCULTIST(user))
+	else if(IS_CULTIST(user))
 		after_use_message = "Nar'Sie hears your call..."

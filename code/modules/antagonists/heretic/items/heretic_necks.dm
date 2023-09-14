@@ -12,10 +12,12 @@
 /obj/item/clothing/neck/heretic_focus/crimson_focus
 	name = "Crimson Focus"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
-	icon_state = "bleeding_necklace"
+	icon_state = "crimson_focus"
 
 #define COMSIG_CULT_EMPOWER "gingus"
 #define TRAIT_WEARING_FOCUS "gingus"
+
+#define COMSIG_ACTION_START_COOLDOWN "gingus"
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
 	. = ..()
@@ -25,9 +27,9 @@
 	AddComponent( \
 		/datum/component/aura_healing, \
 		range = 1, \
-		brute_heal = 0.2, \
-		burn_heal = 0.2, \
-		blood_heal = 0.2, \
+		brute_heal = 0.1, \
+		burn_heal = 0.1, \
+		blood_heal = 0.1, \
 		simple_heal = 0.6, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_WEARING_FOCUS, \
@@ -58,9 +60,9 @@
 	. = ..()
 
 	if(IS_CULTIST(user))
-		to_chat(user, span_cultboldtalic("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect."))
+		. += span_cultboldtalic("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
 	if(IS_HERETIC_OR_MONSTER(user))
-		to_chat(user, span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect."))
+		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect.")
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"

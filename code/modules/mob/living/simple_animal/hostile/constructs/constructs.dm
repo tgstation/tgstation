@@ -87,6 +87,8 @@
 			text_span = "purple"
 		if(THEME_HOLY)
 			text_span = "blue"
+		if(THEME_HERETIC)
+			text_span = "hierophant"
 	. = list("<span class='[text_span]'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)

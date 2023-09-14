@@ -23,12 +23,22 @@
 		pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE
 	slowed_by_drag = FALSE
+	var/list/passable_atoms = list(
+		/obj/machinery/door/airlock/cult,
+		/obj/structure/girder/cult,
+		/obj/structure/table/wood,
+		/turf/closed/wall/mineral/cult,
+		// Add windows and windoors here when narsie_act() doesn't just change their fuckin' color
+	)
 
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
 	. = ..()
-	if(!istype(thing, /turf/closed/wall/mineral/cult) || thing == loc)
-		return // we can go through cult walls
+	if(thing == loc)
+		return
+	// We force move through anything in passable_atoms or that passes a snowflake check.
+	if(!is_type_in_list(thing, passable_atoms) && !snowflake_check())
+		return
 	var/atom/movable/stored_pulling = pulling
 
 	if(stored_pulling)
@@ -38,6 +48,9 @@
 
 	if(stored_pulling)
 		start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
+
+/mob/living/simple_animal/hostile/construct/harvester/proc/snowflake_check(atom/thing)
+	return
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(!iscarbon(target))
@@ -151,3 +164,36 @@
 	desc = "Activate to track Nar'Sie!"
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
+
+/mob/living/simple_animal/hostile/construct/harvester/heretic
+	name = "Rusted Harvester"
+	real_name = "Rusted Harvester"
+	desc = "A long, thin, decrepit construct originally built to herald Nar'Sie's rise, corrupted and rusted by the forces of the Mansus to spread its will instead."
+	icon_state = "harvester"
+	icon_living = "harvester"
+	maxHealth = 40
+	health = 40
+	sight = SEE_MOBS
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	attack_verb_continuous = "butchers"
+	attack_verb_simple = "butcher"
+	// Dim purple
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 20
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
+	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/rust_conversion,
+		/datum/action/cooldown/spell/pointed/rust_construction,
+	)
+	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend foes apart on each attack. Follow your Master's orders!<B>"
+	theme = THEME_HERETIC
+	passable_atoms = list()
+
+/mob/living/simple_animal/hostile/construct/harvester/heretic/snowflake_check(atom/thing)
+	if(HAS_TRAIT(thing, TRAIT_RUSTY))
+		return TRUE
+
+	//thing.AddElement(/datum/element/rust)

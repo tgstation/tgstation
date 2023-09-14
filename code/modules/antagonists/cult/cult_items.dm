@@ -106,6 +106,147 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	..()
 
+/obj/item/melee/cultblade/haunted
+	name = "ensouled longsword"
+	desc = "An eerie sword with a red hilt and a blade that is less 'black' than it is 'absolute nothingness', covered in strange glowing white runes. It glows with furious, restrained green energy."
+	force = 35
+	throwforce = 35
+	block_chance = 55
+	wound_bonus = -10
+	bare_wound_bonus = 20
+	var/mob/living/simple_animal/soulscythe/trapped_heretic_soul
+	var/heretic_path
+	var/path_wielder_action
+	var/path_sword_action
+
+/obj/item/melee/cultblade/haunted/Initialize(mapload)
+	. = ..()
+	trapped_heretic_soul = new(src)
+	RegisterSignal(trapped_heretic_soul, COMSIG_LIVING_RESIST, PROC_REF(on_resist))
+	RegisterSignal(trapped_heretic_soul, COMSIG_MOB_ATTACK_RANGED, PROC_REF(slash_target))
+	RegisterSignal(trapped_heretic_soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(lunge_target))
+	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
+
+/obj/item/melee/cultblade/haunted/proc/slash_target(atom/attacked_atom)
+
+	if(get_dist(src, attacked_atom) > 1)
+		return
+
+	attacked_atom.attacked_by(src, trapped_heretic_soul)
+
+	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
+
+/obj/item/melee/cultblade/haunted/proc/lunge_target(atom/attacked_atom)
+
+	if(!isturf(loc) || !isturf(loc.loc))
+		to_chat(trapped_heretic_soul, span_warning("You can't lunge your way out of this! Resist out!"))
+
+	visible_message(span_danger("[src] lunges at [attacked_atom]!"), span_notice("You lunge at [attacked_atom]!"))
+	safe_throw_at(attacked_atom, range = 2, speed = 5, thrower = trapped_heretic_soul, spin = TRUE, force = MOVE_FORCE_STRONG, gentle = FALSE)
+
+/obj/item/melee/cultblade/haunted/throw_impact(atom/hit_atom)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	do_attack_animation(hit_atom, ATTACK_EFFECT_SLASH)
+	var/mob/living/hit_mob = hit_atom
+	if(istype(hit_mob) && hit_mob.stat != DEAD)
+		give_blood(10)
+
+/obj/item/melee/cultblade/haunted/attack(mob/living/attacked, mob/living/user, params)
+	. = ..()
+	if(attacked.stat != DEAD)
+		give_blood(10)
+
+	else if(heretic_path == PATH_FLESH)
+		make_ghoul(attacked, user)
+
+/obj/item/melee/cultblade/haunted/proc/make_ghoul(mob/living/attacked, mob/living/user)
+	if(HAS_TRAIT(attacked, TRAIT_HUSK) || !IS_VALID_GHOUL_MOB(attacked))
+		attacked.balloon_alert(src, "must be humanoid and nonhusked!")
+		return
+
+	attacked.grab_ghost()
+
+	// The grab failed, so they're mindless or playerless. We can't continue
+	if(!attacked.mind || !attacked.client)
+		attacked.balloon_alert(src, "no soul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	trapped_heretic_soul.log_message("created a ghoul, controlled by [key_name(attacked)].", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(trapped_heretic_soul)] created a ghoul, [ADMIN_LOOKUPFLW(attacked)].")
+
+	//Note that these are the heretic's ghouls and are thus subject to its whims!
+	attacked.apply_status_effect(
+		/datum/status_effect/ghoul,
+		GHOUL_MAX_HEALTH,
+		trapped_heretic_soul.mind,
+		CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		CALLBACK(src, PROC_REF(remove_from_ghoul)),
+	)
+
+/obj/item/melee/cultblade/AllowClick()
+	return TRUE
+
+/obj/item/melee/cultblade/proc/use_blood(amount = 0, message = TRUE)
+	if(amount > soul.blood_level)
+		if(message)
+			to_chat(soul, span_warning("Not enough blood!"))
+		return FALSE
+	soul.blood_level -= amount
+	return TRUE
+
+/obj/item/melee/cultblade/proc/give_blood(amount)
+	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
+
+/obj/item/melee/cultblade/proc/on_resist(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(isturf(loc))
+		return
+
+	// the heretic is allowed to be fickle
+	if(ismob(loc))
+		if(prob(5) || (!IS_CULTIST(loc) || IS_HERETIC(loc)))
+			visible_message(span_danger("[src] rips itself out of its wielders' grasp and drops to the floor!"), span_notice("You wrest yourself off your wielder's grasp and fall onto the floor!"))
+			var/mob/holder = loc
+			holder.temporarilyRemoveItemFromInventory(src)
+			forceMove(drop_location())
+		else
+			visible_message(span_danger("[src] shakes unsettlingly in [loc]'s hand."), span_notice("You attempt to wrest yourself off [loc], but fail."))
+
+	if(iscloset(loc))
+		var/obj/structure/closet/loc_closet = loc
+		loc_closet.open(trapped_heretic_soul, TRUE)
+		visible_message(span_danger("[src] resists out of [loc]!"))
+
+/obj/item/melee/cultblade/haunted/proc/activate_path_abilities()
+	if(heretic_path == PATH_START) // What a shitty heretic
+		name = "callow eldritch longsword"
+		return
+	switch(heretic_path)
+		if(PATH_ASH)
+			path_wielder_action = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+			path_sword_action = /datum/action/cooldown/spell/charged/beam/fire_blast
+			name = "ashen eldritch longsword"
+		if(PATH_FLESH)
+			// Add ghouling and healing to melee hits
+			name = "sanguine eldritch longsword"
+		if(PATH_VOID)
+			path_wielder_action = /datum/action/cooldown/spell/pointed/void_phase
+			path_sword_action = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
+			name = "voided eldritch longsword"
+		if(PATH_BLADE)
+			// Add wound resistance
+			path_sword_action = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
+			name = "keen eldritch longsword"
+		if(PATH_RUST)
+			path_wielder_action = /datum/heretic_knowledge/rust_regen
+			path_sword_action = /datum/action/cooldown/spell/aoe/rust_conversion
+			name = "rusted eldritch longsword"
+		//if(PATH_KNOCK)
+
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks

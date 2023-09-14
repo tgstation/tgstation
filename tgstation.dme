@@ -2721,6 +2721,7 @@
 #include "code\modules\antagonists\clown_ops\clown_weapons.dm"
 #include "code\modules\antagonists\clown_ops\clownop.dm"
 #include "code\modules\antagonists\clown_ops\outfits.dm"
+#include "code\modules\antagonists\cult\_defines.dm"
 #include "code\modules\antagonists\cult\blood_magic.dm"
 #include "code\modules\antagonists\cult\constructs.dm"
 #include "code\modules\antagonists\cult\cult.dm"
