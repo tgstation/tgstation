@@ -123,12 +123,13 @@
  * Parses specific items into a more reaadble form.
  * Can be overriden by knoweldge subtypes.
  */
-/datum/heretic_knowledge/proc/parse_required_item(atom/item, number_of_things)
+/datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
 	// If we need a human, there is a high likelihood we actually need a (dead) body
-	if(ishuman(item))
-		return "[number_of_things > 1 ? "bodies" : "body"]"
-	if(isliving(item))
-		return "of any kind of carcass"
+	if(ispath(item_path, /mob/living/carbon/human))
+		return "bod[number_of_things > 1 ? "ies" : "y"]"
+	if(ispath(item_path, /mob/living))
+		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return "[initial(item_path.name)]\s"
 
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
