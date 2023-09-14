@@ -51,4 +51,6 @@
 	qdel(refund_item)
 /// The item was used, it needs to no longer be refundable
 /datum/element/uplink_reimburse/proc/used(datum/target)
- src.Detach(target)
+	SIGNAL_HANDLER
+	
+	src.Detach(target)
