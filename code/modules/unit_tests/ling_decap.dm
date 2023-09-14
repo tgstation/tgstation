@@ -33,7 +33,7 @@
 
 	var/obj/item/bodypart/head/noggin = normal_guy.get_bodypart(BODY_ZONE_HEAD)
 	noggin.dismember()
-	TEST_ASSERT_EQUAL(noggin.mind, my_guys_mind, "Dummy's mind was not moved to their head after decapitation.")
+	TEST_ASSERT_EQUAL(noggin.brainmob.mind, my_guys_mind, "Dummy's mind was not moved to their head after decapitation.")
 
 	var/obj/item/organ/internal/brain/oldbrain = noggin.brain
 	noggin.drop_organs()
@@ -41,5 +41,5 @@
 
 	// Cleanup
 	qdel(noggin)
-	for(var/obj/item/organ/leftover in ling.loc)
+	for(var/obj/item/organ/leftover in normal_guy.loc)
 		qdel(leftover)
