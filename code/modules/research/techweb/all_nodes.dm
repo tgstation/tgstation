@@ -1489,7 +1489,7 @@
 		"stabilized_hook",
 		"fish_analyzer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	required_experiments = list(/datum/experiment/scanning/fish)
 
 /datum/techweb_node/exp_tools
