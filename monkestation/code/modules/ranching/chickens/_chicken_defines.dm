@@ -121,6 +121,7 @@
 #undef DEFAULT_CHICKEN_ABILITY_COOLDOWN
 
 /obj/item/food/egg
+	name = "White Egg"
 	///the amount the chicken is grown
 	var/amount_grown = 0
 	///the type of chicken that laid this egg

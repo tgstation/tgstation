@@ -137,6 +137,7 @@
 		"Librarian",
 		"Journalist",
 		"Archivist",
+		"Radio Host",
 	)
 
 /datum/job/cyborg

@@ -1,0 +1,37 @@
+{
+	"name": "A Millions Miles Away",
+	"desc": "A stylized plastic cassette tape with a synthwave asethetic.",
+	"side1_icon": "cassette_friday",
+	"side2_icon": "cassette_friday",
+	"author_ckey": "Dwasint",
+	"author_name": "Collects-The-Candy",
+	"approved": 1,
+	"songs": {
+		"side1": [
+			"https://www.youtube.com/watch?v=QFdB408xgEE",
+			"https://www.youtube.com/watch?v=7hpzMfusmzs",
+			"https://www.youtube.com/watch?v=A98DMo5rW10",
+			"https://www.youtube.com/watch?v=Igi5HOUdKdQ",
+			"https://www.youtube.com/watch?v=-aEvgivMy5o"
+			],
+		"side2": [
+			"https://www.youtube.com/watch?v=qGd0ljU1svQ",
+			"https://www.youtube.com/watch?v=ez5WWFdyWxA",
+			"https://www.youtube.com/watch?v=0nB0OHvXTrE",
+			"https://www.youtube.com/watch?v=mU5WmAyhzd4",
+			"https://www.youtube.com/watch?v=Y8RsgAQ1EkE"
+		]
+	},
+	"song_names": {
+		"side1": ["Now and Forever",
+				  "Horsey",
+				  "This Feeling",
+				  "Lovers",
+				  "Night In Tokyo Pt. II"],
+		"side2": ["Grandlife, Highlife",
+				  "82.99 F.M.",
+				  "Fugaz",
+				  "アスカBad Girl",
+				  "Thank You"]
+	}
+}

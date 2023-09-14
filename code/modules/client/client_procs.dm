@@ -107,9 +107,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
-	if (hippie_client_procs(href_list))
-		return
-
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
 		return
@@ -909,12 +906,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/failed = FALSE
 		var/datum/ipintel/res = get_ip_intel(address)
 		if (res.intel >= CONFIG_GET(number/ipintel_rating_bad))
-			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN, they will be added to interview queue"))
-
 			failed = TRUE
 		ip_intel = res.intel
 
 		if(ip_intel >= CONFIG_GET(number/ipintel_rating_bad) && !(ckey in GLOB.interviews.approved_ckeys))
+			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN, they will be added to interview queue"))
 			interviewee = TRUE
 		return failed
 

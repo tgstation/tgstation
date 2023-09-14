@@ -101,7 +101,6 @@
 	. = ..()
 	if(!blood_hunger)
 		icon_state = "monkey_animatronic_2"
-		desc += " It's glaring at you."
 		become_blood_hungry()
 
 /mob/living/basic/monkey_animatronic/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -127,6 +126,9 @@
 	. = ..()
 	if(isobserver(user))
 		. += "It has killed [killed_list.len] so far."
+
+	if(blood_hunger)
+		. += "It's glaring at you."
 
 /mob/living/basic/monkey_animatronic/melee_attack(atom/target, list/modifiers)
 	. = ..()

@@ -50,6 +50,7 @@
 /obj/machinery/power/transmission_laser/Initialize(mapload)
 	. = ..()
 
+	register_context()
 	range = get_dist(get_step(get_front_turf(), dir), get_edge_target_turf(get_front_turf(), dir))
 	var/turf/back_turf = get_step(get_back_turf(), turn(dir, 180))
 	terminal = locate(/obj/machinery/power/terminal) in back_turf
@@ -59,7 +60,6 @@
 		return
 	terminal.master = src
 	update_appearance()
-	register_context()
 
 /obj/machinery/power/transmission_laser/Destroy()
 	. = ..()
@@ -126,6 +126,7 @@
 	obj/item/held_item,
 	mob/living/user,
 )
+	. = ..()
 	context[SCREENTIP_CONTEXT_LMB] = "Turn [turned_on ? "Off" : "On"] the PTL."
 	context[SCREENTIP_CONTEXT_RMB] = "Turn [firing ? "Off" : "On"] the PTL's Firing mechanism."
 	return CONTEXTUAL_SCREENTIP_SET
