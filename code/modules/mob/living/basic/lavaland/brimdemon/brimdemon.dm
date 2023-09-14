@@ -15,7 +15,7 @@
 	melee_damage_lower = 7.5
 	melee_damage_upper = 7.5
 	attack_sound = 'sound/weapons/bite.ogg'
-	melee_attack_cooldown = 14 SECONDS
+	melee_attack_cooldown = 1 SECONDS
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -23,7 +23,7 @@
 	light_power = 5
 	light_range = 1.4
 
-	ai_controller = /datum/ai_controller/basic_controller
+	ai_controller = /datum/ai_controller/basic_controller/brimdemon
 
 	crusher_loot = /obj/item/crusher_trophy/brimdemon_fang
 	butcher_results = list(
@@ -39,6 +39,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	beam = new(src)
 	beam.Grant(src)
+	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, beam)
 
 /mob/living/basic/mining/brimdemon/Destroy()
 	QDEL_NULL(beam)
