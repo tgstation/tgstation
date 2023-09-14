@@ -172,7 +172,8 @@
 	var/static/list/weighted_traits
 	if(!weighted_traits)
 		weighted_traits = list()
-		for(var/datum/fish_trait/trait as anything in GLOB.fish_traits)
+		for(var/trait_type as anything in GLOB.fish_traits)
+			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
 	var/obj/item/fish/caught_fish = new reward_path(get_turf(fisherman), FALSE)
@@ -187,6 +188,7 @@
 	caught_fish.inherit_traits(new_traits, fixed_traits = fixed_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
 	caught_fish.progenitors = full_capitalize(caught_fish.name)
+	return caught_fish
 
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"

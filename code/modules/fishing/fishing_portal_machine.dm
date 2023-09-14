@@ -96,7 +96,7 @@
 		var/datum/fish_source/portal/source = available_fish_sources[radial_name]
 		choices[radial_name] = image(icon = 'icons/hud/radial_fishing.dmi', icon_state = source.radial_state)
 
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
 	if(!choice || !can_interact(user))
 		return
 	activate(available_fish_sources[choice])

@@ -45,21 +45,22 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	RegisterSignal(experiment_handler.parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_handler_examine))
 	RegisterSignal(experiment_handler.parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_handler_examine_more))
 
+/datum/experiment/scanning/fish/on_unselected(datum/component/experiment_handler/experiment_handler)
+	UnregisterSignal(experiment_handler.parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE))
+
 /datum/experiment/scanning/fish/proc/on_handler_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Examine the handler closer to review the fish scanned thus far.")
+	examine_list += span_notice("Examine again to review all the species of fish scanned so far.")
 
 /datum/experiment/scanning/fish/proc/on_handler_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Fish scanned hitherto, if any:")
-	examine_list += "<span class='info ml-1'>"
+	var/message = span_notice("Fish species scanned hitherto, if any:")
+	message += "<span class='info ml-1'>"
 	for(var/atom_type in required_atoms)
 		for(var/obj/item/fish/fish_path as anything in scanned[atom_type])
-			examine_list += "[initial(fish_path.name)]"
-	examine_list += "</span>"
-
-/datum/experiment/scanning/fish/on_selected(datum/component/experiment_handler/experiment_handler)
-	UnregisterSignal(experiment_handler.parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE))
+			message += "[initial(fish_path.name)]"
+	message += "</span>"
+	examine_list += message
 
 ///Only scannable fish will contribute towards the experiment.
 /datum/experiment/scanning/fish/final_contributing_index_checks(obj/item/fish/target, typepath)
