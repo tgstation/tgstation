@@ -320,9 +320,11 @@
 		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
+	door.autoclose = TRUE
+	door.close()
 	door.update_appearance()
+
 	qdel(src)
-	return door
 
 /obj/structure/door_assembly/update_overlays()
 	. = ..()

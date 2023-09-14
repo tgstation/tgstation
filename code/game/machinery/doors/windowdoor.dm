@@ -64,30 +64,6 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
-/**
- * set electronics for this windoor
- * Arguments
- * * [electronics][obj/item/electronics/airlock] - the electronics for this door
- */
-/obj/machinery/door/window/proc/set_electronics(obj/item/electronics/airlock/electronics)
-	name = electronics.passed_name || initial(name)
-	if(electronics.one_access)
-		req_one_access = electronics.accesses
-	else
-		req_access = electronics.accesses
-	if(electronics.unres_sides)
-		unres_sides = electronics.unres_sides
-		switch(dir)
-			if(NORTH,SOUTH)
-				unres_sides &= ~EAST
-				unres_sides &= ~WEST
-			if(EAST,WEST)
-				unres_sides &= ~NORTH
-				unres_sides &= ~SOUTH
-		unres_sensor = TRUE
-	src.electronics = electronics
-	electronics.forceMove(src)
-
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
 	if(atom_integrity == 0)

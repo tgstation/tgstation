@@ -295,10 +295,11 @@
 						continue
 					balloon_alert(user, "there's already a door!")
 					return FALSE
-				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
-				new_window.set_electronics(the_rcd.airlock_electronics.create_copy(new_window))
-				new_window.autoclose = TRUE
-				new_window.update_appearance()
+				//create the assembly and let it finish itself
+				var/obj/structure/windoor_assembly/assembly = new /obj/structure/windoor_assembly(src, user.dir)
+				assembly.secure = ispath(the_rcd.airlock_type, /obj/machinery/door/window/brigdoor)
+				assembly.electronics = the_rcd.airlock_electronics.create_copy(assembly)
+				assembly.finish_door()
 				return TRUE
 
 			for(var/obj/machinery/door/door in src)
@@ -306,6 +307,7 @@
 					continue
 				balloon_alert(user, "there's already a door!")
 				return FALSE
+			//create the assembly and let it finish itself
 			var/obj/structure/door_assembly/assembly = new (src)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/airlock/glass))
 				assembly.glass = TRUE
