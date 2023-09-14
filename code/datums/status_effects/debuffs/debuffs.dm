@@ -363,6 +363,7 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	return ..()
 
+///Handles detonating the mark, calculating and incrementing crusher damage dealt to the owner.
 /datum/status_effect/crusher_mark/proc/on_mark_detonation(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 

@@ -1,7 +1,6 @@
-/**
- * Crusher applicant defines - decides which signal should [/datum/element/crusher_damage_applicant] hook into
- * for applying [/datum/status_effect/crusher_damage] to a target mob
-*/
+//Crusher applicant defines - decides which signal should [/datum/element/crusher_damage_applicant] hook into
+//for applying [/datum/status_effect/crusher_damage] to a target mob
+
 /// This applicant is used to attack in melee and should listen for `COMSIG_ITEM_PRE_ATTACK`
 #define APPLY_WITH_MELEE 0
 /// This applicant is a projectile used to attack from range and should listen to `COMSIG_PROJECTILE_SELF_ON_HIT`

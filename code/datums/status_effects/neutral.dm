@@ -1,25 +1,15 @@
 //entirely neutral or internal status effects go here
 
-/datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
+///Tracks the damage dealt to this mob by kinetic crushers, its projectiles, abilities, effects, mobs, whatever
+/datum/status_effect/crusher_damage
 	id = "crusher_damage"
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	///Total crusher damage the owner has suffered. Determines the chances for the owner to drop their crusher trophy.
 	var/total_damage = 0
 
-//debug
-/datum/status_effect/crusher_damage/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
-	return ..()
-
-/datum/status_effect/crusher_damage/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
-
-/datum/status_effect/crusher_damage/proc/on_owner_death(datum/source)
-	SIGNAL_HANDLER
-	message_admins("[owner] has accumulated [total_damage] crusher damage upon death, max health: [owner.maxHealth].")
-//end debug
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
 	duration = 50
