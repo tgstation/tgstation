@@ -241,14 +241,23 @@
 	. = ..()
 	if(radio)
 		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
-	if(brainmob)
-		var/mob/living/brain/B = brainmob
-		if(!B.key || !B.mind || B.stat == DEAD)
-			. += span_warning("\The [src] indicates that the brain is completely unresponsive.")
-		else if(!B.client)
-			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
+
+	if(!isnull(brain))
+		// It's dead, show it as much
+		if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat == DEAD)
+			if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
+				. += span_warning("[src] indicator light is red.")
+			else
+				. += span_warning("[src] indicator light is yellow - perhaps you should check the brain for damage.")
+		// If we have a client, OR it's a decoy brain, show as active
+		else if(brain.decoy_override || brainmob?.client)
+			. += span_notice("[src] indicates that the brain is active.")
+		// If we have a brainmob and it has a mind, it may just be DC'd
+		else if(brainmob?.mind)
+			. += span_warning("[src] indicates that the brain is currently inactive; it might change.")
+		// No brainmob, no mind, and not a decoy, it's a dead brain
 		else
-			. += span_notice("\The [src] indicates that the brain is active.")
+			. += span_warning("[src] indicates that the brain is completely unresponsive.")
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
