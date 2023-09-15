@@ -230,7 +230,7 @@
 			take_damage(power * 3.125e-6, BURN, ENERGY)
 	else
 		take_damage(power * 3.125e-6, BURN, ENERGY)
-	power -= power * 3.125e-6 //You don't get to do it for free
+	power -= power * 2.5e-3 //You don't get to do it for free
 	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()

@@ -1124,7 +1124,7 @@
 		take_damage(power * 6.25e-7, BURN, ENERGY)
 		if(prob(40))
 			emp_act(EMP_LIGHT)
-		power -= power * 6.25e-7
+		power -= power * 5e-4
 	return ..()
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
