@@ -76,7 +76,6 @@
 	name = "Station Frequencies"
 	default_raw_text = {"Please remember the frequencies of each radio channel used on station:
 	* AI Private - 144.7
-	* CentCom - 133.7
 	* Command - 135.3
 	* Common - 145.9
 	* Engineering - 135.7
