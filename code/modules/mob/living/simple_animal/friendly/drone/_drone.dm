@@ -182,15 +182,14 @@
 		var/obj/item/I = new default_storage(src)
 		equip_to_slot_or_del(I, ITEM_SLOT_DEX_STORAGE)
 
-	for(var/holidayname in GLOB.holidays)
-		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
-
-		if(holiday_today.holiday_hat && !default_headwear) //If we don't already have a hat (no secret syndiedrones), we take the holiday one.
+	for(var/holiday_name in GLOB.holidays)
+		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
+		if(holiday_today.holiday_hat && !default_headwear) //If our drone type doesn't start with a hat, we take the holiday one.
 			default_headwear = holiday_today.holiday_hat
 
 	if(default_headwear)
-		var/obj/item/I = new default_headwear(src)
-		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
+		var/obj/item/new_hat = new default_headwear(src)
+		equip_to_slot_or_del(new_hat, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

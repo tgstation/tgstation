@@ -18,7 +18,7 @@
 	var/year_offset = 0
 	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
 	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
-	///If this is defined, drones/assistants without a default hat will spawn with this one during the holiday.
+	///If this is defined, drones/assistants without a default hat will spawn with this item in their head clothing slot.
 	var/obj/item/holiday_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
@@ -653,7 +653,6 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	holiday_hat = /obj/item/clothing/head/costume/garland
 
 /datum/holiday/xmas
 	name = CHRISTMAS
