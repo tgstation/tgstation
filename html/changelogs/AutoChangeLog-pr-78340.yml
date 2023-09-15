@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - rscadd: "climbing hooks that allow you to go up holes for multiz, found in internals boxes (on planetary maps), the uplink, cargo and nukie personal lockers"
