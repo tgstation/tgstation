@@ -36,8 +36,16 @@
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
-	var/list/enemies_list = controller.blackboard[shitlist_key]
-	if (!length(enemies_list))
+
+	var/list/enemies_list = list()
+
+	for(var/mob/living/potential_target as anything in controller.blackboard[shitlist_key])
+		if(!targetting_datum.can_attack(living_mob, potential_target, vision_range))
+			continue
+		enemies_list += potential_target
+
+
+	if(!length(enemies_list))
 		finish_action(controller, succeeded = FALSE)
 		return
 
@@ -54,16 +62,6 @@
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
-
-/// Returns true if this target is valid for attacking based on current conditions
-/datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target, datum/targetting_datum/targetting_datum)
-	if (!target)
-		return FALSE
-	if (target == living_mob)
-		return FALSE
-	if (!can_see(living_mob, target, vision_range))
-		return FALSE
-	return targetting_datum.can_attack(living_mob, target)
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
