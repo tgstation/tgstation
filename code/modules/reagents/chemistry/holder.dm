@@ -82,10 +82,10 @@
 			if(reagent_to_react_count[reagent_id] < reagent_to_react_count[preferred_id])
 				preferred_id = reagent_id
 				continue
-
-		if(!reaction_lookup[preferred_id])
-			reaction_lookup[preferred_id] = list()
-		reaction_lookup[preferred_id] += reaction
+		if (preferred_id != null)
+			if(!reaction_lookup[preferred_id])
+				reaction_lookup[preferred_id] = list()
+			reaction_lookup[preferred_id] += reaction
 
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		var/list/product_ids = list()
