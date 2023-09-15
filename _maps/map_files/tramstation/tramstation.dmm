@@ -18132,6 +18132,17 @@
 /obj/machinery/light/warm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"frL" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/machinery/status_display/door_timer{
+	id = "Isolation_C";
+	name = "Isolation Cell C";
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/security/execution/transfer)
 "frN" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -32058,6 +32069,7 @@
 /area/station/hallway/primary/tram/center)
 "kwG" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kwN" = (
@@ -32491,8 +32503,6 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/item/mod/module/plasma_stabilizer,
-/obj/item/mod/module/thermal_regulator,
-/obj/item/gun/syringe,
 /obj/machinery/door/window/left/directional/west{
 	name = "Secure Medical Storage";
 	req_access = list("medical")
@@ -32500,6 +32510,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
+/obj/item/mod/module/signlang_radio,
+/obj/item/mod/module/thermal_regulator,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "kGo" = (
@@ -40600,6 +40613,7 @@
 	},
 /obj/structure/rack,
 /obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
 /obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -42935,6 +42949,11 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/machinery/status_display/door_timer{
+	id = "Isolation_D";
+	name = "Isolation Cell D";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -48737,6 +48756,15 @@
 /obj/item/storage/bag/money,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
+"qwV" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/status_display/door_timer{
+	id = "Isolation_B";
+	name = "Isolation Cell B";
+	pixel_y = -32
+	},
+/turf/open/floor/iron,
+/area/station/security/execution/transfer)
 "qwX" = (
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
@@ -49871,6 +49899,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"qTt" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/machinery/status_display/door_timer{
+	id = "Isolation_A";
+	name = "Isolation Cell A";
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/security/execution/transfer)
 "qTv" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -67666,6 +67705,7 @@
 "xfW" = (
 /obj/structure/table,
 /obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
 /obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -83566,7 +83606,7 @@ jWs
 cuM
 uUD
 cWF
-rnm
+frL
 ajM
 ona
 cWF
@@ -84337,9 +84377,9 @@ jWs
 cuM
 uUD
 cWF
-fIH
+qTt
 eTl
-kwG
+qwV
 cWF
 udO
 lrq
