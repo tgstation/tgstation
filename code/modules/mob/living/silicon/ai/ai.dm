@@ -865,11 +865,11 @@
 	if(interaction != AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		return
 	if(!can_be_carded)
-		to_chat(user, span_boldwarning("Transfer failed."))
+		balloon_alert(user, "transfer failed!")
 		return
 	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
 	if(!mind)
-		to_chat(user, span_warning("No intelligence patterns detected."))
+		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
