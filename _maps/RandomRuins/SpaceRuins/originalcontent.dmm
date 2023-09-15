@@ -740,7 +740,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/space/has_grav/powered)
 "cc" = (
-/mob/living/simple_animal/hostile/boss/paper_wizard,
+/mob/living/basic/paper_wizard,
 /turf/open/indestructible/paper,
 /area/ruin/space/has_grav/powered)
 "cd" = (

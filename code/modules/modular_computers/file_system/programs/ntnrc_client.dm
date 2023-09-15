@@ -31,8 +31,10 @@
 	///Cooldown timer between pings.
 	COOLDOWN_DECLARE(ping_cooldown)
 
-/datum/computer_file/program/chatclient/New()
-	username = "DefaultUser[rand(100, 999)]"
+/datum/computer_file/program/chatclient/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+	. = ..()
+	if(!username)
+		username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/Destroy()
 	for(var/datum/ntnet_conversation/discussion as anything in conversations)
@@ -198,7 +200,7 @@
 			channel.offline_clients.Remove(src)
 			channel.active_clients.Add(src)
 
-/datum/computer_file/program/chatclient/kill_program()
+/datum/computer_file/program/chatclient/kill_program(mob/user)
 	for(var/datum/ntnet_conversation/channel as anything in SSmodular_computers.chat_channels)
 		channel.go_offline(src)
 	active_channel = null

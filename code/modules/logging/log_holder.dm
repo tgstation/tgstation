@@ -1,4 +1,3 @@
-
 GLOBAL_REAL(logger, /datum/log_holder)
 /**
  * Main datum to manage logging actions
@@ -22,10 +21,99 @@ GLOBAL_REAL(logger, /datum/log_holder)
 	/// Whether or not logging as human readable text is enabled
 	var/human_readable_enabled = FALSE
 
+	/// Cached ui_data
+	var/list/data_cache = list()
+
+	/// Last time the ui_data was updated
+	var/last_data_update = 0
+
 	var/initialized = FALSE
 	var/shutdown = FALSE
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
+
+/client/proc/log_viewer_new()
+	set name = "View Round Logs"
+	set category = "Admin"
+	logger.ui_interact(mob)
+
+/datum/log_holder/ui_interact(mob/user, datum/tgui/ui)
+	if(!check_rights_for(user.client, R_ADMIN))
+		return
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(isnull(ui))
+		ui = new(user, src, "LogViewer")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/datum/log_holder/ui_state(mob/user)
+	return GLOB.admin_state
+
+/datum/log_holder/ui_static_data(mob/user)
+	var/list/data = list(
+		"round_id" = GLOB.round_id,
+		"logging_start_timestamp" = logging_start_timestamp,
+	)
+
+	var/list/tree = list()
+	data["tree"] = tree
+	var/list/enabled_categories = list()
+	for(var/enabled in log_categories)
+		enabled_categories += enabled
+	tree["enabled"] = enabled_categories
+
+	var/list/disabled_categories = list()
+	for(var/disabled in src.disabled_categories)
+		disabled_categories += disabled
+	tree["disabled"] = disabled_categories
+
+	return data
+
+/datum/log_holder/ui_data(mob/user)
+	if(!last_data_update || (world.time - last_data_update) > LOG_UPDATE_TIMEOUT)
+		cache_ui_data()
+	return data_cache
+
+/datum/log_holder/proc/cache_ui_data()
+	var/list/category_map = list()
+	for(var/datum/log_category/category as anything in log_categories)
+		category = log_categories[category]
+		var/list/category_data = list()
+
+		var/list/entries = list()
+		for(var/datum/log_entry/entry as anything in category.entries)
+			entries += list(list(
+				"id" = entry.id,
+				"message" = entry.message,
+				"timestamp" = entry.timestamp,
+				"data" = entry.data,
+				"semver" = entry.semver_store,
+			))
+		category_data["entries"] = entries
+		category_data["entry_count"] = category.entry_count
+
+		category_map[category.category] = category_data
+
+	data_cache.Cut()
+	last_data_update = world.time
+
+	data_cache["categories"] = category_map
+	data_cache["last_data_update"] = last_data_update
+
+/datum/log_holder/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("re-render")
+			cache_ui_data()
+			SStgui.update_uis(src)
+			return TRUE
+
+		else
+			stack_trace("unknown ui_act action [action] for [type]")
 
 /// Assembles basic information for logging, creating the log category datums and checking for config flags as required
 /datum/log_holder/proc/init_logging()
@@ -145,7 +233,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	var/list/category_header = list(
 		LOG_HEADER_INIT_TIMESTAMP = logging_start_timestamp,
-		LOG_HEADER_ROUND_ID = big_number_to_text(GLOB.round_id),
+		LOG_HEADER_ROUND_ID = GLOB.round_id,
 		LOG_HEADER_SECRET = category_instance.secret,
 		LOG_HEADER_CATEGORY_LIST = contained_categories,
 		LOG_HEADER_CATEGORY = category_instance.category,
@@ -161,7 +249,13 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 	// now we grab the millis from the rustg timestamp
-	var/list/timestamp = splittext(unix_timestamp_string(), ".")
+	var/rustg_stamp = unix_timestamp_string()
+	var/list/timestamp = splittext(rustg_stamp, ".")
+#ifdef UNIT_TESTS
+	if(length(timestamp) != 2)
+		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
+		return start
+#endif
 	var/millis = timestamp[2]
 	if(length(millis) > precision)
 		millis = copytext(millis, 1, precision + 1)
@@ -172,9 +266,6 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /// the data list is optional and will be recursively json serialized.
 /datum/log_holder/proc/Log(category, message, list/data)
 	// This is Log because log is a byond internal proc
-	if(shutdown)
-		stack_trace("Performing logging after shutdown! This might not be functional in the future!")
-	// but for right now it's fine
 
 	// do not include the message because these go into the runtime log and we might be secret!
 	if(!istext(message))

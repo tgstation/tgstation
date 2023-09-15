@@ -47,10 +47,15 @@ GLOBAL_VAR(restart_counter)
  *
  * GOT IT MEMORIZED?
  * - Dominion/Cyberboss
+ *
+ * Where to put init shit quick guide:
+ * If you need it to happen before the mc is created: world/Genesis.
+ * If you need it to happen last: world/New(),
+ * Otherwise, in a subsystem preinit or init. Subsystems can set an init priority.
  */
 
 /**
- * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN MASTER/NEW() IS DONE
+ * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN SUBSYSTEMS OR WORLD/NEW IS DONE
  * NOWHERE THE FUCK ELSE
  * I DON'T CARE HOW MANY LAYERS OF DEBUG/PROFILE/TRACE WE HAVE, YOU JUST HAVE TO DEAL WITH THIS PROC EXISTING
  * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
@@ -175,7 +180,7 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
 #else
-	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
+	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
@@ -299,8 +304,7 @@ GLOBAL_VAR(restart_counter)
 	#ifdef UNIT_TESTS
 	FinishTestRun()
 	return
-	#endif
-
+	#else
 	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
@@ -322,6 +326,7 @@ GLOBAL_VAR(restart_counter)
 			shutdown_logging() // See comment below.
 			auxcleanup()
 			TgsEndProcess()
+			return ..()
 
 	log_world("World rebooted at [time_stamp()]")
 
@@ -331,6 +336,7 @@ GLOBAL_VAR(restart_counter)
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
+	#endif
 
 /world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)

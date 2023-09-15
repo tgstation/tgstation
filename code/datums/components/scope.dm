@@ -18,14 +18,14 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_GUN_TRY_FIRE,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 	))
 
 /datum/component/scope/process(seconds_per_tick)
@@ -152,8 +152,16 @@
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	if(isnull(icon_x))
+		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+		if(isnull(icon_x))
+			icon_x = view_list[1]*world.icon_size/2
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
+	if(isnull(icon_y))
+		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+		if(isnull(icon_y))
+			icon_y = view_list[2]*world.icon_size/2
 	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
 	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
 	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)

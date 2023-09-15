@@ -14,7 +14,7 @@
 	return ..()
 
 /datum/status_effect/eye_blur/on_apply()
-	if(owner.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
+	if(owner.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_SPECIAL))
 		return FALSE
 
 	// Refresh the blur when a client jumps into the mob, in case we get put on a clientless mob with no hud
@@ -31,7 +31,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("eye_blur")
 
-/datum/status_effect/eye_blur/tick(seconds_per_tick, times_fired)
+/datum/status_effect/eye_blur/tick(seconds_between_ticks)
 	// Blur lessens the closer we are to expiring, so we update per tick.
 	update_blur()
 

@@ -1,7 +1,7 @@
 /obj/machinery/quantumpad
 	name = "quantum pad"
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "qpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
@@ -62,7 +62,7 @@
 			if(!multitool_check_buffer(user, I))
 				return
 			var/obj/item/multitool/M = I
-			M.buffer = src
+			M.set_buffer(src)
 			to_chat(user, span_notice("You save the data in [I]'s buffer. It can now be saved to pads with closed panels."))
 			return TRUE
 	else if(I.tool_behaviour == TOOL_MULTITOOL)

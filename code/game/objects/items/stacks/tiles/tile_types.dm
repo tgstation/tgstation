@@ -33,6 +33,7 @@
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+	AddElement(/datum/element/openspace_item_click_handler)
 	if(tile_reskin_types)
 		tile_reskin_types = tile_reskin_list(tile_reskin_types)
 	if(tile_rotate_dirs)
@@ -99,6 +100,10 @@
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
+
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		target.attackby(src, user, click_parameters)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -1020,6 +1025,33 @@
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
+
+/obj/item/stack/tile/noslip/tram
+	name = "high-traction platform tile"
+	singular_name = "high-traction platform tile"
+	desc = "A titanium-aluminium induction plate that powers the tram."
+	icon_state = "tile_noslip"
+	inhand_icon_state = "tile-noslip"
+	turf_type = /turf/open/floor/noslip/tram
+	merge_type = /obj/item/stack/tile/noslip/tram
+
+/obj/item/stack/tile/noslip/tram_platform
+	name = "tram platform tiles"
+	singular_name = "tram platform"
+	desc = "A tile used for tram platforms."
+	icon_state = "darkiron_catwalk"
+	inhand_icon_state = "tile-neon"
+	turf_type = /turf/open/floor/noslip/tram_platform
+	merge_type = /obj/item/stack/tile/noslip/tram_platform
+
+/obj/item/stack/tile/noslip/tram_plate
+	name = "high-traction platform tile"
+	singular_name = "high-traction platform tile"
+	desc = "A high-traction tile used for tram platforms."
+	icon_state = "darkiron_plate"
+	inhand_icon_state = "tile-neon"
+	turf_type = /turf/open/floor/noslip/tram_plate
+	merge_type = /obj/item/stack/tile/noslip/tram_plate
 
 //Circuit
 /obj/item/stack/tile/circuit

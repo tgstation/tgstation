@@ -9,6 +9,9 @@
 	spell_requirements = NONE
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
 
+	/// The max amount of lumens on a turf allowed before we can no longer enter jaunt with this
+	var/light_threshold = SHADOW_SPECIES_LIGHT_THRESHOLD
+
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
 	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
@@ -17,6 +20,12 @@
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
+/datum/action/cooldown/spell/jaunt/shadow_walk/enter_jaunt(mob/living/jaunter, turf/loc_override)
+	var/obj/effect/dummy/phased_mob/shadow/shadow = ..()
+	if(istype(shadow))
+		shadow.light_max = light_threshold
+	return shadow
+
 /datum/action/cooldown/spell/jaunt/shadow_walk/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -24,7 +33,7 @@
 	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
-	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(cast_turf.get_lumcount() >= light_threshold)
 		if(feedback)
 			to_chat(owner, span_warning("It isn't dark enough here!"))
 		return FALSE
@@ -44,6 +53,8 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	/// Max amount of light permitted before being kicked out
+	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
@@ -109,11 +120,9 @@
  * * location_to_check - The location to have its light level checked.
  */
 
-/obj/effect/dummy/phased_mob/shadow/proc/check_light_level(location_to_check)
-	var/turf/T = get_turf(location_to_check)
-	var/light_amount = T.get_lumcount()
-	if(light_amount > 0.2) // jaunt ends
-		return TRUE
+/obj/effect/dummy/phased_mob/shadow/proc/check_light_level(atom/location_to_check)
+	var/turf/light_turf = get_turf(location_to_check)
+	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
 
 /**
  * Checks if the user should recieve a warning that they're moving into light.

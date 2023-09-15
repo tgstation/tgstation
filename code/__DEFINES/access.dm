@@ -188,6 +188,8 @@
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
+/// HUNTERS
+#define ACCESS_HUNTER "hunter"
 
 /// - - - END ACCESS IDS - - -
 
@@ -290,6 +292,7 @@
 	ACCESS_ENGINE_EQUIP, \
 	ACCESS_ENGINEERING, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_GATEWAY, \
 	ACCESS_GENETICS, \
 	ACCESS_HYDROPONICS, \
 	ACCESS_JANITOR, \
@@ -336,7 +339,6 @@
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \
 	ACCESS_EVA, \
-	ACCESS_GATEWAY, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
@@ -390,7 +392,9 @@
 	ACCESS_AWAY_GENERIC4, \
 	ACCESS_AWAY_MAINTENANCE, \
 	ACCESS_AWAY_MEDICAL, \
+	ACCESS_AWAY_SCIENCE, \
 	ACCESS_AWAY_SEC, \
+	ACCESS_AWAY_SUPPLY, \
 )
 
 /// Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)

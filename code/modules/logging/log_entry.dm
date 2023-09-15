@@ -24,6 +24,10 @@
 	/// Message of the log entry.
 	var/message
 
+	/// Bitfield that describes how exactly to log stuff exactly
+	/// See code/__DEFINES/logging/dm
+	var/flags = NONE
+
 	/// Data of the log entry; optional.
 	var/list/data
 
@@ -32,12 +36,13 @@
 
 GENERAL_PROTECT_DATUM(/datum/log_entry)
 
-/datum/log_entry/New(timestamp, category, message, list/data, list/semver_store)
+/datum/log_entry/New(timestamp, category, message, flags, list/data, list/semver_store)
 	..()
 
 	src.id = next_id++
 	src.timestamp = timestamp
 	src.category = category
+	src.flags = flags
 	src.message = message
 	with_data(data)
 	with_semver_store(semver_store)
@@ -62,39 +67,37 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 /// Converts the log entry to a human-readable string.
 /datum/log_entry/proc/to_readable_text(format = TRUE)
+	var/output = ""
 	if(format)
-		return "\[[timestamp]\] [uppertext(category)]: [message]"
+		output += "\[[timestamp]\] [uppertext(category)]: [message]"
 	else
-		return "[message]"
+		output += "[uppertext(category)]: [message]"
+
+	if(flags & ENTRY_USE_DATA_W_READABLE)
+#if DM_VERSION >= 515
+		output += json_encode(data, JSON_PRETTY_PRINT)
+#else
+		output += json_encode(data)
+#endif
+	return output
+
+#define MANUAL_JSON_ENTRY(list, key, value) list.Add("\"[key]\":[(!isnull(value)) ? json_encode(value) : "null"]")
 
 /// Converts the log entry to a JSON string.
 /datum/log_entry/proc/to_json_text()
-	// I do not trust byond's json encoder, so we're doing it manually
-	var/list/json_strings = list()
+	// I do not trust byond's json encoder, and need to ensure the order doesn't change.
+	var/list/json_entries = list()
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_TIMESTAMP, timestamp)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_CATEGORY, category)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_MESSAGE, message)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_DATA, data)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_WORLD_STATE, world.get_world_state_for_logging())
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_SEMVER_STORE, semver_store)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_ID, id)
+	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_SCHEMA_VERSION, schema_version)
+	return "{[json_entries.Join(",")]}"
 
-	json_strings += json_encode(timestamp)
-
-	json_strings += json_encode(category)
-
-	json_strings += json_encode(message)
-
-	if(length(data))
-		json_strings += json_encode(data)
-	else
-		json_strings += "null"
-
-	json_strings += json_encode(world.get_world_state_for_logging())
-
-	if(length(semver_store))
-		json_strings += json_encode(semver_store)
-	else
-		json_strings += "null"
-
-	json_strings += "[id]"
-
-	json_strings += json_encode(schema_version)
-
-	return "\[[json_strings.Join(",")]\]"
+#undef MANUAL_JSON_ENTRY
 
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)

@@ -32,6 +32,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/init_timeofday
 	var/init_time
 	var/tickdrift = 0
+	/// Tickdrift as of last tick, w no averaging going on
+	var/olddrift = 0
 
 	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)
 	var/sleep_delta = 1
@@ -59,6 +61,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	/// During initialization, will be the instanced subsytem that is currently initializing.
 	/// Outside of initialization, returns null.
 	var/current_initializing_subsystem = null
+
+	/// The last decisecond we force dumped profiling information
+	/// Used to avoid spamming profile reads since they can be expensive (string memes)
+	var/last_profiled = 0
 
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
@@ -284,6 +290,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS_INIT_NONE,
 		SS_INIT_SUCCESS,
 		SS_INIT_NO_NEED,
+		SS_INIT_NO_MESSAGE,
 	)
 
 	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
@@ -329,7 +336,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if(SS_INIT_FAILURE)
 			message_prefix = "Failed to initialize [subsystem.name] subsystem after"
 			chat_warning = TRUE
-		if(SS_INIT_SUCCESS)
+		if(SS_INIT_SUCCESS, SS_INIT_NO_MESSAGE)
 			message_prefix = "Initialized [subsystem.name] subsystem within"
 		if(SS_INIT_NO_NEED)
 			// This SS is disabled or is otherwise shy.
@@ -342,7 +349,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/message = "[message_prefix] [seconds] second[seconds == 1 ? "" : "s"]!"
 	var/chat_message = chat_warning ? span_boldwarning(message) : span_boldannounce(message)
 
-	to_chat(world, chat_message)
+	if(result != SS_INIT_NO_MESSAGE)
+		to_chat(world, chat_message)
 	log_world(message)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
@@ -442,8 +450,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	canary.use_variable()
 	//the actual loop.
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
+
+		if(newdrift - olddrift >= CONFIG_GET(number/drift_dump_threshold))
+			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
+		olddrift = newdrift
 
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
@@ -803,3 +816,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
+
+/// Attempts to dump our current profile info into a file, triggered if the MC thinks shit is going down
+/// Accepts a delay in deciseconds of how long ago our last dump can be, this saves causing performance problems ourselves
+/datum/controller/master/proc/AttemptProfileDump(delay)
+	if(REALTIMEOFDAY - last_profiled <= delay)
+		return FALSE
+	last_profiled = REALTIMEOFDAY
+	SSprofiler.DumpFile(allow_yield = FALSE)

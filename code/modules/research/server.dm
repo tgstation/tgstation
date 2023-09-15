@@ -27,8 +27,14 @@
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
-	if(CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = new /datum/techweb
+	//servers handle techwebs differently as we are expected to be there to connect
+	//every other machinery on-station.
+	if(!stored_research)
+		if(CONFIG_GET(flag/no_default_techweb_link))
+			stored_research = new /datum/techweb
+		else
+			var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
+			connect_techweb(science_web)
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 
@@ -102,7 +108,7 @@
 /obj/machinery/rnd/server/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!stored_research)
 		return
-	tool.buffer = stored_research
+	tool.set_buffer(stored_research)
 	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
 	return TRUE
 

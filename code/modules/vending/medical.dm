@@ -13,10 +13,10 @@
 		/obj/item/healthanalyzer = 4,
 		/obj/item/wrench/medical = 1,
 		/obj/item/stack/sticky_tape/surgical = 3,
-		/obj/item/healthanalyzer/wound = 4,
+		/obj/item/healthanalyzer/simple = 4,
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/stack/medical/suture = 2,
-		/obj/item/stack/medical/bone_gel/four = 4,
+		/obj/item/stack/medical/bone_gel = 4,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
 	)
@@ -48,6 +48,22 @@
 	req_access = list(ACCESS_SYNDICATE)
 	initial_language_holder = /datum/language_holder/syndicate
 
+/obj/machinery/vending/medical/infested_frigate
+	req_access = list("theatre")
+	products = list(
+		/obj/item/stack/medical/gauze = 0,
+		/obj/item/reagent_containers/syringe = 7,
+		/obj/item/reagent_containers/dropper = 3,
+		/obj/item/healthanalyzer = 0,
+		/obj/item/wrench/medical = 0,
+		/obj/item/stack/sticky_tape/surgical = 0,
+		/obj/item/healthanalyzer/simple = 0,
+		/obj/item/stack/medical/ointment = 0,
+		/obj/item/stack/medical/suture = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/cane/white = 2,
+		/obj/item/clothing/glasses/eyepatch/medical = 2,
+	)
 //Created out of a necessity to get these dumb chems out of the medical tools vendor.
 /obj/machinery/vending/drugs
 	name = "\improper NanoDrug Plus"

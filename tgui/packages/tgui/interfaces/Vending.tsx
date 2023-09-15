@@ -8,6 +8,8 @@ type VendingData = {
   onstation: boolean;
   department: string;
   jobDiscount: number;
+  displayed_currency_icon: string;
+  displayed_currency_name: string;
   product_records: ProductRecord[];
   coin_records: CoinRecord[];
   hidden_records: HiddenRecord[];
@@ -177,7 +179,13 @@ const ProductDisplay = (
 ) => {
   const { data } = useBackend<VendingData>(context);
   const { custom, inventory, selectedCategory } = props;
-  const { stock, onstation, user } = data;
+  const {
+    stock,
+    onstation,
+    user,
+    displayed_currency_icon,
+    displayed_currency_name,
+  } = data;
 
   return (
     <Section
@@ -188,7 +196,9 @@ const ProductDisplay = (
         !!onstation &&
         user && (
           <Box fontSize="16px" color="green">
-            {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
+            {(user && user.cash) || 0}
+            {displayed_currency_name}{' '}
+            <Icon name={displayed_currency_icon} color="gold" />
           </Box>
         )
       }>
@@ -320,14 +330,14 @@ const ProductStock = (props) => {
 /** The main button to purchase an item. */
 const ProductButton = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
-  const { access } = data;
+  const { access, displayed_currency_name } = data;
   const { custom, discount, disabled, free, product, redPrice } = props;
-  const customPrice = access ? 'FREE' : product.price + ' cr';
-  let standardPrice = product.price + ' cr';
+  const customPrice = access ? 'FREE' : product.price;
+  let standardPrice = product.price;
   if (free) {
     standardPrice = 'FREE';
   } else if (discount) {
-    standardPrice = redPrice + ' cr';
+    standardPrice = redPrice;
   }
   return custom ? (
     <Button
@@ -339,6 +349,7 @@ const ProductButton = (props, context) => {
         })
       }>
       {customPrice}
+      {displayed_currency_name}
     </Button>
   ) : (
     <Button
@@ -350,6 +361,7 @@ const ProductButton = (props, context) => {
         })
       }>
       {standardPrice}
+      {displayed_currency_name}
     </Button>
   );
 };

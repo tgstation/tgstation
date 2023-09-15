@@ -181,10 +181,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
-"jX" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/asteroid)
 "kD" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
@@ -918,7 +914,7 @@ DE
 DE
 DE
 DE
-jX
+WE
 WE
 WE
 WE
@@ -957,7 +953,7 @@ DE
 DE
 DE
 DE
-jX
+WE
 WE
 WE
 WE
@@ -996,7 +992,7 @@ DE
 DE
 DE
 DE
-jX
+WE
 WE
 WE
 WE
@@ -1035,7 +1031,7 @@ DE
 DE
 DE
 DE
-jX
+WE
 WE
 WE
 WE

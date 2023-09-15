@@ -82,8 +82,6 @@
 	if(aiRestorePowerRoutine)
 		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 
-	if(see_override)
-		set_invis_see(see_override)
 	return ..()
 
 

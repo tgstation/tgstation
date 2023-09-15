@@ -92,7 +92,6 @@
 		return
 	if(!user.put_in_hands(weapon))
 		weapon.forceMove(get_turf(src))
-	update_appearance()
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -109,7 +108,8 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/guncase/handle_atom_del(atom/A)
+/obj/structure/guncase/Exited(atom/movable/gone, direction)
+	. = ..()
 	update_appearance()
 
 /obj/structure/guncase/contents_explosion(severity, target)
@@ -133,3 +133,8 @@
 	icon_state = "ecase"
 	case_type = "egun"
 	gun_category = /obj/item/gun/energy/e_gun
+
+/obj/structure/guncase/wt550
+	name = "WT-550 gun locker"
+	desc = "A locker that holds WT-550 rifles."
+	case_type = "wt550"

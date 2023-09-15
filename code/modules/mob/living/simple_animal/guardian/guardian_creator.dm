@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 /obj/item/guardiancreator/miner
 	name = "dusty shard"
 	desc = "Seems to be a very old rock, may have originated from a strange meteor."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "dustyshard"
 	theme = GUARDIAN_THEME_MINER
 	mob_name = "Power Miner"

@@ -18,17 +18,20 @@
 	///How much base damage this clamp does
 	var/clamp_damage = 20
 	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/working/ripley/cargo_holder
+	var/obj/vehicle/sealed/mecha/ripley/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
-	cargo_holder = M
+	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
+		cargo_holder = chassis
+	ADD_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto = null)
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto)
+	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	cargo_holder = null
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -58,7 +61,7 @@
 		if(istype(clamptarget, /obj/machinery/door/airlock/))
 			var/obj/machinery/door/airlock/targetairlock = clamptarget
 			playsound(chassis, clampsound, 50, FALSE, -6)
-			targetairlock.try_to_crowbar(src, source)
+			targetairlock.try_to_crowbar(src, source, TRUE)
 			return
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
@@ -75,8 +78,8 @@
 		LAZYADD(cargo_holder.cargo, clamptarget)
 		clamptarget.forceMove(chassis)
 		clamptarget.set_anchored(FALSE)
-		if(!cargo_holder.box && istype(clamptarget, /obj/structure/ore_box))
-			cargo_holder.box = clamptarget
+		if(!cargo_holder.ore_box && istype(clamptarget, /obj/structure/ore_box))
+			cargo_holder.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
 		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
 
@@ -201,13 +204,10 @@
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
-		"minimum_requ" = required_amount,
+		"reagents_required" = required_amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return TRUE
+/obj/item/mecha_parts/mecha_equipment/extinguisher/handle_ui_act(action, list/params)
 	switch(action)
 		if("activate")
 			spray_extinguisher(usr)
@@ -242,8 +242,8 @@
 /obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"name" = "RCD control",
 		"mode" = get_mode_name(),
+		"mode_label" = "RCD control",
 	)
 
 /// fetches the mode name to display in the UI
@@ -258,10 +258,7 @@
 		else
 			return "Someone didnt set this"
 
-/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode++
 		if(mode > MODE_AIRLOCK)
@@ -338,26 +335,26 @@
 	icon_state = "ripleyupgrade"
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M, attach_right = FALSE, mob/user)
-	if(M.type != /obj/vehicle/sealed/mecha/working/ripley)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
+	if(mecha.type != /obj/vehicle/sealed/mecha/ripley)
 		to_chat(user, span_warning("This conversion kit can only be applied to APLU MK-I models."))
 		return FALSE
-	if(LAZYLEN(M.cargo))
-		to_chat(user, span_warning("[M]'s cargo hold must be empty before this conversion kit can be applied."))
+	if(LAZYLEN(mecha.cargo))
+		to_chat(user, span_warning("[mecha]'s cargo hold must be empty before this conversion kit can be applied."))
 		return FALSE
-	if(!(M.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
-		to_chat(user, span_warning("[M] must have maintenance protocols active in order to allow this conversion kit."))
+	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
 		return FALSE
-	if(LAZYLEN(M.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
-		to_chat(user, span_warning("[M] must be unoccupied before this conversion kit can be applied."))
+	if(LAZYLEN(mecha.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
 		return FALSE
-	if(!M.cell) //Turns out things break if the cell is missing
+	if(!mecha.cell) //Turns out things break if the cell is missing
 		to_chat(user, span_warning("The conversion process requires a cell installed."))
 		return FALSE
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
-	var/obj/vehicle/sealed/mecha/working/ripley/mk2/marktwo = new (get_turf(markone),1)
+	var/obj/vehicle/sealed/mecha/ripley/mk2/marktwo = new (get_turf(markone),1)
 	if(!marktwo)
 		return
 	QDEL_NULL(marktwo.cell)
@@ -375,6 +372,11 @@
 		marktwo.capacitor = markone.capacitor
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
+	QDEL_NULL(marktwo.servo)
+	if (markone.servo)
+		marktwo.servo = markone.servo
+		markone.servo.forceMove(marktwo)
+		markone.servo = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))

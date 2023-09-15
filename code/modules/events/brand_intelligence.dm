@@ -34,8 +34,8 @@
 
 /datum/round_event/brand_intelligence/setup()
 	//select our origin machine (which will also be the type of vending machine affected.)
-	for(var/obj/machinery/vending/vendor in GLOB.machines)
-		if(!is_station_level(vendor.z))
+	for(var/obj/machinery/vending/vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
+		if(!vendor.onstation)
 			continue
 		if(!vendor.density)
 			continue

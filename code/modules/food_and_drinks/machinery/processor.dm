@@ -3,11 +3,13 @@
 /obj/machinery/processor
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
+	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items
@@ -67,6 +69,7 @@
 		var/cached_multiplier = (recipe.food_multiplier * rating_amount)
 		for(var/i in 1 to cached_multiplier)
 			var/atom/processed_food = new recipe.output(drop_location())
+			processed_food.reagents.clear_reagents()
 			what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)

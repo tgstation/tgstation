@@ -7,6 +7,7 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -15,6 +16,11 @@
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+#define HANDCUFFS_TYPE_WEAK 0
+// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+#define HANDCUFFS_TYPE_STRONG 1
 
 /**
  * # Handcuffs
@@ -40,12 +46,23 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
+	var/handcuff_time = 3 SECONDS
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
+	var/restraint_strength = HANDCUFFS_TYPE_STRONG
+
+/obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
+	. = ..()
+	handcuff_time = modify_fantasy_variable("handcuff_time", handcuff_time, -bonus * 2, minimum = 0.3 SECONDS)
+
+/obj/item/restraints/handcuffs/remove_fantasy_bonuses(bonus)
+	handcuff_time = reset_fantasy_variable("handcuff_time", handcuff_time)
+	return ..()
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -70,7 +87,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_after(user, 3 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
+			if(do_after(user, handcuff_time, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -132,6 +149,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -151,6 +169,7 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
@@ -589,3 +608,6 @@
 	. = ..()
 	if(effectReference)
 		QDEL_NULL(effectReference)
+
+#undef HANDCUFFS_TYPE_WEAK
+#undef HANDCUFFS_TYPE_STRONG

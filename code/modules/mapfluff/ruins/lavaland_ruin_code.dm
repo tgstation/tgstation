@@ -25,13 +25,13 @@
 	desc = "Allows for the construction of a Golem Shell."
 	id = "golem"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 40000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*20)
 	build_path = /obj/item/golem_shell
 	category = list(RND_CATEGORY_IMPORTED)
 
 /obj/item/golem_shell
 	name = "incomplete free golem shell"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/mob/shells.dmi'
 	icon_state = "shell_unfinished"
 	desc = "The incomplete body of a golem. Add ten sheets of certain minerals to finish."
 	w_class = WEIGHT_CLASS_BULKY

@@ -92,7 +92,7 @@
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
 /obj/effect/anomaly/grav/high/detonate()
-	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
+	for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
 		if(is_station_level(the_generator.z))
 			the_generator.blackout()
 

@@ -4,12 +4,16 @@
 		return 0
 	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
 	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
-	if(!dy)
-		return (dx >= 0) ? 90 : 270
-	. = arctan(dx/dy)
-	if(dy < 0)
+	return delta_to_angle(dx, dy)
+
+/// Calculate the angle produced by a pair of x and y deltas
+/proc/delta_to_angle(x, y)
+	if(!y)
+		return (x >= 0) ? 90 : 270
+	. = arctan(x/y)
+	if(y < 0)
 		. += 180
-	else if(dx < 0)
+	else if(x < 0)
 		. += 360
 
 /// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
@@ -79,6 +83,41 @@
 			current_y_step += y_distance_sign
 			line += locate(current_x_step, current_y_step, starting_z)
 	return line
+
+/**
+ * Get a list of turfs in a perimeter given the `center_atom` and `radius`.
+ * Automatically rounds down decimals and does not accept values less than positive 1 as they dont play well with it.
+ * Is efficient on large circles but ugly on small ones
+ * Uses [Jesko`s method to the midpoint circle Algorithm](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm).
+ */
+/proc/get_perimeter(atom/center, radius)
+	if(radius < 1)
+		return
+	var/rounded_radius = round(radius)
+	var/x = center.x
+	var/y = center.y
+	var/z = center.z
+	var/t1 = rounded_radius/16
+	var/dx = rounded_radius
+	var/dy = 0
+	var/t2
+	var/list/perimeter = list()
+	while(dx >= dy)
+		perimeter += locate(x + dx, y + dy, z)
+		perimeter += locate(x - dx, y + dy, z)
+		perimeter += locate(x + dx, y - dy, z)
+		perimeter += locate(x - dx, y - dy, z)
+		perimeter += locate(x + dy, y + dx, z)
+		perimeter += locate(x - dy, y + dx, z)
+		perimeter += locate(x + dy, y - dx, z)
+		perimeter += locate(x - dy, y - dx, z)
+		dy += 1
+		t1 += dy
+		t2 = t1 - dx
+		if(t2 > 0)
+			t1 = t2
+			dx -= 1
+	return perimeter
 
 ///Format a power value in W, kW, MW, or GW.
 /proc/display_power(powerused)

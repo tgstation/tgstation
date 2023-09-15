@@ -4,15 +4,13 @@
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///category for plumbing RCD
-	category="Storage"
 
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch
 	var/max_patch_volume = 40
 	///maximum size of a bottle
-	var/max_bottle_volume = 30
+	var/max_bottle_volume = 50
 	///current operating product (pills or patches)
 	var/product = "pill"
 	///the minimum size a pill or patch can be

@@ -1,7 +1,7 @@
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("skubs")
