@@ -100,7 +100,7 @@
 			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
-			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
+			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state, layer = layer + 0.01)
 			bomb_overlay.pixel_y = 8
 			. += bomb_overlay
 		return
@@ -115,7 +115,7 @@
 
 	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
-		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
+		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag", layer = layer + (box_offset * 0.02))
 		tag_overlay.pixel_y = box_offset
 		. += tag_overlay
 
