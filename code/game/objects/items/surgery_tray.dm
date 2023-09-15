@@ -24,9 +24,9 @@
 /obj/item/surgery_tray/full/deployed
 	is_portable = FALSE
 
-/obj/item/surgery_tray/proc/PopulateContents()
+/obj/item/surgery_tray/proc/populate_contents()
 
-/obj/item/surgery_tray/full/PopulateContents()
+/obj/item/surgery_tray/full/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/cautery(src)
@@ -46,7 +46,7 @@
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
 	create_storage(storage_type = /datum/storage/surgery_tray)
-	PopulateContents()
+	populate_contents()
 	register_context()
 	set_tray_mode(is_portable)
 
@@ -182,7 +182,7 @@
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
 	
-/obj/item/surgery_tray/morgue/PopulateContents()
+/obj/item/surgery_tray/morgue/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/cautery/cruel(src)
