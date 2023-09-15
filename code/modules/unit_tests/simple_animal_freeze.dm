@@ -51,7 +51,6 @@
 		/mob/living/simple_animal/hostile/alien/queen/large,
 		/mob/living/simple_animal/hostile/alien/sentinel,
 		/mob/living/simple_animal/hostile/asteroid,
-		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/simple_animal/hostile/asteroid/curseblob,
 		/mob/living/simple_animal/hostile/asteroid/elite,
 		/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
