@@ -10,7 +10,7 @@
 	var/drive_range = 10
 	var/power_per_obj = 1000
 
-/obj/machinery/mass_driver/Initialize()
+/obj/machinery/mass_driver/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/mass_driver(src)
 
