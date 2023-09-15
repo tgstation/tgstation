@@ -202,11 +202,12 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                 <ProgressBar
                   value={zap_transmission}
                   minValue={0}
-                  maxValue={4e6}
+                  maxValue={1e7}
                   ranges={{
-                    good: [9.36e5, Infinity],
-                    average: [6.24e5, 9.36e5],
-                    bad: [-Infinity, 6.24e5],
+                    teal: [1e7, Infinity],
+                    good: [2e6, 1e7],
+                    average: [1e6, 2e6],
+                    bad: [-Infinity, 1e6],
                   }}>
                   {toFixed(zap_transmission_coefficient, 2) + zap_transmission_unit}
                 </ProgressBar>

@@ -427,7 +427,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		///Power multiplier bonus applied to all zaps. Zap power generation doubles when it reaches 7GeV and 9GeV.
 		zap_power_multiplier *= 2 ** clamp(round((internal_energy - POWER_PENALTY_THRESHOLD) / 2000), 0, 2)
 		///The supermatter releases additional zaps after 5GeV, with more at 7GeV and 9GeV.
-		var/additional_zap_bonus = clamp(internal_energy * 1600, 3.2e6, 1.6e7) * clamp(round(INVERSE_LERP(1000, 3000, internal_energy)), 1, 4)
+		var/additional_zap_bonus = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * clamp(round(INVERSE_LERP(1000, 3000, internal_energy)), 1, 4)
 		high_energy_bonus = (zap_transmission + additional_zap_bonus) * zap_power_multiplier - zap_transmission
 		var/list/zap_factor_si_derived_data = siunit_isolated(high_energy_bonus, "W", 2)
 		data["zap_transmission_factors"] += list(list(
