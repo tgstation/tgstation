@@ -12242,7 +12242,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/landmark/navigate_destination/eva,
-/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "eFV" = (
