@@ -38,9 +38,12 @@
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
 		balloon_alert(user, "blocked!")
 		return
+	var/turf/user_turf = get_turf(user)
+	var/away_dir = get_dir(above, target)
 	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
 	playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
-	playsound(get_turf(user), 'sound/effects/picaxe1.ogg', 50)
+	playsound(user_turf, 'sound/effects/picaxe1.ogg', 50)
+	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
 	if(do_after(user, climb_time, target))
 		user.Move(target)
 		uses--
@@ -48,6 +51,8 @@
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))
 		qdel(src)
+	
+	QDEL_LIST(effects)
 
 /obj/item/climbing_hook/emergency
 	name = "emergency climbing hook"
@@ -68,3 +73,14 @@
 	desc = "A plasteel hook, with rope. Upon closer inspection, the rope appears to be made out of plasteel woven into regular rope, amongst many other reinforcements."
 	uses = INFINITY
 	climb_time = 1 SECONDS
+
+/obj/effect/temp_visual/climbing_hook
+	icon = 'icons/mob/silicon/aibots.dmi'
+	icon_state = "path_indicator"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 4 SECONDS
+
+/obj/effect/temp_visual/climbing_hook/Initialize(mapload, direction)
+	. = ..()
+	dir = direction
