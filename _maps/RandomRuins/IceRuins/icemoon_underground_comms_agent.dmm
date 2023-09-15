@@ -2,7 +2,9 @@
 "ag" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "bk" = (
 /turf/open/floor/iron,
@@ -14,6 +16,8 @@
 	pixel_x = -8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/ruin/powered/comms_agent)
 "bt" = (
@@ -23,6 +27,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "ce" = (
@@ -47,6 +53,7 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "do" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "ds" = (
@@ -79,12 +86,23 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
+"gt" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4,
+/turf/open/floor/carpet,
+/area/ruin/powered/comms_agent)
 "gv" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"gY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered/comms_agent)
 "he" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/comms_agent)
@@ -98,6 +116,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "ig" = (
@@ -124,6 +144,20 @@
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"jB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/comms_agent)
+"kp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/powered/comms_agent)
 "kA" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/fluff/fokoff_sign,
@@ -132,6 +166,7 @@
 "kB" = (
 /obj/structure/cable,
 /obj/structure/sign/poster/contraband/random/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "kD" = (
@@ -148,6 +183,8 @@
 /area/ruin/powered/comms_agent)
 "kL" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "lb" = (
@@ -155,6 +192,7 @@
 /area/ruin/powered/comms_agent)
 "lf" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "lj" = (
@@ -172,6 +210,17 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/ruin/powered/comms_agent)
+"mr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "mM" = (
@@ -181,8 +230,16 @@
 "nc" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
+"nm" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "nL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/shower/directional/south,
@@ -204,10 +261,15 @@
 	desc = "Truly, a marvel of modern engineering."
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "pV" = (
 /obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 1
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "qE" = (
@@ -222,6 +284,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "rA" = (
@@ -280,6 +344,9 @@
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 1
+	},
 /turf/open/floor/plating/snowed,
 /area/ruin/powered/comms_agent)
 "un" = (
@@ -297,6 +364,7 @@
 "uY" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "vB" = (
@@ -325,6 +393,7 @@
 	icon_state = "bathroom-closed"
 	},
 /obj/item/soap/syndie,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/diagonal,
 /area/ruin/powered/comms_agent)
 "wj" = (
@@ -334,6 +403,8 @@
 	desc = "Truly, a marvel of modern engineering."
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "wn" = (
@@ -376,7 +447,9 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/item/food/pizzaslice/moldy,
 /obj/structure/closet/mini_fridge/grimy,
-/turf/open/floor/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "yD" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -402,6 +475,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "zJ" = (
@@ -427,6 +502,7 @@
 "BQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/chair/office/tactical,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
@@ -481,12 +557,17 @@
 /obj/machinery/telecomms/relay/preset/ruskie{
 	use_power = 0
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "FL" = (
 /obj/structure/table/wood,
 /obj/item/crowbar/red,
 /obj/item/multitool,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "FZ" = (
@@ -504,6 +585,8 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "GI" = (
@@ -529,8 +612,13 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/carpet,
 /area/ruin/powered/comms_agent)
+"GR" = (
+/turf/open/floor/plating,
+/area/ruin/powered/comms_agent)
 "HX" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "Ie" = (
@@ -566,6 +654,12 @@
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
+"JY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/ruin/powered/comms_agent)
 "Kv" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/plasma/thirty{
@@ -596,17 +690,19 @@
 /area/ruin/powered/comms_agent)
 "KQ" = (
 /turf/open/genturf,
-/area/icemoon/underground/explored)
+/area/template_noop)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/item/cultivator/rake,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/snowed,
 /area/ruin/powered/comms_agent)
 "Ll" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "Lr" = (
@@ -648,6 +744,8 @@
 "Mz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "MH" = (
@@ -656,6 +754,7 @@
 "MM" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "Ng" = (
@@ -667,6 +766,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/washing_machine{
 	pixel_x = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating/snowed,
 /area/ruin/powered/comms_agent)
@@ -687,6 +789,8 @@
 "Oy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/snowed,
 /area/ruin/powered/comms_agent)
 "OB" = (
@@ -724,6 +828,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/item/pipe/trinary/flippable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "QT" = (
@@ -734,6 +841,16 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
+"QU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/ruin/powered/comms_agent)
+"Sc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/powered/comms_agent)
 "Tn" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin/carbon{
@@ -743,6 +860,13 @@
 /obj/machinery/newscaster/directional/south,
 /obj/item/pen/edagger,
 /turf/open/floor/wood/tile,
+/area/ruin/powered/comms_agent)
+"Tp" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "TH" = (
 /obj/structure/flora/tree/dead/style_random,
@@ -759,6 +883,8 @@
 "Uw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/ruin/powered/comms_agent)
 "UI" = (
@@ -771,6 +897,13 @@
 	pixel_y = 7
 	},
 /turf/open/floor/wood/tile,
+/area/ruin/powered/comms_agent)
+"Vo" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "VN" = (
 /turf/open/floor/carpet,
@@ -789,6 +922,7 @@
 /area/ruin/powered/comms_agent)
 "WL" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
 "WU" = (
@@ -808,6 +942,8 @@
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/powered/comms_agent)
 "XU" = (
@@ -817,6 +953,10 @@
 "Yz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "YA" = (
@@ -836,12 +976,15 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
 "ZE" = (
 /obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/mirror/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/diagonal,
 /area/ruin/powered/comms_agent)
 
@@ -1499,11 +1642,11 @@ OM
 OM
 OM
 MH
-MH
-MH
-MH
-MH
 OM
+OM
+OM
+MH
+MH
 OM
 OM
 OB
@@ -1557,7 +1700,7 @@ OM
 MH
 MH
 MH
-MH
+nm
 MH
 MH
 MH
@@ -1614,7 +1757,7 @@ MH
 MH
 LP
 LP
-LP
+QU
 LP
 LP
 MH
@@ -2013,7 +2156,7 @@ nc
 YI
 YI
 xs
-do
+Vo
 lj
 YI
 CS
@@ -2069,8 +2212,8 @@ kD
 Ze
 YI
 vK
-lf
-lf
+JY
+JY
 lf
 MM
 kB
@@ -2180,10 +2323,10 @@ MH
 LP
 Mj
 Ml
-QG
+mr
 QT
-eE
-Qx
+jB
+Sc
 Jh
 YI
 yG
@@ -2237,10 +2380,10 @@ MH
 LP
 KG
 Ng
-QG
+mr
 kL
-Qx
-Wl
+Sc
+Tp
 Gq
 pl
 HX
@@ -2296,7 +2439,7 @@ un
 zG
 mb
 FZ
-eE
+GR
 in
 bt
 YI
@@ -2415,7 +2558,7 @@ tu
 kL
 YI
 WU
-Yz
+kp
 rW
 XU
 MH
@@ -2520,9 +2663,9 @@ MH
 MH
 LP
 sc
-VN
+gt
 bs
-KM
+gY
 Wm
 hl
 LP
