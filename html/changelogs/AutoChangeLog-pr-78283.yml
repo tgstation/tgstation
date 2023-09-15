@@ -1,0 +1,5 @@
+author: "Vincent983"
+delete-after: True
+changes:
+  - qol: "The supply beacon will no longer delete itself due to explosions, and you can now anchor it with a wrench."
+  - spellcheck: "Express console now correctly states that it needs cargo access instead of QM access."
