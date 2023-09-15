@@ -50,7 +50,7 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
-		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_RETALIATE]
+		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_CURRENTLY_RETALIATTING]
 		if(faction_check(living_mob, living_target) && !bypass_faction_check)
 			return FALSE
 		if(living_target.stat > stat_attack)

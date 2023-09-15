@@ -51,11 +51,11 @@
 
 
 	if(!length(enemies_list))
-		finish_action(controller, succeeded = FALSE)
+		finish_action(controller, succeeded = FALSE, check_faction = check_faction)
 		return
 
 	if (controller.blackboard[target_key] in enemies_list) // Don't bother changing
-		finish_action(controller, succeeded = TRUE)
+		finish_action(controller, succeeded = TRUE, check_faction = check_faction)
 		return
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
@@ -66,13 +66,15 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	finish_action(controller, succeeded = TRUE)
+	finish_action(controller, succeeded = TRUE, check_faction = check_faction)
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	return pick(enemies_list)
 
 
-/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key, check_faction)
 	. = ..()
-	controller.set_blackboard_key(BB_BASIC_MOB_RETALIATE, succeeded)
+	if(check_faction)
+		return
+	controller.set_blackboard_key(BB_BASIC_MOB_CURRENTLY_RETALIATTING, succeeded)
