@@ -45,7 +45,7 @@
 	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
-	shuttle_call_time_mod = 2
+	shuttle_call_time_mod = ALERT_COEFF_GREEN
 
 /**
  * BLUE
@@ -58,7 +58,7 @@
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_blue_upto
-	shuttle_call_time_mod = 1
+	shuttle_call_time_mod = ALERT_COEFF_BLUE
 
 /**
  * RED
@@ -71,7 +71,7 @@
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
-	shuttle_call_time_mod = 0.5
+	shuttle_call_time_mod = ALERT_COEFF_RED
 
 /**
  * DELTA
@@ -83,4 +83,4 @@
 	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
-	shuttle_call_time_mod = 0.25
+	shuttle_call_time_mod = ALERT_COEFF_DELTA

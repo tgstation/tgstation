@@ -180,7 +180,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))

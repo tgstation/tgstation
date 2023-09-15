@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "The nuclear operative MODsuit intellicard now actually downloads an AI rather than simply kicking candidates from the game."

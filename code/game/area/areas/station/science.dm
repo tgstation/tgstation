@@ -73,7 +73,7 @@
 	icon_state = "ass_line"
 
 /area/station/science/robotics/augments
-	name = "improper Augmentation Theater"
+	name = "\improper Augmentation Theater"
 	icon_state = "robotics"
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 

@@ -425,3 +425,112 @@
   - image: When you throw up nanites, your vomit should now be appropriately nanite-colored.
   timothymtorres:
   - bugfix: Fix capture devices allowing mob actions while inside
+2023-09-13:
+  ArcaneMusic:
+  - qol: Shuttle engines now tell you how to install them in their screentips and
+      their examine text.
+  CoiledLamb:
+  - image: resprites pestkiller, weedkiller, and nolabel sprays
+  - image: updates shading on medigels
+  - image: resprites all spray bottles
+  Ghommie:
+  - bugfix: The holographic pufferfish from the holographic beach from the holodeck
+      no longer looks like a goldfish.
+  Ghommie (Based on an old PR by Trilbyspaceclone from Citadel):
+  - qol: The notepad app now includes basic nautical directions in its default message.
+  - qol: A tip about nautical directions, too.
+  Hatterhat:
+  - rscadd: The SC/FISHER disruptor pistol, a very compact, permanently silenced energy
+      gun, is now stocked in Nanotrasen-accessible black markets with a price generally
+      somewhere between 400 and 800 credits. Aspiring users are warned that it's really
+      bad for trying to actually kill people. Caveat emptor.
+  - rscadd: Guns now have a dry_fire_sound_volume variable, allowing for guns to be
+      less loud when trying to fire while empty.
+  - bugfix: Closets and crates now properly count as structures for pass flags again.
+  Jacquerel:
+  - rscadd: Operative MODsuits now have an attached "jump jet" which sends you upwards
+      and allows you to use your jetpack under gravity for a few seconds, perfect
+      for navigating the pits and valleys of Icebox Station.
+  JupiterJaeden:
+  - balance: removed anti-drop implants from the nuclear operative uplink
+  - balance: removed anti-drop implant from the nukie implants bundle and changed
+      its cost to 20 TC
+  Melbert:
+  - bugfix: Birdboat's Augment Theater is named less odd now
+  Rhials:
+  - bugfix: The psyker headset is no longer a syndicate headset subtype, and no longer
+      has syndie comms.
+  SuicidalPickles:
+  - qol: Cargo Coats/Jackets can now equip universal scanners on their suit-slots.
+  Wallem:
+  - qol: Examine a Dish Drive to see all the items inside of it, as well as the item
+      you'll pull out when you interact with it.
+  - qol: Dish Drive servo tier increases suction range
+  blueDev2:
+  - bugfix: Soup recipes, that make items, spawn the correct number of items per reaction
+      instead of just one item
+  - bugfix: Soup recipes, that make items, consumes the correct number of reagents
+      instead of the largest multiple of the reagents
+  starrm4nn:
+  - bugfix: the ablative coat's hood now hides the wearer's hair and ear
+  timothymtorres:
+  - balance: Add hypnosis vulnerability for drugged victims
+  vinylspiders:
+  - bugfix: fixed grown food items not getting the right seed type passed to them
+      upon creation
+2023-09-14:
+  ArcaneMusic:
+  - qol: Conveyor belts now have screentips and a better examine tip to teach you
+      how to set one up properly.
+  - qol: Using a conveyor belt stack on a placed conveyor belt will extend the conveyor
+      belt to the output of that conveyor belt.. You can use this to place fully integrated
+      conveyor belts much easier now.
+  Das15:
+  - bugfix: You can no longer teleport to disabled beacon if the teleporter was previously
+      locked-on to it.
+  IHateGeese:
+  - bugfix: Nightmares can no longer receive wounds
+  - bugfix: Nightmares can no longer have limbs dismembered
+  Jacquerel:
+  - bugfix: Roundstart medbots and cleanbots are now more likely to be able to be
+      possessed by observers.
+  - admin: It's easier to modify the properties of bots to stop them from being possessed
+      or depossessed.
+  LT3:
+  - bugfix: Emergency shuttle should correctly scale timer up/down when changing security
+      levels
+  Mothblocks:
+  - bugfix: Dynamic now biases less heavily towards the exact average.
+  Rhials:
+  - rscadd: Shuttle Firesale positive station trait. Some emergency shuttle options
+      have been put on sale!
+  - rscadd: Misplaced Wallet positive station trait. You wouldn't steal from a missing
+      wallet, would you??
+  - rscadd: Wisdom Cow Invasion positive station trait.
+  - rscadd: Advanced Medbots positive station trait. Better roundstart medbots!
+  - rscadd: Loaner Shuttle positive station trait. More shuttle loan offers and more
+      payout!
+  - qol: Station Trait titles are now italicized for easier reading.
+  - spellcheck: Fixes a "prerequisites" typo in the shuttle purchase menu.
+  Seven:
+  - balance: The supermatter delamination countdown has been lowered from 30 to 13
+      seconds
+  - balance: Removing a sliver from the supermatter further lowers that down to 3
+      seconds
+  - balance: The supermatter crystal uses bigger text on its final countdown
+  - spellcheck: Some supermatter delamination related mood descriptions have been
+      edited to explain the mood effect better
+  Timberpoes:
+  - bugfix: Fix poor dynamic threat distribution at lower population levels, causing
+      dynamic to generate better threat curves at lower population levels than it
+      did before.
+2023-09-15:
+  Ghommie:
+  - bugfix: fixed fishing.
+  - bugfix: Fixed a race condition that made fishing yield no reward way too often.
+  - bugfix: The legendary fisher achievement is awarded even if you don't win the
+      minigame.
+  - bugfix: Fixed a fish hook exploit.
+  - bugfix: Baits are now properly consumed by caught fish and (alive) mobs.
+  ZephyrTFA:
+  - bugfix: you can no longer bypass html sanitization using the table element. >:(

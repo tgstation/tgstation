@@ -205,17 +205,13 @@
 			var/atom/movable/result
 			if(ispath(recipe.result, /obj/item/stack))
 				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
-			else if (ispath(recipe.result, /obj/item/food))
-				result = new recipe.result(
-					get_turf(crafter.loc),
-					/* starting_reagent_purity = */ null,
-					/* no_base_reagents = */ TRUE,
-				)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
+			if (IsEdible(result))
+				result.reagents?.clear_reagents()
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
