@@ -1494,6 +1494,7 @@
 /obj/item/circuitboard/machine/artifactheater
 	name = "Artifact Heating Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/atmospherics/components/unary/artifact_heatingpad
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -1508,6 +1509,7 @@
 /obj/item/circuitboard/machine/artifactzapper
 	name = "Artifact Zapper"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/artifact_zapper
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
 		/datum/stock_part/scanning_module = 1,

@@ -48,7 +48,7 @@
 
 	if(forced_origin)
 		valid_origins = list(forced_origin)
-	artifact_origin = SSartifacts.artifact_origins_by_typename[pick_weight(fill_with_ones(valid_origins))]
+	artifact_origin = SSartifacts.artifact_origins_by_typename[pick(valid_origins)]
 	fake_name = "[pick(artifact_origin.adjectives)] [pick(isitem(holder) ? artifact_origin.nouns_small : artifact_origin.nouns_large)]"
 	for(var/datum/artifact_origin/og in SSartifacts.artifact_origins)
 		var/a_name = og.generate_name()
@@ -70,8 +70,9 @@
 			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
 	holder.icon_state = dat_icon
 
-	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", offset_spokesman = holder, plane = LIGHTING_PLANE + 0.5, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
+	act_effect = mutable_appearance(holder.icon, "[holder.icon_state]fx", offset_spokesman = holder, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
 	act_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
+	act_effect.overlays += emissive_appearance(act_effect.icon, act_effect.icon_state, holder, alpha = act_effect.alpha)
 	activation_sound = pick(artifact_origin.activation_sounds)
 	if(LAZYLEN(artifact_origin.deactivation_sounds))
 		deactivation_sound = pick(artifact_origin.deactivation_sounds)
