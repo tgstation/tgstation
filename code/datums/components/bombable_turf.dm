@@ -1,5 +1,5 @@
 /**
- * Apply this element to a turf (usually a wall) and it will be destroyed instantly by any explosion.
+ * Apply this to a turf (usually a wall) and it will be destroyed instantly by any explosion.
  * Most walls can already be destroyed by explosions so this is largely for usually indestructible ones.
  * For applying it in a map editor, use /obj/effect/mapping_helpers/bombable_wall
  */
