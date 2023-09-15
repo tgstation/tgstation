@@ -397,6 +397,7 @@
 	begin_day = 4
 	begin_month = JULY
 	mail_holiday = TRUE
+	holiday_hat = /obj/item/clothing/head/cowboy/brown
 
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
