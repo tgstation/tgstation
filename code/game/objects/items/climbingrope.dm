@@ -11,8 +11,8 @@
 	reach = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("whacks", "flails", "bludgeons", "swings")
-	attack_verb_simple = list("whack", "flail", "bludgeon", "swing")
+	attack_verb_continuous = list("whacks", "flails", "bludgeons")
+	attack_verb_simple = list("whack", "flail", "bludgeon")
 	resistance_flags = FLAMMABLE
 	///how many times can we climb with this rope
 	var/uses = 5
