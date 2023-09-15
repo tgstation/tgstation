@@ -194,8 +194,6 @@
 
 	///Items that the players have loaded into the vendor
 	var/list/vending_machine_input = list()
-	///Display header on the input view
-	var/input_display_header = "Custom Vendor"
 
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
@@ -954,13 +952,9 @@
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
-				var/type_wound
-				if (squish_part.biological_state & BIO_BONE)
-					type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate))
-				else
-					squish_part.receive_damage(brute=30)
-				if (type_wound)
-					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
+				var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
+				if (!carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, squish_part, severity, wound_source = "crushed by [src]"))
+					squish_part.receive_damage(brute = 30)
 			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
 			return TRUE
 		if(CRUSH_CRIT_HEADGIB) // skull squish!
@@ -1042,7 +1036,7 @@
 	to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
 
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(ispath(inserted_item.type, product_datum.product_path))
+		if(inserted_item.type == product_datum.product_path)
 			product_datum.amount++
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
@@ -1536,7 +1530,7 @@
  * * user - the user doing the loading
  */
 /obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user)
-	if((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband))
+	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
 		return TRUE
 	to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
 	return FALSE

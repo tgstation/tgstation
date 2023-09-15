@@ -1683,7 +1683,6 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
@@ -9534,14 +9533,14 @@
 	name = "Privacy Bolts";
 	normaldoorcontrol = 1;
 	pixel_x = -32;
-	pixel_y = 26;
+	pixel_y = 35;
 	specialfunctions = 4
 	},
 /obj/machinery/button/door/directional/north{
 	id = "com_guest2";
 	name = "Privacy Shutters";
 	pixel_x = -32;
-	pixel_y = 35
+	pixel_y = 26
 	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_suite)
@@ -10902,10 +10901,10 @@
 /turf/open/floor/iron,
 /area/station/security)
 "ejn" = (
-/obj/structure/frame,
 /obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/computer/arcade,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/techstorage/arcade_boards,
+/obj/structure/frame/computer,
 /turf/open/floor/eighties/red,
 /area/station/service/abandoned_gambling_den/gaming)
 "ejt" = (
@@ -12243,7 +12242,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/landmark/navigate_destination/eva,
-/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "eFV" = (
@@ -14377,6 +14375,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable/multilayer,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "fuC" = (
@@ -41414,7 +41413,7 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "oWr" = (
@@ -41923,6 +41922,8 @@
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -67668,6 +67669,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/multilayer,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "xlP" = (
@@ -69212,16 +69214,6 @@
 	},
 /turf/open/floor/iron/terracotta/small,
 /area/station/security/checkpoint/escape)
-"xHm" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "com_guest";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/station/command/corporate_suite)
 "xHv" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -69611,10 +69603,12 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/bridge)
 "xMo" = (
-/obj/structure/frame,
 /obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/computer/arcade,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/random/techstorage/arcade_boards,
+/obj/structure/frame/computer{
+	dir = 1
+	},
 /turf/open/floor/eighties/red,
 /area/station/service/abandoned_gambling_den/gaming)
 "xMr" = (
@@ -98161,7 +98155,7 @@ qjy
 vPP
 otX
 hei
-xHm
+hei
 vPP
 hxJ
 jVe
