@@ -662,6 +662,7 @@
 "cK" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/glass,
+/obj/item/disk/surgery/debug,
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 6;
 	pixel_y = 1
@@ -676,8 +677,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "cL" = (
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
-/obj/item/disk/surgery/debug,
+/obj/item/surgery_tray/advanced,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
