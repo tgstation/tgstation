@@ -110,7 +110,7 @@
 
 	else
 		multi_tool.set_buffer(src)
-		balloon_alert(user, "sensor added to multitool buffer")
+		balloon_alert(user, "sensor added to buffer")
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
