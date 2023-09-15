@@ -10,7 +10,7 @@
 /datum/component/bombable_turf/Initialize()
 	. = ..()
 	if(!isturf(parent))
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	var/turf/turf_parent = parent
 	turf_parent.explosive_resistance = 1
 	overlay = mutable_appearance('icons/turf/overlays.dmi', "explodable", turf_parent.layer + 0.1)
