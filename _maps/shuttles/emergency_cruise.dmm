@@ -1,7 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
 /obj/structure/closet/secure_closet/ert_sec{
 	name = "Emergency response security locker";
 	desc = "A storage unit containing equipment for responding to emergencies.";
@@ -362,10 +364,20 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "fP" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ammo_box/c35/rubber,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/closet/secure_closet/ert_sec{
+	name = "Emergency response security locker";
+	desc = "A storage unit containing equipment for responding to emergencies.";
+	req_access = list("security")
+	},
+/obj/item/food/burger/cheese,
+/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/ammo_box/a357,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "gr" = (
 /obj/item/radio/intercom/directional/south,
 /mob/living/simple_animal/bot/medbot{
@@ -841,17 +853,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
-"pY" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "escape_cockpit_windows";
-	name = "Cockpit Blast Door"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	damage_deflection = 21;
-	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "qd" = (
 /obj/machinery/computer/warrant,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -913,7 +914,9 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = 35
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	damage_deflection = 21
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ri" = (
@@ -1028,8 +1031,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "tF" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	damage_deflection = 21
+	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/handcuffs{
 	pixel_x = -3;
@@ -1049,6 +1053,9 @@
 	pixel_y = 4
 	},
 /obj/item/gun/grenadelauncher,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "tS" = (
@@ -1178,7 +1185,8 @@
 	name = "Shuttle Armory";
 	req_access = list("security");
 	dir = 8;
-	safe = 0
+	safe = 0;
+	damage_deflection = 21
 	},
 /obj/effect/turf_decal/trimline/red/warning,
 /obj/effect/turf_decal/trimline/red/warning{
@@ -1463,9 +1471,10 @@
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "BW" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ammo_box/c35/rubber,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Cj" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -2267,6 +2276,17 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"Qp" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Blast Door"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Qu" = (
 /obj/structure/bed/roller,
 /obj/item/bedsheet/patriot,
@@ -2921,7 +2941,7 @@ xf
 xf
 iQ
 yq
-fP
+BW
 nU
 xb
 so
@@ -2980,8 +3000,8 @@ kd
 (6,1,1) = {"
 kd
 kd
-pY
-pY
+Qp
+Qp
 uV
 uV
 rX
@@ -3026,7 +3046,7 @@ uV
 (7,1,1) = {"
 Wq
 uV
-pY
+Qp
 xU
 FR
 yH
@@ -3116,7 +3136,7 @@ xj
 xj
 "}
 (9,1,1) = {"
-pY
+Qp
 qd
 KB
 hH
@@ -3141,7 +3161,7 @@ qI
 Yr
 YZ
 bt
-BW
+uC
 Xw
 iO
 cY
@@ -3162,7 +3182,7 @@ xj
 xj
 "}
 (10,1,1) = {"
-pY
+Qp
 dg
 PU
 OU
@@ -3208,7 +3228,7 @@ uV
 OK
 "}
 (11,1,1) = {"
-pY
+Qp
 vq
 tx
 Gs
@@ -3254,7 +3274,7 @@ uV
 kd
 "}
 (12,1,1) = {"
-pY
+Qp
 mG
 zm
 Gs
@@ -3300,7 +3320,7 @@ uV
 kd
 "}
 (13,1,1) = {"
-pY
+Qp
 Sq
 ys
 bp
@@ -3346,7 +3366,7 @@ uV
 Et
 "}
 (14,1,1) = {"
-pY
+Qp
 oZ
 Ho
 Xo
@@ -3355,7 +3375,7 @@ KZ
 rX
 yT
 dC
-ac
+fP
 AB
 iP
 iP
@@ -3401,7 +3421,7 @@ eb
 rX
 hZ
 dC
-ac
+fP
 nZ
 UX
 Kd
