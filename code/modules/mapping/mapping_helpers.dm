@@ -1373,5 +1373,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		return
 
 	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
-	our_turf.AddComponent(/datum/component/bombable_turf)
+	our_turf.AddElement(/datum/element/bombable_turf)
 	return INITIALIZE_HINT_QDEL
