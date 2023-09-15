@@ -36,11 +36,7 @@
 		var/obj/item/stack/stack_source = source
 		result = new result_typepath(result_loc, stack_source.amount)
 	else
-		result = new result_typepath(
-			result_loc,
-			/* starting_reagent_purity = */ null,
-			/* no_base_reagents = */ TRUE,
-		)
+		result = new result_typepath(result_loc)
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
@@ -48,7 +44,7 @@
 	if(IS_EDIBLE(result))
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
-
+		result.reagents.clear_reagents()
 		source.reagents?.trans_to(result, source.reagents.total_volume)
 
 		BLACKBOX_LOG_FOOD_MADE(result.type)
