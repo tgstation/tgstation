@@ -99,3 +99,6 @@ https://freesound.org/people/FunWithSound/sounds/456965/
 
 beeps_jingle.ogg is adapted from Eponn's "Achievement happy Beeps Jingle", which is public domain (CC 0):
 https://freesound.org/people/Eponn/sounds/619838/
+
+asshole.ogg, bash.ogg, bobby.ogg, compliance.ogg, dontmove.ogg, dredd.ogg, floor.ogg, freeze.ogg, god.ogg, halt.ogg, harry.ogg, imperial.ogg, justice.ogg, robocop.ogg, running.ogg, shutup.ogg, stfu.ogg, and super.ogg are all creates with:
+Using free https://elevenlabs.io/ TTS "Ryan" voice, heavily modified by Audacity
