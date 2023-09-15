@@ -9533,14 +9533,14 @@
 	name = "Privacy Bolts";
 	normaldoorcontrol = 1;
 	pixel_x = -32;
-	pixel_y = 26;
+	pixel_y = 35;
 	specialfunctions = 4
 	},
 /obj/machinery/button/door/directional/north{
 	id = "com_guest2";
 	name = "Privacy Shutters";
 	pixel_x = -32;
-	pixel_y = 35
+	pixel_y = 26
 	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_suite)
@@ -69215,16 +69215,6 @@
 	},
 /turf/open/floor/iron/terracotta/small,
 /area/station/security/checkpoint/escape)
-"xHm" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "com_guest";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/station/command/corporate_suite)
 "xHv" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -98166,7 +98156,7 @@ qjy
 vPP
 otX
 hei
-xHm
+hei
 vPP
 hxJ
 jVe
