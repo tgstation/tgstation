@@ -10799,6 +10799,7 @@
 	pixel_y = 3
 	},
 /obj/item/radio/intercom/command/directional/north,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eau" = (
@@ -32898,6 +32899,7 @@
 "lVq" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "lVB" = (

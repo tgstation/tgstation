@@ -7275,6 +7275,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "chg" = (
@@ -38823,6 +38824,7 @@
 "lVZ" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "lWb" = (

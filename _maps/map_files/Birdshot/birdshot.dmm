@@ -21494,6 +21494,7 @@
 	},
 /obj/machinery/camera/autoname/directional/east,
 /obj/item/wrench,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "hPW" = (
@@ -36813,6 +36814,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
 "nle" = (

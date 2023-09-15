@@ -20784,6 +20784,7 @@
 "grf" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "grh" = (
@@ -43824,6 +43825,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "oHJ" = (

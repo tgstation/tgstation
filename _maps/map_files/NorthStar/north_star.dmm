@@ -21993,6 +21993,7 @@
 /obj/item/flashlight/lamp,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/west,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "fPD" = (
@@ -49003,6 +49004,7 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "mNg" = (
