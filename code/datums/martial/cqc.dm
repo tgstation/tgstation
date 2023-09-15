@@ -80,7 +80,7 @@
 		return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/attacker, mob/living/defender)
-	if(!can_use(attacker) || defender.stat == DEAD)
+	if(!can_use(attacker) || defender.stat != CONSCIOUS)
 		return FALSE
 
 	var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
