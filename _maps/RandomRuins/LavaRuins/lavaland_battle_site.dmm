@@ -5,8 +5,10 @@
 "f" = (
 /obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/item/clothing/head/costume/crown{
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 15;
+	pixel_y = 6;
+	desc = "A crown that was fit for a king, looks like it didn't get them very far.";
+	name = "dented crown"
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -22,12 +24,8 @@
 "j" = (
 /turf/template_noop,
 /area/template_noop)
-"l" = (
-/obj/structure/statue/bone/rib,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "m" = (
-/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "n" = (
@@ -63,21 +61,39 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"u" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "x" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"D" = (
+/obj/structure/statue/bone/rib{
+	name = "colossal tailbone"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "F" = (
-/obj/structure/stone_tile/block/burnt,
 /obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/statue/bone/rib,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "G" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"H" = (
+/obj/structure/firepit,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "I" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/stack/sheet/animalhide/goliath_hide,
+/obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "J" = (
@@ -87,6 +103,12 @@
 "K" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/stack/sheet/sinew,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"L" = (
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "M" = (
@@ -214,7 +236,7 @@ a
 G
 K
 G
-m
+u
 T
 x
 J
@@ -233,7 +255,7 @@ I
 G
 G
 q
-G
+L
 G
 s
 g
@@ -256,7 +278,7 @@ G
 x
 G
 G
-G
+D
 j
 j
 "}
@@ -271,8 +293,8 @@ t
 J
 G
 q
-G
 J
+O
 q
 G
 j
@@ -282,7 +304,7 @@ j
 j
 j
 m
-G
+u
 G
 q
 f
@@ -290,7 +312,7 @@ O
 J
 O
 G
-O
+n
 J
 x
 j
@@ -309,8 +331,8 @@ o
 n
 X
 F
+u
 G
-l
 j
 j
 "}
@@ -320,13 +342,13 @@ j
 J
 G
 G
-G
+u
 J
 U
 G
 U
 J
-U
+G
 G
 G
 j
@@ -338,7 +360,7 @@ j
 j
 q
 h
-m
+G
 G
 G
 q
@@ -357,7 +379,7 @@ j
 G
 G
 x
-G
+H
 x
 G
 G
@@ -377,8 +399,8 @@ J
 G
 G
 P
-m
 G
+u
 G
 a
 a
