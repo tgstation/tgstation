@@ -374,8 +374,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		))
 	var/list/internal_energy_si_derived_data = siunit_isolated(internal_energy * 1e6, "eV", 3)
 	data["internal_energy"] = internal_energy
-	data["internal_energy_coefficient"] = internal_energy_si_derived_data["coefficient"]
-	data["internal_energy_unit"] = internal_energy_si_derived_data["unit"]
+	data["internal_energy_coefficient"] = internal_energy_si_derived_data[SI_COEFFICIENT]
+	data["internal_energy_unit"] = internal_energy_si_derived_data[SI_UNIT]
 	data["internal_energy_factors"] = list()
 	for (var/factor in internal_energy_factors)
 		var/list/internal_energy_factor_si_derived_data = siunit_isolated(internal_energy_factors[factor] * 1e6, "eV", 3)
@@ -384,8 +384,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 		data["internal_energy_factors"] += list(list(
 			"name" = factor,
-			"amount" = internal_energy_factor_si_derived_data["coefficient"],
-			"unit" = internal_energy_factor_si_derived_data["unit"],
+			"amount" = internal_energy_factor_si_derived_data[SI_COEFFICIENT],
+			"unit" = internal_energy_factor_si_derived_data[SI_UNIT],
 		))
 	data["temp_limit"] = temp_limit
 	data["temp_limit_factors"] = list()
@@ -411,12 +411,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	data["zap_transmission_factors"] = list()
 	for (var/factor in zap_factors)
 		var/list/zap_factor_si_derived_data = siunit_isolated(zap_factors[factor] * internal_energy, "W", 2)
-		if(!zap_factor_si_derived_data["coefficient"])
+		if(!zap_factor_si_derived_data[SI_COEFFICIENT])
 			continue
 		data["zap_transmission_factors"] += list(list(
 			"name" = factor,
-			"amount" = zap_factor_si_derived_data["coefficient"],
-			"unit" = zap_factor_si_derived_data["unit"],
+			"amount" = zap_factor_si_derived_data[SI_COEFFICIENT],
+			"unit" = zap_factor_si_derived_data[SI_UNIT],
 		))
 
 	///Add high energy bonus to the zap transmission data so we can accurately measure our power generation from zaps.
@@ -432,14 +432,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/list/zap_factor_si_derived_data = siunit_isolated(high_energy_bonus, "W", 2)
 		data["zap_transmission_factors"] += list(list(
 			"name" = "High Energy Bonus",
-			"amount" = zap_factor_si_derived_data["coefficient"],
-			"unit" = zap_factor_si_derived_data["unit"],
+			"amount" = zap_factor_si_derived_data[SI_COEFFICIENT],
+			"unit" = zap_factor_si_derived_data[SI_UNIT],
 		))
 
 	var/list/zap_transmission_si_derived_data = siunit_isolated(zap_transmission + high_energy_bonus, "W", 2)
 	data["zap_transmission"] = zap_transmission + high_energy_bonus
-	data["zap_transmission_coefficient"] = zap_transmission_si_derived_data["coefficient"]
-	data["zap_transmission_unit"] = zap_transmission_si_derived_data["unit"]
+	data["zap_transmission_coefficient"] = zap_transmission_si_derived_data[SI_COEFFICIENT]
+	data["zap_transmission_unit"] = zap_transmission_si_derived_data[SI_UNIT]
 
 	data["absorbed_ratio"] = absorption_ratio
 	var/list/formatted_gas_percentage = list()
