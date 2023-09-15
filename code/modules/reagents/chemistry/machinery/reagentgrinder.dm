@@ -317,7 +317,7 @@
 			juice_item(I, user)
 
 /obj/machinery/reagentgrinder/proc/juice_item(obj/item/I, mob/user) //Juicing results can be found in respective object definitions
-	if(!I.juice(beaker, user))
+	if(!I.juice(beaker.reagents, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
 		return
 	remove_object(I)
@@ -336,7 +336,7 @@
 			grind_item(i, user)
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
-	if(!I.grind(beaker, user))
+	if(!I.grind(beaker.reagents, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
 		return
 	remove_object(I)
@@ -350,16 +350,18 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/reagentgrinder, mix_complete)), 50)
 
 /obj/machinery/reagentgrinder/proc/mix_complete()
-	if(beaker?.reagents.total_volume)
-		//Recipe to make Butter
-		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
-		var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
-		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
-		for(var/i in 1 to butter_amt)
-			new /obj/item/food/butter(drop_location(), starting_reagent_purity = purity)
-		//Recipe to make Mayonnaise
-		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
-			beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
-		//Recipe to make whipped cream
-		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
-			beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
+	if(beaker?.reagents.total_volume <= 0)
+		return
+	//Recipe to make Butter
+	var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+	var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
+	beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
+	for(var/i in 1 to butter_amt)
+		var/obj/item/food/butter/tasty_butter = new(drop_location())
+		tasty_butter.reagents.set_all_reagents_purity(purity)
+	//Recipe to make Mayonnaise
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
+	//Recipe to make whipped cream
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)

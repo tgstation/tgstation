@@ -367,6 +367,9 @@
 	 */
 	var/list/prefill_flavours
 
+/obj/item/food/icecream/New(loc, list/prefill_flavours)
+	return ..()
+
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
 	if(prefill_flavours)
 		src.prefill_flavours = prefill_flavours
@@ -440,7 +443,6 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/brownie_sheet/make_processable()
@@ -490,7 +492,6 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1, "peanut butter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/peanut_butter_brownie_sheet/make_processable()

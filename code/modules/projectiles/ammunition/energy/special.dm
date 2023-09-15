@@ -74,3 +74,9 @@
 	select_name = "marksman nanoshot"
 	e_cost = 0
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+
+/obj/item/ammo_casing/energy/fisher
+	projectile_type = /obj/projectile/energy/fisher
+	select_name = "light-buster"
+	e_cost = 250
+	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip

@@ -172,6 +172,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
 	var/list/datum/weakref/saviors = null
 
+	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
+	var/supermatter_sliver_removed = FALSE
+	/// Cooldown for sending emergency alerts to the common radio channel
+	COOLDOWN_DECLARE(common_radio_cooldown)
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	gas_percentage = list()
@@ -268,16 +273,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
-	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
+	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
+		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
+		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
+		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 5 * internal_energy * zap_multiplier,
+			zap_str = 1.25 * internal_energy * zap_multiplier * delta_time,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 300,
+			zap_cutoff = 300 * delta_time,
 			power_level = internal_energy,
 			color = zap_color,
 		)
@@ -322,7 +330,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/mob/living/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
 				continue
-			savior.client?.give_award(/datum/award/achievement/misc/theoretical_limits, savior)
+			savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
 		LAZYNULL(saviors)
 
 	if(prob(15))
@@ -501,10 +509,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radio.talk_into(
 		src,
 		count_down_messages[1],
-		emergency_channel
+		emergency_channel,
+		list(SPAN_COMMAND)
 	)
 
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+	var/delamination_countdown_time = SUPERMATTER_COUNTDOWN_TIME
+	// If a sliver was removed from the supermatter, the countdown time is significantly decreased
+	if (supermatter_sliver_removed == TRUE)
+		delamination_countdown_time = SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME
+		radio.talk_into(
+			src,
+			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
+			Please inspect crystal for structural abnormalities or sabotage!",
+			emergency_channel,
+			list(SPAN_COMMAND)
+			)
+
+	for(var/i in delamination_countdown_time to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
 			last_delamination_strategy = delamination_strategy
@@ -523,7 +544,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			message = "[i*0.1]..."
 
-		radio.talk_into(src, message, emergency_channel)
+		radio.talk_into(src, message, emergency_channel, list(SPAN_COMMAND))
 
 		if(healed)
 			final_countdown = FALSE
@@ -915,7 +936,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				multi = 8
 		if(zap_flags & ZAP_SUPERMATTER_FLAGS)
 			var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
-			zap_str = remaining_power * 0.5 //Coils should take a lot out of the power of the zap
+			zap_str = remaining_power / multi //Coils should take a lot out of the power of the zap
 		else
 			zap_str /= 3
 
@@ -949,6 +970,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count > 1)
 			child_targets_hit = targets_hit.Copy() //Pass by ref begone
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
+
+// For /datum/sm_delam to check if it should be sending an alert on common radio channel
+/obj/machinery/power/supermatter_crystal/proc/should_alert_common()
+	if(!COOLDOWN_FINISHED(src, common_radio_cooldown))
+		return FALSE
+
+	COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
+	return TRUE
 
 #undef BIKE
 #undef COIL

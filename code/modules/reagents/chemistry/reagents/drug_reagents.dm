@@ -432,7 +432,7 @@
 	carbie.adjustToxLoss(1 * REM * seconds_per_tick, required_biotype = affected_biotype)
 	if(SPT_PROB(5, seconds_per_tick))
 		carbie.adjustToxLoss(5, required_biotype = affected_biotype)
-		carbie.vomit()
+		carbie.vomit(VOMIT_CATEGORY_DEFAULT)
 
 /datum/reagent/drug/maint/tar
 	name = "Maintenance Tar"

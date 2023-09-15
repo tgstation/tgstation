@@ -65,6 +65,8 @@
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
+	/// If the computer's flashlight/LED light has forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
@@ -127,6 +129,7 @@
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
+		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
 	if(internal_cell)
@@ -200,10 +203,7 @@
 		return TRUE
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -414,7 +414,7 @@
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
-		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -660,7 +660,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
-		toggle_flashlight()
+		toggle_flashlight(user)
 		return
 
 	return ..()
@@ -671,13 +671,31 @@
  * Called from ui_act(), does as the name implies.
  * It is separated from ui_act() to be overwritten as needed.
 */
-/obj/item/modular_computer/proc/toggle_flashlight()
+/obj/item/modular_computer/proc/toggle_flashlight(mob/user)
 	if(!has_light)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
+
+/**
+ * Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+ *
+ * Called when sent COMSIG_HIT_BY_SABOTEUR.
+ */
+/obj/item/modular_computer/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!has_light)
+		return
+	set_light_on(FALSE)
+	update_appearance()
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /**
  * Sets the computer's light color, if it has a light.
@@ -713,12 +731,7 @@
 			return
 
 	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(attacking_item, /obj/item/pai_card) && insert_pai(user, attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
@@ -792,7 +805,7 @@
 	internal_cell?.forceMove(drop_location())
 	computer_id_slot?.forceMove(drop_location())
 	inserted_disk?.forceMove(drop_location())
-	inserted_pai?.forceMove(drop_location())
+	remove_pai()
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
@@ -840,3 +853,30 @@
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
+
+/obj/item/modular_computer/proc/insert_pai(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return FALSE
+	if(!user.transferItemToLoc(card, src))
+		return FALSE
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	var/datum/action/innate/pai/messenger/messenger_ability = new(inserted_pai.pai)
+	messenger_ability.Grant(inserted_pai.pai)
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+/obj/item/modular_computer/proc/remove_pai(mob/user)
+	if(!inserted_pai)
+		return FALSE
+	var/datum/action/innate/pai/messenger/messenger_ability = locate() in inserted_pai.pai.actions
+	messenger_ability.Remove(inserted_pai.pai)
+	qdel(messenger_ability)
+	if(user)
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+	else
+		inserted_pai.forceMove(drop_location())
+	inserted_pai = null
+	update_appearance(UPDATE_ICON)
+	return TRUE

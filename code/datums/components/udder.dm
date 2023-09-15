@@ -117,8 +117,8 @@
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
 		to_chat(user, span_warning("[milk_holder] is full."))
 		return
-	var/transfered = reagents.trans_to(milk_holder, rand(5,10))
-	if(transfered)
+	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
+	if(transferred)
 		user.visible_message(span_notice("[user] milks [src] using \the [milk_holder]."), span_notice("You milk [src] using \the [milk_holder]."))
 	else
 		to_chat(user, span_warning("The udder is dry. Wait a bit longer..."))

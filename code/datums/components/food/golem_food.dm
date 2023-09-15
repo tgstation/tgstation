@@ -46,17 +46,21 @@
 	if (!snack_type.can_consume(target))
 		source.balloon_alert(user, "can't consume!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if (!golem_snack)
-		golem_snack = new(
-			/* loc = */ null,
-			/* name = */ source.name,
-			/* consume_food = */ consume_on_eat,
-			/* food_buff = */ snack_type,
-			/* owner = */ parent,
-		)
-		RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
+	if (isnull(golem_snack))
+		create_golem_snack(source)
 	golem_snack.attack(target, user, click_parameters)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// Creates our golem snack atom instance
+/datum/component/golem_food/proc/create_golem_snack(atom/source)
+	golem_snack = new(null)
+	golem_snack.setup(
+		name = source.name,
+		consume_food = consume_on_eat,
+		food_buff = snack_type,
+		owner = parent,
+	)
+	RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 
 /// Reference handling for abstract food object
 /datum/component/golem_food/proc/on_food_destroyed()
@@ -84,13 +88,17 @@
 	/// Golem food buff to apply on consumption
 	var/datum/golem_food_buff/food_buff
 
-/obj/item/food/golem_food/Initialize(mapload, name, consume_food, datum/golem_food_buff/food_buff, atom/owner)
-	. = ..()
+/// Set up some properties based on a passed-in item that the golem will pretend to eat
+/obj/item/food/golem_food/proc/setup(
+	name,
+	consume_food = TRUE,
+	datum/golem_food_buff/food_buff,
+	atom/owner,
+)
 	src.name = name
 	src.consume_food = consume_food
 	src.food_buff = food_buff
 	src.owner = owner
-
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_parent_destroyed))
 
 /// Clean ourselves up if our parent dies

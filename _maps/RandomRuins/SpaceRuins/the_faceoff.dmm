@@ -735,7 +735,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/full,
-/mob/living/simple_animal/hostile/mining_drone,
+/mob/living/basic/mining_drone,
 /obj/item/grenade/c4,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
