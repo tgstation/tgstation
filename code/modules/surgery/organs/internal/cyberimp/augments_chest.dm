@@ -52,13 +52,16 @@
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
+	var/can_defib_owner
 	COOLDOWN_DECLARE(reviver_cooldown)
 
+/obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
+	on_life() // Allowes implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	if(reviving)
 		switch(owner.stat)
-			if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT)
+			if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT, DEAD)
 				addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 			else
 				COOLDOWN_START(src, reviver_cooldown, revive_cost)
@@ -70,13 +73,24 @@
 		return
 
 	switch(owner.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT, DEAD)
 			revive_cost = 0
 			reviving = TRUE
-			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+			to_chat(owner, span_notisce("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(can_defib_owner == DEFIB_POSSIBLE)
+		revive_dead()
+		can_defib_owner = null
+		revive_cost += 100
+	// this check goes after revive_dead() to delay revival a bit
+	if(owner.stat == DEAD)
+		can_defib_owner = owner.can_defib()
+		if(can_defib_owner == DEFIB_POSSIBLE) 
+			owner.notify_ghost_cloning("You are being revived by [src]!")
+			owner.grab_ghost()
+
 	if(owner.getOxyLoss())
 		owner.adjustOxyLoss(-5)
 		revive_cost += 5
@@ -89,6 +103,20 @@
 	if(owner.getToxLoss())
 		owner.adjustToxLoss(-1)
 		revive_cost += 40
+		
+
+/obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
+	owner.grab_ghost()
+
+	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
+	playsound(src, SFX_BODYFALL, 50, TRUE)
+	playsound(src, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	owner.revive()
+	owner.emote("gasp")
+	owner.set_jitter_if_lower(200 SECONDS)
+	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+	log_game("[owner] been revived by [src]")
+
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
 	. = ..()
