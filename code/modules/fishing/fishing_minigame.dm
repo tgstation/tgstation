@@ -138,7 +138,6 @@
 
 /// Challenge interrupted by something external
 /datum/fishing_challenge/proc/interrupt(datum/source)
-	SIGNAL_HANDLER
 	if(!completed)
 		experience_multiplier *= 0.5
 		complete(FALSE)
