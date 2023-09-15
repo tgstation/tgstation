@@ -10855,7 +10855,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -13337,7 +13337,7 @@
 	network = list("ss13","medbay");
 	pixel_x = 22
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

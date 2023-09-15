@@ -15846,7 +15846,7 @@
 /area/station/cargo/lobby)
 "dRQ" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
@@ -77240,7 +77240,7 @@
 /area/station/engineering/atmos)
 "tsx" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

@@ -44327,7 +44327,7 @@
 /area/station/maintenance/port/lesser)
 "pTr" = (
 /obj/structure/table,
-/obj/item/surgery_tray{
+/obj/item/surgery_tray/full{
 	pixel_y = -5
 	},
 /obj/item/wirecutters{

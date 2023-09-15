@@ -54965,7 +54965,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "onz" = (
-/obj/item/surgery_tray{
+/obj/item/surgery_tray/full{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{
@@ -58301,7 +58301,7 @@
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "pjR" = (
-/obj/item/surgery_tray{
+/obj/item/surgery_tray/full{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{

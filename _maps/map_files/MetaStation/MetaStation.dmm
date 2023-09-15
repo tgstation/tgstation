@@ -36999,7 +36999,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/iron/white,

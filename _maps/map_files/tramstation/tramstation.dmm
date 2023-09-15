@@ -13449,7 +13449,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "dCG" = (
@@ -61818,7 +61818,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/item/radio/intercom/directional/south,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "uWn" = (
