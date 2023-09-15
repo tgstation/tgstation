@@ -278,12 +278,12 @@
 	var/pluck_time = rip_time * (weapon.w_class * 0.3) * (self_pluck ? 1.5 : 1) * tweezer_speed * (tweezer_safe ? 1 : 1.5)
 
 	if(self_pluck)
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]..."), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)].)"),\
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone] with [possible_tweezers]..."), span_notice("You start plucking [weapon] from your [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)].)"),\
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
 	else
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone]..."),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)]."), \
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone] with [possible_tweezers]..."),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)]."), \
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(pluck_time)]."))
+		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)]."))
 
 	if(!do_after(user, pluck_time, victim))
 		if(self_pluck)
@@ -293,8 +293,8 @@
 			to_chat(victim, span_danger("[user] fails to pluck [weapon] from your [limb.plaintext_zone]."))
 		return
 
-	to_chat(user, span_notice("You [tweezer_safe ? "safely" : "unsafely, but"] successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
-	to_chat(victim, span_notice("[user] [tweezer_safe ? "safely" : span_warning("painfully")] plucks [weapon] from your [limb.plaintext_zone]."))
+	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone][tweezer_safe ? "." : ", but hurt [victim.p_them()] in the process."]"))
+	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone][tweezer_safe ? "." : ", but it's not perfect."]"))
 	if(!tweezer_safe)
 		// sure it still hurts but it sucks less
 		damaging_removal(victim, weapon, limb, (0.4 * possible_tweezers.w_class))
