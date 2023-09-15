@@ -313,7 +313,7 @@
  *
  * needs to return amount healed in order to calculate things like tend wounds xp gain
  */
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE)) //zero as argument for no instant health update
 	if(updating_health)
 		updatehealth()
