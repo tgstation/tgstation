@@ -61,3 +61,7 @@
 	donator_only = TRUE
 
 
+/datum/loadout_item/under/navy_uniform
+	name = "Naval Officer Uniform"
+	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
+	donator_only = TRUE

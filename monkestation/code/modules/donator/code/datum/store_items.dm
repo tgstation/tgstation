@@ -30,4 +30,7 @@
 	item_path = /obj/item/clothing/suit/hooded/shark_costume
 	item_cost = 8000
 
-
+/datum/store_item/under/miscellaneous/navy_uniform
+	name = "Naval Officer Uniform"
+	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
+	item_cost = 4000

@@ -55,8 +55,8 @@
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/obj/item/clothing/under/costume/gold
-	name = "gold navy suit"
+/obj/item/clothing/under/costume/navy_uniform_gold
+	name = "Naval Officer Uniform"
 	desc = "A immaculate navy suit studded with gold."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
