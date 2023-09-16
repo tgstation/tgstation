@@ -83,7 +83,7 @@
 	if(can_defib_owner == DEFIB_POSSIBLE)
 		revive_dead()
 		can_defib_owner = null
-		revive_cost += 100
+		revive_cost += 6000 // Additional 10 minutes cooldown after revival.
 	// this check goes after revive_dead() to delay revival a bit
 	if(owner.stat == DEAD)
 		can_defib_owner = owner.can_defib()
