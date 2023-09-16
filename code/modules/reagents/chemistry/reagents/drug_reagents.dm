@@ -337,7 +337,7 @@
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
 		affected_mob.clear_mood_event("maintenance_fun")
-	. = ..()
+	return ..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
