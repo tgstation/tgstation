@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - balance: "Pulling embedded items e.g. shrapnel with hemostats is now a lot faster, and scales appropriately with toolspeed."
-  - balance: "You can now pull embedded items with wirecutters, at a speed penalty."
