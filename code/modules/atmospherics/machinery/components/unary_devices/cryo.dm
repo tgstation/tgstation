@@ -111,8 +111,8 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
-	/// Reference to the pipe connector we're using to interface with the pipe network
-	var/obj/machinery/atmospherics/components/unary/machine_connector/internal_connector
+	/// Reference to the datum connector we're using to interface with the pipe network
+	var/datum/gas_machine_connector/internal_connector
 	/// Check if the machine has been turned on
 	var/on = FALSE
 
@@ -136,8 +136,7 @@
 	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
 	register_context()
-	internal_connector = new(loc, src, dir)
-	internal_connector.airs[1].volume = CELL_VOLUME * 0.5
+	internal_connector = new(loc, src, dir, CELL_VOLUME * 0.5)
 
 /obj/machinery/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -189,14 +188,8 @@
 	QDEL_NULL(occupant_vis)
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
-	///Take the turf the cryotube is on
-	var/turf/T = get_turf(src)
-	if(T)
-		///Take the air composition inside the cryotube
-		var/datum/gas_mixture/air1 = internal_connector.airs[1]
-		T.assume_air(air1)
 
-	internal_connector = null
+	QDEL_NULL(internal_connector)
 
 	return ..()
 
@@ -325,7 +318,7 @@
 			radio.talk_into(src, msg, radio_channel)
 			return
 
-	var/datum/gas_mixture/air1 = internal_connector.airs[1]
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
 	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
@@ -339,9 +332,9 @@
 	if(!on)
 		return
 
-	var/datum/gas_mixture/air1 = internal_connector.airs[1]
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
-	if(!internal_connector.nodes[1] || !internal_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
@@ -375,18 +368,18 @@
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
-		internal_connector.update_parents()
+		internal_connector.gas_connector.update_parents()
 
 /obj/machinery/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 
 	if(breath_request <= 0)
 		return null
-	var/datum/gas_mixture/air1 = internal_connector.airs[1]
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 	var/breath_percentage = breath_request / air1.volume
 	return air1.remove(air1.total_moles() * breath_percentage)
 
 /obj/machinery/cryo_cell/assume_air(datum/gas_mixture/giver)
-	internal_connector.airs[1].merge(giver)
+	internal_connector.gas_connector.airs[1].merge(giver)
 
 /obj/machinery/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
@@ -530,7 +523,7 @@
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
 
-	var/datum/gas_mixture/air1 = internal_connector.airs[1]
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
@@ -591,7 +584,7 @@
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/cryo_cell/return_temperature()
-	var/datum/gas_mixture/G = internal_connector.airs[1]
+	var/datum/gas_mixture/G = internal_connector.gas_connector.airs[1]
 
 	if(G.total_moles() > 10)
 		return G.temperature
