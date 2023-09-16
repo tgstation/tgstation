@@ -67,7 +67,7 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
-	bake_result.reagents.clear_reagents()
+	baked_result.reagents.clear_reagents()
 	original_object.reagents?.trans_to(baked_result, original_object.reagents.total_volume)
 
 	if(who_baked_us)
