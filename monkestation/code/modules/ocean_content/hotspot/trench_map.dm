@@ -66,7 +66,7 @@
 						}
 						.hotspot_locked {
 							position: absolute;
-							background: rgba(255, 208, 0, 0.8);
+							background: rgba(255, 0, 0, 0.8);
 						}
 						.key {
 							text-align: center;
@@ -88,7 +88,7 @@
 						.station { background-color: [colors["station"]]; }
 						.other { background-color: [colors["other"]]; }
 						.vent_unlocked { background-color: rgb(255, 120, 120); }
-						.vent_locked { background-color: rgb(255, 208, 0); }
+						.vent_locked { background-color: rgb(255, 0, 0); }
 					</style>
 
 				</head>
