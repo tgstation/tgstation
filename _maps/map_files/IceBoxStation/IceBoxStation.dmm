@@ -789,6 +789,14 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"aol" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "aoo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -19195,6 +19203,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "fTo" = (
@@ -25446,6 +25455,7 @@
 	id = "medsecprivacy";
 	name = "Privacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "hSF" = (
@@ -26537,6 +26547,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/large,
 /area/station/maintenance/aft/greater)
 "ikz" = (
@@ -28028,6 +28039,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/lobby)
 "iIF" = (
@@ -40387,7 +40399,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
@@ -51219,6 +51230,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "pJQ" = (
@@ -59109,6 +59121,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "shT" = (
@@ -61245,6 +61258,7 @@
 	id = "hopflash";
 	pixel_y = -23
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "sMY" = (
@@ -66179,6 +66193,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"utN" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "utR" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -76812,6 +76830,7 @@
 	id = "medsecprivacy";
 	name = "Privacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "xGI" = (
@@ -77449,6 +77468,7 @@
 	c_tag = "Atmospherics Incinerator"
 	},
 /obj/machinery/atmospherics/components/tank/plasma,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "xTw" = (
@@ -236749,7 +236769,7 @@ nDA
 vvi
 xpJ
 vYs
-nDA
+aol
 gCn
 pJN
 dZQ
@@ -236994,7 +237014,7 @@ xKJ
 rmM
 pZh
 oYI
-wzk
+utN
 uPY
 knU
 kPv
