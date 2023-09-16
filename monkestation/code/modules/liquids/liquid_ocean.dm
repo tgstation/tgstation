@@ -9,10 +9,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	requires_power = TRUE
 	always_unpowered = TRUE
-	static_lighting = FALSE
-
-	base_lighting_alpha = 255
-	base_lighting_color = COLOR_CARP_LIGHT_BLUE
 
 	power_light = FALSE
 	power_equip = FALSE
