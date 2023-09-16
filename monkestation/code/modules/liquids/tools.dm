@@ -67,6 +67,3 @@
 				ocean_types.base_lighting_color = listed_ocean.static_overlay.color
 				ocean_types.update_base_lighting()
 			rebuilt = TRUE
-		listed_ocean.light_color = listed_ocean.static_overlay.color
-		listed_ocean.light_outer_range = 0
-		listed_ocean.update_starlight()

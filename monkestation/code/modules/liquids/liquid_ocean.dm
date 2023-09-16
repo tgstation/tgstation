@@ -75,14 +75,12 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	planetary_atmos = TRUE
 	initial_gas_mix = OSHAN_DEFAULT_ATMOS
-	light_power = 0.75
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C
 	var/list/ocean_turfs = list()
 	var/list/open_turfs = list()
-	var/has_starlight = TRUE
 
 	///are we captured, this is easier than having to run checks on turfs for vents
 	var/captured = FALSE
@@ -94,9 +92,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	var/obj/item/stack/dig_result = /obj/item/stack/ore/glass
 	/// Whether the turf has been dug or not
 	var/dug = FALSE
-
-/turf/open/floor/plating/ocean/dark
-	has_starlight = FALSE
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
@@ -135,29 +130,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 		return TRUE
 	if(user)
 		to_chat(user, span_warning("Looks like someone has dug here already!"))
-
-
-/// Updates starlight. Called when we're unsure of a turf's starlight state
-/// Returns TRUE if we succeed, FALSE otherwise
-/turf/open/floor/plating/ocean/proc/update_starlight()
-	if(!has_starlight)
-		return
-	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		// I've got a lot of cordons near spaceturfs, be good kids
-		if(istype(t, /turf/open/floor/plating/ocean) || istype(t, /turf/cordon))
-			//let's NOT update this that much pls
-			continue
-		enable_starlight()
-		return TRUE
-	set_light(0)
-	return FALSE
-
-/// Turns on the stars, if they aren't already
-/turf/open/floor/plating/ocean/proc/enable_starlight()
-	if(!has_starlight)
-		return
-	if(!light_outer_range)
-		set_light(2)
 
 
 /turf/open/floor/plating/ocean/proc/assume_self()
