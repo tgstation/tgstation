@@ -18,10 +18,10 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/plumbing/grinder_chemical/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/storage))
+	if(istype(weapon, /obj/item/storage/bag))
 		to_chat(user, span_notice("You dump items from [weapon] into the grinder."))
-		for(var/obj/item/item as anything in weapon.contents)
-			grind(item)
+		for(var/obj/item/obj_item in weapon.contents)
+			grind(obj_item)
 	else
 		to_chat(user, span_notice("You attempt to grind [weapon]."))
 		grind(weapon)
