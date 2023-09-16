@@ -55547,10 +55547,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
-"tyv" = (
-/obj/machinery/lapvend,
-/turf/open/floor/iron/white,
-/area/station/hallway/primary/starboard)
 "tyx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -111811,7 +111807,7 @@ rVX
 stP
 wbu
 tbD
-tyv
+ygu
 xdc
 ugC
 xSZ
