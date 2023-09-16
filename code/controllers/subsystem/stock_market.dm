@@ -83,13 +83,13 @@ SUBSYSTEM_DEF(stock_market)
 	var/quantity_change = 0
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
-			price_change = ROUND_UP(gaussian(price_units * 0.1, price_units * 0.05)) //If we don't ceil, small numbers will get trapped at low values
+			price_change = ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05)) //If we don't ceil, small numbers will get trapped at low values
 			quantity_change = -round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
 		if(MARKET_TREND_STABLE)
-			price_change = round(gaussian(0, price_units * 0.01))
+			price_change = round(gaussian(0, price_baseline * 0.01))
 			quantity_change = round(gaussian(0, stock_quantity * 0.01))
 		if(MARKET_TREND_DOWNWARD)
-			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_units * 0.05))
+			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05))
 			quantity_change = round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
 	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, initial(mat.tradable_base_quantity) * 2))
@@ -100,7 +100,6 @@ SUBSYSTEM_DEF(stock_market)
  * Events are also broadcast to the newscaster as a fun little fluff piece. Good way to tell some lore as well, or just make a joke.
  */
 /datum/controller/subsystem/stock_market/proc/handle_market_event(datum/material/mat)
-	var/price_units = materials_prices[mat]
 
 	var/company_name = list( // Pick a random company name from the list, I let copilot make a few up for me which is why some suck
 		"Nakamura Engineering",
@@ -114,10 +113,17 @@ SUBSYSTEM_DEF(stock_market)
 	)
 	var/circumstance
 	var/event = rand(1,3)
+
+	var/price_units = materials_prices[mat]
+	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
+	if(!isnull(mat.minimum_value_override))
+		price_minimum = mat.minimum_value_override * SHEET_MATERIAL_AMOUNT
+	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
+
 	switch(event)
 		if(1) //Reset to stable
-			materials_prices[mat] = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
-			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] = price_baseline
 			materials_trends[mat] = MARKET_TREND_STABLE
 			materials_trend_life[mat] = 1
 			circumstance = pick(list(
@@ -126,8 +132,8 @@ SUBSYSTEM_DEF(stock_market)
 				"<b>[initial(mat.name)]</b> is now under a monopoly by [pick(company_name)]. The price has been changed to <b>[materials_prices[mat]] cr</b> accordingly."
 			))
 		if(2) //Big boost
-			materials_prices[mat] += round(gaussian(price_units * 0.5, 0.1 * price_units))
-			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] += round(gaussian(price_units * 0.5, price_units * 0.1))
+			materials_prices[mat] = clamp(materials_prices[mat], price_minimum, price_maximum)
 			materials_trends[mat] = MARKET_TREND_UPWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
@@ -136,8 +142,8 @@ SUBSYSTEM_DEF(stock_market)
 				"A study has found that <b>[initial(mat.name)]</b> may run out within the next 100 years. The price has raised to <b>[materials_prices[mat]] cr</b> due to panic."
 			))
 		if(3) //Big drop
-			materials_prices[mat] -= round(gaussian(price_units * 1.5, 0.1 * price_units))
-			materials_prices[mat] = clamp(materials_prices[mat], initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5, initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+			materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.1))
+			materials_prices[mat] = clamp(materials_prices[mat], price_minimum, price_maximum)
 			materials_trends[mat] = MARKET_TREND_DOWNWARD
 			materials_trend_life[mat] = rand(1,5)
 			circumstance = pick(list(
