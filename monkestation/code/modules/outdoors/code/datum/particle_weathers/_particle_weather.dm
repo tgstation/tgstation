@@ -269,7 +269,9 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/particle_weather/proc/can_weather(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
-
+	var/area/mob_area = get_area(mob_turf)
+	if(istype(mob_area, /area/shuttle))
+		return
 	if(!mob_turf)
 		return
 
