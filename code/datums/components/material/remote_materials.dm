@@ -155,12 +155,12 @@ handles linking back and forth.
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
-				for(var/datum/material/MAT as anything in mat_container.materials)
-					var/mat_amount = mat_container.materials[MAT]
-					if(!mat_amount || !new_container.has_space(mat_amount) || !new_container.can_hold_material(MAT))
+				for(var/datum/material/mat as anything in mat_container.materials)
+					var/mat_amount = mat_container.materials[mat]
+					if(!mat_amount || !new_container.has_space(mat_amount) || !new_container.can_hold_material(mat))
 						continue
-					new_container.materials[MAT] += mat_amount
-					mat_container.materials[MAT] = 0
+					new_container.materials[mat] += mat_amount
+					mat_container.materials[mat] = 0
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
