@@ -1,0 +1,4 @@
+author: "blueDev2"
+delete-after: True
+changes:
+  - bugfix: "Lipolicide and other chems now puts you in crit, even if it is the only source of damage"
