@@ -1,1 +1,1 @@
-/turf/closed/indestructible/explodable/@SUBTYPES : /turf/closed/indestructible/@SUBTYPES{@OLD}, /obj/effect/mapping_helpers/bombable_wall
+/turf/closed/indestructible/explodable/@SUBTYPES : /turf/closed/indestructible/@SUBTYPES, /obj/effect/mapping_helpers/bombable_wall
