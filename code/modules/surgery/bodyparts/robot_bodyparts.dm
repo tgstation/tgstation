@@ -432,8 +432,6 @@
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
-	biological_state = (BIO_METAL|BIO_JOINTED)
-
 /obj/item/bodypart/arm/right/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -442,8 +440,6 @@
 	burn_modifier = 1
 	brute_modifier = 1
 	max_damage = PROSTHESIS_MAX_HP
-
-	biological_state = (BIO_METAL|BIO_JOINTED)
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -458,8 +454,6 @@
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
-	biological_state = (BIO_METAL|BIO_JOINTED)
-
 /obj/item/bodypart/leg/right/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -468,8 +462,6 @@
 	brute_modifier = 1
 	burn_modifier = 1
 	max_damage = PROSTHESIS_MAX_HP
-
-	biological_state = (BIO_METAL|BIO_JOINTED)
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
