@@ -76,7 +76,7 @@
 		if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT, DEAD)
 			revive_cost = 0
 			reviving = TRUE
-			to_chat(owner, span_notisce("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
