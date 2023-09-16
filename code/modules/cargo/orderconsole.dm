@@ -36,6 +36,8 @@
 	var/cargo_account = ACCOUNT_CAR
 	///Interface name for the ui_interact call for different subtypes.
 	var/interface_type = "Cargo"
+	/// are we currently_sending to an ocean point?
+	var/currently_sending = FALSE
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -296,6 +298,9 @@
 		return
 	switch(action)
 		if("send")
+			if(currently_sending)
+				say("Contents are already on their way")
+				return
 			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
@@ -341,6 +346,7 @@
 				if(!length(GLOB.cargo_launch_points))
 					stack_trace("Erm, we are attempting to launch cargo crates on a map with no cargo landing points")
 					return
+				currently_sending = TRUE
 				var/list/goodies_by_buyer = list()
 				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
 
@@ -384,6 +390,7 @@
 					SSshuttle.shopping_list -= order
 					var/distance = get_dist(spawning_turf, picked_point)
 					new_atom.throw_at(picked_point, distance + 4, 2)
+				currently_sending = FALSE
 
 			. = TRUE
 		if("loan")
