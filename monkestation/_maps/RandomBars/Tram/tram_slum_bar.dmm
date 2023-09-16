@@ -168,6 +168,18 @@
 "hL" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
+/obj/item/fireaxe/boneaxe,
+/obj/item/food/pie/cream{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/food/pie/cream{
+	pixel_y = 2
+	},
+/obj/item/food/pie/cream{
+	pixel_x = 10;
+	pixel_y = 3
+	},
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "hN" = (
@@ -501,7 +513,9 @@
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "ui" = (
-/turf/open/floor/elevator_shaft{
+/turf/open/chasm{
+	icon_state = "moon_shaft";
+	icon = 'goon/icons/turf/floors.dmi';
 	dir = 4
 	},
 /area/station/service/theater)
@@ -888,8 +902,17 @@
 /area/station/service/bar/atrium)
 "Jx" = (
 /obj/structure/table/wood,
-/obj/item/food/pie/cream,
 /obj/effect/turf_decal/siding/wood,
+/obj/item/melee/cleric_mace,
+/obj/item/food/pie/cream,
+/obj/item/food/pie/cream{
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/obj/item/food/pie/cream{
+	pixel_x = 8;
+	pixel_y = 10
+	},
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "JO" = (
@@ -933,7 +956,9 @@
 /turf/open/floor/stone,
 /area/station/service/theater)
 "Lf" = (
-/turf/open/floor/elevator_shaft{
+/turf/open/chasm{
+	icon_state = "moon_shaft";
+	icon = 'goon/icons/turf/floors.dmi';
 	dir = 1
 	},
 /area/station/service/theater)
