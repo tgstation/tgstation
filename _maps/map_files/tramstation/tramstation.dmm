@@ -11886,10 +11886,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
-"cuS" = (
-/obj/structure/sign/directions/upload/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/department/science)
 "cvf" = (
 /obj/machinery/door/window{
 	name = "Captain's Desk";
@@ -12221,6 +12217,10 @@
 "czX" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
+	},
+/obj/structure/sign/directions/vault{
+	dir = 1;
+	pixel_y = 30
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -12613,13 +12613,6 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
-"cHA" = (
-/obj/structure/sign/directions/vault{
-	dir = 1;
-	pixel_y = 30
-	},
-/turf/closed/wall/r_wall,
-/area/station/command/bridge)
 "cHH" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/bombcloset,
@@ -16386,6 +16379,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
+"dUy" = (
+/obj/structure/sign/directions/vault/directional/west,
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room)
 "dUG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -24343,6 +24340,10 @@
 "gFf" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
+"gFi" = (
+/obj/structure/sign/directions/vault/directional/east,
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room)
 "gFp" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -43416,16 +43417,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
-"mOV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/upload{
-	dir = 4;
-	pixel_y = -30
-	},
-/turf/open/floor/iron/smooth,
-/area/station/hallway/primary/tram/left)
 "mOZ" = (
 /obj/machinery/door/airlock/security{
 	name = "Labor Shuttle"
@@ -52756,10 +52747,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"pOW" = (
-/obj/structure/sign/directions/vault/directional/west,
-/turf/closed/wall,
-/area/station/hallway/primary/tram/left)
 "pOZ" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -55793,10 +55780,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"qMj" = (
-/obj/structure/sign/directions/vault/directional/west,
-/turf/closed/wall,
-/area/station/hallway/primary/tram/center)
 "qMx" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 3"
@@ -60266,7 +60249,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
-/obj/structure/sign/directions/vault/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "skX" = (
@@ -68495,10 +68477,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"uMd" = (
-/obj/structure/sign/directions/upload/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/department/medical)
 "uMg" = (
 /obj/structure/table,
 /obj/item/radio/intercom,
@@ -74551,6 +74529,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"wBq" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/sign/directions/upload/directional/south{
+	pixel_y = -39
+	},
+/turf/open/floor/plating,
+/area/station/science/lobby)
 "wBw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -161875,7 +161860,7 @@ qyZ
 qyZ
 qyZ
 qyZ
-qyZ
+gFi
 lvo
 qVN
 vpa
@@ -162143,7 +162128,7 @@ aQO
 aQO
 aQO
 aQO
-cHA
+aQO
 qhM
 wqg
 yiM
@@ -164713,7 +164698,7 @@ aQO
 aQO
 aQO
 aQO
-cHA
+aQO
 qhM
 ieY
 yiM
@@ -164959,7 +164944,7 @@ qyZ
 qyZ
 qyZ
 qyZ
-qyZ
+dUy
 vaj
 aBY
 aBq
@@ -166780,7 +166765,7 @@ afX
 afy
 iPy
 aEP
-mOV
+aHe
 yiM
 tDT
 tDT
@@ -167026,7 +167011,7 @@ keQ
 xNt
 bVs
 rPH
-pOW
+yiM
 aEh
 ojT
 ukT
@@ -174222,7 +174207,7 @@ sQd
 eSz
 eSz
 eSz
-qMj
+izU
 oPM
 vYA
 qhy
@@ -180145,7 +180130,7 @@ afy
 qhy
 wYw
 gvc
-uMd
+whz
 vNN
 whz
 aIq
@@ -187341,7 +187326,7 @@ afy
 aRO
 gaH
 rxO
-cuS
+lVi
 kCF
 soq
 loJ
@@ -191714,7 +191699,7 @@ wpK
 lfQ
 ehz
 fIc
-lfQ
+wBq
 wpK
 oxL
 oxL
