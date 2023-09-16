@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { NoticeBox, Section, LabeledList, Stack } from '../components';
 import { Window } from '../layouts';
 
-type TransportData = {
+type Data = {
   currentTram: Tram[];
   previousTrams: Tram[];
 };
@@ -15,7 +15,7 @@ type Tram = {
 };
 
 export const TramPlaque = (props, context) => {
-  const { data } = useBackend<TransportData>(context);
+  const { data } = useBackend<Data>(context);
   const { currentTram = [], previousTrams = [] } = data;
 
   return (

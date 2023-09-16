@@ -1,9 +1,10 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Section, LabeledList, Flex } from '../components';
+import { Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
-type TransportData = {
-  sensorStatus: boolean;
+type Data = {
+  sensorStatus: BooleanLike;
   operatingStatus: number;
   inboundPlatform: number;
   outboundPlatform: number;
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export const CrossingSignal = (props, context) => {
-  const { act, data } = useBackend<TransportData>(context);
+  const { act, data } = useBackend<Data>(context);
 
   const { sensorStatus, operatingStatus, inboundPlatform, outboundPlatform } =
     data;
@@ -22,30 +23,26 @@ export const CrossingSignal = (props, context) => {
   return (
     <Window title="Crossing Signal" width={400} height={175} theme="dark">
       <Window.Content>
-        <Flex direction="row">
-          <Flex.Item>
-            <Section title="System Status">
-              <LabeledList>
-                <LabeledList.Item
-                  label="Operating Status"
-                  color={operatingStatus ? 'bad' : 'good'}>
-                  {operatingStatus ? 'Degraded' : 'Normal'}
-                </LabeledList.Item>
-                <LabeledList.Item
-                  label="Sensor Status"
-                  color={sensorStatus ? 'good' : 'bad'}>
-                  {sensorStatus ? 'Connected' : 'Error'}
-                </LabeledList.Item>
-                <LabeledList.Item label="Inbound Platform">
-                  {inboundPlatform}
-                </LabeledList.Item>
-                <LabeledList.Item label="Outbound Platform">
-                  {outboundPlatform}
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
-          </Flex.Item>
-        </Flex>
+        <Section title="System Status">
+          <LabeledList>
+            <LabeledList.Item
+              label="Operating Status"
+              color={operatingStatus ? 'bad' : 'good'}>
+              {operatingStatus ? 'Degraded' : 'Normal'}
+            </LabeledList.Item>
+            <LabeledList.Item
+              label="Sensor Status"
+              color={sensorStatus ? 'good' : 'bad'}>
+              {sensorStatus ? 'Connected' : 'Error'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Inbound Platform">
+              {inboundPlatform}
+            </LabeledList.Item>
+            <LabeledList.Item label="Outbound Platform">
+              {outboundPlatform}
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
       </Window.Content>
     </Window>
   );

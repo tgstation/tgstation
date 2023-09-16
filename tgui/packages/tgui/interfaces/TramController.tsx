@@ -4,7 +4,7 @@ import { Section, NoticeBox, Dropdown, LabeledList, ProgressBar, Flex, Button } 
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
 
-type TransportData = {
+type Data = {
   transportId: string;
   controllerActive: number;
   controllerOperational: BooleanLike;
@@ -14,13 +14,13 @@ type TransportData = {
   recoveryMode: BooleanLike;
   currentSpeed: number;
   currentLoad: number;
-  statusSF: boolean;
-  statusCE: boolean;
-  statusES: boolean;
-  statusPD: boolean;
-  statusDR: boolean;
-  statusCL: boolean;
-  statusBS: boolean;
+  statusSF: BooleanLike;
+  statusCE: BooleanLike;
+  statusES: BooleanLike;
+  statusPD: BooleanLike;
+  statusDR: BooleanLike;
+  statusCL: BooleanLike;
+  statusBS: BooleanLike;
   destinations: TramDestination[];
 };
 
@@ -31,7 +31,7 @@ type TramDestination = {
 };
 
 export const TramController = (props, context) => {
-  const { act, data } = useBackend<TransportData>(context);
+  const { act, data } = useBackend<Data>(context);
 
   const {
     transportId,
