@@ -78,6 +78,11 @@
 	description = "Held down to cycle to the other move intent, release to cycle back"
 	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN
 
+/datum/keybinding/mob/toggle_move_intent/can_use(client/user)
+	if(!isliving(user.mob))
+		return FALSE
+	return ..()
+
 /datum/keybinding/mob/toggle_move_intent/down(client/user)
 	. = ..()
 	if(.)
@@ -97,6 +102,11 @@
 	full_name = "press to cycle move intent"
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"
 	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENTALT_DOWN
+
+/datum/keybinding/mob/toggle_move_intent_alternative/can_use(client/user)
+	if(!isliving(user.mob))
+		return FALSE
+	return ..()
 
 /datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
 	. = ..()
