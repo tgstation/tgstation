@@ -19,6 +19,7 @@
 			/mob/living/basic/mouse/rat,
 			/mob/living/simple_animal/parrot,
 			/mob/living/basic/butterfly,
+			/mob/living/basic/bee/friendly,
 			/mob/living/simple_animal/crab,
 			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
