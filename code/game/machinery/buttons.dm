@@ -55,6 +55,7 @@
 			board.accesses = req_one_access
 
 	setup_device()
+	find_and_hang_on_wall()
 
 /obj/machinery/button/Destroy()
 	QDEL_NULL(device)
@@ -232,6 +233,20 @@
 	if(device)
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
+
+/**
+ * Called when the mounted button's wall is knocked down.
+ */
+/obj/machinery/button/proc/knock_down()
+	if(device)
+		device.forceMove(get_turf(src))
+		device = null
+	if(board)
+		board.forceMove(get_turf(src))
+		req_access = list()
+		req_one_access = list()
+		board = null
+	qdel(src)
 
 /obj/machinery/button/door
 	name = "door button"

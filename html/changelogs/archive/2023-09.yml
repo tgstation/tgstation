@@ -478,3 +478,132 @@
   vinylspiders:
   - bugfix: fixed grown food items not getting the right seed type passed to them
       upon creation
+2023-09-14:
+  ArcaneMusic:
+  - qol: Conveyor belts now have screentips and a better examine tip to teach you
+      how to set one up properly.
+  - qol: Using a conveyor belt stack on a placed conveyor belt will extend the conveyor
+      belt to the output of that conveyor belt.. You can use this to place fully integrated
+      conveyor belts much easier now.
+  Das15:
+  - bugfix: You can no longer teleport to disabled beacon if the teleporter was previously
+      locked-on to it.
+  IHateGeese:
+  - bugfix: Nightmares can no longer receive wounds
+  - bugfix: Nightmares can no longer have limbs dismembered
+  Jacquerel:
+  - bugfix: Roundstart medbots and cleanbots are now more likely to be able to be
+      possessed by observers.
+  - admin: It's easier to modify the properties of bots to stop them from being possessed
+      or depossessed.
+  LT3:
+  - bugfix: Emergency shuttle should correctly scale timer up/down when changing security
+      levels
+  Mothblocks:
+  - bugfix: Dynamic now biases less heavily towards the exact average.
+  Rhials:
+  - rscadd: Shuttle Firesale positive station trait. Some emergency shuttle options
+      have been put on sale!
+  - rscadd: Misplaced Wallet positive station trait. You wouldn't steal from a missing
+      wallet, would you??
+  - rscadd: Wisdom Cow Invasion positive station trait.
+  - rscadd: Advanced Medbots positive station trait. Better roundstart medbots!
+  - rscadd: Loaner Shuttle positive station trait. More shuttle loan offers and more
+      payout!
+  - qol: Station Trait titles are now italicized for easier reading.
+  - spellcheck: Fixes a "prerequisites" typo in the shuttle purchase menu.
+  Seven:
+  - balance: The supermatter delamination countdown has been lowered from 30 to 13
+      seconds
+  - balance: Removing a sliver from the supermatter further lowers that down to 3
+      seconds
+  - balance: The supermatter crystal uses bigger text on its final countdown
+  - spellcheck: Some supermatter delamination related mood descriptions have been
+      edited to explain the mood effect better
+  Timberpoes:
+  - bugfix: Fix poor dynamic threat distribution at lower population levels, causing
+      dynamic to generate better threat curves at lower population levels than it
+      did before.
+2023-09-15:
+  Ghommie:
+  - bugfix: fixed fishing.
+  - bugfix: Fixed a race condition that made fishing yield no reward way too often.
+  - bugfix: The legendary fisher achievement is awarded even if you don't win the
+      minigame.
+  - bugfix: Fixed a fish hook exploit.
+  - bugfix: Baits are now properly consumed by caught fish and (alive) mobs.
+  ZephyrTFA:
+  - bugfix: you can no longer bypass html sanitization using the table element. >:(
+2023-09-16:
+  AtomTheProphet:
+  - balance: The spontaneous brain trauma event will no longer occur if there are
+      fewer than 13 players.
+  Donglesplonge:
+  - bugfix: adds the bolted and welded helper to the bar backroom/kitchen coldroom
+      airlock on birdshot, as to prevent chefs from being able to access armor and
+      sunglasses roundstart with barely any work involved
+  Hatterhat:
+  - bugfix: Flares and candles no longer sound like flashlights when being turned
+      on.
+  - bugfix: Getting shot by an SC/FISHER now disables PDA lights for consistency's
+      sake.
+  - balance: Pulling embedded items e.g. shrapnel with hemostats is now a lot faster,
+      and scales appropriately with toolspeed.
+  - balance: You can now pull embedded items with wirecutters, at a speed penalty.
+  Jacquerel:
+  - balance: Watchers will no longer put you at gunpoint.
+  - bugfix: The nuclear operative MODsuit intellicard now actually downloads an AI
+      rather than simply kicking candidates from the game.
+  LovliestPlant:
+  - qol: '[Deltastation, Icebox, Metastation, Tramstation] Adds cell timers to isolation
+      cells. (they do not auto-open the doors)'
+  - qol: '[Birdshot, Deltastation, Icebox, Metastation, Northstar, Tramstation] Adds
+      translator glove modules to the stacks of "accessibility" (e.g. plasma fixation
+      / thermal regulator) modules found in security, medical, and engineering storage
+      rooms.'
+  - qol: '[Birdshot] Adds a roll of packaging paper to the cargo office.'
+  - qol: '[Icebox] Adds a hand labeler to security''s gear room.'
+  - qol: '[Northstar] Nudges the set of binoculars covering the mass driver controls
+      in ordnance over a few inches.'
+  - bugfix: '[Birdshot] Remaps the janitor''s closet such that the recycling machine
+      will now work.'
+  - bugfix: '[Icebox] Removes a duplicated hand labeler from the rack near security''s
+      brig cells.'
+  - bugfix: '[Metastation] Patches a broken corpse disposal pipe running from aux
+      surgery to the morgue.'
+  - bugfix: '[Northstar] Fixes the SM being hotwired at round-start (partially rewires
+      the SM room, moves the APC to the North wall).'
+  Pickle-Coding:
+  - bugfix: Fixes tesla coils duplicating the power of >7GeV supermatter zaps.
+  SyncIt21:
+  - bugfix: returning items to vendors works correctly
+  - bugfix: you can't return items that has stuff in it for e.g. a serving tray with
+      food in it
+  - bugfix: Unary vents & Injectors now link properly with air sensors via multitool
+      both ways
+  Thunder12345:
+  - rscadd: There's a new space ruin in town, be on the lookout for a hidden supply
+      cache.
+  - rscadd: Added a new type of wall which can only be destroyed by blowing it up.
+  Vincent983:
+  - qol: The supply beacon will no longer delete itself due to explosions, and you
+      can now anchor it with a wrench.
+  - spellcheck: Express console now correctly states that it needs cargo access instead
+      of QM access.
+  Zergspower:
+  - bugfix: Space ruin Anomaly Research - Fixes stacked windows and underplating
+  cnleth:
+  - spellcheck: Replaced an irrelevant tip of the round about scars with a better
+      one
+  mc-oofert:
+  - bugfix: the bank machine cannot print holochips worth 0 credits now
+  - rscadd: climbing hooks that allow you to go up holes for multiz, found in internals
+      boxes (on planetary maps), the uplink, cargo and nukie personal lockers
+  san7890:
+  - balance: You will be knocked down again on certain vomits. Don't worry, you'll
+      deserve it when it happens.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause grown inedible plant seeds (like tower cap)
+      to vanish from existence upon being added to the seed extractor
+  - bugfix: fixes a issue that would cause fruit wine to bug out when trying to blend
+      its reagent color

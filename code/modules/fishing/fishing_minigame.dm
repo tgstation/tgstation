@@ -86,6 +86,7 @@
 		QDEL_NULL(fishing_line)
 	if(lure)
 		QDEL_NULL(lure)
+	SStgui.close_uis(src)
 	user = null
 	used_rod = null
 	return ..()
@@ -148,6 +149,8 @@
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/complete(win = FALSE, perfect_win = FALSE)
+	if(completed)
+		return
 	deltimer(next_phase_timer)
 	completed = TRUE
 	if(user)
@@ -156,7 +159,7 @@
 			var/seconds_spent = (world.time - start_time) * 0.1
 			if(!(FISHING_MINIGAME_RULE_NO_EXP in special_effects))
 				user.mind?.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
-				if(win && user.mind?.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
+				if(user.mind?.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
 					user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
 	if(win)
 		if(reward_path != FISHING_DUD)

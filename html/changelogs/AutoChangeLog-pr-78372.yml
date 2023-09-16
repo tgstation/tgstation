@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Forgetting to take dough out of the oven no longer progresses the server to a crash-worthy state with infinite bread and ash and burned food products for all."

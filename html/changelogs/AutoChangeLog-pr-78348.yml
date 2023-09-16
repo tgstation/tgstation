@@ -1,0 +1,4 @@
+author: "notlulz"
+delete-after: True
+changes:
+  - bugfix: "Recipe paper in the ruins now shows a normal recipe for Metalgen and Secret sauce."

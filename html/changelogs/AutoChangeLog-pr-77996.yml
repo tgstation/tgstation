@@ -1,7 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - balance: "The supermatter delamination countdown has been lowered from 30 to 13 seconds"
-  - balance: "Removing a sliver from the supermatter further lowers that down to 3 seconds"
-  - balance: "The supermatter crystal uses bigger text on its final countdown"
-  - spellcheck: "Some supermatter delamination related mood descriptions have been edited to explain the mood effect better"
