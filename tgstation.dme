@@ -679,7 +679,6 @@
 #include "code\controllers\subsystem\processing\fire_burning.dm"
 #include "code\controllers\subsystem\processing\greyscale.dm"
 #include "code\controllers\subsystem\processing\instruments.dm"
-#include "code\controllers\subsystem\processing\netpod_healing.dm"
 #include "code\controllers\subsystem\processing\obj.dm"
 #include "code\controllers\subsystem\processing\obj_tab_items.dm"
 #include "code\controllers\subsystem\processing\plumbing.dm"

@@ -1,16 +1,12 @@
 /datum/component/netpod_healing
 	/// Brute damage to heal over a second
 	var/brute_heal = 0
-
 	/// Burn damage to heal over a second
 	var/burn_heal = 0
-
 	/// Toxin damage to heal over a second
 	var/toxin_heal = 0
-
 	/// Amount of cloning damage to heal over a second
 	var/clone_heal = 0
-
 	/// Amount of blood to heal over a second
 	var/blood_heal = 0
 
@@ -27,7 +23,7 @@
 
 	player.apply_status_effect(/datum/status_effect/embryonic, STASIS_NETPOD_EFFECT)
 
-	START_PROCESSING(SSnetpod_healing, src)
+	START_PROCESSING(SSmachines, src)
 
 	src.brute_heal = brute_heal
 	src.burn_heal = burn_heal
@@ -36,7 +32,7 @@
 	src.blood_heal = blood_heal
 
 /datum/component/netpod_healing/Destroy(force, silent)
-	STOP_PROCESSING(SSnetpod_healing, src)
+	STOP_PROCESSING(SSmachines, src)
 
 	var/mob/living/carbon/player = parent
 	player.remove_status_effect(/datum/status_effect/embryonic)
@@ -54,7 +50,7 @@
 	owner.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 	owner.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
 
-	if (owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += blood_heal * seconds_per_tick
 
 	owner.updatehealth()

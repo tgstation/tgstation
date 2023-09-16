@@ -228,7 +228,7 @@
 
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
-	if(isnull(occupant) || state_open)
+	if(isnull(occupant) || state_open || occupant_mind_ref)
 		return
 
 	if(!iscarbon(occupant))
@@ -263,7 +263,9 @@
 	mob_occupant.set_temp_blindness(1 SECONDS)
 	mob_occupant.Paralyze(2 SECONDS)
 
-	var/heal_time = (mob_occupant.stat + 2) * 5
+	var/heal_time = 1
+	if(mob_occupant.health < mob_occupant.maxHealth)
+		heal_time = (mob_occupant.stat + 2) * 5
 	addtimer(CALLBACK(src, PROC_REF(auto_disconnect)), heal_time SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 	if(!forced)
@@ -321,6 +323,7 @@
 	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
+	occupant_mind_ref = WEAKREF(neo.mind)
 	current_avatar.AddComponent( \
 		/datum/component/avatar_connection, \
 		old_mind = neo.mind, \
@@ -423,24 +426,24 @@
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
 
-/// Sets the owner to in_netpod state, basically short-circuiting environmental conditions
+/// Puts the occupant in netpod stasis, basically short-circuiting environmental conditions
 /obj/machinery/netpod/proc/protect_occupant(mob/living/target)
 	if(target != occupant)
 		return
 
 	target.AddComponent(/datum/component/netpod_healing, \
-		brute_heal = 1, \
-		burn_heal = 1, \
-		toxin_heal = 1, \
-		clone_heal = 1, \
-		blood_heal = 1, \
+		brute_heal = 4, \
+		burn_heal = 4, \
+		toxin_heal = 4, \
+		clone_heal = 4, \
+		blood_heal = 4, \
 	)
 
 	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
 
-/// Removes the in_netpod state
+/// Removes the occupant from netpod stasis
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
 	var/datum/component/netpod_healing/healing_eff = target?.GetComponent(/datum/component/netpod_healing)
 	if(healing_eff)

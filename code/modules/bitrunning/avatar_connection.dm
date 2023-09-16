@@ -54,6 +54,7 @@
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS)
 
+/// One hop of avatar connection - needs called any time the pilot swaps avatars
 /datum/component/avatar_connection/proc/connect_avatar_signals(mob/living/target)
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
 	var/mob/living/avatar = parent
@@ -65,6 +66,7 @@
 	RegisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 	RegisterSignal(avatar, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
 
+/// Disconnects the old body's signals and actions
 /datum/component/avatar_connection/proc/disconnect_avatar_signals()
 	var/mob/living/avatar = parent
 	var/datum/action/avatar_domain_info/action = locate() in avatar.actions
@@ -210,7 +212,7 @@
 		new_master = source,
 	)
 
-
+/// Returns the mind to the old body
 /datum/component/avatar_connection/proc/return_to_old_body()
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
