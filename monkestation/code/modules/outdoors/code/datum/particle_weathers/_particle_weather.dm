@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/turf/mob_turf = get_turf(mob_to_check)
 	var/atom/loc_to_check = mob_to_check.loc
 	while(loc_to_check != mob_turf)
-		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE) || !(mob_turf.turf_flags & TURF_WEATHER))
+		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE))
 			return
 		loc_to_check = loc_to_check.loc
 
