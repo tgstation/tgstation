@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(the_lever, list())
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 
 /area/ocean/generated_above
@@ -510,10 +510,15 @@ GLOBAL_LIST_INIT(the_lever, list())
 
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(isprojectile(arrived))
+		return
 	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+	visible_message("[arrived] falls helplessly into \the [src]")
 	arrived.forceMove(turf)
 
-
+/turf/closed/mineral/random/ocean/gets_drilled(mob/user, give_exp)
+	SShotspots.disturb_turf(src)
+	. = ..()
 
 /turf/closed/mineral/random/ocean/above
 	baseturfs = /turf/open/floor/plating/ocean/rock
