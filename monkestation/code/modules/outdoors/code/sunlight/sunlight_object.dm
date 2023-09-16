@@ -74,6 +74,9 @@ Sunlight System
 
 /atom/movable/outdoor_effect/proc/process_state()
 	if(source_turf != loc)
+		var/turf/turf = get_turf(src)
+		if(turf.turf_flags & TURF_WEATHER)
+			turf.turf_flags &= ~TURF_WEATHER
 		Move(source_turf)
 	switch(state)
 		if(SKY_BLOCKED)
