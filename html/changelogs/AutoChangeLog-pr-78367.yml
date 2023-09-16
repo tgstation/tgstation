@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "the nukie medibot (oppenheimer) has access to the doors of the infiltrator and is not shot at by the turrets"
