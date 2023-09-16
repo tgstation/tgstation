@@ -252,25 +252,16 @@
 	if(isnull(occupant) || !isliving(occupant))
 		return
 
-	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
-	mob_occupant.set_static_vision(2 SECONDS)
-	mob_occupant.set_temp_blindness(1 SECONDS)
-
-	var/obj/machinery/quantum_server/server = find_server()
-	if(server)
-		SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_DISCONNECTED, occupant_mind_ref)
-		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
-		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
-		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)
-		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED)
-	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_CROWBAR_ALERT)
-	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
-	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 	occupant_mind_ref = null
 
 	if(mob_occupant.stat == DEAD)
 		open_machine()
 		return
+
+	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
+	mob_occupant.set_static_vision(2 SECONDS)
+	mob_occupant.set_temp_blindness(1 SECONDS)
+	mob_occupant.Paralyze(2 SECONDS)
 
 	var/heal_time = (mob_occupant.stat + 2) * 5
 	addtimer(CALLBACK(src, PROC_REF(auto_disconnect)), heal_time SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
@@ -278,7 +269,6 @@
 	if(!forced)
 		return
 
-	mob_occupant.Paralyze(2 SECONDS)
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, disconnect_damage)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
@@ -331,20 +321,13 @@
 	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
-	occupant_mind_ref = WEAKREF(neo.mind)
-
 	current_avatar.AddComponent( \
-		/datum/component/temporary_body, \
+		/datum/component/avatar_connection, \
 		old_mind = neo.mind, \
 		old_body = neo, \
-	)
-	current_avatar.key = neo.key
-
-	current_avatar.mind.initial_avatar_connection(
-		pilot = neo,
-		hosting_netpod = src,
-		server = server,
-		help_text = generated_domain.help_text,
+		server = server, \
+		pod = src, \
+		help_text = generated_domain.help_text, \
 	)
 
 /// Finds a server and sets the server_ref

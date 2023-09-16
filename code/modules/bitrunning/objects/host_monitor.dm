@@ -20,10 +20,14 @@
 /obj/item/bitrunning_host_monitor/attack_self(mob/user, modifiers)
 	. = ..()
 
-	var/datum/mind/our_mind = user.mind
-	var/mob/living/pilot = our_mind.pilot_ref?.resolve()
-	if(isnull(pilot))
+	var/datum/component/avatar_connection/connection = user.GetComponent(/datum/component/avatar_connection)
+	if(isnull(connection))
 		balloon_alert(user, "data not recognized")
+		return
+
+	var/mob/living/pilot = connection.old_body_ref?.resolve()
+	if(isnull(pilot))
+		balloon_alert(user, "host not recognized")
 		return
 
 	to_chat(user, span_notice("Current host health: [pilot.health / pilot.maxHealth * 100]%"))

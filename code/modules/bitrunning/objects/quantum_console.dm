@@ -44,7 +44,7 @@
 
 	data["connected"] = TRUE
 	data["generated_domain"] = server.generated_domain?.key
-	data["occupants"] = length(server.occupant_mind_refs)
+	data["occupants"] = length(server.avatar_connection_refs)
 	data["points"] = server.points
 	data["randomized"] = server.domain_randomized
 	data["ready"] = server.is_ready && server.is_operational

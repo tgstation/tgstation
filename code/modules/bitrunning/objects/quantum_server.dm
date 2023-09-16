@@ -28,7 +28,7 @@
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
-	var/list/datum/weakref/occupant_mind_refs = list()
+	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
 	var/list/mob/living/mutation_candidates = list()
 	/// Any ghosts that have spawned in
@@ -76,7 +76,7 @@
 
 	available_domains.Cut()
 	QDEL_LIST(mutation_candidates)
-	QDEL_LIST(occupant_mind_refs)
+	QDEL_LIST(avatar_connection_refs)
 	QDEL_LIST(spawned_threats)
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(receive_turfs)
@@ -107,7 +107,7 @@
 	if(!is_ready)
 		balloon_alert(user, "it's scalding hot!")
 		return TRUE
-	if(length(occupant_mind_refs))
+	if(length(avatar_connection_refs))
 		balloon_alert(user, "all clients must disconnect!")
 		return TRUE
 	if(default_deconstruction_crowbar(crowbar))
@@ -150,7 +150,7 @@
 	if(isnull(generated_domain))
 		return
 
-	if(!length(occupant_mind_refs))
+	if(!length(avatar_connection_refs))
 		balloon_alert(user, "powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 		reset()
@@ -182,7 +182,7 @@
 
 	rewards_base += (domain_threats * 2)
 
-	for(var/index in 2 to length(occupant_mind_refs))
+	for(var/index in 2 to length(avatar_connection_refs))
 		rewards_base += multiplayer_bonus
 
 	return rewards_base
@@ -205,7 +205,7 @@
 		balloon_alert(user, "stop the current domain first.")
 		return FALSE
 
-	if(length(occupant_mind_refs))
+	if(length(avatar_connection_refs))
 		balloon_alert(user, "all clients must disconnect!")
 		return FALSE
 
@@ -358,14 +358,14 @@
 /obj/machinery/quantum_server/proc/get_avatar_data()
 	var/list/hosted_avatars = list()
 
-	for(var/datum/weakref/mind_ref in occupant_mind_refs)
-		var/datum/mind/this_mind = mind_ref.resolve()
-		if(isnull(this_mind))
-			occupant_mind_refs.Remove(this_mind)
+	for(var/datum/weakref/avatar_ref in avatar_connection_refs)
+		var/datum/component/avatar_connection/connection = avatar_ref.resolve()
+		if(isnull(connection))
+			avatar_connection_refs.Remove(connection)
 			continue
 
-		var/mob/living/creature = this_mind.current
-		var/mob/living/pilot = this_mind.pilot_ref?.resolve()
+		var/mob/living/creature = connection.parent
+		var/mob/living/pilot = connection.old_body_ref?.resolve()
 
 		hosted_avatars += list(list(
 			"health" = creature.health,
@@ -410,8 +410,8 @@
 	if(domain_randomized)
 		text += "- **Randomized:** + 0.2\n"
 
-	if(length(occupant_mind_refs) > 1)
-		text += "- **Multiplayer:** + [(length(occupant_mind_refs) - 1) * multiplayer_bonus]\n"
+	if(length(avatar_connection_refs) > 1)
+		text += "- **Multiplayer:** + [(length(avatar_connection_refs) - 1) * multiplayer_bonus]\n"
 
 	if(domain_threats > 0)
 		text += "- **Threats:** + [domain_threats * 2]\n"
@@ -457,7 +457,7 @@
 	// B: The domain is not loaded
 	// C: The domain is shutting down
 	// D: There are no mobs
-	if(!length(occupant_mind_refs) || isnull(generated_domain) || !is_ready || !is_operational || !length(mutation_candidates))
+	if(!length(avatar_connection_refs) || isnull(generated_domain) || !is_ready || !is_operational || !length(mutation_candidates))
 		return list()
 
 	for(var/mob/living/creature as anything in mutation_candidates)
@@ -624,16 +624,16 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 /// Someone connected via netpod
-/obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
+/obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_avatar)
 	SIGNAL_HANDLER
 
-	occupant_mind_refs.Add(new_mind)
+	avatar_connection_refs.Add(new_avatar)
 
 /// Someone disconnected
-/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
+/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_avatar)
 	SIGNAL_HANDLER
 
-	occupant_mind_refs.Remove(old_mind)
+	avatar_connection_refs.Remove(old_avatar)
 
 /// Being qdeleted - make sure the circuit and connected mobs go with it
 /obj/machinery/quantum_server/proc/on_delete(datum/source)
@@ -680,8 +680,8 @@
 		if(isnull(person.mind))
 			person.forceMove(get_turf(loot_crate))
 
-		var/datum/mind/this_mind = person.mind
-		this_mind.full_avatar_disconnect()
+		var/datum/component/avatar_connection/connection = person.GetComponent(/datum/component/avatar_connection)
+		connection?.full_avatar_disconnect()
 
 	spark_at_location(loot_crate)
 	qdel(loot_crate)
