@@ -36,6 +36,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
+	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	var/minimum_value_override = null
 	///Is this material traded on the stock market?
 	var/tradable = FALSE
 	///If this material is tradable, what is the base quantity of the material on the stock market?

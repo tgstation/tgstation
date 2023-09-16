@@ -66,6 +66,7 @@
 		new_block.export_value = amount * value * MARKET_PROFIT_MODIFIER
 		new_block.export_mat = material_to_export
 		new_block.quantity = amount
+		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
 		playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 		return TRUE
 	return ..()
@@ -225,7 +226,34 @@
 	var/datum/material/export_mat
 	/// Quantity of export material
 	var/quantity = 0
+	/// Is this stock block currently updating it's value with the market (aka fluid)?
+	var/fluid = FALSE
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
 	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [export_mat?.name].")
+	if(fluid)
+		. += span_warning("\The [src] is currently liquid! It's value is based on the market price.")
+	else
+		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before it's value becomes liquid!")
+
+/obj/item/stock_block/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES)
+
+/obj/item/stock_block/proc/value_warning()
+	visible_message(span_warning("\The [src] is starting to become liquid!"))
+	icon_state = "stock_block_fluid"
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/stock_block/proc/update_value()
+	if(!export_mat)
+		return
+	if(!SSstock_market.materials_prices[export_mat])
+		return
+	export_value = quantity * SSstock_market.materials_prices[export_mat] * MARKET_PROFIT_MODIFIER
+	icon_state = "stock_block_liquid"
+	update_appearance(UPDATE_ICON_STATE)
+	visible_message(span_warning("\The [src] becomes liquid!"))
+

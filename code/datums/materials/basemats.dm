@@ -7,6 +7,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 
@@ -27,6 +28,7 @@
 	shard_type = /obj/item/shard
 	debris_type = /obj/effect/decal/cleanable/glass
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	beauty_modifier = 0.05

@@ -101,7 +101,7 @@ export const MatMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  disabled={catastrophe === 1}
+                  disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 1}
                   onClick={() =>
                     act('buy', {
@@ -112,7 +112,7 @@ export const MatMarket = (props, context) => {
                   Buy 1
                 </Button>
                 <Button
-                  disabled={catastrophe === 1}
+                  disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 5}
                   onClick={() =>
                     act('buy', {
@@ -123,7 +123,7 @@ export const MatMarket = (props, context) => {
                   5
                 </Button>
                 <Button
-                  disabled={catastrophe === 1}
+                  disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 10}
                   onClick={() =>
                     act('buy', {
@@ -134,7 +134,7 @@ export const MatMarket = (props, context) => {
                   10
                 </Button>
                 <Button
-                  disabled={catastrophe === 1}
+                  disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 25}
                   onClick={() =>
                     act('buy', {
@@ -145,7 +145,7 @@ export const MatMarket = (props, context) => {
                   25
                 </Button>
                 <Button
-                  disabled={catastrophe === 1}
+                  disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 50}
                   onClick={() =>
                     act('buy', {
