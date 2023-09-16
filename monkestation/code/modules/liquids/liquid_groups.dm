@@ -127,6 +127,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/merge_group(datum/liquid_group/otherg)
 	if(otherg == src)
 		return
+	if(!length(members) || !total_reagent_volume)
+		return
 
 	otherg.merging = TRUE
 	var/list/created_reagent_list = list()

@@ -82,6 +82,9 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
 
+	if(oldT.outdoor_effect)
+		oldT.outdoor_effect.process_state()
+
 	return TRUE
 
 /turf/proc/lateShuttleMove(turf/oldT)
