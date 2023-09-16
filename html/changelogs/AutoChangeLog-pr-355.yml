@@ -1,0 +1,5 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - bugfix: "bees are butcherable again"
+  - rscadd: "friendly maintenance bees are available to summon from the pet beacon"
