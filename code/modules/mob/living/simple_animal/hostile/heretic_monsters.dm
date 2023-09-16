@@ -368,6 +368,10 @@
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
 	)
 
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/leeching_walk)
+
 /mob/living/simple_animal/hostile/heretic_summon/rust_spirit/setDir(newdir)
 	. = ..()
 	if(newdir == NORTH)
@@ -379,17 +383,6 @@
 /mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
-
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stat == DEAD)
-		return ..()
-
-	var/turf/our_turf = get_turf(src)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
-		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
-
-	return ..()
 
 /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
 	name = "Ash Man"
@@ -408,6 +401,13 @@
 		/datum/action/cooldown/spell/pointed/cleave,
 		/datum/action/cooldown/spell/fire_sworn,
 	)
+
+/mob/living/simple_animal/hostile/heretic_summon/ash_spirit/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+
+/mob/living/simple_animal/hostile/heretic_summon/ash_spirit/proc/on_move()
+	new /obj/effect/temp_visual/light_ash(get_turf(src))
 
 /mob/living/simple_animal/hostile/heretic_summon/stalker
 	name = "Flesh Stalker"

@@ -91,11 +91,10 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	user.AddElement(/datum/element/leeching_walk)
 
 /datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
+	user.RemoveElement(/datum/element/leeching_walk)
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].

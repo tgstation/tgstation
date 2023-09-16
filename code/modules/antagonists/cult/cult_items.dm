@@ -128,6 +128,9 @@ Striking a noncultist, however, will tear their flesh."}
 	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
 	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
 
+/obj/item/melee/cultblade/haunted/AllowClick()
+	return TRUE
+
 /obj/item/melee/cultblade/haunted/proc/slash_target(atom/attacked_atom)
 
 	if(get_dist(src, attacked_atom) > 1)
@@ -159,35 +162,8 @@ Striking a noncultist, however, will tear their flesh."}
 	if(attacked.stat != DEAD)
 		give_blood(10)
 
-	else if(heretic_path == PATH_FLESH)
-		make_ghoul(attacked, user)
-
-/obj/item/melee/cultblade/haunted/proc/make_ghoul(mob/living/attacked, mob/living/user)
-	if(HAS_TRAIT(attacked, TRAIT_HUSK) || !IS_VALID_GHOUL_MOB(attacked))
-		attacked.balloon_alert(src, "must be humanoid and nonhusked!")
-		return
-
-	attacked.grab_ghost()
-
-	// The grab failed, so they're mindless or playerless. We can't continue
-	if(!attacked.mind || !attacked.client)
-		attacked.balloon_alert(src, "no soul!")
-		return COMPONENT_BLOCK_HAND_USE
-
-	trapped_heretic_soul.log_message("created a ghoul, controlled by [key_name(attacked)].", LOG_GAME)
-	message_admins("[ADMIN_LOOKUPFLW(trapped_heretic_soul)] created a ghoul, [ADMIN_LOOKUPFLW(attacked)].")
-
-	//Note that these are the heretic's ghouls and are thus subject to its whims!
-	attacked.apply_status_effect(
-		/datum/status_effect/ghoul,
-		GHOUL_MAX_HEALTH,
-		trapped_heretic_soul.mind,
-		CALLBACK(src, PROC_REF(apply_to_ghoul)),
-		CALLBACK(src, PROC_REF(remove_from_ghoul)),
-	)
-
-/obj/item/melee/cultblade/AllowClick()
-	return TRUE
+/obj/item/melee/cultblade/proc/give_blood(amount)
+	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
 
 /obj/item/melee/cultblade/proc/use_blood(amount = 0, message = TRUE)
 	if(amount > soul.blood_level)
@@ -197,9 +173,6 @@ Striking a noncultist, however, will tear their flesh."}
 	soul.blood_level -= amount
 	return TRUE
 
-/obj/item/melee/cultblade/proc/give_blood(amount)
-	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
-
 /obj/item/melee/cultblade/proc/on_resist(mob/living/user)
 	SIGNAL_HANDLER
 
@@ -208,13 +181,18 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// the heretic is allowed to be fickle
 	if(ismob(loc))
-		if(prob(5) || (!IS_CULTIST(loc) || IS_HERETIC(loc)))
-			visible_message(span_danger("[src] rips itself out of its wielders' grasp and drops to the floor!"), span_notice("You wrest yourself off your wielder's grasp and fall onto the floor!"))
-			var/mob/holder = loc
+		var/mob/living/mobloc = loc
+		var/obj/item/bodypart/holding_hand = mobloc.get_holding_bodypart_of_item(src)
+		// Heretics and Cultists can usually keep their grasp.
+		if(prob(5) || (!IS_CULTIST(mobloc) || IS_HERETIC(mobloc)))
+			visible_message(span_danger("[mobloc] flinches and drops \the [src] as it sizzles menacingly!"), span_notice("You force [mobloc] to drop \the [src]!"))
+			holding_hand.take_damage(8, BURN)
+			var/mob/holder = mobloc
 			holder.temporarilyRemoveItemFromInventory(src)
 			forceMove(drop_location())
 		else
-			visible_message(span_danger("[src] shakes unsettlingly in [loc]'s hand."), span_notice("You attempt to wrest yourself off [loc], but fail."))
+			visible_message(span_danger("[src] sizzles in [mobloc]'s hand."), span_notice("You attempt toj force [mobloc] to drop \the [src], but fail."))
+			holding_hand.take_damage(4, BURN)
 
 	if(iscloset(loc))
 		var/obj/structure/closet/loc_closet = loc
@@ -231,7 +209,8 @@ Striking a noncultist, however, will tear their flesh."}
 			path_sword_action = /datum/action/cooldown/spell/charged/beam/fire_blast
 			name = "ashen eldritch longsword"
 		if(PATH_FLESH)
-			// Add ghouling and healing to melee hits
+			RegisterSignal(src, COMSIG_ITEM_ATTACK, PROC_REF(ghoulify_target))
+			// Adds ghouling to melee hits
 			name = "sanguine eldritch longsword"
 		if(PATH_VOID)
 			path_wielder_action = /datum/action/cooldown/spell/pointed/void_phase
@@ -239,13 +218,57 @@ Striking a noncultist, however, will tear their flesh."}
 			name = "voided eldritch longsword"
 		if(PATH_BLADE)
 			// Add wound resistance
+			RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_blade))
+			RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(unequip_blade))
 			path_sword_action = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
 			name = "keen eldritch longsword"
 		if(PATH_RUST)
+			RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_rust))
+			RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(unequip_rust))
 			path_wielder_action = /datum/heretic_knowledge/rust_regen
 			path_sword_action = /datum/action/cooldown/spell/aoe/rust_conversion
 			name = "rusted eldritch longsword"
 		//if(PATH_KNOCK)
+
+/obj/item/melee/cultblade/haunted/proc/equip_rust(user, slot)
+	SIGNAL_HANDLER
+	user.AddElement(/datum/element/leeching_walk)
+
+/obj/item/melee/cultblade/haunted/proc/unequip_rust(user, slot)
+	SIGNAL_HANDLER
+	user.RemoveElement(/datum/element/leeching_walk)
+
+/obj/item/melee/cultblade/haunted/proc/equip_blade(user, slot)
+	SIGNAL_HANDLER
+	user.AddElement(/datum/element/leeching_walk)
+
+/obj/item/melee/cultblade/haunted/proc/unequip_blade(user, slot)
+	SIGNAL_HANDLER
+	user.RemoveElement(/datum/element/leeching_walk)
+
+/obj/item/melee/cultblade/haunted/proc/ghoulify_target(target_mob, user, params)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(attacked, TRAIT_HUSK) || !IS_VALID_GHOUL_MOB(attacked))
+		attacked.balloon_alert(src, "must be humanoid and nonhusked!")
+		return
+
+	attacked.grab_ghost()
+
+	// The grab failed, so they're mindless or playerless. We can't continue
+	if(!attacked.mind || !attacked.client)
+		attacked.balloon_alert(src, "no soul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	trapped_heretic_soul.log_message("created a ghoul, controlled by [key_name(attacked)].", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(trapped_heretic_soul)] created a ghoul, [ADMIN_LOOKUPFLW(attacked)].")
+
+	//Note that these are the heretic's ghouls and are thus subject to its whims, not the wielder's!
+	attacked.apply_status_effect(
+		/datum/status_effect/ghoul,
+		master_mind = trapped_heretic_soul.mind,
+		on_made_callback = CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		on_lost_callback = CALLBACK(src, PROC_REF(remove_from_ghoul)),
+	)
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
