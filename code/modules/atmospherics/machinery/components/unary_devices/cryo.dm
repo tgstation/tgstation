@@ -135,9 +135,9 @@
 
 	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
+	register_context()
 	internal_connector = new(loc, src, dir)
 	internal_connector.airs[1].volume = CELL_VOLUME * 0.5
-	register_context()
 
 /obj/machinery/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()

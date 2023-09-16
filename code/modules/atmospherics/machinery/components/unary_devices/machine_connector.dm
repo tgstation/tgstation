@@ -16,7 +16,7 @@
 	///Reference to the machine we are connected to
 	var/obj/machinery/connected_machine
 
-/obj/machinery/atmospherics/components/unary/machine_connector/Initialize(mapload, process = TRUE, setdir, init_dir = ALL_CARDINALS, obj/machinery/connecting_machine, direction)
+/obj/machinery/atmospherics/components/unary/machine_connector/Initialize(mapload, obj/machinery/connecting_machine, direction)
 	dir = direction
 	. = ..()
 	connected_machine = connecting_machine
@@ -26,8 +26,7 @@
 	register_with_machine()
 
 /obj/machinery/atmospherics/components/unary/machine_connector/Destroy()
-	if(connected_machine)
-		connected_machine = null
+	connected_machine = null
 	return ..()
 
 /**
@@ -37,7 +36,7 @@
 	RegisterSignal(connected_machine, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_connected_machine))
 	RegisterSignal(connected_machine, COMSIG_MOVABLE_MOVED, PROC_REF(moved_connected_machine))
 	RegisterSignal(connected_machine, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, PROC_REF(wrenched_connected_machine))
-	RegisterSignal(connected_machine, COMSIG_OBJ_DECONSTRUCT, PROC_REF(deconstruct_connected_machine))
+	RegisterSignal(connected_machine, COMSIG_QDELETING, PROC_REF(deconstruct_connected_machine))
 
 /**
  * Unregister the signals previously registered
@@ -47,7 +46,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH,
-		COMSIG_OBJ_DECONSTRUCT,
+		COMSIG_QDELETING,
 	))
 
 /**
