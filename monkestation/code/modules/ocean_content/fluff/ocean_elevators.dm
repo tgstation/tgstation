@@ -101,10 +101,10 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 	for(var/obj/machinery/ocean_elevator/listed_elevator as anything in GLOB.sea_elevator_list_station[id])
 		if(!istype(listed_elevator)) /// your not suppose to be here
 			return
-		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+		var/turf/turf = locate(listed_elevator.x, listed_elevator.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
 		var/obj/machinery/ocean_elevator/paired_elevator = locate(/obj/machinery/ocean_elevator) in turf.contents
 		if(!paired_elevator)
-			return
+			continue
 		if(listed_elevator.elevator_up)
 			listed_elevator.going_down()
 			paired_elevator.going_down()
