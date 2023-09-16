@@ -149,4 +149,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	apply_organ_damage(10 * severity)
+	apply_organ_damage(20 / severity)
