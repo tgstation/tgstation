@@ -1739,7 +1739,7 @@
 
 /datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(SPT_PROB(8, seconds_per_tick))
-	. = ..()
+		. = ..()
 	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
 		M.adjustStaminaLoss(10)
 		. = TRUE
