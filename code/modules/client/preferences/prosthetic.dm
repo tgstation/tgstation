@@ -3,9 +3,15 @@
 	savefile_key = "prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
-/datum/preference/choiced/pride_pin/init_possible_values()
-//I have to figure this out
-	return assoc_to_keys(GLOB.pride_pin_reskins)
+/datum/preference/choiced/prosthetic/init_possible_values()
+	var/random_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/choice = list(
+		"Random" = random_slot,
+		"Left Arm" = BODY_ZONE_L_ARM,
+		"Right Arm" = BODY_ZONE_R_ARM,
+		"Left Leg" = BODY_ZONE_L_LEG,
+		"Right Leg" = BODY_ZONE_R_LEG,
+	return assoc_to_keys(choice))
 
 /datum/preference/choiced/prosthetic/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

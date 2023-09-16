@@ -666,8 +666,8 @@
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic limb."
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it could be randomized at roundstart
-	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
+	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy when it is randomized roundstart
+	mail_goodies = list(/obj/item/weldingtool, /obj/item/stack/cable_coil/five)
 	/// The slot to replace, in string form
 	var/slot_string = "limb"
 	/// the original limb from before the prosthetic was applied
@@ -675,24 +675,24 @@
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	//I still gotta change this to work with the preferences
-	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/limb_slot = client_source?.prefs?.read_preference(datum/preference/choiced/prosthetic) || assoc_to_keys(choice)[1]
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/bodypart/prosthetic
+	var/obj/item/bodypart/surplus
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
-			prosthetic = new /obj/item/bodypart/arm/left/robot/surplus
+			surplus = new /obj/item/bodypart/arm/left/robot/surplus
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
-			prosthetic = new /obj/item/bodypart/arm/right/robot/surplus
+			surplus = new /obj/item/bodypart/arm/right/robot/surplus
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
-			prosthetic = new /obj/item/bodypart/leg/left/robot/surplus
+			surplus = new /obj/item/bodypart/leg/left/robot/surplus
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
-			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
+			surplus = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]."
-	old_limb = human_holder.return_and_replace_bodypart(prosthetic, special = TRUE)
+	old_limb = human_holder.return_and_replace_bodypart(surplus, special = TRUE)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
