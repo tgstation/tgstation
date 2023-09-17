@@ -54,6 +54,7 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+	inhand_icon_state = null
 
 /obj/item/clothing/under/costume/navy_uniform_gold
 	name = "Naval Officer Uniform"
@@ -62,6 +63,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "navy_gold"
 	can_adjust = FALSE
+	inhand_icon_state = null
 
 /obj/item/clothing/under/costume/syndie_pajamas
 	name = "Syndicate Pajamas"
@@ -70,4 +72,5 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "syndie_pajamas"
 	can_adjust = FALSE
+	inhand_icon_state = null
 
