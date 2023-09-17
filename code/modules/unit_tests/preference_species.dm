@@ -14,7 +14,7 @@
 		var/species_type = GLOB.species_list[species_id]
 		var/datum/species/species = new species_type()
 
-		// Check the species decryption.
+		// Check the species description.
 		// If it's not overridden, a stack trace will be thrown (and fail the test).
 		// If it's null, it was improperly overridden. Fail the test.
 		var/species_desc = species.get_species_description()
