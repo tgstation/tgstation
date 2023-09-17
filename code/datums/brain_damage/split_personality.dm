@@ -246,7 +246,7 @@
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
-	var/duration = 60 ///Duration of effect, 30 seconds = 1 minute
+	var/duration_in_seconds = 60 ///Duration of effect
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
@@ -255,9 +255,9 @@
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
 		qdel(src)
-	if(duration <= 0)
+	if(duration_in_seconds <= 0)
 		qdel(src)
-	duration -= seconds_per_tick
+	duraduration_in_secondstion -= seconds_per_tick
 
 /mob/living/split_personality/blackout
 	name = "blacked-out drunkard"
