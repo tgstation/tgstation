@@ -345,7 +345,9 @@
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
+		var/limb_cached = limb
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
+		limb.update_wounds(replaced)
 		// if you want to keep the ref, do it externally, theres no reason for us to remember it
 
 	if (ismob(old_victim))
