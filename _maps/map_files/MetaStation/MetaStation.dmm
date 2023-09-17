@@ -57417,7 +57417,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "uyj" = (
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},

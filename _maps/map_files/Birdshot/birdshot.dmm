@@ -39211,10 +39211,6 @@
 /obj/structure/steam_vent,
 /turf/open/floor/plating/rust,
 /area/station/maintenance/fore/greater)
-"odN" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "odP" = (
 /obj/machinery/firealarm/directional/west,
 /obj/effect/landmark/generic_maintenance_landmark,
@@ -83163,7 +83159,7 @@ uzJ
 mQh
 nJU
 ppk
-odN
+uzJ
 ovQ
 oRr
 poM

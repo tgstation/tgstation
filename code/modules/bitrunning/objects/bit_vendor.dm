@@ -19,6 +19,7 @@
 
 	order_categories = list(
 		CATEGORY_BITRUNNING,
+		CATEGORY_BEPIS,
 	)
 	blackbox_key = "bitrunning"
 

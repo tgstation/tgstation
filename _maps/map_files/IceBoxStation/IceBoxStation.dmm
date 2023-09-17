@@ -68421,7 +68421,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/work)
 "veh" = (
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

@@ -1,6 +1,7 @@
 #define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 #define REDACTED "???"
 #define MAX_DISTANCE 4 // How far crates can spawn from the server
+#define COMSIG_LAZY_TEMPLATE_LOADED "temporary ci fix"
 
 /obj/machinery/quantum_server
 	name = "quantum server"
@@ -762,3 +763,4 @@
 #undef ONLY_TURF
 #undef REDACTED
 #undef MAX_DISTANCE
+#undef COMSIG_LAZY_TEMPLATE_LOADED

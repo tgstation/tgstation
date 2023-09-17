@@ -59818,7 +59818,6 @@
 /area/station/medical/virology)
 "pCW" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/rnd/bepis,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)

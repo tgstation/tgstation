@@ -9,3 +9,4 @@
 #define CATEGORY_TOYS_DRONE "Toys & Drones"
 #define CATEGORY_PKA "PKAs"
 #define CATEGORY_BITRUNNING "Bitrunning"
+#define CATEGORY_BEPIS "Bepis Tech"
