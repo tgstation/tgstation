@@ -48246,8 +48246,12 @@
 /area/station/engineering/lobby)
 "oQa" = (
 /obj/structure/table,
-/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/food/cheesiehonkers,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oQn" = (
