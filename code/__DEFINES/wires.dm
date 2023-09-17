@@ -30,6 +30,7 @@
 #define WIRE_HACK "Hack"
 #define WIRE_IDSCAN "ID Scan"
 #define WIRE_INTERFACE "Interface"
+#define WIRE_REPLAY "Replay"
 #define WIRE_LAWSYNC "AI Law Synchronization"
 #define WIRE_LIGHT "Lights"
 #define WIRE_LIMIT "Limiter"

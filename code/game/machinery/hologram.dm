@@ -99,6 +99,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
+	wires = new /datum/wires/holopad(src)
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
@@ -180,6 +181,7 @@ Possible to do for anyone motivated enough:
 		holopads += src
 
 /obj/machinery/holopad/Destroy()
+	QDEL_NULL(wires)
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
 
@@ -250,6 +252,11 @@ Possible to do for anyone motivated enough:
 		record_stop()
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
+	
+	if(is_wire_tool(P) && panel_open)
+		wires.interact(user)
+		return
+
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
