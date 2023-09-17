@@ -42,6 +42,7 @@
 
 	if(!item_to_retrieve)
 		to_chat(usr, span_brass("You don't have a slab attuned!"))
+		return
 
 	if(!item_to_retrieve.loc)
 		return

@@ -18,7 +18,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
-	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
+	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
+	"[FREQ_RADIO]" = "radioradio"
 	))
 
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
@@ -42,7 +43,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(client && radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE)
+			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 //MONKESTATION EDIT END
 /**
  * Checks if our movable can speak the provided message, passing it through filters

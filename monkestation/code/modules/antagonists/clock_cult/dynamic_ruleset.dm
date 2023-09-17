@@ -30,7 +30,7 @@
 
 /datum/dynamic_ruleset/roundstart/clock_cult/pre_execute(population)
 	. = ..()
-	INVOKE_ASYNC(GLOBAL_PROC, PROC_REF(spawn_reebe))
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_reebe))
 	var/cultists = get_antag_cap(population)
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)

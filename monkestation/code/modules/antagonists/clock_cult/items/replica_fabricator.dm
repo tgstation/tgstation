@@ -40,6 +40,7 @@
 		. += span_brass("Use on other materials to convert them into power, but less efficiently.")
 		. += span_brass("<b>Use</b> in-hand to select what to fabricate.")
 		. += span_brass("<b>Right Click</b> in-hand to fabricate bronze sheets.")
+		. += span_brass("Walls and windows will be built slower while on reebe.")
 
 
 /obj/item/clockwork/replica_fabricator/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -79,9 +80,10 @@
 	else if(!isopenturf(target))
 		return
 
-	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, selected_output.creation_delay)
+	var/calculated_creation_delay = selected_output.creation_delay * (on_reebe(user) ? selected_output.reebe_mult : 1)
+	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, calculated_creation_delay)
 
-	if(!do_after(user, selected_output.creation_delay, target))
+	if(!do_after(user, calculated_creation_delay, target))
 		qdel(effect)
 		return
 
@@ -218,8 +220,10 @@
 	var/to_create_path
 	/// How long the creation actionbar is
 	var/creation_delay = 1 SECONDS
-	///list of objs this output can replace, normal walls for clock walls, windows for clock windows, ETC
+	/// List of objs this output can replace, normal walls for clock walls, windows for clock windows, ETC
 	var/list/replace_types_of
+	/// Multiplier for creation_delay when used on reebe
+	var/reebe_mult = 1
 
 /// Any extra actions that need to be taken when an object is created
 /datum/replica_fabricator_output/proc/on_create(atom/created_atom, turf/creation_turf, mob/creator)
@@ -249,6 +253,7 @@
 	to_create_path = /turf/closed/wall/clockwork
 	creation_delay = 7 SECONDS
 	replace_types_of = list(/turf/closed/wall)
+	reebe_mult = 1.5
 
 
 /datum/replica_fabricator_output/turf_output/brass_wall/on_create(obj/created_object, turf/creation_turf, mob/creator)
@@ -277,6 +282,7 @@
 	to_create_path = /obj/structure/window/reinforced/clockwork/fulltile
 	creation_delay = 6 SECONDS
 	replace_types_of = list(/obj/structure/window)
+	reebe_mult = 1.2
 
 
 /datum/replica_fabricator_output/brass_window/on_create(obj/created_object, turf/creation_turf, mob/creator)

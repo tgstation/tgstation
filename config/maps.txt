@@ -26,7 +26,6 @@ map deltastation
 endmap
 
 map kilostation
-	votable
 endmap
 
 map icebox
@@ -52,4 +51,5 @@ map multiz_debug
 endmap
 
 map oshan
+	votable
 endmap

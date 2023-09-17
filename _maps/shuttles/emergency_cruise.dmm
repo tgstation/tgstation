@@ -1,7 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
 /obj/structure/closet/secure_closet/ert_sec{
 	name = "Emergency response security locker";
 	desc = "A storage unit containing equipment for responding to emergencies.";
@@ -52,7 +54,8 @@
 /area/shuttle/escape/luxury)
 "bE" = (
 /mob/living/simple_animal/bot/secbot{
-	name = "Officer Beefsky"
+	name = "Officer Beefsky";
+	damage_deflection = 21
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
@@ -175,7 +178,10 @@
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "dQ" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
+	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/brig)
@@ -203,7 +209,8 @@
 /area/shuttle/escape)
 "dY" = (
 /obj/machinery/porta_turret/centcom_shuttle{
-	dir = 6
+	dir = 6;
+	faction = list("neutral","silicon","turret","clowns")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -225,10 +232,13 @@
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "en" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "shuttlewindow";
 	dir = 8
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -324,7 +334,7 @@
 "fy" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/disposalpipe/segment,
-/obj/item/storage/box/fireworks/dangerous,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "fA" = (
@@ -354,10 +364,20 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "fP" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/gun/ballistic/automatic/pistol/m1911,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/closet/secure_closet/ert_sec{
+	name = "Emergency response security locker";
+	desc = "A storage unit containing equipment for responding to emergencies.";
+	req_access = list("security")
+	},
+/obj/item/food/burger/cheese,
+/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/ammo_box/a357,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "gr" = (
 /obj/item/radio/intercom/directional/south,
 /mob/living/simple_animal/bot/medbot{
@@ -367,7 +387,8 @@
 /area/shuttle/escape)
 "gH" = (
 /obj/machinery/porta_turret/centcom_shuttle{
-	dir = 5
+	dir = 5;
+	faction = list("neutral","silicon","turret","clowns")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -450,7 +471,10 @@
 /area/shuttle/escape/luxury)
 "iP" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/brig)
 "iQ" = (
@@ -507,11 +531,13 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy,
 /obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
+/obj/item/ammo_box/magazine/m35/rubber,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "jG" = (
 /obj/machinery/vending/boozeomat/all_access,
+/obj/structure/sign/flag/nanotrasen/directional/north,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "jO" = (
@@ -559,10 +585,13 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "kc" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "shuttlewindow";
 	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -570,11 +599,15 @@
 /turf/template_noop,
 /area/template_noop)
 "kn" = (
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north{
+	damage_deflection = 21
+	},
 /obj/item/clothing/accessory/medal/gold,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	damage_deflection = 21
+	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
@@ -621,12 +654,18 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/grenade/frag,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "ld" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/window/reinforced/spawner/directional/west,
+/mob/living/simple_animal/hostile/retaliate/clown{
+	health = 300;
+	name = "Honk-E-Clown";
+	desc = "This clown looks pretty tough, better stay on his good side...";
+	limb_destroyer = 1;
+	maxHealth = "300"
+	},
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "lk" = (
@@ -728,7 +767,7 @@
 /area/shuttle/escape)
 "nx" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 4
@@ -812,14 +851,8 @@
 "pz" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/gun/ballistic/automatic/pistol/aps,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
-"pY" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/gun,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "qd" = (
 /obj/machinery/computer/warrant,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -881,7 +914,9 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = 35
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	damage_deflection = 21
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ri" = (
@@ -900,6 +935,7 @@
 "rw" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/fireworks,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "rx" = (
@@ -915,14 +951,8 @@
 /area/shuttle/escape/brig)
 "rO" = (
 /obj/effect/decal/cleanable/plastic,
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/simple_animal/hostile/retaliate/clown{
-	health = 300;
-	name = "Honk-E-Clown";
-	desc = "This clown looks pretty tough, better stay on his good side...";
-	limb_destroyer = 1
-	},
+/obj/machinery/door/window/brigdoor/right/directional/east,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "rX" = (
@@ -930,7 +960,8 @@
 /area/shuttle/escape/brig)
 "si" = (
 /obj/machinery/porta_turret/centcom_shuttle{
-	dir = 10
+	dir = 10;
+	faction = list("neutral","silicon","turret","clowns")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1000,8 +1031,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "tF" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	damage_deflection = 21
+	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/handcuffs{
 	pixel_x = -3;
@@ -1021,15 +1053,15 @@
 	pixel_y = 4
 	},
 /obj/item/gun/grenadelauncher,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
+	damage_deflection = 21
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "tS" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 8
-	},
-/obj/item/gun/ballistic/shotgun/lethal{
-	pixel_y = -10
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
@@ -1153,7 +1185,8 @@
 	name = "Shuttle Armory";
 	req_access = list("security");
 	dir = 8;
-	safe = 0
+	safe = 0;
+	damage_deflection = 21
 	},
 /obj/effect/turf_decal/trimline/red/warning,
 /obj/effect/turf_decal/trimline/red/warning{
@@ -1235,14 +1268,16 @@
 	pixel_y = 2;
 	pixel_x = 7
 	},
-/obj/item/gun/ballistic/automatic/pistol/clandestine{
-	pixel_y = 9
-	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "xT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/brig)
 "xU" = (
@@ -1269,7 +1304,8 @@
 /area/shuttle/escape)
 "yq" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/gun/ballistic/revolver/c38,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
+/obj/item/ammo_box/magazine/m35/rubber,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "ys" = (
@@ -1343,8 +1379,8 @@
 /area/shuttle/escape)
 "Al" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/box/fireworks/dangerous,
-/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
+/obj/item/ammo_box/magazine/m35/rubber,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
@@ -1375,13 +1411,17 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Bf" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/west{
+	damage_deflection = 21
+	},
 /obj/item/gun/ballistic/rocketlauncher/unrestricted{
 	name = "\improper Nanotrasen PML-9";
 	desc = "A reusable rocket propelled grenade launcher. The words 'Syndicate this way' and an arrow have been written near the barrel. A sticker near the cheek rest reads, 'FOR DISPLAY PURPOSES ONLY'"
+	},
+/obj/structure/window/reinforced/spawner/directional/north{
+	damage_deflection = 21
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
@@ -1399,11 +1439,12 @@
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /obj/item/gravity_gun,
+/obj/item/assembly/signaler/anomaly/grav,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Bv" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 5
@@ -1430,9 +1471,10 @@
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "BW" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ammo_box/c35/rubber,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Cj" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -1458,7 +1500,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Cy" = (
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/airlock/command{
 	name = "Honk-E-Clown's Mafia Free Playland and Casino"
 	},
@@ -1601,7 +1642,7 @@
 /area/shuttle/escape)
 "Et" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 10
@@ -1801,7 +1842,9 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "HT" = (
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north{
+	damage_deflection = 21
+	},
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 16;
 	pixel_y = 2
@@ -1861,7 +1904,8 @@
 /area/shuttle/escape)
 "IQ" = (
 /obj/machinery/porta_turret/centcom_shuttle{
-	dir = 9
+	dir = 9;
+	faction = list("neutral","silicon","turret","clowns")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1871,12 +1915,12 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/grenade/frag,
+/obj/item/ammo_box/c35/rubber,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jk" = (
-/obj/item/storage/box/fireworks/dangerous,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/fireworks,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jm" = (
@@ -2165,7 +2209,7 @@
 /area/shuttle/escape)
 "OK" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 6
@@ -2175,11 +2219,6 @@
 "OQ" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
-"OT" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/gun/ballistic,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "OU" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 10
@@ -2238,13 +2277,16 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Qp" = (
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/obj/machinery/door/airlock/command{
-	name = "Honk-E-Clown's Mafia Free Playland and Casino"
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Blast Door"
 	},
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape/luxury)
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	damage_deflection = 21;
+	desc = "A 'Titan' brand Plastitanium window, there is a small image of a cat etched into the bottom right corner"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Qu" = (
 /obj/structure/bed/roller,
 /obj/item/bedsheet/patriot,
@@ -2282,6 +2324,7 @@
 "Rz" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ammo_box/c35/rubber,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "RO" = (
@@ -2446,7 +2489,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Ul" = (
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north{
+	damage_deflection = 21
+	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/item/ammo_casing/caseless/rocket/heap,
@@ -2588,7 +2633,7 @@
 /area/shuttle/escape)
 "Wq" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 9
@@ -2621,7 +2666,7 @@
 /area/shuttle/escape)
 "Xd" = (
 /obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
+	faction = list("neutral","silicon","turret","clowns");
 	gender = "female";
 	req_access = list("security");
 	dir = 8
@@ -2684,6 +2729,7 @@
 /area/shuttle/escape)
 "YI" = (
 /obj/effect/spawner/random/vending/snackvend,
+/obj/structure/sign/flag/nanotrasen/directional/north,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "YN" = (
@@ -2845,8 +2891,8 @@ aG
 uV
 Eg
 uV
-pY
-fP
+nU
+nU
 bT
 mw
 mw
@@ -2894,9 +2940,9 @@ Lf
 xf
 xf
 iQ
+yq
+BW
 nU
-nU
-OT
 xb
 so
 Od
@@ -2954,8 +3000,8 @@ kd
 (6,1,1) = {"
 kd
 kd
-Tw
-Tw
+Qp
+Qp
 uV
 uV
 rX
@@ -2979,7 +3025,7 @@ YZ
 YZ
 Cy
 YZ
-Qp
+Cy
 YZ
 YZ
 YZ
@@ -3000,7 +3046,7 @@ uV
 (7,1,1) = {"
 Wq
 uV
-Tw
+Qp
 xU
 FR
 yH
@@ -3090,7 +3136,7 @@ xj
 xj
 "}
 (9,1,1) = {"
-Tw
+Qp
 qd
 KB
 hH
@@ -3115,7 +3161,7 @@ qI
 Yr
 YZ
 bt
-BW
+uC
 Xw
 iO
 cY
@@ -3136,7 +3182,7 @@ xj
 xj
 "}
 (10,1,1) = {"
-Tw
+Qp
 dg
 PU
 OU
@@ -3182,7 +3228,7 @@ uV
 OK
 "}
 (11,1,1) = {"
-Tw
+Qp
 vq
 tx
 Gs
@@ -3228,7 +3274,7 @@ uV
 kd
 "}
 (12,1,1) = {"
-Tw
+Qp
 mG
 zm
 Gs
@@ -3274,7 +3320,7 @@ uV
 kd
 "}
 (13,1,1) = {"
-Tw
+Qp
 Sq
 ys
 bp
@@ -3320,7 +3366,7 @@ uV
 Et
 "}
 (14,1,1) = {"
-Tw
+Qp
 oZ
 Ho
 Xo
@@ -3329,7 +3375,7 @@ KZ
 rX
 yT
 dC
-ac
+fP
 AB
 iP
 iP
@@ -3375,7 +3421,7 @@ eb
 rX
 hZ
 dC
-ac
+fP
 nZ
 UX
 Kd
@@ -3466,8 +3512,8 @@ uV
 uV
 rX
 Vm
-dQ
-dQ
+iP
+iP
 Fp
 iP
 iP
@@ -3485,7 +3531,7 @@ YZ
 YZ
 Cy
 YZ
-Qp
+Cy
 YZ
 YZ
 YZ
