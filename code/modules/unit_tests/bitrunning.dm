@@ -133,15 +133,14 @@
 	TEST_ASSERT_EQUAL(pod.connected, FALSE, "Sanity: pod didn't disconnect")
 	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should've taken brain damage on force disconn")
 
-/// Tests cases where the netpod is destroyed or the occupant unbuckled
-/datum/unit_test/netpod_break/Run()
+/// Tests cases where the netpod is opened with someone inside
+/datum/unit_test/netpod_open/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	var/mob/living/carbon/original = labrat
 
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
@@ -157,7 +156,19 @@
 	TEST_ASSERT_NULL(pod.occupant, "Should've cleared occupant")
 	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should have taken brain damage on unbuckle")
 
-	labrat.fully_heal()
+/// Tests cases where the netpod is broken with someone inside
+/datum/unit_test/netpod_break/Run()
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+
+	labrat.mind_initialize()
+	labrat.mock_client = new()
+
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
+
+	labrat.forceMove(pod.loc)
 	pod.set_occupant(labrat)
 	pod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(pod.occupant, labrat, "Sanity: Pod didn't set occupant")
