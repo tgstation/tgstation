@@ -443,17 +443,23 @@
 
 	// Amount we offset the grid zcrd to get the true zcrd
 	var/grid_z_offset = z_offset - 1
+	var/z_upper_set = z_upper < INFINITY
+	var/z_lower_set = z_lower > -INFINITY
 
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
 	// true max zcrd
 	var/map_bounds_z_max = last_column.zcrd
 	var/z_upper_parsed = map_bounds_z_max + z_offset - 1
-	if(z_upper < INFINITY)
+	if(z_upper_set)
 		z_upper_parsed -= map_bounds_z_max - z_upper
-	if(z_lower > -INFINITY)
+	if(z_lower_set)
 		var/offset_amount = z_lower - 1
 		z_upper_parsed -= offset_amount
 		grid_z_offset -= offset_amount
+
+	var/list/target_grid_sets = gridSets
+	if(z_lower_set || z_upper_set) // bounds are set, filter out gridsets for z levels we don't want
+		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
 
 	var/z_threshold = world.maxz
 	if(z_upper_parsed > z_threshold && crop_map)
@@ -461,10 +467,6 @@
 			world.incrementMaxZ()
 		if(!no_changeturf)
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
-
-	var/list/target_grid_sets = gridSets
-	if(z_lower > -INFINITY || z_upper < INFINITY) // bounds are set, filter out gridsets for z levels we don't want
-		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
 
 	for(var/datum/grid_set/gset as anything in target_grid_sets)
 		var/true_xcrd = gset.xcrd + x_relative_to_absolute
@@ -536,8 +538,26 @@
 	var/x_relative_to_absolute = x_offset - 1
 	var/line_len = src.line_len
 
+	// Amount we offset the grid zcrd to get the true zcrd
+	var/grid_z_offset = z_offset - 1
+	var/z_upper_set = z_upper < INFINITY
+	var/z_lower_set = z_lower > -INFINITY
+
+	// we now need to find the maximum z, fun!
+	var/map_bounds_z_max = 1
+	for(var/datum/grid_set/grid_set as anything in gridSets)
+		map_bounds_z_max = max(map_bounds_z_max, grid_set.zcrd)
+
+	var/z_upper_parsed = map_bounds_z_max + z_offset - 1
+	if(z_upper_set)
+		z_upper_parsed -= map_bounds_z_max - z_upper
+	if(z_lower_set)
+		var/offset_amount = z_lower - 1
+		z_upper_parsed -= offset_amount
+		grid_z_offset -= offset_amount
+
 	var/list/target_grid_sets = gridSets
-	if(z_lower > -INFINITY || z_upper < INFINITY) // bounds are set, filter out gridsets for z levels we don't want
+	if(z_lower_set || z_upper_set) // bounds are set, filter out gridsets for z levels we don't want
 		target_grid_sets = filter_grid_sets_based_on_z_bounds(z_lower, z_upper)
 
 	for(var/datum/grid_set/gset as anything in target_grid_sets)
@@ -545,7 +565,7 @@
 		var/relative_y = gset.ycrd
 		var/true_xcrd = relative_x + x_relative_to_absolute
 		var/ycrd = relative_y + y_relative_to_absolute
-		var/zcrd = gset.zcrd + z_offset - z_lower
+		var/zcrd = gset.zcrd + grid_z_offset
 		if(!crop_map && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
