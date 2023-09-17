@@ -66,7 +66,7 @@
 
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
 			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -238,7 +238,7 @@
 
 	if(istype(I, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = I
-		if(dealer_deck.wielded) // deal a card facedown on the table
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card facedown on the table
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
 				attackby(card, user, params)
@@ -284,7 +284,7 @@
 /obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) // deal a card faceup on the table
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
 				card.Flip()

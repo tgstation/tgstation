@@ -4,7 +4,7 @@ import { randomInteger, randomNumber, randomPick, randomProb } from 'common/rand
 import { useDispatch } from 'common/redux';
 import { Component } from 'inferno';
 import { resolveAsset } from '../assets';
-import { backendSuspendStart, useBackend } from '../backend';
+import { useBackend } from '../backend';
 import { Icon, KeyListener } from '../components';
 import { globalEvents, KeyEvent } from '../events';
 import { Window } from '../layouts';
@@ -408,10 +408,8 @@ class FishingMinigame extends Component<
 
     if (newCompletion <= 0 && !this.no_escape) {
       this.props.lose();
-      dispatch(backendSuspendStart());
     } else if (newCompletion >= 100) {
       this.props.win();
-      dispatch(backendSuspendStart());
     }
 
     return newState;

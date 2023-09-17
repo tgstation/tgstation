@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - code_imp: "Cleans up some unnecessary code left over from caseless ammo."

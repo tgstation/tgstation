@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "Machines now transfer their local materials to silo during linking with multitool"

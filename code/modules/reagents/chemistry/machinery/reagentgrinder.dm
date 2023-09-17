@@ -99,11 +99,9 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
+	if(operating || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
-	if(operating)
-		return
-	replace_beaker(user)
+	eject(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/reagentgrinder/attack_robot_secondary(mob/user, list/modifiers)
@@ -146,24 +144,28 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/reagentgrinder/attackby(obj/item/I, mob/living/user, params)
-	//You can only screw open empty grinder
-	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		return
+/obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!beaker && !length(holdingitems))
+		return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 
-	if(default_deconstruction_crowbar(I))
-		return
+/obj/machinery/reagentgrinder/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
 
+/obj/machinery/reagentgrinder/attackby(obj/item/weapon, mob/living/user, params)
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
+	if(!weapon.grind_requirements(src)) //Error messages should be in the objects' definitions
+		return
+
+	if (is_reagent_container(weapon) && !(weapon.item_flags & ABSTRACT) && weapon.is_open_container())
+		var/obj/item/reagent_containers/container = weapon
 		. = TRUE //no afterattack
-		if(!user.transferItemToLoc(B, src))
+		if(!user.transferItemToLoc(container, src))
 			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
+		replace_beaker(user, container)
+		to_chat(user, span_notice("You add [container] to [src]."))
 		update_appearance()
 		return TRUE //no afterattack
 
@@ -172,39 +174,36 @@
 		return TRUE
 
 	//Fill machine with a bag!
-	if(istype(I, /obj/item/storage/bag))
-		if(!I.contents.len)
-			to_chat(user, span_notice("[I] is empty!"))
+	if(istype(weapon, /obj/item/storage/bag))
+		if(!weapon.contents.len)
+			to_chat(user, span_notice("[weapon] is empty!"))
 			return TRUE
 
 		var/list/inserted = list()
-		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+		if(weapon.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
 			inserted = list()
-		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+		if(weapon.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
 
-		if(!I.contents.len)
-			to_chat(user, span_notice("You empty [I] into [src]."))
+		if(!weapon.contents.len)
+			to_chat(user, span_notice("You empty [weapon] into [src]."))
 		else
 			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
-	if(!I.grind_results && !I.juice_typepath)
+	if(!weapon.grind_results && !weapon.juice_typepath)
 		if(user.combat_mode)
 			return ..()
 		else
-			to_chat(user, span_warning("You cannot grind [I] into reagents!"))
+			to_chat(user, span_warning("You cannot grind/juice [weapon] into reagents!"))
 			return TRUE
 
-	if(!I.grind_requirements(src)) //Error messages should be in the objects' definitions
-		return
-
-	if(user.transferItemToLoc(I, src))
-		to_chat(user, span_notice("You add [I] to [src]."))
-		holdingitems[I] = TRUE
+	if(user.transferItemToLoc(weapon, src))
+		to_chat(user, span_notice("You add [weapon] to [src]."))
+		holdingitems[weapon] = TRUE
 		return FALSE
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
@@ -261,9 +260,9 @@
 	if(beaker)
 		replace_beaker(user)
 
-/obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
-	holdingitems -= O
-	qdel(O)
+/obj/machinery/reagentgrinder/proc/remove_object(obj/item/weapon)
+	holdingitems -= weapon
+	qdel(weapon)
 
 /obj/machinery/reagentgrinder/proc/start_shaking()
 	var/static/list/transforms
@@ -306,11 +305,11 @@
 
 /obj/machinery/reagentgrinder/proc/juice(mob/user)
 	power_change()
-	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.holder_full())
 		return
 	operate_for(50, juicing = TRUE)
 	for(var/obj/item/i in holdingitems)
-		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+		if(beaker.reagents.holder_full())
 			break
 		var/obj/item/I = i
 		if(I.juice_typepath)
@@ -324,12 +323,12 @@
 
 /obj/machinery/reagentgrinder/proc/grind(mob/user)
 	power_change()
-	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.holder_full())
 		return
 	operate_for(60)
 	warn_of_dust() // don't breathe this.
 	for(var/i in holdingitems)
-		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+		if(beaker.reagents.holder_full())
 			break
 		var/obj/item/I = i
 		if(I.grind_results)
@@ -337,7 +336,10 @@
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
 	if(!I.grind(beaker.reagents, user))
-		to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
+		if(isstack(I))
+			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [I] as possible."))
+		else
+			to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
 		return
 	remove_object(I)
 
@@ -347,19 +349,21 @@
 	if(!beaker || machine_stat & (NOPOWER|BROKEN))
 		return
 	operate_for(50, juicing = TRUE)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/reagentgrinder, mix_complete)), 50)
+	addtimer(CALLBACK(src, PROC_REF(mix_complete)), 50 / speed)
 
 /obj/machinery/reagentgrinder/proc/mix_complete()
-	if(beaker?.reagents.total_volume)
-		//Recipe to make Butter
-		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
-		var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
-		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
-		for(var/i in 1 to butter_amt)
-			new /obj/item/food/butter(/* loc = */ drop_location(), /* starting_reagent_purity = */ purity)
-		//Recipe to make Mayonnaise
-		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
-			beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
-		//Recipe to make whipped cream
-		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
-			beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
+	if(beaker?.reagents.total_volume <= 0)
+		return
+	//Recipe to make Butter
+	var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+	var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
+	beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
+	for(var/i in 1 to butter_amt)
+		var/obj/item/food/butter/tasty_butter = new(drop_location())
+		tasty_butter.reagents.set_all_reagents_purity(purity)
+	//Recipe to make Mayonnaise
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
+	//Recipe to make whipped cream
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)

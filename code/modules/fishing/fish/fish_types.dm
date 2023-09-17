@@ -465,6 +465,7 @@
 /obj/item/fish/holo/puffer
 	name = "holographic pufferfish"
 	desc ="A holographic representation of 100% safe-to-eat pufferfish... that is, if holographic fishes were even edible."
+	icon_state = "pufferfish"
 	sprite_width = 8
 	sprite_height = 8
 	average_size = 60
