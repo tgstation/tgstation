@@ -1618,7 +1618,7 @@
 	ph = 8
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 6 // so we can be sure that people are not able to pump themselfs with it. 
+	overdose_threshold = 10 // so we can be sure that people are not able to pump themselfs with it. 
 	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
 	var/clot_rate = 0.3
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
