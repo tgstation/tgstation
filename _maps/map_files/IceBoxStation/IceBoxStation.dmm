@@ -4450,11 +4450,8 @@
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "bsx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/turf/closed/wall,
+/area/station/bitrunning/den)
 "bsG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
@@ -10030,7 +10027,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "cWq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -12949,7 +12946,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "dPX" = (
 /obj/structure/sign/warning/docking/directional/east,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -13209,7 +13206,7 @@
 /obj/machinery/netpod,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "dUL" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "maint1"
@@ -13246,7 +13243,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "dVt" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/checker,
@@ -14906,9 +14903,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "ewq" = (
-/obj/machinery/light/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "ewz" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -15111,7 +15110,7 @@
 "eAe" = (
 /obj/structure/chair,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "eAg" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/closed/wall,
@@ -17717,7 +17716,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "fsv" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -19012,7 +19011,7 @@
 /obj/structure/cable,
 /obj/machinery/computer/quantum_console,
 /turf/open/floor/iron/dark/smooth_corner,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "fNy" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/wintercoat{
@@ -22047,7 +22046,7 @@
 "gMV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "gMZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35284,7 +35283,7 @@
 /obj/structure/chair,
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "kQM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -37102,7 +37101,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron/dark/textured_large,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "lts" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/blue,
@@ -43839,7 +43838,7 @@
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "nyC" = (
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/service/chapel)
@@ -44880,7 +44879,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "nME" = (
 /obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/plating/snowed/icemoon,
@@ -48666,7 +48665,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
-/area/station/cargo/storage)
+/area/station/bitrunning/den)
 "oVt" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -53498,7 +53497,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "que" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Chapel South"
@@ -61828,7 +61827,7 @@
 /obj/effect/turf_decal/box/corners,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/icemoon/surface/outdoors/nospawn)
+/area/station/bitrunning/den)
 "sWl" = (
 /obj/machinery/door/airlock/command{
 	name = "Chief Medical Officer"
@@ -62983,7 +62982,7 @@
 /obj/machinery/netpod,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "tqQ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -68563,7 +68562,7 @@
 /obj/machinery/netpod,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningdock)
+/area/station/bitrunning/den)
 "vgD" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/iron/fifty,
@@ -230691,11 +230690,11 @@ iaF
 ajw
 ajw
 ajw
-kXr
-kXr
+bsx
+bsx
 gMV
-qjQ
-qjQ
+bsx
+bsx
 ojk
 bVJ
 dSO
@@ -230948,11 +230947,11 @@ qqJ
 gjP
 ajw
 ajw
-maT
+gMV
 cWa
 sVW
 ltl
-qjQ
+bsx
 qYc
 hxE
 xtr
@@ -231209,7 +231208,7 @@ oVf
 fss
 qtT
 tqC
-qjQ
+bsx
 qjQ
 rVe
 qjQ
@@ -231459,14 +231458,14 @@ mAN
 vra
 lZQ
 wXR
-qjQ
+kXr
 eAe
+eMa
 bsx
-qjQ
 fNx
 dPW
 vgC
-qjQ
+bsx
 lti
 jBf
 naO
@@ -231716,14 +231715,14 @@ kXA
 oDt
 kRU
 oQa
-qjQ
+kXr
 kQL
-hxE
-qjQ
+ewq
+bsx
 dVs
 nyB
 dUK
-qjQ
+bsx
 fqY
 hxE
 dPn
@@ -231973,14 +231972,14 @@ cXl
 uxl
 oRy
 aHC
-qjQ
+kXr
+ghl
 ewq
-hxE
-qjQ
-aOd
-aOd
-qjQ
-qjQ
+bsx
+gMV
+gMV
+bsx
+bsx
 iVA
 hxE
 aCh
@@ -232231,8 +232230,8 @@ cHb
 psW
 psW
 nMB
-hxE
-hxE
+ewq
+ewq
 tyH
 hxE
 hxE
@@ -232487,9 +232486,9 @@ ljl
 kXA
 rLu
 nRq
-aOd
-hoD
-bsx
+maT
+ajw
+eMa
 aOd
 qJJ
 hxE
@@ -232748,7 +232747,7 @@ tue
 nZh
 lNG
 tue
-tue
+qjQ
 hxE
 feB
 lis

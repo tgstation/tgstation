@@ -1982,7 +1982,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "azu" = (
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
@@ -5566,7 +5566,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "brN" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/disposalpipe/segment,
@@ -10233,7 +10233,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "cBU" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/sunny/style_random,
@@ -10347,7 +10347,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_corner,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "cDh" = (
 /obj/item/broken_bottle,
 /turf/open/floor/carpet/neon/simple/pink/nodots,
@@ -17005,7 +17005,7 @@
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/trimline/brown/line,
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "erY" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
@@ -17153,7 +17153,7 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "euu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -21017,7 +21017,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "fCx" = (
 /obj/structure/rack,
 /turf/open/floor/pod/dark,
@@ -28106,7 +28106,7 @@
 	layer = 3.1
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "htW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron,
@@ -30532,7 +30532,7 @@
 /obj/item/radio/intercom/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "iaO" = (
 /obj/structure/rack,
 /obj/structure/sign/nanotrasen{
@@ -31515,7 +31515,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "iom" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34838,7 +34838,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "jhU" = (
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -36203,7 +36203,7 @@
 	name = "Bitrunning Den"
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/drone_bay)
+/area/station/bitrunning/den)
 "jAB" = (
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark/side{
@@ -42627,7 +42627,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "lgv" = (
 /obj/structure/rack,
 /obj/item/book/manual/nuclear,
@@ -50957,7 +50957,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 8
 	},
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "nla" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -55616,7 +55616,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "owo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -55801,6 +55801,9 @@
 /obj/structure/sign/warning/biohazard/directional/west,
 /turf/open/floor/iron/white,
 /area/station/hallway/floor2/aft)
+"oyT" = (
+/turf/closed/wall,
+/area/station/bitrunning/den)
 "oyW" = (
 /obj/structure/chair{
 	dir = 8
@@ -59699,7 +59702,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "pBJ" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=1-7";
@@ -71559,7 +71562,7 @@
 /obj/machinery/light/directional/north,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "sLE" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Entrance"
@@ -78466,7 +78469,7 @@
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "uDr" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -84748,7 +84751,7 @@
 "whN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "whR" = (
 /turf/closed/wall,
 /area/station/service/bar)
@@ -115356,11 +115359,11 @@ owI
 owI
 owI
 owI
-oic
-oic
-oic
-oic
-oic
+oyT
+oyT
+oyT
+oyT
+oyT
 bAh
 iDJ
 oic
@@ -115613,14 +115616,14 @@ owI
 owI
 owI
 owI
-oic
-oic
+oyT
+oyT
 cDe
 ioi
-oic
-oic
-oic
-oic
+oyT
+oyT
+oyT
+oyT
 gUS
 nOj
 dzo
@@ -115870,14 +115873,14 @@ owI
 owI
 owI
 owI
-oic
-oic
+oyT
+oyT
 lgs
 fCw
 brL
 erV
 uDm
-oic
+oyT
 rGF
 yiZ
 yiZ
@@ -116127,8 +116130,8 @@ owI
 owI
 owI
 owI
-oic
-oic
+oyT
+oyT
 sLq
 azj
 cBT
@@ -116384,8 +116387,8 @@ owI
 owI
 owI
 owI
-oic
-oic
+oyT
+oyT
 iaJ
 pBA
 htK
@@ -116641,14 +116644,14 @@ owI
 owI
 owI
 owI
-oic
-oic
-oic
-oic
-aQK
+oyT
+oyT
+oyT
+oyT
+oyT
 jAr
-gfn
-aQK
+whN
+oyT
 xOd
 fve
 aSL
