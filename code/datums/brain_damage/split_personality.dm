@@ -268,7 +268,7 @@
 	if(!. || !client)
 		return FALSE
 	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
-	to_chat(src, span_userdanger("<b>Do not commit suicide or put the body in danger. While you're drunk, you're not suicidal. </b>"))
+	to_chat(src, span_warning("<b>Do not commit suicide or put the body in danger. While you're drunk, you're not suicidal. </b>"))
 
 #undef OWNER
 #undef STRANGER
