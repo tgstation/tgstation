@@ -34,3 +34,9 @@
 	name = "Naval Officer Uniform"
 	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
 	item_cost = 4000
+
+
+/datum/store_item/under/miscellaneous/syndie_pajamas
+	name = "Syndie Pajamas"
+	item_path = /obj/item/clothing/under/costume/syndie_pajamas
+	item_cost = 4000

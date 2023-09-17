@@ -63,3 +63,11 @@
 	icon_state = "navy_gold"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/syndie_pajamas
+	name = "Syndicate Pajamas"
+	desc = "Luxurious silk pajamas striped with a blood red accent."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "syndie_pajamas"
+	can_adjust = FALSE
+

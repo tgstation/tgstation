@@ -54,6 +54,11 @@
 	requires_purchase = FALSE
 	ckeywhitelist = list("ruby_flamewing")
 
+/datum/loadout_item/under/syndie_pajamas
+	name = "Syndicate Pajamas"
+	item_path = /obj/item/clothing/under/costume/syndie_pajamas
+	donator_only = TRUE
+
 //happiestplane
 /datum/loadout_item/mask/zoro
 	name = "Zoro Mask"
