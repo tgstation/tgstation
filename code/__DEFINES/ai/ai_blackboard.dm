@@ -67,8 +67,6 @@
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
-///do we currently have a retaliate target?
-#define BB_BASIC_MOB_CURRENTLY_RETALIATTING "BB_basic_mob_currently_retaliating"
 
 /// Flag to set on or off if you want your mob to prioritise running away
 #define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
@@ -85,3 +83,6 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+///should we skip the faction check for the targetting datum?
+#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"

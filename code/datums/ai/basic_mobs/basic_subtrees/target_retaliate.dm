@@ -77,4 +77,4 @@
 	. = ..()
 	if(check_faction)
 		return
-	controller.set_blackboard_key(BB_BASIC_MOB_CURRENTLY_RETALIATTING, succeeded)
+	controller.set_blackboard_key(BB_BASIC_MOB_SKIP_FACTION_CHECK, succeeded)
