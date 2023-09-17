@@ -2172,12 +2172,16 @@
 /area/lavaland/surface/outdoors)
 "mu" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/epinephrine{
-	pixel_x = -2;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
+	},
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/storage/pill_bottle/epinephrine{
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 8
@@ -5393,6 +5397,9 @@
 /area/mine/laborcamp/security)
 "HE" = (
 /obj/structure/table,
+/obj/item/storage/box/bandages{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white,
 /area/mine/laborcamp/production)
 "HF" = (
