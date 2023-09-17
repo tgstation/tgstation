@@ -41,7 +41,7 @@
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
-	RegisterSignal(src, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
+	RegisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 
 	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED)
 
@@ -82,9 +82,11 @@
 	if(isnull(old_body))
 		return
 
+	var/mob/living/avatar = parent
+
 	disconnect_avatar_signals()
-	UnregisterSignal(src, COMSIG_BITRUNNER_SAFE_DISCONNECT)
-	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
+	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+	UnregisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED)
 	UnregisterSignal(old_body, COMSIG_LIVING_DEATH)
 	UnregisterSignal(old_body, COMSIG_LIVING_STATUS_UNCONSCIOUS)
 	UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
@@ -99,7 +101,7 @@
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
-		SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_DISCONNECTED, WEAKREF(parent))
+		SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_DISCONNECTED)
 		UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
 		UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
 		UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)

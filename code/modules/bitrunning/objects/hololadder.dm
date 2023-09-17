@@ -36,7 +36,7 @@
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		SEND_SIGNAL(connection, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+		SEND_SIGNAL(user, COMSIG_BITRUNNER_SAFE_DISCONNECT)
 
 /// Helper for times when you dont have hands (gondola??)
 /obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived, turf/old_loc)

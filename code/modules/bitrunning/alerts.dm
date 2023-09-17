@@ -37,4 +37,4 @@
 		return
 
 	if(tgui_alert(living_owner, "Disconnect safely?", "Server Message", list("Exit", "Remain"), 10 SECONDS) == "Exit")
-		SEND_SIGNAL(living_owner.mind, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+		SEND_SIGNAL(living_owner, COMSIG_BITRUNNER_SAFE_DISCONNECT)
