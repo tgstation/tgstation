@@ -11,7 +11,7 @@
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner_backseat
-	var/poll_role= "split personality"
+	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
@@ -246,7 +246,7 @@
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
-	var/duration = 300 //Should last 5 minute
+	var/duration = 60 ///Duration of effect, 30 seconds = 1 minute
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
@@ -255,9 +255,9 @@
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
 		qdel(src)
-	if(duration == 0)
+	if(duration <= 0)
 		qdel(src)
-	duration--
+	duration -= seconds_per_tick
 
 /mob/living/split_personality/blackout
 	name = "blacked-out drunkard"

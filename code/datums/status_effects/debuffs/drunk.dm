@@ -188,15 +188,16 @@
 				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 
 			else
-				blackout()
-
-/datum/status_effect/inebriated/drunk/proc/blackout()
-	var/mob/living/carbon/drunkyard = owner
-	drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout)
+				attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
 		owner.adjustToxLoss(2)
+
+/datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
+	var/mob/living/carbon/drunkyard = owner
+	if(!drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+		owner.Sleeping(90 SECONDS)
 
 /// Status effect for being fully drunk (not tipsy).
 /atom/movable/screen/alert/status_effect/drunk
