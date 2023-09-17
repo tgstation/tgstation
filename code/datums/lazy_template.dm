@@ -61,6 +61,7 @@
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
+	var/list/my_loaded_atoms = list()
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
@@ -78,7 +79,13 @@
 			to_init |= turf
 			for(var/thing in turf.get_all_contents())
 				to_init |= thing
+
 		SSatoms.InitializeAtoms(to_init)
+		for(var/loaded_atom in to_init)
+			my_loaded_atoms |= loaded_atom
+
+	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, my_loaded_atoms)
+	my_loaded_atoms.Cut() // We don't want the list to cause ref holding shenanigans due to ASYNC
 
 	reservations += reservation
 	return reservation
