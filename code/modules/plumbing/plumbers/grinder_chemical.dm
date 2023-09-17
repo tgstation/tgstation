@@ -1,6 +1,6 @@
 /obj/machinery/plumbing/grinder_chemical
 	name = "chemical grinder"
-	desc = "Chemical grinder. Can either grind or juice stuff you put in"
+	desc = "Chemical grinder. Can either grind or juice stuff you put in."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
