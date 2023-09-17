@@ -61,7 +61,6 @@
 
 	balloon_alert(user, "vent saved in buffer")
 	multi_tool.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
