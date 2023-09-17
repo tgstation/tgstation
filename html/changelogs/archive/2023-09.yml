@@ -607,3 +607,31 @@
       to vanish from existence upon being added to the seed extractor
   - bugfix: fixes a issue that would cause fruit wine to bug out when trying to blend
       its reagent color
+2023-09-17:
+  ArcaneMusic:
+  - rscadd: Wall mounted objects (Things like APCs, Air Alarms, Light switches, Signs,
+      Posters, Newscasters, you name it) will now fall to the ground and break or
+      deconstruct when their attaching wall is changed or broken.
+  Ical92:
+  - bugfix: adds a few firelocks and alarms around IceBox
+  Timberpoes:
+  - bugfix: Forgetting to take dough out of the oven no longer progresses the server
+      to a crash-worthy state with infinite bread and ash and burned food products
+      for all.
+  Vincent983:
+  - qol: the recycler can now be rotated
+  blueDev2:
+  - bugfix: Lipolicide and other chems now puts you in crit, even if it is the only
+      source of damage
+  cnleth:
+  - image: Hercuri spray now uses the same sprite as the yellow medical spray
+  - spellcheck: Added a missing space to hercuri spray's description
+  mc-oofert:
+  - bugfix: the nukie medibot (oppenheimer) has access to the doors of the infiltrator
+      and is not shot at by the turrets
+  notlulz:
+  - bugfix: Monkeys have their tails back.
+  - bugfix: Recipe paper in the ruins now shows a normal recipe for Metalgen and Secret
+      sauce.
+  starrm4nn:
+  - spellcheck: Fixed some typos on QM's Overcoat

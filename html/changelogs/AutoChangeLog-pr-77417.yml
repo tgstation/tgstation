@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Wall mounted objects (Things like APCs, Air Alarms, Light switches, Signs, Posters, Newscasters, you name it) will now fall to the ground and break or deconstruct when their attaching wall is changed or broken."

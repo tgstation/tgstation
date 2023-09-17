@@ -1,5 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - image: "Hercuri spray now uses the same sprite as the yellow medical spray"
-  - spellcheck: "Added a missing space to hercuri spray's description"
