@@ -411,6 +411,7 @@
 	name = "Unholy Water"
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
+	self_consuming = TRUE //unholy intervention won't be limited by the lack of a liver
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	penetrates_skin = TOUCH|VAPOR
 	ph = 6.5
@@ -2690,6 +2691,7 @@
 		It re-energizes and heals those who can see beyond this fragile reality, \
 		but is incredibly harmful to the closed-minded. It metabolizes very quickly."
 	taste_description = "Ag'hsj'saje'sh"
+	self_consuming = TRUE //eldritch intervention won't be limited by the lack of a liver
 	color = "#1f8016"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
