@@ -666,7 +666,7 @@
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic limb."
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy when it is randomized roundstart
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE // while this technically changes appearance, we don't want it to be shown on the dummy when it is randomized roundstart
 	mail_goodies = list(/obj/item/weldingtool, /obj/item/stack/cable_coil/five)
 	/// The slot to replace, in string form
 	var/slot_string = "limb"
@@ -675,10 +675,12 @@
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	//I still gotta change this to work with the preferences
-	var/limb_slot = client_source?.prefs?.read_preference(datum/preference/choiced/prosthetic) || assoc_to_keys(choice)[1]
+	var/limb_slot = client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic) || assoc_to_keys(GLOB.limb_choice)[1]
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/surplus
 	switch(limb_slot)
+		if("random")
+			limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(BODY_ZONE_L_ARM)
 			surplus = new /obj/item/bodypart/arm/left/robot/surplus
 			slot_string = "left arm"
