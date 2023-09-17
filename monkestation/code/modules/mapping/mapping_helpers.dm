@@ -20,7 +20,7 @@
 
 /obj/effect/area_lighting_helper/LateInitialize()
 	var/area/our_area = get_area(src)
-	our_area.set_base_lighting(set_color, set_alpha)
+	our_area?.set_base_lighting(set_color, set_alpha)
 	qdel(src)
 
 /obj/effect/area_lighting_helper/max_alpha
