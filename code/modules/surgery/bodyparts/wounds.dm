@@ -306,7 +306,6 @@
 
 	var/dam_mul = 1
 
-	var/any_wound_uses_gauze = FALSE
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/iter_wound as anything in wounds)
 		dam_mul *= iter_wound.damage_multiplier_penalty
