@@ -469,7 +469,7 @@
 	if(lamp_enabled)
 		toggle_headlamp(TRUE)
 		to_chat(src, span_warning("Your headlamp was forcibly turned off. Restarting it should fix it, though."))
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /**
  * Handles headlamp smashing

@@ -157,6 +157,7 @@
 	to_chat(our_target, span_warning("Something inside of you crackles in a bad way."))
 	our_target.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
 	addtimer(CALLBACK(src, PROC_REF(stop_emp), our_target), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER
