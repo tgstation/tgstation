@@ -151,8 +151,8 @@
 		)
 		if(iscarbon(target))
 			var/mob/living/carbon/drunkyard = target
-			if(target.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
-				target.cure_trauma_type(/datum/brain_trauma/severe/split_personality/blackout)
+			if(drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
+				drunkyard.cure_trauma_type(/datum/brain_trauma/severe/split_personality/blackout)
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 

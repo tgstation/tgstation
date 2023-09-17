@@ -196,7 +196,7 @@
 
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
 	var/mob/living/carbon/drunkyard = owner
-	if(!drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+	if(!drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE) || drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))
 		owner.Sleeping(90 SECONDS)
 
 /// Status effect for being fully drunk (not tipsy).

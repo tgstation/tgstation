@@ -257,7 +257,7 @@
 		qdel(src)
 	if(duration_in_seconds <= 0)
 		qdel(src)
-	duraduration_in_secondstion -= seconds_per_tick
+	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
 	name = "blacked-out drunkard"
