@@ -491,14 +491,13 @@
 	processes = TRUE
 	return TRUE
 
-/// if the person has been healed by some kind of cult effect, such as the blood rites spell or the offer rune.
+/// if the person has been healed by some kind of cult effect, such as the blood rites spell or the offer rune. If we're already healing, we decrease the time we have to wait for the wound to heal.
 /datum/wound/blunt/bone/proc/cult_recovery(amount_healed)
-	if(cult_recovering)
-		return TRUE
-
 	regen_ticks_needed -= round(amount_healed)
-	cult_recovering = TRUE
-	processes = TRUE
+	if(!cult_recovering) //This basically upgrades our bone healing
+		cult_recovering = TRUE
+	if(!processes)
+		processes = TRUE
 	return TRUE
 
 /datum/wound/blunt/bone/treat(obj/item/I, mob/user)
