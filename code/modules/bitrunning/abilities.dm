@@ -1,4 +1,3 @@
-
 /datum/avatar_help_text
 	/// Text to display in the window
 	var/help_text

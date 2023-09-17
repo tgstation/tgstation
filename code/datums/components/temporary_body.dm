@@ -24,18 +24,14 @@
 /datum/component/temporary_body/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_QDELETING)
 
-
-/datum/component/temporary_body/proc/on_parent_destroy()
-	SIGNAL_HANDLER
-
-	return_to_old_body()
-
 /**
  * Sends the mind of the temporary body back into their previous host
  * If the previous host is alive, we'll force them into the body.
  * Otherwise we'll let them hang out as a ghost still.
  */
-/datum/component/temporary_body/proc/return_to_old_body()
+/datum/component/temporary_body/proc/on_parent_destroy()
+	SIGNAL_HANDLER
+
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
 
@@ -58,4 +54,3 @@
 
 	old_mind = null
 	old_body = null
-
