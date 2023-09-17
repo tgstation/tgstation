@@ -441,14 +441,20 @@
 
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
 
-	var/map_bounds_z_upper = last_column.zcrd
-	var/z_upper_parsed = map_bounds_z_upper + z_offset - 1
-	if(z_upper < INFINITY) // we're offset by the difference between the map max z and the z upper cutoff
-		z_upper_parsed -= map_bounds_z_upper - z_upper
-	if(z_lower > -INFINITY) //  we're offset by the difference between 1 and the z lower cutoff
-		z_upper_parsed -= 1 - z_lower
+	// Amount we offset the grid zcrd to get the true zcrd
+	var/grid_z_offset = z_offset - 1
 
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
+	// true max zcrd
+	var/map_bounds_z_max = last_column.zcrd
+	var/z_upper_parsed = map_bounds_z_max + z_offset - 1
+	if(z_upper < INFINITY)
+		z_upper_parsed -= map_bounds_z_max - z_upper
+	if(z_lower > -INFINITY)
+		var/offset_amount = z_lower - 1
+		z_upper_parsed -= offset_amount
+		grid_z_offset -= offset_amount
+
 	var/z_threshold = world.maxz
 	if(z_upper_parsed > z_threshold && crop_map)
 		for(var/i in z_threshold + 1 to z_upper_parsed) //create a new z_level if needed
@@ -467,7 +473,7 @@
 		if(final_x < true_xcrd || lowest_x > gset.xcrd)
 			continue
 
-		var/zcrd = gset.zcrd + z_offset - 1
+		var/zcrd = gset.zcrd + grid_z_offset
 		// If we're using changeturf, we disable it if we load into a z level we JUST created
 		var/no_afterchange = no_changeturf || zcrd > z_threshold
 
