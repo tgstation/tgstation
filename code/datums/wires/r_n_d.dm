@@ -33,7 +33,7 @@
 			R.hacked = !R.hacked
 		if(WIRE_DISABLE)
 			R.disabled = !R.disabled
-/datum/wires/rnd/on_cut(wire, mend)
+/datum/wires/rnd/on_cut(wire, mend, source)
 	var/obj/machinery/rnd/R = holder
 	switch(wire)
 		if(WIRE_HACK)

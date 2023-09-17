@@ -94,6 +94,8 @@
 	var/ricochets = 0
 	/// how many times we can ricochet max
 	var/ricochets_max = 0
+	/// how many times we have to ricochet min (unless we hit an atom we can ricochet off)
+	var/min_ricochets = 0
 	/// 0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
 	var/ricochet_chance = 0
 	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
@@ -196,6 +198,7 @@
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(attempt_parry),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -208,7 +211,6 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -379,15 +381,6 @@
 		return
 	Impact(A)
 
-/// Signal proc for when a projectile enters a turf.
-/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
-
-	if(isturf(loc))
-		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
-
 /// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
 /obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
@@ -402,13 +395,14 @@
 	return FALSE
 
 
-/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 17 degrees and increasing the bullet's stats.
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
 /obj/projectile/proc/on_parry(mob/user, list/modifiers)
 	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
 		return
 
 	parried = TRUE
 	set_angle(dir2angle(user.dir) + rand(-3, 3))
+	firer = user
 	speed *= 0.8 // Go 20% faster when parried
 	damage *= 1.15 // And do 15% more damage
 	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
@@ -448,8 +442,9 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	if(!HAS_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE))
+		var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+		def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 
@@ -494,7 +489,9 @@
 		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
-	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
+	if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
+		qdel(src)
+		return BULLET_ACT_BLOCK
 	if(mode == PROJECTILE_PIERCE_HIT)
 		++pierces
 	hit_something = TRUE
@@ -683,7 +680,7 @@
 	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS
-	if(prob(chance))
+	if(ricochets < min_ricochets || prob(chance))
 		return TRUE
 	return FALSE
 
@@ -743,9 +740,6 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if(firer)
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
-	//If no angle needs to resolve it from xo/yo!
-	if(shrapnel_type && LAZYLEN(embedding))
-		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
@@ -1132,5 +1126,25 @@
 
 	return FALSE
 
+///Checks if the projectile can embed into someone
+/obj/projectile/proc/can_embed_into(atom/hit)
+	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
+
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
+
+/// Fire a projectile from this atom at another atom
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+	if (!isnull(sound))
+		playsound(src, sound, vol = 100, vary = TRUE)
+
+	var/turf/startloc = get_turf(src)
+	var/obj/projectile/bullet = new projectile_type(startloc)
+	bullet.starting = startloc
+	bullet.firer = firer || src
+	bullet.fired_from = src
+	bullet.yo = target.y - startloc.y
+	bullet.xo = target.x - startloc.x
+	bullet.original = target
+	bullet.preparePixelProjectile(target, src)
+	bullet.fire()

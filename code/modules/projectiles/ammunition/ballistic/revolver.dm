@@ -14,6 +14,14 @@
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
 	projectile_type = /obj/projectile/bullet/a357/match
 
+/obj/item/ammo_casing/a357/phasic
+	name = ".357 phasic bullet casing"
+	projectile_type = /obj/projectile/bullet/a357/phasic
+
+/obj/item/ammo_casing/a357/heartseeker
+	name = ".357 heartseeker bullet casing"
+	projectile_type = /obj/projectile/bullet/a357/heartseeker
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

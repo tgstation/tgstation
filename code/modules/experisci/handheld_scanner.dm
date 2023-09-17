@@ -45,7 +45,7 @@
 	///The toilet we're about to unleash unto this cursed plane of existence
 	var/obj/structure/toilet/greyscale/result_toilet = new (drop_location())
 
-	result_toilet.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, user) = MINERAL_MATERIAL_AMOUNT))
+	result_toilet.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, user) = SHEET_MATERIAL_AMOUNT))
 	result_toilet.desc = "A horrendous mass of fused flesh resembling a standard-issue HT-451 model toilet. How it manages to function as one is beyond you. \
 	This one seems to be made out of the flesh of a devoted employee of the RnD department."
 	result_toilet.buildstacktype = /obj/effect/decal/remains/human //this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people

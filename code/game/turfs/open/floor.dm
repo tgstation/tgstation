@@ -20,11 +20,7 @@
 
 
 	overfloor_placed = TRUE
-
-	/// Determines the type of damage overlay that will be used for the tile
-	var/damaged_dmi = 'icons/turf/damaged.dmi'
-	var/broken = FALSE
-	var/burnt = FALSE
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
 	/// Determines if you can deconstruct this with a RCD
@@ -32,33 +28,16 @@
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-
-	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
-		var/static/list/previous_errors = list()
-
-		if (!(type in previous_errors))
-			if (broken != (icon_state in broken_states()))
-				stack_trace("[icon_state] (from [type]), which should be [broken ? "NOT broken, IS" : "broken, IS NOT"]")
-				previous_errors[type] = TRUE
-
-			if (burnt != (icon_state in burnt_states()))
-				stack_trace("[icon_state] (from [type]), which should be [burnt ? "NOT burnt, IS" : "burnt, IS NOT"]")
-				previous_errors[type] = TRUE
-
 	if(mapload && prob(33))
 		MakeDirty()
 
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/// Returns a list of every turf state considered "broken".
-/// Will be randomly chosen if a turf breaks at runtime.
-/turf/open/floor/proc/broken_states()
+/turf/open/floor/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/// Returns a list of every turf state considered "burnt".
-/// Will be randomly chosen if a turf is burnt at runtime.
-/turf/open/floor/proc/burnt_states()
+/turf/open/floor/burnt_states()
 	return list()
 
 /turf/open/floor/Destroy()
@@ -105,6 +84,8 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
+	return FALSE
+
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		return 1
@@ -120,29 +101,6 @@
 	if(!istype(T))
 		return
 	T.break_tile()
-
-/turf/open/floor/break_tile()
-	if(broken)
-		return
-	broken = TRUE
-	update_appearance()
-
-/turf/open/floor/burn_tile()
-	if(burnt)
-		return
-	burnt = TRUE
-	update_appearance()
-
-/turf/open/floor/update_overlays()
-	. = ..()
-	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states()))
-	else if(burnt)
-		var/list/burnt_states = burnt_states()
-		if(burnt_states.len)
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
-		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
@@ -255,49 +213,57 @@
 				src, RCD_MEMORY_WALL,
 			)
 		if(RCD_REFLECTOR)
-			return list("mode" = RCD_REFLECTOR, "delay" = 20, "cost" = 30)
+			return list("mode" = RCD_REFLECTOR, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
-				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
+				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 20)
 			else
-				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 16)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
+			//default cost for building a grill for fulltile windows
+			var/cost = 4
+			var/delay = 1 SECONDS
+			if(the_rcd.window_type  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
 			return rcd_result_with_memory(
-				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
+				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
 				src, RCD_MEMORY_WINDOWGRILLE,
 			)
 		if(RCD_MACHINE)
-			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
+			return list("mode" = RCD_MACHINE, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_COMPUTER)
-			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+			return list("mode" = RCD_COMPUTER, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_FLOODLIGHT)
-			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
+			return list("mode" = RCD_FLOODLIGHT, "delay" = 3 SECONDS, "cost" = 20)
+		if(RCD_GIRDER)
+			return list("mode" = RCD_GIRDER, "delay" = 1.3 SECONDS, "cost" = 8)
 		if(RCD_FURNISHING)
 			var/cost = 0
 			var/delay = 0
 			if(the_rcd.furnish_type == /obj/structure/chair || the_rcd.furnish_type == /obj/structure/chair/stool)
-				cost = 8
-				delay = 10
+				cost = 4
+				delay = 1 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
 				cost = 4
-				delay = 5
-			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
-				cost = 4
-				delay = 5
+				delay = 0.5 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/table)
-				cost = 15
-				delay = 20
+				cost = 8
+				delay = 2 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/table/glass)
-				cost = 12
-				delay = 15
+				cost = 8
+				delay = 2 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/rack)
-				cost = 20
-				delay = 25
+				cost = 4
+				delay = 2.5 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/bed)
-				cost = 10
-				delay = 15
+				cost = 8
+				delay = 1.5 SECONDS
 			if(cost == 0)
 				return FALSE
 			return list("mode" = RCD_FURNISHING, "delay" = cost, "cost" = delay)
@@ -377,6 +343,21 @@
 				return FALSE
 			return TRUE
 		if(RCD_WINDOWGRILLE)
+			//check if we are building a window
+			var/obj/structure/window/window_path = the_rcd.window_type
+			if(!ispath(window_path))
+				CRASH("Invalid window path type in RCD: [window_path]")
+
+			//allow directional windows to be built without grills
+			if(!initial(window_path.fulltile))
+				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+				var/obj/structure/window/WD = new the_rcd.window_type(src, user.dir)
+				WD.set_anchored(TRUE)
+				return TRUE
+
+			//build grills to deal with full tile windows
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
 			var/obj/structure/grille/new_grille = new(src)
@@ -406,6 +387,11 @@
 			new_floodlight.desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
 			new_floodlight.icon_state = "floodlight_c3"
 			new_floodlight.state = FLOODLIGHT_NEEDS_LIGHTS
+			return TRUE
+		if(RCD_GIRDER)
+			if(locate(/obj/structure/girder) in src)
+				return FALSE
+			new /obj/structure/girder(src)
 			return TRUE
 		if(RCD_FURNISHING)
 			if(locate(the_rcd.furnish_type) in src)

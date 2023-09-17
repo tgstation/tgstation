@@ -54,8 +54,8 @@
 /obj/machinery/smoke_machine/RefreshParts()
 	. = ..()
 	var/new_volume = REAGENTS_BASE_VOLUME
-	for(var/datum/stock_part/matter_bin/B in component_parts)
-		new_volume += REAGENTS_BASE_VOLUME * B.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		new_volume += REAGENTS_BASE_VOLUME * matter_bin.tier
 	if(!reagents)
 		create_reagents(new_volume, INJECTABLE)
 	reagents.maximum_volume = new_volume
@@ -63,11 +63,11 @@
 		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
 	efficiency = 18
-	for(var/datum/stock_part/capacitor/C in component_parts)
-		efficiency += 2 * C.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		efficiency += 2 * capacitor.tier
 	max_range = 1
-	for(var/datum/stock_part/manipulator/M in component_parts)
-		max_range += M.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		max_range += servo.tier
 	max_range = max(3, max_range)
 
 /obj/machinery/smoke_machine/on_set_is_operational(old_value)
@@ -103,7 +103,7 @@
 	add_fingerprint(user)
 	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return

@@ -34,7 +34,7 @@
 		if(WIRE_INTERFACE)
 			mod.interface_break = !mod.interface_break
 
-/datum/wires/mod/on_cut(wire, mend)
+/datum/wires/mod/on_cut(wire, mend, source)
 	var/obj/item/mod/control/mod = holder
 	switch(wire)
 		if(WIRE_HACK)
@@ -54,4 +54,9 @@
 	var/obj/item/mod/control/mod = holder
 	if(!issilicon(usr) && mod.seconds_electrified && mod.shock(usr))
 		return FALSE
+	return ..()
+
+/datum/wires/mod/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
 	return ..()

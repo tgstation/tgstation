@@ -78,8 +78,6 @@
 /area/centcom/central_command_areas/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
 
 /area/centcom/central_command_areas/supplypod/pod_storage
 	name = "Supplypod Storage"
@@ -122,16 +120,10 @@
 /area/centcom/tdome
 	name = "Thunderdome"
 	icon_state = "thunder"
-	static_lighting = TRUE
-	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
 
 /area/centcom/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
 
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"

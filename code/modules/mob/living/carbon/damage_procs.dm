@@ -1,4 +1,4 @@
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -114,13 +114,13 @@
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be done
  * * maximum - currently an arbitrarily large number, can be set so as to limit damage
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
+ * * required_organ_flag - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organtype)
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	affected_organ.apply_organ_damage(amount, maximum)
 
@@ -131,13 +131,13 @@
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be set to
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
+ * * required_organ_flag - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/setOrganLoss(slot, amount, required_organtype)
+/mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	if(affected_organ.damage == amount)
 		return

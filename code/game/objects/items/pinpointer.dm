@@ -13,7 +13,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
@@ -140,7 +140,7 @@
 
 		while(crewmember_name in name_counts)
 			name_counts[crewmember_name]++
-			crewmember_name = text("[] ([])", crewmember_name, name_counts[crewmember_name])
+			crewmember_name = "[crewmember_name] ([name_counts[crewmember_name]])"
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
@@ -199,7 +199,7 @@
 	B.other_pair = A
 
 /obj/item/pinpointer/shuttle
-	name = "fugitive pinpointer"
+	name = "bounty shuttle pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
 	worn_icon_state = "pinpointer_black"
@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	worn_icon_state = "pinpointer_black"
 
 /obj/item/pinpointer/material_sniffer/scan_for_target()
-	if(target)
+	if(target || !GLOB.sniffable_sheets.len)
 		return
 	var/obj/item/stack/sheet/new_sheet_target
 	var/closest_distance = INFINITY

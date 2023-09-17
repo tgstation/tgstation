@@ -37,15 +37,12 @@
 	wheels_overlay = image(icon, overlay_icon, ABOVE_MOB_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
 	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
+	AddElement(/datum/element/noisy_movement, volume = 75)
 
 /obj/vehicle/ridden/wheelchair/atom_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
-
-/obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
@@ -88,7 +85,7 @@
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
 	armor_type = /datum/armor/wheelchair_gold
-	custom_materials = list(/datum/material/gold = 10000)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
 	foldabletype = /obj/item/wheelchair/gold
 
 /obj/item/wheelchair
@@ -101,7 +98,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	custom_materials = list(/datum/material/iron = 10000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5)
 	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
@@ -115,7 +112,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
-	custom_materials = list(/datum/material/gold = 10000)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /datum/armor/wheelchair_gold

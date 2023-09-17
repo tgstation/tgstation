@@ -75,7 +75,7 @@
 			to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
 			log_combat(user, src, "disarmed")
 		else
-			var/damage = rand(15, 30)
+			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You slash at [src]!"))
@@ -131,12 +131,10 @@
 		return TRUE
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+	. = ..()
+	if(!. || QDELETED(src))
 		return FALSE
 
-	. = ..()
-	if(QDELETED(src))
-		return
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			ex_act_devastate()
@@ -144,6 +142,8 @@
 			ex_act_heavy()
 		if (EXPLODE_LIGHT)
 			ex_act_light()
+
+	return TRUE
 
 /// Called when a devastating explosive acts on this mob
 /mob/living/simple_animal/proc/ex_act_devastate()

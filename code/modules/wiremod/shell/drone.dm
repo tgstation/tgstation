@@ -5,7 +5,7 @@
  */
 /mob/living/circuit_drone
 	name = "drone"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_medium_med"
 	maxHealth = 300
 	health = 300

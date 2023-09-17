@@ -8,7 +8,7 @@
  **/
 /obj/item/robot_model
 	name = "Default"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	inhand_icon_state = "electronic"
@@ -166,6 +166,8 @@
  * Pulls from the charger's silo connection, or fails otherwise.
  */
 /obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -175,18 +177,19 @@
 		charger.sendmats = FALSE
 		return
 
-	for(var/datum/robot_energy_storage/storage_datum in storages)
+	for(var/datum/robot_energy_storage/material/storage_datum in storages)
 		if(storage_datum.renewable == TRUE) //Skipping renewables, already handled in respawn_consumable()
 			continue
 		if(storage_datum.max_energy == storage_datum.energy) //Skipping full
 			continue
-		var/to_stock = min(storage_datum.max_energy / 8, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
+		var/restock_divisor = 8 - charger.repairs //Piggybacking here to avoid part checks every cycle. Repair tiers are 0 through 3, so this value will be 8 through 5. Lower means quicker restocking.
+
+		var/to_stock = min(storage_datum.max_energy / restock_divisor, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -1, "units", list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
@@ -228,6 +231,9 @@
 	return new_model
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	if(HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
+		robot.balloon_alert(robot, "can't transform right now!")
+		return FALSE
 	if(islist(borg_skins) && !forced)
 		var/mob/living/silicon/robot/cyborg = loc
 		var/list/reskin_icons = list()
@@ -261,7 +267,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
-		cyborg.hat = null
+
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
@@ -270,8 +276,9 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	sleep(0.1 SECONDS)
 	flick("[cyborg_base_icon]_transform", cyborg)
-	cyborg.notransform = TRUE
+	ADD_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	if(locked_transform)
+		cyborg.ai_lockdown = TRUE
 		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
@@ -280,9 +287,10 @@
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
+	cyborg.ai_lockdown = FALSE
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
-	cyborg.notransform = FALSE
+	REMOVE_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	cyborg.updatehealth()
 	cyborg.update_icons()
 	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)
@@ -315,7 +323,7 @@
 		/obj/item/stamp/clown,
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
-		/obj/item/paint/anycolor,
+		/obj/item/paint/anycolor/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material
@@ -657,7 +665,7 @@
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
-		/obj/item/roller/robo,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
@@ -780,24 +788,26 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/rsf,
+		/obj/item/storage/bag/tray,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
-		/obj/item/storage/bag/tray,
-		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
-		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		/obj/item/reagent_containers/cup/rag,
+		/obj/item/storage/bag/money,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -862,11 +872,14 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/roller/robo,
+		/obj/item/bonesetter,
+		/obj/item/blood_filter,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/bone_gel,
 		/obj/item/gun/medbeam,
 		/obj/item/borg/apparatus/organ_storage,
 	)
@@ -935,7 +948,7 @@
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 
 // ------------------------------------------ Storages
@@ -946,14 +959,13 @@
 	var/energy
 	///Whether this resource should refill from the aether inside a charging station.
 	var/renewable = TRUE
-	var/datum/material/mat_type
 
 /datum/robot_energy_storage/New(obj/item/robot_model/model)
 	energy = max_energy
 	if(model)
 		model.storages |= src
 		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-		RegisterSignal(model, COMSIG_PARENT_QDELETING, PROC_REF(unregister_from_model))
+		RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
 /datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
 	SIGNAL_HANDLER
@@ -977,14 +989,22 @@
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)
 
-/datum/robot_energy_storage/iron
-	name = "Iron Synthesizer"
+/datum/robot_energy_storage/material
+	name = "generic material storage"
 	renewable = FALSE
+	///The type of materials we should pull when restocking
+	var/datum/material/mat_type
+
+/datum/robot_energy_storage/material/New(obj/item/robot_model/model)
+	max_energy = 60 * SHEET_MATERIAL_AMOUNT
+	return ..()
+
+/datum/robot_energy_storage/material/iron
+	name = "Iron Synthesizer"
 	mat_type = /datum/material/iron
 
-/datum/robot_energy_storage/glass
+/datum/robot_energy_storage/material/glass
 	name = "Glass Synthesizer"
-	renewable = FALSE
 	mat_type = /datum/material/glass
 
 /datum/robot_energy_storage/wire

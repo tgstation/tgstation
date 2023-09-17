@@ -200,6 +200,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 			devices -= devices_filter
 
 /obj/proc/receive_signal(datum/signal/signal)
+	set waitfor = FALSE
 	return
 
 /datum/signal

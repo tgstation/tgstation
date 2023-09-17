@@ -46,32 +46,32 @@
 	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_REFRESH_ORGANS)
 
 // The best stuff there is. For testing/debugging.
-/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
+/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_waterlevel(round(volume))
+	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,5))
 	mytray.adjust_weedlevel(-rand(1,5))
-	if(chems.has_reagent(type, 3))
-		switch(rand(100))
-			if(66  to 100)
-				mytray.mutatespecie()
-			if(33 to 65)
-				mytray.mutateweed()
-			if(1   to 32)
-				mytray.mutatepest(user)
-			else
-				if(prob(20))
-					mytray.visible_message(span_warning("Nothing happens..."))
+	if(volume < 3)
+		return
+
+	switch(rand(100))
+		if(66 to 100)
+			mytray.mutatespecie()
+		if(33 to 65)
+			mytray.mutateweed()
+		if(1 to 32)
+			mytray.mutatepest(user)
+		else
+			if(prob(20))
+				mytray.visible_message(span_warning("Nothing happens..."))
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.heal_bodypart_damage(5 * REM * seconds_per_tick, 5 * REM * seconds_per_tick, 0, FALSE, affected_bodytype)
 	affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, TRUE, affected_biotype)
 	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
 	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
 	name = "Quantum Medicine"
@@ -120,6 +120,25 @@
 		. = TRUE
 	..()
 
+/datum/reagent/medicine/sansufentanyl
+	name = "Sansufentanyl"
+	description = "Temporary side effects include - nausea, dizziness, impaired motor coordination."
+	color = "#07e4d1"
+	ph = 6.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_confusion_up_to(3 SECONDS * REM * seconds_per_tick, 5 SECONDS)
+	affected_mob.adjust_dizzy_up_to(6 SECONDS * REM * seconds_per_tick, 12 SECONDS)
+	affected_mob.adjustStaminaLoss(1 * REM * seconds_per_tick)
+
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, "You feel confused and disoriented.")
+		if(prob(30))
+			SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
+	..()
+	return TRUE
+
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
@@ -149,12 +168,9 @@
 	return TRUE
 
 // Healing
-/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
-	mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
+/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 3))
+	mytray.adjust_toxic(-round(volume * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -247,6 +263,14 @@
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/spaceacillin/on_mob_add(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+
+/datum/reagent/medicine/spaceacillin/on_mob_delete(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
 /datum/reagent/medicine/oxandrolone
@@ -324,7 +348,7 @@
 	color = "#6D6374"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustBruteLoss(-0.25 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -357,6 +381,10 @@
 /datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
 	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.3
+	burn_wound.flesh_healing += 0.5
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -474,6 +502,7 @@
 		affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, required_biotype = affected_biotype)
 
 	..()
+	return TRUE
 
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
@@ -704,20 +733,22 @@
 	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
-		eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
-		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
-			// While healing, gives some eye blur
-			if(affected_mob.is_blind_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
-				affected_mob.adjust_eye_blur(20 SECONDS)
-			else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
-				affected_mob.adjust_eye_blur(5 SECONDS)
+	if(isnull(eyes))
+		return ..()
 
-	return ..()
+	// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+	eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
+	// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+	if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		// While healing, gives some eye blur
+		if(affected_mob.is_blind_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
+			affected_mob.adjust_eye_blur(20 SECONDS)
+		else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+			affected_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..() || TRUE
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
@@ -757,6 +788,7 @@
 		return ..()
 	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
 	..()
+	return TRUE
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
@@ -829,7 +861,7 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
 		..()
-		return
+		return FALSE
 	if(affected_mob.health <= affected_mob.crit_threshold)
 		affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -845,7 +877,7 @@
 	affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
-	..()
+	return ..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
@@ -880,6 +912,7 @@
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
+	chemical_flags = NONE
 
 /datum/reagent/medicine/strange_reagent/New()
 	. = ..()
@@ -888,10 +921,7 @@
 		description += " It appears to be pulsing with a warm pink light."
 
 // FEED ME SEYMOUR
-/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
+/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.spawnplant()
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead
@@ -963,7 +993,8 @@
 	var/damage_at_random = rand(0, 250)/100 //0 to 2.5
 	affected_mob.adjustBruteLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
@@ -978,8 +1009,9 @@
 	inverse_chem_val = 0.45
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
+	return TRUE
 
 //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
 /datum/reagent/medicine/mannitol/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -1044,7 +1076,7 @@
 	..()
 
 /datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1152,7 +1184,7 @@
 	reagent_state = LIQUID
 	color = "#A4D8D8"
 	ph = 8.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.losebreath >= 5)
@@ -1175,9 +1207,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = "#CC22FF"
-	exposed_human.facial_hair_color = "#CC22FF"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_haircolor(color, update = FALSE)
+	exposed_human.set_haircolor(color, update = TRUE)
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -1209,7 +1240,7 @@
 /datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) //wtb flavortext messages that hint that you're vomitting up robots
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(type, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
-		affected_mob.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
+		affected_mob.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/nanites, lost_nutrition = 20) // nanite safety protocols make your body expel them to prevent harmies
 	..()
 	. = TRUE
 
@@ -1231,7 +1262,7 @@
 		affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustCloneLoss(-0.1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, affected_organtype) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, affected_organ_flags) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	else
 		affected_mob.adjustBruteLoss(-5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype) //slow to start, but very quick healing once it gets going
 		affected_mob.adjustFireLoss(-5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -1240,7 +1271,7 @@
 		affected_mob.adjustCloneLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * seconds_per_tick, 1 MINUTES)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, 150, affected_organtype)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, 150, affected_organ_flags)
 		if(SPT_PROB(5, seconds_per_tick))
 			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
@@ -1302,7 +1333,7 @@
 		affected_mob.adjust_hallucinations(-10 SECONDS * REM * seconds_per_tick)
 
 	if(SPT_PROB(10, seconds_per_tick))
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, affected_organtype)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, affected_organ_flags)
 	affected_mob.adjustStaminaLoss(2.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
@@ -1520,7 +1551,7 @@
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 	..()
 
 /datum/reagent/medicine/silibinin
@@ -1532,7 +1563,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -2 * REM * seconds_per_tick, required_organtype = affected_organtype)//Add a chance to cure liver trauma once implemented.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)//Add a chance to cure liver trauma once implemented.
 	..()
 	. = TRUE
 
@@ -1548,7 +1579,7 @@
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25 * REM * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjustBruteLoss(-0.35 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	return TRUE
 
@@ -1556,12 +1587,12 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
-	exposed_human.hair_color = "#9922ff"
-	exposed_human.facial_hair_color = "#9922ff"
+	exposed_human.set_facial_haircolor("#9922ff", update = FALSE)
+	exposed_human.set_haircolor(color, update = TRUE)
 	exposed_human.update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	..()
 	. = TRUE
 
@@ -1583,7 +1614,7 @@
 
 /datum/reagent/medicine/granibitaluri/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = TRUE
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjustToxLoss(0.2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype) //Only really deadly if you eat over 100u
 	..()
 
@@ -1696,3 +1727,21 @@
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
 	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
+
+/datum/reagent/medicine/ondansetron
+	name = "Ondansetron"
+	description = "Prevents nausea and vomiting. May cause drowsiness and wear."
+	reagent_state = LIQUID
+	color = "#74d3ff"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 10.6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(8, seconds_per_tick))
+		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
+		M.adjustStaminaLoss(10)
+		. = TRUE
+	M.adjust_disgust(-10 * REM * seconds_per_tick)

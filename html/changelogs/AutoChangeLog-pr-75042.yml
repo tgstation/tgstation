@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Birdshot's observers now spawn on-station."
-  - bugfix: "Birdshot's EVA door now properly works."
-  - bugfix: "Birdshot now has a few extra rooms connected to the station's distro (atmos canister storage, medical coldroom)"

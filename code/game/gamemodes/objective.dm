@@ -94,6 +94,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/check_completion()
 	return completed
 
+/// Provides a string describing what a good job you did or did not do
+/datum/objective/proc/get_roundend_success_suffix()
+	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
+
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
 	if(!islist(dupe_search_range))
 		stack_trace("Non-list passed as duplicate objective search range")
@@ -170,7 +174,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/obj/equipment_path as anything in special_equipment)
 				var/obj/equipment_object = new equipment_path
-				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots, indirect_action = TRUE))
 					LAZYINITLIST(receiver.failed_special_equipment)
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
@@ -578,12 +582,6 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/get_target()
 	return steal_target
 
-/datum/objective/steal/New()
-	..()
-	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		for(var/I in subtypesof(/datum/objective_item/steal))
-			new I
-
 /datum/objective/steal/find_target(dupe_search_range, list/blacklist)
 	var/list/datum/mind/owners = get_owners()
 	if(!dupe_search_range)
@@ -709,6 +707,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/protect_object/proc/set_target(obj/O)
 	protect_target = O
+	RegisterSignal(protect_target, COMSIG_QDELETING, PROC_REF(on_objective_qdel))
 	update_explanation_text()
 
 /datum/objective/protect_object/update_explanation_text()
@@ -719,7 +718,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 		explanation_text = "Free objective."
 
 /datum/objective/protect_object/check_completion()
-	return !QDELETED(protect_target)
+	return !isnull(protect_target)
+
+/datum/objective/protect_object/proc/on_objective_qdel()
+	SIGNAL_HANDLER
+	protect_target = null
 
 //Changeling Objectives
 
@@ -930,7 +933,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				continue
 			//this is an objective item
 			var/obj/item/organ/wanted = stolen
-			if(!(wanted.organ_flags & ORGAN_FAILING) && !(wanted.organ_flags & ORGAN_SYNTHETIC))
+			if(!(wanted.organ_flags & ORGAN_FAILING) && !IS_ROBOTIC_ORGAN(wanted))
 				stolen_count++
 	return stolen_count >= amount
 
@@ -943,6 +946,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
+
+/datum/objective/custom/get_roundend_success_suffix()
+	return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
 
 //Ideally this would be all of them but laziness and unusual subtypes
 /proc/generate_admin_objective_list()

@@ -76,7 +76,7 @@
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
 	desc = "The pen is mightier than the sword."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -171,8 +171,8 @@
 
 	return TRUE
 
-/obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+/obj/item/gun/energy/plasmacutter/use(used)
+	return (!QDELETED(cell) && cell.use(used ? used * charge_weld : charge_weld))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 
@@ -286,16 +286,18 @@
 	p_orange.link_portal(p_blue)
 	p_blue.link_portal(p_orange)
 
-/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
-	if(istype(W, /obj/projectile/beam/wormhole/orange))
+/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/wormhole_beam, turf/target)
+	var/obj/effect/portal/new_portal = new /obj/effect/portal(target, 300, null, FALSE, null)
+	RegisterSignal(new_portal, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
+	if(istype(wormhole_beam, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
-		p_orange = P
-		P.icon_state = "portal1"
+		p_orange = new_portal
+		new_portal.icon_state = "portal1"
+		new_portal.set_light_color(COLOR_MOSTLY_PURE_ORANGE)
+		new_portal.update_light()
 	else
 		qdel(p_blue)
-		p_blue = P
+		p_blue = new_portal
 	crosslink()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted

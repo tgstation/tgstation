@@ -13,7 +13,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "h" = (
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_x = -10;
 	pixel_y = -6
 	},
@@ -42,7 +42,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "r" = (
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_x = -7;
 	pixel_y = 4
 	},

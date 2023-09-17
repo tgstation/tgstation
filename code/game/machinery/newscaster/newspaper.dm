@@ -1,7 +1,7 @@
 /obj/item/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "newspaper"
 	inhand_icon_state = "newspaper"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
@@ -28,7 +28,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/reagent_containers/cup/glass/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
-	W.reagents.trans_to(H, W.reagents.total_volume, transfered_by = user)
+	W.reagents.trans_to(H, W.reagents.total_volume, transferred_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!"))
 	return TOXLOSS
 

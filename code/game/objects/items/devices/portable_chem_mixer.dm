@@ -25,6 +25,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/condiment,
 	))
@@ -36,6 +37,8 @@
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
 	if(severity > EXPLODE_LIGHT)
 		return ..()
+
+	return FALSE
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
 	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
@@ -86,7 +89,10 @@
 	update_appearance()
 
 /obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
-	atom_storage.locked = !atom_storage.locked
+	if(atom_storage.locked)
+		atom_storage.locked = STORAGE_NOT_LOCKED
+	else
+		atom_storage.locked = STORAGE_FULLY_LOCKED
 	if (!atom_storage.locked)
 		update_contents()
 	if (atom_storage.locked)

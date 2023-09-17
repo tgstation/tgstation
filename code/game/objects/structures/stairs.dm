@@ -11,6 +11,7 @@
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
+	move_resist = INFINITY
 
 	var/force_open_above = FALSE // replaces the turf above this stair obj with /turf/open/openspace
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
@@ -241,7 +242,7 @@
 			return
 		var/list/material_list = list()
 		if(material.material_type)
-			material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT * 10
+			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
 	return TRUE
 

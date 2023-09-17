@@ -1,5 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - bugfix: "Deep Storage Space Ruin - Fixes atmos alarms never shutting off"
-  - bugfix: "Deep Storage Space Ruin - made the atmos pipenet sane"

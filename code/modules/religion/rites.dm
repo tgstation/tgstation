@@ -221,7 +221,7 @@
 	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
-		vomitorium.vomit()
+		vomitorium.vomit(VOMIT_CATEGORY_DEFAULT)
 		var/datum/dna/dna = vomitorium.has_dna()
 		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
 		dna?.add_mutation(/datum/mutation/human/strong)
@@ -413,7 +413,7 @@
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
 	var/obj/item/ceremonial_blade/blade = new(altar_turf)
-	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = MINERAL_MATERIAL_AMOUNT * 5))
+	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = SHEET_MATERIAL_AMOUNT * 5))
 	return TRUE
 
 /datum/religion_rites/unbreakable

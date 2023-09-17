@@ -180,7 +180,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "Q" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)

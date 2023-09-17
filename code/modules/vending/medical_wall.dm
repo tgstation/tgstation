@@ -13,8 +13,8 @@
 		/obj/item/reagent_containers/medigel/libital = 2,
 		/obj/item/reagent_containers/medigel/aiuri = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/healthanalyzer/wound = 2,
-		/obj/item/stack/medical/bone_gel/four = 2,
+		/obj/item/healthanalyzer/simple = 2,
+		/obj/item/stack/medical/bone_gel = 2,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 2,

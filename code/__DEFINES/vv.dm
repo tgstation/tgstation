@@ -98,6 +98,7 @@
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_EDIT_PARTICLES "edit_particles"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
+#define VV_HK_TEST_MATRIXES "test_matrixes"
 #define VV_HK_ADD_AI "add_ai"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
@@ -159,3 +160,8 @@
 #define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
 
 #define VV_HK_WEAKREF_RESOLVE "weakref_resolve"
+
+// Flags for debug_variable() that do little things to what we end up rendering
+
+/// ALWAYS render a reduced list, useful for fuckoff big datums that need to be condensed for the sake of client load
+#define VV_ALWAYS_CONTRACT_LIST (1<<0)

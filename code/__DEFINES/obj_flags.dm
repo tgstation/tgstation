@@ -6,14 +6,13 @@
 #define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
 #define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
 #define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
-#define USES_TGUI (1<<5) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define BLOCK_Z_OUT_DOWN (1<<6)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<7) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<8) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<9) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<10) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<11) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<12) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define BLOCK_Z_OUT_DOWN (1<<5)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<6) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
+#define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
+#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
+#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -32,6 +31,7 @@
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, is a lot worse at the job if the target is alive rather than dead
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
@@ -42,6 +42,8 @@
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
 #define NO_BLOOD_ON_ITEM (1 << 20)
+/// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
+#define SKIP_FANTASY_ON_SPAWN (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -75,8 +77,8 @@
 #define LARGE_WORN_ICON (1<<12)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<13)
-/// prevents from placing on plasmaman helmet
-#define PLASMAMAN_HELMET_EXEMPT (1<<14)
+/// prevents from placing on plasmaman helmet or modsuit hat holder
+#define STACKABLE_HELMET_EXEMPT (1<<14)
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<15)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
@@ -98,6 +100,8 @@
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
 /// Currently used to identify valid guns to steal
 #define NOT_A_REAL_GUN (1<<1)
+/// This gun shouldn't be allowed to go in a turret (it probably causes a bug/exploit)
+#define TURRET_INCOMPATIBLE (1<<2)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

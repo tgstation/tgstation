@@ -1,4 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "papers should count cyrillic and other non-ascii characters correctly both server and client-side"

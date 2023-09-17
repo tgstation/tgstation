@@ -27,7 +27,6 @@
 	maxbodytemp = 0
 	wander = 0
 	speed = 0
-	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	sight = SEE_TURFS | SEE_OBJS
@@ -45,7 +44,7 @@
 	unique_name = TRUE
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	dextrous = TRUE
-	dextrous_hud_type = /datum/hud/dextrous/drone
+	hud_type = /datum/hud/dextrous/drone
 	// Going for a sort of pale green here
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35

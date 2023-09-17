@@ -1,4 +1,0 @@
-author: "norsvenska"
-delete-after: True
-changes:
-  - bugfix: "Shuttle Loan event's resupply and hijacking have been separated into two different datums"

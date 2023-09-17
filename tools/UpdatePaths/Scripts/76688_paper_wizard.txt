@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/boss/paper_wizard : /mob/living/basic/paper_wizard{@OLD}
+

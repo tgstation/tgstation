@@ -27,14 +27,14 @@
 
 	remove_duration(rand(4 SECONDS, 6 SECONDS))
 
-/datum/status_effect/drowsiness/tick(seconds_per_tick)
+/datum/status_effect/drowsiness/tick(seconds_between_ticks)
 	// You do not feel drowsy while unconscious or in stasis
 	if(owner.stat >= UNCONSCIOUS || IS_IN_STASIS(owner))
 		return
 
 	// Resting helps against drowsiness
 	// While resting, we lose 4 seconds of duration (2 additional ticks) per tick
-	if(owner.resting && remove_duration(2 * initial(tick_interval)))
+	if(owner.resting && remove_duration(2 * seconds_between_ticks))
 		return
 
 	owner.set_eye_blur_if_lower(4 SECONDS)

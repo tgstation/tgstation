@@ -84,7 +84,7 @@
 		for(var/plane_offset in starting_offset to ending_offset)
 			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
 				continue
-			var/atom/movable/screen/plane_master/instance = new mytype(null, src, plane_offset)
+			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)
 

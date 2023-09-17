@@ -74,6 +74,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
+		/obj/item/spess_knife,
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -89,7 +90,7 @@
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)//This can be changed if this is too much //It's been 5 years
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
@@ -244,6 +245,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -265,12 +267,16 @@
 	))
 
 /obj/item/storage/belt/medical/paramedic
+	name = "EMT belt"
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
@@ -289,6 +295,9 @@
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/ert/PopulateContents()
@@ -296,7 +305,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -474,7 +483,7 @@
 	icon_state = "championbelt"
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
-	custom_materials = list(/datum/material/gold=400)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
@@ -545,7 +554,7 @@
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
 	desc = "A belt used by abductor agents."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
@@ -563,14 +572,14 @@
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
-	icon_state = "grenadebeltold"
+	icon_state = "military"
 	inhand_icon_state = "security"
-	worn_icon_state = "grenadebeltold"
+	worn_icon_state = "military"
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
 	desc = "A tactical assault belt."
-	icon_state = "assaultbelt"
+	icon_state = "assault"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 
@@ -610,11 +619,10 @@
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/empgrenade = 2,
 		/obj/item/grenade/frag = 10,
-		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/syndieminibomb = 2,
@@ -698,13 +706,13 @@
 	atom_storage.max_total_storage = 18
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/a762,
+		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
 	))
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
-	desc = "A dorky fannypack for keeping small items in."
+	desc = "A dorky fannypack for keeping small items in. Concealed enough, or ugly enough to avert their eyes, that others won't see what you put in or take out easily."
 	icon_state = "fannypack_leather"
 	inhand_icon_state = null
 	worn_icon_state = "fannypack_leather"
@@ -715,6 +723,7 @@
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.silent = TRUE
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -783,7 +792,7 @@
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
@@ -826,9 +835,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
@@ -845,6 +854,7 @@
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,

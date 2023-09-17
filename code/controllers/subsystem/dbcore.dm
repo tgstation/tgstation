@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_TICKER
 	wait = 10 // Not seconds because we're running on SS_TICKER
-	runlevels = RUNLEVEL_INIT|RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	init_order = INIT_ORDER_DBCORE
 	priority = FIRE_PRIORITY_DATABASE
 
@@ -34,8 +34,13 @@ SUBSYSTEM_DEF(dbcore)
 	/// Queries pending execution, mapped to complete arguments
 	var/list/datum/db_query/queries_standby = list()
 
+	/// We are in the process of shutting down and should not allow more DB connections
+	var/shutting_down = FALSE
+
 
 	var/connection  // Arbitrary handle returned from rust_g.
+
+	var/db_daemon_started = FALSE
 
 /datum/controller/subsystem/dbcore/Initialize()
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
@@ -73,8 +78,6 @@ SUBSYSTEM_DEF(dbcore)
 			CONFIG_SET(number/pooling_min_sql_connections, min(min_sql_connections, max_sql_connections))
 			CONFIG_SET(number/pooling_max_sql_connections,  max(min_sql_connections, max_sql_connections))
 			log_config("ERROR: POOLING_MAX_SQL_CONNECTIONS ([max_sql_connections]) is set lower than POOLING_MIN_SQL_CONNECTIONS ([min_sql_connections]). Please check your config or the code defaults for sanity")
-
-
 
 /datum/controller/subsystem/dbcore/stat_entry(msg)
 	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
@@ -170,19 +173,31 @@ SUBSYSTEM_DEF(dbcore)
 	connection = SSdbcore.connection
 
 /datum/controller/subsystem/dbcore/Shutdown()
+	shutting_down = TRUE
+	to_chat(world, span_boldannounce("Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
+		//Execute all waiting queries
 		for(var/datum/db_query/query in queries_standby)
-			run_query(query)
+			run_query_sync(query)
+			queries_standby -= query
+		for(var/datum/db_query/query in queries_active)
+			//Finish any remaining active qeries
+			UNTIL(query.process())
+			queries_active -= query
 
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
-			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id)
+			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id),
+			TRUE
 		)
-		query_round_shutdown.Execute()
+		query_round_shutdown.Execute(FALSE)
 		qdel(query_round_shutdown)
+
+	to_chat(world, span_boldannounce("Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	if(IsConnected())
 		Disconnect()
+	stop_db_daemon()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
@@ -225,6 +240,8 @@ SUBSYSTEM_DEF(dbcore)
 
 	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
+
+	start_db_daemon()
 
 	var/user = CONFIG_GET(string/feedback_login)
 	var/pass = CONFIG_GET(string/feedback_password)
@@ -330,7 +347,11 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/ReportError(error)
 	last_error = error
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments)
+/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE)
+	//If the subsystem is shutting down, disallow new queries
+	if(!allow_during_shutdown && shutting_down)
+		CRASH("Attempting to create a new db query during the world shutdown")
+
 	if(IsAdminAdvancedProcCall())
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
@@ -442,6 +463,47 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		. = Query.Execute(async)
 	qdel(Query)
 
+/datum/controller/subsystem/dbcore/proc/start_db_daemon()
+	set waitfor = FALSE
+
+	if (db_daemon_started)
+		return
+
+	db_daemon_started = TRUE
+
+	var/daemon = CONFIG_GET(string/db_daemon)
+	if (!daemon)
+		return
+
+	ASSERT(fexists(daemon), "Configured db_daemon doesn't exist")
+
+	var/list/result = world.shelleo("echo \"Starting ezdb daemon, do not close this window\" && [daemon]")
+	var/result_code = result[1]
+	if (!result_code || result_code == 1)
+		return
+
+	stack_trace("Failed to start DB daemon: [result_code]\n[result[3]]")
+
+/datum/controller/subsystem/dbcore/proc/stop_db_daemon()
+	set waitfor = FALSE
+
+	if (!db_daemon_started)
+		return
+
+	db_daemon_started = FALSE
+
+	var/daemon = CONFIG_GET(string/db_daemon)
+	if (!daemon)
+		return
+
+	switch (world.system_type)
+		if (MS_WINDOWS)
+			var/list/result = world.shelleo("Get-Process | ? { $_.Path -eq '[daemon]' } | Stop-Process")
+			ASSERT(result[1], "Failed to stop DB daemon: [result[3]]")
+		if (UNIX)
+			var/list/result = world.shelleo("kill $(pgrep -f '[daemon]')")
+			ASSERT(result[1], "Failed to stop DB daemon: [result[3]]")
+
 /datum/db_query
 	// Inputs
 	var/connection
@@ -525,12 +587,18 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	. = (status != DB_QUERY_BROKEN)
 	var/timed_out = !. && findtext(last_error, "Operation timed out")
 	if(!. && log_error)
-		log_sql("[last_error] | Query used: [sql] | Arguments: [json_encode(arguments)]")
+		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
+			"query" = sql,
+			"arguments" = json_encode(arguments),
+			"error" = last_error,
+		))
+
 	if(!async && timed_out)
-		log_query_debug("Query execution started at [start_time]")
-		log_query_debug("Query execution ended at [REALTIMEOFDAY]")
-		log_query_debug("Slow query timeout detected.")
-		log_query_debug("Query used: [sql]")
+		logger.Log(LOG_CATEGORY_DEBUG_SQL, "slow query timeout", list(
+			"query" = sql,
+			"start_time" = start_time,
+			"end_time" = REALTIMEOFDAY,
+		))
 		slow_query_check()
 
 /// Sleeps until execution of the query has finished.
@@ -540,12 +608,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 /datum/db_query/process(seconds_per_tick)
 	if(status >= DB_QUERY_FINISHED)
-		return
+		return TRUE // we are done processing after all
 
 	status = DB_QUERY_STARTED
 	var/job_result = rustg_sql_check_query(job_id)
 	if(job_result == RUSTG_JOB_NO_RESULTS_YET)
-		return
+		return FALSE //no results yet
 
 	store_data(json_decode(job_result))
 	return TRUE

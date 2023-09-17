@@ -8,6 +8,8 @@
 #define BORG_MODEL_MEDICAL (1<<3)
 /// Module is compatible with Engineering Cyborg model
 #define BORG_MODEL_ENGINEERING (1<<4)
+/// Module is compatible with Service Cyborg model
+#define BORG_MODEL_SERVICE (1<<5)
 
 /// Module is compatible with Ripley Exosuit models
 #define EXOSUIT_MODULE_RIPLEY (1<<0)

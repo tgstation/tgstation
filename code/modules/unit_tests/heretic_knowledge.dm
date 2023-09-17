@@ -24,12 +24,12 @@
 	while(i < length(list_to_check))
 		var/datum/heretic_knowledge/path_to_create = list_to_check[++i]
 		if(!ispath(path_to_create))
-			TEST_FAIL("Heretic Knowlege: Got a non-heretic knowledge datum (Got: [path_to_create]) in the list knowledges!")
+			TEST_FAIL("Heretic Knowledge: Got a non-heretic knowledge datum (Got: [path_to_create]) in the list knowledges!")
 		var/datum/heretic_knowledge/instantiated_knowledge = new path_to_create()
 		// Next knowledge is a list of typepaths.
 		for(var/datum/heretic_knowledge/next_knowledge as anything in instantiated_knowledge.next_knowledge)
 			if(!ispath(next_knowledge))
-				TEST_FAIL("Heretic Knowlege: [next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
+				TEST_FAIL("Heretic Knowledge: [next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
 				continue
 			if(next_knowledge in list_to_check)
 				continue
@@ -44,7 +44,7 @@
 		// Unreachables is a list of typepaths - all paths that cannot be obtained.
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
-			TEST_FAIL("Heretic Knowlege: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
+			TEST_FAIL("Heretic Knowledge: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
 
 
 /*

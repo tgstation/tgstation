@@ -23,7 +23,7 @@
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 
 /// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown

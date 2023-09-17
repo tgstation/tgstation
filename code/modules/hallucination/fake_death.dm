@@ -1,6 +1,8 @@
 // This hallucinations makes us suddenly think we died, stopping us / changing our hud / sending a fake deadchat message.
 /datum/hallucination/death
 	random_hallucination_weight = 1
+	/// Determines whether we floor them or just immobilize them
+	var/floor_them = TRUE
 
 /datum/hallucination/death/Destroy()
 	if(!QDELETED(hallucinator))
@@ -12,7 +14,11 @@
 	return ..()
 
 /datum/hallucination/death/start()
-	hallucinator.Paralyze(30 SECONDS)
+	if(floor_them)
+		hallucinator.Paralyze(30 SECONDS)
+	else
+		hallucinator.Immobilize(30 SECONDS)
+
 	hallucinator.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
 	hallucinator.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
@@ -72,7 +78,10 @@
 /datum/hallucination/death/proc/wake_up()
 	if(!QDELETED(hallucinator))
 		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
-		hallucinator.SetParalyzed(0 SECONDS)
+		if(floor_them)
+			hallucinator.SetParalyzed(0 SECONDS)
+		else
+			hallucinator.SetImmobilized(0 SECONDS)
 		hallucinator.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
 	if(!QDELETED(src))
@@ -80,6 +89,7 @@
 
 // A subtype of death which plays a dusted animation.
 /datum/hallucination/death/dust
+	floor_them = FALSE
 	/// List of all images we created to convey the effect to the hallucinator (so we can remove them after)
 	var/list/image/created_images
 

@@ -100,7 +100,7 @@
 /datum/status_effect/temporary_blindness/on_remove()
 	owner.cure_blind(id)
 
-/datum/status_effect/temporary_blindness/tick(seconds_per_tick, times_fired)
+/datum/status_effect/temporary_blindness/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
 
@@ -116,7 +116,7 @@
 		return
 
 	// Otherwise add a chance to let them know that it's working
-	else if(SPT_PROB(5, seconds_per_tick))
+	else if(SPT_PROB(5, seconds_between_ticks))
 		var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
 		// "Your blindfold soothes your eyes", for example
 		to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))

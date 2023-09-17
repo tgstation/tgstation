@@ -8,13 +8,13 @@
 	hat_type = "cakehat"
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
-	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/none
 	light_range = 2 //luminosity when on
 	light_system = MOVABLE_LIGHT
 	flags_cover = HEADCOVERSEYES
 	heat = 999
-
+	wound_bonus = 10
+	bare_wound_bonus = 5
 	dog_fashion = /datum/dog_fashion/head
 	hitsound = 'sound/weapons/tap.ogg'
 	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat

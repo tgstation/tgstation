@@ -16,14 +16,28 @@
 	limited_stock = 1 //please don't spam deadchat
 	surplus = 5
 
-/datum/uplink_item/role_restricted/bureaucratic_error_remote
-	name = "Organic Resources Disturbance Inducer"
-	desc = "A device that raises hell in organic resources indirectly. Single use."
+/datum/uplink_item/role_restricted/mail_counterfeit_kit
+	name = "GLA Brand Mail Counterfeit Kit"
+	desc = "A box full of mail counterfeit devices. Devices that actually able to counterfeit NT's mail. Those devices also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also counterfieted mail might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs. \nNothing stops the mail."
+	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
-	limited_stock = 1
-	item = /obj/item/devices/bureaucratic_error_remote
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
+	illegal_tech = FALSE
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/bureaucratic_error
+	name = "Organic Capital Disturbance Virus"
+	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	limited_stock = 1
+	cost = 2
+	restricted = TRUE
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
+
+/datum/uplink_item/role_restricted/bureaucratic_error/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	force_event(/datum/round_event_control/bureaucratic_error, "a syndicate virus")
+	return source
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
@@ -73,7 +87,7 @@
 	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers, this will not unlock their hidden modules."
 	item = /obj/item/mmi/syndie
 	cost = 2
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_CORONER, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
@@ -130,7 +144,7 @@
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
-	restricted_roles = list(JOB_STATION_ENGINEER)
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
@@ -155,7 +169,7 @@
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER, JOB_ROBOTICIST)
 	cost = 5
 	surplus = 50
 

@@ -3,7 +3,7 @@
 	desc = "This port recharges a mech's internal power cell."
 	density = TRUE
 	dir = EAST
-	icon = 'icons/mecha/mech_bay.dmi'
+	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/mech_recharger
 	///Weakref to currently recharging mech on our recharging_turf
@@ -146,7 +146,7 @@
 /obj/machinery/computer/mech_bay_power_console/proc/reconnect()
 	if(recharge_port)
 		return
-	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
+	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1, src)
 	if(!recharge_port)
 		for(var/direction in GLOB.cardinals)
 			var/turf/target = get_step(src, direction)

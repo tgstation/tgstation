@@ -177,7 +177,7 @@
 				id.forceMove(W)
 				W.update_icon()
 		else
-			H.equip_to_slot(id,ITEM_SLOT_ID)
+			H.equip_to_slot(id, ITEM_SLOT_ID)
 
 	else
 		tgui_alert(usr,"Invalid mob")
@@ -299,7 +299,7 @@
 			areas_all.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/APC as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		var/area/A = APC.area
 		if(!A)
 			dat += "Skipped over [APC] in invalid location, [APC.loc]."
@@ -319,7 +319,7 @@
 			areas_with_air_alarm.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/requests_console/RC in GLOB.allConsoles)
+	for(var/obj/machinery/requests_console/RC in GLOB.req_console_all)
 		var/area/A = get_area(RC)
 		if(!A)
 			dat += "Skipped over [RC] in invalid location, [RC.loc].<br>"
@@ -328,7 +328,7 @@
 			areas_with_RC.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/light/L in GLOB.machines)
+	for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 		var/area/A = get_area(L)
 		if(!A)
 			dat += "Skipped over [L] in invalid location, [L.loc].<br>"
@@ -337,7 +337,7 @@
 			areas_with_light.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/light_switch/LS in GLOB.machines)
+	for(var/obj/machinery/light_switch/LS as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light_switch))
 		var/area/A = get_area(LS)
 		if(!A)
 			dat += "Skipped over [LS] in invalid location, [LS.loc].<br>"
@@ -600,6 +600,9 @@
 			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
 		if (I.no_hint)
 			dellog += "<li>No hint: [I.no_hint]</li>"
+		if(LAZYLEN(I.extra_details))
+			var/details = I.extra_details.Join("</li><li>")
+			dellog += "<li>Extra Info: <ul><li>[details]</li></ul>"
 		dellog += "</ul></li>"
 
 	dellog += "</ol>"
@@ -705,6 +708,8 @@
 		themed_names = list()
 		for (var/name in SSmapping.themed_ruins[theme])
 			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
+			if(names[name])
+				name = "[theme] [name]"
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
@@ -882,6 +887,25 @@
 		<h3>second_queue</h3>
 		[second_queue]
 	"}, "window=check_timer_sources;size=700x700")
+
+/// A debug verb to try and re-establish a connection with the TTS server and to refetch TTS voices.
+/// Since voices are cached beforehand, this is unlikely to update preferences.
+/client/proc/reestablish_tts_connection()
+	set category = "Debug"
+	set name = "Re-establish Connection To TTS"
+	set desc = "Re-establishes connection to the TTS server if possible"
+	if (!check_rights(R_DEBUG))
+		return
+
+	message_admins("[key_name_admin(usr)] attempted to re-establish connection to the TTS HTTP server.")
+	log_admin("[key_name(usr)] attempted to re-establish connection to the TTS HTTP server.")
+	var/success = SStts.establish_connection_to_tts()
+	if(!success)
+		message_admins("[key_name_admin(usr)] failed to re-established the connection to the TTS HTTP server.")
+		log_admin("[key_name(usr)] failed to re-established the connection to the TTS HTTP server.")
+		return
+	message_admins("[key_name_admin(usr)] successfully re-established the connection to the TTS HTTP server.")
+	log_admin("[key_name(usr)] successfully re-established the connection to the TTS HTTP server.")
 
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()

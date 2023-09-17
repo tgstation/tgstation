@@ -21,7 +21,6 @@ type Category = {
 };
 
 type Recipe = {
-  index: number;
   icon: string;
   selected: BooleanLike;
   name: string;
@@ -51,25 +50,27 @@ const PlumbingTypeSection = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.recipes.map((recipe) => (
+      {shownCategory?.recipes.map((recipe, index) => (
         <Button
-          key={recipe.index}
+          key={index}
           fluid
           ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
-              id: recipe.index,
+              category: shownCategory.cat_name,
+              id: index,
             })
           }>
           <Box
             inline
             verticalAlign="middle"
+            height="40px"
             mr="20px"
             className={classes(['plumbing-tgui32x32', recipe.icon])}
             style={{
-              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+              transform: 'scale(1.3) translate(9.5%, 11.2%)',
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>
@@ -79,70 +80,44 @@ const PlumbingTypeSection = (props, context) => {
   );
 };
 
-const StaticSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { silo_upgraded } = data;
-  return (
-    <Section>
-      <MatterItem />
-      {silo_upgraded ? <SiloItem /> : ''}
-      <ColorItem space />
-    </Section>
-  );
-};
-
-const LayerSection = (props, context) => {
-  return (
-    <Section>
-      <LayerSelect />
-    </Section>
-  );
-};
-
 const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { layer_icon } = data;
   return (
-    <Section
-      backgroundColor="green"
+    <Box
+      m={1}
+      className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
-        width: '50px',
-        height: '50px',
-      }}>
-      <Box
-        className={classes(['plumbing-tgui32x32', layer_icon])}
-        style={{
-          transform: 'scale(1.5) translate(9%, 9.5%)',
-        }}
-      />
-    </Section>
+        transform: 'scale(2)',
+      }}
+    />
   );
 };
 
 export const PlumbingService = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={480} height={575}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <StaticSection />
+            <Section>
+              <Stack>
+                <Stack.Item>
+                  <ColorItem />
+                  <LayerSelect />
+                  <MatterItem />
+                  {!!silo_upgraded && <SiloItem />}
+                </Stack.Item>
+                <Stack.Item>
+                  <LayerIconSection />
+                </Stack.Item>
+              </Stack>
+            </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <Stack vertical fill>
-                  <Stack.Item>
-                    <LayerSection />
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <LayerIconSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow>
-                <PlumbingTypeSection />
-              </Stack.Item>
-            </Stack>
+            <PlumbingTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>

@@ -7,7 +7,7 @@
 	fill_icon_thresholds = list(0)
 	fill_icon_state = "drinking_glass"
 	volume = 50
-	custom_materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
@@ -64,7 +64,7 @@
 	possible_transfer_amounts = list(15)
 	fill_icon_state = "shot_glass"
 	volume = 15
-	custom_materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_CREW * 0.4
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)
@@ -100,3 +100,12 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full
+	name = "half full glass of water"
+	desc  = "It's a glass of water. It seems half full. Or is it half empty? You're pretty sure it's full of shit."
+	list_reagents = list(/datum/reagent/water = 25)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
+	. = ..()
+	name = "[pick("half full", "half empty")] glass of water"

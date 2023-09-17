@@ -14,7 +14,7 @@ This memorial has been designed for him and any future coders to perish.
 /obj/structure/fluff/arc
 	name = "Tomb of the Unknown Employee"
 	desc = "Here rests an unknown employee\nUnknown by name or rank\nWhose acts will not be forgotten"
-	icon = 'icons/obj/tomb.dmi'
+	icon = 'icons/obj/fluff/tomb.dmi'
 	icon_state = "memorial"
 	density = TRUE
 	anchored = TRUE
@@ -42,4 +42,4 @@ That’s how he would have wanted it.
 	desc = "Awarded for outstanding excellence in paperwork, administration, and bureaucracy."
 	icon_state = "medal_paperwork"
 	medaltype = "medal-gold"
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)

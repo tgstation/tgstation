@@ -29,12 +29,14 @@
 /datum/ai_controller/basic_controller/syndicate/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/syndicate
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/syndicate,
 	)
+
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/syndicate
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate
 
 /datum/ai_behavior/basic_ranged_attack/syndicate
+	action_cooldown = 1 SECONDS
 	required_distance = 5
 
 /datum/ai_controller/basic_controller/syndicate/ranged/burst
@@ -47,7 +49,6 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate_burst
 
 /datum/ai_behavior/basic_ranged_attack/syndicate_burst
-	shots = 3
 	action_cooldown = 3 SECONDS
 
 /datum/ai_controller/basic_controller/syndicate/ranged/shotgunner
@@ -60,8 +61,6 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate_shotgun
 
 /datum/ai_behavior/basic_ranged_attack/syndicate_shotgun
-	shots = 2
-	burst_interval = 0.6 SECONDS
 	action_cooldown = 3 SECONDS
 	required_distance = 1
 
