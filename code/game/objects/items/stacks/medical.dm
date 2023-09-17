@@ -487,4 +487,4 @@
 	stop_bleeding = 0.2
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
-	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
+	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
