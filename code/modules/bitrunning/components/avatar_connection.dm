@@ -108,6 +108,7 @@
 	return_to_old_body()
 
 	hosting_netpod.disconnect_occupant(forced)
+	qdel(src)
 
 /// Triggers whenever the server gets a loot crate pushed to send area
 /datum/component/avatar_connection/proc/on_domain_completed(datum/source, atom/entered)
