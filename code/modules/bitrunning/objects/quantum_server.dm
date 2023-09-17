@@ -514,36 +514,16 @@
 		return FALSE
 
 	generated_domain = new to_load()
+	RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
 	generated_domain.lazy_load()
 
 	return TRUE
 
 /// Loads in necessary map items, sets mutation targets, etc
 /obj/machinery/quantum_server/proc/initialize_map_items()
-	for(var/thing in generated_domain.created_atoms_list)
-		if(isliving(thing)) // so we can mutate them
-			var/mob/living/creature = thing
-
-			if(creature.can_be_cybercop)
-				mutation_candidates += creature
-			continue
-
-		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
-			RegisterSignal(thing, COMSIG_GHOSTROLE_SPAWNED, PROC_REF(on_threat_created))
-			continue
-
-		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
-			var/obj/effect/mob_spawn/corpse/spawner = thing
-			var/mob/living/creature = spawner.mob_ref?.resolve()
-
-			if(!creature?.can_be_cybercop)
-				continue
-
-			mutation_candidates += creature
-			qdel(spawner)
-
 	var/turf/goal_turfs = list()
 	var/turf/crate_turfs = list()
+
 	for(var/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
@@ -694,6 +674,34 @@
 
 	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")
 	examine_text += span_info("It seems to be part of the location designated for retrieving encrypted payloads.")
+
+/// Scans over the inbound created_atoms from lazy templates
+/obj/machinery/quantum_server/proc/on_template_loaded(datum/lazy_template/source, list/created_atoms)
+	SIGNAL_HANDLER
+
+	for(var/thing in created_atoms)
+		if(isliving(thing)) // so we can mutate them
+			var/mob/living/creature = thing
+
+			if(creature.can_be_cybercop)
+				mutation_candidates += creature
+			continue
+
+		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
+			RegisterSignal(thing, COMSIG_GHOSTROLE_SPAWNED, PROC_REF(on_threat_created))
+			continue
+
+		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
+			var/obj/effect/mob_spawn/corpse/spawner = thing
+			var/mob/living/creature = spawner.mob_ref?.resolve()
+
+			if(!creature?.can_be_cybercop)
+				continue
+
+			mutation_candidates += creature
+			qdel(spawner)
+
+	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
 /// Handles when cybercops are summoned into the area or ghosts click a ghost role spawner
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)

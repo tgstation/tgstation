@@ -11,7 +11,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/eighties,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "e" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -30,19 +33,10 @@
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "l" = (
-/obj/structure/railing,
-/obj/effect/turf_decal/siding/dark{
-	dir = 10
+/obj/structure/railing/corner/end{
+	dir = 4
 	},
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/eighties,
-/area/virtual_domain/safehouse)
-"n" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/eighties,
+/turf/open/floor/pod/dark,
 /area/virtual_domain/safehouse)
 "p" = (
 /turf/open/floor/pod,
@@ -58,7 +52,10 @@
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/east,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/eighties,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -203,7 +200,7 @@ i
 "}
 (5,1,1) = {"
 C
-n
+M
 l
 e
 I

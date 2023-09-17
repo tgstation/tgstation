@@ -15,11 +15,11 @@
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "f" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 9
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
 	},
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/vault,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed,
 /area/virtual_domain/safehouse)
 "g" = (
 /obj/effect/spawner/structure/window/ice,
@@ -52,20 +52,20 @@
 /area/virtual_domain/safehouse)
 "o" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 5
-	},
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/vault,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "p" = (
 /obj/structure/railing,
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 6
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/vault,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -90,22 +90,10 @@
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/snowed,
 /area/virtual_domain/safehouse)
 "A" = (
-/obj/structure/railing,
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 10
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/vault,
-/area/virtual_domain/safehouse)
-"B" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -113,6 +101,11 @@
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"B" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/snowed,
 /area/virtual_domain/safehouse)
 "C" = (

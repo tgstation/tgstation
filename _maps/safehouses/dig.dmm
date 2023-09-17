@@ -19,9 +19,8 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/obj/effect/turf_decal/sand/plating,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/plating,
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -79,7 +78,6 @@
 /area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/turf_decal/siding/yellow,
-/obj/structure/railing/corner,
 /obj/effect/decal/remains/xeno,
 /turf/open/misc/asteroid,
 /area/virtual_domain/safehouse)
@@ -95,9 +93,8 @@
 	},
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/sand/plating,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/plating,
+/turf/open/floor/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/landmark/bitrunning/hololadder_spawn,
