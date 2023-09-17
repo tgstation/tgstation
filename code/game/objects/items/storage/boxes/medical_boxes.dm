@@ -142,7 +142,7 @@
 	illustration = null
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_price = PAYCHECK_CREW * 2
+	custom_price = PAYCHECK_CREW * 1.75
 
 /obj/item/storage/box/bandages/Initialize(mapload)
 	. = ..()
