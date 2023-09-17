@@ -682,6 +682,20 @@
 				if(human_bloodbag.stat == DEAD)
 					to_chat(user,span_warning("Only a revive rune can bring back the dead!"))
 					return
+
+				for(var/i in human_bloodbag.all_wounds)
+					var/datum/wound/iter_wound = i
+					var/potential_healing = max(round(uses * 0.5), 0, 50)
+					if(potential_healing < 20)
+						iter_wound.on_cult_heal(potential_healing)
+						to_chat(user,span_danger("You use the last of your blood rites to being to restore [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] wounds as best as you can!"))
+						uses = 0
+						return ..()
+					else
+						iter_wound.on_cult_heal(potential_healing)
+						to_chat(user,span_danger("Your blood rites begin to retore [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] wounds!"))
+						uses -= round(potential_healing)
+
 				if(human_bloodbag.blood_volume < BLOOD_VOLUME_SAFE)
 					var/restore_blood = BLOOD_VOLUME_SAFE - human_bloodbag.blood_volume
 					if(uses*2 < restore_blood)

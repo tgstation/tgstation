@@ -562,6 +562,9 @@
 /datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
 	return
 
+/datum/wound/proc/on_cult_heal(healing_amount)
+	return
+
 /// Sets our blood flow
 /datum/wound/proc/set_blood_flow(set_to)
 	adjust_blood_flow(set_to - blood_flow)

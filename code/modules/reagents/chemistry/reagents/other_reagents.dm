@@ -463,6 +463,11 @@
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/fuel/unholywater/on_mob_metabolize(mob/living/affected_mob)
+	if(IS_CULTIST(affected_mob))
+		ADD_TRAIT(affected_mob, TRAIT_COAGULATING, type)
+	return ..()
+
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
@@ -472,8 +477,20 @@
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
+
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
+
+			var/datum/wound/bloodiest_wound
+
+			for(var/i in affected_mob.all_wounds)
+				var/datum/wound/iter_wound = i
+				if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+					bloodiest_wound = iter_wound
+
+			if(bloodiest_wound)
+				bloodiest_wound.adjust_blood_flow(-2 * REM * seconds_per_tick)
+
 	else  // Will deal about 90 damage when 50 units are thrown
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
 		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, 0)
@@ -482,6 +499,10 @@
 		affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, 0)
 	..()
 	return TRUE
+
+/datum/reagent/fuel/unholywater/on_mob_end_metabolize(mob/living/affected_mob)
+	REMOVE_TRAIT(affected_mob, TRAIT_COAGULATING, type) //We don't cult check here because potentially our imbiber may no longer be a cultist for whatever reason! It doesn't purge holy water, after all!
+	return ..()
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"

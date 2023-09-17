@@ -279,9 +279,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"),
 	)
 
-	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
-	var/mob/living/carbon/human/human_convertee = convertee
-
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
@@ -301,10 +298,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 	to_chat(convertee, span_cultitalic("<b>Assist your new compatriots in their dark dealings. \
 		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
 
+	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
+	var/mob/living/carbon/human/human_convertee = convertee
+
 	if(istype(human_convertee))
 		human_convertee.uncuff()
 		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
 		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
+		for(var/i in human_convertee.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_cult_heal(brutedamage + burndamage * 0.25) //healed for the total damage healed
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name

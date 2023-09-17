@@ -111,6 +111,10 @@
 	. = ..()
 	adjust_blood_flow(-0.025 * reac_volume) // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
 
+/datum/wound/pierce/bleed/on_cult_heal(healing_amount)
+	. = ..()
+	adjust_blood_flow(-0.01 * healing_amount)
+
 /// If someone is using a suture to close this puncture
 /datum/wound/pierce/bleed/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)

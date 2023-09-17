@@ -263,6 +263,9 @@
 /datum/wound/burn/flesh/on_synthflesh(reac_volume)
 	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard
 
+/datum/wound/burn/flesh/on_cult_heal(healing_amount)
+	flesh_healing += healing_amount * 0.25
+
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
 

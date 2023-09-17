@@ -237,6 +237,10 @@
 	. = ..()
 	adjust_blood_flow(-0.075 * reac_volume) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
+/datum/wound/slash/flesh/on_cult_heal(healing_amount)
+	. = ..()
+	adjust_blood_flow(-0.05 * healing_amount)
+
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/flesh/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
