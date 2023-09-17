@@ -167,13 +167,9 @@
 	bite_consumption_mod = 4
 	var/is_ripening = FALSE
 
-/obj/item/food/grown/banana/bunch/Initialize(
-		mapload,
-		starting_reagent_purity = null,
-		no_base_reagents = TRUE,
-		obj/item/seeds/new_seed,
-	)
+/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
+	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
 	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
 

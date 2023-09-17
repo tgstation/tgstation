@@ -145,16 +145,27 @@ handles linking back and forth.
 		if(!check_z_level(M.buffer))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
+
+		var/obj/machinery/ore_silo/new_silo = M.buffer
+		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
 			silo.updateUsrDialog()
 		else if (mat_container)
+			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
+			if(mat_container.total_amount())
+				for(var/datum/material/mat as anything in mat_container.materials)
+					var/mat_amount = mat_container.materials[mat]
+					if(!mat_amount || !new_container.has_space(mat_amount) || !new_container.can_hold_material(mat))
+						continue
+					new_container.materials[mat] += mat_amount
+					mat_container.materials[mat] = 0
 			qdel(mat_container)
-		silo = M.buffer
+		silo = new_silo
 		silo.ore_connected_machines += src
 		silo.updateUsrDialog()
-		mat_container = silo.GetComponent(/datum/component/material_container)
+		mat_container = new_container
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return COMPONENT_BLOCK_TOOL_ATTACK
