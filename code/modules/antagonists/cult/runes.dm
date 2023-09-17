@@ -279,6 +279,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"),
 	)
 
+	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
+	var/mob/living/carbon/human/human_convertee = convertee
+
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
@@ -297,9 +300,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		and something evil takes root.</b>"))
 	to_chat(convertee, span_cultitalic("<b>Assist your new compatriots in their dark dealings. \
 		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
-
-	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
-	var/mob/living/carbon/human/human_convertee = convertee
 
 	if(istype(human_convertee))
 		human_convertee.uncuff()
