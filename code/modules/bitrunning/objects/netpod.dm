@@ -15,10 +15,10 @@
 	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// Holds this to see if it needs to generate a new one
 	var/datum/weakref/avatar_ref
-	/// Mind weakref used to keep track of the original mind
-	var/datum/weakref/occupant_mind_ref
 	/// The linked quantum server
 	var/datum/weakref/server_ref
+	/// Whether we have an ongoing connection
+	var/connected = FALSE
 	/// The amount of brain damage done from force disconnects
 	var/disconnect_damage
 	/// Static list of outfits to select from
@@ -228,7 +228,7 @@
 
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
-	if(isnull(occupant) || state_open || occupant_mind_ref)
+	if(isnull(occupant) || state_open || connected)
 		return
 
 	if(!iscarbon(occupant))
@@ -247,12 +247,12 @@
  *
  * This is the second stage of the process -  if you want to disconn avatars start at the mind first
  */
-/obj/machinery/netpod/proc/disconnect_occupant(datum/mind/receiving, forced = FALSE)
+/obj/machinery/netpod/proc/disconnect_occupant(forced = FALSE)
 	var/mob/living/mob_occupant = occupant
 	if(isnull(occupant) || !isliving(occupant))
 		return
 
-	occupant_mind_ref = null
+	connected = FALSE
 
 	if(mob_occupant.stat == DEAD)
 		open_machine()
@@ -323,7 +323,6 @@
 	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
-	occupant_mind_ref = WEAKREF(neo.mind)
 	current_avatar.AddComponent( \
 		/datum/component/avatar_connection, \
 		old_mind = neo.mind, \
@@ -332,6 +331,8 @@
 		pod = src, \
 		help_text = generated_domain.help_text, \
 	)
+
+	connected = TRUE
 
 /// Finds a server and sets the server_ref
 /obj/machinery/netpod/proc/find_server()
@@ -381,7 +382,7 @@
 /obj/machinery/netpod/proc/on_domain_complete(datum/source, atom/movable/crate, reward_points)
 	SIGNAL_HANDLER
 
-	if(isnull(occupant) || isnull(occupant_mind_ref) || !iscarbon(occupant))
+	if(isnull(occupant) || connected || !iscarbon(occupant))
 		return
 
 	var/mob/living/carbon/player = occupant

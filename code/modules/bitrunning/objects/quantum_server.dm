@@ -624,16 +624,16 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 /// Someone connected via netpod
-/obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_avatar)
+/obj/machinery/quantum_server/proc/on_client_connected(datum/source)
 	SIGNAL_HANDLER
 
-	avatar_connection_refs.Add(new_avatar)
+	avatar_connection_refs.Add(WEAKREF(source))
 
 /// Someone disconnected
-/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_avatar)
+/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source)
 	SIGNAL_HANDLER
 
-	avatar_connection_refs.Remove(old_avatar)
+	avatar_connection_refs.Remove(WEAKREF(source))
 
 /// Being qdeleted - make sure the circuit and connected mobs go with it
 /obj/machinery/quantum_server/proc/on_delete(datum/source)

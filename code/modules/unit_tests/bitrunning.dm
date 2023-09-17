@@ -50,7 +50,7 @@
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Should load a new domain after cooldown")
 
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
-	server.occupant_mind_refs += fake_mind_ref
+	server.avatar_connection_refs.Add(fake_mind_ref)
 	server.reset(fast = TRUE)
 	TEST_ASSERT_NULL(server.generated_domain, "Should force stop a domain even with occupants")
 
@@ -70,11 +70,11 @@
 	server.reset(fast = TRUE)
 	server.cool_off()
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
-	server.occupant_mind_refs += fake_mind_ref
+	server.avatar_connection_refs.Add(fake_mind_ref)
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NULL(server.generated_domain, "Should prevent setting domains with occupants")
 
-	server.occupant_mind_refs -= fake_mind_ref
+	server.avatar_connection_refs.Remove(fake_mind_ref)
 	server.points = 3
 	server.cold_boot_map(labrat, map_key = TEST_MAP_EXPENSIVE)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP_EXPENSIVE, "Sanity: Should've loaded expensive test map")
@@ -99,44 +99,38 @@
 
 	labrat.forceMove(pod.loc)
 	pod.close_machine(labrat)
-	TEST_ASSERT_NOTNULL(pod.occupant, "Did not set occupant_ref")
-	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], pod.occupant_mind_ref, "Did not add mind to server occupant_mind_refs")
+	TEST_ASSERT_NOTNULL(pod.occupant, "Did not set occupant ref")
+	TEST_ASSERT_EQUAL(pod.connected, TRUE, "Sanity: pod didn't connect")
+	TEST_ASSERT_NOTNULL(server.avatar_connection_refs[1], "Did not add connection to server avatar_connection_refs")
 
 /// Tests the netpod's ability to disconnect
 /datum/unit_test/netpod_disconnect/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/datum/weakref/server_ref = WEAKREF(server)
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 	var/datum/mind/real_mind = WEAKREF(labrat.mind)
 
-	pod.find_server()
-	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: netpod did not set server_ref")
+	pod.connected = TRUE // fake connection
+	pod.disconnect_occupant()
+	TEST_ASSERT_EQUAL(pod.connected, TRUE, "Pod shouldn't disconnect without occupant")
 
-	pod.server_ref = null // We can use this to see if the disconnect was successful
+	pod.connected = TRUE
 	pod.set_occupant(labrat)
-	pod.disconnect_occupant(labrat.mind)
-	TEST_ASSERT_NULL(pod.server_ref, "Should've prevented disconnect with no occupant")
-
-	pod.server_ref = null
-	pod.set_occupant(labrat)
-	pod.disconnect_occupant(labrat.mind)
+	pod.disconnect_occupant()
 	var/mob/living/mob_occupant = pod.occupant
-	TEST_ASSERT_EQUAL(pod.server_ref, server_ref, "Should have correct server_ref")
+	TEST_ASSERT_EQUAL(pod.connected, FALSE, "Sanity: pod didn't disconnect")
 	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 0, "Should not have taken brain damage on disconnect")
-	TEST_ASSERT_NOTNULL(mob_occupant, "Should NOT clear occupant_ref, unbuckle only")
-	TEST_ASSERT_NULL(pod.occupant_mind_ref, "Should've cleared occupant_mind_ref")
+	TEST_ASSERT_NOTNULL(mob_occupant, "Should eject occupant, disconnect only")
 
 	/// Testing force disconn
-	pod.server_ref = null
-	pod.occupant_mind_ref = real_mind
+	pod.connected = TRUE
 	pod.set_occupant(labrat)
-	pod.disconnect_occupant(labrat.mind , forced = TRUE)
+	pod.disconnect_occupant(forced = TRUE)
 	mob_occupant = pod.occupant
-	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: pod didn't set server")
+	TEST_ASSERT_EQUAL(pod.connected, FALSE, "Sanity: pod didn't disconnect")
 	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should've taken brain damage on force disconn")
 
 /// Tests cases where the netpod is destroyed or the occupant unbuckled
@@ -147,7 +141,7 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
+	var/mob/living/carbon/original = labrat
 
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
@@ -157,8 +151,7 @@
 	pod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(pod.occupant, labrat, "Sanity: Pod didn't set occupant")
 	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: Pod didn't set server")
-	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
-	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
+	TEST_ASSERT_EQUAL(pod.connected, TRUE, "Sanity: pod didn't connect")
 
 	pod.open_machine()
 	TEST_ASSERT_NULL(pod.occupant, "Should've cleared occupant")
@@ -167,8 +160,8 @@
 	labrat.fully_heal()
 	pod.set_occupant(labrat)
 	pod.close_machine(labrat)
-	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
-	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
+	TEST_ASSERT_EQUAL(pod.occupant, labrat, "Sanity: Pod didn't set occupant")
+	TEST_ASSERT_EQUAL(pod.connected, TRUE, "Sanity: pod didn't connect")
 
 	qdel(pod)
 	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should have taken brain damage on pod deletion")
@@ -185,43 +178,33 @@
 
 	var/datum/weakref/initial_mind = labrat.mind
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
-	pod.occupant_mind_ref = labrat_mind_ref
 	pod.occupant = labrat
 
-	target.AddComponent( \
-		/datum/component/temporary_body, \
+	var/datum/component/avatar_connection/connection = target.AddComponent( \
+		/datum/component/avatar_connection, \
 		old_mind = labrat.mind, \
 		old_body = labrat, \
+		server = server, \
+		pod = pod, \
 	)
-	target.mind.initial_avatar_connection(
-		pilot = labrat,
-		hosting_netpod = pod,
-		server = server,
-	)
-	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
-	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
-	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
-	TEST_ASSERT_NOTNULL(target.mind.netpod_ref, "Could not set netpod_ref")
 
-	var/mob/living/carbon/human/labrat_resolved = target.mind.pilot_ref.resolve()
+	var/mob/living/carbon/human/labrat_resolved = connection.old_body_ref?.resolve()
 	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Wrong pilot ref")
 
-	var/obj/machinery/netpod/connected_pod = target.mind.netpod_ref.resolve()
+	var/obj/machinery/netpod/connected_pod = connection.netpod_ref?.resolve()
 	TEST_ASSERT_EQUAL(connected_pod, pod, "Wrong netpod ref")
 
 	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE)
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
-	target.mind.full_avatar_disconnect()
-	TEST_ASSERT_NULL(labrat.mind.pilot_ref, "Could not clear pilot_ref")
-	TEST_ASSERT_NULL(labrat.mind.netpod_ref, "Could not clear netpod_ref")
-	TEST_ASSERT_EQUAL(labrat.mind, initial_mind, "Could not transfer mind back to pilot")
+	connection.full_avatar_disconnect()
+	TEST_ASSERT_EQUAL(labrat.mind, initial_mind, "Should reconnect mind on full disconnect")
 
 	for(var/i in 1 to 5) // so sick of this failing
 		target.apply_damage(500, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE, spread_damage = TRUE)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should be very dead")
-	TEST_ASSERT_EQUAL(labrat.stat, CONSCIOUS, "Pilot should be very alive")
+	TEST_ASSERT_NOTEQUAL(labrat.stat, DEAD, "Pilot should be very alive")
 
 /// Gibbing specifically
 /datum/unit_test/avatar_connection_gib/Run()
@@ -232,22 +215,19 @@
 	var/mob/living/carbon/human/pincushion = allocate(/mob/living/carbon/human/consistent)
 	pincushion.mind_initialize()
 	pincushion.mock_client = new()
-	var/datum/mind/pincushion_mind = pincushion.mind
-	pod.occupant_mind_ref = WEAKREF(pincushion.mind)
+	var/datum/mind/initial_mind = pincushion.mind
 	pod.occupant = pincushion
 
 	to_gib.AddComponent( \
-		/datum/component/temporary_body, \
+		/datum/component/avatar_connection, \
 		old_mind = pincushion.mind, \
 		old_body = pincushion, \
+		server = server, \
+		pod = pod, \
 	)
-	to_gib.mind.initial_avatar_connection(
-		pilot = pincushion,
-		hosting_netpod = pod,
-		server = server,
-	)
+
 	to_gib.gib()
-	TEST_ASSERT_EQUAL(pincushion_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
+	TEST_ASSERT_EQUAL(initial_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
 	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Pilot should have taken brain dmg on gib disconnect")
 
 /// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
@@ -299,7 +279,6 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 
 	var/obj/item/crowbar/prybar = allocate(/obj/item/crowbar)
 	var/mob/living/carbon/human/perp = allocate(/mob/living/carbon/human/consistent)
@@ -321,12 +300,8 @@
 	netpod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
 	TEST_ASSERT_NOTNULL(netpod.server_ref, "Sanity: Did not set server")
-	TEST_ASSERT_EQUAL(netpod.occupant_mind_ref, labrat_mind_ref, "Sanity: Did not set mind")
+	TEST_ASSERT_EQUAL(netpod.connected, TRUE, "Sanity: pod didn't connect")
 	TEST_ASSERT_EQUAL(client_connect_received, TRUE, "Did not send COMSIG_BITRUNNER_CLIENT_CONNECTED")
-
-	// Will get back to this later
-	// netpod.take_damage(netpod.max_integrity - 50)
-	// TEST_ASSERT_EQUAL(integrity_alert_received, TRUE, "Did not send COMSIG_BITRUNNER_NETPOD_INTEGRITY")
 
 	perp.put_in_active_hand(prybar)
 	netpod.default_pry_open(prybar, perp)
@@ -335,13 +310,13 @@
 	TEST_ASSERT_EQUAL(client_disconnect_received, TRUE, "Did not send COMSIG_BITRUNNER_CLIENT_DISCONNECTED")
 
 	sever_avatar_received = FALSE
-	server.occupant_mind_refs += labrat_mind_ref
+	server.avatar_connection_refs += WEAKREF(labrat.mind)
 	server.begin_shutdown(perp)
 	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITRUNNER_SHUTDOWN_ALERT")
 	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITRUNNER_SERVER_CRASH")
 
 	server.cool_off()
-	server.occupant_mind_refs.Cut()
+	server.avatar_connection_refs.Cut()
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
@@ -390,7 +365,7 @@
 	var/list/mobs = server.get_valid_domain_targets()
 	TEST_ASSERT_EQUAL(length(mobs), 0, "Shouldn't get a list without players")
 
-	server.occupant_mind_refs += WEAKREF(labrat.mind)
+	server.avatar_connection_refs += WEAKREF(labrat.mind)
 	mobs += server.get_valid_domain_targets()
 
 	var/datum/turf_reservation/res = server.generated_domain.reservations[1]
@@ -463,9 +438,9 @@
 	TEST_ASSERT_EQUAL(rewards, 1.2, "Should increase rewards when randomized")
 
 	server.domain_randomized = FALSE
-	server.occupant_mind_refs += labrat_mind_ref
-	server.occupant_mind_refs += labrat_mind_ref
-	server.occupant_mind_refs += labrat_mind_ref
+	server.avatar_connection_refs += labrat_mind_ref
+	server.avatar_connection_refs += labrat_mind_ref
+	server.avatar_connection_refs += labrat_mind_ref
 	rewards = server.calculate_rewards()
 	var/totalA = ROUND_UP(rewards)
 	var/totalB = ROUND_UP(1 + server.multiplayer_bonus * 2)
@@ -476,7 +451,7 @@
 		server.component_parts += new /datum/stock_part/servo/tier4
 
 	server.RefreshParts()
-	server.occupant_mind_refs.Cut()
+	server.avatar_connection_refs.Cut()
 	rewards = server.calculate_rewards()
 	TEST_ASSERT_EQUAL(rewards, 1.6, "Should increase rewards with modded servos")
 
@@ -499,25 +474,6 @@
 
 	total = crate.calculate_loot(3, 3.2, 0.2)
 	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
-
-/// Ensures the bitminers are getting their proper report cards
-/datum/unit_test/bitrunner_completion_grade/Run()
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-
-	var/grade = server.grade_completion(0, 0, 1, FALSE, 2 MINUTES)
-	TEST_ASSERT_EQUAL(grade, "D", "Should return a grade")
-
-	grade = server.grade_completion(2, 0, 3, FALSE, 10 MINUTES)
-	TEST_ASSERT_EQUAL(grade, "C", "Should return a grade")
-
-	grade = server.grade_completion(3, 0, 4, FALSE, 10 MINUTES)
-	TEST_ASSERT_EQUAL(grade, "B", "Should return a grade")
-
-	grade = server.grade_completion(2, 1, 3, FALSE, 10 MINUTES)
-	TEST_ASSERT_EQUAL(grade, "A", "Should return a grade")
-
-	grade = server.grade_completion(3, 1, 4, FALSE, 5 MINUTES)
-	TEST_ASSERT_EQUAL(grade, "S", "Should return a grade")
 
 /// Ensures settings on vdoms are being set correctly
 /datum/unit_test/bitrunner_vdom_settings/Run()

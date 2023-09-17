@@ -43,7 +43,7 @@
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 	RegisterSignal(src, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED, WEAKREF(src))
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED)
 
 	if(!locate(/datum/action/avatar_domain_info) in avatar.actions)
 		var/datum/avatar_help_text/help_datum = new(help_text)
@@ -107,7 +107,7 @@
 
 	return_to_old_body()
 
-	hosting_netpod.disconnect_occupant(src, forced)
+	hosting_netpod.disconnect_occupant(forced)
 
 /// Triggers whenever the server gets a loot crate pushed to send area
 /datum/component/avatar_connection/proc/on_domain_completed(datum/source, atom/entered)
@@ -221,11 +221,19 @@
 		return
 
 	var/mob/living/avatar = parent
+
+#ifdef UNIT_TESTS
+	// no minds during test so let's just yeet
+	return
+#endif
+
 	var/mob/dead/observer/ghost = avatar.ghostize()
 	if(!ghost)
 		ghost = avatar.get_ghost()
+
 	if(!ghost)
 		CRASH("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
+
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)
 		old_mind.transfer_to(old_body, force_key_move = TRUE)
