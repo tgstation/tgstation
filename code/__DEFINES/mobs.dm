@@ -651,20 +651,22 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 34
+#define TOTAL_LAYERS 35
 /// Mutant race multiparts - Lbelly
-#define ACCESSORIES_LAYER 34
+#define ACCESSORIES_LAYER 35
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 33
+#define MUTATIONS_LAYER 34
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 32
+#define BODY_BEHIND_LAYER 33
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 31
+#define BODYPARTS_LOW_LAYER 32
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 30
+#define BODYPARTS_LAYER 31
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 29
-/// Underwear, undershirts, socks, eyes, lips(makeup)
+#define BODY_ADJ_LAYER 30
+// Eyes, lips(makeup)
+#define FACE_LAYER 29
+/// Underwear, undershirts, socks
 #define BODY_LAYER 28
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
 #define FRONT_MUTATIONS_LAYER 27
@@ -748,6 +750,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
+	"[FACE_LAYER]" = UPPER_BODY,
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,

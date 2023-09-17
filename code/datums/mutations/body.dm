@@ -380,8 +380,8 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.resize = 1.25
-	owner.update_transform()
+	//owner.resize = 1.25
+	//owner.update_transform()
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
@@ -390,7 +390,7 @@
 	// REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	// owner.resize = 0.8
 	// owner.update_transform()
-	// owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/spastic
 	name = "Spastic"

@@ -286,5 +286,7 @@
 /mob/living/carbon/human/proc/get_mob_height()
 	if(HAS_TRAIT(src, TRAIT_DWARF))
 		return HUMAN_HEIGHT_DWARF
+	if(HAS_TRAIT(src, TRAIT_GIANT))
+		return HUMAN_HEIGHT_TALLEST
 
 	return mob_height
