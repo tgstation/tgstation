@@ -175,7 +175,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     average: [5000, 7000],
                     bad: [7000, Infinity],
                   }}>
-                  {toFixed(internal_energy_coefficient, 3) + internal_energy_unit}
+                  {toFixed(internal_energy_coefficient, 3) +
+                    internal_energy_unit}
                 </ProgressBar>
               }
               detail={
@@ -209,7 +210,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     average: [1e6, 2e6],
                     bad: [-Infinity, 1e6],
                   }}>
-                  {toFixed(zap_transmission_coefficient, 2) + zap_transmission_unit}
+                  {toFixed(zap_transmission_coefficient, 2) +
+                    zap_transmission_unit}
                 </ProgressBar>
               }
               detail={
