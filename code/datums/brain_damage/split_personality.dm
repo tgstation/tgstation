@@ -240,12 +240,12 @@
 		to_chat(src, span_notice("Your master left you an objective: <b>[objective]</b>. Follow it at all costs when in control."))
 
 /datum/brain_trauma/severe/split_personality/blackout
-	name = "Blackout Drunk"
-	desc = "Patient brain is filled with alcohol and thus formed a new personality temporarily to survive."
-	scan_desc = "complete alcohol takeover"
-	gain_text = span_warning("You feel your consioucness fading...")
-	lose_text = "You have no memory of what happened while blacked out, try to trace your step and find out what happened while your were out."
-	poll_role = "black out character"
+	name = "Alcohol-Induced CNS Impairment"
+	desc = "Patient's CNS has been temporarily impaired by imbibed alcohol, blocking memory formation, and causing reduced cognition and stupefaction."
+	scan_desc = "alcohol-induced CNS impairment"
+	gain_text = span_warning("Crap, that was one drink too many. You black out...")
+	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
+	poll_role = "blacked out drunkard"
 	var/duration = 300 //Should last 5 minute
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
@@ -260,15 +260,15 @@
 	duration--
 
 /mob/living/split_personality/blackout
-	name = "black out character"
-	real_name = "unknown conscience"
+	name = "blacked-out drunkard"
+	real_name = "drunken consciousness"
 
 /mob/living/split_personality/blackout/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("As a blackout character behave like a loose cannon but do not kill anyone, be unpredictable so that when the original self return they will have to backtrack and find out what happened."))
-	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
+	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
+	to_chat(src, span_userdanger("<b>Do not commit suicide or put the body in danger. While you're drunk, you're not suicidal. </b>"))
 
 #undef OWNER
 #undef STRANGER
