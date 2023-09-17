@@ -11,6 +11,7 @@
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner_backseat
+	var/poll_role= "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
@@ -33,7 +34,7 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s split personality?", ROLE_PAI, null, 7.5 SECONDS, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s [poll_role]?", ROLE_PAI, null, 7.5 SECONDS, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -237,6 +238,37 @@
 	to_chat(src, span_notice("Your activation codeword is: <b>[codeword]</b>"))
 	if(objective)
 		to_chat(src, span_notice("Your master left you an objective: <b>[objective]</b>. Follow it at all costs when in control."))
+
+/datum/brain_trauma/severe/split_personality/blackout
+	name = "Blackout Drunk"
+	desc = "Patient brain is filled with alcohol and thus formed a new personality temporarily to survive."
+	scan_desc = "complete alcohol takeover"
+	gain_text = span_warning("You feel your consioucness fading...")
+	lose_text = "You have no memory of what happened while blacked out, try to trace your step and find out what happened while your were out."
+	poll_role = "black out character"
+	var/duration = 300 //Should last 5 minute
+
+/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
+	if(current_controller == OWNER)
+		switch_personalities()
+	if(owner.stat == DEAD)
+		if(current_controller != OWNER)
+			switch_personalities(TRUE)
+		qdel(src)
+	if(duration == 0)
+		qdel(src)
+	duration--
+
+/mob/living/split_personality/blackout
+	name = "black out character"
+	real_name = "unknown conscience"
+
+/mob/living/split_personality/blackout/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+	to_chat(src, span_notice("As a blackout character behave like a loose cannon but do not kill anyone, be unpredictable so that when the original self return they will have to backtrack and find out what happened."))
+	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
 
 #undef OWNER
 #undef STRANGER

@@ -188,8 +188,11 @@
 				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 
 			else
-				to_chat(owner, span_warning("Just a quick nap..."))
-				owner.Sleeping(90 SECONDS)
+				blackout()
+
+/datum/status_effect/inebriated/drunk/proc/blackout()
+	var/mob/living/carbon/drunkyard = owner
+	drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout)
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
