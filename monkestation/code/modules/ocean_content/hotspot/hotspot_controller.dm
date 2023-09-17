@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(hotspots)
 	///the list of all the hotspots generated
 	var/list/generated_hotspots = list()
 	///the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds
-	var/hotspots_to_generate = 43
+	var/hotspots_to_generate = 30
 	///the map_start map icon
 	var/icon/map
 	///the map icon with all the hotspots rendered ontop
