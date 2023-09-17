@@ -94,7 +94,7 @@
 		scanner.balloon_alert_to_viewers("ore vent nearby!")
 		scanner.spasm_animation(1.5 SECONDS)
 	else
-		scanner.matrix.transform = matrix()
+		scanner.transform = matrix()
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE

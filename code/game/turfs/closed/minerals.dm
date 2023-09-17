@@ -30,7 +30,7 @@
 	var/mineralAmt = 3
 	///Holder for the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
-	var/defer_change = 0
+	var/defer_change = FALSE
 	/// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
 	/// How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
@@ -77,16 +77,70 @@
 					M.Change_Ore(mineralType)
 
 /turf/closed/mineral/proc/Change_Ore(ore_type, random = 0)
-	if(random)
-		mineralAmt = rand(1, 5)
+	// if(random)
+	// 	mineralAmt = rand(1, 5)
 	if(ispath(ore_type, /obj/item/stack/ore)) //If it has a scan_state, switch to it
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 	if(ispath(ore_type, /obj/item/boulder))
-		//var/obj/item/boulder/the_boulder = ore_type //see todo
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
 		spawned_boulder = /obj/item/boulder/gulag/volcanic
+
+/turf/closed/mineral/proc/scale_ore_to_vent(ore_type)
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		mineralAmt = rand(1,5)
+		return
+
+	world.log << "Distance to vent: [distance]"
+	if(distance < VENT_PROX_VERY_HIGH)
+		mineralAmt = 5
+		return
+	if(distance < VENT_PROX_HIGH)
+		mineralAmt = 4
+		return
+	if(distance < VENT_PROX_MEDIUM)
+		mineralAmt = 3
+		return
+	if(distance < VENT_PROX_LOW)
+		mineralAmt = 2
+		return
+	if(distance < VENT_PROX_FAR)
+		mineralAmt = 1
+		return
+
+/turf/closed/mineral/proc/prox_to_vent()
+	if(!SSmapping.level_trait(src.z, ZTRAIT_MINING))
+		return 0
+
+	var/distance
+	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+		if(vent.unique_vent)
+			continue
+		if(vent.z != src.z)
+			continue //Silly
+		var/temp_distance = get_dist(src, vent)
+		if(temp_distance > distance)
+			distance = temp_distance
+	return distance
+
+/turf/closed/mineral/proc/proximity_ore_chance()
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		return 0
+
+	if(distance < VENT_PROX_VERY_HIGH)
+		return 82.4
+	if(distance < VENT_PROX_HIGH)
+		return 52.3
+	if(distance < VENT_PROX_MEDIUM)
+		return 30
+	if(distance < VENT_PROX_LOW)
+		return 15
+	if(distance < VENT_PROX_FAR)
+		return 4
+	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -232,7 +286,10 @@
 	var/static/list/mineral_chances_by_type = list()
 
 	. = ..()
-	if (prob(mineralChance))
+	var/dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
+	if(!dynamic_prob)
+		dynamic_prob = mineralChance
+	if (prob(dynamic_prob))
 		var/list/spawn_chance_list = mineral_chances_by_type[type]
 		if (isnull(spawn_chance_list))
 			mineral_chances_by_type[type] = expand_weights(mineral_chances())
@@ -258,6 +315,7 @@
 		else
 			Change_Ore(path, 1)
 			Spread_Vein(path)
+			scale_ore_to_vent(path)
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -330,7 +388,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
 
-	mineralChance = 10
+	mineralChance = 5
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
 	return list(
