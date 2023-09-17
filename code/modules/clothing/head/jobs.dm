@@ -280,7 +280,7 @@
 		return
 
 	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
-	playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	items_by_phrase[input] = item
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
