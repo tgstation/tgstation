@@ -75017,7 +75017,6 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "sLg" = (
-/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "sLx" = (
@@ -83258,6 +83257,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/order_console/bitrunning,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/half{
 	dir = 1
 	},

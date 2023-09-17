@@ -25992,7 +25992,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jty" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -57417,8 +57416,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "uyj" = (
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)

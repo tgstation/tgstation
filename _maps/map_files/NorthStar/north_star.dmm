@@ -5587,6 +5587,9 @@
 /obj/machinery/computer/order_console/bitrunning{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bsu" = (

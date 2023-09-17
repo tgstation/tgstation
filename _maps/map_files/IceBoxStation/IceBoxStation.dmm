@@ -21209,12 +21209,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"gzN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "gzV" = (
 /obj/structure/mineral_door/paperframe{
 	name = "Meditation Room"
@@ -49631,7 +49625,6 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo Bay North"
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -52041,9 +52034,6 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/structure/table,
 /obj/item/hand_labeler,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/item/folder/yellow,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -68421,9 +68411,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/work)
 "veh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vek" = (
@@ -74957,12 +74945,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
-"xdz" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "xdA" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -229160,7 +229142,7 @@ bCQ
 wBb
 tKI
 veh
-gzN
+ajw
 ajw
 ajw
 mmi
@@ -229417,7 +229399,7 @@ yjn
 wBb
 tKI
 pVC
-xdz
+ajw
 kXs
 ajw
 mmi
