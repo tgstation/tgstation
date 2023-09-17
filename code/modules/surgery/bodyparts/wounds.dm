@@ -304,13 +304,16 @@
 /obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/dam_mul = 1 //initial(wound_damage_multiplier)
+	var/dam_mul = 1
 
+	var/any_wound_uses_gauze = FALSE
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/iter_wound as anything in wounds)
 		dam_mul *= iter_wound.damage_multiplier_penalty
+		if (!any_wound_uses_gauze && iter_wound.wound_flags & ACCEPTS_GAUZE)
+			any_wound_uses_gauze = TRUE
 
-	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
+	if(!any_wound_uses_gauze && !LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [parse_zone(body_zone)] falls away."))
 		QDEL_NULL(current_gauze)
 
