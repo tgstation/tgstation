@@ -130,6 +130,7 @@
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return
 
+	. = ..()
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
 		if(!organ_being_healed.damage)
 			continue

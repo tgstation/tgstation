@@ -344,5 +344,79 @@
 	trait_to_give = STATION_TRAIT_BIGGER_PODS
 	blacklist = list(/datum/station_trait/cramped_escape_pods)
 
+/datum/station_trait/medbot_mania
+	name = "Advanced Medbots"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
+	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
+
+/datum/station_trait/random_event_weight_modifier/shuttle_loans
+	name = "Loaner Shuttle"
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 4
+	event_control_path = /datum/round_event_control/shuttle_loan
+	weight_multiplier = 2.5
+	max_occurrences_modifier = 5 //All but one loan event will occur over the course of a round.
+	trait_to_give = STATION_TRAIT_LOANER_SHUTTLE
+
+/datum/station_trait/random_event_weight_modifier/wise_cows
+	name = "Wise Cow Invasion"
+	report_message = "Bluespace harmonic readings show unusual interpolative signals between your sector and agricultural sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 1
+	event_control_path = /datum/round_event_control/wisdomcow
+	weight_multiplier = 3
+	max_occurrences_modifier = 10 //lotta cows
+
+/datum/station_trait/shuttle_sale
+	name = "Shuttle Firesale"
+	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Some of your emergency shuttle options have been discounted!"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 4
+	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
+	show_in_report = TRUE
+
+/datum/station_trait/missing_wallet
+	name = "Misplaced Wallet"
+	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+
+/datum/station_trait/missing_wallet/on_round_start()
+	. = ..()
+
+	var/obj/structure/closet/locker_to_fill = pick(GLOB.roundstart_station_closets)
+
+	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)
+
+	new /obj/item/stack/spacecash/c500(new_wallet)
+	if(prob(25)) //Jackpot!
+		new /obj/item/stack/spacecash/c1000(new_wallet)
+
+	new /obj/item/card/id/advanced/technician_id(new_wallet)
+	new_wallet.refreshID()
+
+	if(prob(35))
+		report_message += " The technician reports they last remember having their wallet around [get_area_name(new_wallet)]."
+
+	message_admins("A missing wallet has been placed in the [locker_to_fill] locker, in the [get_area_name(locker_to_fill)] area.")
+
+/obj/item/card/id/advanced/technician_id
+	name = "Repair Technician ID"
+	desc = "Repair Technician? We don't have those in this sector, just a bunch of lazy engineers! This must have been from the between-shift crew..."
+	registered_name = "Pluoxium LXVII"
+	registered_age = 67
+	trim = /datum/id_trim/technician_id
+
+/datum/id_trim/technician_id
+	access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS)
+	assignment = "Repair Technician"
+	trim_state = "trim_stationengineer"
+	department_color = COLOR_ASSISTANT_GRAY
+
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX

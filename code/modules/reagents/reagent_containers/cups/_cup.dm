@@ -509,7 +509,10 @@
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
 	if(!item.grind(reagents, user))
-		to_chat(user, span_notice("You fail to grind [item]."))
+		if(isstack(item))
+			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
+		else
+			to_chat(user, span_danger("You fail to grind [item]."))
 		return
 	to_chat(user, span_notice("You grind [item] into a nice powder."))
 	grinded = null

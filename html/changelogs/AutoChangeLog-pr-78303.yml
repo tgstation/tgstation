@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Ghosts (observers) can eat ghost burgers and booberry muffins."
+  - balance: "Ghost burgers will not decay or pick up germs due to the fact that they moved themselves off a table."

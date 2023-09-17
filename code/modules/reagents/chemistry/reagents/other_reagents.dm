@@ -1376,8 +1376,10 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_jitter(-5 SECONDS * seconds_per_tick)
+	. = FALSE
 	if(SPT_PROB(55, seconds_per_tick))
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+		. = TRUE
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.adjust_drowsiness(6 SECONDS)
 	if(SPT_PROB(5, seconds_per_tick))
@@ -2542,6 +2544,7 @@
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	. = FALSE
 	if(affected_mob.getStaminaLoss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH

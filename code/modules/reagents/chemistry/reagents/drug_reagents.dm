@@ -428,6 +428,7 @@
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, required_biotype = affected_biotype)
+	return TRUE
 
 /datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -619,6 +620,7 @@
 
 	if(SPT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, seconds_per_tick))
 		dancer.emote("flip")
+	return TRUE
 
 /datum/reagent/drug/blastoff/overdose_process(mob/living/dancer, seconds_per_tick, times_fired)
 	. = ..()
@@ -805,7 +807,7 @@
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
-	. = ..()
+	. = ..() || TRUE
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
 	if(kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH

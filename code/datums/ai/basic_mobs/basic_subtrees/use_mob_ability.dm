@@ -4,7 +4,7 @@
  */
 /datum/ai_planning_subtree/use_mob_ability
 	/// Blackboard key for the ability
-	var/ability_key
+	var/ability_key = BB_GENERIC_ACTION
 	/// Behaviour to perform using ability
 	var/use_ability_behaviour = /datum/ai_behavior/use_mob_ability
 	/// If true we terminate planning after trying to use the ability.

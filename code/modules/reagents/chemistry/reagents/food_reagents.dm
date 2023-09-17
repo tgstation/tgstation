@@ -716,7 +716,7 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat with rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	
+
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."
@@ -811,13 +811,16 @@
 	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
+	var/need_mob_update
 	if(SPT_PROB(33, seconds_per_tick))
-		M.adjustBruteLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
-		M.adjustFireLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
-		M.adjustOxyLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
-		M.adjustToxLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
-	..()
+		need_mob_update = M.adjustBruteLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += M.adjustFireLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += M.adjustOxyLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += M.adjustToxLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

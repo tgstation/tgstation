@@ -83,6 +83,7 @@
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSdigital_clock, src)
+	find_and_hang_on_wall()
 
 /obj/machinery/digital_clock/Destroy()
 	STOP_PROCESSING(SSdigital_clock, src)
