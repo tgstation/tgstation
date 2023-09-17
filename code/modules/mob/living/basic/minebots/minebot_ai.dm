@@ -63,7 +63,7 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/minebot
 
 /datum/ai_behavior/basic_ranged_attack/minebot
-	avoid_friendly_fire = TRUE
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn

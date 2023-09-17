@@ -109,13 +109,12 @@
 		var/turf/target_turf = get_step(our_turf, direction)
 		if(isnull(target_turf))
 			continue
-		if(target_turf.is_blocked_turf() || get_dist(target_turf, target) > required_distance)
+		if(target_turf.is_blocked_turf() || get_dist(target_turf, target) > get_dist(living_pawn, target))
 			continue
 		possible_turfs += target_turf
 
 	if(!length(possible_turfs))
 		return
-
 	var/turf/picked_turf = get_closest_atom(/turf, possible_turfs, target)
 	step(living_pawn, get_dir(living_pawn, picked_turf))
 
