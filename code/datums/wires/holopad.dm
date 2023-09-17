@@ -1,6 +1,6 @@
 /datum/wires/holopad
-    holder_type = /obj/machinery/holopad
-    proper_name = "Holopad"
+	holder_type = /obj/machinery/holopad
+	proper_name = "Holopad"
 
 /datum/wires/holopad/New(atom/holder)
 	wires = list(WIRE_REPLAY)
