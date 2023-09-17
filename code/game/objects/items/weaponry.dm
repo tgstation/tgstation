@@ -621,10 +621,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/reference = FALSE
 	// Chance for above.
 	var/reference_chance = 1
+	// Minimum time inbetween oaths.
+	COOLDOWN_DECLARE(oath_cd)
 
-// Coroners are more likely to be evil!
-/obj/item/statuebust/hippocratic/coroner
-	reference_chance = 5
+/obj/item/statuebust/hippocratic/evil
+	reference_chance = 100
 
 /obj/item/statuebust/hippocratic/Initialize(mapload)
 	. = ..()
@@ -666,10 +667,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_warning("As you prepare yourself to swear the Oath, you realize that doing so on a blood-caked bust is probably not a good idea."))
 		return
 
+	if(!COOLDOWN_FINISHED(src, oath_cd))
+		to_chat(user, span_warning("You've sworn or forsworn an oath too recently to undo your decisions. The bust looks at you with disgust."))
+		return
+
+	COOLDOWN_START(src, oath_cd, 5 MINUTES)
+
 	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
 		to_chat(user, span_warning("You've already sworn a vow. You start preparing to rescind it..."))
 		if(do_after(user, 5 SECONDS, target = user))
-			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic forswearance")
+			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic hippocrisy")
 			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
 
 	// they can still do it for rp purposes
@@ -703,6 +710,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/hippocratic/proc/fuck_it_up(mob/living/carbon/user)
 	to_chat(user, span_warning("You forget what comes next like a dumbass. The Hippocrates bust looks down on you, disappointed."))
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+	COOLDOWN_RESET(src, oath_cd)
 
 /obj/item/tailclub
 	name = "tail club"
