@@ -708,6 +708,9 @@
 		)
 	if(vomit_flags & MOB_VOMIT_STUN)
 		Stun(20 SECONDS)
+	if(vomit_flags & MOB_VOMIT_KNOCKDOWN)
+		Knockdown(20 SECONDS)
+
 	return TRUE
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)

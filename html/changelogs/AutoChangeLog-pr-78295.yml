@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Roundstart medbots and cleanbots are now more likely to be able to be possessed by observers."
-  - admin: "It's easier to modify the properties of bots to stop them from being possessed or depossessed."
