@@ -49,6 +49,10 @@
 
 	return ..()
 
+/turf/closed/mineral/random/examine(mob/user)
+	. = ..()
+	. += span_notice("[proximity_ore_chance()] CHANCE TO SPAWN. [mineralAmt] ORES INSIDE??? DELETE ME PELASE")
+
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
 	. = ..()
@@ -87,13 +91,12 @@
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
 		spawned_boulder = /obj/item/boulder/gulag/volcanic
 
-/turf/closed/mineral/proc/scale_ore_to_vent(ore_type)
+/turf/closed/mineral/proc/scale_ore_to_vent()
 	var/distance = prox_to_vent()
 	if(distance == 0) // We're not on lavaland or similar failure condition
 		mineralAmt = rand(1,5)
 		return
 
-	world.log << "Distance to vent: [distance]"
 	if(distance < VENT_PROX_VERY_HIGH)
 		mineralAmt = 5
 		return
@@ -114,15 +117,23 @@
 	if(!SSmapping.level_trait(src.z, ZTRAIT_MINING))
 		return 0
 
-	var/distance
+	var/distance = 0
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
 		if(vent.unique_vent)
 			continue
 		if(vent.z != src.z)
 			continue //Silly
 		var/temp_distance = get_dist(src, vent)
-		if(temp_distance > distance)
+		if(temp_distance < distance)
 			distance = temp_distance
+
+	// var/tripped = FALSE
+	// for(var/i in SSore_generation.delete_me.len)
+	// 	if(SSore_generation.delete_me[i] == distance)
+	// 		SSore_generation.delete_me[i] += 1
+	// 		tripped = TRUE
+	// if(!tripped)
+	// 	SSore_generation.delete_me[SSore_generation.delete_me.len + 1] = 1
 	return distance
 
 /turf/closed/mineral/proc/proximity_ore_chance()
@@ -131,16 +142,15 @@
 		return 0
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return 82.4
+		return 100
 	if(distance < VENT_PROX_HIGH)
-		return 52.3
+		return 25
 	if(distance < VENT_PROX_MEDIUM)
-		return 30
+		return 10
 	if(distance < VENT_PROX_LOW)
-		return 15
+		return 5
 	if(distance < VENT_PROX_FAR)
-		return 4
-	return 0
+		return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -306,6 +316,7 @@
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
 				M.mineralAmt = rand(1, 5)
+				SSore_generation.post_ore_r["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
 			else
@@ -315,7 +326,8 @@
 		else
 			Change_Ore(path, 1)
 			Spread_Vein(path)
-			scale_ore_to_vent(path)
+			scale_ore_to_vent()
+			SSore_generation.post_ore_m["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
