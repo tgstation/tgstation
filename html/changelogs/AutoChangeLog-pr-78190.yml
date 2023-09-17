@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Golems can eat"
-  - bugfix: "Cooked and crafted food should be edible"
-  - bugfix: "Medborgs can now spawn vanilla ice cream instead of nothing ice cream"
-  - bugfix: "Ghosts can examine food"
