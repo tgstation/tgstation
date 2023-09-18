@@ -47,7 +47,6 @@
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
 
-	new/datum/stack_recipe("makeshift bandage", /obj/item/stack/medical/bandage/makeshift, 1, check_density = FALSE, category = CAT_TOOLS), \
 /datum/crafting_recipe/bandage
 	name = "Makeshift Bandage"
 	reqs = list(
@@ -56,5 +55,3 @@
 	)
 	result = /obj/item/stack/medical/bandage/makeshift
 	category = CAT_TOOLS
-
-item/stack/medical/bandage/makeshift
