@@ -13,6 +13,7 @@
 	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/distill_reagent
 
+// This may look like it's doing nothing but it's necessary, we do this to have kwargs work in New (for passing into Initialize)  
 /obj/item/grown/New(loc, obj/item/seeds/new_seed)
 	return ..()
 
