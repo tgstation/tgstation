@@ -5,7 +5,6 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
-	input_display_header = "Returned Clothing"
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 

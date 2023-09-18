@@ -548,6 +548,7 @@
 		H.set_heartattack(TRUE)
 		volume = 0
 	. = ..()
+	return TRUE
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.clear_alert("penthrite")

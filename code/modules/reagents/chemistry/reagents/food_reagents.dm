@@ -814,6 +814,7 @@
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
 		M.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

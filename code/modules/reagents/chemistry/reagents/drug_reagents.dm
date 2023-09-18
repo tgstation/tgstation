@@ -122,6 +122,7 @@
 			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
 			affected_mob.adjustBruteLoss(50 * REM, FALSE, required_bodytype = affected_bodytype) // holy shit your skin just FELL THE FUCK OFF
+			. = TRUE
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -344,8 +345,9 @@
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.losebreath++
 		affected_mob.adjustToxLoss(2, FALSE, required_biotype = affected_biotype)
+		. = TRUE
 	..()
-	. = TRUE
+	
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/affected_mob)
 	to_chat(affected_mob, span_userdanger("You can't stop shaking, your heart beats faster and faster..."))
@@ -418,6 +420,7 @@
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, required_biotype = affected_biotype)
+	return TRUE
 
 /datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -445,13 +448,13 @@
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-
 	affected_mob.AdjustStun(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustKnockdown(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustUnconscious(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustParalyzed(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustImmobilized(-10 * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	return TRUE
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -603,6 +606,7 @@
 
 	if(SPT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, seconds_per_tick))
 		dancer.emote("flip")
+	return TRUE
 
 /datum/reagent/drug/blastoff/overdose_process(mob/living/dancer, seconds_per_tick, times_fired)
 	. = ..()
@@ -670,6 +674,7 @@
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, times_fired)
 	. = ..()
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	return TRUE
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)
 	. = ..()
@@ -785,7 +790,7 @@
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
-	. = ..()
+	. = ..() || TRUE
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
