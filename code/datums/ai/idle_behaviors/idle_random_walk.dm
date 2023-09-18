@@ -21,6 +21,6 @@
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 
 /datum/idle_behavior/idle_random_walk/no_target/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
-	if (!QDELETED(controller.blackboard[target_key]))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	return ..()

@@ -40,7 +40,8 @@
 		return TRUE
 
 	if (!fire_laser())
-		owner.emote("cough")
+		var/static/list/fail_emotes = list("coughs.", "wheezes.", "belches out a puff of black smoke.")
+		owner.manual_emote(pick(fail_emotes))
 		StartCooldown()
 		return TRUE
 

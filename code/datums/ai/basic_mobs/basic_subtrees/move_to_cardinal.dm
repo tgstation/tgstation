@@ -7,8 +7,7 @@
 
 /datum/ai_planning_subtree/move_to_cardinal/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
+	if(!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(move_behaviour, target_key)
 
