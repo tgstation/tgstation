@@ -516,3 +516,28 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/// Makes the owner lava immune; also gives them a cool lava overlay
+/datum/status_effect/lava_immunity
+	id = "lava_immunity"
+	alert_type = /atom/movable/screen/alert/status_effect/lava_immunity
+	duration = 10 SECONDS
+	/// Overlay effect added to the mob
+	var/mutable_appearance/lava_overlay
+
+/datum/status_effect/lava_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, STATUS_EFFECT_TRAIT)
+	lava_overlay = mutable_appearance('icons/turf/floors.dmi', "lava")
+	lava_overlay.blend_mode = BLEND_INSET_OVERLAY
+	lava_overlay.alpha = 128
+	owner.add_overlay(lava_overlay)
+	return TRUE
+
+/datum/status_effect/lava_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_LAVA_IMMUNE, STATUS_EFFECT_TRAIT)
+	owner.cut_overlay(lava_overlay)
+
+/atom/movable/screen/alert/status_effect/lava_immunity
+	name = "Lava Immunity"
+	desc = "You are impervious to lava. You also feel very itchy..."
+	icon_state = "lava_immunity"

@@ -37,10 +37,9 @@
 	if(HAS_TRAIT(living_user, TRAIT_LAVA_IMMUNE))
 		to_chat(living_user, span_notice("You stare at the tongue. You don't think this is any use to you."))
 		return
-	ADD_TRAIT(living_user, TRAIT_LAVA_IMMUNE, type)
+	living_user.apply_status_effect(/datum/status_effect/lava_immunity, use_buff_duration)
 	to_chat(living_user, span_boldnotice("You squeeze the tongue, and some transluscent liquid shoots out all over you!"))
 	playsound(get_turf(living_user), 'sound/effects/slosh.ogg', 30, TRUE)
-	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), use_buff_duration)
 	COOLDOWN_START(src, broodmother_tongue_cooldown, use_cooldown)
 
 /obj/effect/goliath_tentacle/broodmother/patch/crusher
@@ -76,12 +75,9 @@
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
-	playsound(get_turf(user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new(get_turf(user))
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = summon_skull(user)
 	summoned_skull.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MOB_ATTACK, summoned_skull.melee_damage_lower)
 	summoned_skull.GiveTarget(target)
-	summoned_skull.friends += user
-	summoned_skull.faction = user.faction.Copy()
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	. = ..()
@@ -93,8 +89,13 @@
 		balloon_alert(living_user, "not ready!")
 		return
 	living_user.visible_message(span_boldwarning("[living_user] shakes \the [src] and summons a legion skull!"))
-	playsound(get_turf(user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(get_turf(living_user))
+	summon_skull(living_user)
+	COOLDOWN_START(src, legionnaire_spine_cooldown, use_cooldown)
+
+///Spawns a legion skull, making it friendly to the user. Returns the newly spawned skull
+/obj/item/crusher_trophy/legionnaire_spine/proc/summon_skull(mob/living/living_user)
+	playsound(get_turf(living_user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new(get_turf(living_user))
 	summoned_skull.friends += living_user
 	summoned_skull.faction = living_user.faction.Copy()
-	COOLDOWN_START(src, legionnaire_spine_cooldown, use_cooldown)
+	return summoned_skull
