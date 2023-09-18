@@ -144,7 +144,7 @@
 	// create our chasm and remember the previous turf so we can change it back once we're done
 	var/original_turf_type = run_loc_floor_bottom_left.type
 	var/original_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
-	run_loc_floor_bottom_left.ChangeTurf(turf/open/chasm/)
+	run_loc_floor_bottom_left.ChangeTurf(/turf/open/chasm)
 	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
 
 	// into the hole they go
