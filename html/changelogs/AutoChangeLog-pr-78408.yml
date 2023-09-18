@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - balance: "Unholy and Eldritch water are self-consuming like holy water! They don't need a liver to be processed."
