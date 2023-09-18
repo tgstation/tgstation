@@ -12,8 +12,7 @@
 	id = "mothership_main"
 	},
 /obj/machinery/recycler{
-	dir = 1;
-	eat_dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
