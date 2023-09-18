@@ -1,0 +1,5 @@
+TEST_FOCUS(/datum/unit_test/fish_size_weight)
+TEST_FOCUS(/datum/unit_test/fish_breeding)
+TEST_FOCUS(/datum/unit_test/fish_evolution)
+TEST_FOCUS(/datum/unit_test/fish_rescue_hook)
+TEST_FOCUS(/datum/unit_test/fish_magnet_hook)

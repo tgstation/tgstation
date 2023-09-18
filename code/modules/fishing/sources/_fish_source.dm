@@ -132,7 +132,11 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-	fisherman.balloon_alert(fisherman, "caught [reward]!")
+		fisherman.balloon_alert(fisherman, "caught [reward]!")
+	else // for fishing things like corpses, move them to the turf of the fisherman
+		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
+		fisherman.balloon_alert(fisherman, "caught something!")
+
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
 
@@ -141,7 +145,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot, get_turf(fisherman))
+		return GLOB.chasm_detritus_types[reward_path].dispense_reward(reward_path, fisherman, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
 	var/atom/movable/reward = new reward_path(get_turf(fisherman))

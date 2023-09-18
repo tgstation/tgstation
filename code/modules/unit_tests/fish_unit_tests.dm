@@ -123,5 +123,77 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
+/// Checks that we are able to fish people out of chasms and that they end up in the right location
+/datum/unit_test/fish_rescue_hook
+
+/datum/unit_test/fish_rescue_hook/Run()
+	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
+	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs
+	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
+
+	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right) // our 'fisherman' where we expect the item to end up at after fishing it up
+	a_fisherman.Move(get_step(a_fisherman, EAST)) // move them to safety before we spawn a chasm
+	var/obj/item/fishing_rod/a_rod = allocate(/obj/item/fishing_rod)
+	a_fisherman.put_in_hands(a_rod)
+
+	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
+	var/turf/open/chasm/the_hole = allocate(/turf/open/chasm)
+
+	the_hole.drop(get_in_the_hole) // into the hole they go
+	the_hole.drop(you_too)
+	the_hole.drop(mindless)
+	the_hole.drop(no_brain)
+	get_in_the_hole.mind = TRUE // pretend like this mob has a mind. they should be fished up first
+
+	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
+	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
+	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
+
+	var/atom/movable/reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/bodies, a_fisherman, the_hole) // try to fish up our minded victim, who should have precedence over any other mobs
+
+	TEST_ASSERT_EQUAL(reward, get_in_the_hole, "Fished up [reward] with a rescue hook; expected to fish up [get_in_the_hole]")
+	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [reward.loc]; expected to be at [a_fisherman.loc]")
+
+	run_loc_floor_bottom_left.ChangeTurf(initial_turf_type)
+
+// our special version for testing that cannot give us a default reward
+/datum/chasm_detritus/restricted/objects/nofail
+	default_contents_chance = 0
+
+/// Checks that items get fished out of chasms and end up in the right location
+/datum/unit_test/fish_magnet_hook
+
+/datum/unit_test/fish_magnet_hook/Run()
+	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right) // our 'fisherman' where we expect the item to end up at after fishing it up
+	var/obj/item/fishing_rod/a_rod = allocate(/obj/item/fishing_rod)
+	a_fisherman.put_in_hands(a_rod)
+
+	var/obj/item/bikehorn/rubberducky/duck_one = allocate(/obj/item/bikehorn/rubberducky)
+	var/obj/item/bikehorn/rubberducky/duck_two = allocate(/obj/item/bikehorn/rubberducky)
+
+	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
+	var/turf/open/chasm/the_hole = allocate(/turf/open/chasm)
+
+	the_hole.drop(duck_one)
+	the_hole.drop(duck_two)
+
+	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
+	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
+	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
+
+	var/atom/movable/reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/objects/nofail, a_fisherman, the_hole) // try to fish up our rubber ducky
+
+	TEST_ASSERT_EQUAL(reward.type, duck_one.type, "Fished up [reward] with a magnet hook; expected to fish up [reward]")
+	TEST_ASSERT_EQUAL(reward.loc, a_fisherman, "[reward] was fished up with the magnet hook and ended up at [reward.loc]; expected to be at [a_fisherman]")
+
+	reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/objects/nofail, a_fisherman, the_hole) // try to fish up the other ducky
+
+	TEST_ASSERT_EQUAL(reward.type, duck_one.type, "Fished up [reward] with a magnet hook; expected to fish up [reward]")
+	// with one free hand it should end up on the floor
+	TEST_ASSERT_EQUAL(reward.loc, a_fisherman.loc, "[reward] was fished up with the magnet hook and ended up at [reward.loc]; expected to be at [a_fisherman.loc]")
+
+	run_loc_floor_bottom_left.ChangeTurf(initial_turf_type)
+
 #undef TRAIT_FISH_TESTING
 
