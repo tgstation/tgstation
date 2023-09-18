@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
-/datum/chasm_detritus/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/chasm_detritus/proc/dispense_reward(mob/fisherman, turf/fishing_spot)
 	if(prob(default_contents_chance))
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(get_turf(fisherman))
