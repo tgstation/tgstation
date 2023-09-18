@@ -39,7 +39,6 @@
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
 		balloon_alert(user, "blocked!")
 		return
-	var/turf/user_turf = get_turf(user)
 	var/away_dir = get_dir(above, target)
 	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
 	playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
