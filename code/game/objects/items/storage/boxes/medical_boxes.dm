@@ -161,10 +161,10 @@
 	. = ..()
 	switch(length(contents))
 		if(5)
-			icon_state = base_icon_state
+			icon_state = "[base_icon_state]_f"
 		if(3 to 4)
 			icon_state = "[base_icon_state]_almostfull"
 		if(1 to 2)
 			icon_state = "[base_icon_state]_almostempty"
 		if(0)
-			icon_state = "[base_icon_state]_e"
+			icon_state = base_icon_state

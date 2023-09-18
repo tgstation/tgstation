@@ -489,7 +489,7 @@
 	other_delay = 1 SECONDS
 	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
 
-/obj/item/stack/medical/bandage/homemade
-	name = "homemade bandage"
+/obj/item/stack/medical/bandage/makeshift
+	name = "makeshift bandage"
 	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
-	icon_state = "bandage_homemade"
+	icon_state = "bandage_makeshift"
