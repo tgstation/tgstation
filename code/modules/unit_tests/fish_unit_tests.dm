@@ -149,14 +149,14 @@
 	the_hole.drop(empty)
 	the_hole.drop(dummy)
 
- 	// pretend like this mob has a mind. they should be fished up first
+	// pretend like this mob has a mind. they should be fished up first
 	get_in_the_hole.mind = TRUE
 
 	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
 	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
 
- 	// try to fish up our minded victim
+	// try to fish up our minded victim
 	var/atom/movable/reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/bodies, a_fisherman, the_hole)
 
 	// mobs with minds (aka players) should have precedence over any other mobs that are in the chasm
