@@ -142,8 +142,10 @@
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 
 	// create our chasm and remember the previous turf so we can change it back once we're done
-	var/turf/initial_turf_type = run_loc_floor_bottom_left.type
-	var/turf/open/chasm/the_hole = allocate(/turf/open/chasm)
+	var/original_turf_type = run_loc_floor_bottom_left.type
+	var/original_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
+	run_loc_floor_bottom_left.ChangeTurf(turf/open/chasm/)
+	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
 
 	// into the hole they go
 	the_hole.drop(get_in_the_hole)
@@ -180,7 +182,7 @@
 	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
 
 	// cleanup
-	run_loc_floor_bottom_left.ChangeTurf(initial_turf_type)
+	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
 
 #undef TRAIT_FISH_TESTING
 
