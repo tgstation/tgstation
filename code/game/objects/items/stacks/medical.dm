@@ -483,8 +483,13 @@
 	max_amount = 1
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 25
+	heal_brute = 20
 	stop_bleeding = 0.2
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
 	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
+
+/obj/item/stack/medical/bandage/homemade
+	name = "homemade bandage"
+	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
+	icon_state = "bandage_homemade"
