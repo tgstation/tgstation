@@ -40,7 +40,10 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
-/datum/chasm_detritus/proc/dispense_reward(mob/fisherman, turf/fishing_spot)
+/datum/chasm_detritus/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
+	if(prob(default_contents_chance))
+		var/default_spawn = pick(default_contents[default_contents_key])
+		return new default_spawn(get_turf(fisherman))
 	return find_chasm_contents(fishing_spot, get_turf(fisherman))
 
 /// Returns the chosen detritus from the given list of things to choose from
@@ -51,7 +54,6 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/proc/find_chasm_contents(turf/fishing_spot, turf/fisher_turf)
 	var/list/chasm_contents = get_chasm_contents(fishing_spot)
 
-	// always return actual items that have fallen in first over 'default' items
 	if(!length(chasm_contents))
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(fisher_turf)

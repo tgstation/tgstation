@@ -123,6 +123,10 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
+// we want no default spawns in this unit test
+/datum/chasm_detritus/restricted/bodies/no_defaults
+	default_contents_chance = 0
+
 /// Checks that we are able to fish people out of chasms with priority and that they end up in the right location
 /datum/unit_test/fish_rescue_hook
 
@@ -155,9 +159,11 @@
 	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
 	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
+	var/obj/item/fishing_hook/rescue/the_hook = allocate(/obj/item/fishing_hook/rescue, run_loc_floor_top_right)
+	the_hook.chasm_detritus_type = /datum/chasm_detritus/restricted/bodies/no_defaults
 
 	// try to fish up our minded victim
-	var/atom/movable/reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/bodies, a_fisherman, the_hole)
+	var/atom/movable/reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
 
 	// mobs with minds (aka players) should have precedence over any other mobs that are in the chasm
 	TEST_ASSERT_EQUAL(reward, get_in_the_hole, "Fished up [reward] with a rescue hook; expected to fish up [get_in_the_hole]")
@@ -167,7 +173,7 @@
 	// let's further test that by giving a second mob a mind. they should be fished up immediately..
 	empty.mind = TRUE
 
-	reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/bodies, a_fisherman, the_hole)
+	reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
 
 	TEST_ASSERT_EQUAL(reward, empty, "Fished up [reward] with a rescue hook; expected to fish up [empty]")
 	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
