@@ -123,7 +123,7 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
-/// Checks that we are able to fish people out of chasms and that they end up in the right location
+/// Checks that we are able to fish people out of chasms with priority and that they end up in the right location
 /datum/unit_test/fish_rescue_hook
 
 /datum/unit_test/fish_rescue_hook/Run()
