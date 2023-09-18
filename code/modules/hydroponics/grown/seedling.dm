@@ -20,7 +20,7 @@
 	var/list/grow_locations = get_adjacent_open_turfs(parent)
 	var/turf/final_location = length(grow_locations) ? pick(grow_locations) : get_turf(parent)
 	var/mob/living/basic/seedling/seed_pet = new product(final_location)
-	seed_pet.assign_tamer(harvester)
+	seed_pet.befriend(harvester)
 	parent.update_tray(user = harvester, product_count = 1)
 
 /obj/item/seeds/seedling/evil

@@ -81,10 +81,6 @@
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))
 	update_appearance()
 
-
-/mob/living/basic/seedling/proc/assign_tamer(mob/living/tamer)
-	befriend(tamer)
-
 /mob/living/basic/seedling/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
 
