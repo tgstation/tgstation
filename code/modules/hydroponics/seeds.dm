@@ -223,7 +223,7 @@
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
 				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
 					mutated_seed.genes += trait.Copy()
-			t_prod = new t_prod(output_loc, mutated_seed)
+			t_prod = new t_prod(output_loc, new_seed = mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, INNATE_TRAIT)
@@ -232,7 +232,7 @@
 				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
-			t_prod = new product(output_loc, src)
+			t_prod = new product(output_loc, new_seed = src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
@@ -266,6 +266,7 @@
 		reagent_max += reagents_add[rid]
 	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
+		var/reagent_purity = get_reagent_purity()
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
 			if(reagent_max > 1)
@@ -277,12 +278,13 @@
 				data = list("blood_type" = "O-")
 			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
-			T.reagents.add_reagent(rid, amount, data)
+			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
-			grown_edible.on_juice()
-			grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
+			grown_edible.juice()
+		else if(get_gene(/datum/plant_gene/trait/brewing))
+			grown_edible.ferment()
 
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
@@ -301,6 +303,14 @@
 			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
+
+/// Returns reagent purity based on seed stats
+/obj/item/seeds/proc/get_reagent_purity()
+	var/purity_from_lifespan = lifespan / 400 //up to +25% for lifespan
+	var/purity_from_endurance = endurance / 400 //up to +25% for endurance
+	var/purity_from_instability = rand(-instability, instability) / 400  //up to +-25% at random for instability
+	var/result_purity = clamp(0.5 + purity_from_lifespan + purity_from_endurance + purity_from_instability, 0, 1) //50% base + stats
+	return result_purity
 
 /// Setters procs ///
 

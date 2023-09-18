@@ -82,6 +82,7 @@
 	unequip_deployable()
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
+	undeployed_overlay = null
 	pre_creation_check = null
 	on_created = null
 	on_deployed = null

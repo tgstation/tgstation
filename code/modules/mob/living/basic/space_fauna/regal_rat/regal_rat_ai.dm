@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/regal_rat
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_BASIC_MOB_FLEEING = FALSE,
+		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)
 
@@ -13,7 +13,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/targeted_mob_ability/riot,
-		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/use_mob_ability/domain,
@@ -22,6 +22,7 @@
 /datum/ai_planning_subtree/targeted_mob_ability/riot
 	target_key = BB_BASIC_MOB_FLEE_TARGET // we only want to trigger this when provoked, manpower is low nowadays
 	ability_key = BB_RAISE_HORDE_ABILITY
+	finish_planning = FALSE
 
 /datum/ai_planning_subtree/use_mob_ability/domain
 	ability_key = BB_DOMAIN_ABILITY

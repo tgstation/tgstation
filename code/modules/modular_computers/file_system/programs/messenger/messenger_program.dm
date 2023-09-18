@@ -91,6 +91,8 @@
 
 	for(var/messenger_ref in messengers_sorted)
 		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+		if(!istype(messenger) || !istype(messenger.computer))
+			continue
 		if(messenger == src || messenger.invisible)
 			continue
 
@@ -552,7 +554,7 @@
 	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
 /datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer))
+	if(!sender.can_perform_action(computer, ALLOW_RESTING))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
@@ -649,17 +651,17 @@
 		if(!isnull(viewing_messages_of) && viewing_messages_of == sender_ref)
 			viewing_messages_of = REF(chat)
 
-	var/mob/living/receiver_mob = null
-	//Check our immediate loc
-	if(isliving(computer.loc))
-		receiver_mob = computer.loc
-	//Maybe they are a silicon!
-	else
-		receiver_mob = get(computer, /mob/living/silicon)
+	var/list/mob/living/receievers = list()
+	if(computer.inserted_pai)
+		receievers += computer.inserted_pai.pai
+	if(computer.loc && isliving(computer.loc))
+		receievers += computer.loc
 
-	var/should_ring = !alert_silenced || is_rigged
-
-	if(should_ring && istype(receiver_mob) && receiver_mob.is_literate() && (receiver_mob.stat == CONSCIOUS || receiver_mob.stat == SOFT_CRIT))
+	for(var/mob/living/messaged_mob as anything in receievers)
+		if(messaged_mob.stat >= UNCONSCIOUS)
+			continue
+		if(!messaged_mob.is_literate())
+			continue
 		var/reply_href = signal.data["rigged"] ? "explode" : "message"
 		var/photo_href = signal.data["rigged"] ? "explode" : "open"
 		var/reply
@@ -674,16 +676,16 @@
 		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
-		if (isAI(receiver_mob))
-			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+		if (isAI(messaged_mob))
+			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
+		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
-	if (alert_able && should_ring)
+	if (alert_able && (!alert_silenced || is_rigged))
 		computer.ring(ringtone)
 
 	SStgui.update_uis(computer)

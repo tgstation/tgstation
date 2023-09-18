@@ -1,8 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - balance: "ninja's stealth module gives silent footsteps when active"
-  - balance: "all ninjas now have the light step and freerunning quirks"
-  - balance: "ninja's hacker module shove no longer stuns in 1 hit. first shove knocks down and pushes away, second one stuns"
-  - bugfix: "fixes ninja shoves not causing sparks"
-  - qol: "the person in an energy net is now reasonable to hit, the dark part of the sprite is now an underlay, so you can click the person inside the net pretty easily and if you wanna hit the net you click the green part or the darker sides that the human sprite doesnt cover"

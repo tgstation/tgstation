@@ -216,15 +216,25 @@
 	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
+	allowed = list(
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
+	)
 
 // Quartermaster
 
 /obj/item/clothing/suit/jacket/quartermaster
-	name = "quatermaster's overcoat"
-	desc = "A luxury, brown double-breasted overcoat, made from kangaroo skin. It's gold cuffs linked are styled on the credits symbol. It makes you feel more important then you probably are."
+	name = "quartermaster's overcoat"
+	desc = "A luxury, brown double-breasted overcoat made from kangaroo skin. It's gold cuffs are linked and styled on the credits symbol. It makes you feel more important than you probably are."
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
+	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
@@ -380,3 +390,35 @@
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/xeno
+
+// Atmos
+/obj/item/clothing/suit/atmos_overalls
+	name = "atmospherics overalls"
+	desc = "A set of fireproof overalls, good for protecting thinner clothes from gas leaks."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	icon_state = "atmos_overalls"
+	inhand_icon_state = ""
+	body_parts_covered = CHEST|GROIN|LEGS
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/atmos_overalls
+	species_exception = list(/datum/species/golem)
+	allowed = list(
+		/obj/item/analyzer,
+		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+	)
+
+/datum/armor/atmos_overalls
+	fire = 100
+	acid = 50
+
+/obj/item/clothing/suit/atmos_overalls/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)

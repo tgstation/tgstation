@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(throwing)
 	var/init_dir
 	///The maximum number of turfs that the thrownthing will travel to reach it's target.
 	var/maxrange
-	///The speed of the projectile thrownthing being thrown.
+	///Turfs to travel per tick
 	var/speed
 	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
 	var/mob/thrower

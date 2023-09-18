@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - rscadd: "Immovable rod will now battle the unstoppable tram should they cross paths"
-  - bugfix: "Birdshot's maint tram doors now work properly"
-  - bugfix: "Tramstation's exterior light fixtures no longer get destroyed as soon as the tram moves"
-  - code_imp: "Tram landmarks are now all subtyped instead of map varedits"

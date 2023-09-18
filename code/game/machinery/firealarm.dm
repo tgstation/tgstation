@@ -80,7 +80,7 @@
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-
+	find_and_hang_on_wall()
 	update_appearance()
 
 
@@ -471,7 +471,7 @@
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
-	if(get_dist(src,user) <= user.interaction_range)
+	if(get_dist(src,user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)
 		return
 	return ..()

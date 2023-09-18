@@ -1,7 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes multitools possibly randomly losing their buffer"
-  - bugfix: "fixes modlinks checking battery charge without a battery and working without charge"
-  - qol: "modlink stuff is a bit more explained"
-  - bugfix: "modlinks printed from rnd no longer start with a frequency (remember to copy it from another one with a multitool buffer, robotics starts with 2 NT frequency linked ones)"
