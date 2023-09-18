@@ -202,12 +202,12 @@
 	new /obj/item/surgicaldrill(src)
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/surgery_tray/morgue
+/obj/item/surgery_tray/full/morgue
 	name = "autopsy tray"
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
 	
-/obj/item/surgery_tray/morgue/populate_contents()
+/obj/item/surgery_tray/full/morgue/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/cautery/cruel(src)
@@ -223,16 +223,16 @@
 	new /obj/item/surgicaldrill(src)
 
 /// Surgery tray with advanced tools for debug
-/obj/item/surgery_tray/advanced
-	initial_contents = list(
-		/obj/item/scalpel/advanced,
-		/obj/item/retractor/advanced,
-		/obj/item/cautery/advanced,
-		/obj/item/surgical_drapes,
-		/obj/item/reagent_containers/medigel/sterilizine,
-		/obj/item/bonesetter,
-		/obj/item/blood_filter,
-		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
-		/obj/item/clothing/mask/surgical,
-	)
+/obj/item/surgery_tray/full/advanced
+
+/obj/item/surgery_tray/full/advanced/populate_contents()
+	new /obj/item/scalpel/advanced
+	new /obj/item/retractor/advanced
+	new /obj/item/cautery/advanced
+	new /obj/item/surgical_drapes
+	new /obj/item/reagent_containers/medigel/sterilizine
+	new /obj/item/bonesetter
+	new /obj/item/blood_filter
+	new /obj/item/stack/medical/bone_gel
+	new /obj/item/stack/sticky_tape/surgical
+	new /obj/item/clothing/mask/surgical
