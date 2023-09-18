@@ -12,7 +12,6 @@
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
-	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
@@ -34,6 +33,7 @@
 		/datum/material/bluespace
 	)
 	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/butchering/recycler, \
 	speed = 0.1 SECONDS, \
 	effectiveness = amount_produced, \
@@ -110,7 +110,7 @@
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	if(border_dir == dir)
 		return TRUE
 
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
