@@ -16,7 +16,7 @@
 	/// If true we're currently portable
 	var/is_portable = TRUE
 
-/// FIlls the tray with items it should contain on creation
+/// Fills the tray with items it should contain on creation
 /obj/item/surgery_tray/proc/populate_contents()
 	return
 
