@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Humanoids without tongues cannot cast spells with vocal components"
-  - balance: "Humanoids without arms cannot cast spells with emotive components"
