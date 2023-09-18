@@ -23,8 +23,8 @@
 
 	var/obj/item/parent_item = parent
 
-	if(parent_item.item_flags & ABSTRACT|DROPDEL)
-		return COMPONENT_INCOMPATIBLE
+	if((parent_item.item_flags & ABSTRACT) || (parent_item.item_flags & DROPDEL))
+		return COMPONENT_NOTRANSFER
 
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
@@ -49,9 +49,12 @@
 
 	var/list/valid_recipes
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
-		var/list/type_ingredient_list = initial(recipe.reqs)
+		// Gotta instance it to copy the list over.
+		recipe = new recipe()
+		var/list/type_ingredient_list = recipe.reqs
+		qdel(recipe)
 		if(length(type_ingredient_list) == 1) // No ingredients besides itself? We use one of the tools then
-			type_ingredient_list = initial(recipe.tool_paths)
+			type_ingredient_list = recipe.tool_paths
 			// Check the tool behaviours differently as they aren't types
 			for(var/behaviour in initial(recipe.tool_behaviors))
 				if(slapper.tool_behaviour == behaviour)
@@ -71,7 +74,7 @@
 	var/list/recipe_choices
 
 	var/final_recipe = valid_recipes[1]
-	if(valid_recipes > 1)
+	if(length(valid_recipes) > 1)
 		for(var/datum/crafting_recipe/recipe as anything in valid_recipes)
 			var/atom/recipe_result = initial(recipe.result)
 			var/image/option_image = image(icon = initial(recipe_result.icon), icon_state = initial(recipe_result.icon_state))
@@ -86,7 +89,7 @@
 	if(!craft_sheet)
 		CRASH("No craft sheet on user ??")
 
-	var/actual_recipe
+	var/datum/crafting/recipe/actual_recipe
 
 	if(istype(actual_recipe, /datum/crafting_recipe/food))
 		actual_recipe = locate(final_recipe) in GLOB.cooking_recipes
@@ -96,18 +99,25 @@
 	if(!actual_recipe)
 		CRASH("Recipe not located in cooking or crafting recipes: [final_recipe]")
 
-	craft_sheet.construct_item(user, actual_recipe)
+	var/error_string = craft_sheet.construct_item(user, actual_recipe)
+	to_chat(user, istext(error_string) ? span_danger("Crafting failed" + error_string) : span_notice("You start crafting \a [initial(actual_recipe.result)]..."))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
 /datum/component/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/string_results
+	// This list saves the recipe names we've already used to cross-check other recipes so we don't have ', a spear, or a spear!' in the desc.
+	var/list/already_used_names
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
+		// Identical name to a previous recipe? Skip in description.
+		if(locate(initial(recipe.name)) in already_used_names)
+			continue
+		already_used_names += initial(recipe.name)
 		var/atom/result = initial(recipe.result)
-		string_results += isnull(result) ? "a [initial(result.name)]" : ", or a [initial(result.name)]"
+		string_results += "\a [initial(result.name)]"
 
-	examine_list += span_notice("You think [parent] could be used to make [string_results]! Examine again to look at the details...")
+	examine_list += span_notice("You think [parent] could be used to make [english_list(string_results)]! Examine again to look at the details...")
 
 /// Alerts any examiners to the details of the recipe.
 /datum/component/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
@@ -115,10 +125,13 @@
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='?src=[REF(src)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
 
 /datum/component/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
+
+	if(!href_list["check_recipe"])
+		return
 
 	var/datum/crafting_recipe/cur_recipe = locate(href_list["check_recipe"]) in slapcraft_recipes
 
@@ -127,10 +140,11 @@
 
 	var/atom/result = initial(cur_recipe.result)
 
-	var/list/examine_list = span_notice("You could craft a [initial(result.name)] by applying one of these ingredients to it!")
+	var/list/examine_list = span_notice("You could craft a [initial(result.name)] by applying one of these items to it!")
 
-	// For our purposes, they're the same thing in the end
-	var/list/type_ingredient_list = initial(cur_recipe.reqs)
+	// Gotta instance it to copy the lists over.
+	cur_recipe = new cur_recipe()
+	var/list/type_ingredient_list = cur_recipe.reqs
 
 	// Final return string list!
 	var/list/string_ingredient_list
@@ -143,30 +157,34 @@
 			if(!istype(reagent_ingredient))
 				stack_trace("Ingredient is datum but not reagent? [reagent_ingredient]")
 			var/amount = initial(cur_recipe.reqs[reagent_ingredient])
-			string_ingredient_list += "[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]"
+			string_ingredient_list += list("[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]")
 
-		// Check if they're atoms.
+		// Redundant!
+		if(parent.type == valid_type)
+			continue
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
-		string_ingredient_list += "[amount > 1 ? (amount + "of") : "a"] [initial(ingredient.name)]"
+		string_ingredient_list += list("[amount > 1 ? ("[amount]" + "of") : "a"] [initial(ingredient.name)]")
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
 		examine_list += span_boldnotice("Ingredients:")
 		examine_list += span_notice(string_ingredient_list)
 
-	var/tool_list = ""
+	var/list/tool_list = list()
 
 	// Paste the required tools.
-	for(var/valid_type in initial(cur_recipe.tool_paths))
+	for(var/valid_type in cur_recipe.tool_paths)
 		var/atom/tool = valid_type
-		tool_list += "\a [initial(tool.name)]"
+		tool_list += list("\a [initial(tool.name)]")
 
-	for(var/string in initial(cur_recipe.tool_behaviors))
-		tool_list += "\a [string]"
+	for(var/string in cur_recipe.tool_behaviors)
+		tool_list += list("\a [string]")
 
 	if(length(tool_list))
 		examine_list += span_boldnotice("Required Tools:")
-		examine_list += span_notice(tool_list)
+		examine_list += list(span_notice(tool_list))
 
-	to_chat(user, span_notice(examine_block("[examine_list.Join()]")))
+	qdel(cur_recipe)
+
+	to_chat(user, span_notice(examine_block("[english_list(examine_list)]")))

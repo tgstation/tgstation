@@ -2,11 +2,23 @@
 
 // PARTS //
 
+/obj/item/weaponcrafting/Initialize(mapload)
+	. = ..()
+	create_slapcraft_component()
+
+/obj/item/weaponcrafting/proc/create_slapcraft_component()
+	return
+
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "receiver"
+
+/obj/item/weaponcrafting/receiver/create_slapcraft_component()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/pipegun)\
+	)
 
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
@@ -16,17 +28,27 @@
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"
 
+/obj/item/weaponcrafting/stock/create_slapcraft_component()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)\
+	)
+
 /obj/item/weaponcrafting/giant_wrench
 	name = "Big Slappy parts kit"
 	desc = "Illegal parts to make a giant like wrench commonly known as a Big Slappy."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "weaponkit_gw"
 
+/obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/giant_wrench)\
+	)
+
 ///These gun kits are printed from the security protolathe to then be used in making new weapons
 
 // GUN PART KIT //
 
-/obj/item/weaponcrafting/gunkit
+/obj/item/weaponcrafting/gunkit // These don't get a slapcraft component, it's added to the gun - more intuitive player-facing to slap the kit onto the gun.
 	name = "generic gun parts kit"
 	desc = "It's an empty gun parts container! Why do you have this?"
 	icon = 'icons/obj/weapons/improvised.dmi'
