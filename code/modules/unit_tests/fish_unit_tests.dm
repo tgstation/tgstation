@@ -129,6 +129,9 @@
 
 /// Checks that we are able to fish people out of chasms with priority and that they end up in the right location
 /datum/unit_test/fish_rescue_hook
+	var/original_turf_type
+	var/original_turf_baseturfs
+	var/list/mobs_spawned
 
 /datum/unit_test/fish_rescue_hook/Run()
 	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
@@ -138,23 +141,27 @@
 	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 
+	mobs_spawned = list(
+		get_in_the_hole,
+		you_too,
+		mindless,
+		no_brain,
+		empty,
+		dummy,
+	)
+
 	// our 'fisherman' where we expect the item to be moved to after fishing it up
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 
 	// create our chasm and remember the previous turf so we can change it back once we're done
-	var/original_turf_type = run_loc_floor_bottom_left.type
-	var/original_turf_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
+	original_turf_type = run_loc_floor_bottom_left.type
+	original_turf_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
 	run_loc_floor_bottom_left.ChangeTurf(/turf/open/chasm)
 	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
 
 	// into the hole they go
-	the_hole.drop(get_in_the_hole)
-	the_hole.drop(you_too)
-	the_hole.drop(mindless)
-	the_hole.drop(no_brain)
-	the_hole.drop(empty)
-	the_hole.drop(dummy)
-
+	for(var/spawned_mob in spawned_mobs)
+		the_hole.drop(spawned_mob)
 
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
@@ -181,8 +188,11 @@
 	TEST_ASSERT_EQUAL(reward, empty, "Fished up [reward]([REF(reward)]) with a rescue hook; expected to fish up [empty]([REF(empty)])")
 	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
 
-	// cleanup
+// clean up so we don't mess up subsequent tests
+/datum/unit_test/fish_rescue_hook/Destroy()
+	QDEL_LIST(mobs_spawned)
 	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
+	return ..()
 
 #undef TRAIT_FISH_TESTING
 
