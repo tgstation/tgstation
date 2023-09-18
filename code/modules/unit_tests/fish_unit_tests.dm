@@ -131,12 +131,12 @@
 /datum/unit_test/fish_rescue_hook
 
 /datum/unit_test/fish_rescue_hook/Run()
-	var/mob/living/carbon/human/get_in_the_hole = allocate(/mob/living/carbon/human) // create a human dummy to drop in the chasm
-	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
-	var/mob/living/carbon/human/mindless = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/no_brain = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/empty = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
+	var/mob/living/basic/mining/lobstrosity/consistent/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
+	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 
 	// our 'fisherman' where we expect the item to be moved to after fishing it up
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
