@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { BooleanLike } from 'common/react';
-import { Section, NoticeBox, Dropdown, LabeledList, ProgressBar, Flex, Button } from '../components';
+import { Stack, Section, LabeledList, ProgressBar, Button, NoticeBox, Dropdown } from '../components';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
 
@@ -60,10 +60,10 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={800} height={325} theme="dark">
+    <Window title="Tram Controller" width={766} height={327} theme="dark">
       <Window.Content>
-        <Flex direction="row">
-          <Flex.Item width={350} px={0.5}>
+        <Stack>
+          <Stack.Item grow={4}>
             <Section title="System Status">
               <LabeledList>
                 <LabeledList.Item label="System ID">
@@ -129,8 +129,8 @@ export const TramController = (props, context) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-          </Flex.Item>
-          <Flex.Item width={480} px={0.5}>
+          </Stack.Item>
+          <Stack.Item grow={6}>
             <Section title="Controls">
               <NoticeBox>
                 Nanotrasen is not responsible for any injuries or fatalities
@@ -141,41 +141,41 @@ export const TramController = (props, context) => {
                 color="bad"
                 my={1}
                 lineHeight={2}
-                minWidth={7}
+                width="20%"
                 minHeight={2}
                 textAlign="center"
-                content="E-Stop"
-                onClick={() => act('estop', {})}
-              />
+                onClick={() => act('estop', {})}>
+                E-Stop
+              </Button>
               <Button
                 icon="pause"
                 color="yellow"
                 my={1}
                 lineHeight={2}
-                minWidth={7}
+                width="20%"
                 minHeight={2}
                 textAlign="center"
-                content="Reset"
-                onClick={() => act('reset', {})}
-              />
+                onClick={() => act('reset', {})}>
+                Reset
+              </Button>
               <Button
                 icon="play"
                 color="green"
                 disabled={statusES || statusSF}
                 my={1}
                 lineHeight={2}
-                minWidth={21}
+                width="58%"
                 minHeight={2}
                 textAlign="center"
-                content="Start: Destination"
                 onClick={() =>
                   act('dispatch', {
                     'tripDestination': tripDestination,
                   })
-                }
-              />
+                }>
+                Start: Destination
+              </Button>
               <Dropdown
-                width="97%"
+                width="98.5%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
                 displayText={tripDestination || 'Pick a Destination'}
@@ -186,93 +186,93 @@ export const TramController = (props, context) => {
                 color="blue"
                 my={1}
                 lineHeight={2}
-                minWidth={10}
+                width="25%"
                 minHeight={2}
                 textAlign="center"
-                content="Open Doors"
-                onClick={() => act('dopen', {})}
-              />
+                onClick={() => act('dopen', {})}>
+                Open Doors
+              </Button>
               <Button
                 icon="bars"
                 color="blue"
                 my={1}
                 lineHeight={2}
-                minWidth={10}
+                width="25%"
                 minHeight={2}
                 textAlign="center"
-                content="Close Doors"
-                onClick={() => act('dclose', {})}
-              />
+                onClick={() => act('dclose', {})}>
+                Close Doors
+              </Button>
               <Button
                 icon="bars"
                 color={statusBS ? 'good' : 'bad'}
                 my={1}
                 lineHeight={2}
-                minWidth={15}
+                width="48%"
                 minHeight={2}
                 textAlign="center"
-                content="Bypass Door Sensors"
-                onClick={() => act('togglesensors', {})}
-              />
+                onClick={() => act('togglesensors', {})}>
+                Bypass Door Sensors
+              </Button>
             </Section>
             <Section title="Operational">
               <Button
                 color={statusES ? 'red' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={6}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="ESTOP"
-              />
+                textAlign="center">
+                ESTOP
+              </Button>
               <Button
                 color={statusSF ? 'yellow' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={6}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="FAULT"
-              />
+                textAlign="center">
+                FAULT
+              </Button>
               <Button
                 color={statusCE ? 'teal' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={6}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="COMMS"
-              />
+                textAlign="center">
+                COMMS
+              </Button>
               <Button
                 color={statusPD ? 'blue' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="RQST"
-              />
+                textAlign="center">
+                RQST
+              </Button>
               <Button
                 color={statusDR ? 'transparent' : 'blue'}
                 my={1}
                 lineHeight={2}
-                minWidth={6}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="DOORS"
-              />
+                textAlign="center">
+                DOORS
+              </Button>
               <Button
                 color={statusCL ? 'blue' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={6}
+                width="16%"
                 minHeight={2}
-                textAlign="center"
-                content="BUSY"
-              />
+                textAlign="center">
+                BUSY
+              </Button>
             </Section>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
