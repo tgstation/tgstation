@@ -91,26 +91,32 @@
 			owner.notify_ghost_cloning("You are being revived by [src]!")
 			owner.grab_ghost()
 
+	var/body_damage_patched = FALSE
 	if(owner.getOxyLoss())
 		owner.adjustOxyLoss(-5)
 		revive_cost += 5
 	if(owner.getBruteLoss())
 		owner.adjustBruteLoss(-2)
 		revive_cost += 40
+		body_damage_patched = TRUE
 	if(owner.getFireLoss())
 		owner.adjustFireLoss(-2)
 		revive_cost += 40
+		body_damage_patched = TRUE
 	if(owner.getToxLoss())
 		owner.adjustToxLoss(-1)
 		revive_cost += 40
+
+	if(body_damage_patched)
+		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
 		
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
 	owner.grab_ghost()
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
-	playsound(src, SFX_BODYFALL, 50, TRUE)
-	playsound(src, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	playsound(owner, SFX_BODYFALL, 50, TRUE)
+	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
 	owner.revive()
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)
