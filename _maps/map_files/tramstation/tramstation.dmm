@@ -45433,7 +45433,6 @@
 /obj/structure/rack,
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
-/obj/item/mod/control/pre_equipped/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nwv" = (
