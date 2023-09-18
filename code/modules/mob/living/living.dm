@@ -1315,14 +1315,13 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || notransform || (GODMODE & status_flags))
+	if(stat == DEAD || (GODMODE & status_flags) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
-	notransform = TRUE
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), MAGIC_TRAIT)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT

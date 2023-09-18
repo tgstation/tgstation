@@ -45,7 +45,7 @@
 	radial_state = "palm_beach"
 
 /datum/fish_source/portal/chasm
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 10,
@@ -92,7 +92,7 @@
 
 ///Unlocked by emagging the fishing portal generator with an emag.
 /datum/fish_source/portal/syndicate
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/donkfish = 5,
@@ -138,31 +138,22 @@
 	for(var/reward_path in fish_table)
 		fish_table[reward_path] = rand(1, 4)
 
-///In the spirit of randomness, difficulty, fish icon and effects are also affected by this fishing source.
-/datum/fish_source/portal/random/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
-	challenge.fish_icon_override = pick(
-		FA_ICON_QUESTION,
-		FA_ICON_LAUGH,
-		FA_ICON_MEH,
-		FA_ICON_FISH,
-		FA_ICON_FIGHTER_JET,
-		FA_ICON_GHOST,
-		FA_ICON_ENVELOPE,
-		FA_ICON_ANCHOR,
-		FA_ICON_TRASH_ALT,
-		FA_ICON_HOTDOG)
-	challenge.difficulty += rand(-10, 15)
+///Difficulty has to be calculated before the rest, because of how it influences jump chances
+/datum/fish_source/portal/random/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+	. = ..()
+	. += rand(-10, 15)
 
-	var/list/additional_effects = list(
-		FISHING_MINIGAME_RULE_ANTIGRAV,
-		FISHING_MINIGAME_RULE_HEAVY_FISH,
-		FISHING_MINIGAME_RULE_LUBED,
-		FISHING_MINIGAME_RULE_LIMIT_LOSS,
-		FISHING_MINIGAME_RULE_WEIGHTED_BAIT,
-		FISHING_MINIGAME_RULE_FLIP,
-	)
-	for(var/iteration in 1 to rand(1, 3))
-		challenge.special_effects |= pick_n_take(additional_effects)
+///In the spirit of randomness, we skew a few values here and there
+/datum/fish_source/portal/random/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
+	challenge.bait_bounce_mult = clamp(challenge.bait_bounce_mult + (rand(-3, 3) * 0.1), 0.1, 1)
+	challenge.completion_loss = max(challenge.completion_loss + rand(-2, 2), 0)
+	challenge.completion_gain = max(challenge.completion_gain + rand(-1, 1), 2)
+	challenge.short_jump_velocity_limit += rand(-100, 100)
+	challenge.long_jump_velocity_limit += rand(-100, 100)
+	var/static/list/active_effects = bitfield_to_list(FISHING_MINIGAME_ACTIVE_EFFECTS)
+	for(var/effect in active_effects)
+		if(prob(30))
+			challenge.special_effects |= effect
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
 /datum/fish_source/portal/random/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
@@ -190,9 +181,10 @@
 	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
 
+
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
@@ -211,7 +203,7 @@
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,

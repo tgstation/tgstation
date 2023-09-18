@@ -21,35 +21,46 @@
 #define ADDITIVE_FISHING_MOD "additive"
 #define MULTIPLICATIVE_FISHING_MOD "multiplicative"
 
-///The fish will swim up slowlier and down faster.
-#define FISHING_MINIGAME_RULE_HEAVY_FISH "heavy"
-///Multiplies the acceleration of the bait by a slippery 1.4
-#define FISHING_MINIGAME_RULE_LUBED "lubed"
-///Reduces the bounce coefficient when hitting the bounds from 0.6 to 0.1
-#define FISHING_MINIGAME_RULE_WEIGHTED_BAIT "weighted"
-///Limits the completion loss of the minigame when the fsh is not on the bait area
-#define FISHING_MINIGAME_RULE_LIMIT_LOSS "limit_loss"
-///Stops the bait from getting dragged down by gravity, instead allowing the player to do so by pressing the ctrl key.
-#define FISHING_MINIGAME_RULE_BIDIRECTIONAL "bidirectional"
-///Prevents the fish from getting away and thus the user losing the minigame
-#define FISHING_MINIGAME_RULE_NO_ESCAPE "no_escape"
-///Slowly damages the fish, until it dies, then it's victory
-#define FISHING_MINIGAME_RULE_KILL "kill"
-///Prevents the fishing skill from having an effect on the minigame and experience being given
-#define FISHING_MINIGAME_RULE_NO_EXP "no_exp"
-///If enabled, the minigame will screw around and occasionally flip the velocity of the bait
-#define FISHING_MINIGAME_RULE_ANTIGRAV "antigrav"
-///When activated, The position of both fish and bait will be shown flipped for the duration of the effect.
-#define FISHING_MINIGAME_RULE_FLIP "flip"
+// These defines are intended for use to interact with fishing hooks when going
+// through the fishing rod, and not the hook itself. They could probably be
+// handled differently, but for now that's how they work. It's grounds for
+// a future refactor, however.
+/// Fishing hook trait that signifies that it's shiny. Useful for fishes
+/// that care about shiner hooks more.
+#define FISHING_HOOK_SHINY (1 << 0)
+/// Fishing hook trait that lessens the bounce from hitting the edges of the minigame bar.
+#define FISHING_HOOK_WEIGHTED (1 << 1)
+///See FISHING_MINIGAME_RULE_BIDIRECTIONAL
+#define FISHING_HOOK_BIDIRECTIONAL (1 << 2)
+///Prevents the user from losing the game by letting the fish get away.
+#define FISHING_HOOK_NO_ESCAPE (1 << 3)
+///Limits the completion loss of the minigame when the fsh is not on the bait area.
+#define FISHING_HOOK_ENSNARE (1 << 4)
+///Automatically kills the fish after a while, at the cost of killing it.
+#define FISHING_HOOK_KILL (1 << 5)
 
-///These are fishing traits not handled by minigame itself but fish traits.
-
-/// Fishing hook trait that signifies that it's shiny. Useful for fishes that care about shiner hooks more.
-#define FISHING_HOOK_SHINY "shiny"
-///Reduces the difficulty of the minigame for wary fishes.
-#define FISHING_LINE_CLOAKED "cloaked"
+///Reduces the difficulty of the minigame
+#define FISHING_LINE_CLOAKED (1 << 0)
 ///Required to cast a line on lava.
-#define FISHING_LINE_REINFORCED "reinforced"
+#define FISHING_LINE_REINFORCED (1 << 1)
+/// Much like FISHING_HOOK_ENSNARE but for the fishing line.
+#define FISHING_LINE_BOUNCY (1 << 2)
+
+///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
+#define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 2)
+///Prevents the player from losing the minigame when the completion reaches 0
+#define FISHING_MINIGAME_RULE_NO_ESCAPE (1 << 3)
+///Automatically kills the fish after a while, at the cost of killing it
+#define FISHING_MINIGAME_RULE_KILL (1 << 4)
+///Prevents the fishing skill from having an effect on the minigame and experience from being awarded
+#define FISHING_MINIGAME_RULE_NO_EXP (1 << 5)
+///If enabled, the minigame will occasionally screw around and invert the velocity of the bait
+#define FISHING_MINIGAME_RULE_ANTIGRAV (1 << 6)
+///Will filp the minigame hud for the duration of the effect
+#define FISHING_MINIGAME_RULE_FLIP (1 << 7)
+
+///all the active effects that trigger during the minigame on a cooldown
+#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0

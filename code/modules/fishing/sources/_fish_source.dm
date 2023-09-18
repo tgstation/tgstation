@@ -9,27 +9,28 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * have access to, we got to make do.
  */
 GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
-		/mob/living/basic/carp = FA_ICON_FISH,
-		/mob/living/basic/mining = FA_ICON_TRIANGLE_EXCLAMATION,
-		/obj/effect/decal/remains = FA_ICON_SKULL_CROSSBONES,
-		/obj/effect/mob_spawn/corpse = FA_ICON_SKULL_CROSSBONES,
-		/obj/item/coin = FA_ICON_DOLLAR,
-		/obj/item/fish = FA_ICON_FISH,
-		/obj/item/fish/armorfish = FA_ICON_BUG,
-		/obj/item/fish/boned = FA_ICON_BONE,
-		/obj/item/fish/catfish = FA_ICON_CAT,
-		/obj/item/fish/chasm_crab = FA_ICON_BUG,
-		/obj/item/fish/holo/crab = FA_ICON_BUG,
-		/obj/item/fish/holo/puffer = FA_ICON_BOWLING_BALL,
-		/obj/item/fish/mastodon = FA_ICON_BONE,
-		/obj/item/fish/pufferfish = FA_ICON_BOWLING_BALL,
-		/obj/item/fish/slimefish = FA_ICON_POO,
-		/obj/item/fish/sludgefish = FA_ICON_POOP,
-		/obj/item/storage/wallet = FA_ICON_WALLET,
-		/obj/item/stack/sheet/bone = FA_ICON_BONE,
-		/obj/item/stack/sheet/mineral = FA_ICON_GEM,
-		/obj/item/stack/ore = FA_ICON_GEM,
-		/obj/structure/closet/crate = FA_ICON_BOX,
+		/mob/living/basic/carp = "fish",
+		/mob/living/basic/mining = "demon",
+		/obj/effect/decal/remains = "bone",
+		/obj/effect/mob_spawn/corpse = "bone",
+		/obj/item/coin = "coin",
+		/obj/item/fish = "fish",
+		/obj/item/fish/armorfish = "crab",
+		/obj/item/fish/boned = "bone",
+		/obj/item/fish/catfish = "cat",
+		/obj/item/fish/chasm_crab = "crab",
+		/obj/item/fish/holo/crab = "crab",
+		/obj/item/fish/holo/puffer = "chunky",
+		/obj/item/fish/mastodon = "chunky",
+		/obj/item/fish/pufferfish = "ball",
+		/obj/item/fish/slimefish = "slime",
+		/obj/item/fish/sludgefish = "slime",
+		/obj/item/fish/starfish = "star",
+		/obj/item/storage/wallet = "coin",
+		/obj/item/stack/sheet/bone = "bone",
+		/obj/item/stack/sheet/mineral = "gem",
+		/obj/item/stack/ore = "gem",
+		/obj/structure/closet/crate = "coin",
 	)))
 
 /**
@@ -51,7 +52,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -84,7 +85,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		. += SETTLER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod

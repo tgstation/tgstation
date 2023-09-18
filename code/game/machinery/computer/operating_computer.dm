@@ -17,13 +17,13 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 	var/list/operating_signals = list(
 		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment),

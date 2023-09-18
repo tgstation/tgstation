@@ -511,7 +511,7 @@
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
-	summoned.notransform = TRUE
+	ADD_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = MOVE_FORCE_OVERPOWERING
 	animate(summoned, 10 SECONDS, alpha = 155)
 
@@ -526,7 +526,7 @@
 	var/mob/dead/observer/picked_candidate = pick(candidates)
 	// Ok let's make them an interactable mob now, since we got a ghost
 	summoned.alpha = 255
-	summoned.notransform = FALSE
+	REMOVE_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)

@@ -65,6 +65,8 @@
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
+	/// If the computer's flashlight/LED light has forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
@@ -127,6 +129,7 @@
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
+		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
 	if(internal_cell)
@@ -657,7 +660,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
-		toggle_flashlight()
+		toggle_flashlight(user)
 		return
 
 	return ..()
@@ -668,13 +671,31 @@
  * Called from ui_act(), does as the name implies.
  * It is separated from ui_act() to be overwritten as needed.
 */
-/obj/item/modular_computer/proc/toggle_flashlight()
+/obj/item/modular_computer/proc/toggle_flashlight(mob/user)
 	if(!has_light)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
+
+/**
+ * Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+ *
+ * Called when sent COMSIG_HIT_BY_SABOTEUR.
+ */
+/obj/item/modular_computer/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!has_light)
+		return
+	set_light_on(FALSE)
+	update_appearance()
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /**
  * Sets the computer's light color, if it has a light.

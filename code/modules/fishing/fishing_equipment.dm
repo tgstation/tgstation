@@ -20,21 +20,21 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	fishing_line_traits = list(FISHING_LINE_REINFORCED)
+	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
 	desc = "Even harder to notice than the common variety."
 	icon_state = "reel_white"
-	fishing_line_traits = list(FISHING_LINE_CLOAKED)
+	fishing_line_traits = FISHING_LINE_CLOAKED
 	line_color = "#82cfdd"
 
 /obj/item/fishing_line/bouncy
 	name = "flexible fishing line reel"
 	desc = "This specialized line is much harder to snap."
 	icon_state = "reel_red"
-	fishing_line_traits = list(FISHING_MINIGAME_RULE_LIMIT_LOSS)
+	fishing_line_traits = FISHING_LINE_BOUNCY
 	line_color = "#99313f"
 
 /obj/item/fishing_line/sinew
@@ -122,7 +122,7 @@
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
 	icon_state = "weighted"
-	fishing_hook_traits = list(FISHING_MINIGAME_RULE_WEIGHTED_BAIT)
+	fishing_hook_traits = FISHING_HOOK_WEIGHTED
 	rod_overlay_icon_state = "hook_weighted_overlay"
 
 
@@ -164,26 +164,21 @@
 
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"
-	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the hook both and up and down when reeling in, otherwise keeping it stabilized."
+	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the bait both and up and down when reeling in, otherwise keeping it in place."
 	icon_state = "gyro"
-	fishing_hook_traits = list(FISHING_MINIGAME_RULE_BIDIRECTIONAL)
+	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
 	rod_overlay_icon_state = "hook_gyro_overlay"
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
-	. += span_notice("While fishing, you can hold the <b>Ctrl</b> key to move the bait down, rather than up.")
+	. += span_notice("While fishing, you can hold the <b>Right</b> Mouse Button to move the bait down, rather than up.")
 
 /obj/item/fishing_hook/jaws
 	name = "jawed hook"
 	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
 	icon_state = "jaws"
-	fishing_hook_traits = list(FISHING_MINIGAME_RULE_NO_ESCAPE, FISHING_MINIGAME_RULE_LIMIT_LOSS, FISHING_MINIGAME_RULE_KILL)
+	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
-
-/obj/item/fishing_hook/active_effects_debug
-	name = "effects debug hook"
-	desc = "Contains the 'Stealth' and 'Anti-gravity' negative effects. Not suitable for children under the age of 3."
-	fishing_hook_traits = list(FISHING_MINIGAME_RULE_FLIP, FISHING_MINIGAME_RULE_ANTIGRAV)
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
