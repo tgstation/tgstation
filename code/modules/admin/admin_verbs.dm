@@ -85,6 +85,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_fingerprints,
 	/client/proc/list_law_changes,
 	/client/proc/list_signalers,
+	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	/client/proc/respawn_character,
 	/client/proc/show_manifest,
@@ -796,6 +797,33 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Admin.Game"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/manage_sect()
+	set name = "Manage Religious Sect"
+	set category = "Admin.Game"
+
+	if (!isnull(GLOB.religious_sect))
+		var/you_sure = tgui_alert(
+			usr,
+			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
+			"Replace God?",
+			list("Yes", "Cancel"),
+		)
+		if (you_sure != "Yes")
+			return
+
+	var/static/list/choices = list()
+	if (!length(choices))
+		choices["nothing"] = null
+		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
+			choices[initial(sect.name)] = sect
+	var/choice = tgui_input_list(usr, "Set new Chaplain sect", "God Picker", choices)
+	if(isnull(choice))
+		return
+	if(choice == "nothing")
+		reset_religious_sect()
+		return
+	set_new_religious_sect(choices[choice], reset_existing = TRUE)
 
 /client/proc/deadmin()
 	set name = "Deadmin"
