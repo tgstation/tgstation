@@ -58,6 +58,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
 	r_pocket = /obj/item/storage/box/bandages
+
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
