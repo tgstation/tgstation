@@ -1,6 +1,8 @@
 /**
  * Component that handles incrementing the crusher damage tracker's total damage on enemies that are eligible
- * for that damage. Also applies the crusher damage tracker status effect if the enemy doesn't have one already.
+ * for that damage. Apply to an item/projectile/mob/spell thingamabob that would count as a source of crusher damage, e.g.
+ * the crusher(duh), its destabilizer projectile, crusher mark, trophies which cause effects that deal extra damage or spawn things that deal extra damage.
+ * Also applies the crusher damage tracker status effect if the enemy doesn't have one already.
  * Arguments:
  * - damage_to_increment - the damage we add to the victim's crusher damage counter
  * - apply_with - determines the type of the attack to determine extra behavior for damage application, see code\__DEFINES\mining.dm for define list
@@ -35,7 +37,12 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_TWOHANDED_POST_WIELD, COMSIG_TWOHANDED_POST_UNWIELD, COMSIG_PROJECTILE_ON_HIT, COMSIG_CRUSHER_SPELL_HIT, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 
 ///Tries to apply a crusher damage status effect. Returns either a new one or an already existing status effect.
-/datum/component/crusher_damage_ticker/proc/try_apply_damage_tracker(mob/living/living_target)
+/datum/component/crusher_damage_ticker/proc/try_apply_damage_tracker(atom/target)
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.mob_size < MOB_SIZE_LARGE)
+		return
 	var/has_tracker = living_target.has_status_effect(/datum/status_effect/crusher_damage)
 	if(has_tracker)
 		return has_tracker
@@ -48,9 +55,9 @@
 /datum/component/crusher_damage_ticker/proc/on_melee_attack(datum/source, mob/living/target, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(target.mob_size < MOB_SIZE_LARGE)
-		return
 	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
+	if(isnull(target_tracker))
+		return
 	target_tracker.total_damage += damage_to_increment
 
 ///Handles updating the component's damage to increment trackers with when the parent item changes its melee damage when (un)wielded.
@@ -63,31 +70,25 @@
 /datum/component/crusher_damage_ticker/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
+	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
+	if(isnull(target_tracker))
 		return
-	var/mob/living/living_target = target
-	if(living_target.mob_size < MOB_SIZE_LARGE)
-		return
-	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(living_target)
 	target_tracker.total_damage += damage_to_increment
 
 ///Handles applying and incrementing crusher damage done with a crusher-caused "spell", e.g. hierophant chaser.
 /datum/component/crusher_damage_ticker/proc/on_applied_spell(datum/source, mob/living/target, mob/living/caster, damage_dealt)
 	SIGNAL_HANDLER
 
-	if(target.mob_size < MOB_SIZE_LARGE)
-		return
 	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
+	if(isnull(target_tracker))
+		return
 	target_tracker.total_damage += damage_dealt ? damage_dealt : damage_to_increment
 
 ///Handles applying and incrementing crusher damage done by a crusher-summoned mob.
 /datum/component/crusher_damage_ticker/proc/on_mob_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
+	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
+	if(isnull(target_tracker))
 		return
-	var/mob/living/living_target = target
-	if(living_target.mob_size < MOB_SIZE_LARGE)
-		return
-	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(living_target)
 	target_tracker.total_damage += damage_to_increment

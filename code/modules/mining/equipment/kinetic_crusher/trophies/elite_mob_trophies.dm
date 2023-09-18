@@ -1,6 +1,4 @@
-/**
- * Elite fauna (tumor bosses) trophies go here.
-*/
+//Elite fauna (tumor bosses) trophies go here.
 
 /**
  * Goliath broodmother
@@ -79,7 +77,7 @@
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
 	playsound(get_turf(user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(get_turf(user))
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new(get_turf(user))
 	summoned_skull.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MOB_ATTACK, summoned_skull.melee_damage_lower)
 	summoned_skull.GiveTarget(target)
 	summoned_skull.friends += user

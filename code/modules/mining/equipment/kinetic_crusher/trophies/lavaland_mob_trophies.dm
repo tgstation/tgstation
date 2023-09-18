@@ -1,6 +1,4 @@
-/**
- * Place lavaland small game trophies here.
- */
+//Place lavaland small game trophies here.
 
 /**
  * Goliath
@@ -83,12 +81,13 @@
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-	if(deadly_shot)
-		marker.name = "heated [marker.name]"
-		marker.icon_state = "lava"
-		marker.damage = bonus_value
-		marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
-		deadly_shot = FALSE
+	if(!deadly_shot)
+		return
+	marker.name = "heated [marker.name]"
+	marker.icon_state = "lava"
+	marker.damage = bonus_value
+	marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
+	deadly_shot = FALSE
 
 /**
  * Legion - the carbon-sized one
@@ -106,13 +105,15 @@
 
 /obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
-	if(.)
-		target_crusher.charge_time -= bonus_value
+	if(!.)
+		return
+	target_crusher.charge_time -= bonus_value
 
 /obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
-	if(.)
-		target_crusher.charge_time += bonus_value
+	if(!.)
+		return
+	target_crusher.charge_time += bonus_value
 
 /**
  * Lobstrosity
@@ -124,7 +125,7 @@
 	icon_state = "lobster_claw"
 	desc = "A lobster claw. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/lobster_claw
-	bonus_value = 1 SECONDS
+	bonus_value = 10 //1 second
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly stagger the target for <b>[bonus_value * 0.1]</b> seconds"
@@ -178,11 +179,14 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
-	if(.)
-		crusher.add_item_action(ability)
+	if(!.)
+		return
+	crusher.add_item_action(ability)
 
 /obj/item/crusher_trophy/bileworm_spewlet/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
+	if(!.)
+		return
 	crusher.remove_item_action(ability)
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user)

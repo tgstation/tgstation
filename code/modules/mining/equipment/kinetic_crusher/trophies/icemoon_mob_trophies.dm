@@ -1,6 +1,4 @@
-/**
- * Place icemoon small game trophies here.
- */
+//Place icemoon small game trophies here.
 
 /**
  * Polar bear
@@ -32,7 +30,7 @@
 	desc = "It's a wolf ear. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wolf_ear"
 	denied_type = /obj/item/crusher_trophy/wolf_ear
-	bonus_value = 1 SECONDS
+	bonus_value = 10 //1 second
 
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
 	return "mark detonation to gain a <b>2X</b> speed boost for <b>[bonus_value * 0.1]</b> seconds"

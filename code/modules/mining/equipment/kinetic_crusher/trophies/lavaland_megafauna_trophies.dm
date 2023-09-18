@@ -1,6 +1,5 @@
-/**
- * Lavaland megafauna trophies go here.
- */
+//Lavaland megafauna trophies go here.
+
 
 /**
  * Blood-drunk miner
@@ -73,17 +72,19 @@
 
 /obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
-	if(.)
-		target_crusher.force += bonus_value * 0.2
-		target_crusher.detonation_damage += bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20 + bonus_value * 0.2)
+	if(!.)
+		return
+	target_crusher.force += bonus_value * 0.2
+	target_crusher.detonation_damage += bonus_value * 0.8
+	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20 + bonus_value * 0.2)
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
-	if(.)
-		target_crusher.force -= bonus_value * 0.2
-		target_crusher.detonation_damage -= bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
+	if(!.)
+		return
+	target_crusher.force -= bonus_value * 0.2
+	target_crusher.detonation_damage -= bonus_value * 0.8
+	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
@@ -110,13 +111,14 @@
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage but move slower"
 
 /obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-	if(deadly_shot)
-		marker.name = "deadly [marker.name]"
-		marker.icon_state = "chronobolt"
-		marker.damage = bonus_value
-		marker.speed = 2
-		marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
-		deadly_shot = FALSE
+	if(!deadly_shot)
+		return
+	marker.name = "deadly [marker.name]"
+	marker.icon_state = "chronobolt"
+	marker.damage = bonus_value
+	marker.speed = 2
+	marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
+	deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE

@@ -2,14 +2,14 @@
 /obj/item/kinetic_crusher
 	name = "proto-kinetic crusher"
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, forming a high-tech club. \
-	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna."
+		While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna."
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 2.075)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 2)
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	inhand_icon_state = "crusher0"
@@ -66,34 +66,36 @@
 		. += span_notice("[icon2html(attached_trophy, user)] It has \a <b>[attached_trophy]</b> attached, which causes [attached_trophy.effect_desc()].")
 
 /obj/item/kinetic_crusher/attackby(obj/item/attack_item, mob/living/user)
-	if(attack_item.tool_behaviour == TOOL_CROWBAR)
-		if(!LAZYLEN(trophies))
-			balloon_alert(user, "nothing to remove!")
-			return
-		//setup options for the radial menu
-		var/trophy_options = list()
-		var/trophy_instances = list()
-		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
-			var/datum/radial_menu_choice/new_choice = new()
-			new_choice.name = capitalize(found_trophy.name)
-			new_choice.image = image(icon = found_trophy.icon, icon_state = found_trophy.icon_state)
-			new_choice.info = "Causes [found_trophy.effect_desc()]."
-			trophy_options += list("[new_choice.name]" = new_choice)
-			trophy_instances[new_choice.name] = found_trophy
-		//show the radial menu and pick the trophy to remove
-		var/picked_trophy = show_radial_menu(user, src, trophy_options, radius = 40, custom_check = CALLBACK(src, PROC_REF(trophy_removal_check), user), require_near = TRUE, tooltips = TRUE)
-		if(!picked_trophy)
-			return
-		//handle removing the trophy
-		var/obj/item/crusher_trophy/trophy_to_remove = trophy_instances[picked_trophy]
-		attack_item.play_tool_sound(src)
-		trophy_to_remove.remove_from(src, user)
-		return
 	if(istype(attack_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/trophy_to_attach = attack_item
 		trophy_to_attach.add_to(src, user)
 		return
 	return ..()
+
+/obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!LAZYLEN(trophies))
+		balloon_alert(user, "nothing to remove!")
+		return
+	//setup options for the radial menu
+	var/trophy_options = list()
+	var/trophy_instances = list()
+	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
+		var/datum/radial_menu_choice/new_choice = new()
+		new_choice.name = capitalize(found_trophy.name)
+		new_choice.image = image(icon = found_trophy.icon, icon_state = found_trophy.icon_state)
+		new_choice.info = "Causes [found_trophy.effect_desc()]."
+		trophy_options += list("[new_choice.name]" = new_choice)
+		trophy_instances[new_choice.name] = found_trophy
+	//show the radial menu and pick the trophy to remove
+	var/picked_trophy = show_radial_menu(user, src, trophy_options, radius = 40, custom_check = CALLBACK(src, PROC_REF(trophy_removal_check), user), require_near = TRUE, tooltips = TRUE)
+	if(!picked_trophy)
+		return
+	//handle removing the trophy
+	var/obj/item/crusher_trophy/trophy_to_remove = trophy_instances[picked_trophy]
+	tool.play_tool_sound(src)
+	trophy_to_remove.remove_from(src, user)
+	return TRUE
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))

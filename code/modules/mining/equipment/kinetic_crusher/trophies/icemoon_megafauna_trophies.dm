@@ -1,6 +1,5 @@
-/**
- * Icemoon megafauna trophies go here.
- */
+//Icemoon megafauna trophies go here.
+
 
 /**
  * Demonic frost miner
@@ -78,10 +77,12 @@
 
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 40)
+	if(!.)
+		return
+	crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 40)
 
 /obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
+	if(!.)
+		return
+	crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
