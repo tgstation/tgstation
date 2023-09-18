@@ -85,3 +85,5 @@
 #define MOD_AI_RANGE 200
 
 #define BB_GROUP_DATUM "BB_group_datum"
+///should we skip the faction check for the targetting datum?
+#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"

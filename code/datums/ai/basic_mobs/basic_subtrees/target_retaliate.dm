@@ -7,10 +7,15 @@
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Blackboard key in which to store selected target's hiding place
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
+	/// do we check for faction?
+	var/check_faction = FALSE
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targetting_datum_key, hiding_place_key)
+	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targetting_datum_key, hiding_place_key, check_faction)
+
+/datum/ai_planning_subtree/target_retaliate/check_faction
+	check_faction = TRUE
 
 /// Places a mob which you can see and who has recently attacked you into some 'run away from this' AI keys
 /// Can use a different targetting datum than you use to select attack targets
@@ -29,20 +34,28 @@
 	/// How far can we see stuff?
 	var/vision_range = 9
 
-/datum/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, shitlist_key, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, shitlist_key, target_key, targetting_datum_key, hiding_location_key, check_faction)
 	. = ..()
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
-	var/list/enemies_list = controller.blackboard[shitlist_key]
-	if (!length(enemies_list))
-		finish_action(controller, succeeded = FALSE)
+
+	var/list/enemies_list = list()
+
+	for(var/mob/living/potential_target as anything in controller.blackboard[shitlist_key])
+		if(!targetting_datum.can_attack(living_mob, potential_target, vision_range, check_faction))
+			continue
+		enemies_list += potential_target
+
+
+	if(!length(enemies_list))
+		finish_action(controller, succeeded = FALSE, check_faction = check_faction)
 		return
 
 	if (controller.blackboard[target_key] in enemies_list) // Don't bother changing
-		finish_action(controller, succeeded = FALSE)
+		finish_action(controller, succeeded = TRUE, check_faction = check_faction)
 		return
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
@@ -53,18 +66,15 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	finish_action(controller, succeeded = TRUE)
-
-/// Returns true if this target is valid for attacking based on current conditions
-/datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target, datum/targetting_datum/targetting_datum)
-	if (!target)
-		return FALSE
-	if (target == living_mob)
-		return FALSE
-	if (!can_see(living_mob, target, vision_range))
-		return FALSE
-	return targetting_datum.can_attack(living_mob, target)
+	finish_action(controller, succeeded = TRUE, check_faction = check_faction)
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	return pick(enemies_list)
+
+
+/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key, check_faction)
+	. = ..()
+	if(check_faction)
+		return
+	controller.set_blackboard_key(BB_BASIC_MOB_SKIP_FACTION_CHECK, succeeded)
