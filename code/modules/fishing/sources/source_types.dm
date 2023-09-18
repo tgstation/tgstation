@@ -24,9 +24,10 @@
 		/obj/item/fish/guppy = 10,
 	)
 	catalog_description = "Fish dimension (Fishing portal generator)"
+
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
@@ -45,7 +46,7 @@
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,

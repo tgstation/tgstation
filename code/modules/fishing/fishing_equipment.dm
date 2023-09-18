@@ -162,14 +162,14 @@
 
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"
-	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the hook both and up and down when reeling in, otherwise keeping it stabilized."
+	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the bait both and up and down when reeling in, otherwise keeping it in place."
 	icon_state = "gyro"
 	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
 	rod_overlay_icon_state = "hook_gyro_overlay"
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
-	. += span_notice("While fishing, you can hold the <b>Ctrl</b> key to move the bait down, rather than up.")
+	. += span_notice("While fishing, you can hold the <b>Right</b> Mouse Button to move the bait down, rather than up.")
 
 /obj/item/fishing_hook/jaws
 	name = "jawed hook"
