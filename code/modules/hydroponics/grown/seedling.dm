@@ -19,7 +19,8 @@
 	var/obj/machinery/hydroponics/parent = loc
 	var/list/grow_locations = get_adjacent_open_turfs(parent)
 	var/turf/final_location = length(grow_locations) ? pick(grow_locations) : get_turf(parent)
-	new product(final_location, harvester)
+	var/mob/living/basic/seedling/seed_pet = new product(final_location)
+	seed_pet.assign_tamer(harvester)
 	parent.update_tray(user = harvester, product_count = 1)
 
 /obj/item/seeds/seedling/evil

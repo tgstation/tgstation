@@ -328,7 +328,7 @@
 
 /datum/uplink_item/role_restricted/evil_seedling
 	name = "Evil Seedling"
-	desc = "A rare seed we have recovered that grows into a dangerous specie that will aid you with your tasks!"
+	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)

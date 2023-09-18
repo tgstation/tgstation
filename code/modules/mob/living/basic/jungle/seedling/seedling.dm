@@ -52,7 +52,7 @@
 		/datum/pet_command/follow,
 	)
 
-/mob/living/basic/seedling/Initialize(mapload, mob/living/tamer)
+/mob/living/basic/seedling/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/seed_attack = new(src)
 	seed_attack.Grant(src)
@@ -79,9 +79,11 @@
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))
-	if(tamer)
-		befriend(tamer)
 	update_appearance()
+
+
+/mob/living/basic/seedling/proc/assign_tamer(mob/living/tamer)
+	befriend(tamer)
 
 /mob/living/basic/seedling/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
@@ -90,7 +92,7 @@
 		treat_hydro_tray(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(!held_can)
+	if(isnull(held_can))
 		return
 
 	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/reagent_dispensers))
@@ -213,39 +215,6 @@
 	)
 
 ///abilities
-/obj/projectile/seedling
-	name = "solar energy"
-	icon_state = "seedling"
-	damage = 10
-	damage_type = BURN
-	light_range = 2
-	armor_flag = ENERGY
-	light_color = LIGHT_COLOR_DIM_YELLOW
-	speed = 1.6
-	hitsound = 'sound/weapons/sear.ogg'
-	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	nondirectional_sprite = TRUE
-
-/obj/projectile/seedling/on_hit(atom/target)
-	if(!isliving(target))
-		return ..()
-
-	var/mob/living/living_target = target
-	if(FACTION_JUNGLE in living_target.faction)
-		return
-
-	return ..()
-
-/obj/effect/temp_visual/solarbeam_killsat
-	name = "beam of solar energy"
-	icon_state = "solar_beam"
-	icon = 'icons/effects/beam.dmi'
-	plane = LIGHTING_PLANE
-	layer = LIGHTING_PRIMARY_LAYER
-	duration = 3 SECONDS
-	alpha = 200
-	randomdir = FALSE
-
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling
 	name = "Solar Energy"
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
