@@ -14,6 +14,9 @@
 /// The max amount of dirtiness a microwave can be
 #define MAX_MICROWAVE_DIRTINESS 100
 
+/// For the wireless version, and display fluff
+#define TIER_1_CELL_CHARGE_RATE 250
+
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
@@ -70,7 +73,7 @@
 
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
-
+	register_context()
 	set_wires(new /datum/wires/microwave(src))
 	create_reagents(100)
 	soundloop = new(src, FALSE)
@@ -96,6 +99,23 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
+/obj/machinery/microwave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(broken > NOT_BROKEN)
+		if(broken == REALLY_BROKEN && held_item.tool_behaviour == TOOL_WIRECUTTER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+
+		else if(broken == KINDA_BROKEN && held_item.tool_behaviour == TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	context[SCREENTIP_CONTEXT_LMB] = "Show menu"
+
+	if(length(ingredients) != 0)
+		context[SCREENTIP_CONTEXT_RMB] = "Cook"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
 	efficiency = 0
@@ -111,10 +131,7 @@
 		if(!operating && !vampire_charging_enabled)
 			. += span_notice("Alt-click [src] to change default mode.")
 
-		if(!vampire_charging_enabled)
-			. += span_notice("Right-click [src] to start cooking cycle.")
-		else
-			. += span_notice("Right-click [src] to start charging cycle.")
+		. += span_notice("Right-click [src] to start cooking cycle.")
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src]'s contents and display!")
@@ -351,10 +368,7 @@
 		if(!length(ingredients))
 			balloon_alert(user, "it's empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(vampire_charging_enabled)
-			charge(user)
-		else
-			cook(user)
+		cook(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/AltClick(mob/user, list/modifiers)
@@ -418,18 +432,25 @@
 /obj/machinery/microwave/proc/cook(mob/cooker)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
+
 	if(operating || broken > 0 || panel_open || !anchored || dirty >= MAX_MICROWAVE_DIRTINESS)
 		return
+
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(!isnull(cell) && cell.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		balloon_alert(cooker, "replace cell!")
+		return
+
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
-	to_chat(world, "prob: [prob(max((5 / efficiency) - 5, dirty * 5))]")
+
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
@@ -450,6 +471,8 @@
 /obj/machinery/microwave/proc/wzhzhzh()
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
+	if(!isnull(cell))
+		cell.use(TIER_1_CELL_CHARGE_RATE * efficiency)
 
 	set_light(1.5)
 	soundloop.start()
@@ -507,10 +530,7 @@
 				pre_success(cooker)
 		return
 	time--
-	if(cell)
-		use_power(active_power_usage)
-	else
-		use_power(active_power_usage)
+	use_power(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(cook_loop), type, time, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()
@@ -518,6 +538,9 @@
 	if((machine_stat & NOPOWER) && operating)
 		pre_fail()
 		eject()
+
+/obj/machinery/microwave/power_change()
+	. = ..()
 
 /**
  * Called when the cook_loop is done successfully, no dirty mess or whatever
@@ -619,7 +642,7 @@
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
 		if(!istype(potential_item, /obj/item/modular_computer/pda))
-			say("Electronic devices only.")
+			balloon_alert(cooker, "PDA only!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 			return
 
@@ -638,22 +661,18 @@
 		pre_fail()
 		return
 
-	to_chat(world, "charge request: [vampire_charge_amount]")
-	if(!vampire_charge_amount || !length(ingredients) || !cell.charge)
+	if(!vampire_charge_amount || !length(ingredients) || !cell.charge || vampire_charge_amount < 25)
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return
 
 	var/charge_rate = vampire_cell.chargerate * efficiency
-	to_chat(world, "charge rate: [charge_rate]")
 	if(charge_rate > vampire_charge_amount)
 		charge_rate = vampire_charge_amount
 
-	to_chat(world, "vampiring: [charge_rate]")
 	if(!cell.use(charge_rate))
 		charge_loop_finish(cooker)
-	to_chat(world, "send: [(charge_rate * (0.7 + efficiency * 0.05))]")
-	vampire_cell.give(charge_rate * (0.7 + efficiency * 0.05))
+	vampire_cell.give(charge_rate * (0.7 + efficiency * 0.05)) // we lose a tiny bit of power in the transfer as heat
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 
@@ -702,7 +721,7 @@
 	//We don't use area power, we always use the cell
 	base_icon_state = "engi_"
 	use_power = NO_POWER_USE
-	// anchored = FALSE
+
 	cell = new /obj/item/stock_parts/cell
 	vampire_charging_capable = TRUE
 	ingredient_shifts_x = list(
@@ -710,6 +729,16 @@
 		3,
 	)
 	ingredient_shifts_y = 0
+
+/obj/machinery/microwave/engineering/power_change()
+	. = ..()
+	return
+
+/obj/machinery/microwave/RefreshParts()
+	. = ..()
+	if(!isnull(cell))
+		for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+			cell = stock_cell
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK
@@ -720,3 +749,4 @@
 #undef REALLY_BROKEN
 
 #undef MAX_MICROWAVE_DIRTINESS
+#undef TIER_1_CELL_CHARGE_RATE

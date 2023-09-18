@@ -1242,6 +1242,19 @@
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/cell = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
