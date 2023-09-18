@@ -275,3 +275,13 @@
 	suffix = "lavaland_surface_phonebooth.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/vent
+	name = "Ore Vent"
+	id = "ore_vent"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon."
+	suffix = "lavaland_surface_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE

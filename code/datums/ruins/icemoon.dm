@@ -173,3 +173,13 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/vent
+	name = "Ore Vent"
+	id = "ore_vent"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon."
+	suffix = "icemoon_underground_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE

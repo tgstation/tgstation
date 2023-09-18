@@ -29,8 +29,7 @@
 		/obj/structure/geyser/protozine = 10,
 		/obj/structure/geyser/random = 2,
 		/obj/structure/geyser/wittel = 10,
-		/obj/structure/ore_vent/random/icebox = 40,
-		/obj/structure/ore_vent/boss/icebox = 2,
+		/obj/structure/ore_vent/boss/icebox = 1,
 		)
 
 /datum/map_generator/cave_generator/icemoon/surface

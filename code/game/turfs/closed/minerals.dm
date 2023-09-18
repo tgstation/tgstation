@@ -81,8 +81,8 @@
 					M.Change_Ore(mineralType)
 
 /turf/closed/mineral/proc/Change_Ore(ore_type, random = 0)
-	// if(random)
-	// 	mineralAmt = rand(1, 5)
+	if(random)
+		mineralAmt = rand(1, 5)
 	if(ispath(ore_type, /obj/item/stack/ore)) //If it has a scan_state, switch to it
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
@@ -315,7 +315,8 @@
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
-				M.mineralAmt = rand(1, 5)
+				// M.mineralAmt = rand(1, 5)
+				M.scale_ore_to_vent()
 				SSore_generation.post_ore_r["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
@@ -324,7 +325,7 @@
 				T.levelupdate()
 
 		else
-			Change_Ore(path, 1)
+			Change_Ore(path, FALSE)
 			Spread_Vein(path)
 			scale_ore_to_vent()
 			SSore_generation.post_ore_m["[mineralAmt]"] += 1
