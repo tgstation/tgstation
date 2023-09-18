@@ -132,7 +132,7 @@
 
 /datum/unit_test/fish_rescue_hook/Run()
 	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
-	var/mob/living/basic/mining/lobstrosity/consistent/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
+	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
 	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
