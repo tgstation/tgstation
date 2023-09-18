@@ -20,6 +20,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = new /obj/item/extinguisher(src)
 	update_appearance(UPDATE_ICON)
 	register_context()
+	find_and_hang_on_wall()
 
 /obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
