@@ -483,7 +483,7 @@
 	max_amount = 1
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 20
+	heal_brute = 25
 	stop_bleeding = 0.2
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
@@ -493,3 +493,4 @@
 	name = "makeshift bandage"
 	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
 	icon_state = "bandage_makeshift"
+	icon_state_preview = "bandage_makeshift_3"
