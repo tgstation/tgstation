@@ -131,12 +131,12 @@
 /datum/unit_test/fish_rescue_hook
 
 /datum/unit_test/fish_rescue_hook/Run()
-	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
+	var/mob/living/carbon/human/get_in_the_hole = allocate(/mob/living/carbon/human) // create a human dummy to drop in the chasm
 	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
-	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/mindless = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/no_brain = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/empty = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
 
 	// our 'fisherman' where we expect the item to be moved to after fishing it up
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
@@ -153,8 +153,9 @@
 	the_hole.drop(empty)
 	the_hole.drop(dummy)
 
+
 	// pretend like this mob has a mind. they should be fished up first
-	no_brain.mind = TRUE
+	no_brain.mind_initialize()
 
 	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
@@ -166,8 +167,16 @@
 	var/atom/movable/reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
 
 	// mobs with minds (aka players) should have precedence over any other mobs that are in the chasm
-	TEST_ASSERT_EQUAL(reward, no_brain, "Fished up [reward] with a rescue hook; expected to fish up [no_brain]")
+	TEST_ASSERT_EQUAL(reward, no_brain, "Fished up [reward] ([REF(reward)]) with a rescue hook; expected to fish up [no_brain]([REF(no_brain)])")
 	// it should end up on the same turf as the fisherman
+	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
+
+	// let's further test that by giving a second mob a mind. they should be fished up immediately..
+	empty.mind_initialize()
+
+	reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
+
+	TEST_ASSERT_EQUAL(reward, empty, "Fished up [reward]([REF(reward)]) with a rescue hook; expected to fish up [empty]([REF(empty)])")
 	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
 
 	// cleanup
