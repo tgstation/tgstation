@@ -16,31 +16,9 @@
 	/// If true we're currently portable
 	var/is_portable = TRUE
 
-/obj/item/surgery_tray/deployed
-	is_portable = FALSE
-
-/obj/item/surgery_tray/full
-
-/obj/item/surgery_tray/full/deployed
-	is_portable = FALSE
-
+/// FIlls the tray with items it should contain on creation
 /obj/item/surgery_tray/proc/populate_contents()
-
-/obj/item/surgery_tray/full/populate_contents()
-	new /obj/item/blood_filter(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/cautery(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/razor/surgery(src)
-	new /obj/item/retractor(src)
-	new /obj/item/scalpel(src)
-	new /obj/item/stack/medical/bone_gel(src)
-	new /obj/item/stack/sticky_tape/surgical(src)
-	new /obj/item/surgical_drapes(src)
-	new /obj/item/surgicaldrill(src)
-	update_appearance(UPDATE_OVERLAYS)
+	return
 
 /obj/item/surgery_tray/Initialize(mapload)
 	. = ..()
@@ -176,6 +154,30 @@
 		new /obj/item/stack/rods(drop_location(), 2)
 		new /obj/item/stack/sheet/mineral/silver(drop_location())
 	return ..()
+
+/obj/item/surgery_tray/deployed
+	is_portable = FALSE
+
+/obj/item/surgery_tray/full
+
+/obj/item/surgery_tray/full/deployed
+	is_portable = FALSE
+
+/obj/item/surgery_tray/full/populate_contents()
+	new /obj/item/blood_filter(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/cautery(src)
+	new /obj/item/circular_saw(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/hemostat(src)
+	new /obj/item/razor/surgery(src)
+	new /obj/item/retractor(src)
+	new /obj/item/scalpel(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/surgicaldrill(src)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/surgery_tray/morgue
 	name = "autopsy tray"
