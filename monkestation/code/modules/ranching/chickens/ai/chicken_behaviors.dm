@@ -5,6 +5,7 @@
 	new_movement = /datum/ai_movement/jps/oneshot
 
 /datum/ai_behavior/targeted_mob_ability/min_range/chicken/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+	. = ..()
 	controller.change_ai_movement_type(/datum/ai_movement/dumb)
 
 /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
