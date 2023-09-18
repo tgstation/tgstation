@@ -27,6 +27,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	melee_attack_cooldown = 1 SECONDS
 
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
@@ -151,7 +152,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/statue,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
 	)
 
@@ -160,3 +161,20 @@
 
 /datum/ai_behavior/basic_melee_attack/statue
 	action_cooldown = 1 SECONDS
+
+/mob/living/basic/statue/frosty
+	name = "Frosty"
+	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman."
+	icon_dead = "snowman"
+	icon_living = "snowman"
+	icon_state = "snowman"
+	health = 5000
+	maxHealth = 5000
+	melee_damage_lower = 65
+	melee_damage_upper = 65
+	faction = list("statue","mining")
+
+/mob/living/basic/statue/frosty/Initialize(mapload)
+	. = ..()
+	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
+	AddElement(/datum/element/death_drops, death_loot)

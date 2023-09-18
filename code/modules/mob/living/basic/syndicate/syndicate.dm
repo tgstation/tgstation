@@ -16,6 +16,7 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	istate = ISTATE_HARM|ISTATE_BLOCKING
+	melee_attack_cooldown = 1.2 SECONDS
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
 	unsuitable_heat_damage = 7.5

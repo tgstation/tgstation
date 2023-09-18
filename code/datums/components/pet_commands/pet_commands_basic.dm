@@ -111,7 +111,7 @@
 	pointed_reaction = "and growls"
 	/// Balloon alert to display if providing an invalid target
 	var/refuse_reaction = "shakes head"
-	/// Attack behaviour to use, generally you will want to override this to add some kind of cooldown
+	/// Attack behaviour to use
 	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Refuse to target things we can't target, chiefly other friends

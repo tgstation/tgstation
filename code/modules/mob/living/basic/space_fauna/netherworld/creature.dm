@@ -15,6 +15,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "gets his head split open."
@@ -111,5 +112,5 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

@@ -69,6 +69,7 @@
 	INVOKE_ASYNC(src, PROC_REF(cannibalize_victim), victim)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
 	balloon_alert(src, "sculpting...")
 	if(!do_after(src, 5 SECONDS, target = target))
@@ -80,7 +81,9 @@
 	dragon_statue.set_anchored(TRUE)
 	qdel(target)
 
+/// Gib and consume our fellow ice drakes
 /mob/living/basic/mining/ice_whelp/proc/cannibalize_victim(mob/living/target)
+	start_pulling(target)
 	balloon_alert(src, "devouring...")
 	if(!do_after(src, 5 SECONDS, target))
 		return

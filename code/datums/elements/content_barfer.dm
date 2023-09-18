@@ -4,9 +4,8 @@
  * Used for morphs and bileworms!
  */
 /datum/element/content_barfer
-	argument_hash_start_idx = 2
 
-/datum/element/content_barfer/Attach(datum/target, tally_string)
+/datum/element/content_barfer/Attach(datum/target)
 	. = ..()
 
 	if(!isliving(target))
