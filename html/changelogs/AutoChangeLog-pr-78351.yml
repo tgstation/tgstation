@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix wooden barricade description \"This looks like it can be barricaded with planks of wood\" being spammed on objects."
