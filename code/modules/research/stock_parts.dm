@@ -100,22 +100,20 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
  */
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
+
+	if(istype(inserted_component, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+		if(inserted_cell.rigged || inserted_cell.corrupted)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
+			usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+		return
+
 	if(inserted_component.reagents)
 		if(length(inserted_component.reagents.reagent_list))
 			inserted_component.reagents.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
 		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
-
-
-	if(!istype(inserted_component, /obj/item/stock_parts/cell))
-		return
-
-	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
-
-	if(inserted_cell.rigged || inserted_cell.corrupted)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
-		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**
  * Signal handler for when the reagents datum of an inserted part has reagents added to it.

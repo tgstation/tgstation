@@ -524,3 +524,157 @@
   - bugfix: Fix poor dynamic threat distribution at lower population levels, causing
       dynamic to generate better threat curves at lower population levels than it
       did before.
+2023-09-15:
+  Ghommie:
+  - bugfix: fixed fishing.
+  - bugfix: Fixed a race condition that made fishing yield no reward way too often.
+  - bugfix: The legendary fisher achievement is awarded even if you don't win the
+      minigame.
+  - bugfix: Fixed a fish hook exploit.
+  - bugfix: Baits are now properly consumed by caught fish and (alive) mobs.
+  ZephyrTFA:
+  - bugfix: you can no longer bypass html sanitization using the table element. >:(
+2023-09-16:
+  AtomTheProphet:
+  - balance: The spontaneous brain trauma event will no longer occur if there are
+      fewer than 13 players.
+  Donglesplonge:
+  - bugfix: adds the bolted and welded helper to the bar backroom/kitchen coldroom
+      airlock on birdshot, as to prevent chefs from being able to access armor and
+      sunglasses roundstart with barely any work involved
+  Hatterhat:
+  - bugfix: Flares and candles no longer sound like flashlights when being turned
+      on.
+  - bugfix: Getting shot by an SC/FISHER now disables PDA lights for consistency's
+      sake.
+  - balance: Pulling embedded items e.g. shrapnel with hemostats is now a lot faster,
+      and scales appropriately with toolspeed.
+  - balance: You can now pull embedded items with wirecutters, at a speed penalty.
+  Jacquerel:
+  - balance: Watchers will no longer put you at gunpoint.
+  - bugfix: The nuclear operative MODsuit intellicard now actually downloads an AI
+      rather than simply kicking candidates from the game.
+  LovliestPlant:
+  - qol: '[Deltastation, Icebox, Metastation, Tramstation] Adds cell timers to isolation
+      cells. (they do not auto-open the doors)'
+  - qol: '[Birdshot, Deltastation, Icebox, Metastation, Northstar, Tramstation] Adds
+      translator glove modules to the stacks of "accessibility" (e.g. plasma fixation
+      / thermal regulator) modules found in security, medical, and engineering storage
+      rooms.'
+  - qol: '[Birdshot] Adds a roll of packaging paper to the cargo office.'
+  - qol: '[Icebox] Adds a hand labeler to security''s gear room.'
+  - qol: '[Northstar] Nudges the set of binoculars covering the mass driver controls
+      in ordnance over a few inches.'
+  - bugfix: '[Birdshot] Remaps the janitor''s closet such that the recycling machine
+      will now work.'
+  - bugfix: '[Icebox] Removes a duplicated hand labeler from the rack near security''s
+      brig cells.'
+  - bugfix: '[Metastation] Patches a broken corpse disposal pipe running from aux
+      surgery to the morgue.'
+  - bugfix: '[Northstar] Fixes the SM being hotwired at round-start (partially rewires
+      the SM room, moves the APC to the North wall).'
+  Pickle-Coding:
+  - bugfix: Fixes tesla coils duplicating the power of >7GeV supermatter zaps.
+  SyncIt21:
+  - bugfix: returning items to vendors works correctly
+  - bugfix: you can't return items that has stuff in it for e.g. a serving tray with
+      food in it
+  - bugfix: Unary vents & Injectors now link properly with air sensors via multitool
+      both ways
+  Thunder12345:
+  - rscadd: There's a new space ruin in town, be on the lookout for a hidden supply
+      cache.
+  - rscadd: Added a new type of wall which can only be destroyed by blowing it up.
+  Vincent983:
+  - qol: The supply beacon will no longer delete itself due to explosions, and you
+      can now anchor it with a wrench.
+  - spellcheck: Express console now correctly states that it needs cargo access instead
+      of QM access.
+  Zergspower:
+  - bugfix: Space ruin Anomaly Research - Fixes stacked windows and underplating
+  cnleth:
+  - spellcheck: Replaced an irrelevant tip of the round about scars with a better
+      one
+  mc-oofert:
+  - bugfix: the bank machine cannot print holochips worth 0 credits now
+  - rscadd: climbing hooks that allow you to go up holes for multiz, found in internals
+      boxes (on planetary maps), the uplink, cargo and nukie personal lockers
+  san7890:
+  - balance: You will be knocked down again on certain vomits. Don't worry, you'll
+      deserve it when it happens.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause grown inedible plant seeds (like tower cap)
+      to vanish from existence upon being added to the seed extractor
+  - bugfix: fixes a issue that would cause fruit wine to bug out when trying to blend
+      its reagent color
+2023-09-17:
+  ArcaneMusic:
+  - rscadd: Wall mounted objects (Things like APCs, Air Alarms, Light switches, Signs,
+      Posters, Newscasters, you name it) will now fall to the ground and break or
+      deconstruct when their attaching wall is changed or broken.
+  Ical92:
+  - bugfix: adds a few firelocks and alarms around IceBox
+  Timberpoes:
+  - bugfix: Forgetting to take dough out of the oven no longer progresses the server
+      to a crash-worthy state with infinite bread and ash and burned food products
+      for all.
+  Vincent983:
+  - qol: the recycler can now be rotated
+  blueDev2:
+  - bugfix: Lipolicide and other chems now puts you in crit, even if it is the only
+      source of damage
+  cnleth:
+  - image: Hercuri spray now uses the same sprite as the yellow medical spray
+  - spellcheck: Added a missing space to hercuri spray's description
+  mc-oofert:
+  - bugfix: the nukie medibot (oppenheimer) has access to the doors of the infiltrator
+      and is not shot at by the turrets
+  notlulz:
+  - bugfix: Monkeys have their tails back.
+  - bugfix: Recipe paper in the ruins now shows a normal recipe for Metalgen and Secret
+      sauce.
+  starrm4nn:
+  - spellcheck: Fixed some typos on QM's Overcoat
+2023-09-18:
+  ArcaneMusic:
+  - rscadd: A new ruin has appeared on lavaland, featuring the site of an ancient
+      battle.
+  Jacquerel:
+  - rscadd: Ghosts (observers) can eat ghost burgers and booberry muffins.
+  - balance: Ghost burgers will not decay or pick up germs due to the fact that they
+      moved themselves off a table.
+  Melbert:
+  - balance: Humanoids without tongues cannot cast spells with vocal components
+  - balance: Humanoids without arms cannot cast spells with emotive components
+  SyncIt21:
+  - qol: Machines now transfer their local materials to silo during linking with multitool
+  - code_imp: added some null checks for general juicing & grinding items
+  - bugfix: grinding stacks now grinds as many pieces/sheets from the stack as possible
+      that can fit in a beaker/container without wasting the whole stack
+  - bugfix: plumbing chemical grinder now actually works again
+  - bugfix: the plumbing chemical grinder allows stuff to enter from any direction
+      but not mobs and also accepts items put inside it via hand including bags
+  - bugfix: You can remove the beaker from the all in 1 grinder when power is off
+      via right click
+  - bugfix: All in 1 grinder now mixes faster with upgraded parts
+  - refactor: you can no longer walk into a plumbing chemical grinder
+  - bugfix: Manually constructed windoors have correct unrestricted accesses applied
+      to them
+  - bugfix: Windoors created via RCD now actually have electronics inside them
+  - bugfix: Airlocks constructed via RCD have the shell component correctly installed
+      inside them and have no other missing variables
+  Thebleh:
+  - bugfix: Bluespace RPEDs can now be rigged again
+  Vincent983:
+  - bugfix: made the radiation protection crate's contents match it's description
+  ZephyrTFA:
+  - rscadd: NanoTrasen improved the quality of the local durathread strain; resulting
+      in it now being twice as filling!
+  jlsnow301:
+  - bugfix: Fixed a resource dupe in the ORM.
+  mc-oofert:
+  - refactor: heretic sacrifice room is now lazyloaded
+  - rscadd: added the inspectors hat to the detectives cabinet, a special hat that
+      allows the wearer to say a phrase to dispense a stored item
+  necromanceranne:
+  - code_imp: Cleans up some unnecessary code left over from caseless ammo.
