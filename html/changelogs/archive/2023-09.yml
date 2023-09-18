@@ -635,3 +635,46 @@
       sauce.
   starrm4nn:
   - spellcheck: Fixed some typos on QM's Overcoat
+2023-09-18:
+  ArcaneMusic:
+  - rscadd: A new ruin has appeared on lavaland, featuring the site of an ancient
+      battle.
+  Jacquerel:
+  - rscadd: Ghosts (observers) can eat ghost burgers and booberry muffins.
+  - balance: Ghost burgers will not decay or pick up germs due to the fact that they
+      moved themselves off a table.
+  Melbert:
+  - balance: Humanoids without tongues cannot cast spells with vocal components
+  - balance: Humanoids without arms cannot cast spells with emotive components
+  SyncIt21:
+  - qol: Machines now transfer their local materials to silo during linking with multitool
+  - code_imp: added some null checks for general juicing & grinding items
+  - bugfix: grinding stacks now grinds as many pieces/sheets from the stack as possible
+      that can fit in a beaker/container without wasting the whole stack
+  - bugfix: plumbing chemical grinder now actually works again
+  - bugfix: the plumbing chemical grinder allows stuff to enter from any direction
+      but not mobs and also accepts items put inside it via hand including bags
+  - bugfix: You can remove the beaker from the all in 1 grinder when power is off
+      via right click
+  - bugfix: All in 1 grinder now mixes faster with upgraded parts
+  - refactor: you can no longer walk into a plumbing chemical grinder
+  - bugfix: Manually constructed windoors have correct unrestricted accesses applied
+      to them
+  - bugfix: Windoors created via RCD now actually have electronics inside them
+  - bugfix: Airlocks constructed via RCD have the shell component correctly installed
+      inside them and have no other missing variables
+  Thebleh:
+  - bugfix: Bluespace RPEDs can now be rigged again
+  Vincent983:
+  - bugfix: made the radiation protection crate's contents match it's description
+  ZephyrTFA:
+  - rscadd: NanoTrasen improved the quality of the local durathread strain; resulting
+      in it now being twice as filling!
+  jlsnow301:
+  - bugfix: Fixed a resource dupe in the ORM.
+  mc-oofert:
+  - refactor: heretic sacrifice room is now lazyloaded
+  - rscadd: added the inspectors hat to the detectives cabinet, a special hat that
+      allows the wearer to say a phrase to dispense a stored item
+  necromanceranne:
+  - code_imp: Cleans up some unnecessary code left over from caseless ammo.
