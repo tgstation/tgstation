@@ -4160,7 +4160,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/port/aft)
 "bcm" = (
-/obj/machinery/lapvend,
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -47394,7 +47393,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "msf" = (
-/obj/machinery/lapvend,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1

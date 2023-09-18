@@ -75421,7 +75421,6 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "xlf" = (
-/obj/machinery/lapvend,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
