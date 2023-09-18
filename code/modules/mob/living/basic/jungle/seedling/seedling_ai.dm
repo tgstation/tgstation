@@ -11,8 +11,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_and_hunt_target/watering_can,
-		/datum/ai_planning_subtree/treat_hydroplants,
 		/datum/ai_planning_subtree/find_and_hunt_target/fill_watercan,
+		/datum/ai_planning_subtree/find_and_hunt_target/treat_hydroplants,
+		/datum/ai_planning_subtree/find_and_hunt_target/beamable_hydroplants,
 	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/watering_can
@@ -28,64 +29,12 @@
 		return
 	return ..()
 
-/datum/ai_planning_subtree/treat_hydroplants/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/solar_ability = controller.blackboard[BB_SOLARBEAM_ABILITY]
-	var/obj/machinery/hydroponics/target_hydro = controller.blackboard[BB_HYDROPLANT_TARGET]
-
-	if(QDELETED(target_hydro))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/treatable_hydro, BB_HYDROPLANT_TARGET, /obj/machinery/hydroponics)
-		return
-
-	var/needs_healing = target_hydro.plant_health < target_hydro.myseed?.endurance
-
-	if(!QDELETED(solar_ability) && solar_ability.IsAvailable() && needs_healing)
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/solarbeam, BB_SOLARBEAM_ABILITY, BB_HYDROPLANT_TARGET)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	controller.queue_behavior(/datum/ai_behavior/treat_hydroplants, BB_HYDROPLANT_TARGET)
-
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/solarbeam
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	required_distance = 2
-	action_cooldown = 1 MINUTES
-
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/solarbeam/setup(datum/ai_controller/controller, ability_key, target_key)
-	. = ..()
-	var/obj/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/treat_hydroplants
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 3 SECONDS
-
-/datum/ai_behavior/treat_hydroplants/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/obj/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/treat_hydroplants/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
-	var/mob/living/basic/living_pawn = controller.pawn
-	var/obj/machinery/hydroponics/hydro_target = controller.blackboard[target_key]
-
-	if(QDELETED(hydro_target) || QDELETED(hydro_target.myseed))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	if(hydro_target.plant_status == HYDROTRAY_PLANT_DEAD)
-		living_pawn.manual_emote("weeps...") //weep over the dead plants
-
-	living_pawn.melee_attack(hydro_target)
-	finish_action(controller, TRUE, target_key)
-
-/datum/ai_behavior/treat_hydroplants/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
+/datum/ai_planning_subtree/find_and_hunt_target/treat_hydroplants
+	target_key = BB_HYDROPLANT_TARGET
+	finding_behavior = /datum/ai_behavior/find_and_set/treatable_hydro
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+	hunt_targets = list(/obj/machinery/hydroponics)
+	hunt_range = 7
 
 /datum/ai_behavior/find_and_set/treatable_hydro
 
@@ -94,7 +43,6 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/waterlevel_threshold = controller.blackboard[BB_WATERLEVEL_THRESHOLD]
 	var/weedlevel_threshold = controller.blackboard[BB_WEEDLEVEL_THRESHOLD]
-	var/datum/action/cooldown/solar_ability = controller.blackboard[BB_SOLARBEAM_ABILITY]
 	var/watering_can = locate(/obj/item/reagent_containers/cup/watering_can) in living_pawn
 
 	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))
@@ -106,7 +54,56 @@
 		if(hydro.weedlevel > weedlevel_threshold || hydro.plant_status == HYDROTRAY_PLANT_DEAD)
 			possible_trays += hydro
 			continue
-		if(hydro.plant_health < hydro.myseed.endurance && solar_ability.IsAvailable())
+
+	if(possible_trays.len)
+		return pick(possible_trays)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+	hunt_cooldown = 2 SECONDS
+	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
+	if(QDELETED(hydro_target) || QDELETED(hydro_target.myseed))
+		return
+
+	if(hydro_target.plant_status == HYDROTRAY_PLANT_DEAD)
+		living_pawn.manual_emote("weeps...") //weep over the dead plants
+	. = ..()
+
+
+/datum/ai_planning_subtree/find_and_hunt_target/beamable_hydroplants
+	target_key = BB_BEAMABLE_HYDROPLANT_TARGET
+	finding_behavior = /datum/ai_behavior/find_and_set/beamable_hydroplants
+	hunting_behavior = /datum/ai_behavior/hunt_target/use_ability_on_target/solarbeam
+	hunt_targets = list(/obj/machinery/hydroponics)
+	hunt_range = 7
+
+/datum/ai_planning_subtree/find_and_hunt_target/beamable_hydroplants/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/solar_ability = controller.blackboard[BB_SOLARBEAM_ABILITY]
+	if(QDELETED(solar_ability) || !solar_ability.IsAvailable())
+		return
+	return ..()
+
+/datum/ai_behavior/hunt_target/use_ability_on_target/solarbeam
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	required_distance = 2
+	action_cooldown = 1 MINUTES
+	ability_key = BB_SOLARBEAM_ABILITY
+
+/datum/ai_behavior/hunt_target/use_ability_on_target/solarbeam/setup(datum/ai_controller/controller, target_key, ability_key)
+	. = ..()
+	var/obj/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/list/possible_trays = list()
+
+	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))
+		if(isnull(hydro.myseed))
+			continue
+		if(hydro.plant_health < hydro.myseed.endurance)
 			possible_trays += hydro
 
 	if(possible_trays.len)

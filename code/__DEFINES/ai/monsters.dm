@@ -149,3 +149,5 @@
 #define BB_SOLARBEAM_ABILITY "solarbeam_ability"
 /// key holds our rapid seeds ability
 #define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
+/// key holds the tray we will beam
+#define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
