@@ -34,7 +34,8 @@
 		return
 	if(target.is_blocked_turf(exclude_mobs = TRUE))
 		return
-	var/turf/above = GET_TURF_ABOVE(user)
+	var/turf/user_turf = get_turf(user)
+	var/turf/above = GET_TURF_ABOVE(user_turf)
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
 		balloon_alert(user, "blocked!")
 		return
@@ -47,11 +48,11 @@
 	if(do_after(user, climb_time, target))
 		user.Move(target)
 		uses--
-	
+
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))
 		qdel(src)
-	
+
 	QDEL_LIST(effects)
 
 /obj/item/climbing_hook/emergency
