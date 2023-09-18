@@ -59,6 +59,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_assign_self_objectives = FALSE
 	/// Default to fill in when entering a custom objective.
 	var/default_custom_objective = "Cause chaos on the space station."
+	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
+	var/hardcore_random_bonus = FALSE
 
 	//ANTAG UI
 
