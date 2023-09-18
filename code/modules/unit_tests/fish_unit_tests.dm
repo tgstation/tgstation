@@ -160,7 +160,7 @@
 	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
 
 	// into the hole they go
-	for(var/spawned_mob in spawned_mobs)
+	for(var/spawned_mob in mobs_spawned)
 		the_hole.drop(spawned_mob)
 
 	// pretend like this mob has a mind. they should be fished up first
