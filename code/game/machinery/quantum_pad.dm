@@ -72,14 +72,14 @@
 		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			if(M.buffer == src)
-				balloon_alert(user, "cannot link to self")
+				balloon_alert(user, "cannot link to self!")
 				return TRUE
 			else
 				linked_pad = M.buffer
 				balloon_alert(user, "data uploaded from buffer")
 				return TRUE
 		else
-			balloon_alert(user, "no quantum pad data found")
+			balloon_alert(user, "no quantum pad data found!")
 			return TRUE
 
 	else if(istype(I, /obj/item/quantum_keycard))
