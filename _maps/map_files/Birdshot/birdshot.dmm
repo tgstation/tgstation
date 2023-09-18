@@ -49373,6 +49373,10 @@
 "rxu" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/south,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
 /obj/item/clipboard{
 	pixel_x = 4;
 	pixel_y = 4

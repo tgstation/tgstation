@@ -33514,6 +33514,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/item/storage/box/bandages,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "kVV" = (

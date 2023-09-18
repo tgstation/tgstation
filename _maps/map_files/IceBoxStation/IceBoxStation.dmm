@@ -72876,8 +72876,12 @@
 /area/mine/laborcamp)
 "wzz" = (
 /obj/structure/rack,
-/obj/item/healthanalyzer,
 /obj/machinery/light/cold/directional/north,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "wAq" = (
