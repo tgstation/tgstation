@@ -167,6 +167,8 @@
 	// let's further test that by giving a second mob a mind. they should be fished up immediately..
 	empty.mind = TRUE
 
+	reward = fishing_source.dispense_reward(/datum/chasm_detritus/restricted/bodies, a_fisherman, the_hole)
+
 	TEST_ASSERT_EQUAL(reward, empty, "Fished up [reward] with a rescue hook; expected to fish up [empty]")
 	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
 
