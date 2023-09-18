@@ -351,7 +351,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			return
 		var/obj/item/multitool/M = I
 		M.set_buffer(src)
-		to_chat(user, span_notice("You add [src] to multitool buffer."))
+		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
