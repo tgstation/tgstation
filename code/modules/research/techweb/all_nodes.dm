@@ -1220,6 +1220,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	design_ids = list(
 		"comm_monitor",
+		"message_monitor",
 		"comm_server",
 		"ntnet_relay",
 		"s_amplifier",
