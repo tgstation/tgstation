@@ -109,6 +109,6 @@
 
 /datum/award/achievement/mafia/universally_hated
 	name = "Universally Hated"
-	desc = "Managed to get more than 12 votes when put up on trial, jesus christ."
+	desc = "Managed to get more than 9 votes when put up on trial, jesus christ."
 	database_id = MAFIA_MEDAL_HATED
 	icon = "hated"

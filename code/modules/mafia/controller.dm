@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
 	var/loser_votes = get_vote_count(loser, "Day")
 	if(loser)
-		if(loser_votes > 12)
+		if(loser_votes > 9)
 			award_role(/datum/award/achievement/mafia/universally_hated, loser)
 		//refresh the lists
 		judgement_abstain_votes = list()
