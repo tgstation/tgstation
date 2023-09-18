@@ -132,10 +132,9 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-		fisherman.balloon_alert(fisherman, "caught [reward]!")
 	else // for fishing things like corpses, move them to the turf of the fisherman
 		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
-		fisherman.balloon_alert(fisherman, "caught something!")
+	fisherman.balloon_alert(fisherman, "caught [reward]!")
 
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
