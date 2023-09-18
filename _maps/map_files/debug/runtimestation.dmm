@@ -659,31 +659,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/medbay)
-"cK" = (
-/obj/machinery/light/directional/south,
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white/corner,
-/area/station/medical/medbay)
-"cL" = (
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
-/obj/item/disk/surgery/debug,
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white/corner,
-/area/station/medical/medbay)
 "cN" = (
 /turf/closed/wall/r_wall,
 /area/station/construction)
@@ -1805,6 +1780,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"lr" = (
+/obj/machinery/bouldertech/brm,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "lH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
@@ -1845,11 +1828,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"oC" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
 "oV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1902,6 +1880,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"sd" = (
+/obj/machinery/bouldertech/refinery,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
@@ -2000,13 +1986,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"wr" = (
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "wB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2054,14 +2033,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science)
-"AT" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "mining"
-	},
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2082,6 +2053,14 @@
 /obj/structure/closet/syndicate/resources/everything,
 /turf/open/floor/iron,
 /area/station/science)
+"CO" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "mining"
+	},
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "CQ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line{
@@ -2175,7 +2154,16 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"FW" = (
+"FA" = (
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
+"GE" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
+"He" = (
+/obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"
@@ -2319,21 +2307,10 @@
 /obj/item/stock_parts/cell/bluespace,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
-"Oz" = (
-/obj/machinery/bouldertech/refinery,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
-"Pd" = (
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "Pk" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2371,6 +2348,14 @@
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"QU" = (
+/obj/item/surgery_tray/advanced,
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/corner,
+/area/station/medical/medbay)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2417,14 +2402,6 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"TS" = (
-/obj/machinery/bouldertech/refinery/smelter,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2437,6 +2414,13 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"UR" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Va" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -2497,6 +2481,13 @@
 /obj/structure/money_bot,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"WN" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "WT" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2552,14 +2543,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"Yf" = (
-/obj/machinery/bouldertech/brm,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "Ym" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
@@ -2590,6 +2573,23 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"Zs" = (
+/obj/machinery/light/directional/south,
+/obj/structure/table/glass,
+/obj/item/disk/surgery/debug,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/corner,
+/area/station/medical/medbay)
 "Zz" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -3085,10 +3085,10 @@ aa
 aa
 aa
 em
-Pd
-oC
-AT
-Pd
+FA
+GE
+CO
+FA
 em
 aa
 aa
@@ -3177,10 +3177,10 @@ aa
 aa
 aa
 em
-Pd
-Pd
-TS
-Pd
+FA
+FA
+He
+FA
 em
 aa
 aa
@@ -3269,10 +3269,10 @@ aa
 aa
 aa
 em
-Pd
-Pd
-FW
-Pd
+FA
+FA
+WN
+FA
 em
 aa
 aa
@@ -3361,10 +3361,10 @@ aa
 aa
 aa
 em
-Pd
-Pd
-Oz
-Pd
+FA
+FA
+sd
+FA
 em
 aa
 aa
@@ -3453,10 +3453,10 @@ aa
 aa
 aa
 em
-Pd
-wr
-FW
-Pd
+FA
+UR
+WN
+FA
 em
 aa
 aa
@@ -3545,10 +3545,10 @@ em
 em
 em
 em
-Pd
-Pd
-Yf
-Pd
+FA
+FA
+lr
+FA
 em
 dY
 en
@@ -8154,7 +8154,7 @@ cm
 cm
 cm
 cm
-cL
+QU
 by
 dk
 eH
@@ -8246,7 +8246,7 @@ is
 cy
 Ut
 cm
-cK
+Zs
 by
 dB
 dx

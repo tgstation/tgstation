@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Supermatter common channel alerts are less frequent if the crystal's integrity is rising rapidly"
