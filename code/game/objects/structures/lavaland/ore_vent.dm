@@ -194,6 +194,8 @@
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
 	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+	COOLDOWN_RESET(src, wave_cooldown)
+	particles = null
 	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
@@ -254,6 +256,8 @@
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
+	RegisterSignal(node, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
+	particles = new /particles/smoke/ash()
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
@@ -417,7 +421,7 @@
 /obj/structure/ore_vent/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
-	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
+	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
 	COOLDOWN_START(src, wave_cooldown, 999999 SECONDS) //Basically forever
 	boss.say("You dare disturb my slumber?!")
 

@@ -3,19 +3,19 @@
 
 /datum/orderable_item/accelerator/gun
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator
-	cost_per_order = 750
+	cost_per_order = 600
 
 /datum/orderable_item/accelerator/range
 	item_path = /obj/item/borg/upgrade/modkit/range
-	cost_per_order = 1000
+	cost_per_order = 675
 
 /datum/orderable_item/accelerator/damage
 	item_path = /obj/item/borg/upgrade/modkit/damage
-	cost_per_order = 1000
+	cost_per_order = 675
 
 /datum/orderable_item/accelerator/cooldown
 	item_path = /obj/item/borg/upgrade/modkit/cooldown
-	cost_per_order = 1000
+	cost_per_order = 675
 
 /datum/orderable_item/accelerator/chasis
 	item_path = /obj/item/borg/upgrade/modkit/chassis_mod
@@ -35,8 +35,8 @@
 
 /datum/orderable_item/accelerator/aoe_mobs
 	item_path = /obj/item/borg/upgrade/modkit/aoe/mobs
-	cost_per_order = 2000
+	cost_per_order = 1500
 
 /datum/orderable_item/accelerator/minebot_passthrough
 	item_path = /obj/item/borg/upgrade/modkit/minebot_passthrough
-	cost_per_order = 1000
+	cost_per_order = 800

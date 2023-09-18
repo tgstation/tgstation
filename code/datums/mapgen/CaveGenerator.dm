@@ -114,7 +114,6 @@
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	var/start_time = REALTIMEOFDAY
-	var/ore_vents_spawned = SSore_generation.ore_vent_count
 	SSore_generation.ore_vent_minerals = SSore_generation.ore_vent_minerals_default
 
 	for(var/turf/turf as anything in turfs)
@@ -144,12 +143,6 @@
 
 			if(can_spawn)
 				new picked_feature(turf)
-				if(ispath(picked_feature, /obj/structure/ore_vent/random))
-					var/obj/structure/ore_vent/random/picked_vent = picked_feature
-					ore_vents_spawned--
-					if(ore_vents_spawned <= 0)
-						weighted_feature_spawn_list.Remove(picked_vent)
-						feature_spawn_list = expand_weights(weighted_feature_spawn_list)
 				spawned_something = TRUE
 
 		//MOB SPAWNING HERE

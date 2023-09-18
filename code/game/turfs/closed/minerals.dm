@@ -297,6 +297,8 @@
 
 	. = ..()
 	var/dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
+	if(prob(1))
+		to_chat(world, "Ore spawn chance: [dynamic_prob]")
 	if(!dynamic_prob)
 		dynamic_prob = mineralChance
 	if (prob(dynamic_prob))
@@ -317,6 +319,8 @@
 				M.turf_type = src.turf_type
 				// M.mineralAmt = rand(1, 5)
 				M.scale_ore_to_vent()
+				if(prob(1))
+					to_chat(world, "Ore spawn chance (inside): [dynamic_prob]")
 				SSore_generation.post_ore_r["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
@@ -328,6 +332,8 @@
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
 			scale_ore_to_vent()
+			if(prob(1))
+				to_chat(world, "Ore spawn chance (outside): [dynamic_prob]")
 			SSore_generation.post_ore_m["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance

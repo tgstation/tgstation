@@ -175,8 +175,8 @@
 	suffix = "icemoon_underground_hotsprings.dmm"
 
 /datum/map_template/ruin/icemoon/underground/vent
-	name = "Ore Vent"
-	id = "ore_vent"
+	name = "Icemoon Ore Vent"
+	id = "ore_vent_i"
 	description = "A vent that spews out ore. Seems to be a natural phenomenon."
 	suffix = "icemoon_underground_ore_vent.dmm"
 	allow_duplicates = TRUE

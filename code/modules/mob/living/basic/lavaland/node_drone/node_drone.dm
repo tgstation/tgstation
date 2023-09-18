@@ -13,13 +13,14 @@
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
 
-	maxHealth = 200
-	health = 200
+	maxHealth = 500
+	health = 500
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_ROBOTIC
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
+	light_range = 4
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
