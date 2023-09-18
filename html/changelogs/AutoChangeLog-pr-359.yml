@@ -1,0 +1,5 @@
+author: "MilkForever"
+delete-after: True
+changes:
+  - rscadd: "Engineering hardsuits are obtainable once again."
+  - image: "Hardsuit sprites have been reverted to their classic appearance."
