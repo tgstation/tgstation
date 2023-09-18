@@ -273,9 +273,10 @@
 	name = "Solar Beam"
 	button_icon = 'icons/effects/beam.dmi'
 	button_icon_state = "solar_beam"
-	desc = "Concenrtate the power of the sun onto your target!"
+	desc = "Concentrate the power of the sun onto your target!"
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
+	///how long will it take for us to charge up the beam
 	var/beam_charge_up = 3 SECONDS
 	///is the owner of this ability a seedling?
 	var/is_seedling = FALSE
