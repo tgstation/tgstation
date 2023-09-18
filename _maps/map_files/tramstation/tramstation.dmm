@@ -55508,7 +55508,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/lapvend,
+/obj/machinery/vending/robotics,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "sSH" = (
