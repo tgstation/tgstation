@@ -34,7 +34,7 @@
 	///the state of combat we are in
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	///the colors our petals can have
-	var/list/possible_colors = list(COLOR_RED, COLOR_YELLOW, COLOR_OLIVE, COLOR_CYAN)
+	var/static/list/possible_colors = list(COLOR_RED, COLOR_YELLOW, COLOR_OLIVE, COLOR_CYAN)
 	///appearance when we are in our normal state
 	var/mutable_appearance/petal_neutral
 	///appearance when we are in our warmup state
@@ -102,6 +102,7 @@
 	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD)
 		balloon_alert(src, "dead plant removed")
 		hydro.set_seed(null)
+		return
 
 	if(hydro.weedlevel > 0)
 		balloon_alert(src, "weeds uprooted")
@@ -196,6 +197,10 @@
 		return
 	held_can.forceMove(drop_location())
 
+/mob/living/basic/seedling/Destroy()
+	QDEL_NULL(held_can)
+	return ..()
+
 /mob/living/basic/seedling/meanie
 	maxHealth = 400
 	health = 400
@@ -225,11 +230,21 @@
 	shared_cooldown = NONE
 	///how long we must charge up before firing off
 	var/charge_up_timer = 3 SECONDS
+	///is the owner of this ability a seedling?
+	var/is_seedling = FALSE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/Grant(mob/grant_to)
+	. = ..()
+	if(isnull(owner))
+		return
+	is_seedling = istype(owner, /mob/living/basic/seedling)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/IsAvailable(feedback)
 	. = ..()
 	if(!.)
 		return FALSE
+	if(!is_seedling)
+		return TRUE
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
@@ -238,17 +253,21 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/Activate(atom/target)
-	var/mob/living/basic/seedling/seed_owner = owner
-	seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
+	if(is_seedling)
+		var/mob/living/basic/seedling/seed_owner = owner
+		seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
 	addtimer(CALLBACK(src, PROC_REF(attack_sequence), owner, target), charge_up_timer)
 	StartCooldown()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/attack_sequence(mob/living/firer, atom/target)
-	var/mob/living/basic/seedling/seed_owner = owner
-	seed_owner.change_combatant_state(state = SEEDLING_STATE_ACTIVE)
-	. = ..()
-	addtimer(CALLBACK(seed_owner, TYPE_PROC_REF(/mob/living/basic/seedling, change_combatant_state), SEEDLING_STATE_NEUTRAL), 2 SECONDS)
+	if(is_seedling)
+		var/mob/living/basic/seedling/seed_owner = owner
+		seed_owner.change_combatant_state(state = SEEDLING_STATE_ACTIVE)
+		addtimer(CALLBACK(seed_owner, TYPE_PROC_REF(/mob/living/basic/seedling, change_combatant_state), SEEDLING_STATE_NEUTRAL), 4 SECONDS)
+
+	return ..()
+
 
 /datum/action/cooldown/mob_cooldown/solarbeam
 	name = "Solar Beam"
@@ -258,11 +277,21 @@
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
 	var/beam_charge_up = 3 SECONDS
+	///is the owner of this ability a seedling?
+	var/is_seedling = FALSE
+
+/datum/action/cooldown/mob_cooldown/solarbeam/Grant(mob/grant_to)
+	. = ..()
+	if(isnull(owner))
+		return
+	is_seedling = istype(owner, /mob/living/basic/seedling)
 
 /datum/action/cooldown/mob_cooldown/solarbeam/IsAvailable(feedback)
 	. = ..()
 	if(!.)
 		return FALSE
+	if(!is_seedling)
+		return TRUE
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
@@ -271,8 +300,9 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/solarbeam/Activate(atom/target)
-	var/mob/living/basic/seedling/seed_owner = owner
-	seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
+	if(is_seedling)
+		var/mob/living/basic/seedling/seed_owner = owner
+		seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
 
 	var/turf/target_turf = get_turf(target)
 	playsound(owner, 'sound/effects/seedling_chargeup.ogg', 100, FALSE)
@@ -288,7 +318,7 @@
 	return TRUE
 
 ///the solarbeam will damage people, otherwise it will heal plants
-/datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/basic/seedling/firer, turf/target_turf)
+/datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/firer, turf/target_turf)
 	for(var/atom/target_atom as anything in target_turf)
 
 		if(istype(target_atom, /obj/machinery/hydroponics))
@@ -305,7 +335,10 @@
 		living_target.adjustFireLoss(30)
 
 	playsound(target_turf, 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	firer.change_combatant_state(state = SEEDLING_STATE_NEUTRAL)
+	if(!is_seedling)
+		return
+	var/mob/living/basic/seedling/seed_firer = firer
+	seed_firer.change_combatant_state(state = SEEDLING_STATE_NEUTRAL)
 
 #undef SEEDLING_STATE_NEUTRAL
 #undef SEEDLING_STATE_WARMUP
