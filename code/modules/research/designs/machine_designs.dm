@@ -51,6 +51,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/mass_driver
+	name = "Mass Driver Board"
+	desc = "The circuit board for a mass driver."
+	id = "mass_driver"
+	build_path = /obj/item/circuitboard/machine/mass_driver
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/turbine_compressor
 	name = "Turbine Compressor Board"
 	desc = "The circuit board for a turbine compressor."
