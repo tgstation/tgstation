@@ -38,6 +38,8 @@
 
 ///Tries to apply a crusher damage status effect. Returns either a new one or an already existing status effect.
 /datum/component/crusher_damage_ticker/proc/try_apply_damage_tracker(atom/target)
+	if(QDELETED(target))
+		return
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
@@ -48,7 +50,7 @@
 		return has_tracker
 	var/new_apply_tracker = living_target.apply_status_effect(/datum/status_effect/crusher_damage)
 	if(!new_apply_tracker)
-		stack_trace("crusher damage tracking failed to apply the crusher damage status effect on [living_target].")
+		CRASH("crusher damage tracking failed to apply the crusher damage status effect on [living_target].")
 	return new_apply_tracker
 
 ///Handles applying and incrementing crusher damage done with a melee item attack.

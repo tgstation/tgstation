@@ -22,7 +22,9 @@
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
 	return "mark detonation to do <b>[bonus_damage]</b> more damage for every <b>[100 * missing_health_ratio]</b> health you are missing"
 
-/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	var/missing_health = user.maxHealth - user.health
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_damage //multiply the remaining amount by bonus_damage
@@ -46,7 +48,9 @@
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[DisplayTimeText(victim_attack_delay)]</b>"
 
-/obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/watcher_wing/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/victim = target //this is fun, doesn't apply to basic mobs. need to look into that
 		if(victim.ranged) //briefly delay ranged attacks
@@ -80,7 +84,9 @@
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[projectile_damage]</b> damage"
 
-/obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+/obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(datum/source, obj/projectile/destabilizer/marker, mob/living/user)
+	. = ..()
+
 	if(!deadly_shot)
 		return
 	marker.name = "heated [marker.name]"
@@ -132,7 +138,9 @@
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly stagger the target for <b>[DisplayTimeText(effect_duration)]</b>"
 
-/obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/lobster_claw/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	target.apply_status_effect(/datum/status_effect/stagger, effect_duration)
 
 /**
@@ -150,7 +158,9 @@
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
 	return "mark detonation to create <b>visual and audiosensory effects</b> on the target"
 
-/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	var/turf/victim_turf = get_turf(target)
 	victim_turf.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(victim_turf, 'sound/lavaland/brimdemon_crush.ogg', 100)
@@ -165,47 +175,28 @@
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_types = list(/obj/item/crusher_trophy/bileworm_spewlet)
-	///item ability that handles the effect
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
+	COOLDOWN_DECLARE(spew_cooldown)
+	///How long does the cooldown between the shots last
+	var/spew_cooldown_time = 10 SECONDS
 
 /obj/item/crusher_trophy/bileworm_spewlet/effect_desc()
-	return "mark detonation to <b>launch projectiles</b> in cardinal directions on a <b>10</b> second cooldown"
+	return "mark detonation to <b>launch projectiles</b> in cardinal directions on a <b>[DisplayTimeText(spew_cooldown_time)]</b> cooldown"
 
-/obj/item/crusher_trophy/bileworm_spewlet/Initialize(mapload)
+/obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
 	. = ..()
-	ability = new()
 
-/obj/item/crusher_trophy/bileworm_spewlet/Destroy(force)
-	. = ..()
-	QDEL_NULL(ability)
-
-/obj/item/crusher_trophy/bileworm_spewlet/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(!.)
+	if(!COOLDOWN_FINISHED(src, spew_cooldown))
 		return
-	crusher.add_item_action(ability)
+	var/list/firing_directions = GLOB.cardinals.Copy()
+	var/turf/user_turf = get_turf(user)
+	playsound(user_turf, 'sound/creatures/bileworm/bileworm_spit.ogg', 80, TRUE)
+	for(var/firing_dir in firing_directions)
+		var/obj/projectile/bileworm_acid/spewlet_trophy/new_spew = new(user_turf)
+		new_spew.preparePixelProjectile(target, user)
+		new_spew.firer = user
+		INVOKE_ASYNC(new_spew, TYPE_PROC_REF(/obj/projectile, fire), dir2angle(firing_dir))
 
-/obj/item/crusher_trophy/bileworm_spewlet/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(!.)
-		return
-	crusher.remove_item_action(ability)
-
-/obj/item/crusher_trophy/bileworm_spewlet/on_mark_detonation(mob/living/target, mob/living/user)
-	//ability itself handles cooldowns.
-	ability.InterceptClickOn(user, null, target)
-
-//yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet
-	check_flags = NONE
-	owner_has_control = FALSE
-	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid/spewlet_trophy
-	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
-
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
-	firing_directions = GLOB.cardinals.Copy()
-	return ..()
+	COOLDOWN_START(src, spew_cooldown, spew_cooldown_time)
 
 /obj/projectile/bileworm_acid/spewlet_trophy
 

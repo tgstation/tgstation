@@ -14,13 +14,14 @@
 /obj/item/crusher_trophy/bear_paw/effect_desc()
 	return "mark detonation to <b>attack twice</b> if you are below half your life"
 
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/bear_paw/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
 	if(user.health / user.maxHealth > 0.5)
 		return
 	var/obj/item/held_item = user.get_active_held_item()
 	if(!held_item)
 		return
-	held_item.melee_attack_chain(user, target, null)
+	INVOKE_ASYNC(held_item, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, null)
 
 /**
  * Wolf
@@ -37,5 +38,7 @@
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
 	return "mark detonation to gain a <b>2X</b> speed boost for <b>[DisplayTimeText(effect_duration)]</b>"
 
-/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	user.apply_status_effect(/datum/status_effect/speed_boost, effect_duration)

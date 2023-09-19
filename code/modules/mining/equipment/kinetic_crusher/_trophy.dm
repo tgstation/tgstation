@@ -31,6 +31,10 @@
 	if(!user.transferItemToLoc(src, crusher))
 		return
 	crusher.trophies += src
+	RegisterSignal(crusher, COMSIG_ITEM_ATTACK, PROC_REF(on_melee_hit))
+	RegisterSignal(crusher, COMSIG_CRUSHER_PROJECTILE_FIRED, PROC_REF(on_projectile_fire))
+	RegisterSignal(crusher, COMSIG_CRUSHER_MARK_APPLIED, PROC_REF(on_mark_application))
+	RegisterSignal(crusher, COMSIG_CRUSHER_MARK_DETONATE, PROC_REF(on_mark_detonation))
 	crusher.balloon_alert(user, "trophy attached")
 	playsound(crusher, 'sound/items/deconstruct.ogg', 40)
 	return TRUE
@@ -42,20 +46,29 @@
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	balloon_alert(user, "trophy removed")
 	forceMove(drop_location(crusher))
+	UnregisterSignal(crusher, list(COMSIG_ITEM_ATTACK, COMSIG_CRUSHER_PROJECTILE_FIRED, COMSIG_CRUSHER_MARK_APPLIED, COMSIG_CRUSHER_MARK_DETONATE))
 	return TRUE
 
 ///Special effect to execute upon hitting an enemy in melee with the crusher
-/obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/proc/on_melee_hit(datum/source, mob/living/target, mob/living/user, params)
+	SIGNAL_HANDLER
+
 	return
 
 ///Special effect to execute upon firing the destabilizer projectile
-/obj/item/crusher_trophy/proc/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+/obj/item/crusher_trophy/proc/on_projectile_fire(datum/source, obj/projectile/destabilizer/marker, mob/living/user)
+	SIGNAL_HANDLER
+
 	return
 
 ///Special effect to execute upon applying a destabilizer mark on an enemy
-/obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark)
+/obj/item/crusher_trophy/proc/on_mark_application(datum/source, atom/target, datum/status_effect/crusher_mark/applied_mark, had_effect)
+	SIGNAL_HANDLER
+
 	return
 
 ///Special effect to execute upon detonating a destabilizer mark attached to an enemy
-/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/proc/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
 	return

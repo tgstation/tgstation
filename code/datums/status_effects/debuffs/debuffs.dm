@@ -329,6 +329,8 @@
 	duration = 30 SECONDS //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	///Whether the mark is about to be detonated. Acts as a safeguard in case we somehow try to detonate the same mark more than once
+	var/detonating = FALSE
 	///The crusher mark's underlay effect
 	var/mutable_appearance/marked_underlay
 	/// The crusher that this mark can be detonated by
@@ -348,7 +350,7 @@
 	marked_underlay.pixel_x = -owner.pixel_x
 	marked_underlay.pixel_y = -owner.pixel_y
 	owner.underlays += marked_underlay
-	RegisterSignal(src, COMSIG_CRUSHER_MARK_DETONATE, PROC_REF(on_mark_detonation))
+	RegisterSignal(owner, COMSIG_CRUSHER_ATTACKED, PROC_REF(on_crusher_attacked))
 	return TRUE
 
 /datum/status_effect/crusher_mark/Destroy()
@@ -356,7 +358,7 @@
 	if(owner)
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
-	UnregisterSignal(src, COMSIG_CRUSHER_MARK_DETONATE)
+	UnregisterSignal(src, COMSIG_CRUSHER_ATTACKED)
 	return ..()
 
 /datum/status_effect/crusher_mark/be_replaced()
@@ -364,10 +366,11 @@
 	return ..()
 
 ///Handles detonating the mark, calculating and incrementing crusher damage dealt to the owner.
-/datum/status_effect/crusher_mark/proc/on_mark_detonation(datum/source, mob/living/user)
+/datum/status_effect/crusher_mark/proc/on_crusher_attacked(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!QDELETED(owner))
+	if(!QDELETED(owner) && !detonating)
+		detonating = TRUE
 		new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
 		var/backstabbed = FALSE
 		var/combined_damage = hammer_synced.detonation_damage
@@ -380,6 +383,8 @@
 
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, owner, user, combined_damage)
 		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, src, backstabbed)
+		if(hammer_synced)
+			SEND_SIGNAL(hammer_synced, COMSIG_CRUSHER_MARK_DETONATE, owner, user)
 		log_combat(user, owner, "detonated a crusher mark", hammer_synced)
 		owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
 		qdel(src)

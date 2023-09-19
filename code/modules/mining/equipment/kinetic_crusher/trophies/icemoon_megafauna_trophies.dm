@@ -16,7 +16,9 @@
 /obj/item/crusher_trophy/ice_block_talisman/effect_desc()
 	return "mark detonation to <b>freeze a creature</b> in a block of ice for <b>[DisplayTimeText(freeze_duration)]</b>, preventing them from moving"
 
-/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_duration)
 
 /datum/status_effect/ice_block_talisman

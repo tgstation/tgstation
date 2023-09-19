@@ -24,7 +24,9 @@
 /obj/item/crusher_trophy/broodmother_tongue/effect_desc()
 	return "mark detonation to have a <b>[effect_chance]%</b> chance to summon a <b>patch of goliath tentacles</b> at the target's location"
 
-/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	if(prob(effect_chance) && target.stat != DEAD)
 		new /obj/effect/goliath_tentacle/broodmother/patch/crusher(get_turf(target), user)
 
@@ -75,7 +77,9 @@
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
 	return "mark detonation to have a <b>[effect_chance]%</b> chance to summon a <b>loyal legion skull</b>"
 
-/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	if(!prob(effect_chance) || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = summon_skull(user)

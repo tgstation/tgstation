@@ -15,7 +15,9 @@
 /obj/item/crusher_trophy/miner_eye/effect_desc()
 	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
 
-/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	user.apply_status_effect(/datum/status_effect/blooddrunk)
 
 /**
@@ -37,7 +39,9 @@
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[blast_damage]</b> damage to nearby creatures and push them back"
 
-/obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/tail_spike/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	for(var/mob/living/victim in oview(2, user))
 		if(victim.stat == DEAD || victim.faction_check_mob(user))
 			continue
@@ -78,7 +82,7 @@
 		return
 	target_crusher.force += bonus_damage * 0.2
 	target_crusher.detonation_damage += bonus_damage * 0.8
-	var/new_wielded_force = 20 + bonus_damage * 0.2
+	var/new_wielded_force = 20 + (bonus_damage * 0.2)
 	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = new_wielded_force)
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
@@ -89,10 +93,18 @@
 	target_crusher.detonation_damage -= bonus_damage * 0.8
 	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
 
-/obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/on_melee_hit(datum/source, mob/living/target, mob/living/user, params)
+	. = ..()
+
+	if(target.stat == DEAD)
+		return
 	user.heal_ordered_damage(bonus_damage * 0.1, damage_heal_order)
 
-/obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
+	if(target.stat == DEAD)
+		return
 	user.heal_ordered_damage(bonus_damage * 0.4, damage_heal_order)
 
 /**
@@ -114,7 +126,9 @@
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[projectile_damage]</b> damage but move slower"
 
-/obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+/obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(datum/source, obj/projectile/destabilizer/marker, mob/living/user)
+	. = ..()
+
 	if(!deadly_shot)
 		return
 	marker.name = "deadly [marker.name]"
@@ -124,7 +138,9 @@
 	marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, projectile_damage)
 	deadly_shot = FALSE
 
-/obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	deadly_shot = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
@@ -147,7 +163,9 @@
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
 	return "mark detonation to create a <b>homing hierophant chaser</b>"
 
-/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(datum/source, mob/living/target, mob/living/user)
+	. = ..()
+
 	new /obj/effect/temp_visual/hierophant/chaser/crusher(get_turf(user), user, target, crusher_chaser_speed, TRUE)
 	log_combat(user, target, "fired a hierophant chaser at", src)
 

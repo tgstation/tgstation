@@ -94,7 +94,7 @@
 		human_owner.physiology.clone_mod *= 0.1
 		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
-	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
+	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 80, TRUE, use_reverb = FALSE)
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()

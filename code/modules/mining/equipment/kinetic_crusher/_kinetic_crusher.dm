@@ -108,19 +108,8 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return //it's already dropped by this point, so no feedback/dropping is required
 
-	//handle trophy attack effects
-	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
-		if(!QDELETED(target))
-			found_trophy.on_melee_hit(target, user)
-
 	if(proximity_flag && isliving(target))
-		var/mob/living/victim = target
-		var/datum/status_effect/crusher_mark/mark_field = victim.has_status_effect(/datum/status_effect/crusher_mark)
-		if(!mark_field || mark_field.hammer_synced != src)
-			return ..()
-		SEND_SIGNAL(mark_field, COMSIG_CRUSHER_MARK_DETONATE, user)
-		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
-			found_trophy.on_mark_detonation(target, user)
+		SEND_SIGNAL(target, COMSIG_CRUSHER_ATTACKED, user)
 	return ..()
 
 /obj/item/kinetic_crusher/attack_secondary(mob/living/victim, mob/living/user, params)
@@ -162,8 +151,7 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
-	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
-		attached_trophy.on_projectile_fire(destabilizer, user)
+	SEND_SIGNAL(src, COMSIG_CRUSHER_PROJECTILE_FIRED, destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
 	destabilizer.hammer_synced = src
