@@ -51,12 +51,11 @@
 
 	var/msg
 	if(on_drop)
-		msg = "\The [hanging_parent] falls off the wall!"
+		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off the wall!"), vision_distance = 5)
 		on_drop.Invoke(hanging_parent)
 	else
-		msg = "\The [hanging_parent] falls apart!"
+		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 		hanging_parent.deconstruct()
-	hanging_parent.visible_message(message = span_warning(msg), vision_distance = 5)
 
 	if(!QDELING(src))
 		qdel(src) //Well, we fell off the wall, so we're done here.
