@@ -111,7 +111,7 @@
 	dir = 5
 	},
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/surgery_tray{
+/obj/item/surgery_tray/full{
 	pixel_y = -11
 	},
 /obj/item/storage/belt/medical,

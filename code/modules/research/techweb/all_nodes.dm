@@ -596,6 +596,7 @@
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
 		"emitter",
+		"mass_driver",
 		"firealarm_electronics",
 		"firelock_board",
 		"generic_tank",
