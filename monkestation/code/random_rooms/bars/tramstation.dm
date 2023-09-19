@@ -5,7 +5,7 @@
 	centerspawner = FALSE
 	template_height = 25
 	template_width = 30
-	weight = 0
+	weight = 8
 	station_name = "Tramstation"
 
 /datum/map_template/random_room/random_bar/tramstation_base/ocean
