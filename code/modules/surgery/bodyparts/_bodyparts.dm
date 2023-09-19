@@ -1292,14 +1292,16 @@
 	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
-	// with defines at the time of writing, this is 3 brute and 2 burn
-	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
-	// 60 * 0.8 = 48
-	var/time_needed = 0
+	// with defines at the time of writing, this is 2 brute and 1.5 burn
+	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
+	// 42 * 0.8 = 33.6
+	// 3 hits to crit with an ion rifle on someone fully augged at a total of 100.8 damage, although im p sure mood can boost max hp above 100
+	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles of grenades
+	var/time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
 	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
 	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
 	if(severity == EMP_HEAVY)
-		time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
+		time_needed *= 2
 		brute_damage *= 2
 		burn_damage *= 2
 
@@ -1307,7 +1309,7 @@
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
 	var/damage_percent_to_max = (get_damage() / max_damage)
 	if (time_needed && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
+		owner.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
 		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
 		addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
 	return TRUE
