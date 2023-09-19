@@ -64,12 +64,6 @@
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
-	if(!loading.load(coords2turf(reservation.bottom_left_coords)))
-		CRASH("Failed to load lazy template: '[key]'")
-
-	var/list/loaded_atom_movables = list()
-	var/list/loaded_turfs = list()
-	var/list/loaded_areas = list()
 	var/list/my_loaded_atoms = list()
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
@@ -105,11 +99,7 @@
 		my_loaded_atoms += areas
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, my_loaded_atoms)
-
-
-	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
-
 	return reservation
 
 /datum/lazy_template/nukie_base

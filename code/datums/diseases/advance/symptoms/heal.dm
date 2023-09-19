@@ -75,8 +75,8 @@
 		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
-	if(direction == ZTRAIT_UP)
-		turf_to_check = turf_to_check.above()
+	if(direction == UP)
+		turf_to_check = GET_TURF_ABOVE(turf_to_check)
 		if(!turf_to_check)
 			return STARLIGHT_CANNOT_HEAL
 	var/area/area_to_check = get_area(turf_to_check)
@@ -98,10 +98,10 @@
 		// Our turf is transparent OR openspace - we can check higher or lower z-levels
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
 			// Check above or below us
-			if(direction == ZTRAIT_UP)
-				turf_to_check = turf_to_check.above()
+			if(direction == UP)
+				turf_to_check = GET_TURF_ABOVE(turf_to_check)
 			else
-				turf_to_check = turf_to_check.below()
+				turf_to_check = GET_TURF_BELOW(turf_to_check)
 
 			// If we found a turf above or below us,
 			// then we can rerun the loop on the newly found turf / area
