@@ -272,6 +272,7 @@
 	duration_in_seconds -= seconds_per_tick
 
 /datum/brain_trauma/severe/split_personality/blackout/Destroy()
+	. = ..()
 	return
 
 
