@@ -18,7 +18,8 @@
 	credit_type = CREDIT_TYPE_BITRUNNING
 
 	order_categories = list(
-		CATEGORY_BITRUNNING,
+		CATEGORY_BITRUNNING_FLAIR,
+		CATEGORY_BITRUNNING_TECH,
 		CATEGORY_BEPIS,
 	)
 	blackbox_key = "bitrunning"
