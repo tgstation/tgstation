@@ -150,9 +150,7 @@
 			span_userdanger("You feel drenched!"),
 		)
 		if(iscarbon(target))
-			var/mob/living/carbon/drunkyard = target
-			if(drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
-				drunkyard.cure_trauma_type(/datum/brain_trauma/severe/split_personality/blackout)
+			SEND_SIGNAL(target, COMSIG_CARBON_SPLASHED)
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 

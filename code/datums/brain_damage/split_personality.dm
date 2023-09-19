@@ -11,6 +11,7 @@
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner_backseat
+	///The role to display when polling ghost
 	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
@@ -246,7 +247,16 @@
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
-	var/duration_in_seconds = 60 ///Duration of effect
+	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
+	var/duration_in_seconds = 60
+
+/datum/brain_trauma/severe/split_personality/blackout/on_gain()
+	. = ..()
+	RegisterSignal(SSobj, COMSIG_CARBON_SPLASHED, PROC_REF(Destroy()))
+
+/datum/brain_trauma/severe/split_personality/blackout/on_lose()
+	. = ..()
+	UnregisterSignal(SSobj, COMSIG_CARBON_SPLASHED)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
@@ -254,10 +264,16 @@
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
-		qdel(src)
+		Destroy()
+		return
 	if(duration_in_seconds <= 0)
-		qdel(src)
+		Destroy()
+		return
 	duration_in_seconds -= seconds_per_tick
+
+/datum/brain_trauma/severe/split_personality/blackout/Destroy()
+	return
+
 
 /mob/living/split_personality/blackout
 	name = "blacked-out drunkard"
@@ -268,7 +284,7 @@
 	if(!. || !client)
 		return FALSE
 	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
-	to_chat(src, span_warning("<b>Do not commit suicide or put the body in danger. While you're drunk, you're not suicidal. </b>"))
+	to_chat(src, span_boldwarning("<b>Do not commit suicide or put the body in danger. While you're drunk, you're not suicidal. </b>"))
 
 #undef OWNER
 #undef STRANGER

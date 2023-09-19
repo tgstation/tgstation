@@ -39,6 +39,9 @@
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
 #define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
 
+/// Called when a carbon is splashed with something
+#define COMSIG_CARBON_SPLASHED "carbon_splashed"
+
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
 #define COMSIG_BODYPART_CHANGED_OWNER "bodypart_changed_owner"
 

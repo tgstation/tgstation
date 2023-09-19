@@ -196,7 +196,13 @@
 
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
 	var/mob/living/carbon/drunkyard = owner
-	if(!drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE) || drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))
+	if(drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+		drunk_value -= 50
+		return
+	else if(drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
+		to_chat(owner, span_warning("You stumbled while walking, next time don't walk and drink 4 head!"))
+		owner.slip(4 SECONDS)
+	else
 		owner.Sleeping(90 SECONDS)
 
 /// Status effect for being fully drunk (not tipsy).
