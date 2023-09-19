@@ -309,7 +309,7 @@
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 
 				var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
-				if (spark_amount)
+				if (spark_amount > 0)
 					do_sparks(spark_amount, FALSE, living_target)
 
 		else if(impact_effect_type && !hitscan)
