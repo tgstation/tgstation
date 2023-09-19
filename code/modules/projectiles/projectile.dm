@@ -227,12 +227,12 @@
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE_OUT)
 	qdel(src)
 
-//to get the correct limb (if any) for the projectile hit message
-/mob/living/proc/check_hit_limb_name(hit_zone)
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
 	if(has_limbs)
 		return hit_zone
 
-/mob/living/carbon/check_hit_limb_name(hit_zone)
+/mob/living/carbon/check_hit_limb_zone_name(hit_zone)
 	if(get_bodypart(hit_zone))
 		return hit_zone
 	else //when a limb is missing the damage is actually passed to the chest
@@ -252,7 +252,7 @@
 	var/hit_limb_zone
 	if(isliving(target))
 		var/mob/living/L = target
-		hit_limb_zone = L.check_hit_limb_name(def_zone)
+		hit_limb_zone = L.check_hit_limb_zone_name(def_zone)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone)
