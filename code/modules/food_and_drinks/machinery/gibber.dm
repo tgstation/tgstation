@@ -198,6 +198,21 @@
 				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
+
+			if(iscarbon(occupant))
+				var/mob/living/carbon/host_target = occupant
+				var/list/diseases = host_target.get_static_viruses()
+				if(LAZYLEN(diseases))
+					var/list/datum/disease/diseases_to_add = list()
+					for(var/datum/disease/disease as anything in diseases)
+						// admin or special viruses that should not be reproduced
+						if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+							continue
+
+						diseases_to_add += disease
+					if(LAZYLEN(diseases_to_add))
+						newmeat.AddComponent(/datum/component/infective, diseases_to_add)
+
 		allmeat[i] = newmeat
 
 	if(typeofskin)

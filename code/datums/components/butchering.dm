@@ -137,12 +137,29 @@
 			continue
 		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
 
+	// transfer delicious reagents to meat
 	if(target.reagents)
 		var/meat_produced = 0
 		for(var/obj/item/food/meat/slab/target_meat in results)
 			meat_produced += 1
 		for(var/obj/item/food/meat/slab/target_meat in results)
 			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
+
+	// dont forget yummy diseases either!
+	if(iscarbon(target))
+		var/mob/living/carbon/host_target = target
+		var/list/diseases = host_target.get_static_viruses()
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/datum/disease/disease as anything in diseases)
+				// admin or special viruses that should not be reproduced
+				if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+					continue
+
+				diseases_to_add += disease
+			if(LAZYLEN(diseases_to_add))
+				for(var/obj/diseased_remains in results)
+					diseased_remains.AddComponent(/datum/component/infective, diseases_to_add)
 
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
