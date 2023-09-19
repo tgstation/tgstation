@@ -1,5 +1,8 @@
 /**
  * Bitrunning tech disks which let you load items or programs into the vdom on first avatar generation.
+ * For the record: Balance shouldn't be a primary concern.
+ * You can make the custom cheese spells you've always wanted.
+ * Just make it fun and engaging, it's PvE content.
  */
 /obj/item/bitrunning_disk
 	name = "generic bitrunning program"
