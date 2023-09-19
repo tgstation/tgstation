@@ -135,6 +135,7 @@
 	desc = "A box of DeForest brand gel bandages designed to treat blunt-force trauma."
 	icon_state = "brutebox"
 	base_icon_state = "brutebox"
+	inhand_icon_state = "brutebox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
