@@ -96,8 +96,6 @@
 		my_loaded_atoms += areas
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, my_loaded_atoms)
-	my_loaded_atoms.Cut() // We don't want the list to cause ref holding shenanigans due to ASYNC
-
 	reservations += reservation
 	return reservation
 
