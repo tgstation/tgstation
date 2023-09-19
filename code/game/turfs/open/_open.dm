@@ -124,6 +124,9 @@
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
 
+/turf/open/indestructible/plating
+	icon_state = "plating"
+
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
