@@ -380,8 +380,8 @@
 
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, owner, user, combined_damage)
 		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, src, backstabbed)
-		owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
 		log_combat(user, owner, "detonated a crusher mark", hammer_synced)
+		owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
 		qdel(src)
 
 /datum/status_effect/stacking/saw_bleed

@@ -9,14 +9,15 @@
 	name = "ice block talisman"
 	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_trap_talisman"
-	denied_type = /obj/item/crusher_trophy/ice_block_talisman
-	bonus_value = 4 SECONDS
+	denied_types = list(/obj/item/crusher_trophy/ice_block_talisman)
+	///How long does the freeze effect last on an affected mob
+	var/freeze_duration = 4 SECONDS
 
 /obj/item/crusher_trophy/ice_block_talisman/effect_desc()
-	return "mark detonation to <b>freeze a creature</b> in a block of ice for <b>[bonus_value * 0.1] seconds</b>, preventing them from moving"
+	return "mark detonation to <b>freeze a creature</b> in a block of ice for <b>[DisplayTimeText(freeze_duration)]</b>, preventing them from moving"
 
 /obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	target.apply_status_effect(/datum/status_effect/ice_block_talisman, bonus_value)
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_duration)
 
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"
@@ -70,7 +71,7 @@
 	name = "wendigo horn"
 	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
+	denied_types = list(/obj/item/crusher_trophy/wendigo_horn)
 
 /obj/item/crusher_trophy/wendigo_horn/effect_desc()
 	return "melee hits to inflict <b>twice as much damage</b>"

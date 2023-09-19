@@ -1,5 +1,6 @@
 //Elite fauna (tumor bosses) trophies go here.
 
+
 /**
  * Goliath broodmother
  * Detonating a mark has a 10% chance to create a tentacle patch under the victim, stunning and dealing damage.
@@ -11,19 +12,20 @@
 	desc = "The tongue of a broodmother. If attached a certain way, makes for a suitable crusher trophy. It also feels very spongey, I wonder what would happen if you squeezed it?..."
 	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "broodmother_tongue"
-	denied_type = /obj/item/crusher_trophy/broodmother_tongue
-	bonus_value = 10
+	denied_types = list(/obj/item/crusher_trophy/broodmother_tongue)
 	COOLDOWN_DECLARE(broodmother_tongue_cooldown)
+	///How likely is the tentacle patch to trigger upon a mark detonation
+	var/effect_chance = 10
 	///How long does the lava immunity last.
 	var/use_buff_duration = 10 SECONDS
 	///Cooldown for using the item in-hand to gain lava immunity.
 	var/use_cooldown = 1 MINUTES
 
 /obj/item/crusher_trophy/broodmother_tongue/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a <b>patch of goliath tentacles</b> at the target's location"
+	return "mark detonation to have a <b>[effect_chance]%</b> chance to summon a <b>patch of goliath tentacles</b> at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
-	if(prob(bonus_value) && target.stat != DEAD)
+	if(prob(effect_chance) && target.stat != DEAD)
 		new /obj/effect/goliath_tentacle/broodmother/patch/crusher(get_turf(target), user)
 
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
@@ -39,7 +41,7 @@
 		return
 	living_user.apply_status_effect(/datum/status_effect/lava_immunity, use_buff_duration)
 	to_chat(living_user, span_boldnotice("You squeeze the tongue, and some transluscent liquid shoots out all over you!"))
-	playsound(get_turf(living_user), 'sound/effects/slosh.ogg', 30, TRUE)
+	playsound(get_turf(living_user), 'sound/effects/slosh.ogg', 60, TRUE)
 	COOLDOWN_START(src, broodmother_tongue_cooldown, use_cooldown)
 
 /obj/effect/goliath_tentacle/broodmother/patch/crusher
@@ -63,17 +65,18 @@
 	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
 	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
-	denied_type = /obj/item/crusher_trophy/legionnaire_spine
-	bonus_value = 20
+	denied_types = list(/obj/item/crusher_trophy/legionnaire_spine)
 	COOLDOWN_DECLARE(legionnaire_spine_cooldown)
+	///How likely is the skull to be summoned upon a mark detonation
+	var/effect_chance = 20
 	///Cooldown time for using the item in-hand to spawn a skull
 	var/use_cooldown = 4 SECONDS
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a <b>loyal legion skull</b>"
+	return "mark detonation to have a <b>[effect_chance]%</b> chance to summon a <b>loyal legion skull</b>"
 
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
-	if(!prob(bonus_value) || target.stat == DEAD)
+	if(!prob(effect_chance) || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = summon_skull(user)
 	summoned_skull.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MOB_ATTACK, summoned_skull.melee_damage_lower)

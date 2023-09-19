@@ -1,5 +1,6 @@
 //Place lavaland small game trophies here.
 
+
 /**
  * Goliath
  * Detonating a mark causes extra damage to the victim based on how much health the user is missing.
@@ -8,28 +9,26 @@
 	name = "goliath tentacle"
 	desc = "A sliced-off goliath tentacle. Suitable as a trophy for a kinetic crusher."
 	icon_state = "goliath_tentacle"
-	denied_type = /obj/item/crusher_trophy/goliath_tentacle
-	bonus_value = 2
+	denied_types = list(/obj/item/crusher_trophy/goliath_tentacle)
+	///How much damage does the crusher deal per missing health
+	var/bonus_damage = 2
 	///How much of user's missing health is converted into bonus damage, %
 	var/missing_health_ratio = 0.1
-	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
-	var/missing_health_desc
 
 /obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
 	. = ..()
-	missing_health_desc = 100 * missing_health_ratio
-	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_SPELL, bonus_value)
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_SPELL, bonus_damage)
 
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
+	return "mark detonation to do <b>[bonus_damage]</b> more damage for every <b>[100 * missing_health_ratio]</b> health you are missing"
 
 /obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
 	var/missing_health = user.maxHealth - user.health
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
-	missing_health *= bonus_value //multiply the remaining amount by bonus_value
+	missing_health *= bonus_damage //multiply the remaining amount by bonus_damage
 	if(missing_health > 0)
-		target.adjustBruteLoss(missing_health) //and do that much damage
 		log_combat(user, target, "struck for bonus damage with a trophy ", src, "crusher damage")
+		target.adjustBruteLoss(missing_health) //and do that much damage
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, missing_health)
 
 /**
@@ -40,20 +39,21 @@
 	name = "watcher wing"
 	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "watcher_wing"
-	denied_type = /obj/item/crusher_trophy/watcher_wing
-	bonus_value = 5
+	denied_types = list(/obj/item/crusher_trophy/watcher_wing)
+	///By how long does the victim's attack get delayed
+	var/victim_attack_delay = 0.5 SECONDS
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
-	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value * 0.1]</b> second\s"
+	return "mark detonation to prevent certain creatures from using certain attacks for <b>[DisplayTimeText(victim_attack_delay)]</b>"
 
 /obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/victim = target //this is fun, doesn't apply to basic mobs. need to look into that
 		if(victim.ranged) //briefly delay ranged attacks
 			if(victim.ranged_cooldown >= world.time)
-				victim.ranged_cooldown += bonus_value
+				victim.ranged_cooldown += victim_attack_delay
 			else
-				victim.ranged_cooldown = bonus_value + world.time
+				victim.ranged_cooldown = victim_attack_delay + world.time
 
 /**
  * Watcher - icewing variant
@@ -63,7 +63,7 @@
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
-	bonus_value = 8
+	victim_attack_delay = 0.8 SECONDS
 
 /**
  * Watcher - magmawing variant
@@ -75,18 +75,18 @@
 	desc = "A still-searing wing from a magmawing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "magma_wing"
 	gender = NEUTER
-	bonus_value = 5
+	projectile_damage = 5
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
-	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
+	return "mark detonation to make the next destabilizer shot deal <b>[projectile_damage]</b> damage"
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
 	if(!deadly_shot)
 		return
 	marker.name = "heated [marker.name]"
 	marker.icon_state = "lava"
-	marker.damage = bonus_value
-	marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
+	marker.damage = projectile_damage
+	marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, projectile_damage)
 	deadly_shot = FALSE
 
 /**
@@ -97,23 +97,24 @@
 	name = "legion skull"
 	desc = "A dead and lifeless legion skull. Suitable as a trophy for a kinetic crusher."
 	icon_state = "legion_skull"
-	denied_type = /obj/item/crusher_trophy/legion_skull
-	bonus_value = 3
+	denied_types = list(/obj/item/crusher_trophy/legion_skull)
+	///By how much does the trophy reduce the crusher's destabilizer shot recharge delay
+	var/recharge_delay_decrease = 0.3 SECONDS
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
-	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> seconds faster"
+	return "a kinetic crusher to recharge <b>[DisplayTimeText(recharge_delay_decrease)]</b> faster"
 
 /obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
 	if(!.)
 		return
-	target_crusher.charge_time -= bonus_value
+	target_crusher.charge_time -= recharge_delay_decrease
 
 /obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
 	if(!.)
 		return
-	target_crusher.charge_time += bonus_value
+	target_crusher.charge_time += recharge_delay_decrease
 
 /**
  * Lobstrosity
@@ -124,14 +125,15 @@
 	name = "lobster claw"
 	icon_state = "lobster_claw"
 	desc = "A lobster claw. Suitable as a trophy for a kinetic crusher."
-	denied_type = /obj/item/crusher_trophy/lobster_claw
-	bonus_value = 10 //1 second
+	denied_types = list(/obj/item/crusher_trophy/lobster_claw)
+	///How long does the stagger effect last for on the affected mob
+	var/effect_duration = 1 SECONDS
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
-	return "mark detonation to briefly stagger the target for <b>[bonus_value * 0.1]</b> seconds"
+	return "mark detonation to briefly stagger the target for <b>[DisplayTimeText(effect_duration)]</b>"
 
 /obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
-	target.apply_status_effect(/datum/status_effect/stagger, bonus_value)
+	target.apply_status_effect(/datum/status_effect/stagger, effect_duration)
 
 /**
  * Brimdemon
@@ -141,7 +143,7 @@
 	name = "brimdemon's fang"
 	icon_state = "brimdemon_fang"
 	desc = "A fang from a brimdemon's corpse. Suitable as a trophy for a kinetic crusher."
-	denied_type = /obj/item/crusher_trophy/brimdemon_fang
+	denied_types = list(/obj/item/crusher_trophy/brimdemon_fang)
 	///Humorous words to display on mark detonation
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
@@ -162,7 +164,7 @@
 	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
-	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
+	denied_types = list(/obj/item/crusher_trophy/bileworm_spewlet)
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 

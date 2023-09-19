@@ -6,10 +6,8 @@
 	desc = "A strange spike with no usage."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
-	///Generic bonus to X var; if the trophy has a bonus effect, this is how much that effect is
-	var/bonus_value = 10
 	///Trophies that conflict with this trophy; either upgrades or something that messes up the interactions
-	var/denied_type = /obj/item/crusher_trophy
+	var/list/denied_types = list(/obj/item/crusher_trophy)
 
 /obj/item/crusher_trophy/examine(mob/living/user)
 	. = ..()
@@ -27,7 +25,7 @@
 ///Applies the trophy to the crusher, as well as applying any special properties
 /obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)
-		if(istype(trophy, denied_type) || istype(src, trophy.denied_type))
+		if((trophy in denied_types) || (src in trophy.denied_types))
 			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
 			return FALSE
 	if(!user.transferItemToLoc(src, crusher))

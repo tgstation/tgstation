@@ -1,5 +1,6 @@
 //Place icemoon small game trophies here.
 
+
 /**
  * Polar bear
  * Detonating a mark while the user's health is at half or less causes the crusher to attack one more time.
@@ -8,7 +9,7 @@
 	name = "polar bear paw"
 	desc = "It's a polar bear paw. Suitable as a trophy for a kinetic crusher."
 	icon_state = "bear_paw"
-	denied_type = /obj/item/crusher_trophy/bear_paw
+	denied_types = list(/obj/item/crusher_trophy/bear_paw)
 
 /obj/item/crusher_trophy/bear_paw/effect_desc()
 	return "mark detonation to <b>attack twice</b> if you are below half your life"
@@ -29,11 +30,12 @@
 	name = "wolf ear"
 	desc = "It's a wolf ear. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wolf_ear"
-	denied_type = /obj/item/crusher_trophy/wolf_ear
-	bonus_value = 10 //1 second
+	denied_types = list(/obj/item/crusher_trophy/wolf_ear)
+	///How long does the buff last on the crusher's wielder
+	var/effect_duration = 1 SECONDS
 
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
-	return "mark detonation to gain a <b>2X</b> speed boost for <b>[bonus_value * 0.1]</b> seconds"
+	return "mark detonation to gain a <b>2X</b> speed boost for <b>[DisplayTimeText(effect_duration)]</b>"
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
-	user.apply_status_effect(/datum/status_effect/speed_boost, bonus_value)
+	user.apply_status_effect(/datum/status_effect/speed_boost, effect_duration)

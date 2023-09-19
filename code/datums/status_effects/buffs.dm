@@ -525,6 +525,11 @@
 	/// Overlay effect added to the mob
 	var/mutable_appearance/lava_overlay
 
+/datum/status_effect/lava_immunity/on_creation(mob/living/new_owner, new_duration)
+	if(isnum(new_duration))
+		duration = new_duration
+	return ..()
+
 /datum/status_effect/lava_immunity/on_apply()
 	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, STATUS_EFFECT_TRAIT)
 	lava_overlay = mutable_appearance('icons/turf/floors.dmi', "lava")
