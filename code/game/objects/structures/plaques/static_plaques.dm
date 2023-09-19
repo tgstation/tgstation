@@ -39,11 +39,12 @@
 	. = ..()
 	link_tram()
 	set_tram_serial()
-	register_context()
 
 /obj/structure/plaque/static_plaque/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	context[SCREENTIP_CONTEXT_LMB] = "View details"
-	return CONTEXTUAL_SCREENTIP_SET
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "View details"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/plaque/static_plaque/tram/proc/link_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
