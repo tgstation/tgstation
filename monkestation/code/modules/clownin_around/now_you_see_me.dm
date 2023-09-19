@@ -1,5 +1,9 @@
 GLOBAL_LIST_INIT(hidden_image_holders, list())
 
+
+/obj/item/clothing/under/rank/civilian/clown/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, outfit_wearer, item_slot)
+
 /datum/component/hide_from_people
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///this is the image that culls players out
