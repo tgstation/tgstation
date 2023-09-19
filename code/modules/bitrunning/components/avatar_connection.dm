@@ -31,8 +31,8 @@
 	var/mob/living/avatar = parent
 	avatar.key = old_body.key
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	connect_avatar_signals(avatar)
 
+	connect_avatar_signals(avatar)
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
 	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
@@ -43,9 +43,8 @@
 #ifndef UNIT_TESTS
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 #endif
-	RegisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED)
+	server.avatar_connection_refs.Add(WEAKREF(src))
 
 	if(!locate(/datum/action/avatar_domain_info) in avatar.actions)
 		var/datum/avatar_help_text/help_datum = new(help_text)
@@ -56,17 +55,31 @@
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS)
 
+/datum/component/avatar_connection/PostTransfer()
+	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
+	if(isnull(pod))
+		return COMPONENT_INCOMPATIBLE
+
+	var/mob/living/avatar = parent
+	if(!isliving(avatar))
+		return COMPONENT_INCOMPATIBLE
+
 /// One hop of avatar connection - needs called any time the pilot swaps avatars
 /datum/component/avatar_connection/proc/connect_avatar_signals(mob/living/target)
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
+
+	if(parent != target)
+		target.TakeComponent(src)
+
 	var/mob/living/avatar = parent
 	if(isnull(pod))
 		avatar.dust()
 		return
 
 	pod.avatar_ref = WEAKREF(target)
-	RegisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
+	RegisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 	RegisterSignal(avatar, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
+	RegisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 /// Disconnects the old body's signals and actions
 /datum/component/avatar_connection/proc/disconnect_avatar_signals()
@@ -75,8 +88,9 @@
 	if(action)
 		action.Remove(avatar)
 
-	UnregisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
 	UnregisterSignal(avatar, COMSIG_LIVING_DEATH)
+	UnregisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
@@ -105,7 +119,7 @@
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
-		SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_DISCONNECTED)
+		server.avatar_connection_refs.Remove(WEAKREF(src))
 		UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
 		UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
 		UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)

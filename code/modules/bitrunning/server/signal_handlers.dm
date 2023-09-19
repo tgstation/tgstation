@@ -7,18 +7,6 @@
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
-/// Someone connected via netpod
-/obj/machinery/quantum_server/proc/on_client_connected(datum/source)
-	SIGNAL_HANDLER
-
-	avatar_connection_refs.Add(WEAKREF(source))
-
-/// Someone disconnected
-/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source)
-	SIGNAL_HANDLER
-
-	avatar_connection_refs.Remove(WEAKREF(source))
-
 /// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
 	SIGNAL_HANDLER

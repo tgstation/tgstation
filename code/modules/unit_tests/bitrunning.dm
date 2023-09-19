@@ -251,14 +251,6 @@
 	var/sever_avatar_received = FALSE
 	var/shutdown_alert_received = FALSE
 
-/datum/unit_test/bitrunning_signals/proc/on_client_connected(datum/source)
-	SIGNAL_HANDLER
-	client_connect_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_client_disconnected(datum/source)
-	SIGNAL_HANDLER
-	client_disconnect_received = TRUE
-
 /datum/unit_test/bitrunning_signals/proc/on_crowbar_alert(datum/source)
 	SIGNAL_HANDLER
 	crowbar_alert_received = TRUE
@@ -294,8 +286,6 @@
 	var/obj/item/crowbar/prybar = allocate(/obj/item/crowbar)
 	var/mob/living/carbon/human/perp = allocate(/mob/living/carbon/human/consistent)
 
-	RegisterSignal(server, COMSIG_BITRUNNER_CLIENT_CONNECTED, PROC_REF(on_client_connected))
-	RegisterSignal(server, COMSIG_BITRUNNER_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutdown_alert))
 	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_server_crash))
@@ -312,13 +302,11 @@
 	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
 	TEST_ASSERT_NOTNULL(netpod.server_ref, "Sanity: Did not set server")
 	TEST_ASSERT_EQUAL(netpod.connected, TRUE, "Sanity: pod didn't connect")
-	TEST_ASSERT_EQUAL(client_connect_received, TRUE, "Did not send COMSIG_BITRUNNER_CLIENT_CONNECTED")
 
 	perp.put_in_active_hand(prybar)
 	netpod.default_pry_open(prybar, perp)
 	TEST_ASSERT_EQUAL(crowbar_alert_received, TRUE, "Did not send COMSIG_BITRUNNER_CROWBAR_ALERT")
 	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITRUNNER_SEVER_AVATAR")
-	TEST_ASSERT_EQUAL(client_disconnect_received, TRUE, "Did not send COMSIG_BITRUNNER_CLIENT_DISCONNECTED")
 
 	sever_avatar_received = FALSE
 	server.avatar_connection_refs += WEAKREF(labrat.mind)
