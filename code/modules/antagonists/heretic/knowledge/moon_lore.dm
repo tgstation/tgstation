@@ -103,17 +103,17 @@
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/moon
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_lunarparade)
+	next_knowledge = list(/datum/heretic_knowledge/spell/moon_parade)
 	route = PATH_MOON
 
-/datum/heretic_knowledge/spell/moon_lunarparade
+/datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations \
 		if they are hit by the parade they will also suffer brain damage when it ends."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	next_knowledge = list(/datum/heretic_knowledge/moons_vision)
-	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
 
