@@ -3,8 +3,6 @@
 	name = "Test Only"
 	key = "test_only"
 	map_name = "test_only"
-	map_height = 5
-	map_width = 5
 	test_only = TRUE
 	safehouse_path = /datum/map_template/safehouse/test_only
 

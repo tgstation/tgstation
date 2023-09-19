@@ -6,7 +6,5 @@
 	extra_loot = list(/obj/item/stack/spacecash/c500 = 3)
 	key = "vaporwave"
 	map_name = "vaporwave"
-	map_height = 28
-	map_width = 25
 	reward_points = BITRUNNER_REWARD_EXTREME
 	safehouse_path = /datum/map_template/safehouse/shuttle_space

@@ -6,8 +6,6 @@
 	forced_outfit = /datum/outfit/job/miner
 	key = "ash_drake"
 	map_name = "ash_drake"
-	map_height = 46
-	map_width = 35
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

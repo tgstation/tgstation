@@ -8,7 +8,5 @@
 	simply protected. Expect resistance."
 	key = "xeno_nest"
 	map_name = "xeno_nest"
-	map_height = 39
-	map_width = 44
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/shuttle

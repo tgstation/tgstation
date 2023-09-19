@@ -9,8 +9,6 @@
 	must have trashed the place, but what?"
 	key = "pipedream"
 	map_name = "pipedream"
-	map_height = 48
-	map_width = 36
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/shuttle
 

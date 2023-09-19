@@ -7,8 +7,6 @@
 	I bet there's a way to move it myself."
 	key = "gondola_asteroid"
 	map_name = "gondola_asteroid"
-	map_height = 43
-	map_width = 37
 	safehouse_path = /datum/map_template/safehouse/shuttle_space
 
 /// Very pushy gondolas, great for moving loot crates.

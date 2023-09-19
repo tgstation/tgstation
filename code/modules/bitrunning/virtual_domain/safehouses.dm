@@ -14,7 +14,6 @@
 	mappath = "_maps/safehouses/" + filename
 	..(path = mappath)
 
-
 /datum/map_template/safehouse/test_only
 	filename = "test_only_safehouse.dmm"
 

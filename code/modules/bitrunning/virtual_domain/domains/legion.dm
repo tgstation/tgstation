@@ -6,8 +6,6 @@
 	forced_outfit = /datum/outfit/job/miner
 	key = "legion"
 	map_name = "legion"
-	map_height = 75
-	map_width = 65
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

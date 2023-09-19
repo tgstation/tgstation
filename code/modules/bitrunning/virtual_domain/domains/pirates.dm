@@ -6,9 +6,7 @@
 	help_text = "Put on the provided outfits to blend in, then battle your way through the hostile pirates. \
 	Grab the treasure and get out before you're overwhelmed!"
 	key = "pirates"
-	map_height = 42
 	map_name = "pirates"
-	map_width = 37
 	reward_points = BITRUNNER_REWARD_MEDIUM
 
 /obj/effect/mob_spawn/corpse/human/pirate/virtual_domain

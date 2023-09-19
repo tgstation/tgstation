@@ -9,7 +9,5 @@
 	this realm- some sort of puzzle, has existed in legend as the final test of just how silly you are."
 	key = "clown_planet"
 	map_name = "clown_planet"
-	map_height = 44
-	map_width = 33
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/mine

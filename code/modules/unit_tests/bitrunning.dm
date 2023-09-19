@@ -493,8 +493,6 @@
 	for(var/path in subtypesof(/datum/lazy_template/virtual_domain))
 		var/datum/lazy_template/virtual_domain/vdom = new path
 		TEST_ASSERT_NOTNULL(vdom.key, "[path] should have a key")
-		TEST_ASSERT_NOTEQUAL(vdom.map_width, 0, "[path] should have a map width")
-		TEST_ASSERT_NOTEQUAL(vdom.map_height, 0, "[path] should have a map height")
 		TEST_ASSERT_NOTNULL(vdom.map_name, "[path] should have a map name")
 
 		// This seems to return true regardless of the map existing or not

@@ -6,8 +6,6 @@
 	forced_outfit = /datum/outfit/job/miner
 	key = "wendigo"
 	map_name = "wendigo"
-	map_height = 37
-	map_width = 33
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

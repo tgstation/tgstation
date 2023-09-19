@@ -6,8 +6,6 @@
 	forced_outfit = /datum/outfit/job/miner
 	key = "hierophant"
 	map_name = "hierophant"
-	map_height = 38
-	map_width = 25
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

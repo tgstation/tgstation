@@ -5,11 +5,8 @@
  */
 /datum/lazy_template/virtual_domain
 	map_dir = "_maps/virtual_domains"
-	map_height = 0 // these should NOT extend beyond 75x75
-	map_width = 0
 	map_name = "None"
 	key = "Virtual Domain"
-	keep_atoms_list = TRUE
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
@@ -35,9 +32,3 @@
 	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
-
-/turf/closed/indestructible/binary
-	name = "tear in the fabric of reality"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "binary"
-

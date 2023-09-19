@@ -9,7 +9,5 @@
 	the crate. 	Be careful, they are extremely armed."
 	key = "syndicate_assault"
 	map_name = "syndicate_assault"
-	map_height = 56
-	map_width = 52
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/shuttle

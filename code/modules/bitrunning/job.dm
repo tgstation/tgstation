@@ -8,10 +8,8 @@
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "BITRUNNER"
-
 	outfit = /datum/outfit/job/bitrunner
 	plasmaman_outfit = /datum/outfit/plasmaman/bitrunner
-
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_BITRUNNER
@@ -32,7 +30,6 @@
 	)
 	rpg_title = "Recluse"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
-
 
 /datum/outfit/job/bitrunner
 	name = "Bitrunner"
