@@ -67,7 +67,7 @@
 	for (var/mob/living/basic/clown/harbringer in oview(src, 7))
 		harbringer.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
 
-/mob/living/basic/clown/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/clown/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!istype(target, /obj/item/food/grown/banana/bunch))
 		return ..()
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
@@ -391,7 +391,7 @@
 		return ..()
 	eat_atom(item)
 
-/mob/living/basic/clown/mutant/glutton/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/clown/mutant/glutton/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!check_edible(target))
 		return ..()
 	eat_atom(target)
