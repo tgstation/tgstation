@@ -11,14 +11,14 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	/// Whether we have an ongoing connection
+	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
 	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// Holds this to see if it needs to generate a new one
 	var/datum/weakref/avatar_ref
 	/// The linked quantum server
 	var/datum/weakref/server_ref
-	/// Whether we have an ongoing connection
-	var/connected = FALSE
 	/// The amount of brain damage done from force disconnects
 	var/disconnect_damage
 	/// Static list of outfits to select from

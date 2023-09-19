@@ -44,9 +44,6 @@
 	outfit = /datum/outfit/job/miner
 	icon_state = "corpseminer"
 
-/obj/effect/mob_spawn/corpse/human/miner/persistent
-	keep_ref = TRUE
-
 /obj/effect/mob_spawn/corpse/human/miner/mod
 	outfit = /datum/outfit/job/miner/equipped/mod
 

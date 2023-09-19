@@ -88,17 +88,14 @@
 	name = "Factory Worker"
 	outfit = /datum/outfit/factory
 	icon_state = "corpsecargotech"
-	keep_ref = TRUE
 
 /obj/effect/mob_spawn/corpse/human/factory/guard
 	name = "Factory Guard"
 	outfit = /datum/outfit/factory/guard
 	icon_state = "corpsecargotech"
-	keep_ref = TRUE
 
 /obj/effect/mob_spawn/corpse/human/factory/qm
 	name = "Factory Quartermaster"
 	outfit = /datum/outfit/factory/qm
 	icon_state = "corpsecargotech"
-	keep_ref = TRUE
 

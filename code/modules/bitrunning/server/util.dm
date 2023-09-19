@@ -24,8 +24,8 @@
 	var/list/levels = list()
 
 	for(var/datum/lazy_template/virtual_domain/domain as anything in available_domains)
-		if(initial(domain.test_only))
-			continue
+		// if(initial(domain.test_only))
+		// 	continue
 		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
 		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
 
@@ -96,14 +96,15 @@
 	// B: The domain is not loaded
 	// C: The domain is shutting down
 	// D: There are no mobs
-	if(!length(avatar_connection_refs) || isnull(generated_domain) || !is_ready || !is_operational || !length(mutation_candidates))
+	if(!length(avatar_connection_refs) || isnull(generated_domain) || !is_ready || !is_operational || !length(mutation_candidate_refs))
 		return list()
 
-	for(var/mob/living/creature as anything in mutation_candidates)
-		if(QDELETED(creature) || creature.mind)
-			mutation_candidates.Remove(creature)
+	for(var/datum/weakref/creature_ref as anything in mutation_candidate_refs)
+		var/mob/living/creature = creature_ref.resolve()
+		if(isnull(creature) || creature.mind)
+			mutation_candidate_refs.Remove(creature_ref)
 
-	return shuffle(mutation_candidates)
+	return shuffle(mutation_candidate_refs)
 
 /// Locates any turfs with crate out landmarks
 /obj/machinery/quantum_server/proc/locate_receive_turfs()
@@ -116,8 +117,9 @@
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
-	for(var/mob/living/baddie as anything in spawned_threats)
-		if(QDELETED(baddie) || baddie.stat >= UNCONSCIOUS || isnull(baddie.mind))
+	for(var/datum/weakref/baddie_ref as anything in spawned_threat_refs)
+		var/mob/living/baddie = baddie_ref.resolve()
+		if(isnull(baddie) || baddie.stat >= UNCONSCIOUS || isnull(baddie.mind))
 			continue
 
 		baddie.throw_alert(

@@ -278,7 +278,7 @@
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
 "nz" = (
-/obj/effect/mob_spawn/corpse/human/pirate/virtual_domain,
+/obj/effect/mob_spawn/corpse/human/pirate,
 /turf/open/misc/beach/coast{
 	dir = 8
 	},
@@ -319,7 +319,7 @@
 /turf/open/misc/beach/coast,
 /area/virtual_domain/powered)
 "pU" = (
-/obj/effect/mob_spawn/corpse/human/pirate/virtual_domain,
+/obj/effect/mob_spawn/corpse/human/pirate,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/powered)
 "qj" = (
@@ -637,7 +637,7 @@
 /turf/open/water/beach,
 /area/virtual_domain/powered)
 "IG" = (
-/obj/effect/mob_spawn/corpse/human/pirate/virtual_domain,
+/obj/effect/mob_spawn/corpse/human/pirate,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
@@ -889,7 +889,7 @@
 	},
 /area/virtual_domain/powered)
 "Vg" = (
-/obj/effect/mob_spawn/corpse/human/pirate/melee/virtual_domain,
+/obj/effect/mob_spawn/corpse/human/pirate/melee,
 /turf/open/water/beach,
 /area/virtual_domain/powered)
 "Vk" = (

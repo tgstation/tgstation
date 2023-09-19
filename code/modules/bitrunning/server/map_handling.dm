@@ -166,9 +166,10 @@
 		var/datum/turf_reservation/res = generated_domain.reservations[1]
 		res.Release()
 
-	var/list/mob/living/creatures = spawned_threats + mutation_candidates
-	for(var/mob/living/creature as anything in creatures)
-		if(QDELETED(creature))
+	var/list/datum/weakref/creatures = spawned_threat_refs + mutation_candidate_refs
+	for(var/datum/weakref/creature_ref as anything in creatures)
+		var/mob/living/creature = creature_ref?.resolve()
+		if(isnull(creature))
 			continue
 
 		creature.dust() // sometimes mobs just don't die
@@ -176,7 +177,7 @@
 	exit_turfs = list()
 	generated_domain = null
 	generated_safehouse = null
-	mutation_candidates.Cut()
-	spawned_threats.Cut()
+	mutation_candidate_refs.Cut()
+	spawned_threat_refs.Cut()
 
 #undef ONLY_TURF

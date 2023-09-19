@@ -44,6 +44,7 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
+	SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -277,10 +278,6 @@
 	var/oxy_damage = 0
 	///burn damage this corpse will spawn with
 	var/burn_damage = 0
-	/// Stops this from being qdeleted on map load. Used in virtual domains -  need the mob it spawned
-	var/keep_ref = FALSE
-	/// The mob it spawned
-	var/datum/weakref/mob_ref
 
 /obj/effect/mob_spawn/corpse/Initialize(mapload, no_spawn)
 	. = ..()
@@ -302,14 +299,7 @@
 
 /obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
 	. = ..()
-
-	if(!keep_ref)
-		qdel(src)
-		return
-
-	if(!.)
-		return
-	mob_ref = WEAKREF(.)
+	qdel(src)
 
 //almost all mob spawns in this game, dead or living, are human. so voila
 

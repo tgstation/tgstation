@@ -34,7 +34,7 @@
 /datum/round_event_control/bitrunning_glitch/proc/get_active_servers()
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
 		if(length(server.get_valid_domain_targets()))
-			active_servers += server
+			active_servers.Add(server)
 
 	return length(active_servers) > 0
 
@@ -86,7 +86,8 @@
 	if(isnull(chosen) || !length(mutation_candidates))
 		return MAP_ERROR
 
-	var/mob/living/mutation_target = pick(mutation_candidates)
+	var/datum/weakref/target_ref = pick(mutation_candidates)
+	var/mob/living/mutation_target = target_ref.resolve()
 
 	var/chosen_role = forced_role || pick(cyber_control.possible_antags)
 

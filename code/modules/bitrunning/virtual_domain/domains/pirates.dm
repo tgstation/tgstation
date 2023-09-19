@@ -8,9 +8,3 @@
 	key = "pirates"
 	map_name = "pirates"
 	reward_points = BITRUNNER_REWARD_MEDIUM
-
-/obj/effect/mob_spawn/corpse/human/pirate/virtual_domain
-	keep_ref = TRUE
-
-/obj/effect/mob_spawn/corpse/human/pirate/melee/virtual_domain
-	keep_ref = TRUE

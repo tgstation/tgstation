@@ -27,7 +27,7 @@
 
 	TEST_ASSERT_EQUAL(server.initialize_map_items(), TRUE, "Should initialize safehouse turfs")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
-	TEST_ASSERT_EQUAL(length(server.mutation_candidates), 2, "Did not set the correct number of mutation candidates")
+	TEST_ASSERT_EQUAL(length(server.mutation_candidate_refs), 2, "Did not set the correct number of mutation candidates")
 
 /// Handles cases with stopping domains. The server should cool down etc
 /datum/unit_test/qserver_reset/Run()

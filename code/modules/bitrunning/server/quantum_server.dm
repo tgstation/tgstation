@@ -29,9 +29,9 @@
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
-	var/list/mob/living/mutation_candidates = list()
+	var/list/datum/weakref/mutation_candidate_refs = list()
 	/// Any ghosts that have spawned in
-	var/list/mob/living/spawned_threats = list()
+	var/list/datum/weakref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
 	/// The amount of points in the system, used to purchase maps
@@ -74,9 +74,9 @@
 	. = ..()
 
 	available_domains.Cut()
-	QDEL_LIST(mutation_candidates)
-	QDEL_LIST(avatar_connection_refs)
-	QDEL_LIST(spawned_threats)
+	mutation_candidate_refs.Cut()
+	avatar_connection_refs.Cut()
+	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(receive_turfs)
 	QDEL_NULL(generated_domain)

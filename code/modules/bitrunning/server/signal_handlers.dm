@@ -19,6 +19,12 @@
 
 	avatar_connection_refs.Remove(WEAKREF(source))
 
+/// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
+/obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
+	SIGNAL_HANDLER
+
+	mutation_candidate_refs.Add(WEAKREF(corpse))
+
 /// Being qdeleted - make sure the circuit and connected mobs go with it
 /obj/machinery/quantum_server/proc/on_delete(datum/source)
 	SIGNAL_HANDLER
@@ -88,7 +94,7 @@
 			var/mob/living/creature = thing
 
 			if(creature.can_be_cybercop)
-				mutation_candidates += creature
+				mutation_candidate_refs += WEAKREF(creature)
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -96,14 +102,7 @@
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
-			var/obj/effect/mob_spawn/corpse/spawner = thing
-			var/mob/living/creature = spawner.mob_ref?.resolve()
-
-			if(!creature?.can_be_cybercop)
-				continue
-
-			mutation_candidates += creature
-			qdel(spawner)
+			RegisterSignal(thing, COMSIG_SPAWNER_SPAWNED, PROC_REF(on_corpse_spawned))
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
@@ -112,5 +111,5 @@
 	SIGNAL_HANDLER
 
 	domain_threats += 1
-	spawned_threats += threat
+	spawned_threat_refs.Add(WEAKREF(threat))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED) // notify players
