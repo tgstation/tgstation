@@ -66,7 +66,7 @@
 
 /obj/effect/temp_visual/brim_burst/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(bang)), duration - 1, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(bang)), duration - (1 DECISECONDS), TIMER_DELETE_ME)
 	animate(src, color = "#ff8888", transform = matrix().Scale(1.1), time = 0.7 SECONDS)
 	animate(color = "#ffffff", transform = matrix(), time = 0.2 SECONDS)
 	animate(color = "#ff4444", transform = matrix().Scale(1.3), time = 0.5 SECONDS)

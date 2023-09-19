@@ -6,11 +6,12 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/brimdemon,
 	)
 
+	ai_traits = PAUSE_DURING_DO_AFTER
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/no_target
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_adjacent_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic,
 		/datum/ai_planning_subtree/move_to_cardinal/brimdemon,
 		/datum/ai_planning_subtree/targeted_mob_ability/brimbeam,
 	)
@@ -38,7 +39,6 @@
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/brimbeam
 
 /datum/ai_behavior/targeted_mob_ability/brimbeam
-	minimum_stat = HARD_CRIT
 	/// Don't shoot if too far away
 	var/max_target_distance = 9
 

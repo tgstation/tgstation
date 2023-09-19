@@ -1,42 +1,33 @@
 /// Attack something which is already adjacent to us, without ending planning
-/datum/ai_planning_subtree/attack_adjacent_target
-	/// Behaviour to execute to slap someone
-	var/melee_attack_behavior = /datum/ai_behavior/attack_adjacent_target
-	/// Blackboard key in which to store targetting datum
-	var/targetting_key = BB_TARGETTING_DATUM
-	/// Blackboard key in which to store selected target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
-	/// Blackboard key in which to store selected target hiding place
-	var/hiding_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
+/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/opportunistic
+	end_planning = FALSE
 
-/datum/ai_planning_subtree/attack_adjacent_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(QDELETED(target) || !controller.pawn.Adjacent(target))
 		return
 	if (isliving(controller.pawn))
 		var/mob/living/pawn = controller.pawn
 		if (LAZYLEN(pawn.do_afters))
 			return
-	controller.queue_behavior(melee_attack_behavior, targetting_key, target_key, hiding_key)
+	controller.queue_behavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
-/// Attack something which is already adjacent to us
-/datum/ai_behavior/attack_adjacent_target
-	action_cooldown = 0.2 SECONDS
+/// Attack something which is already adjacent to us without moving
+/datum/ai_behavior/basic_melee_attack/opportunistic
+	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/attack_adjacent_target/perform(seconds_per_tick, datum/ai_controller/controller, targetting_datum_key, target_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/opportunistic/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+	if (!controller.blackboard_key_exists(targetting_datum_key))
+		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
+	return controller.blackboard_key_exists(target_key)
+
+/datum/ai_behavior/basic_melee_attack/opportunistic/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+	var/atom/movable/atom_pawn = controller.pawn
+	if(!atom_pawn.CanReach(controller.blackboard[target_key]))
+		finish_action(controller, TRUE, target_key) // Don't clear target
+		return FALSE
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
-	if(!targetting_datum.can_attack(controller.pawn, target) || !controller.pawn.Adjacent(target))
-		finish_action(controller, succeeded = FALSE)
-		return
-	if (!isliving(controller.pawn))
-		return
-	var/mob/living/pawn = controller.pawn
-	if (world.time < pawn.next_move)
-		finish_action(controller, succeeded = FALSE)
-		return
-	pawn.combat_mode = TRUE
-	pawn.ClickOn(target, list())
-	finish_action(controller, succeeded = TRUE)
+	finish_action(controller, TRUE, target_key) // Try doing something else

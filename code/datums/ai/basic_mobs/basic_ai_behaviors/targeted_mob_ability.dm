@@ -3,8 +3,6 @@
  * Attempts to use a mob's cooldown ability on a target
  */
 /datum/ai_behavior/targeted_mob_ability
-	/// Drop targetting on mobs more dead than this
-	var/minimum_stat = UNCONSCIOUS
 
 /datum/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/datum/action/cooldown/ability = get_ability_to_use(controller, ability_key)
@@ -20,12 +18,6 @@
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
-		controller.clear_blackboard_key(target_key)
-		return
-	if (!isliving(target))
-		return
-	var/mob/living/living_target = target
-	if(living_target.stat >= minimum_stat)
 		controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/targeted_mob_ability/proc/get_ability_to_use(datum/ai_controller/controller, ability_key)
