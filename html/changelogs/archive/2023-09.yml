@@ -72,3 +72,18 @@
   lmenvs:
   - bugfix: bees are butcherable again
   - rscadd: friendly maintenance bees are available to summon from the pet beacon
+2023-09-19:
+  KittyNoodle:
+  - rscadd: The Lawbringer now has a lock, however, be careful using it, as it tends
+      to make it upset.
+  - bugfix: Bigshot no longer vents the station while blowing up doors/machines.
+  - balance: Detain now does double the previous damage, as originally intended.
+  - sound: The Lawbringer will now talk/yell at you.
+  - spellcheck: fixed projectile name for clownshot.
+  - code_imp: Lots of code improvements for Lawbringer, redundant code is mostly gone.
+  MilkForever:
+  - rscadd: Engineering hardsuits are obtainable once again.
+  - image: Hardsuit sprites have been reverted to their classic appearance.
+  Salted-Zen:
+  - rscadd: FOUR new crusher weapons to the mining vendor! Get them today for 1250
+      points!

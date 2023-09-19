@@ -1,9 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - rscadd: "The Lawbringer now has a lock, however, be careful using it, as it tends to make it upset."
-  - bugfix: "Bigshot no longer vents the station while blowing up doors/machines."
-  - balance: "Detain now does double the previous damage, as originally intended."
-  - sound: "The Lawbringer will now talk/yell at you."
-  - spellcheck: "fixed projectile name for clownshot."
-  - code_imp: "Lots of code improvements for Lawbringer, redundant code is mostly gone."
