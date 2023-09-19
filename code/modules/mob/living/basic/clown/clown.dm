@@ -67,12 +67,12 @@
 	for (var/mob/living/basic/clown/harbringer in oview(src, 7))
 		harbringer.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
 
-/mob/living/basic/clown/melee_attack(atom/attacked_target, list/modifiers)
-	if(!istype(attacked_target, /obj/item/food/grown/banana/bunch))
+/mob/living/basic/clown/melee_attack(atom/target, list/modifiers)
+	if(!istype(target, /obj/item/food/grown/banana/bunch))
 		return ..()
-	var/obj/item/food/grown/banana/bunch/unripe_bunch = attacked_target
+	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
-	log_combat(src, attacked_target, "explosively ripened")
+	log_combat(src, target, "explosively ripened")
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"
@@ -391,10 +391,10 @@
 		return ..()
 	eat_atom(item)
 
-/mob/living/basic/clown/mutant/glutton/melee_attack(atom/attacked_target, list/modifiers)
-	if(!check_edible(attacked_target))
+/mob/living/basic/clown/mutant/glutton/melee_attack(atom/target, list/modifiers)
+	if(!check_edible(target))
 		return ..()
-	eat_atom(attacked_target)
+	eat_atom(target)
 
 /mob/living/basic/clown/mutant/glutton/UnarmedAttack(atom/victim, proximity_flag, list/modifiers)
 	if(!check_edible(victim))
