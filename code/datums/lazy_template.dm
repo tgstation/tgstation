@@ -10,8 +10,6 @@
 	var/key
 	var/map_dir = "_maps/templates/lazy_templates"
 	var/map_name
-	var/map_width
-	var/map_height
 
 /datum/lazy_template/New()
 	reservations = list()
@@ -46,25 +44,53 @@
 	if(!load_path || !fexists(load_path))
 		CRASH("lazy template [type] has an invalid load_path: '[load_path]', check directory and map name!")
 
-	var/datum/map_template/loading = new(path = load_path, cache = TRUE)
-	if(!loading.cached_map)
+	var/datum/parsed_map/parsed_template = load_map(
+		file(load_path),
+		measure_only = TRUE,
+	)
+	if(isnull(parsed_template.parsed_bounds))
 		CRASH("Failed to cache lazy template for loading: '[key]'")
 
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(loading.width, loading.height)
+	var/width = parsed_template.parsed_bounds[MAP_MAXX] - parsed_template.parsed_bounds[MAP_MINX] + 1
+	var/height = parsed_template.parsed_bounds[MAP_MAXY] - parsed_template.parsed_bounds[MAP_MINY] + 1
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(
+		width,
+		height,
+		parsed_template.parsed_bounds[MAP_MAXZ],
+	)
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
-	if(!loading.load(coords2turf(reservation.bottom_left_coords)))
-		CRASH("Failed to load lazy template: '[key]'")
-	reservations += reservation
+	var/list/loaded_atom_movables = list()
+	var/list/loaded_turfs = list()
+	var/list/loaded_areas = list()
+	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
+		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
+		var/turf/top_right = reservation.top_right_turfs[z_idx]
+		load_map(
+			file(load_path),
+			bottom_left.x,
+			bottom_left.y,
+			bottom_left.z,
+			z_upper = z_idx,
+			z_lower = z_idx,
+		)
+		for(var/turf/turf as anything in block(bottom_left, top_right))
+			loaded_turfs += turf
+			loaded_areas |= get_area(turf)
+			for(var/thing in turf.get_all_contents())
+				// atoms can actually be in the contents of two or more turfs based on its icon/bound size
+				// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
+				loaded_atom_movables |= thing
 
+	SSatoms.InitializeAtoms(loaded_atom_movables + loaded_turfs + loaded_areas)
+	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
+	reservations += reservation
 	return reservation
 
 /datum/lazy_template/nukie_base
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
 	map_name = "nukie_base"
-	map_width = 89
-	map_height = 100
 
 /datum/lazy_template/wizard_dem
 	key = LAZY_TEMPLATE_KEY_WIZARDDEN
@@ -77,3 +103,7 @@
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
 	map_name = "abductor_ships"
+
+/datum/lazy_template/heretic_sacrifice_room
+	key = LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE
+	map_name = "heretic_sacrifice"

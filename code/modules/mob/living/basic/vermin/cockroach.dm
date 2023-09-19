@@ -131,6 +131,7 @@
 	melee_damage_lower = 2.5
 	melee_damage_upper = 10
 	obj_damage = 10
+	melee_attack_cooldown = 1 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
@@ -165,30 +166,18 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,  //If we are attacking someone, this will prevent us from hunting
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/hauberoach
-
-/datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS
 
 /datum/ai_controller/basic_controller/cockroach/sewer
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/sewer
-
-/datum/ai_behavior/basic_melee_attack/sewer
-	action_cooldown = 0.8 SECONDS
 
 /mob/living/basic/cockroach/glockroach/mobroach
 	name = "mobroach"

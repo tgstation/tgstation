@@ -4,7 +4,6 @@
  * Adds a floor to the melee damage of the dog, as most pet dogs don't actually have any melee strength
  */
 /datum/ai_behavior/basic_melee_attack/dog
-	action_cooldown = 0.8 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
 
