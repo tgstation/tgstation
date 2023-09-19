@@ -107,7 +107,8 @@
 	var/final_effectiveness = effectiveness - target.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
 
-	for(var/obj/remains in target.butcher_results)
+	for(var/result_typepath in target.butcher_results)
+		var/obj/remains = result_typepath
 		var/amount = target.butcher_results[remains]
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
@@ -123,7 +124,8 @@
 
 		target.butcher_results.Remove(remains) //in case you want to, say, have it drop its results on gib
 
-	for(var/obj/guarnteed_remains in target.guaranteed_butcher_results)
+	for(var/guaranteed_result_typepath in target.guaranteed_butcher_results)
+		var/obj/guaranteed_remains = guaranteed_result_typepath
 		var/amount = target.guaranteed_butcher_results[guarnteed_remains]
 		for(var/i in 1 to amount)
 			results += new guarnteed_remains (location)
