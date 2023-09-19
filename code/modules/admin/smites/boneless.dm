@@ -12,10 +12,10 @@
 	var/mob/living/carbon/carbon_target = target
 	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
 		var/severity = pick(list(
-			"[WOUND_SEVERITY_MODERATE]",
-			"[WOUND_SEVERITY_SEVERE]",
-			"[WOUND_SEVERITY_SEVERE]",
-			"[WOUND_SEVERITY_CRITICAL]",
-			"[WOUND_SEVERITY_CRITICAL]",
+			WOUND_SEVERITY_MODERATE,
+			WOUND_SEVERITY_SEVERE,
+			WOUND_SEVERITY_SEVERE,
+			WOUND_SEVERITY_CRITICAL,
+			WOUND_SEVERITY_CRITICAL,
 		))
 		carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, severity)
