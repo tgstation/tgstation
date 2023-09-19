@@ -184,8 +184,9 @@
 
 	for(var/holiday_name in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
-		if(holiday_today.holiday_hat && !default_headwear) //If our drone type doesn't start with a hat, we take the holiday one.
-			default_headwear = holiday_today.holiday_hat
+		var/obj/item/potential_hat = holiday_today.holiday_hat
+		if(!isnull(potential_hat) && isnull(default_headwear)) //If our drone type doesn't start with a hat, we take the holiday one.
+			default_headwear = potential_hat
 
 	if(default_headwear)
 		var/obj/item/new_hat = new default_headwear(src)
