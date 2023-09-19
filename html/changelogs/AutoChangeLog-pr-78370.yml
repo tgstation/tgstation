@@ -1,6 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "pancake stack layering"
-  - bugfix: "pizzabox stack layering"
-  - bugfix: "pizzabox bombs that spawn unarmed now label their pizza correctly and cannot spawn a spriteless pizza"

@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes inedible grown items (such as tower caps) becoming unclickable when harvested, fixes their seeds disappearing when inserted into the seed machine"

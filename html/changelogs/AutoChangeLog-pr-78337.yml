@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Player-controlled basic mobs attack as fast as those mobs can when controlled by the AI"
-  - balance: "Player-controlled Faithless can paralyse people they attack, like the AI does"
-  - balance: "Player-controlled Star Gazers (if an admin felt like making one) apply the star mark on attack and deal damage to everything around them, like the AI does"
