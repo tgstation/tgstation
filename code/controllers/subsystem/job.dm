@@ -919,19 +919,15 @@ SUBSYSTEM_DEF(job)
  * * crew_threshold - amount of crew before it's no longer considered a skeleton crew
  *
 */
-/datum/controller/subsystem/job/proc/is_skeleton_engineering(crew_threshold)
-	var/engineers = 0
+/datum/controller/subsystem/job/proc/has_minimum_jobs(crew_threshold, list/jobs = list(), list/head_jobs = list())
+	var/employees = 0
 	for(var/datum/record/crew/target in GLOB.manifest.general)
-		if(target.trim == JOB_CHIEF_ENGINEER)
+		if (target.trim in head_jobs)
 			return FALSE
+		if(target.trim in jobs)
+			employees++
 
-		if(target.trim == JOB_STATION_ENGINEER)
-			engineers++
-
-		if(target.trim == JOB_ATMOSPHERIC_TECHNICIAN)
-			engineers++
-
-	if(engineers > crew_threshold)
+	if(employees > crew_threshold)
 		return FALSE
 
 	return TRUE
