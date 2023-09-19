@@ -88,6 +88,10 @@
 				head_icon = selected_hat.icon
 			var/mutable_appearance/hat_adding = selected_hat.build_worn_icon(HEAD_LAYER, head_icon, FALSE, FALSE)
 			hat_adding.pixel_y = ((current_hat * 4) - 1)
+			if(ismob(loc))
+				if(ishuman(loc))
+					var/mob/living/carbon/human/user = loc
+					hat_adding.pixel_y -= GLOB.human_heights_to_offsets[num2text(user.get_mob_height())][1]
 			hat_adding.pixel_x = (rand(-1, 1))
 			current_hat++
 			. += hat_adding
