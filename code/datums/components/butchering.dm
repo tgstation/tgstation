@@ -99,50 +99,50 @@
  *
  * Arguments:
  * - [butcher][/mob/living]: The mob doing the butchering
- * - [meat][/mob/living]: The mob being butchered
+ * - [target][/mob/living]: The mob being butchered
  */
-/datum/component/butchering/proc/on_butchering(atom/butcher, mob/living/meat)
+/datum/component/butchering/proc/on_butchering(atom/butcher, mob/living/target)
 	var/list/results = list()
-	var/turf/T = meat.drop_location()
-	var/final_effectiveness = effectiveness - meat.butcher_difficulty
+	var/turf/location = target.drop_location()
+	var/final_effectiveness = effectiveness - target.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
-	for(var/V in meat.butcher_results)
+	for(var/V in target.butcher_results)
 		var/obj/bones = V
-		var/amount = meat.butcher_results[bones]
+		var/amount = target.butcher_results[bones]
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
 				if(butcher)
-					to_chat(butcher, span_warning("You fail to harvest some of the [initial(bones.name)] from [meat]."))
+					to_chat(butcher, span_warning("You fail to harvest some of the [initial(bones.name)] from [target]."))
 				continue
 
 			if(prob(bonus_chance))
 				if(butcher)
-					to_chat(butcher, span_info("You harvest some extra [initial(bones.name)] from [meat]!"))
-				results += new bones (T)
-			results += new bones (T)
+					to_chat(butcher, span_info("You harvest some extra [initial(bones.name)] from [target]!"))
+				results += new bones (location)
+			results += new bones (location)
 
-		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
+		target.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
 
-	for(var/V in meat.guaranteed_butcher_results)
+	for(var/V in target.guaranteed_butcher_results)
 		var/obj/sinew = V
-		var/amount = meat.guaranteed_butcher_results[sinew]
+		var/amount = target.guaranteed_butcher_results[sinew]
 		for(var/i in 1 to amount)
-			results += new sinew (T)
-		meat.guaranteed_butcher_results.Remove(sinew)
+			results += new sinew (location)
+		target.guaranteed_butcher_results.Remove(sinew)
 
 	for(var/obj/item/carrion in results)
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
 		if(!length(meat_mats))
 			continue
-		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, meat) = counterlist_sum(meat_mats)))
+		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
 
 	if(butcher)
-		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
-								span_notice("You butcher [meat]."))
-	butcher_callback?.Invoke(butcher, meat)
-	meat.harvest(butcher)
-	meat.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
-	meat.gib(FALSE, FALSE, TRUE)
+		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
+								span_notice("You butcher [target]."))
+	butcher_callback?.Invoke(butcher, target)
+	target.harvest(butcher)
+	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
+	target.gib(FALSE, FALSE, TRUE)
 
 ///Enables the butchering mechanic for the mob who has equipped us.
 /datum/component/butchering/proc/enable_butchering(datum/source)
@@ -207,9 +207,9 @@
 	))
 
 ///When we are ready to drill through a mob
-/datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/meat)
+/datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/target)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, meat)
+	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, target)
 
 /datum/component/butchering/wearable
 
