@@ -238,6 +238,7 @@
 /// Helpers for rcd
 /obj/structure/frame/computer/rcd
 	icon = 'icons/hud/radial.dmi'
+	icon_state = "cnorth"
 
 /obj/structure/frame/computer/rcd/Initialize(mapload)
 	name = "computer frame"
