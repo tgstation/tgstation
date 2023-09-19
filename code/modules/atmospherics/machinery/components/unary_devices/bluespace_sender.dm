@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act(mob/living/user, obj/item/tool)
