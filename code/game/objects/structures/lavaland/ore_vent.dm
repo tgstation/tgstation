@@ -93,6 +93,20 @@
 			return
 		scan_and_confirm(user)
 
+/obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!isgolem(user))
+		return
+	if(!tapped)
+		to_chat(user, span_notice("You can't quite find the weakpoint of \the [src]... Perhaps it needs to be scanned first?"))
+		return
+	to_chat(user, span_notice("You start striking \the [src] with your golem's fist, attempting to dredge up a boulder..."))
+	for(var/completion to 3)
+		if(do_after(user, boulder_size SECONDS))
+			user.apply_damage(20, STAMINA)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	produce_boulder()
+	to_chat(user, span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 /obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()
 	if(tapped)

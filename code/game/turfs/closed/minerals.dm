@@ -49,10 +49,6 @@
 
 	return ..()
 
-/turf/closed/mineral/random/examine(mob/user)
-	. = ..()
-	. += span_notice("[proximity_ore_chance()] CHANCE TO SPAWN. [mineralAmt] ORES INSIDE??? DELETE ME PELASE")
-
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
 	. = ..()
@@ -91,33 +87,11 @@
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
 		spawned_boulder = /obj/item/boulder/gulag/volcanic
 
-/turf/closed/mineral/proc/scale_ore_to_vent()
-	var/distance = prox_to_vent()
-	if(distance == 0) // We're not on lavaland or similar failure condition
-		mineralAmt = rand(1,5)
-		return
-
-	if(distance < VENT_PROX_VERY_HIGH)
-		mineralAmt = 5
-		return
-	if(distance < VENT_PROX_HIGH)
-		mineralAmt = 4
-		return
-	if(distance < VENT_PROX_MEDIUM)
-		mineralAmt = 3
-		return
-	if(distance < VENT_PROX_LOW)
-		mineralAmt = 2
-		return
-	if(distance < VENT_PROX_FAR)
-		mineralAmt = 1
-		return
-
-/turf/closed/mineral/proc/prox_to_vent()
+/turf/closed/mineral/proc/prox_to_vent(force_speak = FALSE)
 	if(!SSmapping.level_trait(src.z, ZTRAIT_MINING))
-		return 0
+		return FALSE
 
-	var/distance = 0
+	var/distance = 128 // Max distance for a get_dist is 127
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
 		if(vent.unique_vent)
 			continue
@@ -126,20 +100,12 @@
 		var/temp_distance = get_dist(src, vent)
 		if(temp_distance < distance)
 			distance = temp_distance
-
-	// var/tripped = FALSE
-	// for(var/i in SSore_generation.delete_me.len)
-	// 	if(SSore_generation.delete_me[i] == distance)
-	// 		SSore_generation.delete_me[i] += 1
-	// 		tripped = TRUE
-	// if(!tripped)
-	// 	SSore_generation.delete_me[SSore_generation.delete_me.len + 1] = 1
 	return distance
 
 /turf/closed/mineral/proc/proximity_ore_chance()
 	var/distance = prox_to_vent()
 	if(distance == 0) // We're not on lavaland or similar failure condition
-		return 0
+		return null
 
 	if(distance < VENT_PROX_VERY_HIGH)
 		return 100
@@ -150,7 +116,25 @@
 	if(distance < VENT_PROX_LOW)
 		return 5
 	if(distance < VENT_PROX_FAR)
-		return 0
+		return 1
+	return 0
+
+/turf/closed/mineral/proc/scale_ore_to_vent()
+	var/distance = prox_to_vent()
+	if(distance == 0) // We're not on lavaland or similar failure condition
+		return rand(1,5)
+
+	if(distance < VENT_PROX_VERY_HIGH)
+		return 5
+	if(distance < VENT_PROX_HIGH)
+		return 4
+	if(distance < VENT_PROX_MEDIUM)
+		return 3
+	if(distance < VENT_PROX_LOW)
+		return 2
+	if(distance < VENT_PROX_FAR)
+		return 1
+	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -274,7 +258,10 @@
 		gets_drilled(give_exp = FALSE)
 
 /turf/closed/mineral/random
+	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
 	var/mineralChance = 13
+	/// Does this mineral determine it's random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
+	var/proximity_based = FALSE
 
 /// Returns a list of the chances for minerals to spawn.
 /// Will only run once, and will then be cached.
@@ -296,11 +283,9 @@
 	var/static/list/mineral_chances_by_type = list()
 
 	. = ..()
-	var/dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
-	if(prob(1))
-		to_chat(world, "Ore spawn chance: [dynamic_prob]")
-	if(!dynamic_prob)
-		dynamic_prob = mineralChance
+	var/dynamic_prob = mineralChance
+	if(proximity_based)
+		dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
 	if (prob(dynamic_prob))
 		var/list/spawn_chance_list = mineral_chances_by_type[type]
 		if (isnull(spawn_chance_list))
@@ -317,10 +302,7 @@
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
-				// M.mineralAmt = rand(1, 5)
-				M.scale_ore_to_vent()
-				if(prob(1))
-					to_chat(world, "Ore spawn chance (inside): [dynamic_prob]")
+				M.mineralAmt = scale_ore_to_vent()
 				SSore_generation.post_ore_r["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
@@ -331,9 +313,7 @@
 		else
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
-			scale_ore_to_vent()
-			if(prob(1))
-				to_chat(world, "Ore spawn chance (outside): [dynamic_prob]")
+			mineralAmt = scale_ore_to_vent()
 			SSore_generation.post_ore_m["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance

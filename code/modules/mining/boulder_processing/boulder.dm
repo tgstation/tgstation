@@ -61,13 +61,15 @@
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(!isliving(user))
+		return FALSE
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
 	if(isgolem(user))
 		manual_process(weapon, user, 3)
 		return
 
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/user, override_speed, mech_override = FALSE)
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE)
 	var/process_speed = 0
 	if(weapon)
 		process_speed = weapon.toolspeed
@@ -86,13 +88,12 @@
 		if(!user.Adjacent(src))
 			return
 	durability--
-	if(ishuman(user))
-		var/mob/living/carbon/human/miner = user
-		miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
+	user.apply_damage(4, STAMINA)
 	if(durability <= 0)
+		convert_to_ore()
+		user.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
 		playsound(src, 'sound/effects/rock_break.ogg', 50)
-		convert_to_ore()
 		qdel(src)
 		return
 	else if(durability == 1)
