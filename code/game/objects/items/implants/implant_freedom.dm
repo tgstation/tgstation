@@ -5,34 +5,35 @@
 	implant_color = "r"
 	uses = 4
 
-
 /obj/item/implant/freedom/activate()
 	. = ..()
-	uses--
-	to_chat(imp_in, span_hear("You feel a faint click."))
-	if(iscarbon(imp_in))
-		var/mob/living/carbon/C_imp_in = imp_in
-		C_imp_in.uncuff()
-	if(!uses)
-		qdel(src)
+	if(!iscarbon(imp_in)) //Maybe make it not implantable on these guys?
+		return
 
+	var/mob/living/carbon/carbon_imp_in = imp_in
+	if(!carbon_imp_in.handcuffed && !carbon_imp_in.legcuffed)
+		balloon_alert(carbon_imp_in, "no restraints!")
+		return
+
+	uses--
+
+	balloon_alert(carbon_imp_in, "bindings released!")
+	carbon_imp_in.uncuff()
+	if(!uses)
+		balloon_alert(carbon_imp_in, "implant degraded!")
+		qdel(src)
 
 /obj/item/implant/freedom/get_data()
 	var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Freedom Beacon<BR>
-<b>Life:</b> optimum 5 uses<BR>
+<b>Life:</b> Optimum 4 uses<BR>
 <b>Important Notes:</b> <font color='red'>Illegal</font><BR>
 <HR>
 <b>Implant Details:</b> <BR>
 <b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-mechanisms<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-<HR>
-No Implant Specifics"}
+mechanisms. These signals will release any bindings on both the arms and legs.<BR>"}
 	return dat
-
 
 /obj/item/implanter/freedom
 	name = "implanter (freedom)"
