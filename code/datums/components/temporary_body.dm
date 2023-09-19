@@ -31,7 +31,6 @@
  */
 /datum/component/temporary_body/proc/on_parent_destroy()
 	SIGNAL_HANDLER
-
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
 
