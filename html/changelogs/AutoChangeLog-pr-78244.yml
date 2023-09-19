@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "New random event: Supermatter Surge"
+  - code_imp: "Individual supermatter crystals can have custom gas properties"
