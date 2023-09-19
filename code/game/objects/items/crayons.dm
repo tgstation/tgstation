@@ -747,6 +747,12 @@
 	pre_noise = TRUE
 	post_noise = FALSE
 
+/obj/item/toy/crayon/spraycan/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/improvised_coolant)\
+	)
+
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
 

@@ -43,6 +43,12 @@
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
 
+/obj/item/extinguisher/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/ghettojetpack)\
+	)
+
 /obj/item/extinguisher/empty
 	starting_water = FALSE
 

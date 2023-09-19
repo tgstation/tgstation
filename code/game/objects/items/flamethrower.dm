@@ -34,6 +34,9 @@
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/flamethrower)\
+	)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)

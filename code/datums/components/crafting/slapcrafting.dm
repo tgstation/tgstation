@@ -77,8 +77,7 @@
 	if(length(valid_recipes) > 1)
 		for(var/datum/crafting_recipe/recipe as anything in valid_recipes)
 			var/atom/recipe_result = initial(recipe.result)
-			var/image/option_image = image(icon = initial(recipe_result.icon), icon_state = initial(recipe_result.icon_state))
-			recipe_choices += list(recipe_result = option_image)
+			recipe_choices += list("[recipe_result.name]" = image(icon = initial(recipe_result.icon), icon_state = initial(recipe_result.icon_state)))
 
 		if(!recipe_choices)
 			CRASH("No recipe choices despite validating in earlier proc")
@@ -89,7 +88,7 @@
 	if(!craft_sheet)
 		CRASH("No craft sheet on user ??")
 
-	var/datum/crafting/recipe/actual_recipe
+	var/datum/crafting_recipe/actual_recipe = final_recipe
 
 	if(istype(actual_recipe, /datum/crafting_recipe/food))
 		actual_recipe = locate(final_recipe) in GLOB.cooking_recipes
@@ -106,7 +105,7 @@
 /datum/component/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/string_results
+	var/list/string_results = list()
 	// This list saves the recipe names we've already used to cross-check other recipes so we don't have ', a spear, or a spear!' in the desc.
 	var/list/already_used_names
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
@@ -115,7 +114,7 @@
 			continue
 		already_used_names += initial(recipe.name)
 		var/atom/result = initial(recipe.result)
-		string_results += "\a [initial(result.name)]"
+		string_results += list("\a [initial(result.name)]")
 
 	examine_list += span_notice("You think [parent] could be used to make [english_list(string_results)]! Examine again to look at the details...")
 
@@ -140,36 +139,36 @@
 
 	var/atom/result = initial(cur_recipe.result)
 
-	var/list/examine_list = span_notice("You could craft a [initial(result.name)] by applying one of these items to it!")
+	to_chat(user, span_notice("You could craft \a [initial(result.name)] by applying one of these items to it!"))
+
+	var/list/examine_list = list()
 
 	// Gotta instance it to copy the lists over.
 	cur_recipe = new cur_recipe()
 	var/list/type_ingredient_list = cur_recipe.reqs
 
 	// Final return string list!
-	var/list/string_ingredient_list
+	var/list/string_ingredient_list = list()
 
 	// Check the ingredients of the crafting recipe.
 	for(var/valid_type in type_ingredient_list)
 		// Check if they're datums, specifically reagents.
-		if(isdatum(valid_type))
-			var/datum/reagent/reagent_ingredient = valid_type
-			if(!istype(reagent_ingredient))
-				stack_trace("Ingredient is datum but not reagent? [reagent_ingredient]")
+		var/datum/reagent/reagent_ingredient = valid_type
+		if(istype(reagent_ingredient))
 			var/amount = initial(cur_recipe.reqs[reagent_ingredient])
-			string_ingredient_list += list("[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]")
+			string_ingredient_list += list(span_notice("[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]\n\t"))
 
 		// Redundant!
 		if(parent.type == valid_type)
 			continue
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
-		string_ingredient_list += list("[amount > 1 ? ("[amount]" + "of") : "a"] [initial(ingredient.name)]")
+		string_ingredient_list += list(span_notice("[amount > 1 ? ("[amount]" + "of ") : "a "] [initial(ingredient.name)]\n\t"))
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		examine_list += span_boldnotice("Ingredients:")
-		examine_list += span_notice(string_ingredient_list)
+		to_chat(user, span_boldnotice("Ingredients:"))
+		to_chat(user, string_ingredient_list)
 
 	var/list/tool_list = list()
 
@@ -182,8 +181,8 @@
 		tool_list += list("\a [string]")
 
 	if(length(tool_list))
-		examine_list += span_boldnotice("Required Tools:")
-		examine_list += list(span_notice(tool_list))
+		to_chat(user, span_boldnotice("Required Tools:"))
+		to_chat(user, tool_list)
 
 	qdel(cur_recipe)
 

@@ -10,6 +10,12 @@
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
 
+/obj/item/clothing/gloves/color/black/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/radiogloves)\
+	)
+
 /obj/item/clothing/gloves/fingerless
 	name = "fingerless gloves"
 	desc = "Plain black gloves without fingertips for the hard-working."
@@ -22,6 +28,12 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+
+/obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+			slapcraft_recipes = list(/datum/crafting_recipe/gripperoffbrand)\
+	)
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
