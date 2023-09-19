@@ -199,20 +199,6 @@
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 
-			if(iscarbon(occupant))
-				var/mob/living/carbon/host_target = occupant
-				var/list/diseases = host_target.get_static_viruses()
-				if(LAZYLEN(diseases))
-					var/list/datum/disease/diseases_to_add = list()
-					for(var/datum/disease/disease as anything in diseases)
-						// admin or special viruses that should not be reproduced
-						if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-							continue
-
-						diseases_to_add += disease
-					if(LAZYLEN(diseases_to_add))
-						newmeat.AddComponent(/datum/component/infective, diseases_to_add)
-
 		allmeat[i] = newmeat
 
 	if(typeofskin)
@@ -236,12 +222,24 @@
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 	for (var/i=1 to meat_produced)
 		var/obj/item/meatslab = allmeat[i]
+
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/datum/disease/disease as anything in diseases)
+				// admin or special viruses that should not be reproduced
+				if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+					continue
+
+				diseases_to_add += disease
+			if(LAZYLEN(diseases_to_add))
+				meatslab.AddComponent(/datum/component/infective, diseases_to_add)
+
 		meatslab.forceMove(loc)
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
 			if (!gibturf.density && (src in view(gibturf)))
-				new gibtype(gibturf,i,diseases)
+				new gibtype(gibturf, i, diseases)
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
