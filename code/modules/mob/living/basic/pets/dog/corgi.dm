@@ -44,26 +44,28 @@
 
 /mob/living/basic/pet/dog/corgi/Exited(atom/movable/gone, direction)
 	. = ..()
+	var/dropped_something = FALSE
 	if(gone == inventory_head)
+		dropped_something = TRUE
 		inventory_head = null
-		update_corgi_fluff()
-		update_appearance(UPDATE_OVERLAYS)
 	if(gone == inventory_back)
+		dropped_something = TRUE
 		inventory_back = null
+	if(dropped_something)
 		update_corgi_fluff()
 		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/dog/corgi/gib()
-	if(inventory_head)
-		inventory_head.forceMove(drop_location())
-		inventory_head = null
-	if(inventory_back)
-		inventory_back.forceMove(drop_location())
-		inventory_back = null
+	undress_dog()
 	if(access_card)
 		access_card.forceMove(drop_location())
 		access_card = null
 	return ..()
+
+/// Removes the hat and shirt (but not ID) of this corgi
+/mob/living/basic/pet/dog/corgi/proc/undress_dog()
+	inventory_head?.forceMove(drop_location())
+	inventory_back?.forceMove(drop_location())
 
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
@@ -194,44 +196,42 @@
 /mob/living/basic/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/living/user)
 	if(inventory_head)
 		if(user)
-			to_chat(user, span_warning("You can't put more than one hat on [src]!"))
-		return
-	if(!item_to_add)
-		user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on [src]'s head for a moment."))
-		if(flags_1 & HOLOGRAM_1)
-			return
-		user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
-		return
+			balloon_alert(user, "already wearing a hat!")
+		return FALSE
+
+	if(isnull(item_to_add))
+		if (!isnull(user))
+			user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on [src]'s head for a moment."))
+			if(flags_1 & HOLOGRAM_1)
+				return
+			user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
+		return FALSE
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, span_warning("\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!"))
-		return
-
-	var/valid = FALSE
-	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
-		valid = TRUE
+		return FALSE
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
-
-	if(valid)
-		if(user && (stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-			to_chat(user, span_notice("There is merely a dull, lifeless look in [real_name]'s eyes as you put \the [item_to_add] on [p_them()]."))
-		else if(user)
-			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
-				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
-				span_hear("You hear a friendly-sounding bark."))
-		item_to_add.forceMove(src)
-		inventory_head = item_to_add
-		update_corgi_fluff()
-		update_appearance(UPDATE_OVERLAYS)
-	else
+	if(!ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
 		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
 		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
 		dance_rotate(src, set_original_dir = TRUE)
+		return FALSE
 
-	return valid
+	if (user)
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			to_chat(user, span_notice("There is merely a dull, lifeless look in [real_name]'s eyes as you put \the [item_to_add] on [p_them()]."))
+		else
+			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
+				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
+				span_hear("You hear a friendly-sounding bark."))
+	item_to_add.forceMove(src)
+	inventory_head = item_to_add
+	update_corgi_fluff()
+	update_appearance(UPDATE_OVERLAYS)
+	return TRUE
 
 /mob/living/basic/pet/dog/corgi/proc/update_corgi_fluff()
 	// First, change back to defaults
@@ -379,6 +379,14 @@
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	return ..()
+
+/mob/living/basic/pet/dog/corgi/ian/revive(full_heal_flags, excess_healing, force_grab_ghost)
+	. = ..()
+	if (!.)
+		return
+	if (!istype(inventory_head, /obj/item/clothing/glasses/eyepatch))
+		inventory_head?.forceMove(drop_location())
+	place_on_head(new /obj/item/clothing/glasses/eyepatch/medical)
 
 /mob/living/basic/pet/dog/corgi/ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)

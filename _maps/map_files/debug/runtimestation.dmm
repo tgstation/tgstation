@@ -677,7 +677,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "cL" = (
-/obj/item/surgery_tray/advanced,
+/obj/item/surgery_tray/full/advanced,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
