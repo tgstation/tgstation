@@ -233,20 +233,19 @@
 		if(parent == hit_object)
 			return
 
-		var/mob/living/poor_target = locate(/mob/living) in impacted_turf
 		var/atom/atom_source = source
 
-		if(!iseffect(hit_object))
-			consume(atom_source, hit_object)
-			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-			atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
-				span_hear("You hear a loud crack as you are washed with a wave of heat."))
-		else if(poor_target)
+		for(var/mob/living/poor_target in impacted_turf)
 			consume(atom_source, poor_target)
 			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 			poor_target.visible_message(span_danger("\The [atom_source] slams into \the [poor_target] out of nowhere inducing a resonance... [poor_target.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 				span_userdanger("\The [atom_source] slams into you out of nowhere as your ears are filled with unearthly ringing. Your last thought is \"The fuck.\""),
 				span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+		if(!iseffect(hit_object))
+			consume(atom_source, hit_object)
+			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+			atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
+				span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source
