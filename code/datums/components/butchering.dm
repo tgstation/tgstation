@@ -126,10 +126,10 @@
 
 	for(var/guaranteed_result_typepath in target.guaranteed_butcher_results)
 		var/obj/guaranteed_remains = guaranteed_result_typepath
-		var/amount = target.guaranteed_butcher_results[guarnteed_remains]
+		var/amount = target.guaranteed_butcher_results[guaranteed_remains]
 		for(var/i in 1 to amount)
-			results += new guarnteed_remains (location)
-		target.guaranteed_butcher_results.Remove(guarnteed_remains)
+			results += new guaranteed_remains (location)
+		target.guaranteed_butcher_results.Remove(guaranteed_remains)
 
 	for(var/obj/item/carrion in results)
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
