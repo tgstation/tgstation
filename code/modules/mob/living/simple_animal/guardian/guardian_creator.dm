@@ -91,7 +91,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		SEND_SIGNAL(src, COMSIG_ITEM_TC_USED)
 	else
 		to_chat(user, failure_message)
-		
 
 /obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
 	if(QDELETED(user) || user.stat == DEAD)
