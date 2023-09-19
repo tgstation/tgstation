@@ -161,7 +161,7 @@
 
 	// into the hole they go
 	for(var/spawned_mob in mobs_spawned)
-		the_hole.drop(spawned_mob)
+		the_hole.Enter(spawned_mob)
 
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
