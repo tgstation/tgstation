@@ -134,8 +134,15 @@
 	var/list/mobs_spawned
 
 /datum/unit_test/fish_rescue_hook/Run()
-	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent) // create a human dummy to drop in the chasm
-	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity) // create some mindless mobs to fill the contents a bit
+	// create our chasm and remember the previous turf so we can change it back once we're done
+	original_turf_type = run_loc_floor_bottom_left.type
+	original_turf_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
+	run_loc_floor_bottom_left.ChangeTurf(/turf/open/chasm)
+	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
+
+ 	// create our human dummies to be immediately dropped into the chasm upon being initialized
+	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity)
 	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
@@ -152,16 +159,6 @@
 
 	// our 'fisherman' where we expect the item to be moved to after fishing it up
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
-
-	// create our chasm and remember the previous turf so we can change it back once we're done
-	original_turf_type = run_loc_floor_bottom_left.type
-	original_turf_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
-	run_loc_floor_bottom_left.ChangeTurf(/turf/open/chasm)
-	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
-
-	// into the hole they go
-	for(var/spawned_mob in mobs_spawned)
-		the_hole.Enter(spawned_mob)
 
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
