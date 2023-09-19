@@ -252,11 +252,15 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
-	RegisterSignal(SSobj, COMSIG_CARBON_SPLASHED, PROC_REF(Destroy()))
+	RegisterSignal(SSobj, COMSIG_CARBON_SPLASHED, PROC_REF(on_splashed))
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
 	UnregisterSignal(SSobj, COMSIG_CARBON_SPLASHED)
+
+/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
+	SIGNAL_HANDLER
+	Destroy()
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
