@@ -675,12 +675,12 @@
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	//I still gotta change this to work with the preferences
-	var/limb_slot = client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic) || assoc_to_keys(GLOB.limb_choice)[1]
+	var/limb_slot = client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic) || assoc_to_keys(GLOB.limb_choice)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/surplus
 	switch(limb_slot)
-		if("random")
-			limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+		if("Random")
+			limb_slot = pick(GLOB.limb_choice)
 		if(BODY_ZONE_L_ARM)
 			surplus = new /obj/item/bodypart/arm/left/robot/surplus
 			slot_string = "left arm"
