@@ -209,7 +209,7 @@
 		return ..()
 	
 	speak = speech_lines[BB_EMOTE_SAY] ? speech_lines[BB_EMOTE_SAY] : initial(speak)
-	emote_see = speech_lines[BB_EMOTE_SEE] ? speech_lines[BB_EMOTE_SEE] : initial(emote_see))
+	emote_see = speech_lines[BB_EMOTE_SEE] ? speech_lines[BB_EMOTE_SEE] : initial(emote_see)
 	emote_hear = speech_lines[BB_EMOTE_HEAR] ? speech_lines[BB_EMOTE_HEAR] : initial(emote_hear)
 	sound = speech_lines[BB_EMOTE_SOUND] ? speech_lines[BB_EMOTE_SOUND] : initial(sound)
 	speech_chance = speech_lines[BB_EMOTE_CHANCE] ? speech_lines[BB_EMOTE_CHANCE] : initial(speech_chance)

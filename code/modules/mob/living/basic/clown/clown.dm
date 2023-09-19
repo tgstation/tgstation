@@ -208,7 +208,7 @@
 	loot = list(
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/effect/gibspawner/human,
-		/obj/item/soap
+		/obj/item/soap,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
