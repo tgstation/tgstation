@@ -49,7 +49,6 @@
 	SIGNAL_HANDLER
 	var/obj/hanging_parent = parent
 
-	var/msg
 	if(on_drop)
 		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off the wall!"), vision_distance = 5)
 		on_drop.Invoke(hanging_parent)
