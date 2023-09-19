@@ -444,19 +444,25 @@
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
+		if(RCD_TURF)
+			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
+				return FALSE
+
 			return rcd_result_with_memory(
-				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 8),
+				list("delay" = 2 SECONDS, "cost" = 8),
 				get_turf(src), RCD_MEMORY_WALL,
 			)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 13)
+			return list("delay" = 2 SECONDS, "cost" = 13)
 	return FALSE
 
-/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	var/turf/T = get_turf(src)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
+/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
+		if(RCD_TURF)
+			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
+				return FALSE
+
+			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall)
 			qdel(src)
 			return TRUE

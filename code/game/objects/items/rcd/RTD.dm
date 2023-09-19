@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	banned_upgrades = RCD_ALL_UPGRADES
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -190,11 +190,7 @@
 
 	return data
 
-/obj/item/construction/rtd/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
 		if("root_category")
@@ -264,7 +260,7 @@
 		return TRUE
 
 	var/delay = CONSTRUCTION_TIME(selected_design.cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
 
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))

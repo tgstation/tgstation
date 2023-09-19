@@ -223,6 +223,15 @@
 		toggle_silo(ui.user)
 		return TRUE
 
+	var/update = handle_ui_act(action, params, ui, state)
+	if(isnull(update))
+		update = FALSE
+	return update
+
+/// overwrite to insert custom ui handling for subtypes
+/obj/item/construction/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	return null
+
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)

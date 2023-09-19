@@ -9,8 +9,7 @@
 	worn_icon_state = "plumbing"
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	///it does not make sense why any of these should be installed.
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	banned_upgrades = RCD_ALL_UPGRADES
 	matter = 200
 	max_matter = 200
 
@@ -150,11 +149,7 @@
 
 	return data
 
-/obj/item/construction/plumbing/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
 			var/color = params["paint_color"]

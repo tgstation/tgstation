@@ -315,15 +315,16 @@
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 4 SECONDS, "cost" = 26)
+			return list("delay" = 4 SECONDS, "cost" = 26)
 		if(RCD_WALLFRAME)
-			return list("mode" = RCD_WALLFRAME, "delay" = 1 SECONDS, "cost" = 8)
+			return list("delay" = 1 SECONDS, "cost" = 8)
 	return FALSE
 
-/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
+/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
-			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
 			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
 			ScrapeAway()
