@@ -21,10 +21,10 @@
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
-	RegisterSignal(target,COMSIG_ITEM_TC_USED, PROC_REF(used))
+	RegisterSignal(target,COMSIG_TRAITOR_ITEM_USED(guardiancreator), PROC_REF(used))
 	
 /datum/element/uplink_reimburse/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_TC_USED, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
+	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_TRAITOR_ITEM_USED(guardiancreator), COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
 
 
 	return ..()

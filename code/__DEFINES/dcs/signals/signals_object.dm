@@ -246,8 +246,8 @@
 
 /// Called on component/uplink/OnAttackBy(..)
 #define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
-///Called when a traitor item is used and no longer refundable.
-#define COMSIG_ITEM_TC_USED "item_tc_used"
+///Called when a holoparasite/guardiancreator is used. 
+#define COMSIG_TRAITOR_ITEM_USED(guardiancreator) "traitor_item_used_[guardiancreator]"
 
 // /obj/item/clothing signals
 
