@@ -382,7 +382,7 @@
 /obj/machinery/netpod/proc/on_domain_complete(datum/source, atom/movable/crate, reward_points)
 	SIGNAL_HANDLER
 
-	if(isnull(occupant) || connected || !iscarbon(occupant))
+	if(isnull(occupant) || !connected || !iscarbon(occupant))
 		return
 
 	var/mob/living/carbon/player = occupant
