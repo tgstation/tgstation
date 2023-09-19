@@ -56,6 +56,13 @@
 		/datum/stock_part/capacitor = 1,
 		/obj/item/electronics/airlock = 1)
 
+/obj/item/circuitboard/machine/mass_driver
+	name = "Mass Driver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/mass_driver
+	req_components = list(
+		/datum/stock_part/servo = 1,)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

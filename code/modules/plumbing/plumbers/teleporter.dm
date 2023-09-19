@@ -73,7 +73,7 @@
 
 	var/obj/item/multitool/M = I
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)

@@ -51,14 +51,10 @@
 /// Much like FISHING_HOOK_ENSNARE but for the reel.
 #define FISHING_LINE_BOUNCY (1 << 2)
 
-#define FISHING_MINIGAME_RULE_HEAVY_FISH "heavy"
-#define FISHING_MINIGAME_RULE_LUBED_FISH "lubed"
-#define FISHING_MINIGAME_RULE_WEIGHTED_BAIT "weighted"
-#define FISHING_MINIGAME_RULE_LIMIT_LOSS "limit_loss"
-#define FISHING_MINIGAME_RULE_BIDIRECTIONAL "bidirectional"
-#define FISHING_MINIGAME_RULE_NO_ESCAPE "no_escape"
-#define FISHING_MINIGAME_RULE_KILL "kill"
-#define FISHING_MINIGAME_RULE_NO_EXP "no_exp"
+#define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 2)
+#define FISHING_MINIGAME_RULE_NO_ESCAPE (1 << 3)
+#define FISHING_MINIGAME_RULE_KILL (1 << 4)
+#define FISHING_MINIGAME_RULE_NO_EXP (1 << 5)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
