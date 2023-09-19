@@ -61,7 +61,9 @@
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
-	var/list/my_loaded_atoms = list()
+	var/list/loaded_atom_movables = list()
+	var/list/loaded_turfs = list()
+	var/list/loaded_areas = list()
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
@@ -73,29 +75,16 @@
 			z_upper = z_idx,
 			z_lower = z_idx,
 		)
-		var/list/to_init = list()
-
-		// turfs can never be duplicated so keep them out of the below list to optimize O(n)
-		var/list/turfs = list()
-		// areas can be duplicated but lets keep them seperate for efficiency
-		var/list/areas = list()
-		// everything else that can be duplicated, such as areas or large objects
-		var/list/not_turfs = list()
 		for(var/turf/turf as anything in block(bottom_left, top_right))
-			turfs += turf
-			areas |= get_area(turf)
+			loaded_turfs += turf
+			loaded_areas |= get_area(turf)
 			for(var/thing in turf.get_all_contents())
 				// atoms can actually be in the contents of two or more turfs based on its icon/bound size
 				// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
-				not_turfs |= thing
+				loaded_atom_movables |= thing
 
-		SSatoms.InitializeAtoms(to_init)
-		// we don't need to check for duplicates here
-		my_loaded_atoms += not_turfs
-		my_loaded_atoms += turfs
-		my_loaded_atoms += areas
-
-	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, my_loaded_atoms)
+	SSatoms.InitializeAtoms(loaded_atom_movables + loaded_turfs + loaded_areas)
+	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
 	return reservation
 
