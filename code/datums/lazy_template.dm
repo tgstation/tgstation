@@ -77,11 +77,13 @@
 
 		// turfs can never be duplicated so keep them out of the below list to optimize O(n)
 		var/list/turfs = list()
+		// areas can be duplicated but lets keep them seperate for efficiency
+		var/list/areas = list()
 		// everything else that can be duplicated, such as areas or large objects
 		var/list/not_turfs = list()
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			turfs += turf
-			not_turfs |= get_area(turf)
+			areas |= get_area(turf)
 			for(var/thing in turf.get_all_contents())
 				// atoms can actually be in the contents of two or more turfs based on its icon/bound size
 				// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
@@ -90,7 +92,8 @@
 		SSatoms.InitializeAtoms(to_init)
 		// we don't need to check for duplicates here
 		my_loaded_atoms += not_turfs
-		mu_loaded_atoms += turfs
+		my_loaded_atoms += turfs
+		my_loaded_atoms += areas
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, my_loaded_atoms)
 	my_loaded_atoms.Cut() // We don't want the list to cause ref holding shenanigans due to ASYNC
