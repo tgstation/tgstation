@@ -14,18 +14,22 @@
 		"/obj/item/food/bread/plain",
 	) as null|text
 
-	if (isnull(attempted_target_path)) //The user pressed "Cancel"
-		return FALSE
+	if (isnull(attempted_target_path))
+		return FALSE //The user pressed "Cancel"
 
 	var/desired_object = text2path(attempted_target_path)
 	if(!ispath(desired_object))
-		desired_object = pick_closest_path(attempted_target_path)
-		if(isnull(desired_object) || !ispath(desired_object, /atom/))
-			tgui_alert(user, "ERROR: Incorrect / improper path given.")
-			return FALSE
+		desired_object = pick_closest_path(attempted_target_path, get_fancy_list_of_atom_types())
+	if(isnull(desired_object) || !ispath(desired_object))
+		return FALSE //The user pressed "Cancel"
+	if(!ispath(desired_object, /atom))
+		tgui_alert(user, "ERROR: Incorrect / improper path given.")
+		return FALSE
 	transform_path = desired_object
 
 /datum/smite/objectify/effect(client/user, mob/living/target)
+	if (!isliving(target))
+		return // This doesn't work on ghosts
 	. = ..()
 	var/mutable_appearance/objectified_player = mutable_appearance(initial(transform_path.icon), initial(transform_path.icon_state))
 	objectified_player.pixel_x = initial(transform_path.pixel_x)

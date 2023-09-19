@@ -11,20 +11,19 @@
 	if(QDELETED(passed_container))
 		return
 	containerref = WEAKREF(passed_container)
+	RegisterSignal(passed_container, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	move_tracker = new(parent, CALLBACK(src, PROC_REF(verify_containment)))
 
 
 /datum/component/itembound/RegisterWithParent()
 	. = ..()
 	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
 		living_parent.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ADMIN)
 
 /datum/component/itembound/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
-	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
 		living_parent.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ADMIN)
@@ -42,6 +41,9 @@
 	qdel(src)
 
 /datum/component/itembound/Destroy(force, silent)
+	var/atom/movable/container = containerref?.resolve()
+	if (!QDELETED(container))
+		UnregisterSignal(container, COMSIG_ATOM_EXAMINE)
 	containerref = null
 	QDEL_NULL(move_tracker)
 	return ..()
