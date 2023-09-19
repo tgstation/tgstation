@@ -48,7 +48,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/cascade // Big boi delamination
-	description = "I never thought I'd see a resonance cascade, let alone be near one..."
+	description = "I never thought I'd see a resonance cascade, let alone experience one..."
 	mood_change = -8
 	timeout = 5 MINUTES
 
