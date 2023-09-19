@@ -14,9 +14,6 @@
 
 /datum/ai_controller/basic_controller/clown/murder
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/syndicate, //we use the syndicate targetting datum to avoid repetition AND allow us to murder people
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead,
 		BB_BASIC_MOB_SPEAK_LINES = null,
 	)
-
-/datum/ai_controller/basic_controller/clown/slow
-	movement_delay = 6 SECONDS

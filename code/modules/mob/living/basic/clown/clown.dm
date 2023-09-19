@@ -346,7 +346,6 @@
 
 /mob/living/basic/clown/mutant/slow
 	speed = 20
-	ai_controller = /datum/ai_controller/basic_controller/clown/slow
 
 /mob/living/basic/clown/mutant/glutton
 	name = "banana glutton"
