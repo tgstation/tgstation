@@ -479,6 +479,7 @@
 	name = "first aid bandage"
 	desc = "A DeForest brand bandage designed for basic first aid on blunt-force trauma."
 	icon_state = "bandage"
+	inhand_icon_state = "bandage"
 	amount = 1
 	max_amount = 1
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -494,3 +495,4 @@
 	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
 	icon_state = "bandage_makeshift"
 	icon_state_preview = "bandage_makeshift_3"
+	inhand_icon_state = "bandage"
