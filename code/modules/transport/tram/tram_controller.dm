@@ -720,7 +720,7 @@
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
-	if(!held_item && !cover_locked)
+	if(!held_item)
 		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "open cabinet"
 
 	if(istype(held_item, /obj/item/card/id/) && allowed(user) && !cover_open)
