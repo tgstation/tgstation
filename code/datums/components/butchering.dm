@@ -106,35 +106,41 @@
 	var/turf/location = target.drop_location()
 	var/final_effectiveness = effectiveness - target.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
-	for(var/V in target.butcher_results)
-		var/obj/bones = V
-		var/amount = target.butcher_results[bones]
+
+	for(var/obj/remains in target.butcher_results)
+		var/amount = target.butcher_results[remains]
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
 				if(butcher)
-					to_chat(butcher, span_warning("You fail to harvest some of the [initial(bones.name)] from [target]."))
+					to_chat(butcher, span_warning("You fail to harvest some of the [initial(remains.name)] from [target]."))
 				continue
 
 			if(prob(bonus_chance))
 				if(butcher)
-					to_chat(butcher, span_info("You harvest some extra [initial(bones.name)] from [target]!"))
-				results += new bones (location)
-			results += new bones (location)
+					to_chat(butcher, span_info("You harvest some extra [initial(remains.name)] from [target]!"))
+				results += new remains (location)
+			results += new remains (location)
 
-		target.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
+		target.butcher_results.Remove(remains) //in case you want to, say, have it drop its results on gib
 
-	for(var/V in target.guaranteed_butcher_results)
-		var/obj/sinew = V
-		var/amount = target.guaranteed_butcher_results[sinew]
+	for(var/obj/guarnteed_remains in target.guaranteed_butcher_results)
+		var/amount = target.guaranteed_butcher_results[guarnteed_remains]
 		for(var/i in 1 to amount)
-			results += new sinew (location)
-		target.guaranteed_butcher_results.Remove(sinew)
+			results += new guarnteed_remains (location)
+		target.guaranteed_butcher_results.Remove(guarnteed_remains)
 
 	for(var/obj/item/carrion in results)
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
 		if(!length(meat_mats))
 			continue
 		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
+
+	if(target.reagents)
+		var/meat_produced = 0
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			meat_produced += 1
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
 
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
