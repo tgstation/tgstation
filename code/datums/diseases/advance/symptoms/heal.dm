@@ -76,7 +76,7 @@
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
 	if(direction == UP)
-		turf_to_check = turf_to_check.above()
+		turf_to_check = GET_TURF_ABOVE(turf_to_check)
 		if(!turf_to_check)
 			return STARLIGHT_CANNOT_HEAL
 	var/area/area_to_check = get_area(turf_to_check)
@@ -99,7 +99,7 @@
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
 			// Check above or below us
 			if(direction == UP)
-				turf_to_check = turf_to_check.above()
+				turf_to_check = GET_TURF_ABOVE(turf_to_check)
 			else
 				turf_to_check = GET_TURF_BELOW(turf_to_check)
 

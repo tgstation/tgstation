@@ -105,6 +105,7 @@
 /datum/lazy_template/nukie_base
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
 	map_name = "nukie_base"
+
 /datum/lazy_template/wizard_dem
 	key = LAZY_TEMPLATE_KEY_WIZARDDEN
 	map_name = "wizard_den"

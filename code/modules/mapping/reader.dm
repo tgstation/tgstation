@@ -399,7 +399,7 @@
 	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
 	// How many lines to skip because they'd be above the y cuttoff line
 	var/y_starting_skip = relative_y - y_skip_above
-	highest_y += y_starting_skip
+	highest_y -= y_starting_skip
 
 	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
 	var/line_count = length(first_column.gridLines)

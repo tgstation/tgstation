@@ -40,8 +40,9 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			if(!isgroundlessturf(loc) || GET_TURF_BELOW(loc))
-				new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
+			var/turf/my_turf = get_turf(src)
+			if(!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf))
+				new /obj/effect/decal/cleanable/xenoblood/xsplatter(my_turf)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
