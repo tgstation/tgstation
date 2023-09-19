@@ -1,4 +1,0 @@
-author: "Hypernoblium"
-delete-after: True
-changes:
-  - bugfix: "Fixes a selection window in the game rock-paper-scissors with death."
