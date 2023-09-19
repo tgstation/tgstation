@@ -142,7 +142,6 @@
 	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
 	illustration = null
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_CREW * 1.75
 
 /obj/item/storage/box/bandages/Initialize(mapload)
