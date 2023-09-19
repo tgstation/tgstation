@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Lava can no longer occasionally generate inside of previously loaded templates and breach and/or destroy shit"
