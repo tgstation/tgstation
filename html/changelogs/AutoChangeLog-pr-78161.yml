@@ -1,6 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "adds some more traitor objective brainwashing default objectives."
-  - spellcheck: "fixes the double-punctuation on traitor objective brainwashing broadcasts."
-  - spellcheck: "brainwashing deadchat broadcasts will now auto-punctuate."

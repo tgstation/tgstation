@@ -8,17 +8,11 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/syndicate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/syndicate
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /datum/targetting_datum/basic/syndicate
 	stat_attack = HARD_CRIT
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/syndicate
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/syndicate
-
-/datum/ai_behavior/basic_melee_attack/syndicate
-	action_cooldown = 1.2 SECONDS
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/syndicate
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/syndicate

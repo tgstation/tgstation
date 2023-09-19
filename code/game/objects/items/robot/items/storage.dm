@@ -190,6 +190,21 @@
 	handle_reflling(arrived)
 	return ..()
 
+///Used by the service borg drink apparatus upgrade, holds drink-related items
+/obj/item/borg/apparatus/beaker/drink
+	name = "secondary beverage storage apparatus"
+	desc = "A special apparatus for carrying drinks and condiment packets without spilling their contents. Will NOT resynthesize drinks unlike your standard apparatus."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/reagent_containers/condiment,
+		/obj/item/reagent_containers/cup/coffeepot,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle,
+	)
+
+/obj/item/borg/apparatus/beaker/service2/add_glass()
+	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
+
 /// allows medical cyborgs to manipulate organs without hands
 /obj/item/borg/apparatus/organ_storage
 	name = "organ storage bag"

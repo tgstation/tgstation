@@ -168,6 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hidden_item = new /obj/item/food/urinalcake
+	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
