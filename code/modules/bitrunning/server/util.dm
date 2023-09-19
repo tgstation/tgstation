@@ -24,8 +24,8 @@
 	var/list/levels = list()
 
 	for(var/datum/lazy_template/virtual_domain/domain as anything in available_domains)
-		// if(initial(domain.test_only))
-		// 	continue
+		if(initial(domain.test_only))
+			continue
 		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
 		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
 

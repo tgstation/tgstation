@@ -94,7 +94,7 @@
 			var/mob/living/creature = thing
 
 			if(creature.can_be_cybercop)
-				mutation_candidate_refs += WEAKREF(creature)
+				mutation_candidate_refs.Add(WEAKREF(creature))
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -102,7 +102,9 @@
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
-			RegisterSignal(thing, COMSIG_SPAWNER_SPAWNED, PROC_REF(on_corpse_spawned))
+			var/obj/effect/mob_spawn/corpse/spawner = thing
+
+			mutation_candidate_refs.Add(spawner.spawned_mob_ref)
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 

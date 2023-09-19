@@ -32,6 +32,8 @@
 	var/facial_haircolor
 	///sets a human's skin tone
 	var/skin_tone
+	/// Weakref to the mob this spawner created - just if you needed to do something with it.
+	var/datum/weakref/spawned_mob_ref
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -44,7 +46,7 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
-	SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, spawned_mob)
+	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
