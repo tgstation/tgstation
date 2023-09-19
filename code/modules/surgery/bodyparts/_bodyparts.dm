@@ -1296,7 +1296,7 @@
 	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
 	// 42 * 0.8 = 33.6
 	// 3 hits to crit with an ion rifle on someone fully augged at a total of 100.8 damage, although im p sure mood can boost max hp above 100
-	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles of grenades
+	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles or grenades
 	var/time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
 	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
 	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
