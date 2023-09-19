@@ -107,8 +107,12 @@
 
 	var/atom/final_result = initial(actual_recipe.result)
 
+	to_chat(user, span_notice("You start crafting \a [initial(final_result.name)]..."))
+
 	var/error_string = craft_sheet.construct_item(user, actual_recipe)
-	to_chat(user, istext(error_string) ? span_danger("Crafting failed" + error_string) : span_notice("You start crafting \a [initial(final_result.name)]..."))
+
+	if(error_string)
+		to_chat(user, span_warning("crafting failed" + error_string))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
 /datum/component/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
