@@ -12,8 +12,6 @@
 		return COMPONENT_INCOMPATIBLE
 	if(!isturf(target_wall))
 		return COMPONENT_INCOMPATIBLE
-	if(!on_drop_callback)
-		on_drop = TYPE_PROC_REF(/obj, deconstruct)
 	hanging_wall_turf = target_wall
 	on_drop = on_drop_callback
 
@@ -50,8 +48,16 @@
 /datum/component/wall_mounted/proc/drop_wallmount()
 	SIGNAL_HANDLER
 	var/obj/hanging_parent = parent
-	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off the wall!"), vision_distance = 5)
-	on_drop?.Invoke(hanging_parent)
+
+	var/msg
+	if(on_drop)
+		msg = "\The [hanging_parent] falls off the wall!"
+		on_drop.Invoke(hanging_parent)
+	else
+		msg = "\The [hanging_parent] falls apart!"
+		hanging_parent.deconstruct()
+	hanging_parent.visible_message(message = span_warning(msg), vision_distance = 5)
+
 	if(!QDELING(src))
 		qdel(src) //Well, we fell off the wall, so we're done here.
 /**
