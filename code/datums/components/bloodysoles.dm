@@ -130,7 +130,7 @@
 	wielder = equipper
 	if(bloody_shoes[last_blood_state] > BLOOD_FOOTPRINTS_MIN * 2)
 		RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(wielder, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))
+	RegisterSignal(wielder, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood), TRUE)
 
 /**
  * Called when the parent item has been dropped
