@@ -25,6 +25,7 @@
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
+	hardcore_random_bonus = TRUE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -63,7 +64,8 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
-		PATH_MOON = "blue"
+		PATH_KNOCK = "yellow",
+				PATH_MOON = "blue"
 	)
 
 	var/static/list/path_to_rune_color = list(
@@ -74,6 +76,7 @@
 		PATH_VOID = COLOR_CYAN,
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
+		PATH_KNOCK = COLOR_YELLOW,
 		PATH_MOON = COLOR_BLUE_LIGHT
 	)
 
@@ -510,6 +513,7 @@
 			.["Remove Heart Target"] = CALLBACK(src, PROC_REF(remove_target))
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
+	.["Give Focus"] = CALLBACK(src, PROC_REF(admin_give_focus))
 
 /**
  * Admin proc for giving a heretic a Living Heart easily.
@@ -584,6 +588,18 @@
 		return
 
 	knowledge_points += change_num
+
+/**
+ * Admin proc for giving a heretic a focus.
+ */
+/datum/antagonist/heretic/proc/admin_give_focus(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+
+	var/mob/living/pawn = owner.current
+	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
+	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
 
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()

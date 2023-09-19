@@ -247,10 +247,24 @@
 	owner.Paralyze(2 SECONDS)
 	return ..()
 
+// MARK OF KNOCK
+
+/datum/status_effect/eldritch/knock
+	effect_icon_state = "emark7"
+	duration = 10 SECONDS
+
+/datum/status_effect/eldritch/knock/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/eldritch/knock/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	return ..()
+
 // MARK OF MOON
 
 /datum/status_effect/eldritch/moon
-	effect_icon_state = "emark7"
+	effect_icon_state = "emark8"
 	///Used for checking if the pacifism effect should end early
 	var/damage_sustained = 0
 

@@ -9,6 +9,8 @@
 
 #define WIRE_ACCEPT "Scan Success"
 #define WIRE_ACTIVATE "Activate"
+#define WIRE_LAUNCH "Launch"
+#define WIRE_SAFETIES "Safeties"
 #define WIRE_AGELIMIT "Age Limit"
 #define WIRE_AI "AI Connection"
 #define WIRE_ALARM "Alarm"

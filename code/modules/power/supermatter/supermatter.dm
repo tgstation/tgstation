@@ -39,6 +39,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/absorption_ratio = 0.15
 	/// The gasmix we just recently absorbed. Tile's air multiplied by absorption_ratio
 	var/datum/gas_mixture/absorbed_gasmix
+	/// The current gas behaviors for this particular crystal
+	var/list/current_gas_behavior
 
 	///Refered to as EER on the monitor. This value effects gas output, damage, and power generation.
 	var/internal_energy = 0
@@ -109,7 +111,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
 	var/zap_cutoff = 1500
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
-	var/bullet_energy = 2
+	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
 
@@ -179,6 +181,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
+	current_gas_behavior = init_sm_gas()
 	gas_percentage = list()
 	absorbed_gasmix = new()
 	uid = gl_uid++
@@ -267,7 +270,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// Some extra effects like [/datum/sm_gas/carbon_dioxide/extra_effects]
 	// needs more than one gas and rely on a fully parsed gas_percentage.
 	for (var/gas_path in absorbed_gasmix.gases)
-		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
+		var/datum/sm_gas/sm_gas = current_gas_behavior[gas_path]
 		sm_gas?.extra_effects(src)
 
 	// PART 3: POWER PROCESSING
@@ -600,7 +603,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(mole_count < MINIMUM_MOLE_COUNT) //save processing power from small amounts like these
 			continue
 		gas_percentage[gas_path] = mole_count / total_moles
-		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
+		var/datum/sm_gas/sm_gas = current_gas_behavior[gas_path]
 		if(!sm_gas)
 			continue
 		gas_power_transmission += sm_gas.power_transmission * gas_percentage[gas_path]
