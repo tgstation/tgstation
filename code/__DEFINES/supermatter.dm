@@ -63,6 +63,8 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
+#define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
+
 #define SUPERMATTER_CASCADE_PERCENT 80
 
 /// The divisor scaling value for cubic power loss.
