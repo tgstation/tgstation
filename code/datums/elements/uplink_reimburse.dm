@@ -24,7 +24,7 @@
 	RegisterSignal(target,COMSIG_ITEM_TC_USED, PROC_REF(used))
 	
 /datum/element/uplink_reimburse/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_TC_USED, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_TC_USED, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE))
 
 
 	return ..()
@@ -49,8 +49,8 @@
 	do_sparks(2, source = uplink_comp.uplink_handler)
 	uplink_comp.add_telecrystals(refundable_tc)
 	qdel(refund_item)
-/// The item was used, it needs to no longer be refundable
+/// If the item is used, it needs to no longer be refundable
 /datum/element/uplink_reimburse/proc/used(datum/target)
 	SIGNAL_HANDLER
 	
-	src.Detach(target)
+	Detach(target)
