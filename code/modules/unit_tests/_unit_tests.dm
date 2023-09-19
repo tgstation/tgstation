@@ -100,7 +100,7 @@
 #include "baseturfs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
-// #include "bitrunning.dm" // test is disabled bc linda turf issues. lazy templates maybe cause? 09/19/2023 jlsnow301
+#include "bitrunning.dm"
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
