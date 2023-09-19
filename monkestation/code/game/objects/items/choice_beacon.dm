@@ -21,6 +21,7 @@
 			/mob/living/basic/butterfly,
 			/mob/living/basic/bee/friendly,
 			/mob/living/simple_animal/crab,
+			/mob/living/simple_animal/crab/spycrab,
 			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
 			/mob/living/simple_animal/pet/cat,

@@ -23,3 +23,20 @@
 	item_path = /obj/item/clothing/mask/zoro
 	item_cost = 4000
 
+
+//spinnermaster
+/datum/store_item/suit/shark_costume
+	name = "Shark Costume"
+	item_path = /obj/item/clothing/suit/hooded/shark_costume
+	item_cost = 8000
+
+/datum/store_item/under/miscellaneous/navy_uniform
+	name = "Naval Officer Uniform"
+	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
+	item_cost = 4000
+
+
+/datum/store_item/under/miscellaneous/syndie_pajamas
+	name = "Syndie Pajamas"
+	item_path = /obj/item/clothing/under/costume/syndie_pajamas
+	item_cost = 4000
