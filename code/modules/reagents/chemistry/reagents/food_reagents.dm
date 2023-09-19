@@ -269,6 +269,7 @@
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	creation_purity = 1 // impure base reagents are a big no-no
 	overdose_threshold = 100 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -814,6 +815,7 @@
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
 		M.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

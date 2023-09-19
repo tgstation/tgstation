@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		. += SETTLER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod

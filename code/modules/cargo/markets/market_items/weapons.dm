@@ -63,3 +63,13 @@
 	price_max = CARGO_CRATE_VALUE * 2
 	stock_max = 2
 	availability_prob = 50
+
+/datum/market_item/weapon/fisher
+	name = "SC/FISHER Saboteur Handgun"
+	desc = "A self-recharging, compact pistol that disrupts flashlights and security cameras, if only temporarily. Also usable in melee."
+	item = /obj/item/gun/energy/recharge/fisher
+
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 1
+	availability_prob = 50
