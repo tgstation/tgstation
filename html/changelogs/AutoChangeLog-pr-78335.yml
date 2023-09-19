@@ -1,0 +1,6 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - balance: "Supermatter now takes 15 seconds to delaminate normally and 5 if a sliver has been taken from it. Gives a little more time to escape in the case of the sliver and also evens out the times to please perfectionists."
+  - bugfix: "Supermatter now accurately reports it's detonation time."
+  - spellcheck: "Supermatter mood descriptions have been reverted back to their old, more flavorful selves."
