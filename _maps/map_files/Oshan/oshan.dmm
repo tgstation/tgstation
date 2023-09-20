@@ -1550,6 +1550,7 @@
 "aUq" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/worn_out/directional/north,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/command/storage/eva)
 "aUu" = (
@@ -1712,7 +1713,7 @@
 /area/station/hallway/primary/central/fore)
 "aWW" = (
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
-/obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/medbay/lobby)
 "aXb" = (
@@ -4944,6 +4945,7 @@
 /area/station/science/genetics)
 "cOq" = (
 /obj/machinery/blackbox_recorder,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cOB" = (
@@ -7885,6 +7887,10 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/secure_storage)
+"erk" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium/white,
+/area/station/command/teleporter)
 "erC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -12116,6 +12122,10 @@
 /obj/effect/turf_decal/trimline/neutral/warning,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"gLF" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium/purple,
+/area/station/command/teleporter)
 "gLN" = (
 /turf/closed/wall,
 /area/station/service/janitor)
@@ -16294,6 +16304,7 @@
 "jhr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/command/storage/eva)
 "jht" = (
@@ -17165,6 +17176,7 @@
 "jGE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/command/storage/eva)
 "jGK" = (
@@ -18787,6 +18799,14 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/construction/storage_wing)
+"kzg" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "kzi" = (
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
@@ -21687,6 +21707,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/courtroom)
 "mbj" = (
@@ -25756,6 +25777,7 @@
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/station/cargo/miningoffice)
 "osu" = (
@@ -28241,16 +28263,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/blue,
 /area/station/security/checkpoint/customs)
-"pOv" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/duct/industrial/waste,
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/turf_decal/trimline/dark_blue/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/dark_blue/line,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/central/fore)
 "pOU" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -28957,6 +28969,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "qho" = (
@@ -33057,6 +33070,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "sxw" = (
@@ -34374,6 +34388,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "tmm" = (
@@ -36437,6 +36452,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
+"uua" = (
+/obj/structure/cable,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium,
+/area/station/ai_monitored/command/storage/eva)
 "uub" = (
 /obj/structure/cable,
 /obj/machinery/duct/industrial/waste,
@@ -42652,7 +42672,7 @@
 "xWd" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
-/obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/medbay/lobby)
 "xWl" = (
@@ -62374,7 +62394,7 @@ iWZ
 bul
 vWf
 slx
-dpI
+kzg
 dpI
 iLj
 nHO
@@ -68029,7 +68049,7 @@ wFB
 uCz
 meJ
 xeT
-aJy
+uua
 aJy
 aJy
 jGE
@@ -69321,7 +69341,7 @@ loV
 bAP
 bAP
 bAP
-pOv
+vyd
 ydb
 kHC
 exd
@@ -69830,10 +69850,10 @@ bzC
 bAg
 bAP
 bST
-gpa
+gLF
 bNx
 udK
-udK
+erk
 aaC
 kjE
 diH
