@@ -258,9 +258,10 @@
 	. = ..()
 	UnregisterSignal(SSobj, COMSIG_CARBON_SPLASHED)
 
-/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
+/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed(volume)
 	SIGNAL_HANDLER
-	Destroy()
+	if(prob(20))//we don't want every single splash to wake them up now do we
+		Destroy()
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)

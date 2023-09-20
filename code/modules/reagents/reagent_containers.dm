@@ -150,7 +150,7 @@
 			span_userdanger("You feel drenched!"),
 		)
 		if(iscarbon(target))
-			SEND_SIGNAL(target, COMSIG_CARBON_SPLASHED)
+			SEND_SIGNAL(target, COMSIG_CARBON_SPLASHED, volume)
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 

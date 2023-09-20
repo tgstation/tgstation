@@ -201,7 +201,7 @@
 		return
 	else if(drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
 		to_chat(owner, span_warning("You stumbled while walking, next time don't walk and drink 4 head!"))
-		owner.slip(4 SECONDS)
+		owner.slip(1 SECONDS)
 	else
 		owner.Sleeping(90 SECONDS)
 
