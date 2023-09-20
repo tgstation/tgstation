@@ -1,6 +1,0 @@
-author: "lmenvs"
-delete-after: True
-changes:
-  - rscadd: "Gold Navy outfit and Shark Costume donator clothing."
-  - rscadd: "Big Antler anime implant"
-  - bugfix: "donator items are now properly flagged for donator purchase only.  If you have purchased one and are not a donator, please request a refund of your monkecoin."

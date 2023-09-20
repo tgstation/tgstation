@@ -87,3 +87,12 @@
   Salted-Zen:
   - rscadd: FOUR new crusher weapons to the mining vendor! Get them today for 1250
       points!
+2023-09-20:
+  MomoBerri:
+  - rscdel: excess vault and upload signs on tram
+  lmenvs:
+  - rscadd: Gold Navy outfit and Shark Costume donator clothing.
+  - rscadd: Big Antler anime implant
+  - bugfix: donator items are now properly flagged for donator purchase only.  If
+      you have purchased one and are not a donator, please request a refund of your
+      monkecoin.
