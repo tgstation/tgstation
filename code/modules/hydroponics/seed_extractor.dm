@@ -177,20 +177,13 @@
  * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
-	if(!isnull(taking_from))
-		if(ismob(taking_from))
-			var/mob/mob_loc = taking_from
-			if(!mob_loc.transferItemToLoc(to_add, src))
-				return FALSE
-
-		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
-			return FALSE
-
 	var/seed_id = generate_seed_hash(to_add)
+	var/list/seed_data
+	var/add_ref // so we remember to do this last, in case for some reason we fail to take the seeds into the machine
 	if(piles[seed_id])
-		piles[seed_id]["refs"] += WEAKREF(to_add)
+		add_ref = TRUE
 	else
-		var/list/seed_data = list()
+		seed_data = list()
 		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
 		seed_data["lifespan"] = to_add.lifespan
@@ -225,9 +218,23 @@
 			for(var/datum/reagent/reagent as anything in product.grind_results)
 				seed_data["grind_results"] += initial(reagent.name)
 			qdel(product)
-		piles[seed_id] = seed_data
 
-	to_add.forceMove(src)
+	if(!isnull(taking_from))
+		if(ismob(taking_from))
+			var/mob/mob_loc = taking_from
+			if(!mob_loc.transferItemToLoc(to_add, src))
+				return FALSE
+
+		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
+			return FALSE
+	else
+		to_add.forceMove(src)
+
+	// do this at the end, in case any of the previous steps failed
+	if(add_ref)
+		piles[seed_id]["refs"] += WEAKREF(to_add)
+	else
+		piles[seed_id] = seed_data
 
 	return TRUE
 
