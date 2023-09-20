@@ -7617,9 +7617,6 @@
 /obj/structure/disposalpipe/junction,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
-"ekL" = (
-/turf/open/floor/iron/dark/textured,
-/area/ocean/generated_above)
 "ekZ" = (
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron,
@@ -51226,7 +51223,7 @@ aah
 aah
 aah
 aah
-ekL
+aah
 aah
 aah
 aah
