@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
 		used = TRUE
-		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(/obj/item/guardiancreator))
+		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else
 		to_chat(user, failure_message)
 
