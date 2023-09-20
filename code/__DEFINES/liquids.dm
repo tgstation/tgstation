@@ -78,6 +78,8 @@
 
 #define SUBMERGEMENT_PERCENT(carbon, liquids) min(1,(!MOBILITY_STAND ? liquids.liquid_group.group_overlay_state+LYING_DOWN_SUBMERGEMENT_STATE_BONUS : liquids.liquid_group.group_overlay_state)/TOTAL_LIQUID_STATES)
 
+#define LIQUID_PROTECTION "liquid_protection"
+
 GLOBAL_LIST_INIT(liquid_blacklist, list(
 	/datum/reagent/sorium,
 	/datum/reagent/liquid_dark_matter

@@ -32,8 +32,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/group_temperature = 300
 	///the generated color used to apply coloring to all the members
 	var/group_color
-	///a variable to forcibly trigger a recount of our reagents
-	var/updated_total = FALSE
 	///have we failed a process? if so we are added to a death check so it will gracefully die on its own
 	var/failed_death_check = FALSE
 	///the burn power of our group, used to determine how strong we burn each process_fire()
@@ -101,7 +99,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	members[T] = TRUE
 	T.liquids.liquid_group = src
 	reagents.maximum_volume += 1000 /// each turf will hold 1000 units plus the base amount spread across the group
-	updated_total = TRUE
 	if(group_color)
 		T.liquids.color = group_color
 	process_group()
@@ -121,7 +118,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!members.len)
 		qdel(src)
 		return
-	updated_total = TRUE
 	process_group()
 
 /datum/liquid_group/proc/remove_all()
@@ -150,7 +146,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	total_reagent_volume = reagents.total_volume
 	reagents_per_turf = total_reagent_volume / length(members)
-	updated_total = TRUE
 
 	qdel(otherg)
 	process_group()
@@ -166,7 +161,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		failed_death_check = TRUE
 
 ///PROCESSING
-/datum/liquid_group/proc/process_group()
+/datum/liquid_group/proc/process_group(from_SS = FALSE)
 	if(merging)
 		return
 	if(!members || !members.len) // this ideally shouldn't exist, ideally groups would die before they got to this point but alas here we are
@@ -187,8 +182,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			cached_temperature_shift =((math_cache.return_temperature() * max(1, math_cache.total_moles())) + ((group_temperature * max(1, (total_reagent_volume * 0.025))))) / (max(1, (total_reagent_volume * 0.025)) + max(1, math_cache.total_moles()))
 			temperature_shift_needs_action = TRUE
 
-	if(total_reagent_volume != reagents.total_volume || updated_total)
-		updated_total = FALSE
+	if(from_SS)
 		total_reagent_volume = reagents.total_volume
 		reagents.handle_reactions()
 
@@ -295,7 +289,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	reagents.remove_any(amount, TRUE)
 	if(remover)
 		check_liquid_removal(remover, amount)
-	updated_total = TRUE
 	total_reagent_volume = reagents.total_volume
 	reagents_per_turf = total_reagent_volume / members.len
 	expected_turf_height = CEILING(reagents_per_turf, 1) / LIQUID_HEIGHT_DIVISOR
@@ -307,14 +300,12 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	reagents.remove_reagent(reagent_type.type, amount)
 	if(remover)
 		check_liquid_removal(remover, amount)
-	updated_total = TRUE
 	total_reagent_volume = reagents.total_volume
 
 /datum/liquid_group/proc/transfer_to_atom(obj/effect/abstract/liquid_turf/remover, amount, atom/transfer_target, transfer_method = INGEST)
 	reagents.trans_to(transfer_target, amount, methods = transfer_method)
 	if(remover)
 		check_liquid_removal(remover, amount)
-	updated_total = TRUE
 	total_reagent_volume = reagents.total_volume
 
 /datum/liquid_group/proc/move_liquid_group(obj/effect/abstract/liquid_turf/member)
@@ -733,6 +724,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 /datum/liquid_group/proc/expose_atom(atom/target, modifier = 0, method)
 	if(!turf_reagents)
+		return
+	if(HAS_TRAIT(target, LIQUID_PROTECTION))
 		return
 	turf_reagents.expose(target, method, liquid = TRUE)
 

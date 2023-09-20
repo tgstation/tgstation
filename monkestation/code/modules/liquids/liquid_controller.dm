@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(liquids)
 
 				LG.build_turf_reagent()
 				LG.process_cached_edges()
-				LG.process_group()
+				LG.process_group(TRUE)
 				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur

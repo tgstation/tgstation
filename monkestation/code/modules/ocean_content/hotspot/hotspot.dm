@@ -96,13 +96,14 @@
 /datum/hotspot/proc/get_tile_heat(turf/given_turf)
 	var/distance = get_dist(given_turf, center.return_turf())
 
-	if(distance == -1)//we fucked up bad
-		return
 	//this handles anything greater than radius + leeway and leaves us with 2 ranges in leeway but greater than radius, and in radius
 	if(distance > radius + leeway)
 		return 0
 
 	var/total_heat = base_heat + bonus_heat
+
+	if(given_turf == center.return_turf())//we fucked up bad
+		return total_heat
 
 	if(distance > radius)
 		return total_heat * ((heat_diminish * 0.6) / (distance - radius))

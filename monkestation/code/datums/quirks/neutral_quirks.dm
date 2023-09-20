@@ -26,7 +26,7 @@
 		/obj/item/organ/external/anime_bottom,
 		)
 
-/datum/quirk/anime/add(client/client_source)
+/datum/quirk/anime/post_add()
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
@@ -50,3 +50,36 @@
 /datum/quirk/anime/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	for(var/obj/item/organ/external/organ_path as anything in anime_list)
 		new_species.external_organs |= organ_path
+
+
+/datum/quirk/clown_disbelief
+	name = "Clown Disbelief"
+	desc = "You never really believed in clowns."
+	mob_trait = TRAIT_HIDDEN_CLOWN
+	value = 0
+	icon = "fa-hippo"
+
+/datum/quirk/clown_disbelief/add(client/client_source)
+	. = ..()
+	if(!quirk_holder)
+		return
+	RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(enable))
+	RegisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, PROC_REF(disable))
+	RegisterSignal(quirk_holder, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(examined))
+
+/datum/quirk/clown_disbelief/remove()
+	. = ..()
+	disable()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, COMSIG_MOB_LOGIN, COMSIG_PARENT_EXAMINE_MORE)
+
+/datum/quirk/clown_disbelief/proc/examined(datum/source, mob/user, list/examine_list)
+	if(user.mind?.assigned_role.type == /datum/job/clown)
+		examine_list += "[span_warning("[quirk_holder] doesn't seem to notice you!")]\n"
+
+/datum/quirk/clown_disbelief/proc/enable(datum/source)
+	for(var/image/image as anything in GLOB.hidden_image_holders["clown"])
+		quirk_holder.client.images += image
+
+/datum/quirk/clown_disbelief/proc/disable(datum/source)
+	for(var/image/image as anything in GLOB.hidden_image_holders["clown"])
+		quirk_holder.client.images -= image
