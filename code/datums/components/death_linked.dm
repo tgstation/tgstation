@@ -4,8 +4,6 @@
  * When the owner of this component dies it also gibs a linked mob
  */
 /datum/component/death_linked
-	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 3
 	///The mob that also dies when the user dies
 	var/datum/weakref/linked_mob
 
