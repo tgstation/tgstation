@@ -104,6 +104,7 @@
 #include "code\__DEFINES\ghost.dm"
 #include "code\__DEFINES\gravity.dm"
 #include "code\__DEFINES\guardian_defines.dm"
+#include "code\__DEFINES\holiday.dm"
 #include "code\__DEFINES\holopads.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\icon_smoothing.dm"

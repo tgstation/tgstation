@@ -48,7 +48,7 @@ Assistant
 	for(var/holidayname in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
 		var/obj/item/special_hat = holiday_today.holiday_hat
-		if(!isnull(special_hat) && isnull(head))
+		if(prob(HOLIDAY_HAT_CHANCE) && !isnull(special_hat) && isnull(head))
 			head = special_hat
 
 	give_jumpsuit(target)
