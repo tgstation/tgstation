@@ -229,18 +229,19 @@
 /datum/component/supermatter_crystal/proc/on_z_impact(datum/source, turf/impacted_turf, levels)
 	SIGNAL_HANDLER
 
+	var/atom/atom_source = source
+
+	for(var/mob/living/poor_target in impacted_turf)
+		consume(atom_source, poor_target)
+		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+		poor_target.visible_message(span_danger("\The [atom_source] slams into \the [poor_target] out of nowhere inducing a resonance... [poor_target.p_their()] body starts to glow and burst into flames before flashing into dust!"),
+			span_userdanger("\The [atom_source] slams into you out of nowhere as your ears are filled with unearthly ringing. Your last thought is \"The fuck.\""),
+			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+
 	for(var/atom/movable/hit_object as anything in impacted_turf)
 		if(parent == hit_object)
 			return
 
-		var/atom/atom_source = source
-
-		for(var/mob/living/poor_target in impacted_turf)
-			consume(atom_source, poor_target)
-			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-			poor_target.visible_message(span_danger("\The [atom_source] slams into \the [poor_target] out of nowhere inducing a resonance... [poor_target.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-				span_userdanger("\The [atom_source] slams into you out of nowhere as your ears are filled with unearthly ringing. Your last thought is \"The fuck.\""),
-				span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 		if(!iseffect(hit_object))
 			consume(atom_source, hit_object)
 			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
