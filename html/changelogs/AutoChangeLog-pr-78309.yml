@@ -1,5 +1,0 @@
-author: "Moose1002"
-delete-after: True
-changes:
-  - bugfix: "Nanotrasen has finally recalled their faulty multitools and replaced them with working ones! The multitool's buffer now properly clears itself."
-  - qol: "Moved multitool link messages to balloon alerts"

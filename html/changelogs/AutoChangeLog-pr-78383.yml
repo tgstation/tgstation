@@ -1,6 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - balance: "Only traitor, changeling, heretic, blood brother, headrev, wizard, obsessed, magic/gun survivalists and greentext book holders can now double their hardcore random score"
-  - qol: "Redtexting as antag with hardcore random score will pay you default points, instead of none (normal survival rules)"
-  - bugfix: "End report screen will properly report hardcore random survival in case of station destruction"
