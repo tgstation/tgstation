@@ -258,7 +258,7 @@
 	. = ..()
 	UnregisterSignal(SSobj, COMSIG_CARBON_SPLASHED)
 
-/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed(volume)
+/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER
 	if(prob(20))//we don't want every single splash to wake them up now do we
 		Destroy()
