@@ -1116,7 +1116,7 @@
 		return
 
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier -= 0.1
+		surgery.speed_modifier = max(surgery.speed_modifier  - 0.1, -0.9)
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
