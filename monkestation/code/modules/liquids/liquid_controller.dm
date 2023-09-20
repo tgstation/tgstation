@@ -31,20 +31,20 @@ SUBSYSTEM_DEF(liquids)
 	msg += "AG:[active_groups.len]|BT:[burning_turfs.len]|EQ:[evaporation_queue.len]|AO:[active_ocean_turfs.len]|UO:[length(unvalidated_oceans)]"
 	return ..()
 
-/datum/controller/subsystem/liquids/fire(resumed = FALSE)
+/datum/controller/subsystem/liquids/fire(resumed)
 	if(!active_groups.len && !evaporation_queue.len && !active_ocean_turfs.len && !burning_turfs.len && !unvalidated_oceans.len)
 		return
 
 	if(length(unvalidated_oceans))
 		for(var/turf/open/floor/plating/ocean/unvalidated_turf in unvalidated_oceans)
 			if(MC_TICK_CHECK)
-				return
+				break
 			unvalidated_turf.assume_self()
 
 	if(!length(temperature_queue))
 		for(var/g in active_groups)
 			if(MC_TICK_CHECK)
-				return
+				break
 			var/datum/liquid_group/LG = g
 			var/list/turfs = LG.fetch_temperature_queue()
 			temperature_queue += turfs
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(liquids)
 				populate_evaporation = TRUE
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
-					return
+					break
 				var/datum/liquid_group/LG = g
 
 				LG.build_turf_reagent()
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(liquids)
 		if(temperature_queue.len)
 			for(var/tur in temperature_queue)
 				if(MC_TICK_CHECK)
-					return
+					break
 				var/turf/open/temperature_turf = tur
 				temperature_queue -= temperature_turf
 				if(!temperature_turf.liquids)
@@ -86,13 +86,13 @@ SUBSYSTEM_DEF(liquids)
 			evaporation_counter = 0
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
-					return
+					break
 				var/datum/liquid_group/LG = g
 				LG.check_dead()
 				LG.process_turf_disperse()
 			for(var/t in evaporation_queue)
 				if(MC_TICK_CHECK)
-					return
+					break
 				if(!prob(EVAPORATION_CHANCE))
 					evaporation_queue -= t
 					continue
@@ -105,18 +105,18 @@ SUBSYSTEM_DEF(liquids)
 		fire_counter++
 		for(var/g in active_groups)
 			if(MC_TICK_CHECK)
-				return
+				break
 			var/datum/liquid_group/LG = g
 			if(LG.burning_members.len)
 				for(var/turf/burning_turf in LG.burning_members)
 					if(MC_TICK_CHECK)
-						return
+						break
 					LG.process_spread(burning_turf)
 
 		if(fire_counter > REQUIRED_FIRE_PROCESSES)
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
-					return
+					break
 				var/datum/liquid_group/LG = g
 				if(LG.burning_members.len)
 					LG.process_fire()
@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(liquids)
 		if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
 			for(var/turf/open/floor/plating/ocean/active_ocean in currentrun_active_ocean_turfs)
 				if(MC_TICK_CHECK)
-					return
+					break
 				active_ocean.process_turf()
 			ocean_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_TURFS
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(liquids)
 		if(member_counter > REQUIRED_MEMBER_PROCESSES)
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
-					return
+					break
 				var/datum/liquid_group/LG = g
 				LG.build_turf_reagent()
 				if(!LG.exposure)
