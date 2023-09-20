@@ -956,7 +956,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		else
 			instance = crds.ChangeTurf(members[index], null, CHANGETURF_DEFER_CHANGE)
 			var/turf/instanced_turf = instance
-        	instanced_turf.immediate_calculate_adjacent_turfs()
+			instanced_turf.immediate_calculate_adjacent_turfs()
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 			world.preloader_load(instance)
 	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
