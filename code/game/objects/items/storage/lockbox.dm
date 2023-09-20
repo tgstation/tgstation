@@ -221,6 +221,16 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 
+/obj/item/storage/lockbox/medal/engineering
+	name = "engineering medal box"
+	desc = "A locked box used to store awards to be given to members of the engineering department."
+	req_access = list(ACCESS_CE)
+
+/obj/item/storage/lockbox/medal/engineering/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/silver/emergency_services(src)
+	new /obj/item/clothing/accessory/medal/silver/elder_atmosian(src)
+
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."

@@ -178,3 +178,13 @@
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
 	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
+
+/obj/item/clothing/accessory/medal/silver/emergency_services
+	name = "emergency services award"
+	desc = "A silver medal awarded to the outstanding emergency responders of Nanotrasen, those who work tirelessly together in adversity to keep their crew safe and breathing in the harsh environments of outer space."
+	icon_state = "emergencyservices"
+
+/obj/item/clothing/accessory/medal/silver/elder_atmosian
+	name = "atmospheric mastery award"
+	desc = "Often referred to as the \"elder atmosian\" award, this medal is awarded to the exemplary scientists and technicians who push the boundaries and demonstrate mastery of atmospherics."
+	icon_state = "elderatmosian"
