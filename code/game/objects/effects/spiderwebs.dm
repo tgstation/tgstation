@@ -206,3 +206,19 @@
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+
+/obj/structure/spider/reflector
+	name = "Reflective silk screen"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 10
+	explosion_block = 5
+	flags_ricochet = RICOCHET_SHINY
+	flags_ricochet = RICOCHET_HARD
+	density = FALSE
+	anchored = FALSE
+
+/obj/structure/spider/effigy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/temporary_atom, 1 MINUTES)
