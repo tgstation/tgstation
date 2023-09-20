@@ -193,7 +193,7 @@
 				return FALSE
 			//create the assembly and let it finish itself
 			var/obj/structure/door_assembly/assembly = new (src)
-			if(ispath(airlock_type, /obj/machinery/door/airlock/glass))
+			if(initial(airlock_type.glass))
 				assembly.glass = TRUE
 				assembly.glass_type = airlock_type
 			else
