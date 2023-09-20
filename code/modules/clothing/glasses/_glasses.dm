@@ -194,6 +194,7 @@
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
+	dog_fashion = /datum/dog_fashion/head/eyepatch
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()

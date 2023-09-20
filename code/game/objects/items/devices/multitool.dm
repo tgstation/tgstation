@@ -41,14 +41,25 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
+/**
+ * Sets the multitool internal object buffer
+ *
+ * Arguments:
+ * * buffer - the new object to assign to the multitool's buffer
+ */
 /obj/item/multitool/proc/set_buffer(datum/buffer)
 	if(src.buffer)
 		UnregisterSignal(src.buffer, COMSIG_QDELETING)
-	if(QDELETED(buffer))
-		return
 	src.buffer = buffer
-	RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+	if(!QDELETED(buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
 
+/**
+ * Called when the buffer's stored object is deleted
+ *
+ * This proc does not clear the buffer of the multitool, it is here to
+ * handle the deletion of the object the buffer references
+ */
 /obj/item/multitool/proc/on_buffer_del(datum/source)
 	SIGNAL_HANDLER
 	buffer = null

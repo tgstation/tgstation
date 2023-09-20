@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "Gauze no longer falls off if a wound is demoted or promoted"

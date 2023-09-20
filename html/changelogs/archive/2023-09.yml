@@ -678,3 +678,112 @@
       allows the wearer to say a phrase to dispense a stored item
   necromanceranne:
   - code_imp: Cleans up some unnecessary code left over from caseless ammo.
+2023-09-19:
+  Ben10Omintrix:
+  - bugfix: basic mobs retaliate targetting now selects targets they can attack
+  Ghommie (Thanks Sealed101):
+  - refactor: Reworked the fishing minigame into a game screen object from a TGUI
+      interface
+  Hypernoblium:
+  - bugfix: Fixes a selection window in the game rock-paper-scissors with death.
+  Jacquerel:
+  - rscadd: Many kinds of mobs can now be brought back to life through revival surgery.
+  - rscadd: Dogs can wear eyepatches.
+  - balance: Player-controlled basic mobs attack as fast as those mobs can when controlled
+      by the AI
+  - balance: Player-controlled Faithless can paralyse people they attack, like the
+      AI does
+  - balance: Player-controlled Star Gazers (if an admin felt like making one) apply
+      the star mark on attack and deal damage to everything around them, like the
+      AI does
+  Momo8289:
+  - bugfix: The Nightmare's Light Eater can no longer suck the light out of space
+      tiles.
+  Moose1002:
+  - bugfix: Nanotrasen has finally recalled their faulty multitools and replaced them
+      with working ones! The multitool's buffer now properly clears itself.
+  - qol: Moved multitool link messages to balloon alerts
+  RikuTheKiller:
+  - bugfix: Makes ethanol and sugar pure by default.
+  Shadow-Quill:
+  - qol: Surgery trays can now be crafted via the crafting menu (two rods, one silver),
+      and deconstructed via secondary click with a screwdriver!
+  Time-Green:
+  - balance: Only traitor, changeling, heretic, blood brother, headrev, wizard, obsessed,
+      magic/gun survivalists and greentext book holders can now double their hardcore
+      random score
+  - qol: Redtexting as antag with hardcore random score will pay you default points,
+      instead of none (normal survival rules)
+  - bugfix: End report screen will properly report hardcore random survival in case
+      of station destruction
+  Vincent983:
+  - rscadd: mass drivers are now buildable, you activate them by attaching a signaler
+      to their launch wire, and can increase their power by pulsing the safeties wire,
+      and reset it back to normal by cutting the safeties wire.
+  - bugfix: normal ethereal blood now works for electrolysis, the hydrogen and oxygen
+      output of the electrolysis recipe has been increased.
+  YehnBeep:
+  - server: Default-configuration MINUTE_TOPIC_LIMIT has been increased
+  carlarctg:
+  - balance: Unholy and Eldritch water are self-consuming like holy water! They don't
+      need a liver to be processed.
+  distributivgesetz:
+  - bugfix: Fix a runtime when trying to cycle move intents with a hotkey as a dead
+      mob.
+  - rscdel: Removes the computer vendor.
+  - bugfix: Fixes a misplaced status display in Meta's medical storage.
+  mc-oofert:
+  - bugfix: pancake stack layering
+  - bugfix: pizzabox stack layering
+  - bugfix: pizzabox bombs that spawn unarmed now label their pizza correctly and
+      cannot spawn a spriteless pizza
+  - bugfix: added some missing firealarms on icebox in the hall towards departures
+      and the upper section of chapel
+  necromanceranne:
+  - bugfix: Makes sure pump-up properly grants the baton resistance trait.
+  nikothedude:
+  - code_imp: Scars now stack trace if they fail to get a valid description
+  timothymtorres:
+  - bugfix: Fix wooden barricade description "This looks like it can be barricaded
+      with planks of wood" being spammed on objects.
+2023-09-20:
+  LT3:
+  - rscadd: 'New random event: Supermatter Surge'
+  - code_imp: Individual supermatter crystals can have custom gas properties
+  RikuTheKiller:
+  - spellcheck: Unreverted and improved resonance cascade message.
+  - balance: Supermatter now takes 15 seconds to delaminate normally and 5 if a sliver
+      has been taken from it. Gives a little more time to escape in the case of the
+      sliver and also evens out the times to please perfectionists.
+  - bugfix: Supermatter now accurately reports it's detonation time.
+  - spellcheck: Supermatter mood descriptions have been reverted back to their old,
+      more flavorful selves.
+  Thunder12345:
+  - balance: Improvised shotgun shells now deal half as much damage to humans and
+      cause less wounds, but do 50% more damage to structures and machines. They also
+      require a glass shard for crafting.
+  ZephyrTFA:
+  - bugfix: Lava can no longer occasionally generate inside of previously loaded templates
+      and breach and/or destroy shit
+  antropod:
+  - bugfix: Fixed Mafia achievements
+  carlarctg:
+  - qol: Crafting R&D guns from gun kits no longer requires tools or cable coil. The
+      decloner and energy crossbow still need reagents.
+  - qol: Halved R&D gun crafting time. 20->10 seconds.
+  intercepti0n:
+  - image: resprites t-ray scanner, gas analyzer, geiger counter and hand drill.
+  jlsnow301:
+  - refactor: Refactors the camera console UI.
+  mc-oofert:
+  - rscadd: heretic knock path and its respective items and award
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  nikothedude:
+  - balance: 'EMP damage on augs: 2/1.5 from 3/2'
+  - balance: Augs now only get paralyzed by EMP for 3/6 seconds if they are damaged
+      below 70% HP,
+  - balance: Aug EMP knockdown reduced to 3 seconds
+  - balance: Synthetic ears now take far less EMP damage
+  vinylspiders:
+  - bugfix: fixes inedible grown items (such as tower caps) becoming unclickable when
+      harvested, fixes their seeds disappearing when inserted into the seed machine
