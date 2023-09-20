@@ -11,7 +11,7 @@
 		user,
 		"Enter typepath of an atom you'd like to turn your victim into.",
 		"Typepath",
-		"/obj/item/food/bread/plain",
+		"[/obj/item/food/bread/plain]",
 	) as null|text
 
 	if (isnull(attempted_target_path))

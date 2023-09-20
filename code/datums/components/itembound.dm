@@ -11,7 +11,7 @@
 	if(QDELETED(passed_container))
 		return
 	containerref = WEAKREF(passed_container)
-	RegisterSignal(passed_container, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(passed_container, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined))
 	move_tracker = new(parent, CALLBACK(src, PROC_REF(verify_containment)))
 
 
@@ -43,7 +43,7 @@
 /datum/component/itembound/Destroy(force, silent)
 	var/atom/movable/container = containerref?.resolve()
 	if (!QDELETED(container))
-		UnregisterSignal(container, COMSIG_ATOM_EXAMINE)
+		UnregisterSignal(container, COMSIG_ATOM_EXAMINE_MORE)
 	containerref = null
 	QDEL_NULL(move_tracker)
 	return ..()
