@@ -262,6 +262,8 @@
 		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
 	route = PATH_FLESH
+	///What type of wound do we apply on hit
+	var/wound_type = /datum/wound/slash/flesh/severe
 
 /datum/heretic_knowledge/blade_upgrade/flesh/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!iscarbon(target) || source == target)
@@ -269,7 +271,8 @@
 
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-	carbon_target.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
+	var/datum/wound/crit_wound = new wound_type()
+	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
