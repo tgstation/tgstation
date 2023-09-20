@@ -83,6 +83,8 @@
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
+	///If set, overrides the overlays' icon path.
+	var/icon_overlays
 	///If set, what the icon_state will be if the computer is unpowered.
 	var/icon_state_unpowered
 	///If set, what the icon_state will be if the computer is powered.
@@ -392,15 +394,15 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
+	var/ui_overlay = icon_overlays ? icon_overlays : initial(icon)
+	if(!ui_overlay)
 		return
 
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(ui_overlay, active_program.program_icon_state) : mutable_appearance(ui_overlay, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(ui_overlay, "bsod")
+		. += mutable_appearance(ui_overlay, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
