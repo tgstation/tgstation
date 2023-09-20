@@ -165,6 +165,8 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 
 ///Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
 /datum/sm_gas/miasma/extra_effects(obj/machinery/power/supermatter_crystal/sm)
+	if(prob(30))
+		playsound(sm.loc, 'sound/misc/fart-with-reverb.ogg', 100, TRUE, extrarange = 10)
 	if(!sm.gas_percentage[/datum/gas/miasma])
 		return
 	var/miasma_pp = sm.absorbed_gasmix.return_pressure() * sm.gas_percentage[/datum/gas/miasma]
