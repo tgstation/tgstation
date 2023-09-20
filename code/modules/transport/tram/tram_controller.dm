@@ -261,11 +261,12 @@
  *
  * Moves the tram to its set destination.
  * When it arrives at its destination perform callback to the post-arrival procs like controls and lights.
- * We update the odometer and kill the process until we need to move again.area
+ * We update the odometer and kill the process until we need to move again.
  *
- * TODO: If the status is EMERGENCY_STOP the tram should immediately come to a stop regardless of the
- * travel_remaining. Some extra things happen in an emergency stop (throwing the passengers) and it will
- * run a recovery procedure to head to the nearest platform and 'reset' once the issue is resolved.
+ * If the status is EMERGENCY_STOP the tram should immediately come to a stop regardless of the travel_remaining.
+ * Some extra things happen in an emergency stop (throwing the passengers) and when reset will run a
+ * recovery procedure to head to the nearest platform and sync logical and physical location data
+ * (idle_platform and nav_beacon) once the issue is resolved.
  */
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(isnull(paired_cabinet))
