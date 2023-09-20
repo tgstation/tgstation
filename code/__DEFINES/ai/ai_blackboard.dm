@@ -85,3 +85,6 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+///should we skip the faction check for the targetting datum?
+#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"

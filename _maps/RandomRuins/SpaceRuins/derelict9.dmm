@@ -38,7 +38,8 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "s" = (
-/turf/closed/indestructible/explodable/riveted,
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/indestructible/riveted,
 /area/ruin/space/has_grav)
 "t" = (
 /obj/effect/gibspawner/human/bodypartless,

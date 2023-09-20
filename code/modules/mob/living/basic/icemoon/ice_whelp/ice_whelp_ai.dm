@@ -58,7 +58,6 @@
 		finish_action(controller, FALSE)
 		return
 
-	living_pawn.start_pulling(target)
 	living_pawn.melee_attack(target)
 	finish_action(controller, TRUE)
 

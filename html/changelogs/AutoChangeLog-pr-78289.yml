@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "returning items to vendors works correctly"
-  - bugfix: "you can't return items that has stuff in it for e.g. a serving tray with food in it"
