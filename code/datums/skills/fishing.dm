@@ -11,7 +11,7 @@
 
 /datum/skill/fishing/New()
 	. = ..()
-	levelUpMessages[SKILL_LEVEL_MASTER] = span_nicegreen("After lots of practice, I've begun to truly understand the surprising depth behind [name]. As a master [title], I can take an easy guess of whatever I'm trying to catch now.")
+	levelUpMessages[SKILL_LEVEL_MASTER] = span_nicegreen("After lots of practice, I've begun to truly understand the surprising depth behind [name]. As a master [title], I can take an easier guess of what I'm trying to catch now.")
 
 /datum/skill/fishing/level_gained(datum/mind/mind, new_level, old_level, silent)
 	. = ..()

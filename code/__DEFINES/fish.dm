@@ -59,13 +59,25 @@
 ///Will filp the minigame hud for the duration of the effect
 #define FISHING_MINIGAME_RULE_FLIP (1 << 7)
 
-///all the active effects that trigger during the minigame on a cooldown
+///all the effects that are active and will last for a few seconds before triggering a cooldown
 #define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
 /// The default multiplicative value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_MULTIPLICATIVE 1
+
+//Fish icon defines, used by fishing minigame
+#define FISH_ICON_DEF "fish"
+#define FISH_ICON_HOSTILE "hostile"
+#define FISH_ICON_STAR "star"
+#define FISH_ICON_CHUNKY "chunky"
+#define FISH_ICON_SLIME "slime"
+#define FISH_ICON_COIN "coin"
+#define FISH_ICON_GEM "gem"
+#define FISH_ICON_CRAB "crab"
+#define FISH_ICON_JELLYFISH "jellyfish"
+#define FISH_ICON_BONE "bone"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"

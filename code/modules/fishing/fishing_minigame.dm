@@ -304,7 +304,30 @@
 	phase = BITING_PHASE
 	// Trashing animation
 	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
-	send_alert("!!!")
+	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH))
+		switch(fish_icon)
+			if(FISH_ICON_DEF)
+				send_alert("fish!!!")
+			if(FISH_ICON_HOSTILE)
+				send_alert("hostile!!!")
+			if(FISH_ICON_STAR)
+				send_alert("starfish!!!")
+			if(FISH_ICON_CHUNKY)
+				send_alert("round fish!!!")
+			if(FISH_ICON_JELLYFISH)
+				send_alert("jellyfish!!!")
+			if(FISH_ICON_SLIME)
+				send_alert("slime!!!")
+			if(FISH_ICON_COIN)
+				send_alert("valuable!!!")
+			if(FISH_ICON_GEM)
+				send_alert("ore!!!")
+			if(FISH_ICON_CRAB)
+				send_alert("crustacean!!!")
+			if(FISH_ICON_BONE)
+				send_alert("bones!!!")
+	else
+		send_alert("!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	// Setup next phase
@@ -573,7 +596,7 @@
 	icon_state = challenge.background
 	add_overlay("frame")
 	hud_bait = new(null, null, challenge)
-	hud_fish = new
+	hud_fish = new(null, null, challenge)
 	hud_completion = new(null, null, challenge)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
@@ -603,9 +626,10 @@
 
 /atom/movable/screen/hud_fish
 	icon = 'icons/hud/fishing_hud.dmi'
+	icon_state = "fish"
 	vis_flags = VIS_INHERIT_ID
 
-/atom/movable/screen/hud_completion/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
+/atom/movable/screen/hud_fish/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
 	. = ..()
 	if(challenge)
 		icon_state = challenge.fish_icon
