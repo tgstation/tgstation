@@ -252,6 +252,7 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
+	to_chat(owner, spawn_warning"You black out!")
 	RegisterSignal(owner, COMSIG_CARBON_SPLASHED, PROC_REF(on_splashed))
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
