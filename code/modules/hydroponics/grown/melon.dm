@@ -9,7 +9,7 @@
 	lifespan = 50
 	endurance = 40
 	instability = 20
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/watermelon/holy, /obj/item/seeds/watermelon/barrel)
@@ -30,7 +30,7 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
+	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	wine_power = 40
 
 /obj/item/food/grown/watermelon/make_processable()
@@ -62,7 +62,7 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/water/holywater = 0)
+	juice_typepath = /datum/reagent/water/holywater
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 

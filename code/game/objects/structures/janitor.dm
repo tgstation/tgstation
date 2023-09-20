@@ -3,7 +3,7 @@
 /obj/structure/mop_bucket
 	name = "mop bucket"
 	desc = "Fill it with water, but don't forget a mop!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mopbucket"
 	density = TRUE
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
@@ -43,7 +43,7 @@
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 			balloon_alert(user, "empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transfered_by = user)
+		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transferred_by = user)
 		balloon_alert(user, "doused mop")
 		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 

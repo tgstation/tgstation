@@ -126,11 +126,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
 
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(safety)
 		safety = FALSE
-		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
-		return ..()
+		balloon_alert(user, "vocal circuit fried")
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"

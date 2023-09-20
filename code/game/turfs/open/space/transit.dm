@@ -4,7 +4,7 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
-	flags_1 = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
+	turf_flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosive_resistance = INFINITY
 
 /turf/open/space/transit/Initialize(mapload)
@@ -12,11 +12,11 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(initialize_drifting))
-	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialize_drifting_but_from_initialize))
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialize_drifting_but_from_initialize))
 
 /turf/open/space/transit/Destroy()
 	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
-	UnregisterSignal(src, list(COMSIG_TURF_RESERVATION_RELEASED, COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
+	UnregisterSignal(src, list(COMSIG_TURF_RESERVATION_RELEASED, COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 	return ..()
 
@@ -36,13 +36,13 @@
 /turf/open/space/transit/proc/initialize_drifting(atom/entered, atom/movable/enterer)
 	SIGNAL_HANDLER
 
-	if(enterer && !HAS_TRAIT(enterer, TRAIT_HYPERSPACED))
-		enterer.AddComponent(/datum/component/shuttle_cling, turn(dir, 180))
+	if(enterer && !HAS_TRAIT(enterer, TRAIT_HYPERSPACED) && !HAS_TRAIT(src, TRAIT_HYPERSPACE_STOPPED))
+		enterer.AddComponent(/datum/component/shuttle_cling, REVERSE_DIR(dir))
 
 /turf/open/space/transit/proc/initialize_drifting_but_from_initialize(atom/movable/location, atom/movable/enterer, mapload)
 	SIGNAL_HANDLER
 
-	if(!mapload && !istype(enterer, /obj/docking_port))
+	if(!mapload && !enterer.anchored)
 		INVOKE_ASYNC(src, PROC_REF(initialize_drifting), src, enterer)
 
 /turf/open/space/transit/Exited(atom/movable/gone, direction)

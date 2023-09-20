@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	ADD_TRAIT(parent, TRAIT_GERM_SENSITIVE, src)
+	ADD_TRAIT(parent, TRAIT_GERM_SENSITIVE, REF(src))
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 		handle_movement()
 
 /datum/component/germ_sensitive/UnregisterFromParent()
-	REMOVE_TRAIT(parent, TRAIT_GERM_SENSITIVE, src)
+	REMOVE_TRAIT(parent, TRAIT_GERM_SENSITIVE, REF(src))
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_MOVED,

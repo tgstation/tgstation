@@ -490,11 +490,12 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	obj_flags = CAN_BE_HIT
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	var/status = 0
 	var/delay = 0
 
-/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status, rcd_upgrades)
 	. = ..()
 	status = rcd_status
 	delay = rcd_delay
@@ -504,6 +505,26 @@
 		icon_state = "rcd_end_reverse"
 	else
 		update_appearance()
+
+	if (rcd_upgrades & RCD_UPGRADE_ANTI_INTERRUPT)
+		color = list(
+			1.0, 0.5, 0.5, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.0, 0.0, 0.0, 1.0,
+			0.0, 0.0, 0.0, 0.0,
+		)
+
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
+
+/obj/effect/constructing_effect/update_name(updates)
+	. = ..()
+
+	if (status == RCD_DECONSTRUCT)
+		name = "deconstruction effect"
+	else
+		name = "construction effect"
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
@@ -524,11 +545,25 @@
 	if (status == RCD_DECONSTRUCT)
 		qdel(src)
 	else
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
 		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/constructing_effect/proc/attacked(mob/user)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	end()
+
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+	attacked(user)
+
+/obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
+	attacked(user)
 
 /obj/effect/temp_visual/electricity
 	icon_state = "electricity3"
@@ -617,3 +652,38 @@
 /obj/effect/temp_visual/crit/Initialize(mapload)
 	. = ..()
 	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS
+
+/// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
+/obj/effect/temp_visual/hive_spawn_wither
+	name = "withering spawn"
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+	if (isnull(copy_from))
+		. = ..()
+		return INITIALIZE_HINT_QDEL
+	icon = copy_from.icon
+	icon_state = copy_from.icon_state
+	pixel_x = copy_from.pixel_x
+	pixel_y = copy_from.pixel_y
+	duration = rand(0.5 SECONDS, 1 SECONDS)
+	var/matrix/transformation = matrix(transform)
+	transformation.Turn(rand(-70, 70))
+	transformation.Scale(0.7, 0.7)
+	animate(
+		src,
+		pixel_x = rand(-5, 5),
+		pixel_y = -5,
+		transform = transformation,
+		color = "#44444400",
+		time = duration,
+		flags = ANIMATION_RELATIVE,
+	)
+	return ..()

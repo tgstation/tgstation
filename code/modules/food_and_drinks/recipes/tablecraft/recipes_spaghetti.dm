@@ -80,3 +80,80 @@
 	)
 	result = /obj/item/food/spaghetti/mac_n_cheese
 	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/shoyu_tonkotsu_ramen
+	name = "Shoyu Tonkotsu ramen"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/spaghetti/shoyu_tonkotsu_ramen
+	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/kitakata_ramen
+	name = "Kitakata ramen"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1,
+		/obj/item/food/grown/garlic = 1,
+	)
+	result = /obj/item/food/spaghetti/kitakata_ramen
+	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/kitsune_udon
+	name = "Kitsune udon"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/tofu = 2,
+		/obj/item/food/grown/onion = 1,
+		/datum/reagent/consumable/soysauce = 5,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/spaghetti/kitsune_udon
+	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/nikujaga
+	name = "Nikujaga"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/peas = 1,
+	)
+	result = /obj/item/food/spaghetti/nikujaga
+	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/pho
+	name = "Pho"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	result = /obj/item/food/spaghetti/pho
+	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/pad_thai
+	name = "Pad thai"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/tofu = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peanut = 1,
+		/obj/item/food/grown/citrus/lime = 1,
+	)
+	result = /obj/item/food/spaghetti/pad_thai
+	category = CAT_SPAGHETTI

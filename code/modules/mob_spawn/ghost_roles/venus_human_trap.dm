@@ -2,7 +2,7 @@
 /obj/effect/mob_spawn/ghost_role/venus_human_trap
 	name = "flower bud"
 	desc = "A large pulsating plant..."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "bud0"
 	mob_type = /mob/living/simple_animal/hostile/venus_human_trap
 	density = FALSE

@@ -140,7 +140,7 @@
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
 /datum/mutation/human/laser_eyes/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
@@ -166,7 +166,7 @@
 	to_chat(source, span_warning("You shoot with your laser eyes!"))
 	source.changeNext_move(CLICK_CD_RANGE)
 	source.newtonian_move(get_dir(target, source))
-	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
+	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, modifiers)
@@ -174,9 +174,9 @@
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes
-/obj/projectile/beam/laser_eyes
+/obj/projectile/beam/laser/laser_eyes
 	name = "beam"
-	icon = 'icons/effects/genetics.dmi'
+	icon = 'icons/mob/effects/genetics.dmi'
 	icon_state = "eyelasers"
 
 /datum/mutation/human/illiterate

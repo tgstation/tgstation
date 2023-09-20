@@ -5,6 +5,7 @@
 
 /obj/machinery/power/terminal
 	name = "terminal"
+	icon = 'icons/obj/pipes_n_cables/structures.dmi'
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal, used to draw power from the grid."
 	layer = WIRE_TERMINAL_LAYER //a bit above wires

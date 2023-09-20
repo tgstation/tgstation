@@ -4,7 +4,7 @@
 /obj/item/pushbroom
 	name = "push broom"
 	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "broom0"
 	base_icon_state = "broom"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -20,7 +20,14 @@
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
+	AddComponent(/datum/component/jousting, damage_boost_per_tile = 1)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 8, \
+		force_wielded = 12, \
+		icon_wielded = "[base_icon_state]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "[base_icon_state]0"

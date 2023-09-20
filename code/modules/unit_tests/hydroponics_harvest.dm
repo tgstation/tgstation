@@ -39,7 +39,7 @@
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(hydroponics_tray, planted_food_seed, human)
-	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins. It should also have 8u corn oil.
+	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins. It should also have 8u oil.
 	test_seed(hydroponics_tray, planted_not_food_seed, human)
 	// Redbeets should harvest 5 beets (10 / 2) with 10u nutriments (5 x 2) and 10u vitamins (5 x 2) thanks to densified chemicals.
 	test_seed(hydroponics_tray, planted_densified_seed, human)
@@ -77,7 +77,7 @@
 
 	tray.attack_hand(user)
 	var/list/obj/item/all_harvested_items = list()
-	for(var/obj/item/harvested_food in tray.drop_location())
+	for(var/obj/item/harvested_food in user.drop_location())
 		all_harvested_items += harvested_food
 
 	if(!all_harvested_items.len)

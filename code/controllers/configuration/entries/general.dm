@@ -701,3 +701,11 @@
 
 /datum/config_entry/flag/config_errors_runtime
 	default = FALSE
+
+/datum/config_entry/number/upload_limit
+	default = 524288
+	min_val = 0
+
+/datum/config_entry/number/upload_limit_admin
+	default = 5242880
+	min_val = 0

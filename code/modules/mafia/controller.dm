@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	var/client/role_client = GLOB.directory[rewarded.body.client]
+	var/client/role_client = rewarded.body.client
 	role_client?.give_award(award, rewarded.body)
 
 /**
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)

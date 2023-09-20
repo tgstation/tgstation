@@ -243,12 +243,18 @@
 		var/mob/living/silicon/robot/flashed_borgo = M
 		log_combat(user, flashed_borgo, "flashed", src)
 		update_icon(ALL, TRUE)
-		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
+		if(flashed_borgo.flash_act(affect_silicon = TRUE))
+			if(flashed_borgo.is_blind())
+				var/flash_duration = rand(8,12) SECONDS
+				flashed_borgo.Paralyze(flash_duration)
+				flashed_borgo.set_temp_blindness_if_lower(flash_duration)
+				user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors and computing with the flash!"), span_danger("You overload [flashed_borgo]'s sensors and computing with the flash!"))
+			else
+				user.visible_message(span_warning("[user] blinds [flashed_borgo] with the flash!"), span_danger("You blind [flashed_borgo] with the flash!"))
+			flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
+			flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+		else
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
-			return
-		flashed_borgo.Paralyze(rand(80,120))
-		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
-		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return
 
 	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))

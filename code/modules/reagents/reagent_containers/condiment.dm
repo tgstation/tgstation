@@ -62,7 +62,7 @@
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.get_reagent_log_string())
-	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, 10, transferred_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
@@ -81,7 +81,7 @@
 			to_chat(user, span_warning("[src] is full!"))
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -92,7 +92,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, span_warning("you can't add anymore to [target]!"))
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
 
 /obj/item/reagent_containers/condiment/enzyme
@@ -273,18 +273,18 @@
 	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/cooking_oil
+/obj/item/reagent_containers/condiment/vegetable_oil
 	name = "cooking oil"
 	desc = "For all your deep-frying needs."
 	icon_state = "cooking_oil"
-	list_reagents = list(/datum/reagent/consumable/cooking_oil = 50)
+	list_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/quality_oil
+/obj/item/reagent_containers/condiment/olive_oil
 	name = "quality oil"
 	desc = "For the fancy chef inside everyone."
 	icon_state = "oliveoil"
-	list_reagents = list(/datum/reagent/consumable/quality_oil = 50)
+	list_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 50)
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/condiment/yoghurt
@@ -322,6 +322,51 @@
 	desc = "A tomato slurry in a tall plastic bottle. Somehow still vaguely American."
 	icon_state = "ketchup"
 	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/worcestershire
+	name = "worcestershire sauce"
+	desc = "A fermented sauce of legend from old England. Makes almost anything better."
+	icon_state = "worcestershire"
+	list_reagents = list(/datum/reagent/consumable/worcestershire = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/red_bay
+	name = "\improper Red Bay seasoning"
+	desc = "Mars' favourite seasoning."
+	icon_state = "red_bay"
+	list_reagents = list(/datum/reagent/consumable/red_bay = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/curry_powder
+	name = "curry powder"
+	desc = "It's this yellow magic that makes curry taste like curry."
+	icon_state = "curry_powder"
+	list_reagents = list(/datum/reagent/consumable/curry_powder = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/dashi_concentrate
+	name = "dashi concentrate"
+	desc = "A bottle of Amagi brand dashi concentrate. Simmer with water in a 1:8 ratio for a perfect dashi broth."
+	icon_state = "dashi_concentrate"
+	list_reagents = list(/datum/reagent/consumable/dashi_concentrate = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/coconut_milk
+	name = "coconut milk"
+	desc = "It's coconut milk. Toasty!"
+	icon_state = "coconut_milk"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/coconut_milk = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/grounding_solution
+	name = "grounding solution"
+	desc = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	icon_state = "grounding_solution"
+	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
 	fill_icon_thresholds = null
 
 //technically condiment packs but they are non transparent
@@ -373,7 +418,7 @@
 		/datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in its passage"),
 		/datum/reagent/consumable/salt = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"),
 		/datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"),
-		/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
+		/datum/reagent/consumable/nutriment/fat/oil = list("condi_cornoil", "Vegetable Oil", "A delicious oil used in cooking."),
 		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
@@ -411,7 +456,7 @@
 			return
 		else
 			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
-			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+			src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 			qdel(src)
 			return
 	return . | ..()

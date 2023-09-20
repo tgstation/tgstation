@@ -68,7 +68,7 @@
 	source.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [bumped]",)
 	return STOP_BUMP
 
-/datum/status_effect/hallucination/tick(seconds_per_tick, times_fired)
+/datum/status_effect/hallucination/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
@@ -94,7 +94,7 @@
 /datum/status_effect/hallucination/sanity/refresh(...)
 	update_intervals()
 
-/datum/status_effect/hallucination/sanity/tick(seconds_per_tick, times_fired)
+/datum/status_effect/hallucination/sanity/tick(seconds_between_ticks)
 	// Using psicodine / happiness / whatever to become fearless will stop sanity based hallucinations
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return

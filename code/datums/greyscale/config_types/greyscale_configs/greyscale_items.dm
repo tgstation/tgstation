@@ -42,6 +42,21 @@
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
 
+/datum/greyscale_config/fish_analyzer_inhand_left
+	name = "Held Fish Analyzer, Left"
+	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_inhand_right
+	name = "Held Fish Analyzer, Right"
+	icon_file = 'icons/mob/inhands/items_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_worn
+	name = "Worn Fish Analyzer"
+	icon_file = 'icons/mob/clothing/belt.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
 //
 // WEAPONS
 //
@@ -300,7 +315,7 @@
 
 /datum/greyscale_config/buckets
 	name = "Buckets"
-	icon_file = 'icons/obj/janitor.dmi'
+	icon_file = 'icons/obj/service/janitor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
 /datum/greyscale_config/buckets_worn
@@ -329,12 +344,12 @@
 
 /datum/greyscale_config/circuit
 	name = "Circuit Board"
-	icon_file = 'icons/obj/module.dmi'
+	icon_file = 'icons/obj/assemblies/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
 
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"
-	icon_file = 'icons/obj/janicart_upgrade.dmi'
+	icon_file = 'icons/obj/service/janicart_upgrade.dmi'
 	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade.json'
 
 /datum/greyscale_config/janicart_upgrade/installed
@@ -342,7 +357,7 @@
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
-	icon_file = 'icons/obj/hydroponics/harvest.dmi'
+	icon_file = 'icons/obj/service/hydroponics/harvest.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower.json'
 
 /datum/greyscale_config/flower_simple_worn

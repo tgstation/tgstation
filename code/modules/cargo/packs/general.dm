@@ -62,11 +62,18 @@
 	crate_name = "saltwater fish crate"
 
 /datum/supply_pack/misc/tiziran_fish
-	name = "Tirizan Fish Case"
+	name = "Tiziran Fish Case"
 	desc = "Tiziran saltwater fish imported from the Zagos Sea."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fish_case/tiziran = 2)
 	crate_name = "tiziran fish crate"
+
+/datum/supply_pack/misc/fish_analyzers
+	name = "Fish Analyzers"
+	desc = "A pack containing three analyzers to monitor fish's status and traits with."
+	cost = CARGO_CRATE_VALUE * 2.5
+	contains = list(/obj/item/fish_analyzer = 3)
+	crate_name = "fish analyzers crate"
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"

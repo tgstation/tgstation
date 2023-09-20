@@ -29,19 +29,18 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_GENDER_BLOCK 1
+#define DNA_SKIN_TONE_BLOCK 2
+#define DNA_EYE_COLOR_LEFT_BLOCK 3
 #define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 6
-#define DNA_GENDER_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_HAIRSTYLE_BLOCK 7
-#define DNA_SKIN_TONE_BLOCK 3
-#define DNA_UNI_IDENTITY_BLOCKS 7
+#define DNA_HAIRSTYLE_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 6
+#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
+
+#define DNA_UNI_IDENTITY_BLOCKS 8
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 15
-
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
@@ -57,6 +56,8 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+
+#define DNA_FEATURE_BLOCKS 15
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -118,9 +119,11 @@
 #define CHROMOSOME_USED 2
 
 //used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
+#define GENDERS 4
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
+#define G_NEUTER 4
 
 /// Defines how a mob's organs_slot is ordered
 /// Exists so Life()'s organ process order is consistent

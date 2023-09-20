@@ -62,6 +62,14 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"White" = "#f2f2f2",
 ))
 
+GLOBAL_LIST_INIT(color_list_lustrous, list(
+	"Cyan Blue" = "#00ffff",
+	"Sky Blue" = "#37c0ff",
+	"Blue" = "#3374ff",
+	"Dark Blue" = "#5b5beb",
+	"Bright Red" = "#fa2d2d",
+))
+
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"catghost",
 	"ghost_black",
@@ -134,17 +142,21 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 #define DBACKPACK "Department Backpack"
 #define DDUFFELBAG "Department Duffel Bag"
 #define DSATCHEL "Department Satchel"
+#define DMESSENGER "Department Messenger Bag"
 #define GBACKPACK "Grey Backpack"
 #define GDUFFELBAG "Grey Duffel Bag"
 #define GSATCHEL "Grey Satchel"
+#define GMESSENGER "Grey Messenger Bag"
 #define LSATCHEL "Leather Satchel"
 GLOBAL_LIST_INIT(backpacklist, list(
 	DBACKPACK,
 	DDUFFELBAG,
 	DSATCHEL,
+	DMESSENGER,
 	GBACKPACK,
 	GDUFFELBAG,
 	GSATCHEL,
+	GMESSENGER,
 	LSATCHEL,
 ))
 
@@ -281,7 +293,12 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 	"default",
 	"biohazard",
 	"lockdown",
+	"greenalert",
+	"bluealert",
 	"redalert",
+	"deltaalert",
+	"radiation",
+	"currentalert", //For automatic set of status display on current level
 ))
 
 // Members of status_display_approved_pictures that are actually states and not alert values

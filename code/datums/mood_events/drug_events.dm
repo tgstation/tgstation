@@ -121,3 +121,8 @@
 /datum/mood_event/nicotine_withdrawal_severe
 	description = "Head pounding. Cold sweating. Feeling anxious. Need a smoke to calm down!"
 	mood_change = -8
+
+/datum/mood_event/hauntium_spirits
+	description = "I feel my soul degrading!"
+	mood_change = -8
+	timeout = 8 MINUTES

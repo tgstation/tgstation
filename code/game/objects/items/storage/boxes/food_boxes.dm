@@ -143,6 +143,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/meat/slab(src)
 
+/obj/item/storage/box/papersack/wheat
+	desc = "It's a bit dusty, and smells like a barnyard."
+
+/obj/item/storage/box/papersack/wheat/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/grown/wheat(src)
+
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
@@ -306,7 +313,7 @@
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/tomato(src)
-	new /obj/item/reagent_containers/condiment/quality_oil(src)
+	new /obj/item/reagent_containers/condiment/olive_oil(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
@@ -459,7 +466,7 @@
 			/obj/item/food/cheese/wheel = 5,
 			/obj/item/food/grown/toechtauese = 10,
 			/obj/item/reagent_containers/condiment/cornmeal = 5,
-			/obj/item/reagent_containers/condiment/quality_oil = 5,
+			/obj/item/reagent_containers/condiment/olive_oil = 5,
 			/obj/item/reagent_containers/condiment/yoghurt = 5,
 			))
 		new random_food(src)

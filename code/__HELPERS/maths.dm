@@ -4,12 +4,16 @@
 		return 0
 	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
 	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
-	if(!dy)
-		return (dx >= 0) ? 90 : 270
-	. = arctan(dx/dy)
-	if(dy < 0)
+	return delta_to_angle(dx, dy)
+
+/// Calculate the angle produced by a pair of x and y deltas
+/proc/delta_to_angle(x, y)
+	if(!y)
+		return (x >= 0) ? 90 : 270
+	. = arctan(x/y)
+	if(y < 0)
 		. += 180
-	else if(dx < 0)
+	else if(x < 0)
 		. += 360
 
 /// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]

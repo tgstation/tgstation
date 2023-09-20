@@ -1,7 +1,7 @@
 /obj/item/boxcutter
 	name = "boxcutter"
 	desc = "A tool for cutting boxes, or throats."
-	icon = 'icons/obj/boxcutter.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "boxcutter"
 	inhand_icon_state = "boxcutter"
 	base_icon_state = "boxcutter"
@@ -17,6 +17,9 @@
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = null
+
+/obj/item/boxcutter/get_all_tool_behaviours()
+	return list(TOOL_KNIFE)
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()

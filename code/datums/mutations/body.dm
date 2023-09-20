@@ -90,7 +90,7 @@
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
 			var/cough_range = GET_MUTATION_POWER(src) * 4
-			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
+			var/turf/target = get_ranged_target_turf(owner, REVERSE_DIR(owner.dir), cough_range)
 			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
 /datum/mutation/human/paranoia

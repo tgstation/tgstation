@@ -88,7 +88,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(!blood_volume)
+	if(!blood_volume || (status_flags & GODMODE))
 		return
 	blood_volume = max(blood_volume - amt, 0)
 
@@ -322,7 +322,7 @@
 		return
 	if(!T)
 		T = get_turf(src)
-	if(isclosedturf(T) || (isgroundlessturf(T) && !SSmapping.get_turf_below(T)))
+	if(isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
 		return
 
 	var/list/temp_blood_DNA

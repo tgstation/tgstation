@@ -481,7 +481,7 @@
  *
  * Creates the image for the pipe underlay that all components use, called by get_pipe_underlay() in components_base.dm
  * Arguments:
- * * iconfile  - path of the iconstate we are using (ex: 'icons/obj/atmospherics/components/thermomachine.dmi')
+ * * iconfile  - path of the iconstate we are using (ex: 'icons/obj/machines/atmospherics/thermomachine.dmi')
  * * iconstate - the image we are using inside the file
  * * direction - the direction of our device
  * * color - the color (in hex value, like #559900) that the pipe should have

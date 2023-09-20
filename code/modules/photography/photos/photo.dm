@@ -43,6 +43,7 @@
 		if(!isobserver(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
+		grind_results = list(/datum/reagent/hauntium = 20)
 		break
 
 /obj/item/photo/update_icon_state()

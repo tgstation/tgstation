@@ -44,8 +44,8 @@
 
 /obj/item/ammo_box/magazine/toy/m762
 	name = "donksoft box magazine"
-	icon_state = "a762-toy"
-	base_icon_state = "a762"
+	icon_state = "a7mm-toy"
+	base_icon_state = "a7mm"
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	max_ammo = 50
 
@@ -54,5 +54,5 @@
 	icon_state = "[base_icon_state]-[round(ammo_count(), 10)]"
 
 /obj/item/ammo_box/magazine/toy/m762/riot
-	icon_state = "a762-riot"
+	icon_state = "a7mm-riot"
 	ammo_type = /obj/item/ammo_casing/foam_dart/riot

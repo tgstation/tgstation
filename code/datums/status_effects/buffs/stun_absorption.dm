@@ -28,6 +28,11 @@
 	var/self_message
 	/// Message shown on anyone examining the owner.
 	var/examine_message
+	/// If TRUE, after passing the max seconds of stuns blocked, we will delete ourself.
+	/// If FALSE, we will instead recharge after some time.
+	var/delete_after_passing_max
+	/// If [delete_after_passing_max] is FALSE, this is how long we will wait before recharging.
+	var/recharge_time
 
 	/// Static list of all generic "stun received " signals that we will react to and block.
 	/// These all have the same arguments sent, so we can handle them all via the same signal handler.
@@ -49,6 +54,8 @@
 	self_message,
 	examine_message,
 	max_seconds_of_stuns_blocked = INFINITY,
+	delete_after_passing_max = TRUE,
+	recharge_time = 1 MINUTES,
 )
 
 	if(isnum(duration))
@@ -60,6 +67,8 @@
 	src.self_message = self_message
 	src.examine_message = examine_message
 	src.max_seconds_of_stuns_blocked = max_seconds_of_stuns_blocked
+	src.delete_after_passing_max = delete_after_passing_max
+	src.recharge_time = recharge_time
 
 	return ..()
 
@@ -79,7 +88,9 @@
 	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
 /datum/status_effect/stun_absorption/get_examine_text()
-	return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_theyre(TRUE))
+	if(can_absorb_stun())
+		return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_Theyre())
+	return null // no message if we can't absorb stuns, duh.
 
 /**
  * Signal proc for generic stun signals being sent, such as [COMSIG_LIVING_STATUS_STUN] or [COMSIG_LIVING_STATUS_KNOCKDOWN].
@@ -120,6 +131,14 @@
 
 	return COMPONENT_NO_STUN
 
+/// Simply checks if the owner of the effect is in a valid state to absorb stuns.
+/datum/status_effect/stun_absorption/proc/can_absorb_stun()
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	if(seconds_of_stuns_absorbed > max_seconds_of_stuns_blocked)
+		return FALSE
+	return TRUE
+
 /**
  * Absorb a number of seconds of stuns.
  * If we hit the max amount of absorption, we will qdel ourself in this proc.
@@ -129,7 +148,7 @@
  * Returns TRUE on successful absorption, or FALSE otherwise.
  */
 /datum/status_effect/stun_absorption/proc/absorb_stun(amount)
-	if(owner.stat != CONSCIOUS)
+	if(!can_absorb_stun())
 		return FALSE
 
 	// Now we gotta check that no other stun absorption we have is blocking us
@@ -161,10 +180,18 @@
 
 		// Count seconds absorbed
 		seconds_of_stuns_absorbed += amount
-		if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
-			qdel(src)
+		if(delete_after_passing_max)
+			if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
+				qdel(src)
+
+		else if(recharge_time > 0 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(recharge_absorption), amount), recharge_time)
 
 	return TRUE
+
+/// Used in callbacks to "recharge" the effect after passing the max seconds of stuns blocked.
+/datum/status_effect/stun_absorption/proc/recharge_absorption(amount)
+	seconds_of_stuns_absorbed = max(seconds_of_stuns_absorbed - amount, 0)
 
 /**
  * [proc/apply_status_effect] wrapper specifically for [/datum/status_effect/stun_absorption],
@@ -175,12 +202,16 @@
  *
  * Arguments
  * * source - the source of the stun absorption.
- * * duration - how long does the stun absorption last before it ends? -1 or null = infinite duration
+ * * duration - how long does the stun absorption last before it ends? -1 or null (or infinity) = infinite duration
  * * priority - what is this effect's priority to other stun absorptions? higher = more priority
  * * message - optional, "other message" arg of visible message, shown on trigger. Use %EFFECT_OWNER if you want the owner's name to be inserted.
  * * self_message - optional, "self message" arg of visible message, shown on trigger
  * * examine_message - optional, what is shown on examine of the mob.
  * * max_seconds_of_stuns_blocked - optional, how many seconds of stuns can it block before deleting? the stun that breaks over this number is still blocked, even if it is much higher.
+ * * delete_after_passing_max - optional, if TRUE, after passing the max seconds of stuns blocked, we will delete ourself.
+ * If FALSE, we will instead recharge after some time.
+ * * recharge_time - optional, if [delete_after_passing_max] is FALSE, this is how long we will wait before recharging.
+ * does nothing if [delete_after_passing_max] is TRUE.
  *
  * Returns an instance of a stun absorption effect, or NULL if failure
  */
@@ -192,6 +223,9 @@
 	self_message,
 	examine_message,
 	max_seconds_of_stuns_blocked = INFINITY,
+	delete_after_passing_max = TRUE,
+	recharge_time,
+	recharge_alert,
 )
 
 	// Handle duplicate sources
@@ -216,6 +250,8 @@
 		self_message,
 		examine_message,
 		max_seconds_of_stuns_blocked,
+		delete_after_passing_max,
+		recharge_time,
 	)
 
 /**

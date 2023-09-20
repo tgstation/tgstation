@@ -44,7 +44,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
-	body_color = new_body_color
+	if(!isnull(new_body_color))
+		body_color = new_body_color
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 	held_state = "mouse_[body_color]" // not handled by variety element
@@ -56,6 +57,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
+	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
@@ -115,7 +117,8 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc, src)
+		var/obj/item/food/deadmouse/mouse = new(loc)
+		mouse.copy_corpse(src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -191,7 +194,7 @@
 
 /// Evolves this rat into a regal rat
 /mob/living/basic/mouse/proc/evolve_into_regal_rat()
-	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
+	var/mob/living/basic/regal_rat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
@@ -300,20 +303,22 @@
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload, mob/living/basic/mouse/dead_critter)
+/obj/item/food/deadmouse/Initialize(mapload)
 	. = ..()
-	if(dead_critter)
-		body_color = dead_critter.body_color
-		critter_type = dead_critter.type
-		name = dead_critter.name
-		icon_state = dead_critter.icon_dead
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/// Copy properties from an imminently dead mouse
+/obj/item/food/deadmouse/proc/copy_corpse(mob/living/basic/mouse/dead_critter)
+	body_color = dead_critter.body_color
+	critter_type = dead_critter.type
+	name = dead_critter.name
+	icon_state = dead_critter.icon_dead
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += span_warning("[p_theyre(TRUE)] dripping with fuel and smells terrible.")
+		. += span_warning("[p_Theyre()] dripping with fuel and smells terrible.")
 
 ///Spawn a new mouse from this dead mouse item when hit by a lazarus injector and conditions are met.
 /obj/item/food/deadmouse/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)

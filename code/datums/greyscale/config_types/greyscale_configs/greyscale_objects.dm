@@ -9,27 +9,27 @@
 
 /datum/greyscale_config/bench_solo
 	name = "Bench Solo"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_middle
 	name = "Bench Middle"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_middle.json'
 
 /datum/greyscale_config/bench_left
 	name = "Bench Left"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_left.json'
 
 /datum/greyscale_config/bench_right
 	name = "Bench Right"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
-	icon_file = 'icons/obj/sofa.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
 
 //
@@ -89,7 +89,7 @@
 // CANISTERS
 /datum/greyscale_config/canister
 	name = "Default Canister"
-	icon_file = 'icons/obj/atmospherics/canisters.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 
 /datum/greyscale_config/canister/base
@@ -114,21 +114,21 @@
 
 /datum/greyscale_config/prototype_canister
 	name = "Prototype Canister"
-	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/prototype_canister.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
 
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
-	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
 
 // MISC ATMOSPHERICS
 /datum/greyscale_config/meter
 	name = "Meter"
-	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/meter.dmi'
 	json_config = 'code/datums/greyscale/json_configs/meter.json'
 
 /datum/greyscale_config/thermomachine
 	name = "Thermomachine"
-	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	icon_file = 'icons/obj/machines/atmospherics/thermomachine.dmi'
 	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'

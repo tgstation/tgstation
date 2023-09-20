@@ -21,7 +21,6 @@
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
-
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
@@ -417,9 +416,8 @@
 	else
 		healium_euphoria = EUPHORIA_INACTIVE
 	// Stun/Sleep side-effects.
-	if(healium_pp > healium_para_min)
-		// Random chance to stun mob. Timing not in seconds to have a much higher variation
-		breather.Unconscious(rand(3 SECONDS, 5 SECONDS))
+	if(healium_pp > healium_para_min && !breather.IsSleeping() && prob(30))
+		breather.Sleeping(rand(3 SECONDS, 5 SECONDS))
 	// Metabolize to reagent when concentration is high enough.
 	if(healium_pp > healium_sleep_min)
 		breather.reagents.add_reagent(/datum/reagent/healium, max(0, 1 - breather.reagents.get_reagent_amount(/datum/reagent/healium)))
@@ -463,8 +461,9 @@
 		var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
 		// tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level)
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
-		miasma_disease.name = "Unknown"
-		miasma_disease.try_infect(breather)
+		if(breather.CanContractDisease(miasma_disease))
+			miasma_disease.name = "Unknown"
+			breather.AirborneContractDisease(miasma_disease, TRUE)
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
@@ -482,13 +481,13 @@
 			if(prob(5))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(30 to INFINITY)
 			//Higher chance to vomit. Let the horror start
 			if(prob(15))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		else
 			breather.clear_mood_event("smell")
 	// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
@@ -794,6 +793,9 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+#define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
+#define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
+
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -803,6 +805,14 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
+
+/obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+	name = "smoker plasma filter"
+	desc = "A plasma filter that look discolored, a result from smoking a lot."
+	icon_state = "lungs_plasma_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
@@ -816,14 +826,31 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/smoker_lungs
+	name = "smoker lungs"
+	desc = "A pair of lungs that look sickly, a result from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
-
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.losebreath += 20
+		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/internal/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -847,16 +874,18 @@
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
 
-/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.losebreath += 20
-		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
 
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 /obj/item/organ/internal/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
@@ -926,6 +955,14 @@
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
 
+/obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+	name = "smoker aeration reticulum"
+	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
+	icon_state = "lungs_ethereal_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/ethereal/Initialize(mapload)
 	. = ..()
 	add_gas_reaction(/datum/gas/water_vapor, while_present = PROC_REF(consume_water))
@@ -942,3 +979,5 @@
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER
+#undef SMOKER_ORGAN_HEALTH
+#undef SMOKER_LUNG_HEALING

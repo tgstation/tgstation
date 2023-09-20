@@ -175,6 +175,33 @@
 	desc = "Typically you'd want to mix this with something- but you do you."
 	icon_state = "bitters"
 
+/datum/glass_style/drinking_glass/coconut_rum
+	required_drink_type = /datum/reagent/consumable/ethanol/coconut_rum
+	name = "glass of coconut rum"
+	desc = "Breathe in and relax, you're on vacation until this glass is empty."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "ginvodkaglass"
+
+/datum/glass_style/drinking_glass/yuyake
+	required_drink_type = /datum/reagent/consumable/ethanol/yuyake
+	name = "glass of yūyake"
+	desc = "It's the saccharine essence of the 70s in a glass... the 1970s, that is!"
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "glass_red"
+
+/datum/glass_style/drinking_glass/shochu
+	required_drink_type = /datum/reagent/consumable/ethanol/shochu
+	name = "glass of shochu"
+	desc = "A glass of strong rice wine."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "ginvodkaglass"
+
+/datum/glass_style/drinking_glass/rice_beer
+	required_drink_type = /datum/reagent/consumable/ethanol/rice_beer
+	name = "glass of rice beer"
+	desc = "A glass of fine, light rice beer. Best enjoyed cold."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "rice_beer"
 
 // Shot glasses
 
