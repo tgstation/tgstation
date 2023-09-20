@@ -103,6 +103,8 @@
 		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_LYING)
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
+	if(check_flags & AB_CHECK_PHASED)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), PROC_REF(update_status_on_signal))
 
 	if(owner_has_control)
 		GiveAction(grant_to)
@@ -173,6 +175,10 @@
 	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
 		if (feedback)
 			owner.balloon_alert(owner, "unconscious!")
+		return FALSE
+	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
+		if (feedback)
+			owner.balloon_alert(owner, "incorporeal!")
 		return FALSE
 	return TRUE
 
