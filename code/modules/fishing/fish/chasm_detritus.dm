@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /// if none are sentient choose randomly.
 /datum/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
 	for(var/mob/fallen_mob as anything in chasm_stuff)
-		if(!isnull(fallen_mob.mind))
+		if(fallen_mob.mind)
 			return fallen_mob
 	return ..()
 
