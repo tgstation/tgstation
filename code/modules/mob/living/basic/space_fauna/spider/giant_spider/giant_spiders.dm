@@ -293,10 +293,10 @@
 	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	bare_wound_bonus = 100
 	sharpness = SHARP_EDGED
 	obj_damage = 50
-	limb_destroyer = 4
+	limb_destroyer = 10
 	var/tearing_wall = FALSE
 	speed = 5
 	player_speed_modifier = -4

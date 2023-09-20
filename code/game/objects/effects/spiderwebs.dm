@@ -212,13 +212,11 @@
 	icon = 'icons/effects/effects.dmi'
 	desc = "Made up of an extremly reflective silk material looking at it hurts."
 	icon_state = "reflector"
-	max_integrity = 10
+	max_integrity = 100
 	explosion_block = 5
-	flags_ricochet = RICOCHET_SHINY
-	flags_ricochet = RICOCHET_HARD
-	density = FALSE
+	density = TRUE
 	anchored = FALSE
+	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle, /obj/projectile/bullet)
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
