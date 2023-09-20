@@ -60,7 +60,7 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={766} height={327} theme="dark">
+    <Window title="Tram Controller" width={1060} height={327} theme="dark">
       <Window.Content>
         <Stack>
           <Stack.Item grow={4}>
@@ -137,26 +137,26 @@ export const TramController = (props, context) => {
                 caused by usage of the tram.
               </NoticeBox>
               <Button
+                icon="arrows-rotate"
+                color="yellow"
+                my={1}
+                lineHeight={2}
+                width="30%"
+                minHeight={2}
+                textAlign="center"
+                onClick={() => act('reset', {})}>
+                Reset/Enable Controller
+              </Button>
+              <Button
                 icon="square"
                 color="bad"
                 my={1}
                 lineHeight={2}
-                width="20%"
+                width="30%"
                 minHeight={2}
                 textAlign="center"
                 onClick={() => act('estop', {})}>
-                E-Stop
-              </Button>
-              <Button
-                icon="pause"
-                color="yellow"
-                my={1}
-                lineHeight={2}
-                width="20%"
-                minHeight={2}
-                textAlign="center"
-                onClick={() => act('reset', {})}>
-                Reset
+                E-Stop/Disable
               </Button>
               <Button
                 icon="play"
@@ -164,7 +164,7 @@ export const TramController = (props, context) => {
                 disabled={statusES || statusSF}
                 my={1}
                 lineHeight={2}
-                width="58%"
+                width="38%"
                 minHeight={2}
                 textAlign="center"
                 onClick={() =>

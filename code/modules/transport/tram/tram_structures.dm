@@ -20,7 +20,7 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/tram
-	name = "tram"
+	name = "tram wall"
 	desc = "A lightweight titanium composite structure with titanium silicate panels."
 	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "tram-part-0"
@@ -78,11 +78,11 @@
 	. = ..()
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("screwed.")] to the frame.")
+			. += span_notice("The panel is [EXAMINE_HINT("screwed")] to the frame. To dismantle use a [EXAMINE_HINT("screwdriver.")]")
 		if(TRAM_IN_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("unscrewed,")] but [EXAMINE_HINT("pried")] into the frame.")
+			. += span_notice("The panel is [EXAMINE_HINT("unscrewed,")] but [EXAMINE_HINT("pried")] into the frame. To dismantle use a [EXAMINE_HINT("crowbar.")]")
 		if(TRAM_OUT_OF_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("pried")] out of the frame, but still[EXAMINE_HINT("wired.")]")
+			. += span_notice("The panel is [EXAMINE_HINT("pried")] out of the frame, but still[EXAMINE_HINT("wired.")] To dismantle use [EXAMINE_HINT("wirecutters.")]")
 
 /obj/structure/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity < max_integrity)

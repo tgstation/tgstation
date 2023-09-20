@@ -409,6 +409,7 @@
 
 /obj/structure/girder/tram
 	name = "tram frame"
+	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
 	icon_state = "tram"
 	state = GIRDER_TRAM
 	density = FALSE

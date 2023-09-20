@@ -824,8 +824,8 @@
 	add_fingerprint(user)
 
 /obj/structure/transport/linear/tram
-	name = "tram"
-	desc = "A tram for tramversing the station."
+	name = "tram subfloor"
+	desc = "The subfloor lattice of the tram. You can build a tram wall frame by using <b>titanium sheets,</b> or place down <b>thermoplastic tram floor tiles.</b>"
 	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = null

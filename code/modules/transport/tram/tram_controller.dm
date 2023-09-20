@@ -672,7 +672,7 @@
  */
 /obj/machinery/transport/tram_controller
 	name = "tram controller"
-	desc = "Makes the tram go, or something."
+	desc = "Makes the tram go, or something. Holds the tram's electronics, controls, and maintenance panel. A sticker above the card reader says 'Engineering access only.'"
 	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "controller-panel"
 	anchored = TRUE
@@ -742,9 +742,18 @@
 
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()
-	. += span_notice("The door appears to be [cover_locked ? "locked" : "unlocked"].")
+	. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
 	if(panel_open)
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+	else
+		. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
+
+	if(cover_open)
+		. += span_notice("The [EXAMINE_HINT("yellow reset button")] resets the tram controller if a problem occurs or needs to be restarted.")
+		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
+		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
+	else
+		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Right-click.")]")
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
@@ -868,14 +877,14 @@
 /obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
 	. = ..()
 	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked!")
+		balloon_alert(user, "it's locked! swipe ID!")
 		return
 
 /obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
 	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked!")
+		balloon_alert(user, "it's locked! swipe ID!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_door()
@@ -1023,7 +1032,7 @@
 
 /obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"
-	desc = "A box that makes the tram go, or something. Just secure to the tram."
+	desc = "A box that contains the equipment to control a tram. Just secure to the tram wall."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "controller-panel"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)

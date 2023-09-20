@@ -37,7 +37,7 @@
 
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
-	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place.")
+	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place. Use a [EXAMINE_HINT("wrench")] to remove the plate.")
 
 /turf/open/floor/tram/attackby(obj/item/object, mob/living/user, params)
 	. = ..()
@@ -158,7 +158,7 @@
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
 
 /obj/structure/thermoplastic
-	name = "tram"
+	name = "tram floor"
 	desc = "A lightweight thermoplastic flooring."
 	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_dark"
@@ -193,7 +193,7 @@
 	. = ..()
 
 	if(secured)
-		. += span_notice("It is secured with a set of [EXAMINE_HINT("screws.")]")
+		. += span_notice("It is secured with a set of [EXAMINE_HINT("screws.")] To remove tile use a [EXAMINE_HINT("screwdriver.")]")
 	else
 		. += span_notice("You can [EXAMINE_HINT("crowbar")] to remove the tile.")
 		. += span_notice("It can be re-secured using a [EXAMINE_HINT("screwdriver.")]")

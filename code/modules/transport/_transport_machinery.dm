@@ -9,14 +9,14 @@
 	var/list/methods_to_fix = list()
 	var/list/repair_signals
 	var/static/list/how_do_we_fix_it = list(
-		"try turning it off and on again" = TOOL_MULTITOOL,
-		"try forcing an unexpected reboot" = TOOL_MULTITOOL,
-		"patch the system's call table" = TOOL_MULTITOOL,
-		"gently reset the invalid memory" = TOOL_CROWBAR,
-		"secure its ground connection" = TOOL_WRENCH,
-		"tighten some screws" = TOOL_SCREWDRIVER,
-		"check its wire voltages" = TOOL_MULTITOOL,
-		"cut some excess wires" = TOOL_WIRECUTTER,
+		"try turning it off and on again with a multitool" = TOOL_MULTITOOL,
+		"try forcing an unexpected reboot with a multitool" = TOOL_MULTITOOL,
+		"patch the system's call table with a multitool" = TOOL_MULTITOOL,
+		"gently reset the invalid memory with a crowbar" = TOOL_CROWBAR,
+		"secure its ground connection with a wrench" = TOOL_WRENCH,
+		"tighten some screws with a screwdriver" = TOOL_SCREWDRIVER,
+		"check its wire voltages with a multitool" = TOOL_MULTITOOL,
+		"cut some excess wires with wirecutters" = TOOL_WIRECUTTER,
 	)
 	var/malfunctioning = FALSE
 
@@ -97,7 +97,7 @@
 	. = ..()
 	if(methods_to_fix)
 		for(var/tool_method as anything in methods_to_fix)
-			. += span_info("It needs someone to [tool_method].")
+			. += span_warning("It needs someone to [EXAMINE_HINT(tool_method)].")
 	if(panel_open)
 		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")
 
