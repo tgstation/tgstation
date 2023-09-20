@@ -92,6 +92,9 @@
 	///the built string for use in icon updates
 	var/built_lining_string = "base2"
 
+/obj/machinery/light/neon_lining/Initialize(mapload)
+	. = ..()
+	rebuild_lining_string()
 
 /obj/machinery/light/neon_lining/update_appearance(updates)
 	. = ..()
