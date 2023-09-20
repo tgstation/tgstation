@@ -2508,8 +2508,8 @@
 /area/station/engineering/atmos)
 "bsn" = (
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 8
+	dir = 4;
+	id = "garbage"
 	},
 /obj/machinery/recycler,
 /turf/open/floor/plating,
@@ -7870,11 +7870,13 @@
 /turf/closed/wall,
 /area/station/security/detectives_office)
 "erb" = (
-/obj/machinery/conveyor{
-	id = "garbage"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -8895,11 +8897,13 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "eQa" = (
-/obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
-/obj/structure/disposalpipe/segment,
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "eQj" = (
@@ -12249,11 +12253,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"gPV" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "gPX" = (
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/mineral/titanium,
@@ -14487,6 +14486,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/main)
+"idm" = (
+/obj/structure/disposaloutlet{
+	dir = 2;
+	name = "Prisoner Delivery"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plating/ocean,
+/area/ocean)
 "idx" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 6
@@ -15545,9 +15554,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "iKK" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 10
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -18634,16 +18644,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
-"kuc" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/disposaloutlet{
-	dir = 2;
-	name = "Prisoner Delivery"
-	},
-/turf/open/floor/plating/ocean,
-/area/ocean)
 "kuO" = (
 /obj/structure/table/wood,
 /obj/structure/cassette_rack,
@@ -22756,13 +22756,12 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/sorting)
 "mMc" = (
-/obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -25047,6 +25046,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured/airless,
 /area/station/science/lab)
+"nZc" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "nZx" = (
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/iron/dark,
@@ -34857,6 +34861,14 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
+"tDi" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "tDH" = (
 /obj/machinery/duct/industrial/waste,
 /obj/machinery/camera/autoname/directional/north,
@@ -35251,15 +35263,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/library)
-"tMD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/machinery/conveyor{
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "tMJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -36326,13 +36329,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"uqd" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/conveyor{
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "uqw" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -37450,10 +37446,9 @@
 /area/station/service/library)
 "uWO" = (
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 9
+	dir = 4;
+	id = "garbage"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "uXl" = (
@@ -64199,12 +64194,12 @@ wvF
 hst
 hCB
 inf
-eQa
+tDi
 eQa
 mMc
 uWO
-gPV
-kuc
+foL
+meJ
 meJ
 aah
 aah
@@ -64457,7 +64452,7 @@ xHE
 hCB
 qWE
 yex
-yex
+nCQ
 nCQ
 bsn
 foL
@@ -64713,12 +64708,12 @@ ieu
 cOq
 hCB
 inf
-uqd
-tMD
+iKK
+erb
 erb
 iKK
-pqc
-meJ
+nZc
+idm
 meJ
 meJ
 aah
