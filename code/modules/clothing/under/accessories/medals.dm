@@ -181,7 +181,7 @@
 
 /obj/item/clothing/accessory/medal/silver/emergency_services
 	name = "emergency services award"
-	desc = "A silver medal awarded to the outstanding emergency responders of Nanotrasen, those who work tirelessly together in adversity to keep their crew safe and breathing in the harsh environments of outer space."
+	desc = "A silver medal awarded to the outstanding emergency responders of Nanotrasen, those who work tirelessly together through adversity to keep their crew safe and breathing in the harsh environments of outer space."
 	icon_state = "emergencyservices"
 
 /obj/item/clothing/accessory/medal/silver/elder_atmosian
