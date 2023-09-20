@@ -392,11 +392,9 @@
 	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
-/obj/item/modular_computer/update_overlays()
+/obj/item/modular_computer/update_overlays(var/ui_overlay)
 	. = ..()
-	var/ui_overlay = icon_overlays ? icon_overlays : initial(icon)
-	if(!ui_overlay)
-		return
+	ui_overlay = icon_overlays ? icon_overlays : initial(icon)
 
 	if(enabled)
 		. += active_program ? mutable_appearance(ui_overlay, active_program.program_icon_state) : mutable_appearance(ui_overlay, icon_state_menu)

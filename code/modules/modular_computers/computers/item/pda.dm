@@ -67,7 +67,7 @@
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
-/obj/item/modular_computer/pda/update_overlays()
+/obj/item/modular_computer/pda/update_overlays(ui_overlay)
 	. = ..()
 	if(computer_id_slot)
 		. += mutable_appearance(ui_overlay, "id_overlay")
