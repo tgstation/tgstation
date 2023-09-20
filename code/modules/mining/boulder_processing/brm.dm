@@ -74,9 +74,12 @@
 
 
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
+	if(!is_station_level(z) || !is_mining_level(z))
+		balloon_alert_to_viewers("no planetary lock!")
+		return FALSE
 	if(!SSore_generation.available_boulders.len)
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
-		balloon_alert_to_viewers("no boulders to collect")
+		balloon_alert_to_viewers("no boulders to collect!")
 		return FALSE //Nothing to collect
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	if(random_boulder.processed_by)

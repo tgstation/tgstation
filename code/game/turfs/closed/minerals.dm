@@ -108,15 +108,15 @@
 		return null
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return 100
+		return VENT_CHANCE_VERY_CLOSE
 	if(distance < VENT_PROX_HIGH)
-		return 25
+		return VENT_CHANCE_HIGH
 	if(distance < VENT_PROX_MEDIUM)
-		return 10
+		return VENT_CHANCE_MEDIUM
 	if(distance < VENT_PROX_LOW)
-		return 5
+		return VENT_CHANCE_LOW
 	if(distance < VENT_PROX_FAR)
-		return 1
+		return VENT_CHANCE_FAR
 	return 0
 
 /turf/closed/mineral/proc/scale_ore_to_vent()

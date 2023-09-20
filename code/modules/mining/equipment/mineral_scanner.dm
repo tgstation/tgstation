@@ -66,6 +66,7 @@
 	var/vents_nearby = FALSE
 	var/undiscovered = FALSE
 	var/radar_volume = 30
+	scanner.transform = matrix()
 	for(var/turf/closed/mineral/mineral in range(range, T))
 		if(mineral.scan_state)
 			minerals += mineral
@@ -93,8 +94,6 @@
 			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
 		scanner.balloon_alert_to_viewers("ore vent nearby!")
 		scanner.spasm_animation(1.5 SECONDS)
-	else
-		scanner.transform = matrix()
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE

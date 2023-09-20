@@ -101,7 +101,7 @@
 		to_chat(user, span_notice("You can't quite find the weakpoint of \the [src]... Perhaps it needs to be scanned first?"))
 		return
 	to_chat(user, span_notice("You start striking \the [src] with your golem's fist, attempting to dredge up a boulder..."))
-	for(var/completion to 3)
+	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size SECONDS))
 			user.apply_damage(20, STAMINA)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
@@ -210,7 +210,7 @@
 	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
-	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
+	if(node && !QDELING(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
@@ -270,7 +270,7 @@
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
-	RegisterSignal(node, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
+	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
 	particles = new /particles/smoke/ash()
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.

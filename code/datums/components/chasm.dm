@@ -29,6 +29,7 @@
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/structure/ore_vent,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
