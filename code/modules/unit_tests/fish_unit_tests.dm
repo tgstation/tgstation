@@ -134,7 +134,7 @@
 	var/list/mobs_spawned
 
 /datum/unit_test/fish_rescue_hook/Run()
- 	// create our human dummies to be dropped into the chasm
+	// create our human dummies to be dropped into the chasm
 	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity)
 	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
@@ -160,7 +160,7 @@
 	// into the hole they go
 	for(var/mob/mob_spawned in mobs_spawned)
 		the_hole.drop(mob_spawned)
-		sleep(0.2 SECONDS)
+		sleep(0.2 SECONDS) // we have to WAIT because the drop() proc sleeps.
 
 	// our 'fisherman' where we expect the item to be moved to after fishing it up
 	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
