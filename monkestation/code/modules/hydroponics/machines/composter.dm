@@ -34,11 +34,20 @@
 		return
 	new /obj/item/bio_cube(get_turf(src))
 	biomatter -= 40
+	update_desc()
+	update_appearance()
 
 /obj/machinery/composters/update_desc()
 	. = ..()
 	desc = "Just insert your bio degradable materials and it will produce compost."
 	desc += "\nBiomatter: [biomatter]"
+
+/obj/machinery/composters/update_overlays()
+	. = ..()
+	if(biomatter < 40)
+		. += mutable_appearance('monkestation/icons/obj/machines/composter.dmi', "light_off", layer = OBJ_LAYER + 0.01)
+	else
+		. += mutable_appearance('monkestation/icons/obj/machines/composter.dmi', "light_on", layer = OBJ_LAYER + 0.01)
 
 /obj/machinery/composters/proc/compost(atom/composter)
 	if(istype(composter, /obj/item/seeds))
@@ -48,6 +57,8 @@
 		biomatter += 4
 		qdel(composter)
 	update_desc()
+	update_appearance()
+	flick("composter_animate", src)
 
 /obj/item/seeds/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
