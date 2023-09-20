@@ -129,6 +129,7 @@
 
 /// Checks that we are able to fish people out of chasms with priority and that they end up in the right location
 /datum/unit_test/fish_rescue_hook
+	priority = TEST_LONGER
 	var/original_turf_type
 	var/original_turf_baseturfs
 	var/list/mobs_spawned
