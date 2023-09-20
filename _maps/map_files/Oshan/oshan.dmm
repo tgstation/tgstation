@@ -2229,6 +2229,10 @@
 /obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/aft)
+"blk" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "blt" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east{
@@ -10754,6 +10758,11 @@
 /area/station/command/heads_quarters/qm)
 "fUQ" = (
 /obj/machinery/airalarm/directional/north,
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fVi" = (
@@ -13991,17 +14000,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/courtroom)
-"hOr" = (
-/obj/effect/turf_decal/tile/yellow/opposingcorners{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo/sorting)
 "hOu" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -16246,7 +16244,7 @@
 	invisibility = 101
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/vending/mechcomp,
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/sorting)
 "jgI" = (
@@ -17292,6 +17290,7 @@
 	pixel_x = 9;
 	id = "ticket_machine_cargo"
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "jLk" = (
@@ -26916,7 +26915,7 @@
 	invisibility = 101
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch/directional/north,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "pfg" = (
@@ -29349,6 +29348,19 @@
 /area/station/hallway/primary/aft)
 "qsc" = (
 /obj/machinery/light_switch/directional/north,
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 3
+	},
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 3
+	},
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 3
+	},
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 3
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qsh" = (
@@ -29367,6 +29379,9 @@
 	pixel_y = 11
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/item/clothing/head/costume/mailman,
+/obj/item/clothing/under/misc/mailman,
+/obj/item/storage/bag/mail,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/sorting)
 "qsG" = (
@@ -31960,6 +31975,9 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -42254,6 +42272,14 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
+/obj/item/stamp{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/stamp/denied{
+	pixel_x = 4;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/sorting)
 "xMv" = (
@@ -43168,6 +43194,7 @@
 /area/station/security/courtroom)
 "ylU" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/banner/cargo/mundane,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 
@@ -59536,7 +59563,7 @@ vto
 aOq
 lOa
 mLC
-fKI
+blk
 fKI
 fKI
 fKI
@@ -59780,7 +59807,7 @@ kcP
 dPH
 oTE
 afI
-hOr
+pdU
 eTz
 qIz
 kyM
