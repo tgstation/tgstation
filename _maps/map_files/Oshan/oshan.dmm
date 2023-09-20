@@ -6370,6 +6370,14 @@
 /obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
+"dzW" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/iron,
+/area/station/service/library)
 "dAF" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light_switch/directional/north{
@@ -11363,6 +11371,14 @@
 "gsI" = (
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
+"gsK" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/iron,
+/area/station/service/library)
 "gtg" = (
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
@@ -14284,6 +14300,14 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
+"icW" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/iron,
+/area/station/service/library)
 "icX" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
@@ -82373,9 +82397,9 @@ kgV
 wur
 gXc
 les
-qfa
+icW
 bTl
-qfa
+gsK
 bTl
 uVL
 meJ
@@ -82630,7 +82654,7 @@ oBr
 oBr
 tOO
 les
-qfa
+dzW
 bTl
 qfa
 hby
