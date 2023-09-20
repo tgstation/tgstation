@@ -458,9 +458,8 @@
 		Knockdown(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
-	var/need_mob_update
-	var/turf/T = get_turf(src)
 
+	var/need_mob_update
 	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
