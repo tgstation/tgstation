@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(transport)
 	name = "Transport"
-	wait = 0.5
+	wait = 0.05 SECONDS
 	/// only used on maps with trams, so only enabled by such.
 	can_fire = FALSE
 
