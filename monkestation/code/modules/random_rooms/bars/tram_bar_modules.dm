@@ -36,6 +36,16 @@
 	icon_state = "ironsand1"
 	base_icon_state = "ironsand"
 
+/turf/open/floor/fake_seafloor/spawning/Initialize(mapload)
+	. = ..()
+	if(prob(10))
+		var/to_spawn = pick(list(/obj/structure/flora/ocean/glowweed,
+					/obj/structure/flora/ocean/longseaweed,
+					/obj/structure/flora/ocean/seaweed,
+					/obj/structure/flora/ocean/coral,
+					/obj/structure/flora/rock/style_random))
+		new to_spawn(src)
+
 /turf/closed/mineral/random/fake_ocean
 	baseturfs = /turf/open/floor/fake_seafloor
 	turf_type = /turf/open/floor/fake_seafloor
