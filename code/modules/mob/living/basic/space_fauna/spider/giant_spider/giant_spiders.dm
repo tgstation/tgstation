@@ -273,9 +273,6 @@
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
 
-	var/datum/action/cooldown/mob_cooldown/reflection/spider/spider_reflection = new(src)
-	spider_reflection.Grant(src)
-
 /**
  * ### Spider Breacher
  * A subtype of the giant spider which is similar on every single way,
@@ -291,18 +288,24 @@
 	health = 120
 	melee_damage_lower = 15
 	melee_damage_upper = 25
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 700
+	unsuitable_cold_damage = 0
+	wound_bonus = -10
+	bare_wound_bonus = 20
 	sharpness = SHARP_EDGED
-	bare_wound_bonus = 1000
 	obj_damage = 50
+	limb_destroyer = 4
+	var/tearing_wall = FALSE
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
 
-	var/tearing_wall = FALSE
-
 /mob/living/basic/giant_spider/breacher/Initialize(mapload)
 	. = ..()
 
+	ADD_TRAIT(src, TRAIT_MESON_VISION, INNATE_TRAIT)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
@@ -327,6 +330,19 @@
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		tearing_wall = FALSE
+		return
+	if(isliving(target)) //Swallows corpses like a snake to regain health.
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			to_chat(src, span_warning("You begin to swallow [L] whole..."))
+			if(do_after(src, 30, target = L))
+				if(eat(L))
+					adjustHealth(-L.maxHealth * 0.25)
+			return
+	. = ..()
+	if(ismecha(target))
+		var/obj/vehicle/sealed/mecha/M = target
+		M.take_damage(50, BRUTE, MELEE, 1)
 
 /**
  * ### Tarantula
