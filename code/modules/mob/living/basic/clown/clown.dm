@@ -30,8 +30,6 @@
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	speed = 1.4 //roughly close to simpleanimal clowns
-	///what reagent do we inject on attack
-	var/attack_reagent
 	///list of stuff we drop on death
 	var/list/loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 	///blackboard emote list
@@ -50,11 +48,6 @@
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(retaliate_callback)))
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
 	//im not putting dynamic humans or whatever its called here because this is the base path of nonhuman clownstrosities
-	if(attack_reagent)
-		var/static/list/injection_range
-		if(!injection_range)
-			injection_range = string_numbers_list(list(1, 5))
-		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 	if(waddles)
 		AddElement(/datum/element/waddling)
 	if(LAZYLEN(loot))
@@ -113,7 +106,13 @@
 		/obj/item/soap,
 		/obj/item/seeds/banana/bluespace,
 	)
-	attack_reagent = /datum/reagent/consumable/laughter
+
+/mob/living/basic/clown/honkling/Initialize(mapload)
+	. = ..()
+	var/static/list/injection_range
+	if(!injection_range)
+		injection_range = string_numbers_list(list(1, 5))
+	AddElement(/datum/element/venomous, /datum/reagent/consumable/laughter, injection_range)
 
 /mob/living/basic/clown/fleshclown
 	name = "Fleshclown"
@@ -265,7 +264,6 @@
 	attack_verb_continuous = "ferociously mauls"
 	attack_verb_simple = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	attack_reagent = /datum/reagent/peaceborg/confuse
 	loot = list(
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/effect/gibspawner/xeno/bodypartless,
@@ -276,6 +274,13 @@
 		BB_EMOTE_SAY = list("honk"),
 		BB_EMOTE_SEE = list("squirms", "writhes"),
 	)
+
+/mob/living/basic/clown/clownhulk/honkmunculus/Initialize(mapload)
+	. = ..()
+	var/static/list/injection_range
+	if(!injection_range)
+		injection_range = string_numbers_list(list(1, 5))
+	AddElement(/datum/element/venomous, /datum/reagent/peaceborg/confuse, injection_range)
 
 /mob/living/basic/clown/clownhulk/destroyer
 	name = "The Destroyer"
