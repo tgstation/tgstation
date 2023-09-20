@@ -38860,11 +38860,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/command/bridge)
-"vCh" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/science/ordnance/storage)
 "vCn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -83017,7 +83012,7 @@ gzZ
 qoV
 uYE
 unl
-vCh
+vKu
 vKu
 pXk
 hcz
@@ -83531,7 +83526,7 @@ gsm
 qoV
 qfI
 fyB
-vCh
+vKu
 wiK
 qoV
 plm
