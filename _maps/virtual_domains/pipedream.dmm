@@ -855,7 +855,8 @@
 /turf/template_noop,
 /area/template_noop)
 "yX" = (
-/turf/open/space/basic,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "zp" = (
 /obj/structure/chair/sofa/corp/right{
@@ -1052,7 +1053,9 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "EJ" = (
-/obj/machinery/recycler/deathtrap,
+/obj/machinery/recycler/deathtrap{
+	dir = 8
+	},
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
@@ -2758,7 +2761,7 @@ AU
 AU
 AU
 aK
-yX
+aK
 eg
 Ct
 oN
@@ -2808,7 +2811,7 @@ aK
 aK
 aK
 wl
-yX
+aK
 yX
 ve
 Tt
@@ -2858,7 +2861,7 @@ aK
 aK
 aK
 aK
-yX
+aK
 tr
 uz
 Mh

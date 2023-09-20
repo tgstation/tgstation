@@ -60,8 +60,9 @@
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo)
-	for(var/obj/item/bitrunning_disk/disk in neo)
+	for(var/obj/item/bitrunning_disk/disk in neo.get_contents())
 		if(disk.granted_action)
-			disk.granted_action.Grant(avatar)
+			var/datum/action/our_action = new disk.granted_action()
+			our_action.Grant(avatar)
 		if(disk.granted_item)
-			avatar.put_in_hands(disk.granted_item)
+			avatar.put_in_hands(new disk.granted_item())
