@@ -304,8 +304,8 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
-			else if (!isnull(hit_bodypart) && ((hit_bodypart.biological_state & BIO_METAL) || (hit_bodypart.biological_state & BIO_WIRED)))
-				var/random_damage_mult = LERP(0.85, 1.15, rand()) // SOMETIMES you can get more or less sparks
+			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
+				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 
 				var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
