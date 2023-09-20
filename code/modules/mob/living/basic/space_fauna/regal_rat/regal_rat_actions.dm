@@ -161,6 +161,7 @@
 		nearby_roach.melee_damage_upper += 4
 		nearby_roach.obj_damage += 5
 		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+		nearby_roach.melee_attack_cooldown = 0.8 SECONDS
 
 	nearby_roach.icon_state += "_sewer"
 	nearby_roach.maxHealth += 1

@@ -46,12 +46,11 @@
 	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
 		notify_ghosts("[affected_mob] has entered a game of rock-paper-scissors with death!", source = affected_mob, action = NOTIFY_ORBIT, header = "Who Will Win?")
 		reaping = TRUE
-		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
 			helbent = TRUE
 		to_chat(affected_mob, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
 		var/timeisticking = world.time
-		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", RockPaperScissors, 60)
+		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", list("rock" , "paper" , "scissors"), 60)
 		if(QDELETED(affected_mob) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
@@ -59,21 +58,21 @@
 			to_chat(affected_mob, span_hierophant("You decide to not press your luck, but the spirits remain... hopefully they'll go away soon."))
 			reaping = FALSE
 			return
-		var/grim = pick(RockPaperScissors)
-		if(grim == RPSchoice) //You Tied!
-			to_chat(affected_mob, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
-			reaping = FALSE
-		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
-			to_chat(affected_mob, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
-			affected_mob.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
-			affected_mob.dust()
-			return
-		else //VICTORY ROYALE
-			to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
-			affected_mob.client.give_award(/datum/award/achievement/jobs/helbitaljanken, affected_mob)
-			affected_mob.revive(HEAL_ALL)
-			holder.del_reagent(type)
-			return
+		switch(rand(1,3))
+			if(1) //You Tied!
+				to_chat(affected_mob, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
+				reaping = FALSE
+			if(2) //You lost!
+				to_chat(affected_mob, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
+				affected_mob.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
+				affected_mob.dust()
+				return
+			if(3) //VICTORY ROYALE
+				to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
+				affected_mob.client.give_award(/datum/award/achievement/jobs/helbitaljanken, affected_mob)
+				affected_mob.revive(HEAL_ALL)
+				holder.del_reagent(type)
+				return
 
 	..()
 	return
