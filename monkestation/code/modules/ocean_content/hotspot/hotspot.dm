@@ -177,7 +177,7 @@
 	if(event_flags & WEAK_EXPLOSION)
 		explosion(calculation_point, 0,  0, 4, 0, 0, adminlog = FALSE)
 	if(event_flags & EXPLOSION)
-		explosion(calculation_point, 0, 2, 2, 0, 0, adminlog = FALSE)
+		explosion(calculation_point, 0, 0, 6, 6, 3, adminlog = FALSE)
 
 	var/area_name_string = get_area_name(calculation_point)
 	var/message
