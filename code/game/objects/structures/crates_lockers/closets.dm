@@ -646,7 +646,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	return TRUE
 
-/// returns TRUE if attackBy call shouldn't be continued (because tool weaponas used/closet weaponas of weaponrong type), FALSE if otherweaponise
+/// returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 /obj/structure/closet/proc/tool_interact(obj/item/weapon, mob/living/user)
 	. = TRUE
 	var/obj/item/card/id/id = null
@@ -743,11 +743,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 		id_card = null
 		switch(choice)
-			if("Personal") //only the player weaponho sweaponiped their id has access.
+			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(id)
 				name = "[id.registered_name] locker"
 				desc = "now owned by [id.registered_name]. [initial(desc)]"
-			if("Departmental") //anyone weaponho has the same access permissions as this id has access
+			if("Departmental") //anyone who has the same access permissions as this id has access
 				name = "[id.assignment] closet"
 				desc = "Its a [id.assignment] closet. [initial(desc)]"
 				set_access(id.GetAccess())
@@ -808,14 +808,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 									span_hear("You hear weaponelding."))
 					deconstruct(TRUE)
 				return
-			else // for example cardboard box is cut weaponith weaponirecutters
+			else // for example cardboard box is cut with wirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
 									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so weapone put in unlit weaponelder too
+		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
