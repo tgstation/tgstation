@@ -41,11 +41,13 @@
 	var/open = FALSE
 	var/max_n_of_items = 10
 	var/efficiency = 0
-	/// The cell we spawn with
+	/// If we use a cell instead of powernet
+	var/cell_powered = FALSE
+	/// The cell we charge with
 	var/obj/item/stock_parts/cell/cell
 	/// The cell we're charging
 	var/obj/item/stock_parts/cell/vampire_cell
-	/// Capable of vampire charging
+	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
 	var/vampire_charging_enabled = FALSE
 	var/datum/looping_sound/microwave/soundloop
@@ -113,25 +115,31 @@
 	context[SCREENTIP_CONTEXT_LMB] = "Show menu"
 
 	if(length(ingredients) != 0)
-		context[SCREENTIP_CONTEXT_RMB] = "Cook"
+		context[SCREENTIP_CONTEXT_RMB] = "Start [vampire_charging_enabled ? "charging" : "cooking"]"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
 	efficiency = 0
+	vampire_charging_capable = FALSE
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		efficiency += micro_laser.tier
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		max_n_of_items = 10 * matter_bin.tier
 		break
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		if(capacitor.tier >= 3)
+			vampire_charging_capable = TRUE
+			desc = "Cooks and boils stuff. This upgraded version features wireless PDA charging!"
+			break
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(!operating)
-		if(!operating && !vampire_charging_enabled)
+		if(!operating && vampire_charging_capable)
 			. += span_notice("Alt-click [src] to change default mode.")
 
-		. += span_notice("Right-click [src] to start cooking cycle.")
+		. += span_notice("Right-click [src] to start [vampire_charging_enabled ? "charging" : "cooking"] cycle.")
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src]'s contents and display!")
@@ -164,8 +172,11 @@
 		"[span_notice("- Capacity: <b>[max_n_of_items]</b> items.")]\n"+\
 		span_notice("- Power: <b>[efficiency * TIER_1_CELL_CHARGE_RATE]W</b>.")
 
-		if(!isnull(cell))
-			. += span_notice("- Charge: <b>[round(cell.percent())]%</b>.")
+		if(cell_powered)
+			if(!isnull(cell))
+				. += span_notice("- Charge: <b>[round(cell.percent())]%</b>.")
+			else
+				. += span_notice("- Charge: <b>INSERT CELL</b>.")
 
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 
@@ -377,11 +388,7 @@
 			return
 
 		vampire_charging_enabled = !vampire_charging_enabled
-
-		if(vampire_charging_enabled)
-			balloon_alert(user, "set to charge")
-		else
-			balloon_alert(user, "set to cook")
+		balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
@@ -442,7 +449,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	if(!isnull(cell) && cell.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
+	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		balloon_alert(cooker, "replace cell!")
 		return
@@ -471,7 +478,7 @@
 /obj/machinery/microwave/proc/wzhzhzh()
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
-	if(!isnull(cell))
+	if(cell_powered && !isnull(cell))
 		cell.use(TIER_1_CELL_CHARGE_RATE * efficiency)
 
 	set_light(1.5)
@@ -556,7 +563,7 @@
 		if(istype(cooked_item, /obj/item/modular_computer/pda))
 			spark()
 			broken = REALLY_BROKEN
-			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 2, flame_range = 1)
 
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)
@@ -568,7 +575,7 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(cursed_chef && prob(5))
+	if(cursed_chef && (metal_amount || prob(5)))
 		spark()
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
@@ -576,7 +583,7 @@
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(cursed_chef || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
+		if(prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()
@@ -623,12 +630,24 @@
 /obj/machinery/microwave/proc/vampire(mob/cooker)
 	wzhzhzh()
 	var/obj/item/modular_computer/pda/vampire_pda = LAZYACCESS(ingredients, 1)
+	if(isnull(vampire_pda))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		eject()
+		return
+
 	vampire_cell = vampire_pda.internal_cell
+	if(isnull(vampire_pda))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		eject()
+		return
+
 	var/vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 	charge_loop(vampire_charge_amount, cooker = cooker)
 
 /obj/machinery/microwave/proc/charge(mob/cooker)
 	if(!vampire_charging_capable)
+		balloon_alert(cooker, "needs upgrade!")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(operating || broken > 0 || panel_open || dirty >= MAX_MICROWAVE_DIRTINESS)
@@ -644,6 +663,7 @@
 		if(!istype(potential_item, /obj/item/modular_computer/pda))
 			balloon_alert(cooker, "PDA only!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			eject()
 			return
 
 	vampire(cooker)
@@ -661,7 +681,7 @@
 		pre_fail()
 		return
 
-	if(!vampire_charge_amount || !length(ingredients) || !cell.charge || vampire_charge_amount < 25)
+	if(!vampire_charge_amount || !length(ingredients) || (!isnull(cell) && !cell.charge) || vampire_charge_amount < 25)
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return
@@ -670,9 +690,10 @@
 	if(charge_rate > vampire_charge_amount)
 		charge_rate = vampire_charge_amount
 
-	if(!cell.use(charge_rate))
+	if(cell_powered && !cell.use(charge_rate))
 		charge_loop_finish(cooker)
 	vampire_cell.give(charge_rate * (0.7 + efficiency * 0.05)) // we lose a tiny bit of power in the transfer as heat
+	use_power(charge_rate)
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 
@@ -705,6 +726,7 @@
 /obj/machinery/microwave/hell
 	desc = "Cooks and boils stuff. This one appears to be a bit... off."
 	use_power = NO_POWER_USE
+	cell_powered = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 
@@ -729,6 +751,10 @@
 		3,
 	)
 	ingredient_shifts_y = 0
+
+/obj/machinery/microwave/engineering/Destroy()
+	QDEL_NULL(cell)
+	return ..()
 
 /obj/machinery/microwave/engineering/power_change()
 	. = ..()
