@@ -4890,14 +4890,14 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Medbay Lobby"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/effect/mapping_helpers/airlock/access/any/medical,
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "cMp" = (
@@ -31795,7 +31795,6 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay Clinic"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
@@ -31811,7 +31810,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/effect/mapping_helpers/airlock/access/any/medical,
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "rJn" = (
@@ -34592,12 +34592,13 @@
 /obj/machinery/door/airlock/research{
 	name = "Genetics Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/mapping_helpers/airlock/access/any/medical,
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "tuT" = (
@@ -36823,10 +36824,10 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Medbay Lobby"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical,
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "uGB" = (
