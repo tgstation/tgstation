@@ -33906,10 +33906,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
-"sOa" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/mine/storage/public)
 "sOr" = (
 /obj/machinery/light/directional/west,
 /obj/structure/tank_dispenser,
@@ -38093,8 +38089,6 @@
 /area/station/command/bridge)
 "vhM" = (
 /obj/structure/closet/firecloset,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/mine/storage/public)
 "vhO" = (
@@ -41257,7 +41251,6 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Auxiliary Tool Storage"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/storage/public)
 "wZI" = (
@@ -64447,7 +64440,7 @@ kwp
 wki
 ahh
 adv
-sOa
+adv
 adv
 adv
 wCE
@@ -64701,10 +64694,10 @@ eBe
 nLV
 fZv
 rfc
-mWr
+dPe
 wZC
-sOa
-sOa
+adv
+adv
 adv
 adv
 tRB
