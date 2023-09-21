@@ -14312,6 +14312,10 @@
 	pixel_x = 13;
 	pixel_y = 1
 	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 15;
+	pixel_y = 10
+	},
 /turf/open/floor/wood/large,
 /area/station/security/warden)
 "hLn" = (
@@ -29626,6 +29630,7 @@
 	},
 /obj/machinery/light_switch/directional/north,
 /obj/item/storage/box/zipties,
+/obj/item/storage/box/coffeepack/robusta,
 /turf/open/floor/wood/large,
 /area/station/security/warden)
 "pZg" = (
@@ -40458,6 +40463,7 @@
 	req_access = list("armory")
 	},
 /obj/effect/spawner/random/maintenance/three,
+/obj/item/grenade/clusterbuster/random,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/security/armory)
 "vWn" = (
