@@ -12,8 +12,8 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 
 ///Options for the prothetic limb quirk to choose from
 GLOBAL_LIST_INIT(limb_choice, list(
-	"Left Arm" = BODY_ZONE_L_ARM,
-	"Right Arm" = BODY_ZONE_R_ARM,
-	"Left Leg" = BODY_ZONE_L_LEG,
-	"Right Leg" = BODY_ZONE_R_LEG
+	"Left Arm" = /obj/item/bodypart/arm/left/robot/surplus,
+	"Right Arm" = /obj/item/bodypart/arm/right/robot/surplus,
+	"Left Leg" = /obj/item/bodypart/leg/left/robot/surplus,
+	"Right Leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))

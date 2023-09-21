@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/prosthetic/init_possible_values()
-	return assoc_to_keys(GLOB.limb_choice) + "Random"
+	return "Random" + GLOB.limb_choice
 
 /datum/preference/choiced/prosthetic/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
