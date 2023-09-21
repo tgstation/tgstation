@@ -27,6 +27,10 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
+/obj/structure/mirror/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
 

@@ -6773,7 +6773,9 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "PL" = (
-/obj/machinery/recycler,
+/obj/machinery/recycler{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "mining_disposals"

@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed moonicorns making space/chasm/lava/water bridges with their fairy grass"

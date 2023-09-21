@@ -534,3 +534,284 @@
   - bugfix: Baits are now properly consumed by caught fish and (alive) mobs.
   ZephyrTFA:
   - bugfix: you can no longer bypass html sanitization using the table element. >:(
+2023-09-16:
+  AtomTheProphet:
+  - balance: The spontaneous brain trauma event will no longer occur if there are
+      fewer than 13 players.
+  Donglesplonge:
+  - bugfix: adds the bolted and welded helper to the bar backroom/kitchen coldroom
+      airlock on birdshot, as to prevent chefs from being able to access armor and
+      sunglasses roundstart with barely any work involved
+  Hatterhat:
+  - bugfix: Flares and candles no longer sound like flashlights when being turned
+      on.
+  - bugfix: Getting shot by an SC/FISHER now disables PDA lights for consistency's
+      sake.
+  - balance: Pulling embedded items e.g. shrapnel with hemostats is now a lot faster,
+      and scales appropriately with toolspeed.
+  - balance: You can now pull embedded items with wirecutters, at a speed penalty.
+  Jacquerel:
+  - balance: Watchers will no longer put you at gunpoint.
+  - bugfix: The nuclear operative MODsuit intellicard now actually downloads an AI
+      rather than simply kicking candidates from the game.
+  LovliestPlant:
+  - qol: '[Deltastation, Icebox, Metastation, Tramstation] Adds cell timers to isolation
+      cells. (they do not auto-open the doors)'
+  - qol: '[Birdshot, Deltastation, Icebox, Metastation, Northstar, Tramstation] Adds
+      translator glove modules to the stacks of "accessibility" (e.g. plasma fixation
+      / thermal regulator) modules found in security, medical, and engineering storage
+      rooms.'
+  - qol: '[Birdshot] Adds a roll of packaging paper to the cargo office.'
+  - qol: '[Icebox] Adds a hand labeler to security''s gear room.'
+  - qol: '[Northstar] Nudges the set of binoculars covering the mass driver controls
+      in ordnance over a few inches.'
+  - bugfix: '[Birdshot] Remaps the janitor''s closet such that the recycling machine
+      will now work.'
+  - bugfix: '[Icebox] Removes a duplicated hand labeler from the rack near security''s
+      brig cells.'
+  - bugfix: '[Metastation] Patches a broken corpse disposal pipe running from aux
+      surgery to the morgue.'
+  - bugfix: '[Northstar] Fixes the SM being hotwired at round-start (partially rewires
+      the SM room, moves the APC to the North wall).'
+  Pickle-Coding:
+  - bugfix: Fixes tesla coils duplicating the power of >7GeV supermatter zaps.
+  SyncIt21:
+  - bugfix: returning items to vendors works correctly
+  - bugfix: you can't return items that has stuff in it for e.g. a serving tray with
+      food in it
+  - bugfix: Unary vents & Injectors now link properly with air sensors via multitool
+      both ways
+  Thunder12345:
+  - rscadd: There's a new space ruin in town, be on the lookout for a hidden supply
+      cache.
+  - rscadd: Added a new type of wall which can only be destroyed by blowing it up.
+  Vincent983:
+  - qol: The supply beacon will no longer delete itself due to explosions, and you
+      can now anchor it with a wrench.
+  - spellcheck: Express console now correctly states that it needs cargo access instead
+      of QM access.
+  Zergspower:
+  - bugfix: Space ruin Anomaly Research - Fixes stacked windows and underplating
+  cnleth:
+  - spellcheck: Replaced an irrelevant tip of the round about scars with a better
+      one
+  mc-oofert:
+  - bugfix: the bank machine cannot print holochips worth 0 credits now
+  - rscadd: climbing hooks that allow you to go up holes for multiz, found in internals
+      boxes (on planetary maps), the uplink, cargo and nukie personal lockers
+  san7890:
+  - balance: You will be knocked down again on certain vomits. Don't worry, you'll
+      deserve it when it happens.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause grown inedible plant seeds (like tower cap)
+      to vanish from existence upon being added to the seed extractor
+  - bugfix: fixes a issue that would cause fruit wine to bug out when trying to blend
+      its reagent color
+2023-09-17:
+  ArcaneMusic:
+  - rscadd: Wall mounted objects (Things like APCs, Air Alarms, Light switches, Signs,
+      Posters, Newscasters, you name it) will now fall to the ground and break or
+      deconstruct when their attaching wall is changed or broken.
+  Ical92:
+  - bugfix: adds a few firelocks and alarms around IceBox
+  Timberpoes:
+  - bugfix: Forgetting to take dough out of the oven no longer progresses the server
+      to a crash-worthy state with infinite bread and ash and burned food products
+      for all.
+  Vincent983:
+  - qol: the recycler can now be rotated
+  blueDev2:
+  - bugfix: Lipolicide and other chems now puts you in crit, even if it is the only
+      source of damage
+  cnleth:
+  - image: Hercuri spray now uses the same sprite as the yellow medical spray
+  - spellcheck: Added a missing space to hercuri spray's description
+  mc-oofert:
+  - bugfix: the nukie medibot (oppenheimer) has access to the doors of the infiltrator
+      and is not shot at by the turrets
+  notlulz:
+  - bugfix: Monkeys have their tails back.
+  - bugfix: Recipe paper in the ruins now shows a normal recipe for Metalgen and Secret
+      sauce.
+  starrm4nn:
+  - spellcheck: Fixed some typos on QM's Overcoat
+2023-09-18:
+  ArcaneMusic:
+  - rscadd: A new ruin has appeared on lavaland, featuring the site of an ancient
+      battle.
+  Jacquerel:
+  - rscadd: Ghosts (observers) can eat ghost burgers and booberry muffins.
+  - balance: Ghost burgers will not decay or pick up germs due to the fact that they
+      moved themselves off a table.
+  Melbert:
+  - balance: Humanoids without tongues cannot cast spells with vocal components
+  - balance: Humanoids without arms cannot cast spells with emotive components
+  SyncIt21:
+  - qol: Machines now transfer their local materials to silo during linking with multitool
+  - code_imp: added some null checks for general juicing & grinding items
+  - bugfix: grinding stacks now grinds as many pieces/sheets from the stack as possible
+      that can fit in a beaker/container without wasting the whole stack
+  - bugfix: plumbing chemical grinder now actually works again
+  - bugfix: the plumbing chemical grinder allows stuff to enter from any direction
+      but not mobs and also accepts items put inside it via hand including bags
+  - bugfix: You can remove the beaker from the all in 1 grinder when power is off
+      via right click
+  - bugfix: All in 1 grinder now mixes faster with upgraded parts
+  - refactor: you can no longer walk into a plumbing chemical grinder
+  - bugfix: Manually constructed windoors have correct unrestricted accesses applied
+      to them
+  - bugfix: Windoors created via RCD now actually have electronics inside them
+  - bugfix: Airlocks constructed via RCD have the shell component correctly installed
+      inside them and have no other missing variables
+  Thebleh:
+  - bugfix: Bluespace RPEDs can now be rigged again
+  Vincent983:
+  - bugfix: made the radiation protection crate's contents match it's description
+  ZephyrTFA:
+  - rscadd: NanoTrasen improved the quality of the local durathread strain; resulting
+      in it now being twice as filling!
+  jlsnow301:
+  - bugfix: Fixed a resource dupe in the ORM.
+  mc-oofert:
+  - refactor: heretic sacrifice room is now lazyloaded
+  - rscadd: added the inspectors hat to the detectives cabinet, a special hat that
+      allows the wearer to say a phrase to dispense a stored item
+  necromanceranne:
+  - code_imp: Cleans up some unnecessary code left over from caseless ammo.
+2023-09-19:
+  Ben10Omintrix:
+  - bugfix: basic mobs retaliate targetting now selects targets they can attack
+  Ghommie (Thanks Sealed101):
+  - refactor: Reworked the fishing minigame into a game screen object from a TGUI
+      interface
+  Hypernoblium:
+  - bugfix: Fixes a selection window in the game rock-paper-scissors with death.
+  Jacquerel:
+  - rscadd: Many kinds of mobs can now be brought back to life through revival surgery.
+  - rscadd: Dogs can wear eyepatches.
+  - balance: Player-controlled basic mobs attack as fast as those mobs can when controlled
+      by the AI
+  - balance: Player-controlled Faithless can paralyse people they attack, like the
+      AI does
+  - balance: Player-controlled Star Gazers (if an admin felt like making one) apply
+      the star mark on attack and deal damage to everything around them, like the
+      AI does
+  Momo8289:
+  - bugfix: The Nightmare's Light Eater can no longer suck the light out of space
+      tiles.
+  Moose1002:
+  - bugfix: Nanotrasen has finally recalled their faulty multitools and replaced them
+      with working ones! The multitool's buffer now properly clears itself.
+  - qol: Moved multitool link messages to balloon alerts
+  RikuTheKiller:
+  - bugfix: Makes ethanol and sugar pure by default.
+  Shadow-Quill:
+  - qol: Surgery trays can now be crafted via the crafting menu (two rods, one silver),
+      and deconstructed via secondary click with a screwdriver!
+  Time-Green:
+  - balance: Only traitor, changeling, heretic, blood brother, headrev, wizard, obsessed,
+      magic/gun survivalists and greentext book holders can now double their hardcore
+      random score
+  - qol: Redtexting as antag with hardcore random score will pay you default points,
+      instead of none (normal survival rules)
+  - bugfix: End report screen will properly report hardcore random survival in case
+      of station destruction
+  Vincent983:
+  - rscadd: mass drivers are now buildable, you activate them by attaching a signaler
+      to their launch wire, and can increase their power by pulsing the safeties wire,
+      and reset it back to normal by cutting the safeties wire.
+  - bugfix: normal ethereal blood now works for electrolysis, the hydrogen and oxygen
+      output of the electrolysis recipe has been increased.
+  YehnBeep:
+  - server: Default-configuration MINUTE_TOPIC_LIMIT has been increased
+  carlarctg:
+  - balance: Unholy and Eldritch water are self-consuming like holy water! They don't
+      need a liver to be processed.
+  distributivgesetz:
+  - bugfix: Fix a runtime when trying to cycle move intents with a hotkey as a dead
+      mob.
+  - rscdel: Removes the computer vendor.
+  - bugfix: Fixes a misplaced status display in Meta's medical storage.
+  mc-oofert:
+  - bugfix: pancake stack layering
+  - bugfix: pizzabox stack layering
+  - bugfix: pizzabox bombs that spawn unarmed now label their pizza correctly and
+      cannot spawn a spriteless pizza
+  - bugfix: added some missing firealarms on icebox in the hall towards departures
+      and the upper section of chapel
+  necromanceranne:
+  - bugfix: Makes sure pump-up properly grants the baton resistance trait.
+  nikothedude:
+  - code_imp: Scars now stack trace if they fail to get a valid description
+  timothymtorres:
+  - bugfix: Fix wooden barricade description "This looks like it can be barricaded
+      with planks of wood" being spammed on objects.
+2023-09-20:
+  LT3:
+  - rscadd: 'New random event: Supermatter Surge'
+  - code_imp: Individual supermatter crystals can have custom gas properties
+  RikuTheKiller:
+  - spellcheck: Unreverted and improved resonance cascade message.
+  - balance: Supermatter now takes 15 seconds to delaminate normally and 5 if a sliver
+      has been taken from it. Gives a little more time to escape in the case of the
+      sliver and also evens out the times to please perfectionists.
+  - bugfix: Supermatter now accurately reports it's detonation time.
+  - spellcheck: Supermatter mood descriptions have been reverted back to their old,
+      more flavorful selves.
+  Thunder12345:
+  - balance: Improvised shotgun shells now deal half as much damage to humans and
+      cause less wounds, but do 50% more damage to structures and machines. They also
+      require a glass shard for crafting.
+  ZephyrTFA:
+  - bugfix: Lava can no longer occasionally generate inside of previously loaded templates
+      and breach and/or destroy shit
+  antropod:
+  - bugfix: Fixed Mafia achievements
+  carlarctg:
+  - qol: Crafting R&D guns from gun kits no longer requires tools or cable coil. The
+      decloner and energy crossbow still need reagents.
+  - qol: Halved R&D gun crafting time. 20->10 seconds.
+  intercepti0n:
+  - image: resprites t-ray scanner, gas analyzer, geiger counter and hand drill.
+  jlsnow301:
+  - refactor: Refactors the camera console UI.
+  mc-oofert:
+  - rscadd: heretic knock path and its respective items and award
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  nikothedude:
+  - balance: 'EMP damage on augs: 2/1.5 from 3/2'
+  - balance: Augs now only get paralyzed by EMP for 3/6 seconds if they are damaged
+      below 70% HP,
+  - balance: Aug EMP knockdown reduced to 3 seconds
+  - balance: Synthetic ears now take far less EMP damage
+  vinylspiders:
+  - bugfix: fixes inedible grown items (such as tower caps) becoming unclickable when
+      harvested, fixes their seeds disappearing when inserted into the seed machine
+2023-09-21:
+  Coconutwarrior97:
+  - bugfix: Fixes a bug allowing holopara injectors to be refundable when used.
+  Exester509:
+  - rscadd: Splashing antihol on a patient before surgery will make it to go slower.
+  GPeckman:
+  - bugfix: The caller in a holopad call should now be able to hear people on the
+      other end.
+  Rhials:
+  - qol: Restores holiday hats for drones.
+  - qol: Extends holiday hat behavior to assistants. Get festive!
+  Shadow-Quill:
+  - bugfix: RCD Construction effects will no longer fall into chasms.
+  SyncIt21:
+  - bugfix: wall mounted objects air alarms, fire alarms etc now actually falls off/gets
+      destroyed when their attached wall is deconstructed
+  - bugfix: wall mounts crafted in game also properly falls off/gets destroyed when
+      their attached wall is deconstructed
+  blueDev2:
+  - bugfix: Recipe that converts Vegetable Oil into Olive Oil works properly
+  nikothedude:
+  - bugfix: Projectiles no longer cause a blood graphic or blood splatters if they
+      hit a limb that cant bleed
+  - rscadd: Prosthetics/Augments now spark when shot
+  - bugfix: Gauze no longer falls off if a wound is demoted or promoted
+  vinylspiders:
+  - bugfix: rescue hooks will once again drop the mob next to the fisherman instead
+      of just displaying a balloon alert and doing nothing

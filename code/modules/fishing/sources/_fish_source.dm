@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		. += SETTLER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
@@ -127,21 +127,24 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 			fish_table -= reward_path
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
-	if(!reward) //baloon alert instead
+	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman,pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else // for fishing things like corpses, move them to the turf of the fisherman
+		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot, get_turf(fisherman))
+		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(fisherman, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
 	var/atom/movable/reward = new reward_path(get_turf(fisherman))
