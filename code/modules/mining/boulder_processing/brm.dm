@@ -78,6 +78,17 @@
 	. = ..()
 	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
 
+/obj/machinery/bouldertech/brm/RefreshParts()
+	. = ..()
+	var/scanner_stack = 0
+	var/laser_stack = 0
+	for(var/datum/stock_part/scanning_module/scanner in component_parts)
+		scanner_stack += (scanner.tier)
+	boulders_processing_max = scanner_stack
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		laser_stack += (laser.tier)
+	boulders_held_max = laser_stack
+
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
 	if(!SSore_generation.available_boulders.len)
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)

@@ -319,6 +319,7 @@
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/high_chance/mineral_chances()
 	return list(
@@ -336,6 +337,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/high_chance/volcanic/mineral_chances()
 	return list(
@@ -386,7 +388,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-
+	proximity_based = TRUE
 	mineralChance = 5
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
@@ -414,6 +416,7 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
+	proximity_based = TRUE
 
 /turf/closed/mineral/random/snow/Change_Ore(ore_type, random = 0)
 	. = ..()
@@ -462,6 +465,7 @@
 	)
 
 /turf/closed/mineral/random/snow/high_chance
+	proximity_based = FALSE
 
 /turf/closed/mineral/random/snow/high_chance/mineral_chances()
 	return list(

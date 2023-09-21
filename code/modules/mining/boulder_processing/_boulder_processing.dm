@@ -104,7 +104,7 @@
 		if(amount > points_held)
 			amount = points_held
 		id_card.registered_account.mining_points += amount
-		points_held -= amount
+		points_held = round(points_held - amount)
 		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 		return TRUE
 
@@ -218,7 +218,7 @@
 			remaining_ores[possible_mat] = quantity
 			chosen_boulder.custom_materials[possible_mat] = null
 		else
-			points_held += (chosen_boulder.custom_materials[possible_mat] * possible_mat.points_per_unit)/// put point total here into machine
+			points_held = round(points_held + (chosen_boulder.custom_materials[possible_mat] * possible_mat.points_per_unit))/// put point total here into machine
 			tripped = TRUE
 
 	if(!tripped)
@@ -243,6 +243,8 @@
 		chosen_boulder.break_apart()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
+		if(is_artifact)
+			points_held = round(points_held + 100) /// Artifacts give bonus points!
 		return TRUE
 
 	var/obj/item/boulder/new_rock = new (src)
