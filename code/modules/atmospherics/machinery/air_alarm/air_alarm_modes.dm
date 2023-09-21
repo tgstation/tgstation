@@ -171,10 +171,9 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-		var/list/filtered2 = subtypesof(/datum/gas)
 for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.filter_types = filtered2.Copy()
+		scrubber.filter_types = filtered.Copy(subtypesof(/datum/gas))
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 
