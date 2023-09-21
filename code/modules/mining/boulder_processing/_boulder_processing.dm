@@ -163,7 +163,7 @@
 		else
 			if(prob(25))
 				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
-				visible_message("[pick(quips)]")
+				visible_message(span_notice("[pick(quips)]"))
 	if(!stop_processing_check)
 		STOP_PROCESSING(SSmachines, src)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)

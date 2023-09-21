@@ -91,9 +91,9 @@
 	user.apply_damage(4, STAMINA)
 	if(durability <= 0)
 		convert_to_ore()
-		user.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
 		playsound(src, 'sound/effects/rock_break.ogg', 50)
+		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return
 	else if(durability == 1)

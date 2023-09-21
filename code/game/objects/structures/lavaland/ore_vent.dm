@@ -75,6 +75,7 @@
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
+		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", HIGH_OBJ_LAYER, src, GAME_PLANE))
 	. = ..()
 	///This is the part where we start processing to produce a new boulder over time.
 
@@ -232,6 +233,7 @@
 				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.escape() //Visually show the drone is done and flies away.
 	icon_state = icon_state_tapped
+	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", HIGH_OBJ_LAYER, src, GAME_PLANE))
 	update_appearance(UPDATE_ICON_STATE)
 
 /**

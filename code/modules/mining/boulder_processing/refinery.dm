@@ -61,7 +61,7 @@
 /obj/machinery/bouldertech/refinery/smelter
 	name = "boulder smeltery"
 	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
-	icon_state = "furnace"
+	icon_state = "smelter"
 	holds_minerals = TRUE
 	processable_materials = list(
 		/datum/material/iron,

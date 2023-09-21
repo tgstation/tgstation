@@ -55,7 +55,9 @@
 		return
 	for(var/i in 1 to boulders_processing_max)
 		if(!pre_collect_boulder())
-			i-- //Retry
+			STOP_PROCESSING(SSmachines, src)
+			icon_state = "brm"
+			update_appearance(UPDATE_ICON_STATE)
 	for(var/ground_rocks in loc.contents)
 		if(istype(ground_rocks, /obj/item/boulder))
 			boulders_contained += ground_rocks
@@ -72,11 +74,11 @@
 	context[SCREENTIP_CONTEXT_RMB] = "Toggle automatic boulder retrieval"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/bouldertech/brm/examine(mob/user)
+	. = ..()
+	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
 
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
-	if(!is_station_level(z) || !is_mining_level(z))
-		balloon_alert_to_viewers("no planetary lock!")
-		return FALSE
 	if(!SSore_generation.available_boulders.len)
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("no boulders to collect!")

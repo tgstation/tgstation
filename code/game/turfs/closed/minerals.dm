@@ -108,7 +108,7 @@
 		return null
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return VENT_CHANCE_VERY_CLOSE
+		return VENT_CHANCE_VERY_HIGH
 	if(distance < VENT_PROX_HIGH)
 		return VENT_CHANCE_HIGH
 	if(distance < VENT_PROX_MEDIUM)
