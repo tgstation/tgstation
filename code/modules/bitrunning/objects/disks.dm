@@ -37,6 +37,10 @@
 	name = "bitrunning program: force wall"
 	granted_action = /datum/action/cooldown/spell/forcewall
 
+/obj/item/bitrunning_disk/dragonform
+	name = "bitrunning program: dragon form"
+	granted_action = /datum/action/cooldown/spell/shapeshift/dragon
+
 /obj/item/bitrunning_disk/chainsaw
 	name = "bitrunning program: chainsaw"
 	granted_item = /obj/item/chainsaw

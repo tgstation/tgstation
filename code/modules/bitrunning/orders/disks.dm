@@ -11,6 +11,10 @@
 /datum/orderable_item/bitrunning_tech/forcewall
 	item_path = /obj/item/bitrunning_disk/forcewall
 
+/datum/orderable_item/bitrunning_tech/dragonform
+	item_path = /obj/item/bitrunning_disk/dragonform
+	cost_per_order = 4000
+
 /datum/orderable_item/bitrunning_tech/cheese
 	item_path = /obj/item/bitrunning_disk/cheese
 	cost_per_order = 800
