@@ -10,7 +10,7 @@
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
 	desc = "An implant injected into the body and later activated at the user's will. It will attempt to free the \
-			user from common restraints such as handcuffs. Four uses."
+			user from common restraints such as handcuffs. Implant has enough energy for 4 uses before it becomes inert and self-destructs."
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
