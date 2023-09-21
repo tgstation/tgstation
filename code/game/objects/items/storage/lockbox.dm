@@ -191,6 +191,8 @@
 /obj/item/storage/lockbox/medal/med/PopulateContents()
 	new /obj/item/clothing/accessory/medal/med_medal(src)
 	new /obj/item/clothing/accessory/medal/med_medal2(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/silver/emergency_services/medical(src)
 
 /obj/item/storage/lockbox/medal/sec/PopulateContents()
 	for(var/i in 1 to 3)
@@ -228,7 +230,7 @@
 
 /obj/item/storage/lockbox/medal/engineering/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/accessory/medal/silver/emergency_services(src)
+		new /obj/item/clothing/accessory/medal/silver/emergency_services/engineering(src)
 	new /obj/item/clothing/accessory/medal/silver/elder_atmosian(src)
 
 /obj/item/storage/lockbox/order

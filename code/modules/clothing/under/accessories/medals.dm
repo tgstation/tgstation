@@ -181,8 +181,24 @@
 
 /obj/item/clothing/accessory/medal/silver/emergency_services
 	name = "emergency services award"
-	desc = "A silver medal awarded to the outstanding emergency responders of Nanotrasen, those who work tirelessly together through adversity to keep their crew safe and breathing in the harsh environments of outer space."
+	desc = "A silver medal awarded to the outstanding emergency service workers of Nanotrasen, those who work tirelessly together through adversity to keep their crew safe and breathing in the harsh environments of outer space."
 	icon_state = "emergencyservices"
+
+	/// Flavor text that is appended to the description.
+	var/insignia_desc = null
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/Initialize(mapload)
+	. = ..()
+	if(istext(insignia_desc))
+		desc += " [insignia_desc]"
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/engineering
+	icon_state = "emergencyservices_engi"
+	insignia_desc = "The back of the medal bears an orange wrench."
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/medical
+	icon_state = "emergencyservices_med"
+	insignia_desc = "The back of the medal bears a dark blue cross."
 
 /obj/item/clothing/accessory/medal/silver/elder_atmosian
 	name = "atmospheric mastery award"
