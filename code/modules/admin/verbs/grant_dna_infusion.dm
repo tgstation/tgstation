@@ -8,15 +8,19 @@
 	set category = "Debug"
 
 	var/list/infusions = list()
-	for(var/path in subtypesof(/datum/infuser_entry))
-		infusions += path
+	for(var/datum/infuser_entry/path as anything in subtypesof(/datum/infuser_entry))
+		var/str = "[initial(path.name)] ([path])"
+		infusions[str] = path
 
 	var/datum/infuser_entry/picked_infusion = tgui_input_list(usr, "Select infusion", "Apply DNA Infusion", infusions)
-	// This is necessary because list propererties are not defined until initialization
-	picked_infusion = new picked_infusion()
 
 	if(isnull(picked_infusion))
 		return FALSE
+
+	// This is necessary because list propererties are not defined until initialization
+	picked_infusion = infusions[picked_infusion]
+	picked_infusion = new picked_infusion
+
 	if(!length(picked_infusion.output_organs))
 		return FALSE
 
