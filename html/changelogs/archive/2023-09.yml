@@ -96,3 +96,10 @@
   - bugfix: donator items are now properly flagged for donator purchase only.  If
       you have purchased one and are not a donator, please request a refund of your
       monkecoin.
+2023-09-21:
+  Kat:
+  - rscadd: Added some more lights in dark areas
+  - rscdel: Random disposal pipes inside of objects, walls, and under floors that
+      werent connected to anything
+  - qol: Robotics has gotten a fresh coat of paint
+  - bugfix: one specific disposal unit in dorms being not connected

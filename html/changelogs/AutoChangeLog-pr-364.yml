@@ -1,7 +1,0 @@
-author: "Kat"
-delete-after: True
-changes:
-  - rscadd: "Added some more lights in dark areas"
-  - rscdel: "Random disposal pipes inside of objects, walls, and under floors that werent connected to anything"
-  - qol: "Robotics has gotten a fresh coat of paint"
-  - bugfix: "one specific disposal unit in dorms being not connected"
