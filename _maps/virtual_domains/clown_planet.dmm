@@ -119,6 +119,10 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
 /area/virtual_domain/powered)
+"gr" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "gy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -328,6 +332,10 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
 /area/virtual_domain/powered)
+"tF" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
 "tI" = (
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
@@ -1206,7 +1214,7 @@ Ie
 Ie
 Ie
 Ie
-Ie
+tF
 "}
 (10,1,1) = {"
 Ie
@@ -1709,7 +1717,7 @@ QP
 QP
 QP
 QP
-QP
+gr
 PM
 by
 Ie

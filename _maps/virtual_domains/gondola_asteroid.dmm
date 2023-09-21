@@ -33,6 +33,10 @@
 /obj/structure/flora/tree/palm,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"r" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "s" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -76,6 +80,10 @@
 "J" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"K" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "M" = (
 /obj/structure/table/wood,
@@ -235,7 +243,7 @@ h
 h
 a
 a
-a
+K
 o
 o
 o
@@ -1140,7 +1148,7 @@ t
 t
 t
 t
-t
+r
 c
 a
 "}

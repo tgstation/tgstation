@@ -63,7 +63,11 @@
 	var/datum/round_event_control/bitrunning_glitch/cyber_control = event_control
 	cyber_control.get_active_servers()
 
-	return length(cyber_control.active_servers)
+	var/total = 0
+	for(var/obj/machinery/quantum_server/server in cyber_control.active_servers)
+		total += length(server.mutation_candidate_refs)
+
+	return total
 
 /datum/round_event/ghost_role/bitrunning_glitch
 	minimum_required = 1
@@ -88,6 +92,12 @@
 
 	var/datum/weakref/target_ref = pick(mutation_candidates)
 	var/mob/living/mutation_target = target_ref.resolve()
+
+	if(isnull(mutation_target)) // just in case since it takes a minute
+		target_ref = pick(mutation_candidates)
+		mutation_target = target_ref.resolve()
+		if(isnull(mutation_target))
+			return MAP_ERROR
 
 	var/chosen_role = forced_role || pick(cyber_control.possible_antags)
 

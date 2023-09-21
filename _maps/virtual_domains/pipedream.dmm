@@ -146,6 +146,10 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"ev" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "eJ" = (
 /obj/structure/disposalpipe/sorting{
 	dir = 2
@@ -826,6 +830,10 @@
 	},
 /obj/machinery/light/broken,
 /turf/open/floor/iron,
+/area/virtual_domain/powered)
+"xF" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/virtual_domain/powered)
 "xM" = (
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -2101,7 +2109,7 @@ rO
 rO
 RJ
 RJ
-RJ
+xF
 "}
 (5,1,1) = {"
 yQ
@@ -2749,7 +2757,7 @@ JR
 JR
 JR
 JR
-JR
+ev
 aK
 RJ
 "}

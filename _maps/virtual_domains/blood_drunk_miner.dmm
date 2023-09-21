@@ -12,6 +12,10 @@
 "c" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"d" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
 "f" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -21,6 +25,7 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "h" = (
 /obj/machinery/light/small/blacklight/directional/south,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/virtual_domain/powered)
 "i" = (
@@ -59,6 +64,10 @@
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"q" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "r" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -105,7 +114,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "C" = (
-/obj/effect/mob_spawn/corpse/human/miner/persistent,
+/obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "G" = (
@@ -242,7 +251,7 @@ v
 v
 v
 v
-v
+d
 "}
 (2,1,1) = {"
 v
@@ -743,7 +752,7 @@ a
 a
 a
 a
-a
+C
 a
 a
 a
@@ -1186,7 +1195,7 @@ a
 a
 a
 a
-C
+a
 a
 a
 a
@@ -1196,7 +1205,7 @@ c
 c
 c
 c
-c
+q
 a
 a
 J
@@ -1314,30 +1323,30 @@ a
 a
 a
 a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 C
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 a
 a
 a

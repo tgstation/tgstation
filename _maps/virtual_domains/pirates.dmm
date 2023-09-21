@@ -501,6 +501,10 @@
 /obj/structure/flora/rock/pile/style_3,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/powered)
+"zR" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Ax" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt,
@@ -878,6 +882,10 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/toy/plush/beeplushie,
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Uy" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/virtual_domain/powered)
 "UE" = (
 /obj/structure/barricade/sandbags,
@@ -1445,7 +1453,7 @@ cx
 cx
 cx
 cx
-cx
+Uy
 "}
 (12,1,1) = {"
 xg
@@ -1752,7 +1760,7 @@ ub
 ub
 ub
 ub
-ub
+zR
 cx
 "}
 (19,1,1) = {"

@@ -179,6 +179,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"J" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "K" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/airless{
@@ -250,6 +254,10 @@
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"Y" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Z" = (
 /obj/structure/flora/tree/palm,
 /turf/open/floor/holofloor/beach,
@@ -731,7 +739,7 @@ D
 D
 D
 D
-D
+Y
 a
 u
 "}
@@ -778,7 +786,7 @@ g
 R
 g
 g
-g
+J
 H
 M
 M

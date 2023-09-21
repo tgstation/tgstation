@@ -402,6 +402,7 @@
 		return
 
 	examine_text += span_infoplain("It is currently occupied by [occupant].")
+	examine_text += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
 
 /// On unbuckle or break, make sure the occupant ref is null
 /obj/machinery/netpod/proc/unprotect_and_signal()

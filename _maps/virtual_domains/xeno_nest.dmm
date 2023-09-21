@@ -75,6 +75,10 @@
 /obj/structure/alien/resin/wall,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"r" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "s" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/drone{
@@ -200,6 +204,10 @@
 /obj/item/melee/baton/security/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"O" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "P" = (
 /obj/structure/alien/weeds/node,
@@ -993,7 +1001,7 @@ E
 E
 E
 E
-E
+O
 "}
 (19,1,1) = {"
 E
@@ -1565,7 +1573,7 @@ n
 n
 n
 n
-n
+r
 A
 E
 "}

@@ -59,7 +59,6 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
-/obj/effect/mob_spawn/corpse/human/miner/persistent,
 /turf/open/floor/pod/dark,
 /area/lavaland/surface/outdoors/virtual_domain)
 "bu" = (
@@ -495,6 +494,10 @@
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod/dark,
 /area/lavaland/surface/outdoors/virtual_domain)
+"rt" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "rU" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -641,6 +644,7 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "zg" = (
 /obj/machinery/light/small/directional/south,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/virtual_domain/powered)
 "zo" = (
@@ -657,6 +661,10 @@
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center/cracked,
 /turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Ah" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Aj" = (
 /obj/structure/marker_beacon/burgundy,
@@ -764,6 +772,10 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
+"Fp" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Fq" = (
 /obj/structure/marker_beacon/fuchsia,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -1169,6 +1181,7 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "Ud" = (
 /obj/machinery/light/small/directional/north,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/virtual_domain/powered)
 "UD" = (
@@ -1425,7 +1438,7 @@ ox
 ox
 ox
 ox
-ox
+Ah
 "}
 (2,1,1) = {"
 cp
@@ -1959,7 +1972,7 @@ nu
 nu
 nu
 nu
-nu
+rt
 nu
 nu
 ib
@@ -4180,7 +4193,7 @@ BO
 BO
 BO
 BO
-BO
+Fp
 Ud
 nu
 nu
@@ -5181,7 +5194,7 @@ nu
 nu
 nu
 nu
-nu
+rt
 nu
 nu
 nu

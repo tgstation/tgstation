@@ -227,6 +227,10 @@
 /obj/item/paper/fluff/ruins/forgottenship/missionobj,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"hA" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "hD" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
@@ -690,6 +694,10 @@
 	},
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Bm" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "BK" = (
 /obj/structure/lattice/catwalk,
@@ -1212,6 +1220,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"Yr" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Yu" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/royalblack,
@@ -2073,7 +2085,7 @@ uP
 uP
 uP
 uP
-ru
+hA
 qx
 qx
 qx
@@ -2376,7 +2388,7 @@ TB
 Yb
 Yb
 TB
-TB
+Bm
 nB
 qx
 qx
@@ -2913,7 +2925,7 @@ sM
 sM
 sM
 sM
-sM
+Yr
 qx
 Hq
 "}

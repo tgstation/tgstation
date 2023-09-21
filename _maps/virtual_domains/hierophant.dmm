@@ -26,6 +26,10 @@
 "r" = (
 /turf/closed/indestructible/riveted/hierophant,
 /area/lavaland/surface/outdoors/virtual_domain)
+"u" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "w" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -45,11 +49,16 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "N" = (
 /obj/machinery/light/small/blacklight/directional/south,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/indestructible/hierophant,
 /area/virtual_domain/powered)
-"W" = (
-/obj/effect/mob_spawn/corpse/human/miner/persistent,
+"S" = (
+/obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/indestructible/hierophant,
+/area/lavaland/surface/outdoors/virtual_domain)
+"W" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Y" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -93,7 +102,7 @@ y
 y
 y
 y
-y
+W
 "}
 (2,1,1) = {"
 y
@@ -361,7 +370,7 @@ n
 a
 a
 r
-W
+a
 a
 a
 r
@@ -402,7 +411,7 @@ a
 r
 y
 r
-a
+S
 a
 a
 r
@@ -691,14 +700,14 @@ w
 w
 w
 w
-w
+u
 Y
 y
 "}
 (17,1,1) = {"
 y
 r
-W
+a
 a
 a
 h
@@ -823,7 +832,7 @@ h
 a
 r
 r
-a
+S
 h
 a
 a
