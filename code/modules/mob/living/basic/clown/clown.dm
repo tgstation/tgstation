@@ -23,8 +23,8 @@
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/clown
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 270
-	maximum_survivable_temperature = 370
+	minimum_survivable_temperature = T0C
+	maximum_survivable_temperature = (T0C + 100)
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	faction = list(FACTION_CLOWN)
