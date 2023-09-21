@@ -12,6 +12,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
 	item_flags = SLOWS_WHILE_IN_HAND
+	pass_flags = NONE
 
 	/// If true we're currently portable
 	var/is_portable = TRUE
