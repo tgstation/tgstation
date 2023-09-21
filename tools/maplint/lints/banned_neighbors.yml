@@ -1,0 +1,37 @@
+help: There are things stacked on one another. Please check and remove them.
+/obj/structure/chair:
+  banned_neighbors:
+  - /obj/structure/chair
+/obj/machinery/door/airlock:
+  banned_neighbors:
+  - /obj/machinery/door/airlock
+/area:
+  banned_neighbors:
+  - /area
+=/obj/structure/cable:
+  banned_neighbors:
+  - =/obj/structure/cable
+/obj/structure/closet:
+  banned_neighbors:
+  - /obj/structure/closet
+=/obj/machinery/door/firedoor:
+  banned_neighbors:
+    - =/obj/machinery/door/firedoor
+/obj/structure/girder:
+  banned_neighbors:
+  - /obj/structure/girder
+/obj/structure/grille:
+  banned_neighbors:
+  - /obj/structure/grille
+/obj/structure/lattice:
+  banned_neighbors:
+  - /obj/structure/lattice
+/obj/structure/stairs:
+  banned_neighbors:
+  - /obj/structure/stairs
+/obj/structure/table:
+  banned_neighbors:
+  - /obj/structure/table
+/turf:
+  banned_neighbors:
+  - /turf

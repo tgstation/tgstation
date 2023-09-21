@@ -1,5 +1,0 @@
-help: "Use the directional variants when possible."
-/obj/structure/window:
-  banned_variables:
-    dir:
-      deny: [1, 2, 4, 8]

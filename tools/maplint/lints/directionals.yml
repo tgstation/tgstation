@@ -5,3 +5,11 @@ help: "Use the directional variants when possible."
       allow: [25, -25]
     pixel_y:
       allow: [25, -25]
+/obj/structure/sign/poster:
+  banned_variables:
+    pixel_x:
+    pixel_y:
+/obj/structure/window:
+  banned_variables:
+    dir:
+      deny: [1, 2, 4, 8]
