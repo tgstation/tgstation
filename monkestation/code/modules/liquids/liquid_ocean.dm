@@ -75,6 +75,11 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	planetary_atmos = TRUE
 	initial_gas_mix = OSHAN_DEFAULT_ATMOS
 
+	upgradable = FALSE
+	attachment_holes = FALSE
+
+	resistance_flags = INDESTRUCTIBLE
+
 	overwrites_attack_by = TRUE
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
@@ -151,7 +156,14 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			qdel(C)
 			new /obj/structure/trench_ladder(src)
 
-
+	if(istype(C, /obj/item/mining_charge) && !catwalk)
+		to_chat(user, span_notice("You begin laying down a breaching charge..."))
+		if(do_after(user, 15, target = src))
+			var/obj/item/mining_charge/boom = C
+			user.dropItemToGround(boom)
+			boom.Move(src)
+			boom.set_explosion()
+			to_chat(user, span_warning("You lay down a breaching charge, you better run."))
 
 
 /// Drops itemstack when dug and changes icon

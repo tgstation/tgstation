@@ -19,6 +19,8 @@
 	. = ..()
 	if(src.z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+		if(isclosedturf(turf))
+			turf.TerraformTurf(/turf/open/floor/plating/ocean/dark/rock/heavy, /turf/open/floor/plating/ocean/dark/rock/heavy,  flags = CHANGETURF_INHERIT_AIR)
 		var/obj/structure/trench_ladder/search = locate(/obj/structure/trench_ladder) in turf.contents
 		if(search)
 			search.linked_ladder = src
@@ -28,7 +30,10 @@
 				real_item = new(src)
 				search.real_item = real_item
 		else
-			new /obj/structure/trench_ladder(turf)
+			real_item = new(src)
+			var/obj/structure/trench_ladder/ladder = new /obj/structure/trench_ladder(turf)
+			ladder.linked_ladder = src
+			ladder.real_item = real_item
 
 	else if(src.z in SSmapping.levels_by_trait(ZTRAIT_MINING))
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
@@ -41,7 +46,10 @@
 				real_item = new(src)
 				search.real_item = real_item
 		else
-			new /obj/structure/trench_ladder(turf)
+			real_item = new(src)
+			var/obj/structure/trench_ladder/ladder = new /obj/structure/trench_ladder(turf)
+			ladder.linked_ladder = src
+			ladder.real_item = real_item
 
 /obj/structure/trench_ladder/Destroy()
 	. = ..()
