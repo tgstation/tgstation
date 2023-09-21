@@ -173,7 +173,6 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.filter_types = list(/datum/gas/)
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 
