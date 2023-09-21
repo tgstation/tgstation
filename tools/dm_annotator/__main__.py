@@ -2,7 +2,7 @@ import sys
 import re
 import os.path as path
 
-# Usage: python3 annotate_dm.py [filename]
+# Usage: tools/bootstrap/python -m dm_annotator [filename]
 # If filename is not provided, stdin is checked instead
 
 def red(text):
@@ -44,7 +44,7 @@ def main():
         annotate(sys.stdin.read())
     else:
         print(red("Error: No input provided"))
-        print("Usage: tools/ci/annotate_dm.sh [filename]")
+        print("Usage: tools/bootstrap/python -m dm_annotator [filename]")
         sys.exit(1)
 
 if __name__ == '__main__':

@@ -34,10 +34,9 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
-
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
-
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
+#define STASIS_ADMIN "stasis_admin"
 
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
