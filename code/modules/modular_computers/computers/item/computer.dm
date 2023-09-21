@@ -835,7 +835,7 @@
 			new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
 		else
 			physical.visible_message(span_notice("\The [src] breaks apart!"))
-			new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost / 2))
+			new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
 	relay_qdel()
 	return ..()
 
