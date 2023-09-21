@@ -1220,8 +1220,9 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	design_ids = list(
 		"comm_monitor",
-		"message_monitor",
 		"comm_server",
+		"gigabeacon",
+		"message_monitor",
 		"ntnet_relay",
 		"s_amplifier",
 		"s_analyzer",
@@ -1238,7 +1239,6 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
