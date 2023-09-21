@@ -43960,6 +43960,11 @@
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"xRb" = (
+/obj/machinery/computer/cargo/request,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/plating,
+/area/station/cargo/sorting)
 "xRd" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -61826,7 +61831,7 @@ tPb
 afI
 vmz
 pGC
-qIz
+xRb
 iao
 jwO
 pFJ
