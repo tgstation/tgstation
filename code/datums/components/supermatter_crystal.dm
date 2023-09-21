@@ -69,10 +69,10 @@
 
 /datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
-		return
 	var/atom/atom_source = source
 	var/murder
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
 	if(!user.melee_damage_upper && !user.melee_damage_lower)
 		murder = user.friendly_verb_continuous
 	else
