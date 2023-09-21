@@ -58,10 +58,12 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 		consume(atom_source, blob)
 
-/datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/living/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
-		return
+	if(isliving(user))
+		var/mob/living/living_mob = user
+		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+			return
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
 		return
@@ -86,11 +88,13 @@
 	SIGNAL_HANDLER
 	dust_mob(source, user, cause = "hulk attack")
 
-/datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/living/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
-	if(user.incorporeal_move || user.status_flags & GODMODE)
-		return
+	if(isliving(user))
+		var/mob/living/living_mob = user
+		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+			return
 	if(iscyborg(user) && atom_source.Adjacent(user))
 		dust_mob(source, user, cause = "cyborg attack")
 		return
