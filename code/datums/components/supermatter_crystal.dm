@@ -206,9 +206,6 @@
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
 			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
-		if(istype(hit_object, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
-			our_supermatter.visible_message(span_userdanger("\The [atom_source] glows intensely, the ground starting to shake as \the [hit_object] causes an unusually strong resonance!"))
-			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
 	else if(isobj(hit_object) && !iseffect(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [atom_source] and rapidly flashes to ash."), null,
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
@@ -255,6 +252,8 @@
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
+		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
+			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
