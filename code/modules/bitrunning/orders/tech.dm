@@ -7,4 +7,4 @@
 
 /datum/orderable_item/bepis/pristine
 	item_path = /obj/item/disk/design_disk/bepis/remove_tech
-	cost_per_order = 800
+	cost_per_order = 1000

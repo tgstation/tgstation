@@ -41,13 +41,13 @@
 	name = "bitrunning program: chainsaw"
 	granted_item = /obj/item/chainsaw
 
-/obj/item/bitrunning_disk/medgun
-	name = "bitrunning program: medgun"
+/obj/item/bitrunning_disk/medbeam
+	name = "bitrunning program: medbeam"
 	granted_item = /obj/item/gun/medbeam
 
 /obj/item/bitrunning_disk/pizza
 	name = "bitrunning program: pizza"
-	granted_item = /obj/item/pizzabox
+	granted_item = /obj/item/pizzabox/infinite
 
 /obj/item/bitrunning_disk/makarov
 	name = "bitrunning program: makarov"

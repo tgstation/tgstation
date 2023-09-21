@@ -35,14 +35,14 @@
 	for(var/datum/orderable_item/item as anything in groceries)
 		things_to_order[item.item_path] = groceries[item]
 
-	var/datum/supply_pack/custom/bitrunning_pack = new(
+	var/datum/supply_pack/bitrunning/pack = new(
 		purchaser = purchaser, \
 		cost = get_total_cost(), \
 		contains = things_to_order,
-		pack_name = "Bitrunning",
 	)
+
 	var/datum/supply_order/new_order = new(
-		pack = bitrunning_pack,
+		pack = pack,
 		orderer = purchaser,
 		orderer_rank = "Bitrunning Vendor",
 		orderer_ckey = purchaser.ckey,
@@ -70,5 +70,17 @@
 /obj/machinery/computer/order_console/bitrunning/update_icon_state()
 	icon_state = "[initial(icon_state)][powered() ? null : "_off"]"
 	return ..()
+
+/datum/supply_pack/bitrunning
+	name = "bitrunning order"
+	hidden = TRUE
+	crate_name = "bitrunning delivery crate"
+	access = list(ACCESS_BIT_DEN)
+
+/datum/supply_pack/bitrunning/New(purchaser, cost, list/contains)
+	. = ..()
+	name = "[purchaser]'s Bitrunning Order"
+	src.cost = cost
+	src.contains = contains
 
 #undef CREDIT_TYPE_BITRUNNING
