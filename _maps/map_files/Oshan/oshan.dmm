@@ -31612,11 +31612,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/robotics/lab)
-"qZZ" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/camera/autoname/directional/south,
-/turf/closed/wall,
-/area/station/commons/dorms)
 "rab" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
@@ -59452,7 +59447,7 @@ lUz
 phv
 bOl
 lln
-qZZ
+vwP
 qbg
 rmF
 lln
