@@ -5947,6 +5947,7 @@
 #include "monkestation\code\modules\ocean_content\fluff\industrial_power_cables.dm"
 #include "monkestation\code\modules\ocean_content\fluff\launching.dm"
 #include "monkestation\code\modules\ocean_content\fluff\ocean_elevators.dm"
+#include "monkestation\code\modules\ocean_content\fluff\trench_ladder.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\center.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\hotspot.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\hotspot_controller.dm"
