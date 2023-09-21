@@ -104,7 +104,6 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-
 		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 		scrubber.set_widenet(FALSE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
@@ -158,6 +157,26 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		scrubber.on = TRUE
 		scrubber.set_widenet(FALSE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
+
+/datum/air_alarm_mode/supermatter
+	name = "supermatter"
+	desc = "enables scrubbers and disables internal vent limits"
+	danger = TRUE
+
+/datum/air_alarm_mode/supermatter/apply(area/applied)
+	for (var/obj/machinery/atmospherics/components/unary/supermatter/vent as anything in applied.air_vents)
+		vent.on = TRUE
+		vent.pressure_checks = ATMOS_INTERNAL_BOUND
+		vent.internal_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
+		vent.update_appearance(UPDATE_ICON)
+
+		var/list/filtered = subtypesof(/datum/gas)
+for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+		scrubber.on = TRUE
+		scrubber.filter_types = filtered.Copy()
+		scrubber.set_widenet(TRUE)
+		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 
 /datum/air_alarm_mode/panic_siphon
 	name = "Panic Siphon"
