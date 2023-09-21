@@ -5,11 +5,17 @@
 	implant_color = "r"
 	uses = 4
 
+/obj/item/implant/freedom/implant(mob/living/target, mob/user, silent, force)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!iscarbon(target)) //This is pretty much useless for anyone else since they can't be cuffed
+		balloon_alert(user, "that would be a waste!")
+		return FALSE
+	return TRUE
+
 /obj/item/implant/freedom/activate()
 	. = ..()
-	if(!iscarbon(imp_in)) //Maybe make it not implantable on these guys?
-		return
-
 	var/mob/living/carbon/carbon_imp_in = imp_in
 	if(!carbon_imp_in.handcuffed && !carbon_imp_in.legcuffed)
 		balloon_alert(carbon_imp_in, "no restraints!")
@@ -20,7 +26,7 @@
 	balloon_alert(carbon_imp_in, "bindings released!")
 	carbon_imp_in.uncuff()
 	if(!uses)
-		balloon_alert(carbon_imp_in, "implant degraded!")
+		addtimer(CALLBACK(carbon_imp_in, TYPE_PROC_REF(/atom, balloon_alert), carbon_imp_in, "implant degraded!"), 1 SECONDS)
 		qdel(src)
 
 /obj/item/implant/freedom/get_data()
@@ -32,7 +38,9 @@
 <HR>
 <b>Implant Details:</b> <BR>
 <b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-mechanisms. These signals will release any bindings on both the arms and legs.<BR>"}
+mechanisms. These signals will release any bindings on both the arms and legs.<BR>
+<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed "too complex" to release from.
+"}
 	return dat
 
 /obj/item/implanter/freedom
