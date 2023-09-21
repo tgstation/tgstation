@@ -41,7 +41,21 @@
 	/// If set will be used instead of targets's pixel_y in offset calculations
 	var/override_target_pixel_y = null
 
-/datum/beam/New(origin, target, icon = 'icons/effects/beam.dmi', icon_state = "b_beam", time = INFINITY, max_distance = INFINITY, beam_type = /obj/effect/ebeam, beam_color = null, emissive = TRUE, override_origin_pixel_x = null, override_origin_pixel_y = null, override_target_pixel_x = null, override_target_pixel_y = null)
+/datum/beam/New(
+	origin,
+	target,
+	icon = 'icons/effects/beam.dmi',
+	icon_state = "b_beam",
+	time = INFINITY,
+	max_distance = INFINITY,
+	beam_type = /obj/effect/ebeam,
+	beam_color = null,
+	emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+)
 	src.origin = origin
 	src.target = target
 	src.icon = icon
