@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = TRUE
 
 /datum/air_alarm_mode/supermatter/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/supermatter/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_INTERNAL_BOUND
 		vent.internal_pressure_bound = 0
