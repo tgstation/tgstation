@@ -58,8 +58,10 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 		consume(atom_source, blob)
 
-/datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
 		return
@@ -67,6 +69,8 @@
 
 /datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
 	var/atom/atom_source = source
 	var/murder
 	if(!user.melee_damage_upper && !user.melee_damage_lower)
@@ -82,9 +86,11 @@
 	SIGNAL_HANDLER
 	dust_mob(source, user, cause = "hulk attack")
 
-/datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
 	if(iscyborg(user) && atom_source.Adjacent(user))
 		dust_mob(source, user, cause = "cyborg attack")
 		return
@@ -185,6 +191,8 @@
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
+		if(user.incorporeal_move || user.status_flags & GODMODE)
+			return
 		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_They()] burst[user.p_s()] into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(source, user, vis_msg, mob_msg)
@@ -200,6 +208,10 @@
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
+	if(isliving(hit_object))
+		var/mob/living/hit_mob = hit_object
+		if(hit_mob.incorporeal_move || hit_mob.status_flags & GODMODE)
+			return
 	if(istype(our_supermatter))
 		our_supermatter.log_activation(who = hit_object)
 	if(isliving(hit_object))
