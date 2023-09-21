@@ -15308,7 +15308,6 @@
 /area/station/command/bridge)
 "inW" = (
 /obj/structure/closet/secure_closet/warden,
-/obj/item/gun/energy/laser,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/radio/headset/heads/hos/alt{
 	name = "\proper the Warden's bowman headset";
@@ -15319,6 +15318,17 @@
 	layer = 2.9
 	},
 /obj/item/flashlight/seclite,
+/obj/item/gun/ballistic/automatic/pistol/paco,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_y = -3;
+	pixel_x = -8;
+	layer = 3.1
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 10;
+	pixel_x = -8;
+	layer = 3.1
+	},
 /turf/open/floor/pod/dark,
 /area/station/security/warden)
 "iok" = (
@@ -24454,9 +24464,40 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_y = -3;
+	pixel_x = -8;
+	layer = 3.1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_y = -3;
+	pixel_x = -4
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 10;
+	pixel_x = -8;
+	layer = 3.1
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 10;
+	pixel_x = -4
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 10;
+	pixel_x = 2;
+	layer = 2.9
+	},
+/obj/item/ammo_box/c35{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/ammo_box/c35/rubber{
+	pixel_x = 5
+	},
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/security/armory)
 "njm" = (
@@ -33109,6 +33150,8 @@
 	layer = 3.1;
 	pixel_y = 12
 	},
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/security/armory)
 "rPw" = (
