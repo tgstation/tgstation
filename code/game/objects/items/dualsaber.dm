@@ -245,7 +245,7 @@
 	if(length(affected_turfs) < 2)
 		return ..()
 
-	var/animation_length = time_per_turf * 4
+	var/animation_length = max(0.1 SECONDS, time_per_turf) * 4
 	var/side_angle = prob(50) ? -15 : 15
 	var/image/attack_image = create_attack_image(attacker, weapon)
 	attack_image.transform = turn(attack_image.transform, side_angle)
@@ -292,7 +292,7 @@
 	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[3]) // Only go up to the third turf, since we're two sided baby
 	var/image/attack_image = create_attack_image(attacker, weapon, get_turf(attacker), initial_angle)
 	var/matrix/final_transform = turn(attack_image.transform, final_angle)
-	var/anim_time = 8 * time_per_turf // basically, travel 3 turfs at 2x the speed. then 2 turfs time for fade out.
+	var/anim_time = 8 * max(0.1 SECONDS, time_per_turf) // basically, travel 3 turfs at 2x the speed. then 2 turfs time for fade out.
 
 	attacker.do_attack_animation(affected_turfs[ROUND_UP(length(affected_turfs) / 2)], no_effect = TRUE)
 	flick_overlay_global(attack_image, GLOB.clients, anim_time)

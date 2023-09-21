@@ -98,7 +98,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "aZ" = (
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/structure/table,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)

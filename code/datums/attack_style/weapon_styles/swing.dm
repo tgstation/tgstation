@@ -2,7 +2,6 @@
 /datum/attack_style/melee_weapon/swing
 	cd = CLICK_CD_MELEE * 2
 	sprite_size_multiplier = 1.5
-	time_per_turf = 0.1 SECONDS
 	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
 	var/reverse_for_lefthand = TRUE
 
@@ -11,7 +10,7 @@
 
 /datum/attack_style/melee_weapon/swing/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/num_turfs_to_move = length(affected_turfs)
-	var/final_animation_length = time_per_turf * num_turfs_to_move
+	var/final_animation_length = max(0.1 SECONDS, time_per_turf) * num_turfs_to_move
 	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[1])
 	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[num_turfs_to_move])
 	var/image/attack_image = create_attack_image(attacker, weapon, affected_turfs[1], initial_angle)
@@ -20,7 +19,7 @@
 	var/final_y = (affected_turfs[num_turfs_to_move].y - attacker.y) * 16
 
 	attacker.do_attack_animation(affected_turfs[ROUND_UP(length(affected_turfs) / 2)], no_effect = TRUE)
-	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf) // add a little extra time
+	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + max(0.1 SECONDS, time_per_turf)) // add a little extra time
 	animate(
 		attack_image,
 		time = final_animation_length,

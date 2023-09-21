@@ -171,8 +171,19 @@
 	if(attacking_item.attack_wrapper(src, user, params) & (ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED))
 		return TRUE // end chain
 
-	// Put in a "tap" message
+	if(user == src)
+		if(combat_mode && attacked_by(attacking_item, user)) // Self harm, kind of snowflake
+			playsound(src, attacking_item.hitsound, 50)
+			return TRUE // end chain
 
+		return FALSE // continue chain
+
+	user.visible_message(
+		span_notice("[user] taps [src] with [attacking_item]."),
+		span_notice("You tap [src] with [attacking_item]."),
+		span_hear("You hear a tap."),
+		COMBAT_MESSAGE_RANGE,
+	)
 	return FALSE // continue chain
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)

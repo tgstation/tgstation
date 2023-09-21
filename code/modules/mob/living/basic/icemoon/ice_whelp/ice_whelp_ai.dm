@@ -58,7 +58,6 @@
 		finish_action(controller, FALSE)
 		return
 
-	living_pawn.start_pulling(target)
 	living_pawn.ai_controller_click(target, combat_mode = TRUE)
 	finish_action(controller, TRUE)
 

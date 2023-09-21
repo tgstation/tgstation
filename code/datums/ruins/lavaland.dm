@@ -275,3 +275,11 @@
 	suffix = "lavaland_surface_phonebooth.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/battle_site
+	name = "Battle Site"
+	id = "battle_site"
+	description = "The long past site of a battle between beast and humanoids. The victor is unknown, but the losers are clear."
+	suffix = "lavaland_battle_site.dmm"
+	allow_duplicates = TRUE
+	cost = 3

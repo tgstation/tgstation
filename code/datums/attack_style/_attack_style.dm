@@ -341,6 +341,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /// Determines behavior when we collide with a solid / dense atom mid swing.
 /datum/attack_style/proc/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
+	return NONE
+/*
 	if(!blocking_us.uses_integrity)
 		// This is stuff like walls - essentially does this swing get stopped by hitting a wall?
 		return NONE
@@ -351,6 +353,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	)
 	blocking_us.attacked_by(weapon, attacker)
 	return ATTACK_SWING_BLOCKED
+*/
 
 /**
  * Finalize an attack on a single mob in one of the affected turfs

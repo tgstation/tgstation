@@ -35,6 +35,8 @@
 	var/attack_vis_effect
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
+	/// How often can you melee attack?
+	var/melee_attack_cooldown = 2 SECONDS
 
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES

@@ -2,6 +2,7 @@
  * Unarmed attacks which generically apply damage to the mob it hits.
  */
 /datum/attack_style/unarmed/generic_damage
+	slowdown = 0.2
 	can_hit_self = TRUE
 	/// Type damage this attack does. If null, uses the attacker's [get_attack_type]/
 	var/attack_type
@@ -71,7 +72,7 @@
 	var/obj/item/bodypart/affecting = smacked.get_bodypart(smacked.get_random_valid_zone(attacker.zone_selected))
 	var/miss_chance = calculate_miss_chance(attacker, smacked, weapon, damage)
 
-	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
+d	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
 		smacked.visible_message(
 			span_danger("[attacker]'s [attack_verb] misses [smacked]!"),
 			span_danger("You avoid [attacker]'s [attack_verb]!"),

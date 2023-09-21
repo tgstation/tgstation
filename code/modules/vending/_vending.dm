@@ -194,8 +194,6 @@
 
 	///Items that the players have loaded into the vendor
 	var/list/vending_machine_input = list()
-	///Display header on the input view
-	var/input_display_header = "Custom Vendor"
 
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
@@ -1042,7 +1040,7 @@
 	to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
 
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(ispath(inserted_item.type, product_datum.product_path))
+		if(inserted_item.type == product_datum.product_path)
 			product_datum.amount++
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
@@ -1536,7 +1534,7 @@
  * * user - the user doing the loading
  */
 /obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user)
-	if((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband))
+	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
 		return TRUE
 	to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
 	return FALSE

@@ -1,6 +1,5 @@
 // Direct stabs out to turfs in front
 /datum/attack_style/melee_weapon/stab_out
-	time_per_turf = 0.1 SECONDS
 	/// How far the stab goes
 	var/stab_range = 1
 	/// How long the animation lingers after finishing
@@ -27,7 +26,7 @@
 
 /datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/image/attack_image = create_attack_image(attacker, weapon, affected_turfs[1])
-	var/stab_length = time_per_turf * length(affected_turfs)
+	var/stab_length = max(0.1 SECONDS, time_per_turf) * length(affected_turfs)
 	attacker.do_attack_animation(affected_turfs[1], no_effect = TRUE) // melbert todo
 	flick_overlay_global(attack_image, GLOB.clients, stab_length + animation_linger_time)
 	var/start_x = attack_image.pixel_x

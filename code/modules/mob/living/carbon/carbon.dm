@@ -425,6 +425,7 @@
 	var/starting_dir = dir
 	var/message = (vomit_flags & MOB_VOMIT_MESSAGE)
 	var/stun = (vomit_flags & MOB_VOMIT_STUN)
+	var/knockdown = (vomit_flags & MOB_VOMIT_KNOCKDOWN)
 	var/blood = (vomit_flags & MOB_VOMIT_BLOOD)
 
 	if(!force && !blood && (nutrition < 100))
@@ -435,6 +436,8 @@
 			)
 		if(stun)
 			Stun(20 SECONDS)
+		if(knockdown)
+			Knockdown(20 SECONDS)
 		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -456,6 +459,8 @@
 
 	if(stun)
 		Stun(8 SECONDS)
+	if(knockdown)
+		Knockdown(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 

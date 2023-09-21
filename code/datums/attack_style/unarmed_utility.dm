@@ -168,6 +168,7 @@
 	attack_effect = null
 	successful_hit_sound = null
 	miss_sound = null
+	can_hit_self = TRUE
 
 /datum/attack_style/unarmed/grab/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(smacked.check_block(attacker, 20, "[attacker]'s grab", attack_type = UNARMED_ATTACK)) // likewise, 30 damage = one grab

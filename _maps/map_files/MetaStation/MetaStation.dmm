@@ -2419,7 +2419,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/destructive_scanner,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -6973,10 +6972,10 @@
 	c_tag = "Science Lobby";
 	network = list("ss13","rd")
 	},
-/obj/machinery/vending/modularpc,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/destructive_scanner,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "cAG" = (
@@ -8267,7 +8266,7 @@
 /obj/item/bedsheet/red,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/flasher/directional/north{
-	id = "IsolationFlash"
+	id = "IsolationCell"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
@@ -11944,7 +11943,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "esK" = (
-/obj/machinery/firealarm/directional/east,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
@@ -12997,7 +12995,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
-/obj/item/surgery_tray/morgue,
+/obj/item/surgery_tray/full/morgue,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -16143,6 +16141,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fYC" = (
@@ -20011,6 +20012,7 @@
 	},
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "hwg" = (
@@ -26878,14 +26880,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "jJp" = (
-/obj/machinery/button/flasher{
-	id = "IsolationFlash";
-	pixel_x = -23;
-	pixel_y = 8
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/status_display/door_timer{
+	id = "IsolationCell";
+	name = "Isolation Cell";
+	pixel_x = -32
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "jJC" = (
@@ -36999,7 +37001,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/iron/white,
@@ -38206,6 +38208,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -41909,6 +41912,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "pdX" = (
@@ -45289,7 +45293,6 @@
 	},
 /obj/item/defibrillator/loaded,
 /obj/structure/window/spawner/directional/west,
-/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "qph" = (
@@ -54899,6 +54902,9 @@
 /obj/item/mod/module/plasma_stabilizer{
 	pixel_x = 16
 	},
+/obj/item/mod/module/signlang_radio{
+	pixel_x = 16
+	},
 /obj/item/mod/module/thermal_regulator{
 	pixel_x = 16
 	},
@@ -56546,11 +56552,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "ulX" = (
-/obj/machinery/lapvend,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/vending/modularpc,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "umS" = (
@@ -56802,6 +56808,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "urs" = (
@@ -57559,7 +57566,9 @@
 	dir = 4;
 	id = "garbage"
 	},
-/obj/machinery/recycler,
+/obj/machinery/recycler{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "uEO" = (

@@ -18,6 +18,7 @@
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
+	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
 		/obj/item/food/meat/crab = 2,
 		/obj/item/stack/sheet/bone = 2,
@@ -35,6 +36,7 @@
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddElement(\
@@ -74,6 +76,7 @@
 		return
 	var/mob/living/basic/basic_source = source
 	basic_source.ai_controller_click(target, combat_mode = TRUE)
+	basic_source.changeNext_move(0 SECONDS)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
 	basic_source.start_pulling(target)
 

@@ -24,7 +24,8 @@
 	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	attack_style_path = /datum/attack_style/melee_weapon/swing/heretic_sickle
+	attack_style_path = /datum/attack_style/melee_weapon
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/heretic_sickle
 	weapon_sprite_angle = 45
 
 	var/after_use_message = ""
@@ -124,3 +125,14 @@
 	icon_state = "cosmic_blade"
 	inhand_icon_state = "cosmic_blade"
 	after_use_message = "The Stargazer hears your call..."
+
+// Path of Knock's blade
+/obj/item/melee/sickly_blade/knock
+	name = "\improper key blade"
+	desc = "A blade and a key, a key to what? \
+		What grand gates does it open?"
+	icon_state = "key_blade"
+	inhand_icon_state = "key_blade"
+	after_use_message = "The Mother of Ants hears your call..."
+	tool_behaviour = TOOL_CROWBAR
+	toolspeed = 1.3

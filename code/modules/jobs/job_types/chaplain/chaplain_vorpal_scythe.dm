@@ -36,7 +36,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /datum/attack_style/melee_weapon/stab_out/vorpal_scythe
 	cd = CLICK_CD_MELEE * 1.25
 	stab_range = 2
-	sprite_size_multiplier = 1.25
+	sprite_size_multiplier = 2
 
 /obj/item/vorpalscythe
 	name = "vorpal scythe"
@@ -60,6 +60,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	wound_bonus = 10
 	bare_wound_bonus = 15
+	weapon_sprite_angle = 45
 	/*What state is our scythe in?
 
 	If it is SCYTHE_WEAK, it will harm our reaper on being sheathed.

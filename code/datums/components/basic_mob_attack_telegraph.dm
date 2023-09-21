@@ -74,6 +74,7 @@
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
 	forget_target(target)
 	source.ai_controller_click(target, combat_mode = TRUE)
+	source.changeNext_move(0 SECONDS) // We already started the cooldown when we triggered the forecast
 
 /// The guy we're trying to attack moved, is he still in range?
 /datum/component/basic_mob_attack_telegraph/proc/target_moved(atom/target)
