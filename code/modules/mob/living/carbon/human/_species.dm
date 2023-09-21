@@ -237,6 +237,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Was on_species_gain ever actually called?
 	/// Species code is really odd...
 	var/properly_gained = FALSE
+
+	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
+	var/list/outfit_override_registry = list()
+
 	///are we furry little creatures
 	var/use_fur = FALSE
 	///health mod of a species

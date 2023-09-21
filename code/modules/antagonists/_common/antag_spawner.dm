@@ -104,7 +104,9 @@
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
-	/// The antag datam applied
+	/// The outfit given to plasmaman operatives
+	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
+	/// The antag datum applied
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
