@@ -104,6 +104,7 @@
 	typepath = /datum/round_event/supermatter_surge/poly
 	category = EVENT_CATEGORY_ENGINEERING
 	weight = 0
+	max_occurrences = 0
 	description = "For when Poly is sacrificed to the SM. Not really useful to run manually."
 	min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
 	max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
