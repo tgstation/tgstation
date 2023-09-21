@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "The caller in a holopad call should now be able to hear people on the other end."

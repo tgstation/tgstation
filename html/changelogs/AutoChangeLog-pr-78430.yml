@@ -1,4 +1,0 @@
-author: "blueDev2"
-delete-after: True
-changes:
-  - bugfix: "Recipe that converts Vegetable Oil into Olive Oil works properly"

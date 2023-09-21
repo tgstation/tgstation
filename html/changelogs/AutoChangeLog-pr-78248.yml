@@ -1,5 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Projectiles no longer cause a blood graphic or blood splatters if they hit a limb that cant bleed"
-  - rscadd: "Prosthetics/Augments now spark when shot"
