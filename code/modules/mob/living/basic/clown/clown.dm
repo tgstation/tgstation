@@ -139,7 +139,15 @@
 		/obj/item/clothing/suit/hooded/bloated_human,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "I didn't ask for this", "I feel constant and horrible pain", "YA-HONK!!!", "this body is a merciless and unforgiving prison", "I was born out of mirthful pranking but I live in suffering"),
+		BB_EMOTE_SAY = list(
+			"HONK",
+			"Honk!",
+			"I didn't ask for this",
+			"I feel constant and horrible pain",
+			"YA-HONK!!!",
+			"this body is a merciless and unforgiving prison",
+			"I was born out of mirthful pranking but I live in suffering",
+		),
 		BB_EMOTE_HEAR = list("honks", "contemplates its existence"),
 		BB_EMOTE_SEE = list("sweats", "jiggles"),
 		BB_EMOTE_CHANCE = 5,
