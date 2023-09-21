@@ -72,7 +72,7 @@
 	var/obj/item/bodypart/affecting = smacked.get_bodypart(smacked.get_random_valid_zone(attacker.zone_selected))
 	var/miss_chance = calculate_miss_chance(attacker, smacked, weapon, damage)
 
-d	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
+	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
 		smacked.visible_message(
 			span_danger("[attacker]'s [attack_verb] misses [smacked]!"),
 			span_danger("You avoid [attacker]'s [attack_verb]!"),
