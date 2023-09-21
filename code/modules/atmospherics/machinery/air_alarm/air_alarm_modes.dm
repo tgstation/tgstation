@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
 		scrubber.set_widenet(TRUE)
-		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
+		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
 /datum/air_alarm_mode/panic_siphon
 	name = "Panic Siphon"
