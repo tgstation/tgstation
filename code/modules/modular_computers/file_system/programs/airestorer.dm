@@ -30,10 +30,6 @@
 	examine_text += span_info("Alt-click to eject the intelliCard.")
 	return examine_text
 
-/datum/computer_file/program/ai_restorer/Destroy(force)
-	if (stored_card) // The linter yells at me if I try to call try_eject here, so we have to do this instead
-		stored_card.forceMove(computer.drop_location())
-	return ..()
 
 /datum/computer_file/program/ai_restorer/kill_program(mob/user)
 	try_eject(forced = TRUE)
