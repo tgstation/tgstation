@@ -14303,7 +14303,6 @@
 "hLg" = (
 /obj/structure/table,
 /obj/machinery/coffeemaker/impressa,
-/obj/item/coffee_cartridge/fancy,
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup{
 	pixel_y = 19;
 	pixel_x = 13
