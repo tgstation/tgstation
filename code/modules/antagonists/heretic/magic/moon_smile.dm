@@ -27,13 +27,13 @@
 
 /datum/action/cooldown/spell/pointed/moon_smile/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	playsound(owner, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(owner, 'sound/hallucinations/i_see_you1.ogg', 75, TRUE)
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("The moon turns, its smile no longer set on you."))
 		to_chat(owner, span_warning("The moon does not smile upon them."))
 		return FALSE
 
-	playsound(cast_on, 'sound/hallucinations/i_see_you1.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
+	playsound(cast_on, 'sound/hallucinations/i_see_you1.ogg', 50, TRUE)
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(moon_smile_duration SECONDS)
 	cast_on.set_eye_blur_if_lower(10 SECONDS)

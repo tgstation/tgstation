@@ -19,6 +19,7 @@
 	cast_range = 12
 	projectile_type = /obj/projectile/magic/moon_parade
 
+
 /obj/projectile/magic/moon_parade
 	name = "Lunar parade"
 	icon_state = "star_ball"
@@ -26,14 +27,17 @@
 	damage_type = BURN
 	speed = 1
 	range = 100
-	knockdown = 4 SECONDS
+	ricochets_max = 40
+	ricochet_chance = 500
+	ricochet_incidence_leeway = 0
 	pixel_speed_multiplier = 0.2
-	pass_flags = PASSTABLE | PASSFLAPS
+	projectile_piercing = PASSMOB|PASSVEHICLE
+
 
 /obj/projectile/magic/moon_parade/Initialize(mapload)
 	. = ..()
 
-/obj/projectile/magic/moon_parade/on_hit(atom/hit, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/moon_parade/on_hit(atom/hit, pierce_hit)
 	. = ..()
 	if(isliving(hit) && isliving(firer))
 		var/mob/living/caster = firer
@@ -50,12 +54,11 @@
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-		else
-			victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
-			victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by manus grasp")
-			return PROJECTILE_PIERCE_HIT
-	return ..()
+		victim.AddComponent(/datum/component/leash, src, distance = 1)
+		balloon_alert(victim, "you feel unable to move away from the parade!")
+		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
+	return PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/magic/moon_parade/Destroy()
-	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 	return ..()
