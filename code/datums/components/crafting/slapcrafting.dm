@@ -87,6 +87,8 @@
 			CRASH("No recipe choices despite validating in earlier proc")
 
 		string_chosen_recipe = show_radial_menu(user, parent, recipe_choices, require_near = TRUE)
+		if(isnull(string_chosen_recipe))
+			return // they closed the thing
 
 	if(string_chosen_recipe)
 		final_recipe = result_to_recipe[string_chosen_recipe]
@@ -111,7 +113,7 @@
 
 	var/error_string = craft_sheet.construct_item(user, actual_recipe)
 
-	if(error_string)
+	if(!isatom(error_string))
 		to_chat(user, span_warning("crafting failed" + error_string))
 
 /// Alerts any examiners to the recipe, if they wish to know more.

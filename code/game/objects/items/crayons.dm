@@ -749,8 +749,11 @@
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/improvised_coolant)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)

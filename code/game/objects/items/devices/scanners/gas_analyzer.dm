@@ -28,8 +28,11 @@
 
 	if(type != /obj/item/analyzer)
 		return
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/material_sniffer)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/material_sniffer)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/analyzer/equipped(mob/user, slot, initial)

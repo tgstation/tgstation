@@ -355,8 +355,11 @@
 	add_glasses_slapcraft_component()
 
 /obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/clothing/glasses/sunglasses/reagent
@@ -372,8 +375,11 @@
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/scienceglassesremoval)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/clothing/glasses/sunglasses/gar

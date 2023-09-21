@@ -16,8 +16,11 @@
 	icon_state = "receiver"
 
 /obj/item/weaponcrafting/receiver/create_slapcraft_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/pipegun)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/weaponcrafting/stock
@@ -29,8 +32,11 @@
 	icon_state = "riflestock"
 
 /obj/item/weaponcrafting/stock/create_slapcraft_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/weaponcrafting/giant_wrench
@@ -40,8 +46,11 @@
 	icon_state = "weaponkit_gw"
 
 /obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/giant_wrench)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/giant_wrench)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 ///These gun kits are printed from the security protolathe to then be used in making new weapons

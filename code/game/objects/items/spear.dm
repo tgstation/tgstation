@@ -59,8 +59,11 @@
 
 // I dunno man
 /obj/item/spear/proc/add_headpike_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/headpike)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpike)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/spear/update_icon_state()
@@ -231,8 +234,11 @@
 	force_wielded = 20
 
 /obj/item/spear/bonespear/add_headpike_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/headpikebone)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebone)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /*
@@ -252,6 +258,9 @@
 
 
 /obj/item/spear/bamboospear/add_headpike_component()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/headpikebamboo)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebamboo)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)

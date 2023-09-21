@@ -113,8 +113,11 @@
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/strobeshield)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)

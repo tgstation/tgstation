@@ -39,8 +39,11 @@
 	update_brightness()
 	register_context()
 
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/flashlight_eyes)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

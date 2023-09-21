@@ -12,8 +12,11 @@
 
 /obj/item/clothing/gloves/color/black/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/radiogloves)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radiogloves)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/clothing/gloves/fingerless
@@ -31,8 +34,11 @@
 
 /obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/gripperoffbrand)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gripperoffbrand)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/clothing/gloves/color/orange

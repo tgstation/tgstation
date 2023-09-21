@@ -45,8 +45,11 @@
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/ghettojetpack)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/extinguisher/empty

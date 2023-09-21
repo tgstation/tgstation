@@ -503,8 +503,11 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 
 /obj/item/stack/sheet/durathread/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
@@ -625,8 +628,11 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/cardboard_id)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/cardboard_id)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()

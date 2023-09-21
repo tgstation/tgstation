@@ -258,8 +258,11 @@
 	butcher_sound = 'sound/weapons/circsawhit.ogg', \
 	)
 	//saws are very accurate and fast at butchering
-	AddComponent(/datum/component/slapcrafting,\
-			slapcraft_recipes = list(/datum/crafting_recipe/chainsaw)\
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/chainsaw)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
