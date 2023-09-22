@@ -32,6 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 
 	if(!istype(linked_node))
 		return

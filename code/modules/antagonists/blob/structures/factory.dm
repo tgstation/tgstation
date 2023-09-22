@@ -15,7 +15,7 @@
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 	///Its Blobbernaut, if it has spawned any.
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobbernaut
+	var/mob/living/basic/blobbernaut/minion/blobbernaut
 	///Used in blob/powers.dm, checks if it's already trying to spawn a blobbernaut to prevent issues.
 	var/is_creating_blobbernaut = FALSE
 
@@ -36,11 +36,8 @@
 		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
 		spore.death()
 	spores = null
-	if(blobbernaut)
-		blobbernaut.factory = null
-		to_chat(blobbernaut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
-		blobbernaut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
-		blobbernaut = null
+	blobbernaut?.on_factory_destroyed()
+	blobbernaut = null
 	if(overmind)
 		overmind.factory_blobs -= src
 	return ..()
@@ -59,3 +56,26 @@
 		BS.overmind = overmind
 		BS.update_icons()
 		overmind.blob_mobs.Add(BS)
+
+/// Produce a blobbernaut
+/obj/structure/blob/special/factory/proc/assign_blobbernaut(mob/living/new_naut)
+	is_creating_blobbernaut = FALSE
+	if (isnull(new_naut))
+		return
+
+	modify_max_integrity(initial(max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
+	visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
+
+	blobbernaut = new_naut
+	RegisterSignals(new_naut, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_blobbernaut_death))
+	update_appearance(UPDATE_ICON)
+
+/// When our brave soldier dies, reset our max integrity
+/obj/structure/blob/special/factory/proc/on_blobbernaut_death(mob/living/death_naut)
+	SIGNAL_HANDLER
+	if (isnull(blobbernaut) || blobbernaut != death_naut)
+		return
+	blobbernaut = null
+	max_integrity = initial(max_integrity)
+	update_appearance(UPDATE_ICON)

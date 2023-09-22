@@ -30,6 +30,8 @@
 /// Our overmind has changed colour and properties
 /datum/component/blob_minion/proc/overmind_strain_changed(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	SIGNAL_HANDLER
+	var/mob/living/living_parent = parent
+	living_parent.update_appearance(UPDATE_ICON)
 	on_strain_changed?.Invoke(overmind, new_strain)
 
 /datum/component/blob_minion/RegisterWithParent()
@@ -39,6 +41,7 @@
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
+	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
 	RegisterSignal(parent, COMSIG_MOB_MIND_INITIALIZED, PROC_REF(on_mind_init))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_appearance))
@@ -48,8 +51,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_TRIED_PASS, PROC_REF(on_attempted_pass))
 	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
-
-	/datum/antagonist/blob_minion
+	living_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/blob_minion/UnregisterFromParent()
 	. = ..()
@@ -58,6 +60,7 @@
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags &= ~PASSBLOB
 	living_parent.faction -= ROLE_BLOB
+	REMOVE_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	add_verb(parent, /mob/living/verb/pulled)
 	UnregisterSignal(parent, list(
 		COMSIG_MOB_MIND_INITIALIZED,
@@ -102,6 +105,7 @@
 		var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(parent)) // hello yes you are being healed
 		heal_effect.color = isnull(overmind) ? COLOR_BLACK : overmind.blobstrain.complementary_color
 	minion.heal_overall_damage(minion.maxHealth * BLOBMOB_HEALING_MULTIPLIER)
+	return COMPONENT_CANCEL_BLOB_ACT
 
 /// If we feel the fearsome bite of open flame, we feel worse
 /datum/component/blob_minion/proc/on_burned(mob/living/minion, exposed_temperature, exposed_volume)
@@ -129,8 +133,8 @@
 	SIGNAL_HANDLER
 	var/spanned_message = minion.say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]</font>"
-	for(var/creature in GLOB.mob_list)
-		if(isovermind(creature) || isblobmonster(creature))
+	for(var/mob/creature as anything in GLOB.mob_list)
+		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
 			to_chat(creature, rendered)
 		if(isobserver(creature))
 			var/link = FOLLOW_LINK(creature, src)

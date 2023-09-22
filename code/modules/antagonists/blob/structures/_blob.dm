@@ -129,13 +129,13 @@
 	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
-	for(var/atom/A in loc)
-		if(!A.can_blob_attack())
+	for(var/atom/thing in loc)
+		if(!thing.can_blob_attack())
 			continue
-		if(isliving(A) && overmind && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.blobstrain.attack_living(A)
+		if(isliving(thing) && overmind && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
+			overmind.blobstrain.attack_living(thing)
 			continue // Don't smack them twice though
-		A.blob_act(src)
+		thing.blob_act(src)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 

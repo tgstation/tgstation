@@ -29,7 +29,7 @@
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
 /datum/reagent/blob/proc/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
-	if(exposed_mob.stat == DEAD || isblobmonster(exposed_mob))
+	if(exposed_mob.stat == DEAD || HAS_TRAIT(exposed_mob, TRAIT_BLOB_ALLY))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 

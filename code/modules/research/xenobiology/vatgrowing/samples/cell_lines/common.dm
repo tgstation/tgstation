@@ -282,7 +282,7 @@
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobbernaut/independent = 1)
+	resulting_atoms = list(/mob/living/basic/blobbernaut = 1)
 
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"

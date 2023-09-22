@@ -82,8 +82,6 @@
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 		/mob/living/simple_animal/hostile/big_legion,
 		/mob/living/simple_animal/hostile/blob,
-		/mob/living/simple_animal/hostile/blob/blobbernaut,
-		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 		/mob/living/simple_animal/hostile/blob/blobspore,
 		/mob/living/simple_animal/hostile/blob/blobspore/independent,
 		/mob/living/simple_animal/hostile/blob/blobspore/weak,

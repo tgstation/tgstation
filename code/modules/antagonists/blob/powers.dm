@@ -196,38 +196,26 @@
 
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
 
-	factory.is_creating_blobbernaut = FALSE
-
 	if(!length(candidates))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
-		factory.blobbernaut = null //players must answer rapidly
+		factory.assign_blobbernaut(null)
 		return FALSE
 
-	factory.modify_max_integrity(initial(factory.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
-	factory.update_appearance()
-	factory.visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
-	playsound(factory.loc, 'sound/effects/splat.ogg', 50, TRUE)
-
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(factory))
-	flick("blobbernaut_produce", blobber)
-
-	factory.blobbernaut = blobber
-	blobber.factory = factory
-	blobber.overmind = src
-	blobber.update_icons()
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
+	var/mob/living/basic/blobbernaut/minion/blobber = new(get_turf(factory))
+	factory.assign_blobbernaut(blobber)
 
 	var/mob/dead/observer/player = pick(candidates)
-	blobber.key = player.key
+	blobber.AddComponent(/datum/component/blob_minion, src, CALLBACK(blobber, TYPE_PROC_REF(/mob/living/basic/blobbernaut/minion, on_strain_updated)))
+	blobber.assign_key(player.key)
+	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
-	SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
-	SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
-	to_chat(blobber, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
-	to_chat(blobber, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
-	to_chat(blobber, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
-	to_chat(blobber, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
+/// When one of our boys attacked something, we sometimes want to perform extra effects
+/mob/camera/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success)
+	SIGNAL_HANDLER
+	if (!success)
+		return
+	blobstrain.blobbernaut_attack(target, blobbynaut)
 
 /** Moves the core */
 /mob/camera/blob/proc/relocate_core()

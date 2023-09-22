@@ -54,6 +54,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/strain_choices
 
 /mob/camera/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
+	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
 	blob_points = starting_points
 	manualplace_min_time += world.time
@@ -217,11 +218,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_appearance() //reset anything that was ours
-	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		if(BM)
-			BM.overmind = null
-			BM.update_icons()
 	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
 		blob_structure.overmind = null
 	all_blobs = null
@@ -258,9 +254,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
-	for(var/mob/living/simple_animal/hostile/blob/blobbernaut/blobbernaut in blob_mobs)
-		if(blobbernaut.hud_used && blobbernaut.hud_used.blobpwrdisplay)
-			blobbernaut.hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	for(var/mob/living/basic/blobbernaut/blobbernaut in blob_mobs)
+		if(!blobbernaut.hud_used || !blobbernaut.hud_used.blobpwrdisplay)
+			continue
+		blobbernaut.hud_used.blobpwrdisplay.maptext = MAPTEXT(\
+			"<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
@@ -294,12 +292,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/message_a = say_quote(message)
 	var/rendered = span_big("<font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font>")
 
-	for(var/mob/M in GLOB.mob_list)
-		if(isovermind(M) || isblobmonster(M))
-			to_chat(M, rendered)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [rendered]")
+	for(var/mob/creature in GLOB.mob_list)
+		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
+			to_chat(creature, rendered)
+		if(isobserver(creature))
+			var/link = FOLLOW_LINK(creature, src)
+			to_chat(creature, "[link] [rendered]")
 
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
