@@ -19047,6 +19047,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "kdC" = (
@@ -30353,13 +30354,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "qay" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/structure/cable/industrial,
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 1
-	},
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/station/engineering/main)
 "qbg" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -33553,6 +33549,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "rHF" = (
@@ -41900,8 +41897,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/storage/tech)
 "wky" = (
-/obj/structure/cable/industrial,
-/turf/open/floor/iron/stairs,
+/obj/structure/cable,
+/turf/closed/wall,
 /area/station/engineering/main)
 "wkS" = (
 /obj/machinery/computer/station_alert{
@@ -85970,7 +85967,7 @@ ohC
 nZR
 ohC
 ohC
-nTi
+wky
 jvI
 jvI
 jvI
@@ -86994,15 +86991,15 @@ jWO
 aNi
 aNi
 aNi
-aNi
+qay
 dnr
 jvI
 jRw
 auZ
-auZ
-xKz
-wky
-qay
+rvE
+lSE
+eIg
+qqf
 ghz
 ghz
 ghz
@@ -87251,7 +87248,7 @@ fdi
 aNi
 pGN
 urf
-aNi
+qay
 dnr
 jvI
 cME
