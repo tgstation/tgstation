@@ -30,14 +30,16 @@
 /// Called when something passes into the great beyond, make it not do that
 /datum/grand_finale/immortality/proc/something_died(datum/source, mob/living/died, gibbed)
 	SIGNAL_HANDLER
-	if (died.stat != DEAD || HAS_TRAIT(died, TRAIT_SUICIDED)) // There is a way out of the cycle
+	if (died.stat != DEAD)
 		return
 	var/body_type = died.type
 	var/turf/died_turf = get_turf(died)
+	var/datum/mind/dead_mind = HAS_TRAIT(died, TRAIT_SUICIDED) ? null : died.mind // There is a way out of the cycle
+	if (!isnull(dead_mind))
+		to_chat(died, span_boldnotice("Your spirit surges! You will return to life in [DisplayTimeText(IMMORTAL_PRE_ACTIVATION_TIME + IMMORTAL_RESURRECT_TIME)]."))
 	animate(died, alpha = died.alpha, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, easing = SINE_EASING | EASE_IN)
-	to_chat(died, span_boldnotice("Your spirit surges! You will return to life in [DisplayTimeText(IMMORTAL_PRE_ACTIVATION_TIME + IMMORTAL_RESURRECT_TIME)]."))
-	addtimer(CALLBACK(src, PROC_REF(reverse_death), died, died.mind, died_turf, body_type), IMMORTAL_PRE_ACTIVATION_TIME, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(reverse_death), died, dead_mind, died_turf, body_type), IMMORTAL_PRE_ACTIVATION_TIME, TIMER_DELETE_ME)
 
 /// Create a ghost ready for revival
 /datum/grand_finale/immortality/proc/reverse_death(mob/living/died, datum/mind/dead_mind, turf/died_turf, body_type)
