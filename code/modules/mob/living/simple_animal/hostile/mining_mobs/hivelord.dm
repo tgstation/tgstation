@@ -93,10 +93,15 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(pop)), 10 SECONDS)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
+
+/// Legally different from dying just in case dying has been outlawed
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/proc/pop()
+	new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death(gibbed)
 	if (!gibbed)
