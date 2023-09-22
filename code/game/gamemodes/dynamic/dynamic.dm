@@ -458,11 +458,13 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
+	SSjob.DivideOccupations()
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && !is_unassigned_job(player.mind.assigned_role) && player.check_preferences())
 			roundstart_pop_ready++
 			candidates.Add(player)
+	SSjob.ResetOccupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_dynamic("[candidates.len] candidates.")
