@@ -10671,6 +10671,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
 	},
+/obj/structure/table/glass,
+/obj/item/book/manual/wiki/engineering_hacking,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 16;
+	pixel_x = 12
+	},
+/obj/item/food/burger{
+	pixel_y = -5;
+	pixel_x = 10
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms)
 "fvY" = (
@@ -22701,7 +22711,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "lLE" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink/directional/east{
+	name = "Urinal";
+	desc = "Oh god I washed my hands in it..."
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "lMa" = (
@@ -24543,6 +24556,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
 	},
+/obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms)
 "mQx" = (
