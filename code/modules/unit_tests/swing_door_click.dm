@@ -7,7 +7,7 @@
 
 	tider.forceMove(locate(door.x + 1, door.y, door.z))
 	door.open() // this sleeps we just have to cope
-
+	TEST_ASSERT(!door.operating, "Airlock was operating after being opened.")
+	TEST_ASSERT(!door.density, "Airlock was not open after being opened.")
 	click_wrapper(tider, get_turf(door))
-	TEST_ASSERT(door.density, "Airlock could not be opened by clicking on its floor below, \
-		as expected of behavior added by /datum/component/redirect_attack_hand_from_turf.")
+	TEST_ASSERT(door.operating, "Airlock was not closing after clicking the turf below, as per /datum/component/redirect_attack_hand_from_turf.")

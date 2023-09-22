@@ -5,9 +5,9 @@
 /datum/unit_test/flash_click/Run()
 	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/restraints/handcuffs/cuffs = allocate(/obj/item/restraints/handcuffs)
+	var/obj/item/assembly/flash/handheld/flash = allocate(/obj/item/assembly/flash/handheld)
 
-	attacker.put_in_active_hand(cuffs, forced = TRUE)
+	attacker.put_in_active_hand(flash, forced = TRUE)
 	ready_subjects(attacker, victim)
 	click_wrapper(attacker, victim)
 	check_results(attacker, victim)

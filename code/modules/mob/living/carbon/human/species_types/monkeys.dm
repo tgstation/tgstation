@@ -51,21 +51,26 @@
 	H.pass_flags |= PASSTABLE
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
-	RegisterSignal(H, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(monkey_melee))
+	RegisterSignal(H, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(monkey_melee))
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.pass_flags = initial(C.pass_flags)
 	C.dna.remove_mutation(/datum/mutation/human/race)
-	UnregisterSignal(C, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	UnregisterSignal(C, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/species/monkey/proc/monkey_melee(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
 	SIGNAL_HANDLER
+
+	if(isliving(target))
+		return NONE // should swing / bite instead
 
 	// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
 	if(!ISADVANCEDTOOLUSER(source) && proximity_flag) // This prox flag check is not necessary but we'll keep it just in case
 		target.attack_paw(source, modifiers)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	return NONE // does normal attack hand
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(check_holidays(MONKEYDAY))

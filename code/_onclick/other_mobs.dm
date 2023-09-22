@@ -64,9 +64,6 @@
 	return target.attack_hand_secondary(src, modifiers)
 
 /mob/living/carbon/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	if(!ISADVANCEDTOOLUSER(src))
-		return attack_target.attack_paw(src, modifiers)
-
 	return attack_target.attack_hand(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
