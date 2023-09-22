@@ -98,7 +98,7 @@
 	. = ..()
 	if(!isgolem(user))
 		return
-	if(!tapped)
+	if(!discovered)
 		to_chat(user, span_notice("You can't quite find the weakpoint of \the [src]... Perhaps it needs to be scanned first?"))
 		return
 	to_chat(user, span_notice("You start striking \the [src] with your golem's fist, attempting to dredge up a boulder..."))
@@ -198,6 +198,8 @@
 	COOLDOWN_START(src, wave_cooldown, wave_timer)
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 	spawning_mobs = TRUE
+	icon_state = icon_state_tapped
+	update_appearance(UPDATE_ICON_STATE)
 
 /**
  * Called when the wave defense event ends, after a variable amount of time in start_wave_defense.
@@ -216,7 +218,9 @@
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
 	else
-		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
+		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
+		icon_state = initial(icon_state)
+		update_appearance(UPDATE_ICON_STATE)
 		return FALSE //Bad end, try again.
 
 	for(var/mob/living/carbon/human/potential_miner as anything in range(7, src)) //Give the miners who are near the vent points and xp.
@@ -232,9 +236,7 @@
 				user_id_card.registered_account.mining_points += (point_reward_val)
 				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.escape() //Visually show the drone is done and flies away.
-	icon_state = icon_state_tapped
-	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", LOW_ITEM_LAYER, src, GAME_PLANE))
-	update_appearance(UPDATE_ICON_STATE)
+	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**
  * Called when the ore vent is tapped by a scanning device.
@@ -244,7 +246,7 @@
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
-		if(do_after(user, 4 SECONDS))
+		if(do_after(user, 4 SECONDS) || scan_only)
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
 
@@ -342,7 +344,7 @@
 	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
 		/datum/material/iron = 50,
-		/datum/material/glass = 50,
+		/datum/material/glass = 50
 	)
 
 /obj/structure/ore_vent/random

@@ -57307,9 +57307,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"uwJ" = (
-/turf/closed/wall,
-/area/space)
 "uwK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -84830,7 +84827,7 @@ ufv
 jXu
 sVW
 jXu
-uwJ
+hKg
 hKg
 hKg
 fQW

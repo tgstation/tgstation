@@ -142,8 +142,11 @@
  * Moves boulder contents to the drop location, and then deletes the boulder.
  */
 /obj/item/boulder/proc/break_apart()
+	var/list/quips = list("Clang!", "Crack!", "Bang!", "Clunk!", "Clank!")
 	for(var/obj/item/content as anything in contents)
-		content.forceMove(drop_location())
+		content.forceMove(get_turf(src))
+		visible_message(span_notice("[pick(quips)] Something falls out of \the [src]!"))
+		playsound(loc, 'sound/effects/picaxe1.ogg', 60, FALSE)
 	qdel(src)
 
 /**
@@ -194,7 +197,7 @@
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
-	artifact_inside.forceMove(drop_location())
+	artifact_inside.forceMove(get_turf(src))
 	artifact_inside = null
 
 /obj/item/boulder/artifact/break_apart()
@@ -226,7 +229,7 @@
 	var/datum/material/new_material = pick_weight(pick_minerals)
 	var/list/new_mats = list()
 	new_mats += new_material
-	new_mats[new_material] = SHEET_MATERIAL_AMOUNT //We only want one sheet of material in the gulag boulders
+	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1,3) //We only want a few sheets of material in the gulag boulders
 	set_custom_materials(new_mats)
 
 /obj/item/boulder/gulag/volcanic

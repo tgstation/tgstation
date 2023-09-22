@@ -18,6 +18,11 @@
 	var/holds_minerals = FALSE
 	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
 	var/list/processable_materials = list()
+	/// If we get a boulder with one of these inside, we'll drop it back out.
+	var/static/list/drop_if_contained = list(
+		/obj/item/relic,
+	)
+
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
 	// Cooldown associated with the usage_sound played.
@@ -135,7 +140,8 @@
 	var/stop_processing_check = FALSE
 	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
 	for(var/obj/item/potential_boulder as anything in boulders_contained)
-		if(!potential_boulder)
+		if(!potential_boulder || QDELETED(potential_boulder))
+			boulders_contained -= potential_boulder
 			break
 		if(boulders_concurrent <= 0)
 			break //Try again next time
@@ -144,7 +150,7 @@
 
 		if(!istype(potential_boulder, /obj/item/boulder))
 			potential_boulder.forceMove(drop_location())
-			CRASH("\The [src] had a non-boulder in it!")
+			CRASH("\The [src] had a non-boulder in it's boulders contained!")
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
@@ -160,10 +166,6 @@
 		if(boulder.durability <= 0)
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
-		else
-			if(prob(25))
-				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
-				visible_message(span_notice("[pick(quips)]"))
 	if(!stop_processing_check)
 		STOP_PROCESSING(SSmachines, src)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
@@ -189,6 +191,8 @@
 
 /**
  * Accepts a boulder into the machinery, then converts it into minerals.
+ * If the boulder can be fully processed by this machine, we take the materials, insert it into the silo, and destroy the boulder.
+ * If the boulder has materials left, we make a copy of the boulder to hold the processable materials, take the processable parts, and eject the original boulder.
  * @param chosen_boulder The boulder to being breaking down into minerals.
  */
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
@@ -198,7 +202,6 @@
 		return FALSE
 	if(QDELETED(chosen_boulder))
 		return FALSE
-
 	if(!chosen_boulder.custom_materials)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -206,56 +209,50 @@
 		return FALSE
 	if(isnull(silo_materials))
 		return
-	//here we loop through the boulder's ores
-	var/list/remaining_ores = list()
-	var/tripped = FALSE
-	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
-	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the remaining_ores list to add back to a leftover boulder.
-	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-		if(!is_type_in_list(possible_mat, processable_materials))
-			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			remaining_ores += possible_mat
-			remaining_ores[possible_mat] = quantity
-			chosen_boulder.custom_materials[possible_mat] = null
-		else
-			points_held = round(points_held + (chosen_boulder.custom_materials[possible_mat] * possible_mat.points_per_unit))/// put point total here into machine
-			tripped = TRUE
 
+	//here we loop through the boulder's ores
+	var/list/processable_ores = list()
+	var/tripped = FALSE
+	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the processable_ores list to add back to a leftover boulder.
+	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
+		if(is_type_in_list(possible_mat, processable_materials))
+			var/quantity = chosen_boulder.custom_materials[possible_mat]
+			points_held = round(points_held + (quantity * possible_mat.points_per_unit))// put point total here into machine
+			processable_ores += possible_mat
+			processable_ores[possible_mat] = quantity
+			chosen_boulder.custom_materials -= possible_mat //Remove it from the boulder now that it's tracked
+			tripped = TRUE
 	if(!tripped)
 		remove_boulder(chosen_boulder)
+		say("Nothing to process!")
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
-	var/is_artifact = istype(chosen_boulder, /obj/item/boulder/artifact) //We need to know if it's an artifact so we can carry it over to the new boulder.
-	var/obj/item/potential_contents
-	if(is_artifact)
-		var/obj/item/boulder/artifact/arti_boulder = chosen_boulder
-		potential_contents = arti_boulder?.artifact_inside
-		potential_contents.forceMove(src)
+	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
+	var/obj/item/boulder/disposable_boulder = new (src)
+	disposable_boulder.set_custom_materials(processable_ores)
 	silo_materials.mat_container.insert_item(
-		weapon = chosen_boulder,\
+		weapon = disposable_boulder,\
 		multiplier = refining_efficiency,\
 		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
 		context = src \
-	)
-	var/old_size = chosen_boulder.boulder_size
-	if(!remaining_ores.len)
-		chosen_boulder.break_apart()
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		update_boulder_count()
-		if(is_artifact)
-			points_held = round(points_held + 100) /// Artifacts give bonus points!
-		return TRUE
+		)
+	qdel(disposable_boulder)
 
-	var/obj/item/boulder/new_rock = new (src)
-	new_rock.set_custom_materials(remaining_ores)
-	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
-	new_rock.flavor_boulder(null, old_size, is_artifact)
-	if(potential_contents)
-		var/obj/item/boulder/artifact/arti_boulder = new_rock
-		arti_boulder.artifact_inside = potential_contents
-		potential_contents.forceMove(arti_boulder)
-	remove_boulder(new_rock)
+	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
+	if(!chosen_boulder.custom_materials.len)
+		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		if(is_artifact)
+			points_held = round(points_held + MINER_POINT_MULTIPLIER) /// Artifacts give bonus points!
+		chosen_boulder.break_apart()
+		update_boulder_count()
+		return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+
+	chosen_boulder.set_custom_materials(chosen_boulder.custom_materials)
+	chosen_boulder.reset_processing_cooldown() //So that we don't pick it back up!
+	chosen_boulder.durability = rand(chosen_boulder.boulder_size, chosen_boulder.boulder_size + BOULDER_SIZE_SMALL) //Reset durability to a random value between the boulder's size and a little more.
+	remove_boulder(chosen_boulder)
+
 	return TRUE
 
 /**

@@ -1,6 +1,6 @@
 
 SUBSYSTEM_DEF(ore_generation)
-	name = "Ore_generation"
+	name = "Ore Generation"
 	wait = 60 SECONDS
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME

@@ -71,7 +71,7 @@
 		if(mineral.scan_state)
 			minerals += mineral
 	for(var/obj/structure/ore_vent/vent in range(range, T))
-		if(!vents_nearby)
+		if(!vents_nearby && (!vent.discovered || !vent.tapped))
 			vents_nearby = TRUE
 			if(vent.discovered)
 				undiscovered = TRUE
