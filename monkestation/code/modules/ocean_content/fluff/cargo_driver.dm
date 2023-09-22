@@ -1,5 +1,5 @@
 /obj/machinery/mass_driver/cargo_driver
-	name = "cargo_driver"
+	name = "Cargo Driver"
 	id = MASSDRIVER_CARGO
 
 /obj/machinery/mass_driver/drive(amount)
@@ -67,6 +67,8 @@
 
 	var/list/deletors = list()
 	for(var/atom/movable/listed_atom in ex.exported_atoms_source)
+		if(isliving(listed_atom))
+			continue
 		if(listed_atom in contents_self)
 			deletors += listed_atom
 			contents_self -= listed_atom
