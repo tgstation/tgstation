@@ -36,7 +36,7 @@
 /datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker)
 	SIGNAL_HANDLER
 	if(weapon.force)
-		relay_attacker(target, attacker, weapon.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
+		relay_attacker(target, attacker, weapon.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK, weapon.force)
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
@@ -48,13 +48,13 @@
 
 	// Else check for combat mode.
 	if(attacker.combat_mode)
-		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
+		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK, attacker.melee_damage_upper)
 		return
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(attacker.melee_damage_upper > 0)
-		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
+		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK, attacker.melee_damage_upper,)
 
 /// Even if another component blocked this hit, someone still shot at us
 /datum/element/relay_attackers/proc/on_bullet_act(atom/target, list/bullet_args, obj/projectile/hit_projectile)
@@ -63,7 +63,7 @@
 		return
 	if(!ismob(hit_projectile.firer))
 		return
-	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
+	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK, hit_projectile.damage)
 
 /// Even if another component blocked this hit, someone still threw something
 /datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, datum/thrownthing/throwingdatum)
@@ -76,16 +76,16 @@
 	var/mob/thrown_by = hit_item.thrownby?.resolve()
 	if(!ismob(thrown_by))
 		return
-	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
+	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK, hit_item.throwforce,)
 
 /datum/element/relay_attackers/proc/on_attack_hulk(atom/target, mob/attacker)
 	SIGNAL_HANDLER
-	relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
+	relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK, 15)
 
 /datum/element/relay_attackers/proc/on_attack_mech(atom/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot)
 	SIGNAL_HANDLER
-	relay_attacker(target, mecha_attacker, ATTACKER_DAMAGING_ATTACK)
+	relay_attacker(target, mecha_attacker, ATTACKER_DAMAGING_ATTACK, mecha_attacker.force,)
 
 /// Send out a signal identifying whoever just attacked us (usually a mob but sometimes a mech or turret)
-/datum/element/relay_attackers/proc/relay_attacker(atom/victim, atom/attacker, attack_flags)
-	SEND_SIGNAL(victim, COMSIG_ATOM_WAS_ATTACKED, attacker, attack_flags)
+/datum/element/relay_attackers/proc/relay_attacker(atom/victim, atom/attacker, attack_flags, damage_value)
+	SEND_SIGNAL(victim, COMSIG_ATOM_WAS_ATTACKED, attacker, attack_flags, damage_value)

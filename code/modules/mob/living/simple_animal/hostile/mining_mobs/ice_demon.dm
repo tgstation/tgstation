@@ -83,6 +83,8 @@
 	ice_floor.Grant(src)
 	var/datum/action/cooldown/mob_cooldown/ice_demon_teleport/demon_teleport = new(src)
 	demon_teleport.Grant(src)
+	var/datum/action/cooldown/spell/conjure/create_afterimages/afterimage = new(src)
+	afterimage.Grant(src)
 	AddComponent(\
 		/datum/component/ranged_attacks,\
 		projectile_type = /obj/projectile/temp/ice_demon,\
@@ -93,6 +95,41 @@
 	AddElement(/datum/element/simple_flying)
 
 
+/mob/living/basic/mining/demon_afterimage
+	name = "afterimage demonic watcher"
+	desc = "Is this some sort of illusion?"
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
+	icon_state = "ice_demon"
+	icon_living = "ice_demon"
+	icon_dead = "ice_demon_dead"
+	icon_gib = "syndicate_gib"
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mouse_opacity = MOUSE_OPACITY_ICON
+	basic_mob_flags = DEL_ON_DEATH
+	speed = 5
+	maxHealth = 20
+	health = 20
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attack_verb_continuous = "slices"
+	attack_verb_simple = "slice"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	alpha = 80
+	ai_controller = /datum/ai_controller/basic_controller/ice_demon/afterimage
+
+/mob/living/basic/mining/demon_afterimage/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/temporary_atom, life_time = 60 SECONDS)
+
+/datum/ai_controller/basic_controller/ice_demon/afterimage
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/flee_target/ice_demon, //even the afterimages are afraid of flames!
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+
 /obj/projectile/temp/ice_demon
 	name = "ice blast"
 	icon_state = "ice_2"
@@ -101,7 +138,6 @@
 	armor_flag = ENERGY
 	speed = 1
 	pixel_speed_multiplier = 0.25
-	range = 200
 	temperature = -75
 
 /mob/living/basic/mining/ice_demon/death(gibbed)
@@ -138,8 +174,8 @@
 /datum/action/cooldown/mob_cooldown/slippery_ice_floors
 	name = "Iced Floors"
 	desc = "Summon slippery ice floors all around!"
-	button_icon = 'icons/obj/ore.dmi'
-	button_icon_state = "bluespace_crystal"
+	button_icon = 'icons/turf/floors/ice_turf.dmi'
+	button_icon_state = "ice_turf-6"
 	cooldown_time = 20 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	///perimeter we will spawn the iced floors on
@@ -184,3 +220,38 @@
 
 /obj/effect/temp_visual/slippery_ice/proc/add_slippery_component()
 	AddComponent(/datum/component/slippery, 2 SECONDS)
+
+/datum/action/cooldown/spell/conjure/create_afterimages
+	name = "Create After Images"
+	button_icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
+	button_icon_state = "ice_demon"
+	spell_requirements = NONE
+	cooldown_time = 1 MINUTES
+	summon_type = list(/mob/living/basic/mining/demon_afterimage)
+	summon_radius = 1
+	summon_amount = 2
+	///max number of after images
+	var/max_afterimages = 2
+	///How many clones do we have summoned
+	var/number_of_afterimages = 0
+
+
+/datum/action/cooldown/spell/conjure/create_afterimages/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(number_of_afterimages >= max_afterimages)
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/spell/conjure/create_afterimages/post_summon(atom/summoned_object, atom/cast_on)
+	var/mob/living/created_copy = summoned_object
+	created_copy.AddComponent(/datum/component/joint_damage, overlord_mob = owner)
+	RegisterSignals(created_copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
+	number_of_afterimages++
+
+/datum/action/cooldown/spell/conjure/create_afterimages/proc/delete_copy(mob/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
+	number_of_afterimages--

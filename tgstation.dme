@@ -1000,6 +1000,7 @@
 #include "code\datums\components\itembound.dm"
 #include "code\datums\components\itempicky.dm"
 #include "code\datums\components\jetpack.dm"
+#include "code\datums\components\joint_damage.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\keep_me_secure.dm"
 #include "code\datums\components\knockoff.dm"
