@@ -33,8 +33,6 @@
 
 	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
-	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	dragon.mind.special_role = ROLE_SPACE_DRAGON
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")

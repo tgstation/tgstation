@@ -52,6 +52,10 @@
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 	showpipe = !!underfloor_accessibility
+	if(showpipe)
+		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
+	else
+		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
@@ -74,14 +78,14 @@
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/node_dir = get_dir(src, node)
-		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
+		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
 		pipe_appearance.color = node.pipe_color
 		underlays += pipe_appearance
 		connected |= node_dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]")
+			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]")
 			pipe_appearance.color = pipe_color
 			underlays += pipe_appearance
 

@@ -75,7 +75,7 @@
 /datum/status_effect/stacking/proc/can_gain_stacks()
 	return owner.stat != DEAD
 
-/datum/status_effect/stacking/tick()
+/datum/status_effect/stacking/tick(seconds_between_ticks)
 	if(!can_have_status())
 		qdel(src)
 	else

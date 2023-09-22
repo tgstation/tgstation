@@ -99,7 +99,7 @@
 
 /obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/syndicatebomb(src)
+	set_wires(new /datum/wires/syndicatebomb(src))
 	if(payload)
 		payload = new payload(src)
 	update_appearance()
@@ -183,11 +183,11 @@
 	if(payload || !wires.is_all_cut() || !open_panel)
 		return FALSE
 
-	if(!tool.tool_start_check(user, amount=5))  //uses up 5 fuel
+	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start to cut [src] apart..."))
-	if(tool.use_tool(src, user, 20, volume=50, amount=5)) // uses up 5 fuel
+	if(tool.use_tool(src, user, 20, volume=50))
 		to_chat(user, span_notice("You cut [src] apart."))
 		new /obj/item/stack/sheet/plasteel(loc, 5)
 		qdel(src)
@@ -595,7 +595,7 @@
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
-		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
+		for(var/obj/machinery/syndicatebomb/B as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/syndicatebomb))
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++

@@ -7,7 +7,7 @@
 		/datum/crafting_recipe/halfskull,
 		/datum/crafting_recipe/skull,
 	)
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "boneworking_learing"
 	uses = INFINITY
 	remarks = list(

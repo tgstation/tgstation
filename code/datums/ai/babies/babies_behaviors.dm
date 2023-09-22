@@ -46,7 +46,7 @@
  */
 /datum/ai_behavior/make_babies
 	action_cooldown = 40 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
 /datum/ai_behavior/make_babies/setup(datum/ai_controller/controller, target_key, child_types_key)
 	var/atom/target = controller.blackboard[target_key]

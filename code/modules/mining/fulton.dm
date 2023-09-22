@@ -62,9 +62,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_notice("You start attaching the pack to [A]..."))
 		if(do_after(user,50,target=A))
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
-			if(loc == user && istype(user.back, /obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = user.back
-				B.atom_storage?.attempt_insert(src, user)
+			if(loc == user)
+				user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)
@@ -82,12 +81,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
-			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
+			balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.add_overlay(balloon2)
 			sleep(0.4 SECONDS)
-			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
+			balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon2)
@@ -121,7 +120,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(1 SECONDS)
-			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
+			balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon)

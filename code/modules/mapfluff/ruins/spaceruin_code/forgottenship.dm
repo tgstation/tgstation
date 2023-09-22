@@ -112,12 +112,12 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /area/ruin/space/has_grav/syndicate_forgotten_ship
 	name = "Syndicate Forgotten Ship"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambigen10.ogg')
+	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambigen8.ogg', 'sound/ambience/ambigen9.ogg')
 
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod
 	name = "Syndicate Forgotten Cargo pod"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/ambience/ambigen4.ogg', 'sound/ambience/signal.ogg')
+	ambientsounds = list('sound/ambience/ambigen3.ogg', 'sound/ambience/signal.ogg')
 
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault
 	name = "Syndicate Forgotten Vault"
@@ -136,7 +136,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	rapid_melee = 1
 	retreat_distance = 2
 	minimum_distance = 4
-	casingtype = /obj/item/ammo_casing/a556/weak
+	casingtype = /obj/item/ammo_casing/a223/weak
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier

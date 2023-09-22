@@ -140,7 +140,7 @@
 
 		while(crewmember_name in name_counts)
 			name_counts[crewmember_name]++
-			crewmember_name = text("[] ([])", crewmember_name, name_counts[crewmember_name])
+			crewmember_name = "[crewmember_name] ([name_counts[crewmember_name]])"
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
@@ -199,7 +199,7 @@
 	B.other_pair = A
 
 /obj/item/pinpointer/shuttle
-	name = "fugitive pinpointer"
+	name = "bounty shuttle pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
 	worn_icon_state = "pinpointer_black"

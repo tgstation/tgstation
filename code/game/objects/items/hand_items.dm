@@ -22,16 +22,16 @@
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(ownerExamined))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(ownerExamined))
 
 /obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
 	if(istype(owner))
-		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+		UnregisterSignal(owner, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /obj/item/hand_item/circlegame/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
+	UnregisterSignal(user, COMSIG_ATOM_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
 	// this is a dropdel item.
 	return ..()
 
@@ -128,7 +128,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if(!(the_head.biological_state & BIO_FLESH) || !IS_ORGANIC_LIMB(the_head))
+	if(!(the_head.biological_state & BIO_FLESH))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 

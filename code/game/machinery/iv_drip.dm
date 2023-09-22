@@ -10,6 +10,8 @@
 #define MAX_IV_TRANSFER_RATE 5
 ///Default IV drip transfer rate in units per second
 #define DEFAULT_IV_TRANSFER_RATE 5
+//Alert shown to mob the IV is still connected
+#define ALERT_IV_CONNECTED "iv_connected"
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -59,16 +61,12 @@
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 	register_context()
 	update_appearance(UPDATE_ICON)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
 	QDEL_NULL(reagent_container)
 	return ..()
-
-/obj/machinery/iv_drip/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/machinery/iv_drip/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -245,12 +243,12 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		if(isliving(attached))
-			var/mob/living/attached_mob = attached
+			var/mob/living/carbon/attached_mob = attached
 			to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
 			var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
 			chosen_limb.receive_damage(3)
-			chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate, wound_source = "IV needle")
+			attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
 		else
 			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
@@ -314,6 +312,9 @@
 	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
+	if(isliving(target))
+		var/mob/living/target_mob = target
+		target_mob.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	attached = target
 	START_PROCESSING(SSmachines, src)
 	update_appearance(UPDATE_ICON)
@@ -324,6 +325,9 @@
 /obj/machinery/iv_drip/proc/detach_iv()
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
+		if(isliving(attached))
+			var/mob/living/attached_mob = attached
+			attached_mob.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	attached = null
 	update_appearance(UPDATE_ICON)
@@ -439,6 +443,14 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
+	qdel(src)
+
+/atom/movable/screen/alert/iv_connected
+	name = "IV Connected"
+	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
+	icon_state = ALERT_IV_CONNECTED
+
 #undef IV_TAKING
 #undef IV_INJECTING
 
@@ -446,3 +458,7 @@
 #undef MAX_IV_TRANSFER_RATE
 
 #undef IV_TRANSFER_RATE_STEP
+
+#undef ALERT_IV_CONNECTED
+
+#undef DEFAULT_IV_TRANSFER_RATE

@@ -56,6 +56,13 @@
 		/datum/stock_part/capacitor = 1,
 		/obj/item/electronics/airlock = 1)
 
+/obj/item/circuitboard/machine/mass_driver
+	name = "Mass Driver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/mass_driver
+	req_components = list(
+		/datum/stock_part/servo = 1,)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -82,7 +89,8 @@
 		/obj/item/stack/cable_coil = 1,
 		/datum/stock_part/filter = 1,
 		/datum/stock_part/crystal = 1,
-		/datum/stock_part/micro_laser = 2)
+		/datum/stock_part/micro_laser = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/bus
 	name = "Bus Mainframe"
@@ -91,7 +99,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/hub
 	name = "Hub Mainframe"
@@ -100,7 +109,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 2)
+		/datum/stock_part/filter = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/message_server
 	name = "Messaging Server"
@@ -109,7 +119,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 3)
+		/datum/stock_part/filter = 3,
+	)
 
 /obj/item/circuitboard/machine/telecomms/processor
 	name = "Processor Unit"
@@ -121,7 +132,8 @@
 		/datum/stock_part/treatment = 2,
 		/datum/stock_part/analyzer = 1,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/amplifier = 1)
+		/datum/stock_part/amplifier = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver"
@@ -131,7 +143,8 @@
 		/datum/stock_part/ansible = 1,
 		/datum/stock_part/filter = 1,
 		/datum/stock_part/servo = 2,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/relay
 	name = "Relay Mainframe"
@@ -140,7 +153,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 2)
+		/datum/stock_part/filter = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/server
 	name = "Telecommunication Server"
@@ -149,7 +163,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller"
@@ -158,6 +173,53 @@
 	build_path = /obj/machinery/power/energy_accumulator/tesla_coil
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/modular_shield_generator
+	name = "Modular Shield Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield_generator
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+		/obj/item/stack/sheet/plasteel = 3,
+	)
+
+/obj/item/circuitboard/machine/modular_shield_node
+	name = "Modular Shield Node"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node
+	req_components = list(
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/modular_shield_well
+	name = "Modular Shield Well"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/well
+	req_components = list(
+		/datum/stock_part/capacitor = 3,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/modular_shield_relay
+	name = "Modular Shield Relay"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/relay
+	req_components = list(
+		/datum/stock_part/micro_laser = 3,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/modular_shield_charger
+	name = "Modular Shield Charger"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/charger
+	req_components = list(
+		/datum/stock_part/servo = 3,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
 
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger"
@@ -963,7 +1025,12 @@
 	build_path = /obj/machinery/rnd/server
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/scanning_module = 1)
+		/datum/stock_part/scanning_module = 1,
+	)
+
+/obj/item/circuitboard/machine/rdserver/oldstation
+	name = "Ancient R&D Server"
+	build_path = /obj/machinery/rnd/server/oldstation
 
 /obj/item/circuitboard/machine/techfab/department/science
 	name = "\improper Departmental Techfab - Science"
@@ -1444,3 +1511,13 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/radioactive_nebula_shielding
+	name = "Radioactive Nebula Shielding"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/nebula_shielding/radiation
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/obj/item/mod/module/rad_protection = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)

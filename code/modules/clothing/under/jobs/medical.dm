@@ -1,9 +1,9 @@
 /obj/item/clothing/under/rank/medical
 	icon = 'icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
-	armor_type = /datum/armor/rank_medical
+	armor_type = /datum/armor/clothing_under/rank_medical
 
-/datum/armor/rank_medical
+/datum/armor/clothing_under/rank_medical
 	bio = 50
 
 /obj/item/clothing/under/rank/medical/doctor
@@ -120,10 +120,9 @@
 	name = "chemist's jumpsuit"
 	icon_state = "chemistry"
 	inhand_icon_state = "w_suit"
-	armor_type = /datum/armor/medical_chemist
+	armor_type = /datum/armor/clothing_under/medical_chemist
 
-/datum/armor/medical_chemist
-	bio = 10
+/datum/armor/clothing_under/medical_chemist
 	fire = 50
 	acid = 65
 

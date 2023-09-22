@@ -51,6 +51,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/mass_driver
+	name = "Mass Driver Board"
+	desc = "The circuit board for a mass driver."
+	id = "mass_driver"
+	build_path = /obj/item/circuitboard/machine/mass_driver
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/turbine_compressor
 	name = "Turbine Compressor Board"
 	desc = "The circuit board for a turbine compressor."
@@ -166,6 +176,56 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/modular_shield_generator
+	name = "Modular Shield Generator Board"
+	desc = "The circuit board for a modular shield generator."
+	id = "modular_shield_generator"
+	build_path = /obj/item/circuitboard/machine/modular_shield_generator
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_node
+	name = "Modular Shield Node Board"
+	desc = "The circuit board for a modular shield node."
+	id = "modular_shield_node"
+	build_path = /obj/item/circuitboard/machine/modular_shield_node
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_relay
+	name = "Modular Shield Relay Board"
+	desc = "The circuit board for a modular shield relay."
+	id = "modular_shield_relay"
+	build_path = /obj/item/circuitboard/machine/modular_shield_relay
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_charger
+	name = "Modular Shield Charger Board"
+	desc = "The circuit board for a modular shield charger."
+	id = "modular_shield_charger"
+	build_path = /obj/item/circuitboard/machine/modular_shield_charger
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_well
+	name = "Modular Shield Well Board"
+	desc = "The circuit board for a modular shield well."
+	id = "modular_shield_well"
+	build_path = /obj/item/circuitboard/machine/modular_shield_well
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/teleconsole
 	name = "Teleporter Console Board"
@@ -407,6 +467,16 @@
 	desc = "The circuit board for a DNA Scanner."
 	id = "dnascanner"
 	build_path = /obj/item/circuitboard/machine/dnascanner
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/dnainfuser
+	name = "DNA Infuser Board"
+	desc = "The circuit board for a DNA Infuser."
+	id = "dnainfuser"
+	build_path = /obj/item/circuitboard/machine/dna_infuser
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
 	)
@@ -813,17 +883,6 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/board/spaceship_navigation_beacon
-	name = "Bluespace Navigation Gigabeacon Board"
-	desc = "The circuit board for a Bluespace Navigation Gigabeacon."
-	id = "spaceship_navigation_beacon"
-	build_type = IMPRINTER
-	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/medical_kiosk
 	name = "Medical Kiosk Board"

@@ -33,12 +33,17 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	can_be_held = TRUE
+	held_w_class = WEIGHT_CLASS_TINY
+	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
+	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
+	worn_slot_flags = ITEM_SLOT_HEAD
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	ai_controller = /datum/ai_controller/basic_controller/lizard
 
 	/// Typecache of things that we seek out to eat. Yummy.
 	var/static/list/edibles = typecacheof(list(
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/butterfly,
 	))
 
 /mob/living/basic/lizard/Initialize(mapload)

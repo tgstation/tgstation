@@ -20,6 +20,7 @@
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
+	item_flags = SKIP_FANTASY_ON_SPAWN
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -144,17 +145,48 @@
 /obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
 	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
 
-
-/obj/item/stack/on_grind()
-	. = ..()
-	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
-
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
+		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return
 	return TRUE
+
+/obj/item/stack/grind(datum/reagents/target_holder, mob/user)
+	var/current_amount = get_amount()
+	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
+		return TRUE
+	if(on_grind() == -1)
+		return FALSE
+	if(isnull(target_holder))
+		return TRUE
+
+	if(reagents)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	var/available_volume = target_holder.maximum_volume - target_holder.total_volume
+
+	//compute total volume of reagents that will be occupied by grind_results
+	var/total_volume = 0
+	for(var/reagent in grind_results)
+		total_volume += grind_results[reagent]
+
+	//compute number of pieces(or sheets) from available_volume
+	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	if(available_amount <= 0)
+		return FALSE
+
+	//Now transfer the grind results scaled by available_amount
+	var/list/grind_reagents = grind_results.Copy()
+	for(var/reagent in grind_reagents)
+		grind_reagents[reagent] *= available_amount
+	target_holder.add_reagent_list(grind_reagents)
+
+	/**
+	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
+	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
+	 * this stack if grinding was successfull
+	 */
+	use(available_amount, check = FALSE)
+	return available_amount == current_amount
 
 /obj/item/stack/proc/get_main_recipes()
 	RETURN_TYPE(/list)
@@ -185,10 +217,6 @@
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if(is_cyborg)
-		if(singular_name)
-			. += "There is enough energy for [get_amount()] [singular_name]\s."
-		else
-			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
@@ -404,6 +432,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
@@ -433,6 +462,10 @@
 	//BubbleWrap END
 
 	return TRUE
+
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
@@ -566,7 +599,8 @@
  * - [inhand][boolean]: Whether or not the stack to check should act like it's in a mob's hand.
  */
 /obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
-	if(!istype(check, merge_type))
+	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
+	if(!istype(check, merge_type) || check.merge_type != merge_type)
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
@@ -578,6 +612,8 @@
 		var/obj/machinery/machine = loc
 		if(!(src in machine.component_parts) || !(check in machine.component_parts))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_STACK_CAN_MERGE, check, inhand) & CANCEL_STACK_MERGE)
+		return FALSE
 	return TRUE
 
 /**

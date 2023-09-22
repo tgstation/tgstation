@@ -118,6 +118,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
+/datum/design/board/bankmachine
+	name = "Bank Machine Board"
+	desc = "Allows for the construction of circuit boards used to build a Bank Machine."
+	id = "bankmachine"
+	build_path = /obj/item/circuitboard/computer/bankmachine
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/board/crewconsole
 	name = "Crew Monitoring Computer Board"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."

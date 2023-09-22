@@ -124,6 +124,9 @@
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
 
+/turf/open/indestructible/plating
+	icon_state = "plating"
+
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
@@ -287,7 +290,7 @@
 	else
 		if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 			return FALSE
-		if(slipper.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+		if(slipper.move_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
 			return FALSE
 
 	if(!(lube & SLIDE_ICE))

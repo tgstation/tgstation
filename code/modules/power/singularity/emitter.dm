@@ -1,7 +1,7 @@
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "emitter"
 	base_icon_state = "emitter"
 
@@ -11,6 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE
+	can_change_cable_layer = TRUE
 
 	/// The icon state used by the emitter when it's on.
 	var/icon_state_on = "emitter_+a"
@@ -60,7 +61,7 @@
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
-	wires = new /datum/wires/emitter(src)
+	set_wires(new /datum/wires/emitter(src))
 	if(welded)
 		if(!anchored)
 			set_anchored(TRUE)
@@ -75,6 +76,12 @@
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
 	. = ..()
+
+/obj/machinery/power/emitter/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(welded)
+		balloon_alert(user, "unweld first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
@@ -265,7 +272,7 @@
 		return TRUE
 
 	if(welded)
-		if(!item.tool_start_check(user, amount=0))
+		if(!item.tool_start_check(user, amount=1))
 			return TRUE
 		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
 			span_notice("You start to cut [src] free from the floor..."), \
@@ -281,7 +288,7 @@
 	if(!anchored)
 		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
-	if(!item.tool_start_check(user, amount=0))
+	if(!item.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
 		span_notice("You start to weld [src] to the floor..."), \
@@ -368,13 +375,13 @@
 	projectile_type = initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
 
-/obj/machinery/power/emitter/emag_act(mob/user)
+/obj/machinery/power/emitter/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	locked = FALSE
 	obj_flags |= EMAGGED
-	if(user)
-		user.visible_message(span_warning("[user.name] emags [src]."), span_notice("You short out the lock."))
+	balloon_alert(user, "id lock shorted out")
+	return TRUE
 
 
 /obj/machinery/power/emitter/prototype

@@ -38,7 +38,7 @@
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=1))
 				return FALSE
 			user.balloon_alert(user, "slicing apart...")
 			if(W.use_tool(src, user, 40, volume=50))
@@ -64,7 +64,10 @@
 
 /obj/structure/statue/uranium
 	max_integrity = 300
-	light_range = 2
+	// largish, dim green glow
+	light_range = 3
+	light_power = 0.7
+	light_color = LIGHT_COLOR_NUCLEAR
 	custom_materials = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
@@ -475,8 +478,8 @@ Moving interrupts
 		user.balloon_alert(user, "no sculpt target!")
 		return FALSE
 	//No big icon things
-	var/icon/thing_icon = icon(target.icon, target.icon_state)
-	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	if(icon_dimensions["width"] != world.icon_size || icon_dimensions["height"] != world.icon_size)
 		user.balloon_alert(user, "sculpt target is too big!")
 		return FALSE
 	return TRUE

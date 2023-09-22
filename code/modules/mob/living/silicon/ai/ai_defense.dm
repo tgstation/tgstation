@@ -61,14 +61,17 @@
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing
 
-/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card)///emags access panel lock, so you can crowbar it without robotics access or consent
+/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card) ///emags access panel lock, so you can crowbar it without robotics access or consent
 	. = ..()
 	if(emagged)
 		balloon_alert(user, "access panel lock already shorted!")
 		return
 	balloon_alert(user, "access panel lock shorted")
-	to_chat(src, span_warning("[user] shorts out your access panel lock!"))
+	var/message = (user ? "[user] shorts out your access panel lock!" : "Your access panel lock was short circuited!")
+	to_chat(src, span_warning(message))
+	do_sparks(3, FALSE, src) // just a bit of extra "oh shit" to the ai - might grab its attention
 	emagged = TRUE
+	return TRUE
 
 /mob/living/silicon/ai/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

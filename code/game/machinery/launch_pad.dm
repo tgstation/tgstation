@@ -3,7 +3,7 @@
 /obj/machinery/launchpad
 	name = "bluespace launchpad"
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
@@ -77,8 +77,8 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
+				M.set_buffer(src)
+				balloon_alert(user, "saved to multitool buffer")
 				return 1
 
 		if(default_deconstruction_crowbar(I))
@@ -349,7 +349,7 @@
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE

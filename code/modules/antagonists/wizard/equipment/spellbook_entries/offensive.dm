@@ -23,6 +23,14 @@
 	spell_type = /datum/action/cooldown/spell/touch/smite
 	category = "Offensive"
 
+/datum/spellbook_entry/summon_simians
+	name = "Summon Simians"
+	desc = "This spell reaches deep into the elemental plane of bananas (the monkey one, not the clown one), and \
+		summons primal monkeys and lesser gorillas that will promptly flip out and attack everything in sight. Fun! \
+		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
+	spell_type = /datum/action/cooldown/spell/conjure/simian
+	category = "Offensive"
+
 /datum/spellbook_entry/blind
 	name = "Blind"
 	desc = "Temporarily blinds a single target."

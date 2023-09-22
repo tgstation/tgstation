@@ -13,10 +13,9 @@
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	worn_icon_state = "paper"
 	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
@@ -24,15 +23,13 @@
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
-	slot_flags = ITEM_SLOT_HEAD
-	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	dog_fashion = /datum/dog_fashion/head
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
+	item_flags = SKIP_FANTASY_ON_SPAWN
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -81,6 +78,10 @@
 	camera_holder = null
 	clear_paper()
 
+/// Determines whether this paper has been written or stamped to.
+/obj/item/paper/proc/is_empty()
+	return !(LAZYLEN(raw_text_inputs) || LAZYLEN(raw_stamp_data))
+
 /// Returns a deep copy list of raw_text_inputs, or null if the list is empty or doesn't exist.
 /obj/item/paper/proc/copy_raw_text()
 	if(!LAZYLEN(raw_text_inputs))
@@ -128,7 +129,13 @@
  * * greyscale_override - If set to a colour string and coloured is false, it will override the default of COLOR_WEBSAFE_DARK_GRAY when copying.
  */
 /obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE, greyscale_override = null)
-	var/obj/item/paper/new_paper = new paper_type(location)
+	var/obj/item/paper/new_paper
+	if(ispath(paper_type, /obj/item/paper))
+		new_paper = new paper_type(location)
+	else if(istype(paper_type, /obj/item/paper))
+		new_paper = paper_type
+	else
+		CRASH("invalid paper_type [paper_type], paper type path or instance expected")
 
 	new_paper.raw_text_inputs = copy_raw_text()
 	new_paper.raw_field_input_data = copy_field_text()
@@ -254,7 +261,7 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
 	stamp_overlay.pixel_x = rand(-2, 2)
 	stamp_overlay.pixel_y = rand(-3, 2)
 	add_overlay(stamp_overlay)
@@ -302,7 +309,7 @@
 	if(isnull(n_name) || n_name == "")
 		return
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
-		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
+		name = "paper[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 	update_static_data()
 

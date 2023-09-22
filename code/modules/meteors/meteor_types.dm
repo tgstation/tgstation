@@ -56,7 +56,7 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		if(prob(10) && !ispassmeteorturf(T))//randomly takes a 'hit' from ramming
 			get_hit()
 
 	if(z != z_original || loc == get_turf(dest))
@@ -80,7 +80,7 @@
 	if(!new_loop)
 		return
 
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, PROC_REF(handle_stopping))
+	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(handle_stopping))
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/handle_stopping()

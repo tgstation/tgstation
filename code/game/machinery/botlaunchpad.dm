@@ -1,7 +1,7 @@
 /obj/machinery/botpad
 	name = "Bot pad"
 	desc = "A lighter version of the orbital mech pad modified to launch bots. Requires linking to a remote to function."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "botpad"
 	circuit = /obj/item/circuitboard/machine/botpad
 	// ID of the console, used for linking up
@@ -26,8 +26,8 @@
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
+	multitool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 

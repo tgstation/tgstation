@@ -9,7 +9,7 @@
 	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
 		/obj/item/disk/design_disk/bepis,
-		/obj/item/camera_bug,
+		/obj/item/computer_disk/syndicate/camera_app,
 	)
 
 /obj/effect/spawner/random/exotic/languagebook
@@ -87,5 +87,5 @@
 	icon_state = "ripley"
 	loot = list(
 		/obj/structure/mecha_wreckage/ripley = 3,
-		/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
+		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)

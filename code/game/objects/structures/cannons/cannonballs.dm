@@ -22,6 +22,9 @@
 /obj/item/stack/cannonball/fourteen
 	amount = 14
 
+/obj/item/stack/cannonball/four
+	amount = 4
+
 /obj/item/stack/cannonball/shellball
 	name = "explosive shellballs"
 	singular_name = "explosive shellball"

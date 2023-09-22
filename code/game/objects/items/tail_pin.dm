@@ -28,6 +28,8 @@
 	poster_item_name = "party game poster"
 	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
+
 /obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(!istype(I,/obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.

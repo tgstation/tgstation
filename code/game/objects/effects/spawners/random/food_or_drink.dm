@@ -155,6 +155,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/sake = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/grappa = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
 		/obj/item/reagent_containers/cup/bottle/ethanol = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/fernet = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne = 2,
@@ -242,7 +243,7 @@
 		/obj/item/reagent_containers/condiment/soysauce = 1,
 		/obj/item/reagent_containers/condiment/vinegar = 1,
 		/obj/item/reagent_containers/condiment/peanut_butter = 1,
-		/obj/item/reagent_containers/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/olive_oil = 1,
 		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 

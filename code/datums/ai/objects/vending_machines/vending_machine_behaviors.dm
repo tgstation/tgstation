@@ -22,7 +22,7 @@
 
 /datum/ai_behavior/vendor_crush/proc/tiltonmob(datum/ai_controller/controller, turf/target_turf)
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
-	if(vendor_pawn.tilt(target_turf)) //We hit something
+	if(vendor_pawn.tilt(target_turf, 0) & SUCCESSFULLY_CRUSHED_MOB) //We hit something
 		vendor_pawn.say(pick("Supersize this!", "Eat my shiny metal ass!", "Want to consume some of my products?", "SMASH!", "Don't you love these smashing prices!"))
 		controller.set_blackboard_key(BB_VENDING_LAST_HIT_SUCCESFUL, TRUE)
 	else

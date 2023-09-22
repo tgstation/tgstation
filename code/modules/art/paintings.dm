@@ -50,6 +50,8 @@
 	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
+	/// Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.
+	var/show_grid = TRUE
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
@@ -128,12 +130,13 @@
 	.["finalized"] = finalized
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	var/obj/item/painting_implement = user.get_active_held_item()
-	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
-	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
+	.["show_grid"] = show_grid
 	.["paint_tool_palette"] = null
+	var/obj/item/painting_implement = user.get_active_held_item()
 	if(!painting_implement)
+		.["paint_tool_color"] = null
 		return
+	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
@@ -170,6 +173,29 @@
 		if("select_color")
 			var/obj/item/painting_implement = user.get_active_held_item()
 			painting_implement?.set_painting_tool_color(params["selected_color"])
+			. = TRUE
+		if("select_color_from_coords")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
+			painting_implement.set_painting_tool_color(grid[x][y])
+			. = TRUE
+		if("change_palette")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			//I'd have this done inside the signal, but that'd have to be asynced,
+			//while we want the UI to be updated after the color is chosen, not before.
+			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
+				return FALSE
+			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
+			. = TRUE
+		if("toggle_grid")
+			. = TRUE
+			show_grid = !show_grid
 		if("finalize")
 			. = TRUE
 			finalize(user)
@@ -328,7 +354,8 @@
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
+	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", null, MAX_NAME_LEN)
+	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
@@ -652,6 +679,8 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
+	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 
