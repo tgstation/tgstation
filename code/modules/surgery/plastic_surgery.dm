@@ -1,6 +1,20 @@
+/obj/item/disk/surgery/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery Disk"
+	desc = "The disk provides instructions on how to do an Advanced Plastic Surgery, this surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face. With the surgery long becoming obsolete with the rise of genetics technology. This item became an antique to many collectors, With only the cheaper and easier basic form of plastic surgery remaining in use in most places."
+	surgeries = list(/datum/surgery/plastic_surgery/advanced)
+
 /datum/surgery/plastic_surgery
 	name = "Plastic surgery"
 	possible_locs = list(BODY_ZONE_HEAD)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/reshape_face,
+		/datum/surgery_step/close,
+	)
+
+/datum/surgery/plastic_surgery/advanced
+	name = "advanced plastic surgery"
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -69,7 +83,7 @@
 		var/list/names = list()
 		if(!isabductor(user))
 			var/obj/item/offhand = user.get_inactive_held_item()
-			if(istype(offhand, /obj/item/photo))
+			if(istype(offhand, /obj/item/photo) && istype(surgery, /datum/surgery/plastic_surgery/advanced))
 				var/obj/item/photo/disguises = offhand
 				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist

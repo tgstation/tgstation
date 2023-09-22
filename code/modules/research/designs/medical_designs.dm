@@ -961,3 +961,8 @@
 	id = "surgery_wing_reconstruction"
 	surgery = /datum/surgery/advanced/wing_reconstruction
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery"
+	desc = "An advanced form of the plastic surgery, allowing oneself to remodel someone's face and voice based off a picture of someones face"
+	id = "surgery_advanced_plastic_surgery"
