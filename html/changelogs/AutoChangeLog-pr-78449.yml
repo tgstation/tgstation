@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - admin: "Boneless smite should work properly again."
