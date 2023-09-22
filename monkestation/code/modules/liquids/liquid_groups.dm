@@ -177,6 +177,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(group_temperature != reagents.chem_temp)
 		reagents.chem_temp = group_temperature
 
+	cleanse_members()
 	handle_visual_changes()
 	reagents.my_atom = pick(members) /// change the location of explosions and sounds every group process
 
@@ -214,6 +215,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		for(var/turf/member in members)
 			member.liquids.set_new_liquid_state(group_overlay_state)
 			member.liquid_height = expected_turf_height + member.turf_height
+
+/datum/liquid_group/proc/cleanse_members()
+	for(var/turf/listed_turf as anything in members)
+		if(isclosedturf(listed_turf))
+			remove_from_group(listed_turf)
 
 /datum/liquid_group/proc/process_member(turf/member)
 	if(isspaceturf(member))
