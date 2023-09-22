@@ -68,7 +68,7 @@
 
 	if(hydro_target.plant_status == HYDROTRAY_PLANT_DEAD)
 		living_pawn.manual_emote("weeps...") //weep over the dead plants
-	. = ..()
+	return ..()
 
 
 /datum/ai_planning_subtree/find_and_hunt_target/beamable_hydroplants
