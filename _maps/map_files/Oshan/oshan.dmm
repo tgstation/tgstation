@@ -819,6 +819,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
+"avZ" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/turf_decal/trimline/dark_blue/filled/warning,
+/obj/effect/turf_decal/trimline/dark_blue/filled/warning{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/command/bridge)
 "awg" = (
 /obj/machinery/computer/department_orders/science{
 	dir = 4
@@ -1066,6 +1078,10 @@
 /obj/item/stock_parts/cell,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
+"aGw" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall,
+/area/station/service/bar)
 "aGz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -3127,12 +3143,16 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
 "bER" = (
-/obj/structure/bed/double/pod{
-	name = "Air Matress"
+/obj/effect/turf_decal/trimline/dark_blue/filled/warning,
+/obj/effect/turf_decal/trimline/dark_blue/warning{
+	dir = 1
 	},
-/obj/item/bedsheet/hos/double,
-/turf/open/floor/pod/dark,
-/area/station/security/warden)
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/command/bridge)
 "bFq" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
@@ -6314,7 +6334,11 @@
 /area/station/hallway/primary/aft)
 "dqA" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8;
+	pixel_y = 5;
+	pixel_x = 4
+	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "dqB" = (
@@ -6349,6 +6373,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"drl" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/r_wall,
+/area/station/security/warden)
 "drs" = (
 /obj/effect/turf_decal/bot,
 /obj/vehicle/ridden/cargo_train,
@@ -7316,6 +7344,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 1
 	},
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "dTU" = (
@@ -14614,6 +14643,10 @@
 	dir = 10;
 	color = "#009dc4"
 	},
+/obj/effect/turf_decal/trimline/white/filled/corner{
+	color = "#009dc4";
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "hSR" = (
@@ -21190,7 +21223,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/vending/wardrobe/medi_wardrobe,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
@@ -22854,6 +22886,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge,
 /area/station/command/bridge)
 "mrJ" = (
@@ -26338,6 +26371,7 @@
 "okC" = (
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/turf_decal/trimline/yellow/line,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -26900,7 +26934,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /mob/living/basic/cockroach,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "oyj" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -29898,6 +29932,10 @@
 	},
 /turf/open/floor/plating/ocean,
 /area/ocean)
+"qfA" = (
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/turf/open/floor/pod/dark,
+/area/station/security/warden)
 "qfE" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -31639,9 +31677,14 @@
 /turf/open/floor/iron/kitchen,
 /area/station/service/bar/backroom)
 "rbK" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/carpet/neon/simple/green/nodots,
-/area/station/service/bar)
+/obj/machinery/duct/industrial/waste,
+/obj/effect/turf_decal/trimline/dark_blue/filled/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/warning,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "rbQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31796,7 +31839,10 @@
 /area/station/hallway/primary/central/fore)
 "rgY" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8;
+	pixel_x = 4
+	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "rhi" = (
@@ -32232,6 +32278,7 @@
 "rsk" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "rsl" = (
@@ -33989,7 +34036,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "srJ" = (
 /obj/structure/table/reinforced,
@@ -34573,7 +34620,12 @@
 	},
 /area/station/science/robotics)
 "sHI" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/machinery/button/door/directional/north{
+	pixel_x = 7;
+	id = "wardbed";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/pod/dark,
 /area/station/security/warden)
 "sHS" = (
@@ -35599,7 +35651,8 @@
 /area/station/commons/fitness/recreation/entertainment)
 "toq" = (
 /obj/machinery/door/airlock/security{
-	name = "Evidence Storage"
+	name = "Evidence Storage";
+	id_tag = "wardbed"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
@@ -36060,6 +36113,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "tDP" = (
@@ -37325,6 +37379,10 @@
 	color = "#D381C9"
 	},
 /area/station/science/robotics)
+"uij" = (
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "uiQ" = (
 /obj/machinery/light/small/directional/east{
 	dir = 1
@@ -38434,9 +38492,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "uPn" = (
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/turf/open/floor/pod/dark,
-/area/station/security/warden)
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
 "uPB" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -38890,7 +38949,7 @@
 	dir = 5
 	},
 /obj/effect/spawner/random/trash,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "vbW" = (
 /obj/machinery/telecomms/bus/preset_one,
@@ -39659,6 +39718,13 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"vvw" = (
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
 "vvB" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -43606,9 +43672,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "xIv" = (
-/obj/machinery/vending/medical,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "xID" = (
@@ -44672,7 +44738,13 @@
 /turf/open/floor/wood,
 /area/station/commons/fitness/recreation/entertainment)
 "ylE" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/structure/bed/double/pod{
+	name = "Air Matress";
+	dir = 4
+	},
+/obj/item/bedsheet/hos/double{
+	dir = 4
+	},
 /turf/open/floor/pod/dark,
 /area/station/security/warden)
 "ylI" = (
@@ -65148,8 +65220,8 @@ ojS
 ojS
 aSq
 ojS
-rbK
-lzc
+ojS
+aGw
 jdl
 lwx
 jdl
@@ -67232,11 +67304,11 @@ xBV
 fey
 brz
 qNe
-ejd
+vvw
 srI
 oyc
-wtN
-wtN
+uPn
+uPn
 srI
 vbV
 wKX
@@ -68005,8 +68077,8 @@ owJ
 mLx
 rrB
 sHI
-uPn
-bER
+ydD
+ydD
 rrB
 okD
 okD
@@ -68262,7 +68334,7 @@ uSB
 mLx
 rrB
 toq
-rrB
+drl
 rrB
 rrB
 rrB
@@ -68518,7 +68590,7 @@ fey
 owJ
 mLx
 rrB
-ydD
+qfA
 lKN
 ydD
 ofT
@@ -73138,9 +73210,9 @@ tVq
 tAq
 okC
 mrF
-xhJ
-ogi
-kjE
+bER
+avZ
+rbK
 ydb
 fZn
 bDd
@@ -96705,7 +96777,7 @@ aaK
 bfx
 lNZ
 xwH
-dXQ
+uij
 dXQ
 pUe
 bfx
