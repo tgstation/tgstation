@@ -20262,6 +20262,14 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
+"kBB" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/effect/turf_decal/board_number,
+/obj/machinery/suit_storage_unit/atmos,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "kBH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -89023,7 +89031,7 @@ aah
 aah
 aah
 aah
-tct
+aah
 aah
 aah
 aah
@@ -89280,7 +89288,7 @@ aah
 aah
 aah
 aah
-tct
+aah
 aah
 aah
 aah
@@ -89537,7 +89545,7 @@ aah
 aah
 aah
 aah
-tct
+aah
 aah
 aah
 aah
@@ -91328,7 +91336,7 @@ aah
 aah
 aah
 aah
-ojo
+aah
 aah
 aah
 aah
@@ -91452,7 +91460,7 @@ jWP
 hDV
 rab
 ujh
-hZJ
+kBB
 lvw
 hIX
 lZe
@@ -91966,7 +91974,7 @@ xwe
 nsF
 hMk
 ujh
-hZJ
+kBB
 lvw
 hIX
 lZe
