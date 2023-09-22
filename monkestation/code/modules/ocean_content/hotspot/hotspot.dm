@@ -138,9 +138,9 @@
 	///we need to somehow convert a value into a list of flags we are gonna do this via a switch statement, now with 100% more distribution to quakes
 	switch(heat)
 		///QUAKES
-		if(200 to 1999)
+		if(200 to 1499)
 			event_flags = WEAK_QUAKE
-		if(2000 to 3999)
+		if(1500 to 3999)
 			event_flags = QUAKE
 		///FIRES
 		if(4000 to 4999)
