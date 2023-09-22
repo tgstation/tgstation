@@ -363,9 +363,9 @@ SUBSYSTEM_DEF(job)
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations()
+/datum/controller/subsystem/job/proc/DivideOccupations(allow_all = FALSE)
 	//Setup new player list and get the jobs list
-	JobDebug("Running DO")
+	JobDebug("Running DO, allow_all = [allow_all]")
 
 	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
 
@@ -435,8 +435,9 @@ SUBSYSTEM_DEF(job)
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
-			if(PopcapReached())
-				RejectPlayer(player)
+			if(!allow_all)
+				if(PopcapReached())
+					RejectPlayer(player)
 
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
@@ -474,7 +475,7 @@ SUBSYSTEM_DEF(job)
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/dead/new_player/player in unassigned)
-		HandleUnassigned(player)
+		HandleUnassigned(player, allow_all)
 	JobDebug("DO, Ending handle unassigned.")
 
 	JobDebug("DO, Handle unrejectable unassigned")
@@ -493,12 +494,13 @@ SUBSYSTEM_DEF(job)
 	return TRUE
 
 //We couldn't find a job from prefs for this guy.
-/datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
+/datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player, allow_all = FALSE)
 	var/jobless_role = player.client.prefs.read_preference(/datum/preference/choiced/jobless_role)
 
-	if(PopcapReached())
-		RejectPlayer(player)
-		return
+	if(!allow_all)
+		if(PopcapReached())
+			RejectPlayer(player)
+			return
 
 	switch (jobless_role)
 		if (BEOVERFLOW)

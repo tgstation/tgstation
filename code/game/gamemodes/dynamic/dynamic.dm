@@ -458,12 +458,16 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
-	SSjob.DivideOccupations()
+	SSjob.DivideOccupations(allow_all = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && !is_unassigned_job(player.mind.assigned_role) && player.check_preferences())
-			roundstart_pop_ready++
-			candidates.Add(player)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
+			if(is_unassigned_job(player.mind.assigned_role))
+				log_admin("[player.ckey] failed to qualify for any job and has [player.client.prefs.be_special.len] antag preferences enabled. They will be unable to qualify for any antagonist role.")
+				message_admins("[player.ckey] failed to qualify for any job and has [player.client.prefs.be_special.len] antag preferences enabled. This is an old antag rolling technique. They will be unable to qualify for any antagonist role.")
+			else
+				roundstart_pop_ready++
+				candidates.Add(player)
 	SSjob.ResetOccupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
