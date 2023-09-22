@@ -24,6 +24,8 @@
 	 * This allows for different types of processor to produce different outputs from same input as long as the recipes require different processors.
 	 */
 	var/static/list/processor_inputs
+	/// Awkward variable for examining
+	var/slime_time = FALSE
 
 /obj/machinery/processor/Initialize(mapload)
 	. = ..()
@@ -54,6 +56,10 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.")
+		if(slime_time)
+			. += span_notice("It is currently set to 'Slime Time'. To turn it into a Food Procesor, multitool the circuit board.")
+		else
+			. += span_notice("It is currently set to 'Meat Grinder'. To turn it into a Slime Procesor, multitool the circuit board.")
 
 /obj/machinery/processor/Exited(atom/movable/gone, direction)
 	..()
@@ -187,8 +193,9 @@
 
 /obj/machinery/processor/slime
 	name = "slime processor"
-	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder appropriated for the science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
+	slime_time = TRUE
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)

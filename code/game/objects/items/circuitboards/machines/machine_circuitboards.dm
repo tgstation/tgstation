@@ -1239,6 +1239,7 @@
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
+	desc = "A food or slime processor. Multitool the circuit board to select between them."
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/processor
 	req_components = list(
@@ -1246,15 +1247,15 @@
 		/datum/stock_part/servo = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/circuitboard/machine/processor/multitool_act(mob/living/user, obj/item/tool)
 	if(build_path == /obj/machinery/processor)
 		name = "Slime Processor"
 		build_path = /obj/machinery/processor/slime
-		to_chat(user, span_notice("Name protocols successfully updated."))
+		to_chat(user, span_notice("You set the processor to 'Slime Time'."))
 	else
 		name = "Food Processor"
 		build_path = /obj/machinery/processor
-		to_chat(user, span_notice("Defaulting name protocols."))
+		to_chat(user, span_notice("You set the processor to 'Meat Grinder'."))
 	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
