@@ -11,31 +11,31 @@ const DEFAULT_HELP = `No information available! Ask for assistance if needed.`;
 const boxHelp = [
   {
     color: 'purple',
-    text: 'Study the area and do what needs to be done to recover the crate.',
+    text: 'Study the area and do what needs to be done to recover the crate. Pay close attention to domain information and context clues.',
     icon: 'search-location',
     title: 'Search',
   },
   {
     color: 'green',
-    text: 'Bring the crate to the designated sending location in the safehouse. The area can manifest as many things: A carpet, circuit tiles, glowing floors, and more. Examine the safehouse to find it.',
+    text: 'Bring the crate to the designated sending location in the safehouse. The area may seem out of place. Examine the safehouse to find it.',
     icon: 'boxes',
     'title': 'Recover',
   },
   {
     color: 'blue',
-    text: 'You can disconnect from the domain and return to your physical body. The ladder represents the safest way to do this, but other, unsafe means are also available.',
+    text: 'The ladder represents the safest way to disconnect before the cache is recovered. Should your connection sever, the netpod offers limited resuscitation potential.',
     icon: 'plug',
     title: 'Disconnect',
   },
   {
     color: 'yellow',
-    text: 'Net pods have limited security measures. You are somewhat safe from environmental hazards and intrusions, but not completely.',
+    text: 'While connected, you are somewhat safe from environmental hazards and intrusions, but not completely. Pay close attention to alerts.',
     icon: 'id-badge',
     title: 'Security',
   },
   {
     color: 'gold',
-    text: 'Generating avatars costs tremendous bandwidth. Do not waste them. ',
+    text: 'Generating avatars costs tremendous bandwidth. Do not waste them.',
     icon: 'coins',
     title: 'Limited Attempts',
   },
@@ -55,10 +55,16 @@ export const AvatarHelp = (props, context) => {
     <Window title="Domain Information" width={600} height={600}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item>
-            <Section fill scrollable title="Welcome to the Virtual Domain." />
+          <Stack.Item grow>
+            <Section
+              color="good"
+              fill
+              scrollable
+              title="Welcome to the Virtual Domain.">
+              {help_text}
+            </Section>
           </Stack.Item>
-          <Stack.Item grow={3}>
+          <Stack.Item grow={4}>
             <Stack fill vertical>
               <Stack.Item grow>
                 <Stack fill>
@@ -82,15 +88,6 @@ export const AvatarHelp = (props, context) => {
                 </Stack>
               </Stack.Item>
             </Stack>
-          </Stack.Item>
-          <Stack.Item grow>
-            <Section
-              color="good"
-              fill
-              scrollable
-              title="Detected Domain Information">
-              {help_text}
-            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>

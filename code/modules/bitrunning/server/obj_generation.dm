@@ -60,9 +60,28 @@
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo)
+	var/failed = FALSE
+
 	for(var/obj/item/bitrunning_disk/disk in neo.get_contents())
-		if(disk.granted_action)
-			var/datum/action/our_action = new disk.granted_action()
+		if(istype(disk, /obj/item/bitrunning_disk/ability))
+			var/obj/item/bitrunning_disk/ability/ability_disk = disk
+
+			if(isnull(ability_disk.granted_action))
+				failed = TRUE
+				continue
+
+			var/datum/action/our_action = new ability_disk.granted_action()
 			our_action.Grant(avatar)
-		if(disk.granted_item)
-			avatar.put_in_hands(new disk.granted_item())
+			continue
+
+		if(istype(disk, /obj/item/bitrunning_disk/item))
+			var/obj/item/bitrunning_disk/item/item_disk = disk
+
+			if(isnull(item_disk.granted_item))
+				failed = TRUE
+				continue
+
+			avatar.put_in_hands(new item_disk.granted_item())
+
+	if(failed)
+		to_chat(neo, span_warning("One of your disks failed to load. You must activate them to make a selection."))
