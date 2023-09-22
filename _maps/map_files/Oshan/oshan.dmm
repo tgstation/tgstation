@@ -8030,6 +8030,12 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"eoL" = (
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/station/command/heads_quarters/ce)
 "epb" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/autoname/directional/south,
@@ -8095,6 +8101,12 @@
 	pixel_y = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/circuitboard/aicore,
+/obj/item/computer_disk/ordnance,
+/obj/machinery/keycard_auth{
+	pixel_x = 4;
+	pixel_y = 9
+	},
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
 "eqz" = (
@@ -18197,6 +18209,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/station_alert,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "jRC" = (
@@ -21346,12 +21359,8 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "lxn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table/wood,
-/obj/item/computer_disk/ordnance,
-/obj/item/circuitboard/aicore,
-/obj/machinery/keycard_auth{
-	pixel_x = 4;
-	pixel_y = 9
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 4
 	},
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -41375,6 +41384,9 @@
 	dir = 1;
 	pixel_y = -30
 	},
+/obj/machinery/computer/apc_control{
+	dir = 8
+	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/ce)
 "wvm" = (
@@ -41383,6 +41395,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/item/aicard,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/server)
 "wvr" = (
@@ -87066,7 +87079,7 @@ gly
 bwi
 tan
 rdE
-hCY
+eoL
 lXt
 hUd
 oDZ
