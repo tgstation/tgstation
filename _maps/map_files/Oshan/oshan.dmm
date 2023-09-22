@@ -9605,6 +9605,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/structure/cable/industrial,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "eXv" = (
@@ -14057,6 +14058,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 8
 	},
+/obj/structure/cable/industrial,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "hvv" = (
@@ -16387,6 +16389,7 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/effect/spawner/random/aimodule/syndicate,
+/obj/item/ai_module/zeroth/coderedmartiallaw,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "iIS" = (
@@ -18508,6 +18511,7 @@
 /obj/machinery/duct/industrial/waste,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/industrial,
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/main)
 "jQc" = (
@@ -27331,13 +27335,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"ouV" = (
-/obj/machinery/duct/industrial/waste,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/industrial,
-/turf/open/floor/glass/reinforced,
-/area/station/engineering/main)
 "ovi" = (
 /obj/effect/turf_decal/trimline/blue/filled/end,
 /obj/machinery/disposal/bin,
@@ -36835,7 +36832,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "tCC" = (
@@ -37236,6 +37232,8 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/end{
 	dir = 4
 	},
+/obj/machinery/porta_turret/ai,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tLQ" = (
@@ -43129,6 +43127,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "wUi" = (
@@ -85705,7 +85704,7 @@ eRI
 rvE
 pFm
 qRD
-ouV
+jPC
 qRD
 pYh
 nTi
