@@ -780,7 +780,7 @@
 				return
 
 		if(RESPAWN_FLAG_DISABLED)
-			// pass() // Normal respawn
+			pass() // Normal respawn
 
 		if(RESPAWN_FLAG_DISABLED)
 			if (!check_rights_for(usr.client, R_ADMIN))
