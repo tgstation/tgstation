@@ -31,6 +31,8 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
+	if (!independent)
+		ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 
 	if(!istype(linked_node))
