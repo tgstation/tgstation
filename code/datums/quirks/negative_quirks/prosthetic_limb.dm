@@ -15,9 +15,11 @@
 	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	if(!limb_type)  //Client gone or they a random prosthetic
 		limb_type = GLOB.limb_choice[pick(GLOB.limb_choice)]
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/surplus = new limb_type()
 	var/slot_string = "[surplus.plaintext_zone]"
+
 	medical_record_text = "Patient uses a low-budget prosthetic on the [slot_string]."
 	old_limb = human_holder.return_and_replace_bodypart(surplus, special = TRUE)
 
