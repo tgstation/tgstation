@@ -815,3 +815,13 @@
   vinylspiders:
   - bugfix: rescue hooks will once again drop the mob next to the fisherman instead
       of just displaying a balloon alert and doing nothing
+2023-09-22:
+  Jacquerel:
+  - admin: Admins can transform misbehaving players into arbitrary objects at will.
+  Sealed101:
+  - bugfix: fixed moonicorns making space/chasm/lava/water bridges with their fairy
+      grass
+  Toastgoats:
+  - balance: Peacekeeper cyborg's emagged hug is no longer a hardstun.
+  intercepti0n:
+  - image: resprites t-ray scanner.
