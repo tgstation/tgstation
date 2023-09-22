@@ -127,7 +127,7 @@
 		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
-		/obj/item/storage/backpack/duffelbag/med/surgery,
+		/obj/item/surgery_tray/full,
 		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/emergency_bed,
 	)
