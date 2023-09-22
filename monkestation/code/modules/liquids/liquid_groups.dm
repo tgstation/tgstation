@@ -695,9 +695,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	var/amount_to_transfer = length(connected_liquids) * reagents_per_turf
 
-	members -= connected_liquids
 	var/datum/liquid_group/new_group = new(1)
-	new_group.members += connected_liquids
 
 	for(var/turf/connected_liquid in connected_liquids)
 		new_group.check_edges(connected_liquid)
@@ -774,12 +772,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		var/amount_to_transfer = length(connected_liquids) * reagents_per_turf
 
 		for(var/list/liquid_list as anything in connected_liquids)
-			if(length(members))
-				members -= liquid_list
 			var/datum/liquid_group/new_group = new(1)
-			new_group.members += liquid_list
-
 			for(var/turf/connected_liquid in liquid_list)
+
 				new_group.check_edges(connected_liquid)
 
 				if(connected_liquid in burning_members)
