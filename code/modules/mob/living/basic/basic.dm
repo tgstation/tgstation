@@ -189,7 +189,7 @@
 	return result
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	melee_attack(attack_target, modifiers)
+	return melee_attack(attack_target, modifiers)
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	. = ..()

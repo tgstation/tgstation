@@ -64,7 +64,10 @@
 	return target.attack_hand_secondary(src, modifiers)
 
 /mob/living/carbon/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_hand(src, modifiers)
+	if(!ISADVANCEDTOOLUSER(src))
+		return attack_target.attack_paw(src, modifiers)
+
+	return attack_target.attack_hand(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
 /atom/proc/attack_hand(mob/user, list/modifiers)
@@ -165,12 +168,12 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
-	var/just_do_attack_hand = ismovable(attack_target) && !isliving(attack_target)
-	var/try_moving_pulled = !combat_mode && pulling && isturf(attack_target)
-	if(just_do_attack_hand || try_moving_pulled)
-		if(!right_click_attack_chain(attack_target, modifiers))
-			resolve_unarmed_attack(attack_target, modifiers)
-		return TRUE
+	if(!isliving(attack_target))
+		// Goes into attack hand, attack paw, etc. for non-living mobs
+		if(right_click_attack_chain(attack_target, modifiers))
+			return TRUE
+		if(resolve_unarmed_attack(attack_target, modifiers))
+			return TRUE
 
 	if(execute_unarmed_attack_style(attack_target, modifiers))
 		return TRUE
@@ -236,7 +239,7 @@
  * This will call an attack proc that can vary from mob type to mob type on the target.
  */
 /mob/living/proc/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_animal(src, modifiers)
+	return attack_target.attack_animal(src, modifiers)
 
 /**
  * Called when an unarmed attack performed with right click hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro.
@@ -285,7 +288,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_alien(src, modifiers)
+	return attack_target.attack_alien(src, modifiers)
 
 /mob/living/carbon/alien/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_alien_secondary(src, modifiers)
@@ -318,7 +321,7 @@
 /mob/living/simple_animal/slime/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
 	if(isturf(attack_target))
 		return ..()
-	attack_target.attack_slime(src, modifiers)
+	return attack_target.attack_slime(src, modifiers)
 
 /mob/living/simple_animal/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(isturf(target))
@@ -340,7 +343,7 @@
 */
 
 /mob/living/simple_animal/drone/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
-	attack_target.attack_drone(src, modifiers)
+	return attack_target.attack_drone(src, modifiers)
 
 /mob/living/simple_animal/drone/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_drone_secondary(src, modifiers)
@@ -370,7 +373,7 @@
 */
 
 /mob/living/silicon/pai/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_pai(src, modifiers)
+	return attack_target.attack_pai(src, modifiers)
 
 /mob/living/silicon/pai/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_pai_secondary(src, modifiers)
@@ -391,7 +394,7 @@
 
 /mob/living/simple_animal/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	if(dextrous && (isitem(attack_target) || !combat_mode))
-		attack_target.attack_hand(src, modifiers)
+		. = attack_target.attack_hand(src, modifiers)
 		update_held_items()
 	else
 		return ..()
@@ -413,6 +416,7 @@
 		return ..()
 	else
 		INVOKE_ASYNC(src, PROC_REF(AttackingTarget), attack_target)
+		return TRUE
 
 /*
 	New Players:

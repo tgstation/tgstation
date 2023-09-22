@@ -216,10 +216,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.Move_Pulled(src)
+	return ..() || user.Move_Pulled(src)
 
 /// Call to move a turf from its current area to a new one
 /turf/proc/change_area(area/old_area, area/new_area)
