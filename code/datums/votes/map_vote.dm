@@ -125,5 +125,5 @@
 		return
 
 	SSmapping.changemap(override_map)
-	log_game("The next map has been reset to [override_map.map_name] by the successful restart vote.")
-	send_to_playing_players(span_boldannounce("The next map has been reset to [override_map.map_name] by the successful restart vote."))
+	log_game("The next map has been reset to [override_map.map_name].")
+	send_to_playing_players(span_boldannounce("The next map is: [override_map.map_name]."))
