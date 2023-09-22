@@ -42,13 +42,6 @@
 		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 	add_cell_sample()
 
-/mob/living/simple_animal/hostile/blob/blobspore/mind_initialize()
-	. = ..()
-	if(independent || !overmind)
-		return FALSE
-	var/datum/antagonist/blob_minion/blob_zombie/zombie = new(overmind)
-	mind.add_antag_datum(zombie)
-
 /mob/living/simple_animal/hostile/blob/blobspore/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/target in view(src,1)) //Only for corpse right next to/on same tile
