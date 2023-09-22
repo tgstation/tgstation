@@ -2,8 +2,10 @@
 #define SEEDLING_STATE_WARMUP 1
 #define SEEDLING_STATE_ACTIVE 2
 
-//A plant rooted in the ground that forfeits its melee attack in favor of ranged barrages.
-//It will fire flurries of solar energy, and occasionally charge up a powerful blast that makes it vulnerable to attack.
+/**
+ * A mobile plant with a rapid ranged attack.
+ * It can pick up watering cans and look after plants.
+ */
 /mob/living/basic/seedling
 	name = "seedling"
 	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon."
@@ -215,7 +217,7 @@
 		/datum/pet_command/point_targetting/use_ability/rapidseeds,
 	)
 
-///abilities
+//abilities
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling
 	name = "Solar Energy"
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
