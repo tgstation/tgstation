@@ -61,6 +61,7 @@
 				zombify(target)
 				break
 	if(factory && !is_valid_z_level(get_turf(src), get_turf(factory)))
+		drop_corpse()
 		qdel(src)
 	return ..()
 
@@ -92,9 +93,12 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/death()
+/mob/living/simple_animal/hostile/blob/blobspore/proc/drop_corpse()
 	corpse?.forceMove(loc)
 	corpse = null
+
+/mob/living/simple_animal/hostile/blob/blobspore/death()
+	drop_corpse()
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
