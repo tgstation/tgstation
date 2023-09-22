@@ -17852,6 +17852,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
+"jzw" = (
+/mob/living/basic/cockroach{
+	name = "Manuel"
+	},
+/turf/open/floor/plating,
+/area/station/cargo/warehouse)
 "jzK" = (
 /obj/structure/window/spawner/directional/south,
 /obj/machinery/light_switch/directional/west,
@@ -61332,7 +61338,7 @@ nyQ
 rkn
 khq
 aej
-aej
+jzw
 jkc
 ipq
 rCP
