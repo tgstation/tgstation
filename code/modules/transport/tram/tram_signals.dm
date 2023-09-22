@@ -135,7 +135,7 @@
 /obj/machinery/transport/crossing_signal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(panel_open)
-		if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(held_item?.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_ALT_LMB] = "rotate signal"
 			context[SCREENTIP_CONTEXT_RMB] = "flip signal"
 
@@ -177,7 +177,7 @@
 	. = ..()
 
 	var/obj/item/tool = user.get_active_held_item()
-	if(!panel_open || tool.tool_behaviour != TOOL_WRENCH)
+	if(!panel_open || tool?.tool_behaviour != TOOL_WRENCH)
 		return FALSE
 
 	tool.play_tool_sound(src, 50)
@@ -514,7 +514,7 @@
 /obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(panel_open)
-		if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(held_item?.tool_behaviour == TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_RMB] = "rotate sensor"
 
 	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))

@@ -65,9 +65,9 @@
 
 /obj/machinery/transport/destination_sign/indicator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item.tool_behaviour == TOOL_WRENCH)
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = "unanchor"
-	if(held_item.tool_behaviour == TOOL_WELDER)
+	if(held_item?.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "repair"
 
 	return CONTEXTUAL_SCREENTIP_SET

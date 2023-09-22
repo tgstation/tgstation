@@ -34,16 +34,16 @@
 		id_tag = assign_random_name()
 
 /obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
 	if(panel_open)
 		if(malfunctioning || methods_to_fix.len)
 			context[SCREENTIP_CONTEXT_LMB] = "repair electronics"
-		if(held_item.tool_behaviour == TOOL_CROWBAR)
+		if(held_item?.tool_behaviour == TOOL_CROWBAR)
 			context[SCREENTIP_CONTEXT_RMB] = "deconstruct"
 
-	if(held_item.tool_behaviour == TOOL_WELDER)
+	if(held_item?.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "repair frame"
 
 	return CONTEXTUAL_SCREENTIP_SET
