@@ -69,6 +69,7 @@
 					/obj/item/seeds/bamboo,
 					/obj/item/seeds/eggplant/eggy,
 					/obj/item/seeds/rainbow_bunch,
+					/obj/item/seeds/seedling,
 					/obj/item/seeds/shrub,
 					/obj/item/seeds/random = 2,
 				)
