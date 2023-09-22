@@ -13,7 +13,7 @@
 /obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -237,7 +237,7 @@
 		return
 	if(!M.reagents)
 		return
-	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize(mapload)
@@ -335,7 +335,7 @@
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -362,6 +362,9 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
+
+/obj/item/pen/screwdriver/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()

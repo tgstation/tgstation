@@ -156,6 +156,9 @@
 	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(can_perform_surgery(user, params))
+		return TRUE
+
 	if(..())
 		return TRUE
 	user.changeNext_move(attacking_item.attack_speed)

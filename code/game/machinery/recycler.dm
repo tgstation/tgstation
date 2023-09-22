@@ -3,7 +3,7 @@
 /obj/machinery/recycler
 	name = "recycler"
 	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -12,11 +12,11 @@
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
-	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
+	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
 	var/list/allowed_materials = list(
@@ -32,7 +32,8 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/butchering/recycler, \
 	speed = 0.1 SECONDS, \
 	effectiveness = amount_produced, \
@@ -49,6 +50,10 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/recycler/Destroy()
+	materials = null
+	return ..()
 
 /obj/machinery/recycler/RefreshParts()
 	. = ..()
@@ -83,15 +88,16 @@
 		return
 	return ..()
 
-/obj/machinery/recycler/emag_act(mob/user)
+/obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
+	balloon_alert(user, "safeties disabled")
+	return FALSE
 
 /obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
@@ -104,12 +110,13 @@
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	if(border_dir == dir)
 		return TRUE
 
-/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
+/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(eat), AM)
+
+	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -182,9 +189,8 @@
 		new wood.plank_type(loc, 1 + seed_modifier)
 		. = TRUE
 	else
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/retrived = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		if(retrived > 0) //item was salvaged i.e. deleted
+		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+		if(retrieved > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
 			return TRUE
 	qdel(weapon)

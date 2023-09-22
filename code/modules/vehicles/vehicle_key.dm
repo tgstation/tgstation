@@ -76,7 +76,7 @@
 
 /obj/item/key/lasso
 	name = "bone lasso"
-	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
+	desc = "The perfect tool for directing a Goliath! If only it made them move any faster..."
 	force = 12
 	icon_state = "lasso"
 	inhand_icon_state = "chain"

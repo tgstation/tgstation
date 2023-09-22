@@ -15,7 +15,7 @@
 	light_color = "#ff0000"
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultbastard"
 	inhand_icon_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -33,7 +33,7 @@
 	set_light(4)
 	AddComponent(/datum/component/butchering, 50, 80)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-	AddComponent(/datum/component/soul_stealer)
+	AddComponent(/datum/component/soul_stealer, soulstone_type = /obj/item/soulstone)
 	AddComponent( \
 		/datum/component/spin2win, \
 		spin_cooldown_time = 25 SECONDS, \

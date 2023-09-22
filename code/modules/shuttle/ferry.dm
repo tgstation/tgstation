@@ -8,9 +8,9 @@
 	var/allow_silicons = FALSE
 	var/allow_emag = FALSE
 
-/obj/machinery/computer/shuttle/ferry/emag_act(mob/user)
+/obj/machinery/computer/shuttle/ferry/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!allow_emag)
-		to_chat(user, span_warning("[src]'s security firewall is far too powerful for you to bypass."))
+		balloon_alert(user, "firewall too powerful!")
 		return FALSE
 	return ..()
 

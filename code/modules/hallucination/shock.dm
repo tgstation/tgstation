@@ -2,7 +2,7 @@
 /datum/hallucination/shock
 	random_hallucination_weight = 1
 
-	var/electrocution_icon = 'icons/mob/species/human/human.dmi'
+	var/electrocution_icon = 'icons/mob/human/human.dmi'
 	var/electrocution_icon_state = "electrocuted_base"
 	var/image/shock_image
 	var/image/electrocution_skeleton_anim

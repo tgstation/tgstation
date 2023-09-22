@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -545,29 +545,30 @@
 
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/robot, user = usr)
 	. = ..()
-	if(.)
+	if(!. || HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
+		return FALSE
 
-		if(robot.hasExpanded)
-			to_chat(usr, span_warning("This unit already has an expand module installed!"))
-			return FALSE
+	if(robot.hasExpanded)
+		to_chat(usr, span_warning("This unit already has an expand module installed!"))
+		return FALSE
 
-		robot.notransform = TRUE
-		var/prev_lockcharge = robot.lockcharge
-		robot.SetLockdown(TRUE)
-		robot.set_anchored(TRUE)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(1, holder = robot, location = robot.loc)
-		smoke.start()
-		sleep(0.2 SECONDS)
-		for(var/i in 1 to 4)
-			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(1.2 SECONDS)
-		if(!prev_lockcharge)
-			robot.SetLockdown(FALSE)
-		robot.set_anchored(FALSE)
-		robot.notransform = FALSE
-		robot.hasExpanded = TRUE
-		robot.update_transform(2)
+	ADD_TRAIT(robot, TRAIT_NO_TRANSFORM, REF(src))
+	var/prev_lockcharge = robot.lockcharge
+	robot.SetLockdown(TRUE)
+	robot.set_anchored(TRUE)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(1, holder = robot, location = robot.loc)
+	smoke.start()
+	sleep(0.2 SECONDS)
+	for(var/i in 1 to 4)
+		playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		sleep(1.2 SECONDS)
+	if(!prev_lockcharge)
+		robot.SetLockdown(FALSE)
+	robot.set_anchored(FALSE)
+	REMOVE_TRAIT(robot, TRAIT_NO_TRANSFORM, REF(src))
+	robot.hasExpanded = TRUE
+	robot.update_transform(2)
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -721,6 +722,33 @@
 		if (E)
 			R.model.remove_module(E, TRUE)
 
+/obj/item/borg/upgrade/drink_app
+	name = "glass storage apparatus"
+	desc = "A supplementary drinking glass storage apparatus for service cyborgs."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/drink_app/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
+		if(E)
+			to_chat(user, span_warning("This unit has no room for additional drink storage!"))
+			return FALSE
+
+		E = new(R.model)
+		R.model.basic_modules += E
+		R.model.add_module(E, FALSE, TRUE)
+
+/obj/item/borg/upgrade/drink_app/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
+		if (E)
+			R.model.remove_module(E, TRUE)
+
 /obj/item/borg/upgrade/broomer
 	name = "experimental push broom"
 	desc = "An experimental push broom used for efficiently pushing refuse."
@@ -861,13 +889,41 @@
 	if (rtable)
 		install.model.remove_module(rtable, TRUE)
 
+/obj/item/borg/upgrade/service_cookbook
+	name = "Service Cyborg Cookbook"
+	desc = "An upgrade to the service model cyborg, that lets them create more foods."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/service_cookbook/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	book = new(install.model)
+	install.model.basic_modules += book
+	install.model.add_module(book, FALSE, TRUE)
+
+/obj/item/borg/upgrade/service_cookbook/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.model.remove_module(book, TRUE)
+
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)

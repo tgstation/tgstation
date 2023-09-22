@@ -130,7 +130,7 @@
 		return
 
 	var/datum/action/send_chems/chem_action = new(src)
-	chem_action.transfered_ref = WEAKREF(embedded_mob)
+	chem_action.transferred_ref = WEAKREF(embedded_mob)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
@@ -154,7 +154,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 	/// Weakref to the mob target that we transfer chemicals to on activation
-	var/datum/weakref/transfered_ref
+	var/datum/weakref/transferred_ref
 
 /datum/action/send_chems/New(Target)
 	. = ..()
@@ -168,12 +168,12 @@
 	if(!ishuman(owner) || !owner.reagents)
 		return FALSE
 	var/mob/living/carbon/human/transferer = owner
-	var/mob/living/carbon/human/transfered = transfered_ref?.resolve()
-	if(!ishuman(transfered))
+	var/mob/living/carbon/human/transferred = transferred_ref?.resolve()
+	if(!ishuman(transferred))
 		return FALSE
 
-	to_chat(transfered, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
+	to_chat(transferred, span_warning("You feel a tiny prick!"))
+	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, 1, 1, 0, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()

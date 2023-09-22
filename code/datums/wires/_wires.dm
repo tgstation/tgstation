@@ -153,25 +153,25 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire)
+/datum/wires/proc/cut(wire, source)
 	if(is_cut(wire))
 		cut_wires -= wire
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
-		on_cut(wire, mend = TRUE)
+		on_cut(wire, mend = TRUE, source = source)
 	else
 		cut_wires += wire
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
-		on_cut(wire, mend = FALSE)
+		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color)
-	cut(get_wire(color))
+/datum/wires/proc/cut_color(color, source)
+	cut(get_wire(color), source)
 
-/datum/wires/proc/cut_random()
-	cut(wires[rand(1, wires.len)])
+/datum/wires/proc/cut_random(source)
+	cut(wires[rand(1, wires.len)], source)
 
-/datum/wires/proc/cut_all()
+/datum/wires/proc/cut_all(source)
 	for(var/wire in wires)
-		cut(wire)
+		cut(wire, source)
 
 /datum/wires/proc/pulse(wire, user, force=FALSE)
 	if(!force && is_cut(wire))
@@ -191,14 +191,6 @@
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
 		S.forceMove(holder)
-		/**
-		 * special snowflake check for machines
-		 * someone attached a signaler to the machines wires
-		 * move it to the machines component parts so it doesn't get moved out in dump_inventory_contents() which gets called a lot
-		 */
-		if(istype(holder, /obj/machinery))
-			var/obj/machinery/machine = holder
-			LAZYADD(machine.component_parts, S)
 		S.connected = src
 		S.on_attach() // Notify assembly that it is attached
 		return S
@@ -232,7 +224,7 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE)
+/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
 	return
 
 /datum/wires/proc/on_pulse(wire, user)
@@ -329,7 +321,7 @@
 			if(I || isAdminGhostAI(usr))
 				if(I && holder)
 					I.play_tool_sound(holder, 20)
-				cut_color(target_wire)
+				cut_color(target_wire, source = L)
 				. = TRUE
 			else
 				to_chat(L, span_warning("You need wirecutters!"))

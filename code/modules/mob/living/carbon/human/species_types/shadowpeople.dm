@@ -3,14 +3,15 @@
 	name = "Shadow"
 	plural_form = "Shadowpeople"
 	id = SPECIES_SHADOW
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
-	species_traits = list()
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NODISMEMBER,
+		TRAIT_NEVER_WOUNDED
 	)
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC

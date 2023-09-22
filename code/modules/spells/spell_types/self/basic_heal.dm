@@ -17,6 +17,9 @@
 	/// Amount of burn to heal to the spell caster on cast
 	var/burn_to_heal = 10
 
+/datum/action/cooldown/spell/basic_heal/is_valid_target(atom/cast_on)
+	return isliving(cast_on)
+
 /datum/action/cooldown/spell/basic_heal/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.visible_message(

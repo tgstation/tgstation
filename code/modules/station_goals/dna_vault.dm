@@ -55,11 +55,10 @@
 /datum/station_goal/dna_vault/check_completion()
 	if(..())
 		return TRUE
-	for(var/obj/machinery/dna_vault/V in GLOB.machines)
+	for(var/obj/machinery/dna_vault/V as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/dna_vault))
 		if(V.animal_dna.len >= animal_count && V.plant_dna.len >= plant_count && V.human_dna.len >= human_count)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"

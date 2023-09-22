@@ -33,6 +33,9 @@
 	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/cloneloss = 0
 
+	/// The movement intent of the mob (run/wal)
+	var/move_intent = MOVE_INTENT_RUN
+
 	/// Rate at which fire stacks should decay from this mob
 	var/fire_stack_decay_rate = -0.05
 
@@ -61,9 +64,10 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
+	/// Does the mob rotate when lying
+	var/rotate_on_lying = FALSE
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
-	var/timeofdeath = 0
 
 	///A message sent when the mob dies, with the *deathgasp emote
 	var/death_message = ""
@@ -91,10 +95,10 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	var/cameraFollow = null
-
-	/// Time of death
-	var/tod = null
+	///The mob's latest time-of-death
+	var/timeofdeath = 0
+	///The mob's latest time-of-death, as a station timestamp instead of world.time
+	var/station_timestamp_timeofdeath
 
 	/// Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 	var/limb_destroyer = 0
@@ -151,14 +155,8 @@
 	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
-	///converted to a list of stun absorption sources this mob has when one is added
-	var/stun_absorption = null
-
 	///how much blood the mob has
 	var/blood_volume = 0
-
-	///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
-	var/see_override = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects
@@ -204,10 +202,12 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)
-	var/body_position_pixel_x_offset = 0
 	///The x amount a mob's sprite should be offset due to the current position they're in
+	var/body_position_pixel_x_offset = 0
+	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
 	var/body_position_pixel_y_offset = 0
+	///The height offset of a mob's maptext due to their current size.
+	var/body_maptext_height_offset = 0
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view

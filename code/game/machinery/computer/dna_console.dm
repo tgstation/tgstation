@@ -235,10 +235,13 @@
 	// Set the default tgui state
 	set_default_state()
 
+/obj/machinery/computer/scan_consolenew/LateInitialize()
+	. = ..()
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -716,10 +719,10 @@
 				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
 				if(prob(60))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
-					random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				else if (prob(30))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
-					random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				//Instantiate list to hold resulting mutation_index
 				var/mutation_data[0]
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check

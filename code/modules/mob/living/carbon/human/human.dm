@@ -203,7 +203,7 @@
 				return
 
 			if(href_list["quirk"])
-				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
+				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL, from_scan = TRUE)
 				if(quirkstring)
 					to_chat(human_user,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
 				else
@@ -422,10 +422,10 @@
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	if(gender == MALE)
-		facial_hairstyle = "Full Beard"
+		set_facial_hairstyle("Full Beard", update = FALSE)
 	else
-		facial_hairstyle = "Shaved"
-	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		set_facial_hairstyle("Shaved", update = FALSE)
+	set_hairstyle(pick("Bedhead", "Bedhead 2", "Bedhead 3"), update = FALSE)
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
@@ -483,7 +483,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		if(HAS_TRAIT(src, TRAIT_MORBID))
+		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
 			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
 		else
 			add_mood_event("saved_life", /datum/mood_event/saved_life)
@@ -535,30 +535,6 @@
 
 	return TRUE
 
-/**
- * Used to update the makeup on a human and apply/remove lipstick traits, then store/unstore them on the head object in case it gets severed
- */
-/mob/living/carbon/human/proc/update_lips(new_style, new_colour, apply_trait)
-	lip_style = new_style
-	lip_color = new_colour
-	update_body()
-
-	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
-	hopefully_a_head?.stored_lipstick_trait = null
-
-	if(new_style && apply_trait)
-		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
-		hopefully_a_head?.stored_lipstick_trait = apply_trait
-
-/**
- * A wrapper for [mob/living/carbon/human/proc/update_lips] that tells us if there were lip styles to change
- */
-/mob/living/carbon/human/proc/clean_lips()
-	if(isnull(lip_style) && lip_color == initial(lip_color))
-		return FALSE
-	update_lips(null)
-	return TRUE
 
 /**
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
@@ -721,15 +697,21 @@
 
 	return ..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
-	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
-		if(message)
-			visible_message(span_warning("[src] dry heaves!"), \
-							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
-		if(stun)
-			Stun(20 SECONDS)
-		return 1
-	..()
+/mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+		return ..()
+
+	if(vomit_flags & MOB_VOMIT_MESSAGE)
+		visible_message(
+			span_warning("[src] dry heaves!"),
+			span_userdanger("You try to throw up, but there's nothing in your stomach!"),
+		)
+	if(vomit_flags & MOB_VOMIT_STUN)
+		Stun(20 SECONDS)
+	if(vomit_flags & MOB_VOMIT_KNOCKDOWN)
+		Knockdown(20 SECONDS)
+
+	return TRUE
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))

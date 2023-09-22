@@ -16,7 +16,6 @@
 		A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition. \
 		A form of magical grounding can help, too, but will not cure it on its own."
 	severity = DISEASE_SEVERITY_HARMFUL
-	required_organs = list(/obj/item/bodypart/head)
 
 	/// List of random non-targeted spells to pick from to cast
 	var/list/datum/action/cooldown/spell/random_spells = list()

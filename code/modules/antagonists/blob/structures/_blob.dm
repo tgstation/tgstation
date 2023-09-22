@@ -35,6 +35,7 @@
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
+	laser = 50
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -292,7 +293,6 @@
 			damage_amount *= brute_resist
 		if(BURN)
 			damage_amount *= fire_resist
-		if(CLONE)
 		else
 			return 0
 	var/armor_protection = 0

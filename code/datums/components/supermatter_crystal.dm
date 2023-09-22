@@ -21,6 +21,11 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
+/datum/component/supermatter_crystal/Destroy(force, silent)
+	tool_act_callback = null
+	consume_callback = null
+	return ..()
+
 /datum/component/supermatter_crystal/UnregisterFromParent(force, silent)
 	var/list/signals_to_remove = list(
 		COMSIG_ATOM_BLOB_ACT,
@@ -180,7 +185,7 @@
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
-		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!")
+		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_They()] burst[user.p_s()] into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(source, user, vis_msg, mob_msg)
 
@@ -213,6 +218,8 @@
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
+		if(hit_object == source)
+			continue
 		bumped_hit(parent, hit_object)
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 

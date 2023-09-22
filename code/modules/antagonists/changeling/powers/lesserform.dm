@@ -20,7 +20,7 @@
 
 //Transform into a monkey.
 /datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
-	if(!user || user.notransform)
+	if(!user || HAS_TRAIT(user, TRAIT_NO_TRANSFORM))
 		return FALSE
 	..()
 	return ismonkey(user) ? unmonkey(user) : become_monkey(user)
@@ -40,7 +40,6 @@
 	user.humanize(species = chosen_species, instant = transform_instantly)
 
 	changeling.transform(user, chosen_form)
-	user.regenerate_icons()
 	return TRUE
 
 /// Returns the form to transform back into, automatically selects your only profile if you only have one

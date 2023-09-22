@@ -42,7 +42,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	head = /obj/item/clothing/head/helmet/alt
 	shoes = /obj/item/clothing/shoes/russian
-	l_pocket = /obj/item/ammo_box/a762
+	l_pocket = /obj/item/ammo_box/strilka310
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	id = /obj/item/card/id/advanced/bountyhunter
 
@@ -100,7 +100,7 @@
 	name = "Bounty Hunter - Armored"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	back = /obj/item/storage/backpack
-	head = /obj/item/clothing/head/cowboy
+	head = /obj/item/clothing/head/cowboy/bounty
 	suit = /obj/item/clothing/suit/space/hunter
 	belt = /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	gloves = /obj/item/clothing/gloves/tackler/combat
@@ -187,7 +187,7 @@
 	name = "Psyker-Shikari Hunter"
 	glasses = null
 	head = null
-	ears = /obj/item/radio/headset/syndicate/alt/psyker
+	ears = /obj/item/radio/headset/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

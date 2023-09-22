@@ -1,7 +1,7 @@
 /obj/machinery/griddle
 	name = "griddle"
 	desc = "Because using pans is for pansies."
-	icon = 'icons/obj/machines/kitchenmachines.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "griddle1_off"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | PASSTABLE| LETPASSTHROW // It's roughly the height of a table.
@@ -83,6 +83,13 @@
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/attack_robot(mob/user)
+	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/proc/toggle_mode()
 	on = !on
 	if(on)
 		begin_processing()

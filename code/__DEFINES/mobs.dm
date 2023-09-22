@@ -6,7 +6,7 @@
 #define PLAYER_NOT_READY 0
 #define PLAYER_READY_TO_PLAY 1
 
-//movement intent defines for the m_intent var
+//movement intent defines for the move_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 
@@ -42,29 +42,36 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Mob bio-types flags
+///The mob is organic, can heal from medical sutures.
 #define MOB_ORGANIC (1 << 0)
+///The mob is of a rocky make, most likely a golem. Iron within, iron without!
 #define MOB_MINERAL (1 << 1)
+///The mob is a synthetic lifeform, like station borgs.
 #define MOB_ROBOTIC (1 << 2)
+///The mob is an shambling undead corpse. Or a halloween species. Pick your poison.
 #define MOB_UNDEAD (1 << 3)
+///The mob is a human-sized human-like human-creature.
 #define MOB_HUMANOID (1 << 4)
+///The mob is a bug/insect/arachnid/some other kind of scuttly thing.
 #define MOB_BUG (1 << 5)
+///The mob is a wild animal. Domestication may apply.
 #define MOB_BEAST (1 << 6)
-#define MOB_EPIC (1 << 7) //megafauna
+///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+#define MOB_SPECIAL (1 << 7)
+///The mob is some kind of a scaly reptile creature
 #define MOB_REPTILE (1 << 8)
+///The mob is a spooky phantasm or an evil ghast of such nature.
 #define MOB_SPIRIT (1 << 9)
+///The mob is a plant-based species, benefitting from light but suffering from darkness and plantkillers.
 #define MOB_PLANT (1 << 10)
+///The mob is a goopy creature, probably coming from xenobiology.
+#define MOB_SLIME (1 << 11)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
-
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
@@ -78,10 +85,10 @@
 #define BODYTYPE_ROBOTIC (1<<1)
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<3)
 ///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<4)
+#define BODYTYPE_MONKEY (1<<3)
+///The limb is digitigrade.
+#define BODYTYPE_DIGITIGRADE (1<<4)
 ///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
@@ -99,6 +106,7 @@
 #define SPECIES_ANDROID "android"
 #define SPECIES_DULLAHAN "dullahan"
 #define SPECIES_ETHEREAL "ethereal"
+#define SPECIES_ETHEREAL_LUSTROUS "lustrous"
 #define SPECIES_FELINE "felinid"
 #define SPECIES_FLYPERSON "fly"
 #define SPECIES_HUMAN "human"
@@ -368,6 +376,8 @@
 #define GALOSHES_DONT_HELP (1<<3)
 /// Slip works even if you're already on the ground
 #define SLIP_WHEN_CRAWLING (1<<4)
+/// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
+#define SLIPPERY_TURF (1<<5)
 
 #define MAX_CHICKENS 50
 
@@ -485,20 +495,23 @@
 #define HUMAN_CARRY_SLOWDOWN 0.35
 
 //Flags that control what things can spawn species (whitelist)
-//Badmin magic mirror
-#define MIRROR_BADMIN (1<<0)
+// These flags unlock the Lepton Violet shuttle, hardcoded in wabbajack()
 //Standard magic mirror (wizard)
 #define MIRROR_MAGIC (1<<1)
 //Pride ruin mirror
 #define MIRROR_PRIDE (1<<2)
 //Race swap wizard event
 #define RACE_SWAP (1<<3)
-//ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN (1<<4)
-//xenobio black crossbreed
-#define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
-#define WABBAJACK (1<<6)
+#define WABBAJACK (1<<4)
+
+// These flags do NOT unlock the Lepton Violet shuttle, hardcoded in wabbajack() - use for things like xenobio, admins, etc.
+//Badmin magic mirror
+#define MIRROR_BADMIN (1<<5)
+//ERT spawn template (avoid races that don't function without correct gear)
+#define ERT_SPAWN (1<<6)
+//xenobio black crossbreed
+#define SLIME_EXTRACT (1<<7)
 
 // Randomization keys for calling wabbajack with.
 // Note the contents of these keys are important, as they're displayed to the player
@@ -573,10 +586,14 @@
 
 ///Squash flags. For squashable element
 
-///Whether or not the squashing requires the squashed mob to be lying down
+/// Squashing will not occur if the mob is not lying down (bodyposition is LYING_DOWN)
 #define SQUASHED_SHOULD_BE_DOWN (1<<0)
-///Whether or not to gib when the squashed mob is moved over
-#define SQUASHED_SHOULD_BE_GIBBED (1<<0)
+/// If present, outright gibs the squashed mob instead of just dealing damage
+#define SQUASHED_SHOULD_BE_GIBBED (1<<1)
+/// If squashing always passes if the mob is dead
+#define SQUASHED_ALWAYS_IF_DEAD (1<<2)
+/// Don't squash our mob if its not located in a turf
+#define SQUASHED_DONT_SQUASH_IN_CONTENTS (1<<3)
 
 /*
  * Defines for "AI emotions", allowing the AI to expression emotions
@@ -839,10 +856,26 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 
-/// The mob will vomit a green color
-#define VOMIT_TOXIC 1
-/// The mob will vomit a purple color
-#define VOMIT_PURPLE 2
+// Various flags for carbon mob vomiting
+/// Flag which makes a message send about the vomiting.
+#define MOB_VOMIT_MESSAGE (1<<0)
+/// Flag which makes the mob get stunned upon vomiting.
+#define MOB_VOMIT_STUN (1<<1)
+/// Flag which makes the mob incur damage upon vomiting.
+#define MOB_VOMIT_HARM (1<<2)
+/// Flag which makes the mob vomit blood
+#define MOB_VOMIT_BLOOD (1<<3)
+/// Flag which will cause the mob to fall over when vomiting.
+#define MOB_VOMIT_KNOCKDOWN (1<<4)
+/// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
+#define MOB_VOMIT_FORCE (1<<5)
+
+/// The default. Gives you might typically expect to happen when you vomit.
+#define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)
+/// The vomit you've all come to know and love, but with a little extra "spice" (blood)
+#define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
+/// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
+#define VOMIT_CATEGORY_KNOCKDOWN (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_KNOCKDOWN)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
@@ -935,3 +968,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NO_OBSERVED_ACTIONS (1<<1)
 /// Flag which stops you from attacking while observed
 #define NO_OBSERVED_ATTACKS (1<<2)
+
+/// Types of bullets that mining mobs take full damage from
+#define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)

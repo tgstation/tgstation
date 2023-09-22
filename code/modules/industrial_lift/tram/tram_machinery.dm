@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
@@ -61,10 +62,31 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY))
+		try_illiterate_movement(user)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
 		ui.open()
+
+/// Traverse to a random location after some time
+/obj/machinery/computer/tram_controls/proc/try_illiterate_movement(mob/user)
+	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
+	if (!tram_lift || tram_lift.travelling)
+		return
+	user.visible_message(span_notice("[user] starts mashing buttons at random!"))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	if (!tram_lift || tram_lift.travelling)
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // Broke or started moving during progress bar
+	var/list/all_destinations = GLOB.tram_landmarks[specific_lift_id] || list()
+	var/list/possible_destinations = all_destinations.Copy() - tram_lift.idle_platform
+	if (!length(possible_destinations))
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // No possible places to end up
+	try_send_tram(pick(possible_destinations))
 
 /obj/machinery/computer/tram_controls/ui_data(mob/user)
 	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
@@ -122,7 +144,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
-	tram_part.tram_travel(destination_platform)
+	if(!tram_part.tram_travel(destination_platform))
+		return FALSE // lift_master failure
 	say("The next station is: [destination_platform.name]")
 	update_appearance()
 	return TRUE
@@ -369,13 +392,14 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
-/obj/machinery/crossing_signal/emag_act(mob/living/user)
+/obj/machinery/crossing_signal/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	if(signal_state != XING_STATE_MALF)
 		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/crossing_signal/proc/start_malfunction()
 	if(signal_state != XING_STATE_MALF)
@@ -388,6 +412,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 	malfunctioning = FALSE
 	process()
+
+/obj/machinery/crossing_signal/proc/temp_malfunction()
+	start_malfunction()
+	addtimer(CALLBACK(src, PROC_REF(end_malfunction)), 15 SECONDS)
 
 /**
  * Finds the tram, just like the tram computer
@@ -669,44 +697,44 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return PROCESS_KILL
 
 	if(!tram.travelling)
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
 		update_appearance()

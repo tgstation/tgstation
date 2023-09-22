@@ -2,7 +2,7 @@
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -153,7 +153,7 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
@@ -509,15 +509,15 @@
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3")
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3")
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3")
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3")
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3")
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -813,6 +813,17 @@
 		particles = null
 
 /**
+ * Bee pollinate proc.
+ * Checks if the bee can pollinate the plant
+ */
+/obj/machinery/hydroponics/proc/can_bee_pollinate()
+	if(isnull(myseed))
+		return FALSE
+	if(plant_status == HYDROTRAY_PLANT_DEAD || recent_bee_visit)
+		return FALSE
+	return TRUE
+
+/**
  * Pest Mutation Proc.
  * When a tray is mutated with high pest values, it will spawn spiders.
  * * User - Person who last added chemicals to the tray for logging purposes.
@@ -822,7 +833,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
 		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
-		spawn_atom_to_turf(/mob/living/basic/spiderling/hunter, src, 3, FALSE)
+		spawn_atom_to_turf(/mob/living/basic/spider/growing/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
 
@@ -854,16 +865,16 @@
 			transfer_amount = reagent_source.reagents.total_volume
 			SEND_SIGNAL(reagent_source, COMSIG_ITEM_ON_COMPOSTED, user)
 		else
-			transfer_amount = reagent_source.amount_per_transfer_from_this
+			transfer_amount = min(reagent_source.amount_per_transfer_from_this, reagent_source.reagents.total_volume)
 			if(istype(reagent_source, /obj/item/reagent_containers/syringe/))
 				var/obj/item/reagent_containers/syringe/syr = reagent_source
 				visi_msg="[user] injects [target] with [syr]"
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
-				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
+				flick_overlay_view(splash_animation, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
@@ -871,7 +882,7 @@
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
-			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
+			if(reagent_source.reagents.has_reagent(/datum/reagent/water))
 				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * transfer_amount / reagent_source.reagents.total_volume
 				var/water_amt_adjusted = H.adjust_waterlevel(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt_adjusted)
@@ -881,7 +892,7 @@
 					var/transfer_me_to_tray = reagent_source.reagents.get_reagent_amount(not_water_reagent.type) * transfer_amount / reagent_source.reagents.total_volume
 					reagent_source.reagents.trans_id_to(H.reagents, not_water_reagent.type, transfer_me_to_tray)
 			else
-				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transfered_by = user)
+				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transferred_by = user)
 			lastuser = WEAKREF(user)
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
@@ -988,9 +999,13 @@
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
-		attack_hand(user)
-		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			O.atom_storage?.attempt_insert(G, user, TRUE)
+		if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+			var/list/harvest = myseed.harvest(user)
+			for(var/obj/item/food/grown/G in harvest)
+				O.atom_storage?.attempt_insert(G, user, TRUE)
+		else if(plant_status == HYDROTRAY_PLANT_DEAD)
+			to_chat(user, span_notice("You remove the dead plant from [src]."))
+			set_seed(null)
 		return
 
 	else if(O.tool_behaviour == TOOL_SHOVEL)
@@ -1141,7 +1156,7 @@
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	gender = PLURAL
 	circuit = null

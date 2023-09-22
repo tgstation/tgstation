@@ -9,7 +9,7 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "space_helmet"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -134,11 +134,11 @@
 	return ..()
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/clothing/suit/space/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		thermal_on = FALSE
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell()
@@ -254,12 +254,15 @@
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings
-/obj/item/clothing/suit/space/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
+/obj/item/clothing/suit/space/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	if (user)
+		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

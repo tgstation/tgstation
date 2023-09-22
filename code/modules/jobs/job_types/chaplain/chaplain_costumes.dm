@@ -14,7 +14,6 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
 
@@ -143,7 +142,6 @@
 	icon_state = "clockwork_cuirass"
 	inhand_icon_state = null
 	slowdown = 0
-	clothing_flags = NONE
 
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
@@ -172,7 +170,6 @@
 	icon_state = "knight_templar"
 	inhand_icon_state = null
 	slowdown = 0
-	clothing_flags = NONE
 
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"

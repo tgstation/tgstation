@@ -109,9 +109,9 @@
 		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
-		to_chat(owner, span_userdanger("Seeing [reason] [message]!"))
+		to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
 	else if(trigger_word)
-		to_chat(owner, span_userdanger("Hearing \"[trigger_word]\" [message]!"))
+		to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
 	else
 		to_chat(owner, span_userdanger("Something [message]!"))
 	var/reaction = rand(1,4)
@@ -185,6 +185,10 @@
 
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/heresy
+	phobia_type = "heresy"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/insects

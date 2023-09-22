@@ -15,6 +15,9 @@
 /// Used to make a material type able to be instantiated on demand after roundstart.
 #define MATERIAL_INIT_BESPOKE (1<<1)
 
+/// Makes sure only integer values are used when consuming, removing & checking for mats
+#define OPTIMAL_COST(cost)(max(1, round(cost)))
+
 //Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1<<0)

@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "6.5.0"
+#define TGS_DMAPI_VERSION "6.5.3"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -154,7 +154,7 @@
 #define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 /**
- * Call this as late as possible in [world/proc/Reboot].
+ * Call this as late as possible in [world/proc/Reboot] (BEFORE ..()).
  */
 /world/proc/TgsReboot()
 	return

@@ -31,12 +31,12 @@
 
 	if(result == "Clear")
 		port.event_list.Cut()
-		log_admin("[key_name_admin(usr)] has cleared the shuttle events on: [port]")
+		message_admins("[key_name_admin(usr)] has cleared the shuttle events on: [port]")
 	else if(options[result])
 		var/typepath = options[result]
 		if(typepath in active)
 			port.event_list.Remove(active[options[result]])
-			log_admin("[key_name_admin(usr)] has removed '[active[result]]' from [port].")
+			message_admins("[key_name_admin(usr)] has removed '[active[result]]' from [port].")
 		else
 			port.event_list.Add(new typepath (port))
-			log_admin("[key_name_admin(usr)] has added '[typepath]' to [port].")
+			message_admins("[key_name_admin(usr)] has added '[typepath]' to [port].")

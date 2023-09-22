@@ -932,7 +932,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job))
+		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(admin, "[rank] wasn't able to be spawned.")
 			continue
@@ -1023,7 +1023,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	if(!isobserver(usr))
 		admin_ghost()
-	usr.forceMove(coords2turf(reservation.bottom_left_coords))
+	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))

@@ -88,7 +88,7 @@
 
 /datum/design/rtd_loaded
 	name = "Rapid Tiling Device"
-	desc = "A tool that can lay & destory floor tiles on the fly."
+	desc = "A tool that can lay & destroy floor tiles on the fly."
 	id = "rtd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25)
@@ -133,6 +133,39 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rcd_upgrade/anti_interrupt
+	name = "RCD anti disruption designs upgrade"
+	desc = "Prevents interruption of RCD construction and deconstruction."
+	id = "rcd_upgrade_anti_interrupt"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/rcd_upgrade/anti_interrupt
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/cooling
+	name = "RCD cooling upgrade"
+	desc = "Allows the RCD to more quickly perform multiple actions at once."
+	id = "rcd_upgrade_cooling"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/rcd_upgrade/cooling
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rcd_upgrade/furnishing
 	name = "RCD furnishing upgrade"
 	desc = "Adds the ability to furnish areas using the RCD."
@@ -171,7 +204,7 @@
 
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
-	desc = "A tool that can portable and standing lighting orbs and glowsticks."
+	desc = "A tool that can deploy portable and standing lighting orbs and glowsticks."
 	id = "rld_mini"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT*5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT*4, /datum/material/gold =SHEET_MATERIAL_AMOUNT)

@@ -10,11 +10,6 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
-	var/death_trap = TRUE
-
-/obj/item/mod/module/springlock/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	death_trap = !death_trap
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
@@ -42,11 +37,7 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
-
-	if(death_trap)
-		balloon_alert(user, "springlocks aren't responding...?")
-	else
-		balloon_alert(user, "you disable it just in time")
+	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -295,6 +286,7 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
@@ -309,6 +301,7 @@
 		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
@@ -343,6 +336,10 @@
 
 #undef FLY_TIME
 
+/obj/item/mod/module/atrocinator/proc/on_talk(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= "upside_down"
+
 /obj/item/mod/module/recycler/donk/safe
 	name = "MOD foam dart recycler module"
 	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
@@ -352,6 +349,6 @@
 	overlay_state_active = "module_donk_safe_recycler"
 	complexity = 1
 	efficiency = 1
-	allowed_item_types = list(/obj/item/ammo_casing/caseless/foam_dart)
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
 	ammobox_type = /obj/item/ammo_box/foambox/mini
 	required_amount = SMALL_MATERIAL_AMOUNT*2.5

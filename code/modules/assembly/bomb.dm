@@ -1,6 +1,6 @@
 /obj/item/onetankbomb
 	name = "bomb"
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -122,7 +122,7 @@
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
-	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
+	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
 		to_chat(user, span_warning("[src] is stuck to you!"))
 		return
 

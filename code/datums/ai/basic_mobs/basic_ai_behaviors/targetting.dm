@@ -14,7 +14,7 @@
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	var/atom/current_target = controller.blackboard[target_key]
-	if (targetting_datum.can_attack(living_mob, current_target))
+	if (targetting_datum.can_attack(living_mob, current_target, vision_range))
 		finish_action(controller, succeeded = FALSE)
 		return
 

@@ -36,6 +36,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
@@ -101,6 +102,13 @@ Possible to do for anyone motivated enough:
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
+
+	var/static/list/hovering_mob_typechecks = list(
+		/mob/living/silicon = list(
+			SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
@@ -570,7 +578,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
+				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
@@ -681,16 +689,16 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!LAZYLEN(masters) || !masters[owner])
 		return TRUE
 	var/obj/effect/overlay/holo_pad_hologram/holo = masters[owner]
-	var/transfered = FALSE
+	var/transferred = FALSE
 	if(!validate_location(new_turf))
 		if(!transfer_to_nearby_pad(new_turf, owner))
 			return FALSE
 		else
-			transfered = TRUE
+			transferred = TRUE
 	//All is good.
 	holo.abstract_move(new_turf)
 	SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
-	if(!transfered)
+	if(!transferred)
 		update_holoray(owner, new_turf)
 	return TRUE
 

@@ -13,7 +13,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
 	wing_types = list(/obj/item/organ/external/wings/functional/fly)
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 
 	mutanttongue = /obj/item/organ/internal/tongue/fly
 	mutantheart = /obj/item/organ/internal/heart/fly
@@ -31,13 +31,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/fly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
-
-/datum/species/fly/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))

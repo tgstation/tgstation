@@ -105,12 +105,12 @@
 
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
-	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
+	desc = "A homemade shotgun casing filled with crushed glass, used to commmit vandalism and property damage."
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
-	variance = 25
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	pellets = 6
+	variance = 30
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
@@ -160,3 +160,10 @@
 	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELP OPS IN MAINT
 	reagents.add_reagent(/datum/reagent/toxin/coniine, 6)
 	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 6)
+
+/obj/item/ammo_casing/shotgun/breacher
+	name = "breaching slug"
+	desc = "A 12 gauge anti-material slug. Great for breaching airlocks and windows, quickly and efficiently."
+	icon_state = "breacher"
+	projectile_type = /obj/projectile/bullet/shotgun_breaching
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)

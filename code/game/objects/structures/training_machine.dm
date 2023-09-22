@@ -15,7 +15,7 @@
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "training_machine"
 	can_buckle = TRUE
 	buckle_lying = 0
@@ -314,7 +314,7 @@
 /**
  * Emagging causes a deadly, unremovable syndicate toolbox to be attached to the machine
  */
-/obj/structure/training_machine/emag_act(mob/user)
+/obj/structure/training_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
 		return
@@ -324,6 +324,7 @@
 	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	add_overlay("evil_trainer")
+	return TRUE
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()

@@ -807,15 +807,6 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -834,11 +825,6 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 2.5,/datum/material/glass = SHEET_MATERIAL_AMOUNT *1.25)
 	construction_time = 50
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -852,11 +838,6 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -869,15 +850,6 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,/datum/material/silver=SHEET_MATERIAL_AMOUNT,/datum/material/plasma=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -897,10 +869,6 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 300
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
@@ -913,10 +881,6 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/bananium=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 300
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK
-	)
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
@@ -931,10 +895,6 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 500
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
@@ -948,12 +908,44 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/bananium=SHEET_MATERIAL_AMOUNT*3.75)
 	construction_time = 400
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_HONK
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_HONK,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_radio
+	name = "Mech Radio"
+	id = "mech_radio"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/radio
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2.5)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_air_tank
+	name = "Mech Air Tank"
+	id = "mech_air_tank"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/air_tank
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1171,7 +1163,7 @@
 	)
 
 /datum/design/borg_upgrade_silicon_knife
-	name = "Kitchen toolset"
+	name = "Kitchen Toolset"
 	id = "borg_upgrade_silicon_knife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/silicon_knife
@@ -1181,12 +1173,34 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_drink_apparatus
+	name = "Drink Apparatus"
+	id = "borg_upgrade_drink_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/drink_app
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+	
 /datum/design/borg_upgrade_service_apparatus
-	name = "Service apparatus"
+	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/service_apparatus
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_service_cookbook
+	name = "Service Cookbook"
+	id = "borg_upgrade_service_cookbook"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/service_cookbook
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
@@ -1313,15 +1327,6 @@
 	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 50
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
@@ -1339,15 +1344,6 @@
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 50
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
@@ -1367,15 +1363,6 @@
 	build_path = /obj/item/mecha_parts/camera_kit
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 50
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY,
-		RND_CATEGORY_MECHFAB_GYGAX,
-		RND_CATEGORY_MECHFAB_DURAND,
-		RND_CATEGORY_MECHFAB_HONK,
-		RND_CATEGORY_MECHFAB_PHAZON,
-		RND_CATEGORY_MECHFAB_CLARKE
-	)
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
@@ -1533,6 +1520,18 @@
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
+/datum/design/modlink_scryer
+	name = "MODlink Scryer"
+	desc = "A neck-worn piece of gear that can call with another MODlink-compatible device."
+	id = "modlink_scryer"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	construction_time = 5 SECONDS
+	build_path = /obj/item/clothing/neck/link_scryer
 	category = list(
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)
@@ -1893,6 +1892,19 @@
 	id = "mod_defib"
 	materials = list(/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/defibrillator
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
+	)
+
+/datum/design/module/statusreadout
+	name = "Status Readout Module"
+	id = "mod_statusreadout"
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/mod/module/status_readout
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)

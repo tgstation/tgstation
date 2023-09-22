@@ -6,13 +6,14 @@
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
-	icon = 'icons/obj/engine/tesla_coil.dmi'
+	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
 	icon_state = "coil0"
 
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
+	can_change_cable_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
@@ -37,6 +38,12 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/tesla_coil(src))
+
+/obj/machinery/power/energy_accumulator/tesla_coil/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()
@@ -117,7 +124,7 @@
 /obj/machinery/power/energy_accumulator/grounding_rod
 	name = "grounding rod"
 	desc = "Keeps an area from being fried by Edison's Bane."
-	icon = 'icons/obj/engine/tesla_coil.dmi'
+	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
 	density = TRUE

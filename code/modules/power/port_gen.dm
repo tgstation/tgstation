@@ -2,7 +2,7 @@
 /obj/machinery/power/port_gen
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "portgen0_0"
 	base_icon_state = "portgen0"
 	density = TRUE
@@ -209,12 +209,13 @@
 			return
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/emag_act(mob/user)
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You hear a hefty clunk from inside the generator."))
+	balloon_alert(user, "maximum power output unlocked")
 	emp_act(EMP_HEAVY)
+	return TRUE
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)

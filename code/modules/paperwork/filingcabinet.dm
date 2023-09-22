@@ -13,7 +13,7 @@
 /obj/structure/filingcabinet
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE

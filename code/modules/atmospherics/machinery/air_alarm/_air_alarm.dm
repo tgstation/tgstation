@@ -3,7 +3,7 @@
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarmp"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
@@ -124,6 +124,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	GLOB.air_alarms += src
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))

@@ -23,20 +23,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"h" = (
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor2";
-	name = "Loading Doors";
-	pixel_y = 8
-	},
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor";
-	name = "Loading Doors";
-	pixel_y = -8
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
 "i" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock"
@@ -59,7 +45,7 @@
 "l" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
-"q" = (
+"p" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
@@ -79,12 +65,25 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"w" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
 "x" = (
 /obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"C" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"F" = (
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_y = 8
+	},
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_y = -8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 
@@ -105,10 +104,10 @@ s
 (2,1,1) = {"
 b
 e
-e
-e
-e
 x
+e
+e
+e
 e
 e
 e
@@ -127,12 +126,11 @@ e
 e
 e
 e
-q
+p
 u
 "}
 (4,1,1) = {"
 b
-w
 e
 e
 e
@@ -141,7 +139,8 @@ e
 e
 e
 e
-q
+e
+p
 u
 "}
 (5,1,1) = {"
@@ -155,7 +154,7 @@ e
 e
 e
 e
-q
+p
 u
 "}
 (6,1,1) = {"
@@ -164,10 +163,10 @@ e
 e
 e
 e
-h
+F
 e
 e
-e
+C
 l
 b
 v

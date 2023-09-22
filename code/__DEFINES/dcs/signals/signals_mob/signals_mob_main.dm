@@ -29,12 +29,12 @@
 /// From base of /mob/living/simple_animal/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
-/// From base of /client/Move()
+/// From base of /client/Move(): (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
 	/// Should we stop the current living movement attempt
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-/// From base of /client/Move(): (list/move_args)
+/// From base of /client/Move(): (new_loc, direction)
 #define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
@@ -42,7 +42,7 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The arugment of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move()
+/// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
@@ -133,6 +133,9 @@
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
+///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional)
+#define COMSIG_MOB_PRE_EMOTED "mob_pre_emoted"
+	#define COMPONENT_CANT_EMOTE (1<<0)
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
 ///sent when a mob/login() finishes: (client)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"
@@ -179,6 +182,12 @@
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
 ///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
 #define COMSIG_MOB_MINED "mob_mined"
+///Sent by pilot of mech in base of /obj/vehicle/sealed/mecha/relaymove(): (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_DROVE_MECH "mob_drove_mech"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
@@ -205,3 +214,6 @@
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
+
+/// from /mob/proc/change_mob_type_unchecked() : ()
+#define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

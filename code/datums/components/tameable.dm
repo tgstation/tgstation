@@ -32,6 +32,10 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
+/datum/component/tameable/Destroy(force, silent)
+	after_tame = null
+	return ..()
+
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
 	if(!is_type_in_list(food, food_types))
@@ -43,10 +47,15 @@
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/atom/atom_parent = source
+	var/inform_tamer = FALSE
 	atom_parent.balloon_alert(attacker, "fed")
+	var/modified_tame_chance = current_tame_chance
+	if(HAS_TRAIT(attacker, TRAIT_SETTLER))
+		modified_tame_chance += 50
+		inform_tamer = TRUE
 	if(unique || !already_friends(attacker))
-		if(prob(current_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			on_tame(source, attacker, food)
+		if(prob(modified_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing unless they're an expert!
+			on_tame(source, attacker, food, inform_tamer)
 		else
 			current_tame_chance += bonus_tame_chance
 
@@ -61,13 +70,16 @@
 	return living_parent.faction.Find(REF(potential_friend))
 
 ///Ran once taming succeeds
-/datum/component/tameable/proc/on_tame(datum/source, mob/living/tamer, atom/food)
+/datum/component/tameable/proc/on_tame(datum/source, mob/living/tamer, atom/food, inform_tamer = FALSE)
 	SIGNAL_HANDLER
 	after_tame?.Invoke(tamer, food)//Run custom behavior if needed
 
 	if(isliving(parent) && isliving(tamer))
 		var/mob/living/tamed = parent
 		INVOKE_ASYNC(tamed, TYPE_PROC_REF(/mob/living, befriend), tamer)
+		if(inform_tamer)
+			var/atom/atom_parent = source
+			atom_parent.balloon_alert(tamer, "tamed")
 
 	if(unique)
 		qdel(src)

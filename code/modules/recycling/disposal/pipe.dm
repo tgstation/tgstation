@@ -3,7 +3,7 @@
 /obj/structure/disposalpipe
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	anchored = TRUE
 	density = FALSE
 	obj_flags = CAN_BE_HIT
@@ -49,7 +49,7 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	if(isturf(loc))
@@ -76,16 +76,19 @@
 		expel(holdplease, get_turf(src), 0)
 	stored = null // It gets dumped out in expel()
 
-/obj/structure/disposalpipe/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
-		spawn_pipe = FALSE
-		stored = null
+/obj/structure/disposalpipe/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != stored || QDELETED(src))
+		return
+	spawn_pipe = FALSE
+	stored = null
+	if(QDELETED(gone))
 		deconstruct(FALSE) //pipe has broken.
 
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
-	return dpdir & (~turn(H.dir, 180))
+	return dpdir & (~REVERSE_DIR(H.dir))
 
 // transfer the holder through this pipe segment
 // overridden for special behaviour
@@ -171,12 +174,13 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(spawn_pipe)
-				if(isnull(stored)) // Don't have something? Make one now
-					stored = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
-				stored.forceMove(loc)
-				transfer_fingerprints_to(stored)
-				stored.setDir(dir)
+				var/obj/structure/disposalconstruct/construct = stored
+				if(!construct) // Don't have something? Make one now
+					construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 				stored = null
+				construct.forceMove(loc)
+				transfer_fingerprints_to(construct)
+				construct.setDir(dir)
 				spawn_pipe = FALSE
 		else
 			var/turf/T = get_turf(src)
@@ -210,7 +214,7 @@
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
-	var/flipdir = turn(H.dir, 180)
+	var/flipdir = REVERSE_DIR(H.dir)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
 		return dir
 
@@ -317,6 +321,22 @@
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
 	spawn_pipe = FALSE
+	anchored = FALSE
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
+
+/obj/structure/disposalpipe/rotator
+	icon_state = "pipe-r1"
+	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_RIGHT | DISP_DIR_FLIP
+	flip_type = /obj/structure/disposalpipe/rotator/flip
+	/// In what direction the atom travels.
+	var/direction_angle = -90
+
+/obj/structure/disposalpipe/rotator/nextdir(obj/structure/disposalholder/holder)
+	return turn(holder.dir, direction_angle)
+
+/obj/structure/disposalpipe/rotator/flip
+	icon_state = "pipe-r2"
+	flip_type = /obj/structure/disposalpipe/rotator
+	direction_angle = 90

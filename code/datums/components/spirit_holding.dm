@@ -67,13 +67,15 @@
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
+	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
+		to_chat(chosen_spirit, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		return
 	bound_spirit = new(parent)
 	bound_spirit.ckey = chosen_spirit.ckey
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")
 	bound_spirit.status_flags |= GODMODE
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
-	bound_spirit.update_atom_languages()
-	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
+	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 
 	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
