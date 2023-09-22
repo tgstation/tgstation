@@ -33,7 +33,22 @@
 	if (died.stat != DEAD)
 		return
 	var/body_type = died.type
+
 	var/turf/died_turf = get_turf(died)
+	var/list/nearby_turfs = circle_view_turfs(died_turf, 2)
+	var/list/nearby_safe_turfs = list()
+	for (var/turf/check_turf as anything in nearby_turfs)
+		if (check_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = died))
+			nearby_turfs -= check_turf
+			continue
+		if (islava(check_turf) || ischasm(check_turf))
+			continue
+		nearby_safe_turfs += check_turf
+	if (length(nearby_safe_turfs)) // If you're in the middle of a 5x5 chasm, tough luck I guess
+		died_turf = pick(nearby_safe_turfs)
+	else if (length(nearby_turfs))
+		died_turf = pick(nearby_turfs)
+
 	var/datum/mind/dead_mind = HAS_TRAIT(died, TRAIT_SUICIDED) ? null : died.mind // There is a way out of the cycle
 	if (!isnull(dead_mind))
 		to_chat(died, span_boldnotice("Your spirit surges! You will return to life in [DisplayTimeText(IMMORTAL_PRE_ACTIVATION_TIME + IMMORTAL_RESURRECT_TIME)]."))
@@ -61,6 +76,8 @@
 	plane = GAME_PLANE
 	alpha = 0
 	color = COLOR_PALE_GREEN
+	light_range = 2
+	light_color = COLOR_PALE_GREEN
 	/// Who are we reviving?
 	var/mob/living/corpse
 	/// Who if anyone is playing as them?
