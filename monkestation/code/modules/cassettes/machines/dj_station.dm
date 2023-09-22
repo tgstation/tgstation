@@ -47,8 +47,13 @@ GLOBAL_VAR(dj_booth)
 	if(inserted_tape)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
 		if(!broadcasting)
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Play Tape"
+			context[SCREENTIP_CONTEXT_LMB] = "Play Tape"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/cassette/dj_station/examine(mob/user)
+	. = ..()
+	if(time_left > 0)
+		. += span_notice("It seems to be cooling down, you estimate it will take about [time_left] seconds.")
 
 /obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
@@ -60,16 +65,17 @@ GLOBAL_VAR(dj_booth)
 			COOLDOWN_START(src, next_song_timer, 10 MINUTES)
 		broadcasting = 0
 
-/obj/machinery/cassette/dj_station/AltClick(mob/user)
+/obj/machinery/cassette/dj_station/attack_hand(mob/user)
 	. = ..()
 	if(!inserted_tape)
 		return
 	if((!COOLDOWN_FINISHED(src, next_song_timer)) && !broadcasting)
 		to_chat(user, span_notice("The [src] feels hot to the touch and needs time to cooldown."))
+		to_chat(user, span_info("You estimate it will take about [time_left] seconds to cool down."))
 		return
 	start_broadcast()
 
-/obj/machinery/cassette/dj_station/ShiftClick(mob/user)
+/obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
 	if(!isliving(user) || !user.Adjacent(src))
 		return
@@ -77,7 +83,6 @@ GLOBAL_VAR(dj_booth)
 		return
 	if(broadcasting)
 		next_song()
-
 
 /obj/machinery/cassette/dj_station/CtrlClick(mob/user)
 	. = ..()
