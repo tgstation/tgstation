@@ -47,8 +47,8 @@ SUBSYSTEM_DEF(stock_market)
 
 	var/price_units = materials_prices[mat]
 	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
-	if(!isnull(mat.minimum_value_override))
-		price_minimum = mat.minimum_value_override * SHEET_MATERIAL_AMOUNT
+	if(!isnull(initial(mat.minimum_value_override)))
+		price_minimum = initial(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
 	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
 
@@ -116,8 +116,8 @@ SUBSYSTEM_DEF(stock_market)
 
 	var/price_units = materials_prices[mat]
 	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
-	if(!isnull(mat.minimum_value_override))
-		price_minimum = mat.minimum_value_override * SHEET_MATERIAL_AMOUNT
+	if(!isnull(initial(mat.minimum_value_override)))
+		price_minimum = initial(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
 	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
 
