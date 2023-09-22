@@ -47,6 +47,10 @@
 	if(isnull(slapcraft_recipes))
 		CRASH("NULL SLAPCRAFT RECIPES?")
 
+	var/datum/component/personal_crafting/craft_sheet = user.GetComponent(/datum/component/personal_crafting)
+	if(!craft_sheet)
+		CRASH("No craft sheet on user ??")
+
 	var/list/valid_recipes
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		// Gotta instance it to copy the list over.
@@ -67,9 +71,9 @@
 		return
 
 	// We might use radials so we need to split the proc chain
-	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), valid_recipes, user)
+	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), valid_recipes, user, craftsheet)
 
-/datum/component/slapcrafting/proc/slapcraft_async(list/valid_recipes, mob/user)
+/datum/component/slapcrafting/proc/slapcraft_async(list/valid_recipes, mob/user, datum/component/personal_crafting/craft_sheet)
 
 	var/list/recipe_choices = list()
 
@@ -93,9 +97,6 @@
 	if(string_chosen_recipe)
 		final_recipe = result_to_recipe[string_chosen_recipe]
 
-	var/datum/component/personal_crafting/craft_sheet = user.GetComponent(/datum/component/personal_crafting)
-	if(!craft_sheet)
-		CRASH("No craft sheet on user ??")
 
 	var/datum/crafting_recipe/actual_recipe = final_recipe
 
