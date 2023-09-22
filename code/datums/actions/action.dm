@@ -96,15 +96,15 @@
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_INCAPACITATED)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_IMMOBILE)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED)), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_HANDS_BLOCKED)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED)), PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_LYING)
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_PHASED)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
 
 	if(owner_has_control)
 		GiveAction(grant_to)
@@ -132,6 +132,11 @@
 			SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
 			SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
 			SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
+			SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED),
+			SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED),
+			SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED),
+			SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED),
+			SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
 		))
 
 		if(target == owner)
