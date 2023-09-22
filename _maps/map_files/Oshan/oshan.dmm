@@ -31867,6 +31867,13 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
+"qBI" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	color = "#009dc4";
+	dir = 6
+	},
+/turf/open/floor/plating/ocean,
+/area/ocean/generated_above)
 "qBL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -89775,7 +89782,7 @@ aah
 aah
 aah
 aah
-aah
+qBI
 aah
 aah
 aah
@@ -90033,7 +90040,7 @@ aah
 aah
 aah
 aah
-aah
+qBI
 aah
 aah
 aah
