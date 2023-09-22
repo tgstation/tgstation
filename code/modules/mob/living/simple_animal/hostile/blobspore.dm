@@ -61,8 +61,7 @@
 				zombify(target)
 				break
 	if(factory && !is_valid_z_level(get_turf(src), get_turf(factory)))
-		drop_corpse()
-		qdel(src)
+		death()
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)
@@ -91,14 +90,9 @@
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown
 
-	return ..()
-
-/mob/living/simple_animal/hostile/blob/blobspore/proc/drop_corpse()
 	corpse?.forceMove(loc)
 	corpse = null
 
-/mob/living/simple_animal/hostile/blob/blobspore/death()
-	drop_corpse()
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
