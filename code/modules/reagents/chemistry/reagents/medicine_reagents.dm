@@ -876,6 +876,7 @@
 	affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
+	..()
 	return TRUE
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
