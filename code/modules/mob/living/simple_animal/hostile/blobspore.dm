@@ -42,6 +42,11 @@
 		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 	add_cell_sample()
 
+/mob/living/simple_animal/hostile/blob/blobspore/Destroy()
+	factory?.spores -= src
+	QDEL_NULL(corpse)
+	return ..()
+
 /mob/living/simple_animal/hostile/blob/blobspore/mind_initialize()
 	. = ..()
 	if(independent || !overmind)
@@ -56,7 +61,7 @@
 				zombify(target)
 				break
 	if(factory && !is_valid_z_level(get_turf(src), get_turf(factory)))
-		death()
+		qdel(src)
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)
@@ -88,8 +93,6 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/death()
-	if(factory)
-		factory.spores -= src
 	corpse?.forceMove(loc)
 	corpse = null
 	return ..()
