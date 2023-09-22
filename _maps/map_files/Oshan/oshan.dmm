@@ -2004,6 +2004,12 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
+"bcF" = (
+/obj/machinery/duct/industrial/waste,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/main)
 "bcL" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -4865,6 +4871,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"cDf" = (
+/obj/machinery/duct/industrial/waste,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/mid_joiner,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "cDm" = (
 /obj/item/pen,
 /obj/structure/table/reinforced,
@@ -9605,7 +9619,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
-/obj/structure/cable/industrial,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "eXv" = (
@@ -14058,7 +14071,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 8
 	},
-/obj/structure/cable/industrial,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "hvv" = (
@@ -36835,6 +36847,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "tCC" = (
@@ -43130,7 +43143,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
-/obj/structure/cable/industrial,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "wUi" = (
@@ -86221,7 +86233,7 @@ kFZ
 xQn
 eMG
 tCB
-jPC
+bcF
 sgQ
 asg
 sli
@@ -86992,7 +87004,7 @@ aNi
 aNi
 aNi
 qay
-dnr
+cDf
 jvI
 jRw
 auZ
