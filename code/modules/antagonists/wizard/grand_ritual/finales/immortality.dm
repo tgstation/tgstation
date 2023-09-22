@@ -30,10 +30,13 @@
 /// Called when something passes into the great beyond, make it not do that
 /datum/grand_finale/immortality/proc/something_died(datum/source, mob/living/died, gibbed)
 	SIGNAL_HANDLER
+	if (died.stat != DEAD || HAS_TRAIT(died, TRAIT_SUICIDED)) // There is a way out of the cycle
+		return
 	var/body_type = died.type
 	var/turf/died_turf = get_turf(died)
 	animate(died, alpha = died.alpha, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, easing = SINE_EASING | EASE_IN)
+	to_chat(died, span_boldnotice("Your spirit surges! You will return to life in [DisplayTimeText(IMMORTAL_PRE_ACTIVATION_TIME + IMMORTAL_RESURRECT_TIME)]."))
 	addtimer(CALLBACK(src, PROC_REF(reverse_death), died, died.mind, died_turf, body_type), IMMORTAL_PRE_ACTIVATION_TIME, TIMER_DELETE_ME)
 
 /// Create a ghost ready for revival
@@ -43,7 +46,7 @@
 	var/obj/effect/spectre_of_resurrection/ghost = new(died_turf)
 	var/mob/living/corpse = QDELETED(died) ? new body_type(ghost) : died
 	corpse.alpha = initial(corpse.alpha)
-	corpse.add_traits(list(TRAIT_NO_TELEPORT, TRAIT_CORPSELOCKED, TRAIT_AI_PAUSED), MAGIC_TRAIT)
+	corpse.add_traits(list(TRAIT_NO_TELEPORT, TRAIT_AI_PAUSED), MAGIC_TRAIT)
 	corpse.apply_status_effect(/datum/status_effect/grouped/stasis, MAGIC_TRAIT)
 	ghost.set_up_resurrection(corpse, dead_mind)
 
@@ -56,8 +59,6 @@
 	plane = GAME_PLANE
 	alpha = 0
 	color = COLOR_PALE_GREEN
-	/// How long do we spend before hatching into a living boy?
-	var/resurrect_time = IMMORTAL_RESURRECT_TIME - IMMORTAL_PRE_ACTIVATION_TIME
 	/// Who are we reviving?
 	var/mob/living/corpse
 	/// Who if anyone is playing as them?
@@ -88,7 +89,7 @@
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 	RegisterSignal(corpse, COMSIG_QDELETING, PROC_REF(on_corpse_deleted))
 	RegisterSignal(dead_mind, COMSIG_QDELETING, PROC_REF(on_mind_lost))
-	addtimer(CALLBACK(src, PROC_REF(revive)), resurrect_time, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(revive)), IMMORTAL_RESURRECT_TIME, TIMER_DELETE_ME)
 
 /obj/effect/spectre_of_resurrection/Destroy(force)
 	QDEL_NULL(corpse)
@@ -106,7 +107,10 @@
 /// Bring our body back to life
 /obj/effect/spectre_of_resurrection/proc/revive()
 	if (!isnull(dead_mind))
-		dead_mind.transfer_to(corpse, force_key_move = TRUE)
+		if (dead_mind.current == corpse)
+			dead_mind.grab_ghost(force = TRUE)
+		else
+			dead_mind.transfer_to(corpse, force_key_move = TRUE)
 	corpse.revive(HEAL_ALL) // The signal is sent even if they weren't actually dead
 
 /// Remove our stored corpse back to the living world
@@ -115,7 +119,7 @@
 	if (isnull(corpse))
 		return
 	visible_message(span_boldnotice("[corpse] suddenly shudders to life!"))
-	corpse.remove_traits(list(TRAIT_NO_TELEPORT, TRAIT_CORPSELOCKED, TRAIT_AI_PAUSED), MAGIC_TRAIT)
+	corpse.remove_traits(list(TRAIT_NO_TELEPORT, TRAIT_AI_PAUSED), MAGIC_TRAIT)
 	corpse.remove_status_effect(/datum/status_effect/grouped/stasis, MAGIC_TRAIT)
 	corpse.forceMove(loc)
 
