@@ -787,3 +787,41 @@
   vinylspiders:
   - bugfix: fixes inedible grown items (such as tower caps) becoming unclickable when
       harvested, fixes their seeds disappearing when inserted into the seed machine
+2023-09-21:
+  Coconutwarrior97:
+  - bugfix: Fixes a bug allowing holopara injectors to be refundable when used.
+  Exester509:
+  - rscadd: Splashing antihol on a patient before surgery will make it to go slower.
+  GPeckman:
+  - bugfix: The caller in a holopad call should now be able to hear people on the
+      other end.
+  Rhials:
+  - qol: Restores holiday hats for drones.
+  - qol: Extends holiday hat behavior to assistants. Get festive!
+  Shadow-Quill:
+  - bugfix: RCD Construction effects will no longer fall into chasms.
+  SyncIt21:
+  - bugfix: wall mounted objects air alarms, fire alarms etc now actually falls off/gets
+      destroyed when their attached wall is deconstructed
+  - bugfix: wall mounts crafted in game also properly falls off/gets destroyed when
+      their attached wall is deconstructed
+  blueDev2:
+  - bugfix: Recipe that converts Vegetable Oil into Olive Oil works properly
+  nikothedude:
+  - bugfix: Projectiles no longer cause a blood graphic or blood splatters if they
+      hit a limb that cant bleed
+  - rscadd: Prosthetics/Augments now spark when shot
+  - bugfix: Gauze no longer falls off if a wound is demoted or promoted
+  vinylspiders:
+  - bugfix: rescue hooks will once again drop the mob next to the fisherman instead
+      of just displaying a balloon alert and doing nothing
+2023-09-22:
+  Jacquerel:
+  - admin: Admins can transform misbehaving players into arbitrary objects at will.
+  Sealed101:
+  - bugfix: fixed moonicorns making space/chasm/lava/water bridges with their fairy
+      grass
+  Toastgoats:
+  - balance: Peacekeeper cyborg's emagged hug is no longer a hardstun.
+  intercepti0n:
+  - image: resprites t-ray scanner.
