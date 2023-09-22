@@ -11,9 +11,9 @@
 	var/datum/dna/old_dna
 
 /datum/status_effect/temporary_transformation/Destroy()
+	. = ..() // parent must be called first, so we clear DNA refs AFTER transforming back... yeah i know
 	QDEL_NULL(new_dna)
 	QDEL_NULL(old_dna)
-	return ..()
 
 /datum/status_effect/temporary_transformation/on_creation(mob/living/new_owner, new_duration = 1 MINUTES, datum/dna/dna_to_copy)
 	src.duration = (new_duration == INFINITY) ? -1 : new_duration
@@ -32,6 +32,7 @@
 	// Makes them into the new DNA
 	new_dna.transfer_identity(transforming)
 	transforming.real_name = new_dna.real_name
+	transforming.name = transforming.get_visible_name()
 	transforming.updateappearance(mutcolor_update = TRUE)
 	return TRUE
 
@@ -43,6 +44,7 @@
 		transforming.updateappearance(mutcolor_update = TRUE)
 
 	transforming.real_name = old_dna.real_name // Name is fine though
+	transforming.name = transforming.get_visible_name()
 
 /datum/status_effect/temporary_transformation/trans_sting
 	/// Tracks the time left on the effect when the owner last died. Used to pause the effect.

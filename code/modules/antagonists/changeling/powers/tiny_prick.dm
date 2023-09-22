@@ -121,12 +121,16 @@
 	return TRUE
 
 /datum/action/changeling/sting/transformation/sting_action(mob/living/user, mob/living/target)
-	var/final_duration = ismonkey(target) ? INFINITY : sting_duration
+	var/final_duration = sting_duration
+	var/final_message = span_notice("We transform [target] into [selected_dna.dna.real_name].")
+	if(ismonkey(target))
+		final_duration = INFINITY
+		final_message = span_warning("Our genes cry out as we transform the lesser form of [target] into [selected_dna.dna.real_name] permanently!")
+
 	if(target.apply_status_effect(/datum/status_effect/temporary_transformation/trans_sting, final_duration, selected_dna.dna))
 		log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 		..()
-		if(final_duration == INFINITY)
-			to_chat(user, span_warning("Our genes cry out!"))
+		to_chat(user, final_message)
 		return TRUE
 	return FALSE
 
