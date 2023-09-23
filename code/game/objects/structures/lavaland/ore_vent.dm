@@ -46,7 +46,7 @@
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
 		/mob/living/basic/mining/watcher,
 		/mob/living/basic/mining/lobstrosity/lava,
-		/mob/living/simple_animal/hostile/asteroid/brimdemon,
+		/mob/living/basic/mining/brimdemon,
 		/mob/living/basic/mining/bileworm
 	)
 	///What items can be used to scan a vent?

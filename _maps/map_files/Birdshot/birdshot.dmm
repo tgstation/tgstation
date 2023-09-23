@@ -109,21 +109,11 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "adE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/bouldertech/refinery,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mining"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/quantum_server,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/textured_large,
+/area/station/bitrunning/den)
 "adF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister,
@@ -1348,8 +1338,8 @@
 /area/station/maintenance/central/greater)
 "aBB" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/white/corner,
+/obj/structure/closet/secure_closet/miner,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "aBK" = (
@@ -2470,14 +2460,6 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/engine,
 /area/station/maintenance/department/engine)
-"aZu" = (
-/obj/machinery/light/small/directional/east{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
 "aZw" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/navigate_destination/dockescpod,
@@ -5721,7 +5703,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "cns" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 5
@@ -12534,16 +12516,6 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "eJJ" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/bouldertech/refinery/smelter,
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "mining"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -12560,8 +12532,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/holopad,
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/station/bitrunning/den)
 "eJP" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -17929,19 +17903,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "gEq" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/computer/quantum_console{
 	dir = 4
 	},
@@ -17955,8 +17916,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/textured_large,
+/area/station/bitrunning/den)
 "gEH" = (
 /turf/closed/wall/r_wall,
 /area/station/security/evidence)
@@ -19243,20 +19204,6 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "hax" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -19267,10 +19214,8 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/effect/landmark/start/bitrunner,
-/turf/open/floor/iron/textured_corner{
-	dir = 8
-	},
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_half,
+/area/station/bitrunning/den)
 "haO" = (
 /obj/effect/turf_decal/stripes/white/end,
 /obj/machinery/door/poddoor/shutters{
@@ -21711,22 +21656,6 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/wardrobe/miner,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	pixel_y = -7
-	},
-/obj/item/clothing/head/utility/hardhat/orange,
-/obj/item/clothing/head/utility/hardhat/orange{
-	pixel_y = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "hRd" = (
@@ -25561,13 +25490,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"jlI" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "jlN" = (
 /turf/open/floor/iron/white/side{
 	dir = 6
@@ -28036,20 +27958,6 @@
 /turf/closed/wall,
 /area/station/hallway/secondary/spacebridge)
 "keP" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/tile/brown/half,
-/obj/effect/turf_decal/stripes/white/corner,
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -28061,8 +27969,8 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/start/bitrunner,
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_half,
+/area/station/bitrunning/den)
 "keZ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -31470,8 +31378,16 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/light_switch/directional/east,
+/obj/item/stack/conveyor/thirty,
+/obj/item/boulder_beacon{
+	pixel_x = -6
+	},
+/obj/item/conveyor_switch_construct{
+	pixel_x = 9
+	},
+/obj/structure/rack,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "lmR" = (
@@ -36151,7 +36067,6 @@
 "mUM" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "mUO" = (
@@ -36423,13 +36338,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/solars/starboard/aft)
 "nap" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/white/line,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -36445,8 +36353,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/station/bitrunning/den)
 "nau" = (
 /obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36586,7 +36496,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "ncD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -37380,17 +37290,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "nsY" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "nta" = (
 /obj/machinery/photocopier,
 /turf/open/floor/plating,
@@ -38524,15 +38426,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
-"nLm" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
 "nLN" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -40218,6 +40111,10 @@
 	dir = 1
 	},
 /area/station/command/corporate_suite)
+"oud" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/bitrunning/den)
 "ouf" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41163,6 +41060,9 @@
 /obj/structure/chair/sofa/bench/left,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
+"oNU" = (
+/turf/closed/wall/rust,
+/area/station/bitrunning/den)
 "oNX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42871,7 +42771,7 @@
 /obj/machinery/light_switch/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "psI" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue/full,
@@ -44362,18 +44262,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
-"pQg" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
 "pQr" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
@@ -47010,19 +46898,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qEs" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
@@ -47030,10 +46905,8 @@
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
-/turf/open/floor/iron/textured_corner{
-	dir = 1
-	},
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/bitrunning/den)
 "qEz" = (
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Holding Cell";
@@ -57504,15 +57377,6 @@
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
-"ubc" = (
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/machinery/bouldertech/brm,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "ubf" = (
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/trimline/neutral/line{
@@ -62931,11 +62795,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "vNi" = (
-/obj/effect/turf_decal/bot,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -62951,8 +62810,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/textured_half,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/station/bitrunning/den)
 "vNj" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -65978,9 +65839,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor_switch/oneway{
-	id = "mining"
-	},
 /turf/open/floor/iron/textured_half,
 /area/station/cargo/miningoffice)
 "wKm" = (
@@ -67863,17 +67721,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "xkq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
@@ -67883,10 +67730,8 @@
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/bitrunning/den)
 "xkt" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/security/armory)
@@ -71895,15 +71740,6 @@
 /obj/structure/alien/weeds,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
-"ymc" = (
-/obj/effect/spawner/structure/window,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
 "ymd" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -83061,7 +82897,7 @@ iVK
 iVK
 jhU
 lPi
-kuy
+hNA
 kdP
 ipb
 kOv
@@ -83320,8 +83156,8 @@ jig
 lOj
 hNZ
 aBB
-ubc
-pQg
+kuy
+lOj
 lmH
 jir
 lPi
@@ -83575,11 +83411,11 @@ ueX
 slY
 ueX
 teR
-hzm
-aZu
-jlI
-nLm
-lOj
+oNU
+teR
+teR
+teR
+teR
 lxy
 hzm
 jTA
@@ -83836,7 +83672,7 @@ nsY
 keP
 adE
 gEq
-hLT
+oud
 hIX
 lRc
 moz
@@ -84350,7 +84186,7 @@ psA
 hax
 xkq
 qEs
-ymc
+oud
 jkS
 lTN
 mRD
@@ -84603,11 +84439,11 @@ jCo
 slY
 slY
 teR
-lOj
-lOj
-lOj
-lOj
-lOj
+teR
+teR
+teR
+teR
+teR
 tuI
 lUz
 ohj

@@ -1541,6 +1541,8 @@
 		/obj/item/assembly/igniter = 1,
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/matter_bin = 1,
+	)
+
 /obj/item/circuitboard/machine/quantum_server
 	name = "Quantum Server"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
