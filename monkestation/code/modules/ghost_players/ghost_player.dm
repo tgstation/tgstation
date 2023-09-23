@@ -24,7 +24,7 @@
 /mob/living/carbon/human/ghost/Destroy()
 	. = ..()
 	if(dueling && linked_button)
-		addtimer(CALLBACK(linked_button, PROC_REF(end_duel), src), 3 SECONDS)
+		addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
 
 	if(linked_button)
 		linked_button.remove_user(src)
