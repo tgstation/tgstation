@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed a race condition that made fishing yield no reward way too often."
-  - bugfix: "The legendary fisher achievement is awarded even if you don't win the minigame."
-  - bugfix: "Fixed a fish hook exploit."
-  - bugfix: "Baits are now properly consumed by caught fish and (alive) mobs."

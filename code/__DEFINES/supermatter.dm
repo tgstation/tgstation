@@ -52,9 +52,9 @@
 #define DIMENSIONAL_ANOMALY "dimensional_anomaly"
 
 /// How long it takes for the supermatter to delaminate after hitting 0 integrity
-#define SUPERMATTER_COUNTDOWN_TIME (13 SECONDS)
+#define SUPERMATTER_COUNTDOWN_TIME (15 SECONDS)
 /// How long it takes for the supermatter to delaminate after hitting 0 integrity if a sliver has been removed
-#define SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME (3 SECONDS)
+#define SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME (5 SECONDS)
 
 ///to prevent accent sounds from layering
 #define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN (2 SECONDS)
@@ -62,6 +62,8 @@
 #define DEFAULT_ZAP_ICON_STATE "sm_arc"
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
+
+#define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
 
 #define SUPERMATTER_CASCADE_PERCENT 80
 

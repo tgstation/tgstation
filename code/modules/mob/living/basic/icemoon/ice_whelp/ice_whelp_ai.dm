@@ -58,7 +58,6 @@
 		finish_action(controller, FALSE)
 		return
 
-	living_pawn.start_pulling(target)
 	living_pawn.melee_attack(target)
 	finish_action(controller, TRUE)
 
@@ -70,14 +69,10 @@
 /datum/ai_planning_subtree/sculpt_statues
 
 /datum/ai_planning_subtree/sculpt_statues/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/obj/target = controller.blackboard[BB_TARGET_ROCK]
-
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_TARGET_ROCK, /obj/structure/flora/rock/icy)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/sculpt_statue, BB_TARGET_ROCK)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_ROCK))
+		controller.queue_behavior(/datum/ai_behavior/sculpt_statue, BB_TARGET_ROCK)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_TARGET_ROCK, /obj/structure/flora/rock/icy)
 
 /datum/ai_behavior/sculpt_statue
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -136,16 +131,13 @@
 
 /datum/ai_planning_subtree/burn_trees/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE]
-	if (!using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
-	var/obj/structure/target = controller.blackboard[BB_TARGET_TREE]
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/set_target_tree, BB_TARGET_TREE)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees, BB_WHELP_STRAIGHTLINE_FIRE, BB_TARGET_TREE)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_TREE))
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees, BB_WHELP_STRAIGHTLINE_FIRE, BB_TARGET_TREE)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/set_target_tree, BB_TARGET_TREE)
 
 /datum/ai_behavior/set_target_tree
 
