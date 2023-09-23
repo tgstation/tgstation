@@ -24,6 +24,9 @@ SUBSYSTEM_DEF(job)
 
 	var/list/unassigned = list() //Players who need jobs
 	var/initial_players_to_assign = 0 //used for checking against population caps
+	// Whether to run DivideOccupations pure so that there are no side-effects from calling it other than
+	// a player's assigned_role being set to some value.
+	var/run_divide_occupation_pure = FALSE
 
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()
@@ -224,7 +227,8 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
-	job.current_positions++
+	if(!run_divide_occupation_pure)
+		job.current_positions++
 	return TRUE
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level)
@@ -363,10 +367,10 @@ SUBSYSTEM_DEF(job)
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations(allow_all = FALSE)
+/datum/controller/subsystem/job/proc/DivideOccupations(pure = FALSE, allow_all = FALSE)
 	//Setup new player list and get the jobs list
-	JobDebug("Running DO, allow_all = [allow_all]")
-
+	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
+	run_divide_occupation_pure = pure
 	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
 
 	//Get the players who are ready
@@ -485,12 +489,13 @@ SUBSYSTEM_DEF(job)
 			if(!AssignRole(player, GetJobType(overflow_role))) //If everything is already filled, make them an assistant
 				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
 				JobDebug("---------------------------------------------------")
+				run_divide_occupation_pure = FALSE
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 	JobDebug("DO, Ending handle unrejectable unassigned")
 
 	JobDebug("All divide occupations tasks completed.")
 	JobDebug("---------------------------------------------------")
-
+	run_divide_occupation_pure = FALSE
 	return TRUE
 
 //We couldn't find a job from prefs for this guy.
@@ -669,7 +674,8 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Player rejected :[player]")
 	to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
 	unassigned -= player
-	player.ready = PLAYER_NOT_READY
+	if(!run_divide_occupation_pure)
+		player.ready = PLAYER_NOT_READY
 
 
 /datum/controller/subsystem/job/Recover()
