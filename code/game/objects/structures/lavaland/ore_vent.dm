@@ -243,6 +243,12 @@
  * Gives a readout of the ores available in the vent that gets added to the description, then asks the user if they want to start wave defense.
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user, scan_only = FALSE)
+	if(tapped)
+		to_chat(user, span_notice("\The [src] has already been tapped!"))
+		return
+	if(!COOLDOWN_FINISHED(src, wave_cooldown))
+		to_chat(user, span_warning("\The [src] is currently being excavated! Protect the node drone!"))
+		return
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
@@ -262,12 +268,7 @@
 			return
 	if(scan_only)
 		return
-	if(tapped)
-		to_chat(user, span_notice("\The [src] has already been tapped!"))
-		return
-	if(!COOLDOWN_FINISHED(src, wave_cooldown))
-		to_chat(user, span_warning("\The [src] is currently being excavated! Protect the node drone!"))
-		return
+
 	if(tgui_alert(usr, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
 	//This is where we start spitting out mobs.
