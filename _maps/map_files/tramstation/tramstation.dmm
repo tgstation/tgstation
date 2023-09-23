@@ -62367,7 +62367,7 @@
 /area/station/science/explab)
 "vet" = (
 /obj/effect/landmark/transport/transport_id{
-	specific_lift_id = "tram_cargo_lift"
+	specific_transport_id = "tram_cargo_lift"
 	},
 /obj/structure/railing{
 	dir = 8
