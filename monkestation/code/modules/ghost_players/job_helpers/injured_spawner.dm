@@ -46,15 +46,12 @@
 				continue
 
 			var/datum/wound/iter_test_wound
-			var/threshold_penalty = 0
 			for(iter_test_wound as anything in iter_test_wound_list)
-				var/threshold = initial(iter_test_wound.threshold_minimum) - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
+				var/threshold = initial(iter_test_wound.threshold_minimum) + rand(40, 60) // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
 				if(dam_types[i] == BRUTE)
 					tested_part.receive_damage(WOUND_MINIMUM_DAMAGE + 15, 0, wound_bonus = threshold, sharpness=sharps[i])
 				else if(dam_types[i] == BURN)
 					tested_part.receive_damage(0, WOUND_MINIMUM_DAMAGE + 15, wound_bonus = threshold, sharpness=sharps[i])
-				var/datum/wound/actual_wound = victim.all_wounds[1]
-				threshold_penalty = actual_wound.threshold_penalty
 			i++
 
 /obj/structure/injured_spawner/proc/rot_organs(mob/living/carbon/human/victim)
