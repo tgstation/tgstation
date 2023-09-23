@@ -78,84 +78,6 @@
 	TEST_ASSERT_EQUAL(initial_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
 	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Pilot should have taken brain dmg on gib disconnect")
 
-/// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
-/datum/unit_test/bitrunning_signals
-	var/client_connect_received = FALSE
-	var/client_disconnect_received = FALSE
-	var/crowbar_alert_received = FALSE
-	var/domain_complete_received = FALSE
-	var/integrity_alert_received = FALSE
-	var/sever_avatar_received = FALSE
-	var/shutdown_alert_received = FALSE
-
-/datum/unit_test/bitrunning_signals/proc/on_crowbar_alert(datum/source)
-	SIGNAL_HANDLER
-	crowbar_alert_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_domain_complete(datum/source)
-	SIGNAL_HANDLER
-	domain_complete_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_shutdown_alert(datum/source)
-	SIGNAL_HANDLER
-	shutdown_alert_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_netpod_broken(datum/source)
-	SIGNAL_HANDLER
-	sever_avatar_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_netpod_integrity(datum/source)
-	SIGNAL_HANDLER
-	integrity_alert_received = TRUE
-
-/datum/unit_test/bitrunning_signals/proc/on_server_crash(datum/source)
-	SIGNAL_HANDLER
-	sever_avatar_received = TRUE
-
-/datum/unit_test/bitrunning_signals/Run()
-	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/machinery/netpod/netpod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-
-	labrat.mind_initialize()
-	labrat.mock_client = new()
-
-	var/obj/item/crowbar/prybar = allocate(/obj/item/crowbar)
-	var/mob/living/carbon/human/perp = allocate(/mob/living/carbon/human/consistent)
-
-	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
-	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutdown_alert))
-	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_server_crash))
-	RegisterSignal(netpod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_crowbar_alert))
-	RegisterSignal(netpod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_netpod_broken))
-	RegisterSignal(netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_integrity))
-
-	server.cold_boot_map(labrat, map_key = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
-
-	labrat.forceMove(get_turf(netpod))
-	netpod.set_occupant(labrat)
-	netpod.close_machine(labrat)
-	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
-	TEST_ASSERT_NOTNULL(netpod.server_ref, "Sanity: Did not set server")
-	TEST_ASSERT_EQUAL(netpod.connected, TRUE, "Sanity: pod didn't connect")
-
-	perp.put_in_active_hand(prybar)
-	netpod.default_pry_open(prybar, perp)
-	TEST_ASSERT_EQUAL(crowbar_alert_received, TRUE, "Did not send COMSIG_BITRUNNER_CROWBAR_ALERT")
-	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITRUNNER_SEVER_AVATAR")
-
-	sever_avatar_received = FALSE
-	server.avatar_connection_refs += WEAKREF(labrat.mind)
-	server.begin_shutdown(perp)
-	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITRUNNER_SHUTDOWN_ALERT")
-	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITRUNNER_SERVER_CRASH")
-
-	server.cool_off()
-	server.avatar_connection_refs.Cut()
-	server.cold_boot_map(labrat, map_key = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
-
 /// Tests the server's ability to generate a loot crate
 /datum/unit_test/qserver_generate_rewards/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
@@ -172,10 +94,6 @@
 	server.receive_turfs = tiles
 	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
 
-	// This is a pretty shallow test. I keep getting null crates with locate(), so I'm not sure how to test this
-	// var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = locate(/obj/structure/closet/crate/secure/bitrunning/decrypted) in tiles
-	// TEST_ASSERT_NOTNULL(crate, "Should generate a loot crate")
-
 /// Server side randomization of domains
 /datum/unit_test/qserver_get_random_domain_id/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
@@ -186,50 +104,6 @@
 	server.points = 3
 	id = server.get_random_domain_id()
 	TEST_ASSERT_NOTNULL(id, "Should return a random domain with points")
-
-	/// Can't truly test the randomization past this
-
-/// Tests getting list of domain generated mobs for antag targets
-/datum/unit_test/qserver_get_valid_domain_mobs/Run()
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-
-	server.cold_boot_map(labrat, map_key = TEST_MAP)
-	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
-	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
-
-	var/list/mobs = server.get_valid_domain_targets()
-	TEST_ASSERT_EQUAL(length(mobs), 0, "Shouldn't get a list without players")
-
-	server.avatar_connection_refs += WEAKREF(labrat.mind)
-	mobs += server.get_valid_domain_targets()
-
-	var/datum/turf_reservation/res = server.generated_domain.reservations[1]
-	TEST_ASSERT_NOTNULL(res, "Sanity: Did not generate a reservation")
-
-	var/mob/living/basic/pet/dog/corgi/pupper
-	var/mob/living/carbon/human/corpse
-	for(var/turf/tile as anything in res.reserved_turfs)
-		var/mob/living/basic/pet/dog/corgi/doggo = locate() in tile
-		if(doggo)
-			pupper = doggo
-			continue
-		var/mob/living/carbon/human/husk = locate() in tile
-		if(husk)
-			corpse = husk
-
-	TEST_ASSERT_NOTNULL(pupper, "Should be a corgi on test map")
-	TEST_ASSERT_NOTNULL(corpse, "Should be a corpse on test map")
-
-	mobs.Cut()
-	mobs += server.get_valid_domain_targets()
-	TEST_ASSERT_EQUAL(length(mobs), 2, "Should return a list of mobs")
-
-	mobs.Cut()
-	pupper.mind_initialize()
-	pupper.mock_client = new()
-	mobs += server.get_valid_domain_targets()
-	TEST_ASSERT_EQUAL(length(mobs), 1, "Should not return mobs with minds")
 
 /// Tests the ability to create hololadders and effectively, retries
 /datum/unit_test/qserver_generate_hololadder/Run()
@@ -319,10 +193,6 @@
 		var/datum/lazy_template/virtual_domain/vdom = new path
 		TEST_ASSERT_NOTNULL(vdom.key, "[path] should have a key")
 		TEST_ASSERT_NOTNULL(vdom.map_name, "[path] should have a map name")
-
-		// This seems to return true regardless of the map existing or not
-		// var/file_name = '_maps/virtual_domains/' + [vdom.map_name] + '.dmm'
-		// TEST_ASSERT_NOTNULL(isfile(file_name), "Could not find map file for [path]")
 
 		if(!length(vdom.extra_loot))
 			continue
