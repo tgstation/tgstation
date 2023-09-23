@@ -17,6 +17,8 @@
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
+	var/open_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
+	var/close_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -132,10 +134,10 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, open_sound, 30, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, close_sound, 30, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
