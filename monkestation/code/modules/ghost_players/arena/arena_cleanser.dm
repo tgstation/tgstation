@@ -26,8 +26,7 @@
 	if(mapload)
 		if(!length(SSmapping.random_arena_templates))
 			message_admins("Room spawner created with no templates available. This shouldn't happen.")
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 
 		var/list/possible_arenas = list()
 		var/datum/map_template/random_room/random_arena/arena_candidate
@@ -42,7 +41,7 @@
 		if(possible_arenas.len)
 			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arenas)
 			template.stationinitload(get_turf(src), centered = template.centerspawner)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 	else
 		return INITIALIZE_HINT_LATELOAD
 
