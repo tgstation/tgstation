@@ -1,4 +1,4 @@
 #!/bin/bash
 
 set -euo pipefail
-tools/bootstrap/python tools/ci/annotate_dm.py "$@"
+tools/bootstrap/python -m dm_annotator "$@"
