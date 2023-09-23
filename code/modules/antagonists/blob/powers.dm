@@ -202,7 +202,7 @@
 		factory.assign_blobbernaut(null)
 		return FALSE
 
-	var/mob/living/basic/blobbernaut/minion/blobber = new(get_turf(factory))
+	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
 	factory.assign_blobbernaut(blobber)
 
 	var/mob/dead/observer/player = pick(candidates)

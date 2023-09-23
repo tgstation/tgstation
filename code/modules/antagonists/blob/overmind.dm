@@ -165,15 +165,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		has_announced = TRUE
 
 /// Create a blob spore and link it to us
-/mob/camera/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_spore/minion)
-	var/mob/living/basic/blob_spore/spore = new spore_type(spore_turf)
+/mob/camera/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
 	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
 
 /// Add something to our list of mobs and wait for it to die
 /mob/camera/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
-	if (!istype(minion, /mob/living/basic/blobbernaut))
+	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
 		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
 
 /// When a spore (or zombie) dies then we do this
@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
-	for(var/mob/living/basic/blobbernaut/blobbernaut in blob_mobs)
+	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
 		if(!blobbernaut.hud_used || !blobbernaut.hud_used.blobpwrdisplay)
 			continue
 		blobbernaut.hud_used.blobpwrdisplay.maptext = MAPTEXT(\

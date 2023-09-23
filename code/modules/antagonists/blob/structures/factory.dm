@@ -15,7 +15,7 @@
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 	///Its Blobbernaut, if it has spawned any.
-	var/mob/living/basic/blobbernaut/minion/blobbernaut
+	var/mob/living/basic/blob_minion/blobbernaut/minion/blobbernaut
 	///Used in blob/powers.dm, checks if it's already trying to spawn a blobbernaut to prevent issues.
 	var/is_creating_blobbernaut = FALSE
 
@@ -51,7 +51,7 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_spore/minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+	var/mob/living/basic/blob_minion/spore/minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
 	created_spore.link_to_factory(src)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
