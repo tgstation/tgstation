@@ -39,7 +39,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/fight_button/proc/update_maptext()
-	var/string = "Player One:[player_one ? "[player_one.real_name]" : "No One"] \n Player Two:[player_two ? "[player_two.real_name]" : "No One"] \n Weapon of Choice: [initial(weapon_of_choice.name)]\n Wager: [payout]"
+	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One:[player_one ? "[player_one.real_name]" : "No One"] \n Player Two:[player_two ? "[player_two.real_name]" : "No One"] \n Weapon of Choice: [initial(weapon_of_choice.name)]\n Wager: [payout]</span></span>"
 
 	if(generated_maptext)
 		qdel(generated_maptext)
