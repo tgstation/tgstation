@@ -23,25 +23,12 @@
 	var/room_width = 17
 	var/room_height = 10
 
+/obj/effect/spawner/random_bar/New()
+	if(!isnull(SSmapping.random_arena_spawners))
+		SSmapping.random_arena_spawners += src
+
 /obj/effect/spawner/random_arena_spawner/Initialize(mapload)
 	if(mapload)
-		if(!length(SSmapping.random_arena_templates))
-			message_admins("Room spawner created with no templates available. This shouldn't happen.")
-			return INITIALIZE_HINT_QDEL
-
-		var/list/possible_arenas = list()
-		var/datum/map_template/random_room/random_arena/arena_candidate
-		shuffle_inplace(SSmapping.random_arena_templates)
-		for(var/ID in SSmapping.random_arena_templates)
-			arena_candidate = SSmapping.random_arena_templates[ID]
-			if(arena_candidate.weight == 0)
-				arena_candidate = null
-				continue
-			possible_arenas[arena_candidate] = arena_candidate.weight
-
-		if(possible_arenas.len)
-			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arenas)
-			template.stationinitload(get_turf(src), centered = template.centerspawner)
 		return INITIALIZE_HINT_QDEL
 	else
 		return INITIALIZE_HINT_LATELOAD
