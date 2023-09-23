@@ -49,28 +49,98 @@
 	else if (length(nearby_turfs))
 		died_turf = pick(nearby_turfs)
 
+	var/saved_appearance = ishuman(died) ? new /datum/human_appearance_profile(died) : null
+
 	var/datum/mind/dead_mind = HAS_TRAIT(died, TRAIT_SUICIDED) ? null : died.mind // There is a way out of the cycle
 	if (!isnull(dead_mind))
 		to_chat(died, span_boldnotice("Your spirit surges! You will return to life in [DisplayTimeText(IMMORTAL_PRE_ACTIVATION_TIME + IMMORTAL_RESURRECT_TIME)]."))
 	animate(died, alpha = died.alpha, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = IMMORTAL_PRE_ACTIVATION_TIME / 2, easing = SINE_EASING | EASE_IN)
-	addtimer(CALLBACK(src, PROC_REF(reverse_death), died, dead_mind, died_turf, body_type), IMMORTAL_PRE_ACTIVATION_TIME, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(reverse_death), died, dead_mind, died_turf, body_type, saved_appearance), IMMORTAL_PRE_ACTIVATION_TIME, TIMER_DELETE_ME)
 
 /// Create a ghost ready for revival
-/datum/grand_finale/immortality/proc/reverse_death(mob/living/died, datum/mind/dead_mind, turf/died_turf, body_type)
+/datum/grand_finale/immortality/proc/reverse_death(mob/living/died, datum/mind/dead_mind, turf/died_turf, body_type, datum/human_appearance_profile/human_appearance)
 	if (died.stat != DEAD)
 		return
-	var/obj/effect/spectre_of_resurrection/ghost = new(died_turf)
+	var/ghost_type = ispath(body_type, /mob/living/carbon/human) ? /obj/effect/spectre_of_resurrection/human : /obj/effect/spectre_of_resurrection
+	var/obj/effect/spectre_of_resurrection/ghost = new ghost_type(died_turf)
 	var/mob/living/corpse = QDELETED(died) ? new body_type(ghost) : died
+	if (!isnull(human_appearance))
+		corpse.real_name = human_appearance.name
 	corpse.alpha = initial(corpse.alpha)
 	corpse.add_traits(list(TRAIT_NO_TELEPORT, TRAIT_AI_PAUSED), MAGIC_TRAIT)
 	corpse.apply_status_effect(/datum/status_effect/grouped/stasis, MAGIC_TRAIT)
-	ghost.set_up_resurrection(corpse, dead_mind)
+	ghost.set_up_resurrection(corpse, dead_mind, human_appearance)
+
+
+/// Store of data we use to recreate someone who was gibbed, like a simplified version of changeling profiles
+/datum/human_appearance_profile
+	/// The name of the profile / the name of whoever this profile source.
+	var/name = "human"
+	/// The DNA datum associated with our profile from the profile source
+	var/datum/dna/dna
+	/// The age of the profile source.
+	var/age
+	/// The body type of the profile source.
+	var/physique
+	/// The quirks of the profile source.
+	var/list/quirks = list()
+	/// The hair and facial hair gradient styles of the profile source.
+	var/list/hair_gradient_style = list("None", "None")
+	/// The hair and facial hair gradient colours of the profile source.
+	var/list/hair_gradient_colours = list(null, null)
+	/// The TTS voice of the profile source
+	var/voice
+	/// The TTS filter of the profile filter
+	var/voice_filter = ""
+
+/datum/human_appearance_profile/New(mob/living/carbon/human/target)
+	copy_from(target)
+
+/// Copy the appearance data of the target
+/datum/human_appearance_profile/proc/copy_from(mob/living/carbon/human/target)
+	target.dna.real_name = target.real_name
+	dna = new target.dna.type()
+	target.dna.copy_dna(dna)
+	name = target.real_name
+	age = target.age
+	physique = target.physique
+
+	for(var/datum/quirk/target_quirk as anything in target.quirks)
+		LAZYADD(quirks, new target_quirk.type)
+
+	hair_gradient_style = LAZYLISTDUPLICATE(target.grad_style)
+	hair_gradient_colours = LAZYLISTDUPLICATE(target.grad_color)
+
+	voice = target.voice
+	voice_filter = target.voice_filter
+
+/// Make the targetted human look like this
+/datum/human_appearance_profile/proc/apply_to(mob/living/carbon/human/target)
+	target.real_name = name
+	target.age = age
+	target.physique = physique
+	target.grad_style = LAZYLISTDUPLICATE(hair_gradient_style)
+	target.grad_color = LAZYLISTDUPLICATE(hair_gradient_colours)
+	target.voice = voice
+	target.voice_filter = voice_filter
+
+	for(var/datum/quirk/target_quirk as anything in quirks)
+		target_quirk.add_to_holder(target)
+
+	dna.transfer_identity(target, TRUE)
+	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
+		limb.update_limb(is_creating = TRUE)
+	target.updateappearance(mutcolor_update = TRUE)
+	target.domutcheck()
+	target.regenerate_icons()
+
 
 /// A ghostly image of a mob showing where and what is going to respawn
 /obj/effect/spectre_of_resurrection
 	name = "spectre"
 	desc = "A frightening apparition, slowly growing more solid."
+	icon_state = "blank_white"
 	anchored = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE
@@ -88,7 +158,7 @@
 	animate(src, alpha = 150, time = 2 SECONDS)
 
 /// Prepare to revive someone
-/obj/effect/spectre_of_resurrection/proc/set_up_resurrection(mob/living/corpse, datum/mind/dead_mind)
+/obj/effect/spectre_of_resurrection/proc/set_up_resurrection(mob/living/corpse, datum/mind/dead_mind, datum/human_appearance_profile/human_appearance)
 	if (isnull(corpse))
 		qdel(src)
 		return
@@ -97,18 +167,18 @@
 	src.dead_mind = dead_mind
 	corpse.forceMove(src)
 	name = "spectre of [corpse]"
-
-	if (ishuman(corpse))
-		icon_state = "blank_white"
-	else
-		icon = initial(corpse.icon)
-		icon_state = initial(corpse.icon_state)
+	setup_icon(corpse)
 	DO_FLOATING_ANIM(src)
 
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 	RegisterSignal(corpse, COMSIG_QDELETING, PROC_REF(on_corpse_deleted))
 	RegisterSignal(dead_mind, COMSIG_QDELETING, PROC_REF(on_mind_lost))
 	addtimer(CALLBACK(src, PROC_REF(revive)), IMMORTAL_RESURRECT_TIME, TIMER_DELETE_ME)
+
+/// Copy appearance from ressurecting mob
+/obj/effect/spectre_of_resurrection/proc/setup_icon(mob/living/corpse)
+	icon = initial(corpse.icon)
+	icon_state = initial(corpse.icon_state)
 
 /obj/effect/spectre_of_resurrection/Destroy(force)
 	QDEL_NULL(corpse)
@@ -151,6 +221,26 @@
 /obj/effect/spectre_of_resurrection/proc/on_mind_lost()
 	SIGNAL_HANDLER
 	dead_mind = null
+
+/// A ressurection spectre with extra behaviour for humans
+/obj/effect/spectre_of_resurrection/human
+	/// Stored data used to restore someone to a fascimile of what they were before
+	var/datum/human_appearance_profile/human_appearance
+
+/obj/effect/spectre_of_resurrection/human/set_up_resurrection(mob/living/corpse, datum/mind/dead_mind, datum/human_appearance_profile/human_appearance)
+	. = ..()
+	src.human_appearance = human_appearance
+
+// We just use a generic floating human appearance to save unecessary costly icon operations
+/obj/effect/spectre_of_resurrection/human/setup_icon(mob/living/corpse)
+	return
+
+// Apply stored human details
+/obj/effect/spectre_of_resurrection/human/on_corpse_revived()
+	if (isnull(corpse))
+		return
+	human_appearance?.apply_to(corpse)
+	return ..()
 
 
 /// Visual flair on the wizard when cast
