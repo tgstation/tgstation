@@ -42,6 +42,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	register_context()
 
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
@@ -50,6 +51,20 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. += "\nLeft-click with a <b>wrench</b> to rotate."
 	. += "Left-click with a <b>screwdriver</b> to invert its direction."
 	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
+	. += "Using another <b>conveyor belt assembly</b> on this will place a <b>new conveyor belt<b> in the direction this one is pointing."
+
+/obj/machinery/conveyor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(istype(held_item, /obj/item/stack/conveyor))
+		context[SCREENTIP_CONTEXT_LMB] = "Extend current conveyor belt"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
+		context[SCREENTIP_CONTEXT_RMB] = "Flip conveyor belt"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -281,6 +296,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		inverted = !inverted
 		update_move_direction()
 		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
+
+	else if(istype(attacking_item, /obj/item/stack/conveyor))
+		// We should place a new conveyor belt machine on the output turf the conveyor is pointing to.
+		var/turf/target_turf = get_step(get_turf(src), forwards)
+		if(!target_turf)
+			return ..()
+		for(var/obj/machinery/conveyor/belt in target_turf)
+			to_chat(user, span_warning("You cannot place a conveyor belt on top of another conveyor belt."))
+			return ..()
+
+		var/obj/item/stack/conveyor/belt_item = attacking_item
+		belt_item.use(1)
+		new /obj/machinery/conveyor(target_turf, forwards, id)
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
@@ -533,6 +561,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/update_weight()
 	return FALSE
+
+/obj/item/stack/conveyor/examine(mob/user)
+	. = ..()
+	. += span_notice("Use a conveyor switch assembly on this before placing to connect to a lever.")
+
+/obj/item/stack/conveyor/use(used, transfer, check)
+	. = ..()
+	playsound(src, 'sound/weapons/genhit.ogg', 30, TRUE)
 
 /obj/item/stack/conveyor/thirty
 	amount = 30

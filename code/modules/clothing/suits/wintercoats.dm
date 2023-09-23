@@ -589,6 +589,7 @@
 	allowed = list(
 		/obj/item/storage/bag/mail,
 		/obj/item/stamp,
+		/obj/item/universal_scanner,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/cargo

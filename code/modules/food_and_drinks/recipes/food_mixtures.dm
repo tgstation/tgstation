@@ -97,6 +97,10 @@
 	required_reagents = list(/datum/reagent/consumable/corn_starch = 1, /datum/reagent/toxin/acid = 1)
 	required_temp = 374
 
+/datum/chemical_reaction/food/rice_flour
+	results = list(/datum/reagent/consumable/rice_flour = 10)
+	required_reagents = list(/datum/reagent/consumable/flour = 5,/datum/reagent/consumable/rice = 5)
+
 /datum/chemical_reaction/food/caramel
 	results = list(/datum/reagent/consumable/caramel = 1)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1)
@@ -149,6 +153,12 @@
 	mix_message = "The ingredients form a dough."
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/dough
+
+/datum/chemical_reaction/food/rice_dough
+	required_reagents = list(/datum/reagent/consumable/rice_flour = 20,/datum/reagent/water = 10)
+	mix_message = "The ingredients form a rice dough."
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/rice_dough
 
 /datum/chemical_reaction/food/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
@@ -243,7 +253,8 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/olive_oil_upconvert
-	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1, /datum/reagent/consumable/nutriment/fat/oil = 2)
+	required_catalysts = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1)
+	required_reagents = list( /datum/reagent/consumable/nutriment/fat/oil = 2)
 	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT

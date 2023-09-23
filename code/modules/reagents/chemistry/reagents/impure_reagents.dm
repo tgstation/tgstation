@@ -15,12 +15,12 @@
 	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(!liver)//Though, lets be safe
-		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)//Incase of no liver!
-		return ..()
+	if(isnull(liver)) //Though, lets be safe
+		return affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype) //Incase of no liver!
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	return ..()
+	return TRUE
 
 //Basically just so people don't forget to adjust metabolization_rate
 /datum/reagent/inverse
@@ -35,8 +35,8 @@
 
 
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	return ..()
+	. = ..()
+	return affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction
