@@ -32,11 +32,7 @@
 		overmind.factory_blobs += src
 
 /obj/structure/blob/special/factory/Destroy()
-	for(var/mob/living/blob_mob as anything in spores_and_zombies)
-		to_chat(blob_mob, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
-		blob_mob.death()
 	spores_and_zombies = null
-	blobbernaut?.on_factory_destroyed()
 	blobbernaut = null
 	if(overmind)
 		overmind.factory_blobs -= src
@@ -51,14 +47,14 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_minion/spore/minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
-	created_spore.link_to_factory(src)
+	var/mob/living/basic/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
 
 /// Tracks the existence of a mob in our mobs list
-/obj/structure/blob/special/factory/proc/register_mob(mob/living/blob_mob)
+/obj/structure/blob/special/factory/proc/register_mob(mob/living/basic/blob_minion/blob_mob)
 	spores_and_zombies |= blob_mob
+	blob_mob.link_to_factory(src)
 	RegisterSignal(blob_mob, COMSIG_LIVING_DEATH, PROC_REF(on_spore_died))
 	RegisterSignal(blob_mob, COMSIG_QDELETING, PROC_REF(on_spore_lost))
 
@@ -88,6 +84,7 @@
 	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 	blobbernaut = new_naut
+	blobbernaut.link_to_factory(src)
 	RegisterSignals(new_naut, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_blobbernaut_death))
 	update_appearance(UPDATE_ICON)
 

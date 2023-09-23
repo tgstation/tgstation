@@ -99,7 +99,7 @@
 	attack_verb_continuous = new_strain.blobbernaut_message
 
 /// Called by our factory to inform us that it's not going to support us financially any more
-/mob/living/basic/blob_minion/blobbernaut/minion/proc/on_factory_destroyed()
+/mob/living/basic/blob_minion/blobbernaut/minion/on_factory_destroyed()
+	. = ..()
 	orphaned = TRUE
-	to_chat(src, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
 	throw_alert("nofactory", /atom/movable/screen/alert/nofactory)

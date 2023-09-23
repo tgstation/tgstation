@@ -38,6 +38,9 @@
 	. = ..()
 	death_burst()
 
+/mob/living/basic/blob_minion/spore/on_factory_destroyed()
+	death()
+
 /// Create an explosion of spores on death
 /mob/living/basic/blob_minion/spore/proc/death_burst()
 	do_chem_smoke(range = death_cloud_size, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
@@ -66,16 +69,22 @@
 	/// We die if we leave the same turf as this z level
 	var/turf/z_turf
 
-/mob/living/basic/blob_minion/spore/minion/Life(seconds_per_tick, times_fired)
+/mob/living/basic/blob_minion/spore/minion/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_changed))
+
+/// When we z-move check that we're on the same z level as our factory was
+/mob/living/basic/blob_minion/spore/minion/proc/on_z_changed()
+	SIGNAL_HANDLER
 	if (isnull(z_turf))
 		return
 	if (!is_valid_z_level(get_turf(src), z_turf))
 		death()
 
 /// Mark the turf we need to track from our factory
-/mob/living/basic/blob_minion/spore/minion/proc/link_to_factory(turf/factory_turf)
-	z_turf = factory_turf
+/mob/living/basic/blob_minion/spore/minion/link_to_factory(obj/structure/blob/special/factory/factory)
+	. = ..()
+	z_turf = get_turf(factory)
 
 /// If the blob changes to distributed neurons then you can control the spores
 /mob/living/basic/blob_minion/spore/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)

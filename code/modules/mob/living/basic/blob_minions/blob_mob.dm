@@ -1,7 +1,7 @@
 /// Root of shared behaviour for mobs spawned by blobs, is abstract and should not be spawned
 /mob/living/basic/blob_minion
 	name = "Blob Error"
-	desc - "A fungal creature created by bad code or celestial mistake."
+	desc = "A nonfunctional fungal creature created by bad code or celestial mistake. Point and laugh."
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_head"
 	unique_name = TRUE
@@ -26,3 +26,12 @@
 /// Called when our blob overmind changes their variant, update some of our mob properties
 /mob/living/basic/blob_minion/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	return
+
+/// Associates this mob with a specific blob factory node
+/mob/living/basic/blob_minion/proc/link_to_factory(obj/structure/blob/special/factory/factory)
+	RegisterSignal(factory, COMSIG_QDELETING, PROC_REF(on_factory_destroyed))
+
+/// Called when our factory is destroyed
+/mob/living/basic/blob_minion/proc/on_factory_destroyed()
+	SIGNAL_HANDLER
+	to_chat(src, span_userdanger("Your factory was destroyed! You feel yourself dying!"))

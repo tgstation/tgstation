@@ -31,13 +31,22 @@
 
 /mob/living/basic/blob_minion/zombie/death(gibbed)
 	corpse?.forceMove(loc)
-	corpse = null
 	death_burst()
 	return ..()
+
+/mob/living/basic/blob_minion/zombie/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (gone != corpse)
+		return
+	corpse = null
+	death()
 
 /mob/living/basic/blob_minion/zombie/Destroy()
 	QDEL_NULL(corpse)
 	return ..()
+
+/mob/living/basic/blob_minion/zombie/on_factory_destroyed()
+	death()
 
 /mob/living/basic/blob_minion/zombie/update_overlays()
 	. = ..()
@@ -61,6 +70,13 @@
 	new_corpse.forceMove(src)
 	corpse = new_corpse
 	update_appearance(UPDATE_ICON)
+	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
+
+/// Dynamic changeling reentry
+/mob/living/basic/blob_minion/zombie/proc/on_corpse_revived()
+	SIGNAL_HANDLER
+	visible_message(span_boldwarning("[src] bursts from the inside!"))
+	death()
 
 /// Blob-created zombies will ping for player control when they make a zombie
 /mob/living/basic/blob_minion/zombie/controlled
