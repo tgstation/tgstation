@@ -11,7 +11,7 @@
 
 	var/basic_mob_flags = NONE
 
-	///Defines how fast the basic mob can move. This is a multiplier
+	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second
 	var/stamina_recovery = 5
