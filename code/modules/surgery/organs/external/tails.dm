@@ -80,9 +80,6 @@
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
 	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
 
-/datum/bodypart_overlay/mutant/tail/get_global_feature_list()
-	return GLOB.tails_list
-
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
@@ -111,6 +108,9 @@
 /datum/bodypart_overlay/mutant/tail/monkey
 	color_source = NONE
 	feature_key = "tail_monkey"
+
+/datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
+	return GLOB.tails_list_monkey
 
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
