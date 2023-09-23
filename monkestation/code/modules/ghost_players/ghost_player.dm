@@ -20,6 +20,8 @@
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
+	equipOutfit(/datum/outfit/job/assistant)
+	regenerate_icons()
 
 /mob/living/carbon/human/ghost/Destroy()
 	. = ..()
