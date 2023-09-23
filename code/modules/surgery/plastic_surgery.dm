@@ -89,6 +89,7 @@
 				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist
 			else
+				user.visible_message(span_warning("You have no picture to base the appearance on, Reverting to random appearances."))
 				for(var/i in 1 to 10)
 					names += target.dna.species.random_name(target.gender, TRUE)
 		else
