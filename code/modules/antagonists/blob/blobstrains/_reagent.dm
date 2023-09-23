@@ -15,8 +15,9 @@
 	var/mob_protection = L.getarmor(null, BIO) * 0.01
 	reagent.expose_mob(L, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
-/datum/blobstrain/reagent/on_sporedeath(mob/living/basic/blob_spore/spore)
-	spore.release_spore_cloud(reagent.type)
+/datum/blobstrain/reagent/on_sporedeath(mob/living/basic/spore)
+	var/burst_range = (spore.type == /mob/living/basic/blob_spore) ? 1 : 0
+	do_chem_smoke(range = burst_range, holder = spore, location = get_turf(spore), reagent_type = reagent.type)
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob

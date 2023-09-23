@@ -167,14 +167,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Create a blob spore and link it to us
 /mob/camera/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_spore/minion)
 	var/mob/living/basic/blob_spore/spore = new spore_type(spore_turf)
-	spore.AddComponent(/datum/component/blob_minion, src, CALLBACK(spore, TYPE_PROC_REF(/mob/living/basic/blob_spore/minion, on_strain_updated)))
-	RegisterSignal(spore, COMSIG_LIVING_DEATH, PROC_REF(on_spore_death))
+	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
 
-/mob/camera/blob/proc/on_spore_death(mob/living/basic/blob_spore/spore)
+/// Add something to our list of mobs and wait for it to die
+/mob/camera/blob/proc/register_new_minion(mob/living/minion)
+	blob_mobs |= minion
+	if (!istype(minion, /mob/living/basic/blobbernaut))
+		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
+
+/// When a spore (or zombie) dies then we do this
+/mob/camera/blob/proc/on_minion_death(mob/living/spore)
 	SIGNAL_HANDLER
-	if (!istype(spore))
-		return
 	blobstrain.on_sporedeath(spore)
 
 /mob/camera/blob/proc/victory()

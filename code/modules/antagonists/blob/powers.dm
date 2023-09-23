@@ -206,7 +206,7 @@
 	factory.assign_blobbernaut(blobber)
 
 	var/mob/dead/observer/player = pick(candidates)
-	blobber.AddComponent(/datum/component/blob_minion, src, CALLBACK(blobber, TYPE_PROC_REF(/mob/living/basic/blobbernaut/minion, on_strain_updated)))
+	blobber.AddComponent(/datum/component/blob_minion, src)
 	blobber.assign_key(player.key)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 

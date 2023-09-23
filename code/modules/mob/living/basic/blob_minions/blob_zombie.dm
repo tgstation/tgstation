@@ -43,10 +43,12 @@
 	. = ..()
 	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddComponent(/datum/component/blob_minion)
 
 /mob/living/basic/blob_zombie/death(gibbed)
 	corpse?.forceMove(loc)
 	corpse = null
+	death_burst()
 	return ..()
 
 /mob/living/basic/blob_zombie/Destroy()
@@ -60,6 +62,10 @@
 	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
 	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
 	. += blob_head_overlay
+
+/// Create an explosion of spores on death
+/mob/living/basic/blob_zombie/proc/death_burst()
+	do_chem_smoke(range = 0, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
 
 /// Store a body so that we can drop it on death
 /mob/living/basic/blob_zombie/proc/consume_corpse(mob/living/carbon/human/new_corpse)
@@ -85,3 +91,6 @@
 		poll_candidates = TRUE,\
 		poll_ignore_key = POLL_IGNORE_BLOB,\
 	)
+
+/mob/living/basic/blob_zombie/controlled/death_burst()
+	return

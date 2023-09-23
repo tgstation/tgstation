@@ -2,6 +2,7 @@
  * Common behaviour shared by things which are minions to a blob
  */
 /datum/component/blob_minion
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Overmind who is our boss
 	var/mob/camera/blob/overmind
 	/// Callback to run if overmind strain changes
@@ -13,22 +14,30 @@
 		return COMPONENT_INCOMPATIBLE
 	if (isnull(overmind))
 		return
+	src.on_strain_changed = on_strain_changed
+	register_overlord(overmind)
+
+/// Averages corrosive power and sums volume.
+/datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/camera/blob/overmind, datum/callback/on_strain_changed)
+	if (!isnull(on_strain_changed))
+		src.on_strain_changed = on_strain_changed
+	register_overlord(overmind)
+
+/datum/component/blob_minion/proc/register_overlord(mob/camera/blob/overmind)
 	src.overmind = overmind
+	overmind.register_new_minion(parent)
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
-	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_strain_changed))
-	/// register signal for strain changing
-	on_strain_changed?.Invoke(overmind, overmind.blobstrain)
+	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_properties_changed))
+	overmind_properties_changed(overmind, overmind.blobstrain)
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
 	SIGNAL_HANDLER
 	overmind = null
-	var/mob/living/living_parent = parent
-	living_parent.update_appearance(UPDATE_ICON)
-	on_strain_changed?.Invoke()
+	overmind_properties_changed()
 
 /// Our overmind has changed colour and properties
-/datum/component/blob_minion/proc/overmind_strain_changed(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/datum/component/blob_minion/proc/overmind_properties_changed(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	SIGNAL_HANDLER
 	var/mob/living/living_parent = parent
 	living_parent.update_appearance(UPDATE_ICON)
@@ -36,8 +45,6 @@
 
 /datum/component/blob_minion/RegisterWithParent()
 	. = ..()
-	if (!isnull(overmind))
-		overmind.blob_mobs |= parent
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
@@ -147,6 +154,7 @@
 /datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)
 	SIGNAL_HANDLER
 	replacement.TakeComponent(src)
+	overmind?.register_new_minion(replacement)
 
 /datum/component/blob_minion/PostTransfer()
 	if(!isliving(parent))

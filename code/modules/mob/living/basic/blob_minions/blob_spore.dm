@@ -47,6 +47,7 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)))
 
 /mob/living/basic/blob_spore/death(gibbed)
 	. = ..()
@@ -54,19 +55,11 @@
 
 /// Create an explosion of spores on death
 /mob/living/basic/blob_spore/proc/death_burst()
-	release_spore_cloud()
+	do_chem_smoke(range = death_cloud_size, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
 
-/// On death, create a small smoke of harmful gas (s-Acid)
-/mob/living/basic/blob_spore/proc/release_spore_cloud(reagent_type = /datum/reagent/toxin/spore)
-	var/datum/effect_system/fluid_spread/smoke/chem/spores = new
-	var/turf/location = get_turf(src)
-	// Create the reagents to put into the air
-	create_reagents(10)
-	reagents.add_reagent(reagent_type, 10)
-	// Attach the smoke spreader and setup/start it.
-	spores.attach(location)
-	spores.set_up(death_cloud_size, holder = src, location = location, carry = reagents, silent = TRUE)
-	spores.start()
+/// Doesn't actually do anything if you're not spawned by a blob
+/mob/living/basic/blob_spore/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+	return
 
 /mob/living/basic/blob_spore/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -103,7 +96,7 @@
 	z_turf = factory_turf
 
 /// If the blob changes to distributed neurons then you can control the spores
-/mob/living/basic/blob_spore/minion/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_spore/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
 	if (istype(new_strain, /datum/blobstrain/reagent/distributed_neurons))
 		AddComponent(\
 			/datum/component/ghost_direct_control,\
