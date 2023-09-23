@@ -24,7 +24,7 @@
 /obj/item/bodybag/attempt_pickup(mob/user)
 	// can't pick ourselves up if we are inside of the bodybag, else very weird things may happen
 	if(contains(user))
-		return TRUE
+		return FALSE
 	return ..()
 
 /**

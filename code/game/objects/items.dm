@@ -635,11 +635,14 @@
 		return
 	return attempt_pickup(user)
 
+/**
+ * Attempts to be picked up by the user
+ *
+ * Returns TRUE if we successfully were picked up and are now in the user's hands, FALSE otherwise
+ */
 /obj/item/proc/attempt_pickup(mob/user)
-	. = TRUE
-
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
-		return
+		return FALSE
 
 	//Heavy gravity makes picking up things very slow.
 	var/grav = user.has_gravity()
@@ -647,8 +650,7 @@
 		var/grav_power = min(3,grav - STANDARD_GRAVITY)
 		to_chat(user,span_notice("You start picking up [src]..."))
 		if(!do_after(user, 30 * grav_power, src))
-			return
-
+			return FALSE
 
 	//If the item is in a storage item, take it out
 	var/outside_storage = !loc.atom_storage
@@ -658,9 +660,9 @@
 		if(isturf(user.loc))
 			storage_turf = get_turf(loc)
 		if(!loc.atom_storage.remove_single(user, src, user, silent = TRUE))
-			return
+			return FALSE
 	if(QDELETED(src)) //moving it out of the storage destroyed it.
-		return
+		return FALSE
 
 	if(storage_turf)
 		do_pickup_animation(user, storage_turf)
@@ -669,14 +671,15 @@
 		throwing.finalize(FALSE)
 	if(loc == user && outside_storage)
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
-			return
+			return FALSE
 
-	. = FALSE
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, ignore_animation = !outside_storage))
 		user.dropItemToGround(src)
-		return TRUE
+		return FALSE
+
+	return TRUE
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
