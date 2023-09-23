@@ -54,6 +54,7 @@
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
+		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
 		victim.AddComponent(/datum/component/leash, src, distance = 1)
 		balloon_alert(victim, "you feel unable to move away from the parade!")
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
