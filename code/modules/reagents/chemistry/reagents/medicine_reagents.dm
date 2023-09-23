@@ -854,7 +854,6 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = TRUE
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2 * REM * seconds_per_tick)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * REM * seconds_per_tick)
@@ -877,7 +876,8 @@
 	affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))

@@ -825,3 +825,35 @@
   - balance: Peacekeeper cyborg's emagged hug is no longer a hardstun.
   intercepti0n:
   - image: resprites t-ray scanner.
+2023-09-23:
+  ArcaneMusic:
+  - bugfix: Conveyor belts now properly show their new screentips on mouseover with
+      tools.
+  Ben10Omintrix:
+  - refactor: seedlings have been refactored into basic mobs please report any bugs
+  - rscadd: seedlings now can have different colored petals and can look after botanys
+      plants
+  - rscadd: seedlings are re-added to the game! they grow out of seedling seeds obtainable
+      from exotic seed crates or traitor uplink
+  GPeckman:
+  - admin: Boneless smite should work properly again.
+  LT3:
+  - rscadd: Poly now causes a power surge when dusted by the supermatter crystal
+  - bugfix: Ghosts and godmode mobs will no longer create resonance when touching
+      the supermatter crystal
+  Shadow-Quill:
+  - rscadd: The Message Monitor console's board can now be obtained via the telecoms
+      research node.
+  distributivgesetz, CoiledLamb:
+  - rscadd: 'Added two new awards specifically for engineering and medical: The "Emergency
+      Services Award" and the "Atmospheric Mastery Award". CEs get 3 Emergency Services
+      Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards.'
+  lizardqueenlexi:
+  - bugfix: Foods that have special conditions for liking/disliking them (such as
+      donuts for sec officers) have these conditions again.
+  - bugfix: Characters with ageusia properly ignore non-toxic food types that they
+      eat.
+  - bugfix: If you examine toxic food, it can no longer appear to you as edible.
+  mc-oofert:
+  - bugfix: clown bomb payload is no longer named badmin payload and no longer disperses
+      clowns in cardinal directions only
