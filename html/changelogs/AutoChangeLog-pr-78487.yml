@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Maybe fixes some weird occurrences where you lose the ability to pass over tables when you shouldn't, and visa versa"

@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Brimdemon corpses release an explosion shortly after death, just to keep you on your toes."
+  - refactor: "Brimdemons now use the basic mob framework which (should) improve their pathfinding somewhat. Please bug report any unusual behaviour."
+  - admin: "The brimdemon's beam ability can be given to any mob, for your Binding of Isaac event"

@@ -58,10 +58,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(istype(held_item, /obj/item/stack/conveyor))
 		context[SCREENTIP_CONTEXT_LMB] = "Extend current conveyor belt"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item.tool_behaviour == TOOL_WRENCH)
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
 		context[SCREENTIP_CONTEXT_RMB] = "Flip conveyor belt"
 		return CONTEXTUAL_SCREENTIP_SET

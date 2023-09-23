@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "rescue hooks will once again drop the mob next to the fisherman instead of just displaying a balloon alert and doing nothing"

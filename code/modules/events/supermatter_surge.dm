@@ -80,8 +80,8 @@
 
 	end_when = rand(SURGE_DURATION_MIN, SURGE_DURATION_MAX)
 
-/datum/round_event/supermatter_surge/announce()
-	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber and energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [surge_class] Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
+/datum/round_event/supermatter_surge/announce(fake)
+	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [surge_class] Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
 	engine.bullet_energy = surge_class + SURGE_BULLET_ENERGY_ADDITION
@@ -98,6 +98,25 @@
 	priority_announce("The supermatter surge has dissipated, crystal output readings have normalized.", "Anomaly Cleared")
 	engine = null
 	sm_gas = null
+
+/datum/round_event_control/supermatter_surge/poly
+	name = "Supermatter Surge: Poly's Revenge"
+	typepath = /datum/round_event/supermatter_surge/poly
+	category = EVENT_CATEGORY_ENGINEERING
+	weight = 0
+	max_occurrences = 0
+	description = "For when Poly is sacrificed to the SM. Not really useful to run manually."
+	min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	admin_setup = null
+
+/datum/round_event/supermatter_surge/poly
+	announce_when = 4
+	surge_class =  4
+	fakeable = FALSE
+
+/datum/round_event/supermatter_surge/poly/announce(fake)
+	priority_announce("The Crystal Integrity Monitoring System has detected unusual parrot type resonance in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class P Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
 
 #undef SURGE_DURATION_MIN
 #undef SURGE_DURATION_MAX
