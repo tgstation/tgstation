@@ -23,7 +23,7 @@
 	var/room_width = 17
 	var/room_height = 10
 
-/obj/effect/spawner/random_bar/New()
+/obj/effect/spawner/random_arena_spawner/New()
 	if(!isnull(SSmapping.random_arena_spawners))
 		SSmapping.random_arena_spawners += src
 

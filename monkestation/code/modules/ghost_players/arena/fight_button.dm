@@ -30,6 +30,13 @@
 /obj/structure/fight_button/Initialize(mapload)
 	. = ..()
 	update_maptext()
+	register_context()
+
+/obj/structure/fight_button/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Join Duel"
+	context[SCREENTIP_CONTEXT_RMB] = "Leave Duel"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/fight_button/proc/update_maptext()
 	var/string = "Player One:[player_one ? "[player_one.real_name]" : "No One"] \n Player Two:[player_two ? "[player_two.real_name]" : "No One"] \n Weapon of Choice: [initial(weapon_of_choice.name)]\n Wager: [payout]"
@@ -66,6 +73,17 @@
 		if(player_one && player_two)
 			update_maptext()
 			addtimer(CALLBACK(src, PROC_REF(prep_round)), 5 SECONDS)
+
+
+/obj/structure/fight_button/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(user == player_one)
+		break_off_game()
+		player_one = null
+
+	else if(user == player_two)
+		player_two.linked_button = null
+		player_two = null
 
 /obj/structure/fight_button/proc/remove_user(mob/living/carbon/human/ghost/vanisher)
 	if(player_one == vanisher)
