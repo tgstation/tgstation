@@ -13,7 +13,7 @@
  * Mark of Moon
  * Ritual of Knowledge
  * Lunar Parade
- * Moons vision
+ * Lunar robe
  * > Sidepaths:
  *   Space Phase
  *   Curse of Paralysis
@@ -111,18 +111,18 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations \
 		if they are hit by the parade they will also suffer brain damage when it ends."
-	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/moons_vision)
+	gain_text = "...to regain its gaze they left, moving with a parade bringing all who suffered along."
+	next_knowledge = list(/datum/heretic_knowledge/moons_robe)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
 
 
-/datum/heretic_knowledge/moons_vision
-	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
-		It can also be forced onto a heathen, to make them unable to take it off..."
+/datum/heretic_knowledge/moons_robe
+	name = "Lunar Robe"
+	desc = "Allows you to transmute 2 sheets of glass, a suit,  and a brain \
+			to create a lunar robe, when anyone hits it they swap places with you \
+			and everyone around suffers hallucinations and stamina damage."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
