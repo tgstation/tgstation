@@ -63,6 +63,9 @@
 		if(user.client.prefs.metacoins < payout)
 			to_chat(user, span_warning("You do not have the funds to compete in this wager!"))
 			return
+		var/choice = tgui_alert(user, "Do you wish to enter the duel? The wager is [payout].", "[src.name]", list("Yes", "No"))
+		if(choice != "Yes")
+			return
 		player_two = user
 		player_two.linked_button = src
 		if(player_one && player_two)
@@ -75,10 +78,14 @@
 	if(user == player_one)
 		break_off_game()
 		player_one = null
+		update_maptext()
 
 	else if(user == player_two)
 		player_two.linked_button = null
 		player_two = null
+		update_maptext()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fight_button/proc/remove_user(mob/living/carbon/human/ghost/vanisher)
 	if(player_one == vanisher)
