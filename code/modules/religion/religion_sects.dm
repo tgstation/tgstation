@@ -58,6 +58,13 @@
 	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span>")
 	to_chat(chap, "<span class='notice'>[desc]</span>")
 
+/// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
+/datum/religion_sect/proc/on_deconversion(mob/living/chap)
+	SHOULD_CALL_PARENT(TRUE)
+	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
+	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
 	. = TRUE
@@ -292,6 +299,11 @@
 		return
 	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
 
+/datum/religion_sect/burden/on_deconversion(mob/living/carbon/human/new_convert)
+	if (ishuman(new_convert))
+		new_convert.cure_trauma_type(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+	return ..()
+
 /datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
 	if(!ishuman(burdened))
 		return FALSE
@@ -332,6 +344,11 @@
 		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
 		return FALSE
 	new_convert.gain_trauma(/datum/brain_trauma/special/honorbound, TRAUMA_RESILIENCE_MAGIC)
+
+/datum/religion_sect/honorbound/on_deconversion(mob/living/carbon/human/new_convert)
+	if (ishuman(new_convert))
+		new_convert.cure_trauma_type(/datum/brain_trauma/special/honorbound, TRAUMA_RESILIENCE_MAGIC)
+	return ..()
 
 #define MINIMUM_YUCK_REQUIRED 5
 

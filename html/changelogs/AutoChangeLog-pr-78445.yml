@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - admin: "Admins can transform misbehaving players into arbitrary objects at will."
