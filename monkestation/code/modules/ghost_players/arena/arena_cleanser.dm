@@ -28,7 +28,7 @@
 
 /obj/effect/spawner/random_arena_spawner/LateInitialize()
 	. = ..()
-	/*
+	#ifndef SPACEMAN_DMM
 	if(!length(SSmapping.random_arena_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		qdel(src)
@@ -48,4 +48,4 @@
 		var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arenas)
 		template.load(get_turf(src), centered = template.centerspawner)
 	qdel(src)
-	*/
+	#endif
