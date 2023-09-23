@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///The type of mutant race the player is if applicable (i.e. potato-man)
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
+	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
 	var/list/features = list("mcolor" = "#FFFFFF")
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
