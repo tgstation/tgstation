@@ -26,8 +26,8 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	obj_damage = 0
-	attack_verb_continuous = "hits"
-	attack_verb_simple = "hit"
+	attack_verb_continuous = "batters"
+	attack_verb_simple = "batter"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	death_message = "explodes into a cloud of gas!"
 	lighting_cutoff_red = 20
@@ -45,7 +45,7 @@
 /mob/living/basic/blob_spore/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
+	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/blob_spore/death(gibbed)

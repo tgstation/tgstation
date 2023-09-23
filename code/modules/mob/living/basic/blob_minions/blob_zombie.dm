@@ -15,20 +15,20 @@
 	maxHealth = 70
 	bubble_icon = "blob"
 	speak_emote = null
-	verb_say = "psychically pulses"
-	verb_ask = "psychically probes"
-	verb_exclaim = "psychically yells"
-	verb_yell = "psychically screams"
+	verb_say = "gurgles"
+	verb_ask = "demands"
+	verb_exclaim = "roars"
+	verb_yell = "bellows"
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	obj_damage = 20
-	attack_verb_continuous = "hits"
-	attack_verb_simple = "hit"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	death_message = "explodes into a cloud of gas!"
+	death_message = "collapses to the ground!"
 	lighting_cutoff_red = 20
 	lighting_cutoff_green = 40
 	lighting_cutoff_blue = 30
@@ -38,6 +38,20 @@
 	ai_controller = /datum/ai_controller/basic_controller/blob_zombie
 	/// The dead body we have inside
 	var/mob/living/carbon/human/corpse
+
+/mob/living/basic/blob_zombie/Initialize(mapload)
+	. = ..()
+	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/basic/blob_zombie/death(gibbed)
+	corpse?.forceMove(loc)
+	corpse = null
+	return ..()
+
+/mob/living/basic/blob_zombie/Destroy()
+	QDEL_NULL(corpse)
+	return ..()
 
 /mob/living/basic/blob_zombie/update_overlays()
 	. = ..()

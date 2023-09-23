@@ -45,18 +45,12 @@
 
 /mob/living/basic/blobbernaut/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
+	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
 
 /mob/living/basic/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
 	return ..()
-
-/// We're mute but we intercept it via signals so that blobs with overminds can broadcast to them
-/mob/living/basic/blobbernaut/proc/on_try_speech()
-	SIGNAL_HANDLER
-	return COMPONENT_CANNOT_SPEAK
 
 /// This variant is the one actually spawned by blob factories, takes damage when away from blob tiles
 /mob/living/basic/blobbernaut/minion
