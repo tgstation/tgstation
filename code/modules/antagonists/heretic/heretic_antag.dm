@@ -605,7 +605,7 @@
 	if(!admin.client?.holder)
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
-	
+
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
 	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
@@ -777,8 +777,8 @@
 	target_amount = main_path_length
 	// Add in the base research we spawn with, otherwise it'd be too easy.
 	target_amount += length(GLOB.heretic_start_knowledge)
-	// And add in some buffer, to require some sidepathing.
-	target_amount += rand(2, 4)
+	// And add in some buffer, to require some sidepathing. // Increased by 3 now that each path gets 3 free side points.
+	target_amount += rand(5, 7)
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()
