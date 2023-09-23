@@ -164,44 +164,56 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 		has_announced = TRUE
 
+/// Create a blob spore and link it to us
+/mob/camera/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_spore/minion)
+	var/mob/living/basic/blob_spore/spore = new spore_type(spore_turf)
+	spore.AddComponent(/datum/component/blob_minion, src, CALLBACK(spore, TYPE_PROC_REF(/mob/living/basic/blob_spore/minion, on_strain_updated)))
+	RegisterSignal(spore, COMSIG_LIVING_DEATH, PROC_REF(on_spore_death))
+	return spore
+
+/mob/camera/blob/proc/on_spore_death(mob/living/basic/blob_spore/spore)
+	SIGNAL_HANDLER
+	if (!istype(spore))
+		return
+	blobstrain.on_sporedeath(spore)
+
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(10 SECONDS)
-	for(var/i in GLOB.mob_living_list)
-		var/mob/living/L = i
-		var/turf/T = get_turf(L)
-		if(!T || !is_station_level(T.z))
+	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
+		var/turf/guy_turf = get_turf(live_guy)
+		if(!guy_turf || !is_station_level(guy_turf.z))
 			continue
 
-		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))
+		if(live_guy in GLOB.overminds || (live_guy.pass_flags & PASSBLOB))
 			continue
 
-		var/area/Ablob = get_area(T)
-
-		if(!(Ablob.area_flags & BLOBS_ALLOWED))
+		var/area/blob_area = get_area(guy_turf)
+		if(!(blob_area.area_flags & BLOBS_ALLOWED))
 			continue
 
-		if(!(ROLE_BLOB in L.faction))
-			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			if(L.stat != DEAD)
-				L.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
-			L.death()
-			new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		if(!(ROLE_BLOB in live_guy.faction))
+			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
+			if(live_guy.stat != DEAD)
+				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
+			live_guy.death()
+			create_spore(guy_turf)
 		else
-			L.fully_heal()
+			live_guy.fully_heal()
 
-		for(var/area/A in GLOB.areas)
-			if(!(A.type in GLOB.the_station_areas))
+		for(var/area/check_area in GLOB.areas)
+			if(!(check_area.type in GLOB.the_station_areas))
 				continue
-			if(!(A.area_flags & BLOBS_ALLOWED))
+			if(!(check_area.area_flags & BLOBS_ALLOWED))
 				continue
-			A.color = blobstrain.color
-			A.name = "blob"
-			A.icon = 'icons/mob/nonhuman-player/blob.dmi'
-			A.icon_state = "blob_shield"
-			A.layer = BELOW_MOB_LAYER
-			A.invisibility = 0
-			A.blend_mode = 0
+			check_area.color = blobstrain.color
+			check_area.name = "blob"
+			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+			check_area.icon_state = "blob_shield"
+			check_area.layer = BELOW_MOB_LAYER
+			check_area.invisibility = 0
+			check_area.blend_mode = 0
+
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
 		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
@@ -323,8 +335,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			return FALSE
 	else
-		var/area/A = get_area(NewLoc)
-		if(isgroundlessturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or goundless tiles
+		var/area/check_area = get_area(NewLoc)
+		if(isgroundlessturf(NewLoc) || istype(check_area, /area/shuttle)) //if unplaced, can't go on shuttles or goundless tiles
 			return FALSE
 		forceMove(NewLoc)
 		return TRUE

@@ -346,10 +346,11 @@
 	var/list/surrounding_turfs = TURF_NEIGHBORS(tile)
 	if(!length(surrounding_turfs))
 		return FALSE
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in blob_mobs)
-		if(isturf(spore.loc) && get_dist(spore, tile) <= 35 && !spore.key)
-			spore.LoseTarget()
-			spore.Goto(pick(surrounding_turfs), spore.move_to_delay)
+	for(var/mob/living/basic/blob_mob as anything in blob_mobs)
+		if(!isturf(blob_mob.loc) || get_dist(blob_mob, tile) > 35 || blob_mob.key)
+			continue
+		blob_mob.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		blob_mob.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, pick(surrounding_turfs))
 
 /** Opens the reroll menu to change strains */
 /mob/camera/blob/proc/strain_reroll()

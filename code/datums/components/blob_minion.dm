@@ -17,7 +17,7 @@
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
 	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_strain_changed))
 	/// register signal for strain changing
-	on_strain_changed?.Invoke(overmind)
+	on_strain_changed?.Invoke(overmind, overmind.blobstrain)
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
@@ -51,6 +51,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_TRIED_PASS, PROC_REF(on_attempted_pass))
 	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
+	RegisterSignal(parent, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
 	living_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/blob_minion/UnregisterFromParent()
@@ -71,6 +72,7 @@
 		COMSIG_ATOM_TRIED_PASS,
 		COMSIG_MOVABLE_SPACEMOVE,
 		COMSIG_LIVING_TRY_SPEECH,
+		COMSIG_MOB_CHANGED_TYPE,
 	))
 
 /// Become blobpilled when we gain a mind
@@ -140,3 +142,12 @@
 			var/link = FOLLOW_LINK(creature, src)
 			to_chat(creature, "[link] [rendered]")
 	return COMPONENT_CANNOT_SPEAK
+
+/// Called when a blob minion is transformed into something else, hopefully a spore into a zombie
+/datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)
+	SIGNAL_HANDLER
+	replacement.TakeComponent(src)
+
+/datum/component/blob_minion/PostTransfer()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
