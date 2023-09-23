@@ -15,7 +15,7 @@
 		CRASH("You forgot to tell this mob where to find its ability")
 
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
-	if (QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key)

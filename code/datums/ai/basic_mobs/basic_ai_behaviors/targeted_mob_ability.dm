@@ -19,12 +19,6 @@
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
 		controller.clear_blackboard_key(target_key)
-		return
-	if (!isliving(target))
-		return
-	var/mob/living/living_target = target
-	if(living_target.stat >= UNCONSCIOUS)
-		controller.clear_blackboard_key(target_key)
 
 /**
  * # Try Mob Ability and plan execute

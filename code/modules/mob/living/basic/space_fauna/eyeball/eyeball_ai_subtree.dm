@@ -17,14 +17,10 @@
 /datum/ai_planning_subtree/heal_the_blind
 
 /datum/ai_planning_subtree/heal_the_blind/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/carbon/target = controller.blackboard[BB_BLIND_TARGET]
-
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_the_blind, BB_BLIND_TARGET, BB_EYE_DAMAGE_THRESHOLD)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/heal_eye_damage, BB_BLIND_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_BLIND_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/heal_eye_damage, BB_BLIND_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_the_blind, BB_BLIND_TARGET, BB_EYE_DAMAGE_THRESHOLD)
 
 /datum/targetting_datum/basic/eyeball/can_attack(mob/living/owner, atom/target)
 	. = ..()

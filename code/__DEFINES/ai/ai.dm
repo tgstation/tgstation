@@ -29,7 +29,9 @@
 /// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
 /// Continue processing even if dead
-#define CAN_ACT_WHILE_DEAD	(1<<1)
+#define CAN_ACT_WHILE_DEAD (1<<1)
+/// Stop processing while in a progress bar
+#define PAUSE_DURING_DO_AFTER (1<<2)
 
 //Base Subtree defines
 

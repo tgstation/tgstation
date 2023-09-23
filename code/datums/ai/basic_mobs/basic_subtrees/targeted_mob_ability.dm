@@ -13,9 +13,11 @@
 	if (!ability_key)
 		CRASH("You forgot to tell this mob where to find its ability")
 
-	var/mob/living/target = controller.blackboard[target_key]
+	if (!controller.blackboard_key_exists(target_key))
+		return
+
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
-	if (QDELETED(target) || QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)

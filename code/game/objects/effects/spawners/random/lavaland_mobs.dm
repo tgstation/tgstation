@@ -10,7 +10,7 @@
 		/mob/living/basic/mining/goliath = 1,
 		/mob/living/basic/mining/lobstrosity/lava = 1,
 		/mob/living/basic/mining/watcher = 1,
-		/mob/living/simple_animal/hostile/asteroid/brimdemon = 1,
+		/mob/living/basic/mining/brimdemon = 1,
 		/mob/living/basic/mining/goldgrub = 1,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 1,
 	)

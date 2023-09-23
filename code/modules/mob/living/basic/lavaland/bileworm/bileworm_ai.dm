@@ -15,9 +15,7 @@
 /datum/ai_planning_subtree/bileworm_attack
 
 /datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(target))
+	if (!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]

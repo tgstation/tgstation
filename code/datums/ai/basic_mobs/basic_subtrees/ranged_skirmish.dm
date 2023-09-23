@@ -8,8 +8,7 @@
 
 /datum/ai_planning_subtree/ranged_skirmish/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
+	if(!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(attack_behavior, target_key, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
