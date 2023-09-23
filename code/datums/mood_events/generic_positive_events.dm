@@ -360,15 +360,6 @@
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
 
-
-
-
-
-
-
-
-
-
 ///Wizard cheesy grand finale - what the wizard gets
 /datum/mood_event/madness_elation
 	description = "Madness truly is the greatest of blessings..."
