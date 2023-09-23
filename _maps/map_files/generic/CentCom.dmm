@@ -521,8 +521,6 @@
 	name = "Thunderdome"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "cl" = (
@@ -5209,17 +5207,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"uJ" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Backstage"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
-/turf/open/floor/iron,
-/area/centcom/tdome/observation)
 "uK" = (
 /obj/machinery/processor,
 /obj/effect/turf_decal/stripes/end,
@@ -7947,12 +7934,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/sleeper{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/structure/injured_spawner,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "Hj" = (
@@ -8368,15 +8353,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"JX" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/any/admin/bar,
-/obj/effect/mapping_helpers/airlock/access/any/service/bar,
-/turf/open/floor/iron,
-/area/centcom/tdome/observation)
 "Kb" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/structure/table/reinforced,
@@ -52654,7 +52630,7 @@ PT
 Nl
 QC
 QC
-uJ
+at
 QC
 QC
 QC
@@ -57539,7 +57515,7 @@ QC
 cW
 cS
 nj
-JX
+ck
 BW
 gx
 gx

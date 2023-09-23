@@ -9,6 +9,11 @@
 	///are we dueling?
 	var/dueling = FALSE
 
+/mob/living/carbon/human/ghost/death(gibbed)
+	. = ..()
+	fully_heal()
+	move_to_ghostspawn()
+
 /mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter)
 	. = ..()
 	old_key = _old_key
