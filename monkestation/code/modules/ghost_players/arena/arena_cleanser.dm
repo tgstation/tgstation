@@ -23,12 +23,30 @@
 	var/room_height = 10
 
 /obj/effect/spawner/random_arena_spawner/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
+	if(mapload)
+		if(!length(SSmapping.random_arena_templates))
+			message_admins("Room spawner created with no templates available. This shouldn't happen.")
+			qdel(src)
+			return
+
+		var/list/possible_arenas = list()
+		var/datum/map_template/random_room/random_arena/arena_candidate
+		shuffle_inplace(SSmapping.random_arena_templates)
+		for(var/ID in SSmapping.random_arena_templates)
+			arena_candidate = SSmapping.random_arena_templates[ID]
+			if(arena_candidate.weight == 0)
+				arena_candidate = null
+				continue
+			possible_arenas[arena_candidate] = arena_candidate.weight
+
+		if(possible_arenas.len)
+			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arenas)
+			template.stationinitload(get_turf(src), centered = template.centerspawner)
+		qdel(src)
+	else
+		return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/spawner/random_arena_spawner/LateInitialize()
-	. = ..()
-	#ifndef SPACEMAN_DMM
 	if(!length(SSmapping.random_arena_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		qdel(src)
@@ -48,4 +66,3 @@
 		var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arenas)
 		template.load(get_turf(src), centered = template.centerspawner)
 	qdel(src)
-	#endif
