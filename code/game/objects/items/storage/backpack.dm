@@ -515,22 +515,6 @@
 	icon_state = "duffel-coroner"
 	inhand_icon_state = "duffel-coroner"
 
-/obj/item/storage/backpack/duffelbag/coroner/surgery
-	name = "surgical coroner bag"
-	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding morbid surgical tools."
-
-/obj/item/storage/backpack/duffelbag/coroner/surgery/PopulateContents()
-	new /obj/item/scalpel/cruel(src)
-	new /obj/item/hemostat/cruel(src)
-	new /obj/item/retractor/cruel(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery/cruel(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgical_drapes(src)
-	new /obj/item/razor(src)
-	new /obj/item/blood_filter(src)
-
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
 	desc = "A large duffel bag for holding extra exotic treasures."
