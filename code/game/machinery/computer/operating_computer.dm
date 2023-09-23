@@ -172,7 +172,7 @@
 			experiment_handler.ui_interact(usr)
 	return TRUE
 
-/obj/machinery/computer/operating/proc/on_links_to_operating_computers_initialized(datum/source, datum/link, list/patients)
+/obj/machinery/computer/operating/proc/on_links_to_operating_computers_initialized(datum/source, datum/component/links_to_operating_computers/link, list/patients)
 	SIGNAL_HANDLER
 
 	if (link in links)

@@ -723,13 +723,11 @@
 
 	AddComponent(/datum/component/links_to_operating_computers, provide_upgraded_surgeries = TRUE)
 
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_atom_entered))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
-
-/obj/structure/table/optable/Destroy()
-	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
-	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
-	return ..()
+	var/static/list/connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_atom_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_atom_exited),
+	)
+	AddElement(/datum/element/connect_loc, connections)
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)

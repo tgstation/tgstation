@@ -33,25 +33,25 @@
 
 	patients.Cut()
 
-/datum/component/links_to_operating_computers/proc/on_atom_entered(source, mob/living/carbon/enterer)
+/datum/component/links_to_operating_computers/proc/on_atom_entered(datum/source, mob/living/carbon/enterer)
 	SIGNAL_HANDLER
 
 	if (enterer in patients)
 		return
 
-	check_atom_on_object(enterer)
+	try_add_patient(enterer)
 
-/datum/component/links_to_operating_computers/proc/check_atom_on_object(atom)
-	if (!iscarbon(atom))
+/datum/component/links_to_operating_computers/proc/try_add_patient(atom/potential_patient)
+	if (!iscarbon(potential_patient))
 		return
 
-	RegisterSignal(atom, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_enterer_body_position_changed))
-	check_patient(atom)
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_enterer_body_position_changed))
+	check_patient(potential_patient)
 
-/datum/component/links_to_operating_computers/proc/on_atom_exited(source, mob/living/carbon/exiter)
+/datum/component/links_to_operating_computers/proc/on_atom_exited(datum/source, atom/exiter)
 	SIGNAL_HANDLER
 
-	if (!istype(exiter))
+	if (!iscarbon(exiter))
 		return
 
 	UnregisterSignal(exiter, COMSIG_LIVING_SET_BODY_POSITION)
@@ -93,8 +93,8 @@
 	var/atom/atom_parent = parent
 	var/atom/loc = atom_parent.loc
 
-	for (var/atom/atom as anything in loc)
-		check_atom_on_object(atom)
+	for (var/atom/potential_patient as anything in loc)
+		try_add_patient(potential_patient)
 
 	for (var/direction in GLOB.alldirs)
 		var/turf/nearby_turf = get_step(loc, direction)
