@@ -17,6 +17,12 @@
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
 
+/mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
+	if(CAN_SUCCUMB(src))
+		move_to_ghostspawn()
+		fully_heal()
+	. = ..()
+
 /mob/living/carbon/human/ghost/proc/disolve_ghost()
 	var/mob/dead/observer/new_ghost = ghostize(FALSE)
 	new_ghost.key = old_key
