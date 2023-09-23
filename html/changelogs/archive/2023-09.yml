@@ -746,3 +746,114 @@
   timothymtorres:
   - bugfix: Fix wooden barricade description "This looks like it can be barricaded
       with planks of wood" being spammed on objects.
+2023-09-20:
+  LT3:
+  - rscadd: 'New random event: Supermatter Surge'
+  - code_imp: Individual supermatter crystals can have custom gas properties
+  RikuTheKiller:
+  - spellcheck: Unreverted and improved resonance cascade message.
+  - balance: Supermatter now takes 15 seconds to delaminate normally and 5 if a sliver
+      has been taken from it. Gives a little more time to escape in the case of the
+      sliver and also evens out the times to please perfectionists.
+  - bugfix: Supermatter now accurately reports it's detonation time.
+  - spellcheck: Supermatter mood descriptions have been reverted back to their old,
+      more flavorful selves.
+  Thunder12345:
+  - balance: Improvised shotgun shells now deal half as much damage to humans and
+      cause less wounds, but do 50% more damage to structures and machines. They also
+      require a glass shard for crafting.
+  ZephyrTFA:
+  - bugfix: Lava can no longer occasionally generate inside of previously loaded templates
+      and breach and/or destroy shit
+  antropod:
+  - bugfix: Fixed Mafia achievements
+  carlarctg:
+  - qol: Crafting R&D guns from gun kits no longer requires tools or cable coil. The
+      decloner and energy crossbow still need reagents.
+  - qol: Halved R&D gun crafting time. 20->10 seconds.
+  intercepti0n:
+  - image: resprites t-ray scanner, gas analyzer, geiger counter and hand drill.
+  jlsnow301:
+  - refactor: Refactors the camera console UI.
+  mc-oofert:
+  - rscadd: heretic knock path and its respective items and award
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  nikothedude:
+  - balance: 'EMP damage on augs: 2/1.5 from 3/2'
+  - balance: Augs now only get paralyzed by EMP for 3/6 seconds if they are damaged
+      below 70% HP,
+  - balance: Aug EMP knockdown reduced to 3 seconds
+  - balance: Synthetic ears now take far less EMP damage
+  vinylspiders:
+  - bugfix: fixes inedible grown items (such as tower caps) becoming unclickable when
+      harvested, fixes their seeds disappearing when inserted into the seed machine
+2023-09-21:
+  Coconutwarrior97:
+  - bugfix: Fixes a bug allowing holopara injectors to be refundable when used.
+  Exester509:
+  - rscadd: Splashing antihol on a patient before surgery will make it to go slower.
+  GPeckman:
+  - bugfix: The caller in a holopad call should now be able to hear people on the
+      other end.
+  Rhials:
+  - qol: Restores holiday hats for drones.
+  - qol: Extends holiday hat behavior to assistants. Get festive!
+  Shadow-Quill:
+  - bugfix: RCD Construction effects will no longer fall into chasms.
+  SyncIt21:
+  - bugfix: wall mounted objects air alarms, fire alarms etc now actually falls off/gets
+      destroyed when their attached wall is deconstructed
+  - bugfix: wall mounts crafted in game also properly falls off/gets destroyed when
+      their attached wall is deconstructed
+  blueDev2:
+  - bugfix: Recipe that converts Vegetable Oil into Olive Oil works properly
+  nikothedude:
+  - bugfix: Projectiles no longer cause a blood graphic or blood splatters if they
+      hit a limb that cant bleed
+  - rscadd: Prosthetics/Augments now spark when shot
+  - bugfix: Gauze no longer falls off if a wound is demoted or promoted
+  vinylspiders:
+  - bugfix: rescue hooks will once again drop the mob next to the fisherman instead
+      of just displaying a balloon alert and doing nothing
+2023-09-22:
+  Jacquerel:
+  - admin: Admins can transform misbehaving players into arbitrary objects at will.
+  Sealed101:
+  - bugfix: fixed moonicorns making space/chasm/lava/water bridges with their fairy
+      grass
+  Toastgoats:
+  - balance: Peacekeeper cyborg's emagged hug is no longer a hardstun.
+  intercepti0n:
+  - image: resprites t-ray scanner.
+2023-09-23:
+  ArcaneMusic:
+  - bugfix: Conveyor belts now properly show their new screentips on mouseover with
+      tools.
+  Ben10Omintrix:
+  - refactor: seedlings have been refactored into basic mobs please report any bugs
+  - rscadd: seedlings now can have different colored petals and can look after botanys
+      plants
+  - rscadd: seedlings are re-added to the game! they grow out of seedling seeds obtainable
+      from exotic seed crates or traitor uplink
+  GPeckman:
+  - admin: Boneless smite should work properly again.
+  LT3:
+  - rscadd: Poly now causes a power surge when dusted by the supermatter crystal
+  - bugfix: Ghosts and godmode mobs will no longer create resonance when touching
+      the supermatter crystal
+  Shadow-Quill:
+  - rscadd: The Message Monitor console's board can now be obtained via the telecoms
+      research node.
+  distributivgesetz, CoiledLamb:
+  - rscadd: 'Added two new awards specifically for engineering and medical: The "Emergency
+      Services Award" and the "Atmospheric Mastery Award". CEs get 3 Emergency Services
+      Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards.'
+  lizardqueenlexi:
+  - bugfix: Foods that have special conditions for liking/disliking them (such as
+      donuts for sec officers) have these conditions again.
+  - bugfix: Characters with ageusia properly ignore non-toxic food types that they
+      eat.
+  - bugfix: If you examine toxic food, it can no longer appear to you as edible.
+  mc-oofert:
+  - bugfix: clown bomb payload is no longer named badmin payload and no longer disperses
+      clowns in cardinal directions only

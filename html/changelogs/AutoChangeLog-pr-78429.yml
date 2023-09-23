@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Admins can now reset or modify the chaplain's sect from a UI panel"
