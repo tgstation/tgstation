@@ -136,7 +136,6 @@
 		/mob/living/simple_animal/hostile/jungle,
 		/mob/living/simple_animal/hostile/jungle/leaper,
 		/mob/living/simple_animal/hostile/jungle/mook,
-		/mob/living/simple_animal/hostile/jungle/seedling,
 		/mob/living/simple_animal/hostile/megafauna,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom,
