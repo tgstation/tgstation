@@ -284,3 +284,4 @@
 	var/obj/item/trash/can/crushed_can = .. ()
 	if(istype(crushed_can))
 		crushed_can.icon_state = pick(soda_icons)
+	return crushed_can
