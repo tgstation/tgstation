@@ -369,25 +369,27 @@
 /datum/status_effect/crusher_mark/proc/on_crusher_attacked(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!QDELETED(owner) && !detonating)
-		detonating = TRUE
-		new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
-		var/backstabbed = FALSE
-		var/combined_damage = hammer_synced.detonation_damage
-		var/backstab_dir = get_dir(user, owner)
-		var/def_check = owner.getarmor(type = BOMB)
-		if((user.dir & backstab_dir) && (owner.dir & backstab_dir))
-			backstabbed = TRUE
-			combined_damage += hammer_synced.backstab_bonus
-			playsound(user, 'sound/weapons/kinetic_accel.ogg', 80, TRUE)
+	if(QDELETED(owner) || detonating)
+		return
+	detonating = TRUE
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
+	var/backstabbed = FALSE
+	var/combined_damage = hammer_synced.detonation_damage
+	var/backstab_dir = get_dir(user, owner)
+	var/def_check = owner.getarmor(type = BOMB)
+	if((user.dir & backstab_dir) && (owner.dir & backstab_dir))
+		backstabbed = TRUE
+		combined_damage += hammer_synced.backstab_bonus
+		playsound(user, 'sound/weapons/kinetic_accel.ogg', 80, TRUE)
 
-		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, owner, user, combined_damage)
-		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, src, backstabbed)
-		if(hammer_synced)
-			SEND_SIGNAL(hammer_synced, COMSIG_CRUSHER_MARK_DETONATE, owner, user)
+	SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, owner, user, combined_damage)
+	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, src, backstabbed)
+	if(hammer_synced)
+		SEND_SIGNAL(hammer_synced, COMSIG_CRUSHER_MARK_DETONATE, owner, user)
+	if(!QDELETED(owner)) //triggering a mark detonation can kill the owner and in case they're qdel_on_death it will runtime
 		log_combat(user, owner, "detonated a crusher mark", hammer_synced)
 		owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
-		qdel(src)
+	qdel(src)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
