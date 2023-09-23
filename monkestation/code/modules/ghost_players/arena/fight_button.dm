@@ -45,6 +45,8 @@
 
 	maptext = string
 
+	desc = "A button that displays your intent to duel aswell as the weapon of choice and stakes of the duel.Player One:[player_one ? "[player_one.real_name]" : "No One"] \nPlayer Two:[player_two ? "[player_two.real_name]" : "No One"] \nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]"
+
 
 /obj/structure/fight_button/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
