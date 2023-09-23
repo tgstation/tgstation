@@ -1147,6 +1147,14 @@
 		. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick * normalise_creation_purity())
 
+/datum/reagent/medicine/antihol/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
+		surgery.speed_modifier = max(surgery.speed_modifier  - 0.1, -0.9)
+
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
 	description = "Increases resistance to batons and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
