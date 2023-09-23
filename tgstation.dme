@@ -6192,6 +6192,8 @@
 #include "monkestation\code\modules\vehicles\monkey_ball.dm"
 #include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\modules\vehicles\mecha\equipment\tools\other_tools.dm"
+#include "monkestation\code\modules\wiki_templater\templates.dm"
+#include "monkestation\code\modules\wiki_templater\test_generate.dm"
 #include "monkestation\code\random_rooms\room_base.dm"
 #include "monkestation\code\random_rooms\bars\icebox.dm"
 #include "monkestation\code\random_rooms\bars\tramstation.dm"
