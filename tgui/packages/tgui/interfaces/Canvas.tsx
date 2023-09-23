@@ -223,6 +223,40 @@ export const Canvas = (props, context) => {
         (data.editable && data.paint_tool_palette ? palette_height : 0)
       }>
       <Window.Content>
+        <Flex align="start" direction="row">
+          {!!data.paint_tool_palette && (
+            <Flex.Item>
+              <Tooltip
+                content={
+                  multiline`
+                  You can Right-Click the canvas to change the color of
+                  the painting tool to that of the clicked pixel.
+                ` +
+                  (data.editable
+                    ? multiline`
+                  \n You can also select a color from the
+                  palette at the bottom of the UI,
+                  or input a new one with Right-Click.
+                `
+                    : '')
+                }>
+                <Icon name="question-circle" color="blue" size={1.5} m={0.5} />
+              </Tooltip>
+            </Flex.Item>
+          )}
+          {!!data.editable && !!data.paint_tool_color && (
+            <Flex.Item>
+              <Button
+                title="Grid Toggle"
+                icon="th-large"
+                backgroundColor={data.show_grid ? 'green' : 'red'}
+                onClick={() => act('toggle_grid')}
+                size={1.5}
+                m={0.5}
+              />
+            </Flex.Item>
+          )}
+        </Flex>
         <Box textAlign="center">
           <PaintCanvas
             value={data.grid}
