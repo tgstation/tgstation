@@ -44,7 +44,6 @@
 	on_strain_changed?.Invoke(overmind, new_strain)
 
 /datum/component/blob_minion/RegisterWithParent()
-	. = ..()
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
