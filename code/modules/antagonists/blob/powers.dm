@@ -203,11 +203,10 @@
 		return FALSE
 
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
+	assume_direct_control(blobber)
 	factory.assign_blobbernaut(blobber)
-
 	var/mob/dead/observer/player = pick(candidates)
-	blobber.AddComponent(/datum/component/blob_minion, src)
-	blobber.assign_key(player.key)
+	blobber.assign_key(player.key, blobstrain)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
 /// When one of our boys attacked something, we sometimes want to perform extra effects

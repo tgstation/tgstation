@@ -21,7 +21,8 @@
 /datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/camera/blob/overmind, datum/callback/on_strain_changed)
 	if (!isnull(on_strain_changed))
 		src.on_strain_changed = on_strain_changed
-	register_overlord(overmind)
+	if (!isnull(overmind))
+		register_overlord(overmind)
 
 /datum/component/blob_minion/proc/register_overlord(mob/camera/blob/overmind)
 	src.overmind = overmind
@@ -151,8 +152,7 @@
 /// Called when a blob minion is transformed into something else, hopefully a spore into a zombie
 /datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)
 	SIGNAL_HANDLER
-	replacement.TakeComponent(src)
-	overmind?.register_new_minion(replacement)
+	overmind?.assume_direct_control(replacement)
 
 /datum/component/blob_minion/PostTransfer()
 	if(!isliving(parent))

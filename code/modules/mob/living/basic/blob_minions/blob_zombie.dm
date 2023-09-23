@@ -46,6 +46,7 @@
 	return ..()
 
 /mob/living/basic/blob_minion/zombie/on_factory_destroyed()
+	. = ..()
 	death()
 
 /mob/living/basic/blob_minion/zombie/update_overlays()

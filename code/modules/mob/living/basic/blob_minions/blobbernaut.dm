@@ -44,6 +44,8 @@
 
 /mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
 	. = ..()
+	if (!.)
+		return
 	var/damage_sources = 0
 	var/list/blobs_in_area = range(2, src)
 
