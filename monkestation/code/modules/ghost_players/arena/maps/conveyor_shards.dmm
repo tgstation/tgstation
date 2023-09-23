@@ -165,15 +165,11 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
 "uT" = (
-/obj/machinery/power/supermatter_crystal/shard/hugbox{
-	anchored = 0;
-	name = "supermatter shard";
-	hallucination_power = 0
-	},
 /obj/machinery/conveyor/auto{
 	dir = 8;
 	use_power = 0
 	},
+/obj/item/flashlight/lamp/bananalamp,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "wl" = (
@@ -386,15 +382,11 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
 "Ye" = (
-/obj/machinery/power/supermatter_crystal/shard/hugbox{
-	anchored = 0;
-	name = "supermatter shard";
-	hallucination_power = 0
-	},
 /obj/machinery/conveyor/auto{
 	dir = 4;
 	use_power = 0
 	},
+/obj/item/flashlight/lamp/bananalamp,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "Yr" = (

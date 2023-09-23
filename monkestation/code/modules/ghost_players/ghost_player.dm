@@ -4,6 +4,10 @@
 	var/datum/mind/old_mind
 	var/old_reenter
 
+	///the button we are tied to for dueling
+	var/obj/structure/fight_button/linked_button
+	///are we dueling?
+	var/dueling = FALSE
 
 /mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter)
 	. = ..()
@@ -17,8 +21,18 @@
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
 
+/mob/living/carbon/human/ghost/Destroy()
+	. = ..()
+	if(dueling)
+		linked_button?.end_duel(src)
+	if(linked_button)
+		linked_button.remove_user(src)
+		linked_button = null
+
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
 	if(CAN_SUCCUMB(src))
+		if(dueling)
+			linked_button?.end_duel(src)
 		move_to_ghostspawn()
 		fully_heal()
 	. = ..()

@@ -8,6 +8,7 @@
 				var/mob/living/carbon/human/ghost/mob = listed_atom
 				mob.move_to_ghostspawn()
 				mob.fully_heal()
+				continue
 			qdel(listed_atom)
 		listed_turf.ScrapeAway()
 

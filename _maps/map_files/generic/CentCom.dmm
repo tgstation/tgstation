@@ -4276,6 +4276,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"qK" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/fight_button,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "qL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -55985,7 +55990,7 @@ Mu
 dL
 hN
 BW
-BW
+qK
 BW
 Cz
 BW

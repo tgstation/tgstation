@@ -5782,6 +5782,7 @@
 #include "monkestation\code\modules\ghost_players\area_changes.dm"
 #include "monkestation\code\modules\ghost_players\ghost_player.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_cleanser.dm"
+#include "monkestation\code\modules\ghost_players\arena\fight_button.dm"
 #include "monkestation\code\modules\ghost_players\arena\map_templates.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_assets\alien.dm"
 #include "monkestation\code\modules\ghost_players\arena\arena_assets\bottomless_sign.dm"
