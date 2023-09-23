@@ -164,6 +164,10 @@
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	var/area/target_area = get_area(src)
+	if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+		return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -224,6 +228,10 @@
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+	var/area/target_area = get_area(src)
+	if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+		return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -249,6 +257,10 @@
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	var/area/target_area = get_area(src)
+	if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+		return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -270,6 +282,10 @@
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+	var/area/target_area = get_area(src)
+	if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+		return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
