@@ -27,6 +27,9 @@
 		return FALSE
 
 	var/mob/living/carbon/transforming = owner
+	if(!transforming.has_dna())
+		return FALSE
+
 	// Save the old DNA
 	transforming.dna.copy_dna(old_dna)
 	// Makes them into the new DNA
@@ -34,6 +37,7 @@
 	transforming.real_name = new_dna.real_name
 	transforming.name = transforming.get_visible_name()
 	transforming.updateappearance(mutcolor_update = TRUE)
+	transforming.domutcheck()
 	return TRUE
 
 /datum/status_effect/temporary_transformation/on_remove()
@@ -42,6 +46,7 @@
 	if(!QDELING(owner)) // Don't really need to do appearance stuff if we're being deleted
 		old_dna.transfer_identity(transforming)
 		transforming.updateappearance(mutcolor_update = TRUE)
+		transforming.domutcheck()
 
 	transforming.real_name = old_dna.real_name // Name is fine though
 	transforming.name = transforming.get_visible_name()

@@ -1,33 +1,16 @@
 /// Tests transformation sting goes back and forth correctly
 /datum/unit_test/transformation_sting
+	var/ling_name = "Is-A-Changeling"
+	var/base_victim_name
 	var/last_frame = 1
 	var/icon/final_icon
 
 /datum/unit_test/transformation_sting/Run()
-	var/mob/living/carbon/human/ling = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
-	var/ling_name = "Is-A-Changeling"
-	var/base_victim_name = victim.name
+	var/mob/living/carbon/human/ling = setup_ling()
+	var/mob/living/carbon/human/victim = setup_victim()
+	var/datum/antagonist/changeling/ling_datum = ling.mind.has_antag_datum(/datum/antagonist/changeling)
 
-	victim.mind_initialize()
-
-	// Sets up some unique stuff for the ling so we can check what changes
-	// Because we use two consistent humans, we need to change some of the features to know they're actually updating to new values.
-	// Yeah guess who/what this is, I dare you.
-	ling.dna.features["mcolor"] = "#860"
-	ling.dna.features["tail_lizard"] = "Smooth"
-	ling.dna.features["snout"] = "Sharp + Light"
-	ling.dna.features["horns"] = "Curled"
-	ling.dna.features["frills"] = "Short"
-	ling.dna.features["spines"] = "Long + Membrane"
-	ling.dna.features["body_markings"] = "Light Belly"
-	ling.dna.features["legs"] = DIGITIGRADE_LEGS
-	ling.set_species(/datum/species/lizard)
-	ling.name = ling_name
-	ling.real_name = ling_name
-	ling.mind_initialize()
-	var/datum/antagonist/changeling/ling_datum = ling.mind.add_antag_datum(/datum/antagonist/changeling)
-
+	// Get the ability we're testing
 	ling_datum.purchase_power(/datum/action/changeling/sting/transformation)
 	var/datum/action/changeling/sting/transformation/sting_action = locate() in ling.actions
 	sting_action.selected_dna = ling_datum.current_profile
@@ -62,8 +45,8 @@
 	if(isnull(final_icon))
 		final_icon = icon('icons/effects/effects.dmi', "nothing")
 
-	final_icon.Insert(getFlatIcon(ling, no_anim = TRUE), dir = NORTH, frame = last_frame)
-	final_icon.Insert(getFlatIcon(victim, no_anim = TRUE), dir = SOUTH, frame = last_frame)
+	final_icon.Insert(getFlatIcon(ling, no_anim = TRUE), dir = SOUTH, frame = last_frame)
+	final_icon.Insert(getFlatIcon(victim, no_anim = TRUE), dir = NORTH, frame = last_frame)
 
 	if(both_species)
 		var/prior_species = victim.dna.species.type
@@ -72,3 +55,35 @@
 		victim.set_species(prior_species)
 
 	last_frame += 1
+
+/datum/unit_test/transformation_sting/proc/setup_victim()
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
+	base_victim_name = victim.name
+	victim.mind_initialize()
+	return victim
+
+/datum/unit_test/transformation_sting/proc/setup_ling()
+	var/mob/living/carbon/human/ling = allocate(/mob/living/carbon/human/consistent)
+	// Because we use two consistent humans, we need to change some of the features to know they're actually updating to new values.
+	// The more DNA features and random things we change, the more likely we are to catch something not updating correctly.
+	// Yeah guess who/what this is, I dare you.
+	ling.dna.features["mcolor"] = "#886600"
+	ling.dna.features["tail_lizard"] = "Smooth"
+	ling.dna.features["snout"] = "Sharp + Light"
+	ling.dna.features["horns"] = "Curled"
+	ling.dna.features["frills"] = "Short"
+	ling.dna.features["spines"] = "Long + Membrane"
+	ling.dna.features["body_markings"] = "Light Belly"
+	ling.dna.features["legs"] = DIGITIGRADE_LEGS
+	ling.eye_color_left = "#FFFFFF"
+	ling.eye_color_right = "#FFFFFF"
+	ling.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
+	ling.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+	ling.set_species(/datum/species/lizard)
+
+	ling.name = ling_name
+	ling.real_name = ling_name
+	ling.mind_initialize()
+	ling.mind.add_antag_datum(/datum/antagonist/changeling)
+
+	return ling
