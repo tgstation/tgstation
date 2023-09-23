@@ -1,4 +1,0 @@
-author: "KoboldCommando"
-delete-after: True
-changes:
-  - bugfix: "Spliced seed packs should be named slightly more coherently and have a max length"

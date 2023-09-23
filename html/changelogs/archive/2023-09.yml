@@ -103,3 +103,9 @@
       werent connected to anything
   - qol: Robotics has gotten a fresh coat of paint
   - bugfix: one specific disposal unit in dorms being not connected
+2023-09-23:
+  Gboster-0:
+  - qol: DJ station now uses left clicking for playing songs
+  KoboldCommando:
+  - bugfix: Spliced seed packs should be named slightly more coherently and have a
+      max length
