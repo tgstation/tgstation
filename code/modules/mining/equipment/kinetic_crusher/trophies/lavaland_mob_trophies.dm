@@ -30,6 +30,7 @@
 	missing_health *= bonus_damage //multiply the remaining amount by bonus_damage
 	if(missing_health > 0)
 		log_combat(user, target, "struck for bonus damage with a trophy ", src, "crusher damage")
+		playsound(target, 'sound/weapons/whipgrab.ogg', 25 + missing_health, TRUE)
 		target.adjustBruteLoss(missing_health) //and do that much damage
 		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, missing_health)
 
