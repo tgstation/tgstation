@@ -227,8 +227,7 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
-	if(!run_divide_occupation_pure)
-		job.current_positions++
+	job.current_positions++
 	return TRUE
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level)
@@ -371,7 +370,7 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
 	run_divide_occupation_pure = pure
-	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
