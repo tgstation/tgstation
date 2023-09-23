@@ -14,7 +14,6 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"bepis",
 		"blast",
 		"bounced_radio",
 		"bowl",
@@ -499,6 +498,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
+/datum/techweb_node/oldstation_surgery
+	id = "oldstation_surgery"
+	display_name = "Experimental Dissection"
+	description = "Grants access to experimental dissections, which allows generation of research points."
+	design_ids = list(
+		"surgery_oldstation_dissection",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	hidden = TRUE
+	show_on_wiki = FALSE
 
 /datum/techweb_node/adv_surgery
 	id = "adv_surgery"
@@ -586,6 +595,7 @@
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
 		"emitter",
+		"mass_driver",
 		"firealarm_electronics",
 		"firelock_board",
 		"generic_tank",
@@ -969,6 +979,7 @@
 		"borg_upgrade_condiment_synthesizer",
 		"borg_upgrade_silicon_knife",
 		"borg_upgrade_service_apparatus",
+		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
@@ -1209,6 +1220,8 @@
 	design_ids = list(
 		"comm_monitor",
 		"comm_server",
+		"gigabeacon",
+		"message_monitor",
 		"ntnet_relay",
 		"s_amplifier",
 		"s_analyzer",
@@ -1225,7 +1238,6 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
@@ -2119,8 +2131,8 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	hidden = TRUE
 
-/datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
-		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
+/datum/techweb_node/alientech/on_station_research()
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

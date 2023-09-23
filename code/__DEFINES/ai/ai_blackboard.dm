@@ -44,6 +44,8 @@
 
 /// Generic key for a non-specific targetted action
 #define BB_TARGETTED_ACTION "BB_targetted_action"
+/// Generic key for a non-specific action
+#define BB_GENERIC_ACTION "BB_generic_action"
 
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
@@ -83,3 +85,6 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+///should we skip the faction check for the targetting datum?
+#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"

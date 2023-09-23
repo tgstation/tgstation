@@ -6,18 +6,26 @@
 	organization = "Nanotrasen"
 	should_generate_points = TRUE
 
-//When something is researched, triggers the proc for this techweb only
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
 	. = ..()
 	if(.)
-		node.on_research()
+		node.on_station_research()
+
+/datum/techweb/oldstation
+	id = "CHARLIE"
+	organization = "Nanotrasen"
+	should_generate_points = TRUE
+
+/datum/techweb/oldstation/New()
+	. = ..()
+	research_node_id("oldstation_surgery", TRUE, TRUE, FALSE)
 
 /**
  * Admin techweb that has everything unlocked by default
  */
 /datum/techweb/admin
 	id = "ADMIN"
-	organization = "CentCom"
+	organization = "Central Command"
 
 /datum/techweb/admin/New()
 	. = ..()

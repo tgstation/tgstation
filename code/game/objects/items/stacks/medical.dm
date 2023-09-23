@@ -433,7 +433,7 @@
 
 	patient.emote("scream")
 	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i
+		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new

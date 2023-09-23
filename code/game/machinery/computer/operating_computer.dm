@@ -34,6 +34,8 @@
 
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 	SEND_SIGNAL(loc, COMSIG_OPERATING_COMPUTER_INITIALIZED, src)
 

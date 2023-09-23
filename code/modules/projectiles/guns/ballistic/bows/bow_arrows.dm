@@ -11,7 +11,6 @@
 	throwforce = 1
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
-	is_cased_ammo = FALSE
 	///Whether the bullet type spawns another casing of the same type or not.
 	var/reusable = TRUE
 

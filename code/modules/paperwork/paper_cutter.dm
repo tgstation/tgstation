@@ -171,8 +171,9 @@
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
 		var/obj/item/bodypart/finger = user.get_active_hand()
-		var/datum/wound/slash/flesh/moderate/papercut = new
-		papercut.apply_wound(finger, wound_source = "paper cut")
+		if (iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, finger, WOUND_SEVERITY_MODERATE, wound_source = "paper cut")
 	stored_paper = null
 	qdel(stored_paper)
 	new /obj/item/paper/paperslip(get_turf(src))

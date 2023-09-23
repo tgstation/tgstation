@@ -22,7 +22,7 @@
 			Harvest(A)
 
 /mob/living/simple_animal/revenant/ranged_secondary_attack(atom/target, modifiers)
-	if(revealed || notransform || inhibited || !Adjacent(target) || !incorporeal_move_check(target))
+	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)

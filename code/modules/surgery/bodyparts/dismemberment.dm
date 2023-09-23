@@ -5,7 +5,7 @@
 	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -23,14 +23,14 @@
 	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 
-	if (wound_type)
-		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wound_type)
+	if (wounding_type)
+		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
-	if(wound_type != WOUND_BURN && istype(owner_location) && can_bleed())
+	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
 		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
@@ -55,7 +55,7 @@
 
 	return TRUE
 
-/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner
@@ -64,7 +64,7 @@
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
-	if(wound_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
+	if(wounding_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/obj/item/organ/organ as anything in chest_owner.organs)
@@ -158,16 +158,16 @@
  * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
  * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
  *
- * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
+ * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_EXTERIOR if our skin is broken, BODYPART_MANGLED_INTERIOR if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
  */
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
 
 	for(var/datum/wound/iter_wound as anything in wounds)
-		if((iter_wound.wound_flags & MANGLES_BONE))
-			. |= BODYPART_MANGLED_BONE
-		if((iter_wound.wound_flags & MANGLES_FLESH))
-			. |= BODYPART_MANGLED_FLESH
+		if((iter_wound.wound_flags & MANGLES_INTERIOR))
+			. |= BODYPART_MANGLED_INTERIOR
+		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
+			. |= BODYPART_MANGLED_EXTERIOR
 
 /**
  * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
@@ -445,8 +445,8 @@
 		if (LAZYLEN(dismembered_by_copy))
 			var/datum/scar/scaries = new
 			var/datum/wound/loss/phantom_loss = new // stolen valor, really
-			phantom_loss.loss_wound_type = dismembered_by_copy?[limb_zone]
-			if (phantom_loss.loss_wound_type)
+			phantom_loss.loss_wounding_type = dismembered_by_copy?[limb_zone]
+			if (phantom_loss.loss_wounding_type)
 				scaries.generate(limb, phantom_loss)
 				LAZYREMOVE(dismembered_by_copy, limb_zone) // in case we're using a passed list
 			else
