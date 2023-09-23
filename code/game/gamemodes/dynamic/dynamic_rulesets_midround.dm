@@ -75,7 +75,10 @@
 		if (length(exclusive_roles) && !(creature.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 			trimmed_list.Remove(creature)
 			continue
-		if(HAS_TRAIT(creature, TRAIT_MIND_TEMPORARILY_GONE)) // are they in the vdom?
+		if(HAS_TRAIT(creature, TRAIT_MIND_TEMPORARILY_GONE)) // are they out of body?
+			trimmed_list.Remove(creature)
+			continue
+		if(!isnull(creature.GetComponent(/datum/component/avatar_connection))) // are they an avatar?
 			trimmed_list.Remove(creature)
 			continue
 	return trimmed_list
