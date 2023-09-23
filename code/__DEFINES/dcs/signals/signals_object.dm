@@ -50,6 +50,8 @@
 // /obj/machinery/computer/teleporter
 /// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
 #define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
+/// from /obj/item/beacon/proc/turn_off()
+#define COMSIG_BEACON_DISABLED "beacon_disabled"
 
 // /obj/machinery/power/supermatter_crystal
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
@@ -246,6 +248,8 @@
 
 /// Called on component/uplink/OnAttackBy(..)
 #define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+///Called when a holoparasite/guardiancreator is used. 
+#define COMSIG_TRAITOR_ITEM_USED(type) "traitor_item_used_[type]"
 
 // /obj/item/clothing signals
 

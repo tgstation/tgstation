@@ -82,10 +82,10 @@
 			if(reagent_to_react_count[reagent_id] < reagent_to_react_count[preferred_id])
 				preferred_id = reagent_id
 				continue
-
-		if(!reaction_lookup[preferred_id])
-			reaction_lookup[preferred_id] = list()
-		reaction_lookup[preferred_id] += reaction
+		if (preferred_id != null)
+			if(!reaction_lookup[preferred_id])
+				reaction_lookup[preferred_id] = list()
+			reaction_lookup[preferred_id] += reaction
 
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		var/list/product_ids = list()
@@ -1354,9 +1354,7 @@
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
-	if(total_volume >= maximum_volume)
-		return TRUE
-	return FALSE
+	return total_volume >= maximum_volume
 
 /// Get the amount of this reagent
 /datum/reagents/proc/get_reagent_amount(reagent, include_subtypes = FALSE)
@@ -1382,6 +1380,12 @@
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
 	return 0
+
+/// Directly set the purity of all contained reagents to a new value
+/datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		cached_reagent.purity = max(0, new_purity)
 
 /// Get the average purity of all reagents (or all subtypes of provided typepath)
 /datum/reagents/proc/get_average_purity(parent_type = null)

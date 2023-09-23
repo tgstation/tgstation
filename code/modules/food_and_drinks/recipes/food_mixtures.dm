@@ -253,7 +253,8 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/olive_oil_upconvert
-	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1, /datum/reagent/consumable/nutriment/fat/oil = 2)
+	required_catalysts = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1)
+	required_reagents = list( /datum/reagent/consumable/nutriment/fat/oil = 2)
 	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT

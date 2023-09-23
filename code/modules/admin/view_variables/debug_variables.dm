@@ -90,7 +90,10 @@
 		for (var/i in GLOB.bitfields[name])
 			if (value & GLOB.bitfields[name][i])
 				flags += i
+		if(length(flags))
 			item = "[name_part] = [VV_HTML_ENCODE(jointext(flags, ", "))]"
+		else
+			item = "[name_part] = NONE"
 	else
 		item = "[name_part] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
