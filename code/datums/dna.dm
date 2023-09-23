@@ -424,22 +424,27 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(message)
 			to_chat(holder, message)
 
-//used to update dna UI, UE, and dna.real_name.
+/// Updates the UI, UE, and UF of the DNA according to the features, appearance, name, etc. of the DNA / holder.
 /datum/dna/proc/update_dna_identity()
 	unique_identity = generate_unique_identity()
 	unique_enzymes = generate_unique_enzymes()
 	unique_features = generate_unique_features()
 
-/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
+/**
+ * Sets up DNA codes and initializes some features.
+ *
+ * * newblood_type - Optional, the blood type to set the DNA to
+ * * create_mutation_blocks - If true, generate_dna_blocks is called, which is used to set up mutation blocks (what a mob can naturally mutate).
+ * * randomize_features - If true, all entries in the features list will be randomized.
+ */
+/datum/dna/proc/initialize_dna(newblood_type, create_mutation_blocks = TRUE, randomize_features = TRUE)
 	if(newblood_type)
 		blood_type = newblood_type
-	unique_enzymes = generate_unique_enzymes()
-	unique_identity = generate_unique_identity()
-	if(!skip_index) //I hate this
+	if(create_mutation_blocks) //I hate this
 		generate_dna_blocks()
-	features = random_features()
-	unique_features = generate_unique_features()
-
+	if(randomize_features)
+		features = random_features()
+	update_dna_identity()
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
 

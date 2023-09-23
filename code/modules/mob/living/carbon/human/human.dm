@@ -55,7 +55,7 @@
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	randomize_human(src)
-	dna.initialize_dna()
+	dna.initialize_dna(randomize_features = FALSE)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)

@@ -58,7 +58,7 @@
 
 /datum/unit_test/transformation_sting/proc/setup_victim()
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
-	base_victim_name = victim.name
+	base_victim_name = victim.real_name
 	victim.mind_initialize()
 	return victim
 
@@ -81,9 +81,11 @@
 	ling.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 	ling.set_species(/datum/species/lizard)
 
-	ling.name = ling_name
 	ling.real_name = ling_name
+	ling.dna.real_name = ling_name
+	ling.name = ling_name
 	ling.mind_initialize()
 	ling.mind.add_antag_datum(/datum/antagonist/changeling)
+	ling.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
 
 	return ling
