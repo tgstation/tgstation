@@ -56,7 +56,8 @@
 
 		victim.AddComponent(/datum/component/leash, src, distance = 1)
 		balloon_alert(victim, "you feel unable to move away from the parade!")
-		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
+		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 	return PROJECTILE_PIERCE_PHASE
 

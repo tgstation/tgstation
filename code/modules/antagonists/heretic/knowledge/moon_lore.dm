@@ -13,7 +13,7 @@
  * Mark of Moon
  * Ritual of Knowledge
  * Lunar Parade
- * Lunar robe
+ * Moonlight Amulette
  * > Sidepaths:
  *   Space Phase
  *   Curse of Paralysis
@@ -112,17 +112,17 @@
 		when hitting someone they are forced to join the parade and suffer hallucinations \
 		if they are hit by the parade they will also suffer brain damage when it ends."
 	gain_text = "...to regain its gaze they left, moving with a parade bringing all who suffered along."
-	next_knowledge = list(/datum/heretic_knowledge/moons_robe)
+	next_knowledge = list(/datum/heretic_knowledge/moon_amulette)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
 
 
-/datum/heretic_knowledge/moons_robe
-	name = "Lunar Robe"
-	desc = "Allows you to transmute 2 sheets of glass, a suit,  and a brain \
-			to create a lunar robe, when anyone hits it they swap places with you \
-			and everyone around suffers hallucinations and stamina damage."
+/datum/heretic_knowledge/moon_amulette
+	name = "Moonlight Amulette"
+	desc = "Allows you to transmute 2 sheets of glass, a pair of eyes, a brain and a tie \
+			if the item is used on someone with low sanity they turn into a devoted follower \
+			of you, if their sanity isnt low enough it lowers them to a sufficent level."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
