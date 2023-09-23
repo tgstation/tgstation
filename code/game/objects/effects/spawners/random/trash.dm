@@ -283,4 +283,4 @@
 /obj/effect/spawner/random/trash/crushed_can/make_item(spawn_loc, type_path_to_make)
 	var/obj/item/trash/can/crushed_can = .. ()
 	if(istype(crushed_can))
-		icon_state = pick(soda_icons)
+		crushed_can.icon_state = pick(soda_icons)

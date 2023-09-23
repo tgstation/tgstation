@@ -238,7 +238,7 @@
 
 /obj/effect/spawner/random/structure/shipping_container
 	name = "shipping container spawner"
-	icon = "icons/obj/fluff/containers.dmi"
+	icon = 'icons/obj/fluff/containers.dmi'
 	icon_state = "random_container"
 	loot = list(
 		/obj/structure/shipping_container/conarex = 3,
