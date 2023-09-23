@@ -4819,8 +4819,7 @@
 /area/centcom/central_command_areas/control)
 "ta" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/ferry)
 "tb" = (
 /obj/structure/table/wood,
@@ -7072,6 +7071,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"BX" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/control)
 "Ca" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -7708,6 +7710,9 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
+"Ft" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/evacuation)
 "Fv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -7859,6 +7864,9 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"GA" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/ferry)
 "GB" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -8141,6 +8149,9 @@
 	dir = 4
 	},
 /area/centcom/central_command_areas/prison)
+"Ih" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/supply)
 "Im" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -12046,8 +12057,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "XT" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/supplypod)
 "XV" = (
 /obj/structure/table/wood,
@@ -12333,8 +12343,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Zf" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/admin)
 "Zg" = (
 /obj/machinery/status_display/ai/directional/north,
@@ -12398,6 +12407,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
+"Zo" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/supply)
 "Zq" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/herringbone,
@@ -46708,12 +46721,12 @@ aa
 aa
 aa
 aa
-oe
-oe
+GA
+GA
 mD
 mD
-oe
-oe
+GA
+GA
 aa
 aa
 aa
@@ -46965,12 +46978,12 @@ aa
 aa
 aa
 aa
-oe
+GA
 Ga
 sq
 to
 ZN
-oe
+GA
 aa
 aa
 Io
@@ -47229,9 +47242,9 @@ tp
 Xr
 mD
 aa
-oe
+GA
 xc
-oe
+GA
 aa
 aa
 aa
@@ -47479,16 +47492,16 @@ aa
 aa
 aa
 aa
-oe
+GA
 rm
 ss
 tq
 Ir
 mD
 vA
-oe
+GA
 xd
-oe
+GA
 yn
 mD
 aa
@@ -47736,22 +47749,22 @@ aa
 aa
 aa
 aa
-oe
+GA
 rn
 st
 tr
 um
 mD
 vB
-oe
+GA
 Xy
-oe
+GA
 oU
 mD
 ta
-oe
+GA
 td
-oe
+GA
 ta
 mD
 aa
@@ -48010,7 +48023,7 @@ pT
 pT
 pT
 qF
-oe
+GA
 aa
 aa
 aa
@@ -48250,7 +48263,7 @@ aa
 aa
 aa
 aa
-oe
+GA
 nB
 su
 ts
@@ -48267,7 +48280,7 @@ pU
 pU
 pU
 qG
-oe
+GA
 aa
 aa
 aa
@@ -48524,7 +48537,7 @@ pX
 pX
 pX
 rb
-oe
+GA
 aa
 aa
 aa
@@ -51832,13 +51845,13 @@ jr
 iX
 jr
 jI
-iX
+Ih
 aa
 aa
 aa
 aa
-iX
-iX
+Ih
+Ih
 iF
 iF
 iF
@@ -52089,12 +52102,12 @@ js
 iX
 js
 jJ
-jb
+Zo
 aa
 aa
 aa
 aa
-iX
+Ih
 OM
 mG
 nl
@@ -52346,10 +52359,10 @@ jr
 iX
 jr
 jK
-iX
-iX
-iX
-iX
+Ih
+Ih
+Ih
+Ih
 iN
 iF
 Pg
@@ -53666,7 +53679,7 @@ Ya
 rY
 Ya
 Ya
-iu
+BX
 io
 io
 io
@@ -65230,9 +65243,9 @@ sV
 cg
 cg
 cg
-fm
-fm
-fm
+Ft
+Ft
+Ft
 Yn
 Yn
 Yn
