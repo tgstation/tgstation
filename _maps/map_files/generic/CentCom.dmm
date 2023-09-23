@@ -8172,10 +8172,10 @@
 /area/centcom/central_command_areas/ferry)
 "Is" = (
 /obj/effect/spawner/random_arena_spawner,
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "It" = (
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "Iv" = (
 /obj/effect/turf_decal/siding/wood{
@@ -8231,7 +8231,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "IH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -8243,7 +8243,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "IK" = (
 /obj/structure/closet/secure_closet/ert_sec,
@@ -8378,19 +8378,19 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "Jk" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "Jq" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "Jr" = (
 /mob/living/simple_animal/hostile/retaliate/clown{
@@ -11559,7 +11559,7 @@
 /area/centcom/tdome/observation)
 "Wg" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/holofloor/plating,
+/turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "Wi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,

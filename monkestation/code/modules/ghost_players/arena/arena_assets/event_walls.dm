@@ -25,7 +25,7 @@
 	icon_state = "rock_wall-0"
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/closed/indestructible/event/rock/Initialize(mapload)
 	. = ..()
