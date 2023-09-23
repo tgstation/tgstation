@@ -1,6 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "seedlings have been refactored into basic mobs please report any bugs"
-  - rscadd: "seedlings now can have different colored petals and can look after botanys plants"
-  - rscadd: "seedlings are re-added to the game! they grow out of seedling seeds obtainable from exotic seed crates or traitor uplink"

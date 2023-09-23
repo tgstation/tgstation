@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Ghosts and godmode mobs will no longer create resonance when touching the supermatter crystal"
