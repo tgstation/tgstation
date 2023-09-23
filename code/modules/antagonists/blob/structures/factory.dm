@@ -51,7 +51,8 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/created_spore = (overmind) ? overmind.create_spore(loc) : new /mob/living/basic/blob_spore(loc)
+	var/mob/living/basic/blob_spore/minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+	created_spore.link_to_factory(src)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
 
