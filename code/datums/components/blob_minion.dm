@@ -61,7 +61,6 @@
 	living_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/blob_minion/UnregisterFromParent()
-	. = ..()
 	if (!isnull(overmind))
 		overmind.blob_mobs -= parent
 	var/mob/living/living_parent = parent
