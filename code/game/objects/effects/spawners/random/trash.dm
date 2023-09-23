@@ -272,7 +272,6 @@
 	icon_state = "crushed_can"
 	loot = list(/obj/item/trash/can)
 	/// Whether the can will spawn with this spawner's icon_state instead of a random one (used for mapedits)
-	var/random_icon = TRUE
 	var/soda_icons = list(
 		"energy_drink", "monkey_energy", "thirteen_loko", "space_mountain_wind", "dr_gibb", "starkist",
 		"sodawater", "tonic", "cola", "purple_can", "ice_tea_can",
@@ -284,4 +283,4 @@
 /obj/effect/spawner/random/trash/crushed_can/make_item(spawn_loc, type_path_to_make)
 	var/obj/item/trash/can/crushed_can = .. ()
 	if(istype(crushed_can))
-		crushed_can.icon_state = random_icon ? pick(soda_icons) : icon_state
+		icon_state = pick(soda_icons)
