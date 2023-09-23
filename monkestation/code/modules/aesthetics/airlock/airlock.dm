@@ -627,12 +627,14 @@
 
 /obj/machinery/door/poddoor/shutters
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/shutters.dmi'
+	door_align_type = /obj/machinery/door/poddoor/shutters
 
 /obj/machinery/door/password
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
 
 /obj/machinery/door/poddoor
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
+	door_align_type = /obj/machinery/door/poddoor
 
 //SKYRAT EDIT ADDITION BEGIN - AESTHETICS
 #undef AIRLOCK_LIGHT_POWER

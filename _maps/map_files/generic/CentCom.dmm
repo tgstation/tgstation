@@ -1286,10 +1286,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
-"fJ" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
 "fK" = (
 /obj/structure/sign/painting/library{
 	pixel_y = -32
@@ -8175,17 +8171,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "Is" = (
-/obj/machinery/igniter/on,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/obj/effect/spawner/random_arena_spawner,
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "It" = (
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
-"Iu" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "Iv" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -8240,36 +8231,20 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
-"IF" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
-"IG" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "IH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
-"II" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
 "IJ" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "IK" = (
 /obj/structure/closet/secure_closet/ert_sec,
 /obj/effect/turf_decal/stripes/line{
@@ -8403,30 +8378,20 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
-"Ji" = (
-/turf/open/floor/circuit/green,
-/area/centcom/tdome/arena)
-"Jj" = (
-/obj/machinery/flasher{
-	id = "tdomeflash";
-	name = "Thunderdome Flash"
-	},
-/turf/open/floor/circuit/green,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "Jk" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "Jq" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
-/turf/open/floor/circuit/green,
-/area/centcom/tdome/arena)
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "Jr" = (
 /mob/living/simple_animal/hostile/retaliate/clown{
 	limb_destroyer = 1
@@ -11592,6 +11557,10 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"Wg" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/holofloor/plating,
+/area/centcom/tdome/arena/actual)
 "Wi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/airlock/public/glass{
@@ -53710,16 +53679,16 @@ bi
 eI
 bi
 cY
-QC
+fc
 ID
 ID
 ID
 ID
 ID
 ID
-uf
-uf
-uf
+fc
+fc
+fc
 uf
 uf
 uf
@@ -53967,7 +53936,7 @@ Id
 Bs
 di
 QC
-Is
+Wg
 Jh
 Jh
 IE
@@ -54482,14 +54451,14 @@ Kd
 nD
 SZ
 It
-Iu
-IF
-IF
-IF
-IF
-IF
-IF
-Iu
+It
+It
+It
+It
+It
+It
+It
+It
 It
 Pj
 Pr
@@ -54740,12 +54709,12 @@ nD
 SZ
 It
 It
-IG
-IG
-IG
-IG
-IG
-IG
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -54997,12 +54966,12 @@ sH
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -55254,12 +55223,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -55511,12 +55480,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -55768,12 +55737,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-Ji
-Ji
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -56025,12 +55994,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-Jj
+It
+It
+It
 Jq
-fJ
-fJ
+It
+It
 It
 It
 Pj
@@ -56282,12 +56251,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-Ji
-Ji
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -56539,12 +56508,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -56796,12 +56765,12 @@ yY
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -57053,12 +57022,12 @@ sH
 SZ
 It
 It
-fJ
-fJ
-fJ
-fJ
-fJ
-fJ
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -57310,12 +57279,12 @@ nD
 SZ
 It
 It
-II
-II
-II
-II
-II
-II
+It
+It
+It
+It
+It
+It
 It
 It
 Pj
@@ -57566,14 +57535,14 @@ Kd
 nD
 SZ
 It
-Iu
-IF
-IF
-IF
-IF
-IF
-IF
-Iu
+It
+It
+It
+It
+It
+It
+It
+It
 It
 Pj
 Pr
@@ -58079,7 +58048,7 @@ Ot
 Ot
 di
 QC
-Is
+Wg
 Jk
 Jk
 IJ
@@ -58088,7 +58057,7 @@ Jk
 Jk
 IJ
 IJ
-Is
+Wg
 Pj
 YO
 Bx

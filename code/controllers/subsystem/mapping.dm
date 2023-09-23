@@ -93,6 +93,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_templates = list()
 	var/list/random_bar_templates = list()
 	var/list/random_engine_templates = list()
+	var/list/random_arena_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
@@ -355,6 +356,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	random_engine_templates = SSmapping.random_engine_templates
 	random_bar_templates = SSmapping.random_bar_templates
+	random_arena_templates = SSmapping.random_arena_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -680,6 +682,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/random_room/random_bar/E = new room_type()
 		random_bar_templates[E.room_id] = E
 		map_templates[E.room_id] = E
+
+	for(var/item in subtypesof(/datum/map_template/random_room/random_arena))
+		var/datum/map_template/random_room/random_arena/room_type = item
+		if(!(initial(room_type.mappath)))
+			message_admins("Arena Template [initial(room_type.name)] found without mappath. Yell at coders")
+			continue
+		var/datum/map_template/random_room/random_arena/E = new room_type()
+		random_arena_templates[E.room_id] = E
+		map_templates[E.room_id] = E
+
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
