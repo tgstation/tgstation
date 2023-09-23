@@ -49,6 +49,7 @@
 #define WIRE_RESETOWNER "Reset Owner"
 #define WIRE_UNRESTRICTED_EXIT "Unrestricted Exit"
 #define WIRE_RX "Receive"
+#define WIRE_FORCEANSWER "Force Answer"
 #define WIRE_LOOP "Loop"
 #define WIRE_SAFETY "Safety"
 #define WIRE_SHOCK "High Voltage Ground"

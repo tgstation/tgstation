@@ -76,8 +76,10 @@ Possible to do for anyone motivated enough:
 	var/record_user
 	/// Replay hologram
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo
-	/// Calls will be automatically answered after a couple rings, here for debugging
-	var/static/force_answer_call = FALSE
+	/// Holopad can make calls
+	var/transmitting = TRUE
+	/// Calls will be automatically answered after a couple rings
+	var/force_answer_call = FALSE
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
 	var/ringing = FALSE
@@ -319,46 +321,54 @@ Possible to do for anyone motivated enough:
 
 	switch(action)
 		if("AIrequest")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/ai_user = usr
-				ai_user.eyeobj.setLoc(get_turf(src))
-				to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
-				return
-			if(last_request + 200 < world.time)
-				last_request = world.time
-				to_chat(usr, span_info("You requested an AI's presence."))
-				var/area/area = get_area(src)
-				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
-					if(!AI.client)
-						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
-				return TRUE
+			if(transmitting)
+				if(isAI(usr))
+					var/mob/living/silicon/ai/ai_user = usr
+					ai_user.eyeobj.setLoc(get_turf(src))
+					to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
+					return
+				if(last_request + 200 < world.time)
+					last_request = world.time
+					to_chat(usr, span_info("You requested an AI's presence."))
+					var/area/area = get_area(src)
+					for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+						if(!AI.client)
+							continue
+						to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
+					return TRUE
+				else
+					to_chat(usr, span_info("A request for AI presence was already sent recently."))
+					return
 			else
-				to_chat(usr, span_info("A request for AI presence was already sent recently."))
+				to_chat(usr, span_info("ERROR: Transmitter not operational, conduct maintenance on your holopad's wires."))
 				return
 		if("holocall")
 			if(outgoing_call)
 				return
 			if(usr.loc == loc)
-				var/list/callnames = list()
-				for(var/I in holopads)
-					var/area/A = get_area(I)
-					if(A)
-						LAZYADD(callnames[A], I)
-				callnames -= get_area(src)
-				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
-				if(isnull(result))
+				if(transmitting)
+					var/list/callnames = list()
+					for(var/I in holopads)
+						var/area/A = get_area(I)
+						if(A)
+							LAZYADD(callnames[A], I)
+					callnames -= get_area(src)
+					var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
+					if(isnull(result))
+						return
+					if(QDELETED(usr) || outgoing_call)
+						return
+					if(usr.loc == loc)
+						var/input = text2num(params["headcall"])
+						var/headcall = input == 1 ? TRUE : FALSE
+						var/datum/holocall/holo_call = new(usr, src, callnames[result], headcall)
+						if(QDELETED(holo_call)) //can delete itself if the target pad was destroyed
+							return FALSE
+						calling = TRUE
+						return TRUE
+				else
+					to_chat(usr, span_info("ERROR: Transmitter not operational, conduct maintenance on your holopad's wires."))
 					return
-				if(QDELETED(usr) || outgoing_call)
-					return
-				if(usr.loc == loc)
-					var/input = text2num(params["headcall"])
-					var/headcall = input == 1 ? TRUE : FALSE
-					var/datum/holocall/holo_call = new(usr, src, callnames[result], headcall)
-					if(QDELETED(holo_call)) //can delete itself if the target pad was destroyed
-						return FALSE
-					calling = TRUE
-					return TRUE
 			else
 				to_chat(usr, span_warning("You must stand on the holopad to make a call!"))
 		if("connectcall")
@@ -517,7 +527,7 @@ Possible to do for anyone motivated enough:
 		if(holocall.connected_holopad == src)
 			continue
 
-		if(force_answer_call && world.time > (holocall.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
+		if(force_answer_call)
 			holocall.Answer(src)
 			break
 		if(holocall.head_call && !secure)
