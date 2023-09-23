@@ -1,4 +1,4 @@
-https://github.com/Monkestation/Monkestation2.0/pull/304
+https://github.com/Monkestation/Monkestation2.0/pull/384
 
 ## Title:
 
@@ -25,4 +25,4 @@ N/A
 
 ### Credits:
 
-Gboster - Reverting a very old TG removal
+Gboster - Reverting a very old TG removal, modularizes and fixes it to be up-to-date with current proc's
