@@ -121,7 +121,7 @@
 	icon_state = "capcap"
 	dog_fashion = null
 
-/obj/item/clothing/head/caphat/beret
+/obj/item/clothing/head/hats/caphat/beret
 	name = "captain's beret"
 	desc = "For the Captains known for their sense of fashion."
 	icon_state = "beret_badge"
@@ -246,7 +246,7 @@
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
 		return FALSE
-	
+
 	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
