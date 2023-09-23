@@ -484,7 +484,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/load_random_arena()
 	var/start_time = REALTIMEOFDAY
-	for(var/obj/effect/spawner/random_arena/arena_spawner as() in random_bar_spawners)
+	for(var/obj/effect/spawner/random_arena_spawner/arena_spawner as() in random_arena_spawners)
 		var/list/possible_arena_templates = list()
 		var/datum/map_template/random_room/random_arena/arena_candidate
 		shuffle_inplace(random_arena_templates)
