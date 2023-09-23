@@ -407,7 +407,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	var/area/target_area = get_area(src.owner)
 	if(target_area)
-		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+		if((target_area.area_flags & PASSIVE_AREA))
 			return FALSE
 
 	var/hit_percent = (100-blocked)/100
