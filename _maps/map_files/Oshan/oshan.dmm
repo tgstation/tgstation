@@ -12653,6 +12653,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/book/manual/wiki/grenades,
+/obj/item/book/manual/wiki/chemistry,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "gyH" = (
@@ -16992,19 +16994,8 @@
 "iPp" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/light/directional/east,
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 2
-	},
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 2
-	},
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 2
-	},
 /obj/effect/turf_decal/stripes/line,
-/obj/item/book/manual/wiki/chemistry,
-/obj/item/book/manual/wiki/grenades,
+/obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "iPw" = (
@@ -26056,6 +26047,15 @@
 /obj/item/toy/figure/chemist{
 	pixel_y = 13;
 	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
