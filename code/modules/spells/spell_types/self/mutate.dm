@@ -51,7 +51,7 @@
 /datum/action/cooldown/spell/apply_mutations/mutate/cast(mob/living/carbon/human/cast_on)
 	..()
 	/*if(HAS_TRAIT(cast_on, TRAIT_USES_SKINTONES) || HAS_TRAIT(cast_on, TRAIT_MUTANT_COLORS))
-		return*/ //monkestation removal, we dont have this refactor yet
+		return*/ //monkestation temp removal, we dont have this refactor yet
 	// Our caster has a species that doesn't greenify when hulked, so we will do it manually.
 	cast_on.add_atom_colour("#00FF00", TEMPORARY_COLOUR_PRIORITY)
 

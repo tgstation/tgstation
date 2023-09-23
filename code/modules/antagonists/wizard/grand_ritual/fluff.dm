@@ -3,7 +3,7 @@
  */
 /obj/item/book/manual/ancient_parchment
 	name = "ancient parchment"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "scroll-ancient"
 	unique = TRUE
 	w_class = WEIGHT_CLASS_SMALL
