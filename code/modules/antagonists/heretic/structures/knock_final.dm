@@ -16,10 +16,6 @@
 	var/datum/mind/ascendee
 	/// True if we're currently checking for ghost opinions
 	var/gathering_candidates = TRUE
-	/// How often can you use this to spawn in?
-	var/respawn_cooldown = 3 MINUTES
-	/// List of ckeys to when they are next allowed to use this
-	var/list/ghost_spawn_cooldowns = list()
 	///a static list of heretic summons we cam create, automatically populated from heretic monster subtypes
 	var/static/list/monster_types
 	/// A static list of heretic summons which we should not create
@@ -68,23 +64,14 @@
 	. = ..()
 	if (!isobserver(user) || gathering_candidates)
 		return
-	var/cooldown_time = ghost_spawn_cooldowns[user.ckey]
-	if (isnull(cooldown_time) || cooldown_time < world.time)
-		. += span_notice("You can use this to enter the world as a foul monster.")
-	else
-		. += span_warning("You can use this again in [DisplayTimeText(cooldown_time - world.time, round_seconds_to = 1)].")
+	. += span_notice("You can use this to enter the world as a foul monster.")
 
 /// Turn a ghost into an 'orrible beast
 /obj/structure/knock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)
-	var/cooldown_time = ghost_spawn_cooldowns[user.ckey]
-	if(!isnull(cooldown_time) && world.time < cooldown_time)
-		to_chat(user, span_warning("You cannot use this for another [DisplayTimeText(cooldown_time - world.time, round_seconds_to = 1)]."))
-		return FALSE
 	if(should_ask)
 		var/ask = tgui_alert(user, "Become a monster?", "Ascended Rift", list("Yes", "No"))
 		if(ask != "Yes" || QDELETED(src) || QDELETED(user))
 			return FALSE
-	ghost_spawn_cooldowns[user.ckey] = world.time + respawn_cooldown
 	var/monster_type = pick(monster_types)
 	var/mob/living/monster = new monster_type(loc)
 	monster.key = user.key
