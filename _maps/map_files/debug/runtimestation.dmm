@@ -516,6 +516,9 @@
 "cm" = (
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"cn" = (
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "co" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/ore_silo,
@@ -658,6 +661,23 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
+/area/station/medical/medbay)
+"cK" = (
+/obj/machinery/light/directional/south,
+/obj/structure/table/glass,
+/obj/item/disk/surgery/debug,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "cN" = (
 /turf/closed/wall/r_wall,
@@ -1733,6 +1753,10 @@
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"ja" = (
+/obj/effect/landmark/bitrunning/station_reward_spawn,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "jb" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1770,6 +1794,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"kS" = (
+/obj/machinery/door/airlock,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "lc" = (
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
@@ -1780,14 +1810,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"lr" = (
-/obj/machinery/bouldertech/brm,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "lH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
@@ -1822,12 +1844,31 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"nI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"ol" = (
+/obj/machinery/bouldertech/refinery,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
+"oI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "oV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1835,6 +1876,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"pl" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
+"pt" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "pv" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -1850,6 +1903,10 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/station/medical/medbay)
+"pJ" = (
+/obj/machinery/quantum_server,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "qb" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -1880,14 +1937,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"sd" = (
-/obj/machinery/bouldertech/refinery,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
+"rU" = (
+/obj/item/surgery_tray/full/advanced,
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/turf/open/floor/iron/white/corner,
+/area/station/medical/medbay)
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
@@ -2027,6 +2084,11 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/science)
+"AK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "AP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -2046,6 +2108,13 @@
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"BK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "Ce" = (
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
@@ -2053,14 +2122,10 @@
 /obj/structure/closet/syndicate/resources/everything,
 /turf/open/floor/iron,
 /area/station/science)
-"CO" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "mining"
-	},
-/obj/machinery/camera/autoname/directional/west,
+"CE" = (
+/obj/machinery/netpod,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "CQ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line{
@@ -2093,6 +2158,10 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
+"Ev" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/bitrunning/den)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -2154,20 +2223,18 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"FA" = (
+"Ho" = (
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"GE" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
-"He" = (
-/obj/machinery/bouldertech/refinery/smelter,
+"HL" = (
+/turf/closed/wall/r_wall,
+/area/station/bitrunning/den)
+"HT" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 9;
 	id = "mining"
 	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "HW" = (
@@ -2205,6 +2272,21 @@
 "II" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
+"Jk" = (
+/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
+"Jl" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -2307,6 +2389,10 @@
 /obj/item/stock_parts/cell/bluespace,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"OC" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/cargo/miningoffice)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
@@ -2348,14 +2434,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
-"QU" = (
-/obj/item/surgery_tray/advanced,
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white/corner,
-/area/station/medical/medbay)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2402,11 +2480,24 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"TD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/construction)
+"Ue" = (
+/obj/machinery/bouldertech/brm,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "Ut" = (
 /obj/structure/closet/secure_closet/medical3{
 	locked = 0
@@ -2414,13 +2505,6 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
-"UR" = (
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "Va" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -2481,13 +2565,6 @@
 /obj/structure/money_bot,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
-"WN" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "WT" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2573,23 +2650,13 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"Zs" = (
-/obj/machinery/light/directional/south,
-/obj/structure/table/glass,
-/obj/item/disk/surgery/debug,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white/corner,
-/area/station/medical/medbay)
+"Zh" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/computer/quantum_console,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Zz" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -3085,14 +3152,14 @@ aa
 aa
 aa
 em
-FA
-GE
-CO
-FA
+Ho
+pl
+HT
+Ho
 em
-aa
-aa
-aa
+HL
+HL
+HL
 aa
 aa
 aa
@@ -3177,14 +3244,14 @@ aa
 aa
 aa
 em
-FA
-FA
-He
-FA
+Ho
+Ho
+Jk
+ja
 em
-aa
-aa
-aa
+cn
+CE
+HL
 aa
 aa
 aa
@@ -3269,14 +3336,14 @@ aa
 aa
 aa
 em
-FA
-FA
-WN
-FA
+Ho
+Ho
+Jl
+ja
 em
-aa
-aa
-aa
+cn
+CE
+HL
 aa
 aa
 aa
@@ -3361,14 +3428,14 @@ aa
 aa
 aa
 em
-FA
-FA
-sd
-FA
+Ho
+Ho
+ol
+pJ
 em
-aa
-aa
-aa
+BK
+CE
+HL
 aa
 aa
 aa
@@ -3453,14 +3520,14 @@ aa
 aa
 aa
 em
-FA
-UR
-WN
-FA
-em
-aa
-aa
-aa
+Ho
+pt
+Jl
+Zh
+OC
+TD
+oI
+HL
 aa
 aa
 aa
@@ -3545,14 +3612,14 @@ em
 em
 em
 em
-FA
-FA
-lr
-FA
-em
-dY
-en
-dY
+Ho
+Ho
+Ue
+cn
+HL
+kS
+Ev
+HL
 Tj
 Tj
 Tj
@@ -3642,7 +3709,7 @@ rK
 rK
 vy
 em
-eh
+AK
 eh
 LW
 lc
@@ -3734,7 +3801,7 @@ qQ
 qQ
 ME
 em
-eh
+AK
 eh
 LW
 lc
@@ -3826,7 +3893,7 @@ qQ
 qQ
 ME
 em
-eh
+AK
 eh
 LW
 lc
@@ -3918,7 +3985,7 @@ qQ
 qQ
 CQ
 em
-eh
+nI
 eh
 LW
 lc
@@ -4010,7 +4077,7 @@ qQ
 qQ
 ME
 em
-eh
+AK
 eh
 LW
 lc
@@ -4102,7 +4169,7 @@ qQ
 qQ
 YL
 em
-eh
+AK
 eh
 LW
 lc
@@ -4194,7 +4261,7 @@ II
 gl
 gD
 kj
-wM
+AK
 wM
 LW
 lc
@@ -8154,7 +8221,7 @@ cm
 cm
 cm
 cm
-QU
+rU
 by
 dk
 eH
@@ -8246,7 +8313,7 @@ is
 cy
 Ut
 cm
-Zs
+cK
 by
 dB
 dx

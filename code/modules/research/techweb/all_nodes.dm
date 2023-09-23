@@ -14,7 +14,6 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"bepis",
 		"blast",
 		"bounced_radio",
 		"bowl",
@@ -596,6 +595,7 @@
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
 		"emitter",
+		"mass_driver",
 		"firealarm_electronics",
 		"firelock_board",
 		"generic_tank",
@@ -1220,6 +1220,8 @@
 	design_ids = list(
 		"comm_monitor",
 		"comm_server",
+		"gigabeacon",
+		"message_monitor",
 		"ntnet_relay",
 		"s_amplifier",
 		"s_analyzer",
@@ -1236,7 +1238,6 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
