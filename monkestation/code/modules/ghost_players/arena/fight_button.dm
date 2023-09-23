@@ -20,9 +20,6 @@
 		/obj/item/storage/toolbox,
 		/obj/item/knife/shiv,
 	)
-	///our generated maptext
-	var/image/visual_maptext/generated_maptext
-
 	///player storages
 	var/list/player_one_storage = list()
 	var/list/player_two_storage = list()
@@ -39,18 +36,14 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/fight_button/proc/update_maptext()
-	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One:[player_one ? "[player_one.real_name]" : "No One"] \n Player Two:[player_two ? "[player_two.real_name]" : "No One"] \n Weapon of Choice: [initial(weapon_of_choice.name)]\n Wager: [payout]</span></span>"
+	var/string = "<span class='ol c pixel'><span style='color: #40b0ff;'>Player One:[player_one ? "[player_one.real_name]" : "No One"] \nPlayer Two:[player_two ? "[player_two.real_name]" : "No One"] \nWeapon: [initial(weapon_of_choice.name)]\nWager: [payout]</span></span>"
 
-	if(generated_maptext)
-		qdel(generated_maptext)
-	generated_maptext = generate_maptext(src, string, x_offset = -8, y_offset = 32)
-	update_appearance()
+	maptext_height = 256
+	maptext_width = 128
+	maptext_x = -32
+	maptext_y = 18
 
-/obj/structure/fight_button/update_overlays()
-	. = ..()
-	cut_overlays()
-	if(generated_maptext)
-		add_overlay(generated_maptext)
+	maptext = string
 
 
 /obj/structure/fight_button/attack_hand(mob/living/user, list/modifiers)
