@@ -464,6 +464,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/nnpa = CONFIG_GET(number/notify_new_player_age)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (nnpa >= 0)
+			log_access("New Login: [key_name(key, FALSE, TRUE)] just logged in for the first time")
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
 				var/new_player_alert_role = CONFIG_GET(string/new_player_alert_role_id)
