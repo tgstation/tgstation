@@ -1073,6 +1073,14 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"ey" = (
+/obj/machinery/bouldertech/brm,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "ez" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1755,8 +1763,8 @@
 /area/station/medical/medbay)
 "ja" = (
 /obj/effect/landmark/bitrunning/station_reward_spawn,
-/turf/open/floor/circuit/green,
-/area/station/bitrunning/den)
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "jb" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1794,6 +1802,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"kR" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "mining"
+	},
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "kS" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1856,6 +1872,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"oo" = (
+/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "oI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
@@ -1886,7 +1910,7 @@
 "pJ" = (
 /obj/machinery/quantum_server,
 /turf/open/floor/iron,
-/area/station/bitrunning/den)
+/area/station/cargo/miningoffice)
 "qb" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -1925,6 +1949,14 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
+"sd" = (
+/obj/machinery/bouldertech/refinery,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
@@ -1934,9 +1966,6 @@
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"sU" = (
-/turf/open/floor/circuit/green,
-/area/station/bitrunning/den)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -2032,6 +2061,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"wJ" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "wM" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2247,6 +2283,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"Jk" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
 "Jp" = (
 /obj/machinery/gravity_generator/main,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2348,8 +2389,8 @@
 /area/station/science/explab)
 "OC" = (
 /obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/bitrunning/den)
+/turf/closed/wall/r_wall,
+/area/station/cargo/miningoffice)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
@@ -2522,6 +2563,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
+"WU" = (
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Xg" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/vending/syndichem{
@@ -2537,6 +2581,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"Xw" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "XC" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2605,7 +2656,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/computer/quantum_console,
 /turf/open/floor/iron,
-/area/station/bitrunning/den)
+/area/station/cargo/miningoffice)
 "Zz" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -3008,12 +3059,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+em
+em
+em
+em
+em
 aa
 aa
 aa
@@ -3100,12 +3151,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-HL
-HL
-HL
+em
+WU
+Jk
+kR
+WU
+em
 HL
 HL
 HL
@@ -3192,12 +3243,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-HL
+em
+WU
+WU
+oo
 ja
-sU
+em
 cn
 CE
 HL
@@ -3284,12 +3335,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-HL
+em
+WU
+WU
+wJ
 ja
-sU
+em
 cn
 CE
 HL
@@ -3376,12 +3427,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-HL
+em
+WU
+WU
+sd
 pJ
-cn
+em
 BK
 CE
 HL
@@ -3468,10 +3519,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-HL
+em
+WU
+Xw
+wJ
 Zh
 OC
 TD
@@ -3561,10 +3612,10 @@ em
 em
 em
 em
-em
-em
-HL
-HL
+WU
+WU
+ey
+cn
 HL
 kS
 Ev
