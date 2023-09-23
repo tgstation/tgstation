@@ -61,7 +61,7 @@
 	new /obj/item/clothing/gloves/captain(src)
 	new /obj/item/clothing/head/costume/crown/fancy(src)
 	new /obj/item/clothing/head/hats/caphat(src)
-	new /obj/item/clothing/head/hats/caphat/beret(src)
+	new /obj/item/clothing/head/caphat/beret(src)
 	new /obj/item/clothing/head/hats/caphat/parade(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
