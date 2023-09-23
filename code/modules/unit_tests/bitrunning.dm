@@ -2,6 +2,8 @@
 #define TEST_MAP_EXPENSIVE "test_only_expensive"
 
 /// The qserver and qconsole should find each other on init
+/datum/unit_test/qserver_find_console
+
 /datum/unit_test/qserver_find_console/Run()
 	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -15,6 +17,8 @@
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
 
 /// Tests the connection between avatar and pilot
+/datum/unit_test/avatar_connection_basic
+
 /datum/unit_test/avatar_connection_basic/Run()
 	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -55,6 +59,8 @@
 	TEST_ASSERT_NOTEQUAL(labrat.stat, DEAD, "Pilot should be very alive")
 
 /// Gibbing specifically
+/datum/unit_test/avatar_connection_gib
+
 /datum/unit_test/avatar_connection_gib/Run()
 	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -79,6 +85,8 @@
 	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Pilot should have taken brain dmg on gib disconnect")
 
 /// Tests the server's ability to generate a loot crate
+/datum/unit_test/qserver_generate_rewards
+
 /datum/unit_test/qserver_generate_rewards/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
@@ -95,6 +103,8 @@
 	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
 
 /// Server side randomization of domains
+/datum/unit_test/qserver_get_random_domain_id
+
 /datum/unit_test/qserver_get_random_domain_id/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
@@ -106,6 +116,8 @@
 	TEST_ASSERT_NOTNULL(id, "Should return a random domain with points")
 
 /// Tests the ability to create hololadders and effectively, retries
+/datum/unit_test/qserver_generate_hololadder
+
 /datum/unit_test/qserver_generate_hololadder/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
@@ -132,6 +144,8 @@
 	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Should reset retries on reset()")
 
 /// Tests the calculate rewards function
+/datum/unit_test/qserver_calculate_rewards
+
 /datum/unit_test/qserver_calculate_rewards/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
@@ -166,6 +180,8 @@
 	TEST_ASSERT_EQUAL(rewards, 1.6, "Should increase rewards with modded servos")
 
 /// Ensures loot crates can spawn a proper number of items
+/datum/unit_test/bitrunning_loot_crate_rewards
+
 /datum/unit_test/bitrunning_loot_crate_rewards/Run()
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/decrypted)
 
@@ -186,6 +202,8 @@
 	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
 
 /// Ensures settings on vdoms are being set correctly
+/datum/unit_test/bitrunner_vdom_settings
+
 /datum/unit_test/bitrunner_vdom_settings/Run()
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/decrypted)
 

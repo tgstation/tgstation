@@ -78,7 +78,7 @@
 		if(HAS_TRAIT(creature, TRAIT_MIND_TEMPORARILY_GONE)) // are they out of body?
 			trimmed_list.Remove(creature)
 			continue
-		if(!isnull(creature.GetComponent(/datum/component/avatar_connection))) // are they an avatar?
+		if(HAS_TRAIT(creature, TRAIT_TEMPORARY_BODY)) // are they an avatar?
 			trimmed_list.Remove(creature)
 			continue
 	return trimmed_list
