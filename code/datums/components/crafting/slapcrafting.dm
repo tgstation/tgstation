@@ -71,7 +71,7 @@
 		return
 
 	// We might use radials so we need to split the proc chain
-	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), valid_recipes, user, craftsheet)
+	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), valid_recipes, user, craft_sheet)
 
 /datum/component/slapcrafting/proc/slapcraft_async(list/valid_recipes, mob/user, datum/component/personal_crafting/craft_sheet)
 
