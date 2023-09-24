@@ -7222,6 +7222,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"CX" = (
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/turf/open/floor/wood,
+/area/centcom/tdome/observation)
 "CY" = (
 /obj/structure/chair{
 	dir = 4
@@ -7326,6 +7338,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"DD" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/wood,
+/area/centcom/tdome/observation)
 "DF" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/indestructible/riveted,
@@ -59849,8 +59865,8 @@ cZ
 QC
 Gj
 Sb
-Sb
-Sb
+CX
+DD
 Sb
 ZC
 uf
