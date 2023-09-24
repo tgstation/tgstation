@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "clown bomb payload is no longer named badmin payload and no longer disperses clowns in cardinal directions only"

@@ -459,6 +459,20 @@
 	allow_duplicate_results = FALSE
 	result_type = /obj/effect/decal/cleanable/dirt
 
+/obj/effect/spawner/foam_starter
+	var/datum/effect_system/fluid_spread/foam/foam_type = /datum/effect_system/fluid_spread/foam
+	var/foam_size = 4
+
+/obj/effect/spawner/foam_starter/Initialize(mapload)
+	. = ..()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
+	foam.set_up(foam_size, holder = src, location = loc)
+	foam.start()
+
+/obj/effect/spawner/foam_starter/small
+	foam_size = 2
+
 #undef MINIMUM_FOAM_DILUTION_RANGE
 #undef MINIMUM_FOAM_DILUTION
 #undef FOAM_REAGENT_SCALE

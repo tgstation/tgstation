@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(24)
 			new /obj/structure/elite_tumor(loc)
 		if(25)
-			new /mob/living/simple_animal/hostile/retaliate/clown/clownhulk(loc)
+			new /mob/living/basic/clown/clownhulk(loc)
 		if(26)
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)
