@@ -1556,6 +1556,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
 	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms)
 "aSy" = (
@@ -2783,12 +2784,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "bvf" = (
-/obj/structure/disposaloutlet{
-	name = "Cargo Deliveries";
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
-/area/station/science/robotics)
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood/large,
+/area/station/security/warden)
 "bvp" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -6145,7 +6146,6 @@
 /area/station/security/detectives_office)
 "dji" = (
 /obj/machinery/cassette/dj_station,
-/obj/machinery/light/dim/directional/west,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
@@ -7733,7 +7733,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "dXv" = (
 /obj/machinery/duct/industrial/waste,
@@ -19262,7 +19262,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
 "jZd" = (
 /obj/effect/turf_decal/stripes{
@@ -20392,6 +20392,7 @@
 /obj/item/storage/backpack/duffelbag/sec,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/floor/has_bulb,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "kDh" = (
@@ -21955,7 +21956,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "lrZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31985,12 +31986,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "qBI" = (
-/obj/effect/turf_decal/trimline/white/filled/line{
-	color = "#009dc4";
-	dir = 6
-	},
-/turf/open/floor/plating/ocean,
-/area/ocean/generated_above)
+/obj/machinery/requests_console/directional/west,
+/turf/open/floor/pod/dark,
+/area/station/security/warden)
 "qBL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34872,6 +34870,13 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
+"sbd" = (
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/line,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/aft)
 "sbg" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/warning{
@@ -41771,7 +41776,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "vMb" = (
 /obj/machinery/button/door/directional/south{
@@ -43798,7 +43803,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
 "wQE" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
@@ -68849,7 +68854,7 @@ fjT
 xBV
 xzw
 xBV
-xSC
+sbd
 owJ
 mLx
 emN
@@ -70397,7 +70402,7 @@ mLx
 rrB
 qfA
 lKN
-ydD
+qBI
 ofT
 rrB
 lhf
@@ -71167,7 +71172,7 @@ iIe
 piv
 rrB
 dys
-tIq
+bvf
 vMF
 sqw
 fRn
@@ -84734,7 +84739,7 @@ noG
 mnj
 ovu
 uzj
-bvf
+uzj
 mxq
 uzj
 uzj
@@ -89930,7 +89935,7 @@ aah
 aah
 aah
 aah
-qBI
+aah
 aah
 aah
 aah
@@ -90188,7 +90193,7 @@ aah
 aah
 aah
 aah
-qBI
+aah
 aah
 aah
 aah
