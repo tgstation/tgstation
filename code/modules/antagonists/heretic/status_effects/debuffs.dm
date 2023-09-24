@@ -218,7 +218,7 @@
 // Lunar Parade hypnosis
 /datum/status_effect/moon_parade_hypnosis
 	id = "moon_parade_hypnosis"
-	alert_type = /atom/movable/screen/alert/status_effect/moon_parade_hypnosis
+	alert_type = null
 	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
 

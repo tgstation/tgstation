@@ -63,7 +63,8 @@
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 	return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/magic/moon_parade/Destroy(atom/mob/living/hit)
-	if(hit.has_status_effect(/datum/status_effect/moon_parade_hypnosis))
-		hit.remove_status_effect(/datum/status_effect/moon_parade_hypnosis)
+/obj/projectile/magic/moon_parade/Destroy(atom/hit)
+	var/mob/living/victim = hit
+	if(victim.has_status_effect(/datum/status_effect/moon_parade_hypnosis))
+		victim.remove_status_effect(/datum/status_effect/moon_parade_hypnosis)
 	return ..()
