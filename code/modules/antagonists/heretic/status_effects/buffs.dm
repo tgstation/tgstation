@@ -297,12 +297,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()
-	ADD_TRAIT(owner, TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS)
+	ADD_TRAIT(owner, TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS, TRAIT_STATUS_EFFECT(id))
 	owner.update_name()
 	return TRUE
 
 /datum/status_effect/moon_grasp_hide/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS)
+	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS, TRAIT_STATUS_EFFECT(id))
 	owner.update_name()
 
 /atom/movable/screen/alert/status_effect/moon_grasp_hide

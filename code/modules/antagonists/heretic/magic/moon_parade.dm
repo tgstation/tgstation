@@ -56,11 +56,14 @@
 
 		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
 		victim.AddComponent(/datum/component/leash, src, distance = 1)
-		balloon_alert(victim, "you feel unable to move away from the parade!")
+		victim.apply_status_effect(/datum/status_effect/moon_parade_hypnosis)
+		victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
 		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 	return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/magic/moon_parade/Destroy()
+/obj/projectile/magic/moon_parade/Destroy(atom/mob/living/hit)
+	if(hit.has_status_effect(/datum/status_effect/moon_parade_hypnosis))
+		hit.remove_status_effect(/datum/status_effect/moon_parade_hypnosis)
 	return ..()
