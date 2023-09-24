@@ -2,7 +2,7 @@
 /datum/status_effect/borg_throw_slow
 	id = "borg_throw_slowdown"
 	alert_type = /atom/movable/screen/alert/status_effect/borg_throw_slow
-	duration = 5 SECONDS
+	duration = 3 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 
 /datum/status_effect/borg_throw_slow/on_apply()
