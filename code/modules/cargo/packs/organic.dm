@@ -291,6 +291,7 @@
 					/obj/item/seeds/cucumber,
 				)
 	crate_name = "seeds crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/randomized/chef/vegetables
 	name = "Vegetables Crate"
