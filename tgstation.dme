@@ -1641,6 +1641,7 @@
 #include "code\datums\status_effects\debuffs\choke.dm"
 #include "code\datums\status_effects\debuffs\confusion.dm"
 #include "code\datums\status_effects\debuffs\cursed.dm"
+#include "code\datums\status_effects\debuffs\cyborg.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
 #include "code\datums\status_effects\debuffs\decloning.dm"
 #include "code\datums\status_effects\debuffs\dizziness.dm"
