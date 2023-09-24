@@ -19,7 +19,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 	vent_movement = NONE
-	///Transfer rate of the component in L/s
+	///Transfer rate of the component in L/tick.
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
@@ -44,8 +44,9 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [transfer_rate] L/s")
+		var/transfer_rate_per_second = transfer_rate SECONDS / SSair.wait
+		investigate_log("was set to [transfer_rate_per_second] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "volume output set to [transfer_rate_per_second] L/s")
 		update_appearance()
 	return ..()
 
@@ -115,8 +116,8 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["rate"] = round(transfer_rate)
-	data["max_rate"] = round(MAX_TRANSFER_RATE)
+	data["rate"] = round(transfer_rate SECONDS / SSair.wait)
+	data["max_rate"] = round(MAX_TRANSFER_RATE SECONDS / SSair.wait)
 	return data
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
@@ -137,8 +138,8 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
+				transfer_rate = clamp(rate * SSair.wait / (1 SECONDS), 0, MAX_TRANSFER_RATE)
+				investigate_log("was set to [transfer_rate SECONDS / SSair.wait] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
