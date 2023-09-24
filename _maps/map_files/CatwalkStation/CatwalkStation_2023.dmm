@@ -11558,10 +11558,6 @@
 /area/station/engineering/storage/tcomms)
 "ftA" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock_note_placer{
-	note_path = "paper/fluff/fda_notice";
-	note_name = "Closure Notice"
-	},
 /turf/open/floor/plating/airless,
 /area/station/service/kitchen/abandoned)
 "ftK" = (
@@ -34218,6 +34214,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/structure/railing/corner/end,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "pBL" = (
@@ -42144,6 +42141,9 @@
 /area/station/service/kitchen/abandoned)
 "tcr" = (
 /obj/structure/stairs/south,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/iron/stairs/left{
 	dir = 1;
 	initial_gas_mix = "TEMP=2.7"
