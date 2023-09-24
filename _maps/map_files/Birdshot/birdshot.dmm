@@ -36414,7 +36414,7 @@
 /area/station/maintenance/starboard/greater)
 "ncf" = (
 /obj/machinery/recycler{
-	dir = 4
+	dir = 8
 	},
 /obj/machinery/conveyor{
 	dir = 4;
