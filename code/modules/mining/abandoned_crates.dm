@@ -189,7 +189,7 @@
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
-			free_bomb.quality = GIBTONITE_QUALITY_HIGH
+			free_bomb.quality = rand(1, 3)
 			free_bomb.GibtoniteReaction(null, 3)
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)
