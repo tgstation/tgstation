@@ -36413,7 +36413,9 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
 "ncf" = (
-/obj/machinery/recycler,
+/obj/machinery/recycler{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "garbage"
