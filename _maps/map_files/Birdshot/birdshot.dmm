@@ -42855,6 +42855,7 @@
 "puC" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "puD" = (
@@ -58333,6 +58334,11 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/station/hallway/secondary/dock)
+"urE" = (
+/obj/effect/turf_decal/bot_white/left,
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/station/engineering/gravity_generator)
 "urM" = (
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -70123,6 +70129,11 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den/gaming)
+"xRX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "xRZ" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/grass,
@@ -105156,9 +105167,9 @@ nyi
 rvp
 rvp
 uIT
-xqC
+uIT
 wSZ
-tdI
+urE
 hHE
 nNi
 hPs
@@ -106703,7 +106714,7 @@ rGL
 rGL
 rGL
 rGL
-rIO
+xRX
 iux
 jeX
 pzd
