@@ -91,7 +91,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/proc/check_friendly_in_path(mob/living/source, atom/target, datum/targetting_datum/targetting_datum)
 	var/list/turfs_list = calculate_trajectory(source, target)
-	for(var/turf/possible_turf in turfs_list)
+	for(var/turf/possible_turf as anything in turfs_list)
 
 		for(var/mob/living/potential_friend in possible_turf)
 			if(!targetting_datum.can_attack(source, potential_friend))
