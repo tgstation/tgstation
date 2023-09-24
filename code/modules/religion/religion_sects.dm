@@ -190,16 +190,17 @@
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/mechanical/on_sacrifice(obj/item/I, mob/living/chap)
-	var/obj/item/stock_parts/cell/the_cell = I
-	if(!istype(the_cell)) //how...
+/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/cell/power_cell, mob/living/chap)
+	if(!istype(power_cell))
 		return
-	if(the_cell.charge < 300)
-		to_chat(chap,span_notice("[GLOB.deity] does not accept pity amounts of power."))
+
+	if(power_cell.charge < 300)
+		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
 		return
-	adjust_favor(round(the_cell.charge/300), chap)
-	to_chat(chap, span_notice("You offer [the_cell]'s power to [GLOB.deity], pleasing them."))
-	qdel(I)
+
+	adjust_favor(round(power_cell.charge/300), chap)
+	to_chat(chap, span_notice("You offer [power_cell]'s power to [GLOB.deity], pleasing them."))
+	qdel(power_cell)
 	return TRUE
 
 /**** Pyre God ****/
