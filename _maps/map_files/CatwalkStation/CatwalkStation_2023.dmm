@@ -3966,7 +3966,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
@@ -6133,7 +6133,7 @@
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -9793,6 +9793,10 @@
 "eAX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/spawner/random/structure/closet_maintenance,
+/obj/item/food/burger/rat{
+	pixel_x = 1;
+	pixel_y = 2
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "eBt" = (
@@ -12021,9 +12025,9 @@
 /turf/open/openspace,
 /area/space)
 "fHf" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/vending/wallmed/directional/west,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = -5;
 	pixel_y = 15
 	},
@@ -12499,7 +12503,7 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "fSl" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/wood,
 /area/station/command/gateway)
@@ -12660,10 +12664,6 @@
 	id = "abandonedcafe";
 	name = "Maintenance Cafe shutters";
 	dir = 8
-	},
-/obj/item/food/burger/rat{
-	pixel_x = 1;
-	pixel_y = 2
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
@@ -14093,10 +14093,7 @@
 /area/station/medical/break_room)
 "gEv" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 4
-	},
-/obj/structure/table,
+/obj/machinery/grill,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "gEE" = (
@@ -23137,14 +23134,14 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "kxL" = (
-/obj/item/roller,
-/obj/item/roller{
+/obj/item/emergency_bed,
+/obj/item/emergency_bed{
 	pixel_y = 3
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 3
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -23960,7 +23957,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/east,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "kSY" = (
@@ -28327,7 +28324,6 @@
 	},
 /obj/structure/closet/secure_closet/hop,
 /obj/item/bedsheet/ian,
-/obj/item/clothing/suit/costume/ianshirt,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
@@ -30159,7 +30155,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/machinery/rnd/bepis,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nKB" = (
@@ -33207,13 +33202,6 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
 /area/space)
-"pjV" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 1
-	},
-/obj/machinery/lapvend,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "pkc" = (
 /obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -33809,6 +33797,13 @@
 	},
 /turf/open/openspace,
 /area/station/medical/medbay/central)
+"pzU" = (
+/obj/machinery/chem_dispenser/drinks/beer{
+	pixel_y = 14
+	},
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/service/kitchen/abandoned)
 "pAn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -41632,7 +41627,6 @@
 /area/station/science/xenobiology)
 "tac" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/item/food/deadmouse/moldy,
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
@@ -42739,7 +42733,7 @@
 "tAS" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "\improper APLU \";
-	\t\t\t\t\t\t\tCargostormer 3\""=None
+	\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -52823,6 +52817,10 @@
 /area/space)
 "yaP" = (
 /obj/structure/broken_flooring/pile/directional/north,
+/obj/item/food/deadmouse/moldy{
+	pixel_x = -10;
+	pixel_y = -2
+	},
 /turf/open/floor/plating/airless,
 /area/station/service/kitchen/abandoned)
 "yaR" = (
@@ -80259,7 +80257,7 @@ bPC
 bPC
 vfp
 tce
-tZO
+pzU
 vSS
 kZv
 tce
@@ -87421,7 +87419,7 @@ fLr
 fLr
 fLr
 vUS
-pjV
+afL
 quJ
 quJ
 quJ
