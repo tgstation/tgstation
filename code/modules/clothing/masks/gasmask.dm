@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/starting_filter_type = /obj/item/gas_filter
 	///Does the mask have an FOV?
 	var/has_fov = TRUE
+	voice_filter = "lowpass=f=750,volume=2"
 
 /datum/armor/mask_gas
 	bio = 100
@@ -211,6 +212,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dog_fashion = /datum/dog_fashion/head/clown
 	has_fov = FALSE
 	var/list/clownmask_designs = list()
+	voice_filter = null // performer masks expect to be talked through
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman

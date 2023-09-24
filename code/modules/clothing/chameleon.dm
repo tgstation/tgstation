@@ -366,6 +366,12 @@
 		agent_pda.saved_job = job_datum.title
 
 
+/datum/action/item_action/chameleon/change/mask/update_item(obj/item/picked_item)
+	..()
+	var/obj/item/clothing/mask/mask_picked = picked_item
+	var/obj/item/clothing/mask/mask_used = target
+	mask_used.voice_filter = mask_picked.voice_filter
+	
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
@@ -612,6 +618,7 @@
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	voice_filter = null
 
 /datum/armor/mask_chameleon
 	melee = 5
@@ -646,6 +653,15 @@
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	voice_change = !voice_change
+	if(voice_change && SStts.tts_enabled)
+		var/voice_choice = tgui_input_list(user, "Choose what voice to use as a disguise", "Voice Selection", SStts.available_speakers)
+		if(isnull(voice_choice))
+			to_chat(user, span_warning("No choice selected, falling back to a random voice."))
+			voice_override = pick(SStts.available_speakers)
+			return
+		voice_override = voice_choice
+	else
+		voice_override = null
 	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
 
 
