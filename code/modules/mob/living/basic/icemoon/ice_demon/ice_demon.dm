@@ -1,9 +1,3 @@
-#define BB_LIST_SCARY_ITEMS "list_scary_items"
-#define BB_DEMON_TELEPORT_ABILITY "demon_teleport_ability"
-#define BB_TELEPORT_DESTINATION "teleport_destination"
-#define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
-#define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
-
 /mob/living/basic/mining/ice_demon
 	name = "demonic watcher"
 	desc = "A creature formed entirely out of ice, bluespace energy emanates from inside of it."
