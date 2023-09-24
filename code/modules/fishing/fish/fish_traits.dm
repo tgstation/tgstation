@@ -23,9 +23,9 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	SHOULD_CALL_PARENT(TRUE)
 	return list(ADDITIVE_FISHING_MOD = 0, MULTIPLICATIVE_FISHING_MOD = 1)
 
-/// Returns special minigame rules applied by this trait
-/datum/fish_trait/proc/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
-	return list()
+/// Returns special minigame rules and effects applied by this trait
+/datum/fish_trait/proc/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
+	return
 
 /// Applies some special qualities to the fish that has been spawned
 /datum/fish_trait/proc/apply_to_fish(obj/item/fish/fish)
@@ -100,8 +100,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Heavy"
 	catalog_description = "This fish tends to stay near the waterbed.";
 
-/datum/fish_trait/heavy/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
-	return list(FISHING_MINIGAME_RULE_HEAVY_FISH)
+/datum/fish_trait/heavy/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
+	minigame.fish_idle_velocity -= 10
 
 /datum/fish_trait/carnivore
 	name = "Carnivore"
@@ -338,8 +338,9 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
 
-/datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
-	return list(FISHING_MINIGAME_RULE_LUBED_FISH)
+/datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
+	minigame.reeling_velocity *= 1.4
+	minigame.gravity_velocity *= 1.4
 
 /datum/fish_trait/amphibious
 	name = "Amphibious"

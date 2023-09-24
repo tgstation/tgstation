@@ -838,7 +838,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -1284,6 +1284,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "fw" = (
@@ -1531,9 +1532,9 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "gP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/breath/medical,
+/obj/machinery/computer/operating/oldstation{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "gQ" = (
@@ -2594,6 +2595,12 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"lh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/rnd/server/oldstation,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "lk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -4910,14 +4917,6 @@
 	},
 /turf/template_noop,
 /area/space/nearstation)
-"zW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/garbage,
-/obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/rnd)
 "zX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -14186,7 +14185,7 @@ kw
 Hk
 kw
 iq
-ze
+lh
 WV
 ob
 hY
@@ -14384,7 +14383,7 @@ kw
 jk
 lF
 hS
-zW
+ze
 WV
 ca
 SI

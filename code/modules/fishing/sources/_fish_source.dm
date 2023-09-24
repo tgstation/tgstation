@@ -16,7 +16,14 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
+
+/datum/fish_source/New()
+	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
+		return
+	for(var/path in fish_counts)
+		if(!(path in fish_table))
+			stack_trace("path [path] found in the 'fish_counts' list but not in the fish_table one of [type]")
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
@@ -38,7 +45,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 		. += SETTLER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
@@ -116,24 +123,28 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	if((reward_path in fish_counts)) // This is limited count result
 		fish_counts[reward_path] -= 1
 		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)ù
+			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
+			fish_table -= reward_path
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
-	if(!reward) //baloon alert instead
+	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman,pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else // for fishing things like corpses, move them to the turf of the fisherman
+		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot)
+		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(fisherman, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
 	var/atom/movable/reward = new reward_path(get_turf(fisherman))
@@ -184,10 +195,6 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/final_table = fish_table.Copy()
 	for(var/result in final_table)
-		if((result in fish_counts) && fish_counts[result] <= 0) //ran out of these, ignore
-			final_table -= result
-			continue
-
 		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
 		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
 		if(ispath(result, /obj/item/fish))

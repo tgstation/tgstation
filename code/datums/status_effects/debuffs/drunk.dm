@@ -166,7 +166,7 @@
 			owner.adjust_confusion(15 SECONDS)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
-				carbon_owner.vomit() // Vomiting clears toxloss - consider this a blessing
+				carbon_owner.vomit(VOMIT_CATEGORY_DEFAULT) // Vomiting clears toxloss - consider this a blessing
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)

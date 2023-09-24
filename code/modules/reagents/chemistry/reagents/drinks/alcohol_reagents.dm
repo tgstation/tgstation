@@ -8,6 +8,7 @@
 	nutriment_factor = 0
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	creation_purity = 1 // impure base reagents are a big no-no
 	ph = 7.33
 	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
 	burning_volume = 0.1
@@ -2143,7 +2144,7 @@
 		if(SPT_PROB(5, seconds_per_tick))
 			stored_teleports += rand(2, 6)
 			if(prob(70))
-				drinker.vomit(vomit_type = VOMIT_PURPLE)
+				drinker.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/purple)
 	return ..()
 
 /datum/reagent/consumable/ethanol/planet_cracker

@@ -64,6 +64,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
+GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
+	/turf/closed/mineral,
+	/turf/open/misc/asteroid,
+	/turf/open/openspace,
+	/turf/open/space
+)))
+
+#define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -167,7 +176,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
-#define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+#define isclown(A) (istype(A, /mob/living/basic/clown))
 
 #define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 

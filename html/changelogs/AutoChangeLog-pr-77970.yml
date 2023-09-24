@@ -1,6 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Nuclear operatives have expanded the scope of their hiring practices. Members of all species can now roll nukie!"
-  - qol: "The preferences menu now has an option to always be human when being selected for a nuclear operative role. Check it out!"
-  - image: "Plasmaman operative envirosuits."

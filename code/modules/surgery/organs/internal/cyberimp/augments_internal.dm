@@ -172,4 +172,3 @@
 	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
 	new /obj/item/autosurgeon/syndicate/anti_stun(src)
 	new /obj/item/autosurgeon/syndicate/reviver(src)
-	new /obj/item/autosurgeon/syndicate/anti_drop(src)

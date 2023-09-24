@@ -29,7 +29,7 @@
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
 			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -77,7 +77,7 @@
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
+		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle cardhand into deck (if unwielded)
 			dealer_deck.insert(src)
 			user.balloon_alert_to_viewers("puts card in deck")
 			return

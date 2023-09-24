@@ -180,12 +180,12 @@
 	result = /datum/reagent/consumable/yoghurt
 	reaction = /datum/chemical_reaction/food/yoghurt
 
-/datum/crafting_recipe/food/reaction/quality_oil
+/datum/crafting_recipe/food/reaction/olive_oil
 	result = /datum/reagent/consumable/nutriment/fat/oil/olive
-	reaction = /datum/chemical_reaction/food/quality_oil
+	reaction = /datum/chemical_reaction/food/olive_oil
 
-/datum/crafting_recipe/food/reaction/quality_oil/upconvert
-	reaction = /datum/chemical_reaction/food/quality_oil_upconvert
+/datum/crafting_recipe/food/reaction/olive_oil/upconvert
+	reaction = /datum/chemical_reaction/food/olive_oil_upconvert
 
 /datum/crafting_recipe/food/reaction/moonshine
 	reaction = /datum/chemical_reaction/drink/moonshine

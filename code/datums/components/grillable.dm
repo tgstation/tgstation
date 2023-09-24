@@ -95,12 +95,13 @@
 		grilled_result = new cook_result(original_object.loc, stack_parent.amount)
 
 	else
-		grilled_result = new cook_result(original_object.loc, no_base_reagents = TRUE)
+		grilled_result = new cook_result(original_object.loc)
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
 
-	if(IS_EDIBLE(grilled_result))
+	if(IsEdible(grilled_result))
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
+		grilled_result.reagents.clear_reagents()
 		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
@@ -130,7 +131,7 @@
 		else if(current_cook_time <= required_cook_time)
 			examine_list += span_notice("[parent] seems to be almost finished cooking!")
 	else
-		examine_list += span_danger("[parent] should probably not be cooked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put on the grill.")
 
 ///Ran when an object moves from the grill
 /datum/component/grillable/proc/on_moved(atom/source, atom/OldLoc, Dir, Forced)

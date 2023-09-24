@@ -9,7 +9,6 @@
 	tastes = list("pancakes" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 	///Used as a base name while generating the icon states when stacked
 	var/stack_name = "pancakes"
@@ -21,7 +20,6 @@
 	icon_state = "rawpancakes_1"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("milky batter" = 1)
-	burns_on_grill = FALSE
 	stack_name = "rawpancakes"
 	crafting_complexity = FOOD_COMPLEXITY_1
 
@@ -149,6 +147,7 @@
 	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.stack_name]_[rand(1, 3)]")
 	pancake_visual.pixel_x = rand(-1, 1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
+	pancake_visual.layer = layer + (contents.len * 0.01)
 	add_overlay(pancake_visual)
 	update_appearance()
 

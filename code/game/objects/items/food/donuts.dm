@@ -44,7 +44,7 @@
 	return "[icon_state]_inbox"
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
-/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/donut/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		return FOOD_LIKED
