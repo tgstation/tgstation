@@ -59,11 +59,13 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		. = take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
+		. = take_overall_damage(brute = amount, updating_health = updating_health, forced = forced, required_bodytype = required_bodytype)
 	else
-		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
+		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	var/current = getBruteLoss()
 	var/diff = amount - current
 	if(!diff)
@@ -74,11 +76,13 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		. = take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)
+		. = take_overall_damage(burn = amount, updating_health = updating_health, forced = forced, required_bodytype = required_bodytype)
 	else
-		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
+		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
 /mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	var/current = getFireLoss()
 	var/diff = amount - current
 	if(!diff)
@@ -86,6 +90,8 @@
 	return adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	if(!forced && !(mob_biotypes & required_biotype))
 		return FALSE
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
@@ -96,7 +102,7 @@
 			blood_volume = max(blood_volume - (5*amount), 0)
 		else
 			blood_volume = max(blood_volume - amount, 0)
-	else if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
 	return ..()
 
@@ -207,7 +213,7 @@
 
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage() //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(abs(brute), abs(burn), required_bodytype))
+	if(picked.heal_damage(abs(brute), abs(burn), required_bodytype = required_bodytype))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
@@ -233,7 +239,7 @@
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE, forced = FALSE)
 	. = FALSE
 	// treat negative args as positive
 	brute = abs(brute)
@@ -249,7 +255,7 @@
 		var/burn_was = picked.burn_dam
 		. += picked.get_damage()
 
-		update |= picked.heal_damage(brute, burn, required_bodytype, FALSE)
+		update |= picked.heal_damage(brute, burn, updating_health = FALSE, forced = forced, required_bodytype = required_bodytype)
 
 		. -= picked.get_damage() // return the net amount of damage healed
 
@@ -258,14 +264,17 @@
 
 		parts -= picked
 
+	if(!.) // no change? no need to update anything
+		return
+
 	if(updating_health)
 		updatehealth()
 	if(update)
 		update_damage_overlays()
 
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = FALSE
-	if(status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return
 	// treat negative args as positive
 	brute = abs(brute)
@@ -282,7 +291,8 @@
 		var/burn_was = picked.burn_dam
 		. += picked.get_damage()
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, FALSE, updating_health, required_bodytype, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		// disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		update |= picked.receive_damage(brute_per_part, burn_per_part, blocked = FALSE, updating_health = FALSE, forced = forced, required_bodytype = required_bodytype, wound_bonus = CANT_WOUND)
 
 		. -= picked.get_damage() // return the net amount of damage healed
 
@@ -290,6 +300,9 @@
 		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
 
 		parts -= picked
+
+	if(!.) // no change? no need to update anything
+		return
 
 	if(updating_health)
 		updatehealth()

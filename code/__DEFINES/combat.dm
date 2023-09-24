@@ -56,10 +56,12 @@
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
-#define OXYLOSS (1<<3)
-#define SHAME (1<<4)
-#define MANUAL_SUICIDE (1<<5) //suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL (1<<6) //when the suicide is conditionally lethal
+#define CLONELOSS (1<<3)
+#define OXYLOSS (1<<4)
+#define STAMINALOSS (1<<5)
+#define SHAME (1<<6)
+#define MANUAL_SUICIDE (1<<7) //suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL (1<<8) //when the suicide is conditionally lethal
 
 #define EFFECT_STUN "stun"
 #define EFFECT_KNOCKDOWN "knockdown"

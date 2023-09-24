@@ -161,8 +161,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -303,8 +303,8 @@
 	if(prob(5))
 		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, BODYTYPE_ORGANIC)) //more effective on brute
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, required_bodytype = BODYTYPE_ORGANIC)) //more effective on brute
 			M.update_damage_overlays()
 	return 1
 
@@ -405,8 +405,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
@@ -469,8 +469,8 @@
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	return 1
@@ -592,8 +592,8 @@
 		return
 	if(prob(5))
 		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -650,8 +650,8 @@
 	if(prob(4))
 		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
