@@ -62,7 +62,7 @@
 	if (prob(33))
 		whinny_angrily()
 
-/mob/living/basic/pony/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/pony/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 
 	if (!.)

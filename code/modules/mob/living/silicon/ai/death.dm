@@ -21,8 +21,6 @@
 	if(icon_exists(icon, "[base_icon]_death_transition"))
 		flick("[base_icon]_death_transition", src)
 
-	cameraFollow = null
-
 	if(is_anchored)
 		flip_anchored()
 

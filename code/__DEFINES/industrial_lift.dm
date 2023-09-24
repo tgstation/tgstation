@@ -12,6 +12,9 @@
 ///debug lift_id
 #define DEBUG_LIFT_ID "debug"
 
+///used for navigation aids that aren't actual platforms
+#define TRAM_NAV_BEACONS "tram_nav"
+#define IMMOVABLE_ROD_DESTINATIONS "immovable_rod"
 
 //specific_lift_id's
 ///the specific_lift_id of the main station tram landmark for tramstation that spawns roundstart.

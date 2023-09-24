@@ -1,12 +1,4 @@
-GLOBAL_LIST_INIT(fish_evolutions, init_fish_evolutions())
-
-/proc/init_fish_evolutions()
-	. = list()
-	for(var/datum/fish_evolution/evolution as anything in subtypesof(/datum/fish_evolution))
-		//Skip abstract types.
-		if(!initial(evolution.probability) || !initial(evolution.new_fish_type))
-			continue
-		.[evolution] = new evolution
+GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolution, list()))
 
 /**
  * Fish evolution datums

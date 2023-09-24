@@ -38,8 +38,8 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
-	/// The configuration key for the preset fishing spot for this type of turf.
-	var/fish_source_type = FISHING_SPOT_PRESET_LAVALAND_LAVA
+	/// The type for the preset fishing spot of this type of turf.
+	var/fish_source_type = /datum/fish_source/lavaland
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -345,7 +345,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
-	fish_source_type = FISHING_SPOT_PRESET_ICEMOON_PLASMA
+	fish_source_type = /datum/fish_source/lavaland/icemoon
 
 	light_range = 3
 	light_power = 0.75

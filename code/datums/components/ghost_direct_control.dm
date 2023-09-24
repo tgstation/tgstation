@@ -48,8 +48,8 @@
 	return ..()
 
 /datum/component/ghost_direct_control/Destroy(force, silent)
-	QDEL_NULL(extra_control_checks)
-	QDEL_NULL(after_assumed_control)
+	extra_control_checks = null
+	after_assumed_control = null
 
 	var/mob/mob_parent = parent
 	var/list/spawners = GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")]

@@ -11,15 +11,9 @@
 		//Use passed in instance
 		fish_source = configuration
 	else
-		/// Check if it's a preset key
-		var/datum/fish_source/preset_configuration = GLOB.preset_fish_sources[configuration]
-		if(!preset_configuration)
-			stack_trace("Invalid fishing spot configuration \"[configuration]\" passed down to fishing spot component.")
-			return COMPONENT_INCOMPATIBLE
-		fish_source = preset_configuration
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
-
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
@@ -52,5 +46,5 @@
 	/// Roll what we caught based on modified table
 	var/result = fish_source.roll_reward(rod, user)
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
-	fish_source.pre_challenge_started(rod, user)
+	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)

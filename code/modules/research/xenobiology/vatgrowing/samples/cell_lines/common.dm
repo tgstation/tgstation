@@ -10,11 +10,10 @@
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 2,
 		/datum/reagent/consumable/liquidgibs = 2,
-		/datum/reagent/consumable/cornoil = 2,
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 		/datum/reagent/consumable/sugar = 1,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/rice = 1,
 		/datum/reagent/consumable/eggyolk = 1)
 
@@ -176,9 +175,8 @@
 		/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
-		/datum/reagent/consumable/cornoil = 4, //Carp are oily fish
+		/datum/reagent/consumable/nutriment/fat/oil = 4, //Carp are oily fish
 		/datum/reagent/toxin/carpotoxin = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2)
 
 	suppressive_reagents = list(
@@ -197,10 +195,9 @@
 		/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
-		/datum/reagent/consumable/cornoil = 4,
+		/datum/reagent/consumable/nutriment/fat/oil = 4,
 		/datum/reagent/growthserum = 3,
 		/datum/reagent/toxin/carpotoxin = 2,
-		/datum/reagent/consumable/cooking_oil = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2)
 
 	suppressive_reagents = list(
@@ -484,7 +481,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
@@ -512,7 +509,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/fuel/oil = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/banana = 1)
+	resulting_atoms = list(/mob/living/basic/clown/banana = 1)
 
 /datum/micro_organism/cell_line/clown/glutton
 	desc = "hyperadipogenic clown stem cells"
@@ -526,8 +523,7 @@
 		/datum/reagent/consumable/vanillapudding = 8,
 		/datum/reagent/growthserum = 6,
 		/datum/reagent/consumable/nutriment/peptides = 4,
-		/datum/reagent/consumable/cornoil = 3,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 3,
 		/datum/reagent/consumable/space_cola = 1)
 
 	suppressive_reagents = list(
@@ -539,7 +535,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/toxin/bad_food = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton = 1)
+	resulting_atoms = list(/mob/living/basic/clown/mutant/glutton = 1)
 
 /datum/micro_organism/cell_line/clown/longclown
 	desc = "long clown bits"
@@ -562,7 +558,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/sulfur = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
+	resulting_atoms = list(/mob/living/basic/clown/longface = 1)
 
 /datum/micro_organism/cell_line/frog
 	desc = "anura amphibian cells"

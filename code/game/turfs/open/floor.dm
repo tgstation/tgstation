@@ -222,8 +222,17 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
+			//default cost for building a grill for fulltile windows
+			var/cost = 4
+			var/delay = 1 SECONDS
+			if(the_rcd.window_type  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
 			return rcd_result_with_memory(
-				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
+				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
 				src, RCD_MEMORY_WINDOWGRILLE,
 			)
 		if(RCD_MACHINE)
@@ -286,15 +295,11 @@
 						continue
 					balloon_alert(user, "there's already a door!")
 					return FALSE
-				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
-				if(the_rcd.airlock_electronics)
-					new_window.name = the_rcd.airlock_electronics.passed_name || initial(new_window.name)
-					if(the_rcd.airlock_electronics.one_access)
-						new_window.req_one_access = the_rcd.airlock_electronics.accesses.Copy()
-					else
-						new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
-				new_window.autoclose = TRUE
-				new_window.update_appearance()
+				//create the assembly and let it finish itself
+				var/obj/structure/windoor_assembly/assembly = new /obj/structure/windoor_assembly(src, user.dir)
+				assembly.secure = ispath(the_rcd.airlock_type, /obj/machinery/door/window/brigdoor)
+				assembly.electronics = the_rcd.airlock_electronics.create_copy(assembly)
+				assembly.finish_door()
 				return TRUE
 
 			for(var/obj/machinery/door/door in src)
@@ -302,29 +307,15 @@
 					continue
 				balloon_alert(user, "there's already a door!")
 				return FALSE
-			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
-			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
-			if(the_rcd.airlock_electronics)
-				new_airlock.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
-				new_airlock.electronics.one_access = the_rcd.airlock_electronics.one_access
-				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
-				new_airlock.electronics.passed_name = the_rcd.airlock_electronics.passed_name
-				new_airlock.electronics.passed_cycle_id = the_rcd.airlock_electronics.passed_cycle_id
-				new_airlock.electronics.shell = the_rcd.airlock_electronics.shell
-			if(new_airlock.electronics.one_access)
-				new_airlock.req_one_access = new_airlock.electronics.accesses
+			//create the assembly and let it finish itself
+			var/obj/structure/door_assembly/assembly = new (src)
+			if(ispath(the_rcd.airlock_type, /obj/machinery/door/airlock/glass))
+				assembly.glass = TRUE
+				assembly.glass_type = the_rcd.airlock_type
 			else
-				new_airlock.req_access = new_airlock.electronics.accesses
-			if(new_airlock.electronics.unres_sides)
-				new_airlock.unres_sides = new_airlock.electronics.unres_sides
-				new_airlock.unres_sensor = TRUE
-			if(new_airlock.electronics.passed_name)
-				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
-			if(new_airlock.electronics.passed_cycle_id)
-				new_airlock.closeOtherId = new_airlock.electronics.passed_cycle_id
-				new_airlock.update_other_id()
-			new_airlock.autoclose = TRUE
-			new_airlock.update_appearance()
+				assembly.airlock_type = the_rcd.airlock_type
+			assembly.electronics = the_rcd.airlock_electronics.create_copy(assembly)
+			assembly.finish_door()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(rcd_proof)
@@ -334,6 +325,21 @@
 				return FALSE
 			return TRUE
 		if(RCD_WINDOWGRILLE)
+			//check if we are building a window
+			var/obj/structure/window/window_path = the_rcd.window_type
+			if(!ispath(window_path))
+				CRASH("Invalid window path type in RCD: [window_path]")
+
+			//allow directional windows to be built without grills
+			if(!initial(window_path.fulltile))
+				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+				var/obj/structure/window/WD = new the_rcd.window_type(src, user.dir)
+				WD.set_anchored(TRUE)
+				return TRUE
+
+			//build grills to deal with full tile windows
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
 			var/obj/structure/grille/new_grille = new(src)

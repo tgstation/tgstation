@@ -46,6 +46,7 @@
 	)
 	tastes = list("beans" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/canned/peaches
 	name = "canned peaches"
@@ -101,6 +102,7 @@
 	)
 	tastes = list("dog food" = 5, "狗肉" = 3)
 	foodtypes = MEAT | GROSS
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!check_buffability(user))
@@ -188,7 +190,6 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)
-	burns_on_grill = TRUE
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -314,5 +315,5 @@
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
-/obj/item/food/rationpack/proc/check_liked(fraction, mob/mob) //Nobody likes rationpacks. Nobody.
+/obj/item/food/rationpack/proc/check_liked(mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED

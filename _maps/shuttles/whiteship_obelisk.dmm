@@ -704,7 +704,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Ow" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Ph" = (

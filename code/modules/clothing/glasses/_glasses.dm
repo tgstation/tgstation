@@ -194,6 +194,7 @@
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
+	dog_fashion = /datum/dog_fashion/head/eyepatch
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -290,7 +291,7 @@
 		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
-		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
+		if(crusher.move_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
 			playsound(src, 'sound/effects/footstep/glass_step.ogg', 30, TRUE)
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)

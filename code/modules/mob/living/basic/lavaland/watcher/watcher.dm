@@ -1,4 +1,4 @@
-/// A floating eyeball which keeps its distance and plays red light/green light with you.
+/// A floating eyeball which keeps its distance and sometimes make you look away.
 /mob/living/basic/mining/watcher
 	name = "watcher"
 	desc = "A levitating, monocular creature held aloft by wing-like veins. A sharp spine of crystal protrudes from its body."
@@ -11,8 +11,8 @@
 	base_pixel_x = -12
 	speak_emote = list("chimes")
 	speed = 3
-	maxHealth = 200
-	health = 200
+	maxHealth = 160
+	health = 160
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
@@ -44,6 +44,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
+	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
 	AddComponent(\
 		/datum/component/ranged_attacks,\
@@ -58,17 +59,15 @@
 	)
 	update_appearance(UPDATE_OVERLAYS)
 
-	var/datum/action/cooldown/mob_cooldown/watcher_overwatch/overwatch = new(src)
-	overwatch.Grant(src)
-	overwatch.projectile_type = projectile_type
-	ai_controller.set_blackboard_key(BB_WATCHER_OVERWATCH, overwatch)
-
 	var/datum/action/cooldown/mob_cooldown/watcher_gaze/gaze = new gaze_attack(src)
 	gaze.Grant(src)
-	ai_controller.set_blackboard_key(BB_WATCHER_GAZE, gaze)
+	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, gaze)
+	AddComponent(/datum/component/revenge_ability, gaze, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM])
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
+	if (stat == DEAD)
+		return
 	. += emissive_appearance(icon, "watcher_emissive", src)
 
 /// I love eating diamonds yum
@@ -84,8 +83,8 @@
 	icon_living = "watcher_magmawing"
 	icon_dead = "watcher_magmawing_dead"
 	eye_glow = "fire_glow"
-	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
-	health = 215
+	maxHealth = 175 //Compensate for the lack of slowdown on projectiles with a bit of extra health
+	health = 175
 	projectile_type = /obj/projectile/temp/watcher/magma_wing
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/fire
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
@@ -98,8 +97,8 @@
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
-	maxHealth = 170
-	health = 170
+	maxHealth = 130
+	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/ice
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)
