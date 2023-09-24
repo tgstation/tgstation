@@ -25,7 +25,7 @@
 
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
-	// Cooldown associated with the usage_sound played.
+	/// Cooldown associated with the usage_sound played.
 	COOLDOWN_DECLARE(sound_cooldown)
 
 	/// Silo link to it's materials list.
@@ -55,9 +55,9 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/bouldertech/Destroy()
-	. = ..()
 	boulders_contained = null
 	silo_materials = null
+	return ..()
 
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
 	..()
@@ -83,6 +83,8 @@
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
+	if(.)
+		return 
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()
@@ -116,6 +118,8 @@
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
 		return
@@ -174,6 +178,8 @@
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+	if(!.)
+		return
 	if(!anchored)
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max)
@@ -208,7 +214,7 @@
 		update_boulder_count()
 		return FALSE
 	if(isnull(silo_materials))
-		return
+		return FALSE
 
 	//here we loop through the boulder's ores
 	var/list/processable_ores = list()

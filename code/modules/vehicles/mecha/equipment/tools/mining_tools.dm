@@ -69,10 +69,9 @@
 				if(istype(O, /obj/item/boulder))
 					var/obj/item/boulder/nu_boulder = O
 					nu_boulder.manual_process(src, source, mech_override = TRUE)
-					playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
 				else
 					O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-					playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+				playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
 
 			// If we caused a qdel drilling the target, we can stop drilling them.
 			// Prevents starting a do_after on a qdeleted target.

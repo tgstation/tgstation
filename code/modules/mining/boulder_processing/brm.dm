@@ -11,7 +11,7 @@
 	var/toggled_on = FALSE
 	/// How long does it take to collect a boulder?
 	var/teleportation_time = 1.5 SECONDS
-	// Cooldown used for left click teleportation.
+	/// Cooldown used for left click teleportation.
 	COOLDOWN_DECLARE(manual_teleport_cooldown)
 
 /obj/machinery/bouldertech/brm/Initialize(mapload)
@@ -20,8 +20,8 @@
 	set_wires(new /datum/wires/brm(src))
 
 /obj/machinery/bouldertech/brm/Destroy()
-	. = ..()
 	QDEL_NULL(wires)
+	return ..()
 
 /obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -43,7 +43,10 @@
 
 /obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/bouldertech/brm/process()
 	balloon_alert_to_viewers("Bzzap!")

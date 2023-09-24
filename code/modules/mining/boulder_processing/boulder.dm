@@ -25,9 +25,9 @@
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
 
 /obj/item/boulder/Destroy(force)
-	. = ..()
 	SSore_generation.available_boulders -= src
 	processed_by = null
+	return ..()
 
 /obj/item/boulder/examine(mob/user)
 	. = ..()
@@ -44,11 +44,15 @@
 
 /obj/item/boulder/attack_self(mob/user, list/modifiers)
 	. = ..()
+	if(.)
+		return
 	if(isgolem(user))
 		return manual_process(null, user, 1.5)
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(isgolem(user))
 		return manual_process(null, user, 1.5)
 
@@ -61,13 +65,16 @@
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(.)
+		return
 	if(!isliving(user))
 		return FALSE
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
+		return TRUE
 	if(isgolem(user))
 		manual_process(weapon, user, 3)
-		return
+		return TRUE
 
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE)
 	var/process_speed = 0
@@ -192,8 +199,8 @@
 	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology in the future.
 
 /obj/item/boulder/artifact/Destroy(force)
-	. = ..()
 	artifact_inside = null
+	return ..()
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
@@ -215,7 +222,7 @@
 		/datum/material/plasma = 30,
 		/datum/material/silver = 20,
 		/datum/material/titanium = 8,
-		/datum/material/uranium = 3
+		/datum/material/uranium = 3,
 	)
 
 /obj/item/boulder/gulag/Initialize(mapload)
@@ -241,5 +248,5 @@
 		/datum/material/plasma = 30,
 		/datum/material/silver = 20,
 		/datum/material/titanium = 8,
-		/datum/material/uranium = 3
+		/datum/material/uranium = 3,
 	)

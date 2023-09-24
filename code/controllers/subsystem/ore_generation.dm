@@ -41,14 +41,14 @@ SUBSYSTEM_DEF(ore_generation)
 		"2" = 0,
 		"3" = 0,
 		"4" = 0,
-		"5" = 0
+		"5" = 0,
 	)
 	var/list/post_ore_m = list(
 		"1" = 0,
 		"2" = 0,
 		"3" = 0,
 		"4" = 0,
-		"5" = 0
+		"5" = 0,
 	)
 
 /datum/controller/subsystem/ore_generation/Initialize()

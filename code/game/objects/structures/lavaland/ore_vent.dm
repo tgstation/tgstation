@@ -47,19 +47,20 @@
 		/mob/living/basic/mining/watcher,
 		/mob/living/basic/mining/lobstrosity/lava,
 		/mob/living/basic/mining/brimdemon,
-		/mob/living/basic/mining/bileworm
+		/mob/living/basic/mining/bileworm,
 	)
 	///What items can be used to scan a vent?
 	var/static/list/scanning_equipment = list(
 		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/mining_scanner
+		/obj/item/mining_scanner,
 	)
 
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
-	COOLDOWN_DECLARE(wave_cooldown) //We use a cooldown to prevent the wave defense from being started multiple times.
+	/// We use a cooldown to prevent the wave defense from being started multiple times.
+	COOLDOWN_DECLARE(wave_cooldown)
 
 
 /obj/structure/ore_vent/Initialize(mapload)
@@ -69,41 +70,46 @@
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
-		"stone"
+		"stone",
 	))
 	if(tapped)
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
 		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", HIGH_OBJ_LAYER, src, GAME_PLANE))
-	. = ..()
+	return ..()
 	///This is the part where we start processing to produce a new boulder over time.
 
 /obj/structure/ore_vent/Destroy()
-	. = ..()
 	SSore_generation.possible_vents -= src
 	node = null
 	if(tapped)
 		SSore_generation.processed_vents -= src
+	return ..()
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
+	if(.)
+		return
 	if(is_type_in_list(attacking_item, scanning_equipment))
 		if(tapped)
 			visible_message(span_notice("\the [src] has already been tapped!"))
-			return
+			return TRUE
 		scan_and_confirm(user)
+		return TRUE
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	if(.)
+		return
 	if(!isgolem(user))
 		return
 	if(!discovered)
-		to_chat(user, span_notice("You can't quite find the weakpoint of \the [src]... Perhaps it needs to be scanned first?"))
-		return
-	to_chat(user, span_notice("You start striking \the [src] with your golem's fist, attempting to dredge up a boulder..."))
+		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
+		return TRUE
+	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
 	for(var/i in 1 to 3)
-		if(do_after(user, boulder_size SECONDS))
+		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder()
@@ -182,14 +188,16 @@
  * Will summon a number of waves of mobs, ending in the vent being tapped after the final wave.
  */
 /obj/structure/ore_vent/proc/start_wave_defense()
-	AddComponent(/datum/component/spawner,\
-		spawn_types = defending_mobs,\
-		spawn_time = (10 SECONDS + (5 SECONDS * (boulder_size/5))),\
-		max_spawned = 10,\
-		max_spawn_per_attempt = (1 + (boulder_size/5)),\
-		spawn_text = "emerges to assault",\
-		spawn_distance = 4,\
-		spawn_distance_exclude = 3)
+	AddComponent(\
+		/datum/component/spawner, \
+		spawn_types = defending_mobs, \
+		spawn_time = (10 SECONDS + (5 SECONDS * (boulder_size/5))), \
+		max_spawned = 10, \
+		max_spawn_per_attempt = (1 + (boulder_size/5)), \
+		spawn_text = "emerges to assault", \
+		spawn_distance = 4, \
+		spawn_distance_exclude = 3, \
+	)
 	var/wave_timer = 60 SECONDS
 	if(boulder_size == BOULDER_SIZE_MEDIUM)
 		wave_timer = 90 SECONDS
@@ -269,7 +277,7 @@
 	if(scan_only)
 		return
 
-	if(tgui_alert(usr, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
@@ -345,7 +353,7 @@
 	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
 		/datum/material/iron = 50,
-		/datum/material/glass = 50
+		/datum/material/glass = 50,
 	)
 
 /obj/structure/ore_vent/random
@@ -388,7 +396,7 @@
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
-		/mob/living/simple_animal/hostile/asteroid/wolf
+		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 
 /obj/structure/ore_vent/boss
@@ -406,12 +414,12 @@
 		/datum/material/diamond = 1,
 		/datum/material/uranium = 1,
 		/datum/material/bluespace = 1,
-		/datum/material/plastic = 1
+		/datum/material/plastic = 1,
 	)
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/bubblegum,
 		/mob/living/simple_animal/hostile/megafauna/dragon,
-		/mob/living/simple_animal/hostile/megafauna/colossus
+		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent?"
 	///What boss do we want to spawn?
@@ -441,13 +449,13 @@
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
-	COOLDOWN_START(src, wave_cooldown, 999999 SECONDS) //Basically forever
+	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
 	boss.say("You dare disturb my slumber?!")
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
 	COOLDOWN_RESET(src, wave_cooldown)
-	. = ..()
+	return ..()
 
 /obj/structure/ore_vent/boss/icebox
 	icon_state = "ore_vent_ice"
@@ -455,7 +463,7 @@
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
 		/mob/living/simple_animal/hostile/megafauna/wendigo,
-		/mob/living/simple_animal/hostile/megafauna/colossus
+		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
