@@ -1,8 +1,8 @@
 /obj/item/clothing/gloves/butchering
 	name = "butchering gloves"
-	desc = "These gloves allow the user to rip apart bodies with precision and ease."
-	icon_state = "black"
-	greyscale_colors = "#2f2e31"
+	desc = "These gloves were modified with some ill-fashioned yet sharp bone blades on their fingers, \
+		allowing the user to rip apart bodies with precision and ease."
+	icon_state = "butchering"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
