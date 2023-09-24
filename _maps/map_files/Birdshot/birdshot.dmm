@@ -10359,7 +10359,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "dYf" = (
-/obj/item/kirbyplants/random,
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "dYj" = (
@@ -11853,6 +11855,7 @@
 /area/station/engineering/break_room)
 "eyz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "eyB" = (
@@ -24999,6 +25002,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/north,
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation/entertainment)
 "jbr" = (
@@ -26524,10 +26528,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "jFc" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/cheesie{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "jFf" = (
@@ -28783,6 +28789,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
+"ktN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "ktZ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/bookcase/random,
@@ -31495,6 +31508,7 @@
 /area/station/service/library)
 "lqs" = (
 /obj/machinery/light/cold/directional/south,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "lqt" = (
@@ -33833,6 +33847,9 @@
 "meP" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "mfc" = (
@@ -36041,6 +36058,11 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/grimy,
 /area/station/cargo/boutique)
+"mUC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "mUO" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -38605,6 +38627,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
+"nRo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "nRr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -48740,6 +48767,12 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
+"rkP" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/eighties/red,
+/area/station/service/abandoned_gambling_den/gaming)
 "rkR" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -49596,6 +49629,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
+"rzR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "rAb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53800,6 +53838,7 @@
 /area/station/cargo/storage)
 "sSl" = (
 /obj/machinery/camera/directional/west,
+/obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "sSm" = (
@@ -62439,6 +62478,11 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/fore)
+"vIN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "vIX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66920,6 +66964,9 @@
 "xaj" = (
 /obj/machinery/light/cold/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "xam" = (
@@ -105935,11 +105982,11 @@ dDB
 dDB
 dDB
 rGL
-rIO
+vIN
 eyz
-tJN
+mUC
 rIO
-rIO
+rzR
 iux
 lqs
 pzd
@@ -106193,8 +106240,8 @@ dDB
 dDB
 rGL
 rIO
-rIO
-tJN
+ktN
+gEQ
 rIO
 jWR
 vmA
@@ -106451,7 +106498,7 @@ dDB
 rGL
 eKX
 jFc
-gEQ
+nRo
 tJN
 wCD
 kmb
@@ -111609,7 +111656,7 @@ nSu
 xXT
 cek
 xQJ
-mbV
+rkP
 vJx
 rdw
 xMO
