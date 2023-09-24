@@ -157,11 +157,13 @@
 ////////////////////////////////////////////
 
 ///Returns a list of damaged bodyparts
-/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, required_bodytype)
+/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, required_bodytype = NONE, target_zone = null)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(required_bodytype && !(BP.bodytype & required_bodytype))
+			continue
+		if(!isnull(target_zone) && BP.body_zone != target_zone)
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
 			parts += BP
@@ -197,19 +199,15 @@
  *
  * It automatically updates health status
  */
-/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
+/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
 	. = FALSE
-	if(status_flags & GODMODE)
-		return
-	if(brute < 0 || burn < 0)
-		return
-	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype, target_zone)
 	if(!parts.len)
 		return
 
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage() //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(brute, burn, required_bodytype))
+	if(picked.heal_damage(abs(brute), abs(burn), required_bodytype))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
@@ -223,7 +221,7 @@
  */
 /mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	. = FALSE
-	if(brute < 0 || burn < 0)
+	if(status_flags & GODMODE)
 		return
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
 	if(!parts.len)
@@ -231,12 +229,16 @@
 
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage()
-	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	. = FALSE
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
+
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
 
 	var/update = NONE
@@ -265,6 +267,9 @@
 	. = FALSE
 	if(status_flags & GODMODE)
 		return
+	// treat negative args as positive
+	brute = abs(brute)
+	burn = abs(burn)
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
 	var/update = NONE

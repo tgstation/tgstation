@@ -330,34 +330,26 @@
  *
  * returns the net change in damage
  */
-/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
-	if(brute < 0 || burn < 0)
-		return FALSE
-	. = (adjustBruteLoss(-brute, updating_health = FALSE) + adjustFireLoss(-burn, updating_health = FALSE))
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + adjustFireLoss(-abs(burn), updating_health = FALSE)) //zero as argument for no instant health update
 	if(updating_health)
 		updatehealth()
 
 /// damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
-	if(brute < 0 || burn < 0)
-		return FALSE
-	. = (adjustBruteLoss(brute, updating_health = FALSE) + adjustFireLoss(burn, updating_health = FALSE))
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + adjustFireLoss(abs(burn), updating_health = FALSE))
 	if(updating_health)
 		updatehealth()
 
 /// heal MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
-	if(brute < 0 || burn < 0)
-		return FALSE
-	. = (adjustBruteLoss(-brute, updating_health = FALSE) + adjustFireLoss(-burn, updating_health = FALSE) + adjustStaminaLoss(-stamina, updating_stamina = FALSE))
+	. = (adjustBruteLoss(-abs(brute), updating_health = FALSE) + adjustFireLoss(-abs(burn), updating_health = FALSE) + adjustStaminaLoss(-abs(stamina), updating_stamina = FALSE))
 	if(updating_health)
 		updatehealth()
 
 /// damage MANY bodyparts, in random order. note: stamina arg nonfunctional for carbon mobs
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
-	if(brute < 0 || burn < 0)
-		return FALSE
-	. = (adjustBruteLoss(brute, updating_health = FALSE) + adjustFireLoss(burn, updating_health = FALSE) + adjustStaminaLoss(stamina, updating_stamina = FALSE))
+	. = (adjustBruteLoss(abs(brute), updating_health = FALSE) + adjustFireLoss(abs(burn), updating_health = FALSE) + adjustStaminaLoss(abs(stamina), updating_stamina = FALSE))
 	if(updating_health)
 		updatehealth()
 
@@ -365,7 +357,7 @@
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)
 	. = FALSE //we'll return the amount of damage healed
 	for(var/damagetype in damage_types)
-		var/amount_to_heal = min(amount, get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
+		var/amount_to_heal = min(abs(amount), get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
 			. += apply_damage_type(-amount_to_heal, damagetype)
 			amount -= amount_to_heal //remove what we healed from our current amount
