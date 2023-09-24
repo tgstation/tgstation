@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixes Birdshot's recycler being turned the wrong direction."

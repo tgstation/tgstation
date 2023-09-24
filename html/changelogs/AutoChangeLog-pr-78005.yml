@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "containers can no longer add more water to hydroponic trays than they actually contain."
-  - bugfix: "watering a hydroponic tray with amounts of water lesser than 1 will no longer be added to nutrients rather than water"
