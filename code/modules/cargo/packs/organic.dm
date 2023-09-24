@@ -252,29 +252,45 @@
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/organic/seeds
-	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fifteen different seeds."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/seeds/chili,
-					/obj/item/seeds/cotton,
-					/obj/item/seeds/berry,
-					/obj/item/seeds/corn,
-					/obj/item/seeds/eggplant,
-					/obj/item/seeds/tomato,
-					/obj/item/seeds/soya,
-					/obj/item/seeds/wheat,
-					/obj/item/seeds/wheat/rice,
-					/obj/item/seeds/carrot,
-					/obj/item/seeds/sunflower,
-					/obj/item/seeds/rose,
-					/obj/item/seeds/chanter,
-					/obj/item/seeds/potato,
-					/obj/item/seeds/sugarcane,
-					/obj/item/seeds/cucumber,
-				)
-	crate_name = "seeds crate"
+/datum/supply_pack/organic/randomized/exoticseeds // Randomized seed crate, at least 9000 times less boring.
+	name = "Exotic Seeds Crate"
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, \
+		now comes with a randomized selection of seeds!"
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_HYDROPONICS
+	contains = list(
+		/obj/item/seeds/aloe = 1,
+		/obj/item/seeds/amanita = 1,
+		/obj/item/seeds/cannabis = 5,
+		/obj/item/seeds/bamboo = 1,
+		/obj/item/seeds/cocaleaf = 1,
+		/obj/item/seeds/cocoapod = 1,
+		/obj/item/seeds/cotton = 1,
+		/obj/item/seeds/eggplant/eggy = 5,
+		/obj/item/seeds/glowshroom = 1,
+		/obj/item/seeds/greenbean = 1,
+		/obj/item/seeds/herbs = 1,
+		/obj/item/seeds/kronkus = 5,
+		/obj/item/seeds/liberty= 1,
+		/obj/item/seeds/nettle = 1,
+		/obj/item/seeds/odious_puffball = 5,
+		/obj/item/seeds/plump = 1,
+		/obj/item/seeds/random = 50,
+		/obj/item/seeds/replicapod = 25,
+		/obj/item/seeds/reishi = 1,
+		/obj/item/seeds/rainbow_bunch = 10,
+		/obj/item/seeds/seedling = 25,
+		/obj/item/seeds/shrub = 1,
+		/obj/item/seeds/starthistle/corpse_flower = 5,
+		/obj/item/seeds/tea/astra = 5,
+	)
+	crate_name = "exotic seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
+
+/datum/supply_pack/organic/randomized/exoticseeds/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 12)
+		var/item = pick_weight(contains)
+		new item(C)
 
 /datum/supply_pack/organic/randomized/chef/vegetables
 	name = "Vegetables Crate"
