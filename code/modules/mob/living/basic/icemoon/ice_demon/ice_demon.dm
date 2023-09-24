@@ -83,7 +83,7 @@
 /mob/living/basic/mining/demon_afterimage/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/temporary_atom, life_time = 15 SECONDS)
+	AddElement(/datum/element/temporary_atom, life_time = 7 SECONDS)
 
 ///afterimage subtypes summoned by the crusher
 /mob/living/basic/mining/demon_afterimage/crusher
