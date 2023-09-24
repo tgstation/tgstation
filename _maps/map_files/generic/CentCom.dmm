@@ -2989,6 +2989,17 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
+"lX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "XCCsec1";
+	name = "XCC Checkpoint 1 Shutters";
+	max_integrity = 3000000
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "md" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/effect/turf_decal/stripes/line{
@@ -5393,7 +5404,8 @@
 "vG" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "XCCsec1";
-	name = "XCC Checkpoint 1 Shutters"
+	name = "XCC Checkpoint 1 Shutters";
+	max_integrity = 3000000
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10910,12 +10922,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin/storage)
 "Ud" = (
-/obj/machinery/sleeper{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/organ_creator,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "Uf" = (
@@ -53663,10 +53673,10 @@ iF
 rK
 mQ
 io
-vG
-vG
-vG
-vG
+lX
+lX
+lX
+lX
 vG
 io
 rK

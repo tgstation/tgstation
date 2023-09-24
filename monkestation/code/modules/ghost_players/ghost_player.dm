@@ -12,6 +12,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	var/old_key
 	var/datum/mind/old_mind
 	var/old_reenter
+	var/obj/item/organ/internal/brain/old_human
 
 	///the button we are tied to for dueling
 	var/obj/structure/fight_button/linked_button
@@ -23,12 +24,12 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	fully_heal()
 	move_to_ghostspawn()
 
-/mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter)
+/mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter, obj/item/organ/internal/brain/_old_human)
 	. = ..()
 	old_key = _old_key
 	old_mind = _old_mind
 	old_reenter = _old_reenter
-
+	old_human = _old_human
 
 /mob/living/carbon/human/ghost/Initialize(mapload)
 	. = ..()
@@ -59,6 +60,10 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	new_ghost.key = old_key
 	new_ghost.mind = old_mind
 	new_ghost.can_reenter_corpse = old_reenter
+
+	if(old_human)
+		old_human.temporary_sleep = FALSE
+
 	qdel(src)
 
 /datum/action/cooldown/mob_cooldown/return_to_ghost
@@ -119,7 +124,14 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
 
 /mob/dead/observer/proc/create_ghost_body()
-	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse)
+	var/mob/living/carbon/human/old_mob = mind.current
+	var/obj/item/organ/internal/brain/brain
+	if(istype(old_mob))
+		brain = old_mob.get_organ_by_type(/obj/item/organ/internal/brain)
+		if(brain)
+			brain.temporary_sleep = TRUE
+
+	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse, brain)
 	client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
 	new_existance.move_to_ghostspawn()
 	new_existance.key = key
@@ -139,3 +151,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 		if(!turf.density)
 			target_turf = turf
 	forceMove(target_turf)
+
+
+/obj/item/organ/internal/brain
+	var/temporary_sleep = FALSE
