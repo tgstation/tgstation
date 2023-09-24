@@ -75,8 +75,7 @@
 	hunt_range = 3
 
 /datum/ai_planning_subtree/find_and_hunt_target/teleport_destination/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(target))
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
 	var/datum/action/cooldown/ability = controller.blackboard[BB_DEMON_TELEPORT_ABILITY]
 	if(!ability?.IsAvailable())
