@@ -137,23 +137,23 @@
 
 	verify_damage(dummy, 50, included_types = __BRUTE|__BURN)
 
-	// testing negative args with the overall damage procs
+	// testing negative damage amount args with the overall damage procs - the sign should be ignored for these procs
 
 	damage_returned = round(dummy.take_bodypart_damage(-50, -50, updating_health = FALSE), 1)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"take_bodypart_damage() should have returned 0, but returned [damage_returned] instead!")
+	TEST_ASSERT_EQUAL(damage_returned, -100, \
+		"take_bodypart_damage() should have returned -100, but returned [damage_returned] instead!")
 
 	damage_returned = round(dummy.heal_bodypart_damage(-50, -50, updating_health = FALSE), 1)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"heal_bodypart_damage() should have returned 0, but returned [damage_returned] instead!")
+	TEST_ASSERT_EQUAL(damage_returned, 100, \
+		"heal_bodypart_damage() should have returned 100, but returned [damage_returned] instead!")
 
 	damage_returned = round(dummy.take_overall_damage(-50, -50, updating_health = FALSE), 1)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"take_overall_damage() should have returned 0, but returned [damage_returned] instead!")
+	TEST_ASSERT_EQUAL(damage_returned, -100, \
+		"take_overall_damage() should have returned -100, but returned [damage_returned] instead!")
 
 	damage_returned = round(dummy.heal_overall_damage(-50, -50, updating_health = FALSE), 1)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"heal_overall_damage() should have returned 0, but returned [damage_returned] instead!")
+	TEST_ASSERT_EQUAL(damage_returned, 100, \
+		"heal_overall_damage() should have returned 100, but returned [damage_returned] instead!")
 
 	verify_damage(dummy, 50, included_types = __BRUTE|__BURN)
 
@@ -368,21 +368,21 @@
 
 	// testing negative args with the overall damage procs
 
-	damage_returned = gusgus.take_bodypart_damage(-50, -50, updating_health = FALSE)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"take_bodypart_damage() should have returned 0, but returned [damage_returned] instead!")
+	damage_returned = gusgus.take_bodypart_damage(-1, -1, updating_health = FALSE)
+	TEST_ASSERT_EQUAL(damage_returned, -2, \
+		"take_bodypart_damage() should have returned -2, but returned [damage_returned] instead!")
 
-	damage_returned = gusgus.heal_bodypart_damage(-50, -50, updating_health = FALSE)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"heal_bodypart_damage() should have returned 0, but returned [damage_returned] instead!")
+	damage_returned = gusgus.heal_bodypart_damage(-1, -1, updating_health = FALSE)
+	TEST_ASSERT_EQUAL(damage_returned, 2, \
+		"heal_bodypart_damage() should have returned 2, but returned [damage_returned] instead!")
 
-	damage_returned = gusgus.take_overall_damage(-50, -50, updating_health = FALSE)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"take_overall_damage() should have returned 0, but returned [damage_returned] instead!")
+	damage_returned = gusgus.take_overall_damage(-1, -1, updating_health = FALSE)
+	TEST_ASSERT_EQUAL(damage_returned, -2, \
+		"take_overall_damage() should have returned -2, but returned [damage_returned] instead!")
 
-	damage_returned = gusgus.heal_overall_damage(-50, -50, updating_health = FALSE)
-	TEST_ASSERT_EQUAL(damage_returned, 0, \
-		"heal_overall_damage() should have returned 0, but returned [damage_returned] instead!")
+	damage_returned = gusgus.heal_overall_damage(-1, -1, updating_health = FALSE)
+	TEST_ASSERT_EQUAL(damage_returned, 2, \
+		"heal_overall_damage() should have returned 2, but returned [damage_returned] instead!")
 
 	verify_damage(gusgus, 1, expected = 6, included_types = __BRUTE)
 
