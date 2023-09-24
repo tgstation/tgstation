@@ -12,6 +12,9 @@
 	var/icon/final_icon = new(head_icon)
 
 	var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+	if(istype(sprite_accessory, /datum/sprite_accessory/hair))
+		var/datum/sprite_accessory/hair/hair_style = sprite_accessory
+		head_accessory_icon.Shift(NORTH, hair_style.y_offset)
 	head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
 	final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
