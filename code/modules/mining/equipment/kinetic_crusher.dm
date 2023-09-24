@@ -470,4 +470,4 @@
 		if(possible_turf.is_blocked_turf())
 			continue
 		return possible_turf
-	return user.drop_location()
+	return get_turf(user)

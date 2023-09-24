@@ -139,7 +139,7 @@
 			continue
 		var/datum/action/cooldown/slip_ability = controller.blackboard[BB_DEMON_SLIP_ABILITY]
 		if(!slip_ability?.IsAvailable())
-			controller.queue_behavior(/datum/ai_behavior/use_mob_ability/burrow, BB_DEMON_SLIP_ABILITY)
+			controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_DEMON_SLIP_ABILITY)
 		return ..()
 
 /datum/ai_controller/basic_controller/ice_demon/afterimage
