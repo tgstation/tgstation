@@ -281,7 +281,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			objective.target = null
 			if(!objective)
 				return
-			objective.find_target()
 			if(!objective.target && objective.owner)
 				to_chat(objective.owner.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 				message_admins("[mob_occupant] is being despawned when they are an objective of [objective.owner.current].")
