@@ -448,7 +448,7 @@
 	COOLDOWN_DECLARE(summon_cooldown)
 
 /obj/item/crusher_trophy/ice_demon_cube/effect_desc()
-	return "mark detonation to unleash demonic ice clones upon the target!"
+	return "mark detonation to unleash demonic ice clones upon the target"
 
 /obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user)
 	if(isnull(target))
