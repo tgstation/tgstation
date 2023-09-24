@@ -215,16 +215,3 @@
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
 
-// Lunar Parade hypnosis
-/datum/status_effect/moon_parade_hypnosis
-	id = "moon_parade_hypnosis"
-	alert_type = null
-	duration = -1
-	status_type = STATUS_EFFECT_REPLACE
-
-/datum/status_effect/moon_parade_hypnosis/on_apply()
-	owner.add_traits(TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	return TRUE
-
-/datum/status_effect/moon_parade_hypnosis/on_remove()
-	owner.remove_traits(TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))

@@ -54,17 +54,15 @@
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
-		victim.AddComponent(/datum/component/leash, src, distance = 1)
-		victim.apply_status_effect(/datum/status_effect/moon_parade_hypnosis)
+		//Leashes them to the source projectile with them being able to move maximum 2 tile away from it
+		victim.AddComponent(/datum/component/leash, src, distance = 2)
 		victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
 		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 	return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/magic/moon_parade/Destroy(atom/hit)
-	var/mob/living/victim = hit
-	if(victim.has_status_effect(/datum/status_effect/moon_parade_hypnosis))
-		victim.remove_status_effect(/datum/status_effect/moon_parade_hypnosis)
+
+// USE "COMSIG_MOB_CLIENT_PRE_LIVING_MOVE" AND "return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE"
+/obj/projectile/magic/moon_parade/Destroy()
 	return ..()
