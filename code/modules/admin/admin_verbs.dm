@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/delay_command_report,
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
+	/client/proc/flip_ghost_spawn,
 	/client/proc/forceEvent,
 	/client/proc/generate_bulk_code, //monkestation addition
 	/client/proc/generate_code, //monkestation addition

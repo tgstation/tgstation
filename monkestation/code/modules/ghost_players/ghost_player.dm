@@ -1,3 +1,12 @@
+GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
+
+/client/proc/flip_ghost_spawn()
+	set category = "Admin.Fun"
+	set name = "Toggle Centcomm Spawning"
+	set desc= "Toggles whether dead players can respawn in the centcomm area"
+
+	GLOB.disable_ghost_spawning = !GLOB.disable_ghost_spawning
+
 /mob/living/carbon/human/ghost
 	var/revive_prepped = FALSE
 	var/old_key
@@ -95,6 +104,12 @@
 	check_flags = NONE
 	cooldown_time = 40 SECONDS
 	shared_cooldown = NONE
+
+
+/datum/action/cooldown/mob_cooldown/create_ghost_player/IsAvailable(feedback)
+	. = ..()
+	if(GLOB.disable_ghost_spawning)
+		return FALSE
 
 /datum/action/cooldown/mob_cooldown/create_ghost_player/Activate(atom/target)
 	var/mob/dead/observer/player = owner
