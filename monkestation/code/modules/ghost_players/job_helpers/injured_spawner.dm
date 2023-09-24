@@ -3,6 +3,7 @@
 	desc = "Sends over injured personell from other Centcomm facilities for you to treat."
 
 	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE
 
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
 	icon_state = "portal"
@@ -10,13 +11,35 @@
 	COOLDOWN_DECLARE(spawner_cooldown)
 
 
+/obj/structure/injured_spawner/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/injured_spawner/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(COOLDOWN_FINISHED(src, spawner_cooldown))
 		generate_and_equip()
 
+
+/obj/structure/injured_spawner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Spawn Body"
+	context[SCREENTIP_CONTEXT_RMB] = "Return Body (Drag Body)"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/injured_spawner/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!user.pulling)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/human/injured/pullee = user.pulling
+	if(!istype(pullee))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.stop_pulling()
+	qdel(pullee)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/structure/injured_spawner/proc/generate_and_equip()
-	var/mob/living/carbon/human/new_human = new()
+	var/mob/living/carbon/human/injured/new_human = new()
 	new_human.equipOutfit(/datum/outfit/beachbum)
 
 	apply_wounds(new_human)
@@ -60,3 +83,7 @@
 	while(organs_to_rot > 0)
 		organs_to_rot--
 		victim.adjustOrganLoss(pick(organ_slots), rand(50, 75))
+
+
+/mob/living/carbon/human/injured
+
