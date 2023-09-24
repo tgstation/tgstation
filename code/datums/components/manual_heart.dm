@@ -12,24 +12,24 @@
 	/// How long between needed pumps; you can pump one second early
 	var/pump_delay = 3 SECONDS
 	/// How much blood volume you lose every missed pump, this is a flat amount not a percentage!
-	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5) // 20% of normal volume, missing five pumps is instant death
+	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2 // 20% of normal volume, missing five pumps is instant death
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/heal_oxy = 0
 
-/datum/component/manual_heart/Initialize(_pump_delay = 3 SECONDS, _blood_loss = (BLOOD_VOLUME_NORMAL / 5), _heal_brute = 0, _heal_burn = 0, _heal_oxy = 0)
+/datum/component/manual_heart/Initialize(pump_delay = 3 SECONDS, blood_loss = BLOOD_VOLUME_NORMAL * 0.2, heal_brute = 0, heal_burn = 0, heal_oxy = 0)
 	//Non-Carbon mobs can't have hearts, and should never receive this component.
 	if (!iscarbon(parent))
 		stack_trace("Manual Heart component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
 
-	pump_delay = _pump_delay
-	blood_loss = _blood_loss
-	heal_brute = _heal_brute
-	heal_burn = _heal_burn
-	heal_oxy = _heal_oxy
+	src.pump_delay = pump_delay
+	src.blood_loss = blood_loss
+	src.heal_brute = heal_brute
+	src.heal_burn = heal_burn
+	src.heal_oxy = heal_oxy
 
 	pump_action = new(src)
 	pump_action.cooldown_time = pump_delay - (1 SECONDS) //you can pump up to a second early
@@ -45,28 +45,27 @@
 
 /datum/component/manual_heart/Destroy()
 	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
+	var/mob/living/carbon/carbon_parent = parent
+	if(istype(carbon_parent))
+		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood)
 	QDEL_NULL(pump_action)
 	return ..()
 
 /datum/component/manual_heart/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_removed_organ))
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(restart))
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(pause))
-	RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(check_new_species))
+	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
+	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD)), PROC_REF(pause))
+	RegisterSignals(parent, list(COMSIG_LIVING_REVIVE, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)), PROC_REF(restart))
 
 /datum/component/manual_heart/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
-	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
-	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
-	UnregisterSignal(parent, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)))
 
 /datum/component/manual_heart/proc/restart()
 	SIGNAL_HANDLER
 
-	last_pump = world.time
-	START_PROCESSING(SSdcs, src)
+	if(check_valid())
+		last_pump = world.time
+		START_PROCESSING(SSdcs, src)
 
 /datum/component/manual_heart/proc/pause()
 	SIGNAL_HANDLER
@@ -116,7 +115,7 @@
 
 	var/obj/item/organ/internal/heart/new_heart = new_organ
 
-	if(istype(new_heart))
+	if(istype(new_heart) && check_valid())
 		last_pump = world.time
 		START_PROCESSING(SSdcs, src)
 
@@ -129,16 +128,13 @@
 	if(istype(removed_heart))
 		STOP_PROCESSING(SSdcs, src)
 
-///If the owner changes species to one without blood, stop processing - and vice versa.
-/datum/component/manual_heart/proc/check_new_species(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-
+///Helper proc to check if processing can be restarted.
+/datum/component/manual_heart/proc/check_valid()
 	var/mob/living/carbon/carbon_parent = parent
-	if(HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD))
-		STOP_PROCESSING(SSdcs, src)
-	else
-		last_pump = world.time
-		START_PROCESSING(SSdcs, src)
+	if(!istype(parent))
+		return FALSE
+	var/obj/item/organ/internal/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
+	return (parent_heart && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD)
 
 ///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
 /datum/action/cooldown/manual_heart

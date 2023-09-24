@@ -105,7 +105,7 @@
 	base_icon_state = "cursedheart"
 	decay_factor = 0
 	var/pump_delay = 3 SECONDS
-	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5)
+	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/heal_oxy = 0
@@ -124,7 +124,6 @@
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
-	accursed.remove_client_colour(/datum/client_colour/manual_heart_blood)
 	qdel(accursed.GetComponent(/datum/component/manual_heart))
 
 /obj/item/organ/internal/heart/cybernetic
