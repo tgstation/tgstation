@@ -37,6 +37,7 @@
 	button_icon = 'icons/turf/floors/ice_turf.dmi'
 	button_icon_state = "ice_turf-6"
 	cooldown_time = 5 SECONDS
+	click_to_activate = FALSE
 	melee_cooldown_time = 0 SECONDS
 	///perimeter we will spawn the iced floors on
 	var/radius = 1
