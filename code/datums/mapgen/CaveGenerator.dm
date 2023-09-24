@@ -137,6 +137,12 @@
 					can_spawn = FALSE
 					break
 
+			//we may have generated a plant on the target turf, so let's not place
+			//a geyser here if that's the case
+			for(var/obj/structure/turf_existing_feature in turf.contents)
+				can_spawn = FALSE
+				break
+
 			if(can_spawn)
 				new picked_feature(turf)
 				spawned_something = TRUE
