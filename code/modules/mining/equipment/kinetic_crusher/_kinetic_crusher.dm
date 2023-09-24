@@ -9,7 +9,7 @@
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	inhand_icon_state = "crusher0"
