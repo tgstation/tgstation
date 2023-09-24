@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/shuttle_turf in shuttle_area)
+		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
 			for(var/atom/passenger in shuttle_turf.get_all_contents())
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					return FALSE
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/return_blacklisted_things_home(list/area/areas_to_check, obj/docking_port/stationary/home)
 	var/list/stuff_to_send_home = list()
 	for(var/area/shuttle_area as anything in areas_to_check)
-		for(var/turf/shuttle_turf in shuttle_area)
+		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
 			for(var/atom/passenger in shuttle_turf.get_all_contents())
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					stuff_to_send_home += passenger
@@ -104,17 +104,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 
 	// Else we are docking at Centcom, check the blacklist to make sure no contraband was put onto the shuttle mid-transit.
-	// This is a sort of catch-all exploit check.
+	// If there's anything contrabandy, send these items back to the origin docking port.
+	// This is a sort of catch-all Centcom exploit check.
 	var/list/stuff_sent_home = return_blacklisted_things_home(shuttle_areas, previous)
 	if(!length(stuff_sent_home))
 		return
 
-	for(var/atom/thing_sent_home in stuff_sent_home)
+	for(var/atom/thing_sent_home as anything in stuff_sent_home)
 		investigate_log("Blacklisted item found on in-transit Cargo Shuttle: [thing_sent_home] ([thing_sent_home.type])", INVESTIGATE_CARGO)
 
 	message_admins("Blacklisted item found on in-transit Cargo Shuttle. See cargo logs for more details.")
 	SSshuttle.centcom_message = "Contraband found on Cargo Shuttle. This has been returned via drop pod."
-	return FALSE
 
 /obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
