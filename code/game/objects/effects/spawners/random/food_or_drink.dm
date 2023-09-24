@@ -67,6 +67,11 @@
 		/obj/item/seeds/angel = 1,
 		/obj/item/seeds/glowshroom/glowcap = 1,
 		/obj/item/seeds/glowshroom/shadowshroom = 1,
+		/obj/item/seeds/kronkus = 10,
+		/obj/item/seeds/odious_puffball = 10,
+		/obj/item/seeds/rainbow_bunch = 10,
+		/obj/item/seeds/shrub = 10,
+		/obj/item/seeds/seedling = 10,
 	)
 
 /obj/effect/spawner/random/food_or_drink/soup
