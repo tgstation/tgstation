@@ -56,45 +56,38 @@
 		var/item = pick(contains)
 		new item(C)
 
-/datum/supply_pack/organic/randomized/exoticseeds // Randomized seed crate, at least 9000 times less boring.
+/datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
 	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, \
-		now comes with a randomized selection of seeds!"
-	cost = CARGO_CRATE_VALUE * 5
+		including one replica-pod seed and two mystery seeds!"
+	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_HYDROPONICS
 	contains = list(
-		/obj/item/seeds/aloe = 1,
-		/obj/item/seeds/amanita = 1,
-		/obj/item/seeds/cannabis = 5,
-		/obj/item/seeds/bamboo = 1,
-		/obj/item/seeds/cocaleaf = 1,
-		/obj/item/seeds/cocoapod = 1,
-		/obj/item/seeds/cotton = 1,
-		/obj/item/seeds/eggplant/eggy = 5,
-		/obj/item/seeds/glowshroom = 1,
-		/obj/item/seeds/greenbean = 1,
-		/obj/item/seeds/herbs = 1,
-		/obj/item/seeds/kronkus = 5,
-		/obj/item/seeds/liberty= 1,
-		/obj/item/seeds/nettle = 1,
-		/obj/item/seeds/odious_puffball = 5,
-		/obj/item/seeds/plump = 1,
-		/obj/item/seeds/random = 50,
-		/obj/item/seeds/replicapod = 25,
-		/obj/item/seeds/reishi = 1,
-		/obj/item/seeds/rainbow_bunch = 10,
-		/obj/item/seeds/seedling = 25,
-		/obj/item/seeds/shrub = 1,
-		/obj/item/seeds/starthistle/corpse_flower = 5,
-		/obj/item/seeds/tea/astra = 5,
+		/obj/item/seeds/amanita,
+		/obj/item/seeds/bamboo,
+		/obj/item/seeds/eggplant/eggy,
+		/obj/item/seeds/liberty,
+		/obj/item/seeds/nettle,
+		/obj/item/seeds/plump,
+		/obj/item/seeds/replicapod,
+		/obj/item/seeds/reishi,
+		/obj/item/seeds/rainbow_bunch,
+		/obj/item/seeds/seedling,
+		/obj/item/seeds/shrub,
+		/obj/item/seeds/random = 2,
 	)
 	crate_name = "exotic seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/randomized/exoticseeds/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 12)
-		var/item = pick_weight(contains)
-		new item(C)
+/datum/supply_pack/organic/randomized/randomseeds // Randomized seed crate, at least 9000 times less boring.
+	name = "Collectible Exotic Seeds Crate"
+	desc = "Rare collectible plants for the botanist who loves gambling. Contains five seeds, \
+			from a fully randomized selection!"
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_HYDROPONICS
+	contains = list(/obj/effect/spawner/random/food_or_drink/seed_rare)
+	crate_name = "collectible exotic seeds crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/food
 	name = "Food Crate"
