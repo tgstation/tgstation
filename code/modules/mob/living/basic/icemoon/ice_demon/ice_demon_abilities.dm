@@ -76,7 +76,7 @@
 /obj/effect/temp_visual/slippery_ice/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 160, time = phase_in_period)
-	animate(alpha = 0, time = 1 SECONDS) /// slowly fade out of existence
+	animate(alpha = 0, time = duration - phase_in_period) /// slowly fade out of existence
 	addtimer(CALLBACK(src, PROC_REF(add_slippery_component), phase_in_period)) //only become slippery after we phased in
 
 /obj/effect/temp_visual/slippery_ice/proc/add_slippery_component()

@@ -451,9 +451,7 @@
 	return "mark detonation to unleash demonic ice clones upon the target"
 
 /obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user)
-	if(isnull(target))
-		return
-	if(!COOLDOWN_FINISHED(src, summon_cooldown))
+	if(isnull(target) || !COOLDOWN_FINISHED(src, summon_cooldown))
 		return
 	for(var/i in 1 to summon_amount)
 		var/turf/drop_off = find_dropoff_turf(target, user)
