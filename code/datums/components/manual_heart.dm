@@ -65,11 +65,12 @@
 
 	if(check_valid())
 		last_pump = world.time
+		pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS) //make sure the action button always shows as available when it is
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/manual_heart/proc/pause()
 	SIGNAL_HANDLER
-
+	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	STOP_PROCESSING(SSdcs, src)
 
 /// Worker proc that checks logic for if a pump can happen, and applies effects/notifications from doing so
@@ -117,6 +118,7 @@
 
 	if(istype(new_heart) && check_valid())
 		last_pump = world.time
+		pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 		START_PROCESSING(SSdcs, src)
 
 ///If the heart is removed, stop processing.
@@ -126,6 +128,7 @@
 	var/obj/item/organ/internal/heart/removed_heart = removed_organ
 
 	if(istype(removed_heart))
+		pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 		STOP_PROCESSING(SSdcs, src)
 
 ///Helper proc to check if processing can be restarted.
