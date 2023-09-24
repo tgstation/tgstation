@@ -55,8 +55,8 @@
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span>")
-	to_chat(chap, "<span class='notice'>[desc]</span>")
+	to_chat(chap, span_boldnotice("\"[quote]\""))
+	to_chat(chap, span_notice("[desc]"))
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,17 +66,17 @@
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
-/datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
+/datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
 		to_chat(chap, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
 		return
-	if(!is_type_in_typecache(I,desired_items_typecache))
+	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
 
 /// Activates when the sect sacrifices an item. This proc has NO bearing on the attackby sequence of other objects when used in conjunction with the religious_tool component.
-/datum/religion_sect/proc/on_sacrifice(obj/item/I, mob/living/chap)
-	return adjust_favor(default_item_favor,chap)
+/datum/religion_sect/proc/on_sacrifice(obj/item/sacrifice, mob/living/chap)
+	return adjust_favor(default_item_favor, chap)
 
 /// Returns a description for religious tools
 /datum/religion_sect/proc/tool_examine(mob/living/holy_creature)
@@ -89,7 +89,7 @@
 		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
 	if((favor + amount > max_favor))
 		. = (max_favor-favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
-	favor = clamp(0,max_favor, favor+amount)
+	favor = clamp(0, max_favor, favor+amount)
 
 /// Sets favor to a specific amount. Can provide optional features based on a user.
 /datum/religion_sect/proc/set_favor(amount = 0, mob/living/chap)
