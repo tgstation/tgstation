@@ -311,18 +311,21 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(!is_mining_level(z))//Only annoy the admins ingame if we're triggered off the mining zlevel
 		notify_admins = TRUE
 
-	if(triggered_by == 1)
-		log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
-	else if(triggered_by == 2)
-		var/turf/bombturf = get_turf(src)
-		if(notify_admins)
-			message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-		var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
-		log_game(bomb_message)
-		GLOB.bombers += bomb_message
-	else
-		user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
-		log_bomber(user, "has primed a", src, "for detonation", notify_admins)
+	switch(triggered_by)
+		if(1)
+			log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
+		if(2)
+			var/turf/bombturf = get_turf(src)
+			if(notify_admins)
+				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
+			var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
+			log_game(bomb_message)
+			GLOB.bombers += bomb_message
+		if(3)
+			log_bomber(null, "A secure loot closet has spawned a live", src, message_admins=notify_admins)
+		else
+			user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
+			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
 	det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)
