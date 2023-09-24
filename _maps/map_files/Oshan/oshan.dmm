@@ -8004,13 +8004,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 5
 	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "eeS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9781,6 +9775,11 @@
 /area/station/medical/surgery/theatre)
 "eXH" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Medical Closure Shutters";
+	desc = "Fuck off we're closed.";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/medical/treatment_center)
 "eXV" = (
@@ -11274,6 +11273,10 @@
 	name = "Medical Reception Desk";
 	req_access = list("medical")
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Medical Closure Shutters";
+	desc = "Fuck off we're closed."
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "fNz" = (
@@ -11450,6 +11453,16 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/button/door/directional/east{
+	pixel_x = 22;
+	id = "medclosed";
+	desc = "Fuck off we're closed";
+	name = "Medical Desk Closure Shutters"
+	},
+/obj/item/radio/intercom/directional/east{
+	pixel_x = 32;
+	pixel_y = -13
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "fRn" = (
@@ -13115,7 +13128,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gMi" = (
-/obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -15563,6 +15575,16 @@
 /obj/item/book/manual/wiki,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
+"iaI" = (
+/obj/machinery/camera/autoname/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/treatment_center)
 "iaP" = (
 /obj/machinery/duct/industrial/waste,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -17949,6 +17971,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "jsj" = (
@@ -21373,11 +21398,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 6
 	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "lca" = (
 /obj/machinery/duct/industrial/waste,
@@ -22014,10 +22035,10 @@
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/hallway/primary/central)
 "ltZ" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "luc" = (
@@ -22387,6 +22408,7 @@
 /area/mine/storage/public)
 "lCz" = (
 /obj/structure/sign/departments/chemistry/pharmacy,
+/obj/machinery/vending/drugs,
 /turf/closed/wall/r_wall,
 /area/station/medical/medbay/central)
 "lCD" = (
@@ -23685,6 +23707,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 8
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "moq" = (
@@ -24154,6 +24182,26 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"mCO" = (
+/obj/structure/table/reinforced,
+/obj/item/wrench/medical,
+/obj/item/wrench/medical{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile{
+	pixel_y = 4;
+	pixel_x = 2
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Medical Closure Shutters";
+	desc = "Fuck off we're closed."
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/medbay/central)
 "mCV" = (
 /obj/structure/cable,
 /obj/structure/sign/painting/library{
@@ -24226,7 +24274,8 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Engineering Services Desk";
-	id = "engiedesk"
+	id = "engiedesk";
+	dir = 8
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "elock";
@@ -24303,10 +24352,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "mHY" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -26406,10 +26452,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "nIg" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "nIm" = (
@@ -26718,7 +26765,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/blue,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "nQI" = (
 /turf/closed/wall/r_wall,
@@ -28192,19 +28239,19 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "oEo" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 8
+	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 8
-	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "oEs" = (
@@ -36255,7 +36302,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/siding/blue,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "sQL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -38715,6 +38762,12 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/treatment_center)
 "uhr" = (
@@ -39245,7 +39298,7 @@
 /obj/effect/turf_decal/siding/blue,
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "uxK" = (
 /turf/closed/wall/r_wall,
@@ -39334,13 +39387,13 @@
 /area/station/science/genetics)
 "uzC" = (
 /obj/item/kirbyplants/random,
+/obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "uzR" = (
@@ -41126,6 +41179,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
+"vsL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Medical Closure Shutters";
+	desc = "Fuck off we're closed.";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "vsU" = (
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
@@ -41220,7 +41282,8 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Engineering Services Desk";
-	id = "engiedesk"
+	id = "engiedesk";
+	dir = 8
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "elock";
@@ -41571,6 +41634,10 @@
 "vGh" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Medical Closure Shutters";
+	desc = "Fuck off we're closed."
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
 "vGu" = (
@@ -44680,7 +44747,8 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Engineering Services Desk";
-	id = "engiedesk"
+	id = "engiedesk";
+	dir = 8
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "elock";
@@ -45360,6 +45428,7 @@
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/vending/wardrobe/medi_wardrobe,
+/obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "xID" = (
@@ -45518,9 +45587,11 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/wrench/medical,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/obj/machinery/cell_charger,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "xMG" = (
@@ -73592,7 +73663,7 @@ jKo
 jKo
 jKo
 gVL
-aDe
+vsL
 xxZ
 xxZ
 eJv
@@ -75138,7 +75209,7 @@ wGM
 wGM
 oEo
 fRj
-vGh
+mCO
 hsi
 xeP
 kAH
@@ -75392,7 +75463,7 @@ tBQ
 xXa
 uhh
 eXH
-eXH
+uOF
 uOF
 eJv
 eJv
@@ -75648,7 +75719,7 @@ dLY
 nsM
 avv
 wYe
-dLY
+iaI
 uzC
 hpU
 gMi
