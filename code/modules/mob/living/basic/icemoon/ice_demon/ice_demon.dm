@@ -4,7 +4,6 @@
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "ice_demon"
 	icon_living = "ice_demon"
-	icon_dead = "ice_demon_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -58,7 +57,6 @@
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "ice_demon"
 	icon_living = "ice_demon"
-	icon_dead = "ice_demon_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -73,11 +71,13 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	alpha = 80
 	ai_controller = /datum/ai_controller/basic_controller/ice_demon/afterimage
+	///how long do we exist for
+	var/existence_period = 15 SECONDS
 
 /mob/living/basic/mining/demon_afterimage/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/temporary_atom, life_time = 7 SECONDS)
+	AddElement(/datum/element/temporary_atom, life_time = existence_period)
 
 ///afterimage subtypes summoned by the crusher
 /mob/living/basic/mining/demon_afterimage/crusher
@@ -86,3 +86,4 @@
 	maxHealth = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 10
+	existence_period = 7 SECONDS
