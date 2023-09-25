@@ -237,21 +237,6 @@
 	H.forceMove(L)
 	qdel(src)
 
-//Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
-	stat_attack = DEAD
-	maxHealth = 120
-	health = 120
-	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
-	icon_state = "dwarf_legion"
-	icon_living = "dwarf_legion"
-	icon_aggro = "dwarf_legion"
-	icon_dead = "dwarf_legion"
-
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
-	stat_attack = DEAD
-	can_infest_dead = TRUE
-
 //Legion that spawns Legions
 /mob/living/simple_animal/hostile/big_legion
 	name = "legion"

@@ -20,11 +20,12 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"
 	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE
 	ai_controller = /datum/ai_controller/basic_controller/hivelord
 	/// Mobs to spawn when we die, varedit this to be recursive to give the players a fun surprise
 	var/death_spawn_type = /mob/living/basic/hivelord_brood
+	/// Action which spawns worms
+	var/datum/action/cooldown/mob_cooldown/hivelord_spawn/spawn_brood
 
 /mob/living/basic/mining/hivelord/Initialize(mapload)
 	. = ..()
@@ -33,9 +34,13 @@
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") // They writhe so much.
 	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "hivelord_alert")
-	var/datum/action/cooldown/mob_cooldown/hivelord_spawn/worms = new(src)
-	worms.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, worms)
+	spawn_brood = new(src)
+	spawn_brood.Grant(src)
+	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, spawn_brood)
+
+/mob/living/basic/mining/hivelord/Destroy()
+	QDEL_NULL(spawn_brood)
+	return ..()
 
 /mob/living/basic/mining/hivelord/death(gibbed)
 	. = ..()
@@ -57,6 +62,9 @@
 	var/mob/living/brood = new death_spawn_type(spawn_turf)
 	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
+
+/mob/living/basic/mining/hivelord/RangedAttack(atom/atom_target, modifiers)
+	spawn_brood?.Trigger(target = atom_target)
 
 /// Attack worms spawned by the hivelord
 /mob/living/basic/hivelord_brood

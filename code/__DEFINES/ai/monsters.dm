@@ -146,3 +146,6 @@
 #define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
 /// key holds the tray we will beam
 #define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
+
+/// Corpse we have consumed
+#define BB_LEGION_CORPSE "legion_corpse"
