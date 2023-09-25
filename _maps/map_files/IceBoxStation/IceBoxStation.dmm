@@ -35066,6 +35066,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
+"lmW" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "lmY" = (
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/camera{
@@ -63753,7 +63760,10 @@
 "uBy" = (
 /obj/structure/flora/grass/brown/style_random,
 /obj/structure/railing{
-	dir = 9
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
@@ -158535,7 +158545,7 @@ uBy
 gQe
 gQe
 gQe
-nzG
+lmW
 eJf
 gjq
 gOU
