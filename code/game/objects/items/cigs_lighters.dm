@@ -347,6 +347,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!istype(smoker) || smoker.get_item_by_slot(ITEM_SLOT_MASK) != loc)
 			reagents.remove_any(to_smoke)
 			return
+	else
+		if(src != smoker.wear_mask)
+			reagents.remove_any(to_smoke)
+			return
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
