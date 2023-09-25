@@ -26881,7 +26881,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "jLG" = (
-/obj/structure/railing/corner,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "jMo" = (
@@ -29940,9 +29943,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "kRf" = (
-/obj/structure/railing{
-	dir = 6
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/end,
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
@@ -29953,6 +29953,11 @@
 	pixel_y = 4
 	},
 /obj/structure/cable,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kRi" = (
@@ -41864,8 +41869,10 @@
 /area/station/hallway/secondary/entry)
 "pdU" = (
 /obj/structure/railing{
-	dir = 6
+	dir = 4;
+	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "pdX" = (
@@ -60993,8 +61000,10 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/railing,
 /obj/structure/railing{
-	dir = 10
+	dir = 8;
+	layer = 4.1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)

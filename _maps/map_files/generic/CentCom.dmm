@@ -2634,7 +2634,7 @@
 /obj/item/folder/blue,
 /obj/item/stamp/law,
 /obj/item/banhammer{
-	force = 2000;
+	force = -10;
 	name = "Hammer of Justice";
 	desc = "Divine Judgement."
 	},
@@ -2989,17 +2989,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"lX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCsec1";
-	name = "XCC Checkpoint 1 Shutters";
-	max_integrity = 3000000
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
 "md" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/effect/turf_decal/stripes/line{
@@ -3833,15 +3822,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
-"pi" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/yellow,
-/obj/item/stamp/qm,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/supply)
 "pj" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -3859,7 +3839,8 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access = list("cent_captain")
+	req_access = list("cent_captain");
+	max_integrity = 300000000
 	},
 /obj/item/clipboard,
 /obj/item/folder/yellow,
@@ -3991,7 +3972,9 @@
 "pQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	max_integrity = 300000000
+	},
 /obj/item/paper_bin,
 /obj/item/pen/red,
 /obj/effect/turf_decal/bot,
@@ -4300,6 +4283,9 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
+"rj" = (
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "rk" = (
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/courtroom)
@@ -4924,15 +4910,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
-"tD" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/light/directional/east,
-/obj/structure/mirror/directional/east,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/admin)
 "tF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Locker Room"
@@ -5187,11 +5164,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "uH" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Shuttle Control Office"
-	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
+/turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/supply)
 "uK" = (
 /obj/machinery/processor,
@@ -5402,14 +5376,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "vG" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCsec1";
-	name = "XCC Checkpoint 1 Shutters";
-	max_integrity = 3000000
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/door/poddoor/shutters/cc/xcc,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "vH" = (
@@ -7723,6 +7693,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"FJ" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Shuttle Control Office"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/space/basic,
+/area/centcom/central_command_areas/admin)
 "FK" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
@@ -9151,6 +9129,7 @@
 "Nx" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/poddoor/shutters/cc/xcc,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
 "Ny" = (
@@ -52122,7 +52101,7 @@ TO
 On
 Ui
 Cs
-tD
+Hz
 oB
 ZF
 YU
@@ -52379,7 +52358,7 @@ yP
 On
 On
 On
-On
+FJ
 On
 On
 YU
@@ -52636,7 +52615,7 @@ nG
 iF
 yd
 GL
-pi
+jt
 FO
 Tq
 YU
@@ -53673,10 +53652,10 @@ iF
 rK
 mQ
 io
-lX
-lX
-lX
-lX
+vG
+vG
+vG
+vG
 vG
 io
 rK
@@ -54170,8 +54149,8 @@ oJ
 oJ
 oJ
 lo
-lK
-iR
+uH
+rj
 oJ
 oJ
 lo
@@ -54678,7 +54657,7 @@ iF
 iF
 iF
 iF
-iX
+Ih
 iF
 iF
 iF
@@ -54691,10 +54670,10 @@ no
 iF
 iF
 iN
-iX
+Ih
 pl
 pQ
-iX
+Ih
 iF
 iX
 iF

@@ -2491,7 +2491,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/railing/corner,
 /obj/machinery/ticket_machine/directional/north{
 	id = "ticket_machine_med"
 	},
@@ -4385,9 +4384,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/effect/turf_decal/trimline/purple/arrow_cw{
 	dir = 9
-	},
-/obj/structure/railing/corner{
-	dir = 4
 	},
 /turf/open/floor/iron/dark/textured/airless,
 /area/station/science/lobby)
@@ -6542,17 +6538,6 @@
 	dir = 8
 	},
 /area/station/security/office)
-"dDB" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/medbay/lobby)
 "dDN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8678,11 +8663,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 10
-	},
 /obj/machinery/ticket_machine/directional/east{
 	id = "ticket_machine_engie"
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/plastic,
 /area/station/hallway/primary/central)
@@ -9694,6 +9679,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
+"fmC" = (
+/mob/living/basic/chicken,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/station/service/hydroponics/upper)
 "fmI" = (
 /obj/structure/spider/stickyweb/sealed,
 /turf/open/floor/plating,
@@ -12845,6 +12837,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/break_room)
+"hfF" = (
+/mob/living/basic/chicken/brown,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
+/area/station/service/hydroponics/upper)
 "hfR" = (
 /obj/structure/weightmachine/stacklifter,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -13958,14 +13957,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
-"hNC" = (
-/obj/structure/railing,
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
-	},
-/turf/open/floor/wood,
-/area/station/service/hydroponics/upper)
 "hNH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
@@ -15395,9 +15386,6 @@
 /obj/effect/turf_decal/trimline/purple/corner{
 	dir = 8
 	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -15503,13 +15491,6 @@
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"iIX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/service/hydroponics/upper)
 "iJb" = (
 /obj/effect/turf_decal/stripes{
 	dir = 9
@@ -16155,21 +16136,6 @@
 "jcU" = (
 /turf/open/floor/carpet/purple,
 /area/station/science/server)
-"jdb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/machinery/ticket_machine/directional/north{
-	id = "ticket_machine_med"
-	},
-/obj/effect/turf_decal/trimline/blue/line,
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/medbay/lobby)
 "jdl" = (
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar/backroom)
@@ -18216,7 +18182,6 @@
 /obj/effect/turf_decal/trimline/purple/arrow_cw{
 	dir = 10
 	},
-/obj/structure/railing/corner,
 /turf/open/floor/iron/dark/textured/airless,
 /area/station/science/lobby)
 "kie" = (
@@ -19028,9 +18993,6 @@
 "kFH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/service/hydroponics/upper)
 "kFT" = (
@@ -19377,6 +19339,12 @@
 "kMm" = (
 /obj/structure/cable,
 /obj/structure/nestbox,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/upper)
 "kMx" = (
@@ -22322,7 +22290,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/railing,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
@@ -22928,6 +22895,9 @@
 "mQX" = (
 /mob/living/basic/chicken,
 /obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
 	dir = 4
 	},
 /turf/open/misc/sandy_dirt,
@@ -23029,9 +22999,6 @@
 "mTs" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/structure/railing{
-	dir = 8
-	},
 /turf/open/floor/wood,
 /area/station/service/hydroponics/upper)
 "mTt" = (
@@ -25685,6 +25652,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "opQ" = (
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/upper)
 "opR" = (
@@ -29754,6 +29724,9 @@
 /area/station/tcommsat/server)
 "qEb" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/upper)
 "qEi" = (
@@ -31558,9 +31531,6 @@
 /obj/effect/turf_decal/trimline/purple/corner{
 	dir = 1
 	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -32664,7 +32634,6 @@
 "skl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/railing,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
@@ -33658,17 +33627,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
-"sNI" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/medbay/lobby)
 "sNP" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
@@ -40094,6 +40052,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/security/checkpoint/customs)
+"wzS" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/misc/sandy_dirt,
+/area/station/service/hydroponics/upper)
 "wAk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -62874,10 +62839,10 @@ csW
 csW
 syi
 qEb
-hsV
+wzS
 xyY
 kFH
-iIX
+kqQ
 kqQ
 eqZ
 djv
@@ -63134,7 +63099,7 @@ syi
 mTs
 skl
 kMm
-dJB
+fmC
 hmD
 hmD
 sxX
@@ -63646,7 +63611,7 @@ qxW
 xCU
 eig
 aST
-hNC
+xva
 opQ
 xPK
 hmD
@@ -63903,8 +63868,8 @@ qxW
 csW
 syi
 clC
-hNC
-xPK
+xva
+hfF
 mLJ
 hmD
 uRS
@@ -70306,7 +70271,7 @@ xxZ
 eJv
 eJv
 bsc
-dDB
+dno
 kAH
 cIO
 oIu
@@ -72104,8 +72069,8 @@ eXH
 uOF
 eJv
 eJv
-jdb
-sNI
+bsc
+dno
 kAH
 cIO
 xev
