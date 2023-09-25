@@ -25,7 +25,7 @@
 		/datum/surgery_step/close,
 	)
 
-//Insert plastic step, It ain't called plasting surgery for nothing! :)
+//Insert plastic step, It ain't called plastic surgery for nothing! :)
 /datum/surgery_step/insert_plastic
 	name = "insert plastic (plastic)"
 	implements = list(
