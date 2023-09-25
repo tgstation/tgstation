@@ -13,7 +13,7 @@
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	guaranteed_butcher_results = list(/obj/item/wendigo_skull = 1)
-	health = 1500
+	health = 2000
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	maxHealth = 1500
+	maxHealth = 2000
 	true_spawn = FALSE
