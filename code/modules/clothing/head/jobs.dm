@@ -246,7 +246,7 @@
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
 		return FALSE
-	
+
 	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
@@ -591,6 +591,54 @@
 	name = "black surgery cap"
 	icon_state = "surgicalcapblack"
 	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/utility/head_mirror
+	name = "head mirror"
+	desc = "Used by doctors to look into the patient's eyes, ears, and mouth. \
+		A little useless now, but a part of the look."
+	icon_state = "headmirror"
+
+/obj/item/clothing/head/utility/head_mirror/examine(mob/user)
+	. = ..()
+	. += span_notice("In a properly lit room, you can use this to examine people's mouth, if you <i>look close enough</i>.")
+
+/obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & slot_flags)
+		RegisterSignal(user, COMSIG_MOB_EXAMINING_MORE, PROC_REF(examining))
+	else
+		UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
+	SIGNAL_HANDLER
+	if(!ishuman(examining) || deprecise_zone(examiner.zone_selected) != BODY_ZONE_HEAD || !examiner.Adjacent(examining))
+		return
+
+	if(!examiner.has_light_nearby())
+		examine_list += span_warning("You could use your [name] to examine [examining.p_them()] better, but it's too dark.")
+		return
+
+	var/mob/living/carbon/human/human_examined = examining
+	var/obj/item/organ/internal/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/pill_count = 0
+	for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
+		pill_count++
+
+	var/final_message = "You examine [examining] closer with your [name], you notice [examining.p_they()] have "
+	if(pill_count >= 1 && has_tongue)
+		final_message += "[pill_count] pill\s in their mouth, and \a [has_tongue]."
+	else if(pill_count >= 1)
+		final_message += "[pill_count] pill\s in their mouth, but oddly no tongue."
+	else if(has_tongue)
+		final_message += "\a [has_tongue]. Go figure."
+	else
+		final_message += "no tongue, oddly enough."
+
+	examine_list += span_notice("<i>[final_message]</i>")
 
 //Engineering
 /obj/item/clothing/head/beret/engi
