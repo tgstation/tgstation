@@ -38,6 +38,11 @@
 		return
 
 	var/obj/item/bodypart/actual_limb = target.get_bodypart(def_zone)
+
+	// What you hitting bro?
+	if(!actual_limb)
+		return
+
 	var/limb_damage = actual_limb.get_damage()
 	var/limb_armor = max(0, target.getarmor(actual_limb, BIO) - 25)
 
