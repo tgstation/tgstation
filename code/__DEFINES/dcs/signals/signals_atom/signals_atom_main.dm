@@ -23,7 +23,7 @@
 ///from base of atom/examine_more(): (/mob, examine_list)
 #define COMSIG_ATOM_EXAMINE_MORE "atom_examine_more"
 /// from atom/examine_more(): (/atom/examining, examine_list)
-#define COMSIG_MOB_EXAMINING_MORE "mob_examinign_more"
+#define COMSIG_MOB_EXAMINING_MORE "mob_examining_more"
 ///from base of [/atom/proc/update_appearance]: (updates)
 #define COMSIG_ATOM_UPDATE_APPEARANCE "atom_update_appearance"
 	/// If returned from [COMSIG_ATOM_UPDATE_APPEARANCE] it prevents the atom from updating its name.

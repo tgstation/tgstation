@@ -594,13 +594,14 @@
 
 /obj/item/clothing/head/utility/head_mirror
 	name = "head mirror"
-	desc = "Used by doctors to look into the patient's eyes, ears, and mouth. \
-		A little useless now, but a part of the look."
+	desc = "Used by doctors to look into a patient's eyes, ears, and mouth. \
+		A little useless now, given the technology available, but it certainly completes the look."
 	icon_state = "headmirror"
+	body_parts_covered = NONE
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
-	. += span_notice("In a properly lit room, you can use this to examine people's mouth, if you <i>look close enough</i>.")
+	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
 
 /obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
 	. = ..()
@@ -615,30 +616,62 @@
 
 /obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
 	SIGNAL_HANDLER
-	if(!ishuman(examining) || deprecise_zone(examiner.zone_selected) != BODY_ZONE_HEAD || !examiner.Adjacent(examining))
+	if(!ishuman(examining) \
+		|| examining == examiner \
+		|| deprecise_zone(examiner.zone_selected) != BODY_ZONE_HEAD \
+		|| examiner.is_blind() \
+		|| !examiner.Adjacent(examining))
 		return
-
-	if(!examiner.has_light_nearby())
-		examine_list += span_warning("You could use your [name] to examine [examining.p_them()] better, but it's too dark.")
-		return
-
 	var/mob/living/carbon/human/human_examined = examining
-	var/obj/item/organ/internal/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!human_examined.get_bodypart(BODY_ZONE_HEAD))
+		return
+	if(!examiner.has_light_nearby())
+		examine_list += span_warning("You attempt to use your [name] to examine [examining] better... but it's too dark. Should've invested in a head lamp.")
+		return
+	if(examiner.dir == examining.dir) // disallow examine from behind - every other dir is OK
+		examine_list += span_warning("You attempt to use your [name] to examine [examining] better... but [examining.p_theyre()] facing the wrong way.")
+		return
+
+	var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
 	var/pill_count = 0
 	for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
 		pill_count++
 
-	var/final_message = "You examine [examining] closer with your [name], you notice [examining.p_they()] [examining.p_have()] "
-	if(pill_count >= 1 && has_tongue)
-		final_message += "[pill_count] pill\s in their mouth, and \a [has_tongue]."
-	else if(pill_count >= 1)
-		final_message += "[pill_count] pill\s in their mouth, but oddly no tongue."
-	else if(has_tongue)
-		final_message += "\a [has_tongue]. Go figure."
+	var/list/final_message = list("You examine [examining]'s head closer with your [name], you notice [examining.p_they()] [examining.p_have()]...")
+	if(human_examined.is_mouth_covered())
+		final_message += "\tYou can't see [examining.p_their()] mouth."
 	else
-		final_message += "no tongue, oddly enough."
+		if(pill_count >= 1 && has_tongue)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, and \a [has_tongue]."
+		else if(pill_count >= 1)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, but oddly no tongue."
+		else if(has_tongue)
+			final_message += "\t\A [has_tongue] in [examining.p_their()] mouth - go figure."
+		else
+			final_message += "\tNo tongue in [examining.p_their()] mouth, oddly enough."
 
-	examine_list += span_notice("<i>[final_message]</i>")
+	if(human_examined.is_ears_covered())
+		final_message += "\tYou can't see [examining.p_their()] ears."
+	else
+		if(has_ears)
+			if(has_ears.deaf)
+				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
+			else
+				final_message += "\tA set of [has_ears.damage ? "" : "healthy "][has_ears.name]."
+		else
+			final_message += "\tNo eardrums and empty ear canals... how peculiar."
+
+	if(human_examined.is_eyes_covered())
+		final_message += "\tYou can't see [examining.p_their()] eyes."
+	else
+		if(has_eyes)
+			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
+		else
+			final_message += "\tEmpty eye sockets."
+
+	examine_list += span_notice("<i>[jointext(final_message, "\n")]</i>")
 
 //Engineering
 /obj/item/clothing/head/beret/engi
