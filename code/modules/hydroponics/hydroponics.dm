@@ -614,7 +614,7 @@
 		. += span_info("It's empty.")
 
 	. += span_info("Water: [waterlevel]/[maxwater].")
-	. += span_info("Nutrient: [round(reagents.total_volume)]/[maxnutri].")
+	. += span_info("Nutrient: [round(reagents.total_volume)]/[maxnutri]. Right-click to empty.")
 	if(self_sustaining)
 		. += span_info("The tray's self-sustenance is active, protecting it from species mutations, weeds, and pests.")
 	if(self_growing)
