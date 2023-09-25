@@ -7555,6 +7555,12 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "bPj" = (
@@ -38421,16 +38427,9 @@
 	},
 /area/station/service/chapel)
 "jAi" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "jAk" = (
@@ -61241,6 +61240,7 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/toy/cards/deck,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "puW" = (
@@ -62235,14 +62235,17 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "pFF" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/north{
 	c_tag = "Arrivals - Starboard Entrance";
 	dir = 9;
 	name = "arrivals camera"
 	},
-/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/bot,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "pFO" = (
@@ -91139,8 +91142,10 @@
 /area/station/hallway/primary/central/fore)
 "wKt" = (
 /obj/structure/table,
-/obj/item/toy/cards/deck,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "wKu" = (

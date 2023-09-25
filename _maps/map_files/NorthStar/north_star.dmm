@@ -1599,9 +1599,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200;
 	dir = 8;
-	initialize_directions = 8
+	initialize_directions = 8;
+	volume_rate = 200
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
@@ -13834,6 +13834,10 @@
 /area/station/engineering/atmos)
 "dAN" = (
 /obj/machinery/light_switch/directional/west,
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "dAU" = (
@@ -42143,6 +42147,9 @@
 /area/station/engineering/atmos)
 "laC" = (
 /obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/green,
 /area/station/commons/dorms/apartment1)
 "laJ" = (
@@ -46851,6 +46858,13 @@
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/aft)
+"mkP" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "mkZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -56734,6 +56748,15 @@
 /obj/structure/beebox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
+"oLI" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/hallway/floor4/aft)
 "oLL" = (
 /obj/structure/toilet{
 	dir = 4
@@ -79202,9 +79225,9 @@
 /area/station/maintenance/floor2/port/aft)
 "uLB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200;
 	dir = 8;
-	initialize_directions = 8
+	initialize_directions = 8;
+	volume_rate = 200
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 8
@@ -108430,7 +108453,7 @@ nrx
 bag
 mdB
 mMr
-mdB
+mkP
 pgo
 rqM
 wyp
@@ -319182,7 +319205,7 @@ vRO
 qbg
 nWW
 tEh
-bVy
+oLI
 vVu
 vOE
 tDs

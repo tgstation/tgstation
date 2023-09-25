@@ -15825,6 +15825,7 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/effect/landmark/start/hangover,
+/obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "fRr" = (
@@ -23534,7 +23535,9 @@
 /area/station/hallway/primary/aft)
 "iEE" = (
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/deck,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "iEK" = (
@@ -53664,7 +53667,10 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "tiD" = (
-/obj/item/kirbyplants/random,
+/obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "tjf" = (

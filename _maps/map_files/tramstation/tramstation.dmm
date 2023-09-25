@@ -16622,6 +16622,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "eOw" = (
@@ -28660,8 +28663,8 @@
 /area/station/security/checkpoint/supply)
 "jnL" = (
 /obj/structure/railing{
-	layer = 3.1;
-	dir = 4
+	dir = 4;
+	layer = 3.1
 	},
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -35306,6 +35309,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/escapepodbay)
+"lzN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "lAm" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -186651,7 +186664,7 @@ pEx
 aGr
 fmy
 sWq
-akS
+lzN
 gXH
 fmy
 fmy

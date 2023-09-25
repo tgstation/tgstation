@@ -2487,6 +2487,9 @@
 	},
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "aZL" = (
@@ -7717,8 +7720,8 @@
 /obj/structure/sink/kitchen/directional/east,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/button/door/directional/west{
-	pixel_y = 8;
-	id = "custodialshutters"
+	id = "custodialshutters";
+	pixel_y = 8
 	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
@@ -18750,8 +18753,8 @@
 	},
 /obj/structure/industrial_lift/tram,
 /obj/machinery/door/window/tram/right/directional/north{
-	pixel_y = -25;
-	associated_lift = "maint_tram"
+	associated_lift = "maint_tram";
+	pixel_y = -25
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -19741,8 +19744,8 @@
 	pixel_y = 11
 	},
 /obj/item/mod/module/signlang_radio{
-	pixel_y = 2;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/small,
 /area/station/security/office)
@@ -22135,9 +22138,9 @@
 	},
 /obj/structure/industrial_lift/tram,
 /obj/machinery/door/window/tram/left/directional/north{
+	associated_lift = "maint_tram";
 	pixel_x = -32;
-	pixel_y = -25;
-	associated_lift = "maint_tram"
+	pixel_y = -25
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -40788,6 +40791,9 @@
 /area/station/bitrunning/den)
 "oIk" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons)
 "oIP" = (

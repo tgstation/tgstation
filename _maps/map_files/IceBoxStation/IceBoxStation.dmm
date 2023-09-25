@@ -1391,8 +1391,8 @@
 /area/station/security/courtroom)
 "awR" = (
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
+	dir = 1;
+	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -2828,8 +2828,8 @@
 "aUi" = (
 /obj/structure/table,
 /obj/item/storage/briefcase{
-	pixel_y = 3;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/storage/wallet,
@@ -2935,6 +2935,9 @@
 /obj/effect/landmark/start/hangover,
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -3186,8 +3189,8 @@
 	pixel_x = 7
 	},
 /obj/item/reagent_containers/cup/soda_cans/sol_dry{
-	pixel_y = 4;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
@@ -5334,8 +5337,8 @@
 	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor";
-	pixel_y = 5;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/box/corners{
@@ -7118,8 +7121,8 @@
 	name = "Disposal Exit Vent"
 	},
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
+	dir = 1;
+	id = "garbage"
 	},
 /obj/effect/turf_decal/stripes/red/box,
 /turf/open/floor/plating,
@@ -7818,8 +7821,8 @@
 /obj/structure/table,
 /obj/item/storage/wallet,
 /obj/item/storage/wallet{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/open/floor/plastic,
 /area/station/commons/dorms/laundry)
@@ -13237,6 +13240,7 @@
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "dVq" = (
@@ -16877,8 +16881,8 @@
 /area/icemoon/underground/explored)
 "fdX" = (
 /obj/item/toy/cards/deck{
-	pixel_y = 13;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 13
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/generic,
@@ -20999,8 +21003,8 @@
 /area/station/security/prison/workout)
 "gvp" = (
 /obj/item/chair/stool{
-	pixel_y = -3;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/dim/directional/west,
@@ -22547,13 +22551,13 @@
 /area/station/science/breakroom)
 "gVm" = (
 /obj/item/coin/silver{
-	pixel_y = -3;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /obj/item/toy/plush/moth{
-	pixel_y = 5;
+	name = "Marcellus";
 	pixel_x = 5;
-	name = "Marcellus"
+	pixel_y = 5
 	},
 /turf/open/floor/plating,
 /area/station/commons/dorms/laundry)
@@ -24568,17 +24572,17 @@
 "hCY" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow{
-	pixel_y = 8;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 8
 	},
 /obj/item/folder/white{
-	pixel_y = 12;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 12
 	},
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/item/folder/blue{
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/folder/red{
 	pixel_x = 5;
@@ -27364,8 +27368,8 @@
 "ixb" = (
 /obj/machinery/button/door/directional/south{
 	id = "vacantofficemaintshutter";
-	pixel_x = 4;
 	name = "Privacy Shutters";
+	pixel_x = 4;
 	pixel_y = -28
 	},
 /turf/open/floor/iron/grimy,
@@ -31076,8 +31080,8 @@
 /area/station/engineering/atmos)
 "jHV" = (
 /obj/machinery/mineral/stacking_machine{
-	stack_amt = 10;
-	output_dir = 2
+	output_dir = 2;
+	stack_amt = 10
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -32353,8 +32357,8 @@
 /area/icemoon/surface/outdoors/nospawn)
 "kbq" = (
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
+	dir = 1;
+	id = "garbage"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -34402,8 +34406,8 @@
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/hooded/wintercoat/eva{
-	pixel_y = 5;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/mining_weather_monitor/directional/north,
@@ -43640,8 +43644,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/multi_tile/public/glass{
-	name = "Arrivals Dock";
-	dir = 4
+	dir = 4;
+	name = "Arrivals Dock"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
@@ -46481,8 +46485,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/multi_tile/public/glass{
-	name = "Arrivals Dock";
-	dir = 4
+	dir = 4;
+	name = "Arrivals Dock"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
@@ -49133,12 +49137,12 @@
 /area/station/medical/medbay/central)
 "pcc" = (
 /obj/item/stack/spacecash/c10{
-	pixel_y = 4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/toy/plush/beeplushie{
-	pixel_y = -6;
-	name = "Coolidge"
+	name = "Coolidge";
+	pixel_y = -6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -56635,8 +56639,8 @@
 	pixel_y = 3
 	},
 /obj/item/assembly/flash/handheld{
-	pixel_y = 3;
-	pixel_x = -19
+	pixel_x = -19;
+	pixel_y = 3
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -59776,13 +59780,13 @@
 	pixel_y = -5
 	},
 /obj/item/coin/plasma{
-	pixel_y = -2;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /obj/item/toy/plush/lizard_plushie{
+	name = "Cassius";
 	pixel_x = 11;
-	pixel_y = -4;
-	name = "Cassius"
+	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -61278,8 +61282,8 @@
 /area/station/medical/chemistry)
 "sLR" = (
 /obj/machinery/conveyor{
-	id = "garbage";
-	dir = 1
+	dir = 1;
+	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -62279,9 +62283,9 @@
 "teE" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters{
+	dir = 8;
 	id = "vacantofficemaintshutter";
-	name = "Privacy Shutters";
-	dir = 8
+	name = "Privacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/office)
@@ -62630,8 +62634,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/multi_tile/public/glass{
-	name = "Auxiliary Dock";
-	dir = 4
+	dir = 4;
+	name = "Auxiliary Dock"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
@@ -71250,7 +71254,9 @@
 "vZg" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/dice,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "vZp" = (
@@ -75282,8 +75288,8 @@
 "xgX" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/deck{
-	pixel_y = 15;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 15
 	},
 /obj/effect/spawner/random/food_or_drink/snack{
 	pixel_x = 5;
