@@ -262,6 +262,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return !T || !is_station_level(T.z)
 
 #undef DISCONNECT_GRACE_TIME
+#undef DISCONNECT_GRACE_WARNING_TIME
+
 
 
 /datum/objective/mutiny/update_explanation_text()

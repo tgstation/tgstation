@@ -486,7 +486,7 @@
 	// Here, we check current head of staff objectives and remove them if the target doesn't exist as a headrev anymore
 	for(var/datum/objective/mutiny/objective in heads_objective_copy)
 		if(!(objective.target in current_headrevs))
-			heads_objective -= objective.target
+			heads_objective -= objective
 			continue
 		if(!objective.check_completion())
 			objective_complete = FALSE
@@ -500,6 +500,7 @@
 			objective.target = rev_mind
 			if(!objective.check_completion())
 				objective_complete = FALSE
+			heads_objective += objective
 
 	return objective_complete
 
