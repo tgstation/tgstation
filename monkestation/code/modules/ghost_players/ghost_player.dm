@@ -124,7 +124,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
 
 /mob/dead/observer/proc/create_ghost_body()
-	var/mob/living/carbon/human/old_mob = mind.current
+	var/mob/living/carbon/human/old_mob = mind?.current
 	var/obj/item/organ/internal/brain/brain
 	if(istype(old_mob))
 		brain = old_mob.get_organ_by_type(/obj/item/organ/internal/brain)

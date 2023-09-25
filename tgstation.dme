@@ -5479,6 +5479,7 @@
 #include "monkestation\code\modules\aesthetics\items\clothing.dm"
 #include "monkestation\code\modules\aesthetics\mobs\slime.dm"
 #include "monkestation\code\modules\aesthetics\objects\misc.dm"
+#include "monkestation\code\modules\aesthetics\objects\railing.dm"
 #include "monkestation\code\modules\aesthetics\objects\window_sill.dm"
 #include "monkestation\code\modules\aesthetics\objects\windows.dm"
 #include "monkestation\code\modules\aesthetics\subsystem\coloring.dm"
