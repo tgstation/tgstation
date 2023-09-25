@@ -47,7 +47,7 @@
 		return
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
-	stored_mob.add_mood_event("regenerative core", /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
+	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
 	stored_mob = null
 
 /mob/living/basic/mining/legion/death(gibbed)
@@ -58,16 +58,21 @@
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
 	gender = consumed.gender
-	real_name = consumed.real_name
-	visible_message(span_warning("[name] staggers to [p_their()] feet!"))
+	name = consumed.real_name
+	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
 	consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	consumed.forceMove(src)
-	ai_controller.set_blackboard_key(BB_LEGION_CORPSE, consumed)
+	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	stored_mob = consumed
+	if (!prob(25))
+		return
+	// Congratulations you have won a special prize: cancer
+	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	cancer.Insert(consumed, special = TRUE, drop_if_replaced = FALSE)
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
 /mob/living/basic/mining/legion/spawner_made

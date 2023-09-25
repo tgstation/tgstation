@@ -2,6 +2,7 @@
 #define MAJOR_INSANITY_PEN 10
 #define MOOD_CATEGORY_NUTRITION "nutrition"
 #define MOOD_CATEGORY_AREA_BEAUTY "area_beauty"
+#define MOOD_CATEGORY_LEGION_CORE "regenerative core"
 
 /**
  * Mood datum
