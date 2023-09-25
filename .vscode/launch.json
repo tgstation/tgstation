@@ -14,8 +14,7 @@
 			"request": "launch",
 			"name": "Launch DreamDaemon",
 			"preLaunchTask": "Build All",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
 		},
 		{
 			"name": "Debug External Libraries",
