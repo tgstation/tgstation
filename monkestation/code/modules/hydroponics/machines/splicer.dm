@@ -6,6 +6,7 @@
 	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
 	var/obj/item/seeds/seed_1
 	var/obj/item/seeds/seed_2
+	var/obj/item/reagent_containers/cup/beaker/held_beaker
 
 	var/working = FALSE
 
@@ -24,11 +25,18 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			seed_2 = I
+	if(istype(I, /obj/item/reagent_containers/cup/beaker))
+		if(!held_beaker)
+			if(!user.transferItemToLoc(I, src))
+				return
+			held_beaker = I
+			return
 
 /obj/machinery/splicer/ui_data(mob/user)
 	. = ..()
 	var/has_seed_one = FALSE
 	var/has_seed_two = FALSE
+	var/has_beaker = FALSE
 	var/list/data = list()
 	if(seed_1)
 		data["seed_1"] = list(seed_1.return_all_data())
@@ -36,10 +44,14 @@
 	if(seed_2)
 		data["seed_2"] = list(seed_2.return_all_data())
 		has_seed_two = TRUE
+	if(held_beaker)
+		data["held_beaker"] = held_beaker.reagents
+		has_beaker = TRUE
 
 
 	data["seedone"] = has_seed_one
 	data["seedtwo"] = has_seed_two
+	data["held_beaker"] = has_beaker
 
 	data["working"] = working
 
@@ -69,6 +81,9 @@
 			eject_seed(seed_2)
 			seed_2 = null
 			return TRUE
+		if("eject_beaker")
+			eject_beaker(held_beaker)
+			return TRUE
 		if("splice")
 			splice(seed_1, seed_2)
 			return TRUE
@@ -80,6 +95,18 @@
 				ejected_seed.forceMove(drop_location())
 		else
 			ejected_seed.forceMove(drop_location())
+		. = TRUE
+
+/obj/machinery/splicer/proc/eject_beaker()
+	if (held_beaker)
+		if(Adjacent(usr) && !issiliconoradminghost(usr))
+			if (!usr.put_in_hands(held_beaker))
+				held_beaker.forceMove(drop_location())
+		else
+			held_beaker.forceMove(drop_location())
+		held_beaker = null
+		//stats = list()
+		//potential_damage = 0
 		. = TRUE
 
 /obj/machinery/splicer/proc/splice(obj/item/seeds/first_seed, obj/item/seeds/second_seed)
