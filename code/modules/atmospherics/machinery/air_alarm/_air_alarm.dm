@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	my_area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 	alarm_manager = new(src)
-	select_mode(src, /datum/air_alarm_mode/filteringh, should_apply = FALSE)
+	select_mode(src, /datum/air_alarm_mode/filtering, should_apply = FALSE)
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
