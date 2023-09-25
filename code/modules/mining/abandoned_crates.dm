@@ -190,7 +190,7 @@
 		if(67 to 68)
 			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
 			free_bomb.quality = rand(1, 3)
-			free_bomb.GibtoniteReaction(null, 3)
+			free_bomb.GibtoniteReaction(null, "A secure loot closet has spawned a live")
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)
 		if(71 to 72)
