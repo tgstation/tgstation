@@ -1,4 +1,4 @@
 author: "mc-oofert"
 delete-after: True
 changes:
-  - refactor: "clowns are basicmobs now"
+  - bugfix: "posibrains can be inserted again"

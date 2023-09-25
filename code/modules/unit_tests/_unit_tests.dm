@@ -162,6 +162,7 @@
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "ling_decap.dm"
 #include "liver.dm"
 #include "load_map_security.dm"
 #include "lungs.dm"
