@@ -567,6 +567,9 @@
 /obj/machinery/button/door/directional/south{
 	id = "beach_room_10"
 	},
+/obj/item/table_clock{
+	pixel_y = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "hC" = (
@@ -606,6 +609,9 @@
 "im" = (
 /obj/structure/table/bronze,
 /obj/structure/sign/poster/random/directional/east,
+/obj/item/table_clock{
+	pixel_y = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "io" = (
@@ -1543,6 +1549,9 @@
 /obj/machinery/button/door/directional/south{
 	id = "beach_room_11"
 	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "un" = (
@@ -1735,6 +1744,10 @@
 /obj/item/wrench{
 	pixel_y = -1;
 	pixel_x = 6
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = -8;
+	pixel_x = -3
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/beach)
@@ -2311,6 +2324,9 @@
 /obj/structure/table/bronze,
 /obj/machinery/button/door/directional/south{
 	id = "beach_room_4"
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -2935,6 +2951,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/maintenance/two,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/beach)
 "Ld" = (
@@ -3650,6 +3669,15 @@
 	},
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
+"Uz" = (
+/obj/structure/table/bronze,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "UB" = (
 /obj/structure/bed,
 /turf/open/floor/iron/dark/textured_large,
@@ -3940,6 +3968,9 @@
 /area/awaymission/beach)
 "Zt" = (
 /obj/structure/table/bronze,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "Zw" = (
@@ -12880,7 +12911,7 @@ oa
 xv
 VP
 jZ
-Zt
+Uz
 xv
 Qf
 vM
