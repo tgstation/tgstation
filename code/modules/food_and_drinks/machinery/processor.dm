@@ -57,9 +57,9 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.")
 		if(slime_time)
-			. += span_notice("It is currently set to 'Slime Time'. To turn it into a Food Procesor, multitool the circuit board.")
+			. += span_notice("It is currently set to 'Slime Time'. To turn it into a Food Processor, use a multitool on the circuit board.")
 		else
-			. += span_notice("It is currently set to 'Meat Grinder'. To turn it into a Slime Procesor, multitool the circuit board.")
+			. += span_notice("It is currently set to 'Meat Grinder'. To turn it into a Slime Processor, use a multitool on the circuit board.")
 
 /obj/machinery/processor/Exited(atom/movable/gone, direction)
 	..()

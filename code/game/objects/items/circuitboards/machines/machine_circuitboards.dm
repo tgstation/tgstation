@@ -1239,7 +1239,7 @@
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
-	desc = "A food or slime processor. Multitool the circuit board to select between them."
+	desc = "A food or slime processor. Use a multitool on the circuit board to select between them."
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/processor
 	req_components = list(
