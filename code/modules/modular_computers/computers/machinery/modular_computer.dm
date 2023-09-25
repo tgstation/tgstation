@@ -13,8 +13,6 @@
 	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE
-	///Power usage during last tick
-	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 4
 

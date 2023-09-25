@@ -42,7 +42,7 @@
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
 	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads = list()
+	var/list/datum/computer_file/program/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
@@ -70,11 +70,9 @@
 	/// The built-in light's color, editable by players.
 	var/comp_light_color = "#FFFFFF"
 
-	///The last recorded amount of power used.
-	var/last_power_usage = 0
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 75
-	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_active_power_usage = 125
+	///Power usage when the computer is idle and screen is off.
 	var/base_idle_power_usage = 5
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
@@ -365,6 +363,9 @@
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove Cell"
+		. = CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -458,7 +459,6 @@
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
-		last_power_usage = 0
 		return
 
 	if(atom_integrity <= integrity_failure * max_integrity)
@@ -714,7 +714,7 @@
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(ismachinery(loc))
+		if(ismachinery(physical))
 			return
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
@@ -777,6 +777,16 @@
 		return
 
 	return ..()
+
+/obj/item/modular_computer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(internal_cell)
+		user.balloon_alert(user, "cell removed")
+		internal_cell.forceMove(drop_location())
+		internal_cell = null
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	else
+		user.balloon_alert(user, "no cell!")
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
