@@ -239,7 +239,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/warned_admins = FALSE
 
 /datum/objective/mutiny/proc/warn_admins()
-	message_admins("[ADMIN_LOOKUPFLW(target.current)] has gone AFK with a mutiny objective that involves them. They have only [COOLDOWN_TIMELEFT(src, disconnect_timer) / 10] seconds remaining before they are treated as if they were dead.")
+	message_admins("[ADMIN_LOOKUPFLW(target.current)] has gone AFK with a mutiny objective that involves them. They only have [COOLDOWN_TIMELEFT(src, disconnect_timer) / 10] seconds remaining before they are treated as if they were dead.")
 
 /datum/objective/mutiny/check_completion()
 	if(!target || !considered_alive(target) || considered_exiled(target))
