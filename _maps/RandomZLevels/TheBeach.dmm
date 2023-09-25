@@ -626,9 +626,7 @@
 /turf/open/floor/plastic,
 /area/awaymission/beach)
 "iw" = (
-/obj/structure/sign/poster/official/fruit_bowl/directional/north{
-	pixel_y = 36
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /turf/open/floor/carpet,
 /area/awaymission/beach)
 "iy" = (
@@ -2033,6 +2031,15 @@
 	pixel_y = -4
 	},
 /turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"AB" = (
+/obj/structure/table/bronze,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "AG" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -3668,15 +3675,6 @@
 	pixel_x = 10
 	},
 /turf/open/floor/wood/large,
-/area/awaymission/beach)
-"Uz" = (
-/obj/structure/table/bronze,
-/obj/item/pai_card{
-	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "\improper Nanotrasen-brand personal AI device exhibit";
-	pixel_y = 4
-	},
-/turf/open/floor/wood,
 /area/awaymission/beach)
 "UB" = (
 /obj/structure/bed,
@@ -12911,7 +12909,7 @@ oa
 xv
 VP
 jZ
-Uz
+AB
 xv
 Qf
 vM
