@@ -49881,6 +49881,11 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"rDl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation/entertainment)
 "rDx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -51264,6 +51269,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "rZG" = (
@@ -62496,6 +62502,7 @@
 "vIN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair/stool,
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "vIX" = (
@@ -106251,7 +106258,7 @@ aJq
 aJq
 aJq
 pzd
-rIO
+rDl
 ktN
 gEQ
 rIO
