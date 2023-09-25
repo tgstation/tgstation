@@ -87,9 +87,13 @@
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
 		spawned_boulder = /obj/item/boulder/gulag/volcanic
 
-/turf/closed/mineral/proc/prox_to_vent(force_speak = FALSE)
-	if(!SSmapping.level_trait(src.z, ZTRAIT_MINING))
-		return FALSE
+/**
+ * Returns the distance to the nearest ore vent, where ore vents are tracked in SSore_generation's possible vents list.
+ * Returns 0 if we're not on lavaland, and as we're using get_dist, our range is limited to 127 tiles.
+ */
+/turf/closed/mineral/proc/prox_to_vent()
+	if(!is_mining_level(z))
+		return 0
 
 	var/distance = 128 // Max distance for a get_dist is 127
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
@@ -102,10 +106,13 @@
 			distance = temp_distance
 	return distance
 
+/**
+ * Returns the chance of ore spawning in this turf, based on proximity to a vent.
+ * See mining defines for the chances and distance defines.
+ */
 /turf/closed/mineral/proc/proximity_ore_chance()
 	var/distance = prox_to_vent()
-	if(distance == 0) // We're not on lavaland or similar failure condition
-		return null
+	ASSERT(distance != 0)
 
 	if(distance < VENT_PROX_VERY_HIGH)
 		return VENT_CHANCE_VERY_HIGH
@@ -119,6 +126,10 @@
 		return VENT_CHANCE_FAR
 	return 0
 
+/**
+ * Returns the amount of ore to spawn in this turf, based on proximity to a vent.
+ * If for some reason we have a distance of zero (like being off mining Z levels), we return a random amount between 1 and 5 instead.
+ */
 /turf/closed/mineral/proc/scale_ore_to_vent()
 	var/distance = prox_to_vent()
 	if(distance == 0) // We're not on lavaland or similar failure condition

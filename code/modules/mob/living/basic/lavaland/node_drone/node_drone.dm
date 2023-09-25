@@ -41,10 +41,14 @@
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
-	attached_vent.node = null //clean our reference to the vent both ways.
-	attached_vent = null
 	explosion(origin = src, light_impact_range = 1, smoke = 1)
 	qdel(src)
+
+/mob/living/basic/node_drone/Destroy()
+	attached_vent.node = null //clean our reference to the vent both ways.
+	attached_vent = null
+	return ..()
+
 
 /mob/living/basic/node_drone/examine(mob/user)
 	. = ..()

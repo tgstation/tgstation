@@ -7,6 +7,7 @@
 	icon_state = "brm"
 	circuit = /obj/item/circuitboard/machine/brm
 	usage_sound = MANUAL_TELEPORT_SOUND
+	processing_flags = START_PROCESSING_MANUALLY
 	/// Are we trying to actively collect boulders automatically?
 	var/toggled_on = FALSE
 	/// How long does it take to collect a boulder?
@@ -16,7 +17,6 @@
 
 /obj/machinery/bouldertech/brm/Initialize(mapload)
 	. = ..()
-	STOP_PROCESSING(SSmachines, src) // Don't start processing until flipped on.
 	set_wires(new /datum/wires/brm(src))
 
 /obj/machinery/bouldertech/brm/Destroy()
@@ -45,11 +45,14 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_auto_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/bouldertech/brm/process()
-	balloon_alert_to_viewers("Bzzap!")
+	balloon_alert_to_viewers("bzzap!")
 	if(SSore_generation.available_boulders.len < 1)
 		say("No boulders to collect. Entering idle mode.")
 		STOP_PROCESSING(SSmachines, src)
@@ -91,6 +94,11 @@
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		laser_stack += (laser.tier)
 	boulders_held_max = laser_stack
+
+/obj/machinery/bouldertech/brm/update_icon_state()
+	. = ..()
+	icon_state = "brm"
+
 
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
 	if(!SSore_generation.available_boulders.len)

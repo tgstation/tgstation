@@ -17,6 +17,9 @@
 	var/durability = 5
 	/// What was the size of the boulder when it was spawned? This is used for inheiriting the icon_state.
 	var/boulder_size = BOULDER_SIZE_SMALL
+	/// Used in inheriting the icon_state from our parent vent in update_icon.
+	var/boulder_string = "boulder"
+	/// Cooldown used to prevents boulders from getting processed back into a machine immediately after being processed.
 	COOLDOWN_DECLARE(processing_cooldown)
 
 /obj/item/boulder/Initialize(mapload)
@@ -47,15 +50,16 @@
 	if(.)
 		return
 	if(isgolem(user))
-		return manual_process(null, user, 1.5)
+		manual_process(null, user, 1.5)
+		return
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(isgolem(user))
-		return manual_process(null, user, 1.5)
-
+		manual_process(null, user, 1.5)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -65,16 +69,28 @@
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
-	if(.)
-		return
 	if(!isliving(user))
-		return FALSE
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
 		return TRUE
 	if(isgolem(user))
 		manual_process(weapon, user, 3)
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(.)
+		return
+
+/obj/item/boulder/update_icon_state()
+	. = ..()
+	switch(boulder_size)
+		if(BOULDER_SIZE_SMALL)
+			icon_state = "[boulder_string]_small"
+		if(BOULDER_SIZE_MEDIUM)
+			icon_state = "[boulder_string]_medium"
+		if(BOULDER_SIZE_LARGE)
+			icon_state = "[boulder_string]_large"
+		else
+			icon_state = "[boulder_string]_small"
 
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE)
 	var/process_speed = 0
@@ -163,7 +179,6 @@
 /obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
 	var/durability_min = size
 	var/durability_max = size + BOULDER_SIZE_SMALL
-	var/boulder_string = "boulder"
 	if(parent_vent)
 		durability_min = parent_vent.boulder_size
 		durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
@@ -172,17 +187,6 @@
 	if(parent_vent)
 		boulder_size = parent_vent.boulder_size
 		boulder_string = parent_vent.boulder_icon_state
-	switch(boulder_size)
-		if(BOULDER_SIZE_SMALL)
-			icon_state = "[boulder_string]_small"
-		if(BOULDER_SIZE_MEDIUM)
-			icon_state = "[boulder_string]_medium"
-		if(BOULDER_SIZE_LARGE)
-			icon_state = "[boulder_string]_large"
-		else
-			icon_state = "[boulder_string]_small"
-	if(istype(src, /obj/item/boulder/artifact) || is_artifact)
-		icon_state = "boulder_artifact" //special case
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/boulder/artifact
@@ -204,13 +208,16 @@
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
-	artifact_inside.forceMove(get_turf(src))
+	artifact_inside.forceMove(drop_location())
 	artifact_inside = null
 
 /obj/item/boulder/artifact/break_apart()
 	artifact_inside = null
 	return ..()
 
+/obj/item/boulder/artifact/update_icon_state()
+	. = ..()
+	icon_state = "boulder_artifact" //We're always going to use the artifact state for clarity.
 
 /obj/item/boulder/gulag
 	name = "boulder"

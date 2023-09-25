@@ -78,7 +78,6 @@
 		update_appearance(UPDATE_ICON_STATE)
 		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", HIGH_OBJ_LAYER, src, GAME_PLANE))
 	return ..()
-	///This is the part where we start processing to produce a new boulder over time.
 
 /obj/structure/ore_vent/Destroy()
 	SSore_generation.possible_vents -= src
@@ -93,7 +92,7 @@
 		return
 	if(is_type_in_list(attacking_item, scanning_equipment))
 		if(tapped)
-			visible_message(span_notice("\the [src] has already been tapped!"))
+			balloon_alert_to_viewers("vent tapped!")
 			return TRUE
 		scan_and_confirm(user)
 		return TRUE
@@ -113,7 +112,9 @@
 			user.apply_damage(20, STAMINA)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder()
-	to_chat(user, span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+	return TRUE
+
 /obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()
 	if(tapped)
@@ -135,7 +136,7 @@
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(istype(held_item, /obj/item/t_scanner/adv_mining_scanner))
+	if(is_type_in_list(held_item, scanning_equipment))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan vent"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -252,10 +253,10 @@
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user, scan_only = FALSE)
 	if(tapped)
-		to_chat(user, span_notice("\The [src] has already been tapped!"))
+		balloon_alert_to_viewers("vent tapped!")
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
-		to_chat(user, span_warning("\The [src] is currently being excavated! Protect the node drone!"))
+		balloon_alert_to_viewers("Protect the node drone!")
 		return
 	if(!discovered)
 		balloon_alert(user, "scanning...")
@@ -278,6 +279,8 @@
 		return
 
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
+		return
+	if(!COOLDOWN_FINISHED(src, wave_cooldown))
 		return
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)

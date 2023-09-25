@@ -59,13 +59,16 @@
 	silo_materials = null
 	return ..()
 
+/obj/machinery/bouldertech/update_icon_state()
+	. = ..()
+	if(anchored)
+		icon_state ="[initial(icon_state)]"
+	else
+		icon_state ="[initial(icon_state)]-off"
+
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			icon_state ="[initial(icon_state)]"
-		else
-			icon_state ="[initial(icon_state)]-off"
 		update_appearance(UPDATE_ICON_STATE)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -83,17 +86,15 @@
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(.)
-		return 
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()
 		if(!accept_boulder(my_boulder))
-			visible_message(span_warning("[my_boulder] is rejected!"))
+			balloon_alert_to_viewers("full!")
 			return
-		visible_message(span_notice("[my_boulder] is accepted into \the [src]"))
+		balloon_alert_to_viewers("accepted!")
 		START_PROCESSING(SSmachines, src)
-		return
+		return TRUE
 	if(istype(attacking_item, /obj/item/card/id))
 		if(!holds_mining_points)
 			return FALSE
@@ -114,7 +115,8 @@
 		points_held = round(points_held - amount)
 		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 		return TRUE
-
+	if(.)
+		return
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -122,13 +124,13 @@
 		return
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(holds_minerals)
-		if(!boulders_contained.len)
-			visible_message(span_warning("No boulders to remove!"))
-			return
+		if(!length(boulders_contained))
+			balloon_alert_to_viewers("No boulders to remove!")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		remove_boulder(pick(boulders_contained))
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
@@ -269,7 +271,6 @@
 	if(isnull(new_boulder))
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max) //Full already
-
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
 		qdel(new_boulder)
