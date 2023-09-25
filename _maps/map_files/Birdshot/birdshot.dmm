@@ -29787,10 +29787,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs)
-"kNb" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/closed/mineral/random/stationside,
-/area/station/service/library/abandoned)
 "kNf" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -33789,6 +33785,10 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
+"mcy" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron,
+/area/station/commons)
 "mcP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48773,12 +48773,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
-"rkP" = (
-/obj/effect/spawner/random/entertainment/arcade{
-	dir = 8
-	},
-/turf/open/floor/eighties/red,
-/area/station/service/abandoned_gambling_den/gaming)
 "rkR" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -51269,7 +51263,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
-/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "rZG" = (
@@ -58393,11 +58386,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/station/hallway/secondary/dock)
-"urE" = (
-/obj/effect/turf_decal/bot_white/left,
-/obj/structure/rack,
-/turf/open/floor/engine,
-/area/station/engineering/gravity_generator)
 "urM" = (
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -105235,7 +105223,7 @@ rvp
 uIT
 uIT
 wSZ
-urE
+tdI
 hHE
 nNi
 hPs
@@ -106788,7 +106776,7 @@ qhq
 tDq
 rnn
 udZ
-qkF
+mcy
 uct
 lzR
 wYC
@@ -111402,7 +111390,7 @@ iMy
 kOW
 aJq
 aJq
-kNb
+weg
 weg
 weg
 wOp
@@ -111675,7 +111663,7 @@ nSu
 xXT
 cek
 xQJ
-rkP
+mbV
 vJx
 rdw
 xMO
