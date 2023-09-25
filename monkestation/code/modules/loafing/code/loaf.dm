@@ -130,13 +130,13 @@
 /obj/effect/immovablerod/loaf
 	name = "immovable loaf"
 	desc = "Oh no, the flavor is coming right for us!"
-	icon = 'monkestation/code/modules/loafing/icon/obj.dmi'
+	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "rod_loaf"
 
 /obj/machinery/power/supermatter_crystal/loaf
 	name = "suppermatter loaf" //you can't kill me for my bad puns.  they make me immortal.
 	desc = "A prison loaf that has condensed and crystalized to the point where it can be used as a standard power source."
-	icon = 'monkestation/code/modules/loafing/icon/obj.dmi'
+	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "supermatter_loaf"
 
 
