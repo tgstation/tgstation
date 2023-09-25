@@ -616,20 +616,16 @@
 
 /obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
 	SIGNAL_HANDLER
-	if(!ishuman(examining) \
-		|| examining == examiner \
-		|| deprecise_zone(examiner.zone_selected) != BODY_ZONE_HEAD \
-		|| examiner.is_blind() \
-		|| !examiner.Adjacent(examining))
+	if(!ishuman(examining) || examining == examiner || examiner.is_blind() || !examiner.Adjacent(examining))
 		return
 	var/mob/living/carbon/human/human_examined = examining
 	if(!human_examined.get_bodypart(BODY_ZONE_HEAD))
 		return
 	if(!examiner.has_light_nearby())
-		examine_list += span_warning("You attempt to use your [name] to examine [examining] better... but it's too dark. Should've invested in a head lamp.")
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but it's too dark. Should've invested in a head lamp.")
 		return
 	if(examiner.dir == examining.dir) // disallow examine from behind - every other dir is OK
-		examine_list += span_warning("You attempt to use your [name] to examine [examining] better... but [examining.p_theyre()] facing the wrong way.")
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but [examining.p_theyre()] facing the wrong way.")
 		return
 
 	var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
