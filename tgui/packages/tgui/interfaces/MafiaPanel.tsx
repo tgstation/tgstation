@@ -45,6 +45,7 @@ type MafiaData = {
   phase: string;
   turn: number;
   timeleft: number;
+  is_observer: boolean;
   all_roles: string[];
   admin_controls: boolean;
 };
@@ -200,7 +201,7 @@ const MafiaChat = (props, context) => {
 
 const MafiaLobby = (props, context) => {
   const { act, data } = useBackend<MafiaData>(context);
-  const { lobbydata = [] } = data;
+  const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
     : null;
@@ -239,18 +240,22 @@ const MafiaLobby = (props, context) => {
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
       </NoticeBox>
-      <NoticeBox color="green" textAlign="center">
-        Players who sign up for Mafia while dead will be returned to their
-        bodies after the game finishes, allowing you to temporarily exit to play
-        a match.
-      </NoticeBox>
+      {!!is_observer && (
+        <NoticeBox color="green" textAlign="center">
+          Players who sign up for Mafia while dead will be returned to their
+          bodies after the game finishes, allowing you to temporarily exit to
+          play a match.
+        </NoticeBox>
+      )}
       {lobbydata.map((lobbyist) => (
         <Stack
           key={lobbyist.name}
           className="candystripe"
           p={1}
           align="baseline">
-          <Stack.Item grow>{lobbyist.name}</Stack.Item>
+          <Stack.Item grow>
+            {!is_observer ? 'Unknown Player' : lobbyist.name}
+          </Stack.Item>
           <Stack.Item>Status:</Stack.Item>
           <Stack.Item color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
             {lobbyist.status}

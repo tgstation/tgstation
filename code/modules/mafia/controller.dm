@@ -630,6 +630,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	if(usr.client?.holder)
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
+	data["is_observer"] = !!isobserver(user)
 	data["all_roles"] = current_setup_text
 
 	if(phase == MAFIA_PHASE_SETUP)
