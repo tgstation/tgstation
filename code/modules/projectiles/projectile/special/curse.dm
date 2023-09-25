@@ -1,7 +1,5 @@
 /obj/effect/ebeam/curse_arm
 	name = "curse arm"
-	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 
 /obj/projectile/curse_hand
 	name = "curse hand"
