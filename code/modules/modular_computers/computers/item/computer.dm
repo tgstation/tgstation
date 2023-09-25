@@ -437,7 +437,7 @@
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(internal_cell && internal_cell.charge) // checks if the PC is powered
+	if(use_power()) // checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
