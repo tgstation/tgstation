@@ -161,6 +161,8 @@
 
 #endif
 
+// Kept outside the ifdef so overrides are easy to implement
+
 /// Return info about us for reference searching purposes
 /// Will be logged as a representation of this datum if it's a part of a search chain
 /datum/proc/ref_search_details()
