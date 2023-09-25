@@ -9,7 +9,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles,
@@ -96,8 +96,7 @@
 	var/target_key = BB_GOLIATH_HOLE_TARGET
 
 /datum/ai_planning_subtree/goliath_dig/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(target_turf))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(/datum/ai_behavior/goliath_dig, target_key)
 	return SUBTREE_RETURN_FINISH_PLANNING

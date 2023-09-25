@@ -199,3 +199,19 @@
 	speech_chance = 5
 	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
 	emote_see = list("stares ferociously.")
+
+/datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
+	speech_chance = 1
+
+/datum/ai_planning_subtree/random_speech/blackboard/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
+	if(isnull(speech_lines))
+		return ..()
+	
+	speak = speech_lines[BB_EMOTE_SAY] || list()
+	emote_see = speech_lines[BB_EMOTE_SEE] || list()
+	emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
+	sound = speech_lines[BB_EMOTE_SOUND] || list()
+	speech_chance = speech_lines[BB_EMOTE_CHANCE] ? speech_lines[BB_EMOTE_CHANCE] : initial(speech_chance)
+
+	return ..()

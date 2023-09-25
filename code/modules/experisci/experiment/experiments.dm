@@ -283,7 +283,6 @@
 		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/medical_kiosk = 2,
 		/obj/machinery/piratepad/civilian = 2,
-		/obj/machinery/rnd/bepis = 3
 	)
 	required_stock_part = /obj/item/stock_parts/scanning_module/adv
 
