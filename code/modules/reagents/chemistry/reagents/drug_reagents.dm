@@ -325,17 +325,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 6) //2.6 per 2 seconds
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/L)
-	..()
-	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
-	var/obj/item/organ/internal/liver/liver = L.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
-		L.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		affected_mob.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
 		metabolization_rate *= 0.8
 
-/datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
-	..()
+/datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/affected_mob)
+	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
+	return ..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
@@ -369,7 +369,7 @@
 	name = "Maintenance Drugs"
 	chemical_flags = NONE
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/L)
+/datum/reagent/drug/maint/on_mob_metabolize(mob/living/carbon/L)
 	var/obj/item/organ/internal/liver/liver = L.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
 		L.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)

@@ -264,13 +264,13 @@ export const Canvas = (props, context) => {
               <Tooltip
                 content={
                   multiline`
-                  You can Right-Click the canvas to change the color of  
-                  the painting tool to that of the clicked pixel. 
+                  You can Right-Click the canvas to change the color of
+                  the painting tool to that of the clicked pixel.
                 ` +
                   (data.editable
-                    ? multiline` 
-                  \n You can also select a color from the 
-                  palette at the bottom of the UI, 
+                    ? multiline`
+                  \n You can also select a color from the
+                  palette at the bottom of the UI,
                   or input a new one with Right-Click.
                 `
                     : '')
