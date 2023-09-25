@@ -11,7 +11,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/datum/mafia_role/all_roles = list()
 	///all living roles in the game, removed on death.
 	var/list/datum/mafia_role/living_roles = list()
-	///exists to speed up role retrieval, it's a dict. `player_role_lookup[player ckey]` will give you the role they play
+	///exists to speed up role retrieval, it's a dict.
+	/// `player_role_lookup[player ckey/PDA]` will give you the role they play
 	var/list/player_role_lookup = list()
 	///what part of the game you're playing in. day phases, night phases, judgement phases, etc.
 	var/phase = MAFIA_PHASE_SETUP
@@ -202,6 +203,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		if(!modpc)
 			continue
 		modpc.update_static_data_for_all_viewers()
+	SEND_GLOBAL_SIGNAL(COMSIG_MAFIA_GAME_START, src)
 
 /**
  * How every day starts.
@@ -417,11 +419,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/mafia_controller/proc/end_game()
-	for(var/datum/mafia_role/roles as anything in all_roles)
-		var/obj/item/modular_computer/modpc = roles.player_pda
-		if(!modpc)
-			continue
-		modpc.update_static_data_for_all_viewers()
 	QDEL_LIST(all_roles)
 	living_roles.Cut()
 	QDEL_LIST(landmarks)
@@ -622,7 +619,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			role.put_player_in_body(player_client)
 		role.greet()
 
-/datum/mafia_controller/ui_static_data(mob/user)
+/datum/mafia_controller/ui_static_data(atom/user)
 	var/list/data = list()
 
 	if(usr.client?.holder)
@@ -631,10 +628,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	data["all_roles"] = current_setup_text
 
 	if(phase == MAFIA_PHASE_SETUP)
-		data["timeleft"] = null
-		data["all_roles"] = null
-		data["roleinfo"] = null
-		data["players"] = null
 		return data
 
 	var/datum/mafia_role/user_role = player_role_lookup[user]
@@ -648,7 +641,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	return data
 
-/datum/mafia_controller/ui_data(mob/user)
+/datum/mafia_controller/ui_data(atom/user)
 	var/list/data = list()
 
 	data["phase"] = phase

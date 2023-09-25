@@ -58,6 +58,23 @@ export const MafiaPanelData = (props, context) => {
     'mafia_tab',
     'Role list'
   );
+
+  if (phase === 'No Game') {
+    return (
+      <Stack fill>
+        <Stack.Item grow={1}>
+          <Stack fill vertical>
+            <MafiaLobby />
+
+            <Stack grow>
+              <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
+            </Stack>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    );
+  }
+
   return (
     <Stack fill>
       {!!roleinfo && (
@@ -67,11 +84,6 @@ export const MafiaPanelData = (props, context) => {
       )}
       <Stack.Item grow={1}>
         <Stack fill vertical>
-          {!roleinfo && (
-            <Stack.Item grow>
-              <MafiaLobby />
-            </Stack.Item>
-          )}
           {!!roleinfo && (
             <>
               <Stack.Item>

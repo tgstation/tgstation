@@ -100,6 +100,8 @@
 /// now clearing refs to prepare for the next day. Do not do any actions here, it's just for ref clearing.
 #define COMSIG_MAFIA_NIGHT_END "night_end"
 
+/// signal sent to roles when the game is confirmed starting
+#define COMSIG_MAFIA_GAME_START "game_start"
 /// signal sent to roles when the game is confirmed ending
 #define COMSIG_MAFIA_GAME_END "game_end"
 
