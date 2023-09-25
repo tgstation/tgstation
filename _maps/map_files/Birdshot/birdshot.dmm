@@ -10965,6 +10965,10 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
+"ejV" = (
+/mob/living/basic/mining/basilisk,
+/turf/open/misc/asteroid,
+/area/space/nearstation)
 "eki" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
@@ -17566,6 +17570,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
+"gxZ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/duct,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/greater)
 "gyd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/spawner/directional/east,
@@ -24145,6 +24157,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"iMy" = (
+/turf/open/misc/asteroid,
+/area/space/nearstation)
 "iMC" = (
 /obj/machinery/flasher/portable,
 /turf/open/floor/plating,
@@ -24439,13 +24454,6 @@
 /obj/structure/sign/warning/pods/directional/west,
 /turf/open/floor/iron/checker,
 /area/station/security/breakroom)
-"iSO" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/maintenance/fore/greater)
 "iSW" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/boxing/yellow,
@@ -29903,6 +29911,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
+"kOW" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid,
+/area/space/nearstation)
 "kPa" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -50656,10 +50668,6 @@
 "rQi" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
-"rQo" = (
-/mob/living/basic/mining/basilisk,
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "rQt" = (
 /obj/effect/landmark/start/mime,
 /turf/open/floor/carpet/lone,
@@ -105469,8 +105477,8 @@ dDB
 dDB
 dDB
 dDB
-dDB
-dDB
+aJq
+aJq
 pzd
 pzd
 pzd
@@ -105726,9 +105734,9 @@ dDB
 dDB
 dDB
 dDB
-dDB
-dDB
-rGL
+aJq
+aJq
+pzd
 dYf
 xaj
 meP
@@ -105982,10 +105990,10 @@ dDB
 dDB
 dDB
 dDB
-dDB
-dDB
-dDB
-rGL
+aJq
+aJq
+aJq
+pzd
 vIN
 eyz
 mUC
@@ -106238,11 +106246,11 @@ dDB
 dDB
 dDB
 dDB
-dDB
-dDB
-dDB
-dDB
-rGL
+aJq
+aJq
+aJq
+aJq
+pzd
 rIO
 ktN
 gEQ
@@ -106497,9 +106505,9 @@ blb
 blb
 blb
 hwJ
-dDB
-dDB
-rGL
+aJq
+aJq
+pzd
 eKX
 jFc
 nRo
@@ -106753,10 +106761,10 @@ dDB
 dDB
 dDB
 dDB
-rGL
-rGL
-rGL
-rGL
+pzd
+pzd
+pzd
+pzd
 ydt
 rGL
 rGL
@@ -109078,9 +109086,9 @@ bqy
 bqy
 bqy
 pzd
-nFW
-iSO
-bHA
+sJR
+njm
+gxZ
 dxz
 sJR
 xwy
@@ -109589,9 +109597,9 @@ hwJ
 aJq
 aJq
 vcE
-vcE
-vcE
-vcE
+jIb
+pyt
+nvS
 nFW
 iUy
 vtL
@@ -110615,8 +110623,8 @@ aJq
 aJq
 aJq
 aJq
-aJq
-weg
+iMy
+jJy
 nvS
 kbY
 imE
@@ -110871,8 +110879,8 @@ aJq
 aJq
 aJq
 aJq
-aJq
-aJq
+iMy
+iMy
 weg
 jKf
 nvS
@@ -111126,9 +111134,9 @@ dDB
 dDB
 aJq
 aJq
-aJq
-aJq
-aJq
+iMy
+iMy
+iMy
 aJq
 weg
 weg
@@ -111383,8 +111391,8 @@ dDB
 dDB
 aJq
 aJq
-aJq
-aJq
+iMy
+kOW
 aJq
 aJq
 kNb
@@ -111640,7 +111648,7 @@ dDB
 dDB
 aJq
 aJq
-aJq
+ejV
 aJq
 aJq
 aJq
@@ -130988,7 +130996,7 @@ aJq
 tYT
 tYT
 tYT
-rQo
+tYT
 tYT
 tYT
 tYT
