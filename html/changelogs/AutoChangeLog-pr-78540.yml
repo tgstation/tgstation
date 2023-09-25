@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Centcom now rejects contraband that somehow makes it way onto the cargo shuttle mid-transit and returns it."
