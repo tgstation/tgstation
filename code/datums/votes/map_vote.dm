@@ -118,3 +118,12 @@
 	SSmapping.map_voted = TRUE
 	if(SSmapping.map_vote_rocked)
 		SSmapping.map_vote_rocked = FALSE
+
+/proc/revert_map_vote()
+	var/datum/map_config/override_map = SSmapping.config
+	if(isnull(override_map))
+		return
+
+	SSmapping.changemap(override_map)
+	log_game("The next map has been reset to [override_map.map_name].")
+	send_to_playing_players(span_boldannounce("The next map is: [override_map.map_name]."))

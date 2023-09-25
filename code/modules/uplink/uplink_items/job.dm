@@ -325,3 +325,10 @@
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/evil_seedling
+	name = "Evil Seedling"
+	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
+	item = /obj/item/seeds/seedling/evil
+	cost = 8
+	restricted_roles = list(JOB_BOTANIST)
