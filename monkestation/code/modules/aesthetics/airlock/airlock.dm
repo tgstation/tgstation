@@ -659,12 +659,3 @@
 #undef AIRLOCK_FRAME_CLOSING
 #undef AIRLOCK_FRAME_OPEN
 #undef AIRLOCK_FRAME_OPENING
-
-
-/obj/machinery/door/poddoor/shutters/cc
-	obj_flags = INDESTRUCTIBLE
-
-/obj/machinery/door/poddoor/shutters/cc/xcc
-	id = "XCCsec1"
-	name = "XCC Checkpoint 1 Shutters"
-	max_integrity = 3000000
