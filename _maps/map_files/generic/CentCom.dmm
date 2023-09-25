@@ -3791,7 +3791,8 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/turf/open/space/basic,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "pc" = (
 /obj/structure/sign/nanotrasen,
