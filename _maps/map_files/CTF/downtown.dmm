@@ -2126,9 +2126,6 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/beret/sec/navywarden{
-	name = "blue beret"
-	},
 /turf/open/floor/carpet/blue,
 /area/centcom/ctf)
 "VD" = (

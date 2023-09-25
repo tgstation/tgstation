@@ -549,7 +549,6 @@
 /obj/structure/closet/wardrobe/white/medical,
 /obj/item/clothing/suit/toggle/labcoat/interdyne,
 /obj/item/clothing/under/syndicate/scrubs,
-/obj/item/clothing/head/beret/medical,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/mineral/plastitanium,
@@ -1145,8 +1144,6 @@
 /obj/item/clothing/suit/toggle/labcoat/interdyne,
 /obj/item/clothing/under/syndicate/scrubs,
 /obj/item/clothing/under/syndicate/scrubs,
-/obj/item/clothing/head/beret/medical,
-/obj/item/clothing/head/beret/medical,
 /obj/item/clothing/shoes/jackboots,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)

@@ -121,14 +121,6 @@
 	icon_state = "capcap"
 	dog_fashion = null
 
-/obj/item/clothing/head/caphat/beret
-	name = "captain's beret"
-	desc = "For the Captains known for their sense of fashion."
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#0070B7#FFCE5B"
-
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
 	name = "head of personnel's cap"
@@ -246,7 +238,7 @@
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
 		return FALSE
-	
+
 	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
@@ -369,11 +361,6 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
-
-/obj/item/clothing/head/hats/hos/beret/navyhos
-	name = "head of security's formal beret"
-	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
-	greyscale_colors = "#638799#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/syndicate
 	name = "syndicate beret"
@@ -510,47 +497,6 @@
 	acid = 50
 	wound = 4
 
-/obj/item/clothing/head/beret/sec/navywarden
-	name = "warden's beret"
-	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
-	greyscale_colors = "#638799#ebebeb"
-	strip_delay = 60
-
-/obj/item/clothing/head/beret/sec/navyofficer
-	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
-	greyscale_colors = "#638799#a52f29"
-
-//Science
-/obj/item/clothing/head/beret/science
-	name = "science beret"
-	desc = "A science-themed beret for our hardworking scientists."
-	greyscale_colors = "#8D008F"
-	flags_1 = NONE
-
-/obj/item/clothing/head/beret/science/rd
-	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#7e1980#c9cbcb"
-
-//Medical
-/obj/item/clothing/head/beret/medical
-	name = "medical beret"
-	desc = "A medical-flavored beret for the doctor in you!"
-	greyscale_colors = "#FFFFFF"
-	flags_1 = NONE
-
-/obj/item/clothing/head/beret/medical/paramedic
-	name = "paramedic beret"
-	desc = "For finding corpses in style!"
-	greyscale_colors = "#16313D"
-
-/obj/item/clothing/head/beret/medical/cmo
-	name = "chief medical officer beret"
-	desc = "A beret in a distinct surgical turquoise!"
-	greyscale_colors = "#5EB8B8"
-
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
 	icon_state = "surgicalcap"
@@ -591,20 +537,6 @@
 	name = "black surgery cap"
 	icon_state = "surgicalcapblack"
 	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
-
-//Engineering
-/obj/item/clothing/head/beret/engi
-	name = "engineering beret"
-	desc = "Might not protect you from radiation, but definitely will protect you from looking unfashionable!"
-	greyscale_colors = "#FFBC30"
-	flags_1 = NONE
-
-//Cargo
-/obj/item/clothing/head/beret/cargo
-	name = "cargo beret"
-	desc = "No need to compensate when you can wear this beret!"
-	greyscale_colors = "#b7723d"
-	flags_1 = NONE
 
 //Curator
 /obj/item/clothing/head/fedora/curator

@@ -22012,8 +22012,6 @@
 /obj/item/clothing/under/rank/security/officer/formal,
 /obj/item/clothing/suit/jacket/officer/blue,
 /obj/item/clothing/suit/jacket/officer/blue,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
 /turf/open/floor/plating,
 /area/station/security/tram)
 "iap" = (
@@ -26630,8 +26628,6 @@
 /obj/item/clothing/under/rank/security/officer/formal,
 /obj/item/clothing/suit/jacket/officer/blue,
 /obj/item/clothing/suit/jacket/officer/blue,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/security/tram)

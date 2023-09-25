@@ -81,13 +81,12 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/under/rank/security/officer/formal = 2,
 					/obj/item/clothing/suit/jacket/officer/blue = 2,
-					/obj/item/clothing/head/beret/sec/navyofficer = 2,
-					/obj/item/clothing/under/rank/security/warden/formal,
-					/obj/item/clothing/suit/jacket/warden/blue,
-					/obj/item/clothing/head/beret/sec/navywarden,
-					/obj/item/clothing/under/rank/security/head_of_security/formal,
-					/obj/item/clothing/suit/jacket/hos/blue,
-					/obj/item/clothing/head/hats/hos/beret/navyhos,
+					/obj/item/clothing/head/beret/sec = 3,
+					/obj/item/clothing/under/rank/security/warden/formal = 1,
+					/obj/item/clothing/suit/jacket/warden/blue = 1,
+					/obj/item/clothing/under/rank/security/head_of_security/formal = 1,
+					/obj/item/clothing/suit/jacket/hos/blue = 1,
+					/obj/item/clothing/head/hats/hos/beret = 1,
 				)
 	crate_name = "security clothing crate"
 

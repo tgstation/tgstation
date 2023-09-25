@@ -150,7 +150,7 @@
 	name = "Syndicate Operative - Interdyne Reinforcement"
 	uniform = /obj/item/clothing/under/syndicate/scrubs
 	suit = /obj/item/clothing/suit/toggle/labcoat/interdyne
-	head = /obj/item/clothing/head/beret/medical
+	head = /obj/item/clothing/head/utility/surgerycap
 	gloves = /obj/item/clothing/gloves/latex
 	neck = /obj/item/clothing/neck/stethoscope
 	glasses = /obj/item/clothing/glasses/hud/health

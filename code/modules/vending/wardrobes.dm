@@ -15,7 +15,7 @@
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(
-		/obj/item/clothing/head/beret/sec = 3,
+		/obj/item/clothing/head/beret/sec = 5,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
@@ -35,7 +35,6 @@
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,
 		/obj/item/clothing/suit/jacket/officer/blue = 3,
-		/obj/item/clothing/head/beret/sec/navyofficer = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
@@ -53,11 +52,9 @@
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 4,
 		/obj/item/clothing/head/costume/nursehat = 4,
-		/obj/item/clothing/head/beret/medical = 4,
 		/obj/item/clothing/head/utility/surgerycap = 4,
 		/obj/item/clothing/head/utility/surgerycap/purple = 4,
 		/obj/item/clothing/head/utility/surgerycap/green = 4,
-		/obj/item/clothing/head/beret/medical/paramedic = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/mask/surgical = 4,
@@ -99,7 +96,6 @@
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/clothing/head/utility/hardhat = 3,
 		/obj/item/clothing/head/utility/hardhat/welding = 3,
-		/obj/item/clothing/head/beret/engi = 3,
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
 		/obj/item/clothing/under/rank/engineering/engineer = 3,
 		/obj/item/clothing/under/rank/engineering/engineer/skirt = 3,
@@ -151,7 +147,6 @@
 	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(
-		/obj/item/clothing/head/beret/cargo = 3,
 		/obj/item/clothing/mask/bandana/striped/cargo = 3,
 		/obj/item/clothing/head/soft = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
@@ -223,7 +218,6 @@
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
-		/obj/item/clothing/head/beret/science = 3,
 		/obj/item/clothing/mask/gas = 3,
 		/obj/item/clothing/mask/bandana/striped/science = 3,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -546,7 +540,6 @@
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(
-		/obj/item/clothing/head/beret/medical = 2,
 		/obj/item/clothing/under/rank/medical/chemist = 2,
 		/obj/item/clothing/under/rank/medical/chemist/skirt = 2,
 		/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
@@ -605,7 +598,6 @@
 		/obj/item/clothing/mask/surgical = 2,
 		/obj/item/clothing/under/rank/medical/virologist = 2,
 		/obj/item/clothing/under/rank/medical/virologist/skirt = 2,
-		/obj/item/clothing/head/beret/medical = 2,
 		/obj/item/clothing/shoes/sneakers/white = 2,
 		/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/medical/viro = 2,

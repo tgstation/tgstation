@@ -62,7 +62,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/rd
-	head = /obj/item/clothing/head/beret/science/rd
+	head = /obj/item/clothing/head/utility/welding
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/jackboots
 	gloves = /obj/item/clothing/gloves/color/black
