@@ -17,8 +17,6 @@
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
-	avatar.drop_all_held_items()
-
 	var/thing = avatar.get_active_held_item()
 	if(!isnull(thing))
 		qdel(thing)
