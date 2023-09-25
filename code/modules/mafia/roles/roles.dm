@@ -15,7 +15,15 @@
 	///The player's written notes, that they can send to chat at any time.
 	var/written_notes
 
+	///The ckey of the person playing as this Mafia role, CAN BE NULL IN FAVOR OF player_pda.
 	var/player_key
+	///The PDA of the person playing as this Mafia role, CAN BE NULL IN FAVOR OF player_key.
+	var/obj/item/modular_computer/player_pda
+
+	///List of all messages this role got throughout the game.
+	var/list/role_messages = list()
+
+
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
@@ -46,10 +54,38 @@
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
+	var/obj/item/modular_computer/modpc = player_pda //destroy it to prevent keeping ui data.
+	if(modpc)
+		var/datum/computer_file/program/mafia/mafia_app = locate() in modpc.stored_files
+		if(mafia_app)
+			mafia_app.kill_program()
+	UnregisterSignal(body, COMSIG_MOB_SAY)
 	QDEL_NULL(mafia_alert)
 	QDEL_NULL(body)
 	QDEL_LIST(role_unique_actions)
+	role_messages = null
 	return ..()
+
+/datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
+	body = new_body
+	RegisterSignal(new_body, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/**
+ * handle_speech
+ *
+ * Handles Mafia roles talking in chat.
+ * First it will go through their abilities for Ability-specific speech,
+ * if none affects it, we will go to day chat.
+ */
+/datum/mafia_role/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	for(var/datum/mafia_ability/abilities as anything in role_unique_actions)
+		if(abilities.handle_speech(source, speech_args))
+			return
+	var/datum/mafia_controller/mafia_game = GLOB.mafia_game
+	if(!mafia_game || mafia_game.phase == MAFIA_PHASE_NIGHT)
+		return
+	mafia_game.send_message(html_decode(speech_args[SPEECH_MESSAGE]))
 
 /**
  * Puts the player in their body and keeps track of their previous one to put them back in later.

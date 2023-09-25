@@ -39,3 +39,21 @@
 		return FALSE
 	using_ability = TRUE
 	game.vote_for(host_role, new_target, "Mafia", MAFIA_TEAM_MAFIA)
+
+/**
+ * handle_message
+ *
+ * During the night, Changelings talking will instead redirect it to Changeling chat.
+ */
+/datum/mafia_ability/changeling_kill/handle_speech(datum/source, list/speech_args)
+	. = ..()
+	var/datum/mafia_controller/mafia_game = GLOB.mafia_game
+	if(!mafia_game)
+		return FALSE
+	if (mafia_game.phase != MAFIA_PHASE_NIGHT)
+		return FALSE
+
+	var/phrase = html_decode(speech_args[SPEECH_MESSAGE])
+	mafia_game.send_message(span_changeling("<b>[host_role.body.real_name]:</b> [phrase]"), MAFIA_TEAM_MAFIA)
+	speech_args[SPEECH_MESSAGE] = ""
+	return TRUE

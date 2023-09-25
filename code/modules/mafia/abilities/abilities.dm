@@ -29,6 +29,11 @@
 	target_role = null
 	return ..()
 
+///Handles special messagese sent by ability-specific stuff (such as changeling chat).
+/datum/mafia_ability/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	return FALSE
+
 /**
  * Called when refs need to be cleared, when the target is no longer set.
  */

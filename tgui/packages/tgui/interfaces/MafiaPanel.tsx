@@ -31,9 +31,14 @@ type LobbyData = {
   status: string;
 };
 
+type MessageData = {
+  msg: string;
+};
+
 type MafiaData = {
   players: PlayerInfo[];
   lobbydata: LobbyData[];
+  messages: MessageData[];
   user_notes: string;
   roleinfo: RoleInfo;
   phase: string;
@@ -43,14 +48,95 @@ type MafiaData = {
   admin_controls: boolean;
 };
 
-export const MafiaPanel = (props, context) => {
+export const MafiaPanelData = (props, context) => {
   const { act, data } = useBackend<MafiaData>(context);
-  const { phase, roleinfo, admin_controls } = data;
+  const { phase, roleinfo, admin_controls, messages } = data;
   const [mafia_tab, setMafiaMode] = useLocalState(
     context,
     'mafia_tab',
     'Role list'
   );
+  return (
+    <Stack fill vertical>
+      {!!messages && (
+        <Stack.Item grow>
+          <MafiaChat />
+        </Stack.Item>
+      )}
+      {!roleinfo && (
+        <Stack.Item grow>
+          <MafiaLobby />
+        </Stack.Item>
+      )}
+      {!!roleinfo && (
+        <>
+          <Stack.Item>
+            <MafiaRole />
+          </Stack.Item>
+          {phase === 'Judgment' && (
+            <Stack.Item>
+              <MafiaJudgement />
+            </Stack.Item>
+          )}
+        </>
+      )}
+      {!!admin_controls && <MafiaAdmin />}
+      {phase !== 'No Game' && (
+        <Stack.Item grow>
+          <Stack grow fill>
+            <>
+              <Stack.Item grow>
+                <MafiaPlayers />
+              </Stack.Item>
+              <Stack.Item fluid grow>
+                <Stack.Item>
+                  <Tabs fluid>
+                    <Tabs.Tab
+                      align="center"
+                      selected={mafia_tab === 'Role list'}
+                      onClick={() => setMafiaMode('Role list')}>
+                      Role list
+                      <Button
+                        color="transparent"
+                        icon="address-book"
+                        tooltipPosition="bottom-start"
+                        tooltip={multiline`
+                            This is the list of roles in the game. You can
+                            press the question mark to get a quick blurb
+                            about the role itself.`}
+                      />
+                    </Tabs.Tab>
+                    <Tabs.Tab
+                      align="center"
+                      selected={mafia_tab === 'Notes'}
+                      onClick={() => setMafiaMode('Notes')}>
+                      Notes
+                      <Button
+                        color="transparent"
+                        icon="pencil"
+                        tooltipPosition="bottom-start"
+                        tooltip={multiline`
+                            This is your notes, anything you want to write
+                            can be saved for future reference. You can
+                            also send it to chat with a button.`}
+                      />
+                    </Tabs.Tab>
+                  </Tabs>
+                </Stack.Item>
+                {mafia_tab === 'Role list' && <MafiaListOfRoles />}
+                {mafia_tab === 'Notes' && <MafiaNotesTab />}
+              </Stack.Item>
+            </>
+          </Stack>
+        </Stack.Item>
+      )}
+    </Stack>
+  );
+};
+
+export const MafiaPanel = (props, context) => {
+  const { act, data } = useBackend<MafiaData>(context);
+  const { phase, roleinfo, admin_controls, messages } = data;
   return (
     <Window
       title="Mafia"
@@ -58,77 +144,23 @@ export const MafiaPanel = (props, context) => {
       width={650}
       height={580}>
       <Window.Content>
-        <Stack fill vertical>
-          {!roleinfo && (
-            <Stack.Item grow>
-              <MafiaLobby />
-            </Stack.Item>
-          )}
-          {!!roleinfo && (
-            <>
-              <Stack.Item>
-                <MafiaRole />
-              </Stack.Item>
-              {phase === 'Judgment' && (
-                <Stack.Item>
-                  <MafiaJudgement />
-                </Stack.Item>
-              )}
-            </>
-          )}
-          {!!admin_controls && <MafiaAdmin />}
-          {phase !== 'No Game' && (
-            <Stack.Item grow>
-              <Stack grow fill>
-                <>
-                  <Stack.Item grow>
-                    <MafiaPlayers />
-                  </Stack.Item>
-                  <Stack.Item fluid grow>
-                    <Stack.Item>
-                      <Tabs fluid>
-                        <Tabs.Tab
-                          align="center"
-                          selected={mafia_tab === 'Role list'}
-                          onClick={() => setMafiaMode('Role list')}>
-                          Role list
-                          <Button
-                            color="transparent"
-                            icon="address-book"
-                            tooltipPosition="bottom-start"
-                            tooltip={multiline`
-                            This is the list of roles in the game. You can
-                            press the question mark to get a quick blurb
-                            about the role itself.`}
-                          />
-                        </Tabs.Tab>
-                        <Tabs.Tab
-                          align="center"
-                          selected={mafia_tab === 'Notes'}
-                          onClick={() => setMafiaMode('Notes')}>
-                          Notes
-                          <Button
-                            color="transparent"
-                            icon="pencil"
-                            tooltipPosition="bottom-start"
-                            tooltip={multiline`
-                            This is your notes, anything you want to write
-                            can be saved for future reference. You can
-                            also send it to chat with a button.`}
-                          />
-                        </Tabs.Tab>
-                      </Tabs>
-                    </Stack.Item>
-                    {mafia_tab === 'Role list' && <MafiaListOfRoles />}
-                    {mafia_tab === 'Notes' && <MafiaNotesTab />}
-                  </Stack.Item>
-                </>
-              </Stack>
-            </Stack.Item>
-          )}
-        </Stack>
+        <MafiaPanelData />
       </Window.Content>
     </Window>
+  );
+};
+
+const MafiaChat = (props, context) => {
+  const { act, data } = useBackend<MafiaData>(context);
+  const { messages } = data;
+  return (
+    <Section fill scrollable title="Chat Logs">
+      <Flex direction="column">
+        {messages.map((message) => (
+          <Box key={message.msg}>{message.msg}</Box>
+        ))}
+      </Flex>
+    </Section>
   );
 };
 
