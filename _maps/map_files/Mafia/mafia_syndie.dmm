@@ -45,10 +45,6 @@
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"n" = (
-/obj/effect/landmark/mafia,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/mafia)
 "o" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
@@ -68,6 +64,7 @@
 	name = "tactical swivel chair"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "r" = (
@@ -93,12 +90,14 @@
 	name = "tactical swivel chair"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "y" = (
 /obj/structure/chair/office{
 	name = "tactical swivel chair"
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "z" = (
@@ -106,6 +105,7 @@
 	name = "tactical swivel chair"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "A" = (
@@ -113,6 +113,7 @@
 	dir = 8;
 	name = "tactical swivel chair"
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "B" = (
@@ -120,6 +121,7 @@
 	dir = 4;
 	name = "tactical swivel chair"
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "C" = (
@@ -128,6 +130,7 @@
 	name = "tactical swivel chair"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "E" = (
@@ -135,6 +138,7 @@
 	dir = 1;
 	name = "tactical swivel chair"
 	},
+/obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "G" = (
@@ -144,11 +148,6 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/clothing/syndie,
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
-"H" = (
-/obj/effect/landmark/mafia,
-/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "Q" = (
@@ -318,11 +317,11 @@ w
 G
 o
 p
-n
+r
 r
 p
 o
-H
+o
 p
 r
 b
@@ -340,7 +339,7 @@ c
 d
 d
 w
-H
+o
 o
 w
 w
@@ -350,7 +349,7 @@ o
 w
 w
 r
-n
+r
 w
 d
 d
@@ -414,7 +413,7 @@ w
 c
 d
 j
-n
+r
 r
 r
 y
@@ -426,7 +425,7 @@ p
 q
 o
 o
-H
+o
 j
 i
 c
@@ -464,7 +463,7 @@ w
 c
 d
 j
-H
+o
 o
 o
 z
@@ -476,7 +475,7 @@ p
 E
 r
 r
-n
+r
 j
 d
 c
@@ -540,7 +539,7 @@ c
 f
 d
 w
-n
+r
 r
 w
 w
@@ -550,7 +549,7 @@ r
 w
 w
 o
-H
+o
 w
 d
 d
@@ -568,11 +567,11 @@ w
 b
 r
 p
-H
+o
 o
 p
 r
-n
+r
 p
 o
 G
