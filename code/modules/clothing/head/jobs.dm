@@ -628,7 +628,7 @@
 	for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
 		pill_count++
 
-	var/final_message = "You examine [examining] closer with your [name], you notice [examining.p_they()] have "
+	var/final_message = "You examine [examining] closer with your [name], you notice [examining.p_they()] [examining.p_have()] "
 	if(pill_count >= 1 && has_tongue)
 		final_message += "[pill_count] pill\s in their mouth, and \a [has_tongue]."
 	else if(pill_count >= 1)
