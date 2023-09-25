@@ -112,7 +112,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			return TRUE
 		if(HAS_TRAIT(beard_dresser, TRAIT_SHAVED))
 			to_chat(beard_dresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
-			beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald)
+			beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
 			return TRUE
 		beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 	else
