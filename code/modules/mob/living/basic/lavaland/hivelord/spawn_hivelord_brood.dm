@@ -52,7 +52,7 @@
 /datum/action/cooldown/mob_cooldown/hivelord_spawn/proc/spawn_brood(target, turf/target_turf, feedback = TRUE)
 	var/ai_target = isliving(target) ? target : null
 	if (isnull(ai_target))
-		ai_target = owner.ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+		ai_target = owner.ai_controller?.blackboard[ai_target_key]
 
 	var/dir_to_target = get_dir(owner, target_turf)
 	var/list/target_turfs = list()
@@ -80,6 +80,7 @@
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/hivelord_spawn/proc/complete_spawn(turf/spawn_turf, target)
 	var/mob/living/brood = new spawn_type(spawn_turf)
+	brood.faction = owner.faction
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_turf)
 

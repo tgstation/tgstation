@@ -30,20 +30,15 @@
 	elapsed_time = 0
 
 /obj/item/organ/internal/legion_tumour/attack(mob/living/target, mob/living/user, params)
-	if (!proximity_flag)
-		return ..()
 	if (try_apply(target, user))
 		return
 	return ..()
 
 /// Smear it on someone like a regen core, why not
 /obj/item/organ/internal/legion_tumour/proc/try_apply(mob/living/target, mob/user)
-	if (!isliving(target))
-		balloon_alert(user, "invalid target!")
+	if(!user.Adjacent(target) || !isliving(target) || target.stat == DEAD)
 		return FALSE
-	if (target.stat == DEAD)
-		balloon_alert(user, "they're dead!")
-		return FALSE
+
 	target.apply_status_effect(applied_status)
 	target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
 

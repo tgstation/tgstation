@@ -42,6 +42,18 @@
 		new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
 	return ..()
 
+/mob/living/basic/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	if (ishuman(target) && target.stat > SOFT_CRIT)
+		infest(target)
+		return
+	if (isliving(target) && faction_check_mob(target))
+		visible_message(span_warning("[src] melds with [target]'s flesh!"))
+		target.apply_status_effect(/datum/status_effect/regenerative_core)
+		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
+		death()
+		return
+	return ..()
+
 /// Turn the targetted mob into one of us
 /mob/living/basic/legion_brood/proc/infest(mob/living/target)
 	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
