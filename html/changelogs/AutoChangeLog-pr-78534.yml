@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Metalgen can no longer be used to transmute indestructible turfs."
