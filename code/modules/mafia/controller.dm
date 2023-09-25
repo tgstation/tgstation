@@ -327,7 +327,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
  */
 /datum/mafia_controller/proc/check_victory()
-	return FALSE
 	var/list/datum/mafia_role/living_town = list()
 	var/list/datum/mafia_role/living_mafia = list()
 	var/list/datum/mafia_role/living_neutrals = list()
