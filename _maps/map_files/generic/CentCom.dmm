@@ -140,12 +140,15 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "aL" = (
-/obj/structure/railing/corner,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 6;
+	layer = 3.1
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "aM" = (
@@ -717,12 +720,6 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "dv" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
@@ -893,6 +890,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
+	},
+/obj/structure/railing{
+	dir = 10;
+	layer = 3.1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -4608,6 +4609,10 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 10;
+	layer = 3.1
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "sx" = (
@@ -6452,10 +6457,6 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Ae" = (
-/obj/structure/railing/corner,
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
@@ -7895,9 +7896,6 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/fore)
 "GT" = (
@@ -8064,6 +8062,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -8700,6 +8702,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
+	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -10609,9 +10615,6 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/tdome/observation)
 "Tb" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
