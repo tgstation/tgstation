@@ -547,6 +547,7 @@
 		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=FALSE, use_steps=TRUE)
 
 	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
+		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
 
 /**
  * Used to stabilize the body temperature back to normal on living mobs
