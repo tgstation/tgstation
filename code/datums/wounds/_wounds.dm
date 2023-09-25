@@ -442,7 +442,7 @@
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(!limb.current_gauze)
+			set_disabling(isnull(limb.current_gauze))
 
 		limb.update_wounds(replaced_or_replacing)
 
