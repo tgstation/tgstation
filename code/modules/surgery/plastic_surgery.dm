@@ -1,3 +1,4 @@
+/// Disk containing info for doing advanced plastic surgery. Spawns in maint and available as a role-restricted item in traitor uplinks.
 /obj/item/disk/surgery/advanced_plastic_surgery
 	name = "Advanced Plastic Surgery Disk"
 	desc = "The disk provides instructions on how to do an Advanced Plastic Surgery, this surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face. With the surgery long becoming obsolete with the rise of genetics technology. This item became an antique to many collectors, With only the cheaper and easier basic form of plastic surgery remaining in use in most places."
@@ -24,7 +25,7 @@
 		/datum/surgery_step/close,
 	)
 
-//insert plastic
+//Insert plastic step, It ain't called plasting surgery for nothing! :)
 /datum/surgery_step/insert_plastic
 	name = "insert plastic (plastic)"
 	implements = list(
@@ -89,7 +90,7 @@
 				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist
 			else
-				user.visible_message(span_warning("You have no picture to base the appearance on, Reverting to random appearances."))
+				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
 					names += target.dna.species.random_name(target.gender, TRUE)
 		else
