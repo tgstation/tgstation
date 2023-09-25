@@ -1,7 +1,7 @@
 /obj/item/food/prison_loaf
 	name = "prison loaf"
 	desc = "A barely edible brick of nutrients, designed as a low-cost solution to malnourishment."
-	icon = 'monkestation/code/modules/loafing/icon/obj.dmi'
+	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loaf"
 	var/loaf_density = 1 //base loaf density
 	var/can_condense = TRUE //for special loaves, make false

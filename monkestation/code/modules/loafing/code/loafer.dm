@@ -1,7 +1,7 @@
 /obj/structure/disposalpipe/loafer
 	name = "loafing device"
 	desc = "A prisoner feeding device that condenses matter into an Ultra Delicious(tm) nutrition bar!"
-	icon = 'monkestation/code/modules/loafing/icon/obj.dmi'
+	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loafer"
 	var/is_loafing = FALSE
 
