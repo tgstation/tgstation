@@ -300,7 +300,8 @@ SUBSYSTEM_DEF(job)
 	SetupOccupations()
 	unassigned = list()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
-		load_jobs_from_config()
+		// Any errors with the configs has already been said, we don't need to repeat them here.
+		load_jobs_from_config(silent = TRUE)
 	set_overflow_role(overflow_role)
 	return
 
