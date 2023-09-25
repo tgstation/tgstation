@@ -127,7 +127,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return TRUE
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
 		to_chat(hairdresser, span_notice("If only growing back hair were that easy for you... The reminder makes you feel terrible."))
-		hairdresser.add_mood_event("bald_hair_day", /datum/mood_event/bald)
+		hairdresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
 		return TRUE
 
 	hairdresser.set_hairstyle(new_style, update = TRUE)
