@@ -75,13 +75,14 @@
 	check_neighbors(update_neighbors)
 	overlays.Cut()
 
+	var/turf/turf = get_turf(src)
 	if(dir == SOUTH)
 		layer = ABOVE_MOB_LAYER + 0.01
 
-	else if( dir != NORTH)
-		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, get_turf(src))
+	else if(dir != NORTH)
+		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
 	else
-		SET_PLANE(src, GAME_PLANE, get_turf(src))
+		SET_PLANE(src, GAME_PLANE, turf)
 		layer = initial(layer)
 
 	if(!neighbor_status || !anchored)
