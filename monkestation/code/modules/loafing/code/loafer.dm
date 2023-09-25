@@ -17,22 +17,15 @@
 		playsound(src, 'monkestation/code/modules/loafing/sound/loafer.ogg', 100, 1)
 
 		//create new loaf
-		var/obj/item/food/prison_loaf/loaf = locate(/obj/item/food/prison_loaf) in holder.contents
-		if(!loaf)
-			loaf = new /obj/item/food/prison_loaf(src)
+		var/obj/item/food/prison_loaf/loaf = new /obj/item/food/prison_loaf(src)
 
 		//add all the garbage to the loaf's contents
 		for (var/atom/movable/debris in holder)
 			if(debris.reagents)//the object has reagents
 				debris.reagents.trans_to(loaf, 1000)
-			if(istype(debris, /obj/machinery/power/supermatter_crystal/))
-				var/obj/machinery/power/supermatter_crystal/loaf/superloaf = new /obj/machinery/power/supermatter_crystal/loaf
-				loaf = null
-				holder.contents += superloaf
-				break
 			if(istype(debris, /obj/item/food/prison_loaf))//the object is a loaf, compress somehow
 				var/obj/item/food/prison_loaf/loaf_to_grind = debris
-				loaf.loaf_density += loaf_to_grind.loaf_density
+				loaf.loaf_density += loaf_to_grind.loaf_density * 1.05
 				loaf_to_grind = null
 			else if(isliving(debris))
 				var/mob/living/victim = debris
@@ -41,8 +34,10 @@
 					loaf.reagents.add_reagent(/datum/reagent/fuel, 10)
 					loaf.reagents.add_reagent(/datum/reagent/iron, 10)
 				else
-					loaf.reagents.add_reagent(/datum/reagent/blood, 10)
-					loaf.reagents.add_reagent(/datum/reagent/ammonia/urine, 10)
+					loaf.reagents.add_reagent(/datum/reagent/bone_dust, 3)
+					loaf.reagents.add_reagent(/datum/reagent/ammonia/urine, 2)
+					loaf.reagents.add_reagent(/datum/reagent/consumable/liquidgibs, 2)
+					loaf.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 2)
 				//then we give the loaf more power
 				if(ishuman(victim))
 					loaf.loaf_density += 50
@@ -56,7 +51,7 @@
 			else if (istype(debris, /obj/item))//everything else
 				var/obj/item/kitchen_sink = debris
 				var/weight = kitchen_sink.w_class
-				loaf.loaf_density += weight
+				loaf.loaf_density += weight * 3
 			holder.contents -= debris
 			qdel(debris)
 
