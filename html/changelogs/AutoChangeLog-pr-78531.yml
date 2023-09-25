@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "you can no longer push watchers (and any other lavaland basic mob) around by running into them"
