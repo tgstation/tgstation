@@ -77,6 +77,7 @@
 
 	var/turf/turf = get_turf(src)
 	if(dir == SOUTH)
+		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
 		layer = ABOVE_MOB_LAYER + 0.01
 
 	else if(dir != NORTH)
