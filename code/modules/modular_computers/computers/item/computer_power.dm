@@ -36,15 +36,15 @@
 ///Charge depends on whether the PC is on, and what programs are running/idle on it.
 /obj/item/modular_computer/proc/handle_power(seconds_per_tick)
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
-	for(var/datum/computer_file/program/open_programs as anything in idle_threads + active_program)
+	if(active_program)
+		power_usage += active_program.power_cell_use
+	for(var/datum/computer_file/program/open_programs as anything in idle_threads)
 		if(!open_programs.power_cell_use)
 			continue
 		if(open_programs in idle_threads)
 			power_usage += (open_programs.power_cell_use / 2)
-		else
-			power_usage += open_programs.power_cell_use
 
-	if(use_power(power_usage))
+	if(use_power(power_usage * seconds_per_tick))
 		return TRUE
 	power_failure()
 	return FALSE

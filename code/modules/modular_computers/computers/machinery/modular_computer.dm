@@ -70,7 +70,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
+	if(!cpu || !cpu.enabled || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
@@ -81,7 +81,7 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled && cpu.use_power())
+	if(cpu.enabled)
 		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
