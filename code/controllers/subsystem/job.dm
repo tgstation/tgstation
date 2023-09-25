@@ -299,8 +299,9 @@ SUBSYSTEM_DEF(job)
 		player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
-	if(overflow_role)
-		set_overflow_role(overflow_role)
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		load_jobs_from_config()
+	set_overflow_role(overflow_role)
 	return
 
 
