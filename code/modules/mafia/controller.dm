@@ -612,14 +612,12 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
 		var/obj/item/modular_computer/modpc = role.player_pda
-		var/client/player_client = GLOB.directory[role.player_key]
-		if(player_client)
-			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.register_body(H)
 		if(modpc)
 			player_role_lookup[modpc] = role
 		else
 			player_role_lookup[H] = role
+		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
 			role.put_player_in_body(player_client)
 		role.greet()

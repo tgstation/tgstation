@@ -186,10 +186,11 @@ const MafiaChat = (props, context) => {
                 fluid
                 content="Send to Chat"
                 textAlign="center"
-                onClick={() =>
-                  act('send_message_to_chat', { message: message_to_send })
-                }
                 tooltip="Sends your message to chat."
+                onClick={() => {
+                  setMessagingBox('');
+                  act('send_message_to_chat', { message: message_to_send });
+                }}
               />
             </Stack.Item>
           </Stack>
