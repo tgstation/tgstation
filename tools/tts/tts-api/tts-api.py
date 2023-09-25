@@ -130,12 +130,4 @@ if __name__ == "__main__":
 	if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
 		os.putenv('LD_LIBRARY_PATH', os.getenv('TTS_LD_LIBRARY_PATH'))
 	from waitress import serve
-	#response = requests.get(f"http://127.0.0.1:5003/tts-voices")
-	#list_of_voices = json.loads(response.content)
-	#for voice in list_of_voices:
-	#	for pitch in [-12, 0, 12]:
-	#		dummy_request = requests.get(f"http://127.0.0.1:5003/generate-tts-blips", json={ 'text': "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 'voice': voice, 'pitch': str(pitch) })
-	#		if dummy_request.status_code != 200:
-	#			print(dummy_request.status_code)
-	#			print("FAILED TO DO PITCH " + str(pitch) + " VOICE " + str(voice))
 	serve(app, host="0.0.0.0", port=5002, threads=2, backlog=8, connection_limit=24, channel_timeout=10)
