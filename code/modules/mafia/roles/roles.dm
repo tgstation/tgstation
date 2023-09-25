@@ -54,11 +54,6 @@
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
-	var/obj/item/modular_computer/modpc = player_pda //destroy it to prevent keeping ui data.
-	if(modpc)
-		var/datum/computer_file/program/mafia/mafia_app = locate() in modpc.stored_files
-		if(mafia_app)
-			mafia_app.kill_program()
 	UnregisterSignal(body, COMSIG_MOB_SAY)
 	QDEL_NULL(mafia_alert)
 	QDEL_NULL(body)
@@ -69,6 +64,23 @@
 /datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
 	body = new_body
 	RegisterSignal(new_body, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/**
+ * send_message_to_player
+ *
+ * Sends a message to a player, checking if they are playing through a PDA or not.
+ * Args:
+ * * message - The message to send to the person
+ * * balloon_alert - Whether it should be as a balloon alert, only if it's to a non-PDA user.
+ */
+/datum/mafia_role/proc/send_message_to_player(message, balloon_alert = FALSE)
+	if(player_pda)
+		role_messages += message
+		return
+	if(balloon_alert)
+		body.balloon_alert(body, message)
+		return
+	to_chat(body, message)
 
 /**
  * handle_speech
@@ -85,7 +97,8 @@
 	var/datum/mafia_controller/mafia_game = GLOB.mafia_game
 	if(!mafia_game || mafia_game.phase == MAFIA_PHASE_NIGHT)
 		return
-	mafia_game.send_message(html_decode(speech_args[SPEECH_MESSAGE]))
+	var/message = "[source]: [html_decode(speech_args[SPEECH_MESSAGE])]"
+	mafia_game.send_message(message, log_only = TRUE)
 
 /**
  * Puts the player in their body and keeps track of their previous one to put them back in later.

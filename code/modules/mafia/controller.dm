@@ -175,12 +175,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			role.player_key = selected_player
 			ready_ghosts -= selected_player
 
-/datum/mafia_controller/proc/send_message(msg, team)
+///Sends a global message to all players, or just 'team' if set.
+/datum/mafia_controller/proc/send_message(msg, team, log_only = FALSE)
 	for(var/datum/mafia_role/role as anything in all_roles)
 		if(team && role.team != team)
 			continue
 		role.role_messages += msg
-		to_chat(role.body, msg)
+		if(!log_only)
+			to_chat(role.body, msg)
 
 /**
  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -192,7 +194,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/start_game()
 	create_bodies()
 	start_day(can_vote = FALSE)
-	send_message(span_notice("<b>The selected map is [current_map.name]!</b></br>[current_map.description]"))
+	send_message(span_notice("<b>The selected map is [current_map.name]!</b></br> [current_map.description]"))
 	send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE), (FIRST_DAY_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE) //no voting period = no votes = instant night
 	for(var/datum/mafia_role/roles as anything in all_roles)
@@ -416,6 +418,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/mafia_controller/proc/end_game()
+	for(var/datum/mafia_role/roles as anything in all_roles)
+		var/obj/item/modular_computer/modpc = roles.player_pda
+		if(!modpc)
+			continue
+		modpc.update_static_data_for_all_viewers()
 	QDEL_LIST(all_roles)
 	living_roles.Cut()
 	QDEL_LIST(landmarks)
@@ -624,6 +631,13 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(usr.client?.holder)
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
 	data["all_roles"] = current_setup_text
+
+	if(phase == MAFIA_PHASE_SETUP)
+		data["timeleft"] = null
+		data["all_roles"] = null
+		data["roleinfo"] = null
+		data["players"] = null
+		return data
 
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
@@ -835,7 +849,13 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			if(user_role.game_status == MAFIA_DEAD)
 				return TRUE
 			user_role.written_notes = params["new_notes"]
-			user_role.body.balloon_alert(user_role.body, "notes saved")
+			user_role.send_message_to_player("notes saved", balloon_alert = TRUE)
+			return TRUE
+		if("send_message_to_chat")
+			if(user_role.game_status == MAFIA_DEAD)
+				return TRUE
+			var/message_said = params["message"]
+			user_role.body.say(message_said, forced = "mafia notes sending")
 			return TRUE
 		if("send_notes_to_chat")
 			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
@@ -867,21 +887,21 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			if("vote_abstain")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))
 					return
-				to_chat(user_role.body,"You have decided to abstain.")
+				user_role.send_message_to_player("You have decided to abstain.")
 				judgement_innocent_votes -= user_role
 				judgement_guilty_votes -= user_role
 				judgement_abstain_votes += user_role
 			if("vote_innocent")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_innocent_votes))
 					return
-				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
+				user_role.send_message_to_player("Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
 				judgement_abstain_votes -= user_role//no fakers, and...
 				judgement_guilty_votes -= user_role//no radical centrism
 				judgement_innocent_votes += user_role
 			if("vote_guilty")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_guilty_votes))
 					return
-				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
+				user_role.send_message_to_player("Your vote on [on_trial.body.real_name] submitted as GUILTY!")
 				judgement_abstain_votes -= user_role//no fakers, and...
 				judgement_innocent_votes -= user_role//no radical centrism
 				judgement_guilty_votes += user_role
@@ -1098,7 +1118,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	maptext_height = 480
 	maptext_width = 480
 	///The client that owns the popup.
-	var/datum/mafia_role/mafia/owner
+	var/datum/mafia_role/owner
 
 /atom/movable/screen/mafia_popup/Initialize(mapload, datum/mafia_role/mafia)
 	. = ..()
@@ -1109,6 +1129,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	return ..()
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
+	owner.role_messages += text
 	maptext = MAPTEXT("<span style='color: [COLOR_RED]; text-align: center; font-size: 24pt'> [text]</span>")
 	maptext_width = view_to_pixels(owner.body.client?.view_size.getView())[1]
 	owner.body.client?.screen += src
