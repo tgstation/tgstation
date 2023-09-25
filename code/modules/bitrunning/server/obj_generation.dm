@@ -17,6 +17,16 @@
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
+	avatar.drop_all_held_items()
+
+	var/thing = avatar.get_active_held_item()
+	if(!isnull(thing))
+		qdel(thing)
+
+	thing = avatar.get_inactive_held_item()
+	if(!isnull(thing))
+		qdel(thing)
+
 	var/obj/item/storage/backpack/bag = avatar.back
 	if(istype(bag))
 		QDEL_LIST(bag.contents)
