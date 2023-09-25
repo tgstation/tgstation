@@ -8,6 +8,8 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///Path we should use next time we use the JPS movement datum
 #define BB_PATH_TO_USE "BB_path_to_use"
+///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
+#define BB_AGGRO_RANGE "BB_aggro_range"
 
 ///song instrument blackboard, set by instrument subtrees
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
