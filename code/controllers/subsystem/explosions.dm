@@ -279,6 +279,11 @@ SUBSYSTEM_DEF(explosions)
  */
 /datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, atom/explosion_cause)
 	epicenter = get_turf(epicenter)
+
+	var/area/checking = get_area(epicenter)
+	if((checking.area_flags & NO_EXPLOSIONS_DURING) && SSticker.current_state == GAME_STATE_PLAYING)
+		return
+
 	if(!epicenter)
 		return
 

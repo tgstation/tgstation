@@ -142,6 +142,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DEATH_MESSAGE (1<<15)
 /// This area should have extra shielding from certain event effects
 #define EVENT_PROTECTED (1<<16)
+///is this a passive area
+#define PASSIVE_AREA (1<<17)
+///is this a ghost accessible area?
+#define GHOST_AREA (1<<18)
+///can we explode during rounds?
+#define NO_EXPLOSIONS_DURING (1<<19)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
