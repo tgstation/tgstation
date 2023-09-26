@@ -7,6 +7,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
+	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
+	/turf/open/indestructible
+)))
 
 //Various reagents
 //Toxin & acid reagents
