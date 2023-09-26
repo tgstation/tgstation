@@ -30,6 +30,12 @@
 	return ..() //Run parent at end
 
 /datum/ai_controller/robot_customer/UnpossessPawn(destroy)
+	if(isnull(pawn))
+#ifndef UNIT_TESTS
+		stack_trace("Robot Customer AI Controller UnpossessPawn called with null pawn! This shouldn't happen in normal circumstances.") // and unit tests are abnormal circumstances
+#endif
+		return
+
 	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
 	return ..() //Run parent at end
 
