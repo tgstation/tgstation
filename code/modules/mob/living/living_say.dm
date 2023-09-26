@@ -407,9 +407,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 					filter += worn_mask.voice_filter
 				use_radio = worn_mask.use_radio_beeps_tts
 		if(use_radio)
-			special_filter += "radio"
+			special_filter += TTS_FILTER_RADIO
 		if(issilicon(src))
-			special_filter += "silicon"
+			special_filter += TTS_FILTER_SILICON
 
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
