@@ -4431,6 +4431,7 @@
 #include "code\modules\mob\living\basic\space_fauna\regal_rat\regal_rat_actions.dm"
 #include "code\modules\mob\living\basic\space_fauna\regal_rat\regal_rat_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\snake\snake.dm"
+#include "code\modules\mob\living\basic\space_fauna\snake\snake_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spider_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spider_subtrees.dm"

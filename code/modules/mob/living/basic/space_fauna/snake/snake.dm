@@ -31,7 +31,7 @@
 	mob_size = MOB_SIZE_SMALL
 
 	faction = list(FACTION_HOSTILE)
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_REPTILE
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	ai_controller = /datum/ai_controller/basic_controller/snake
@@ -61,9 +61,10 @@
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
 	)
 
+	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -71,4 +72,5 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/snake,
 	)
