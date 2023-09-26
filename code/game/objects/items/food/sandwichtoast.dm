@@ -262,14 +262,14 @@
 ///Override for checkliked callback
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /**
 * Callback to be used with the edible component.
-* If you eat the sandwich with the right clothes and hairstyle, you like it.
+* If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
 * If you don't, you contract a deadly disease.
 */
-/obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
+/obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
