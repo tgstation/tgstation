@@ -30,8 +30,6 @@
 	var/click_cooldown_override = 0
 	///the visual effect appearing when the ammo is fired.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
-	///Does this leave a casing behind?
-	var/is_cased_ammo = TRUE
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
 
@@ -148,8 +146,6 @@
 	return ..()
 
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
-	if(!is_cased_ammo)
-		return
 	update_appearance()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)

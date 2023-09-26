@@ -108,7 +108,7 @@
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"moth_antennae" = pick(GLOB.moth_antennae_list),
 		"moth_markings" = pick(GLOB.moth_markings_list),
-		"tail_monkey" = "None",
+		"tail_monkey" = "Monkey",
 		"pod_hair" = pick(GLOB.pod_hair_list),
 	))
 
@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			X.flags_1 |= ADMIN_SPAWNED_1
 	return X //return the last mob spawned
 
-/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
+/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE, cardinals_only = TRUE)
 	var/turf/T = get_turf(target)
 	var/step_count = 0
 	if(!T)
@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				step_count = rand(1, max_walk)
 
 			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
+				step(X, cardinals_only ? pick(GLOB.cardinals) : pick(GLOB.alldirs))
 
 	return spawned_mobs
 
@@ -592,7 +592,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
-#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
+#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis) || mob.has_status_effect(/datum/status_effect/embryonic))
 
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.

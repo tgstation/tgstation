@@ -118,11 +118,14 @@
 	return hook?.reason_we_cant_fish(target_fish_source)
 
 /obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
-	if(!reward)
+	// catching things that aren't fish or alive mobs doesn't consume baits.
+	if(isnull(reward) || isnull(bait))
 		return
-	var/mob/living/caught_mob = isliving(reward) ? reward : null
-	// catching non-fish, non-mob movables, or dead mobs (probably from a chasm) doesn't consume baits.
-	if(!bait || !isfish(reward) || !caught_mob || (caught_mob && caught_mob.stat == DEAD))
+	if(isliving(reward))
+		var/mob/living/caught_mob = reward
+		if(caught_mob.stat == DEAD)
+			return
+	else if(!isfish(reward))
 		return
 	QDEL_NULL(bait)
 	update_icon()
@@ -157,7 +160,7 @@
 	if(!istype(user))
 		return
 	var/beam_color = line?.line_color || default_line_color
-	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
+	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
 	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
 	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line_beam, COMSIG_QDELETING, PROC_REF(clear_line))
@@ -208,7 +211,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!CheckToolReach(src, source.target, cast_range))
+	if(!isturf(source.origin.loc) || !isturf(source.target.loc) || !CheckToolReach(src, source.target, cast_range))
 		SEND_SIGNAL(source, COMSIG_FISHING_LINE_SNAPPED) //Stepped out of range or los interrupted
 		return BEAM_CANCEL_DRAW
 
@@ -574,6 +577,31 @@
 	// Is the fishing rod held in left side hand
 	var/lefthand = FALSE
 
+	// Make these inline with final sprites
+	var/righthand_s_px = 13
+	var/righthand_s_py = 16
+
+	var/righthand_e_px = 18
+	var/righthand_e_py = 16
+
+	var/righthand_w_px = -20
+	var/righthand_w_py = 18
+
+	var/righthand_n_px = -14
+	var/righthand_n_py = 16
+
+	var/lefthand_s_px = -13
+	var/lefthand_s_py = 15
+
+	var/lefthand_e_px = 24
+	var/lefthand_e_py = 18
+
+	var/lefthand_w_px = -17
+	var/lefthand_w_py = 16
+
+	var/lefthand_n_px = 13
+	var/lefthand_n_py = 15
+
 /datum/beam/fishing_line/Start()
 	update_offsets(origin.dir)
 	. = ..()
@@ -602,29 +630,3 @@
 		if(NORTH)
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
-
-// Make these inline with final sprites
-/datum/beam/fishing_line
-	var/righthand_s_px = 13
-	var/righthand_s_py = 16
-
-	var/righthand_e_px = 18
-	var/righthand_e_py = 16
-
-	var/righthand_w_px = -20
-	var/righthand_w_py = 18
-
-	var/righthand_n_px = -14
-	var/righthand_n_py = 16
-
-	var/lefthand_s_px = -13
-	var/lefthand_s_py = 15
-
-	var/lefthand_e_px = 24
-	var/lefthand_e_py = 18
-
-	var/lefthand_w_px = -17
-	var/lefthand_w_py = 16
-
-	var/lefthand_n_px = 13
-	var/lefthand_n_py = 15

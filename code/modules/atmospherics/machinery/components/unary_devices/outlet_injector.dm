@@ -43,16 +43,13 @@
 	. += span_notice("You can link it with an air sensor using a multitool.")
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = ..()
-
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
-		sensor.inlet_id = id_tag
-		multi_tool.set_buffer(null)
-		balloon_alert(user, "input linked to sensor")
+		multi_tool.set_buffer(src)
+		sensor.multitool_act(user, multi_tool)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	balloon_alert(user, "saved in buffer")
+	balloon_alert(user, "injector saved in buffer")
 	multi_tool.set_buffer(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

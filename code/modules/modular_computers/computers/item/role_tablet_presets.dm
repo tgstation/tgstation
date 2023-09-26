@@ -270,6 +270,14 @@
 		/datum/computer_file/program/skill_tracker,
 	)
 
+/obj/item/modular_computer/pda/bitrunner
+	name = "bit runner PDA"
+	greyscale_colors = "#D6B328#6BC906"
+	starting_programs = list(
+		/datum/computer_file/program/arcade,
+		/datum/computer_file/program/skill_tracker,
+	)
+
 /**
  * Service
  */

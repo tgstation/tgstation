@@ -29,6 +29,7 @@
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/effect/constructing_effect,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -235,13 +236,13 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if (isliving(arrived))
+	if(isliving(arrived))
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		GLOB.chasm_fallen_mobs += arrived
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if (isliving(gone))
+	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 		GLOB.chasm_fallen_mobs -= gone
 

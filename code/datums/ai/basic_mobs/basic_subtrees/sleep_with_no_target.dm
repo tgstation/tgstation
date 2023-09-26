@@ -16,7 +16,7 @@
 
 /datum/ai_behavior/sleep_after_targetless_time/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/atom/target = controller.blackboard[target_key]
-	finish_action(controller, succeeded = !target, seconds_per_tick = seconds_per_tick)
+	finish_action(controller, succeeded = QDELETED(target), seconds_per_tick = seconds_per_tick)
 
 /datum/ai_behavior/sleep_after_targetless_time/finish_action(datum/ai_controller/controller, succeeded, seconds_per_tick)
 	. = ..()

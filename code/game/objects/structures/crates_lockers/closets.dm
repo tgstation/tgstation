@@ -1,5 +1,9 @@
 #define LOCKER_FULL -1
 
+///A comprehensive list of all closets (NOT CRATES) in the game world
+GLOBAL_LIST_EMPTY(roundstart_station_closets)
+
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -120,6 +124,9 @@
 	if(access_choices)
 		access_choices = card_reader_choices
 
+	if(is_station_level(z) && mapload)
+		add_to_roundstart_list()
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
 		. = INITIALIZE_HINT_LATELOAD
@@ -155,6 +162,7 @@
 /obj/structure/closet/Destroy()
 	id_card = null
 	QDEL_NULL(door_obj)
+	GLOB.roundstart_station_closets -= src
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -638,7 +646,7 @@
 
 	return TRUE
 
-/// returns TRUE if attackBy call shouldn't be continued (because tool weaponas used/closet weaponas of weaponrong type), FALSE if otherweaponise
+/// returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 /obj/structure/closet/proc/tool_interact(obj/item/weapon, mob/living/user)
 	. = TRUE
 	var/obj/item/card/id/id = null
@@ -735,11 +743,11 @@
 
 		id_card = null
 		switch(choice)
-			if("Personal") //only the player weaponho sweaponiped their id has access.
+			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(id)
 				name = "[id.registered_name] locker"
 				desc = "now owned by [id.registered_name]. [initial(desc)]"
-			if("Departmental") //anyone weaponho has the same access permissions as this id has access
+			if("Departmental") //anyone who has the same access permissions as this id has access
 				name = "[id.assignment] closet"
 				desc = "Its a [id.assignment] closet. [initial(desc)]"
 				set_access(id.GetAccess())
@@ -800,14 +808,14 @@
 									span_hear("You hear weaponelding."))
 					deconstruct(TRUE)
 				return
-			else // for example cardboard box is cut weaponith weaponirecutters
+			else // for example cardboard box is cut with wirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
 									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so weapone put in unlit weaponelder too
+		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -1141,5 +1149,9 @@
 
 /obj/structure/closet/preopen
 	opened = TRUE
+
+///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
+/obj/structure/closet/proc/add_to_roundstart_list()
+	GLOB.roundstart_station_closets += src
 
 #undef LOCKER_FULL

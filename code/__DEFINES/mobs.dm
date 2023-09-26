@@ -393,6 +393,14 @@
 #define SHOCK_NOSTUN (1 << 3)
 /// No default message is sent from the shock
 #define SHOCK_SUPPRESS_MESSAGE (1 << 4)
+/// No skeleton animation if a human was shocked
+#define SHOCK_NO_HUMAN_ANIM (1 << 5)
+/// Ignores TRAIT_STUNIMMUNE
+#define SHOCK_IGNORE_IMMUNITY (1 << 6)
+/// Prevents the immediate stun, instead only gives the delay
+#define SHOCK_DELAY_STUN (1 << 7)
+/// Makes the paralyze into a knockdown
+#define SHOCK_KNOCKDOWN (1 << 8)
 
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
@@ -865,13 +873,17 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MOB_VOMIT_HARM (1<<2)
 /// Flag which makes the mob vomit blood
 #define MOB_VOMIT_BLOOD (1<<3)
+/// Flag which will cause the mob to fall over when vomiting.
+#define MOB_VOMIT_KNOCKDOWN (1<<4)
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
-#define MOB_VOMIT_FORCE (1<<4)
+#define MOB_VOMIT_FORCE (1<<5)
 
-/// The default "vomit" color green, which will ultinately give you might typically expect to happen when you vomit.
-#define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_STUN | MOB_VOMIT_HARM)
-/// The green vomit you've all come to know and love, but with a little extra "spice" (blood)
+/// The default. Gives you might typically expect to happen when you vomit.
+#define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)
+/// The vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
+/// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
+#define VOMIT_CATEGORY_KNOCKDOWN (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_KNOCKDOWN)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1

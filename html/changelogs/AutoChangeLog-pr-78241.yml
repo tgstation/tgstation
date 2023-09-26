@@ -1,5 +1,0 @@
-author: "Ghommie (Based on an old PR by Trilbyspaceclone from Citadel)"
-delete-after: True
-changes:
-  - qol: "The notepad app now includes basic nautical directions in its default message."
-  - qol: "A tip about nautical directions, too."
