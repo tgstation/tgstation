@@ -64,8 +64,9 @@
 		exposed_mob.domutcheck()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype)
-	return ..() || .
+	. = ..()
+	if(affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
@@ -98,10 +99,10 @@
 	return ..()
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
 	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
-	return ..()
 
 /datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
 	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM)) // sometimes mobs can temporarily metabolize plasma (e.g. plasma fixation disease symptom)
@@ -152,6 +153,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
 	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
@@ -159,7 +161,6 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	return ..()
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
 	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM))
@@ -180,17 +181,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = UPDATE_MOB_HEALTH
-
-	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
-		. = FALSE
-
-	if(.)
+	. = ..()
+	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
 		affected_mob.adjustOxyLoss(5 * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.losebreath += 2 * REM * normalise_creation_purity() * seconds_per_tick
+		. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote("gasp")
-	return ..() || .
 
 /datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/affected_mob)
 	RegisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
@@ -213,14 +210,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_mob, span_danger("Your insides are burning!"))
 		if(affected_mob.adjustToxLoss(rand(20, 60), updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 	else if(SPT_PROB(23, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(5))
-			. = UPDATE_MOB_HEALTH
-	return ..() || .
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
@@ -686,7 +683,6 @@
 	else
 		return ..() || .
 
-
 /datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
@@ -901,8 +897,8 @@
 	var/delayed_toxin_damage = 0
 
 /datum/reagent/toxin/amanitin/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	delayed_toxin_damage += (seconds_per_tick * 3)
-	return ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/affected_mob)
 	affected_mob.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
