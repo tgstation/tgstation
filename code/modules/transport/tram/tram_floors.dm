@@ -18,23 +18,6 @@
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
 
-/turf/open/floor/tram/plate
-	name = "linear induction plate"
-	desc = "The linear induction plate that powers the tram."
-	icon = 'icons/turf/tram.dmi'
-	icon_state = "tram_plate"
-	base_icon_state = "tram_plate"
-	flags_1 = NONE
-
-/turf/open/floor/tram/plate/energized
-	desc = "The linear induction plate that powers the tram. It is currently energized."
-	/// Inbound station
-	var/inbound
-	/// Outbound station
-	var/outbound
-	/// Transport ID of the tram
-	var/specific_transport_id = TRAMSTATION_LINE_1
-
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
 	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place. Use a [EXAMINE_HINT("wrench")] to remove the plate.")
@@ -78,24 +61,39 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(80))
-				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+				if(!ispath(baseturf_at_depth(2), /turf/open/floor))
 					attempt_lattice_replacement()
 				else
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-			else if(prob(50))
-				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				break_tile()
 		if(EXPLODE_HEAVY)
-			if(prob(50))
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			if(prob(30))
+				if(!ispath(baseturf_at_depth(2), /turf/open/floor))
+					attempt_lattice_replacement()
+				else
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
 				break_tile()
 		if(EXPLODE_LIGHT)
-			if(prob(30))
+			if(prob(50))
 				break_tile()
 
 	return TRUE
+
+/turf/open/floor/tram/broken_states()
+	return list("tram_platform-damaged1","tram_platform-damaged2")
+
+/turf/open/floor/tram/tram_platform/burnt_states()
+	return list("tram_platform-scorched1","tram_platform-scorched2")
+
+/turf/open/floor/tram/plate
+	name = "linear induction plate"
+	desc = "The linear induction plate that powers the tram."
+	icon = 'icons/turf/tram.dmi'
+	icon_state = "tram_plate"
+	base_icon_state = "tram_plate"
+	flags_1 = NONE
 
 /turf/open/floor/tram/plate/broken_states()
 	return list("tram_plate-damaged1","tram_plate-damaged2")
@@ -103,17 +101,14 @@
 /turf/open/floor/tram/plate/burnt_states()
 	return list("tram_plate-scorched1","tram_plate-scorched2")
 
-/turf/open/floor/tram/plate/energized/broken_states()
-	return list("energized_plate_damaged")
-
-/turf/open/floor/tram/plate/energized/burnt_states()
-	return list("energized_plate_damaged")
-
-/turf/open/floor/tram/broken_states()
-	return list("tram_platform-damaged1","tram_platform-damaged2")
-
-/turf/open/floor/tram/tram_platform/burnt_states()
-	return list("tram_platform-scorched1","tram_platform-scorched2")
+/turf/open/floor/tram/plate/energized
+	desc = "The linear induction plate that powers the tram. It is currently energized."
+	/// Inbound station
+	var/inbound
+	/// Outbound station
+	var/outbound
+	/// Transport ID of the tram
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /turf/open/floor/tram/plate/energized/Initialize(mapload)
 	. = ..()
@@ -123,6 +118,22 @@
 	. = ..()
 	if(broken || burnt)
 		. += span_danger("It looks damaged and the electrical components exposed!")
+		. += span_notice("The plate can be repaired using a [EXAMINE_HINT("titanium sheet")].")
+
+/turf/open/floor/tram/plate/energized/broken_states()
+	return list("energized_plate_damaged")
+
+/turf/open/floor/tram/plate/energized/burnt_states()
+	return list("energized_plate_damaged")
+
+/turf/open/floor/tram/plate/energized/attackby(obj/item/attacking_item, mob/living/user, params)
+	if((broken || burnt) && istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
+		if(attacking_item.use(1))
+			broken = FALSE
+			update_appearance()
+			balloon_alert(user, "plate replaced")
+			return
+	return ..()
 
 // Resetting the tram contents to its original state needs the turf to be there
 /turf/open/indestructible/tram
