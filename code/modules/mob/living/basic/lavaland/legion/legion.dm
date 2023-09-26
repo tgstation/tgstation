@@ -64,6 +64,7 @@
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
+	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
 	name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)

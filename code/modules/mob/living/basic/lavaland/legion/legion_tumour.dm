@@ -13,7 +13,7 @@
 	/// How long have we been in this stage?
 	var/elapsed_time = 0 SECONDS
 	/// How long does it take to advance one stage?
-	var/growth_time = 90 SECONDS
+	var/growth_time = 80 SECONDS // Long enough that if you go back to lavaland without realising it you're not totally fucked
 	/// What kind of mob will we transform into?
 	var/spawn_type = /mob/living/basic/mining/legion
 	/// Spooky sounds to play as you start to turn
@@ -31,6 +31,7 @@
 
 /obj/item/organ/internal/legion_tumour/attack(mob/living/target, mob/living/user, params)
 	if (try_apply(target, user))
+		qdel(src)
 		return
 	return ..()
 
@@ -45,7 +46,7 @@
 	if (target != user)
 		target.visible_message(span_notice("[user] splatters [target] with [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
 	else
-		to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving."))
+		to_chat(user, span_notice("You smear [src] on yourself. Disgusting tendrils pull your wounds closed."))
 	return TRUE
 
 /obj/item/organ/internal/legion_tumour/on_life(seconds_per_tick, times_fired)
@@ -81,7 +82,9 @@
 			if(SPT_PROB(3, seconds_per_tick))
 				owner.vomit(vomit_type = /obj/effect/decal/cleanable/vomit/old/black_bile)
 				if (prob(50))
-					var/mob/living/basic/legion_brood/child = new(owner.loc)
+					var/turf/check_turf = get_step(owner.loc, owner.dir)
+					var/atom/land_turf = (check_turf.is_blocked_turf()) ? owner.loc : check_turf
+					var/mob/living/basic/legion_brood/child = new(land_turf)
 					child.assign_creator(owner, copy_full_faction = FALSE)
 
 			if(SPT_PROB(3, seconds_per_tick))
@@ -98,12 +101,13 @@
 		return
 	stage++
 	elapsed_time = 0
+	if (stage == 5)
+		to_chat(owner, span_bolddanger("Something is moving under your skin!"))
 
 /// Consume our host
 /obj/item/organ/internal/legion_tumour/proc/infest()
 	if (QDELETED(src) || QDELETED(owner))
 		return
-	new /obj/effect/gibspawner/generic(owner.loc)
 	owner.visible_message(span_boldwarning("Black tendrils burst from [owner]'s flesh, covering them in amorphous flesh!"))
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(owner.loc)
 	new_legion.consume(owner)
