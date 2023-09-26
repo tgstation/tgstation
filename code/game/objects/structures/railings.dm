@@ -24,7 +24,6 @@
 	bomb = 10
 
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
-	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
 

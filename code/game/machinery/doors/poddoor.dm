@@ -174,10 +174,11 @@
 /obj/machinery/door/poddoor/shuttledock
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
+	max_integrity = 100000 ///lol
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)
-	if(!istype(turf, turftype))
+	if(!istype(turf, turftype) && SSticker.current_state == GAME_STATE_PLAYING)
 		INVOKE_ASYNC(src, PROC_REF(open))
 	else
 		INVOKE_ASYNC(src, PROC_REF(close))

@@ -11,7 +11,7 @@
 	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/crab/spycrab
+/mob/living/basic/crab/spycrab
 	name = "spy crab"
 	desc = "hon hon hon"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
@@ -20,7 +20,7 @@
 	icon_dead = "crab_dead"
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/crab/spycrab/Initialize(mapload)
+/mob/living/basic/crab/spycrab/Initialize(mapload)
 	. = ..()
 	var/random_icon = pick("crab_red","crab_blue")
 	icon_state = random_icon

@@ -405,6 +405,10 @@
 //Cannot apply negative damage
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
 	SHOULD_CALL_PARENT(TRUE)
+	var/area/target_area = get_area(src.owner)
+	if(target_area)
+		if((target_area.area_flags & PASSIVE_AREA))
+			return FALSE
 
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)

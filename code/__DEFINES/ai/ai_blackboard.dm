@@ -83,3 +83,5 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+#define BB_GROUP_DATUM "BB_group_datum"
