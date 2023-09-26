@@ -746,3 +746,254 @@
   timothymtorres:
   - bugfix: Fix wooden barricade description "This looks like it can be barricaded
       with planks of wood" being spammed on objects.
+2023-09-20:
+  LT3:
+  - rscadd: 'New random event: Supermatter Surge'
+  - code_imp: Individual supermatter crystals can have custom gas properties
+  RikuTheKiller:
+  - spellcheck: Unreverted and improved resonance cascade message.
+  - balance: Supermatter now takes 15 seconds to delaminate normally and 5 if a sliver
+      has been taken from it. Gives a little more time to escape in the case of the
+      sliver and also evens out the times to please perfectionists.
+  - bugfix: Supermatter now accurately reports it's detonation time.
+  - spellcheck: Supermatter mood descriptions have been reverted back to their old,
+      more flavorful selves.
+  Thunder12345:
+  - balance: Improvised shotgun shells now deal half as much damage to humans and
+      cause less wounds, but do 50% more damage to structures and machines. They also
+      require a glass shard for crafting.
+  ZephyrTFA:
+  - bugfix: Lava can no longer occasionally generate inside of previously loaded templates
+      and breach and/or destroy shit
+  antropod:
+  - bugfix: Fixed Mafia achievements
+  carlarctg:
+  - qol: Crafting R&D guns from gun kits no longer requires tools or cable coil. The
+      decloner and energy crossbow still need reagents.
+  - qol: Halved R&D gun crafting time. 20->10 seconds.
+  intercepti0n:
+  - image: resprites t-ray scanner, gas analyzer, geiger counter and hand drill.
+  jlsnow301:
+  - refactor: Refactors the camera console UI.
+  mc-oofert:
+  - rscadd: heretic knock path and its respective items and award
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  nikothedude:
+  - balance: 'EMP damage on augs: 2/1.5 from 3/2'
+  - balance: Augs now only get paralyzed by EMP for 3/6 seconds if they are damaged
+      below 70% HP,
+  - balance: Aug EMP knockdown reduced to 3 seconds
+  - balance: Synthetic ears now take far less EMP damage
+  vinylspiders:
+  - bugfix: fixes inedible grown items (such as tower caps) becoming unclickable when
+      harvested, fixes their seeds disappearing when inserted into the seed machine
+2023-09-21:
+  Coconutwarrior97:
+  - bugfix: Fixes a bug allowing holopara injectors to be refundable when used.
+  Exester509:
+  - rscadd: Splashing antihol on a patient before surgery will make it to go slower.
+  GPeckman:
+  - bugfix: The caller in a holopad call should now be able to hear people on the
+      other end.
+  Rhials:
+  - qol: Restores holiday hats for drones.
+  - qol: Extends holiday hat behavior to assistants. Get festive!
+  Shadow-Quill:
+  - bugfix: RCD Construction effects will no longer fall into chasms.
+  SyncIt21:
+  - bugfix: wall mounted objects air alarms, fire alarms etc now actually falls off/gets
+      destroyed when their attached wall is deconstructed
+  - bugfix: wall mounts crafted in game also properly falls off/gets destroyed when
+      their attached wall is deconstructed
+  blueDev2:
+  - bugfix: Recipe that converts Vegetable Oil into Olive Oil works properly
+  nikothedude:
+  - bugfix: Projectiles no longer cause a blood graphic or blood splatters if they
+      hit a limb that cant bleed
+  - rscadd: Prosthetics/Augments now spark when shot
+  - bugfix: Gauze no longer falls off if a wound is demoted or promoted
+  vinylspiders:
+  - bugfix: rescue hooks will once again drop the mob next to the fisherman instead
+      of just displaying a balloon alert and doing nothing
+2023-09-22:
+  Jacquerel:
+  - admin: Admins can transform misbehaving players into arbitrary objects at will.
+  Sealed101:
+  - bugfix: fixed moonicorns making space/chasm/lava/water bridges with their fairy
+      grass
+  Toastgoats:
+  - balance: Peacekeeper cyborg's emagged hug is no longer a hardstun.
+  intercepti0n:
+  - image: resprites t-ray scanner.
+2023-09-23:
+  ArcaneMusic:
+  - bugfix: Conveyor belts now properly show their new screentips on mouseover with
+      tools.
+  Ben10Omintrix:
+  - refactor: seedlings have been refactored into basic mobs please report any bugs
+  - rscadd: seedlings now can have different colored petals and can look after botanys
+      plants
+  - rscadd: seedlings are re-added to the game! they grow out of seedling seeds obtainable
+      from exotic seed crates or traitor uplink
+  GPeckman:
+  - admin: Boneless smite should work properly again.
+  LT3:
+  - rscadd: Poly now causes a power surge when dusted by the supermatter crystal
+  - bugfix: Ghosts and godmode mobs will no longer create resonance when touching
+      the supermatter crystal
+  Shadow-Quill:
+  - rscadd: The Message Monitor console's board can now be obtained via the telecoms
+      research node.
+  distributivgesetz, CoiledLamb:
+  - rscadd: 'Added two new awards specifically for engineering and medical: The "Emergency
+      Services Award" and the "Atmospheric Mastery Award". CEs get 3 Emergency Services
+      Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards.'
+  lizardqueenlexi:
+  - bugfix: Foods that have special conditions for liking/disliking them (such as
+      donuts for sec officers) have these conditions again.
+  - bugfix: Characters with ageusia properly ignore non-toxic food types that they
+      eat.
+  - bugfix: If you examine toxic food, it can no longer appear to you as edible.
+  mc-oofert:
+  - bugfix: clown bomb payload is no longer named badmin payload and no longer disperses
+      clowns in cardinal directions only
+2023-09-24:
+  GPeckman:
+  - bugfix: Epinephrine will now update health properly.
+  Jacquerel:
+  - rscadd: Brimdemon corpses release an explosion shortly after death, just to keep
+      you on your toes.
+  - refactor: Brimdemons now use the basic mob framework which (should) improve their
+      pathfinding somewhat. Please bug report any unusual behaviour.
+  - admin: The brimdemon's beam ability can be given to any mob, for your Binding
+      of Isaac event
+  - admin: Admins can now reset or modify the chaplain's sect from a UI panel
+  LT3:
+  - bugfix: Fixed supermatter surges always being the lowest severity
+  Melbert:
+  - bugfix: Maybe fixes some weird occurrences where you lose the ability to pass
+      over tables when you shouldn't, and visa versa
+  jlsnow301:
+  - rscadd: Adds Bitrunning to supply department- a semi-offstation role that rewards
+      teamwork.
+  - rscadd: Adds new machines to complement the job- net pod, quantum server, quantum
+      consoles, and the nexacache vendor.
+  - rscadd: Adds several new maps which can be loaded and unloaded at will.
+  - rscadd: Some flair for the new bitrunning vendor.
+  - rscadd: Adds a new antagonist for the virtual domain only. Short lived ghost role
+      that fights bitrunners.
+  - rscdel: Removes the BEPIS machine, moves its tech into the Bitrunning vendor.
+  mc-oofert:
+  - refactor: clowns are basicmobs now
+2023-09-25:
+  Ghommie:
+  - bugfix: Fixed beams rendering below mobs by default.
+  - bugfix: The fishing line beam is no longer emissive (it doesn't glow in the dark).
+  LemonInTheDark:
+  - admin: First time user connections are now logged
+  Melbert:
+  - rscadd: Changelings can now speak through their decoy brain if it is placed in
+      an MMI, to maintain the illusion they are actually dead and have been debrained.
+  Pickle-Coding:
+  - qol: NT CIMs shows how much power the supermatter is releasing.
+  - qol: NT CIMs internal energy will adjust its prefix.
+  - qol: Energy displays (such as multitooling grid) will use the full range of SI
+      prefixes available, up to the peta prefix if you somehow managed to reach that.
+  - rscdel: Removes the per cubic centimeter part of internal energy.
+  - bugfix: Fix unnecessary delta time scaling on inactive supermatters.
+  - bugfix: Fix high energy zaps not scaling with delta time.
+  - bugfix: Fixes grounding rods lying about potential power you can generate.
+  - code_imp: Convert supermatter_zap() and tesla_zap() zap_str argument unit to be
+      in joules, and scales everything that uses that argument.
+  Singul0:
+  - bugfix: Syndicate Modsuit AI's now downloads the current codespeak book upon being
+      downloaded.
+  Vekter:
+  - bugfix: Fixes Birdshot's recycler being turned the wrong direction.
+  Watermelon914:
+  - bugfix: Fixed the overflow role having less slots than it actually should.
+  - bugfix: Fixed players being able to roll antagonist without ever being eligible
+      to play any role. Players who have their preferences set up so that they're
+      likely to return to lobby when the round starts have a lowered chance of becoming
+      antagonist.
+  carlarctg:
+  - rscadd: Added the Hippocrates bust to medbay heirlooms. Paramedics don't get one.
+  - rscadd: You can now swear the Hippocratic oath with these busts! It'll give you
+      pacifism but nothing else. The process is reversible.
+  - rscadd: There's a very small chance that the Hippocrates bust was once wielded
+      by a certain German doctor. This chance is increased for coroner heirlooms.
+  distributivgesetz:
+  - bugfix: Clamping/closing a wound should now heal the bodypart that was damaged
+      instead of a random one.
+  nikothedude:
+  - code_imp: New flags/args to electrocute_act()
+  starrm4nn:
+  - balance: Makes it so Ephedrine spasms have a 10 * (1.5 - purity)% chance per second
+      to happen, Adding a downside to pure Ephedrine
+  timothymtorres:
+  - bugfix: Fix secret documents steal objective failing while inside folder.
+2023-09-26:
+  Ben10Omintrix:
+  - rscadd: added ranged attack friendly fire checks for basic mobs. minebots and
+      hivebots will now try to avoid shooting their friends
+  GPeckman:
+  - bugfix: Stun immune people should no longer have issues with gripper gloves and
+      other tackle gloves.
+  - bugfix: Intellicards in computers are no longer deleted when the computer is destroyed.
+  - bugfix: Modular consoles can now be deconstructed by right clicking with a wrench.
+  Higgin:
+  - bugfix: cigarettes no longer smoke themselves from inside your pockets or on your
+      hands.
+  Jacquerel:
+  - bugfix: Selecting "Monkey" on a magic mirror will now once again turn you into
+      a Monkey rather than a disgusting freak of nature.
+  - bugfix: Tall Boys have once again been barred from joining the Wizard Federation.
+  LT3:
+  - admin: Successful restart votes will now restart on the current map
+  - code_imp: End round and persistence data will be saved before executing successful
+      restart vote
+  - spellcheck: Improved wording in greyscale JSON error message
+  Rhials:
+  - bugfix: '"Spooky" meteors will now properly spawn during halloween.'
+  Sealed101:
+  - bugfix: you can no longer push watchers (and any other lavaland basic mob) around
+      by running into them
+  Singul0:
+  - rscadd: Adds an advanced plastic surgery procedure, allowing you to imitate people
+      in pictures. Simply hold a picture in your offhand of the person you wish to
+      imitate as while conducting the surgery! Remember, it's not foolproof, it only
+      changes your name and voice!
+  - rscadd: You can obtain the disk containing the afromentioned surgery. as a role-restricted
+      item to doctors and roboticists for 1TC, as a rare maint loot and BEPIS technode
+      reward
+  Thunder12345:
+  - bugfix: Metalgen can no longer be used to transmute indestructible turfs.
+  Timberpoes:
+  - bugfix: Centcom now rejects contraband that somehow makes it way onto the cargo
+      shuttle mid-transit and returns it.
+  Vincent983:
+  - image: the security records suspected status is now teal instead of orange
+  carlarctg:
+  - refactor: Heavily refactored mirrors to be less ass cancer 1998 code. Player facing
+      changes are that mirrors now use a radial menu, women can get beards in magic
+      mirrors, made the magic mirror 'change sex' option Woke (it supports the 4 official
+      genders and physique as well)
+  - bugfix: Fixed Pride Mirror teleporting you into the space on the first use. Now
+      it waits until you officially cancel and say 'I am Done' so you can customize
+      yourself to your liking.
+  jlsnow301:
+  - rscadd: Netpods and quantum servers now have more examination info
+  - bugfix: You no longer lose antag status if you receive it in the vdom.
+  - bugfix: Beach bar shouldn't have visible atmos piping anymore.
+  - bugfix: Adds more lighting to the vaporwave vdom level.
+  - balance: Buffed vdom megafauna health to compensate for new ability disks.
+  mc-oofert:
+  - bugfix: posibrains can be inserted again
+  san7890:
+  - bugfix: The custom error message for when there is only one map to vote for should
+      pop up in all cases rather than just a select few.
+  tattle:
+  - qol: Basic animals now make sounds for audible emotes
+  - sound: Added new sound effects for chicks, chickens, crabs, and insects
+  xPokee:
+  - image: adds a frog holoform for pAIs

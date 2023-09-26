@@ -359,10 +359,10 @@
 	animate(vehicle, pixel_y = -6, time = 3)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 	passtable_on(rider, VEHICLE_TRAIT)
-	vehicle.pass_flags |= PASSTABLE
+	passtable_on(vehicle, VEHICLE_TRAIT)
 	rider.Move(landing_turf, vehicle_target.dir)
 	passtable_off(rider, VEHICLE_TRAIT)
-	vehicle.pass_flags &= ~PASSTABLE
+	passtable_off(vehicle, VEHICLE_TRAIT)
 
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip
 	name = "Kickflip"

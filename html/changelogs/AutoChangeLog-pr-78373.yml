@@ -1,7 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - balance: "EMP damage on augs: 2/1.5 from 3/2"
-  - balance: "Augs now only get paralyzed by EMP for 3/6 seconds if they are damaged below 70% HP,"
-  - balance: "Aug EMP knockdown reduced to 3 seconds"
-  - balance: "Synthetic ears now take far less EMP damage"

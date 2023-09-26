@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Crafting R&D guns from gun kits no longer requires tools or cable coil. The decloner and energy crossbow still need reagents."
-  - qol: "Halved R&D gun crafting time. 20->10 seconds."

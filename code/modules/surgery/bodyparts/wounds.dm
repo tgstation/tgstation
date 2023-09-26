@@ -304,7 +304,7 @@
 /obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/dam_mul = 1 //initial(wound_damage_multiplier)
+	var/dam_mul = 1
 
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/iter_wound as anything in wounds)

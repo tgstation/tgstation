@@ -461,30 +461,30 @@
 	can_be_shaved = FALSE
 	unique_pet = TRUE
 	held_state = "narsian"
+	/// Mobs we will consume in the name of Nar'Sie
+	var/static/list/edible_types = list(/mob/living/simple_animal/pet, /mob/living/basic/pet)
 
-//this could maybe be turned into an element
-/mob/living/basic/pet/dog/corgi/narsie/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/corgi/narsie/Initialize(mapload)
 	. = ..()
-	//consume simple_animal pets
-	for(var/mob/living/simple_animal/pet/simple_pet in range(1, src))
-		if(simple_pet != src && !istype(simple_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("Dark magic resonating from [src] devours [simple_pet]!"), \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
-			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
-			new /obj/effect/temp_visual/cult/sac(get_turf(simple_pet))
-			narsie_act()
-			simple_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			simple_pet.gib()
-	//consume basic pets
-	for(var/mob/living/basic/pet/basic_pet in range(1, src))
-		if(basic_pet != src && !istype(basic_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("Dark magic resonating from [src] devours [basic_pet]!"), \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
-			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
-			new /obj/effect/temp_visual/cult/sac(get_turf(basic_pet))
-			narsie_act()
-			basic_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			basic_pet.gib()
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_prey_approached))
+	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
+
+/// Attempt to eat a pet we get near
+/mob/living/basic/pet/dog/corgi/narsie/proc/on_prey_approached(atom/movable/dog, atom/movable/prey)
+	SIGNAL_HANDLER
+	if (!is_type_in_list(prey, edible_types) || istype(prey, type))
+		return
+	visible_message(span_warning("Dark magic resonating from [src] devours [prey]!"), \
+		"<span class='cult big bold'>DELICIOUS SOULS</span>")
+	playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	new /obj/effect/temp_visual/cult/sac(get_turf(prey))
+	narsie_act()
+	prey.investigate_log("has been sacrificed by [src].", INVESTIGATE_DEATHS)
+	if (isliving(prey))
+		var/mob/living/living_sacrifice = prey
+		living_sacrifice.gib()
+	else
+		qdel(prey)
 
 /mob/living/basic/pet/dog/corgi/narsie/update_corgi_fluff()
 	. = ..()

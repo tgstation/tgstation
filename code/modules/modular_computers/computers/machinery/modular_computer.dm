@@ -125,9 +125,9 @@
 		return cpu.screwdriver_act(user, tool)
 	return ..()
 
-/obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
+/obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
 	if(cpu)
-		return cpu.wrench_act(user, tool)
+		return cpu.wrench_act_secondary(user, tool)
 	return ..()
 
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
