@@ -84,7 +84,11 @@
 		// we're going to interrupt SSair for just a moment to ensure cleanup on the turfs we're about to replace
 		SSair.can_fire = FALSE
 		UNTIL(!length(SSair.currentrun))
-		SSair.active_turfs -= target_turfs
+		for(var/turf/open/open_turf in target_turfs)
+			for(var/turf/open/adjacent_turf as anything in open_turf.atmos_adjacent_turfs)
+				adjacent_turf.atmos_adjacent_turfs -= open_turf
+			open_turf.atmos_adjacent_turfs.Cut()
+			SSair.remove_from_active(open_turf)
 		SSair.can_fire = TRUE
 
 		load_map(
