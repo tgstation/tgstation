@@ -211,9 +211,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(new_turf)
 	else
+		for(var/turf/open/adjacent_turf as anything in atmos_adjacent_turfs)
+			adjacent_turf.atmos_adjacent_turfs -= src
+		atmos_adjacent_turfs = null
 		if(excited || excited_group)
 			SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
-		if(ispath(path,/turf/closed) || ispath(path,/turf/cordon))
+		if(ispath(path, /turf/closed) || ispath(path, /turf/cordon))
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 

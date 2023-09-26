@@ -80,17 +80,6 @@
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
 
-		var/list/target_turfs = block(bottom_left, top_right)
-		// we're going to interrupt SSair for just a moment to ensure cleanup on the turfs we're about to replace
-		SSair.can_fire = FALSE
-		UNTIL(!length(SSair.currentrun))
-		for(var/turf/open/open_turf in target_turfs)
-			for(var/turf/open/adjacent_turf as anything in open_turf.atmos_adjacent_turfs)
-				adjacent_turf.atmos_adjacent_turfs -= open_turf
-			SSair.remove_from_active(open_turf)
-			open_turf.atmos_adjacent_turfs = null
-		SSair.can_fire = TRUE
-
 		load_map(
 			file(load_path),
 			bottom_left.x,
@@ -99,7 +88,7 @@
 			z_upper = z_idx,
 			z_lower = z_idx,
 		)
-		for(var/turf/turf as anything in target_turfs)
+		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf
 			loaded_areas |= get_area(turf)
 
