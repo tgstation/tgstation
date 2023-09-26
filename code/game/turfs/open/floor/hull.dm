@@ -25,3 +25,9 @@
 	desc = "Extremely sturdy exterior hull plating that separates you from the uncaring vacuum of space."
 	icon_state = "reinforced_hull"
 	heat_capacity = INFINITY
+
+/turf/open/floor/engine/hull/reinforced/air
+	name = "reinforced nterior hull plating"
+	desc = "Extremely sturdy interior hull plating that separates you from the floor below."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	temperature = T20C
