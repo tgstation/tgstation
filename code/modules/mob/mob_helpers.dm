@@ -537,14 +537,15 @@
 				say_log = reverse_range(reversed.Copy())
 				break
 
-	if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
-		recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
-	else
-		for(var/spoken_memory in say_log)
-			if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
-				break
-			if(!prob(line_chance))
-				continue
-			recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
+	for(var/spoken_memory in say_log)
+		if(recent_speech.len >= copy_amount)
+			break
+		if(!prob(line_chance))
+			continue
+		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 
-	return recent_speech
+	var/list/raw_lines = list()
+	for (var/key as anything in recent_speech)
+		raw_lines += recent_speech[key]
+
+	return raw_lines

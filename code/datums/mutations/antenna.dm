@@ -91,11 +91,11 @@
 		// chance to alert the read-ee
 		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
 
-	var/list/recent_speech = copy_recent_speech(copy_amount = 3, line_chance = 50)
+	var/list/recent_speech = cast_on.copy_recent_speech(copy_amount = 3, line_chance = 50)
 	if(length(recent_speech))
 		to_chat(owner, span_boldnotice("You catch some drifting memories of their past conversations..."))
 		for(var/spoken_memory in recent_speech)
-			to_chat(owner, span_notice("[recent_speech[spoken_memory]]"))
+			to_chat(owner, span_notice("[spoken_memory]"))
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on

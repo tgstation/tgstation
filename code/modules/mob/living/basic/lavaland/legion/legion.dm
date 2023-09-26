@@ -78,11 +78,7 @@
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	consumed.forceMove(src)
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
-	var/list/recent_lines = list()
-	var/list/recent_log = consumed.copy_recent_speech()
-	for (var/key in recent_log)
-		recent_lines += recent_log[key]
-	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, recent_lines)
+	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
 	if (!prob(25))
 		return
@@ -92,7 +88,7 @@
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
 /mob/living/basic/mining/legion/spawner_made
-	corpse_type = /obj/effect/mob_spawn/corpse/human/charredskeleton
+	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
 
 
 /// Like a Legion but it's an adorable snowman
@@ -105,7 +101,7 @@
 	// icon_aggro = "snowlegion_alive"
 	icon_dead = "snowlegion"
 	brood_type = /mob/living/basic/legion_brood/snow
-	corpse_type = /obj/effect/mob_spawn/corpse/human/snowlegioninfested
+	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/snow
 
 /mob/living/basic/mining/legion/snow/Initialize(mapload)
 	. = ..()
@@ -113,7 +109,7 @@
 
 /// As Snow Legion but spawns corpses which don't have any exciting loot
 /mob/living/basic/mining/legion/snow/spawner_made
-	corpse_type = /obj/effect/mob_spawn/corpse/human/skeleton
+	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton
 
 
 /// Like a Legion but shorter and faster

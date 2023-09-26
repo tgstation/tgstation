@@ -101,8 +101,8 @@
 		changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
 		to_chat(owner, span_boldnotice("Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!"))
 		for(var/spoken_memory in recent_speech)
-			changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
-			to_chat(owner, span_notice("\"[recent_speech[spoken_memory]]\""))
+			changeling.antag_memory += "\"[spoken_memory]\"<br>"
+			to_chat(owner, span_notice("\"[spoken_memory]\""))
 		changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
 		to_chat(owner, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
 
