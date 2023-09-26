@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
-	if(!istype(new_pawn, /mob/living/simple_animal/robot_customer))
+	if(!istype(new_pawn, /mob/living/basic/robot_customer))
 		return AI_CONTROLLER_INCOMPATIBLE
 	new_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
@@ -67,7 +67,7 @@
 	INVOKE_ASYNC(src, PROC_REF(async_on_get_pulled), source, puller)
 
 /datum/ai_controller/robot_customer/proc/async_on_get_pulled(datum/source, mob/living/puller)
-	var/mob/living/simple_animal/robot_customer/customer = pawn
+	var/mob/living/basic/robot_customer/customer = pawn
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
@@ -81,12 +81,12 @@
 
 
 /datum/ai_controller/robot_customer/proc/dont_want_that(mob/living/chef, obj/item/thing)
-	var/mob/living/simple_animal/robot_customer/customer = pawn
+	var/mob/living/basic/robot_customer/customer = pawn
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	customer.say(customer_data.wrong_item_line)
 
 /datum/ai_controller/robot_customer/proc/warn_greytider(mob/living/greytider)
-	var/mob/living/simple_animal/robot_customer/customer = pawn
+	var/mob/living/basic/robot_customer/customer = pawn
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	//Living mobs are tagged, so these will always be valid
