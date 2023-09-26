@@ -68,7 +68,6 @@
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/lesser,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
-		/mob/living/simple_animal/hostile/big_legion,
 		/mob/living/simple_animal/hostile/blob,
 		/mob/living/simple_animal/hostile/blob/blobbernaut,
 		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
