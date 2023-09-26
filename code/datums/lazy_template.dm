@@ -73,7 +73,6 @@
 	var/list/type_to_list = list(
 		/obj/structure/cable = list(),
 		/obj/machinery/atmospherics = list(),
-		/obj/docking_port/stationary = list(),
 	)
 
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
@@ -109,7 +108,6 @@
 	SSatoms.InitializeAtoms(loaded_turfs)
 	SSmachines.setup_template_powernets(type_to_list[/obj/structure/cable])
 	SSair.setup_template_machinery(type_to_list[/obj/machinery/atmospherics])
-	SSshuttle.setup_shuttles(type_to_list[/obj/docking_port/stationary])
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
