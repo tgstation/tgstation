@@ -54,7 +54,8 @@
 
 /obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_LMB] = "Take a random tool"
+	if(length(contents))
+		context[SCREENTIP_CONTEXT_LMB] = "Take a random tool"
 	context[SCREENTIP_CONTEXT_RMB] = "Take a specific tool"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -150,7 +151,7 @@
 	return
 
 /obj/item/surgery_tray/attack_hand(mob/living/user)
-	if(!user.can_perform_action(src, NEED_HANDS))
+	if(!length(contents) || !user.can_perform_action(src, NEED_HANDS))
 		return ..()
 	var/obj/item/grabbies = pick(contents)
 	if(grabbies)
@@ -207,7 +208,7 @@
 	name = "autopsy tray"
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
-	
+
 /obj/item/surgery_tray/full/morgue/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
