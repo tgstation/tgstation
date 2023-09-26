@@ -131,10 +131,10 @@
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
-		/obj/item/clothing/mask = 1,
-		/obj/item/flashlight/flare/candle = 4,
+		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/internal/brain = 1,  // Technically means a cattleprod is valid
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/clothing/neck/tie = 1,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1

@@ -50,3 +50,26 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
+
+// The amulette conversion tool used by moon heretics
+/obj/item/clothing/neck/eldritch_amulet/moon_amulette
+	name = "Amber Focus"
+	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and you feel tendrils reach into your mind whispering of laughter and joy."
+	icon_state = "eldritch_necklace"
+	w_class = WEIGHT_CLASS_SMALL
+
+
+/obj/item/clothing/neck/eldritch_amulet/moon_amulette/attack(mob/living/target, mob/living/user, params)
+	var/mob/living/carbon/human/hit = target
+	switch(hit.mob_mood.sanity_level)
+		if(SANITY_LEVEL_GREAT)
+			hit.add_mood_event("Moon Insanity", /datum/mood_event/amulette_insanity)
+		if(SANITY_LEVEL_NEUTRAL)
+			hit.add_mood_event("Moon Insanity", /datum/mood_event/amulette_insanity)
+		if(SANITY_LEVEL_DISTURBED)
+			hit.add_mood_event("Moon Insanity", /datum/mood_event/amulette_insanity)
+		if(SANITY_LEVEL_CRAZY)
+			hit.apply_status_effect(/datum/status_effect/mayhem)
+		if(SANITY_LEVEL_INSANE)
+			hit.apply_status_effect(/datum/status_effect/mayhem)
+	. = ..()

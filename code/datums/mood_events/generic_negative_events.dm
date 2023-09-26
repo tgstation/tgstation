@@ -433,6 +433,11 @@
 
 /datum/mood_event/moon_insanity
 	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
+	mood_change = -3
+	timeout = 2 MINUTES
+
+/datum/mood_event/amulette_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
 	mood_change = -6
 	timeout = 2 MINUTES
 

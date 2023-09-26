@@ -26,7 +26,7 @@
 	damage = 0
 	damage_type = BURN
 	speed = 1
-	range = 100
+	range = 70
 	ricochets_max = 40
 	ricochet_chance = 500
 	ricochet_incidence_leeway = 0
@@ -54,8 +54,9 @@
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
+		//Registers a signal that triggers when the client sends an input to move
 		RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
+		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
 		victim.AddComponent(/datum/component/leash, src, distance = 1)
 		victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
@@ -64,12 +65,12 @@
 	return PROJECTILE_PIERCE_PHASE
 
 
-// USE "COMSIG_MOB_CLIENT_PRE_LIVING_MOVE" AND "return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE"
 /obj/projectile/moon_parade/Destroy(atom/hit)
 	var/mob/living/victim = hit
 	UnregisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	return ..()
 
+// This signal blocks movement by returning COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE when they are attempting to move
 /obj/projectile/moon_parade/proc/moon_block_move(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
