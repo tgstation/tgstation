@@ -6,39 +6,61 @@
 	icon_living = "snake"
 	icon_dead = "snake_dead"
 	speak_emote = list("hisses")
+
 	health = 20
 	maxHealth = 20
+	melee_damage_lower = 5
+	melee_damage_upper = 6
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
+
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	melee_damage_lower = 5
-	melee_damage_upper = 6
+
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "shoos"
 	response_disarm_simple = "shoo"
 	response_harm_continuous = "steps on"
 	response_harm_simple = "step on"
-	faction = list(FACTION_HOSTILE)
+
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
+
+	faction = list(FACTION_HOSTILE)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	gold_core_spawnable = FRIENDLY_SPAWN
-	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
+
+	ai_controller = /datum/ai_controller/basic_controller/snake
 
 /mob/living/basic/snake/Initialize(mapload, special_reagent)
 	. = ..()
-	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	if(!special_reagent)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
+
 	AddElement(/datum/element/venomous, special_reagent, 4)
 
-/mob/living/basic/snake/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+/mob/living/basic/snake/proc/on_attack(mob/living/basic/source, atom/target)
+	if(!ismouse(target))
+		return
+
+	visible_message(
+		span_notice("[name] consumes [target] in a single gulp!"),
+		span_notice("You consume [target] in a single gulp!"),
+		span_hear("You hear a small scuffling followed by a silent gulp.")
+	)
+
+	QDEL_NULL(target)
+	adjustBruteLoss(-2)
+	return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/snake/ListTargets(atom/the_target)
 	var/atom/target_from = GET_TARGETS_FROM(src)
@@ -67,10 +89,5 @@
 	//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
 	return  living_mobs & actual_enemies
 
-/mob/living/basic/snake/AttackingTarget()
-	if(ismouse(target))
-		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("You consume [target] in a single gulp!"))
-		QDEL_NULL(target)
-		adjustBruteLoss(-2)
-	else
-		return ..()
+
+/datum/ai_controller/basic_controller/snake
