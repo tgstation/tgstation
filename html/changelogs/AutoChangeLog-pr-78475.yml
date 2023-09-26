@@ -1,0 +1,5 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Intellicards in computers are no longer deleted when the computer is destroyed."
+  - bugfix: "Modular consoles can now be deconstructed by right clicking with a wrench."

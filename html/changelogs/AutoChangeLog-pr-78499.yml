@@ -1,0 +1,5 @@
+author: "tattle"
+delete-after: True
+changes:
+  - qol: "Basic animals now make sounds for audible emotes"
+  - sound: "Added new sound effects for chicks, chickens, crabs, and insects"

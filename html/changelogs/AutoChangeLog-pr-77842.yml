@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - refactor: "Heavily refactored mirrors to be less ass cancer 1998 code. Player facing changes are that mirrors now use a radial menu, women can get beards in magic mirrors, made the magic mirror 'change sex' option Woke (it supports the 4 official genders and physique as well)"
+  - bugfix: "Fixed Pride Mirror teleporting you into the space on the first use. Now it waits until you officially cancel and say 'I am Done' so you can customize yourself to your liking."

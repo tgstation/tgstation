@@ -47,6 +47,7 @@
 		if("oxy")
 			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
+	return TRUE
 
 // C2 medications
 // Helbital
@@ -198,7 +199,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170)
 	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
-	. = ..()
+	..()
+	return TRUE
 
 //Lenturi
 //impure
@@ -233,6 +235,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Just the removed itching mechanism - omage to it's origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
+		. = TRUE
 		if(spammer < world.time)
 			to_chat(owner,span_warning("You can't help but itch yourself."))
 			spammer = world.time + (10 SECONDS)
@@ -242,7 +245,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		resetting_probability = 0
 	resetting_probability += (5*(current_cycle/10) * seconds_per_tick) // 10 iterations = >51% to itch
 	..()
-	return TRUE
+	return .
 
 //Aiuri
 //impure
@@ -441,7 +444,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
 		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
-
+		. = TRUE
 	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
@@ -561,7 +564,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(affected_mob)
 	..()
-
+	return TRUE
+	
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/affected_mob)
 	remove_buffs(affected_mob)
 	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)

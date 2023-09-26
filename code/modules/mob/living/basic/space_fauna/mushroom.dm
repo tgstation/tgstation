@@ -64,7 +64,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/mushroom,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/mushroom_food,
 	)
 
@@ -75,13 +75,6 @@
 ///we only attacked another mushrooms
 /datum/targetting_datum/basic/mushroom/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly)
-
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/mushroom
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/mushroom
-
-/datum/ai_behavior/basic_melee_attack/mushroom
-	action_cooldown = 2 SECONDS
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET

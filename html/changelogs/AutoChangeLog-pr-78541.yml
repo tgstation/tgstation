@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Selecting \"Monkey\" on a magic mirror will now once again turn you into a Monkey rather than a disgusting freak of nature."
+  - bugfix: "Tall Boys have once again been barred from joining the Wizard Federation."

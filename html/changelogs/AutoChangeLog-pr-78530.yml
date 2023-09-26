@@ -1,0 +1,8 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscadd: "Netpods and quantum servers now have more examination info"
+  - bugfix: "You no longer lose antag status if you receive it in the vdom."
+  - bugfix: "Beach bar shouldn't have visible atmos piping anymore."
+  - bugfix: "Adds more lighting to the vaporwave vdom level."
+  - balance: "Buffed vdom megafauna health to compensate for new ability disks."

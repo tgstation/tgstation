@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - bugfix: "cigarettes no longer smoke themselves from inside your pockets or on your hands."

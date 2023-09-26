@@ -1,0 +1,4 @@
+author: "Vincent983"
+delete-after: True
+changes:
+  - image: "the security records suspected status is now teal instead of orange"

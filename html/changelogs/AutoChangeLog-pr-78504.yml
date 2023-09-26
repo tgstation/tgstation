@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "Adds an advanced plastic surgery procedure, allowing you to imitate people in pictures. Simply hold a picture in your offhand of the person you wish to imitate as while conducting the surgery! Remember, it's not foolproof, it only changes your name and voice!"
+  - rscadd: "You can obtain the disk containing the afromentioned surgery. as a role-restricted item to doctors and roboticists for 1TC, as a rare maint loot and BEPIS technode reward"

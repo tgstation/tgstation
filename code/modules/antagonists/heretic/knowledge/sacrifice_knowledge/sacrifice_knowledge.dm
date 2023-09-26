@@ -40,18 +40,17 @@
 #ifndef UNIT_TESTS // This is a decently hefty thing to generate while unit testing, so we should skip it.
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
-		log_game("Generating z-level for heretic sacrifices...")
+		log_game("Loading heretic lazytemplate for heretic sacrifices...")
 		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
 #endif
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
-	var/datum/map_template/heretic_sacrifice_level/new_level = new()
-	if(!new_level.load_new_z())
-		log_game("The heretic sacrifice z-level failed to load.")
-		message_admins("The heretic sacrifice z-level failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
+	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE))
+		log_game("The heretic sacrifice template failed to load.")
+		message_admins("The heretic sacrifice lazy template failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
 			If you want, you can spawn an /obj/effect/landmark/heretic somewhere to stop that from happening.")
-		CRASH("Failed to initialize heretic sacrifice z-level!")
+		CRASH("Failed to lazy load heretic sacrifice template!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

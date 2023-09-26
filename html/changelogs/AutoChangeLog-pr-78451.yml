@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - rscadd: "added ranged attack friendly fire checks for basic mobs. minebots and hivebots will now try to avoid shooting their friends"
