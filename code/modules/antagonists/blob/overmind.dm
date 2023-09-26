@@ -211,7 +211,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			live_guy.fully_heal()
 
 		for(var/area/check_area in GLOB.areas)
-			if(!(is_type_in_list(check_area, GLOB.the_station_areas)))
+			if(!is_type_in_list(check_area, GLOB.the_station_areas))
 				continue
 			if(!(check_area.area_flags & BLOBS_ALLOWED))
 				continue
