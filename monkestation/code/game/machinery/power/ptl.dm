@@ -201,6 +201,8 @@
 			power_format_multi = 1 GW
 		if("inputTW")
 			power_format_multi = 1 TW
+		if("inputPW")
+			power_format_multi = 1 PW
 
 		if("outputW")
 			power_format_multi_output = 1
@@ -212,6 +214,8 @@
 			power_format_multi_output = 1 GW
 		if("outputTW")
 			power_format_multi_output = 1 TW
+		if("inputPW")
+			power_format_multi = 1 PW
 
 
 /obj/machinery/power/transmission_laser/process()

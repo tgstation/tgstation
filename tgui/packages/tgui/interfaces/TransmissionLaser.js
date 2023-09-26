@@ -140,6 +140,11 @@ const InputControls = (props, context) => {
           selected={power_format === 10 ** 12}
           onClick={() => act('inputTW')}
         />
+        <Button
+          content={'PW'}
+          selected={power_format === 10 ** 15}
+          onClick={() => act('inputPW')}
+        />
       </Box>
     </Section>
   );
@@ -211,6 +216,11 @@ const OutputControls = (props, context) => {
           content={'TW'}
           selected={output_multiplier === 10 ** 12}
           onClick={() => act('outputTW')}
+        />
+        <Button
+          content={'PW'}
+          selected={output_multiplier === 10 ** 15}
+          onClick={() => act('outputPW')}
         />
       </Box>
     </Section>

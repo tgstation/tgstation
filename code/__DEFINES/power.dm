@@ -19,3 +19,4 @@ GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a perce
 #define MW * 1000000
 #define GW * 1000000000
 #define TW * 1000000000000
+#define PW * 1000000000000000
