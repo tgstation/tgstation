@@ -168,11 +168,11 @@
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	//if solution is getting too basic(high ph) add some acid to lower it's value
-	if(acidic_beaker.reagents.total_volume && reagents.ph > alkaline_limit)
+	while(acidic_beaker.reagents.total_volume && reagents.ph > alkaline_limit)
 		acidic_beaker.reagents.trans_to(reagents, seconds_per_tick)
 
 	//if solution is getting too acidic(low ph) add some base to increase it's value
-	if(alkaline_beaker.reagents.total_volume && reagents.ph < acidic_limit)
+	while(alkaline_beaker.reagents.total_volume && reagents.ph < acidic_limit)
 		alkaline_beaker.reagents.trans_to(reagents, seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
