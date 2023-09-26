@@ -25,12 +25,15 @@
 	/// Reference to the hud that we show when the player hovers over us.
 	var/datum/atom_hud/hud_to_show_on_hover
 
-/mob/living/basic/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
-	. = ..()
-
+/mob/living/basic/robot_customer/Initialize(
+	mapload,
+	datum/customer_data/customer_data = /datum/customer_data/american,
+	datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant],
+)
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
-	clothes_set = pick(customer_info.clothing_sets)
 	ai_controller = customer_info.ai_controller_used
+
+	. = ..()
 
 	ADD_TRAIT(src, list(TRAIT_NOMOBSWAP, TRAIT_NO_TELEPORT, TRAIT_STRONG_GRABBER), INNATE_TRAIT) // never suffer a bitch to fuck with you
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
@@ -43,7 +46,8 @@
 	icon_state = customer_info.base_icon_state
 	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
-	update_icon()
+	clothes_set = pick(customer_info.clothing_sets)
+	update_appearance(UPDATE_ICON)
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
@@ -96,14 +100,17 @@
 
 /mob/living/basic/robot_customer/examine(mob/user)
 	. = ..()
-	// this should be handled by the ai controller
-	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
-		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
-		var/order
-		if(istype(wanted_item, /datum/custom_order))
-			var/datum/custom_order/custom_order = wanted_item
-			order = custom_order.get_order_line(attending_venue)
-		else
-			order = attending_venue.order_food_line(wanted_item)
-		. += span_notice("Their order was: \"[order].\"")
+	if(isnull(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]))
+		return
+
+	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+	var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+	var/order = "nothing"
+
+	if(istype(wanted_item, /datum/custom_order))
+		var/datum/custom_order/custom_order = wanted_item
+		order = custom_order.get_order_line(attending_venue)
+	else
+		order = attending_venue.order_food_line(wanted_item)
+
+	. += span_notice("Their order was: \"[order].\"")
