@@ -9783,7 +9783,7 @@
 	dir = 1
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/commons/fitness/recreation/entertainment)
 "dNq" = (
 /turf/closed/wall/r_wall/rust,
@@ -28490,7 +28490,7 @@
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/commons/fitness/recreation/entertainment)
 "kmT" = (
 /obj/structure/closet/firecloset,
