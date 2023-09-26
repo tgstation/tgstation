@@ -86,7 +86,7 @@
 	purchaseable = TRUE
 	base_value = 0.1
 	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
-	primary_color = "#ff0000"
+	primary_color = "#ffff00"
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = GAS_CO2
