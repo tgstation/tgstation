@@ -113,6 +113,11 @@
 
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
+	if(!mob_parent)
+		stack_trace("Mood is processing without a mob parent!")
+		qdel(src)
+		return
+
 	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
 		clear_mood_event(MOOD_CATEGORY_NUTRITION)  // if you happen to switch species while hungry youre no longer hungy
 		return FALSE // no moods for nutrition
@@ -410,6 +415,11 @@
 
 /// Sets sanity to the specified amount and applies effects.
 /datum/mood/proc/set_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
+	if(!mob_parent)
+		stack_trace("Mood is processing without a mob parent!")
+		qdel(src)
+		return
+
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
