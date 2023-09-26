@@ -1001,6 +1001,15 @@
 "aBy" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/ce)
+"aBO" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/cable/industrial,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/station/engineering/main)
 "aCo" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -35786,6 +35795,10 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
+"sAA" = (
+/obj/structure/cable/industrial,
+/turf/open/floor/iron/stairs,
+/area/station/engineering/main)
 "sAM" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
@@ -40823,6 +40836,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -87974,10 +87988,10 @@ fFQ
 jvI
 jRw
 auZ
-rvE
-lSE
-eIg
-qqf
+cbM
+xKz
+sAA
+aBO
 ghz
 ghz
 ghz
