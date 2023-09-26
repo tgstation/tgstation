@@ -77,7 +77,7 @@
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
 	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
-	if (!prob(25))
+	if (prob(75))
 		return
 	// Congratulations you have won a special prize: cancer
 	var/obj/item/organ/internal/legion_tumour/cancer = new()

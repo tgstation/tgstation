@@ -155,5 +155,5 @@
 		to_chat(finder, span_notice("Its tendrils seem to twitch towards the light."))
 		return
 	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
-	if(prob(10))
+	if(prob(stage * 2))
 		infest()
