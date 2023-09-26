@@ -58,6 +58,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(parent, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
 	living_parent.update_appearance(UPDATE_ICON)
+	GLOB.blob_telepathy_mobs |= parent
 
 /datum/component/blob_minion/UnregisterFromParent()
 	if (!isnull(overmind))
@@ -78,6 +79,7 @@
 		COMSIG_MOB_MIND_INITIALIZED,
 		COMSIG_MOVABLE_SPACEMOVE,
 	))
+	GLOB.blob_telepathy_mobs -= parent
 
 /// Become blobpilled when we gain a mind
 /datum/component/blob_minion/proc/on_mind_init(mob/living/minion, datum/mind/new_mind)
@@ -139,12 +141,7 @@
 	SIGNAL_HANDLER
 	var/spanned_message = minion.say_quote(message)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
-	for(var/mob/creature as anything in GLOB.mob_list)
-		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
-			to_chat(creature, rendered)
-		if(isobserver(creature))
-			var/link = FOLLOW_LINK(creature, src)
-			to_chat(creature, "[link] [rendered]")
+	blob_telepathy(rendered, minion)
 	return COMPONENT_CANNOT_SPEAK
 
 /// Called when a blob minion is transformed into something else, hopefully a spore into a zombie

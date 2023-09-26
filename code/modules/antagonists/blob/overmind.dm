@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSshuttle.registerHostileEnvironment(src)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	GLOB.blob_telepathy_mobs |= src
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -250,6 +251,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
+	GLOB.blob_telepathy_mobs -= src
 
 	return ..()
 
@@ -311,13 +313,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-
-	for(var/mob/creature in GLOB.mob_list)
-		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
-			to_chat(creature, rendered)
-		if(isobserver(creature))
-			var/link = FOLLOW_LINK(creature, src)
-			to_chat(creature, "[link] [rendered]")
+	blob_telepathy(rendered, src)
 
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
