@@ -27,7 +27,7 @@
 	heat_capacity = INFINITY
 
 /turf/open/floor/engine/hull/reinforced/air
-	name = "reinforced nterior hull plating"
+	name = "reinforced interior hull plating"
 	desc = "Extremely sturdy interior hull plating that separates you from the floor below."
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	temperature = T20C
