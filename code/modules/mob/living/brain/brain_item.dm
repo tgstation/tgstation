@@ -46,10 +46,13 @@
 	. = ..()
 	// Brain size logic
 	transform = transform.Scale(brain_size)
+
+/obj/item/organ/internal/brain/examine()
+	. = ..()
 	if(brain_size < 1)
-		desc += "\nIt is a bit on the smaller side"
+		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
-		desc += "\nIt is bigger than average"
+		. += span_notice("It is bigger than average...")
 
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
