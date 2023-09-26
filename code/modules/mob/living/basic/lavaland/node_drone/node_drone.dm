@@ -1,3 +1,7 @@
+#define FLY_IN_STATE 1
+#define FLY_OUT_STATE 2
+#define NEUTRAL_STATE 3
+
 /**
  * Mining drones that are spawned when starting a ore vent's wave defense minigame.
  * They will latch onto the vent to defend it from lavaland mobs, and will flee if attacked by lavaland mobs.
@@ -34,6 +38,8 @@
 
 	/// Is the drone currently attached to a vent?
 	var/active_node = FALSE
+	/// What status do we currently track for icon purposes?
+	var/flying_state = NEUTRAL_STATE
 	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
 	/// Set when the drone is begining to leave lavaland after the vent is secured.
@@ -45,7 +51,7 @@
 	qdel(src)
 
 /mob/living/basic/node_drone/Destroy()
-	attached_vent.node = null //clean our reference to the vent both ways.
+	attached_vent?.node = null //clean our reference to the vent both ways.
 	attached_vent = null
 	return ..()
 
@@ -58,9 +64,17 @@
 	else
 		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
 
+/mob/living/basic/node_drone/update_icon_state()
+	. = ..()
+
+	icon_state = "mining_node_active"
+
+	if(flying_state == FLY_IN_STATE || flying_state == FLY_OUT_STATE)
+		icon_state = "mining_node_flying"
+
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
-	icon_state = "mining_node_flying"
+	flying_state = FLY_IN_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400
 	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
@@ -77,7 +91,8 @@
 		flick("mining_node_escape", src)
 		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
 		return
-	icon_state = "mining_node_flying"
+	flying_state = FLY_OUT_STATE
+	update_appearance(UPDATE_ICON_STATE)
 	if(prob(1))
 		say("I have to go now, my planet needs me.")
 		funny_ending = TRUE
@@ -126,4 +141,7 @@
 
 /datum/ai_behavior/run_away_from_target/drone
 	action_cooldown = 1 SECONDS
-	required_distance = 5
+	run_distance = 3
+
+
+#undef FLYIN_STATE

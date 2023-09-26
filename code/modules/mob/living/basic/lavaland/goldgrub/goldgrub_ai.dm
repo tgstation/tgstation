@@ -85,10 +85,6 @@
 	if(target in source)
 		return FALSE
 
-	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
-	if(target == pet_target) //we're a bit busy right now
-		return FALSE
-
 	var/turf/vent_turf = target.drop_location()
 	if(vent_turf.contents.len > MAX_BOULDERS_PER_VENT) //Too many items currently on the vent
 		return FALSE

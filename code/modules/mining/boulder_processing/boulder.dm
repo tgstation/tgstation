@@ -216,7 +216,6 @@
 	return ..()
 
 /obj/item/boulder/artifact/update_icon_state()
-	. = ..()
 	icon_state = "boulder_artifact" //We're always going to use the artifact state for clarity.
 
 /obj/item/boulder/gulag
