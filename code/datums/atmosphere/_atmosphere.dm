@@ -59,7 +59,6 @@
 	while(gasmix.return_pressure() > target_pressure)
 		gaslist[gastype][MOLES] -= gaslist[gastype][MOLES] * 0.1
 	gaslist[gastype][MOLES] = FLOOR(gaslist[gastype][MOLES], 0.1)
-	var/current_pressure = gasmix.return_pressure()
 	gasmix.garbage_collect()
 
 	// Now finally lets make that string
@@ -70,13 +69,3 @@
 	gas_string_builder += "TEMP=[gasmix.temperature]"
 	gas_string = gas_string_builder.Join(";")
 	return current_pressure
-
-/datum/atmosphere/proc/validate_minimum_pressure()
-	var/fail_count = 0
-	var/i
-	var/test_pressure
-	for(i = 1, i <= 100, i++)
-		test_pressure = generate_gas_string()
-		if (test_pressure < minimum_pressure)
-			fail_count++
-	return "Pressure validation failed [fail_count] times"
