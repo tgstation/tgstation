@@ -68,4 +68,3 @@
 		gas_string_builder += "[gas[GAS_META][META_GAS_ID]]=[gas[MOLES]]"
 	gas_string_builder += "TEMP=[gasmix.temperature]"
 	gas_string = gas_string_builder.Join(";")
-	return current_pressure
