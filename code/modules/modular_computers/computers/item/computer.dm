@@ -150,6 +150,7 @@
 	close_all_programs()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
+	looping_sound = FALSE // Necessary to stop a possible runtime trying to call soundloop.stop() when soundloop has been qdel'd
 	QDEL_LIST(stored_files)
 
 	if(istype(inserted_disk))
@@ -802,14 +803,8 @@
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
-	internal_cell?.forceMove(drop_location())
-	computer_id_slot?.forceMove(drop_location())
-	inserted_disk?.forceMove(drop_location())
-	remove_pai()
-	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	deconstruct(TRUE)
 	user.balloon_alert(user, "disassembled")
-	relay_qdel()
-	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
@@ -830,15 +825,26 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
-	break_apart()
+	remove_pai()
+	eject_aicard()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if (disassembled)
+			internal_cell?.forceMove(drop_location())
+			computer_id_slot?.forceMove(drop_location())
+			inserted_disk?.forceMove(drop_location())
+			new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
+		else
+			physical.visible_message(span_notice("\The [src] breaks apart!"))
+			new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
+	relay_qdel()
 	return ..()
 
-/obj/item/modular_computer/proc/break_apart()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		physical.visible_message(span_notice("\The [src] breaks apart!"))
-		var/turf/newloc = get_turf(src)
-		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
-	relay_qdel()
+// Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
+/obj/item/modular_computer/proc/eject_aicard()
+	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
+	if (program)
+		return program.try_eject(forced = TRUE)
+	return FALSE
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()

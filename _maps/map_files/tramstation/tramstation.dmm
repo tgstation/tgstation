@@ -34518,6 +34518,7 @@
 /area/station/cargo/sorting)
 "lnh" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/service/chapel/monastery)
 "lnk" = (
