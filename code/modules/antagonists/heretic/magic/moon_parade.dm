@@ -17,10 +17,10 @@
 	active_msg = "You prepare to make them join the parade!"
 	deactive_msg = "You stop the music and halt tha parade... for now."
 	cast_range = 12
-	projectile_type = /obj/projectile/magic/moon_parade
+	projectile_type = /obj/projectile/moon_parade
 
 
-/obj/projectile/magic/moon_parade
+/obj/projectile/moon_parade
 	name = "Lunar parade"
 	icon_state = "star_ball"
 	damage = 0
@@ -34,10 +34,10 @@
 	projectile_piercing = PASSMOB|PASSVEHICLE
 
 
-/obj/projectile/magic/moon_parade/Initialize(mapload)
+/obj/projectile/moon_parade/Initialize(mapload)
 	. = ..()
 
-/obj/projectile/magic/moon_parade/on_hit(atom/hit, pierce_hit)
+/obj/projectile/moon_parade/on_hit(atom/hit, pierce_hit)
 	. = ..()
 	if(isliving(hit) && isliving(firer))
 		var/mob/living/caster = firer
@@ -54,8 +54,9 @@
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
-		//Leashes them to the source projectile with them being able to move maximum 2 tile away from it
-		victim.AddComponent(/datum/component/leash, src, distance = 2)
+		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
+		RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
+		victim.AddComponent(/datum/component/leash, src, distance = 1)
 		victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 80)
 		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
@@ -64,5 +65,11 @@
 
 
 // USE "COMSIG_MOB_CLIENT_PRE_LIVING_MOVE" AND "return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE"
-/obj/projectile/magic/moon_parade/Destroy()
+/obj/projectile/moon_parade/Destroy(atom/hit)
+	var/mob/living/victim = hit
+	UnregisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	return ..()
+
+/obj/projectile/moon_parade/proc/moon_block_move(datum/source)
+	SIGNAL_HANDLER
+	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
