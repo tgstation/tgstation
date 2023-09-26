@@ -40,7 +40,7 @@
 	if (isnull(ai_target))
 		ai_target = owner.ai_controller?.blackboard[ai_target_key]
 
-	var/target_dir = get_dir(owner, target_turf)
+	var/target_dir = get_dir(owner, target)
 
 	var/obj/effect/temp_visual/legion_skull_depart/launch = new(get_turf(owner))
 	launch.set_appearance(spawn_type)
@@ -57,6 +57,10 @@
 	brood.faction = owner.faction
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_location)
+	if (!isnull(target))
+		brood.face_atom(target)
+	else
+		brood.dir = get_dir(owner, spawn_location)
 
 
 /// Animation for launching a skull

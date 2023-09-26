@@ -12,7 +12,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	basic_mob_flags = DEL_ON_DEATH
-	speed = 4
+	speed = 3
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -23,23 +23,34 @@
 	throw_blocked_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
+	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
 	var/brood_type = /mob/living/basic/legion_brood
+	/// How we launch our brood
+	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher
 	/// What kind of corpse spawner do we leave behind on death?
-	var/corpse_type
+	var/corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested
 	/// Who is inside of us?
 	var/mob/living/stored_mob
-	/// What we drop when we die
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, get_loot_list())
 	AddElement(/datum/element/content_barfer)
 
+	skull_launcher = new(src)
+	skull_launcher.Grant(src)
+	skull_launcher.spawn_type = brood_type
+	ai_controller.blackboard[BB_TARGETTED_ACTION] = skull_launcher
+
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/proc/get_loot_list()
 	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	return death_loot
+
+/mob/living/basic/mining/legion/Destroy()
+	QDEL_NULL(skull_launcher)
+	return ..()
 
 /mob/living/basic/mining/legion/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -118,6 +129,7 @@
 /mob/living/basic/mining/legion/large
 	name = "myriad"
 	desc = "A legion of legions, a dead end to whatever form the Necropolis was attempting to create."
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
@@ -129,7 +141,6 @@
 	melee_damage_upper = 20
 	obj_damage = 30
 	sentience_type = SENTIENCE_BOSS
-	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested
 
 /mob/living/basic/mining/legion/large/Initialize(mapload)
 	. = ..()

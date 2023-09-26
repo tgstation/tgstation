@@ -28,6 +28,7 @@
 	speak_emote = list("echoes") // who the fuck speaking as this mob it dies 10 seconds after it spawns
 	attack_sound = 'sound/weapons/pierce.ogg'
 	density = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/legion_brood
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
@@ -46,7 +47,7 @@
 	if (ishuman(target) && target.stat > SOFT_CRIT)
 		infest(target)
 		return
-	if (isliving(target) && faction_check_mob(target))
+	if (isliving(target) && faction_check_mob(target) && !istype(target, /mob/living/basic/mining/legion))
 		visible_message(span_warning("[src] melds with [target]'s flesh!"))
 		target.apply_status_effect(/datum/status_effect/regenerative_core)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
