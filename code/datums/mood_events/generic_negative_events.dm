@@ -439,12 +439,12 @@
 /datum/mood_event/moon_insanity
 	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
 	mood_change = -3
-	timeout = 2 MINUTES
+	timeout = 5 MINUTES
 
 /datum/mood_event/amulette_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
 	mood_change = -6
-	timeout = 2 MINUTES
+	timeout = 5 MINUTES
 
 ///Wizard cheesy grand finale - what everyone but the wizard gets
 /datum/mood_event/madness_despair

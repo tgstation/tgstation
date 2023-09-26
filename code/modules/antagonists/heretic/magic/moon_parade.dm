@@ -15,7 +15,7 @@
 	spell_requirements = NONE
 
 	active_msg = "You prepare to make them join the parade!"
-	deactive_msg = "You stop the music and halt tha parade... for now."
+	deactive_msg = "You stop the music and halt the parade... for now."
 	cast_range = 12
 	projectile_type = /obj/projectile/moon_parade
 

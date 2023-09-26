@@ -215,3 +215,41 @@
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
 
+
+/// Used by moon heretics to make people mad
+/datum/status_effect/moon_converted
+	id = "heretic_lastresort"
+	alert_type = null
+	duration = -1
+	status_type = STATUS_EFFECT_REPLACE
+	var/damage_sustained = 0
+
+/datum/status_effect/moon_converted/on_apply()
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
+	ADD_TRAIT(owner, TRAIT_MUTE, type)
+
+/datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// Stamina damage is funky so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	// Adds damage to the damage sustained
+	damage_sustained += damage
+
+	// If the damage_sustained is below 75 don't remove the status effect
+	if(damage_sustained<75)
+		return
+
+	if (damage_sustained>=75)
+	// Remove the status effect
+		REMOVE_TRAIT(owner, TRAIT_MUTE, type)
+		owner.remove_status_effect(/datum/status_effect/moon_converted)
+	return TRUE
+
+
+/datum/status_effect/moon_converted/on_remove()
+	owner.balloon_alert(owner, "your mind clears and you return to normal!")
+	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
