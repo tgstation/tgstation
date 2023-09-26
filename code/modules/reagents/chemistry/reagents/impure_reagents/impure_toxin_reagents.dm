@@ -18,7 +18,6 @@
 	owner.adjust_disgust(50)
 	..()
 
-
 //Formaldehyde - Impure Version
 /datum/reagent/impurity/methanol
 	name = "Methanol"
@@ -32,7 +31,7 @@
 	. = ..()
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 //Chloral Hydrate - Impure Version
 /datum/reagent/impurity/chloralax
@@ -46,7 +45,7 @@
 /datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
 	. = ..()
 	if(owner.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 //Mindbreaker Toxin - Impure Version
 /datum/reagent/impurity/rosenol

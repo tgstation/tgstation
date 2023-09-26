@@ -10,7 +10,7 @@
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 
 /datum/quirk/drunkhealing/process(seconds_per_tick)
-	var/need_mob_update
+	var/need_mob_update = FALSE
 	switch(quirk_holder.get_drunk_amount())
 		if (6 to 40)
 			need_mob_update += quirk_holder.adjustBruteLoss(-0.1 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)

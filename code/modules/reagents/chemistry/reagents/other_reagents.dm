@@ -484,7 +484,7 @@
 		need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
-	 . = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -503,7 +503,7 @@
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	holder.remove_reagent(type, 0.5*seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
@@ -976,7 +976,7 @@
 	if(SPT_PROB(3.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan"))
 	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -1164,7 +1164,7 @@
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1262,7 +1262,7 @@
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, seconds_per_tick, times_fired)
 	. = ..()
 	if(victim.adjustToxLoss(0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1335,7 +1335,7 @@
 	need_mob_update += affected_mob.adjustFireLoss(1.665*seconds_per_tick, updating_health = FALSE)
 	need_mob_update += affected_mob.adjustToxLoss(1.665*seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1702,7 +1702,7 @@
 	. = ..()
 	if(SPT_PROB(tox_prob, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(1, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
 	name = "E-Z Nutrient"
@@ -2767,7 +2767,7 @@
 		if(wounded_part)
 			wounded_part.heal_damage(0.25 * REM * seconds_per_tick, 0.25 * REM * seconds_per_tick)
 		if(affected_mob.adjustStaminaLoss(-0.25 * REM * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.
 // why couldn't they have both just used the same reagent?
@@ -2805,7 +2805,7 @@
 		need_mob_update += drinker.adjustOxyLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += drinker.adjustBruteLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"
@@ -2916,7 +2916,7 @@
 /datum/reagent/lead/on_mob_life(mob/living/carbon/victim)
 	. = ..()
 	if(victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 //The main feedstock for kronkaine production, also a shitty stamina healer.
 /datum/reagent/kronkus_extract
@@ -2933,7 +2933,7 @@
 	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	need_mob_update += kronkus_enjoyer.adjustStaminaLoss(-2, updating_stamina = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust
 	name = "Brimdust"
@@ -2946,7 +2946,7 @@
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_weedlevel(-1)
@@ -3031,4 +3031,4 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH

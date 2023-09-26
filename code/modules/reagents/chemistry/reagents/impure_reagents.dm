@@ -25,7 +25,7 @@
 		need_mob_update = affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
 
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 //Basically just so people don't forget to adjust metabolization_rate
 /datum/reagent/inverse
@@ -42,7 +42,7 @@
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction

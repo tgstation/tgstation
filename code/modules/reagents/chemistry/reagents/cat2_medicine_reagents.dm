@@ -82,7 +82,7 @@
 	if(!helbent)
 		affected_mob.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/L)
 	if(helbent)
@@ -104,7 +104,7 @@
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital
 	name = "Probital"
@@ -131,7 +131,7 @@
 			ooo_youaregettingsleepy = 2
 	need_mob_update += affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -144,7 +144,7 @@
 		need_mob_update += affected_mob.adjustStaminaLoss(-100, updating_stamina = FALSE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
 		need_mob_update += affected_mob.Sleeping(10 SECONDS)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
 	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/internal/stomach)) )
@@ -189,7 +189,7 @@
 	need_mob_update = affected_mob.adjustFireLoss(-2 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/hercuri
 	name = "Hercuri"
@@ -217,7 +217,7 @@
 	affected_mob.reagents?.chem_temp += (-10 * REM * seconds_per_tick)
 	affected_mob.adjust_fire_stacks(-1 * REM * seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
@@ -264,7 +264,7 @@
 		affected_mob.losebreath--
 		need_mob_update = TRUE
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	metabolization_rate += 2.5 * REAGENTS_METABOLISM
@@ -295,7 +295,7 @@
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/tirimol/on_mob_end_metabolize(mob/living/L)
 	if(current_cycle > 20)
@@ -347,7 +347,7 @@
 	healypoints = round(healypoints, 0.1)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
@@ -378,7 +378,7 @@
 			continue
 		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -422,7 +422,7 @@
 		affected_mob.reagents.remove_reagent(R.type, 0.4 * REM * seconds_per_tick)
 
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -452,7 +452,7 @@
 			continue
 		affected_mob.reagents.remove_reagent(R.type, 0.2 * REM * seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/musiver/overdose_start(mob/living/carbon/affected_mob)
 	. = ..()
@@ -575,7 +575,7 @@
 		affected_mob.set_heartattack(TRUE)
 		volume = 0
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
 	user.clear_alert("penthrite")
@@ -590,7 +590,7 @@
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.set_heartattack(TRUE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 
 /******NICHE******/

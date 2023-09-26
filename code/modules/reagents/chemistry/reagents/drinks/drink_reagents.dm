@@ -11,7 +11,7 @@
 	. = ..()
 	if(affected_mob.getOxyLoss() && SPT_PROB(16, seconds_per_tick))
 		if(affected_mob.adjustOxyLoss(-1 * REM * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tomatojuice
 	name = "Tomato Juice"
@@ -25,7 +25,7 @@
 	. = ..()
 	if(affected_mob.getFireLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 0, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/limejuice
 	name = "Lime Juice"
@@ -40,7 +40,7 @@
 	. = ..()
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/carrotjuice
 	name = "Carrot Juice"
@@ -63,7 +63,7 @@
 		if(110 to INFINITY)
 			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/berryjuice
 	name = "Berry Juice"
@@ -89,7 +89,7 @@
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/watermelonjuice
 	name = "Watermelon Juice"
@@ -118,7 +118,7 @@
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(affected_mob))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/nothing
 	name = "Nothing"
@@ -135,7 +135,7 @@
 	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		if(drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/laughter
 	name = "Laughter"
@@ -186,7 +186,7 @@
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)))
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/grapejuice
 	name = "Grape Juice"
@@ -237,10 +237,10 @@
 	default_container = /obj/item/reagent_containers/condiment/soymilk
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
-		. = TRUE
-	..()
+		if(affected_mob.heal_bodypart_damage(1, 0))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/cream
 	name = "Cream"
@@ -394,7 +394,7 @@
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
@@ -414,7 +414,7 @@
 		need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/space_cola
 	name = "Cola"
@@ -663,7 +663,7 @@
 		if (SANITY_NEUTRAL to SANITY_GREAT)
 			need_mob_update = affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"
@@ -708,7 +708,7 @@
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, updating_health = FALSE, affected_mob.get_body_temp_normal()))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/soy_latte
 	name = "Soy Latte"
@@ -730,7 +730,7 @@
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/cafe_latte
 	name = "Cafe Latte"
@@ -752,7 +752,7 @@
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
@@ -775,7 +775,7 @@
 			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			affected_mob.adjust_nutrition(-2 * REM * seconds_per_tick)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/cinderella
 	name = "Cinderella"
@@ -1075,7 +1075,7 @@
 	. = ..()
 	if(affected_mob.getToxLoss() && SPT_PROB(16, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/agua_fresca
 	name = "Agua Fresca"
@@ -1090,7 +1090,7 @@
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mushroom_tea
 	name = "Mushroom Tea"
@@ -1104,7 +1104,7 @@
 	. = ..()
 	if(islizard(affected_mob))
 		if(affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 //Moth Stuff
 /datum/reagent/consumable/toechtauese_juice
@@ -1191,7 +1191,7 @@
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	if(doll.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		if(doll.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mississippi_queen
 	name = "Mississippi Queen"
@@ -1229,7 +1229,7 @@
 	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
 		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/hakka_mate
 	name = "Hakka-Mate"

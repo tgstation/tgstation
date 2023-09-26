@@ -15,7 +15,7 @@
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
@@ -50,7 +50,7 @@
 	. = ..()
 	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
 	if(affected_mob.adjustFireLoss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -180,7 +180,7 @@
 	. = ..()
 	metabolizer.adjust_fire_stacks(1 * REM * seconds_per_tick)
 	if(metabolizer.adjustFireLoss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/napalm
 	name = "Napalm"
@@ -345,7 +345,7 @@
 			var/datum/species/jelly/luminescent/slime_species = affected_human.dna.species
 			slime_species.extract_cooldown = max(slime_species.extract_cooldown - (2 SECONDS * REM * seconds_per_tick), 0)
 		if(need_mob_update)
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"

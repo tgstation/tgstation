@@ -74,7 +74,7 @@
 	. = ..()
 	if(SPT_PROB(30, seconds_per_tick))
 		if(M.heal_bodypart_damage(brute = brute_heal * REM * seconds_per_tick, burn = burn_heal * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	. = ..()
@@ -290,7 +290,7 @@
 /datum/reagent/consumable/sugar/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.AdjustSleeping(40 * REM * seconds_per_tick))
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -552,7 +552,7 @@
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-					. = UPDATE_MOB_HEALTH
+					return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
@@ -586,7 +586,7 @@
 	var/obj/item/organ/internal/liver/liver = M.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		if(M.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
@@ -821,7 +821,7 @@
 		need_mob_update += M.adjustOxyLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += M.adjustToxLoss(-1, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -891,8 +891,7 @@
 		M.set_eye_blur_if_lower(10 SECONDS)
 		need_mob_update = TRUE
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
-
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tinlux
 	name = "Tinea Luxor"
@@ -935,7 +934,7 @@
 		need_mob_update = M.adjustBruteLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += M.adjustFireLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"

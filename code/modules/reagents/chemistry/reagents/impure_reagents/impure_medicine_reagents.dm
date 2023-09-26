@@ -49,7 +49,7 @@
 		if("oxy")
 			need_mob_update += owner.adjustOxyLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 // C2 medications
 // Helbital
@@ -448,7 +448,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
 		if(owner.adjustToxLoss(creation_purity * 1, updating_health = FALSE, required_biotype = affected_biotype))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
@@ -502,7 +502,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	else
 		need_mob_update = affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 ///Can bring a corpse back to life temporarily (if heart is intact)
 ///Makes wounds bleed more, if it brought someone back, they take additional brute and heart damage
@@ -570,7 +570,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(affected_mob)
 	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/affected_mob)
 	remove_buffs(affected_mob)
