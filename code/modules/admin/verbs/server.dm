@@ -209,8 +209,8 @@
 			WARNING("Invalid respawn state in config: [respawn_state]")
 
 	if(new_state == -1)
-		to_chat(usr, span_warning("The config for respawn is set incorrectly, please complain to your nearest sever host (or fix it yourself). \
-			In the meanwhile respawn has been sets to \"Off\"."))
+		to_chat(usr, span_warning("The config for respawn is set incorrectly, please complain to your nearest server host (or fix it yourself). \
+			In the meanwhile respawn has been set to \"Off\"."))
 		new_state = RESPAWN_FLAG_DISABLED
 		new_state_text = "Disabled"
 
