@@ -196,29 +196,15 @@
 
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
 
-	factory.is_creating_blobbernaut = FALSE
-
 	if(!length(candidates))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
-		factory.blobbernaut = null //players must answer rapidly
+		factory.assign_blobbernaut(null)
 		return FALSE
 
-	factory.modify_max_integrity(initial(factory.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
-	factory.update_appearance()
-	factory.visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
-	playsound(factory.loc, 'sound/effects/splat.ogg', 50, TRUE)
-
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(factory))
-	flick("blobbernaut_produce", blobber)
-
-	factory.blobbernaut = blobber
-	blobber.factory = factory
-	blobber.overmind = src
-	blobber.update_icons()
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
-
+	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
+	assume_direct_control(blobber)
+	factory.assign_blobbernaut(blobber)
 	var/mob/dead/observer/player = pick(candidates)
 	blobber.assign_key(player.key, blobstrain)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))

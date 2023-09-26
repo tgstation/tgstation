@@ -1040,7 +1040,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Isn't attacked harmfully by blob structures
 #define TRAIT_BLOB_ALLY "blob_ally"
 
-
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
 * granted/removed by [/obj/item/organ/internal/tongue]

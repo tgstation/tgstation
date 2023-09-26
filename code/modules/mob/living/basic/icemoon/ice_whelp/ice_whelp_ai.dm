@@ -39,13 +39,7 @@
 	if(QDELETED(target) || target.stat != DEAD || target.pulledby) //we were too slow
 		finish_action(controller, FALSE)
 		return
-
-	if(target.stat != DEAD || target.pulledby) //we were too slow
-		finish_action(controller, FALSE)
-		return
-
-	living_pawn.melee_attack(target)
-	finish_action(controller, TRUE)
+	return ..()
 
 /datum/ai_behavior/cannibalize/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
