@@ -55,9 +55,9 @@
 	AddComponent(\
 		/datum/component/tameable,\
 		food_types = list(/obj/item/food/deadmouse),\
-		tame_chance = 75,\ // snakes are really fond of food, especially in the cold darkness of space :)
+		tame_chance = 75,\
 		bonus_tame_chance = 10,\
-	)
+	) // snakes are really fond of food, especially in the cold darkness of space :)
 
 	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
