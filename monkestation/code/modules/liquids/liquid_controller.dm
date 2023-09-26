@@ -48,6 +48,7 @@ SUBSYSTEM_DEF(liquids)
 			var/datum/liquid_group/LG = g
 			while(!MC_TICK_CHECK && length(LG.splitting_array)) // three at a time until we either finish or over-run, this should be done before anything else
 				LG.work_on_split_queue()
+				LG.cleanse_members()
 
 	if(!length(temperature_queue))
 		for(var/g in active_groups)
@@ -74,6 +75,7 @@ SUBSYSTEM_DEF(liquids)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur
 						evaporation_queue |= listed_turf
+
 		run_type = SSLIQUIDS_RUN_TYPE_TEMPERATURE
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_TEMPERATURE)

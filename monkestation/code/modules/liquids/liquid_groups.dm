@@ -177,7 +177,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(group_temperature != reagents.chem_temp)
 		reagents.chem_temp = group_temperature
 
-	cleanse_members()
 	handle_visual_changes()
 	reagents.my_atom = pick(members) /// change the location of explosions and sounds every group process
 
@@ -246,7 +245,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(pulled_reagent.type in turf_reagents.previous_reagent_list)
 			turf_reagents.remove_all_type(pulled_reagent.type, 100000)
 		turf_reagents.add_reagent(pulled_reagent.type, amount)
-		if(pulled_reagent.turf_exposure)
+		if(pulled_reagent.turf_exposure && amount > 10)
 			exposure = TRUE
 
 
