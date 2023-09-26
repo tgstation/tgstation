@@ -214,7 +214,7 @@
 			power_format_multi_output = 1 GW
 		if("outputTW")
 			power_format_multi_output = 1 TW
-		if("outputTW")
+		if("outputPW")
 			power_format_multi = 1 PW
 
 
