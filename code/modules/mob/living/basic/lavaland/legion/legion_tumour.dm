@@ -1,11 +1,13 @@
 /// Left behind when a legion infects you, for medical enrichment
 /obj/item/organ/internal/legion_tumour
 	name = "legion tumour"
-	desc = "A mass of pulsing flesh and dark tendrils."
+	desc = "A mass of pulsing flesh and dark tendrils, containing the power to regenerate flesh at a terrible cost."
+	failing_desc = "pulses and writhes with horrible life, reaching towards you with its tendrils!"
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "legion_remains"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
+	decay_factor = STANDARD_ORGAN_DECAY * 3 // About 5 minutes outside of a host
 	/// What stage of growth the corruption has reached.
 	var/stage = 0
 	/// We apply this status effect periodically or when used on someone
@@ -24,6 +26,30 @@
 		'sound/voice/lowHiss4.ogg',
 	)
 
+/obj/item/organ/internal/legion_tumour/Initialize(mapload)
+	. = ..()
+	animate_pulse()
+
+/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
+	var/was_failing = organ_flags & ORGAN_FAILING
+	. = ..()
+	if (was_failing != (organ_flags & ORGAN_FAILING))
+		animate_pulse()
+
+/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
+	. = ..()
+	animate_pulse()
+
+/// Do a heartbeat animation depending on if we're failing or not
+/obj/item/organ/internal/legion_tumour/proc/animate_pulse()
+	animate(src, transform = matrix()) // Stop any current animation
+
+	var/speed_divider = organ_flags & ORGAN_FAILING ? 2 : 1
+
+	animate(src, transform = matrix().Scale(1.1), time = 0.5 SECONDS / speed_divider, easing = SINE_EASING | EASE_OUT, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(transform = matrix(), time = 0.5 SECONDS / speed_divider, easing = SINE_EASING | EASE_IN)
+	animate(transform = matrix(), time = 2 SECONDS / speed_divider)
+
 /obj/item/organ/internal/legion_tumour/Remove(mob/living/carbon/egg_owner, special)
 	. = ..()
 	stage = 0
@@ -35,18 +61,27 @@
 		return
 	return ..()
 
-/// Smear it on someone like a regen core, why not
+/// Smear it on someone like a regen core, why not. Make sure they're alive though.
 /obj/item/organ/internal/legion_tumour/proc/try_apply(mob/living/target, mob/user)
-	if(!user.Adjacent(target) || !isliving(target) || target.stat == DEAD)
+	if(!user.Adjacent(target) || !isliving(target))
 		return FALSE
 
-	target.apply_status_effect(applied_status)
-	target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
+	if (target.stat <= SOFT_CRIT && !(organ_flags & ORGAN_FAILING))
+		target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
+		target.apply_status_effect(applied_status)
 
-	if (target != user)
-		target.visible_message(span_notice("[user] splatters [target] with [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
-	else
-		to_chat(user, span_notice("You smear [src] on yourself. Disgusting tendrils pull your wounds closed."))
+		if (target != user)
+			target.visible_message(span_notice("[user] splatters [target] with [src]... Disgusting tendrils pull [target.p_their()] wounds shut!"))
+		else
+			to_chat(user, span_notice("You smear [src] on yourself. Disgusting tendrils pull your wounds closed."))
+		return TRUE
+
+	if (!ishuman(target))
+		return FALSE
+
+	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
+	var/mob/living/basic/legion_brood/skull = new(target.loc)
+	skull.melee_attack(target)
 	return TRUE
 
 /obj/item/organ/internal/legion_tumour/on_life(seconds_per_tick, times_fired)
@@ -96,7 +131,7 @@
 			infest()
 		return
 
-	elapsed_time += seconds_per_tick SECONDS
+	elapsed_time += seconds_per_tick SECONDS * ((organ_flags & ORGAN_FAILING) ? 3 : 1) // Let's call it "matured" rather than failed
 	if (elapsed_time < growth_time)
 		return
 	stage++
