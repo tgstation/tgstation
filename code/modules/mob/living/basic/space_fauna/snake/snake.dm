@@ -45,7 +45,6 @@
 /mob/living/basic/snake/Initialize(mapload, special_reagent)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -53,15 +52,26 @@
 	AddElement(/datum/element/basic_eating, 2, 0, null, edibles)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
 
+	AddComponent(\
+		/datum/component/tameable,\
+		food_types = list(/obj/item/food/deadmouse),\
+		tame_chance = 75,\ // snakes are really fond of food, especially in the cold darkness of space :)
+		bonus_tame_chance = 10,\
+	)
+
 	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
 
 	AddElement(/datum/element/venomous, special_reagent, 4)
 
+/mob/living/basic/snake/befriend(mob/living/new_friend)
+	. = ..()
+	visible_message("[src] hisses happily as it seems to bond with [new_friend].")
+
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends/allow_items,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
