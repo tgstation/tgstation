@@ -27,7 +27,7 @@
 	produce_cash(sold_to, thing_sold)
 	return TRANSACTION_SUCCESS
 
-/datum/element/venue_price/proc/reagent_sold(datum/reagent/reagent_sold, mob/living/simple_animal/basic/sold_to, obj/item/container)
+/datum/element/venue_price/proc/reagent_sold(datum/reagent/reagent_sold, mob/living/basic/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER
 
 	produce_cash(sold_to, container)

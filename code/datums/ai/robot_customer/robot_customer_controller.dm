@@ -8,7 +8,7 @@
 		BB_CUSTOMER_EATING = FALSE,
 		BB_CUSTOMER_LEAVING = FALSE,
 		BB_CUSTOMER_MY_SEAT = null,
-		BB_CUSTOMER_PATIENCE = 999,
+		BB_CUSTOMER_PATIENCE = 999 SECONDS,
 		BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE,
 	)
 	planning_subtrees = list(/datum/ai_planning_subtree/robot_customer)
