@@ -24,7 +24,7 @@
 	outfit = select_outfit()
 	return ..()
 
-obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	var/obj/item/organ/internal/legion_tumour/cancer = new()
 	cancer.Insert(spawned_human, special = TRUE, drop_if_replaced = FALSE)
@@ -110,21 +110,21 @@ obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human
 	mob_name = "skeleton"
 	mob_species = /datum/species/skeleton
 
-/obj/effect/mob_spawn/corpse/human/charredskeleton/select_outfit()
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/select_outfit()
 	return null
 
-/obj/effect/mob_spawn/corpse/human/charredskeleton/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	spawned_human.gender = NEUTER
 
 /// Creates a dead and burned legion-infested skeleton
-/obj/effect/mob_spawn/corpse/human/legioninfested/charred
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
 	name = "charred legion-infested skeleton"
 	mob_name = "charred skeleton"
 	brute_damage = 0
 	burn_damage = 1000
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/charred/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	spawned_human.color = "#454545"
 

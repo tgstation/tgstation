@@ -13,6 +13,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 3
+	maxHealth = 75
+	health = 75
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -26,8 +28,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
 	var/brood_type = /mob/living/basic/legion_brood
-	/// How we launch our brood
-	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher
 	/// What kind of corpse spawner do we leave behind on death?
 	var/corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested
 	/// Who is inside of us?
@@ -38,7 +38,7 @@
 	AddElement(/datum/element/death_drops, get_loot_list())
 	AddElement(/datum/element/content_barfer)
 
-	skull_launcher = new(src)
+	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher = new(src)
 	skull_launcher.Grant(src)
 	skull_launcher.spawn_type = brood_type
 	ai_controller.blackboard[BB_TARGETTED_ACTION] = skull_launcher
@@ -47,10 +47,6 @@
 /mob/living/basic/mining/legion/proc/get_loot_list()
 	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	return death_loot
-
-/mob/living/basic/mining/legion/Destroy()
-	QDEL_NULL(skull_launcher)
-	return ..()
 
 /mob/living/basic/mining/legion/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -70,7 +66,6 @@
 /mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
 	gender = consumed.gender
 	name = consumed.real_name
-	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
@@ -80,6 +75,7 @@
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
+	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
 	if (!prob(25))
 		return
 	// Congratulations you have won a special prize: cancer
@@ -141,6 +137,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 30
+	pixel_x = -16
 	sentience_type = SENTIENCE_BOSS
 
 /mob/living/basic/mining/legion/large/Initialize(mapload)

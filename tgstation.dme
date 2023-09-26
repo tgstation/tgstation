@@ -4372,7 +4372,7 @@
 #include "code\modules\mob\living\basic\lavaland\legion\legion.dm"
 #include "code\modules\mob\living\basic\lavaland\legion\legion_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\legion\legion_brood.dm"
-#include "code\modules\mob\living\basic\lavaland\legion\legion_organ.dm"
+#include "code\modules\mob\living\basic\lavaland\legion\legion_tumour.dm"
 #include "code\modules\mob\living\basic\lavaland\legion\spawn_legions.dm"
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity.dm"
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity_ai.dm"

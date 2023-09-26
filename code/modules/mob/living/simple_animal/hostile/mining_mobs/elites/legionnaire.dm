@@ -329,8 +329,8 @@
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
 	var/mob/living/basic/legion_brood/minion = new (user.loc)
+	minion.assign_creator(user)
 	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
-	minion.faction = user.faction.Copy()
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
@@ -343,7 +343,7 @@
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
 
 	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
-	minion.faction = user.faction.Copy()
+	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
 
 #undef LEGIONNAIRE_CHARGE

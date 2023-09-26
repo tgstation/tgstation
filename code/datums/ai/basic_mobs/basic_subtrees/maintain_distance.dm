@@ -3,7 +3,7 @@
 	/// Blackboard key holding atom we want to stay away from
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// How close will we allow our target to get?
-	var/minimum_distance = 3
+	var/minimum_distance = 4
 	/// How far away will we allow our target to get?
 	var/maximum_distance = 6
 	/// How far do we look for our target?
@@ -39,7 +39,6 @@
 
 	var/turf/next_step = get_step_away(controller.pawn, current_target)
 	if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-		to_chat(world, "[controller.pawn] steppin")
 		set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
 		return TRUE
 
@@ -51,7 +50,6 @@
 	for (var/dir in all_dirs)
 		next_step = get_step(controller.pawn, dir)
 		if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-			to_chat(world, "[controller.pawn] steppin")
 			set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
 			return TRUE
 	return FALSE

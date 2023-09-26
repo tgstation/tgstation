@@ -4,6 +4,7 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead/legion,
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_AGGRO_RANGE = 5, // Unobservant
+		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -34,7 +35,10 @@
 /datum/targetting_datum/basic/attack_until_dead/legion/faction_check(mob/living/living_mob, mob/living/the_target)
 	if (!living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly))
 		return FALSE
-	if (istype(the_target, /mob/living/basic/mining/legion))
+	if (istype(the_target, living_mob.type))
+		return TRUE
+	var/atom/created_by = living_mob.ai_controller.blackboard[BB_LEGION_BROOD_CREATOR]
+	if (!QDELETED(created_by) && istype(the_target, created_by.type))
 		return TRUE
 	return the_target.stat == DEAD || the_target.health >= the_target.maxHealth
 

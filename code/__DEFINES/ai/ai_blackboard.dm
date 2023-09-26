@@ -43,6 +43,8 @@
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
 #define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+#define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
+#define DEFAULT_BASIC_FLEE_DISTANCE 9
 
 /// Generic key for a non-specific targetted action
 #define BB_TARGETTED_ACTION "BB_targetted_action"

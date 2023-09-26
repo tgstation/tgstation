@@ -29,6 +29,8 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
+	/// Reference to a guy who made us
+	var/mob/living/created_by
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
@@ -47,7 +49,7 @@
 	if (ishuman(target) && target.stat > SOFT_CRIT)
 		infest(target)
 		return
-	if (isliving(target) && faction_check_mob(target) && !istype(target, /mob/living/basic/mining/legion))
+	if (isliving(target) && faction_check_mob(target) && !istype(target, created_by?.type))
 		visible_message(span_warning("[src] melds with [target]'s flesh!"))
 		target.apply_status_effect(/datum/status_effect/regenerative_core)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
@@ -61,6 +63,7 @@
 	var/spawn_type = get_legion_type(target)
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(loc)
 	new_legion.consume(target)
+	new_legion.faction = faction.Copy()
 	qdel(src)
 
 /// Returns the kind of legion we make out of the target
@@ -68,6 +71,21 @@
 	if (HAS_TRAIT(target, TRAIT_DWARF))
 		return /mob/living/basic/mining/legion/dwarf
 	return /mob/living/basic/mining/legion
+
+/// Sets someone as our creator, mostly so you can't use skulls to heal yourself
+/mob/living/basic/legion_brood/proc/assign_creator(mob/living/creator, copy_full_faction = TRUE)
+	if (copy_full_faction)
+		faction = creator.faction.Copy()
+	else
+		faction |= REF(creator)
+	created_by = creator
+	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
+	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
+
+/// Reference handling
+/mob/living/basic/legion_brood/proc/creator_destroyed()
+	SIGNAL_HANDLER
+	created_by = null
 
 /// Like the Legion's summoned skull but funnier (it's snow now)
 /mob/living/basic/legion_brood/snow

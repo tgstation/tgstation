@@ -80,6 +80,10 @@
 					SEND_SOUND(owner, sound(pick(spooky_sounds)))
 			if(SPT_PROB(3, seconds_per_tick))
 				owner.vomit(vomit_type = /obj/effect/decal/cleanable/vomit/old/black_bile)
+				if (prob(50))
+					var/mob/living/basic/legion_brood/child = new(owner.loc)
+					child.assign_creator(owner, copy_full_faction = FALSE)
+
 			if(SPT_PROB(3, seconds_per_tick))
 				to_chat(owner, span_danger("Your muscles ache."))
 				owner.take_bodypart_damage(3)

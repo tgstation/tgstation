@@ -53,8 +53,9 @@
 
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/skull_launcher/proc/spawn_skull(turf/spawn_location, target)
-	var/mob/living/brood = new spawn_type(spawn_location)
-	brood.faction = owner.faction
+	var/mob/living/basic/legion_brood/brood = new spawn_type(spawn_location)
+	if (istype(brood))
+		brood.assign_creator(owner)
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_location)
 	if (!isnull(target))
