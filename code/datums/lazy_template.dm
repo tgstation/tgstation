@@ -79,6 +79,14 @@
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
+
+		var/list/target_turfs = block(bottom_left, top_right)
+		// we're going to interrupt SSair for just a moment to ensure cleanup on the turfs we're about to replace
+		SSair.can_fire = FALSE
+		UNTIL(!length(SSair.currentrun))
+		SSair.active_turfs -= target_turfs
+		SSair.can_fire = TRUE
+
 		load_map(
 			file(load_path),
 			bottom_left.x,
@@ -87,7 +95,7 @@
 			z_upper = z_idx,
 			z_lower = z_idx,
 		)
-		for(var/turf/turf as anything in block(bottom_left, top_right))
+		for(var/turf/turf as anything in target_turfs)
 			loaded_turfs += turf
 			loaded_areas |= get_area(turf)
 
