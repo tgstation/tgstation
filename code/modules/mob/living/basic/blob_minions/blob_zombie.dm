@@ -84,7 +84,7 @@
 
 /mob/living/basic/blob_minion/zombie/controlled/consume_corpse(mob/living/carbon/human/new_corpse)
 	. = ..()
-	if (key)
+	if (!isnull(client))
 		return
 	AddComponent(\
 		/datum/component/ghost_direct_control,\

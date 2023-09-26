@@ -45,7 +45,7 @@
 /mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if (!.)
-		return
+		return FALSE
 	var/damage_sources = 0
 	var/list/blobs_in_area = range(2, src)
 
@@ -76,6 +76,7 @@
 	harming.color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_WHITE
 	harming.dir = dir
 	flick_overlay_view(harming, 0.8 SECONDS)
+	return TRUE
 
 /// Called by the blob creation power to give us a mind and a basic task orientation
 /mob/living/basic/blob_minion/blobbernaut/minion/proc/assign_key(ckey, datum/blobstrain/blobstrain)

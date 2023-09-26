@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
 		var/turf/guy_turf = get_turf(live_guy)
-		if(!guy_turf || !is_station_level(guy_turf.z))
+		if(isnull(guy_turf) || !is_station_level(guy_turf.z))
 			continue
 
 		if(live_guy in GLOB.overminds || (live_guy.pass_flags & PASSBLOB))
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			live_guy.fully_heal()
 
 		for(var/area/check_area in GLOB.areas)
-			if(!(check_area.type in GLOB.the_station_areas))
+			if(!(is_type_in_list(check_area, GLOB.the_station_areas)))
 				continue
 			if(!(check_area.area_flags & BLOBS_ALLOWED))
 				continue
@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
 		if(main_objective)
 			main_objective.completed = TRUE
-	to_chat(world, span_blob("[real_name] consumed the station in an unstoppable tide!"))
+	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = FORCE_END_ROUND
 
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_blob("You are the overmind!"))
+	to_chat(src, span_blobannounce("You are the overmind!"))
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, span_boldannounce("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
 		to_chat(src, span_boldannounce("You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen."))
@@ -275,10 +275,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		if(!blobbernaut.hud_used || !blobbernaut.hud_used.blobpwrdisplay)
+		var/datum/hud/using_hud = blobbernaut.hud_used
+		if(!using_hud?.blobpwrdisplay)
 			continue
-		blobbernaut.hud_used.blobpwrdisplay.maptext = MAPTEXT(\
-			"<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+		using_hud.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	src.log_talk(message, LOG_SAY)
 
 	var/message_a = say_quote(message)
-	var/rendered = span_big("<font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]</font>")
+	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
 
 	for(var/mob/creature in GLOB.mob_list)
 		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			return FALSE
 	else
 		var/area/check_area = get_area(NewLoc)
-		if(isgroundlessturf(NewLoc) || istype(check_area, /area/shuttle)) //if unplaced, can't go on shuttles or goundless tiles
+		if(isgroundlessturf(NewLoc) || istype(check_area, /area/shuttle)) //if unplaced, can't go on shuttles or groundless tiles
 			return FALSE
 		forceMove(NewLoc)
 		return TRUE

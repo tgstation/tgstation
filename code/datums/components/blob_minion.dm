@@ -12,19 +12,17 @@
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	if (isnull(overmind))
-		return
 	src.on_strain_changed = on_strain_changed
 	register_overlord(overmind)
 
-/// Averages corrosive power and sums volume.
 /datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/camera/blob/overmind, datum/callback/on_strain_changed)
 	if (!isnull(on_strain_changed))
 		src.on_strain_changed = on_strain_changed
-	if (!isnull(overmind))
-		register_overlord(overmind)
+	register_overlord(overmind)
 
 /datum/component/blob_minion/proc/register_overlord(mob/camera/blob/overmind)
+	if (isnull(overmind))
+		return
 	src.overmind = overmind
 	overmind.register_new_minion(parent)
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
@@ -70,15 +68,15 @@
 	REMOVE_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	add_verb(parent, /mob/living/verb/pulled)
 	UnregisterSignal(parent, list(
-		COMSIG_MOB_MIND_INITIALIZED,
-		COMSIG_ATOM_UPDATE_ICON,
-		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_FIRE_ACT,
 		COMSIG_ATOM_TRIED_PASS,
-		COMSIG_MOVABLE_SPACEMOVE,
+		COMSIG_ATOM_UPDATE_ICON,
 		COMSIG_LIVING_TRY_SPEECH,
 		COMSIG_MOB_CHANGED_TYPE,
+		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
+		COMSIG_MOB_MIND_INITIALIZED,
+		COMSIG_MOVABLE_SPACEMOVE,
 	))
 
 /// Become blobpilled when we gain a mind
@@ -140,7 +138,7 @@
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 	var/spanned_message = minion.say_quote(message)
-	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]</font>"
+	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	for(var/mob/creature as anything in GLOB.mob_list)
 		if(HAS_TRAIT(creature, TRAIT_BLOB_ALLY))
 			to_chat(creature, rendered)
