@@ -110,6 +110,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 	. = ..()
 
+/turf/New(...)
+	// This is done to prevent atmos from processing on turfs that have just been created, for example during mapload
+	SSair.currentrun -= src
+	SSair.active_turfs -= src
+	return ..()
+
 /**
  * Turf Initialize
  *
