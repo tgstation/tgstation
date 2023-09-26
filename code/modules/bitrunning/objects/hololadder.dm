@@ -29,8 +29,7 @@
 	if(isnull(user.mind))
 		return
 
-	var/datum/component/avatar_connection/connection = user.GetComponent(/datum/component/avatar_connection)
-	if(isnull(connection))
+	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
 		balloon_alert(user, "no connection detected.")
 		return
 

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed beams rendering below mobs by default."
-  - bugfix: "The fishing line beam is no longer emissive (it doesn't glow in the dark)."
