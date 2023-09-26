@@ -54,8 +54,7 @@
 
 /obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(length(contents))
-		context[SCREENTIP_CONTEXT_LMB] = "Take a random tool"
+	context[SCREENTIP_CONTEXT_LMB] = "Take a random tool"
 	context[SCREENTIP_CONTEXT_RMB] = "Take a specific tool"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -151,10 +150,12 @@
 	return
 
 /obj/item/surgery_tray/attack_hand(mob/living/user)
-	if(!length(contents) || !user.can_perform_action(src, NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_HANDS))
 		return ..()
-	var/obj/item/grabbies = pick(contents)
-	if(grabbies)
+	if(!length(contents))
+		balloon_alert(user, "empty!")
+	else
+		var/obj/item/grabbies = pick(contents)
 		atom_storage.remove_single(user, grabbies, drop_location())
 		user.put_in_hands(grabbies)
 	return TRUE
