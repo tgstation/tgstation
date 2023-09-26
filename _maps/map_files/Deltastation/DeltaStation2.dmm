@@ -3936,12 +3936,12 @@
 	name = "Meets-the-Ore"
 	},
 /obj/structure/railing{
-	dir = 9;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 8;
 	layer = 4.1
+	},
+/obj/structure/railing{
+	dir = 10;
+	layer = 3.1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -56117,7 +56117,7 @@
 "nHf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
-	dir = 9;
+	dir = 10;
 	layer = 3.1
 	},
 /turf/open/space/basic,
@@ -98535,11 +98535,11 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate,
 /obj/structure/railing{
-	dir = 9;
-	layer = 3.1
+	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4
+	dir = 10;
+	layer = 3.1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
