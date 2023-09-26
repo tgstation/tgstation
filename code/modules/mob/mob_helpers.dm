@@ -519,3 +519,32 @@
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
+
+/**
+ * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob
+ * copy_amount - number of lines to return
+ * line_chance - chance to return a line, if you don't want just the most recent x lines
+ */
+/mob/proc/copy_recent_speech(copy_amount = LING_ABSORB_RECENT_SPEECH, line_chance = 100)
+	var/list/recent_speech = list()
+	var/list/say_log = list()
+	var/log_source = logging
+	for(var/log_type in log_source)
+		var/nlog_type = text2num(log_type)
+		if(nlog_type & LOG_SAY)
+			var/list/reversed = log_source[log_type]
+			if(islist(reversed))
+				say_log = reverse_range(reversed.Copy())
+				break
+
+	if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
+		recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
+	else
+		for(var/spoken_memory in say_log)
+			if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
+				break
+			if(!prob(line_chance))
+				continue
+			recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
+
+	return recent_speech

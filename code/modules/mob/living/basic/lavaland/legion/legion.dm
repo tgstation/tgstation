@@ -18,7 +18,7 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "lashes out at"
 	attack_verb_simple = "lash out at"
-	speak_emote = list("echoes")
+	speak_emote = list("gurgles")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
@@ -78,6 +78,11 @@
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	consumed.forceMove(src)
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
+	var/list/recent_lines = list()
+	var/list/recent_log = consumed.copy_recent_speech()
+	for (var/key in recent_log)
+		recent_lines += recent_log[key]
+	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, recent_lines)
 	stored_mob = consumed
 	if (!prob(25))
 		return

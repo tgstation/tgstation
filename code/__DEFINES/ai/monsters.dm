@@ -149,3 +149,5 @@
 
 /// Corpse we have consumed
 #define BB_LEGION_CORPSE "legion_corpse"
+/// Things our target recently said
+#define BB_LEGION_RECENT_LINES "legion_recent_lines"

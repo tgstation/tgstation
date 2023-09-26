@@ -9,10 +9,10 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability,
 		/datum/ai_planning_subtree/flee_target/legion,
-		// random speech legion
 	)
 
 /// Chase and attack whatever we are targetting, if it's friendly we will heal them
@@ -46,3 +46,28 @@
 	if (QDELETED(target) || target.faction_check_mob(controller.pawn))
 		return // Only flee if we have a hostile target
 	return ..()
+
+/// Make spooky sounds, if we have a corpse inside then impersonate them
+/datum/ai_planning_subtree/random_speech/legion
+	speech_chance = 1
+	speak = list("Come...", "Legion...", "Why...?")
+	emote_hear = list("groans.", "wails.", "whimpers.")
+	emote_see = list("twitches.", "shudders.")
+	/// Stuff to specifically say into a radio
+	var/list/radio_speech = list("Come...", "Why...?")
+
+/datum/ai_planning_subtree/random_speech/legion/speak(datum/ai_controller/controller)
+	var/mob/living/carbon/human/victim = controller.blackboard[BB_LEGION_CORPSE]
+	if (QDELETED(victim) || prob(30))
+		return ..()
+
+	var/list/remembered_speech = controller.blackboard[BB_LEGION_RECENT_LINES] || list()
+
+	if (length(remembered_speech) && prob(50)) // Don't spam the radio
+		controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(remembered_speech))
+		return
+
+	var/obj/item/radio/mob_radio = locate() in victim.contents
+	if (QDELETED(mob_radio))
+		return ..() // No radio, just talk funny
+	controller.queue_behavior(/datum/ai_behavior/perform_speech_radio, pick(radio_speech + remembered_speech), mob_radio, list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_COMMON))
