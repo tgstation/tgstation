@@ -41,7 +41,7 @@ const updateGlobalOverrideRule = () => {
 };
 
 const setGlobalFontSize = (fontSize) => {
-  overrideFontSize = `${fontSize}px`;
+  overrideFontSize = fontSize ? `${fontSize}px` : null;
 };
 
 const setGlobalFontFamily = (fontFamily) => {
