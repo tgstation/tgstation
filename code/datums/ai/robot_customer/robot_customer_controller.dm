@@ -1,14 +1,16 @@
 /datum/ai_controller/robot_customer
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.8 SECONDS
-	blackboard = list(BB_CUSTOMER_CURRENT_ORDER = null,
-	BB_CUSTOMER_MY_SEAT = null,
-	BB_CUSTOMER_PATIENCE = 999,
-	BB_CUSTOMER_CUSTOMERINFO = null,
-	BB_CUSTOMER_EATING = FALSE,
-	BB_CUSTOMER_LEAVING = FALSE,
-	BB_CUSTOMER_ATTENDING_VENUE = null,
-	BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE)
+	blackboard = list(
+		BB_CUSTOMER_ATTENDING_VENUE = null,
+		BB_CUSTOMER_CURRENT_ORDER = null,
+		BB_CUSTOMER_CUSTOMERINFO = null,
+		BB_CUSTOMER_EATING = FALSE,
+		BB_CUSTOMER_LEAVING = FALSE,
+		BB_CUSTOMER_MY_SEAT = null,
+		BB_CUSTOMER_PATIENCE = 999,
+		BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE,
+	)
 	planning_subtrees = list(/datum/ai_planning_subtree/robot_customer)
 
 /datum/ai_controller/robot_customer/Destroy()
