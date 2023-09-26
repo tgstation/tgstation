@@ -36,58 +36,39 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/snake
 
+	/// List of stuff (mice) that we want to eat
+	var/static/list/edibles = list(
+		/mob/living/basic/mouse,
+		/obj/item/food/deadmouse,
+	)
+
 /mob/living/basic/snake/Initialize(mapload, special_reagent)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
 
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+	AddElement(/datum/element/basic_eating, 2, 0, null, edibles)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
 
 	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
 
 	AddElement(/datum/element/venomous, special_reagent, 4)
 
-/mob/living/basic/snake/proc/on_attack(mob/living/basic/source, atom/target)
-	if(!ismouse(target))
-		return
-
-	visible_message(
-		span_notice("[name] consumes [target] in a single gulp!"),
-		span_notice("You consume [target] in a single gulp!"),
-		span_hear("You hear a small scuffling followed by a silent gulp.")
+/// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
+/datum/ai_controller/basic_controller/snake
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
-	QDEL_NULL(target)
-	adjustBruteLoss(-2)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-/mob/living/basic/snake/ListTargets(atom/the_target)
-	var/atom/target_from = GET_TARGETS_FROM(src)
-	. = oview(vision_range, target_from) //get list of things in vision range
-	var/list/living_mobs = list()
-	var/list/mice = list()
-	for (var/HM in .)
-		//Yum a tasty mouse
-		if(ismouse(HM))
-			mice += HM
-		if(isliving(HM))
-			living_mobs += HM
-
-	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
-	if(length(mice))
-		return mice
-
-	var/list/actual_enemies = list()
-	for(var/datum/weakref/enemy as anything in enemies)
-		var/mob/flesh_and_blood = enemy.resolve()
-		if(!flesh_and_blood)
-			enemies -= enemy
-			continue
-		actual_enemies += flesh_and_blood
-
-	//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
-	return  living_mobs & actual_enemies
-
-
-/datum/ai_controller/basic_controller/snake
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
