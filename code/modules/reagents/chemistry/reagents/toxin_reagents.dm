@@ -774,6 +774,7 @@
 	if(SPT_PROB(8, seconds_per_tick))
 		to_chat(affected_mob, span_danger("You scratch at your arm."))
 		need_mob_update += affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
+
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
