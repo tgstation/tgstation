@@ -64,6 +64,8 @@
 
 /datum/ai_behavior/basic_ranged_attack/hivebot
 	action_cooldown = 3 SECONDS
+	avoid_friendly_fire = TRUE
 
 /datum/ai_behavior/basic_ranged_attack/hivebot_rapid
 	action_cooldown = 1.5 SECONDS
+	avoid_friendly_fire = TRUE

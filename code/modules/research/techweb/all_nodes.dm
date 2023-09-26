@@ -14,7 +14,6 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"bepis",
 		"blast",
 		"bounced_radio",
 		"bowl",
@@ -2364,6 +2363,18 @@
 		"fishing_rod_tech",
 		"stabilized_hook",
 		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/advanced_plastic_surgery
+	id = "plastic_surgery"
+	display_name = "Advanced Plastic Surgery"
+	description = "A Procedure long lost due to licensing problems now once again available."
+	prereq_ids = list("base")
+	design_ids = list(
+		"surgery_advanced_plastic_surgery"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

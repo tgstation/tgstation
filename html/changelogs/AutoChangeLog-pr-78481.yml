@@ -1,6 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Foods that have special conditions for liking/disliking them (such as donuts for sec officers) have these conditions again."
-  - bugfix: "Characters with ageusia properly ignore non-toxic food types that they eat."
-  - bugfix: "If you examine toxic food, it can no longer appear to you as edible."

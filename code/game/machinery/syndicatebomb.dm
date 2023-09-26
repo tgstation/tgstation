@@ -416,7 +416,7 @@
 /obj/item/bombcore/badmin/summon/clown
 	name = "bananium payload"
 	desc = "Clowns delivered fast and cheap!"
-	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
+	summon_path = /mob/living/basic/clown
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
