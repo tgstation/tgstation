@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 
 
-// If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
+// This flag disables certain checks that presume antagonist datums mean 'baddie'.
 #define FLAG_FAKE_ANTAG (1 << 0)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"

@@ -211,7 +211,7 @@
  * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
  * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
 */
-/proc/is_special_character(mob/M, var/allow_fake_antags = FALSE)
+/proc/is_special_character(mob/M, allow_fake_antags = FALSE)
 	if(!SSticker.HasRoundStarted())
 		return FALSE
 	if(!istype(M))
