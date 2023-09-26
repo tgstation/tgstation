@@ -1,4 +1,6 @@
 /mob/living/basic/aquatic/fish
+	name = "Fish"
+	desc = "Found in the ocean."
 	icon = 'monkestation/code/modules/ocean_content/icons/fish.dmi'
 	icon_state = "fish"
 	icon_living = "fish"
@@ -16,3 +18,16 @@
 	ai_controller = /datum/ai_controller/basic_controller/fish
 
 
+/mob/living/basic/aquatic/fish/cod
+	name = "Cod"
+	icon_state = "cod"
+	icon_living = "cod"
+	icon_dead = "cod_dead"
+	icon_gib = "cod_dead"
+
+/mob/living/basic/aquatic/fish/gupper
+	name = "Gupper"
+	icon_state = "gupper"
+	icon_living = "gupper"
+	icon_dead = "gupper_dead"
+	icon_gib = "gupper_dead"

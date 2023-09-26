@@ -2268,13 +2268,10 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 4;
 	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "azi" = (
@@ -9754,10 +9751,7 @@
 	dir = 8;
 	layer = 4.1
 	},
-/obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cmq" = (
@@ -21119,6 +21113,10 @@
 /obj/machinery/status_display/ai/directional/south,
 /obj/structure/chair/stool/directional/east,
 /obj/machinery/light/directional/south,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "fdG" = (
@@ -31112,13 +31110,10 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/stripes/box,
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 8;
 	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "hAN" = (
@@ -36073,6 +36068,14 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
+"iNu" = (
+/obj/structure/chair/stool/directional/east,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/theater)
 "iNA" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -36844,6 +36847,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"iYP" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/theater)
 "iYS" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
@@ -44228,6 +44241,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"kKA" = (
+/obj/structure/chair/stool/directional/east,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/theater)
 "kKK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -50009,10 +50033,7 @@
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/machinery/light/floor/has_bulb,
-/obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "mhl" = (
@@ -56624,19 +56645,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"nNc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/fore)
 "nNq" = (
 /obj/machinery/button/door/directional/east{
 	id = "Dorm5";
@@ -68032,19 +68040,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"qFe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/fore)
 "qFj" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -69290,6 +69285,10 @@
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/east,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "qTB" = (
@@ -70189,13 +70188,10 @@
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 4;
 	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "rhN" = (
@@ -71190,13 +71186,10 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 4;
 	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "rua" = (
@@ -84983,9 +84976,6 @@
 /area/station/service/library/artgallery)
 "uNg" = (
 /obj/item/kirbyplants/random,
-/obj/structure/railing{
-	dir = 9
-	},
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
@@ -90075,6 +90065,10 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "vZq" = (
@@ -91952,6 +91946,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/stool/directional/east,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "wtv" = (
@@ -94350,13 +94348,10 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
-/obj/structure/railing{
 	dir = 8;
 	layer = 4.1
 	},
+/obj/structure/railing,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "xav" = (
@@ -133872,15 +133867,15 @@ msF
 suj
 iCu
 iCu
-nNc
-nNc
-nNc
-nNc
 iCu
-nNc
-nNc
-nNc
-qFe
+iCu
+iCu
+iCu
+iCu
+iCu
+iCu
+iCu
+owu
 rPh
 fxu
 kQK
@@ -134129,13 +134124,13 @@ fbU
 cwV
 fRo
 fRo
-khN
+kKA
 wtg
-jwb
-dxk
+iYP
+iNu
 qGm
-dxk
-dxk
+iNu
+iNu
 qTA
 fdA
 vnU
