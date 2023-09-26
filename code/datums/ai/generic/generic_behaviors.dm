@@ -287,11 +287,13 @@
 
 /datum/ai_behavior/perform_emote
 
-/datum/ai_behavior/perform_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote)
+/datum/ai_behavior/perform_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote, speech_sound)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
 	living_pawn.manual_emote(emote)
+	if(speech_sound) // Only audible emotes will pass in a sound
+		playsound(living_pawn, speech_sound, 80, vary = TRUE)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/perform_speech

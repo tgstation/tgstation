@@ -316,6 +316,11 @@
 	description = "I need something to cover my head..."
 	mood_change = -3
 
+/datum/mood_event/bald_reminder
+	description = "I was reminded that I can't grow my hair back at all! This is awful!"
+	mood_change = -5
+	timeout = 4 MINUTES
+
 /datum/mood_event/bad_touch
 	description = "I don't like when people touch me."
 	mood_change = -3
