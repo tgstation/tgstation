@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - qol: "drones now have individual names, instead of just \"drone\""

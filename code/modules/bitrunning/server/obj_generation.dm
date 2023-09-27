@@ -5,16 +5,30 @@
 	var/outfit_path = generated_domain.forced_outfit || netsuit
 	var/datum/outfit/to_wear = new outfit_path()
 
-	to_wear.suit_store = null
 	to_wear.belt = /obj/item/bitrunning_host_monitor
 	to_wear.glasses = null
-	to_wear.suit = null
 	to_wear.gloves = null
+	to_wear.l_hand = null
+	to_wear.l_pocket = null
+	to_wear.r_hand = null
+	to_wear.r_pocket = null
+	to_wear.suit = null
+	to_wear.suit_store = null
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
+	var/thing = avatar.get_active_held_item()
+	if(!isnull(thing))
+		qdel(thing)
+
+	thing = avatar.get_inactive_held_item()
+	if(!isnull(thing))
+		qdel(thing)
+
 	var/obj/item/storage/backpack/bag = avatar.back
 	if(istype(bag))
+		QDEL_LIST(bag.contents)
+
 		bag.contents += list(
 			new /obj/item/storage/box/survival,
 			new /obj/item/storage/medkit/regular,
