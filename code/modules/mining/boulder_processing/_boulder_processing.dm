@@ -179,9 +179,6 @@
 
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(!.)
-		return
 	if(!anchored)
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max)
@@ -191,6 +188,7 @@
 		if(boulder.can_get_processed())
 			return TRUE
 		return FALSE
+	return ..()
 
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()

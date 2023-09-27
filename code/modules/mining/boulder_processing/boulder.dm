@@ -92,16 +92,18 @@
 		else
 			icon_state = "[boulder_string]_small"
 
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE)
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE, continued = FALSE)
 	var/process_speed = 0
 	if(weapon)
 		process_speed = weapon.toolspeed
 		weapon.play_tool_sound(src, 50)
-		to_chat(user, span_notice("You swing at \the [src]..."))
+		if(!continued)
+			to_chat(user, span_notice("You swing at \the [src]..."))
 	else if (override_speed)
 		process_speed = override_speed
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
-		to_chat(user, span_notice("You scrape away at \the [src]..."))
+		if(!continued)
+			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
 		return
 
@@ -120,12 +122,12 @@
 		qdel(src)
 		return
 	else if(durability == 1)
-		to_chat(user, span_notice("\The [src] has been weakened, and is close to crumbling!"))
-		manual_process(weapon, user, override_speed)
+		to_chat(user, span_notice("\The [src] is close to crumbling!"))
+		manual_process(weapon, user, override_speed, continued = TRUE)
 		return
 	else
-		to_chat(user, span_notice("You finish working on \the [src], and it looks a bit weaker."))
-		manual_process(weapon, user, override_speed)
+		to_chat(user, span_notice("\The [src], and it looks a bit weaker."))
+		manual_process(weapon, user, override_speed, continued = TRUE)
 		return
 
 /obj/item/boulder/proc/convert_to_ore(weak)

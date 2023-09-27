@@ -8,6 +8,7 @@
 	circuit = /obj/item/circuitboard/machine/brm
 	usage_sound = MANUAL_TELEPORT_SOUND
 	processing_flags = START_PROCESSING_MANUALLY
+	boulders_held_max = 2
 	/// Are we trying to actively collect boulders automatically?
 	var/toggled_on = FALSE
 	/// How long does it take to collect a boulder?
@@ -55,22 +56,22 @@
 	balloon_alert_to_viewers("bzzap!")
 	if(SSore_generation.available_boulders.len < 1)
 		say("No boulders to collect. Entering idle mode.")
+		toggled_on = FALSE
 		STOP_PROCESSING(SSmachines, src)
-		icon_state = "brm"
 		update_appearance(UPDATE_ICON_STATE)
 		return
 	for(var/i in 1 to boulders_processing_max)
 		if(!pre_collect_boulder())
+			toggled_on = FALSE
 			STOP_PROCESSING(SSmachines, src)
-			icon_state = "brm"
 			update_appearance(UPDATE_ICON_STATE)
 	for(var/ground_rocks in loc.contents)
 		if(istype(ground_rocks, /obj/item/boulder))
 			boulders_contained += ground_rocks
 			if(boulders_contained.len > boulders_held_max)
+				toggled_on = FALSE
 				STOP_PROCESSING(SSmachines, src)
 				boulders_contained = list()
-				icon_state = "brm"
 				update_appearance(UPDATE_ICON_STATE)
 				return
 
@@ -93,12 +94,13 @@
 	boulders_processing_max = scanner_stack
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		laser_stack += (laser.tier)
-	boulders_held_max = laser_stack
+	boulders_held_max = laser_stack + 1
 
 /obj/machinery/bouldertech/brm/update_icon_state()
-	. = ..()
-	icon_state = "brm"
-
+	if(toggled_on && !panel_open)
+		icon_state = "[initial(icon_state)]-toggled"
+		return
+	return ..()
 
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
 	if(!SSore_generation.available_boulders.len)
@@ -114,6 +116,7 @@
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	SSore_generation.available_boulders -= random_boulder
 	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder), 1.5 SECONDS)
+	return TRUE
 
 /obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
 	flick("brm-flash", src)
@@ -132,8 +135,8 @@
 		if(user)
 			balloon_alert(user, "close panel first!")
 		return
+	toggled_on = TRUE
 	START_PROCESSING(SSmachines, src)
-	icon_state = "brm-toggled"
 	update_appearance(UPDATE_ICON_STATE)
 	usage_sound = AUTO_TELEPORT_SOUND
 

@@ -76,7 +76,7 @@
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
-		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", HIGH_OBJ_LAYER, src, GAME_PLANE))
+		add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE_UPPER))
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
