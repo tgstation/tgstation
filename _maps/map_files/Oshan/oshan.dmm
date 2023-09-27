@@ -1146,7 +1146,8 @@
 	pixel_y = 5;
 	pixel_x = 7;
 	id = "cargo";
-	name = "Launch Cargo"
+	name = "Launch Cargo";
+	looping_time = 1
 	},
 /turf/closed/wall/r_wall,
 /area/station/cargo/storage)
@@ -9847,16 +9848,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"eZq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
-	},
-/obj/docking_port/stationary/escape_pod{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/cargo/miningoffice)
 "eZx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -67302,7 +67293,7 @@ iLH
 ont
 dGk
 hcx
-eZq
+hcx
 dGk
 nip
 qRY

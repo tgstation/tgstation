@@ -1,3 +1,5 @@
+/obj/machinery/computer/pod/var/looping_time = FALSE
+
 /obj/machinery/mass_driver/cargo_driver
 	name = "Cargo Driver"
 	id = MASSDRIVER_CARGO
