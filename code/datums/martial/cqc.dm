@@ -83,16 +83,16 @@
 	if(!can_use(attacker) || defender.stat != CONSCIOUS)
 		return FALSE
 
-	var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
-	var/knockout_prob = rand(-15,15) + defender.getStaminaLoss() - helmet_protection
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && prob(knockout_prob))
+	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.getStaminaLoss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"), \
 						span_userdanger("You're knocked unconscious by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
 		playsound(get_turf(attacker), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
+
+		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
 		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, helmet_protection)
-		defender.SetUnconscious(10 SECONDS)
+		defender.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS, helmet_protection)
 		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		defender.visible_message(span_danger("[attacker] kicks [defender] back!"), \
@@ -102,8 +102,8 @@
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
+		defender.adjustStaminaLoss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
-
 	. = TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/attacker, mob/living/defender)
@@ -249,7 +249,7 @@
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")
-	to_chat(usr, "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned or knocked down opponents.")
+	to_chat(usr, "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned opponents and does stamina damage.")
 	to_chat(usr, "[span_notice("Restrain")]: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
 	to_chat(usr, "[span_notice("Pressure")]: Shove Grab. Decent stamina damage.")
 	to_chat(usr, "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage.")
