@@ -179,9 +179,9 @@
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
 	var/seed_id = generate_seed_hash(to_add)
 	var/list/seed_data
-	var/add_ref // so we remember to do this last, in case for some reason we fail to take the seeds into the machine
+	var/has_seed_data // so we remember to add a seed obj weakref to piles[seed_id] at the end of the proc. That way if some reason we runtime in this proc it won't incorrectly add data to the list
 	if(piles[seed_id])
-		add_ref = TRUE
+		has_seed_data = TRUE
 	else
 		seed_data = list()
 		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
@@ -231,7 +231,7 @@
 		to_add.forceMove(src)
 
 	// do this at the end, in case any of the previous steps failed
-	if(add_ref)
+	if(has_seed_data)
 		piles[seed_id]["refs"] += WEAKREF(to_add)
 	else
 		piles[seed_id] = seed_data
