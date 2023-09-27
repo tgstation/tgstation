@@ -242,11 +242,12 @@
 		if(parent == hit_object)
 			return
 
-		if(!iseffect(hit_object))
-			consume(atom_source, hit_object)
-			playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-			atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
-				span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		if(iseffect(hit_object))
+			continue
+		consume(atom_source, hit_object)
+		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+		atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
+			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source
