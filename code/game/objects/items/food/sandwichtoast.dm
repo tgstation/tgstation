@@ -262,14 +262,13 @@
 // Makes you feel disgusted if you look at it wrong.
 /obj/item/food/sandwich/death/examine(mob/user)
 	. = ..()
+	// Only human mobs, not animals or silicons, can like/dislike by this.
+	if(!ishuman(user))
+		return
 	if(check_liked(user) == FOOD_LIKED)
 		return
-	// Only human mobs, not animals or silicons, can be disgusted by this.
-	if(!istype(user, /mob/living/carbon/human))
-		return
-	balloon_alert(user, "looked at it wrong!")
 	to_chat(user, span_warning("You imagine yourself eating [src]. You feel a sudden sour taste in your mouth, and a horrible feeling that you've done something wrong."))
-	user.adjust_disgust(33);
+	user.adjust_disgust(33)
 
 ///Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
@@ -285,8 +284,7 @@
 	/// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
-	else
-		return FOOD_DISLIKED
+	return FOOD_DISLIKED
 
 /**
 * Callback to be used with the edible component.
@@ -294,7 +292,7 @@
 * If you don't, you contract a deadly disease.
 */
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
-	/// If you're eating it right, you like it.
+	/// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
