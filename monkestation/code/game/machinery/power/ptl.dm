@@ -346,12 +346,14 @@
 
 /obj/effect/transmission_beam/Initialize(mapload, obj/machinery/power/transmission_laser/creator)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	var/turf/source_turf = get_turf(src)
+	RegisterSignal(source_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	update_appearance()
 
 /obj/effect/transmission_beam/Destroy(force)
 	. = ..()
-	UnregisterSignal(src, COMSIG_ATOM_ENTERED)
+	var/turf/source_turf = get_turf(src)
+	UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
 
 /obj/effect/transmission_beam/update_overlays()
 	. = ..()
