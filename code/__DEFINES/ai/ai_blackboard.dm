@@ -9,6 +9,9 @@
 ///Path we should use next time we use the JPS movement datum
 #define BB_PATH_TO_USE "BB_path_to_use"
 
+///Turf we want a mob to move to
+#define BB_TRAVEL_DESTINATION "BB_travel_destination"
+
 ///song instrument blackboard, set by instrument subtrees
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
@@ -88,3 +91,11 @@
 
 ///should we skip the faction check for the targetting datum?
 #define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"
+
+///currently only used by clowns, a list of what can the mob speak randomly
+#define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
+#define BB_EMOTE_SAY "emote_say"
+#define BB_EMOTE_HEAR "emote_hear"
+#define BB_EMOTE_SEE "emote_see"
+#define BB_EMOTE_SOUND "emote_sound"
+#define BB_EMOTE_CHANCE "emote_chance"

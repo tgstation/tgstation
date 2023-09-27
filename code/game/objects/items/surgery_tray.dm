@@ -35,6 +35,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
 	item_flags = SLOWS_WHILE_IN_HAND
+	pass_flags = NONE
 
 	/// If true we're currently portable
 	var/is_portable = TRUE
@@ -120,11 +121,11 @@
 
 	if(is_portable)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-		pass_flags |= PASSTABLE
+		passtable_on(src, type)
 		RemoveElement(/datum/element/noisy_movement)
 	else
 		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-		pass_flags &= ~PASSTABLE
+		passtable_off(src, type)
 		AddElement(/datum/element/noisy_movement)
 
 	update_appearance()
