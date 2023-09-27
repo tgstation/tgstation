@@ -157,8 +157,7 @@
 	. = ..()
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	if(drinker.AdjustSleeping(-40 * REM * seconds_per_tick))
-		. = UPDATE_MOB_HEALTH
+	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 
@@ -205,8 +204,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	if(drinker.AdjustSleeping(-40 * REM * seconds_per_tick))
-		. = UPDATE_MOB_HEALTH
+	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
@@ -1336,15 +1334,13 @@
 		drinker.adjust_confusion(2 SECONDS * REM * seconds_per_tick)
 	drinker.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
-	var/need_mob_update
 	switch(current_cycle)
 		if(51 to 200)
-			need_mob_update = drinker.Sleeping(100 * REM * seconds_per_tick)
+			drinker.Sleeping(100 * REM * seconds_per_tick)
 		if(201 to INFINITY)
-			need_mob_update = drinker.AdjustSleeping(40 * REM * seconds_per_tick)
-			need_mob_update += drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
+			drinker.AdjustSleeping(40 * REM * seconds_per_tick)
+			if(drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+				return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"

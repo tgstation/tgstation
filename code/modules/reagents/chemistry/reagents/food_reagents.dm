@@ -289,8 +289,7 @@
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.AdjustSleeping(40 * REM * seconds_per_tick))
-		return UPDATE_MOB_HEALTH
+	affected_mob.AdjustSleeping(40 * REM * seconds_per_tick)
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -544,8 +543,7 @@
 	if(isvampire(affected_mob)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(SPT_PROB(min((current_cycle-1)/2, 12.5), seconds_per_tick))
 			to_chat(affected_mob, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
-			if(affected_mob.Paralyze(10))
-				. = UPDATE_MOB_HEALTH
+			affected_mob.Paralyze(10)
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 	else
 		var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -882,7 +880,7 @@
 	. = ..()
 	var/need_mob_update
 	if(current_cycle > 10)
-		need_mob_update = M.Unconscious(40 * REM * seconds_per_tick, FALSE)
+		M.Unconscious(40 * REM * seconds_per_tick, FALSE)
 	if(SPT_PROB(10, seconds_per_tick))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)

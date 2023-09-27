@@ -3018,17 +3018,15 @@
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 
-	var/need_mob_update
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		need_mob_update = affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-		need_mob_update += affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-		need_mob_update += affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-		need_mob_update += affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-		need_mob_update += affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
 	else
-		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
+		if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick)) //1 heart damage per tick
+			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH

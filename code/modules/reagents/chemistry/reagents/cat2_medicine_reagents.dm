@@ -142,7 +142,7 @@
 	if(affected_mob.getStaminaLoss() >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		need_mob_update += affected_mob.adjustStaminaLoss(-100, updating_stamina = FALSE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
-		need_mob_update += affected_mob.Sleeping(10 SECONDS)
+		affected_mob.Sleeping(10 SECONDS)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 

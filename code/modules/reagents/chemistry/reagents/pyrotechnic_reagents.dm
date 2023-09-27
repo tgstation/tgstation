@@ -336,16 +336,13 @@
 	. = ..()
 	if(isjellyperson(affected_mob))
 		shock_timer = 0 //immune to shocks
-		var/need_mob_update
-		need_mob_update = affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-		need_mob_update += affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE)
-		log_world("need_mob_update [need_mob_update]")
+		affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
+		if(affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE))
+			. = UPDATE_MOB_HEALTH
 		if(is_species(affected_mob, /datum/species/jelly/luminescent))
 			var/mob/living/carbon/human/affected_human = affected_mob
 			var/datum/species/jelly/luminescent/slime_species = affected_human.dna.species
 			slime_species.extract_cooldown = max(slime_species.extract_cooldown - (2 SECONDS * REM * seconds_per_tick), 0)
-		if(need_mob_update)
-			return UPDATE_MOB_HEALTH
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"

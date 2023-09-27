@@ -684,8 +684,7 @@
 		if(13 to 25)
 			affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 		if(25 to INFINITY)
-			if(affected_mob.Sleeping(40 * REM * seconds_per_tick))
-				return UPDATE_MOB_HEALTH
+			affected_mob.Sleeping(40 * REM * seconds_per_tick)
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1205,8 +1204,7 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick))
-		. = UPDATE_MOB_HEALTH
+	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
@@ -1309,8 +1307,8 @@
 		need_mob_update += affected_mob.adjustToxLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjustCloneLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjustStaminaLoss(-3 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjust_jitter_up_to(6 SECONDS * REM * seconds_per_tick, 1 MINUTES)
 		need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, 150, affected_organ_flags)
+		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * seconds_per_tick, 1 MINUTES)
 		if(SPT_PROB(5, seconds_per_tick))
 			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
@@ -1392,13 +1390,11 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
-	need_mob_update = metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
-	need_mob_update += metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, 0)
+	metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
+	if(metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -1538,14 +1534,14 @@
 			if(SPT_PROB(10, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("You have a sudden fit!"))
 				affected_mob.emote("moan")
-				need_mob_update = affected_mob.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
+				affected_mob.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(affected_mob, span_userdanger("You feel too exhausted to continue!")) // at this point you will eventually die unless you get charcoal
 			need_mob_update = affected_mob.adjustOxyLoss(0.1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			need_mob_update += affected_mob.adjustStaminaLoss(0.1 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(82 to INFINITY)
 			REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-			need_mob_update = affected_mob.Sleeping(100 * REM * seconds_per_tick)
+			affected_mob.Sleeping(100 * REM * seconds_per_tick)
 			need_mob_update += affected_mob.adjustOxyLoss(1.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			need_mob_update += affected_mob.adjustStaminaLoss(1.5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -1580,10 +1576,8 @@
 
 /datum/reagent/medicine/psicodine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
-	need_mob_update = affected_mob.adjust_hallucinations_up_to(10 SECONDS * REM * seconds_per_tick, 120 SECONDS)
-	need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	if(need_mob_update)
+	affected_mob.adjust_hallucinations_up_to(10 SECONDS * REM * seconds_per_tick, 120 SECONDS)
+	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/metafactor

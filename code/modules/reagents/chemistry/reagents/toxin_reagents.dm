@@ -475,8 +475,7 @@
 			affected_mob.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
 			affected_mob.adjust_drowsiness(4 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
 		if(11 to 51)
-			if(affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick))
-				return UPDATE_MOB_HEALTH
+			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 		if(52 to INFINITY)
 			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 			if(affected_mob.adjustToxLoss(1 * (current_cycle - 51) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
@@ -505,15 +504,13 @@
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
 	switch(current_cycle)
 		if(2 to 51)
-			need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
+			affected_mob.Sleeping(40 * REM * seconds_per_tick)
 		if(52 to INFINITY)
-			need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
-			need_mob_update += affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
+			affected_mob.Sleeping(40 * REM * seconds_per_tick)
+			if(affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+				return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
@@ -710,7 +707,7 @@
 	if(current_cycle > 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle > 18)
-		need_mob_update += affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
+		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -728,13 +725,13 @@
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
+	var/need_mob_update = FALSE
 	if(SPT_PROB(2.5, seconds_per_tick))
 		affected_mob.losebreath += 1
 		need_mob_update = TRUE
 	if(SPT_PROB(4, seconds_per_tick))
 		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
-		need_mob_update = affected_mob.Stun(40)
+		affected_mob.Stun(40)
 		need_mob_update += affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -802,7 +799,7 @@
 		var/need_mob_update
 		switch(picked_option)
 			if(1)
-				need_mob_update = affected_mob.Paralyze(60)
+				affected_mob.Paralyze(60)
 			if(2)
 				affected_mob.losebreath += 10
 				affected_mob.adjustOxyLoss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
@@ -831,13 +828,10 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
 	if(current_cycle > 10)
-		need_mob_update = affected_mob.Stun(40 * REM * seconds_per_tick)
+		affected_mob.Stun(40 * REM * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 4
-		need_mob_update = TRUE
-	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/sodium_thiopental
@@ -860,11 +854,9 @@
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update
 	if(current_cycle > 10)
-		need_mob_update = affected_mob.Sleeping(40 * REM * seconds_per_tick)
-	need_mob_update += affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
-	if(need_mob_update)
+		affected_mob.Sleeping(40 * REM * seconds_per_tick)
+	if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/sulfonal
@@ -883,8 +875,7 @@
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(current_cycle > 22)
-		if(affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick))
-			return UPDATE_MOB_HEALTH
+		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 
 /datum/reagent/toxin/amanitin
 	name = "Amanitin"
@@ -987,11 +978,9 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/need_mob_update = FALSE
 	if(current_cycle > 11)
-		need_mob_update += affected_mob.Paralyze(60 * REM * seconds_per_tick)
-	need_mob_update += affected_mob.adjustOxyLoss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	if(need_mob_update)
+		affected_mob.Paralyze(60 * REM * seconds_per_tick)
+	if(affected_mob.adjustOxyLoss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1173,12 +1162,10 @@
 	. = ..()
 	if(current_cycle > delay)
 		holder.remove_reagent(type, actual_metaboliztion_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
-		var/need_mob_update
-		need_mob_update = affected_mob.adjustToxLoss(actual_toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		if(affected_mob.adjustToxLoss(actual_toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(5, seconds_per_tick))
-			need_mob_update += affected_mob.Paralyze(20)
-		if(need_mob_update)
-			return UPDATE_MOB_HEALTH
+			affected_mob.Paralyze(20)
 
 /datum/reagent/toxin/mimesbane
 	name = "Mime's Bane"
