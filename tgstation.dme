@@ -4728,6 +4728,7 @@
 #include "code\modules\mob_spawn\corpses\nonhuman_corpses.dm"
 #include "code\modules\mob_spawn\corpses\species_corpses.dm"
 #include "code\modules\mob_spawn\ghost_roles\away_roles.dm"
+#include "code\modules\mob_spawn\ghost_roles\drone_roles.dm"
 #include "code\modules\mob_spawn\ghost_roles\fugitive_hunter_roles.dm"
 #include "code\modules\mob_spawn\ghost_roles\golem_roles.dm"
 #include "code\modules\mob_spawn\ghost_roles\mining_roles.dm"
