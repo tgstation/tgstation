@@ -1,0 +1,6 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "You can no longer break the game by AI rolling in a card or APC"
+  - qol: "AI Roll now doesnt require you to click the exact turf to move you"
+  - qol: "AI roll cooldown and roll time is now a variable, making it possible for AIs to become terrifying catamari damacy balls"
