@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - refactor: "Turned slapcrafting into a component! You can examine compatible items to see what recipes they can be used in, and what the ingredients for them are. For example, spears and the head-on-spear crafting recipe."

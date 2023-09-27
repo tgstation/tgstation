@@ -221,6 +221,13 @@
 					/obj/item/clothing/under/misc/burial = 2,
 				)
 	crate_name = "religious supplies crate"
+	
+/datum/supply_pack/misc/candles_bulk
+	name = "Candle Box Crate"
+	desc = "Keep your local chapel lit with three candle boxes!"
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/storage/fancy/candle_box = 3)
+	crate_name = "candle box crate"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
