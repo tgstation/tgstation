@@ -230,6 +230,7 @@
 	SIGNAL_HANDLER
 
 	var/atom/atom_source = source
+	var/dusted_objects = 0
 
 	for(var/mob/living/poor_target in impacted_turf)
 		consume(atom_source, poor_target)
@@ -244,10 +245,16 @@
 
 		if(iseffect(hit_object))
 			continue
+
+		dusted_objects++
 		consume(atom_source, hit_object)
 		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-		atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		if(dusted_objects == 1) // so it doesn't spam in the chat that several different objects were dusted
+			atom_source.visible_message(span_danger("\The [atom_source] smacks into \the [hit_object] out of nowhere and rapidly flashes to ash."), null,
+				span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		else if(dusted_objects > 1)
+			atom_source.visible_message(span_danger("\The [atom_source], smacks into the plating out of nowhere, reducing everything below to ash."), null,
+				span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source
