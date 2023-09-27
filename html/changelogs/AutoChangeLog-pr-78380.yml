@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Clamping/closing a wound should now heal the bodypart that was damaged instead of a random one."
