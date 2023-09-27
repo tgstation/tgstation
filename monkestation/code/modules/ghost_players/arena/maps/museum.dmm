@@ -154,6 +154,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "wZ" = (
@@ -167,6 +168,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "yn" = (
@@ -240,6 +242,23 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"FT" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"GN" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "Im" = (
@@ -339,6 +358,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "VF" = (
@@ -359,6 +379,16 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"WW" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "YF" = (
@@ -383,10 +413,10 @@
 TW
 AA
 ro
-tz
+FT
 bs
 bs
-Wk
+GN
 ro
 OV
 TW
@@ -578,7 +608,7 @@ EW
 Di
 bs
 bs
-Cz
+WW
 EW
 Ky
 TW

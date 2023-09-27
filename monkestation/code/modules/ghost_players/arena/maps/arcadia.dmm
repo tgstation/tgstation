@@ -39,11 +39,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/tdome/arena/actual)
 "iW" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/eighties/red,
 /area/centcom/tdome/arena/actual)
 "je" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/checker,
 /area/centcom/tdome/arena/actual)
 "jI" = (
@@ -254,7 +254,7 @@
 /turf/open/floor/eighties/red,
 /area/centcom/tdome/arena/actual)
 "MS" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/eighties,
 /area/centcom/tdome/arena/actual)
 "NR" = (
