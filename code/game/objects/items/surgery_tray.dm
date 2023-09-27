@@ -207,7 +207,7 @@
 	name = "autopsy tray"
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
-	
+
 /obj/item/surgery_tray/full/morgue/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
