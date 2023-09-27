@@ -259,10 +259,34 @@
 	. = ..()
 	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
 
-///Override for checkliked callback
+// Makes you feel disgusted if you look at it wrong.
+/obj/item/food/sandwich/death/examine(mob/user)
+	. = ..()
+	if(check_liked(user) == FOOD_LIKED)
+		return
+	// Only human mobs, not animals or silicons, can be disgusted by this.
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	balloon_alert(user, "looked at it wrong!")
+	to_chat(user, span_warning("You imagine yourself eating [src]. You feel a sudden sour taste in your mouth, and a horrible feeling that you've done something wrong."))
+	user.adjust_disgust(33);
+
+///Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
+
+/**
+* Callback to be used with the edible component.
+* If you have the right clothes and hairstyle, you like it.
+* If you don't, you don't like it.
+*/
+/obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
+	/// Closest thing to a mullet we have
+	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
+		return FOOD_LIKED
+	else
+		return FOOD_DISLIKED
 
 /**
 * Callback to be used with the edible component.
@@ -270,12 +294,12 @@
 * If you don't, you contract a deadly disease.
 */
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
-	/// Closest thing to a mullet we have
-	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
-		return FOOD_LIKED
+	/// If you're eating it right, you like it.
+	if(check_liked(consumer) == FOOD_LIKED)
+		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
 	balloon_alert(consumer, "ate it wrong!")
-	consumer.ForceContractDisease(new/datum/disease/death_sandwich_poisoning())
+	consumer.ForceContractDisease(new /datum/disease/death_sandwich_poisoning())
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
