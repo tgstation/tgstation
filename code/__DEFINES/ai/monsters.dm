@@ -158,3 +158,7 @@
 #define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
 ///our slippery ice ability
 #define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
+///the turf we are escaping too
+#define BB_ESCAPE_DESTINATION "escape_destination"
+///how far away we will be from our target before teleporting
+#define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"

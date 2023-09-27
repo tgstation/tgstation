@@ -6,6 +6,7 @@
 			/obj/item/flashlight/flare,
 		),
 		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_MINIMUM_DISTANCE_RANGE = 3,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -13,30 +14,33 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon,
+		/datum/ai_planning_subtree/teleport_away_from_target,
+		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
+		/datum/ai_planning_subtree/ranged_skirmish,
 		/datum/ai_planning_subtree/find_and_hunt_target/teleport_destination,
 		/datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
 	)
 
 
 /datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon
-	minimum_distance = 5
 	maximum_distance = 7
 
-/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/teleport_ability = controller.blackboard[BB_DEMON_TELEPORT_ABILITY]
-	if(!teleport_ability?.IsAvailable())
-		return ..()
 
-	var/mob/living/living_pawn = controller.pawn
-	var/atom/target = controller.blackboard[target_key]
-	var/distance_to_target = get_dist(living_pawn, target)
-	if(distance_to_target >= minimum_distance)
-		return ..()
-
-	//instead of running away, we will teleport away! teleportation is handled by hunt_target behavior
-	controller.queue_behavior(/datum/ai_behavior/find_furthest_turf_from_target, target_key, BB_TELEPORT_DESTINATION, minimum_distance - distance_to_target)
+/datum/ai_planning_subtree/teleport_away_from_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/distance_from_target = get_dist(target, controller.pawn)
+	if(distance_from_target >= controller.blackboard[BB_MINIMUM_DISTANCE_RANGE])
+		controller.clear_blackboard_key(BB_ESCAPE_DESTINATION)
+		return
+	var/datum/action/cooldown/ability = controller.blackboard[BB_DEMON_TELEPORT_ABILITY]
+	if(!ability?.IsAvailable())
+		return
+	if(controller.blackboard_key_exists(BB_ESCAPE_DESTINATION))
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target, BB_DEMON_TELEPORT_ABILITY, BB_ESCAPE_DESTINATION)
+		return
+	controller.queue_behavior(/datum/ai_behavior/find_furthest_turf_from_target, BB_BASIC_MOB_CURRENT_TARGET, BB_ESCAPE_DESTINATION, controller.blackboard[BB_MINIMUM_DISTANCE_RANGE])
 
 ///find furtherst turf target so we may teleport to it
 /datum/ai_behavior/find_furthest_turf_from_target
@@ -48,7 +52,7 @@
 
 	var/distance = 0
 	var/turf/chosen_turf
-	for(var/turf/open/potential_destination in oview(controller.pawn, range))
+	for(var/turf/open/potential_destination in oview(living_target, range))
 		if(potential_destination.is_blocked_turf())
 			continue
 		var/new_distance_to_target = get_dist(potential_destination, living_target)
@@ -62,7 +66,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	controller.set_blackboard_key(BB_TELEPORT_DESTINATION, chosen_turf)
+	controller.set_blackboard_key(set_key, chosen_turf)
 	finish_action(controller, TRUE)
 
 
@@ -71,8 +75,8 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/use_ability_on_target/demon_teleport
 	finding_behavior = /datum/ai_behavior/find_valid_teleport_location
 	hunt_targets = list(/turf/open)
-	hunt_chance = 100
 	hunt_range = 3
+	finish_planning = FALSE
 
 /datum/ai_planning_subtree/find_and_hunt_target/teleport_destination/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
@@ -108,9 +112,9 @@
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/hunt_target/use_ability_on_target/demon_teleport
-	hunt_cooldown = 5 SECONDS
+	hunt_cooldown = 2 SECONDS
 	ability_key = BB_DEMON_TELEPORT_ABILITY
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	behavior_flags = NONE
 	always_reset_target = TRUE
 
 /datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages
@@ -138,7 +142,7 @@
 		if(!held_item.light_on)
 			continue
 		var/datum/action/cooldown/slip_ability = controller.blackboard[BB_DEMON_SLIP_ABILITY]
-		if(!slip_ability?.IsAvailable())
+		if(slip_ability?.IsAvailable())
 			controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_DEMON_SLIP_ABILITY)
 		return ..()
 

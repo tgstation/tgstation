@@ -13,7 +13,7 @@
 	desc = "Teleport towards a destination target!"
 	button_icon = 'icons/obj/ore.dmi'
 	button_icon_state = "bluespace_crystal"
-	cooldown_time = 5 SECONDS
+	cooldown_time = 2 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	///time delay before teleport
 	var/time_delay = 0.5 SECONDS
@@ -36,7 +36,7 @@
 	desc = "Summon slippery ice floors all around!"
 	button_icon = 'icons/turf/floors/ice_turf.dmi'
 	button_icon_state = "ice_turf-6"
-	cooldown_time = 5 SECONDS
+	cooldown_time = 2 SECONDS
 	click_to_activate = FALSE
 	melee_cooldown_time = 0 SECONDS
 	///perimeter we will spawn the iced floors on
