@@ -553,6 +553,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	AddElement(/datum/element/art, impressiveness)
 	AddElement(/datum/element/beauty, 1000)
 
+/datum/attack_style/melee_weapon/slow
+	cd = CLICK_CD_SLOW
+
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
@@ -573,7 +576,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(reference_chance))
 		name = "Solemn Vow"
 		desc = "Art lovers will cherish the bust of Hippocrates, commemorating a time when medics still thought doing no harm was a good idea."
-		attack_speed = CLICK_CD_SLOW
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/slow]
 		reference = TRUE
 
 /obj/item/statuebust/hippocratic/examine(mob/user)

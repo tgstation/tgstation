@@ -51,8 +51,6 @@
 
 	var/harm_intent_damage = 3
 
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
 	///How much stamina the mob recovers per second
@@ -178,8 +176,6 @@
 		add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
-	if(force_threshold)
-		AddElement(/datum/element/damage_threshold, force_threshold)
 	if(speak)
 		speak = string_list(speak)
 	if(speak_emote)

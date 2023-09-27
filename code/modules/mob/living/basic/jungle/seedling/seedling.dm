@@ -120,17 +120,16 @@
 		INVOKE_ASYNC(held_can, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, hydro)
 		return
 
-/mob/living/basic/seedling/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-
-	if(!. || !proximity_flag || held_can)
-		return
+/mob/living/basic/seedling/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
+	if(proximity_flag || held_can)
+		return ..()
 
 	if(!istype(attack_target, /obj/item/reagent_containers/cup/watering_can))
-		return
+		return ..()
 
 	var/obj/item/can_target = attack_target
 	can_target.forceMove(src)
+	return TRUE
 
 /mob/living/basic/seedling/proc/change_combatant_state(state)
 	combatant_state = state

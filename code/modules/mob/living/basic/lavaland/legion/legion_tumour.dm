@@ -81,7 +81,7 @@
 
 	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
 	var/mob/living/basic/legion_brood/skull = new(target.loc)
-	skull.melee_attack(target)
+	skull.ai_controller_click(target)
 	return TRUE
 
 /obj/item/organ/internal/legion_tumour/on_life(seconds_per_tick, times_fired)
