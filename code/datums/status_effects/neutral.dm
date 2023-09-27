@@ -109,12 +109,14 @@
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
 			spell.reset_spell_cooldown()
 
-		rewarded.adjustBruteLoss(-25, updating_health = FALSE)
-		rewarded.adjustFireLoss(-25, updating_health = FALSE)
-		rewarded.adjustToxLoss(-25, updating_health = FALSE)
-		rewarded.adjustOxyLoss(-25, updating_health = FALSE)
-		rewarded.adjustCloneLoss(-25, updating_health = FALSE)
-		rewarded.updatehealth()
+		var/need_mob_update = FALSE
+		need_mob_update += rewarded.adjustBruteLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustCloneLoss(-25, updating_health = FALSE)
+		if(need_mob_update)
+			rewarded.updatehealth()
 
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup

@@ -65,14 +65,16 @@
 	return
 
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
-	inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
-	inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
 	inspired_human.AdjustStun(-40)
 	inspired_human.AdjustKnockdown(-40)
 	inspired_human.AdjustImmobilized(-40)
 	inspired_human.AdjustParalyzed(-40)
 	inspired_human.AdjustUnconscious(-40)
-	inspired_human.updatehealth()
 	playsound(inspired_human, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
