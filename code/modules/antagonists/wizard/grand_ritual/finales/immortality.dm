@@ -30,7 +30,7 @@
 /// Called when something passes into the great beyond, make it not do that
 /datum/grand_finale/immortality/proc/something_died(datum/source, mob/living/died, gibbed)
 	SIGNAL_HANDLER
-	if (died.stat != DEAD || HAS_TRAIT(died, TRAIT_PERMANENTLY_MORTAL))
+	if (died.stat != DEAD || HAS_TRAIT(died, TRAIT_PERMANENTLY_MORTAL) || died.flags_1 & HOLOGRAM_1)
 		return
 	var/body_type = died.type
 
