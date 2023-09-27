@@ -4,6 +4,7 @@
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loafer"
 	var/is_loafing = FALSE
+	var/list/loaf_blacklist = list(/obj/item/organ/internal/brain, /obj/item/bodypart/head)
 
 /obj/structure/disposalpipe/loafer/transfer(obj/structure/disposalholder/holder)
 	if(is_loafing)
@@ -14,13 +15,21 @@
 		is_loafing = TRUE
 		src.icon_state = "loafer-on"
 		src.update_appearance()
-		playsound(src, 'monkestation/code/modules/loafing/sound/loafer.ogg', 100, 1)
+		playsound(src, 'monkestation/code/modules/loafing/sound/loafer.ogg', 100, 1, mixer_channel = CHANNEL_MACHINERY)
 
 		//create new loaf
 		var/obj/item/food/prison_loaf/loaf = new /obj/item/food/prison_loaf(src)
 
 		//add all the garbage to the loaf's contents
 		for (var/atom/movable/debris in holder)
+			if(debris.resistance_flags & INDESTRUCTIBLE || (debris.type in loaf_blacklist))
+				if(holder.contents.len > 1)
+					continue
+				else
+					loaf = null
+					src.icon_state = "loafer"
+					is_loafing = FALSE
+					return transfer_to_dir(holder, nextdir(holder))
 			if(debris.reagents)//the object has reagents
 				debris.reagents.trans_to(loaf, 1000)
 			if(istype(debris, /obj/item/food/prison_loaf))//the object is a loaf, compress somehow
@@ -40,12 +49,12 @@
 					loaf.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 2)
 				//then we give the loaf more power
 				if(ishuman(victim))
-					loaf.loaf_density += 50
+					loaf.loaf_density += 25
 				else
 					loaf.loaf_density += 10
 				if(!isdead(victim))
 					victim.emote("scream")
-				victim.death()
+				victim.gib()
 				if(victim.mind || victim.client)
 					victim.ghostize(FALSE)
 			else if (istype(debris, /obj/item))//everything else
@@ -101,4 +110,4 @@
 /obj/effect/spawner/random/loafer/Initialize(mapload)
 	loot = list(
 		/obj/structure/disposalpipe/loafer/)
-	. = ..()
+	return ..()

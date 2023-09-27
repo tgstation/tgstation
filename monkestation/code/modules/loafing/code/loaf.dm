@@ -137,7 +137,7 @@
 	name = "suppermatter loaf" //you can't kill me for my bad puns.  they make me immortal.
 	desc = "A prison loaf that has condensed and crystalized to the point where it can be used as a standard power source."
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
-	icon_state = "supermatter_loaf"
+	icon_state = "sm"
 
 
 
@@ -155,88 +155,101 @@
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 1)
 		if(11 to 100)
 			src.name = "dense " + initial(src.name)
-			src.desc = initial(src.desc) + "  This loaf is noticeably heavier than usual."
+			src.desc = initial(src.desc) + "\n This loaf is noticeably heavier than usual."
 			src.icon_state = initial(src.icon_state) + "0"
-			src.force = 3
-			src.throwforce = 3
+			src.force = 2
+			src.throwforce = 2
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 3)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 3)
 		if(101 to 250)
 			src.name = "compacted " + initial(src.name)
-			src.desc = initial(src.desc) + "  Hooh, this thing packs a punch. What are they putting into these?"
+			src.desc = initial(src.desc) + "\n Hooh, this thing packs a punch. What are they putting into these?"
 			src.icon_state = initial(src.icon_state) + "0"
-			src.force = 5
-			src.throwforce = 5
+			src.force = 4
+			src.throwforce = 4
 			src.throw_range = 6
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 5)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 5)
 		if(251 to 500)
 			src.name = "super-compressed " + initial(src.name)
-			src.desc = initial(src.desc) + "  Hard enough to scratch a diamond, yet still somehow edible, this loaf seems to be emitting decay heat. Dear god."
+			src.desc = initial(src.desc) + "\n Hard enough to scratch a diamond, yet still somehow edible,\n this loaf seems to be emitting decay heat. Dear god."
 			src.icon_state = initial(src.icon_state) + "1"
-			src.force = 10
-			src.throwforce = 10
+			src.force = 5
+			src.throwforce = 5
 			src.throw_range = 6
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 8)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 8)
 		if(501 to 2500)
 			src.name = "molecular " + initial(src.name)
-			src.desc = initial(src.desc) + "  The loaf has become so dense that no food particulates are visible to the naked eye."
+			src.desc = initial(src.desc) + "\n The loaf has become so dense that no food particulates are visible to the naked eye."
 			src.icon_state = initial(src.icon_state) + "2"
-			src.force = 20
-			src.throwforce = 20
+			src.force = 10
+			src.throwforce = 10
 			src.throw_range = 5
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/corn_syrup, 5)
 		if(2501 to 10000)
 			src.name = "atomic " + initial(src.name)
-			src.desc = initial(src.desc) + "  Forget food particulates, the loaf is now comprised of flavor atoms."
+			src.desc = initial(src.desc) + "\n Forget food particulates, the loaf is now comprised of flavor atoms."
 			src.icon_state = initial(src.icon_state) + "3"
-			src.force = 40
-			src.throwforce = 40
+			src.force = 20
+			src.throwforce = 20
 			src.throw_range = 4
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
 			src.reagents.add_reagent(/datum/reagent/growthserum, 5)
 		if(10001 to 25000)
 			src.name = "sub atomic " + initial(src.name)
-			src.desc = initial(src.desc) + "  Oh good, the flavor atoms in this prison loaf have collapsed down to a a solid lump of neutrons. Eating this could prove dangerous."
+			src.desc = initial(src.desc) + "\n Oh good, the flavor atoms in this prison loaf have collapsed down to a a solid lump of neutrons. Eating this could prove dangerous."
 			src.icon_state = initial(src.icon_state) + "4"
-			src.force = 65
-			src.throwforce = 65
+			src.force = 30
+			src.throwforce = 30
 			src.throw_range = 3
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
-			src.reagents.add_reagent(/datum/reagent/consumable/vitfro, 5)
+			src.reagents.add_reagent(/datum/reagent/consumable/vitfro, 25)
 		if(25001 to 50000)
 			src.name = "quark " + initial(src.name)
-			src.desc = initial(src.desc) + "  This nutritional loaf is collapsing into subatomic flavor particles. Consuption could convert your DNA into synthetic sludge."
+			src.desc = initial(src.desc) + "\n This nutritional loaf is collapsing into subatomic flavor particles. Consuption could convert your DNA into synthetic sludge."
 			src.icon_state = initial(src.icon_state) + "5"
-			src.force = 80
-			src.throwforce = 80
+			src.force = 50
+			src.throwforce = 50
 			src.throw_range = 2
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
-			src.reagents.add_reagent(/datum/reagent/mulligan, 5)
+			src.reagents.add_reagent(/datum/reagent/mulligan, 25)
 		if(50001 to 100000)
 			src.name = "strangelet " + initial(src.name)
-			src.desc = initial(src.desc) + "  At this point you may be considering: has man gone too far? Are we meant to have food this powerful?"
+			src.desc = initial(src.desc) + "\n At this point you may be considering: has man gone too far? Are we meant to have food this powerful?"
 			src.icon_state = initial(src.icon_state) + "6"
-			src.force = 125
-			src.throwforce = 125
+			src.force = 75
+			src.throwforce = 75
 			src.throw_range = 1
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
-			src.reagents.add_reagent(/datum/reagent/cyborg_mutation_nanomachines, 5)
+			src.reagents.add_reagent(/datum/reagent/cyborg_mutation_nanomachines, 50)
 		if(100001 to 1000000)
 			src.name = "quantum " + initial(src.name)
-			src.desc = initial(src.desc) + "  The mere existence of this nutritional masterpiece is causing reality to distort!"
+			src.desc = initial(src.desc) + "\n The mere existence of this nutritional masterpiece is causing reality to distort!"
 			src.icon_state = initial(src.icon_state) + "7"
-			src.force = 250
-			src.throwforce = 250
+			src.force = 100
+			src.throwforce = 100
 			src.throw_range = 0
 			src.reagents.add_reagent(/datum/reagent/consumable/salt, 10)
 			src.reagents.add_reagent(/datum/reagent/consumable/nutraslop, 10)
-			src.reagents.add_reagent(/datum/reagent/gravitum, 25)
+			src.reagents.add_reagent(/datum/reagent/gravitum, 100)
 			critical()
+
+
+/datum/export/food/loaf
+	cost = 10
+	unit_name = "loaf"
+	message = "of Nutraloaf"
+	export_types = list(/obj/item/food/prison_loaf)
+	include_subtypes = TRUE
+
+/datum/export/food/loaf/get_cost(obj/O, apply_elastic = TRUE)
+	var/obj/item/food/prison_loaf/loaf = O
+	cost = max(10, loaf.loaf_density / 5)
+
