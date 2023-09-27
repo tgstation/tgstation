@@ -268,17 +268,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage
+///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage. Returns the net change in organ damage.
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
-		return
+		return FALSE
 	maximum = clamp(maximum, 0, maxHealth) // the logical max is, our max
 	if(maximum < damage)
-		return
+		return FALSE
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
-		return
+		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
+	. = (prev_damage - damage) // return net damage
+	var/message = check_damage_thresholds(owner)
 	prev_damage = damage
 
 	if(damage >= maxHealth)
@@ -286,8 +287,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	else
 		organ_flags &= ~ORGAN_FAILING
 
-	if(mess && owner && owner.stat <= SOFT_CRIT)
-		to_chat(owner, mess)
+	if(message && owner && owner.stat <= SOFT_CRIT)
+		to_chat(owner, message)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/set_organ_damage(damage_amount, required_organ_flag = NONE) //use mostly for admin heals
