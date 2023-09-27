@@ -109,3 +109,11 @@
   KoboldCommando:
   - bugfix: Spliced seed packs should be named slightly more coherently and have a
       max length
+2023-09-27:
+  Gboster-0:
+  - rscadd: A new exotic tendril can now spawn on oshan
+  - rscadd: Oshan tendrils now cause fissures to appear instead of chasms (where's
+      the tweak label for changelogs anyway?)
+  NanoCats:
+  - qol: Sec fixes
+  - qol: Innumerable OSHAN fixes

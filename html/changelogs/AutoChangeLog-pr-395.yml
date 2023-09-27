@@ -1,5 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "A new exotic tendril can now spawn on oshan"
-  - rscadd: "Oshan tendrils now cause fissures to appear instead of chasms (where's the tweak label for changelogs anyway?)"
