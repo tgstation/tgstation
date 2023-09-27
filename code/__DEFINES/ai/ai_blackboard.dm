@@ -11,6 +11,9 @@
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 
+///Turf we want a mob to move to
+#define BB_TRAVEL_DESTINATION "BB_travel_destination"
+
 ///song instrument blackboard, set by instrument subtrees
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
