@@ -285,11 +285,14 @@
 
 	var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/datum/bank_account/department/engineer = SSeconomy.get_dep_account(ACCOUNT_ENG)
+	var/datum/bank_account/department/security = SSeconomy.get_dep_account(ACCOUNT_SEC)
 
 	///the other 25% will be sent to engineers in the future but for now its stored inside
 	var/cargo_cut = generated_cash * 0.25
 	var/engineering_cut = generated_cash * 0.5
 
+	security.adjust_money(cargo_cut, "Transmission Laser Payout")
+	unsent_earnings -= cargo_cut
 	engineer.adjust_money(engineering_cut, "Transmission Laser Payout")
 	unsent_earnings -= engineering_cut
 	cargo.adjust_money(cargo_cut, "Transmission Laser Payout")
