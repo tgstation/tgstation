@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Blob spores will respond to rallies more reliably (it won't runtime every time they try and pathfind)."
-  - bugfix: "Blobbernaut pain animation overlays should align with the direction the mob is facing instead of always facing South"
-  - refactor: "Blob spores, zombies, and blobbernauts now all use the basic mob framework. They should work the same, but please report any issues."

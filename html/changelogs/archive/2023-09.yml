@@ -997,3 +997,23 @@
   - sound: Added new sound effects for chicks, chickens, crabs, and insects
   xPokee:
   - image: adds a frog holoform for pAIs
+2023-09-27:
+  Helg2:
+  - bugfix: '[Tramstation] Mass Driver in chapel now has tiny fan so you don''t space
+      yourself.'
+  Jacquerel:
+  - bugfix: Blob spores will respond to rallies more reliably (it won't runtime every
+      time they try and pathfind).
+  - bugfix: Blobbernaut pain animation overlays should align with the direction the
+      mob is facing instead of always facing South
+  - refactor: Blob spores, zombies, and blobbernauts now all use the basic mob framework.
+      They should work the same, but please report any issues.
+  Sealed101:
+  - bugfix: fixed Strong Stone ruin generation
+  Vekter:
+  - rscadd: Added a holodeck to Birdshot Station. It can be reached via the Crew Facilities
+      hallway.
+  Watermelon914:
+  - bugfix: Fixed job configs not being loaded properly.
+  admeeer:
+  - rscadd: Added a candle box crate for all your candle needs!
