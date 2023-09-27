@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		CRASH("Trying to extract metadata from empty adventure")
 	var/list/json_data = json_decode(raw_json)
 	if(!islist(json_data))
-		CRASH("Invalid JSON for adventure with at path:[path]")
+		CRASH("Invalid JSON for adventure with at path:[filename]")
 	version = json_data[ADVENTURE_VERSION_FIELD] || 0
 	name = json_data[ADVENTURE_NAME_FIELD]
 	required_site_traits = json_data[ADVENTURE_REQUIRED_SITE_TRAITS_FIELD]
@@ -112,13 +112,13 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 /datum/adventure_db_entry/proc/try_loading_adventure()
 	var/list/json_data = json_decode(raw_json)
 	if(!islist(json_data))
-		CRASH("Invalid JSON in adventure with path:[path], name:[name]")
+		CRASH("Invalid JSON in adventure with path:[filename], name:[name]")
 
 	//Basic validation of required fields, don't even bother loading if they are missing.
 	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
-			CRASH("Adventure path:[path], name:[name] missing [field] value")
+			CRASH("Adventure path:[filename], name:[name] missing [field] value")
 
 	var/datum/adventure/loaded_adventure = new
 	//load properties
@@ -134,16 +134,16 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		var/datum/adventure_node/node = try_loading_node(node_data)
 		if(node)
 			if(loaded_adventure.nodes[node.id])
-				CRASH("Duplicate [node.id] node in path:[path], name:[name] adventure")
+				CRASH("Duplicate [node.id] node in path:[filename], name:[name] adventure")
 			loaded_adventure.nodes[node.id] = node
 	loaded_adventure.triggers = json_data[ADVENTURE_TRIGGERS_FIELD]
 	if(!loaded_adventure.validate())
-		CRASH("Validation failed for path:[path], name:[name] adventure")
+		CRASH("Validation failed for path:[filename], name:[name] adventure")
 	return loaded_adventure
 
 /datum/adventure_db_entry/proc/try_loading_node(node_data)
 	if(!islist(node_data))
-		CRASH("Invalid adventure node data in path:[path], name:[name] adventure.")
+		CRASH("Invalid adventure node data in path:[filename], name:[name] adventure.")
 	var/datum/adventure_node/fresh_node = new
 	fresh_node.id = node_data[NODE_NAME_FIELD]
 	fresh_node.description = node_data[NODE_DESCRIPTION_FIELD]
