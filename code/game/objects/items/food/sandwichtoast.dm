@@ -270,7 +270,7 @@
 	to_chat(user, span_warning("You imagine yourself eating [src]. You feel a sudden sour taste in your mouth, and a horrible feeling that you've done something wrong."))
 	user.adjust_disgust(33)
 
-///Override for after_eat and check_liked callbacks.
+// Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
@@ -281,7 +281,7 @@
 * If you don't, you don't like it.
 */
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
-	/// Closest thing to a mullet we have
+	// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
 	return FOOD_DISLIKED
@@ -292,7 +292,7 @@
 * If you don't, you contract a deadly disease.
 */
 /obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
-	/// If you like it, you're eating it right.
+	// If you like it, you're eating it right.
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
