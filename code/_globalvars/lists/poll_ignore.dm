@@ -4,6 +4,7 @@
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
 #define POLL_IGNORE_ASH_SPIRIT "ash_spirit"
 #define POLL_IGNORE_ASHWALKER "ashwalker"
+#define POLL_IGNORE_BLOB "blob"
 #define POLL_IGNORE_BOTS "bots"
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
@@ -41,6 +42,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ALIEN_LARVA = "Xenomorph larva",
 	POLL_IGNORE_ASH_SPIRIT = "Ash Spirit",
 	POLL_IGNORE_ASHWALKER = "Ashwalker eggs",
+	POLL_IGNORE_BLOB = "Blob spores",
 	POLL_IGNORE_BOTS = "Bots",
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
