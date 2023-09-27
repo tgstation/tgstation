@@ -56748,15 +56748,6 @@
 /obj/structure/beebox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
-"oLI" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/station/hallway/floor4/aft)
 "oLL" = (
 /obj/structure/toilet{
 	dir = 4
@@ -58542,6 +58533,8 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "pmw" = (
@@ -85729,9 +85722,10 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "wtt" = (
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen/fourcolor,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "wtu" = (
@@ -319205,7 +319199,7 @@ vRO
 qbg
 nWW
 tEh
-oLI
+bVy
 vVu
 vOE
 tDs
