@@ -1,0 +1,5 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - rscadd: "New visuals for the composter"
+  - rscadd: "The composter can now compost food and people"
