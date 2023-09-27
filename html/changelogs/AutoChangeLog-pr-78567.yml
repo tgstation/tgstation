@@ -1,0 +1,7 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - qol: "Gas masks now muffle your voice with TTS."
+  - qol: "Security Hailer masks now disguise your voice to protect your right to brutalize greytiders."
+  - qol: "Lizards, Ethereals, and Xenomorphs now have a vocal effect."
+  - qol: "Security Records now show someone's voice name."
