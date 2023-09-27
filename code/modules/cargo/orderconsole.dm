@@ -375,6 +375,9 @@
 								paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing 700 credit S&H fee.")
 						else
 							paying_for_this = SSeconomy.get_dep_account(order.account_to_charge)
+							if(order.account_to_charge != ACCOUNT_CAR)
+								var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+								cargo.adjust_money(order.pack.get_cost() * 0.1) // give some back for actually getting the crates
 						if(paying_for_this)
 							if(!paying_for_this.adjust_money(-price, "Cargo: [order.pack.name]"))
 								if(order.paying_account)
