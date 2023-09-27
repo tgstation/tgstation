@@ -52,6 +52,9 @@ GLOBAL_LIST_EMPTY(current_living_antags)
 /// All observers with clients that joined as observers.
 GLOBAL_LIST_EMPTY(current_observers_list)
 
+/// All living mobs which can hear blob telepathy
+GLOBAL_LIST_EMPTY(blob_telepathy_mobs)
+
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 
