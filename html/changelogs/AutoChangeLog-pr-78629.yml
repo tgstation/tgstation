@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Contractor baton in traitor uplink for 12 TC"
+  - balance: "Ebow no longer has a reputation requirement."
