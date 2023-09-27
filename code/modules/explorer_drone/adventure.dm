@@ -87,7 +87,6 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 /datum/adventure_db_entry/proc/valid_for_use(list/site_traits)
 	if(!raw_json || version != CURRENT_ADVENTURE_VERSION || placed)
 		return FALSE
-	to_chat(world, "[length(required_site_traits - site_traits)]")
 	if(required_site_traits && length(required_site_traits - site_traits) != 0)
 		return FALSE
 	return TRUE

@@ -24,7 +24,6 @@
 	if(.)
 		return
 	feedback_message = ""
-	var/mob/user = usr
 	switch(action)
 		if("play")
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
