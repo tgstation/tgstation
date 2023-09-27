@@ -695,11 +695,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	var/mob/living/carbon/carbon_mob = affected_mob
 	var/obj/item/organ/internal/heart/affected_heart = carbon_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(!affected_heart)
+	if(isnull(affected_heart))
 		return
 	carbon_mob.AddComponent(/datum/component/manual_heart)
 
-	..()
+	return ..()
 
 ///We're done - remove the curse
 /datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/affected_mob)

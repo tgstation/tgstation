@@ -120,7 +120,7 @@
 
 /obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
 	. = ..()
-	accursed.AddComponent(/datum/component/manual_heart, _pump_delay = pump_delay, _blood_loss = blood_loss, _heal_brute = heal_brute, _heal_burn = heal_burn, _heal_oxy = heal_oxy)
+	accursed.AddComponent(/datum/component/manual_heart, pump_delay = pump_delay, blood_loss = blood_loss, heal_brute = heal_brute, heal_burn = heal_burn, heal_oxy = heal_oxy)
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
