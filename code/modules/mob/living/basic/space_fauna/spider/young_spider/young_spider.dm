@@ -30,6 +30,7 @@
 /datum/ai_controller/basic_controller/young_spider
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -46,6 +47,3 @@
 		/datum/ai_planning_subtree/find_unwebbed_turf,
 		/datum/ai_planning_subtree/spin_web,
 	)
-
-/datum/ai_behavior/run_away_from_target/young_spider
-	run_distance = 6

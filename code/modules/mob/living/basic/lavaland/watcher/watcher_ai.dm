@@ -9,10 +9,10 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/use_mob_ability/gaze,
 		/datum/ai_planning_subtree/targeted_mob_ability/overwatch,
 		/datum/ai_planning_subtree/ranged_skirmish/watcher,
-		/datum/ai_planning_subtree/maintain_distance,
 	)
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch
