@@ -435,7 +435,7 @@
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
  */
 /datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transferred_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
-	if(!target || !total_volume)
+	if(QDELETED(target) || !total_volume)
 		return
 
 	if(!IS_FINITE(amount))
@@ -553,7 +553,7 @@
 
 /// Transfer a specific reagent id to the target object
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	if (!target)
+	if (QDELETED(target))
 		return
 
 	if(!IS_FINITE(amount))
@@ -604,7 +604,7 @@
 
 /// Copies the reagents to the target object
 /datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE)
-	if(!target || !total_volume)
+	if(QDELETED(target) || !total_volume)
 		return
 
 	if(!IS_FINITE(amount))
@@ -647,7 +647,7 @@
 	return amount
 
 ///Multiplies the reagents inside this holder by a specific amount
-/datum/reagents/proc/multiply_reagents(multiplier=1)
+/datum/reagents/proc/multiply_reagents(multiplier = 1)
 	var/list/cached_reagents = reagent_list
 	if(!total_volume)
 		return
