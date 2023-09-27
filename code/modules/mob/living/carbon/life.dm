@@ -30,9 +30,8 @@
 
 		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
 			adjustStaminaLoss(-INFINITY)
-		var/bprv = handle_bodyparts(seconds_per_tick, times_fired)
-		if(bprv & BODYPART_LIFE_UPDATE_HEALTH) // note: this is currently not being used
-			updatehealth()
+
+	handle_bodyparts(seconds_per_tick, times_fired)
 
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
