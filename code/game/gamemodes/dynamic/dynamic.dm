@@ -468,8 +468,8 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 				for(var/job in job_prefs)
 					var/priority = job_prefs[job]
 					job_data += "[job]: [SSjob.job_priority_level_to_string(priority)]"
-				to_chat(player, span_danger("You were unable to qualify for any roundstart antagonist role because you could not qualify for any of the roundstart jobs you were trying to qualify for, along with 'return to lobby if job is unavailable' enabled."))
-				log_admin("[player.ckey] failed to qualify for any job and has [player.client.prefs.be_special.len] antag preferences enabled. They will be unable to qualify for any roundstart antagonist role. These are their job preferences - [job_data.Join(" | ")]")
+				to_chat(player, span_danger("You were unable to qualify for any roundstart antagonist role this round because your job preferences presented a high chance of all of your selected jobs being unavailable, along with 'return to lobby if job is unavailable' enabled. Increase the number of roles set to medium or low priority to reduce the chances of this happening."))
+				log_admin("[player.ckey] failed to qualify for any roundstart antagonist role because their job preferences presented a high chance of all of their selected jobs being unavailable, along with 'return to lobby if job is unavailable' enabled and has [player.client.prefs.be_special.len] antag preferences enabled. They will be unable to qualify for any roundstart antagonist role. These are their job preferences - [job_data.Join(" | ")]")
 			else
 				roundstart_pop_ready++
 				candidates.Add(player)
