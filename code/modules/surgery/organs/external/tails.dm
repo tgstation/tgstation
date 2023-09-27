@@ -10,6 +10,9 @@
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
+	// defaults to cat, but the parent type shouldn't be created regardless
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
+
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
 	///The original owner of this tail
@@ -69,7 +72,7 @@
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
 
-///Tail parent type (which is MONKEEEEEEEEEEE by default), with wagging functionality
+///Tail parent type, with wagging functionality
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	var/wagging = FALSE
