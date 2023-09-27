@@ -24,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// The character's voice, if they have one.
+	var/voice
 
 /datum/record/New(
 	age = 18,
@@ -37,6 +39,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	voice = "?????",
 )
 	src.age = age
 	src.blood_type = blood_type

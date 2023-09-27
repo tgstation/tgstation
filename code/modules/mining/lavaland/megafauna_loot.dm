@@ -641,9 +641,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, \
-	speed = 15 SECONDS, \
-	effectiveness = 90, \
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 15 SECONDS, \
+		effectiveness = 90, \
 	)
 
 /obj/item/melee/ghost_sword/Destroy()

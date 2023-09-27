@@ -892,6 +892,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
+/// Similar trait given to temporary bodies inhabited by players
+#define TRAIT_TEMPORARY_BODY "temporary_body"
+
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
 
@@ -1141,6 +1144,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AUTOPSY_TRAIT "autopsy_trait"
 /// Trait given by [/datum/status_effect/blessing_of_insanity]
 #define MAD_WIZARD_TRAIT "mad_wizard_trait"
+/// Isn't attacked harmfully by blob structures
+#define TRAIT_BLOB_ALLY "blob_ally"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -1183,6 +1188,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
+#define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
+#define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
+#define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -1193,6 +1201,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
+/// things with this trait are treated as having no access in /obj/proc/check_access(obj/item)
+#define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
 
 /// Traits granted to items due to their chameleon properties.
 #define CHAMELEON_ITEM_TRAIT "chameleon_item_trait"

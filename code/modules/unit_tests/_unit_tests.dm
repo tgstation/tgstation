@@ -104,7 +104,6 @@
 #include "bloody_footprints.dm"
 #include "breath.dm"
 #include "burning.dm"
-#include "byond_status.dm"
 #include "cable_powernets.dm"
 #include "card_mismatch.dm"
 #include "cardboard_cutouts.dm"
@@ -162,6 +161,7 @@
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "ling_decap.dm"
 #include "liver.dm"
 #include "load_map_security.dm"
 #include "lungs.dm"
@@ -261,6 +261,7 @@
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
+#include "weird_food.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
 // END_INCLUDE

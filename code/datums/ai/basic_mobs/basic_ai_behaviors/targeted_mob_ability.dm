@@ -19,12 +19,6 @@
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
 		controller.clear_blackboard_key(target_key)
-		return
-	if (!isliving(target))
-		return
-	var/mob/living/living_target = target
-	if(living_target.stat >= UNCONSCIOUS)
-		controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/targeted_mob_ability/proc/get_ability_to_use(datum/ai_controller/controller, ability_key)
 	return controller.blackboard[ability_key]

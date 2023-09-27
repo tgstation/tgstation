@@ -36,7 +36,6 @@
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
-	regenerate_icons()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -71,7 +70,6 @@
 	invisibility = 0
 	set_species(species)
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
-	regenerate_icons()
 	return src
 
 /mob/proc/AIize(client/preference_source, move = TRUE)

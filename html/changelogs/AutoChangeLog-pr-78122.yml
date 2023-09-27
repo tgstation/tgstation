@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Cauteries now have 'heat', like lighters, welders, etc."
-  - qol: "You can smoke with a space helmet as long as you have internals on."

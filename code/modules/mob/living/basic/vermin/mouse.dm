@@ -51,12 +51,13 @@
 	held_state = "mouse_[body_color]" // not handled by variety element
 	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	AddComponent(/datum/component/squeak, list('sound/creatures/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
+	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
@@ -116,7 +117,8 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc, /* starting_reagent_purity = */ null, /* no_base_reagents = */ FALSE, /* dead_critter = */ src)
+		var/obj/item/food/deadmouse/mouse = new(loc)
+		mouse.copy_corpse(src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -301,15 +303,17 @@
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload, starting_reagent_purity, no_base_reagents, mob/living/basic/mouse/dead_critter)
+/obj/item/food/deadmouse/Initialize(mapload)
 	. = ..()
-	if(dead_critter)
-		body_color = dead_critter.body_color
-		critter_type = dead_critter.type
-		name = dead_critter.name
-		icon_state = dead_critter.icon_dead
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/// Copy properties from an imminently dead mouse
+/obj/item/food/deadmouse/proc/copy_corpse(mob/living/basic/mouse/dead_critter)
+	body_color = dead_critter.body_color
+	critter_type = dead_critter.type
+	name = dead_critter.name
+	icon_state = dead_critter.icon_dead
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()

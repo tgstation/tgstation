@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Megafauna now correctly prints the victim's name after a kill"

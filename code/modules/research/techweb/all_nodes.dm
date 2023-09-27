@@ -14,7 +14,6 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"bepis",
 		"blast",
 		"bounced_radio",
 		"bowl",
@@ -596,6 +595,7 @@
 		"emergency_oxygen_engi",
 		"emergency_oxygen",
 		"emitter",
+		"mass_driver",
 		"firealarm_electronics",
 		"firelock_board",
 		"generic_tank",
@@ -979,6 +979,7 @@
 		"borg_upgrade_condiment_synthesizer",
 		"borg_upgrade_silicon_knife",
 		"borg_upgrade_service_apparatus",
+		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
@@ -1219,6 +1220,8 @@
 	design_ids = list(
 		"comm_monitor",
 		"comm_server",
+		"gigabeacon",
+		"message_monitor",
 		"ntnet_relay",
 		"s_amplifier",
 		"s_analyzer",
@@ -1235,7 +1238,6 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
@@ -2361,6 +2363,18 @@
 		"fishing_rod_tech",
 		"stabilized_hook",
 		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/advanced_plastic_surgery
+	id = "plastic_surgery"
+	display_name = "Advanced Plastic Surgery"
+	description = "A Procedure long lost due to licensing problems now once again available."
+	prereq_ids = list("base")
+	design_ids = list(
+		"surgery_advanced_plastic_surgery"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
