@@ -32,10 +32,12 @@
 	ricochet_incidence_leeway = 0
 	pixel_speed_multiplier = 0.2
 	projectile_piercing = PASSMOB|PASSVEHICLE
+	///looping sound datum for our projectile.
+	var/datum/looping_sound/moon_parade/soundloop
 
 
 /obj/projectile/moon_parade/Initialize(mapload)
-	playsound(src, 'sound/effects/moon_parade.ogg', 50, TRUE)
+	soundloop.start()
 	. = ..()
 
 /obj/projectile/moon_parade/on_hit(atom/hit, pierce_hit)
@@ -69,6 +71,7 @@
 /obj/projectile/moon_parade/Destroy(atom/hit)
 	var/mob/living/victim = hit
 	UnregisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+	soundloop.stop()
 	return ..()
 
 // This signal blocks movement by returning COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE when they are attempting to move
