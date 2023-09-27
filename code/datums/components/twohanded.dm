@@ -63,7 +63,7 @@
 	return ..()
 
 // Inherit the new values passed to the component
-/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
+/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, attacksound, \
 											force_multiplier, force_wielded, force_unwielded, icon_wielded, \
 											datum/callback/wield_callback, datum/callback/unwield_callback)
 	if(!original)

@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - qol: "you can undeploy fulton beacons by clicking them with an empty hand"
+  - qol: "you can rename fulton beacons with a pen"

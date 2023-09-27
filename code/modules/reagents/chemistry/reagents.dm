@@ -7,6 +7,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
+	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
+	/turf/open/indestructible
+)))
 
 //Various reagents
 //Toxin & acid reagents
@@ -161,6 +165,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+
+/// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
+/datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	return
 
 /*
 Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.

@@ -86,7 +86,7 @@
 /obj/item/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
+	spawn_type = /mob/living/basic/clown
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
@@ -97,7 +97,7 @@
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus. This one gleams with a special light."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
+	spawn_type = /mob/living/basic/clown/clownhulk
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
@@ -150,7 +150,7 @@
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
-	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
 	C.spew_organ(3, 2)
 	C.investigate_log("has died from using telekinesis on a tear in reality.", INVESTIGATE_DEATHS)
 	C.death()

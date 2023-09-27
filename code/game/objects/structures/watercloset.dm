@@ -168,6 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hidden_item = new /obj/item/food/urinalcake
+	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -823,6 +824,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
+
+/obj/structure/curtain/bounty/start_closed
+	icon_state = "bounty-closed"
+
+/obj/structure/curtain/bounty/start_closed/Initialize(mapload)
+	. = ..()
+	if(open)
+		toggle()
 
 /obj/structure/curtain/cloth
 	color = null

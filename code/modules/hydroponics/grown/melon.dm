@@ -78,7 +78,7 @@
  * Checks whether or not the person eating the holymelon
  * is a holy_role (chaplain), as chaplains love holymelons.
  */
-/obj/item/food/grown/holymelon/proc/check_holyness(fraction, mob/mob_eating)
+/obj/item/food/grown/holymelon/proc/check_holyness(mob/mob_eating)
 	if(!ishuman(mob_eating))
 		return
 	var/mob/living/carbon/human/holy_person = mob_eating
