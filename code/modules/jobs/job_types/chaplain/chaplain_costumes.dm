@@ -50,11 +50,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/chaplainsuit/nun/alt // based on the Order of the Sacred Heart habits
+/obj/item/clothing/suit/chaplainsuit/habit // based on the Order of the Sacred Heart habits
+	name = "religious habit"
 	desc = "No nunsene clothing."
-	icon_state = "nun_alt"
+	icon_state = "habit"
 	inhand_icon_state = "nun_alt"
 	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/chaplainsuit/bishoprobe
 	name = "bishop's robes"
