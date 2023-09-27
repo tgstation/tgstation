@@ -22,9 +22,11 @@
 	// Do the sting, make the transformation
 	sting_action.sting_action(ling, victim)
 	// Check their name and species align
+	TEST_ASSERT(victim.has_status_effect(/datum/status_effect/temporary_transformation), "Victim did not get temporary transformation status effect on being transformation stung.")
 	TEST_ASSERT_EQUAL(victim.real_name, ling_name, "Victim real name did not change on being transformation stung.")
 	TEST_ASSERT_EQUAL(victim.name, ling_name, "Victim name did not change on being transformation stung.")
-	TEST_ASSERT_EQUAL(victim.dna.species.type, /datum/species/lizard, "Victim species did not change on being transformation stung.")
+	TEST_ASSERT_EQUAL(victim.dna.species.type, ling.dna.species.type, "Victim species did not change on being transformation stung.")
+	TEST_ASSERT_EQUAL(victim.dna.features["mcolor"], ling.dna.features["mcolor"], "Victim mcolor did not change on being transformation stung.")
 	// Check they actually look the same
 	add_to_screenshot(ling, victim)
 
@@ -34,7 +36,8 @@
 	// Check their name and species reset correctly
 	TEST_ASSERT_EQUAL(victim.name, base_victim_name, "Victim name did not change back after transformation sting expired.")
 	TEST_ASSERT_EQUAL(victim.real_name, base_victim_name, "Victim real name did not change back after transformation sting expired.")
-	TEST_ASSERT_NOTEQUAL(victim.dna.species.type, /datum/species/lizard, "Victim species did not change back after transformation sting expired.")
+	TEST_ASSERT_NOTEQUAL(victim.dna.species.type, ling.dna.species.type, "Victim species did not change back after transformation sting expired.")
+	TEST_ASSERT_NOTEQUAL(victim.dna.features["mcolor"], ling.dna.features["mcolor"], "Victim mcolor did not reset after transformation sting expired.")
 	// Check they actually look different again
 	add_to_screenshot(ling, victim, both_species = TRUE)
 
@@ -84,8 +87,9 @@
 	ling.real_name = ling_name
 	ling.dna.real_name = ling_name
 	ling.name = ling_name
+	ling.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+
 	ling.mind_initialize()
 	ling.mind.add_antag_datum(/datum/antagonist/changeling)
-	ling.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
 
 	return ling

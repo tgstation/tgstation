@@ -7,8 +7,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail
-
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
@@ -74,7 +72,6 @@
 ///Tail parent type (which is MONKEEEEEEEEEEE by default), with wagging functionality
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	feature_key = "tail_monkey"
 	var/wagging = FALSE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
