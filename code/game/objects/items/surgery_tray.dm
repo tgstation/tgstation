@@ -152,8 +152,10 @@
 /obj/item/surgery_tray/attack_hand(mob/living/user)
 	if(!user.can_perform_action(src, NEED_HANDS))
 		return ..()
-	var/obj/item/grabbies = pick(contents)
-	if(grabbies)
+	if(!length(contents))
+		balloon_alert(user, "empty!")
+	else
+		var/obj/item/grabbies = pick(contents)
 		atom_storage.remove_single(user, grabbies, drop_location())
 		user.put_in_hands(grabbies)
 	return TRUE
