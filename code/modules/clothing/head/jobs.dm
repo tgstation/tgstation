@@ -158,7 +158,6 @@
 	name = "religious habit (veil)"
 	desc = "No nunsene clothing."
 	icon_state = "nun_hood_alt"
-	inhand_icon_state = "nun_hood_alt"
 	flags_inv = HIDEHAIR | HIDEEARS
 	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
 
