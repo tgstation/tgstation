@@ -144,4 +144,6 @@
 	run_distance = 3
 
 
-#undef FLYIN_STATE
+#undef FLY_IN_STATE
+#undef FLY_OUT_STATE
+#undef NEUTRAL_STATE
