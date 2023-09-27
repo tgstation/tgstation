@@ -18,7 +18,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/surplus = new limb_type()
-	var/slot_string = "[surplus.plaintext_zone]"
+	slot_string = "[surplus.plaintext_zone]"
 
 	medical_record_text = "Patient uses a low-budget prosthetic on the [slot_string]."
 	old_limb = human_holder.return_and_replace_bodypart(surplus, special = TRUE)
