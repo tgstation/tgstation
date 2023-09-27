@@ -71,7 +71,11 @@
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data = null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
+	if(!ispath(reagent, /datum/reagent))
+		stack_trace("invalid reagent passed to add reagent [reagent]")
+		return FALSE
+
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
 		return FALSE
@@ -185,6 +189,10 @@
 
 /// Remove a specific reagent
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
+	if(!ispath(reagent, /datum/reagent))
+		stack_trace("invalid reagent passed to remove reagent [reagent]")
+		return FALSE
+
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove reagent [amount] [reagent]")
 		return FALSE
@@ -272,6 +280,10 @@
 
 /// Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1)
+	if(!ispath(reagent_type, /datum/reagent))
+		stack_trace("invalid reagent path passed to remove all type [reagent_type]")
+		return FALSE
+
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove all type reagent [amount] [reagent_type]")
 		return FALSE
@@ -303,6 +315,10 @@
 
 /// Fuck this one reagent
 /datum/reagents/proc/del_reagent(target_reagent_typepath)
+	if(!ispath(target_reagent_typepath, /datum/reagent))
+		stack_trace("invalid reagent path passed to del reagent [reagent_type]")
+		return FALSE
+
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(reagent.type == target_reagent_typepath)
@@ -321,6 +337,10 @@
 
 /// Turn one reagent into another, preserving volume, temp, purity, ph
 /datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath, multiplier = 1, include_source_subtypes = FALSE)
+	if(!ispath(source_reagent_typepath, /datum/reagent))
+		stack_trace("invalid reagent path passed to convert reagent [reagent_type]")
+		return FALSE
+
 	var/reagent_amount
 	var/reagent_purity
 	var/reagent_ph
@@ -357,6 +377,10 @@
  * Check subtypes controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
  */
 /datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE, check_subtypes = FALSE)
+	if(!ispath(reagent, /datum/reagent))
+		stack_trace("invalid reagent path passed to has reagent [reagent]")
+		return FALSE
+
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
 		if (check_subtypes ? ispath(holder_reagent.type, reagent) : holder_reagent.type == reagent)
