@@ -1,135 +1,5 @@
-#define REAGENTS_UI_MODE_LOOKUP 0
-#define REAGENTS_UI_MODE_REAGENT 1
-#define REAGENTS_UI_MODE_RECIPE 2
-
 #define REAGENT_TRANSFER_AMOUNT "amount"
 #define REAGENT_PURITY "purity"
-
-/// Initialises all /datum/reagent into a list indexed by reagent id
-/proc/init_chemical_reagent_list()
-	var/list/reagent_list = list()
-
-	var/paths = subtypesof(/datum/reagent)
-
-	for(var/path in paths)
-		if(path in GLOB.fake_reagent_blacklist)
-			continue
-		var/datum/reagent/D = new path()
-		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
-		reagent_list[path] = D
-
-	return reagent_list
-
-/// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
-/proc/init_chemical_name_list()
-	var/list/name_list = list()
-	for(var/X in GLOB.chemical_reagents_list)
-		var/datum/reagent/Reagent = GLOB.chemical_reagents_list[X]
-		name_list += Reagent.name
-	return sort_list(name_list)
-
-
-/proc/build_chemical_reactions_lists()
-	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
-	// It is filtered into multiple lists within a list.
-	// For example:
-	// chemical_reactions_list_reactant_index[/datum/reagent/toxin/plasma] is a list of all reactions relating to plasma
-	//For chemical reaction list product index - indexes reactions based off the product reagent type - see get_recipe_from_reagent_product() in helpers
-	//For chemical reactions list lookup list - creates a bit list of info passed to the UI. This is saved to reduce lag from new windows opening, since it's a lot of data.
-
-	//Prevent these reactions from appearing in lookup tables (UI code)
-	var/list/blacklist = typecacheof(/datum/chemical_reaction/randomized)
-
-	if(GLOB.chemical_reactions_list_reactant_index)
-		return
-
-	//Randomized need to go last since they need to check against conflicts with normal recipes
-	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
-	GLOB.chemical_reactions_list = list() //typepath to reaction list
-	GLOB.chemical_reactions_list_reactant_index = list() //reagents to reaction list
-	GLOB.chemical_reactions_results_lookup_list = list() //UI glob
-	GLOB.chemical_reactions_list_product_index = list() //product to reaction list
-
-	var/list/datum/chemical_reaction/reactions = list()
-	for(var/path in paths)
-		var/datum/chemical_reaction/reaction = new path()
-		reactions += reaction
-
-	// Ok so we're gonna do a thingTM here
-	// I want to distribute all our reactions such that each reagent id links to as few as possible
-	// I get the feeling there's a canonical way of doing this, but I don't know it
-	// So instead, we're gonna wing it
-	var/list/reagent_to_react_count = list()
-	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		for(var/reagent_id as anything in reaction.required_reagents)
-			reagent_to_react_count[reagent_id] += 1
-
-	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
-	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
-	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
-	// Doing this separately because it relies on the loop above, and this is easier to parse
-	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		var/preferred_id = null
-		for(var/reagent_id as anything in reaction.required_reagents)
-			if(!preferred_id)
-				preferred_id = reagent_id
-				continue
-			// If we would have less then they would, take it
-			if(length(reaction_lookup[reagent_id]) < length(reaction_lookup[preferred_id]))
-				preferred_id = reagent_id
-				continue
-			// If they potentially have more then us, we take it
-			if(reagent_to_react_count[reagent_id] < reagent_to_react_count[preferred_id])
-				preferred_id = reagent_id
-				continue
-		if (preferred_id != null)
-			if(!reaction_lookup[preferred_id])
-				reaction_lookup[preferred_id] = list()
-			reaction_lookup[preferred_id] += reaction
-
-	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		var/list/product_ids = list()
-		var/list/reagents = list()
-		var/list/product_names = list()
-		var/bitflags = reaction.reaction_tags
-
-		if(!reaction.required_reagents || !reaction.required_reagents.len) //Skip impossible reactions
-			continue
-
-		GLOB.chemical_reactions_list[reaction.type] = reaction
-
-		for(var/reagent_path in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(reagent_path)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] required_reagents: [reagent_path]")
-				continue
-			reagents += list(list("name" = reagent.name, "id" = reagent.type))
-
-		for(var/product in reaction.results)
-			var/datum/reagent/reagent = find_reagent_object_from_type(product)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] results: [product]")
-				continue
-			product_names += reagent.name
-			product_ids += product
-
-		var/product_name
-		if(!length(product_names))
-			var/list/names = splittext("[reaction.type]", "/")
-			product_name = names[names.len]
-		else
-			product_name = product_names[1]
-
-		if(!is_type_in_typecache(reaction.type, blacklist))
-			//Master list of ALL reactions that is used in the UI lookup table. This is expensive to make, and we don't want to lag the server by creating it on UI request, so it's cached to send to UIs instantly.
-			GLOB.chemical_reactions_results_lookup_list += list(list("name" = product_name, "id" = reaction.type, "bitflags" = bitflags, "reactants" = reagents))
-
-			// Create filters based on each reagent id in the required reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
-			for(var/id in product_ids)
-				if(!GLOB.chemical_reactions_list_product_index[id])
-					GLOB.chemical_reactions_list_product_index[id] = list()
-				GLOB.chemical_reactions_list_product_index[id] += reaction
-
 
 ///////////////////////////////Main reagents code/////////////////////////////////////////////
 
@@ -147,8 +17,6 @@
 	var/chem_temp = 150
 	///pH of the whole system
 	var/ph = CHEMICAL_NORMAL_PH
-	/// unused
-	var/last_tick = 1
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
 	///list of reactions currently on going, this is a lazylist for optimisation
@@ -204,16 +72,18 @@
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
-		return FALSE
-
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
 		return FALSE
 
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
 	if(!glob_reagent)
@@ -241,7 +111,7 @@
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
-		if(amount <= 0)
+		if(amount < CHEMICAL_VOLUME_MINIMUM)
 			return FALSE
 
 	var/cached_temp = chem_temp
@@ -307,7 +177,7 @@
 	return TRUE
 
 /// Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data = null)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
@@ -315,12 +185,12 @@
 
 /// Remove a specific reagent
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
-	if(isnull(amount))
-		stack_trace("null amount passed to reagent code")
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
 		return FALSE
 
-	if(amount < 0 || !IS_FINITE(amount))
-		stack_trace("invalid number passed to remove_reagent [amount]")
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -328,7 +198,7 @@
 		if(cached_reagent.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = clamp(amount, 0, cached_reagent.volume)
+			amount = round(clamp(amount, 0, cached_reagent.volume),  CHEMICAL_QUANTISATION_LEVEL)
 			cached_reagent.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -340,6 +210,16 @@
 
 /// Remove an amount of reagents without caring about what they are
 /datum/reagents/proc/remove_any(amount = 1)
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to remove [amount] amount of any reagent")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+
 	var/list/cached_reagents = reagent_list
 	var/total_removed = 0
 	var/current_list_element = 1
@@ -357,7 +237,7 @@
 			current_list_element = 1
 
 		var/datum/reagent/R = cached_reagents[current_list_element]
-		var/remove_amt = min(amount-total_removed,round(amount/rand(2,initial_list_length),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
+		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
 		//min ensures we don't go over amount.
 		remove_reagent(R.type, remove_amt)
 
@@ -370,6 +250,16 @@
 
 /// Removes all reagents from this holder
 /datum/reagents/proc/remove_all(amount = 1)
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to remove all [amount] amount of reagents")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
@@ -382,8 +272,16 @@
 
 /// Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1)
-	if(!isnum(amount))
-		return 1
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 
@@ -442,21 +340,6 @@
 		reagent_ph = source_reagent.ph
 		remove_reagent(source_reagent_typepath, reagent_amount)
 	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
-
-//Converts the creation_purity to purity
-/datum/reagents/proc/uncache_creation_purity(id)
-	var/datum/reagent/R = has_reagent(id)
-	if(!R)
-		return
-	R.purity = R.creation_purity
-
-/// Remove every reagent except this one
-/datum/reagents/proc/isolate_reagent(reagent)
-	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if(cached_reagent.type != reagent)
-			del_reagent(cached_reagent.type)
-			update_total()
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
@@ -527,11 +410,20 @@
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
  */
 /datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transferred_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
-	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
-	if(amount < 0)
-		return
+
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to transfer [amount] amount of reagents")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+
+	var/list/cached_reagents = reagent_list
 
 	var/cached_amount = amount
 	var/atom/target_atom
@@ -558,7 +450,10 @@
 	if(!no_react)
 		transfer_reactions(R)
 
-	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+	amount = round(min(amount, total_volume, R.maximum_volume - R.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
+
 	var/trans_data = null
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
@@ -633,9 +528,16 @@
 
 /// Transfer a specific reagent id to the target object
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
+
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
 
 	var/datum/reagents/holder
 	if(istype(target, /datum/reagents))
@@ -644,13 +546,19 @@
 		holder = target.reagents
 	else
 		return
-	if(amount < 0)
-		return
+
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+
 	var/cached_amount = amount
 	if(get_reagent_amount(reagent) < amount)
 		amount = get_reagent_amount(reagent)
 
-	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), holder.maximum_volume - holder.total_volume)
+	amount = round(min(amount, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return
+
+	var/list/cached_reagents = reagent_list
+
 	var/trans_data = null
 	for (var/looping_through_reagents in cached_reagents)
 		var/datum/reagent/current_reagent = looping_through_reagents
@@ -671,9 +579,16 @@
 
 /// Copies the reagents to the target object
 /datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE)
-	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
+
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to copy [amount] amount of reagents")
+		return FALSE
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
 
 	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
@@ -683,10 +598,12 @@
 			return
 		target_holder = target.reagents
 
-	if(amount < 0)
+	amount = round(min(amount, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return
 
-	amount = min(min(amount, total_volume), target_holder.maximum_volume - target_holder.total_volume)
+	var/list/cached_reagents = reagent_list
+
 	var/part = amount / total_volume
 	var/trans_data = null
 	for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -1123,7 +1040,7 @@
 	is_reacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		reagent.volume = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
+		reagent.volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	if(!QDELING(src))
@@ -1223,7 +1140,7 @@
 	var/datum/cached_my_atom = my_atom
 	var/multiplier = INFINITY
 	for(var/reagent in cached_required_reagents)
-		multiplier = min(multiplier, round(get_reagent_amount(reagent) / cached_required_reagents[reagent]))
+		multiplier = min(multiplier, round(get_reagent_amount(reagent) / cached_required_reagents[reagent], CHEMICAL_QUANTISATION_LEVEL))
 
 	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
@@ -1610,7 +1527,7 @@
 
 	for(var/reagent_type in external_list)
 		var/list/qualities = external_list[reagent_type]
-		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
+		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], CHEMICAL_QUANTISATION_LEVEL)]u, [qualities[REAGENT_PURITY]] purity)"
 
 	return english_list(data)
 
@@ -1627,7 +1544,7 @@
 	var/list/data = list()
 
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
+		data += "[reagent.type] ([round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)]u, [reagent.purity] purity)"
 
 	return english_list(data)
 
@@ -2102,7 +2019,3 @@
 
 #undef REAGENT_TRANSFER_AMOUNT
 #undef REAGENT_PURITY
-
-#undef REAGENTS_UI_MODE_LOOKUP
-#undef REAGENTS_UI_MODE_REAGENT
-#undef REAGENTS_UI_MODE_RECIPE

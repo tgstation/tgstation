@@ -504,6 +504,7 @@
 #include "code\_globalvars\lists\objects.dm"
 #include "code\_globalvars\lists\poll_ignore.dm"
 #include "code\_globalvars\lists\quirks.dm"
+#include "code\_globalvars\lists\reagents.dm"
 #include "code\_globalvars\lists\rtd.dm"
 #include "code\_globalvars\lists\typecache.dm"
 #include "code\_globalvars\lists\wiremod.dm"
