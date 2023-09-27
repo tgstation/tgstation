@@ -219,10 +219,16 @@
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
 	id = "moon converted"
+	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
 	alert_type = null
 	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
 	var/damage_sustained = 0
+
+/atom/movable/screen/alert/status_effect/moon_converted
+	name = "Moon Converted"
+	desc = "THEY LIE, THEY ALL LIE!!! SLAY THEM!!! BURN THEM!!! MAKE THEM SEE THE TRUTH!!!"
+	icon_state = "lastresort"
 
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))

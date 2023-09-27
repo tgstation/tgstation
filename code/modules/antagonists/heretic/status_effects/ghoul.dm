@@ -101,5 +101,3 @@
 	name = "Flesh Servant"
 	desc = "You are a Ghoul!"
 	icon_state = ALERT_MIND_CONTROL
-
-

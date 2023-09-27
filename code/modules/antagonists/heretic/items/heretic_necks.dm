@@ -53,9 +53,10 @@
 
 // The amulette conversion tool used by moon heretics
 /obj/item/clothing/neck/heretic_focus/moon_amulette
-	name = "Amber Focus"
+	name = "Moonlight Amulette"
 	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and you feel tendrils reach into your mind whispering of laughter and joy."
-	icon_state = "eldritch_necklace"
+	icon = 'icons/obj/antags/eldritch.dmi'
+	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
 
 
