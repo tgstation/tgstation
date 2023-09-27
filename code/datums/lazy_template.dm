@@ -7,8 +7,11 @@
 	/// If this is true each load will increment an index keyed to the type and it will load [map_name]_[index]
 	var/list/datum/turf_reservation/reservations = list()
 	var/uses_multiple_allocations = FALSE
+	/// Key to identify this template - used in caching
 	var/key
+	/// Directory of maps to prefix to the filename
 	var/map_dir = "_maps/templates/lazy_templates"
+	/// The filename (without extension) of the map to load
 	var/map_name
 
 /datum/lazy_template/New()

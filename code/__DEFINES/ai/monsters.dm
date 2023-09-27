@@ -130,3 +130,19 @@
 #define BB_AUTOMATED_MINING "automated_mining"
 /// key that stores the nearest dead human
 #define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+
+//seedling keys
+/// the water can we will pick up
+#define BB_WATERCAN_TARGET "watercan_target"
+/// the hydrotray we will heal
+#define BB_HYDROPLANT_TARGET "hydroplant_target"
+/// minimum weed levels for us to cure
+#define BB_WEEDLEVEL_THRESHOLD "weedlevel_threshold"
+/// minimum water levels for us to refill
+#define BB_WATERLEVEL_THRESHOLD "waterlevel_threshold"
+/// key holds our solarbeam ability
+#define BB_SOLARBEAM_ABILITY "solarbeam_ability"
+/// key holds our rapid seeds ability
+#define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
+/// key holds the tray we will beam
+#define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"

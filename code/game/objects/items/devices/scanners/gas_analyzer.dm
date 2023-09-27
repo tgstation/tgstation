@@ -26,6 +26,15 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
 
+	if(type != /obj/item/analyzer)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/material_sniffer)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/analyzer/equipped(mob/user, slot, initial)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_DETECT_STORM, CLOTHING_TRAIT)

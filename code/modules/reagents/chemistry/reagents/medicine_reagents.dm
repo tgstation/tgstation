@@ -597,7 +597,7 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(10 * (1-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
+	if(SPT_PROB(10 * (1.5-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
 		var/obj/item/I = affected_mob.get_active_held_item()
 		if(I && affected_mob.dropItemToGround(I))
 			to_chat(affected_mob, span_notice("Your hands spaz out and you drop what you were holding!"))
@@ -854,7 +854,6 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = TRUE
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2 * REM * seconds_per_tick)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * REM * seconds_per_tick)
@@ -877,7 +876,8 @@
 	affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
