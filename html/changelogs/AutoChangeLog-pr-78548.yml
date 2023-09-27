@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - rscadd: "Added a holodeck to Birdshot Station. It can be reached via the Crew Facilities hallway."
