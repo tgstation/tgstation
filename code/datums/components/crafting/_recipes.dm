@@ -17,7 +17,7 @@
 	var/list/tool_paths
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
-	///type paths of items that will be placed in the result
+	///type paths of items that will be forceMoved() into the result, or added to the reagents of it
 	var/list/parts = list()
 	///like tool_behaviors but for reagents
 	var/list/chem_catalysts = list()

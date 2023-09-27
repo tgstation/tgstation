@@ -162,3 +162,10 @@
 #define BB_ESCAPE_DESTINATION "escape_destination"
 ///how far away we will be from our target before teleporting
 #define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"
+
+/// Corpse we have consumed
+#define BB_LEGION_CORPSE "legion_corpse"
+/// Things our target recently said
+#define BB_LEGION_RECENT_LINES "legion_recent_lines"
+/// The creator of our legion skull
+#define BB_LEGION_BROOD_CREATOR "legion_brood_creator"

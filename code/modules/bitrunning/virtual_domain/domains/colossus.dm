@@ -13,6 +13,6 @@
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	health = 1200
-	maxHealth = 1200
+	health = 2000
+	maxHealth = 2000
 	true_spawn = FALSE

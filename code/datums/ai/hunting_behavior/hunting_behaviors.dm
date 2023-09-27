@@ -93,7 +93,7 @@
 	var/mob/living/hunter = controller.pawn
 	var/atom/hunted = controller.blackboard[hunting_target_key]
 
-	if(isnull(hunted))
+	if(QDELETED(hunted))
 		//Target is gone for some reason. forget about this task!
 		controller[hunting_target_key] = null
 		finish_action(controller, FALSE, hunting_target_key)
