@@ -19,10 +19,9 @@
 	var/list/weapon_choices = list(
 		/obj/item/storage/toolbox,
 		/obj/item/knife/shiv,
+		/obj/item/grenade/clusterbuster,
+		/obj/item/spear/bamboospear,
 	)
-	///player storages
-	var/list/player_one_storage = list()
-	var/list/player_two_storage = list()
 
 /obj/structure/fight_button/Initialize(mapload)
 	. = ..()
@@ -132,13 +131,11 @@
 		return
 
 
-	player_one_storage = player_one.unequip_everything_return_list()
-	for(var/atom/movable/atom in player_one_storage)
-		atom.forceMove(src)
+	player_one.unequip_everything()
+	player_one.fully_heal()
 
-	player_two_storage = player_two.unequip_everything_return_list()
-	for(var/atom/movable/atom in player_two_storage)
-		atom.forceMove(src)
+	player_two.unequip_everything()
+	player_two.fully_heal()
 
 	var/obj/item/one_weapon = new weapon_of_choice(src)
 	var/turf/one_spot = locate(161, 49, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
@@ -166,35 +163,8 @@
 	player_one.dueling = FALSE
 	player_two.dueling = FALSE
 
-	var/turf/player_one_turf = get_turf(player_one)
-	for(var/atom/movable/atom in player_one_storage)
-		atom.forceMove(player_one_turf)
-
-	var/turf/player_two_turf = get_turf(player_two)
-	for(var/atom/movable/atom in player_two_storage)
-		atom.forceMove(player_two_turf)
-
-	player_one_storage = list()
-	player_two_storage = list()
-
 	player_one = null
 	player_two = null
 
 	payout = 0
 	update_maptext()
-
-/mob/living/proc/unequip_everything_return_list()
-	var/list/items = list()
-	items |= get_equipped_items(TRUE)
-	for(var/I in items)
-		dropItemToGround(I)
-	items += drop_all_held_items_return_list()
-	return items
-
-/mob/proc/drop_all_held_items_return_list()
-	. = FALSE
-	var/list/items = list()
-	for(var/obj/item/I in held_items)
-		items += I
-		. |= dropItemToGround(I)
-	return items
