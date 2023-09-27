@@ -115,7 +115,6 @@
 	hunt_cooldown = 2 SECONDS
 	ability_key = BB_DEMON_TELEPORT_ABILITY
 	behavior_flags = NONE
-	always_reset_target = TRUE
 
 /datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages
 	ability_key = BB_DEMON_CLONE_ABILITY

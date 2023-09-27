@@ -17,9 +17,10 @@
 
 /datum/component/joint_damage/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_overlord))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(damage_overlord))
 
 /datum/component/joint_damage/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE)
+	UnregisterSignal(parent, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_DEATH))
 
 /datum/component/joint_damage/Destroy()
 	overlord_mob = null
