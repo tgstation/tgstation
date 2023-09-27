@@ -167,15 +167,25 @@
 	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	//if solution is getting too basic(high ph) add some acid to lower it's value
-	while(reagents.ph > alkaline_limit && acidic_beaker.reagents.total_volume)
-		if(!acidic_beaker.reagents.trans_to(reagents, seconds_per_tick))
-			break
+	//twice to balance acidic & alkaline values each time after a reaction
+	for(var/_ in 1 to 2)
+		//not too acidic nor too basic. work done
+		if(reagents.ph >= acidic_limit && reagents.ph <= alkaline_limit)
+			continue
+		/**
+		 * figure out which buffer to transfer to restore balance
+		 * if solution is getting too basic(high ph) add some acid to lower it's value
+		 * else if solution is getting too acidic(low ph) add some base to increase it's value
+		 */
+		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
+		if(!buffer.total_volume)
+			continue
 
-	//if solution is getting too acidic(low ph) add some base to increase it's value
-	while(reagents.ph < acidic_limit && alkaline_beaker.reagents.total_volume)
-		if(!alkaline_beaker.reagents.trans_to(reagents, seconds_per_tick))
-			break
+		//transfer buffer and handle reactions
+		var/ph_diff = reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)
+		if(!buffer.trans_to(reagents, max(ph_diff * seconds_per_tick, CHEMICAL_VOLUME_MINIMUM)))
+			continue
+		reagents.handle_reactions()
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
