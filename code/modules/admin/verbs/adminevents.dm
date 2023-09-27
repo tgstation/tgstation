@@ -340,7 +340,7 @@
 
 /client/proc/add_mob_ability()
 	set category = "Admin.Events"
-	set name = "Add Mob Ability"
+	set name = "Add Marked Mob Ability"
 	set desc = "Adds an ability to a marked mob."
 
 	if(!holder)
@@ -398,7 +398,7 @@
 
 /client/proc/remove_mob_ability()
 	set category = "Admin.Events"
-	set name = "Remove Mob Ability"
+	set name = "Remove Marked Mob Ability"
 	set desc = "Removes an ability from marked mob."
 
 	if(!holder)

@@ -682,6 +682,56 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Debug"
 	SStrading_card_game.printAllCards()
 
+/client/proc/give_mob_action(mob/ability_recipient in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Give Mob Action"
+	set desc = "Gives a mob ability to a mob."
+
+	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/static/list/actions_by_name = list()
+	if (!length(actions_by_name))
+		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
+			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
+
+	var/ability = tgui_input_list(usr, "Choose an ability", "Ability Selection", actions_by_name)
+	if(isnull(ability))
+		return
+	if(QDELETED(ability_recipient))
+		to_chat(usr, span_warning("The intended ability recipient no longer exists."))
+		return
+
+	var/ability_type = actions_by_name[ability]
+	var/datum/action/cooldown/mob_cooldown/add_ability = new ability_type(ability_recipient)
+	add_ability.Grant(ability_recipient)
+
+	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability From VV") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
+/client/proc/remove_mob_action(mob/removal_target in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Remove Mob Action"
+	set desc = "Remove a special ability from the selected mob."
+
+	var/list/target_abilities = list()
+	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
+		target_abilities[ability.name] = ability
+
+	if(!length(target_abilities))
+		return
+
+	var/chosen_ability = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
+	if(isnull(chosen_ability))
+		return
+	var/datum/action/cooldown/mob_cooldown/to_remove = target_abilities[chosen_ability]
+	if(!istype(to_remove))
+		return
+
+	qdel(to_remove)
+	log_admin("[key_name(usr)] removed the spell [chosen_ability] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(usr)] removed the spell [chosen_ability] from [key_name_admin(removal_target)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Give Spell"
