@@ -1,3 +1,6 @@
+///The multiplier given to the base overtime charge drain value if its flashlight is on.
+#define FLASHLIGHT_DRAIN_MULTIPLIER 1.25
+
 // Tries to draw power from charger or, if no operational charger is present, from power cell.
 /obj/item/modular_computer/proc/use_power(amount = 0)
 	if(check_power_override())
@@ -36,6 +39,8 @@
 ///Charge depends on whether the PC is on, and what programs are running/idle on it.
 /obj/item/modular_computer/proc/handle_power(seconds_per_tick)
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
+	if(light_on)
+		base_active_power_usage *= FLASHLIGHT_DRAIN_MULTIPLIER
 	if(active_program)
 		power_usage += active_program.power_cell_use
 	for(var/datum/computer_file/program/open_programs as anything in idle_threads)
@@ -56,3 +61,5 @@
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
 /obj/item/modular_computer/pda/silicon/check_power_override()
 	return TRUE
+
+#undef FLASHLIGHT_DRAIN_MULTIPLIER
