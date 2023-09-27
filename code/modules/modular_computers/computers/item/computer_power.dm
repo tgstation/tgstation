@@ -31,6 +31,8 @@
 		return
 	if(active_program)
 		active_program.event_powerfailure()
+	if(light_on)
+		set_light_on(FALSE)
 	for(var/datum/computer_file/program/programs as anything in idle_threads)
 		programs.event_powerfailure()
 	shutdown_computer(loud = FALSE)
