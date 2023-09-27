@@ -730,7 +730,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	qdel(to_remove)
 	log_admin("[key_name(usr)] removed the spell [chosen_ability] from [key_name(removal_target)].")
 	message_admins("[key_name_admin(usr)] removed the spell [chosen_ability] from [key_name_admin(removal_target)].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability From VV") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
