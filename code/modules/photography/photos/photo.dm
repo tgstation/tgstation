@@ -54,7 +54,7 @@
 		icon = I
 	return ..()
 
-/obj/item/photo/suicide_act(mob/living/carbon/user)
+/obj/item/photo/suicide_act(mob/living/carbon/human/user)
 	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
 	if (user.physique == MALE)
 		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
