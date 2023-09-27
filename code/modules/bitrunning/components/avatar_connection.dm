@@ -31,7 +31,6 @@
 	var/mob/living/avatar = parent
 	avatar.key = old_body.key
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	ADD_TRAIT(avatar, TRAIT_TEMPORARY_BODY, REF(src))
 
 	connect_avatar_signals(avatar)
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
@@ -77,6 +76,7 @@
 		avatar.dust()
 		return
 
+	ADD_TRAIT(avatar, TRAIT_TEMPORARY_BODY, REF(src))
 	pod.avatar_ref = WEAKREF(target)
 	RegisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 	RegisterSignal(avatar, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
@@ -89,6 +89,7 @@
 	if(action)
 		action.Remove(avatar)
 
+	REMOVE_TRAIT(avatar, TRAIT_TEMPORARY_BODY, REF(src))
 	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
 	UnregisterSignal(avatar, COMSIG_LIVING_DEATH)
 	UnregisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE)
@@ -263,7 +264,6 @@
 		old_mind.set_current(old_body)
 
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-	REMOVE_TRAIT(avatar, TRAIT_TEMPORARY_BODY, REF(src))
 
 	old_mind = null
 	old_body = null
