@@ -13,6 +13,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakeice/slippery,
 /area/centcom/tdome/arena/actual)
 "g" = (
@@ -56,6 +57,10 @@
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
+"v" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
 "w" = (
 /obj/item/toy/snowball,
 /obj/item/toy/snowball,
@@ -63,6 +68,10 @@
 /obj/item/toy/snowball,
 /obj/item/toy/snowball,
 /turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"C" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/fakeice/slippery,
 /area/centcom/tdome/arena/actual)
 "E" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -99,9 +108,16 @@
 /obj/structure/statue/snow/snowlegion,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
+"R" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
 
 (1,1,1) = {"
-a
+v
 a
 a
 a
@@ -110,7 +126,7 @@ a
 a
 a
 b
-a
+v
 "}
 (2,1,1) = {"
 b
@@ -151,12 +167,12 @@ u
 (5,1,1) = {"
 a
 b
+v
 a
 a
 a
 a
-a
-a
+v
 a
 b
 "}
@@ -189,9 +205,9 @@ a
 a
 a
 E
+C
 c
-c
-n
+R
 a
 a
 b
@@ -213,7 +229,7 @@ b
 a
 a
 g
-c
+C
 c
 f
 a
@@ -247,12 +263,12 @@ a
 (13,1,1) = {"
 a
 a
+v
 a
 a
 a
 a
-a
-a
+v
 a
 a
 "}
@@ -293,7 +309,7 @@ a
 a
 "}
 (17,1,1) = {"
-a
+v
 a
 a
 a
@@ -302,5 +318,5 @@ a
 a
 a
 b
-a
+v
 "}

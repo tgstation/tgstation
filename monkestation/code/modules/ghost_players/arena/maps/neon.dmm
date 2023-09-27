@@ -1,11 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"bA" = (
+"aZ" = (
 /obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"bA" = (
 /obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 8
 	},
@@ -16,10 +20,32 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
-"hX" = (
+"fy" = (
 /obj/structure/railing{
-	dir = 6
+	dir = 1;
+	layer = 3.1
 	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"fR" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"he" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"hn" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/centcom/tdome/arena/actual)
+"hX" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
@@ -28,33 +54,21 @@
 	},
 /area/centcom/tdome/arena/actual)
 "ih" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating/light,
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "ip" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/turf/open/floor/fakespace{
-	density = 1
-	},
+/turf/open/space/basic,
 /area/centcom/tdome/arena/actual)
 "iB" = (
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 1
 	},
@@ -63,26 +77,57 @@
 	},
 /area/centcom/tdome/arena/actual)
 "jn" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
+/turf/open/space/basic,
+/area/centcom/tdome/arena/actual)
+"ju" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 9
+	},
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "ki" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
+"km" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/fakespace{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"ku" = (
+/obj/structure/railing,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"kX" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/tdome/arena/actual)
 "lO" = (
+/obj/structure/railing,
 /turf/open/floor/carpet/blue,
 /area/centcom/tdome/arena/actual)
 "mf" = (
@@ -93,9 +138,6 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/centcom/tdome/arena/actual)
 "mi" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
@@ -104,20 +146,21 @@
 	},
 /area/centcom/tdome/arena/actual)
 "mA" = (
-/obj/structure/railing{
-	dir = 5
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
+	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/obj/structure/railing{
+	dir = 4
 	},
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "nk" = (
-/obj/structure/railing{
-	dir = 10
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
@@ -125,17 +168,18 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
-"nz" = (
+"nu" = (
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"nz" = (
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
-	dir = 8
-	},
-/obj/structure/railing{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -160,9 +204,6 @@
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
 "oJ" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
@@ -170,13 +211,13 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
-"rF" = (
+"qD" = (
 /obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/railing/corner{
 	dir = 4
 	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"rF" = (
 /obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 4
 	},
@@ -188,31 +229,28 @@
 	},
 /area/centcom/tdome/arena/actual)
 "rN" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
+/obj/structure/railing,
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "rX" = (
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/carpet/neon/simple/purple/nodots,
 /area/centcom/tdome/arena/actual)
 "vc" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
@@ -220,24 +258,21 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
+"vh" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/blue,
+/area/centcom/tdome/arena/actual)
 "vV" = (
-/obj/structure/railing/corner,
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "wq" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
@@ -245,11 +280,46 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
-"CE" = (
+"wL" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"xX" = (
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/railing/corner,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"yC" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/tdome/arena/actual)
+"AB" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"Cd" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"CC" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"CE" = (
 /obj/effect/turf_decal/siding/thinplating/light/corner,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -258,10 +328,21 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
-"EZ" = (
-/obj/structure/railing/corner{
-	dir = 1
+"Dp" = (
+/obj/structure/railing{
+	dir = 8
 	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"Ek" = (
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/tdome/arena/actual)
+"EZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
@@ -270,19 +351,44 @@
 	},
 /area/centcom/tdome/arena/actual)
 "Fp" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/railing,
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
+"FI" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"Gr" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"GH" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet/neon/simple/purple/nodots,
+/area/centcom/tdome/arena/actual)
 "HK" = (
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/centcom/tdome/arena/actual)
-"JZ" = (
-/obj/structure/railing/corner{
-	dir = 8
+"Ju" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 5
 	},
+/turf/open/floor/fakespace{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"JZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
@@ -293,28 +399,30 @@
 "Kv" = (
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/centcom/tdome/arena/actual)
-"Mk" = (
+"KY" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"LE" = (
 /obj/structure/railing{
-	dir = 6
+	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 1
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
 	},
+/turf/open/floor/carpet/neon/simple/blue/nodots,
+/area/centcom/tdome/arena/actual)
+"Mk" = (
 /obj/effect/turf_decal/siding/thinplating/light/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
-/turf/open/floor/fakespace{
-	density = 1
-	},
+/turf/open/space/basic,
 /area/centcom/tdome/arena/actual)
 "Mw" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing/corner,
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 1
 	},
@@ -324,11 +432,12 @@
 	},
 /area/centcom/tdome/arena/actual)
 "NQ" = (
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
 	},
 /turf/open/floor/fakespace{
 	density = 1
@@ -341,13 +450,33 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/centcom/tdome/arena/actual)
-"TN" = (
+"PS" = (
+/obj/structure/railing,
 /obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing/corner{
 	dir = 8
 	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
+"Qu" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom/tdome/arena/actual)
+"Tp" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 6
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/fakespace{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"TN" = (
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 1
 	},
@@ -358,17 +487,15 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
+"UK" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet/neon/simple/red/nodots,
+/area/centcom/tdome/arena/actual)
 "Wj" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
-	dir = 4
-	},
-/obj/structure/railing{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -391,20 +518,21 @@
 	},
 /area/centcom/tdome/arena/actual)
 "XA" = (
-/obj/structure/railing{
-	dir = 9
-	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
+	},
+/obj/structure/railing{
+	dir = 1;
+	layer = 3.1
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/fakespace{
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
 "Zz" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
@@ -418,8 +546,8 @@ Xf
 Xf
 Xf
 ih
-lO
-lO
+Ek
+vh
 lO
 iB
 Xf
@@ -430,7 +558,7 @@ mi
 Zz
 Xf
 ih
-lO
+Ek
 PD
 lO
 iB
@@ -438,38 +566,38 @@ vV
 mi
 "}
 (3,1,1) = {"
-HK
-mA
+PS
+Ju
 Zz
 ih
-lO
-lO
-lO
+kX
+yC
+Qu
 Mw
 hX
-Kv
+Cd
 "}
 (4,1,1) = {"
 HK
-HK
-mA
+PS
+Ju
 bA
 Wj
 wq
 ip
 Mk
-Kv
+Cd
 Kv
 "}
 (5,1,1) = {"
 HK
 HK
-HK
-HK
+AB
+CC
 rX
 rX
-Kv
-Kv
+Dp
+xX
 Kv
 Kv
 "}
@@ -479,7 +607,7 @@ HK
 HK
 HK
 XA
-nk
+km
 Kv
 Kv
 Kv
@@ -512,12 +640,12 @@ Kv
 (9,1,1) = {"
 mf
 HK
-HK
+UK
 nB
 NQ
 rN
 nB
-Kv
+KY
 Kv
 Wl
 "}
@@ -551,7 +679,7 @@ HK
 HK
 HK
 mA
-hX
+Tp
 Kv
 Kv
 Kv
@@ -560,47 +688,47 @@ Kv
 (13,1,1) = {"
 HK
 HK
-HK
-HK
-rX
-rX
-Kv
-Kv
+qD
+nu
+GH
+GH
+FI
+fR
 Kv
 Kv
 "}
 (14,1,1) = {"
 HK
-HK
-XA
+Gr
+ju
 CE
 vc
 nz
 jn
 rF
-Kv
+LE
 Kv
 "}
 (15,1,1) = {"
-HK
-XA
+Gr
+ju
 EZ
 ih
-ki
-ki
+aZ
+he
 ki
 TN
 nk
-Kv
+LE
 "}
 (16,1,1) = {"
 oJ
-EZ
+hn
 Xf
 ih
-ki
+fy
 oG
-ki
+ku
 iB
 JZ
 oJ
@@ -610,9 +738,9 @@ Xf
 Xf
 Xf
 ih
-ki
-ki
-ki
+fy
+wL
+ku
 iB
 Xf
 Xf

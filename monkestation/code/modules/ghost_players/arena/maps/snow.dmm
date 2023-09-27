@@ -23,6 +23,7 @@
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/dirt,
 /area/centcom/tdome/arena/actual)
 "go" = (
@@ -80,6 +81,7 @@
 /area/centcom/tdome/arena/actual)
 "mv" = (
 /obj/structure/flora/tree/dead/style_4,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
 "mG" = (
@@ -87,6 +89,7 @@
 /area/centcom/tdome/arena/actual)
 "oa" = (
 /obj/structure/flora/tree/dead/style_5,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
 "ol" = (
@@ -111,6 +114,10 @@
 /area/centcom/tdome/arena/actual)
 "qB" = (
 /obj/structure/fence/cut/large,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"rJ" = (
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/snow/actually_safe,
 /area/centcom/tdome/arena/actual)
 "rX" = (
@@ -144,6 +151,7 @@
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/dirt,
 /area/centcom/tdome/arena/actual)
 "vl" = (
@@ -254,11 +262,20 @@
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/dirt,
 /area/centcom/tdome/arena/actual)
 "RD" = (
 /obj/structure/fluff/fokoff_sign,
 /turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"SH" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Tr" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/centcom/tdome/arena/actual)
 "Ty" = (
 /obj/item/wallframe/picture{
@@ -306,7 +323,7 @@ EZ
 EZ
 "}
 (2,1,1) = {"
-pD
+Tr
 By
 pD
 EZ
@@ -331,15 +348,15 @@ qB
 "}
 (4,1,1) = {"
 zi
-mi
+SH
 Ty
 rX
 cc
 mG
-EZ
+rJ
 pD
 EZ
-EZ
+rJ
 "}
 (5,1,1) = {"
 um
@@ -370,7 +387,7 @@ Pb
 Pb
 mi
 mi
-mi
+SH
 mG
 Ju
 EZ
@@ -418,7 +435,7 @@ mi
 Pb
 mi
 mi
-mi
+SH
 mG
 FM
 EZ
@@ -451,15 +468,15 @@ pD
 "}
 (14,1,1) = {"
 zl
-mi
+SH
 mi
 hm
 Ah
 mG
-pD
+Tr
 EZ
 EZ
-EZ
+rJ
 "}
 (15,1,1) = {"
 mG
@@ -474,7 +491,7 @@ HK
 GL
 "}
 (16,1,1) = {"
-pD
+Tr
 bl
 pD
 EZ

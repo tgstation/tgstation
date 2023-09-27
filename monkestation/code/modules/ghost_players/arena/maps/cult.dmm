@@ -8,6 +8,13 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
+"ay" = (
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
 "bk" = (
 /obj/structure/destructible/cult/item_dispenser/altar,
 /obj/item/toy/plush/narplush,
@@ -16,11 +23,13 @@
 "bw" = (
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
+"bK" = (
+/obj/structure/stone_tile/slab,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/basalt/safe,
+/area/centcom/tdome/arena/actual)
 "bU" = (
-/obj/structure/railing/corner{
-	dir = 1;
-	color = "#8E5450"
-	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "cx" = (
@@ -28,26 +37,7 @@
 /obj/item/melee/cultblade/dagger,
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
-"cK" = (
-/obj/structure/railing{
-	dir = 8;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"cL" = (
-/obj/structure/railing{
-	dir = 8;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
 "df" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "floor5"
 	},
@@ -58,6 +48,14 @@
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "dK" = (
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#8E5450"
+	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "el" = (
@@ -71,12 +69,20 @@
 /obj/structure/stone_tile/burnt{
 	dir = 1
 	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "fs" = (
 /obj/structure/stone_tile/burnt,
 /obj/structure/stone_tile/cracked{
 	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#8E5450"
 	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
@@ -90,35 +96,21 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/lava,
-/area/centcom/tdome/arena/actual)
-"jD" = (
-/obj/structure/railing/corner{
-	color = "#8E5450"
-	},
-/turf/open/floor/cult,
+/turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "lb" = (
 /obj/structure/stone_tile/burnt{
 	dir = 4
 	},
-/turf/open/lava,
+/turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "lo" = (
 /obj/effect/rune/blood_boil,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"lI" = (
-/obj/structure/stone_tile/slab/cracked,
-/obj/structure/statue/goliath,
-/turf/open/misc/basalt/safe,
-/area/centcom/tdome/arena/actual)
 "lY" = (
-/obj/structure/railing/corner{
-	dir = 8;
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "mw" = (
@@ -142,44 +134,41 @@
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"pi" = (
-/obj/structure/railing/corner{
-	dir = 8;
-	color = "#8E5450"
-	},
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
 "pP" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
 	},
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"rA" = (
-/obj/structure/railing{
-	dir = 1;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/drip{
-	icon_state = "floor3"
-	},
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"sO" = (
-/obj/structure/stone_tile/slab,
-/obj/structure/statue/goliath,
-/turf/open/misc/basalt/safe,
-/area/centcom/tdome/arena/actual)
-"va" = (
+"qR" = (
 /obj/structure/railing{
 	dir = 8;
 	color = "#8E5450"
 	},
-/turf/open/floor/cult,
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
+"tN" = (
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#8E5450"
+	},
+/turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "vm" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
 	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
@@ -187,15 +176,12 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"xc" = (
+"wM" = (
 /obj/structure/railing{
-	dir = 1;
+	dir = 4;
 	color = "#8E5450"
 	},
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 8
-	},
-/turf/open/floor/cult,
+/turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "xd" = (
 /obj/effect/rune/teleport,
@@ -205,50 +191,43 @@
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
+	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "xg" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/lava,
-/area/centcom/tdome/arena/actual)
-"xm" = (
 /obj/structure/railing{
-	dir = 1;
+	dir = 4;
 	color = "#8E5450"
 	},
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/cult,
+/turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "xr" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
 	},
-/turf/open/lava,
+/turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "xt" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"xS" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "ya" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#8E5450"
+	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "yj" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 6
 	},
@@ -261,22 +240,29 @@
 /obj/structure/stone_tile/burnt{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#8E5450"
+	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
-"AO" = (
+"zP" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
 /obj/structure/railing{
 	color = "#8E5450"
 	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
+"AO" = (
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip2"
 	},
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "AU" = (
-/obj/structure/railing{
-	dir = 1;
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
 	},
@@ -284,31 +270,10 @@
 /area/centcom/tdome/arena/actual)
 "BB" = (
 /obj/structure/stone_tile/block/cracked,
+/obj/structure/railing{
+	color = "#8E5450"
+	},
 /turf/open/lava,
-/area/centcom/tdome/arena/actual)
-"Dq" = (
-/obj/structure/railing/corner{
-	dir = 1;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"Es" = (
-/obj/structure/railing/corner{
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 8
-	},
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"EC" = (
-/obj/structure/railing/corner{
-	dir = 4;
-	color = "#8E5450"
-	},
-/turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "EG" = (
 /obj/effect/rune/manifest,
@@ -318,16 +283,6 @@
 	pixel_x = 10
 	},
 /turf/open/misc/basalt/safe,
-/area/centcom/tdome/arena/actual)
-"FR" = (
-/obj/structure/railing{
-	dir = 4;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 5
-	},
-/turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "Gc" = (
 /obj/effect/decal/cleanable/blood,
@@ -340,55 +295,45 @@
 /obj/effect/rune/raise_dead,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"GM" = (
-/obj/structure/railing/corner{
-	dir = 4;
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/drip{
-	icon_state = "drip2"
-	},
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"GW" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"JE" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
-/obj/effect/decal/cleanable/blood/tracks{
+"HB" = (
+/obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/floor/cult,
+/turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "KC" = (
 /obj/structure/fluff/drake_statue,
 /obj/structure/stone_tile/slab,
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
+"Ld" = (
+/obj/structure/railing{
+	dir = 8;
+	color = "#8E5450"
+	},
+/obj/structure/railing{
+	color = "#8E5450"
+	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
 "Mn" = (
 /obj/effect/mob_spawn/corpse/human/cook,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"Nd" = (
+"My" = (
 /obj/structure/railing{
-	dir = 1;
 	color = "#8E5450"
 	},
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/cult,
+/turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "NP" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/burnt{
 	dir = 8
+	},
+/obj/structure/railing{
+	color = "#8E5450"
 	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
@@ -401,33 +346,30 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "Py" = (
-/obj/structure/railing/corner{
-	dir = 4;
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
-"PY" = (
+"Rf" = (
+/obj/structure/railing{
+	dir = 4;
+	color = "#8E5450"
+	},
 /obj/structure/railing{
 	dir = 1;
 	color = "#8E5450"
 	},
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/cult,
-/area/centcom/tdome/arena/actual)
-"RX" = (
-/obj/structure/railing{
-	dir = 4;
-	color = "#8E5450"
-	},
-/turf/open/floor/cult,
+/turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "Sr" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#8E5450"
 	},
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
@@ -436,23 +378,17 @@
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "TH" = (
-/obj/structure/railing/corner{
-	dir = 4;
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 10
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "TV" = (
-/obj/structure/railing{
-	dir = 4;
-	color = "#8E5450"
-	},
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip4"
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "Uc" = (
@@ -462,15 +398,24 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
+"Ui" = (
+/obj/structure/railing{
+	dir = 4;
+	color = "#8E5450"
+	},
+/obj/structure/railing{
+	color = "#8E5450"
+	},
+/turf/open/lava,
+/area/centcom/tdome/arena/actual)
 "Vs" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
-"Vv" = (
-/obj/structure/railing{
-	color = "#8E5450"
-	},
-/turf/open/floor/cult,
+"Wf" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/basalt/safe,
 /area/centcom/tdome/arena/actual)
 "Wt" = (
 /obj/effect/decal/cleanable/blood/drip{
@@ -495,42 +440,42 @@
 (1,1,1) = {"
 bw
 bw
-Vv
+bw
 vm
-lI
-sO
+Vs
+NT
 Uc
 my
 ax
 bw
 "}
 (2,1,1) = {"
-RX
-EC
-Vv
-dK
+bw
+bw
+bw
+tN
 xr
 hG
-dK
+wM
 my
-jD
-RX
+bw
+bw
 "}
 (3,1,1) = {"
-dK
-my
+Ld
+bw
 lY
-cK
-va
-va
-va
+Ss
+bw
+bw
+bw
 bU
-GW
+Ss
 dK
 "}
 (4,1,1) = {"
-dK
-PY
+My
+vo
 fx
 oj
 bw
@@ -538,11 +483,11 @@ YN
 ax
 bw
 AO
-dK
+ay
 "}
 (5,1,1) = {"
-dK
-rA
+My
+mw
 fx
 vo
 Gc
@@ -550,41 +495,41 @@ bw
 lo
 Zb
 df
-dK
+ay
 "}
 (6,1,1) = {"
-dK
-my
-Es
-RX
-RX
-RX
-RX
+Ui
+bw
 Py
-Vv
-dK
+bw
+bw
+bw
+bw
+Py
+bw
+tN
 "}
 (7,1,1) = {"
-va
-Dq
-JE
+bw
+Ss
+fx
 dK
 yG
 ya
-dK
-xc
-pi
-va
+Ld
+fx
+bw
+bw
 "}
 (8,1,1) = {"
 XM
 mV
-JE
+fx
 xe
-NT
+bK
 am
-Uc
-xc
+zP
+fx
 bw
 Ss
 "}
@@ -603,96 +548,96 @@ ax
 (10,1,1) = {"
 el
 NS
-Vv
+bw
 vm
-Vs
+Wf
 cx
 NP
-xm
+Ss
 xt
 vo
 "}
 (11,1,1) = {"
-RX
-GM
-Vv
-dK
+bw
+AO
+bw
+tN
 xg
 fs
-dK
-my
-jD
-RX
+Ui
+bw
+bw
+bw
 "}
 (12,1,1) = {"
-dK
-Nd
-pi
-va
-va
-va
-cL
+Ld
+Gc
 bU
-Vv
-dK
+bw
+bw
+bw
+ax
+bU
+bw
+qR
 "}
 (13,1,1) = {"
-dK
-my
+My
+bw
 dJ
 bw
 mw
 Wt
 bw
 bw
-xS
-dK
+Gc
+ay
 "}
 (14,1,1) = {"
-dK
-my
+My
+bw
 bw
 ax
 xd
 Ss
 Mn
 bw
-Vv
-dK
+bw
+ay
 "}
 (15,1,1) = {"
-dK
-xm
-jD
+Ui
+Ss
+bU
 TV
-RX
-RX
-FR
+bw
+bw
+AU
 TH
-Vv
-dK
+bw
+Rf
 "}
 (16,1,1) = {"
-va
-bU
-Vv
+bw
+bw
+bw
 dK
 lb
-ya
-dK
-xc
-pi
-va
+HB
+Ld
+fx
+bw
+bw
 "}
 (17,1,1) = {"
 bw
 ax
-Vv
+bw
 Sr
-sO
-lI
+NT
+Vs
 BB
-xc
+fx
 Ss
 bw
 "}
