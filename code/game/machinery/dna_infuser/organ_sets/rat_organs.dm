@@ -133,7 +133,7 @@
 	. = ..()
 	if(prob(5))
 		owner.emote("squeaks")
-		playsound(owner, 'sound/effects/mousesqueek.ogg', 100)
+		playsound(owner, 'sound/creatures/mousesqueek.ogg', 100)
 
 #undef RAT_ORGAN_COLOR
 #undef RAT_SCLERA_COLOR
