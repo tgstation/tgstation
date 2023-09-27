@@ -186,7 +186,7 @@
 /// Remove a specific reagent
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
+		stack_trace("non finite amount passed to remove reagent [amount] [reagent]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -211,7 +211,7 @@
 /// Remove an amount of reagents without caring about what they are
 /datum/reagents/proc/remove_any(amount = 1)
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove [amount] amount of any reagent")
+		stack_trace("non finite amount passed to remove any reagent [amount]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -251,7 +251,7 @@
 /// Removes all reagents from this holder
 /datum/reagents/proc/remove_all(amount = 1)
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove all [amount] amount of reagents")
+		stack_trace("non finite amount passed to remove all reagents [amount]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -273,7 +273,7 @@
 /// Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1)
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
+		stack_trace("non finite amount passed to remove all type reagent [amount] [reagent_type]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -414,7 +414,7 @@
 		return
 
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to transfer [amount] amount of reagents")
+		stack_trace("non finite amount passed to trans_to [amount] amount of reagents")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -532,7 +532,7 @@
 		return
 
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to transfer [amount] [reagent]")
+		stack_trace("non finite amount passed to trans_id_to [amount] [reagent]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -583,7 +583,7 @@
 		return
 
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to copy [amount] amount of reagents")
+		stack_trace("non finite amount passed to copy_to [amount] amount of reagents")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
