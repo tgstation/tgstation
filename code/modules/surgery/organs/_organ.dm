@@ -57,6 +57,8 @@
 	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
+	/// String displayed when the organ has decayed.
+	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -242,10 +244,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
-		if(IS_ROBOTIC_ORGAN(src))
-			. += span_warning("[src] seems to be broken.")
-			return
-		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
+		. += span_warning("[src] [failing_desc]")
 		return
 
 	if(damage > high_threshold)

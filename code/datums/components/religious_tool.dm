@@ -74,9 +74,9 @@
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
-		if(easy_access_sect?.can_sacrifice(the_item,user))
+		if(!easy_access_sect?.can_sacrifice(the_item, user))
 			return
-		easy_access_sect.on_sacrifice(the_item,user)
+		easy_access_sect.on_sacrifice(the_item, user)
 		return COMPONENT_NO_AFTERATTACK
 
 /datum/component/religious_tool/ui_interact(mob/user, datum/tgui/ui)

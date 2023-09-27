@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Doctors can now get head mirrors from their clothes vendor, to complete the doctor outfit"
