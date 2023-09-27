@@ -54,9 +54,6 @@ const AdventureList = (props, context) => {
             </Table.Cell>
           </Table.Row>
         ))}
-        <Table.Row>
-          <Button onClick={() => act('create')}>Create New</Button>
-        </Table.Row>
       </Table>
     </>
   );
