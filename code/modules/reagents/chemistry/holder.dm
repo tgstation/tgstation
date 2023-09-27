@@ -532,7 +532,7 @@
 		return
 
 	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
+		stack_trace("non finite amount passed to transfer [amount] [reagent]")
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
@@ -598,7 +598,7 @@
 			return
 		target_holder = target.reagents
 
-	amount = round(min(amount, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return
 
