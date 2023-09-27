@@ -7,7 +7,7 @@ import { formatTime } from '../format';
 type Adventure = {
   ref: string;
   name: string;
-  id: string;
+  filename: string;
   approved: boolean;
   uploader: string;
   version: number;
@@ -49,7 +49,7 @@ const AdventureList = (props, context) => {
           </Table.Row>
           {data.adventures.map((adventure) => (
             <Table.Row key={adventure.ref} className="candystripe">
-              <Table.Cell>{adventure.id}</Table.Cell>
+              <Table.Cell>{adventure.filename}</Table.Cell>
               <Table.Cell>{adventure.name}</Table.Cell>
 			  <Table.Cell>{adventure.uploader}</Table.Cell>
               <Table.Cell>

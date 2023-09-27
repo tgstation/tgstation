@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		var/raw_json = file2text(ADVENTURE_LOOK_PATH + filename)
 		var/list/json_decoded = json_decode(raw_json)
 		var/datum/adventure_db_entry/entry = new()
-		entry.path = filename
+		entry.filename = filename
 		entry.raw_json = raw_json
 		entry.uploader = json_decoded["author"]
 		entry.extract_metadata()
@@ -63,8 +63,8 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	GLOB.explorer_drone_adventure_db_entries = .
 
 /datum/adventure_db_entry
-	/// path or null for freshly created adventures
-	var/path
+	/// filename of the adventure
+	var/filename
 	/// actual adventure json string
 	var/raw_json
 	/// Unapproved adventures won't be used for exploration sites.

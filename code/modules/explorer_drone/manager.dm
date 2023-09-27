@@ -54,7 +54,7 @@
 	for(var/datum/adventure_db_entry/db_entry in GLOB.explorer_drone_adventure_db_entries)
 		adventure_data += list(list(
 			"ref" = ref(db_entry),
-			"id" = db_entry.path,
+			"filename" = db_entry.filename,
 			"name" = db_entry.name,
 			"version" = db_entry.version,
 			"uploader" = db_entry.uploader,
