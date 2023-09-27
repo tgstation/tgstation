@@ -165,16 +165,13 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
 		return
-	var/added_passtable = FALSE
-	if(!(pushed_mob.pass_flags & PASSTABLE))
-		added_passtable = TRUE
-		pushed_mob.pass_flags |= PASSTABLE
+	var/passtable_key = REF(user)
+	passtable_on(pushed_mob, passtable_key)
 	for (var/obj/obj in user.loc.contents)
 		if(!obj.CanAllowThrough(pushed_mob))
 			return
 	pushed_mob.Move(src.loc)
-	if(added_passtable)
-		pushed_mob.pass_flags &= ~PASSTABLE
+	passtable_off(pushed_mob, passtable_key)
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
 	pushed_mob.Knockdown(30)

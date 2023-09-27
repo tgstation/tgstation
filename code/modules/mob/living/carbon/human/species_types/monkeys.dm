@@ -48,14 +48,14 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.pass_flags |= PASSTABLE
+	passtable_on(H, SPECIES_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 	RegisterSignal(H, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(monkey_melee))
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.pass_flags = initial(C.pass_flags)
+	passtable_off(C, SPECIES_TRAIT)
 	C.dna.remove_mutation(/datum/mutation/human/race)
 	UnregisterSignal(C, COMSIG_LIVING_UNARMED_ATTACK)
 

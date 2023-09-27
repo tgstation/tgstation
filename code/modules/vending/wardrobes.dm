@@ -59,6 +59,7 @@
 		/obj/item/clothing/head/utility/surgerycap/green = 4,
 		/obj/item/clothing/head/beret/medical/paramedic = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
+		/obj/item/clothing/head/utility/head_mirror = 4,
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/mask/surgical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,

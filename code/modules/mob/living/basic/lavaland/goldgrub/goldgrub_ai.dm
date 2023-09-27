@@ -108,10 +108,15 @@
 	if(!dig_ability.IsAvailable())
 		return
 
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/has_target = controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)
 
 	//a storm is coming or someone is nearby, its time to escape
-	if(currently_underground || !currently_underground && storm_approaching || !QDELETED(target))
+	if(currently_underground)
+		if(has_target)
+			return
+		controller.queue_behavior(/datum/ai_behavior/use_mob_ability/burrow, BB_BURROW_ABILITY)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	if(storm_approaching || has_target)
 		controller.queue_behavior(/datum/ai_behavior/use_mob_ability/burrow, BB_BURROW_ABILITY)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -122,14 +127,10 @@
 /datum/ai_planning_subtree/grub_mine
 
 /datum/ai_planning_subtree/grub_mine/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/target_wall = controller.blackboard[BB_TARGET_MINERAL_WALL]
-
-	if(QDELETED(target_wall))
-		controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_TARGET_MINERAL_WALL)
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_TARGET_MINERAL_WALL)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_WALL))
+		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_TARGET_MINERAL_WALL)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_TARGET_MINERAL_WALL)
 
 /datum/ai_behavior/mine_wall
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -168,7 +169,7 @@
 
 /datum/pet_command/grub_spit/execute_action(datum/ai_controller/controller)
 	var/datum/action/cooldown/spit_ability = controller.blackboard[BB_SPIT_ABILITY]
-	if(QDELETED(spit_ability) || !spit_ability.IsAvailable())
+	if(!spit_ability?.IsAvailable())
 		return
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SPIT_ABILITY)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)

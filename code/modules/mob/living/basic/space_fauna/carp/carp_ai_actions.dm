@@ -34,9 +34,7 @@
 
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
-	if (QDELETED(using_action))
-		return
-	if (!using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	var/spell_targetting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING]

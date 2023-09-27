@@ -89,6 +89,6 @@
 	var/result = ability.InterceptClickOn(controller.pawn, null, target)
 	finish_action(controller, result, ability_key, target_key)
 
-/datum/ai_behavior/hunt_target/simple_click/carrot
+/datum/ai_behavior/hunt_target/unarmed_attack_target/carrot
 	hunt_cooldown = 2 SECONDS
 	always_reset_target = TRUE

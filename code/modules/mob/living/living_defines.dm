@@ -257,3 +257,6 @@
 	/// Default attack style to use when right clicking
 	var/datum/attack_style/unarmed/default_disarm_style_path
 	var/datum/attack_style/unarmed/default_disarm_style
+
+	/// Whether this mob can be mutated into a cybercop via quantum server get_valid_domain_targets(). Specifically dodges megafauna
+	var/can_be_cybercop = TRUE
