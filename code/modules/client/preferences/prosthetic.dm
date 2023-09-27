@@ -7,7 +7,8 @@
 	return list("Random") + GLOB.limb_choice
 
 /datum/preference/choiced/prosthetic/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
+	. = ..()
+	if (!.)
 		return FALSE
 
 	return "Prosthetic Limb" in preferences.all_quirks

@@ -13,7 +13,7 @@
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
-	if(!limb_type)  //Client gone or they a random prosthetic
+	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
 		limb_type = GLOB.limb_choice[pick(GLOB.limb_choice)]
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
