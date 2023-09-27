@@ -111,7 +111,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations \
 		if they are hit by the parade they will also suffer brain damage when it ends."
-	gain_text = "...to regain its gaze they left, moving with a parade bringing all who suffered along."
+	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	next_knowledge = list(/datum/heretic_knowledge/moon_amulette)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
@@ -121,8 +121,8 @@
 /datum/heretic_knowledge/moon_amulette
 	name = "Moonlight Amulette"
 	desc = "Allows you to transmute 2 sheets of glass, a pair of eyes, a brain and a tie \
-			if the item is used on someone with low sanity they turn into a devoted follower \
-			of you, if their sanity isnt low enough it lowers them to a sufficent level."
+			if the item is used on someone with low sanity they go berserk attacking everyone \
+			, if their sanity isnt low enough it decreases their mood."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
@@ -136,19 +136,19 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/mask/madness_mask)
+	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
 	cost = 1
 	route = PATH_MOON
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now lights enemies ablaze on attack."
+	desc = "Your blade now deals brain damage, causes confusion and ."
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
 
-/datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
 		return
 

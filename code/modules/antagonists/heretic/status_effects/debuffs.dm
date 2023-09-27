@@ -218,7 +218,7 @@
 
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
-	id = "heretic_lastresort"
+	id = "moon converted"
 	alert_type = null
 	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
@@ -227,7 +227,9 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
+	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = TRUE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
+	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
 	SIGNAL_HANDLER
@@ -239,17 +241,15 @@
 	// Adds damage to the damage sustained
 	damage_sustained += damage
 
-	// If the damage_sustained is below 75 don't remove the status effect
-	if(damage_sustained<75)
-		return
-
+	// If the damage_sustained is above or equal to 75 remove the status effect
 	if (damage_sustained>=75)
 	// Remove the status effect
-		REMOVE_TRAIT(owner, TRAIT_MUTE, type)
 		owner.remove_status_effect(/datum/status_effect/moon_converted)
-	return TRUE
-
 
 /datum/status_effect/moon_converted/on_remove()
+	to_chat(owner, span_notice("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
 	owner.balloon_alert(owner, "your mind clears and you return to normal!")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
+	owner.log_message("[owner] is no longer insane.", LOG_GAME)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))

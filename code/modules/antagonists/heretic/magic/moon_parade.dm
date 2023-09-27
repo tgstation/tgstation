@@ -35,6 +35,7 @@
 
 
 /obj/projectile/moon_parade/Initialize(mapload)
+	playsound(src, 'sound/effects/moon_parade.ogg', 50, TRUE)
 	. = ..()
 
 /obj/projectile/moon_parade/on_hit(atom/hit, pierce_hit)

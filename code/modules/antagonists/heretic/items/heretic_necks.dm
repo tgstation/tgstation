@@ -52,7 +52,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 // The amulette conversion tool used by moon heretics
-/obj/item/clothing/neck/eldritch_amulet/moon_amulette
+/obj/item/clothing/neck/heretic_focus/moon_amulette
 	name = "Amber Focus"
 	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and you feel tendrils reach into your mind whispering of laughter and joy."
 	icon_state = "eldritch_necklace"
@@ -61,27 +61,19 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
-	if(hit.mob_mood)
-		switch(hit.mob_mood.sanity_level)
-			if(SANITY_LEVEL_GREAT)
-				user.balloon_alert(user, "Their mind is too strong!")
-				hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-			if(SANITY_LEVEL_NEUTRAL)
-				user.balloon_alert(user, "Their mind is too strong!")
-				hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-			if(SANITY_LEVEL_DISTURBED)
-				user.balloon_alert(user, "Their mind is too strong!")
-				hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-			if(SANITY_LEVEL_CRAZY)
-				user.balloon_alert(user, "Their mind bends to see the truth!")
-				to_chat(hit, span_notice("Your master is [user]. Obey their commands and slay all other liars."))
-				hit.apply_status_effect(/datum/status_effect/moon_converted)
-				user.log_message("created a converted, controlled by [target].", LOG_GAME)
-				message_admins("[ADMIN_LOOKUPFLW(user)] created a converted, [ADMIN_LOOKUPFLW(target)].")
-			if(SANITY_LEVEL_INSANE)
-				user.balloon_alert(user, "Their mind bends to see the truth!")
-				to_chat(hit, span_notice("Your master is [user]. Obey their commands and slay all other liars."))
-				hit.apply_status_effect(/datum/status_effect/moon_converted)
-				user.log_message("created a converted, controlled by [target].", LOG_GAME)
-				message_admins("[ADMIN_LOOKUPFLW(user)] created a converted, [ADMIN_LOOKUPFLW(target)].")
+	if(IS_HERETIC(user))
+		if(hit.mob_mood)
+			switch(hit.mob_mood.sanity_level)
+				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
+					user.balloon_alert(user, "Their mind is too strong!")
+					hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
+				if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
+					user.balloon_alert(user, "Their mind bends to see the truth!")
+					to_chat(hit, span_notice("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!"))
+					hit.apply_status_effect(/datum/status_effect/moon_converted)
+					user.log_message("made [target] insane.", LOG_GAME)
+					message_admins("[ADMIN_LOOKUPFLW(user)] made, [ADMIN_LOOKUPFLW(target)] insane.")
+	else
+		user.balloon_alert(user, "You feel a presence watching you")
+		user.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
 	. = ..()
