@@ -32,30 +32,28 @@ const AdventureList = (props, context) => {
   );
 
   return (
-    <>
-      <Table>
-        <Table.Row>
-          <Table.Cell color="label">Filename</Table.Cell>
-          <Table.Cell color="label">Title</Table.Cell>
-          <Table.Cell color="label">Author</Table.Cell>
-          <Table.Cell color="label">Playtest</Table.Cell>
+    <Table>
+      <Table.Row>
+        <Table.Cell color="label">Filename</Table.Cell>
+        <Table.Cell color="label">Title</Table.Cell>
+        <Table.Cell color="label">Author</Table.Cell>
+        <Table.Cell color="label">Playtest</Table.Cell>
+      </Table.Row>
+      {data.adventures.map((adventure) => (
+        <Table.Row key={adventure.ref} className="candystripe">
+          <Table.Cell>{adventure.filename}</Table.Cell>
+          <Table.Cell>{adventure.name}</Table.Cell>
+          <Table.Cell>{adventure.uploader}</Table.Cell>
+          <Table.Cell>
+            <Button
+              color="good"
+              onClick={() => act('play', { ref: adventure.ref })}
+              content="Play"
+            />
+          </Table.Cell>
         </Table.Row>
-        {data.adventures.map((adventure) => (
-          <Table.Row key={adventure.ref} className="candystripe">
-            <Table.Cell>{adventure.filename}</Table.Cell>
-            <Table.Cell>{adventure.name}</Table.Cell>
-            <Table.Cell>{adventure.uploader}</Table.Cell>
-            <Table.Cell>
-              <Button
-                color="good"
-                onClick={() => act('play', { ref: adventure.ref })}
-                content="Play"
-              />
-            </Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    </>
+      ))}
+    </Table>
   );
 };
 
