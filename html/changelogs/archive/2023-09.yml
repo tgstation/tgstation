@@ -932,3 +932,88 @@
       to happen, Adding a downside to pure Ephedrine
   timothymtorres:
   - bugfix: Fix secret documents steal objective failing while inside folder.
+2023-09-26:
+  Ben10Omintrix:
+  - rscadd: added ranged attack friendly fire checks for basic mobs. minebots and
+      hivebots will now try to avoid shooting their friends
+  GPeckman:
+  - bugfix: Stun immune people should no longer have issues with gripper gloves and
+      other tackle gloves.
+  - bugfix: Intellicards in computers are no longer deleted when the computer is destroyed.
+  - bugfix: Modular consoles can now be deconstructed by right clicking with a wrench.
+  Higgin:
+  - bugfix: cigarettes no longer smoke themselves from inside your pockets or on your
+      hands.
+  Jacquerel:
+  - bugfix: Selecting "Monkey" on a magic mirror will now once again turn you into
+      a Monkey rather than a disgusting freak of nature.
+  - bugfix: Tall Boys have once again been barred from joining the Wizard Federation.
+  LT3:
+  - admin: Successful restart votes will now restart on the current map
+  - code_imp: End round and persistence data will be saved before executing successful
+      restart vote
+  - spellcheck: Improved wording in greyscale JSON error message
+  Rhials:
+  - bugfix: '"Spooky" meteors will now properly spawn during halloween.'
+  Sealed101:
+  - bugfix: you can no longer push watchers (and any other lavaland basic mob) around
+      by running into them
+  Singul0:
+  - rscadd: Adds an advanced plastic surgery procedure, allowing you to imitate people
+      in pictures. Simply hold a picture in your offhand of the person you wish to
+      imitate as while conducting the surgery! Remember, it's not foolproof, it only
+      changes your name and voice!
+  - rscadd: You can obtain the disk containing the afromentioned surgery. as a role-restricted
+      item to doctors and roboticists for 1TC, as a rare maint loot and BEPIS technode
+      reward
+  Thunder12345:
+  - bugfix: Metalgen can no longer be used to transmute indestructible turfs.
+  Timberpoes:
+  - bugfix: Centcom now rejects contraband that somehow makes it way onto the cargo
+      shuttle mid-transit and returns it.
+  Vincent983:
+  - image: the security records suspected status is now teal instead of orange
+  carlarctg:
+  - refactor: Heavily refactored mirrors to be less ass cancer 1998 code. Player facing
+      changes are that mirrors now use a radial menu, women can get beards in magic
+      mirrors, made the magic mirror 'change sex' option Woke (it supports the 4 official
+      genders and physique as well)
+  - bugfix: Fixed Pride Mirror teleporting you into the space on the first use. Now
+      it waits until you officially cancel and say 'I am Done' so you can customize
+      yourself to your liking.
+  jlsnow301:
+  - rscadd: Netpods and quantum servers now have more examination info
+  - bugfix: You no longer lose antag status if you receive it in the vdom.
+  - bugfix: Beach bar shouldn't have visible atmos piping anymore.
+  - bugfix: Adds more lighting to the vaporwave vdom level.
+  - balance: Buffed vdom megafauna health to compensate for new ability disks.
+  mc-oofert:
+  - bugfix: posibrains can be inserted again
+  san7890:
+  - bugfix: The custom error message for when there is only one map to vote for should
+      pop up in all cases rather than just a select few.
+  tattle:
+  - qol: Basic animals now make sounds for audible emotes
+  - sound: Added new sound effects for chicks, chickens, crabs, and insects
+  xPokee:
+  - image: adds a frog holoform for pAIs
+2023-09-27:
+  Helg2:
+  - bugfix: '[Tramstation] Mass Driver in chapel now has tiny fan so you don''t space
+      yourself.'
+  Jacquerel:
+  - bugfix: Blob spores will respond to rallies more reliably (it won't runtime every
+      time they try and pathfind).
+  - bugfix: Blobbernaut pain animation overlays should align with the direction the
+      mob is facing instead of always facing South
+  - refactor: Blob spores, zombies, and blobbernauts now all use the basic mob framework.
+      They should work the same, but please report any issues.
+  Sealed101:
+  - bugfix: fixed Strong Stone ruin generation
+  Vekter:
+  - rscadd: Added a holodeck to Birdshot Station. It can be reached via the Crew Facilities
+      hallway.
+  Watermelon914:
+  - bugfix: Fixed job configs not being loaded properly.
+  admeeer:
+  - rscadd: Added a candle box crate for all your candle needs!
