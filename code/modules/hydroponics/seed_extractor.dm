@@ -207,9 +207,8 @@
 		seed_data["mutatelist"] = list()
 		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
 			seed_data["mutatelist"] += initial(mutant.plantname)
-		var/obj/item/food/grown/product_path = to_add.product
-		if(product_path)
-			var/obj/item/food/grown/product = new product_path
+		if(to_add.product)
+			var/obj/item/food/grown/product = new to_add.product
 			var/datum/reagent/product_distill_reagent = product.distill_reagent
 			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
 			var/datum/reagent/product_juice_typepath = product.juice_typepath
