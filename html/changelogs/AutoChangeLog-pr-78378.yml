@@ -1,0 +1,11 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you can now deconstruct exodrone scanner arrays"
+  - bugfix: "the tree in space exodrone adventure no longer softlocks you"
+  - qol: "the exodrone launchers now tell you on examine how to remove their fuel canister if you somehow needed to do that"
+  - balance: "exodrone wide scans are now capped at 10 minutes"
+  - balance: "exodrone travel times are 18% faster"
+  - balance: "you can now upgrade scanner arrays for faster wide scan"
+  - balance: "exodrone point scan and deep scan are faster"
+  - spellcheck: "fixes several typos related to exodrones and gives scanner control console a description"
