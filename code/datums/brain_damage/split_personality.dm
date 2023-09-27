@@ -252,7 +252,6 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
-	to_chat(owner, span_warning("You black out!"))
 	RegisterSignal(owner, COMSIG_CARBON_SPLASHED, PROC_REF(on_splashed))
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
@@ -262,7 +261,7 @@
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER
 	if(prob(20))//we don't want every single splash to wake them up now do we
-		Destroy()
+		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
@@ -270,17 +269,12 @@
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
-		Destroy()
+		qdel(src)
 		return
 	if(duration_in_seconds <= 0)
-		Destroy()
+		qdel(src)
 		return
 	duration_in_seconds -= seconds_per_tick
-
-/datum/brain_trauma/severe/split_personality/blackout/Destroy()
-	. = ..()
-	return
-
 
 /mob/living/split_personality/blackout
 	name = "blacked-out drunkard"
@@ -291,7 +285,7 @@
 	if(!. || !client)
 		return FALSE
 	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
-	to_chat(src, span_boldwarning("<b>Do not commit suicide or put the body in danger, you have a minor liscense to grief just like a clown, do not kill anyone or create a situation leading to the body being in danger or in harm ways. While you're drunk, you're not suicidal. </b>"))
+	to_chat(src, span_boldwarning("Do not commit suicide or put the body in danger, you have a minor liscense to grief just like a clown, do not kill anyone or create a situation leading to the body being in danger or in harm ways. While you're drunk, you're not suicidal."))
 
 #undef OWNER
 #undef STRANGER

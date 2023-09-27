@@ -195,12 +195,12 @@
 		owner.adjustToxLoss(2)
 
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
-	var/mob/living/carbon/drunkyard = owner
-	if(drunkyard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+	var/mob/living/carbon/drunkard = owner
+	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
 		drunk_value -= 50
 		return
-	else if(drunkyard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
-		to_chat(owner, span_warning("You stumbled while walking, next time don't walk and drink 4 head!"))
+	else if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
+		to_chat(owner, span_warning("You stumbled and fall over!"))
 		owner.slip(1 SECONDS)
 	else
 		owner.Sleeping(90 SECONDS)
