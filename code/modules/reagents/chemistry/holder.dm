@@ -316,7 +316,7 @@
 /// Fuck this one reagent
 /datum/reagents/proc/del_reagent(target_reagent_typepath)
 	if(!ispath(target_reagent_typepath, /datum/reagent))
-		stack_trace("invalid reagent path passed to del reagent [reagent_type]")
+		stack_trace("invalid reagent path passed to del reagent [target_reagent_typepath]")
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -338,7 +338,7 @@
 /// Turn one reagent into another, preserving volume, temp, purity, ph
 /datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath, multiplier = 1, include_source_subtypes = FALSE)
 	if(!ispath(source_reagent_typepath, /datum/reagent))
-		stack_trace("invalid reagent path passed to convert reagent [reagent_type]")
+		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
 		return FALSE
 
 	var/reagent_amount
@@ -347,8 +347,9 @@
 	if(include_source_subtypes)
 		reagent_ph = ph
 		var/weighted_purity
+		var/list/reagent_type_list = typecacheof(source_reagent_typepath)
 		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(reagent.type in typecacheof(source_reagent_typepath))
+			if(reagent.type in reagent_type_list)
 				weighted_purity += reagent.volume * reagent.purity
 				reagent_amount += reagent.volume
 				remove_reagent(reagent.type, reagent.volume)
