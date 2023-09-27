@@ -60,7 +60,7 @@
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isliving(avatar))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	pod.avatar_ref = WEAKREF(parent)
