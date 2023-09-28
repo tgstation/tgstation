@@ -779,7 +779,7 @@
 			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
 				return
 
-		if(RESPAWN_FLAG_DISABLED)
+		if(RESPAWN_FLAG_FREE)
 			pass() // Normal respawn
 
 		if(RESPAWN_FLAG_DISABLED)
