@@ -1,0 +1,4 @@
+author: "Vincent983"
+delete-after: True
+changes:
+  - bugfix: "the parole status and discharged status are now green and blue respectively in the security record interface"
