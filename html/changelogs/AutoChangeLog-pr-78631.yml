@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixes the missing grinder in Birdshot's Virology department"

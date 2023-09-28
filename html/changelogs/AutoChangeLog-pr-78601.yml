@@ -1,0 +1,4 @@
+author: "yorii"
+delete-after: True
+changes:
+  - qol: "allowed names to start with a number if AI/Borg"
