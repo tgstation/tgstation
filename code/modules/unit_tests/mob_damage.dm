@@ -12,9 +12,9 @@
 	dummy.maxHealth = 200 // tank mode
 
 	/* The sanity tests: here we make sure that:
-	 1) That damage procs are returning the expected values. They should be returning the actual amount of damage taken/healed.
-	    (Negative values mean damage was taken, positive mean healing)
-	 2) Verifying that the damage has been accurately applied to the mob afterwards. */
+	1) That damage procs are returning the expected values. They should be returning the actual amount of damage taken/healed.
+		(Negative values mean damage was taken, positive mean healing)
+	2) Verifying that the damage has been accurately applied to the mob afterwards. */
 
 	test_sanity_simple(dummy)
 	test_sanity_complex(dummy)
