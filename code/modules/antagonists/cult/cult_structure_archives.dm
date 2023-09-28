@@ -2,6 +2,7 @@
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
 #define VEIL_WALKER "Veil Walker Set"
+#define CRIMSON_FOCUS "Crimson Focus"
 
 // Cult archives. Gives out utility items.
 /obj/structure/destructible/cult/item_dispenser/archives
@@ -51,3 +52,4 @@
 #undef CULT_BLINDFOLD
 #undef CURSE_ORB
 #undef VEIL_WALKER
+#undef CRIMSON_FOCUS

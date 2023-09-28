@@ -2,6 +2,7 @@
 #define ELDRITCH_WHETSTONE "Eldritch Whetstone"
 #define CONSTRUCT_SHELL "Construct Shell"
 #define UNHOLY_WATER "Flask of Unholy Water"
+#define PROTEON_ORB "Portal Summoning Orb"
 
 // Cult altar. Gives out consumable items.
 /obj/structure/destructible/cult/item_dispenser/altar
@@ -31,11 +32,11 @@
 	options = altar_items + extra_options()
 
 /obj/structure/destructible/cult/item_dispenser/altar/extra_options()
-	if(cult_team?.unlocked_heretic_items[HARVESTER_SHELL_UNLOCKED] == FALSE)
+	if(cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED] == FALSE)
 		return
-	return list(HARVESTER_SHELL = list(
-			PREVIEW_IMAGE = image(icon = 'icons/mob/shells.dmi', icon_state = "construct_cult"),
-			OUTPUT_ITEMS = list(/obj/structure/constructshell/harvester),
+	return list(PROTEON_ORB = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "summoning_orb"),
+			OUTPUT_ITEMS = list(/obj/item/proteon_orb),
 			),
 	)
 
@@ -45,3 +46,4 @@
 #undef ELDRITCH_WHETSTONE
 #undef CONSTRUCT_SHELL
 #undef UNHOLY_WATER
+#undef PROTEON_ORB

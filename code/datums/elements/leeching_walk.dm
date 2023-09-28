@@ -6,12 +6,12 @@
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(target, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/element/leeching_walk/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].

@@ -30,13 +30,21 @@
 	src.ban_type = ban_type
 	src.assumed_control_message = assumed_control_message || "You are [parent]!"
 	src.extra_control_checks = extra_control_checks
-	src.after_assumed_control= after_assumed_control
+	src.after_assumed_control = after_assumed_control
 
 	var/mob/mob_parent = parent
 	LAZYADD(GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")], mob_parent)
 
 	if (poll_candidates)
 		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), role_name || "[parent]", poll_length, poll_ignore_key)
+	else
+		notify_ghosts(
+			"A [mob_parent] has become ghost-controllable in \the [get_area(mob_parent)].",
+			source = mob_parent,
+			action = NOTIFY_ATTACK,
+			flashwindow = FALSE,
+			header = "Sentient [mob_parent] Created",
+		)
 
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()

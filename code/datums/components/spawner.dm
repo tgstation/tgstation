@@ -11,10 +11,12 @@
 	var/list/faction
 	/// List of weak references to things we have already created
 	var/list/spawned_things = list()
+	/// Callback to a proc that is called when a mob is spawned. Primarily used for sentient spawners.
+	var/datum/callback/spawn_callback
 	/// Time until we next spawn
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, faction = list(FACTION_MINING), spawn_text = null)
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -22,6 +24,7 @@
 	src.faction = faction
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
+	src.spawn_callback = spawn_callback
 
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
@@ -63,6 +66,7 @@
 
 	SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, created)
 	RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
+	spawn_callback?.Invoke(created)
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()

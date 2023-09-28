@@ -131,7 +131,7 @@
 	toolspeed = 1.3
 
 // Path of Nar'Sie's blade
-// What!? This blade is given to cultists as a forge item when they sacrifice a heretic.
+// What!? This blade is given to cultists as an altar item when they sacrifice a heretic.
 // It is also given to the heretic themself if they sacrifice a cultist.
 /obj/item/melee/sickly_blade/cursed
 	name = "\improper cursed blade"
@@ -165,7 +165,7 @@
 		if(!affecting)
 			return
 		affecting.receive_damage(burn = 5)
-		playsound(source, SFX_SEAR, 25, TRUE)
+		playsound(src, SFX_SEAR, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
@@ -179,3 +179,19 @@
 		after_use_message = "The Mansus hears your call..."
 	else if(IS_CULTIST(user))
 		after_use_message = "Nar'Sie hears your call..."
+	else
+		after_use_message = "As you break [src] over your knee, you appear in a different room!"
+
+/obj/item/melee/sickly_blade/cursed/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag)
+		return
+
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	if(!heretic_datum)
+		return
+
+	// Can only carve runes with it if off combat mode.
+	if(isopenturf(target) && (user.combat_mode == FALSE))
+		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
+		return TRUE

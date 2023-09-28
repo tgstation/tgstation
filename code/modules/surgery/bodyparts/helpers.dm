@@ -47,6 +47,14 @@
 		which_hand = BODY_ZONE_PRECISE_R_HAND
 	return get_bodypart(check_zone(which_hand))
 
+/mob/proc/get_inactive_hand()
+	return FALSE
+
+/mob/living/carbon/get_inactive_hand()
+	var/which_hand = BODY_ZONE_PRECISE_R_HAND
+	if(!(active_hand_index % RIGHT_HANDS))
+		which_hand = BODY_ZONE_PRECISE_L_HAND
+	return get_bodypart(check_zone(which_hand))
 
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE

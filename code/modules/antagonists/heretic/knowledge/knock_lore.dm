@@ -63,34 +63,45 @@
 
 /datum/heretic_knowledge/knock_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
-	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	target.knock_heretic_act()
+
+/datum/heretic_knowledge/knock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+	SIGNAL_HANDLER
+	target.knock_heretic_act()
+	target.balloon_alert_to_viewers(source, "unlocked", 2) // stealthy
+
+/atom/proc/knock_heretic_act()
+	var/turf/target_turf = get_turf(src)
+	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src)
+	playsound(target_turf, 'sound/magic/hereticknock.ogg', 100, TRUE, -1)
+	return COMPONENT_USE_HAND
+
+/obj/vehicle/sealed/mecha/knock_heretic_act()
+	dna_lock = null
+	for(var/mob/living/occupant as anything in occupants)
+		if(isAI(occupant))
+			continue
+		mob_exit(occupant, randomstep = TRUE)
+	..()
+
+/obj/machinery/door/airlock/knock_heretic_act()
+	unbolt()
+	..()
+
+/obj/machinery/computer/knock_heretic_act()
+	authenticated = TRUE
+	..()
+
+/mob/living/carbon/human/knock_heretic_act()
+	var/obj/item/clothing/under/suit = get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
-/datum/heretic_knowledge/knock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
-	SIGNAL_HANDLER
-	
-	if(ismecha(target))
-		var/obj/vehicle/sealed/mecha/mecha = target
-		mecha.dna_lock = null
-		for(var/mob/living/occupant as anything in mecha.occupants)
-			if(isAI(occupant))
-				continue
-			mecha.mob_exit(occupant, randomstep = TRUE)
-	else if(istype(target,/obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/door = target
-		door.unbolt()
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/computer = target
-		computer.authenticated = TRUE
-		computer.balloon_alert(source, "unlocked")
-
-	var/turf/target_turf = get_turf(target)
-	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
-	playsound(target, 'sound/magic/hereticknock.ogg', 100, TRUE, -1)
-	
-	return COMPONENT_USE_HAND
+/mob/living/silicon/robot/knock_heretic_act()
+	locked = FALSE
+	opened = TRUE
+	update_icons()
 
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"

@@ -128,8 +128,13 @@
 		INVOKE_ASYNC(src, PROC_REF(do_destroy_girder), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
+
 	if(istype(target, /obj/structure/destructible/cult))
 		INVOKE_ASYNC(src, PROC_REF(do_unanchor_structure), target, cultist)
+		return COMPONENT_NO_AFTERATTACK
+
+	if(istype(target, /obj/structure/spawner/sentient/proteon_spawner))
+		INVOKE_ASYNC(src, PROC_REF(buff_spawner), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 /*
@@ -193,6 +198,17 @@
 	playsound(cult_structure, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 	cult_structure.set_anchored(!cult_structure.anchored)
 	to_chat(cultist, span_notice("You [cult_structure.anchored ? "":"un"]secure \the [cult_structure] [cult_structure.anchored ? "to":"from"] the floor."))
+
+/**
+ * Upgrades the proteon spawner, increasing the maximum from 2 to 4, and halving the cooldown to 30 seconds.
+ * However, it also makes it lose integrity quickly, breaking apart in roughly 2.5 minutes, plus or minus artificer healing and battering.
+ *
+ * proteon_portal - the portal being enhanced.
+ * cultist - the mob doing the enhancing.
+ */
+/datum/component/cult_ritual_item/proc/buff_spawner(obj/structure/spawner/sentient/proteon_spawner/hole, mob/living/cultist)
+	playsound(hole, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = TRUE)
+	INVOKE_ASYNC(hole, TYPE_PROC_REF(/obj/structure/spawner/sentient/proteon_spawner, buff_spawner), cultist)
 
 /*
  * Removes the targeted rune. If the rune is important, asks for confirmation and logs it.

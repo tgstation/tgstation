@@ -99,18 +99,18 @@
 	/// An associated list of options this structure can make. See setup_options() for format.
 	var/list/options
 	/// The dispenser will create this item and then delete itself if it is mansus grasped or rust converted.
-	var/mansus_conversion_path = /obj/item/skub
+	var/obj/mansus_conversion_path = /obj/item/skub
 
 /obj/structure/destructible/cult/item_dispenser/Initialize(mapload)
 	. = ..()
 	setup_options()
 
 /obj/structure/destructible/cult/item_dispenser/rust_heretic_act()
-	. = ..()
 	visible_message(span_notice("[src] crumbles to dust. In its midst, you spot \a [initial(mansus_conversion_path.name)]."))
 	var/turf/turfy = get_turf(src)
 	new mansus_conversion_path(turfy)
 	turfy.rust_heretic_act()
+	. = ..()
 
 /obj/structure/destructible/cult/item_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

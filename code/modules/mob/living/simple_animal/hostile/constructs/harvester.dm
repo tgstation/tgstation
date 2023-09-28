@@ -37,7 +37,7 @@
 	if(thing == loc)
 		return
 	// We force move through anything in passable_atoms or that passes a snowflake check.
-	if(!is_type_in_list(thing, passable_atoms) && !snowflake_check())
+	if(!is_type_in_list(thing, passable_atoms) && !snowflake_check(thing))
 		return
 	var/atom/movable/stored_pulling = pulling
 
@@ -188,7 +188,7 @@
 		/datum/action/cooldown/spell/aoe/rust_conversion,
 		/datum/action/cooldown/spell/pointed/rust_construction,
 	)
-	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend foes apart on each attack. Follow your Master's orders!<B>"
+	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
 	theme = THEME_HERETIC
 	passable_atoms = list()
 

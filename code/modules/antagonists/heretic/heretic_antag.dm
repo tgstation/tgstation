@@ -202,9 +202,13 @@
 		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
 	return ..()
 
+#define TRAIT_MANSUS_TOUCHED "gingus4"
+
 /datum/antagonist/heretic/on_gain()
 	if(give_objectives)
 		forge_primary_objectives()
+
+	ADD_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
@@ -219,6 +223,8 @@
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current, src)
+
+	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
 
 	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
@@ -401,7 +407,7 @@
 	//evil_in_a_jar.trapped_heretic_soul.mind?.antag_datums |= source.mind?.antag_datums
 	source.mind.transfer_to(evil_in_a_jar.trapped_heretic_soul)
 	evil_in_a_jar.heretic_path = heretic_path
-	evil_in_a_jar.activate_path_abilities()
+	//evil_in_a_jar.activate_path_abilities()
 
 	evil_in_a_jar.trapped_heretic_soul.faction = source.faction.Copy()
 	evil_in_a_jar.trapped_heretic_soul.copy_languages(source, LANGUAGE_MIND)
@@ -612,7 +618,7 @@
 	if(!admin.client?.holder)
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
-	
+
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
 	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))

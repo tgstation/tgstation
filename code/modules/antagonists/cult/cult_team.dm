@@ -23,7 +23,7 @@
 	var/list/unlocked_heretic_items = list(
 		CURSED_BLADE_UNLOCKED = FALSE,
 		CRIMSON_FOCUS_UNLOCKED = FALSE,
-		HARVESTER_SHELL_UNLOCKED = FALSE,
+		PROTEON_ORB_UNLOCKED = FALSE,
 	)
 
 	///Has narsie been summoned yet?

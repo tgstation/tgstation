@@ -2,6 +2,7 @@
 #define NARSIE_ARMOR "Nar'Sien Hardened Armor"
 #define FLAGELLANT_ARMOR "Flagellant's Robe"
 #define ELDRITCH_SWORD "Eldritch Longsword"
+#define CURSED_BLADE "Cursed Ritual Blade"
 
 // Cult forge. Gives out combat weapons.
 /obj/structure/destructible/cult/item_dispenser/forge
@@ -53,3 +54,4 @@
 #undef NARSIE_ARMOR
 #undef FLAGELLANT_ARMOR
 #undef ELDRITCH_SWORD
+#undef CURSED_BLADE

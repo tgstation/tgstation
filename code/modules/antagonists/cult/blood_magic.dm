@@ -48,7 +48,7 @@
 		limit = MAX_BLOODCHARGE
 	var/empowering_channel_time = 10 SECONDS - (rune ? 6 SECONDS : 0 SECONDS)
 	var/list/signal_return_list = list("limit_data" = limit, "rune_data" = rune, "speed_data" = empowering_channel_time)
-	signal_return_list = SEND_SIGNAL(owner, COMSIG_CULT_EMPOWER, signal_return_list)
+	SEND_SIGNAL(owner, COMSIG_CULT_EMPOWER, signal_return_list)
 	limit = signal_return_list["limit_data"]
 	empowering_channel_time = signal_return_list["speed_data"]
 	if(length(spells) >= limit)
