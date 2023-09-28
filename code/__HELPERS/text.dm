@@ -191,7 +191,7 @@
 
 			// 0  .. 9
 			if(48 to 57) //Numbers
-				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
+				if(!allow_numbers) //allow name to start with number if AI/Borg
 					if(strict)
 						return
 					continue

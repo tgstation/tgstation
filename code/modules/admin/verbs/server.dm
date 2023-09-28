@@ -185,16 +185,42 @@
 	set category = "Server"
 	set desc = "Respawn basically"
 	set name = "Toggle Respawn"
-	var/new_nores = !CONFIG_GET(flag/norespawn)
-	CONFIG_SET(flag/norespawn, new_nores)
-	if (!new_nores)
-		to_chat(world, "<B>You may now respawn.</B>", confidential = TRUE)
-	else
-		to_chat(world, "<B>You may no longer respawn :(</B>", confidential = TRUE)
-	message_admins(span_adminnotice("[key_name_admin(usr)] toggled respawn to [!new_nores ? "On" : "Off"]."))
-	log_admin("[key_name(usr)] toggled respawn to [!new_nores ? "On" : "Off"].")
+
+	var/respawn_state = CONFIG_GET(flag/allow_respawn)
+	var/new_state = -1
+	var/new_state_text = ""
+	switch(respawn_state)
+		if(RESPAWN_FLAG_DISABLED) // respawn currently disabled
+			new_state = RESPAWN_FLAG_FREE
+			new_state_text = "Enabled"
+			to_chat(world, span_bold("You may now respawn."), confidential = TRUE)
+
+		if(RESPAWN_FLAG_FREE) // respawn currently enabled
+			new_state = RESPAWN_FLAG_NEW_CHARACTER
+			new_state_text = "Enabled, Different Slot"
+			to_chat(world, span_bold("You may now respawn as a different character."), confidential = TRUE)
+
+		if(RESPAWN_FLAG_NEW_CHARACTER) // respawn currently enabled for different slot characters only
+			new_state = RESPAWN_FLAG_DISABLED
+			new_state_text = "Disabled"
+			to_chat(world, span_bold("You may no longer respawn :("), confidential = TRUE)
+
+		else
+			WARNING("Invalid respawn state in config: [respawn_state]")
+
+	if(new_state == -1)
+		to_chat(usr, span_warning("The config for respawn is set incorrectly, please complain to your nearest server host (or fix it yourself). \
+			In the meanwhile respawn has been set to \"Off\"."))
+		new_state = RESPAWN_FLAG_DISABLED
+		new_state_text = "Disabled"
+
+	CONFIG_SET(flag/allow_respawn, new_state)
+
+	message_admins(span_adminnotice("[key_name_admin(usr)] toggled respawn to \"[new_state_text]\"."))
+	log_admin("[key_name(usr)] toggled respawn to \"[new_state_text]\".")
+
 	world.update_status()
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[!new_nores ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[new_state_text]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
 	set category = "Server"

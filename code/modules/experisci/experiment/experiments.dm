@@ -44,7 +44,7 @@
 		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/pet/dog/corgi,
-		/mob/living/simple_animal/hostile/retaliate/snake,
+		/mob/living/basic/snake,
 		/mob/living/simple_animal/pet/cat,
 	)
 
@@ -226,7 +226,7 @@
 		/obj/machinery/biogenerator = 3,
 		/obj/machinery/gibber = 3,
 		/obj/machinery/chem_master = 3,
-		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/cryo_cell = 3,
 		/obj/machinery/harvester = 5,
 		/obj/machinery/quantumpad = 5
 	)
