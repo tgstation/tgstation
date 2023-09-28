@@ -93,13 +93,11 @@
 	UnregisterSignal(old_body, COMSIG_LIVING_STATUS_UNCONSCIOUS)
 	UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
 
-	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
-	if(isnull(hosting_netpod))
-		return
-
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_CROWBAR_ALERT)
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_SEVER_AVATAR)
+	var/obj/machinery/netpod/hosting_netpod = broken_netpod || netpod_ref?.resolve()
+	if(hosting_netpod)
+		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_CROWBAR_ALERT)
+		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
+		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
@@ -110,8 +108,7 @@
 		UnregisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED)
 
 	return_to_old_body()
-
-	hosting_netpod.disconnect_occupant(forced)
+	hosting_netpod?.disconnect_occupant(forced)
 	qdel(src)
 
 /// Triggers whenever the server gets a loot crate pushed to goal area
