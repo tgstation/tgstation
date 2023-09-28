@@ -23,7 +23,6 @@
 
 	uses--
 
-	balloon_alert(carbon_imp_in, "bindings released!")
 	carbon_imp_in.uncuff()
 	if(!uses)
 		addtimer(CALLBACK(carbon_imp_in, TYPE_PROC_REF(/atom, balloon_alert), carbon_imp_in, "implant degraded!"), 1 SECONDS)
@@ -31,16 +30,16 @@
 
 /obj/item/implant/freedom/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Freedom Beacon<BR>
-<b>Life:</b> Optimum 4 uses<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-mechanisms. These signals will release any bindings on both the arms and legs.<BR>
-<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed "too complex" to release from.
-"}
+		<b>Implant Specifications:</b><BR>
+		<b>Name:</b> Freedom Beacon<BR>
+		<b>Life:</b> Optimum [initial(uses)] uses<BR>
+		<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+		<HR>
+		<b>Implant Details:</b> <BR>
+		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
+		mechanisms. These signals will release any bindings on both the arms and legs.<BR>
+		<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed "too complex" to release from.
+	"}
 	return dat
 
 /obj/item/implanter/freedom
