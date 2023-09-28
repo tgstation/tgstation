@@ -138,12 +138,6 @@
 "jh" = (
 /turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
-"jt" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/turf/closed/mineral/random/jungle/space_safe,
-/area/shuttle/pirate)
 "jx" = (
 /turf/closed/mineral/random/jungle/space_safe,
 /area/shuttle/pirate)
@@ -1200,7 +1194,7 @@ jx
 "}
 (10,1,1) = {"
 lt
-jt
+jx
 Od
 DT
 ZF
