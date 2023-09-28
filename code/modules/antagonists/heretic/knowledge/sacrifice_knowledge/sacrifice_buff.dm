@@ -27,7 +27,7 @@
 
 /datum/status_effect/unholy_determination/tick(seconds_between_ticks)
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
-	var/healing_amount = (1 + (2 - owner.usable_legs)) / 2.5
+	var/healing_amount = (0.4 + (0.8 - owner.usable_legs))
 
 	// In softcrit you're, strong enough to stay up.
 	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
