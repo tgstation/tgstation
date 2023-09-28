@@ -800,7 +800,7 @@
 	if(!iscarbon(kronkaine_receptacle))
 		return
 	var/mob/living/carbon/druggo = kronkaine_receptacle
-	if(druggo.adjustStaminaLoss(-4 * trans_volume, updating_health = FALSE))
+	if(druggo.adjustStaminaLoss(-4 * trans_volume, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 

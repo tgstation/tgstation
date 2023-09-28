@@ -101,7 +101,7 @@
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -587,7 +587,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.set_heartattack(TRUE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH

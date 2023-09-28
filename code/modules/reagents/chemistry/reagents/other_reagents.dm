@@ -2791,7 +2791,7 @@
 	if(IS_HERETIC(drinker))
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_health = FALSE)
+		drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
 		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)

@@ -68,7 +68,7 @@
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.heal_bodypart_damage(brute = 5 * REM * seconds_per_tick, 5 * REM * seconds_per_tick, burn = 0, updating_health = FALSE, required_bodytype = affected_bodytype)
+	affected_mob.heal_bodypart_damage(brute = 5 * REM * seconds_per_tick, burn = 5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
 	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS) // there is no need to return UPDATE_MOB_HEALTH because this proc calls updatehealth()
@@ -159,8 +159,8 @@
 	need_mob_update = affected_mob.adjustOxyLoss(-3 * power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update += affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjustFireLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_bodytype = affected_bodytype) //heals TOXINLOVERs
-	need_mob_update += affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
+	need_mob_update += affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotypee)
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(power * REM * seconds_per_tick)
@@ -213,7 +213,7 @@
 
 		var/need_mob_update
 		need_mob_update = affected_mob.adjustOxyLoss(-2 * power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjustFireLoss(-1.5 * power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_bodytype = affected_biotype)
 		need_mob_update += affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -567,7 +567,7 @@
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.getBruteLoss()) //It only makes existing bruises worse
-		if(affected_mob.adjustBruteLoss(4.5 * REM * seconds_per_tick, updating_health = FALSE, BODYTYPE_ORGANIC)) // it's going to be healing either 4 or 0.5
+		if(affected_mob.adjustBruteLoss(4.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodtype = BODYTYPE_ORGANIC)) // it's going to be healing either 4 or 0.5
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/salbutamol

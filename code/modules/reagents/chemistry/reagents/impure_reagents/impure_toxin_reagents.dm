@@ -30,7 +30,7 @@
 /datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags))
+	if(eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 //Chloral Hydrate - Impure Version
