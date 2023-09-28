@@ -1,4 +1,4 @@
-/// A nasty little robotic bug that dusts people on attack. Jeepers.
+/// A nasty little robotic bug that dusts people on attack. Jeepers. This should be a very, very, very rare spawn.
 /mob/living/basic/supermatter_spider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
@@ -10,23 +10,19 @@
 
 	gender = NEUTER
 	mob_biotypes = MOB_BUG|MOB_ROBOTIC
-
 	speak_emote = list("vibrates")
-	emote_see = list("vibrates")
-	emote_taunt = list("vibrates")
-	taunt_chance = 40
+
 
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/effects/supermatter.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	footstep_type = FOOTSTEP_MOB_CLAW
 
 	maxHealth = 10
 	health = 10
-	minbodytemp = TCMB
-	maxbodytemp = T0C + 1250
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 1250
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	death_message = "falls to the ground, its shard dulling to a miserable grey!"
 
 	faction = list(FACTION_HOSTILE)
@@ -44,6 +40,10 @@
 /mob/living/basic/supermatter_spider/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/swarming)
+
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
 
 /// Proc that we call on attacking something to dust 'em.
@@ -69,7 +69,7 @@
 /// Simple proc that plays the supermatter dusting sound and sends a visible message.
 /mob/living/basic/supermatter_spider/proc/dust_feedback(atom/target)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
-	visible_message(span_danger("[src] knocks into [target], turning it to dust in a brilliant flash of light!"))
+	visible_message(span_danger("[src] knocks into [target], turning [target.p_them()] to dust in a brilliant flash of light!"))
 
 /mob/living/basic/supermatter_spider/overcharged
 	name = "overcharged supermatter spider"
@@ -92,5 +92,11 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/random_speech/supermatter_spider,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+/datum/ai_planning_subtree/random_speech/supermatter_spider
+	speech_chance = 7
+	emote_hear = list("clinks", "clanks")
+	emote_see = list("vibrates")
