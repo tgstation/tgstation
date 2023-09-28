@@ -22535,6 +22535,16 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/storage/public)
+"lCu" = (
+/obj/machinery/light/neon_lining{
+	icon_state = "pink2_1"
+	},
+/obj/machinery/light/neon_lining{
+	dir = 8;
+	icon_state = "pink2_1"
+	},
+/turf/open/ballpit,
+/area/station/security/checkpoint/customs)
 "lCz" = (
 /obj/structure/sign/departments/chemistry/pharmacy,
 /obj/machinery/vending/drugs,
@@ -82655,7 +82665,7 @@ vQL
 jBo
 jBo
 jBo
-axu
+lCu
 jMN
 gPk
 ydb
