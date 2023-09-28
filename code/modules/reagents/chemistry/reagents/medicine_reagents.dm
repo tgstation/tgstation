@@ -213,9 +213,9 @@
 
 		var/need_mob_update
 		need_mob_update = affected_mob.adjustOxyLoss(-2 * power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjustFireLoss(-1.5 * power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_bodytype = affected_biotype)
+		need_mob_update += affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
