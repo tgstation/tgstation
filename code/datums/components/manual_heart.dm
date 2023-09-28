@@ -48,6 +48,7 @@
 /datum/component/manual_heart/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_removed_organ))
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
+	RegisterSignal(parent, COMSIG_HEART_MANUAL_PULSE, PROC_REF(on_pump))
 	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD)), PROC_REF(pause))
 	RegisterSignals(parent, list(COMSIG_LIVING_REVIVE, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)), PROC_REF(restart))
 
@@ -63,7 +64,7 @@
 	to_chat(parent, span_userdanger("Your heart no longer beats automatically! You have to pump it manually - otherwise you'll die!"))
 
 /datum/component/manual_heart/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)))
+	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_HEART_MANUAL_PULSE, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)))
 
 	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
 	var/mob/living/carbon/carbon_parent = parent
@@ -82,6 +83,9 @@
 /datum/component/manual_heart/proc/pause()
 	SIGNAL_HANDLER
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
+	var/mob/living/carbon/carbon_parent = parent
+	if(istype(carbon_parent))
+		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
 	STOP_PROCESSING(SSdcs, src)
 
 /// Worker proc that checks logic for if a pump can happen, and applies effects from doing so
@@ -128,6 +132,9 @@
 		return
 	COOLDOWN_START(src, heart_timer, pump_delay)
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
+	var/mob/living/carbon/carbon_parent = parent
+	if(istype(carbon_parent))
+		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
 	START_PROCESSING(SSdcs, src)
 
 ///If the heart is removed, stop processing.
@@ -157,10 +164,7 @@
 /datum/action/cooldown/manual_heart/Activate(atom/atom_target)
 	. = ..()
 
-	var/datum/component/manual_heart/heart = target
-	if(!istype(heart))
-		CRASH("Manual heart pump action created without corresponding component!")
-	heart.on_pump(owner)
+	SEND_SIGNAL(owner, COMSIG_HEART_MANUAL_PULSE)
 
 ///The action button is only available when you're a living carbon with blood and a heart.
 /datum/action/cooldown/manual_heart/IsAvailable(feedback = FALSE)
