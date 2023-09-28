@@ -14,10 +14,10 @@
 
 	/// Current screen the user is viewing
 	var/screen = MAIN_VIEW
-	/// The machines located by the computer
-	var/list/machinelist = list()
-	/// the currently selected machine
-	var/obj/machinery/telecomms/SelectedMachine
+	/// Weakrefs of the machines located by the computer
+	var/list/machine_list = list()
+	/// Weakref of the currently selected tcomms machine
+	var/datum/weakref/selected_machine_ref
 	/// The network to probe
 	var/network = "NULL"
 	/// Error message to show
@@ -35,20 +35,26 @@
 	  	// --- Main Menu ---
 		if(MAIN_VIEW)
 			var/list/found_machinery = list()
-			for(var/obj/machinery/telecomms/telecomms in machinelist)
+			for(var/datum/weakref/tcomms_ref in machine_list)
+				var/obj/machinery/telecomms/telecomms = tcomms_ref.resolve()
+				if(!telecomms)
+					machine_list -= tcomms_ref
+					continue
 				found_machinery += list(list("ref" = REF(telecomms), "name" = telecomms.name, "id" = telecomms.id))
 			data["machinery"] = found_machinery
 	  	// --- Viewing Machine ---
 		if(MACHINE_VIEW)
 			// Send selected machinery data
 			var/list/machine_out = list()
-			machine_out["name"] = SelectedMachine.name
-			// Get the linked machinery
-			var/list/linked_machinery = list()
-			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-				linked_machinery += list(list("ref" = REF(T.id), "name" = T.name, "id" = T.id))
-			machine_out["linked_machinery"] = linked_machinery
-			data["machine"] = machine_out
+			var/obj/machinery/telecomms/selected = selected_machine_ref.resolve()
+			if(selected)
+				machine_out["name"] = selected.name
+				// Get the linked machinery
+				var/list/linked_machinery = list()
+				for(var/obj/machinery/telecomms/T in selected.links)
+					linked_machinery += list(list("ref" = REF(T.id), "name" = T.name, "id" = T.id))
+				machine_out["linked_machinery"] = linked_machinery
+				data["machine"] = machine_out
 	return data
 
 /obj/machinery/computer/telecomms/monitor/ui_act(action, params)
@@ -67,7 +73,9 @@
 				error_message = "OPERATION FAILED: NETWORK ID TOO LONG."
 				return TRUE
 
-			if(machinelist.len > 0)
+			list_clear_empty_weakrefs(machine_list)
+
+			if(machine_list.len > 0)
 				error_message = "OPERATION FAILED: CANNOT PROBE WHEN BUFFER FULL."
 				return TRUE
 
@@ -75,26 +83,30 @@
 
 			for(var/obj/machinery/telecomms/T in urange(25, src))
 				if(T.network == network)
-					machinelist.Add(T)
-			if(machinelist.len == 0)
+					machine_list += WEAKREF(T)
+			if(machine_list.len == 0)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN  [network]."
 				return TRUE
-			error_message = "[machinelist.len] ENTITIES LOCATED & BUFFERED";
+			error_message = "[machine_list.len] ENTITIES LOCATED & BUFFERED";
 			return TRUE
 		if("flush_buffer")
-			machinelist = list()
+			machine_list = list()
 			network = ""
 			return TRUE
 		if("view_machine")
-			for(var/obj/machinery/telecomms/T in machinelist)
-				if(T.id == params["id"])
-					SelectedMachine = T
-			if(!SelectedMachine)
+			for(var/datum/weakref/tcomms_ref in machine_list)
+				var/obj/machinery/telecomms/tcomms = tcomms_ref.resolve()
+				if(!tcomms)
+					machine_list -= tcomms_ref
+					continue
+				if(tcomms.id == params["id"])
+					selected_machine_ref = tcomms_ref
+			if(!selected_machine_ref)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE MACHINERY."
 			screen = MACHINE_VIEW
 			return TRUE
 		if("return_home")
-			SelectedMachine = null
+			selected_machine_ref = null
 			screen = MAIN_VIEW
 			return TRUE
 	return TRUE

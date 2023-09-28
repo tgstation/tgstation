@@ -190,7 +190,7 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
 		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
+	contains = list(/mob/living/basic/snake = 3)
 	crate_name = "snake crate"
 
 /datum/supply_pack/critter/amphibians
