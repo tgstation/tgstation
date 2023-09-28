@@ -11004,7 +11004,6 @@
 /obj/item/storage/secure/briefcase,
 /obj/item/crowbar/large/heavy,
 /obj/item/rwd/loaded,
-/obj/structure/cable/industrial,
 /obj/item/construction/plumbing/engineering,
 /obj/machinery/button/door/directional/west{
 	id = "Engineering";
@@ -26327,6 +26326,11 @@
 "nDB" = (
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/upper)
+"nDE" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/structure/cable/industrial,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "nDK" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -90121,11 +90125,11 @@ pDS
 fRu
 dGs
 dGs
-dGs
-dGs
-dGs
-eXv
 eJV
+eJV
+eJV
+nDE
+dGs
 dGs
 eXv
 apz
