@@ -90,11 +90,11 @@
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustCloneLoss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & BRUTELOSS)
-		damage_returned = round(testing_mob.adjustBruteLoss(amount, updating_health = FALSE, forced = forced), 1)
+		damage_returned = round(testing_mob.adjustBruteLoss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustBruteLoss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & FIRELOSS)
-		damage_returned = round(testing_mob.adjustFireLoss(amount, updating_health = FALSE, forced = forced), 1)
+		damage_returned = round(testing_mob.adjustFireLoss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustFireLoss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & OXYLOSS)
