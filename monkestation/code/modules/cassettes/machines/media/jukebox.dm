@@ -132,8 +132,7 @@
 	cut_overlays()
 	icon_state = state_base
 	if(playing)
-		else
-			add_overlay("[state_base]-running")
+		add_overlay("[state_base]-running")
 	if (panel_open)
 		add_overlay("panel_open")
 
