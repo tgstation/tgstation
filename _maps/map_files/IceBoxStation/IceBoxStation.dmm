@@ -33607,7 +33607,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "krx" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -59510,7 +59510,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "slK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

@@ -226,7 +226,7 @@
 		/obj/machinery/biogenerator = 3,
 		/obj/machinery/gibber = 3,
 		/obj/machinery/chem_master = 3,
-		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/cryo_cell = 3,
 		/obj/machinery/harvester = 5,
 		/obj/machinery/quantumpad = 5
 	)
