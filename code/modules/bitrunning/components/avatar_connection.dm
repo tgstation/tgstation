@@ -80,7 +80,7 @@
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
 	return_to_old_body()
-	
+
 	var/obj/machinery/netpod/hosting_netpod = broken_netpod || netpod_ref?.resolve()
 	if(hosting_netpod)
 		hosting_netpod?.disconnect_occupant(forced)
@@ -197,11 +197,6 @@
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
 	var/mob/living/avatar = parent
-
-#ifdef UNIT_TESTS
-	// no minds during test so let's just yeet
-	return
-#endif
 
 	var/mob/dead/observer/ghost = avatar.ghostize()
 	if(isnull(ghost))
