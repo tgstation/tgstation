@@ -65,7 +65,7 @@
 	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
 
-/mob/living/basic/mining/hivelord/RangedAttack(atom/atom_target, modifiers)
+/mob/living/basic/mining/hivelord/click_on_without_item_at_range(atom/atom_target, modifiers)
 	spawn_brood?.Trigger(target = atom_target)
 
 /// Attack worms spawned by the hivelord

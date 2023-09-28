@@ -170,10 +170,10 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 
-/mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
+/mob/living/basic/mining/goliath/click_on_without_item_at_range(atom/target, modifiers)
 	tentacles?.Trigger(target = atom_target)
 
-/mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
+/mob/living/basic/mining/goliath/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour

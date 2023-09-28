@@ -47,7 +47,7 @@
 	QDEL_NULL(beam)
 	return ..()
 
-/mob/living/basic/mining/brimdemon/RangedAttack(atom/target, modifiers)
+/mob/living/basic/mining/brimdemon/click_on_without_item_at_range(atom/target, modifiers)
 	beam.Trigger(target = target)
 
 /mob/living/basic/mining/brimdemon/death(gibbed)
