@@ -302,69 +302,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/cursed //used by wizard events, see the tendril_loot.dm file for the miner one
 	slot_flags = null
 
-/obj/item/wirerod
-	name = "wired rod"
-	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-	icon = 'icons/obj/weapons/spear.dmi'
-	icon_state = "wiredrod"
-	inhand_icon_state = "rods"
-	flags_1 = CONDUCT_1
-	force = 9
-	throwforce = 10
-	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
-	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
-	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
-
-/obj/item/wirerod/Initialize(mapload)
-	. = ..()
-
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/shard = list(
-			SCREENTIP_CONTEXT_LMB = "Craft spear",
-		),
-
-		/obj/item/assembly/igniter = list(
-			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-
-/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/shard))
-		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
-		user.balloon_alert(user, "crafting spear...")
-		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
-			var/obj/item/spear/crafted_spear = new /obj/item/spear()
-
-			remove_item_from_storage(user)
-			if (!user.transferItemToLoc(attacking_item, crafted_spear))
-				return
-			crafted_spear.CheckParts(list(attacking_item))
-			qdel(src)
-
-			user.put_in_hands(crafted_spear)
-			user.balloon_alert(user, "crafted spear")
-		return
-
-	if(isigniter(attacking_item) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
-		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
-		user.balloon_alert(user, "crafting cattleprod...")
-		if(do_after(user, initial(recipe_to_use.time), src))
-			var/obj/item/melee/baton/security/cattleprod/prod = new
-
-			remove_item_from_storage(user)
-
-			qdel(attacking_item)
-			qdel(src)
-
-			user.put_in_hands(prod)
-			user.balloon_alert(user, "crafted cattleprod")
-		return
-	return ..()
-
-
 /obj/item/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
