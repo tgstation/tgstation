@@ -90,6 +90,16 @@
 /obj/structure/flora/lunar_plant/style_2,
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
+"gO" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod/end{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "geodebridge";
+	dir = 4
+	},
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "hM" = (
 /obj/machinery/porta_turret/syndicate/teleport{
 	dir = 4;
@@ -127,6 +137,14 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"iG" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod/end,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "geodebridge";
+	dir = 4
+	},
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "jh" = (
 /turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
@@ -134,14 +152,10 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
+/turf/closed/mineral/random/jungle/space_safe,
 /area/shuttle/pirate)
 "jx" = (
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
+/turf/closed/mineral/random/jungle/space_safe,
 /area/shuttle/pirate)
 "jD" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -150,6 +164,17 @@
 	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain{
 	color = "#4f98ff"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"jH" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/spawner/structure/window/hollow/survival_pod/middle{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -465,7 +490,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "xg" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/dirt/station,
@@ -514,11 +538,6 @@
 "zZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/misc/dirt/station,
-/area/shuttle/pirate)
-"At" = (
-/turf/closed/mineral/random/jungle{
-	baseturfs = null
-	},
 /area/shuttle/pirate)
 "AT" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -865,10 +884,12 @@
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
 "Qg" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/effect/spawner/structure/window/hollow/survival_pod/middle{
+	dir = 4
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "geodebridge"
+	id = "geodebridge";
+	dir = 4
 	},
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
@@ -947,8 +968,7 @@
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/survival_pod/end,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
@@ -963,7 +983,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "UM" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
@@ -973,6 +992,17 @@
 /obj/machinery/microwave,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/misc/dirt/station,
+/area/shuttle/pirate)
+"Wi" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/spawner/structure/window/hollow/survival_pod/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "WR" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -1050,11 +1080,11 @@ mv
 Od
 Pq
 Pq
-At
+jx
 Pq
 Pq
 Pq
-At
+jx
 Pq
 Pq
 Od
@@ -1066,21 +1096,21 @@ lt
 (3,1,1) = {"
 lt
 lt
-At
-At
+jx
+jx
 Od
-Uf
-Uf
-Od
-Uf
-Uf
+Wi
 Uf
 Od
-Uf
+Wi
+jH
 Uf
 Od
-At
-At
+Wi
+Uf
+Od
+jx
+jx
 lt
 lt
 "}
@@ -1407,9 +1437,9 @@ jx
 jx
 Od
 Od
+gO
 Qg
-Qg
-Qg
+iG
 Od
 Od
 Od
