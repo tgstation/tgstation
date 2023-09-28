@@ -16120,14 +16120,6 @@
 "inW" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/radio/headset/heads/hos/alt{
-	name = "\proper the Warden's bowman headset";
-	desc = "The headset of the one in charge of keeping order and protecting the brig. Protects ears from flashbangs.";
-	layer = 2.9
-	},
-/obj/item/storage/belt/utility/full{
-	layer = 2.9
-	},
 /obj/item/flashlight/seclite,
 /obj/item/gun/ballistic/automatic/pistol/paco,
 /obj/item/ammo_box/magazine/m35/rubber{
