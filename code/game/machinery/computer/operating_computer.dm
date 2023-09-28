@@ -25,9 +25,6 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
-
 	RegisterSignal(src, COMSIG_LINKS_TO_OPERATING_COMPUTERS_INITIALIZED, PROC_REF(on_links_to_operating_computers_initialized))
 
 	return INITIALIZE_HINT_LATELOAD
