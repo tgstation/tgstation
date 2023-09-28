@@ -44,7 +44,7 @@
 		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/pet/dog/corgi,
-		/mob/living/simple_animal/hostile/retaliate/snake,
+		/mob/living/basic/snake,
 		/mob/living/simple_animal/pet/cat,
 	)
 
