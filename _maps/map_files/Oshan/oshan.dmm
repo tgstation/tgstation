@@ -2369,6 +2369,12 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
+"blP" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "cargodoor"
+	},
+/turf/open/space/basic,
+/area/station/cargo/warehouse)
 "blR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2924,6 +2930,13 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/window/left/directional/west{
+	dir = 2;
+	name = "Crate Security Door";
+	req_access = list("shipping")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
@@ -3952,8 +3965,7 @@
 /turf/open/floor/pod/dark,
 /area/station/security/warden)
 "bZJ" = (
-/obj/machinery/camera/autoname/directional/west,
-/obj/effect/turf_decal/trimline/brown/filled/line{
+/obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
@@ -5242,6 +5254,7 @@
 	pixel_x = 5;
 	pixel_y = 20
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
 "cLv" = (
@@ -6585,11 +6598,6 @@
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall/r_wall,
 /area/station/security/warden)
-"drs" = (
-/obj/effect/turf_decal/bot,
-/obj/vehicle/ridden/cargo_train,
-/turf/open/floor/iron/dark/textured,
-/area/station/cargo/storage)
 "drz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cassette/adv_cassette_deck,
@@ -6806,6 +6814,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
 "dxd" = (
@@ -8462,7 +8472,7 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "erU" = (
-/obj/structure/window/reinforced/tinted/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "esa" = (
@@ -11781,11 +11791,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/auxiliary)
-"gae" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/cart,
-/turf/open/floor/iron/dark/textured,
-/area/station/cargo/storage)
 "gak" = (
 /obj/structure/chair{
 	dir = 1
@@ -17010,6 +17015,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"iON" = (
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "cargodoor"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/cargo/warehouse)
 "iPh" = (
 /obj/structure/cable,
 /turf/closed/wall,
@@ -20173,11 +20194,10 @@
 "kxu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/maintenance,
-/obj/item/stock_parts/cell,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
+/obj/machinery/cart,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "kxO" = (
@@ -22163,6 +22183,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lwu" = (
@@ -22697,11 +22719,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "lHT" = (
-/obj/effect/turf_decal/trimline/brown/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line{
+/obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/warning{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
@@ -23661,6 +23683,12 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mnJ" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "cargodoor"
+	},
+/turf/open/floor/plating,
+/area/station/cargo/storage)
 "mnO" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
@@ -26453,6 +26481,8 @@
 "nHR" = (
 /obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/item/stock_parts/cell,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "nHZ" = (
@@ -26721,6 +26751,11 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/hop)
+"nOx" = (
+/obj/vehicle/ridden/cargo_train,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured,
+/area/station/cargo/storage)
 "nOV" = (
 /obj/machinery/duct/industrial/waste,
 /obj/structure/disposalpipe/segment{
@@ -27613,15 +27648,15 @@
 "ooa" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor/auto,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
-	name = "Crate Security Door";
-	req_access = list("shipping")
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
+	},
+/obj/machinery/door/window/left/directional/west{
+	dir = 2;
+	name = "Crate Security Door";
+	req_access = list("shipping")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -29742,10 +29777,10 @@
 	},
 /area/station/science/lab)
 "pua" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
+/obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/brown/warning{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
@@ -31881,6 +31916,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/eighties/red,
 /area/station/service/electronic_marketing_den)
+"qxh" = (
+/obj/machinery/cart,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured,
+/area/station/cargo/storage)
 "qxw" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/rack,
@@ -31903,11 +31943,11 @@
 /turf/open/floor/iron/textured,
 /area/station/science/robotics/lab)
 "qxC" = (
-/obj/effect/spawner/structure/window,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "qxF" = (
@@ -32218,18 +32258,6 @@
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/ocean,
 /area/ocean)
-"qIf" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/cargo/warehouse)
-"qIz" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/cargo/sorting)
 "qIB" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
@@ -36630,6 +36658,10 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
+	},
+/obj/vehicle/ridden/cargo_train,
+/obj/machinery/button/door/directional/east{
+	id = "cargodoor"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
@@ -62107,9 +62139,9 @@ afI
 mLC
 hvE
 wCO
-gae
+fKI
 ekq
-gae
+fKI
 gWr
 wRN
 fKI
@@ -62364,14 +62396,14 @@ gVR
 mLC
 fUQ
 vYR
-gae
-fKI
-gae
-nyQ
 fKI
 fKI
 fKI
 fKI
+qxh
+qxh
+qxh
+nOx
 fKI
 rph
 qvN
@@ -62621,9 +62653,9 @@ lOa
 mLC
 qsc
 fKI
-gae
 fKI
-gae
+fKI
+fKI
 fKI
 wRN
 fKI
@@ -62878,15 +62910,15 @@ lOa
 mLC
 ylU
 mUV
-drs
 fKI
-drs
+fKI
+fKI
 ezr
 pQD
 cxG
 lZa
-pQD
-pQD
+lZa
+lZa
 sWJ
 kxu
 rXi
@@ -63142,8 +63174,8 @@ dvq
 mLC
 mLC
 ryM
-mLC
-mLC
+mnJ
+mnJ
 iTd
 mLC
 rXi
@@ -64406,7 +64438,7 @@ pug
 qKD
 afI
 qxC
-qIz
+erU
 afI
 grB
 xCy
@@ -64684,8 +64716,8 @@ qaa
 rkn
 rkn
 hbm
-rkn
-rkn
+blP
+blP
 epV
 rkn
 ucv
@@ -64941,9 +64973,9 @@ qaa
 dwP
 cLu
 oII
-qIf
 bZJ
-ygc
+bZJ
+iON
 rrZ
 fWk
 meJ
