@@ -1588,7 +1588,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/drinker)
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_add(mob/living/drinker)
 	var/heal_points = 10
 	if(drinker.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
