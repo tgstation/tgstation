@@ -106,5 +106,3 @@
 			server_ref = WEAKREF(nearby_server)
 			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server
-
-	return
