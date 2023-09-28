@@ -41647,6 +41647,11 @@
 /obj/item/stack/cable_coil/industrial,
 /obj/item/stack/cable_coil/industrial,
 /obj/item/stack/cable_coil/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "vDY" = (
