@@ -703,7 +703,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	else
 		modpc = null
 	//Admin actions
-	if(usr.client?.holder)
+	if(ui.user.client.holder)
 		switch(action)
 			if("new_game")
 				if(phase == MAFIA_PHASE_SETUP)
@@ -839,14 +839,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		if("change_notes")
 			if(user_role.game_status == MAFIA_DEAD)
 				return TRUE
-			user_role.written_notes = params["new_notes"]
+			user_role.written_notes = sanitize_text(params["new_notes"])
 			user_role.send_message_to_player("notes saved", balloon_alert = TRUE)
 			return TRUE
 		if("send_message_to_chat")
 			if(user_role.game_status == MAFIA_DEAD)
 				return TRUE
-			var/message_said = params["message"]
-			user_role.body.say(message_said, forced = "mafia notes sending")
+			var/message_said = sanitize_text(params["message"])
+			user_role.body.say(message_said, forced = "mafia chat (sent by [ui.user.client])")
 			return TRUE
 		if("send_notes_to_chat")
 			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
