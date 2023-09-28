@@ -4,13 +4,14 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/lizard,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/cow,
-	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
 	/mob/living/basic/pet,
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
+	/mob/living/basic/snake,
+	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
 )))
 
