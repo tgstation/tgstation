@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 
 /**
- * Codex Cicatrixi can now be crafted at the start.
+ * Codex Cicatrixi is available at the start: 
  * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
  * Construct a codex and take what's left with more points.
  * Another downside to having the book is strip searches, which means that it's not just a free nab, at least until you get exposed - and when you do, you'll probably need the faster drawing speed.

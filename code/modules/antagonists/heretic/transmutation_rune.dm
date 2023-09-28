@@ -131,7 +131,7 @@
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/req_type as anything in requirements_list)
+	for(var/req_type in requirements_list)
 		var/number_of_things = requirements_list[req_type]
 		// <= 0 means it's fulfilled, skip
 		if(number_of_things <= 0)

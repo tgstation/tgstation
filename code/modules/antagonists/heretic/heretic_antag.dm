@@ -147,7 +147,7 @@
 
 			// If side path and has path points, buy!
 			var/coupon = FALSE
-			if((initial(researched_path.route) == PATH_SIDE )&& (side_path_points > 0))
+			if((initial(researched_path.route) == PATH_SIDE) && (side_path_points > 0))
 				coupon = TRUE
 			// else try normal purchase
 			else if(initial(researched_path.cost) > knowledge_points)
@@ -777,7 +777,7 @@
 	target_amount = main_path_length
 	// Add in the base research we spawn with, otherwise it'd be too easy.
 	target_amount += length(GLOB.heretic_start_knowledge)
-	// And add in some buffer, to require some sidepathing. // Increased by 3 now that each path gets 3 free side points.
+	// And add in some buffer, to require some sidepathing, especially since heretics get some free side paths.
 	target_amount += rand(5, 7)
 	update_explanation_text()
 
