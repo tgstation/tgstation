@@ -3952,6 +3952,7 @@
 /area/station/hallway/secondary/entry)
 "bTj" = (
 /obj/structure/chair/office,
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/carpet,
 /area/station/service/chapel/office)
 "bTl" = (
@@ -11626,6 +11627,7 @@
 /area/station/maintenance/port)
 "fur" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "fuu" = (
@@ -14742,7 +14744,10 @@
 /area/station/science/ordnance/storage)
 "gQB" = (
 /obj/structure/table/reinforced,
-/obj/item/pai_card,
+/obj/item/pai_card{
+	pixel_y = 6;
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "gQI" = (
@@ -15424,7 +15429,7 @@
 "hgG" = (
 /obj/structure/table/wood,
 /obj/item/book/bible{
-	pixel_y = 6
+	pixel_y = 8
 	},
 /obj/item/binoculars,
 /obj/machinery/button/door/directional/south{
@@ -19734,6 +19739,7 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/plating,
 /area/space)
 "iXA" = (
@@ -20882,10 +20888,16 @@
 "jwt" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/poppy{
-	pixel_y = 2
+	pixel_y = 2;
+	pixel_x = 4
 	},
 /obj/item/food/grown/poppy{
-	pixel_y = 2
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/food/grown/poppy{
+	pixel_y = 14;
+	pixel_x = -6
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -23102,10 +23114,7 @@
 	pixel_y = 2
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/camera{
-	c_tag = "Chapel Office";
-	dir = 1
-	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet,
 /area/station/service/chapel/office)
 "ksc" = (
@@ -23551,10 +23560,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison)
 "kBc" = (
-/obj/machinery/camera{
-	c_tag = "Chapel- Starboard";
-	dir = 1
-	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
@@ -31264,9 +31270,17 @@
 "oac" = (
 /obj/structure/table/reinforced,
 /obj/item/binoculars,
-/obj/item/binoculars,
-/obj/item/binoculars,
-/obj/item/binoculars,
+/obj/item/binoculars{
+	pixel_y = 19;
+	pixel_x = -2
+	},
+/obj/item/binoculars{
+	pixel_y = 13
+	},
+/obj/item/binoculars{
+	pixel_y = 6;
+	pixel_x = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "oag" = (
@@ -31355,6 +31369,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "odM" = (
@@ -31867,6 +31882,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/genetics)
+"orx" = (
+/obj/effect/landmark/start/chaplain,
+/turf/open/floor/wood,
+/area/station/service/chapel)
 "ory" = (
 /obj/structure/closet/crate,
 /obj/item/storage/fancy/candle_box,
@@ -35361,6 +35380,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "pXT" = (
@@ -35589,6 +35609,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/plating,
 /area/space)
 "qec" = (
@@ -38097,13 +38118,16 @@
 "riK" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/poppy{
-	pixel_y = 2
+	pixel_y = 8;
+	pixel_x = 3
 	},
 /obj/item/food/grown/poppy{
-	pixel_y = 2
+	pixel_y = 4;
+	pixel_x = -5
 	},
 /obj/item/food/grown/poppy{
-	pixel_y = 2
+	pixel_y = -4;
+	pixel_x = -6
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -41868,6 +41892,7 @@
 	name = "Coffin Storage"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "sSw" = (
@@ -46744,6 +46769,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ves" = (
@@ -51119,6 +51145,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
+"wVH" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
+/turf/open/floor/plating,
+/area/space)
 "wVL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/newscaster/directional/west,
@@ -147241,7 +147274,7 @@ nlm
 aCL
 uik
 oLO
-lXQ
+wVH
 oLO
 aCL
 cPk
@@ -150071,7 +150104,7 @@ nlm
 dDL
 kfs
 kTB
-kdl
+orx
 wJt
 xjR
 qMK
