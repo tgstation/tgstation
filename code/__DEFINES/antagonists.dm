@@ -365,3 +365,5 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATON_CUFF 2
 #define BATON_PROBE 3
 #define BATON_MODES 4
+
+#define FREEDOM_IMPLANT_CHARGES 4

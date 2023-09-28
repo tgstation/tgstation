@@ -3,7 +3,7 @@
 	desc = "Use this to escape from those evil Red Shirts."
 	icon_state = "freedom"
 	implant_color = "r"
-	uses = 4
+	uses = FREEDOM_IMPLANT_CHARGES
 
 /obj/item/implant/freedom/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
