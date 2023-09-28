@@ -23235,6 +23235,7 @@
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/structure/cable/industrial,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/ce)
 "lYm" = (
