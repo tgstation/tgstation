@@ -276,6 +276,7 @@
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	name = "\improper Syndicate Revolver"
+	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	clumsy_check = FALSE
 	icon_state = "revolversyndie"
 
