@@ -52,8 +52,8 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station/examine(mob/user)
 	. = ..()
-	if(time_left > 0)
-		. += span_notice("It seems to be cooling down, you estimate it will take about [time_left] seconds.")
+	if(time_left > 0 || next_song_timer)
+		. += span_notice("It seems to be cooling down, you estimate it will take about [((time_left + next_song_timer) / 600)] minutes.")
 
 /obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
@@ -71,7 +71,7 @@ GLOBAL_VAR(dj_booth)
 		return
 	if((!COOLDOWN_FINISHED(src, next_song_timer)) && !broadcasting)
 		to_chat(user, span_notice("The [src] feels hot to the touch and needs time to cooldown."))
-		to_chat(user, span_info("You estimate it will take about [time_left] seconds to cool down."))
+		to_chat(user, span_info("You estimate it will take about [((time_left + next_song_timer) / 600)] minutes to cool down."))
 		return
 	start_broadcast()
 
