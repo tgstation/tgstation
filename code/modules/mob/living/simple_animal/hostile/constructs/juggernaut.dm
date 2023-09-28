@@ -19,7 +19,6 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
-	force_threshold = 10
 	construct_spells = list(
 		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
@@ -27,6 +26,10 @@
 	)
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
+
+/mob/living/simple_animal/hostile/construct/juggernaut/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/damage_threshold, 10)
 
 /mob/living/simple_animal/hostile/construct/juggernaut/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
