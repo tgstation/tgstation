@@ -634,8 +634,10 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 		if(rule.persistent)
 			current_rules += rule
 		new_snapshot(rule)
+		rule.forget_startup()
 		return TRUE
 	rule.clean_up() // Refund threat, delete teams and so on.
+	rule.forget_startup()
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -683,9 +685,11 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
+				new_rule.forget_startup()
 				return TRUE
 		else if (forced)
 			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	new_rule.forget_startup()
 	return FALSE
 
 /datum/game_mode/dynamic/process()

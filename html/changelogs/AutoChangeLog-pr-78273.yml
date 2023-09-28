@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes:
+  - code_imp: "adds a gas connector component that allows connection to the atmos piping system without the need of repathing"
+  - refactor: "changes the cryo machine to use this new system"

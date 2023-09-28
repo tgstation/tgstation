@@ -31798,7 +31798,7 @@
 "jRB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
-/obj/item/wirerod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -33607,7 +33607,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "krx" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -59510,7 +59510,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "slK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
