@@ -15681,10 +15681,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/executive,
 /area/station/commons/vacant_room/commissary)
-"iaG" = (
-/obj/item/book/manual/wiki,
-/turf/open/floor/grass,
-/area/station/service/hydroponics)
 "iaP" = (
 /obj/machinery/duct/industrial/waste,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -19576,6 +19572,7 @@
 /obj/item/reagent_containers/cup/rag{
 	pixel_y = 7
 	},
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "kdT" = (
@@ -44911,6 +44908,7 @@
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
 /obj/item/plate,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "xiD" = (
@@ -61818,7 +61816,7 @@ bFK
 vrw
 gUq
 utm
-iaG
+utm
 pZD
 lFv
 ven
