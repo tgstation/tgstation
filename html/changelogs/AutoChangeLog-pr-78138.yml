@@ -1,6 +1,0 @@
-author: "Toastgoats"
-delete-after: True
-changes:
-  - balance: "Gave the bluespace geode pirates 4 more teleporter bolt turrets."
-  - bugfix: "The bluespace geode pirates no longer have a bluespace portal to the bottomless pit dimension."
-  - rscadd: "Station-safe dirt tiles for all your mapping needs, but surely no station maps use the chasm baseturf ones, right? Right?"
