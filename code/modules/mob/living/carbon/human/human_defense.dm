@@ -114,31 +114,20 @@
 	return FALSE
 
 /mob/living/carbon/human/check_block(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	. = ..()
+	if(.)
+		return TRUE
 	if(check_martial_art_block())
 		return TRUE
 
 	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
+		// Things that are supposed to be worn being held in hand - don't count
+		if((worn_thing.slot_flags & CLOTHING_ITEM_SLOTS) && (worn_thing in held_items))
+			continue
 
-	for(var/obj/item/I in held_items)
-		if(!isclothing(I))
-			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type, damage_type))
-				return TRUE
-	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type, damage_type))
-			return TRUE
-	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type, damage_type))
-			return TRUE
-	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type, damage_type))
-			return TRUE
-	if(head)
-		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type, damage_type))
+		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
+		if(worn_thing.hit_reaction(src, hitby, attack_text, final_block_chance, damage, attack_type, damage_type))
 			return TRUE
 
 	return FALSE
