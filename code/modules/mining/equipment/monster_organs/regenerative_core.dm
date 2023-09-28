@@ -36,7 +36,7 @@
 
 /// Log applications and apply moodlet.
 /obj/item/organ/internal/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
-	target.add_mood_event("regenerative core", /datum/mood_event/healsbadman)
+	target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
 	if (target != user)
 		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))

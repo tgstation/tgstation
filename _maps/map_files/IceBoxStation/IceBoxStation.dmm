@@ -31798,7 +31798,7 @@
 "jRB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
-/obj/item/wirerod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)

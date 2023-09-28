@@ -203,6 +203,7 @@
 	base_icon_state = "heart-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+	failing_desc = "seems to be broken."
 
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
