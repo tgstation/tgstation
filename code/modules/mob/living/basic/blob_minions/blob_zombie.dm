@@ -14,6 +14,7 @@
 	verb_yell = "bellows"
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = 20
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
