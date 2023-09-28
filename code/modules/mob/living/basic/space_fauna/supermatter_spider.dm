@@ -1,64 +1,96 @@
-/mob/living/simple_animal/hostile/smspider
+/// A nasty little robotic bug that dusts people on attack. Jeepers.
+/mob/living/basic/supermatter_spider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
+
 	icon = 'icons/mob/simple/smspider.dmi'
 	icon_state = "smspider"
 	icon_living = "smspider"
 	icon_dead = "smspider_dead"
+
 	gender = NEUTER
 	mob_biotypes = MOB_BUG|MOB_ROBOTIC
-	turns_per_move = 2
+
 	speak_emote = list("vibrates")
 	emote_see = list("vibrates")
 	emote_taunt = list("vibrates")
 	taunt_chance = 40
-	combat_mode = TRUE
-	maxHealth = 10
-	health = 10
-	minbodytemp = 0
-	maxbodytemp = 1500
+
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/effects/supermatter.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+	maxHealth = 10
+	health = 10
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 1250
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	robust_searching = 1
+	death_message = "falls to the ground, its shard dulling to a miserable grey!"
+
 	faction = list(FACTION_HOSTILE)
+
 	// Gold, supermatter tinted
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 30
 	lighting_cutoff_blue = 10
-	death_message = "falls to the ground, its shard dulling to a miserable grey!"
-	footstep_type = FOOTSTEP_MOB_CLAW
-	var/overcharged = FALSE // if true, spider will not die if it dusts a limb
 
-/mob/living/simple_animal/hostile/smspider/AttackingTarget()
-	. = ..()
-	if(isliving(target))
-		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
-		visible_message(span_danger("[src] knocks into [target], turning them to dust in a brilliant flash of light!"))
-		var/mob/living/victim = target
-		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
-		victim.dust()
-		if(!overcharged)
-			death()
-	else if(!isturf(target))
-		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
-		visible_message(span_danger("[src] knocks into [target], turning it to dust in a brilliant flash of light!"))
-		qdel(target)
-		if(!overcharged)
-			death()
-	return FALSE
+	ai_controller = /datum/ai_controller/basic_controller/supermatter_spider
 
-/mob/living/simple_animal/hostile/smspider/Initialize(mapload)
+	/// If we successfully dust something, should we die?
+	var/single_use = TRUE
+
+/mob/living/basic/supermatter_spider/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/swarming)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
 
-/mob/living/simple_animal/hostile/smspider/overcharged
+/// Proc that we call on attacking something to dust 'em.
+/mob/living/basic/supermatter_spider/proc/on_attack(mob/living/basic/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(isliving(target))
+		var/mob/living/victim = target
+		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
+		dust_feedback(target)
+		victim.dust()
+		if(single_use)
+			death()
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(!isturf(target))
+		dust_feedback(target)
+		qdel(target)
+		if(single_use)
+			death()
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+/// Simple proc that plays the supermatter dusting sound and sends a visible message.
+/mob/living/basic/supermatter_spider/proc/dust_feedback(atom/target)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
+	visible_message(span_danger("[src] knocks into [target], turning it to dust in a brilliant flash of light!"))
+
+/mob/living/basic/supermatter_spider/overcharged
 	name = "overcharged supermatter spider"
 	desc = "A sliver of overcharged supermatter placed upon a robotically enhanced pedestal. This one seems especially dangerous."
 	icon_state = "smspideroc"
 	icon_living = "smspideroc"
 	maxHealth = 25
 	health = 25
-	overcharged = TRUE
+	single_use = FALSE
+
+/datum/ai_controller/basic_controller/supermatter_spider
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
