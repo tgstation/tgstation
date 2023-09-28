@@ -232,6 +232,9 @@
 
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	// Some light healing is applied to make the ability a bit stronger
+	owner.adjustBruteLoss(-75) //The most common way for this to be made is using the moon blade upgrade
+	owner.adjustFireLoss(-75)
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = TRUE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)

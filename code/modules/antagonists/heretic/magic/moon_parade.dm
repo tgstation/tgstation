@@ -37,8 +37,8 @@
 
 
 /obj/projectile/moon_parade/Initialize(mapload)
-	. = ..()
 	soundloop = new(src,  TRUE)
+	. = ..()
 
 /obj/projectile/moon_parade/on_hit(atom/hit, pierce_hit)
 	. = ..()
@@ -71,7 +71,6 @@
 	var/mob/living/victim = hit
 	UnregisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	soundloop.stop()
-	QDEL_NULL(soundloop)
 	return ..()
 
 // This signal blocks movement by returning COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE when they are attempting to move
