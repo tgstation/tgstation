@@ -644,7 +644,7 @@
 	var/need_mob_update
 	switch(affected_mob.mob_mood.sanity_level)
 		if (SANITY_INSANE to SANITY_CRAZY)
-			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
 		if (SANITY_NEUTRAL to SANITY_GREAT)
@@ -693,7 +693,7 @@
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, updating_health = FALSE, affected_mob.get_body_temp_normal()))
+	if(affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, FALSE, affected_mob.get_body_temp_normal()))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/soy_latte

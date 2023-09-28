@@ -180,7 +180,7 @@
 	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustParalyzed(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustImmobilized(-40 * REM * seconds_per_tick)
-	affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -234,7 +234,7 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
-	affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
@@ -807,7 +807,7 @@
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
 	. = ..() || TRUE
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
-	if(kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, updating_health = FALSE, required_organ_flag = affected_organ_flags))
+	if(kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * seconds_per_tick)
