@@ -243,7 +243,7 @@
 		return FALSE
 	var/beam
 	if(ranged)
-		beam = user.Beam(target,icon_state="rped_upgrade", time = delay)
+		beam = user.Beam(target, icon_state = "rped_upgrade", time = delay)
 	if(!do_after(user, delay, target = target))
 		qdel(rcd_effect)
 		if(!isnull(beam))
@@ -281,22 +281,17 @@
 		ui.open()
 
 /obj/item/construction/rcd/ui_static_data(mob/user)
-	return airlock_electronics.ui_static_data(user)
-
-/obj/item/construction/rcd/ui_data(mob/user)
 	var/list/data = ..()
 
-	//main categories
-	data["selected_root"] = root_category
+	var/list/electronics_data = airlock_electronics.ui_static_data(user)
+	for(var/key in electronics_data)
+		data[key] = electronics_data[key]
+
 	data["root_categories"] = list()
 	for(var/category in GLOB.rcd_designs)
 		data["root_categories"] += category
 
-	//create the category list
-	data["selected_category"] = design_category
-	data["selected_design"] = design_title
 	data["categories"] = list()
-
 	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
 		var/list/target_category =  GLOB.rcd_designs[root_category][sub_category]
 		if(!length(target_category))
@@ -316,6 +311,16 @@
 
 			designs += list(list("title" = design_name, "icon" = sanitize_css_class_name(design_name)))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
+
+	return data
+
+/obj/item/construction/rcd/ui_data(mob/user)
+	var/list/data = ..()
+
+	//main categories
+	data["selected_root"] = root_category
+	data["selected_category"] = design_category
+	data["selected_design"] = design_title
 
 	//merge airlock_electronics ui data with this
 	var/list/airlock_data = airlock_electronics.ui_data(user)
@@ -489,7 +494,6 @@
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
-
 
 // Ranged RCD
 /obj/item/construction/rcd/arcd

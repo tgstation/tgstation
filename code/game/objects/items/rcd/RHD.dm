@@ -104,6 +104,7 @@
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
+	update_static_data_for_all_viewers()
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/item, mob/user)
@@ -184,6 +185,11 @@
 		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
 		return TRUE
 
+/obj/item/construction/ui_static_data(mob/user)
+	. = list()
+
+	.["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
+
 ///shared data for rcd,rld & plumbing
 /obj/item/construction/ui_data(mob/user)
 	var/list/data = list()
@@ -194,8 +200,6 @@
 		total_matter = 0
 	data["matterLeft"] = total_matter
 
-	//silo details
-	data["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
 	data["silo_enabled"] = silo_link
 
 	return data

@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	banned_upgrades = RCD_ALL_UPGRADES
+	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -165,21 +165,16 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rtd/ui_data(mob/user)
+/obj/item/construction/rtd/ui_static_data(mob/user)
 	var/list/data = ..()
-	var/floor_designs = GLOB.floor_designs
 
-	data["selected_root"] = root_category
 	data["root_categories"] = list()
-	for(var/category in floor_designs)
+	for(var/category in GLOB.floor_designs)
 		data["root_categories"] += category
-	data["selected_category"] = design_category
-
-	selected_design.fill_ui_data(data)
 
 	data["categories"] = list()
-	for(var/sub_category as anything in floor_designs[root_category])
-		var/list/target_category =  floor_designs[root_category][sub_category]
+	for(var/sub_category as anything in GLOB.floor_designs[root_category])
+		var/list/target_category =  GLOB.floor_designs[root_category][sub_category]
 
 		var/list/designs = list() //initialize all designs under this category
 		for(var/list/design as anything in target_category)
@@ -187,6 +182,15 @@
 			designs += list(list("name" = tile_design.name, "icon" = tile_design.get_icon_state()))
 
 		data["categories"] += list(list("category_name" = sub_category, "recipes" = designs))
+
+	return data
+
+/obj/item/construction/rtd/ui_data(mob/user)
+	var/list/data = ..()
+
+	data["selected_root"] = root_category
+	data["selected_category"] = design_category
+	selected_design.fill_ui_data(data)
 
 	return data
 
