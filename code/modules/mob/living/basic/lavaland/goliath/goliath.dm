@@ -170,7 +170,7 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 
-/mob/living/basic/mining/goliath/click_on_without_item_at_range(atom/target, modifiers)
+/mob/living/basic/mining/goliath/click_on_without_item_at_range(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)
 
 /mob/living/basic/mining/goliath/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
