@@ -49,6 +49,9 @@
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
+	//half the power for getting reagents in
+	var/power_usage = active_power_usage / 2
+
 	if(!emptying || reagents.is_reacting)
 		//do reactions and stuff
 		reagents.handle_reactions()
@@ -61,7 +64,10 @@
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)
 
-	use_power(active_power_usage * seconds_per_tick)
+		//full power for doing reactions
+		power_usage *= 2
+
+	use_power(power_usage * seconds_per_tick)
 
 ///For subtypes that want to do additional reagent handling
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
@@ -167,11 +173,13 @@
 	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	//twice to balance acidic & alkaline values each time after a reaction
-	for(var/_ in 1 to 2)
+	while(TRUE)
+		if(machine_stat & NOPOWER)
+			return
+
 		//not too acidic nor too basic. work done
 		if(reagents.ph >= acidic_limit && reagents.ph <= alkaline_limit)
-			continue
+			return
 		/**
 		 * figure out which buffer to transfer to restore balance
 		 * if solution is getting too basic(high ph) add some acid to lower it's value
@@ -179,13 +187,16 @@
 		 */
 		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
 		if(!buffer.total_volume)
-			continue
+			return
 
 		//transfer buffer and handle reactions
 		var/ph_diff = reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)
-		if(!buffer.trans_to(reagents, max(ph_diff * seconds_per_tick, CHEMICAL_VOLUME_MINIMUM)))
-			continue
+		if(!buffer.trans_to(reagents, round(max(ph_diff * seconds_per_tick, CHEMICAL_VOLUME_MINIMUM), CHEMICAL_QUANTISATION_LEVEL)))
+			return
 		reagents.handle_reactions()
+
+		//some power for accurate ph balancing
+		use_power((active_power_usage / 5) * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
