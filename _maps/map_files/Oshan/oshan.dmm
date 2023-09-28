@@ -9362,11 +9362,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 10
-	},
 /obj/machinery/ticket_machine/directional/east{
 	id = "ticket_machine_engie"
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/plastic,
 /area/station/hallway/primary/central)
@@ -13575,11 +13575,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"gWr" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/camera/autoname/directional/south,
-/turf/open/floor/iron/dark/textured,
-/area/station/cargo/storage)
 "gWA" = (
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
@@ -62368,7 +62363,7 @@ wCO
 fKI
 ekq
 fKI
-gWr
+iyv
 wRN
 fKI
 wRN
