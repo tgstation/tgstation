@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "The flight potion wings will no longer fail to work on lavaland/icemoon on rare occasions."

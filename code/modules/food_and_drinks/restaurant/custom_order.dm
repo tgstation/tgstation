@@ -34,7 +34,7 @@
  * Return [TRANSACTION_SUCCESS] to denote the order went through successfully (Not generally necessary to include here)
  * Return [TRANSACTION_HANDLED] to not do any further handling of the order by the
  */
-/datum/custom_order/proc/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/proc/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	return NONE
 
 /datum/custom_order/moth_clothing
@@ -153,7 +153,7 @@
 	food_image.add_overlay(drink_image)
 	return food_image
 
-/datum/custom_order/reagent/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	. = TRANSACTION_HANDLED
 
 	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
@@ -184,7 +184,7 @@
 /datum/custom_order/reagent/drink
 	container_needed = /obj/item/reagent_containers/cup/glass/drinkingglass
 
-/datum/custom_order/reagent/drink/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/drink/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] slurps up [order_item] in one go!"),
 		span_danger("You slurp up [order_item] in one go."),
@@ -210,7 +210,7 @@
 /datum/custom_order/reagent/soup/get_order_line(datum/venue/our_venue)
 	return "I'll take a [picked_serving] of [initial(reagent_type.name)]"
 
-/datum/custom_order/reagent/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/soup/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
 		span_danger("You pour [order_item] down your hatch in one go."),

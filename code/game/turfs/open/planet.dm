@@ -14,6 +14,13 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
+/turf/open/misc/dirt/station
+	name = "dirt flooring" //FOR THE LOVE OF GOD USE THIS INSTEAD OF DIRT FOR STATION MAPS
+	desc = "You heard this place was dirty, but this is just absurd."
+	baseturfs = /turf/open/floor/plating
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	planetary_atmos = FALSE
+
 /turf/open/misc/dirt/dark
 	icon_state = "greenerdirt"
 	base_icon_state = "greenerdirt"

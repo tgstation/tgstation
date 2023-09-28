@@ -55,6 +55,13 @@
 
 	return null
 
+/mob/living/carbon/is_ears_covered()
+	for(var/obj/item/worn_thing as anything in get_equipped_items())
+		if(worn_thing.flags_cover & EARS_COVERED)
+			return worn_thing
+
+	return null
+
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
