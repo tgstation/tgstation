@@ -140,17 +140,17 @@
 		///QUAKES
 		if(200 to 1499)
 			event_flags = WEAK_QUAKE
-		if(1500 to 3999)
+		if(1500 to 4999)
 			event_flags = QUAKE
 		///FIRES
-		if(4000 to 4999)
-			event_flags = QUAKE | WEAK_FIRE
 		if(5000 to 5999)
+			event_flags = QUAKE | WEAK_FIRE
+		if(6000 to 6999)
 			event_flags = QUAKE | FIRE_EVENT
 		///EXPLOSIONS
-		if(6000 to 6999)
+		if(7000 to 8999)
 			event_flags = QUAKE | FIRE_EVENT | WEAK_EXPLOSION
-		if(7000 to INFINITY)
+		if(9000 to INFINITY)
 			event_flags = QUAKE | FIRE_EVENT | EXPLOSION
 
 	///quakes are camera shakes so we scan for mobs in range
@@ -175,9 +175,9 @@
 			explosion(calculation_point, 0,  0, 0, 7, 0, adminlog = FALSE)
 
 	if(event_flags & WEAK_EXPLOSION)
-		explosion(calculation_point, 0,  0, 4, 0, 0, adminlog = FALSE)
+		explosion(calculation_point, 0,  0, 1, 0, 3, adminlog = FALSE)
 	if(event_flags & EXPLOSION)
-		explosion(calculation_point, 0, 0, 6, 6, 3, adminlog = FALSE)
+		explosion(calculation_point, 0, 0, 3, 0, 5, adminlog = FALSE)
 
 	var/area_name_string = get_area_name(calculation_point)
 	var/message
