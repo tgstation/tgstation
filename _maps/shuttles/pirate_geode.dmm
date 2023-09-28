@@ -90,16 +90,6 @@
 /obj/structure/flora/lunar_plant/style_2,
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
-"gO" = (
-/obj/effect/spawner/structure/window/hollow/survival_pod/end{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "geodebridge";
-	dir = 4
-	},
-/turf/open/misc/dirt/station,
-/area/shuttle/pirate)
 "hM" = (
 /obj/machinery/porta_turret/syndicate/teleport{
 	dir = 4;
@@ -138,7 +128,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "iG" = (
-/obj/effect/spawner/structure/window/hollow/survival_pod/end,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "geodebridge";
 	dir = 4
@@ -164,17 +154,6 @@
 	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain{
 	color = "#4f98ff"
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"jH" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod/middle{
-	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -883,16 +862,6 @@
 	},
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
-"Qg" = (
-/obj/effect/spawner/structure/window/hollow/survival_pod/middle{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "geodebridge";
-	dir = 4
-	},
-/turf/open/misc/dirt/station,
-/area/shuttle/pirate)
 "Qo" = (
 /turf/open/floor/iron/stairs{
 	dir = 1
@@ -968,7 +937,7 @@
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod/end,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
@@ -992,17 +961,6 @@
 /obj/machinery/microwave,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/misc/dirt/station,
-/area/shuttle/pirate)
-"Wi" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "WR" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -1099,14 +1057,14 @@ lt
 jx
 jx
 Od
-Wi
+Uf
 Uf
 Od
-Wi
-jH
+Uf
+Uf
 Uf
 Od
-Wi
+Uf
 Uf
 Od
 jx
@@ -1437,8 +1395,8 @@ jx
 jx
 Od
 Od
-gO
-Qg
+iG
+iG
 iG
 Od
 Od
