@@ -361,8 +361,8 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> "
-		if(!CONFIG_GET(flag/norespawn))
-			features += "respawn"
+		if(CONFIG_GET(flag/allow_respawn))
+			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
 		if(!CONFIG_GET(flag/allow_ai))
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)

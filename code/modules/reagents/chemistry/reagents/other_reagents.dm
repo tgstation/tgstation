@@ -274,6 +274,7 @@
 	. = ..()
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
+	affected_mob.adjust_drunk_effect(-0.25 * REM * seconds_per_tick) // and even sobers you up slowly!!
 
 // For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -2665,13 +2666,16 @@
 	metal_morph(exposed_turf)
 
 ///turn an object into a special material
-/datum/reagent/metalgen/proc/metal_morph(atom/A)
+/datum/reagent/metalgen/proc/metal_morph(atom/target)
 	var/metal_ref = data["material"]
 	if(!metal_ref)
 		return
 
+	if(is_type_in_typecache(target, GLOB.blacklisted_metalgen_types)) //some stuff can lead to exploits if transmuted
+		return
+
 	var/metal_amount = 0
-	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	var/list/materials_to_transmute = target.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
 	for(var/metal_key in materials_to_transmute) //list with what they're made of
 		metal_amount += materials_to_transmute[metal_key]
 
@@ -2679,9 +2683,9 @@
 		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
 
 	var/list/metal_dat = list((metal_ref) = metal_amount)
-	A.material_flags = applied_material_flags
-	A.set_custom_materials(metal_dat)
-	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
+	target.material_flags = applied_material_flags
+	target.set_custom_materials(metal_dat)
+	ADD_TRAIT(target, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"

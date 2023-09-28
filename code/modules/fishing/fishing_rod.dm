@@ -160,7 +160,7 @@
 	if(!istype(user))
 		return
 	var/beam_color = line?.line_color || default_line_color
-	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
+	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
 	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
 	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line_beam, COMSIG_QDELETING, PROC_REF(clear_line))
@@ -577,6 +577,31 @@
 	// Is the fishing rod held in left side hand
 	var/lefthand = FALSE
 
+	// Make these inline with final sprites
+	var/righthand_s_px = 13
+	var/righthand_s_py = 16
+
+	var/righthand_e_px = 18
+	var/righthand_e_py = 16
+
+	var/righthand_w_px = -20
+	var/righthand_w_py = 18
+
+	var/righthand_n_px = -14
+	var/righthand_n_py = 16
+
+	var/lefthand_s_px = -13
+	var/lefthand_s_py = 15
+
+	var/lefthand_e_px = 24
+	var/lefthand_e_py = 18
+
+	var/lefthand_w_px = -17
+	var/lefthand_w_py = 16
+
+	var/lefthand_n_px = 13
+	var/lefthand_n_py = 15
+
 /datum/beam/fishing_line/Start()
 	update_offsets(origin.dir)
 	. = ..()
@@ -605,29 +630,3 @@
 		if(NORTH)
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
-
-// Make these inline with final sprites
-/datum/beam/fishing_line
-	var/righthand_s_px = 13
-	var/righthand_s_py = 16
-
-	var/righthand_e_px = 18
-	var/righthand_e_py = 16
-
-	var/righthand_w_px = -20
-	var/righthand_w_py = 18
-
-	var/righthand_n_px = -14
-	var/righthand_n_py = 16
-
-	var/lefthand_s_px = -13
-	var/lefthand_s_py = 15
-
-	var/lefthand_e_px = 24
-	var/lefthand_e_py = 18
-
-	var/lefthand_w_px = -17
-	var/lefthand_w_py = 16
-
-	var/lefthand_n_px = 13
-	var/lefthand_n_py = 15

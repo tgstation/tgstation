@@ -149,6 +149,7 @@
 #define VV_HK_MOD_QUIRKS "quirkmod"
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
+#define VV_HK_APPLY_DNA_INFUSION "apply_dna_infusion"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
