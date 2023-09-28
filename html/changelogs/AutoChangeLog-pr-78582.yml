@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes:
+  - bugfix: "Scrubbers and Vents will no longer reset their settings on map load."
