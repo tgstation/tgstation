@@ -3,7 +3,7 @@
 	/// Blackboard key holding atom we want to stay away from
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// How close will we allow our target to get?
-	var/minimum_distance = 3
+	var/minimum_distance = 4
 	/// How far away will we allow our target to get?
 	var/maximum_distance = 6
 	/// How far do we look for our target?

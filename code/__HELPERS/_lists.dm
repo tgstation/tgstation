@@ -408,6 +408,17 @@
 	list_to_clear -= new_list
 	return list_to_clear.len < start_len
 
+/**
+ * Removes any empty weakrefs from the list
+ * Returns TRUE if the list had empty refs, FALSE otherwise
+**/
+/proc/list_clear_empty_weakrefs(list/list_to_clear)
+	var/start_len = list_to_clear.len
+	for(var/datum/weakref/entry in list_to_clear)
+		if(!entry.resolve())
+			list_to_clear -= entry
+	return list_to_clear.len < start_len
+
 /*
  * Returns list containing all the entries from first list that are not present in second.
  * If skiprep = 1, repeated elements are treated as one.

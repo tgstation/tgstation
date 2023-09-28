@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Examine blocked out roundstart / latejoin job information."
+  - qol: "Captain gets a little bit more information about how their radio works roundstart."
+  - bugfix: "Fixed roundstart players not getting radio information."
