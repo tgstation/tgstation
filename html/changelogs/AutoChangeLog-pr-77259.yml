@@ -1,9 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "Adds Bitrunning to supply department- a semi-offstation role that rewards teamwork."
-  - rscadd: "Adds new machines to complement the job- net pod, quantum server, quantum consoles, and the nexacache vendor."
-  - rscadd: "Adds several new maps which can be loaded and unloaded at will."
-  - rscadd: "Some flair for the new bitrunning vendor."
-  - rscadd: "Adds a new antagonist for the virtual domain only. Short lived ghost role that fights bitrunners."
-  - rscdel: "Removes the BEPIS machine, moves its tech into the Bitrunning vendor."

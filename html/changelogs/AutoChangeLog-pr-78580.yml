@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "You can now remove and replace power cells from PDAs (with screwdriver)."
+  - balance: "PDAs now drain their power cells harder, and also take into account active programs & their flashlight being on."
+  - balance: "PDAs running out of charge now turn their flashlights off."

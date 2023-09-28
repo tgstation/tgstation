@@ -10737,7 +10737,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cEy" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -34518,6 +34518,7 @@
 /area/station/cargo/sorting)
 "lnh" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/service/chapel/monastery)
 "lnk" = (

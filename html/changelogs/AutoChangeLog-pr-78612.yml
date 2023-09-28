@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - refactor: "Snakes have been refactored into basic mobs. This means that they are a bit more intelligent than previous snakes, making them more docile and averse to harming people (unless otherwise provoked). They do chomp all sorts of mice though. You can feed them a dead mouse to make them your friend if you'd want that."
+  - sound: "If you listen closely to snakes, you might be able to hear a small hissing sound..."

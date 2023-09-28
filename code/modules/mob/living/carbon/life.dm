@@ -543,6 +543,9 @@
 	if(stat != DEAD) // If you are dead your body does not stabilize naturally
 		natural_bodytemperature_stabilization(environment, seconds_per_tick, times_fired)
 
+	else if(!on_fire && areatemp < bodytemperature) // lowers your dead body temperature to room temperature over time
+		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=FALSE, use_steps=TRUE)
+
 	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
 		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
 

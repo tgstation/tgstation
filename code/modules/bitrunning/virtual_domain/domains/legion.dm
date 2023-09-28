@@ -12,9 +12,9 @@
 /mob/living/simple_animal/hostile/megafauna/legion/virtual_domain
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	health = 1100
+	health = 1500
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	maxHealth = 1100
+	maxHealth = 1500
 	true_spawn = FALSE
 
-// You may be thinking, well, what about those mini-legions? They're not part of the created_atoms list
+// You may be thinking, what about those mini-legions? They're not part of the initial created_atoms list

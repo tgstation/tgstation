@@ -16,18 +16,21 @@
 
 //Legion infested mobs
 
-//dwarf type which spawns dwarfy versions
-/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
-
-/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
-	. = ..()
-	spawned_human.dna.add_mutation(/datum/mutation/human/dwarfism)
-
-//main type, rolls a pool of legion victims
+/// Mob spawner used by Legion to spawn costumed bodies
 /obj/effect/mob_spawn/corpse/human/legioninfested
 	brute_damage = 1000
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/Initialize(mapload)
+	outfit = select_outfit()
+	return ..()
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
+	. = ..()
+	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	cancer.Insert(spawned_human, special = TRUE, drop_if_replaced = FALSE)
+
+/// Returns the outfit worn by our corpse
+/obj/effect/mob_spawn/corpse/human/legioninfested/proc/select_outfit()
 	var/corpse_theme = pick_weight(list(
 		"Miner" = 64,
 		"Clown" = 5,
@@ -40,26 +43,36 @@
 			"Shadow",
 		)) = 4,
 	))
+
 	switch(corpse_theme)
 		if("Miner")
-			outfit = /datum/outfit/consumed_miner
+			return /datum/outfit/consumed_miner
 		if("Ashwalker")
-			outfit = /datum/outfit/consumed_ashwalker
+			return /datum/outfit/consumed_ashwalker
 		if("Golem")
-			outfit = /datum/outfit/consumed_golem
+			return /datum/outfit/consumed_golem
 		if("Clown")
-			outfit = /datum/outfit/consumed_clown
+			return /datum/outfit/consumed_clown
 		if("Cultist")
-			outfit = /datum/outfit/consumed_cultist
+			return /datum/outfit/consumed_cultist
 		if("Dame")
-			outfit = /datum/outfit/consumed_dame
+			return /datum/outfit/consumed_dame
 		if("Operative")
-			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+			return /datum/outfit/syndicatecommandocorpse/lessenedgear
 		if("Shadow")
-			outfit = /datum/outfit/consumed_shadowperson
-	. = ..()
+			return /datum/outfit/consumed_shadowperson
 
-/obj/effect/mob_spawn/corpse/human/snowlegioninfested/Initialize(mapload)
+/// Corpse spawner used by dwarf legions to make small corpses
+/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
+	. = ..()
+	spawned_human.dna.add_mutation(/datum/mutation/human/dwarfism)
+
+/// Corpse spawner used by snow legions with alternate costumes
+/obj/effect/mob_spawn/corpse/human/legioninfested/snow
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/snow/select_outfit()
 	var/corpse_theme = pick_weight(list(
 		"Miner" = 64,
 		"Clown" = 5,
@@ -72,24 +85,49 @@
 			"Shadow",
 		)) = 4,
 	))
+
 	switch(corpse_theme)
 		if("Miner")
-			outfit = /datum/outfit/consumed_miner
+			return /datum/outfit/consumed_miner
 		if("Settler")
-			outfit = /datum/outfit/consumed_ice_settler
+			return /datum/outfit/consumed_ice_settler
 		if("Heremoth")
-			outfit = /datum/outfit/consumed_heremoth
+			return /datum/outfit/consumed_heremoth
 		if("Clown")
-			outfit = /datum/outfit/consumed_clown
+			return /datum/outfit/consumed_clown
 		if("Cultist")
-			outfit = /datum/outfit/consumed_cultist
+			return /datum/outfit/consumed_cultist
 		if("Golem")
-			outfit = /datum/outfit/consumed_golem
+			return /datum/outfit/consumed_golem
 		if("Operative")
-			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+			return /datum/outfit/syndicatecommandocorpse/lessenedgear
 		if("Shadow")
-			outfit = /datum/outfit/consumed_shadowperson
+			return /datum/outfit/consumed_shadowperson
+
+/// Creates a dead legion-infested skeleton
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton
+	name = "legion-infested skeleton"
+	mob_name = "skeleton"
+	mob_species = /datum/species/skeleton
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/select_outfit()
+	return null
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human)
 	. = ..()
+	spawned_human.gender = NEUTER
+
+/// Creates a dead and burned legion-infested skeleton
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
+	name = "charred legion-infested skeleton"
+	mob_name = "charred skeleton"
+	brute_damage = 0
+	burn_damage = 1000
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
+	. = ..()
+	spawned_human.color = "#454545"
+
 
 /datum/outfit/consumed_miner
 	name = "Legion-Consumed Miner"

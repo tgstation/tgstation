@@ -4,9 +4,9 @@
 
 
 	weighted_mob_spawn_list = list(
+		/mob/living/basic/mining/legion/snow = 50,
 		/mob/living/basic/mining/lobstrosity = 15,
 		/mob/living/basic/mining/goldgrub = 10,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50,
 		/mob/living/simple_animal/hostile/asteroid/polarbear = 30,
 		/mob/living/simple_animal/hostile/asteroid/wolf = 50,
 		/obj/structure/spawner/ice_moon = 3,
@@ -63,7 +63,7 @@
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 1,
 		/mob/living/basic/mining/ice_whelp = 60,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 100,
+		/mob/living/basic/mining/legion/snow = 100,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon = 100,
 		/obj/structure/spawner/ice_moon/demonic_portal = 6,
 		/obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 6,
