@@ -1,3 +1,6 @@
+/// How many tiles within player radius does it perform a rcd scan in
+#define RCD_DESTRUCTIVE_SCAN_RANGE 10
+
 /**
  * Global proc that generates RCD hologram in a range.
  *
@@ -36,3 +39,5 @@
 		hologram.icon = hologram_icon
 		hologram.makeHologram()
 		animate(hologram, alpha = 0, time = fade_time, easing = CIRCULAR_EASING | EASE_IN)
+
+#undef RCD_DESTRUCTIVE_SCAN_RANGE

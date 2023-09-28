@@ -1,5 +1,8 @@
-///multiplier applied on construction & deconstruction time when building multiple structures
+/// Multiplier applied on construction & deconstruction time when building multiple structures
 #define FREQUENT_USE_DEBUFF_MULTIPLIER 3
+
+/// Delay before another rcd scan can be performed in the UI
+#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
 
 //RAPID CONSTRUCTION DEVICE
 
@@ -503,6 +506,7 @@
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
+#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
 
 /obj/item/rcd_ammo
 	name = "RCD matter cartridge"
