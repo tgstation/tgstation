@@ -430,16 +430,20 @@
 
 
 /**
- * Check if this holder contains this reagent.
- * Reagent takes a PATH to a reagent.
+ * Check if this holder contains this reagent. Reagent takes a PATH to a reagent
  * Arguments
  *
- * *
- * Amount checks for having a specific amount of that chemical.
- * Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.
- * Check subtypes controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
+ * * [target_reagent][datum/reagent] - the reagent typepath to check for
+ * * amount - checks for having a specific amount of that chemical
+ * * needs_metabolizing - takes into consideration if the chemical is matabolizing when it's checked.
+ * * check_subtypes - controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
  */
-/datum/reagents/proc/has_reagent(datum/reagent/target_reagent, amount = -1, needs_metabolizing = FALSE, check_subtypes = FALSE)
+/datum/reagents/proc/has_reagent(
+	datum/reagent/target_reagent,
+	amount = -1,
+	needs_metabolizing = FALSE,
+	check_subtypes = FALSE
+)
 	if(!ispath(target_reagent))
 		stack_trace("invalid reagent path passed to has reagent [target_reagent]")
 		return FALSE
