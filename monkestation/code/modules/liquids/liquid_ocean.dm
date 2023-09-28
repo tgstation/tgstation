@@ -245,11 +245,14 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	else if(src in SSliquids.active_ocean_turfs)
 		SSliquids.active_ocean_turfs -= src
 
-/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+/turf/open/attackby(obj/item/C, mob/user, params)
 	. = ..()
 	if(istype(C, /obj/item/dousing_rod))
 		var/obj/item/dousing_rod/attacking_rod = C
 		attacking_rod.deploy(src)
+
+/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+	. = ..()
 
 	if(C.tool_behaviour == TOOL_SHOVEL || C.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
