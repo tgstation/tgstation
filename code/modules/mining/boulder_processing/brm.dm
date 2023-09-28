@@ -53,7 +53,6 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/bouldertech/brm/process()
-	balloon_alert_to_viewers("bzzap!")
 	if(SSore_generation.available_boulders.len < 1)
 		say("No boulders to collect. Entering idle mode.")
 		toggled_on = FALSE
@@ -119,6 +118,7 @@
 	return TRUE
 
 /obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
+	balloon_alert_to_viewers("bzzap!")
 	flick("brm-flash", src)
 	if(QDELETED(random_boulder))
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)

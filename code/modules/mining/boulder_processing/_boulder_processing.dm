@@ -116,8 +116,7 @@
 		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 		return TRUE
 	if(.)
-		return
-
+			return
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)

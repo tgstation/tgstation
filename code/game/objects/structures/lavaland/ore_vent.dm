@@ -43,7 +43,7 @@
 		/// A list of mobs that can be spawned by this vent during a wave defense event.
 	var/list/defending_mobs = list(
 		/mob/living/basic/mining/goliath,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
+		/mob/living/basic/mining/legion/spawner_made,
 		/mob/living/basic/mining/watcher,
 		/mob/living/basic/mining/lobstrosity/lava,
 		/mob/living/basic/mining/brimdemon,
@@ -396,7 +396,7 @@
 	defending_mobs = list(
 		/mob/living/basic/mining/ice_whelp,
 		/mob/living/basic/mining/lobstrosity,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow,
+		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
