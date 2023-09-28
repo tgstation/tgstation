@@ -79,36 +79,16 @@
 
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
-	var/mob/living/old_body = old_body_ref?.resolve()
-	if(isnull(old_body))
-		return
-
-	var/mob/living/avatar = parent
-
-	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
-#ifndef UNIT_TESTS
-	UnregisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED)
-#endif
-	UnregisterSignal(old_body, COMSIG_LIVING_DEATH)
-	UnregisterSignal(old_body, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-	UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
-
+	return_to_old_body()
+	
 	var/obj/machinery/netpod/hosting_netpod = broken_netpod || netpod_ref?.resolve()
 	if(hosting_netpod)
-		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_CROWBAR_ALERT)
-		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
-		UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_SEVER_AVATAR)
+		hosting_netpod?.disconnect_occupant(forced)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
 		server.avatar_connection_refs.Remove(WEAKREF(src))
-		UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
-		UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
-		UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)
-		UnregisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED)
 
-	return_to_old_body()
-	hosting_netpod?.disconnect_occupant(forced)
 	qdel(src)
 
 /// Triggers whenever the server gets a loot crate pushed to goal area
@@ -216,10 +196,6 @@
 /datum/component/avatar_connection/proc/return_to_old_body()
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
-
-	if(!old_mind || !old_body)
-		return
-
 	var/mob/living/avatar = parent
 
 #ifdef UNIT_TESTS
@@ -228,11 +204,14 @@
 #endif
 
 	var/mob/dead/observer/ghost = avatar.ghostize()
-	if(!ghost)
+	if(isnull(ghost))
 		ghost = avatar.get_ghost()
 
-	if(!ghost)
+	if(isnull(ghost))
 		CRASH("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
+
+	if(isnull(old_mind) || isnull(old_body))
+		return
 
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)
@@ -241,6 +220,3 @@
 		old_mind.set_current(old_body)
 
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-
-	old_mind = null
-	old_body = null
