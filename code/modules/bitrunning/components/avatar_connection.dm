@@ -85,7 +85,6 @@
 
 	var/mob/living/avatar = parent
 
-	UnregisterFromParent()
 	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
 #ifndef UNIT_TESTS
 	UnregisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED)
