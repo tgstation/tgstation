@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/datum/admins/proc/station_traits_panel,
 // Client procs
 	/client/proc/admin_away,
-	/client/proc/add_mob_ability,
+	/client/proc/add_marked_mob_ability,
 	/client/proc/admin_change_sec_level,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_infection,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
-	/client/proc/remove_mob_ability,
+	/client/proc/remove_marked_mob_ability,
 	/client/proc/reset_ooc,
 	/client/proc/run_weather,
 	/client/proc/set_dynex_scale,
@@ -693,20 +693,44 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
 			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
 
-	var/ability = tgui_input_list(usr, "Choose an ability", "Ability Selection", actions_by_name)
+	var/ability = tgui_input_list(usr, "Choose an ability", "Ability", actions_by_name)
 	if(isnull(ability))
-		return
-	if(QDELETED(ability_recipient))
-		to_chat(usr, span_warning("The intended ability recipient no longer exists."))
 		return
 
 	var/ability_type = actions_by_name[ability]
-	var/datum/action/cooldown/mob_cooldown/add_ability = new ability_type(ability_recipient)
+	var/datum/action/cooldown/mob_cooldown/add_ability
+
+	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	if(make_sequence == "Yes")
+		add_ability = new /datum/action/cooldown/mob_cooldown(ability_recipient)
+		add_ability.sequence_actions = list()
+		while(!isnull(ability_type))
+			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			if(isnull(ability_delay) || ability_delay < 0)
+				ability_delay = 0
+			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
+			ability = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
+			ability_type = actions_by_name[ability]
+		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		if(isnull(ability_cooldown) || ability_cooldown < 0)
+			ability_cooldown = 2
+		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
+		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
+			ability_melee_cooldown = 2
+		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
+		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.create_sequence_actions()
+	else
+		add_ability = new ability_type(ability_recipient)
+
+	if(isnull(ability_recipient))
+		return
 	add_ability.Grant(ability_recipient)
 
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [ability_recipient].")
 	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [ability_recipient].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability From VV") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/remove_mob_action(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"
@@ -728,9 +752,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		return
 
 	qdel(to_remove)
-	log_admin("[key_name(usr)] removed the spell [chosen_ability] from [key_name(removal_target)].")
-	message_admins("[key_name_admin(usr)] removed the spell [chosen_ability] from [key_name_admin(removal_target)].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability From VV") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	log_admin("[key_name(usr)] removed the ability [chosen_ability] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(usr)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
