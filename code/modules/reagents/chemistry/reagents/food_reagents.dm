@@ -268,9 +268,9 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
-	metabolization_rate = 2 * REAGENTS_METABOLISM
+	metabolization_rate = 5 * REAGENTS_METABOLISM
 	creation_purity = 1 // impure base reagents are a big no-no
-	overdose_threshold = 100 // Hyperglycaemic shock
+	overdose_threshold = 120 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
@@ -282,11 +282,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
-	M.AdjustSleeping(600)
+	M.AdjustSleeping(20 SECONDS)
 	. = TRUE
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M, seconds_per_tick, times_fired)
-	M.AdjustSleeping(40 * REM * seconds_per_tick)
+	M.adjust_drowsiness_up_to((5 SECONDS * REM * seconds_per_tick), 60 SECONDS)
 	..()
 	. = TRUE
 

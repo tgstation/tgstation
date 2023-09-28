@@ -82,9 +82,9 @@
 
 	if(!prob(effect_chance) || target.stat == DEAD)
 		return
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = summon_skull(user)
+	var/mob/living/basic/legion_brood/summoned_skull = summon_skull(user)
 	summoned_skull.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_MOB_ATTACK, summoned_skull.melee_damage_lower)
-	summoned_skull.GiveTarget(target)
+	summoned_skull.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	. = ..()
@@ -101,8 +101,7 @@
 
 ///Spawns a legion skull, making it friendly to the user. Returns the newly spawned skull
 /obj/item/crusher_trophy/legionnaire_spine/proc/summon_skull(mob/living/living_user)
-	playsound(get_turf(living_user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new(get_turf(living_user))
-	summoned_skull.friends += living_user
-	summoned_skull.faction = living_user.faction.Copy()
+	playsound(living_user, prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
+	var/mob/living/basic/legion_brood/summoned_skull = new (living_user.loc)
+	summoned_skull.assign_creator(LivingUser)
 	return summoned_skull
