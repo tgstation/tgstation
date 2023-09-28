@@ -4,6 +4,7 @@
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "labeler0"
 	inhand_icon_state = null
+	item_flags = NOBLUDGEON
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0

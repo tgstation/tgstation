@@ -174,6 +174,7 @@
 	if(user == src)
 		if(combat_mode && attacked_by(attacking_item, user)) // Self harm, kind of snowflake
 			playsound(src, attacking_item.hitsound, 50)
+			do_attack_animation(src)
 			return TRUE // end chain
 
 		return FALSE // continue chain

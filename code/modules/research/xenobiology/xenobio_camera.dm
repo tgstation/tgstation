@@ -283,7 +283,7 @@
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
-			X.current_potion.melee_attack_chain(S, C)
+			INVOKE_ASYNC(X.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), S, C)
 			break
 	else
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
