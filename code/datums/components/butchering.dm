@@ -163,7 +163,7 @@
 
 	if(butcher)
 		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
-								span_notice("You butcher [target]."))
+			span_notice("You butcher [target]."))
 	butcher_callback?.Invoke(butcher, target)
 	target.harvest(butcher)
 	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
