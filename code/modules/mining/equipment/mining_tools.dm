@@ -138,7 +138,7 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
-	weapon_sprite_angle = 45
+	weapon_sprite_angle = 225
 	attack_style_path = /datum/attack_style/melee_weapon/swing
 
 /obj/item/shovel/Initialize(mapload)

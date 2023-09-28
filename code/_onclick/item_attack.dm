@@ -261,10 +261,15 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
 	if(item_flags & NOBLUDGEON)
-		return
+		return FALSE
+	if(force <= 0)
+		return FALSE
 	var/item_cd = attack_style?.cd || CLICK_CD_MELEE
 	user.changeNext_move(min(item_cd, CLICK_CD_MELEE * 1.25))
 	user.do_attack_animation(attacked_atom)

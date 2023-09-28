@@ -883,7 +883,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	AI_Interact = !AI_Interact
 	if(mob && isAdminGhostAI(mob))
-		mob.has_unlimited_silicon_privilege = AI_Interact
+		mob.has_unlimited_silicon_privilege = AI_Interact // melbert todo check
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")

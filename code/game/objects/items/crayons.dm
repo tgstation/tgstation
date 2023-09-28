@@ -559,7 +559,7 @@
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 
-/obj/item/toy/crayon/pre_attack(atom/A, mob/living/user, params)
+/obj/item/toy/crayon/pre_attack(atom/A, mob/living/user, params) // melbert todo check
 	. = ..()
 	if(.)
 		return
