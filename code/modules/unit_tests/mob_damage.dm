@@ -37,6 +37,15 @@
 	// testing with godmode enabled
 	test_godmode(dummy)
 
+/**
+ * Check that the mob has a specific amount of damage
+ *
+ * By default this checks that the mob has <amount> of every type of damage.
+ * Arguments:
+ * * testing_mob - the mob to check the damage of
+ * * amount - the amount of damage to verify that the mob has
+ * * included_types - Bitflag of damage types to check.
+ */
 /datum/unit_test/mob_damage/proc/verify_damage(mob/living/testing_mob, amount, included_types = ALL)
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), amount, \
@@ -57,6 +66,19 @@
 		TEST_ASSERT_EQUAL(testing_mob.getStaminaLoss(), amount, \
 			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
 
+/**
+ * Apply a specific amount of damage to the mob using adjustBruteLoss(), adjustToxLoss(), etc.
+ *
+ * By default this applies <amount> damage of every type to the mob, and checks that the damage procs return the <expected> value
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
 /datum/unit_test/mob_damage/proc/apply_damage(mob/living/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
@@ -84,6 +106,19 @@
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustStaminaLoss() should have returned [expected], but returned [damage_returned] instead!")
 
+/**
+ * Set a specific amount of damage for the mob using setBruteLoss(), setToxLoss(), etc.
+ *
+ * By default this sets every type of damage to <amount> for the mob, and checks that the damage procs return the <expected> value
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
 /datum/unit_test/mob_damage/proc/set_damage(mob/living/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
@@ -375,6 +410,16 @@
 	test_sanity_simple(gusgus)
 	test_sanity_complex(gusgus)
 
+/**
+ * Check that the mob has a specific amount of damage. Note: basic mobs have all incoming damage types besides stam converted into brute damage.
+ *
+ * By default this checks that the mob has <amount> of every type of damage.
+ * Arguments:
+ * * testing_mob - the mob to check the damage of
+ * * amount - the amount of damage to verify that the mob has
+ * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 5)
+ * * included_types - Bitflag of damage types to check.
+ */
 /datum/unit_test/mob_damage/basic/verify_damage(mob/living/testing_mob, amount, expected, included_types = ALL)
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), 0, \
