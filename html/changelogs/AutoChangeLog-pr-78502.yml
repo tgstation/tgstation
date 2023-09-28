@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Transformation sting now lasts 8 minutes, down from permanent. However, the effect is paused for dead and stasis mobs, making it permanent SO LONG AS they stay dead or in stasis. The effect is also permanent if used on a monkey."
+  - balance: "Transformation sting now costs 33 chemicals, down from 50."
+  - balance: "Transformation sting now costs 2 dna points, down from 3."
+  - bugfix: "Transformation sting works on monkeys again."
+  - refactor: "Refactored a bit of human randomization."
