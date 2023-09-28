@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
-/// Called from [/datum/reagents/proc/metabolize]
+/// Called from [/datum/reagents/proc/metabolize_reagent]. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
@@ -198,7 +198,7 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
-/// Called when a reagent is inside of a mob when they are dead
+/// Called when a reagent is inside of a mob when they are dead. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
@@ -225,11 +225,11 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	return
 
-/// Called when an overdose starts
+/// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
 	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
