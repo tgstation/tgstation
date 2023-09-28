@@ -332,7 +332,6 @@
 /area/station/command/heads_quarters/qm)
 "afY" = (
 /obj/structure/lattice,
-/obj/structure/lattice/catwalk,
 /turf/open/floor/plating/ocean/pit,
 /area/ocean)
 "agf" = (
@@ -9540,7 +9539,6 @@
 /area/station/hallway/primary/central)
 "ePE" = (
 /obj/structure/lattice,
-/obj/structure/lattice/catwalk,
 /turf/open/floor/plating/ocean/pit/wall,
 /area/ocean)
 "ePK" = (
@@ -20192,11 +20190,6 @@
 /obj/effect/base_turf_modifier/pit,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
-"kto" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/ocean,
-/area/ocean)
 "ktC" = (
 /obj/machinery/duct/industrial/waste,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -46734,11 +46727,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/bridge)
-"ydK" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/ocean,
-/area/ocean/generated_above)
 "ydU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72356,9 +72344,9 @@ aah
 aah
 aah
 meJ
-kto
-kto
-kto
+mdW
+mdW
+mdW
 ePE
 afY
 aah
@@ -74146,8 +74134,8 @@ aah
 aah
 aah
 aah
-ydK
-ydK
+ojo
+ojo
 ePE
 afY
 fAs
@@ -74403,7 +74391,7 @@ aah
 aah
 aah
 aah
-ydK
+ojo
 aah
 fKl
 aYY
@@ -74660,8 +74648,8 @@ aah
 aah
 aah
 aah
-ydK
-ydK
+ojo
+ojo
 ePE
 afY
 fAs
@@ -74917,7 +74905,7 @@ aah
 aah
 aah
 aah
-ydK
+ojo
 aah
 fKl
 aYY
@@ -75174,8 +75162,8 @@ aah
 aah
 aah
 aah
-ydK
-ydK
+ojo
+ojo
 ePE
 afY
 fAs
@@ -76982,11 +76970,11 @@ aah
 aah
 aah
 aah
-ydK
-ydK
-ydK
-ydK
-ydK
+ojo
+ojo
+ojo
+ojo
+ojo
 aah
 aah
 aah
