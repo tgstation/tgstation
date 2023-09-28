@@ -103,5 +103,5 @@
 /obj/item/crusher_trophy/legionnaire_spine/proc/summon_skull(mob/living/living_user)
 	playsound(living_user, prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
 	var/mob/living/basic/legion_brood/summoned_skull = new (living_user.loc)
-	summoned_skull.assign_creator(LivingUser)
+	summoned_skull.assign_creator(living_user)
 	return summoned_skull
