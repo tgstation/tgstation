@@ -30,6 +30,10 @@
 	var/time_left_warning = 60 SECONDS
 	///Sound loop that plays when recording or playing back.
 	var/datum/looping_sound/tape_recorder_hiss/soundloop
+	///If the tape recorder has an ejectable tape
+	var/caneject = TRUE
+	///This var will be used for a check in the audio_tag subtype.
+	var/isaudiotag = FALSE
 
 /obj/item/taperecorder/Initialize(mapload)
 	. = ..()
@@ -97,18 +101,22 @@
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
-	if(!mytape)
-		balloon_alert(user, "no tape!")
+	if(caneject)
+		if(!mytape)
+			balloon_alert(user, "no tape!")
+			return
+		if(playing)
+			balloon_alert(user, "stop the tape first!")
+			return
+		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
+		balloon_alert(user, "ejected [mytape]")
+		stop()
+		user.put_in_hands(mytape)
+		mytape = null
+		update_appearance()
+	else
+		balloon_alert(usr, "cannot eject drive!")
 		return
-	if(playing)
-		balloon_alert(user, "stop the tape first!")
-		return
-	playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
-	balloon_alert(user, "ejected [mytape]")
-	stop()
-	user.put_in_hands(mytape)
-	mytape = null
-	update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
@@ -142,17 +150,19 @@
 
 
 /obj/item/taperecorder/update_icon_state()
-	if(!mytape)
-		icon_state = "taperecorder_empty"
+	if(!isaudiotag) //Won't update the icon states if it's audio_tag.
+		if(!mytape)
+			icon_state = "taperecorder_empty"
+			return ..()
+		if(recording)
+			icon_state = "taperecorder_recording"
+			return ..()
+		if(playing)
+			icon_state = "taperecorder_playing"
+			return ..()
+		icon_state = "taperecorder_idle"
 		return ..()
-	if(recording)
-		icon_state = "taperecorder_recording"
-		return ..()
-	if(playing)
-		icon_state = "taperecorder_playing"
-		return ..()
-	icon_state = "taperecorder_idle"
-	return ..()
+
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
@@ -370,15 +380,11 @@
 /obj/item/taperecorder/audio_tag
 	name = "audio tag"
 	desc = "A small, independent disk that can hold up to ten minutes of content. Its drive cannot be ejected."
-	// icon_state = "tape_tag" // Remove comment tags once icon state is added.
+	icon_state = "audiotag_codersprite" // Remove comment tags once icon state is added.
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/taperecorder/audio_tag/Initialize(mapload)
-	. = ..() //This is probably not the way to inherit all the procs and it's probably not what I want, but I'm gonna try it anyway.
-
-/obj/item/taperecorder/audio_tag/proc/eject(mob/user)
-	balloon_alert("cannot eject drive!")
-	return
+	caneject = FALSE
+	canprint = FALSE
+	isaudiotag = TRUE
 
 /obj/item/tape
 	name = "tape"
@@ -409,6 +415,8 @@
 	var/unspooled = FALSE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
+	///If the tape can become unspooled
+	var/unspoolable = TRUE
 
 /obj/item/tape/Initialize(mapload)
 	. = ..()
@@ -464,6 +472,8 @@
 
 /obj/item/tape/proc/unspool()
 	//Let's not add infinite amounts of overlays when our fire_act is called repeatedly
+	if(unspoolable)
+		return
 	if(!unspooled)
 		add_overlay("ribbonoverlay")
 	unspooled = TRUE
@@ -511,3 +521,15 @@
 
 /obj/item/tape/dyed
 	icon_state = "tape_greyscale"
+
+// AUDIO TAG
+/obj/item/tape/tag_drive
+	name = "audio tag drive"
+	desc = "The drive that once belonged to a complete audio tag. It probably won't work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "audiotag_codersprite"
+	unspooled = FALSE
+	unspoolable = TRUE
+/* /obj/item/tape/tag_drive/proc/unspool()
+	return //We don't want the tag drive to unspool, ever.
+*/
