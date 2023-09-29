@@ -83,10 +83,10 @@
 		affected_mob.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
 
-/datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	if(helbent)
-		L.remove_status_effect(/datum/status_effect/necropolis_curse)
-	..()
+		affected_mob.remove_status_effect(/datum/status_effect/necropolis_curse)
 
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
@@ -461,10 +461,10 @@
 	trauma = new()
 	affected_mob.gain_trauma(trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/medicine/c2/musiver/on_mob_delete(mob/living/carbon/affected_mob)
+/datum/reagent/medicine/c2/musiver/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	if(trauma)
 		QDEL_NULL(trauma)
-	return ..()
 
 /datum/reagent/medicine/c2/musiver/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
