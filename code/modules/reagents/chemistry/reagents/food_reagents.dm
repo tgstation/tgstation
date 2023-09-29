@@ -329,29 +329,29 @@
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/heating = 0
 	switch(current_cycle)
 		if(2 to 16)
 			heating = 5
 			if(holder.has_reagent(/datum/reagent/cryostylane))
 				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
-			if(isslime(M))
+			if(isslime(affected_mob))
 				heating = rand(5, 20)
 		if(16 to 26)
 			heating = 10
-			if(isslime(M))
+			if(isslime(affected_mob))
 				heating = rand(10, 20)
 		if(26 to 36)
 			heating = 15
-			if(isslime(M))
+			if(isslime(affected_mob))
 				heating = rand(15, 20)
 		if(36 to INFINITY)
 			heating = 20
-			if(isslime(M))
+			if(isslime(affected_mob))
 				heating = rand(20, 25)
-	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+	return ..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -364,33 +364,33 @@
 	specific_heat = 40
 	default_container = /obj/item/reagent_containers/cup/bottle/frostoil
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/cooling = 0
 	switch(current_cycle)
 		if(2 to 16)
 			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
-			if(isslime(M))
+			if(isslime(affected_mob))
 				cooling = -rand(5, 20)
 		if(16 to 26)
 			cooling = -20
-			if(isslime(M))
+			if(isslime(affected_mob))
 				cooling = -rand(10, 20)
 		if(26 to 36)
 			cooling = -30
 			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
+				affected_mob.emote("shiver")
+			if(isslime(affected_mob))
 				cooling = -rand(15, 20)
 		if(36 to INFINITY)
 			cooling = -40
 			if(prob(5))
-				M.emote("shiver")
-			if(isslime(M))
+				affected_mob.emote("shiver")
+			if(isslime(affected_mob))
 				cooling = -rand(20, 25)
-	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
+	affected_mob.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
+	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -418,7 +418,6 @@
 	default_container = /obj/item/reagent_containers/cup/bottle/capsaicin
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
 	if(!ishuman(exposed_mob))
 		return
 
@@ -447,12 +446,13 @@
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
 				victim.vomit(VOMIT_CATEGORY_DEFAULT)
+	return ..()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(SPT_PROB(5, seconds_per_tick))
 			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
+	return ..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -787,8 +787,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
+	return ..()
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -810,8 +810,8 @@
 	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
+	. = ..()
 	var/need_mob_update
 	if(SPT_PROB(33, seconds_per_tick))
 		need_mob_update = M.adjustBruteLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)

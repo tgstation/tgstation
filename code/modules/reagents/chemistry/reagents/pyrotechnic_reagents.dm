@@ -279,13 +279,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
 		affected_mob.adjust_bodytemperature(15 * REM * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/humi = affected_mob
 			humi.adjust_coretemperature(15 * REM * seconds_per_tick)
+	return ..()
 
 /datum/reagent/pyrosium/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))

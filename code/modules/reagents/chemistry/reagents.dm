@@ -157,13 +157,27 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
-/// Called from [/datum/reagents/proc/metabolize_reagent]. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/**
+ * Ticks on mob Life() for as long as the reagent remains in the mob's reagents.
+ *
+ * Usage: Parent should be called first using . = ..()
+ *
+ * Exceptions: If the holder var needs to be accessed, call the parent afterward that as it can become null if the reagent is fully removed.
+ *
+ * Returns: UPDATE_MOB_HEALTH only if you need to update the health of a mob (this is only needed when damage is dealt to the mob)
+ *
+ * Arguments
+ * * mob/living/carbon/affected_mob - the mob which the reagent currently is inside of
+ * * seconds_per_tick - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
+ *
+ */
+/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
 	if(holder)
-		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+		holder.remove_reagent(type, metabolization_rate * affected_mob.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)

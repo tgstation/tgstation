@@ -682,11 +682,11 @@
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	. = ..()
 	if(QDELETED(light_holder))
 		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != drinker)
 		light_holder.forceMove(drinker)
+	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/drinker)
 	to_chat(drinker, span_notice("The warmth in your body fades."))
@@ -1722,9 +1722,9 @@
 			return TRUE
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
-	. = ..()
 	if(mighty_shield && !(mighty_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
 		holder.remove_reagent(type, volume)
+	return ..()
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
 	if(mighty_shield)

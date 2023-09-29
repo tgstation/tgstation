@@ -221,12 +221,12 @@
 	myseed.adjust_potency(-round(volume * 0.5))
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * seconds_per_tick)
+	return ..() || .
 
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
@@ -272,7 +272,6 @@
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
@@ -280,6 +279,7 @@
 	affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * seconds_per_tick)
+	return ..() || .
 
 /datum/reagent/consumable/tea
 	name = "Tea"
@@ -912,13 +912,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * seconds_per_tick)
+	return ..() || .
 
 /datum/reagent/consumable/italian_coco
 	name = "Italian Hot Chocolate"

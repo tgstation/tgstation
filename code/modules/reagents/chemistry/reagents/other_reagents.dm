@@ -396,9 +396,11 @@
 			affected_mob.Unconscious(100)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
-		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+		if(holder)
+			holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
-	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
+	if(holder)
+		holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -502,7 +504,8 @@
 	need_mob_update = affected_mob.adjustToxLoss(0.5*seconds_per_tick, updating_health = FALSE)
 	need_mob_update += affected_mob.adjustFireLoss(0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
-	holder.remove_reagent(type, 0.5*seconds_per_tick)
+	if(holder)
+		holder.remove_reagent(type, 0.5*seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -649,11 +652,11 @@
 #define MUT_MSG_ABOUT2TURN 3
 
 /// the current_cycle threshold / iterations needed before one can transform
-#define CYCLES_TO_TURN 21
+#define CYCLES_TO_TURN 20
 /// the cycle at which 'immediate' mutation text begins displaying
-#define CYCLES_MSG_IMMEDIATE 7
+#define CYCLES_MSG_IMMEDIATE 6
 /// the cycle at which 'extended' mutation text begins displaying
-#define CYCLES_MSG_EXTENDED 17
+#define CYCLES_MSG_EXTENDED 16
 
 /datum/reagent/mutationtoxin
 	name = "Stable Mutation Toxin"
@@ -674,8 +677,6 @@
 		return
 	if(!(affected_mob.dna?.species) || !(affected_mob.mob_biotypes & affected_biotype))
 		return
-
-	. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(5, seconds_per_tick))
 		var/list/pick_ur_fav = list()
@@ -698,6 +699,8 @@
 		holder.del_reagent(type)
 		to_chat(affected_mob, span_warning("You've become \a [lowertext(initial(species_type.name))]!"))
 		return
+
+	return ..()
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -2589,13 +2592,14 @@
 	desc = "It smells like a carcass, and doesn't look much better."
 
 /datum/reagent/yuck/on_mob_add(mob/living/affected_mob)
-	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
+	return ..()
 
 #define YUCK_PUKE_CYCLES 3 // every X cycle is a puke
 #define YUCK_PUKES_TO_STUN 3 // hit this amount of pukes in a row to start stunning
 /datum/reagent/yuck/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!yuck_cycle)
 		if(SPT_PROB(4, seconds_per_tick))
 			var/dread = pick("Something is moving in your stomach...", \
@@ -2607,13 +2611,13 @@
 		var/yuck_cycles = current_cycle - yuck_cycle
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
 			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
-				holder.remove_reagent(type, 5)
+				if(holder)
+					holder.remove_reagent(type, 5)
 			var/passable_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
 			if(yuck_cycles >= (YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN))
 				passable_flags |= MOB_VOMIT_STUN
 			affected_mob.vomit(vomit_flags = passable_flags, lost_nutrition = rand(14, 26))
-	if(holder)
-		return ..()
+
 #undef YUCK_PUKE_CYCLES
 #undef YUCK_PUKES_TO_STUN
 

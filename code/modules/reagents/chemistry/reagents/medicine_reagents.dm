@@ -87,7 +87,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustStun(-20 * REM * seconds_per_tick)
 	affected_mob.AdjustKnockdown(-20 * REM * seconds_per_tick)
@@ -96,6 +95,7 @@
 	affected_mob.AdjustParalyzed(-20 * REM * seconds_per_tick)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * seconds_per_tick)
+	. = ..()
 	affected_mob.adjust_hallucinations(-20 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(16, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(1, updating_health = FALSE, required_biotype = affected_biotype))
@@ -109,12 +109,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * seconds_per_tick)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
 		holder.remove_reagent(/datum/reagent/toxin/histamine, 5 * REM * seconds_per_tick)
+	. = ..()
 	affected_mob.adjust_hallucinations(-20 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(16, seconds_per_tick))
 		if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
@@ -336,7 +336,6 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	var/need_mob_update
 	if(SPT_PROB(1.5, seconds_per_tick))
 		to_chat(affected_mob, span_warning("You feel salty."))
@@ -350,7 +349,8 @@
 		need_mob_update = affected_mob.adjustBruteLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
 		need_mob_update += affected_mob.adjustFireLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
 	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
+		. = UPDATE_MOB_HEALTH
+	return ..() || .
 
 /datum/reagent/medicine/mine_salve
 	name = "Miner's Salve"
@@ -653,11 +653,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.adjust_drowsiness(2 SECONDS)
 	affected_mob.adjust_jitter(-2 SECONDS * REM * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 3 * REM * seconds_per_tick)
+	return ..()
 
 /datum/reagent/medicine/morphine
 	name = "Morphine"
@@ -872,13 +872,14 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2 * REM * seconds_per_tick)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * REM * seconds_per_tick)
 		if(SPT_PROB(10, seconds_per_tick))
 			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
-		return
+		return ..()
+
+	. = ..()
 
 	var/need_mob_update
 	if(affected_mob.health <= affected_mob.crit_threshold)
@@ -1097,11 +1098,11 @@
 		affected_carbon.setOrganLoss(ORGAN_SLOT_BRAIN, initial_bdamage)
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = .. ()
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
 		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5 * REM * seconds_per_tick * normalise_creation_purity())
 	if(SPT_PROB(8 * normalise_creation_purity(), seconds_per_tick))
 		affected_mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	return ..()
 
 /datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
@@ -1207,9 +1208,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
 	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
+	return ..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
 
