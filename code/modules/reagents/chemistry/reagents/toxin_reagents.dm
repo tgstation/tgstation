@@ -192,9 +192,11 @@
 			affected_mob.emote("gasp")
 
 /datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	RegisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 
 /datum/reagent/toxin/lexorin/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 
 /datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
@@ -294,12 +296,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_FAKEDEATH, type)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_FAKEDEATH, type)
-	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -895,9 +897,9 @@
 	delayed_toxin_damage += (seconds_per_tick * 3)
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	affected_mob.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
 	affected_mob.adjustToxLoss(delayed_toxin_damage, required_biotype = affected_biotype)
-	return ..()
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
@@ -1004,12 +1006,12 @@
 	return ..()
 
 /datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
-	return ..()
 
 /datum/reagent/toxin/heparin/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
-	return ..()
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
@@ -1037,11 +1039,11 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	if(affected_mob?.hud_used)
 		var/atom/movable/plane_master_controller/pm_controller = affected_mob.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 		for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
 			animate(plane, transform = matrix(), time = 5, easing = QUAD_EASING)
-	..()
 
 /datum/reagent/toxin/anacea
 	name = "Anacea"
@@ -1064,7 +1066,6 @@
 		affected_mob.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
 
 //ACID
-
 
 /datum/reagent/toxin/acid
 	name = "Sulfuric Acid"
@@ -1202,8 +1203,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
+	. = ..()
 	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
-	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1388,9 +1389,11 @@
 	traits_not_applied -= added_trait
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	RegisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 	// the initial() proc doesn't work for lists.
 	var/list/initial_list = list(

@@ -268,13 +268,13 @@
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/spaceacillin/on_mob_add(mob/living/L)
+/datum/reagent/medicine/spaceacillin/on_mob_add(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+	ADD_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE, type)
 
-/datum/reagent/medicine/spaceacillin/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/spaceacillin/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE, type)
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
@@ -767,11 +767,11 @@
 				affected_mob.adjust_eye_blur(5 SECONDS)
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
 	restore_eyesight(affected_mob, eyes)
-	..()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
@@ -825,8 +825,8 @@
 	ADD_TRAIT(affected_mob, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
 
 /datum/reagent/medicine/atropine/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
-	return ..()
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

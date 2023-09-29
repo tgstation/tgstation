@@ -2979,12 +2979,12 @@
 	. = ..()
 	metabolizer.add_mood_event(name, /datum/mood_event/love_reagent)
 
-/datum/reagent/love/on_mob_delete(mob/living/deleted_from)
+/datum/reagent/love/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	// When we exit the system we'll leave the moodlet based on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
-	deleted_from.clear_mood_event(name)
-	deleted_from.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
+	affected_mob.clear_mood_event(name)
+	affected_mob.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
 
 /datum/reagent/love/overdose_process(mob/living/metabolizer, seconds_per_tick, times_fired)
 	. = ..()

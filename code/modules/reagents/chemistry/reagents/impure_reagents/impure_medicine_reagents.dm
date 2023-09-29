@@ -115,6 +115,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //At the end, we clear up any loose hanging timers just in case and spawn any remaining lag_remaining hands all at once.
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	var/hands = 0
 	while(lag_remainder > hands)
 		spawn_hands(affected_mob)
@@ -122,7 +123,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/id in timer_ids) // So that we can be certain that all timers are deleted at the end.
 		deltimer(id)
 	timer_ids.Cut()
-	return ..()
 
 /datum/reagent/inverse/helgrasp/heretic
 	name = "Grasp of the Mansus"
@@ -346,6 +346,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				cached_reagent_list = list()
 
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/affected_mob)
+	. = ..()
 	if(affected_mob.IsSleeping())
 		affected_mob.visible_message(span_notice("[icon2html(affected_mob, viewers(DEFAULT_MESSAGE_RANGE, src))] [affected_mob] lets out a hearty snore!"))//small way of letting people know the supersnooze is ended
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
@@ -353,7 +354,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			continue
 		reagent.creation_purity *= 0.8
 	cached_reagent_list = list()
-	..()
 
 //convermol
 //inverse
