@@ -5,18 +5,18 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	mats_per_unit = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*0.25)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/iron
 	armor_type = /datum/armor/tile_iron
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	cost = 125
-	source = /datum/robot_energy_storage/iron
+	cost = HALF_SHEET_MATERIAL_AMOUNT * 0.5
+	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/tile/iron
 	tile_reskin_types = list(
-		/obj/item/stack/tile/iron,
+		/obj/item/stack/tile/iron/base,
 		/obj/item/stack/tile/iron/edge,
 		/obj/item/stack/tile/iron/half,
 		/obj/item/stack/tile/iron/corner,
@@ -139,7 +139,6 @@
 	merge_type = /obj/item/stack/tile/iron/base
 
 /obj/item/stack/tile/iron/base/cyborg //cant reskin these, fucks with borg code
-	merge_type = /obj/item/stack/tile/iron/base/cyborg
 	tile_reskin_types = null
 
 /obj/item/stack/tile/iron/edge

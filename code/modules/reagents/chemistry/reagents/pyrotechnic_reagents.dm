@@ -32,12 +32,9 @@
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
-/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	myseed?.adjust_instability(-round(chems.get_reagent_amount(type)))
+//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.myseed?.adjust_instability(-round(volume))
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
@@ -195,20 +192,18 @@
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// why, just why
-/datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	if(!(myseed.resistance_flags & FIRE_PROOF))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
+// why, just why
+/datum/reagent/napalm/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	if(!(mytray.myseed?.resistance_flags & FIRE_PROOF))
+		mytray.adjust_plant_health(-round(volume * 6))
+		mytray.adjust_toxic(round(volume * 7))
 
 	mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_fire_stacks(1 * REM * seconds_per_tick)
 	..()
+	return TRUE
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

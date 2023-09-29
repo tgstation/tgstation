@@ -7,6 +7,7 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -15,6 +16,11 @@
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+#define HANDCUFFS_TYPE_WEAK 0
+// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+#define HANDCUFFS_TYPE_STRONG 1
 
 /**
  * # Handcuffs
@@ -38,14 +44,25 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
+	var/handcuff_time = 3 SECONDS
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
+	var/restraint_strength = HANDCUFFS_TYPE_STRONG
+
+/obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
+	. = ..()
+	handcuff_time = modify_fantasy_variable("handcuff_time", handcuff_time, -bonus * 2, minimum = 0.3 SECONDS)
+
+/obj/item/restraints/handcuffs/remove_fantasy_bonuses(bonus)
+	handcuff_time = reset_fantasy_variable("handcuff_time", handcuff_time)
+	return ..()
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -70,7 +87,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_after(user, 3 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
+			if(do_after(user, handcuff_time, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -132,6 +149,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -148,28 +166,32 @@
 	var/cable_color = CABLE_COLOR_RED
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
-		/obj/item/stack/rods = list(
-			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
-		),
-
 		/obj/item/stack/sheet/iron = list(
 			SCREENTIP_CONTEXT_LMB = "Craft bola",
 		),
 	)
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDCUFFED)
 
 	if(new_color)
 		set_cable_color(new_color)
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/restraints/handcuffs/cable/proc/set_cable_color(new_color)
 	color = GLOB.cable_colors[new_color]
@@ -269,36 +291,6 @@
 	color = CABLE_HEX_COLOR_WHITE
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
-
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if (R.use(1))
-			var/obj/item/wirerod/W = new /obj/item/wirerod
-			remove_item_from_storage(user)
-			user.put_in_hands(W)
-			to_chat(user, span_notice("You wrap [src] around the top of [I]."))
-			qdel(src)
-		else
-			to_chat(user, span_warning("You need one rod to make a wired rod!"))
-			return
-	else if(istype(I, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = I
-		if(M.get_amount() < 6)
-			to_chat(user, span_warning("You need at least six iron sheets to make good enough weights!"))
-			return
-		to_chat(user, span_notice("You begin to apply [I] to [src]..."))
-		if(do_after(user, 35, target = src))
-			if(M.get_amount() < 6 || !M)
-				return
-			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
-			M.use(6)
-			user.put_in_hands(S)
-			to_chat(user, span_notice("You make some weights out of [I] and tie them to [src]."))
-			remove_item_from_storage(user)
-			qdel(src)
-	else
-		return ..()
 
 /**
  * # Zipties
@@ -589,3 +581,6 @@
 	. = ..()
 	if(effectReference)
 		QDEL_NULL(effectReference)
+
+#undef HANDCUFFS_TYPE_WEAK
+#undef HANDCUFFS_TYPE_STRONG

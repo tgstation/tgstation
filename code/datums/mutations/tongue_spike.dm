@@ -15,7 +15,7 @@
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spike"
 
-	cooldown_time = 10 SECONDS
+	cooldown_time = 1 SECONDS
 	spell_requirements = SPELL_REQUIRES_HUMAN
 
 	/// The type-path to what projectile we spawn to throw at someone.
@@ -46,17 +46,18 @@
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
 	force = 2
-	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
+	throwforce = 25
 	throw_speed = 4
 	embedding = list(
-		"embedded_pain_multiplier" = 4,
+		"impact_pain_mult" = 0,
+		"embedded_pain_multiplier" = 15,
 		"embed_chance" = 100,
 		"embedded_fall_chance" = 0,
 		"embedded_ignore_throwspeed_threshold" = TRUE,
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/biomass = 500)
+	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
 	/// What mob "fired" our tongue
 	var/datum/weakref/fired_by_ref
 	/// if we missed our target
@@ -107,8 +108,9 @@
 	name = "chem spike"
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
-	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
+	throwforce = 2
 	embedding = list(
+		"impact_pain_mult" = 0,
 		"embedded_pain_multiplier" = 0,
 		"embed_chance" = 100,
 		"embedded_fall_chance" = 0,
@@ -128,7 +130,7 @@
 		return
 
 	var/datum/action/send_chems/chem_action = new(src)
-	chem_action.transfered_ref = WEAKREF(embedded_mob)
+	chem_action.transferred_ref = WEAKREF(embedded_mob)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
@@ -152,7 +154,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 	/// Weakref to the mob target that we transfer chemicals to on activation
-	var/datum/weakref/transfered_ref
+	var/datum/weakref/transferred_ref
 
 /datum/action/send_chems/New(Target)
 	. = ..()
@@ -166,12 +168,12 @@
 	if(!ishuman(owner) || !owner.reagents)
 		return FALSE
 	var/mob/living/carbon/human/transferer = owner
-	var/mob/living/carbon/human/transfered = transfered_ref?.resolve()
-	if(!ishuman(transfered))
+	var/mob/living/carbon/human/transferred = transferred_ref?.resolve()
+	if(!ishuman(transferred))
 		return FALSE
 
-	to_chat(transfered, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
+	to_chat(transferred, span_warning("You feel a tiny prick!"))
+	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, 1, 1, 0, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()

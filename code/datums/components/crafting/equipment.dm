@@ -46,23 +46,40 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/rods = 8,
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
 	)
 	parts = list(
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS
 	category = CAT_EQUIPMENT
 
-/datum/crafting_recipe/freezer_cabinat
-	name = "Freezer Cabinet"
+/datum/crafting_recipe/secured_freezer_cabinet
+	name = "Secure Freezer Cabinet"
 	result = /obj/structure/closet/secure_closet/freezer/empty
 	reqs = list(
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/iron = 5,
 		/obj/item/assembly/igniter/condenser = 1,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/secure_closet
+	name = "Secure Closet"
+	result = /obj/structure/closet/secure_closet
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
@@ -74,7 +91,7 @@
 		/obj/item/stack/sheet/iron = 4,
 		/obj/item/stack/rods = 4,
 		/obj/item/stack/cable_coil = 10,
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/assembly/signaler = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)

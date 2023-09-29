@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 			projectiletype = initial(M.projectile_type)
 		if(istype(G, /obj/item/gun/ballistic))
 			Pewgun = G
-			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
+			var/obj/item/ammo_box/magazine/M = Pewgun.spawn_magazine_type
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/gun/energy))
 			Zapgun = G
@@ -336,14 +336,14 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 	if(locked)
 		return
 	if(!opened)
-		set_density(FALSE)
+		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
 		icon_state = "crateopen"
 		playsound(src, open_sound, 50, TRUE)
 		for(var/atom/movable/AM in src)
 			AM.forceMove(loc)
 	else
-		set_density(TRUE)
+		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
 		icon_state = "crate"
 		playsound(src, close_sound, 50, TRUE)

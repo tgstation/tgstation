@@ -67,7 +67,7 @@
 	// When casting, throw the caster backwards a few tiles.
 	var/original_dir = living_cast_on.dir
 	living_cast_on.throw_at(
-		get_edge_target_turf(living_cast_on, turn(living_cast_on.dir, 180)),
+		get_edge_target_turf(living_cast_on, REVERSE_DIR(living_cast_on.dir)),
 		range = self_throw_range,
 		speed = 2,
 		gentle = TRUE,

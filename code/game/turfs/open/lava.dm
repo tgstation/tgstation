@@ -38,10 +38,13 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
+	/// The type for the preset fishing spot of this type of turf.
+	var/fish_source_type = /datum/fish_source/lavaland
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+	if(fish_source_type)
+		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
@@ -67,10 +70,10 @@
 	var/border_turf = FALSE
 	var/list/turfs_to_check = RANGE_TURFS(1, src)
 	if(GET_LOWEST_STACK_OFFSET(z))
-		var/turf/above = SSmapping.get_turf_above(src)
+		var/turf/above = GET_TURF_ABOVE(src)
 		if(above)
 			turfs_to_check += RANGE_TURFS(1, above)
-		var/turf/below = SSmapping.get_turf_below(src)
+		var/turf/below = GET_TURF_BELOW(src)
 		if(below)
 			turfs_to_check += RANGE_TURFS(1, below)
 
@@ -92,10 +95,10 @@
 		// We have gone from a lava turf to a non lava turf, time to let them know
 		var/list/turfs_to_check = RANGE_TURFS(1, result)
 		if(GET_LOWEST_STACK_OFFSET(z))
-			var/turf/above = SSmapping.get_turf_above(result)
+			var/turf/above = GET_TURF_ABOVE(result)
 			if(above)
 				turfs_to_check += RANGE_TURFS(1, above)
-			var/turf/below = SSmapping.get_turf_below(result)
+			var/turf/below = GET_TURF_BELOW(result)
 			if(below)
 				turfs_to_check += RANGE_TURFS(1, below)
 		for(var/turf/open/lava/inform in turfs_to_check)
@@ -109,7 +112,7 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -128,17 +131,19 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/leaving_mob = gone
-		if(!islava(leaving_mob.loc))
-			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!leaving_mob.on_fire)
-			leaving_mob.update_fire()
+	if(isliving(gone) && !islava(gone.loc))
+		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	return ..()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -215,13 +220,9 @@
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	//if anything matching this typecache is found in the lava, we don't burn things
-	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile, /obj/structure/lattice/lava))
-	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
-	for(var/obj/structure/stone_tile/S in found_safeties)
-		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
+	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
+		return TRUE
+	return FALSE
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0
@@ -342,8 +343,9 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
+	fish_source_type = /datum/fish_source/lavaland/icemoon
 
 	light_range = 3
 	light_power = 0.75
@@ -387,7 +389,7 @@
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
 		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(!IS_ORGANIC_LIMB(burn_limb))
+		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
@@ -425,3 +427,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
+	fish_source_type = null
+
+//basketball specific lava (normal atmos, no slowdown)
+/turf/open/lava/smooth/basketball
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	slowdown = 0
+	fish_source_type = null

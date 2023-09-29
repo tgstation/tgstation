@@ -45,6 +45,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/trophy_manager,
 	/datum/admins/proc/view_all_circuits,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
+	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -84,6 +85,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_fingerprints,
 	/client/proc/list_law_changes,
 	/client/proc/list_signalers,
+	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	/client/proc/respawn_character,
 	/client/proc/show_manifest,
@@ -91,8 +93,10 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
+	/client/proc/log_viewer_new,
+	/client/proc/player_ticket_history,
 	)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_direct_mob_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_sounds)
@@ -101,7 +105,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/datum/admins/proc/station_traits_panel,
 // Client procs
 	/client/proc/admin_away,
-	/client/proc/add_mob_ability,
+	/client/proc/add_marked_mob_ability,
 	/client/proc/admin_change_sec_level,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -116,7 +120,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_infection,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
-	/client/proc/remove_mob_ability,
+	/client/proc/remove_marked_mob_ability,
 	/client/proc/reset_ooc,
 	/client/proc/run_weather,
 	/client/proc/set_dynex_scale,
@@ -209,6 +213,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/populate_world,
 	/client/proc/pump_random_event,
 	/client/proc/print_cards,
+	/client/proc/reestablish_tts_connection,
 	/client/proc/reload_cards,
 	/client/proc/reload_configuration,
 	/client/proc/restart_controller,
@@ -677,6 +682,80 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Debug"
 	SStrading_card_game.printAllCards()
 
+/client/proc/give_mob_action(mob/ability_recipient in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Give Mob Action"
+	set desc = "Gives a mob ability to a mob."
+
+	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/static/list/actions_by_name = list()
+	if (!length(actions_by_name))
+		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
+			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
+
+	var/ability = tgui_input_list(usr, "Choose an ability", "Ability", actions_by_name)
+	if(isnull(ability))
+		return
+
+	var/ability_type = actions_by_name[ability]
+	var/datum/action/cooldown/mob_cooldown/add_ability
+
+	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	if(make_sequence == "Yes")
+		add_ability = new /datum/action/cooldown/mob_cooldown(ability_recipient)
+		add_ability.sequence_actions = list()
+		while(!isnull(ability_type))
+			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			if(isnull(ability_delay) || ability_delay < 0)
+				ability_delay = 0
+			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
+			ability = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
+			ability_type = actions_by_name[ability]
+		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		if(isnull(ability_cooldown) || ability_cooldown < 0)
+			ability_cooldown = 2
+		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
+		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
+			ability_melee_cooldown = 2
+		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
+		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.create_sequence_actions()
+	else
+		add_ability = new ability_type(ability_recipient)
+
+	if(isnull(ability_recipient))
+		return
+	add_ability.Grant(ability_recipient)
+
+	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
+/client/proc/remove_mob_action(mob/removal_target in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Remove Mob Action"
+	set desc = "Remove a special ability from the selected mob."
+
+	var/list/target_abilities = list()
+	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
+		target_abilities[ability.name] = ability
+
+	if(!length(target_abilities))
+		return
+
+	var/chosen_ability = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
+	if(isnull(chosen_ability))
+		return
+	var/datum/action/cooldown/mob_cooldown/to_remove = target_abilities[chosen_ability]
+	if(!istype(to_remove))
+		return
+
+	qdel(to_remove)
+	log_admin("[key_name(usr)] removed the ability [chosen_ability] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(usr)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Give Spell"
@@ -792,6 +871,33 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Admin.Game"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/manage_sect()
+	set name = "Manage Religious Sect"
+	set category = "Admin.Game"
+
+	if (!isnull(GLOB.religious_sect))
+		var/you_sure = tgui_alert(
+			usr,
+			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
+			"Replace God?",
+			list("Yes", "Cancel"),
+		)
+		if (you_sure != "Yes")
+			return
+
+	var/static/list/choices = list()
+	if (!length(choices))
+		choices["nothing"] = null
+		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
+			choices[initial(sect.name)] = sect
+	var/choice = tgui_input_list(usr, "Set new Chaplain sect", "God Picker", choices)
+	if(isnull(choice))
+		return
+	if(choice == "nothing")
+		reset_religious_sect()
+		return
+	set_new_religious_sect(choices[choice], reset_existing = TRUE)
 
 /client/proc/deadmin()
 	set name = "Deadmin"
@@ -928,7 +1034,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job))
+		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(admin, "[rank] wasn't able to be spawned.")
 			continue
@@ -968,8 +1074,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		var/reqs = initial(spell.spell_requirements)
 		if(reqs & SPELL_CASTABLE_AS_BRAIN)
 			real_reqs += "Castable as brain"
-		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
-			real_reqs += "Castable phased"
 		if(reqs & SPELL_REQUIRES_HUMAN)
 			real_reqs += "Must be human"
 		if(reqs & SPELL_REQUIRES_MIME_VOW)
@@ -1019,7 +1123,18 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	if(!isobserver(usr))
 		admin_ghost()
-	usr.forceMove(coords2turf(reservation.bottom_left_coords))
+	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
+
+/client/proc/library_control()
+	set name = "Library Management"
+	set category = "Admin"
+	if(!check_rights(R_BAN))
+		return
+
+	if(!holder.library_manager)
+		holder.library_manager = new()
+	holder.library_manager.ui_interact(usr)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Library Management") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

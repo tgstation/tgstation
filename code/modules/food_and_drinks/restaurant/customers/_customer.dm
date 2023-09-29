@@ -52,10 +52,10 @@
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
 
-/datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/proc/get_overlays(mob/living/basic/robot_customer/customer)
 	return
 
-/datum/customer_data/proc/get_underlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/proc/get_underlays(mob/living/basic/robot_customer/customer)
 	return
 
 /datum/customer_data/american
@@ -74,6 +74,7 @@
 			/obj/item/food/burger/plain = 25,
 			/obj/item/food/burger/cheese = 15,
 			/obj/item/food/burger/superbite = 1,
+			/obj/item/food/butter/on_a_stick = 8,
 			/obj/item/food/fries = 10,
 			/obj/item/food/cheesyfries = 6,
 			/obj/item/food/pie/applepie = 4,
@@ -176,7 +177,7 @@
 		),
 	)
 
-/datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/french/get_overlays(mob/living/basic/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
 		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
 		flag.appearance_flags = RESET_COLOR
@@ -223,7 +224,7 @@
 		),
 	)
 
-/datum/customer_data/japanese/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/japanese/get_overlays(mob/living/basic/robot_customer/customer)
 	//leaving and eaten
 	if(type == /datum/customer_data/japanese && customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.ai_controller.blackboard[BB_CUSTOMER_EATING])
 		var/mutable_appearance/you_won_my_heart = mutable_appearance('icons/effects/effects.dmi', "love_hearts")
@@ -302,29 +303,29 @@
 		return FALSE
 	return TRUE
 
-/datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
 		LAZYSET(wings_chosen, customer_ref, GLOB.moth_wings_list[pick(GLOB.moth_wings_list)])
 	return wings_chosen[customer_ref]
 
-/datum/customer_data/moth/get_underlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/get_underlays(mob/living/basic/robot_customer/customer)
 	var/list/underlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
 	wings_behind.appearance_flags = RESET_COLOR
 	underlays += wings_behind
 
 	return underlays
 
-/datum/customer_data/moth/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/get_overlays(mob/living/basic/robot_customer/customer)
 	var/list/overlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
 	wings_front.appearance_flags = RESET_COLOR
 	overlays += wings_front
 
@@ -393,7 +394,7 @@
 			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
 			/obj/item/food/full_english = 2,
-			/obj/item/food/grilled_cheese_sandwich = 5,
+			/obj/item/food/sandwich/cheese/grilled = 5,
 			/obj/item/food/pie/meatpie = 5,
 			/obj/item/food/salad/ricepudding = 5,
 		),

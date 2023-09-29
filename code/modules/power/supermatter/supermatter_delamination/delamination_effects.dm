@@ -120,7 +120,7 @@
 	// set supermatter cascade to true, to prevent auto evacuation due to no way of calling the shuttle
 	SSshuttle.supermatter_cascade = TRUE
 	// set hijack completion timer to infinity, so that you cant prematurely end the round with a hijack
-	for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
+	for(var/obj/machinery/computer/emergency_shuttle/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/emergency_shuttle))
 		console.hijack_completion_flight_time_set = INFINITY
 
 	/* This logic is to keep uncalled shuttles uncalled
@@ -164,7 +164,7 @@
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
 	make_maint_all_access()
-	for(var/obj/machinery/light/light_to_break in GLOB.machines)
+	for(var/obj/machinery/light/light_to_break as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 		if(prob(35))
 			light_to_break.set_major_emergency_light()
 			continue
@@ -211,7 +211,7 @@
 	sleep(10 SECONDS)
 
 	SSticker.news_report = SUPERMATTER_CASCADE
-	SSticker.force_ending = TRUE
+	SSticker.force_ending = FORCE_END_ROUND
 
 /// Scatters crystal mass over the event spawns as long as they are at least 30 tiles away from whatever we want to avoid.
 /datum/sm_delam/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)

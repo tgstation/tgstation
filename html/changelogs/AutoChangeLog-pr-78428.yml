@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "SM crystal can now dust someone or something if it falls on it."

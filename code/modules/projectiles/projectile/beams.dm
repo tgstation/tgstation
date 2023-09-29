@@ -24,14 +24,15 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
-	wound_bonus = -30
+	wound_bonus = -20
+	damage = 25
 	bare_wound_bonus = 40
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
-	damage = 25
+	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
@@ -53,6 +54,21 @@
 		M.ignite_mob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
+
+/obj/projectile/beam/laser/musket
+	name = "low-power laser"
+	icon_state = "laser_musket"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	damage = 25
+	stamina = 40
+	light_color = COLOR_STRONG_VIOLET
+	weak_against_armour = TRUE
+
+/obj/projectile/beam/laser/musket/prime
+	name = "mid-power laser"
+	damage = 30
+	stamina = 45
+	weak_against_armour = FALSE
 
 /obj/projectile/beam/weak
 	damage = 15
@@ -99,6 +115,15 @@
 
 /obj/projectile/beam/disabler/weak
 	damage = 15
+
+/obj/projectile/beam/disabler/smoothbore
+	name = "unfocused disabler beam"
+	weak_against_armour = TRUE
+
+/obj/projectile/beam/disabler/smoothbore/prime
+	name = "focused disabler beam"
+	weak_against_armour = FALSE
+	damage = 35 //slight increase in damage just for the hell of it
 
 /obj/projectile/beam/pulse
 	name = "pulse"

@@ -21,7 +21,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/variable_name = variable["name"]
 		var/datum/circuit_variable/variable_datum = new /datum/circuit_variable(variable_name, variable["datatype"])
 		circuit_variables[variable_name] = variable_datum
-		if(variable["is_list"])
+		if(variable["is_assoc_list"])
+			assoc_list_variables[variable_name] = variable_datum
+			variable_datum.set_value(list())
+		else if(variable["is_list"])
 			list_variables[variable_name] = variable_datum
 			variable_datum.set_value(list())
 		else
@@ -191,10 +194,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/datum/circuit_variable/variable = circuit_variables[variable_identifier]
 		new_data["name"] = variable.name
 		new_data["datatype"] = variable.datatype
-		if(variable_identifier in list_variables)
+		if(variable_identifier in assoc_list_variables)
+			new_data["is_assoc_list"] = TRUE
+		else if(variable_identifier in list_variables)
 			new_data["is_list"] = TRUE
-		else
-			new_data["is_list"] = FALSE
 		variables += list(new_data)
 	general_data["variables"] = variables
 

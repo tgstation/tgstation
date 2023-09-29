@@ -4,7 +4,7 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	flags_1 = 0
 	icon_state = "frame-overlay"
@@ -66,7 +66,7 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-overlay"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	var/obj/item/photo/framed
 	var/persistence_id
@@ -261,6 +261,19 @@
 
 /obj/structure/sign/picture_frame/showroom/four
 	persistence_id = "frame_showroom4"
+
+// for the hall of fame escape shuttle
+/obj/structure/sign/picture_frame/hall_of_fame/one
+	persistence_id = "frame_hall_of_fame_1"
+
+/obj/structure/sign/picture_frame/hall_of_fame/two
+	persistence_id = "frame_hall_of_fame_2"
+
+/obj/structure/sign/picture_frame/hall_of_fame/three
+	persistence_id = "frame_hall_of_fame_3"
+
+/obj/structure/sign/picture_frame/hall_of_fame/four
+	persistence_id = "frame_hall_of_fame_4"
 
 /obj/structure/sign/picture_frame/portrait/bar
 	persistence_id = "frame_bar"

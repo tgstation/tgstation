@@ -47,10 +47,15 @@ GLOBAL_VAR(restart_counter)
  *
  * GOT IT MEMORIZED?
  * - Dominion/Cyberboss
+ *
+ * Where to put init shit quick guide:
+ * If you need it to happen before the mc is created: world/Genesis.
+ * If you need it to happen last: world/New(),
+ * Otherwise, in a subsystem preinit or init. Subsystems can set an init priority.
  */
 
 /**
- * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN MASTER/NEW() IS DONE
+ * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN SUBSYSTEMS OR WORLD/NEW IS DONE
  * NOWHERE THE FUCK ELSE
  * I DON'T CARE HOW MANY LAYERS OF DEBUG/PROFILE/TRACE WE HAVE, YOU JUST HAVE TO DEAL WITH THIS PROC EXISTING
  * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
@@ -75,6 +80,9 @@ GLOBAL_VAR(restart_counter)
 
 	// Init the debugger first so we can debug Master
 	init_debugger()
+
+	// Create the logger
+	logger = new
 
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
@@ -172,10 +180,18 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
 #else
-	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
+	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
+/// Returns a list of data about the world state, don't clutter
+/world/proc/get_world_state_for_logging()
+	var/data = list()
+	data["tick_usage"] = world.tick_usage
+	data["tick_lag"] = world.tick_lag
+	data["time"] = world.time
+	data["timestamp"] = logger.unix_timestamp_string()
+	return data
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -199,7 +215,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.logger.init_logging()
+	logger.init_logging()
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -288,8 +304,7 @@ GLOBAL_VAR(restart_counter)
 	#ifdef UNIT_TESTS
 	FinishTestRun()
 	return
-	#endif
-
+	#else
 	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
@@ -311,6 +326,7 @@ GLOBAL_VAR(restart_counter)
 			shutdown_logging() // See comment below.
 			auxcleanup()
 			TgsEndProcess()
+			return ..()
 
 	log_world("World rebooted at [time_stamp()]")
 
@@ -320,6 +336,7 @@ GLOBAL_VAR(restart_counter)
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
+	#endif
 
 /world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
@@ -344,8 +361,8 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> "
-		if(!CONFIG_GET(flag/norespawn))
-			features += "respawn"
+		if(CONFIG_GET(flag/allow_respawn))
+			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
 		if(!CONFIG_GET(flag/allow_ai))
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
@@ -381,31 +398,35 @@ GLOBAL_VAR(restart_counter)
 	else
 		hub_password = "SORRYNOPASSWORD"
 
-// If this is called as a part of maploading you cannot call it on the newly loaded map zs, because those get handled later on in the pipeline
-/world/proc/increaseMaxX(new_maxx, max_zs_to_load = maxz)
+/**
+ * Handles incresing the world's maxx var and intializing the new turfs and assigning them to the global area.
+ * If map_load_z_cutoff is passed in, it will only load turfs up to that z level, inclusive.
+ * This is because maploading will handle the turfs it loads itself.
+ */
+/world/proc/increase_max_x(new_maxx, map_load_z_cutoff = maxz)
 	if(new_maxx <= maxx)
 		return
 	var/old_max = world.maxx
 	maxx = new_maxx
-	if(!max_zs_to_load)
+	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(
 		locate(old_max + 1, 1, 1),
-		locate(maxx, maxy, max_zs_to_load))
+		locate(maxx, maxy, map_load_z_cutoff))
 	global_area.contained_turfs += to_add
 
-/world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
+/world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
 	if(new_maxy <= maxy)
 		return
 	var/old_maxy = maxy
 	maxy = new_maxy
-	if(!max_zs_to_load)
+	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(
 		locate(1, old_maxy + 1, 1),
-		locate(maxx, maxy, max_zs_to_load))
+		locate(maxx, maxy, map_load_z_cutoff))
 	global_area.contained_turfs += to_add
 
 /world/proc/incrementMaxZ()

@@ -96,11 +96,11 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
-	ruletype = "Roundstart"
+	ruletype = ROUNDSTART_RULESET
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
-	ruletype = "Latejoin"
+	ruletype = LATEJOIN_RULESET
 
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
@@ -167,6 +167,14 @@
 		GLOB.pre_setup_antags -= M
 	return TRUE
 
+/// Rulesets can be reused, so when we're done setting one up we want to wipe its memory of the people it was selecting over
+/// This isn't Destroy we aren't deleting it here, rulesets free when nothing holds a ref. This is just to prevent hung refs.
+/datum/dynamic_ruleset/proc/forget_startup()
+	SHOULD_CALL_PARENT(TRUE)
+	candidates = list()
+	assigned = list()
+	antag_datum = null
+	
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!

@@ -46,11 +46,17 @@
 	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, VEHICLE_TRAIT)
 
 
-/obj/vehicle/sealed/proc/mob_try_enter(mob/M)
-	if(!istype(M))
+/obj/vehicle/sealed/proc/mob_try_enter(mob/rider)
+	if(!istype(rider))
 		return FALSE
-	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), M)))
-		mob_enter(M)
+	var/enter_delay = get_enter_delay(rider)
+	if (enter_delay == 0)
+		if (enter_checks(rider))
+			mob_enter(rider)
+			return TRUE
+		return FALSE
+	if (do_after(rider, enter_delay, src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), rider)))
+		mob_enter(rider)
 		return TRUE
 	return FALSE
 

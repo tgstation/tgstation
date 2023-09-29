@@ -2,7 +2,7 @@
 /obj/structure/spacevine
 	name = "space vine"
 	desc = "An extremely expansionistic species of vine."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "Light1"
 	anchored = TRUE
 	density = FALSE
@@ -30,6 +30,7 @@
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -182,6 +183,8 @@
 		index += mutation.on_explosion(severity, target, src)
 	if(!index && prob(34 * severity))
 		qdel(src)
+
+	return TRUE
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (always_atmos_process || exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe

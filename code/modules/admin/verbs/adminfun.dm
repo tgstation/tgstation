@@ -7,19 +7,19 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = input("Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null)
 		return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = input("Range of heavy impact. -1 to none", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = input("Range of light impact. -1 to none", "Input")  as num|null
 	if(light == null)
 		return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = input("Range of flash. -1 to none", "Input")  as num|null
 	if(flash == null)
 		return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = input("Range of flames. -1 to none", "Input")  as num|null
 	if(flames == null)
 		return
 
@@ -40,10 +40,10 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = input("Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = input("Range of light pulse.", "Input")  as num|null
 	if(light == null)
 		return
 
@@ -60,11 +60,11 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = tgui_alert(usr, "Drop a brain?", "Confirm", list("Yes", "No","Cancel"))
+	var/confirm = tgui_alert(usr, "Drop a brain?", "Confirm", list("Yes", "No","Cancel")) || "Cancel"
 	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
-	if(!victim)
+	if(isnull(victim))
 		return
 
 	log_admin("[key_name(usr)] has gibbed [key_name(victim)]")
@@ -89,14 +89,15 @@
 	set category = "Admin.Fun"
 
 	var/confirm = tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No"))
-	if(confirm == "Yes")
-		log_admin("[key_name(usr)] used gibself.")
-		message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	if(confirm != "Yes")
+		return
+	log_admin("[key_name(usr)] used gibself.")
+	message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-		var/mob/living/ourself = mob
-		if (istype(ourself))
-			ourself.gib(TRUE, TRUE, TRUE)
+	var/mob/living/ourself = mob
+	if (istype(ourself))
+		ourself.gib(TRUE, TRUE, TRUE)
 
 /client/proc/everyone_random()
 	set category = "Admin.Fun"
@@ -114,7 +115,7 @@
 		to_chat(usr, "Disabled.", confidential = TRUE)
 		return
 
-	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
+	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel")) || "Cancel"
 	if(notifyplayers == "Cancel")
 		return
 
@@ -218,9 +219,9 @@
 		return
 	smite.effect(src, target)
 
-///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
-/proc/breadify(atom/movable/target)
-	var/obj/item/food/bread/plain/smite/tomb = new(get_turf(target))
+/// "Turns" people into objects. Really, we just add them to the contents of the item.
+/proc/objectify(atom/movable/target, path)
+	var/atom/tomb = new path(get_turf(target))
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 

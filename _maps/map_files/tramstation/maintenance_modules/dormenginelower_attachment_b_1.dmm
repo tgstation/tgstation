@@ -78,7 +78,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "t" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/yellow,
@@ -158,7 +158,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "L" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,

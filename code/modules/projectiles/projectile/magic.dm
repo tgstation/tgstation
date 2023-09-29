@@ -141,7 +141,7 @@
 /obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = FALSE
+		A.unlock()
 	D.open()
 
 /obj/projectile/magic/change
@@ -276,6 +276,7 @@
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
+	paint_jobs = null
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -284,13 +285,12 @@
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
+/obj/structure/closet/decay/after_open(mob/living/user, force)
+	. = ..()
+	unmagify()
+
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
-		unmagify()
-
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself
@@ -431,9 +431,9 @@
 	/// The duration of the trail before deleting.
 	var/trail_lifespan = 0 SECONDS
 	/// The icon the trail uses.
-	var/trail_icon = 'icons/obj/wizard.dmi'
+	var/trail_icon = 'icons/effects/magic.dmi'
 	/// The icon state the trail uses.
-	var/trail_icon_state = "trail"
+	var/trail_icon_state = "arrow"
 
 /obj/projectile/magic/aoe/Range()
 	if(trigger_range >= 1)
@@ -481,7 +481,7 @@
 	speed = 0.3
 
 	/// The power of the zap itself when it electrocutes someone
-	var/zap_power = 20000
+	var/zap_power = 8e6
 	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
 	/// The flags of the zap itself when it electrocutes someone
@@ -503,7 +503,7 @@
 	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
-	zap_power = 10000
+	zap_power = 4e6
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 

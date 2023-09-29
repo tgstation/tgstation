@@ -162,6 +162,6 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/ntnetdownload/kill_program(forced)
+/datum/computer_file/program/ntnetdownload/kill_program(mob/user)
 	abort_file_download()
 	return ..()

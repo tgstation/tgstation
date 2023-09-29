@@ -468,7 +468,7 @@
 	if(moderator_list[/datum/gas/bz] < (150 / power_level))
 		return
 	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-	picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+	picked_corner.loc.fire_nuclear_particle(REVERSE_DIR(picked_corner.dir))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
 	if(power_level < 4)
@@ -480,8 +480,8 @@
 	if(critical_threshold_proximity > 650 && prob(20))
 		zap_number += 1
 
-	var/cutoff = 1500
-	cutoff = clamp(3000 - (power_level * (internal_fusion.total_moles() * 0.45)), 450, 3000)
+	var/cutoff = 1.2e6
+	cutoff = clamp(2.4e6 - (power_level * (internal_fusion.total_moles() * 360)), 3.6e5, 2.4e6)
 
 	var/zaps_aspect = DEFAULT_ZAP_ICON_STATE
 	var/flags = ZAP_SUPERMATTER_FLAGS
@@ -495,7 +495,7 @@
 
 	playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	for(var/i in 1 to zap_number)
-		supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
+		supermatter_zap(src, 5, power_level * 2.4e5, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse(seconds_per_tick)
 	if(SPT_PROB(100 - critical_threshold_proximity / 15, seconds_per_tick))

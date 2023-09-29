@@ -4,7 +4,6 @@
  * Adds a floor to the melee damage of the dog, as most pet dogs don't actually have any melee strength
  */
 /datum/ai_behavior/basic_melee_attack/dog
-	action_cooldown = 0.8 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
 
@@ -22,7 +21,7 @@
 		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
 		return
 
-	if (!in_range(living_pawn, target))
+	if (!living_pawn.Adjacent(target))
 		growl_at(living_pawn, target, seconds_per_tick)
 		return
 

@@ -3,7 +3,7 @@
 /datum/element/update_icon_updates_onmob
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	///The ITEM_SLOT_X flags to update on the parent mob. (Ex: ITEM_SLOT_HANDS|ITEM_SLOT_FEET)
+	///The ITEM_SLOT_X flags to update on the parent mob in additon to the item's slot_flags. (Ex: Passing ITEM_SLOT_HANDCUFFED for sneakers will update the handcuff overlays in addition to ITEM_SLOT_FEET's overlays when their icon changes.)
 	var/update_flags = NONE
 	///Should the element call [/mob/proc/update_body()] in addition to clothing updates?
 	var/update_body = FALSE
@@ -24,6 +24,6 @@
 		if(M.is_holding(target))
 			M.update_held_items()
 		else
-			M.update_clothing(update_flags)
+			M.update_clothing((target.slot_flags|update_flags))
 			if(update_body)
 				M.update_body()

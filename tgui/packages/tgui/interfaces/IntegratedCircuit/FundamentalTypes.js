@@ -87,8 +87,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         options={data}
         onSelected={setValue}
         displayText={value}
-        openWidth={large ? '200px' : undefined}
-        noscroll
+        menuWidth={large ? '200px' : undefined}
       />
     );
   },

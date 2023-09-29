@@ -30,7 +30,7 @@
 	. = ..()
 	invocation = span_notice("<b>[cast_on]</b> moves [cast_on.p_their()] hands in the shape of a cube, pressing a box out of the air.")
 
-/datum/action/cooldown/spell/conjure_item/invisible_box/make_item()
+/datum/action/cooldown/spell/conjure_item/invisible_box/make_item(atom/caster)
 	. = ..()
 	var/obj/item/made_box = .
 	made_box.alpha = 255
