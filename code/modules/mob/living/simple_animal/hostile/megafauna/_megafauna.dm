@@ -71,11 +71,9 @@
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(gibbed) // in case they've been force dusted
-		SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
-		return
+		return ..(gibbed, drop_loot = FALSE)
 
-	if(health > 0)
+	if(health > 0) // death wand etc
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not

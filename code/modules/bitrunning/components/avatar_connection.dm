@@ -78,16 +78,17 @@
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Disconnects the avatar and returns the mind to the old_body.
-/datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
+/datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, datum/source)
 	return_to_old_body()
 
-	var/obj/machinery/netpod/hosting_netpod = broken_netpod || netpod_ref?.resolve()
-	if(hosting_netpod)
-		hosting_netpod?.disconnect_occupant(forced)
+	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve()
+	if(isnull(hosting_netpod) && istype(source, /obj/machinery/netpod))
+		hosting_netpod = source
+
+	hosting_netpod?.disconnect_occupant(forced)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
-	if(server)
-		server.avatar_connection_refs.Remove(WEAKREF(src))
+	server?.avatar_connection_refs.Remove(WEAKREF(src))
 
 	qdel(src)
 
@@ -164,10 +165,10 @@
 	full_avatar_disconnect()
 
 /// Helper for calling sever with forced variables
-/datum/component/avatar_connection/proc/on_sever_connection(datum/source, obj/machinery/netpod/broken_netpod)
+/datum/component/avatar_connection/proc/on_sever_connection(datum/source)
 	SIGNAL_HANDLER
 
-	full_avatar_disconnect(forced = TRUE, broken_netpod = broken_netpod)
+	full_avatar_disconnect(forced = TRUE, source = source)
 
 /// Triggers when the server is shutting down
 /datum/component/avatar_connection/proc/on_shutting_down(datum/source, mob/living/hackerman)

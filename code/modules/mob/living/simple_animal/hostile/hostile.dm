@@ -423,9 +423,9 @@
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
-/mob/living/simple_animal/hostile/death(gibbed)
+/mob/living/simple_animal/hostile/death(gibbed, drop_loot = TRUE)
 	LoseTarget()
-	..(gibbed)
+	..(gibbed, drop_loot)
 
 /mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
 	do_alert_animation()
