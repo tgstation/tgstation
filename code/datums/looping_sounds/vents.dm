@@ -4,4 +4,4 @@
 	end_sound = 'sound/machines/fan_stop.ogg'
 	end_sound = 1.5 SECONDS
 	mid_sounds = 'sound/machines/fan_loop.ogg'
-	mid_length = 2 SECOND
+	mid_length = 2 SECONDS
