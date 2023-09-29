@@ -36,13 +36,14 @@
 	ammo_x_offset = 3
 
 /obj/item/gun/energy/laser/fullauto
-	name = "laser SMG"
-	desc = "A modified laser gun which can shoot far faster, but is far less damaging."
+	name = "laser carbine"
+	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
+	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/fullauto)
 
 /obj/item/gun/energy/laser/fullauto/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
