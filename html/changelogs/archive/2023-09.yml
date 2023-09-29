@@ -1126,3 +1126,82 @@
   - bugfix: Some seeds that were previously not able to be added to the seed extractor
       may now be added (starthistle for example)
   - bugfix: fixes replica pod seeds spawning humans in nullspace
+2023-09-29:
+  A.C.M.O.:
+  - bugfix: Fixes the death sandwich, making it safe to examine.
+  BurgerBB:
+  - bugfix: Scrubbers and Vents will no longer reset their settings on map load.
+  GPeckman:
+  - admin: There is now a tool to apply a DNA Infuser entry to any human.
+  Ghilker:
+  - code_imp: adds a gas connector component that allows connection to the atmos piping
+      system without the need of repathing
+  - refactor: changes the cryo machine to use this new system
+  Ghommie:
+  - bugfix: Fixed crabs not correctly (kinda) walking sideway.
+  Higgin:
+  - balance: Diabetics rejoice! Nerfed sugar OD/hyperglycaemic shock to be an immediate
+      KO followed by drowsiness afterwards until the OD is gone.
+  Jacquerel:
+  - bugfix: The Nuke Op MODsuit AI downloader only works once per purchase, as intended.
+  - bugfix: Blob Zombies and Blobbernauts have had their attack speed restored to
+      its original value
+  JohnFulpWillard:
+  - code_imp: Your bodytype now decides what gendered sounds you make.
+  - balance: You can now remove and replace power cells from PDAs (with screwdriver).
+  - balance: PDAs now drain their power cells harder, and also take into account active
+      programs & their flashlight being on.
+  - balance: PDAs running out of charge now turn their flashlights off.
+  Melbert:
+  - qol: Examine blocked out roundstart / latejoin job information.
+  - qol: Captain gets a little bit more information about how their radio works roundstart.
+  - bugfix: Fixed roundstart players not getting radio information.
+  - balance: Transformation sting now lasts 8 minutes, down from permanent. However,
+      the effect is paused for dead and stasis mobs, making it permanent SO LONG AS
+      they stay dead or in stasis. The effect is also permanent if used on a monkey.
+  - balance: Transformation sting now costs 33 chemicals, down from 50.
+  - balance: Transformation sting now costs 2 dna points, down from 3.
+  - bugfix: Transformation sting works on monkeys again.
+  - refactor: Refactored a bit of human randomization.
+  Rhials:
+  - bugfix: The Polymorph Belt should now update its sprite when active.
+  - qol: The freedom implant has received minor feedback and other minor usage improvements.
+  Sealed101:
+  - bugfix: fixed lobstrosities becoming unmovable when killed during their charge
+      windup
+  SyncIt21:
+  - bugfix: removes incorrect stack traces when using some admin secrets
+  Vekter:
+  - bugfix: Fixes the missing grinder in Birdshot's Virology department
+  Vincent983:
+  - bugfix: the parole status and discharged status are now green and blue respectively
+      in the security record interface
+  Watermelon914:
+  - balance: Head revolutionaries and heads of staff are no longer immediately considered
+      disqualified when going AFK or disconnecting and are given a 2 minute grace
+      period.
+  - admin: Admins now get a log when a head revolutionary or head of staff disconnects
+      or goes AFK during a revolution. They also get the same log 1 minute after to
+      give them a chance to act on the information.
+  necromanceranne:
+  - bugfix: Splattercasting resets your blood to normal values when you transsform
+      into a vampire.
+  - bugfix: Gaining a new species will set your blood volume down to the normal volume
+      levels if higher than normal.
+  san7890:
+  - code_imp: Robot Customers have recently been touched codewise, please report any
+      bugs or unexpected behavior as there really should not be any.
+  - refactor: Snakes have been refactored into basic mobs. This means that they are
+      a bit more intelligent than previous snakes, making them more docile and averse
+      to harming people (unless otherwise provoked). They do chomp all sorts of mice
+      though. You can feed them a dead mouse to make them your friend if you'd want
+      that.
+  - sound: If you listen closely to snakes, you might be able to hear a small hissing
+      sound...
+  timothymtorres:
+  - bugfix: Fix water puddle runtime when washing items
+  - rscadd: Add drinking water causes drunk mobs to become sober
+  - rscadd: Add candle design to biogenerator
+  yorii:
+  - bugfix: dead bodies now cool down to room temperature over time
+  - qol: allowed names to start with a number if AI/Borg
