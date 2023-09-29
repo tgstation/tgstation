@@ -1074,8 +1074,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		var/reqs = initial(spell.spell_requirements)
 		if(reqs & SPELL_CASTABLE_AS_BRAIN)
 			real_reqs += "Castable as brain"
-		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
-			real_reqs += "Castable phased"
 		if(reqs & SPELL_REQUIRES_HUMAN)
 			real_reqs += "Must be human"
 		if(reqs & SPELL_REQUIRES_MIME_VOW)
