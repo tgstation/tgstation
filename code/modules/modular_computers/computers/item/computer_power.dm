@@ -1,5 +1,5 @@
 ///The multiplier given to the base overtime charge drain value if its flashlight is on.
-#define FLASHLIGHT_DRAIN_MULTIPLIER 1.10
+#define FLASHLIGHT_DRAIN_MULTIPLIER 1.1
 
 // Tries to draw power from charger or, if no operational charger is present, from power cell.
 /obj/item/modular_computer/proc/use_power(amount = 0)
