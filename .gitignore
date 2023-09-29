@@ -237,3 +237,9 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+#Local maps
+_maps/RandomRuins/SpaceRuins/haruyamahq.dmm
+_maps/map_files/OmegaStation.dmm
+_maps/map_files/TowerStation.dmm
+tgstation.code-workspace
