@@ -48,7 +48,7 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  */
 /proc/get_swarm_path_to(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE)
-	var/list/hand_around = list()	
+	var/list/hand_around = list()
 	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, /proc/pathfinding_finished, hand_around))
 	if(!SSpathfinder.swarmed_pathfind(caller, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await))
@@ -279,7 +279,11 @@
 	var/movement_type = NONE
 	/// Are we being thrown?
 	var/thrown = FALSE
+	/// Are we anchored
+	var/anchored = FLASH_LIGHT_POWER
 
+	/// Are we a ghost? (they have effectively unique pathfinding)
+	var/is_observer = FALSE
 	/// Are we a living mob?
 	var/is_living = FALSE
 	/// Are we a bot?
@@ -288,13 +292,23 @@
 	var/can_ventcrawl = FALSE
 	/// What is the size of our mob
 	var/mob_size = null
+	/// Is our mob incapacitated
+	var/incapacitated = FALSE
+	/// Is our mob incorporeal
+	var/incorporeal_move = FALSE
+	/// If our mob has a rider, what does it look like
+	var/datum/can_pass_info/rider_info = null
+	/// If our mob is buckled to something, what's it like
+	var/datum/can_pass_info/buckled_info = null
 
-	/// Would we fall over standard openspace?
-	var/fall_openspace = TRUE
 	/// Do we have gravity
 	var/has_gravity = TRUE
 	/// Pass information for the object we are pulling, if any
 	var/datum/can_pass_info/pulling_info = null
+
+	/// Cameras have a lot of BS can_z_move overrides
+	/// Let's avoid this
+	var/camera_type
 
 	/// Weakref to the caller used to generate this info
 	/// Should not use this almost ever, it's for context and to allow for proc chains that
@@ -313,12 +327,23 @@
 	src.pass_flags = construct_from.pass_flags
 	src.movement_type = construct_from.movement_type
 	src.thrown = !!construct_from.throwing
+	src.anchored = construct_from.anchored
 	src.has_gravity = construct_from.has_gravity()
+	if(ismob(construct_from))
+		var/mob/living/mob_construct = construct_from
+		src.incapacitated = mob_construct.incapacitated()
+		if(mob_construct.buckled)
+			src.buckled_info = new(mob_construct.buckled, access, no_id, call_depth + 1)
+	if(isobserver(construct_from))
+		src.is_observer = TRUE
 	if(isliving(construct_from))
 		var/mob/living/living_construct = construct_from
 		src.is_living = TRUE
 		src.can_ventcrawl = HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_construct, TRAIT_VENTCRAWLER_NUDE)
 		src.mob_size = living_construct.mob_size
+		src.incorporeal_move = living_construct.incorporeal_move
+	if(iscameramob(construct_from))
+		src.camera_type = construct_from.type
 	src.is_bot = isbot(construct_from)
 
 	if(construct_from.pulling)
