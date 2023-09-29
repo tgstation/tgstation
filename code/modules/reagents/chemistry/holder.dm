@@ -519,11 +519,6 @@
 		stack_trace("non finite amount passed to trans_to [amount] amount of reagents")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount < CHEMICAL_VOLUME_MINIMUM)
-		return FALSE
-
 	var/list/cached_reagents = reagent_list
 
 	var/cached_amount = amount
@@ -537,7 +532,9 @@
 			var/mob/living/carbon/eater = target
 			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 			if(!belly)
-				eater.expel_ingested(my_atom, amount)
+				var/expel_amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+				if(expel_amount > CHEMICAL_VOLUME_MINIMUM)
+					eater.expel_ingested(my_atom, expel_amount)
 				return
 			R = belly.reagents
 			target_atom = belly
@@ -547,44 +544,45 @@
 			R = target.reagents
 			target_atom = target
 
-	//Set up new reagents to inherit the old ongoing reactions
-	if(!no_react)
-		transfer_reactions(R)
-
+	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, R.maximum_volume - R.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
+	//Set up new reagents to inherit the old ongoing reactions
+	if(!no_react)
+		transfer_reactions(R)
+
+	var/transfered_amount = 0
 	var/trans_data = null
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
 	var/reagents_to_remove = list()
 	if(!round_robin)
-		var/part = amount / src.total_volume
+		var/part = 1 / length(cached_reagents)
+
 		for(var/datum/reagent/reagent as anything in cached_reagents)
 			if(remove_blacklisted && !(reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
-			var/transfer_amount = round(reagent.volume * part, CHEMICAL_QUANTISATION_LEVEL)
+			var/transfer_amount = round(min(reagent.volume, amount * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
 			if(preserve_data)
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
+			if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
+			transfered_amount += transfer_amount
 			if(methods)
 				r_to_send += reagent
 
 			reagents_to_remove += reagent
 
-		if(isorgan(target_atom))
-			R.expose_multiple(r_to_send, target, methods, part, show_message)
-		else
-			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
+		R.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
 
 		for(var/datum/reagent/reagent as anything in reagents_to_remove)
-			var/transfer_amount = reagent.volume * part
+			var/transfer_amount = round(min(reagent.volume, amount * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
 			if(methods)
-				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
+				reagent.on_transfer(target_atom, methods, transfer_amount)
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
@@ -598,20 +596,19 @@
 				continue
 			if(preserve_data)
 				trans_data = copy_data(reagent)
-			var/transfer_amount = amount
-			if(amount > reagent.volume)
-				transfer_amount = reagent.volume
+			var/transfer_amount = round(min(amount * multiplier, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
+			if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
+			transfered_amount += transfer_amount
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(isorgan(target_atom))
 					R.expose_single(reagent, target, methods, transfer_amount, show_message)
 				else
 					R.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
-				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
+				reagent.on_transfer(target_atom, methods, transfer_amount)
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
@@ -625,7 +622,7 @@
 	if(!no_react)
 		R.handle_reactions()
 		src.handle_reactions()
-	return amount
+	return transfered_amount
 
 /**
  * Transfer a specific reagent id to the target object
@@ -640,18 +637,13 @@
 	obj/target,
 	datum/reagent/reagent_type,
 	amount = 1,
-	preserve_data=1
+	preserve_data = 1
 )
 	if (QDELETED(target))
 		return
 
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to trans_id_to [amount] [reagent_type]")
-		return FALSE
-
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
 	var/available_volume = get_reagent_amount(reagent_type)
@@ -663,6 +655,7 @@
 	else
 		return
 
+	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/cached_amount = amount
