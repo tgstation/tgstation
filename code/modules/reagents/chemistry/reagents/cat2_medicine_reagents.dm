@@ -82,7 +82,6 @@
 	if(!helbent)
 		affected_mob.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
-		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/L)
 	if(helbent)
