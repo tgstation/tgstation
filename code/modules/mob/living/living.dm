@@ -535,6 +535,15 @@
 		if(held_item)
 			. = held_item.GetID()
 
+/**
+ * Returns the access list for this mob
+ */
+/mob/living/proc/get_access()
+	var/obj/item/card/id/id = get_idcard()
+	if(!id)
+		return list()
+	return id.GetAccess()
+
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(!held_item)

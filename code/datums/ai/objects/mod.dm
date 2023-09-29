@@ -28,7 +28,7 @@
 		queue_behavior(/datum/ai_behavior/mod_attach)
 
 /datum/ai_controller/mod/get_access()
-	return id_card
+	return id_card.GetAccess()
 
 /datum/ai_behavior/mod_attach
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_MOVE_AND_PERFORM
