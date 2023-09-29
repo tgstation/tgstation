@@ -90,14 +90,13 @@
 		stack_trace("non finite amount passed to add reagent [amount] [reagent_type]")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	if(amount < CHEMICAL_VOLUME_MINIMUM)
-		return FALSE
-
 	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent_type, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
 
+	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+	if(amount < CHEMICAL_VOLUME_MINIMUM)
+		return FALSE
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent_type]
 	if(!glob_reagent)
@@ -221,6 +220,7 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
@@ -250,11 +250,9 @@
 		stack_trace("non finite amount passed to remove any reagent [amount]")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
-
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/list/cached_reagents = reagent_list
 	var/total_removed = 0
@@ -297,10 +295,9 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
-
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
@@ -330,10 +327,9 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
-
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
@@ -524,10 +520,9 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
-
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/list/cached_reagents = reagent_list
 
@@ -655,6 +650,7 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
@@ -719,6 +715,7 @@
 		return FALSE
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return FALSE
 
