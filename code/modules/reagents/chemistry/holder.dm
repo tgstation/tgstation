@@ -738,7 +738,11 @@
 
 	return amount
 
-///Multiplies the reagents inside this holder by a specific amount
+/**
+ * Multiplies the reagents inside this holder by a specific amount
+ * Arguments
+ * * multiplier - the amount to multiply each reagent by
+ */
 /datum/reagents/proc/multiply_reagents(multiplier = 1)
 	var/list/cached_reagents = reagent_list
 	if(!total_volume)
@@ -875,7 +879,13 @@
 		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
 	return need_mob_update
 
-/// Signals that metabolization has stopped, triggering the end of trait-based effects
+/**
+ * Signals that metabolization has stopped, triggering the end of trait-based effects
+ * Arguments
+ *
+ * * [C][mmob/living/carbon] - the mob to end metabolization on
+ * * keep_liverless - if true will work without a liver
+ */
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -917,7 +927,14 @@
 		return FALSE //prevent addition
 	return added_volume
 
-///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
+/**
+ * Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
+ * Arguments
+ *
+ * * [owner][mob/living/carbon] - the mob we are doing stasis handlng on
+ * * seconds_per_tick - passed from process
+ * * times_fired - number of times to metabolize this reagent
+ */
 /datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/need_mob_update = FALSE
 	for(var/datum/reagent/reagent as anything in reagent_list)
