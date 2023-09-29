@@ -461,6 +461,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/solars/ks13/sb_bow_solars)
+"fe" = (
+/obj/item/circuitboard/computer/solar_control,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "fg" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
@@ -649,11 +653,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/corridor)
-"iE" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/closet/crate/solarpanel_small,
-/turf/open/floor/iron/airless,
-/area/space/nearstation)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -858,6 +857,9 @@
 	name = "AI Upload Access"
 	},
 /turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
+"lq" = (
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "lw" = (
 /obj/structure/lattice,
@@ -2203,9 +2205,6 @@
 "uw" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/security/court)
-"uy" = (
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "uz" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -2491,6 +2490,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"wt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/chaplain/bishopmitre,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ks13/service/chapel_office)
 "wu" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -3012,6 +3016,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
+"yY" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/airless,
+/area/space/nearstation)
 "yZ" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -3157,6 +3166,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
+"zJ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "zK" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -4681,11 +4697,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
-"HG" = (
-/obj/structure/cable,
-/obj/machinery/power/solar_control,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "HH" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/service/jani)
@@ -6046,10 +6057,6 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
-"Pp" = (
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Pq" = (
@@ -7639,11 +7646,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
-"Xp" = (
-/obj/structure/lattice,
-/obj/item/paper/fluff/ruins/thederelict/syndie_mission,
-/turf/template_noop,
-/area/space/nearstation)
 "Xr" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/science/genetics)
@@ -7693,6 +7695,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
+"XI" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "XJ" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -7753,6 +7759,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"Yb" = (
+/obj/structure/cable,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "Yc" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/ai/corridor)
@@ -8577,7 +8590,7 @@ xB
 vl
 NO
 uf
-iE
+yY
 zN
 qG
 aa
@@ -8790,7 +8803,7 @@ aa
 aa
 rk
 MB
-sh
+wt
 Eu
 sh
 sh
@@ -12821,11 +12834,11 @@ Yc
 Yc
 Yc
 Yc
-uy
+lq
 Bu
 Hg
 fJ
-uy
+lq
 YC
 Yc
 Yc
@@ -13048,11 +13061,11 @@ Yc
 Yc
 Yc
 Xi
-uy
+lq
 qf
 Rm
-uy
-uy
+lq
+lq
 Yc
 LL
 Yc
@@ -13167,7 +13180,7 @@ fU
 fU
 fU
 PW
-Pp
+XI
 Yc
 aa
 aa
@@ -13277,7 +13290,7 @@ LM
 xL
 Po
 Jy
-uy
+lq
 YC
 Yc
 DK
@@ -13656,7 +13669,7 @@ QR
 NG
 yl
 XC
-Qz
+zJ
 Mz
 QR
 yg
@@ -15752,7 +15765,7 @@ aa
 aa
 xS
 pR
-pR
+fe
 xS
 VB
 cR
@@ -15864,7 +15877,7 @@ bP
 aa
 aa
 xS
-HG
+Yb
 IK
 xS
 pR
@@ -16065,7 +16078,7 @@ rk
 aa
 aa
 rk
-Xp
+rk
 rk
 rk
 rk
