@@ -32,7 +32,7 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-	
+
 /datum/design/tscanner
 	name = "T-Ray Scanner"
 	id = "tscanner"
@@ -600,4 +600,14 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
-
+/datum/design/audio_tag
+	name = "Audio Tag"
+	desc = "A compact recorder and player which can hold up to ten minutes of content."
+	id = "audio_tag"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
+	build_path = /obj/item/taperecorder/audio_tag
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
