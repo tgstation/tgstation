@@ -376,6 +376,10 @@
 /obj/item/taperecorder/audio_tag/Initialize(mapload)
 	. = ..() //This is probably not the way to inherit all the procs and it's probably not what I want, but I'm gonna try it anyway.
 
+/obj/item/taperecorder/audio_tag/proc/eject(mob/user)
+	balloon_alert("cannot eject drive!")
+	return
+
 /obj/item/tape
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
