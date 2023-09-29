@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 
 /**
- * Codex Cicatrixi is available at the start: 
+ * Codex Cicatrixi is available at the start:
  * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
  * Construct a codex and take what's left with more points.
  * Another downside to having the book is strip searches, which means that it's not just a free nab, at least until you get exposed - and when you do, you'll probably need the faster drawing speed.
@@ -255,3 +255,36 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		selected_atoms += body
 		return TRUE
 	return FALSE
+
+/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms, atom/loc)
+	var/mob/living/body = locate() in selected_atoms
+	if(!body)
+		return
+	// A golem or an android doesn't have skin!
+	var/exterior_text = "skin"
+	// If carbon, it's the limb. If not, it's the body.
+	var/ripped_thing = body
+
+	// We will check if it's a carbon's body.
+	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
+	if(iscarbon(body))
+		var/mob/living/carbon/carbody = body
+		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
+		ripped_thing = bodypart
+		bodypart.receive_damage(25)
+		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
+			exterior_text = "exterior"
+	else
+		// If it is not a carbon mob, we will just check biotypes and damage it directly.
+		if(body.mob_biotypes & MOB_MINERAL ||body.mob_biotypes & MOB_ROBOTIC)
+			exterior_text = "exterior"
+			body.apply_damage(25, BRUTE)
+
+	// Procure book for flavor text. This is why we call parent at the end.
+	var/obj/item/book/le_book = locate() in selected_atoms
+	if(!le_book)
+		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
+	playsound(body, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	body.do_jitter_animation()
+	loc.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book ? le_book : "the book"], turning into an eldritch shade of blue!"))
+	return ..()

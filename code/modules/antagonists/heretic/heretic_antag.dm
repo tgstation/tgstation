@@ -156,9 +156,9 @@
 			if(!gain_knowledge(researched_path))
 				return TRUE
 
-			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)][coupon ? "(via free side-path point)" : ""]")
 			if(coupon)
-				side_path_points--
+				side_path_points -= initial(researched_path.cost)
 			else
 				knowledge_points -= initial(researched_path.cost)
 			return TRUE

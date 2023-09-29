@@ -179,7 +179,7 @@
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
 	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
 	if(ritual_result)
-		ritual.cleanup_atoms(selected_atoms)
+		ritual.cleanup_atoms(selected_atoms, loc)
 
 	// Clean up done, re-appear anything that hasn't been deleted.
 	for(var/atom/to_appear as anything in initial_selected_atoms)
