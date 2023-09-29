@@ -24,7 +24,7 @@ const CharacterControls = (props: {
   handleOpenSpecies: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
-  showGender: boolean;
+  agender: boolean;
 }) => {
   return (
     <Stack>
@@ -47,15 +47,13 @@ const CharacterControls = (props: {
           tooltipPosition="top"
         />
       </Stack.Item>
-
-      {props.showGender && (
-        <Stack.Item>
-          <GenderButton
-            gender={props.gender}
-            handleSetGender={props.setGender}
-          />
-        </Stack.Item>
-      )}
+      <Stack.Item>
+        <GenderButton
+          gender={props.gender}
+          handleSetGender={props.setGender}
+          agender={props.agender}
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -171,6 +169,7 @@ const GenderButton = (
   props: {
     handleSetGender: (gender: Gender) => void;
     gender: Gender;
+    agender: boolean;
   },
   context
 ) => {
@@ -188,25 +187,26 @@ const GenderButton = (
       popperContent={
         genderMenuOpen && (
           <Stack backgroundColor="white" ml={0.5} p={0.3}>
-            {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
-              (gender) => {
-                return (
-                  <Stack.Item key={gender}>
-                    <Button
-                      selected={gender === props.gender}
-                      onClick={() => {
-                        props.handleSetGender(gender);
-                        setGenderMenuOpen(false);
-                      }}
-                      fontSize="22px"
-                      icon={GENDERS[gender].icon}
-                      tooltip={GENDERS[gender].text}
-                      tooltipPosition="top"
-                    />
-                  </Stack.Item>
-                );
-              }
-            )}
+            {(!props.agender // if not agender, then show all options
+              ? [Gender.Male, Gender.Female, Gender.Other, Gender.Other2]
+              : [Gender.Other, Gender.Other2]
+            ).map((gender) => {
+              return (
+                <Stack.Item key={gender}>
+                  <Button
+                    selected={gender === props.gender}
+                    onClick={() => {
+                      props.handleSetGender(gender);
+                      setGenderMenuOpen(false);
+                    }}
+                    fontSize="22px"
+                    icon={GENDERS[gender].icon}
+                    tooltip={GENDERS[gender].text}
+                    tooltipPosition="top"
+                  />
+                </Stack.Item>
+              );
+            })}
           </Stack>
         )
       }>
@@ -215,7 +215,15 @@ const GenderButton = (
           setGenderMenuOpen(!genderMenuOpen);
         }}
         fontSize="22px"
-        icon={GENDERS[props.gender].icon}
+        icon={
+          GENDERS[
+            props.agender && props.gender !== Gender.Other2
+              ? Gender.Other
+              : props.gender
+          ].icon
+        } // Prevents showing wrong icon on species switch. That being said, they/them
+        //   will still not be highlighted green (until manually selected) as
+        //   it's only an implicit choice (FIXME/TODO)
         tooltip="Gender"
         tooltipPosition="top"
       />
@@ -529,8 +537,8 @@ export const MainPage = (
                         act('rotate');
                       }}
                       setGender={createSetPreference(act, 'gender')}
-                      showGender={
-                        currentSpeciesData ? !!currentSpeciesData.sexes : true
+                      agender={
+                        currentSpeciesData ? !currentSpeciesData.sexes : false
                       }
                     />
                   </Stack.Item>
