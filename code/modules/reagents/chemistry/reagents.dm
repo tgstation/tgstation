@@ -195,35 +195,35 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/living/L, amount)
+/datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
 	return
 
 /// Called when this reagent is removed while inside a mob
-/datum/reagent/proc/on_mob_delete(mob/living/L)
-	L.clear_mood_event("[type]_overdose")
+/datum/reagent/proc/on_mob_delete(mob/living/affected_mob)
+	affected_mob.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
-/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+/datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
 	return
 
 /// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
 	return
 
 /// Called when a reagent is inside of a mob when they are dead. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
 	if(holder)
-		holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
+		holder.remove_reagent(type, metabolization_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
-/datum/reagent/proc/on_move(mob/M)
+/datum/reagent/proc/on_move(mob/affected_mob)
 	return
 
 /// Called after add_reagents creates a new reagent.
@@ -240,13 +240,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	return
 
 /// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
+/datum/reagent/proc/overdose_start(mob/living/affected_mob)
+	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
+	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /**

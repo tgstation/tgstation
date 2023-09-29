@@ -165,10 +165,12 @@
 		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM))
 		toxpwr = 0
 
 /datum/reagent/toxin/hot_ice/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
 	toxpwr = initial(toxpwr)
 
 /datum/reagent/toxin/lexorin
@@ -253,9 +255,9 @@
 	if((data?["method"] & INGEST) && holder_mob.stat != DEAD)
 		holder_mob.fakedeath(type)
 
-/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/holder_mob)
-	holder_mob.cure_fakedeath(type)
-	return ..()
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.cure_fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
 	. = ..()
@@ -321,23 +323,23 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
-/datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/metabolizer)
+/datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
+	ADD_TRAIT(affected_mob, TRAIT_RDS_SUPPRESSED, type)
 
-/datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/metabolizer)
+/datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_RDS_SUPPRESSED, type)
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
-	if(metabolizer.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
-		metabolizer.remove_status_effect(/datum/status_effect/hallucination)
+	if(affected_mob.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
+		affected_mob.remove_status_effect(/datum/status_effect/hallucination)
 
 	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
-		metabolizer.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -685,9 +687,9 @@
 		return ..() || .
 
 /datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	..()
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
@@ -1184,9 +1186,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_EMOTEMUTE, type)
 
 /datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_EMOTEMUTE, type)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch

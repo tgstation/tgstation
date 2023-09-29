@@ -387,13 +387,13 @@
 		if(show_message)
 			to_chat(exposed_carbon, span_danger("You feel your injuries fade away to nothing!") )
 
-/datum/reagent/medicine/mine_salve/on_mob_metabolize(mob/living/metabolizer)
+/datum/reagent/medicine/mine_salve/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	metabolizer.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	affected_mob.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
-/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/metabolizer)
+/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	affected_mob.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
 /datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.3
@@ -511,8 +511,8 @@
 	ADD_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 
 /datum/reagent/medicine/potass_iodide/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-	return ..()
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -534,8 +534,8 @@
 	ADD_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 
 /datum/reagent/medicine/pen_acid/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-	return ..()
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -607,14 +607,14 @@
 	inverse_chem_val = 0.4
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
-	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -671,12 +671,12 @@
 	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -863,13 +863,13 @@
 	ph = 10.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/affected_mob)
-	..()
+/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
 
-/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
-	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
@@ -1048,8 +1048,8 @@
 	ADD_TRAIT(affected_mob, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 
 /datum/reagent/medicine/mannitol/on_mob_end_metabolize(mob/living/carbon/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	. = ..()
+	REMOVE_TRAIT(affected_mob, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/affected_mob)
 	to_chat(affected_mob, span_notice("You suddenly feel <span class='purple'>E N L I G H T E N E D!</span>"))
@@ -1170,14 +1170,14 @@
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	ADD_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
-	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1321,12 +1321,12 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/earthsblood/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_PACIFISM, type)
 
 /datum/reagent/medicine/earthsblood/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, type)
-	..()
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1402,12 +1402,12 @@
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.remove_traits(list(TRAIT_SLEEPIMMUNE, TRAIT_BATON_RESISTANCE), type)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	affected_mob.remove_status_effect(/datum/status_effect/dizziness)
@@ -1426,12 +1426,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
-	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
@@ -1450,7 +1450,7 @@
 	ADD_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/cordiolis_hepatico
@@ -1461,11 +1461,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.remove_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
 
 /datum/reagent/medicine/muscle_stimulant
@@ -1494,12 +1494,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/modafinil/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-	..()
 
 /datum/reagent/medicine/modafinil/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_SLEEPIMMUNE, type)
-	..()
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
@@ -1512,6 +1512,7 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/modafinil/overdose_start(mob/living/affected_mob)
+	. = ..()
 	to_chat(affected_mob, span_userdanger("You feel awfully out of breath and jittery!"))
 	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.005 per second on overdose
 
@@ -1563,12 +1564,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_FEARLESS, type)
 
 /datum/reagent/medicine/psicodine/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_FEARLESS, type)
-	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1689,15 +1690,15 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/blood_boy = affected_mob
 		blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
 
-	return ..()
-
 /datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
 
 	if(was_working)
@@ -1705,8 +1706,6 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/blood_boy = affected_mob
 		blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
-
-	return ..()
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1793,11 +1792,11 @@
 	ph = 10.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(8, seconds_per_tick))
-		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
-	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
-		if(M.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
+		affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick) && !affected_mob.getStaminaLoss())
+		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
-	M.adjust_disgust(-10 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)

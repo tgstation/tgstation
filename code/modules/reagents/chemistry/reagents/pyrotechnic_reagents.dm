@@ -283,8 +283,8 @@
 		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
 		affected_mob.adjust_bodytemperature(15 * REM * seconds_per_tick)
 		if(ishuman(affected_mob))
-			var/mob/living/carbon/human/humi = affected_mob
-			humi.adjust_coretemperature(15 * REM * seconds_per_tick)
+			var/mob/living/carbon/human/affected_human = affected_mob
+			affected_human.adjust_coretemperature(15 * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/pyrosium/burn(datum/reagents/holder)

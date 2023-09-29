@@ -531,13 +531,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	)
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	. = ..()
 	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
-		return ..()
+		return
 	metabolization_rate = 0.2 * REM
 	affected_mob.add_traits(trait_buffs, type)
 	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
-	affected_mob.updatehealth()
 	affected_mob.update_sight()
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
@@ -548,7 +548,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
 	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
-	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -812,10 +811,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		headache = TRUE
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.cure_blind(IMPURE_OCULINE)
 	if(headache)
 		to_chat(affected_mob, span_notice("Your headache clears up!"))
-	..()
 
 /datum/reagent/impurity/inacusiate
 	name = "Tinacusiate"
@@ -831,15 +830,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/randomSpan
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
 	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off!"))
-	..()
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
 	to_chat(affected_mob, span_notice("You start hearing things normally again."))
-	..()
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER

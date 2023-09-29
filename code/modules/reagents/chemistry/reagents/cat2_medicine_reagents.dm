@@ -298,10 +298,10 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/medicine/c2/tirimol/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/c2/tirimol/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	if(current_cycle > 21)
-		L.Sleeping(10 SECONDS)
-	..()
+		affected_mob.Sleeping(10 SECONDS)
 
 /******TOXIN******/
 /*Suffix: -iver*/
@@ -579,10 +579,10 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
-	user.clear_alert("penthrite")
-	user.remove_traits(subject_traits, type)
-	return ..()
+/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.clear_alert("penthrite")
+	affected_mob.remove_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

@@ -442,12 +442,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
-	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -471,12 +471,12 @@
 	var/effect_enabled = FALSE
 
 /datum/reagent/consumable/rootbeer/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_DOUBLE_TAP, type)
 	if(current_cycle > 10)
 		to_chat(affected_mob, span_warning("You feel kinda tired as your sugar rush wears off..."))
 		affected_mob.adjustStaminaLoss(min(80, current_cycle * 3), required_biotype = affected_biotype)
 		affected_mob.adjust_drowsiness((current_cycle-1) * 2 SECONDS)
-	..()
 
 /datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -500,7 +500,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/carbon/affected_atom)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_atom, TRAIT_SHOCKIMMUNE, type)
 	var/obj/item/organ/internal/liver/liver = affected_atom.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
@@ -508,8 +508,8 @@
 		metabolization_rate *= 0.8
 
 /datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-	..()
 
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -669,13 +669,13 @@
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	if(ismonkey(affected_mob))
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
-	..()
 
 /datum/reagent/consumable/monkey_energy/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1032,9 +1032,9 @@
 		affected_mob.emote("sneeze")
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	..()
 
 /datum/reagent/consumable/bungojuice
 	name = "Bungo Juice"

@@ -351,7 +351,7 @@
 	mytray.myseed?.adjust_instability(round(volume * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_HOLY, type)
 
 /datum/reagent/water/holywater/on_mob_add(mob/living/affected_mob, amount)
@@ -360,8 +360,8 @@
 		data["misc"] = 0
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_HOLY, type)
-	..()
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1539,13 +1539,13 @@
 		exposed_mob.adjust_drowsiness(drowsiness_to_apply)
 
 /datum/reagent/nitrous_oxide/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //IF the mob does not have a coagulant in them, we add the blood mess trait to make the bleed quicker
 		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
-	return ..()
 
 /datum/reagent/nitrous_oxide/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
-	return ..()
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_drowsiness(4 SECONDS * REM * seconds_per_tick)
@@ -2424,9 +2424,9 @@
 	current_size = newsize
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	..()
 
 /datum/reagent/plastic_polymers
 	name = "Plastic Polymers"
@@ -2488,12 +2488,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/pax/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_PACIFISM, type)
 
 /datum/reagent/pax/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, type)
-	..()
 
 /datum/reagent/bz_metabolites
 	name = "BZ Metabolites"
@@ -2504,11 +2504,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
-	..()
+	. = ..()
 	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
-	..()
+	. = ..()
 	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
@@ -2622,8 +2622,8 @@
 #undef YUCK_PUKES_TO_STUN
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	yuck_cycle = 0 // reset vomiting
-	return ..()
 
 /datum/reagent/yuck/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	if((methods & INGEST) || !iscarbon(A))
@@ -2722,10 +2722,11 @@
 	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/reagent/gravitum/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
-	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
 	affected_mob.RemoveElement(/datum/element/forced_gravity, 0)
 
 /datum/reagent/cellulose
@@ -2749,6 +2750,7 @@
 	var/significant = FALSE
 
 /datum/reagent/determination/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
 	if(significant)
 		var/stam_crash = 0
 		for(var/thing in affected_mob.all_wounds)
@@ -2756,7 +2758,6 @@
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
 		affected_mob.adjustStaminaLoss(stam_crash)
 	affected_mob.remove_status_effect(/datum/status_effect/determined)
-	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2872,9 +2873,9 @@
 		victim.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = rand(5,10), purge_ratio = 1)
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
+	. = ..()
 	ant_damage = 0
 	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
-	return ..()
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

@@ -12,8 +12,8 @@
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 
 /datum/reagent/freon/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
-	return ..()
 
 /datum/reagent/halon
 	name = "Halon"
@@ -30,9 +30,9 @@
 	ADD_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	REMOVE_TRAIT(breather, TRAIT_RESISTHEAT, type)
-	return ..()
 
 /datum/reagent/healium
 	name = "Healium"
@@ -44,8 +44,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.SetSleeping(1 SECONDS)
-	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
 	. = ..()
@@ -87,8 +87,8 @@
 	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-	return ..()
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
 	. = ..()
@@ -113,8 +113,8 @@
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 
 /datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/breather)
+	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
-	return ..()
 
 /datum/reagent/pluoxium
 	name = "Pluoxium"
