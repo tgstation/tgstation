@@ -15,6 +15,7 @@
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
 		/obj/item/wirecutters = 1,
+		/obj/item/taperecorder/audio_tag = 3,
 	)
 	contraband = list(
 		/obj/item/assembly/health = 2,
