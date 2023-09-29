@@ -538,6 +538,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.2 * REM
 	affected_mob.add_traits(trait_buffs, type)
 	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
+	affected_mob.updatehealth()
 	affected_mob.update_sight()
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before

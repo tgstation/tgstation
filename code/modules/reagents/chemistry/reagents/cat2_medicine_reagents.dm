@@ -268,8 +268,8 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	metabolization_rate += 2.5 * REAGENTS_METABOLISM
-	return ..()
 
 #undef CONVERMOL_RATIO
 

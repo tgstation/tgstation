@@ -60,11 +60,13 @@
 	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
-	owner.adjustToxLoss(-amount * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	owner.adjustOxyLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustBruteLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustFireLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	owner.updatehealth()
+	var/need_mob_update = FALSE
+	need_mob_update += owner.adjustToxLoss(-amount * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjustOxyLoss(-amount * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustBruteLoss(-amount * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-amount * seconds_between_ticks, updating_health = FALSE)
+	if(need_mob_update)
+		owner.updatehealth()
 
 /*
  * Adjust the owner's temperature up or down to standard body temperatures.

@@ -45,15 +45,17 @@
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
-	owner.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-	owner.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
+	var/need_mob_update = FALSE
+	need_mob_update += owner.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
 
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += blood_heal * seconds_per_tick
 
-	owner.updatehealth()
+	if(need_mob_update)
+		owner.updatehealth()
 
 /datum/status_effect/embryonic
 	id = "embryonic"

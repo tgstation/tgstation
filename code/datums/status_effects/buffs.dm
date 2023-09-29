@@ -141,9 +141,12 @@
 	if(owner.on_fire)
 		return
 
-	owner.adjustBruteLoss(-4 * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_between_ticks)
+	var/need_mob_update = FALSE
+	need_mob_update += owner.adjustBruteLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	if(need_mob_update)
+		owner.updatehealth()
 
 /datum/status_effect/fleshmend/proc/on_ignited(datum/source)
 	SIGNAL_HANDLER
@@ -446,10 +449,13 @@
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
-	owner.adjustStaminaLoss(-4 * seconds_between_ticks, updating_stamina = FALSE)
+	var/need_mob_update = FALSE
+	need_mob_update += owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustStaminaLoss(-4 * seconds_between_ticks, updating_stamina = FALSE)
+	if(need_mob_update)
+		owner.updatehealth()
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
