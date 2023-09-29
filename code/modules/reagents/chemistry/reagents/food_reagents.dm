@@ -374,7 +374,7 @@
 				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
 			if(isslime(M))
 				cooling = -rand(5, 20)
-		if(16 to 266)
+		if(16 to 26)
 			cooling = -20
 			if(isslime(M))
 				cooling = -rand(10, 20)
