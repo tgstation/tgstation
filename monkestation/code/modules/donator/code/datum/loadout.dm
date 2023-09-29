@@ -43,7 +43,6 @@
 /datum/loadout_item/suit/shark_costume
 	name = "Blahaj Costume"
 	item_path = /obj/item/clothing/suit/hooded/shark_costume
-	donator_only = TRUE
 
 //ruby_flamewing
 
