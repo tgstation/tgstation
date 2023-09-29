@@ -637,10 +637,13 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
+	var/need_mob_update = FALSE
 	if(cellular_damage)
-		M.adjustCloneLoss(-heal_amt * 0.5)
+		need_mob_update += M.adjustCloneLoss(-heal_amt * 0.5, updating_health = FALSE)
 
-	M.adjustToxLoss(-(2 * heal_amt))
+	need_mob_update += M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE)
+	if(need_mob_update)
+		M.updatehealth()
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 

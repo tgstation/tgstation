@@ -224,6 +224,7 @@
 		drinker.set_jitter_if_lower(10 SECONDS)
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker)
+	. = ..()
 	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
 	drinker.set_jitter_if_lower(40 SECONDS)
 	drinker.Stun(1.5 SECONDS)
@@ -751,6 +752,7 @@
 		QDEL_NULL(beepsky_hallucination)
 
 /datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/drinker)
+	. = ..()
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	// if you don't have a liver, or your liver isn't an officer's liver
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))

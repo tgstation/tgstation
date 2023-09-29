@@ -189,8 +189,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	liver_damage = 0
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
+	. = ..()
 	metabolization_rate = 4  * REAGENTS_METABOLISM
-	..()
 
 /datum/reagent/peptides_failed
 	name = "Prion Peptides"

@@ -235,7 +235,7 @@
 
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	target.adjustFireLoss(3)
+	target.adjustFireLoss(3, updating_health = FALSE)
 	target.adjustCloneLoss(1)
 	return
 

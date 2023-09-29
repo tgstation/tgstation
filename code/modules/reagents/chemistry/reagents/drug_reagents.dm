@@ -26,6 +26,7 @@
 		affected_mob.emote(pick("twitch","drool","moan","giggle"))
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/affected_mob)
+	. = ..()
 	to_chat(affected_mob, span_userdanger("You start tripping hard!"))
 	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 
@@ -359,6 +360,7 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/affected_mob)
+	. = ..()
 	to_chat(affected_mob, span_userdanger("You can't stop shaking, your heart beats faster and faster..."))
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -847,6 +849,7 @@
 	chemical_flags = NONE
 
 /datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored)
+	. = ..()
 	gored.visible_message(
 		span_danger("[gored] explodes in a shower of gore!"),
 		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-"),
