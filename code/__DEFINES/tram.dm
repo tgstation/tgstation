@@ -26,3 +26,7 @@
 
 #define BIRDSHOT_MAINTENANCE_LEFT 1
 #define BRIDSHOT_MAINTENANCE_RIGHT 2
+
+/// Tram navigation directions
+#define OUTBOUND 1
+#define INBOUND -1

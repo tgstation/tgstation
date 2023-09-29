@@ -31,6 +31,47 @@
 	name = "paper- 'Holopad Notice'"
 	default_raw_text = "<B>Can't get any botanists at the table? Have you tried using the damn holopad?</B><BR>\n<BR>\nStep onto the pad, and interface with it<BR>\nthen make your dang ol' call!<BR>\n<BR>\nYou want to call \"Hydroponics\" to reach them."
 
+/obj/item/paper/guides/jobs/engineering/bsa
+	name = "Bluespace Artillery (BSA) Assembly Instructions"
+	default_raw_text = {"<b>Below is a quick guide on setting up your new Bluespace Artillery Cannon.</b>
+	<br>
+	Featuring the newest in Nanotrasen technology, the Bluespace Artillery Cannon is your surefire ticket to complete and total threat elimination.
+	<br>
+	<h1>1. Acquire necessary resources.</h1>
+	* Bluespace Artillery Bore
+	* Bluespace Artillery Fusor
+	* Bluespace Artillery Generator
+	* Bluespace Artillery Controls
+	* 26 cable pieces
+	* 20 iron
+	* 20 bluespace crystals (or artificial)
+	* 5 quadratic capacitors
+	* 5 femto servos
+	* 1 glass sheet
+	<h1>2. Find suitable location</h1>
+	The BSA has a steep power requirement and functions best when it is on its own APC; keep other items in the room to a minimum. Ensure the BSA is placed at the edge of the station, so that it won't shoot through another portion of the station..  Make sure the room isn't easily accessible by someone who shouldn't be there.
+	<h1>3. Construction</h1>
+	1. Build three machine frames.
+	2. Determine the desired direction you want your artillery to face.
+	3. Leave six spaces in front, four behind.  The artillery cannon finishes itself after the assemblies are aligned.
+	4. Place the machine frames in a horizontal line.
+	5. Wrench the three machine frames in place.
+	6. Install wires in the three machine frames.
+	7. Install the bore in the front machine frame. this is your barrel.
+	8. Install the fusor in the center machine frame.
+	9. Install the generator in the back machine frame.
+	10. Examine the three machines and see what else they need, you can use a screwdriver to finish the assembly when parts are installed.
+	11. Construct a computer terminal in the same room as the BSA assembly, make sure they draw power from the same APC or ask the Chief Engineer to check the blueprints for you.
+	12. Use a screwdriver to fasten the board, install wires and one glass sheet, use screwdriver again to turn on.
+	13. Use a multitool and interact with the generator, then the fusor.
+	14. Use a multitool again to interact with the bore, then the fusor.
+	15. Use the console to finalize construction, make sure there's enough empty space around the BSA for the assembly to commence.
+	And with that, you are done!
+	<b>Commencing firing protocols requires the access of at least two heads, the console will be locked down until this requirement is met.</b>
+	<b>Always make sure you are certain before attempting to fire the BSA.<b>
+	<br>
+	<i>Keep this manual for your records, failure to do so will void your 2 day limited liability warranty from Nanotrasen.</i>"}
+
 /obj/item/paper/fluff/jobs/security/beepsky_mom
 	name = "Note from Beepsky's Mom"
 	default_raw_text = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110"

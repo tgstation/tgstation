@@ -22,6 +22,7 @@
 		CRASH("A non '/obj/machinery/modular_computer' had a [src] initialized in it!")
 
 	// Obtain reference to machinery computer
+	physical = loc
 	machinery_computer = loc
 	machinery_computer.cpu = src
 	internal_cell = machinery_computer.internal_cell
@@ -45,3 +46,6 @@
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
+
+/obj/item/modular_computer/processor/get_messenger_ending()
+	return "Sent from my Desktop"

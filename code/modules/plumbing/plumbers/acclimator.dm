@@ -12,8 +12,6 @@
 	base_icon_state = "acclimator"
 	buffer = 200
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///category for plumbing RCD
-	category="Storage"
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300

@@ -73,7 +73,6 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	small_sprite_type = /datum/action/small_sprite/megafauna/drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -273,7 +272,7 @@
 	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
-		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
 		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
@@ -289,14 +288,14 @@
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/lava_safe
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 13
 
 /obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"

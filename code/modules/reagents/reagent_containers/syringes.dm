@@ -82,7 +82,7 @@
 			living_target.log_message("injected themselves ([contained]) with [name]", LOG_ATTACK, color="orange")
 		else
 			log_combat(user, living_target, "injected", src, addition="which had [contained]")
-	reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+	reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 	to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
 	target.update_appearance()
 
@@ -117,7 +117,7 @@
 			to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
 
 		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 		target.update_appearance()
@@ -134,7 +134,7 @@
 		to_chat(victim, span_boldwarning("[src] injects you!"))
 
 	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
+	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transferred_by = user, methods = INJECT)
 
 	return discover_after
 
@@ -150,7 +150,7 @@
 /// Returns a list of overlays to add that relate to the reagents inside the syringe
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 
@@ -199,6 +199,7 @@
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
+	has_variable_transfer_amount = FALSE
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
@@ -211,6 +212,7 @@
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/mulligan = 1)
 
@@ -218,6 +220,7 @@
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 
@@ -251,6 +254,16 @@
 
 /obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
 	return
+
+	// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
+/obj/item/reagent_containers/syringe/crude/tribal
+	name = "tribal syringe"
+	desc = "A crudely made syringe. Smells like bananas."
+
+/obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
+	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
+	list_reagents = list((toxin_to_get) = 5)
+	return ..()
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

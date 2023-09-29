@@ -2,7 +2,7 @@
 /obj/item/usb_cable
 	name = "usb cable"
 	desc = "A cable that can connect integrated circuits to anything with a USB port, such as computers and machines."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "usb_cable"
 	inhand_icon_state = "coil_yellow"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -88,13 +88,13 @@
 
 /obj/item/usb_cable/proc/register_circuit_signals()
 	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_qdeling))
+	RegisterSignal(attached_circuit, COMSIG_QDELETING, PROC_REF(on_circuit_qdeling))
 	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 
 	UnregisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED)

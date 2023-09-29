@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -91,9 +91,9 @@
 	selected_direction = direction
 
 /**
- * retrive the icon for this tile design based on its direction
+ * retrieve the icon for this tile design based on its direction
  * for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
- * so we check which icons we want to retrive based on its direction
+ * so we check which icons we want to retrieve based on its direction
  * for basic directions its rotated with CSS so there is no need for icon
  */
 /datum/tile_info/proc/get_icon_state()
@@ -110,7 +110,7 @@
 
 /**
  * Stores the decal & overlays on the floor to preserve texture of the design
- * in short its just an wrapper for mutable appearance where we retrive the nessassary information
+ * in short its just an wrapper for mutable appearance where we retrieve the nessassary information
  * to recreate an mutable appearance
  */
 /datum/overlay_info

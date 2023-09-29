@@ -65,7 +65,7 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
 		our_mob.vars[v] = null
-	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, PROC_REF(handle_mob_delete))
+	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
@@ -84,8 +84,8 @@
 	mobtype = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/chick/permanent,
+		/mob/living/basic/pet/fox/docile,
 		/mob/living/basic/rabbit,
-		/mob/living/simple_animal/pet/fox,
 	)
 	mobtype += pick(
 		/mob/living/basic/pet/dog/corgi,
@@ -98,21 +98,21 @@
 	)
 
 /obj/effect/holodeck_effect/mobspawner/bee
-	mobtype = /mob/living/simple_animal/hostile/bee/toxin
+	mobtype = /mob/living/basic/bee/toxin
 
 /obj/effect/holodeck_effect/mobspawner/monkey
 	mobtype = /mob/living/simple_animal/holodeck_monkey
 
 /obj/effect/holodeck_effect/mobspawner/penguin
-	mobtype = /mob/living/simple_animal/pet/penguin/emperor
+	mobtype = /mob/living/basic/pet/penguin/emperor/neuter
 
 /obj/effect/holodeck_effect/mobspawner/penguin/Initialize(mapload)
 	if(prob(1))
-		mobtype = /mob/living/simple_animal/pet/penguin/emperor/shamebrero
+		mobtype = /mob/living/basic/pet/penguin/emperor/shamebrero/neuter
 	return ..()
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
-	mobtype = /mob/living/simple_animal/pet/penguin/baby
+	mobtype = /mob/living/basic/pet/penguin/baby/permanent
 
 /obj/effect/holodeck_effect/mobspawner/crab/jon
-	mobtype = /mob/living/simple_animal/crab/jon
+	mobtype = /mob/living/basic/crab/jon

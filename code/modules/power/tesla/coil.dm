@@ -1,18 +1,17 @@
 // zap needs to be over this amount to get power
-#define TESLA_COIL_THRESHOLD 80
-// each zap power unit produces 400 joules
-#define ZAP_TO_ENERGY(p) (joules_to_energy((p) * 400))
+#define TESLA_COIL_THRESHOLD 32000
 
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
-	icon = 'icons/obj/engine/tesla_coil.dmi'
+	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
 	icon_state = "coil0"
 
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
+	can_change_cable_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
@@ -36,7 +35,13 @@
 
 /obj/machinery/power/energy_accumulator/tesla_coil/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src)
+	set_wires(new /datum/wires/tesla_coil(src))
+
+/obj/machinery/power/energy_accumulator/tesla_coil/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()
@@ -100,7 +105,7 @@
 		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max(ZAP_TO_ENERGY(power_removed - TESLA_COIL_THRESHOLD), 0)
+	stored_energy += max(joules_to_energy(power_removed - TESLA_COIL_THRESHOLD), 0)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/energy_accumulator/tesla_coil/proc/zap()
@@ -117,7 +122,7 @@
 /obj/machinery/power/energy_accumulator/grounding_rod
 	name = "grounding rod"
 	desc = "Keeps an area from being fried by Edison's Bane."
-	icon = 'icons/obj/engine/tesla_coil.dmi'
+	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
 	density = TRUE
@@ -163,10 +168,9 @@
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)
-		stored_energy += ZAP_TO_ENERGY(power)
+		stored_energy += joules_to_energy(power)
 		return 0
 	else
 		. = ..()
 
 #undef TESLA_COIL_THRESHOLD
-#undef ZAP_TO_ENERGY

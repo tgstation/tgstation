@@ -38,7 +38,7 @@
 		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 		playsound(loc, attacked_sound, 25, TRUE, -1)
 		var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-		var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+		var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 
 		attack_threshold_check(damage)
 		log_combat(user, src, "attacked")
@@ -165,6 +165,9 @@
 	return TRUE
 
 /mob/living/basic/blob_act(obj/structure/blob/attacking_blob)
+	. = ..()
+	if (!.)
+		return
 	apply_damage(20, damagetype = BRUTE)
 
 /mob/living/basic/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)

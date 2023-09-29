@@ -62,6 +62,17 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
+#define iscliffturf(A) (istype(A, /turf/open/cliff))
+
+GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
+	/turf/closed/mineral,
+	/turf/open/misc/asteroid,
+	/turf/open/openspace,
+	/turf/open/space
+)))
+
+#define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -157,7 +168,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+#define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -165,9 +176,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
-#define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+#define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/giant_spider))
+#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
 
 //Misc mobs
@@ -190,6 +201,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isfish(A) (istype(A, /obj/item/fish))
+
 #define isstack(A) (istype(A, /obj/item/stack))
 
 #define isgrenade(A) (istype(A, /obj/item/grenade))
@@ -204,7 +217,13 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
+#define isaquarium(A) (istype(A, /obj/structure/aquarium))
+
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+
+#define isvendor(A) (istype(A, /obj/machinery/vending))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
@@ -229,6 +248,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
 
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
@@ -257,8 +278,6 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 #define isholoeffect(O) (istype(O, /obj/effect/holodeck_effect))
 
-#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
-
 #define isshuttleturf(T) (!isnull(T.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)))
 
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
@@ -267,6 +286,7 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
+	/obj/item/infuser_book,
 )))
 
 // Jobs

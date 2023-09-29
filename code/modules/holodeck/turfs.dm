@@ -91,6 +91,10 @@
 	icon_state = "water"
 	bullet_sizzle = TRUE
 
+/turf/open/floor/holofloor/beach/water/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/holographic)
+
 /turf/open/floor/holofloor/asteroid
 	gender = PLURAL
 	name = "asteroid sand"
@@ -172,7 +176,6 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
-	initial_gas_mix = SPACE_TEMP_NOBLIUM
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE

@@ -25,8 +25,9 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			if (prob(40))
-				new /obj/effect/decal/cleanable/oil/streak(src.loc)
+			var/turf/my_turf = get_turf(src)
+			if(prob(40) && (!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf)))
+				new /obj/effect/decal/cleanable/oil/streak(my_turf)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
@@ -36,8 +37,10 @@
 
 /obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
+	if(NeverShouldHaveComeHere(loc))
+		return
 	if (prob(40))
-		new /obj/effect/decal/cleanable/oil/streak(src.loc)
+		new /obj/effect/decal/cleanable/oil/streak(loc)
 	else if (prob(10))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)

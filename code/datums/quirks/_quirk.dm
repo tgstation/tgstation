@@ -90,7 +90,7 @@
 		else
 			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(on_quirk_holder_first_login))
 
-	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdeleting))
+	RegisterSignal(quirk_holder, COMSIG_QDELETING, PROC_REF(on_holder_qdeleting))
 
 	return TRUE
 
@@ -99,7 +99,7 @@
 	if(!quirk_holder)
 		CRASH("Attempted to remove quirk from the current holder when it has no current holder.")
 
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING))
 
 	quirk_holder.quirks -= src
 
@@ -173,7 +173,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE) || default_location
+	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location
 
 	if(where == LOCATION_BACKPACK)
 		open_backpack = TRUE
@@ -199,32 +199,25 @@
  * Arguments:
  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
  * * Category- Which types of quirks we want to print out. Defaults to everything
+ * * from_scan- If the source of this call is like a health analyzer or HUD, in which case QUIRK_HIDE_FROM_MEDICAL hides the quirk.
  */
-/mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
+/mob/living/proc/get_quirk_string(medical = FALSE, category = CAT_QUIRK_ALL, from_scan = FALSE)
 	var/list/dat = list()
-	switch(category)
-		if(CAT_QUIRK_ALL)
-			for(var/V in quirks)
-				var/datum/quirk/T = V
-				dat += medical ? T.medical_record_text : T.name
-		//Major Disabilities
-		if(CAT_QUIRK_MAJOR_DISABILITY)
-			for(var/V in quirks)
-				var/datum/quirk/T = V
-				if(T.value < -4)
-					dat += medical ? T.medical_record_text : T.name
-		//Minor Disabilities
-		if(CAT_QUIRK_MINOR_DISABILITY)
-			for(var/V in quirks)
-				var/datum/quirk/T = V
-				if(T.value >= -4 && T.value < 0)
-					dat += medical ? T.medical_record_text : T.name
-		//Neutral and Positive quirks
-		if(CAT_QUIRK_NOTES)
-			for(var/V in quirks)
-				var/datum/quirk/T = V
-				if(T.value > -1)
-					dat += medical ? T.medical_record_text : T.name
+	for(var/datum/quirk/candidate as anything in quirks)
+		if(from_scan & candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN)
+			continue
+		switch(category)
+			if(CAT_QUIRK_MAJOR_DISABILITY)
+				if(candidate.value >= -4)
+					continue
+			if(CAT_QUIRK_MINOR_DISABILITY)
+				if(!ISINRANGE(candidate.value, -4, -1))
+					continue
+			if(CAT_QUIRK_NOTES)
+				if(candidate.value < 0)
+					continue
+		dat += medical ? candidate.medical_record_text : candidate.name
+
 	if(!dat.len)
 		return medical ? "No issues have been declared." : "None"
 	return medical ?  dat.Join("<br>") : dat.Join(", ")

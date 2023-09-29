@@ -4,7 +4,7 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/smartfridge.dmi'
+	icon = 'icons/obj/machines/smartfridge.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -67,14 +67,14 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(welded_down)
-		if(!tool.tool_start_check(user, amount=1))
+		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
-		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		if(!tool.use_tool(src, user, delay=100, volume=100))
 			return FALSE
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
@@ -82,14 +82,14 @@
 	if(!anchored)
 		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
-	if(!tool.tool_start_check(user, amount=1))
+	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
 		span_notice("[user.name] starts to weld the [name] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
-	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+	if(!tool.use_tool(src, user, delay=100, volume=100))
 		balloon_alert(user, "cancelled!")
 		return FALSE
 	welded_down = TRUE
@@ -101,7 +101,7 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(machine_stat & BROKEN)
-		if(!tool.tool_start_check(user, amount=0))
+		if(!tool.tool_start_check(user, amount=1))
 			return FALSE
 		user.visible_message(
 			span_notice("[user] is repairing [src]."),
@@ -349,7 +349,8 @@
 	.["name"] = name
 	.["isdryer"] = FALSE
 
-/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+/obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
+	. = ..()
 	SStgui.update_uis(src)
 
 /obj/machinery/smartfridge/ui_act(action, params)
@@ -398,7 +399,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
@@ -512,7 +513,7 @@
 	base_build_path = /obj/machinery/smartfridge/drinks
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT) || istype(O,/obj/item/reagent_containers/cup/bowl) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/cup) || istype(O, /obj/item/reagent_containers/cup/glass) || istype(O, /obj/item/reagent_containers/condiment))
 		return TRUE
@@ -525,7 +526,7 @@
 	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(IS_EDIBLE(O))
+	if(IS_EDIBLE(O) || (istype(O,/obj/item/reagent_containers/cup/bowl) && O.reagents && O.reagents.reagent_list.len))
 		return TRUE
 	return FALSE
 
@@ -597,8 +598,11 @@
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (matter_bin.tier - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(seconds_per_tick)
-	for(var/obj/item/organ/organ in contents)
-		organ.apply_organ_damage(-repair_rate * organ.maxHealth * seconds_per_tick)
+	for(var/obj/item/organ/target_organ in contents)
+		if(!target_organ.damage)
+			continue
+
+		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -680,7 +684,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE

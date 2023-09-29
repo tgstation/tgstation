@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/color_adapter
-	icon = 'icons/obj/atmospherics/pipes/color_adapter.dmi'
+	icon = 'icons/obj/pipes_n_cables/color_adapter.dmi'
 	icon_state = "adapter_map-3"
 
 	name = "color adapter"
@@ -45,7 +45,7 @@
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
-		var/image/pipe = get_pipe_image('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-3", get_dir(src, nodes[i]), nodes[i].pipe_color)
+		var/image/pipe = get_pipe_image('icons/obj/pipes_n_cables/manifold.dmi', "pipe-3", get_dir(src, nodes[i]), nodes[i].pipe_color)
 		PIPING_LAYER_DOUBLE_SHIFT(pipe, piping_layer)
 		pipe.layer = layer + 0.01
 		. += pipe

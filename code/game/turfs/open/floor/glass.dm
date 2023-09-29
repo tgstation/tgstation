@@ -21,8 +21,8 @@
 	var/list/glow_stuff
 	/// How much alpha to leave when cutting away emissive blockers
 	var/alpha_to_leave = 255
-	/// Color of starlight to use
-	var/starlight_color = COLOR_STARLIGHT
+	/// Color of starlight to use. Defaults to STARLIGHT_COLOR if not set
+	var/starlight_color
 
 /turf/open/floor/glass/broken_states()
 	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
@@ -51,7 +51,7 @@
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
-	set_light(2, 0.75, starlight_color)
+	set_light(2, 0.75, starlight_color || GLOB.starlight_color)
 
 /turf/open/floor/glass/make_plating()
 	return

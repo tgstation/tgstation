@@ -142,7 +142,7 @@
 		/obj/structure/closet/l3closet = 1,
 		/obj/structure/closet/radiation = 1,
 		/obj/structure/closet/bombcloset = 1,
-		/obj/structure/closet/mini_fridge = 1,
+		/obj/structure/closet/mini_fridge/grimy = 1,
 	)
 
 /obj/effect/spawner/random/structure/chair_flipped
@@ -188,7 +188,7 @@
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_random"
 	loot = list(
 		/obj/structure/billboard/azik = 50,
@@ -234,4 +234,25 @@
 	loot = list(
 		/obj/structure/musician/piano,
 		/obj/structure/musician/piano/minimoog,
+	)
+
+/obj/effect/spawner/random/structure/shipping_container
+	name = "shipping container spawner"
+	icon = 'icons/obj/fluff/containers.dmi'
+	icon_state = "random_container"
+	loot = list(
+		/obj/structure/shipping_container/conarex = 3,
+		/obj/structure/shipping_container/deforest = 3,
+		/obj/structure/shipping_container/kahraman = 3,
+		/obj/structure/shipping_container/kahraman/alt = 3,
+		/obj/structure/shipping_container/kosmologistika = 3,
+		/obj/structure/shipping_container/interdyne = 3,
+		/obj/structure/shipping_container/nakamura = 3,
+		/obj/structure/shipping_container/nanotrasen = 3,
+		/obj/structure/shipping_container/nthi = 3,
+		/obj/structure/shipping_container/vitezstvi = 3,
+		/obj/structure/shipping_container/cybersun = 2,
+		/obj/structure/shipping_container/donk_co = 2,
+		/obj/structure/shipping_container/gorlex = 1,
+		/obj/structure/shipping_container/gorlex/red = 1,
 	)

@@ -19,7 +19,7 @@
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
 /mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	. = ..()
@@ -28,22 +28,20 @@
 
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
-
-	if(!IS_IN_STASIS(src))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life(seconds_per_tick, times_fired)
-
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
+			//handle active mutations
+			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
+				human_mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)
+			//handles liver failure effects, if we lack a liver
 			handle_liver(seconds_per_tick, times_fired)
 
-		dna.species.spec_life(src, seconds_per_tick, times_fired) // for mutantraces
+		// for special species interactions
+		dna.species.spec_life(src, seconds_per_tick, times_fired)
 	else
-		for(var/i in all_wounds)
-			var/datum/wound/iter_wound = i
+		for(var/datum/wound/iter_wound as anything in all_wounds)
 			iter_wound.on_stasis(seconds_per_tick, times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
@@ -102,7 +100,7 @@
 /// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	// If we are in a cryo bed do not process life functions
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/cryo_cell))
 		return
 
 	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)
@@ -281,7 +279,7 @@
 
 	lastpuke += SPT_PROB(30, seconds_per_tick)
 	if(lastpuke >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
-		vomit(20)
+		vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 		lastpuke = 0
 
 

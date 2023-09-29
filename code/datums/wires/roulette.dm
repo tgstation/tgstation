@@ -51,7 +51,7 @@
 			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
 			R.prize_theft(0.20)
 
-/datum/wires/roulette/on_cut(wire, mend)
+/datum/wires/roulette/on_cut(wire, mend, source)
 	var/obj/machinery/roulette/R = holder
 	switch(wire)
 		if(WIRE_SHOCK)

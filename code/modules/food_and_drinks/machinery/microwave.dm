@@ -51,7 +51,7 @@
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
 
-	wires = new /datum/wires/microwave(src)
+	set_wires(new /datum/wires/microwave(src))
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON)
@@ -146,11 +146,10 @@
 	for (var/atom/movable/ingredient as anything in ingredients)
 		var/image/ingredient_overlay = image(ingredient, src)
 
-		var/icon/ingredient_icon = icon(ingredient.icon, ingredient.icon_state)
-
+		var/list/icon_dimensions = get_icon_dimensions(ingredient.icon)
 		ingredient_overlay.transform = ingredient_overlay.transform.Scale(
-			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Width(),
-			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Height(),
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / icon_dimensions["width"],
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / icon_dimensions["height"],
 		)
 
 		ingredient_overlay.pixel_y = -4
@@ -287,9 +286,16 @@
 		balloon_alert(user, "it's too dirty!")
 		return TRUE
 
-	if(istype(O, /obj/item/storage/bag/tray))
+	if(istype(O, /obj/item/storage))
 		var/obj/item/storage/T = O
 		var/loaded = 0
+
+		if(!istype(O, /obj/item/storage/bag/tray))
+			// Non-tray dumping requires a do_after
+			to_chat(user, span_notice("You start dumping out the contents of [O] into [src]..."))
+			if(!do_after(user, 2 SECONDS, target = T))
+				return
+
 		for(var/obj/S in T.contents)
 			if(!IS_EDIBLE(S))
 				continue
@@ -366,7 +372,11 @@
 	open()
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
-
+/**
+ * Begins the process of cooking the included ingredients.
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/cook(mob/cooker)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -378,7 +388,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
+	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
@@ -412,10 +422,20 @@
 	s.set_up(2, 1, src)
 	s.start()
 
+/**
+ * The start of the cook loop
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/start(mob/cooker)
 	wzhzhzh()
 	loop(MICROWAVE_NORMAL, 10, cooker = cooker)
 
+/**
+ * The start of the cook loop, but can fail (result in a splat / dirty microwave)
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/start_can_fail(mob/cooker)
 	wzhzhzh()
 	loop(MICROWAVE_PRE, 4, cooker = cooker)
@@ -427,12 +447,20 @@
 	update_appearance()
 	loop(MICROWAVE_MUCK, 4)
 
+/**
+ * The actual cook loop started via [proc/start] or [proc/start_can_fail]
+ *
+ * * type - the type of cooking, determined via how this iteration of loop is called, and determines the result
+ * * time - how many loops are left, base case for recursion
+ * * wait - deciseconds between loops
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2), mob/cooker) // standard wait is 10
 	if((machine_stat & BROKEN) && type == MICROWAVE_PRE)
 		pre_fail()
 		return
 
-	if(!time || !length(ingredients))
+	if(time <= 0 || !length(ingredients))
 		switch(type)
 			if(MICROWAVE_NORMAL)
 				loop_finish(cooker)
@@ -451,9 +479,15 @@
 		pre_fail()
 		eject()
 
+/**
+ * Called when the loop is done successfully, no dirty mess or whatever
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/loop_finish(mob/cooker)
 	operating = FALSE
 
+	var/cursed_chef = cooker && HAS_TRAIT(cooker, TRAIT_CURSED)
 	var/metal_amount = 0
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
@@ -466,7 +500,7 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(5))
+	if(cursed_chef && prob(5))
 		spark()
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
@@ -474,7 +508,7 @@
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(HAS_TRAIT(cooker, TRAIT_CURSED) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
+		if(cursed_chef || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()

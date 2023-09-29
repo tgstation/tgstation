@@ -4,7 +4,7 @@
 
 /obj/structure/bookcase
 	name = "bookcase"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookempty"
 	desc = "A great place for storing knowledge."
 	anchored = FALSE

@@ -102,8 +102,9 @@
  * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
+ * should_play_sound - Whether the notice sound should be played or not.
  */
-/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players, sound_override)
+/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players = null, sound_override = null, should_play_sound = TRUE)
 	if(!message)
 		return
 
@@ -121,6 +122,6 @@
 			continue
 
 		to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))

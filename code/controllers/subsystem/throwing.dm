@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(throwing)
 	var/init_dir
 	///The maximum number of turfs that the thrownthing will travel to reach it's target.
 	var/maxrange
-	///The speed of the projectile thrownthing being thrown.
+	///Turfs to travel per tick
 	var/speed
 	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
 	var/mob/thrower
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 	. = ..()
 	src.thrownthing = thrownthing
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, PROC_REF(on_thrownthing_qdel))
+	RegisterSignal(thrownthing, COMSIG_QDELETING, PROC_REF(on_thrownthing_qdel))
 	src.starting_turf = get_turf(thrownthing)
 	src.target_turf = get_turf(target)
 	if(target_turf != target)
@@ -115,8 +115,7 @@ SUBSYSTEM_DEF(throwing)
 	thrownthing = null
 	thrower = null
 	initial_target = null
-	if(callback)
-		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	callback = null
 	return ..()
 
 ///Defines the datum behavior on the thrownthing's qdeletion event.
@@ -225,6 +224,8 @@ SUBSYSTEM_DEF(throwing)
 
 	if(thrownthing)
 		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)
+		var/turf/landed_turf = get_turf(thrownthing)
+		SEND_SIGNAL(landed_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, thrownthing)
 
 	qdel(src)
 

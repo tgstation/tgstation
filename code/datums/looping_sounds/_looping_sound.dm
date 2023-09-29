@@ -52,8 +52,9 @@
 	var/loop_started = FALSE
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
-	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
-	var/audio_index = 1
+	///The index of the current song we're playing in the mid_sounds list, only used if in_order is used
+	///This is immediately set to 1, so we start the index at 0
+	var/audio_index = 0
 
 	// Args
 	/// Do we skip the starting sounds?
@@ -233,10 +234,10 @@
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
 	if(parent)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = new_parent
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
+		RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(handle_parent_del))
 
 /// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()

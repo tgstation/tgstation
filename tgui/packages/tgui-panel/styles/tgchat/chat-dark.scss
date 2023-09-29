@@ -534,6 +534,10 @@ em {
 }
 
 .blob {
+  color: #ee4000;
+}
+
+.blobannounce {
   color: #556b2f;
   font-weight: bold;
   font-size: 185%;
@@ -852,6 +856,15 @@ em {
 
 .resonate {
   color: #298f85;
+}
+
+.upside_down {
+  display: inline;
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
 }
 
 .connectionClosed,

@@ -31,7 +31,7 @@
 
 /obj/item/golem_shell
 	name = "incomplete free golem shell"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/mob/shells.dmi'
 	icon_state = "shell_unfinished"
 	desc = "The incomplete body of a golem. Add ten sheets of certain minerals to finish."
 	w_class = WEIGHT_CLASS_BULKY

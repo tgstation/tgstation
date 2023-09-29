@@ -21,7 +21,6 @@ type Category = {
 };
 
 type Recipe = {
-  index: number;
   icon: string;
   selected: BooleanLike;
   name: string;
@@ -51,25 +50,27 @@ const PlumbingTypeSection = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.recipes.map((recipe) => (
+      {shownCategory?.recipes.map((recipe, index) => (
         <Button
-          key={recipe.index}
+          key={index}
           fluid
           ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
-              id: recipe.index,
+              category: shownCategory.cat_name,
+              id: index,
             })
           }>
           <Box
             inline
             verticalAlign="middle"
+            height="40px"
             mr="20px"
             className={classes(['plumbing-tgui32x32', recipe.icon])}
             style={{
-              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+              transform: 'scale(1.3) translate(9.5%, 11.2%)',
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>

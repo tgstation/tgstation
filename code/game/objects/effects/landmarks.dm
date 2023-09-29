@@ -77,6 +77,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Cargo Technician"
 	icon_state = "Cargo Technician"
 
+/obj/effect/landmark/start/bitrunner
+	name = "Bitrunner"
+	icon_state = "x3"
+
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
 	icon_state = "Bartender"
@@ -467,7 +471,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
 
-
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
@@ -549,12 +552,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "hangover_spawn_closet"
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
-	for(var/obj/structure/closet/closet in contents)
+	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
 		joining_mob.forceMove(closet)
+		make_hungover(joining_mob)
 		return
+
 	return ..() //Call parent as fallback
 
 //Landmark that creates destinations for the navigate verb to path to
