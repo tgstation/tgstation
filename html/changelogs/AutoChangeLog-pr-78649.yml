@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Lavaland syndicate operatives can no longer trivially use the jetpack on their modsuit to fly over the lava."
