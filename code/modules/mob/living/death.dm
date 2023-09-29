@@ -1,12 +1,14 @@
 /**
  * Blow up the mob into giblets
  *
- * Arguments:
- * * no_brain - Should the mob NOT drop a brain?
- * * no_organs - Should the mob NOT drop organs?
- * * no_bodyparts - Should the mob NOT drop bodyparts?
-*/
-/mob/living/proc/gib(no_brain, no_organs, no_bodyparts)
+ * drop_bitflags: (see code/__DEFINES/blood.dm)
+ * * DROP_BRAIN - Gibbed mobs will drop a brain
+ * * DROP_ORGANS - Gibbed mobs will drop organs
+ * * DROP_BODYPARTS - Gibbed mobs will drop bodyparts (arms, legs, etc.)
+ * * DROP_ITEMS - Gibbed mobs will drop items and not be deleted
+ * * DROP_ALL_REMAINS - Gibbed mobs will drop everything
+**/
+/mob/living/proc/gib(drop_bitflags) //no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
@@ -14,13 +16,13 @@
 	if(!prev_lying)
 		gib_animation()
 
-	spill_organs(no_brain, no_organs, no_bodyparts)
+	spill_organs(drop_bitflags)//no_brain, no_organs, no_bodyparts)
 
-	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
+	if(drop_bitflags & DROP_BODYPARTS)//no_bodyparts)
+		spread_bodyparts(drop_bitflags)//no_brain, no_organs)
 
-	spawn_gibs(no_bodyparts)
-	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
+	spawn_gibs(drop_bitflags) //no_bodyparts)
+	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags) //, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
@@ -29,7 +31,17 @@
 /mob/living/proc/spawn_gibs()
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
-/mob/living/proc/spill_organs()
+/**
+ * Drops the mobs organs on the floor
+ *
+ * drop_bitflags: (see code/__DEFINES/blood.dm)
+ * * DROP_BRAIN - Mobs will drop a brain
+ * * DROP_ORGANS - Mobs will drop organs
+ * * DROP_BODYPARTS - Mobs will drop bodyparts (arms, legs, etc.)
+ * * DROP_ITEMS - Mobs will drop items
+ * * DROP_ALL_REMAINS - Mobs will drop everything
+**/
+/mob/living/proc/spill_organs(drop_bitflags)
 	return
 
 /mob/living/proc/spread_bodyparts()
