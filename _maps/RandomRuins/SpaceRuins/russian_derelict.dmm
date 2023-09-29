@@ -493,7 +493,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "fL" = (
 /obj/machinery/door/window/left/directional/west{
@@ -649,6 +649,11 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/corridor)
+"iE" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/airless,
+/area/space/nearstation)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1181,7 +1186,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "pc" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1391,7 +1396,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/cryo_tube,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "qh" = (
 /obj/structure/fluff/oldturret,
@@ -1660,10 +1665,6 @@
 /area/ruin/space/ks13/hallway/aft)
 "rI" = (
 /obj/structure/table_frame/wood,
-/obj/item/clothing/head/helmet/chaplain{
-	armor = null;
-	desc = "The Chaplains crusader helment. It seems old and dented."
-	},
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
 "rJ" = (
@@ -2202,6 +2203,9 @@
 "uw" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/security/court)
+"uy" = (
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "uz" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -2623,7 +2627,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "xb" = (
 /obj/structure/frame/computer{
@@ -2769,7 +2773,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "xN" = (
 /obj/structure/rack,
@@ -3474,7 +3478,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/smes,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Bv" = (
 /obj/effect/decal/cleanable/glass,
@@ -3869,7 +3873,7 @@
 	pixel_y = 6
 	},
 /obj/item/ai_module/core/full/drone,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "DL" = (
 /obj/structure/table,
@@ -4575,7 +4579,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/space_heater,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Hh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4677,6 +4681,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
+"HG" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "HH" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/service/jani)
@@ -4967,7 +4976,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Jz" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -5361,12 +5370,12 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/protolathe/offstation,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "LM" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "LN" = (
 /turf/closed/wall,
@@ -6037,7 +6046,11 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
+"Pp" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Pq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6407,7 +6420,7 @@
 "Rm" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/crew,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Ro" = (
 /obj/structure/grille/broken,
@@ -7530,7 +7543,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 15
 	},
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "WO" = (
 /obj/effect/spawner/random/maintenance,
@@ -7609,7 +7622,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Xj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7626,6 +7639,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
+"Xp" = (
+/obj/structure/lattice,
+/obj/item/paper/fluff/ruins/thederelict/syndie_mission,
+/turf/template_noop,
+/area/space/nearstation)
 "Xr" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/science/genetics)
@@ -7835,7 +7853,7 @@
 /area/ruin/space/ks13/hallway/aft)
 "YC" = (
 /obj/structure/fluff/oldturret,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
@@ -7980,7 +7998,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 15
 	},
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "Zq" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -8045,7 +8063,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "ZC" = (
 /obj/structure/table/glass,
@@ -8559,7 +8577,7 @@ xB
 vl
 NO
 uf
-oU
+iE
 zN
 qG
 aa
@@ -10761,13 +10779,13 @@ aa
 aa
 aa
 aa
-rk
 aa
 aa
 aa
-rk
-rk
-rk
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10873,16 +10891,16 @@ aa
 aa
 aa
 aa
-rk
-aa
-rk
-rk
-rk
 aa
 aa
 aa
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10986,16 +11004,16 @@ aa
 aa
 aa
 aa
-rk
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
 aa
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11100,24 +11118,24 @@ aa
 aa
 aa
 aa
-rk
-Yc
-Pw
-fU
-zA
-fU
-Yc
 aa
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11212,29 +11230,29 @@ aa
 aa
 aa
 aa
+aa
 rk
-Yc
-Yc
-eA
-Yc
-Yc
-fU
-Yc
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
+aa
+aa
+aa
 rk
 rk
 rk
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11325,26 +11343,26 @@ aa
 aa
 aa
 aa
+rk
 aa
 rk
 rk
 rk
-Yc
-AW
-KO
-Yc
-Bw
-Bw
-Bw
-Bw
-Bw
-Bw
-IF
-IF
-RL
+aa
 aa
 aa
 rk
+rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11438,23 +11456,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 rk
 Yc
 Yc
-lk
 Yc
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
+Yc
+Yc
+Yc
+Yc
+aa
 rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11552,24 +11570,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 rk
 Yc
+Pw
 fU
+zA
 fU
-fU
-fU
-fU
-fU
-fU
-fU
-YC
 Yc
-rk
-rk
 aa
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
 aa
 aa
 aa
@@ -11664,25 +11682,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-st
-Yc
-Yc
-aa
 rk
-aa
+Yc
+Yc
+eA
+Yc
+Yc
+fU
+Yc
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+rk
 aa
 aa
 aa
@@ -11778,22 +11796,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+rk
+rk
+rk
 Yc
-YC
-fU
-fU
-fU
-fU
-fU
-fU
-fU
+AW
+KO
 Yc
-Yc
-aa
+sg
+Bw
+Bw
+Bw
+Bw
+Bw
+IF
+IF
+RL
 aa
 aa
 aa
@@ -11893,20 +11911,20 @@ aa
 aa
 aa
 aa
-aa
-aa
+rk
 Yc
 Yc
-st
+lk
 Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-aa
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+rk
 aa
 aa
 aa
@@ -12007,9 +12025,9 @@ aa
 aa
 aa
 aa
-aa
+rk
 Yc
-Yc
+fU
 fU
 fU
 fU
@@ -12019,8 +12037,8 @@ fU
 fU
 YC
 Yc
-aa
-aa
+rk
+rk
 aa
 aa
 uu
@@ -12042,11 +12060,11 @@ bm
 PI
 zv
 PI
+Jc
 xJ
 xJ
 xJ
-xJ
-xJ
+Jc
 zv
 PI
 zv
@@ -12133,8 +12151,8 @@ st
 Yc
 Yc
 aa
-aa
 rk
+aa
 aa
 uu
 NJ
@@ -12246,8 +12264,8 @@ fU
 Yc
 Yc
 aa
-IF
-rk
+aa
+aa
 aa
 yf
 bN
@@ -12359,8 +12377,8 @@ Yc
 Yc
 Yc
 aa
-Bw
-Gf
+aa
+aa
 aa
 yf
 wQ
@@ -12472,8 +12490,8 @@ fU
 YC
 Yc
 aa
-Bw
-Gf
+aa
+aa
 aa
 yf
 WF
@@ -12494,11 +12512,11 @@ PI
 zv
 PI
 zv
+Jc
 xJ
 xJ
 xJ
-xJ
-xJ
+PI
 PI
 fg
 FI
@@ -12586,7 +12604,7 @@ Yc
 Yc
 Yc
 Bw
-Gf
+Jw
 aa
 yf
 yf
@@ -12803,15 +12821,15 @@ Yc
 Yc
 Yc
 Yc
-fU
+uy
 Bu
 Hg
 fJ
-fU
+uy
 YC
 Yc
 Yc
-IF
+Xa
 aa
 aa
 aa
@@ -13030,11 +13048,11 @@ Yc
 Yc
 Yc
 Xi
-fU
+uy
 qf
 Rm
-fU
-fU
+uy
+uy
 Yc
 LL
 Yc
@@ -13149,7 +13167,7 @@ fU
 fU
 fU
 PW
-KO
+Pp
 Yc
 aa
 aa
@@ -13259,7 +13277,7 @@ LM
 xL
 Po
 Jy
-fU
+uy
 YC
 Yc
 DK
@@ -15846,7 +15864,7 @@ bP
 aa
 aa
 xS
-VB
+HG
 IK
 xS
 pR
@@ -16047,7 +16065,7 @@ rk
 aa
 aa
 rk
-rk
+Xp
 rk
 rk
 rk
