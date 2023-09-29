@@ -152,6 +152,8 @@
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
 		return FALSE
+	if(istype(item, /obj/item/toy/crayon/spraycan))
+		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
