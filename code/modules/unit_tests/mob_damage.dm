@@ -332,12 +332,12 @@
 	// need to force apply some toxin damage since the TOXIMUNNE trait sets toxloss to 0 upon being added
 	apply_damage(dummy, 2, included_types = TOXLOSS, forced = TRUE)
 
-	// try to heal it again, this time it should just do nothing
+	// try to 'heal' again - this time it should just do nothing because we should be immune to any sort of toxin damage - including from inverted healing
 	apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS)
 	verify_damage(dummy, 2, included_types = TOXLOSS)
 
-	// ok, let's try forcing the healing now. This should override any trait checks.
-	apply_damage(dummy, -2, included_types = TOXLOSS, forced = TRUE)
+	// ok, let's try taking 'damage'. The inverted damage should still heal mobs with the TOXIMMUNE trait.
+	apply_damage(dummy, 2, expected = 2, included_types = TOXLOSS)
 	verify_damage(dummy, 0, included_types = TOXLOSS)
 
 	REMOVE_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
