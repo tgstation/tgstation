@@ -225,11 +225,11 @@
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/laser_fullauto
+/datum/supply_pack/security/armory/laser_carbine
 	name = "Laser Carbine Crate"
 	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
 	cost = CARGO_CRATE_VALUE * 9
-	contains = list(/obj/item/gun/energy/laser/fullauto = 3)
+	contains = list(/obj/item/gun/energy/laser/carbine = 3)
 	crate_name = "laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
