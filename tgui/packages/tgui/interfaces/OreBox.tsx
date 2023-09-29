@@ -44,7 +44,7 @@ export const OreBox = (props, context) => {
                 </Table.Cell>
               </Table.Row>
             ))}
-            {boulders > 0 ? (
+            {boulders > 0 && (
               <Table.Row>
                 <Table.Cell>Boulders</Table.Cell>
                 <Table.Cell collapsing textAlign="right">
@@ -53,7 +53,7 @@ export const OreBox = (props, context) => {
                   </Box>
                 </Table.Cell>
               </Table.Row>
-            ) : null}
+            )}
           </Table>
         </Section>
         <Section>
