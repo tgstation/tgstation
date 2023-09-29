@@ -104,6 +104,8 @@
 #define ACCESS_VAULT "vault"
 /// Access for the Quartermaster's personal quarters in mapping, as well as some other QM-related things.
 #define ACCESS_QM "qm"
+/// Access for the bitrunning den
+#define ACCESS_BIT_DEN "bit_den"
 
 /// General access for Science, allows for entry to the general hallways of Science, as well as the main lathe room.
 #define ACCESS_SCIENCE "science"
@@ -188,6 +190,8 @@
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
+/// HUNTERS
+#define ACCESS_HUNTER "hunter"
 
 /// - - - END ACCESS IDS - - -
 
@@ -279,6 +283,7 @@
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BAR, \
+	ACCESS_BIT_DEN, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
 	ACCESS_CARGO, \
@@ -290,6 +295,7 @@
 	ACCESS_ENGINE_EQUIP, \
 	ACCESS_ENGINEERING, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_GATEWAY, \
 	ACCESS_GENETICS, \
 	ACCESS_HYDROPONICS, \
 	ACCESS_JANITOR, \
@@ -336,7 +342,6 @@
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \
 	ACCESS_EVA, \
-	ACCESS_GATEWAY, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
@@ -390,7 +395,9 @@
 	ACCESS_AWAY_GENERIC4, \
 	ACCESS_AWAY_MAINTENANCE, \
 	ACCESS_AWAY_MEDICAL, \
+	ACCESS_AWAY_SCIENCE, \
 	ACCESS_AWAY_SEC, \
+	ACCESS_AWAY_SUPPLY, \
 )
 
 /// Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)
@@ -487,6 +494,7 @@
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
+	ACCESS_BIT_DEN, \
 	ACCESS_CARGO, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MINERAL_STOREROOM, \
@@ -545,6 +553,7 @@
 	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \

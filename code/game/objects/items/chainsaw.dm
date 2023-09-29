@@ -27,6 +27,18 @@
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
 
+/obj/item/chainsaw/apply_fantasy_bonuses(bonus)
+	. = ..()
+	force_on = modify_fantasy_variable("force_on", force_on, bonus)
+	if(on)
+		force = force_on
+
+/obj/item/chainsaw/remove_fantasy_bonuses(bonus)
+	force_on = reset_fantasy_variable("force_on", force_on)
+	if(on)
+		force = force_on
+	return ..()
+
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
 	chainsaw_loop = new(src)

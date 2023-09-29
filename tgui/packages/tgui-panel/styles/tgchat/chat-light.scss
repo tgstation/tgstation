@@ -593,6 +593,10 @@ h2.alert {
 }
 
 .blob {
+  color: #ee4000;
+}
+
+.blobannounce {
   color: #323f1c;
   font-weight: bold;
   font-size: 185%;
@@ -884,6 +888,15 @@ h2.alert {
 
 .resonate {
   color: #298f85;
+}
+
+.upside_down {
+  display: inline;
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
 }
 
 .connectionClosed,

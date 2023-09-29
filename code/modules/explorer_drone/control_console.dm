@@ -1,6 +1,7 @@
 /obj/machinery/computer/exodrone_control_console
 	name = "exploration drone control console"
-	desc = "control eploration drones from intersteller distances. Communication lag not included."
+	desc = "Control exploration drones from interstellar distances. Communication lag not included."
+	circuit = /obj/item/circuitboard/computer/exodrone_console
 	//Currently controlled drone
 	var/obj/item/exodrone/controlled_drone
 	/// Have we lost contact with the drone without disconnecting. Unset on user confirmation.
@@ -19,7 +20,7 @@
 		end_drone_control()
 		controlled_drone = drone
 		controlled_drone.controlled = TRUE
-		RegisterSignal(controlled_drone,COMSIG_PARENT_QDELETING, PROC_REF(drone_destroyed))
+		RegisterSignal(controlled_drone,COMSIG_QDELETING, PROC_REF(drone_destroyed))
 		RegisterSignal(controlled_drone,COMSIG_EXODRONE_STATUS_CHANGED, PROC_REF(on_exodrone_status_changed))
 		update_icon()
 
@@ -37,7 +38,7 @@
 /obj/machinery/computer/exodrone_control_console/proc/end_drone_control()
 	if(controlled_drone)
 		controlled_drone.controlled = FALSE
-		UnregisterSignal(controlled_drone,list(COMSIG_PARENT_QDELETING,COMSIG_EXODRONE_STATUS_CHANGED))
+		UnregisterSignal(controlled_drone,list(COMSIG_QDELETING,COMSIG_EXODRONE_STATUS_CHANGED))
 		controlled_drone = null
 		update_icon()
 
@@ -129,6 +130,9 @@
 				if(params["target_site"])
 					target_site = locate(params["target_site"]) in GLOB.exploration_sites
 					if(!target_site)
+						return TRUE
+					if(!controlled_drone.check_blacklist())
+						say("Error - An unauthorized object was found inside the cargo!")
 						return TRUE
 				controlled_drone.launch_for(target_site)
 			return TRUE

@@ -24,12 +24,12 @@
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir)
 	if(input_turf) // make sure there is actually a turf
-		RegisterSignals(input_turf, list(COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_ENTERED), PROC_REF(pickup_item))
+		RegisterSignals(input_turf, list(COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_ENTERED), PROC_REF(pickup_item))
 
 /// Unregisters signals that are registered the machine's input turf, if it has one.
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
-		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
+		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 /obj/machinery/mineral/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -46,7 +46,7 @@
 /**
 	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.
 
-	Called when the COMSIG_ATOM_ENTERED and COMSIG_ATOM_INITIALIZED_ON signals are sent.
+	Called when the COMSIG_ATOM_ENTERED and COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON signals are sent.
 
 	Arguments:
 	* source - the turf that is listening for the signals.
@@ -136,6 +136,8 @@
 	var/datum/techweb/stored_research
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
+	///Material container for materials
+	var/datum/component/material_container/materials
 
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
@@ -152,13 +154,20 @@
 		/datum/material/titanium,
 		/datum/material/bluespace,
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		allowed_materials, \
+		INFINITY, \
+		MATCONTAINER_EXAMINE | BREAKDOWN_FLAGS_ORE_PROCESSOR, \
+		allowed_items = /obj/item/stack \
+	)
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
+	materials = null
 	mineral_machine = null
 	stored_research = null
 	return ..()
@@ -166,7 +175,6 @@
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
 		return
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O, BREAKDOWN_FLAGS_ORE_PROCESSOR)
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)
@@ -177,7 +185,6 @@
 
 /obj/machinery/mineral/processing_unit/proc/get_machine_data()
 	var/dat = "<b>Smelter control console</b><br><br>"
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/datum/material/all_materials as anything in materials.materials)
 		var/amount = materials.materials[all_materials]
 		dat += "<span class=\"res_name\">[all_materials.name]: </span>[amount] cm&sup3;"
@@ -231,7 +238,6 @@
 		mineral_machine.updateUsrDialog()
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore(seconds_per_tick = 2)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/datum/material/mat = selected_material
 	if(!mat)
 		return
@@ -254,8 +260,7 @@
 		on = FALSE
 		return
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.use_materials(alloy.materials, amount)
+	materials.use_materials(alloy.materials, multiplier = amount)
 
 	generate_mineral(alloy.build_path)
 
@@ -264,8 +269,6 @@
 		return FALSE
 
 	var/build_amount = SMELT_AMOUNT * seconds_per_tick
-
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	for(var/mat_cat in D.materials)
 		var/required_amount = D.materials[mat_cat]
@@ -278,10 +281,5 @@
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)
-
-/obj/machinery/mineral/processing_unit/on_deconstruction()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all()
-	return ..()
 
 #undef SMELT_AMOUNT

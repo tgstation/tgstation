@@ -205,7 +205,8 @@
 			user.visible_message(span_warning("[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!"), span_userdanger("You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!"))
 
-			user.SetKnockdown(0)
+			// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
+			user.SetKnockdown(0, ignore_canstun = TRUE)
 			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
@@ -228,7 +229,8 @@
 				user.visible_message(span_warning("[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), span_userdanger("You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), ignored_mobs = target)
 				to_chat(target, span_userdanger("[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!"))
 
-				user.SetKnockdown(0)
+				// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
+				user.SetKnockdown(0, ignore_canstun = TRUE)
 				user.get_up(TRUE)
 				user.forceMove(get_turf(target))
 				target.adjustStaminaLoss(40)
@@ -365,7 +367,7 @@
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
 		var/obj/machinery/vending/darth_vendor = hit
-		darth_vendor.tilt(user, TRUE)
+		darth_vendor.tilt(user, 100)
 		return
 	else if(istype(hit, /obj/structure/window))
 		var/obj/structure/window/W = hit

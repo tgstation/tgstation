@@ -110,18 +110,29 @@
 			if(!ishuman(ownerlimb.owner))
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
-			draw_color = human_owner.hair_color
+			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
+			//head hair color takes priority, owner hair color is a backup if we lack a head or something
+			if(my_head)
+				draw_color = my_head.hair_color
+			else
+				draw_color = human_owner.hair_color
 
 	return TRUE
 
 ///Sprite accessories are singletons, stored list("Big Snout" = instance of /datum/sprite_accessory/snout/big), so here we get that singleton
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum(datum/sprite_accessory/accessory_path)
-	var/list/feature_list = get_global_feature_list()
-
-	return feature_list[initial(accessory_path.name)]
+	return fetch_sprite_datum_from_name(initial(accessory_path.name))
 
 ///Get the singleton from the sprite name
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum_from_name(accessory_name)
 	var/list/feature_list = get_global_feature_list()
+	var/found = feature_list[accessory_name]
+	if(found)
+		return found
 
-	return feature_list[accessory_name]
+	if(!length(feature_list))
+		CRASH("External organ [type] returned no sprite datums from get_global_feature_list(), so no accessories could be found!")
+	else if(accessory_name)
+		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
+	else
+		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")

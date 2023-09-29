@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/fire_breath
 	name = "Fire Breath"
-	button_icon = 'icons/obj/wizard.dmi'
+	button_icon = 'icons/effects/magic.dmi'
 	button_icon_state = "fireball"
 	desc = "Allows you to shoot fire towards a target."
 	cooldown_time = 3 SECONDS
@@ -24,7 +24,8 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/fire_line(atom/target, offset)
 	SLEEP_CHECK_DEATH(0, owner)
 	var/list/turfs = line_target(offset, fire_range, target)
-	dragon_fire_line(owner, turfs, ice_breath)
+	// This proc sleeps
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(dragon_fire_line), owner,  /* burn_turfs = */ turfs,  /* frozen = */ ice_breath)
 
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/line_target(offset, range, atom/target)
 	if(!target)

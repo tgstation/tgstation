@@ -8,26 +8,25 @@ import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Material } from './Fabrication/Types';
 
-type AutolatheDesign = Design & {
-  buildable: BooleanLike;
-  mult5: BooleanLike;
-  mult10: BooleanLike;
-  mult25: BooleanLike;
-  mult50: BooleanLike;
-  sheet: BooleanLike;
-};
-
 type AutolatheData = {
   materials: Material[];
   materialtotal: number;
   materialsmax: number;
-  designs: AutolatheDesign[];
+  SHEET_MATERIAL_AMOUNT: number;
+  designs: Design[];
   active: BooleanLike;
 };
 
 export const Autolathe = (props, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
-  const { materialtotal, materialsmax, materials, designs, active } = data;
+  const { data } = useBackend<AutolatheData>(context);
+  const {
+    materialtotal,
+    materialsmax,
+    materials,
+    designs,
+    active,
+    SHEET_MATERIAL_AMOUNT,
+  } = data;
 
   const filteredMaterials = materials.filter((material) => material.amount > 0);
 
@@ -54,7 +53,10 @@ export const Autolathe = (props, context) => {
                       'average': [materialsmax * 0.25, materialsmax * 0.85],
                       'bad': [0, materialsmax * 0.25],
                     }}>
-                    {materialtotal + '/' + materialsmax + ' cm³'}
+                    {materialtotal / SHEET_MATERIAL_AMOUNT +
+                      '/' +
+                      materialsmax / SHEET_MATERIAL_AMOUNT +
+                      ' sheets'}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
@@ -74,7 +76,8 @@ export const Autolathe = (props, context) => {
                               backgroundColor={material.color}
                               color="black">
                               <div style={{ transform: 'scaleX(-1)' }}>
-                                {material.amount + ' cm³'}
+                                {material.amount / SHEET_MATERIAL_AMOUNT +
+                                  ' sheets'}
                               </div>
                             </ProgressBar>
                           </LabeledList.Item>
@@ -98,6 +101,7 @@ export const Autolathe = (props, context) => {
               ) => (
                 <AutolatheRecipe
                   design={design}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   availableMaterials={availableMaterials}
                 />
               )}
@@ -113,11 +117,12 @@ type PrintButtonProps = {
   design: Design;
   quantity: number;
   availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 const PrintButton = (props: PrintButtonProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
-  const { design, quantity, availableMaterials } = props;
+  const { act } = useBackend<AutolatheData>(context);
+  const { design, quantity, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -131,6 +136,7 @@ const PrintButton = (props: PrintButtonProps, context) => {
         <MaterialCostSequence
           design={design}
           amount={quantity}
+          SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={availableMaterials}
         />
       }>
@@ -148,13 +154,14 @@ const PrintButton = (props: PrintButtonProps, context) => {
 };
 
 type AutolatheRecipeProps = {
-  design: AutolatheDesign;
+  design: Design;
   availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
-  const { design, availableMaterials } = props;
+  const { act } = useBackend<AutolatheData>(context);
+  const { design, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -179,6 +186,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={availableMaterials}
           />
         }>
@@ -199,37 +207,19 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
         </div>
       </Tooltip>
 
-      {!!design.mult5 && (
-        <PrintButton
-          design={design}
-          quantity={5}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={5}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+        availableMaterials={availableMaterials}
+      />
 
-      {!!design.mult10 && (
-        <PrintButton
-          design={design}
-          quantity={10}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult25 && (
-        <PrintButton
-          design={design}
-          quantity={25}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult50 && (
-        <PrintButton
-          design={design}
-          quantity={50}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={10}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+        availableMaterials={availableMaterials}
+      />
 
       <div
         className={classes([

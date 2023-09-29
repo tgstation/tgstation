@@ -8,11 +8,11 @@
 	active_overlay_icon_state = "bg_spell_border_active_blue"
 
 	school = SCHOOL_TRANSLOCATION
-	cooldown_time = 30 SECONDS
-	cooldown_reduction_per_rank = 6 SECONDS
+	cooldown_time = 25 SECONDS
+	cooldown_reduction_per_rank = 10 SECONDS
+	spell_max_level = 3
 	cast_range = 9
-	invocation = "FRO' BRT'TRO, DA!"
-	invocation_type = INVOCATION_SHOUT
+	invocation_type = INVOCATION_NONE
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION
 	active_msg = "You prepare to swap locations with a target..."
 
@@ -35,27 +35,27 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/click_target)
+/datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 		if(!IsAvailable(feedback = TRUE))
 			return FALSE
 		if(!target)
 			return FALSE
-		if(!isliving(click_target) || isturf(click_target))
+		if(!isliving(target) || isturf(target))
 			// Find any living being in the list. We aren't picky, it's aim assist after all
-			click_target = locate(/mob/living) in click_target
-			if(!click_target)
+			target = locate(/mob/living) in target
+			if(!target)
 				to_chat(owner, span_warning("You can only select living beings as secondary target!"))
 				return FALSE
-		if(click_target == owner)
+		if(target == owner)
 			if(!isnull(second_target))
 				to_chat(owner, span_notice("You cancel your secondary swap target!"))
 				second_target = null
 			else
 				to_chat(owner, span_warning("You have no secondary swap target!"))
 			return FALSE
-		second_target = click_target
-		to_chat(owner, span_notice("You select [click_target.name] as a secondary swap target!"))
+		second_target = target
+		to_chat(owner, span_notice("You select [target.name] as a secondary swap target!"))
 		return FALSE
 	return ..()
 

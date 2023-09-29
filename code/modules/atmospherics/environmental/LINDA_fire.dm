@@ -305,9 +305,4 @@
 /obj/effect/hotspot/singularity_pull()
 	return
 
-/obj/effect/dummy/lighting_obj/moblight/fire
-	name = "fire"
-	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
-
 #undef INSUFFICIENT

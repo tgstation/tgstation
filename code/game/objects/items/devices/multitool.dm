@@ -30,7 +30,7 @@
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	var/datum/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)
@@ -41,6 +41,28 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
+/**
+ * Sets the multitool internal object buffer
+ *
+ * Arguments:
+ * * buffer - the new object to assign to the multitool's buffer
+ */
+/obj/item/multitool/proc/set_buffer(datum/buffer)
+	if(src.buffer)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
+	src.buffer = buffer
+	if(!QDELETED(buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+
+/**
+ * Called when the buffer's stored object is deleted
+ *
+ * This proc does not clear the buffer of the multitool, it is here to
+ * handle the deletion of the object the buffer references
+ */
+/obj/item/multitool/proc/on_buffer_del(datum/source)
+	SIGNAL_HANDLER
+	buffer = null
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
@@ -84,10 +106,6 @@
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
-	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
-		if(AI.cameraFollow == src)
-			detect_state = PROXIMITY_ON_SCREEN
-			return
 
 	for(var/mob/camera/ai_eye/AI_eye as anything in GLOB.aiEyes)
 		if(!AI_eye.ai_detector_visible)
@@ -107,12 +125,6 @@
 		if(distance < rangewarning) //ai cant see us but is close
 			detect_state = PROXIMITY_NEAR
 
-/mob/camera/ai_eye/remote/ai_detector
-	name = "AI detector eye"
-	ai_detector_visible = FALSE
-	visible_icon = FALSE
-	use_static = FALSE
-
 /datum/action/item_action/toggle_multitool
 	name = "Toggle AI detecting mode"
 	check_flags = NONE
@@ -128,7 +140,7 @@
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
 	belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)

@@ -95,11 +95,11 @@
 	return ..()
 
 /datum/status_effect/golem/get_examine_text()
-	return span_notice("[owner.p_their(capitalized = TRUE)] body has been augmented with veins of [mineral_name].")
+	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
-	icon = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
 	layers = ALL_EXTERNAL_OVERLAYS
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
@@ -176,14 +176,14 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod *= burn_multiplier
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod /= burn_multiplier
@@ -295,7 +295,7 @@
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/diamond/on_remove()
@@ -315,7 +315,7 @@
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
@@ -365,7 +365,7 @@
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
 	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
@@ -384,7 +384,7 @@
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
 	arm.unarmed_stun_threshold -= damage_increase
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)

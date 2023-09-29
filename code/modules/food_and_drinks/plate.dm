@@ -1,7 +1,7 @@
 /obj/item/plate
 	name = "plate"
 	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate"
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
 	///How many things fit on this plate?
@@ -55,7 +55,7 @@
 	item_to_plate.flags_1 |= IS_ONTOP_1
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
-	RegisterSignal(item_to_plate, COMSIG_PARENT_QDELETING, PROC_REF(ItemMoved))
+	RegisterSignal(item_to_plate, COMSIG_QDELETING, PROC_REF(ItemMoved))
 	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
 	item_to_plate.pixel_w = item_to_plate.pixel_x
 	item_to_plate.pixel_z = item_to_plate.pixel_y
@@ -68,7 +68,7 @@
 	removed_item.flags_1 &= ~IS_ONTOP_1
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
-	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	// Resettt
 	removed_item.pixel_x = removed_item.pixel_w
 	removed_item.pixel_y = removed_item.pixel_z
@@ -98,7 +98,7 @@
 
 /obj/item/plate_shard
 	name = "ceramic shard"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate_shard1"
 	base_icon_state = "plate_shard"
 	w_class = WEIGHT_CLASS_TINY

@@ -38,7 +38,7 @@
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = partner_ref?.resolve()
 	if(!partner)
 		partner_ref = null
-		var/partner_connect = turn(dir,180)
+		var/partner_connect = REVERSE_DIR(dir)
 
 		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src,target))

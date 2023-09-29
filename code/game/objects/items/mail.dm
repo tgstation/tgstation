@@ -3,7 +3,7 @@
 	name = "mail"
 	gender = NEUTER
 	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mail_small"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
@@ -115,7 +115,7 @@
 		return TRUE
 	balloon_alert(user, "hold it!")
 	return FALSE
-	
+
 
 /obj/item/mail/attack_self(mob/user)
 	if(!unwrap(user))
@@ -140,8 +140,11 @@
 // proc that goes after unwrapping a mail.
 /obj/item/mail/proc/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
-	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
-		user.put_in_hands(stuff)
+	for(var/obj/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
+		if(isitem(stuff))
+			user.put_in_hands(stuff)
+		else
+			stuff.forceMove(drop_location())
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
 	return TRUE
@@ -205,7 +208,12 @@
 
 	if(prob(25))
 		special_name = TRUE
-		junk = pick(list(/obj/item/paper/pamphlet/gateway, /obj/item/paper/pamphlet/violent_video_games, /obj/item/paper/fluff/junkmail_redpill, /obj/effect/decal/cleanable/ash))
+		junk = pick(list(
+			/obj/item/paper/pamphlet/gateway,
+			/obj/item/paper/pamphlet/violent_video_games,
+			/obj/item/paper/fluff/junkmail_redpill,
+			/obj/effect/decal/cleanable/ash,
+		))
 
 	var/list/junk_names = list(
 		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
@@ -306,7 +314,7 @@
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
@@ -330,7 +338,7 @@
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
-	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct)
 	if(!self_destruct || !prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
 		return ..()
@@ -391,7 +399,7 @@
 		return TRUE
 	else
 		balloon_alert(user, "tinkering with something...")
-		
+
 		if(!do_after(user, 2 SECONDS, target = src))
 			after_unwrap(user)
 			return FALSE
@@ -408,7 +416,7 @@
 	name = "GLA-2 mail counterfeit device"
 	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
 	w_class = WEIGHT_CLASS_NORMAL
-	icon = 'icons/obj/device_syndie.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device"
 
 /obj/item/storage/mail_counterfeit_device/Initialize(mapload)
@@ -442,17 +450,18 @@
 	var/list/mail_recipients_for_input = list("Anyone")
 	var/list/used_names = list()
 	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
-		if(isnull(person.mind_ref))
+		var/datum/mind/locked_mind = person.mind_ref.resolve()
+		if(isnull(locked_mind))
 			continue
-		mail_recipients += person.mind_ref
+		mail_recipients += locked_mind
 		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
-		
+
 	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_for_input)
 	if(isnull(recipient))
 		return FALSE
 	if(!(src in user.contents))
 		return FALSE
-	
+
 	var/index = mail_recipients_for_input.Find(recipient)
 
 	var/obj/item/mail/traitor/shady_mail
@@ -460,7 +469,7 @@
 		shady_mail = new /obj/item/mail/traitor
 	else
 		shady_mail = new /obj/item/mail/traitor/envelope
-	
+
 	shady_mail.made_by_cached_ckey = user.ckey
 	shady_mail.made_by_cached_name = user.mind.name
 

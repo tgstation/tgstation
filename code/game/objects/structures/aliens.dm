@@ -38,7 +38,7 @@
 /obj/structure/alien/gelpod
 	name = "gelatinous mound"
 	desc = "A mound of jelly-like substance encasing something inside."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
@@ -170,7 +170,7 @@
 
 /obj/structure/alien/weeds/Destroy()
 	if(parent_node)
-		UnregisterSignal(parent_node, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(parent_node, COMSIG_QDELETING)
 		parent_node = null
 	return ..()
 
@@ -214,7 +214,7 @@
 		check_weed = new(check_turf)
 		//set the new one's parent node to our parent node
 		check_weed.parent_node = parent_node
-		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
+		check_weed.RegisterSignal(parent_node, COMSIG_QDELETING, PROC_REF(after_parent_destroyed))
 
 /**
  * Called when the parent node is destroyed
@@ -236,7 +236,7 @@
 		if(new_parent == previous_node)
 			continue
 		parent_node = new_parent
-		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
+		RegisterSignal(parent_node, COMSIG_QDELETING, PROC_REF(after_parent_destroyed))
 		return parent_node
 	return FALSE
 
@@ -339,6 +339,7 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
+	/// Ref to the hugger within.
 	var/obj/item/clothing/mask/facehugger/child
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -432,6 +433,11 @@
 					if(CanHug(M))
 						child.Leap(M)
 						break
+
+/obj/structure/alien/egg/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == child)
+		child = null
 
 /obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 500

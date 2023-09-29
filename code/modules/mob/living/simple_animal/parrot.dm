@@ -143,7 +143,7 @@
 	if(stat != DEAD)
 		return
 
-	if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+	if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 		. += pick(
 			"It seems tired and shagged out after a long squawk.",
 			"It seems to be pining for the fjords.",
@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = user
+		set_parrot_interest(user)
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
 		if(health > 30) //Let's get in there and squawk it up!
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
 	if(user.melee_damage_upper > 0 && !stat)
-		parrot_interest = user
+		set_parrot_interest(user)
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living
 
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-			parrot_interest = user
+			set_parrot_interest(user)
 			parrot_state = PARROT_SWOOP
 			if(health > 30) //Let's get in there and squawk it up!
 				parrot_state |= PARROT_ATTACK
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = null
+		set_parrot_interest(null)
 		parrot_state = PARROT_WANDER | PARROT_FLEE //Been shot and survived! RUN LIKE HELL!
 		//parrot_been_shot += 5
 		icon_state = icon_living
@@ -471,7 +471,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				speak = newspeak
 
 			//Search for item to steal
-			parrot_interest = search_for_item()
+			set_parrot_interest(search_for_item())
 			if(parrot_interest)
 				manual_emote("looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
@@ -482,7 +482,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	else if(parrot_state == PARROT_WANDER)
 		//Stop movement, we'll set it later
 		SSmove_manager.stop_looping(src)
-		parrot_interest = null
+		set_parrot_interest(null)
 
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
@@ -494,7 +494,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
 				if(isitem(AM) || isliving(AM)) //If stealable item
-					parrot_interest = AM
+					set_parrot_interest(AM)
 					manual_emote("turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
@@ -539,7 +539,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 					parrot_interest.forceMove(src)
 					visible_message(span_notice("[src] grabs [held_item]!"), span_notice("You grab [held_item]!"), span_hear("You hear the sounds of wings flapping furiously."))
 
-			parrot_interest = null
+			set_parrot_interest(null)
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
@@ -587,7 +587,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 		//If we're attacking a nothing, an object, a turf or a ghost for some stupid reason, switch to wander
 		if(!parrot_interest || !isliving(parrot_interest))
-			parrot_interest = null
+			set_parrot_interest(null)
 			parrot_state = PARROT_WANDER
 			return
 
@@ -601,7 +601,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
-				parrot_interest = null
+				set_parrot_interest(null)
 				if(!held_item)
 					held_item = steal_from_ground()
 					if(!held_item)
@@ -625,7 +625,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
 		SSmove_manager.stop_looping(src)
-		parrot_interest = null
+		set_parrot_interest(null)
 		parrot_perch = null
 		drop_held_item()
 		parrot_state = PARROT_WANDER
@@ -634,6 +634,17 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /*
  * Procs
  */
+
+/mob/living/simple_animal/parrot/proc/set_parrot_interest(atom/movable/shiny)
+	if(parrot_interest)
+		UnregisterSignal(parrot_interest, COMSIG_QDELETING)
+	parrot_interest = shiny
+	if(parrot_interest)
+		RegisterSignal(parrot_interest, COMSIG_QDELETING, PROC_REF(shiny_deleted))
+
+/mob/living/simple_animal/parrot/proc/shiny_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_parrot_interest(null)
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
@@ -908,7 +919,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN MODSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
-	voice_filter = "rubberband=pitch=1.5"
 
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
@@ -920,6 +930,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	ears = new /obj/item/radio/headset/headset_eng(src)
 	if(SStts.tts_enabled)
 		voice = pick(SStts.available_speakers)
+		if(SStts.pitch_enabled)
+			if(findtext(voice, "Woman"))
+				pitch = 12 // up-pitch by one octave
+			else
+				pitch = 24 // up-pitch by 2 octaves
+		else
+			voice_filter = "rubberband=pitch=1.5" // Use the filter to pitch up if we can't naturally pitch up.
+
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
@@ -949,6 +967,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..()
 
 /mob/living/simple_animal/parrot/poly/death(gibbed)
+	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY))
+		return ..() // Don't read memory either.
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
@@ -957,7 +977,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			mind.transfer_to(G)
 		else
 			G.key = key
-	..(gibbed)
+	return ..()
 
 /mob/living/simple_animal/parrot/poly/proc/Read_Memory()
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
@@ -1026,7 +1046,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/simple_animal/parrot/poly/ghost/handle_automated_movement()
 	if(isliving(parrot_interest))
 		if(!ishuman(parrot_interest))
-			parrot_interest = null
+			set_parrot_interest(null)
 		else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK) && Adjacent(parrot_interest))
 			SSmove_manager.move_to(src, parrot_interest, 0, parrot_speed)
 			Possess(parrot_interest)
@@ -1039,7 +1059,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	P.parrot = src
 	forceMove(H)
 	H.ForceContractDisease(P, FALSE)
-	parrot_interest = null
+	set_parrot_interest(null)
 	H.visible_message(span_danger("[src] dive bombs into [H]'s chest and vanishes!"), span_userdanger("[src] dive bombs into your chest, vanishing! This can't be good!"))
 
 #undef PARROT_PERCH

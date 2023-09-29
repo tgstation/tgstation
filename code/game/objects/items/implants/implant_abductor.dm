@@ -1,7 +1,7 @@
 /obj/item/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "implant"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 60 SECONDS
@@ -53,7 +53,7 @@
 
 	else //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
 		var/list/consoles = list()
-		for(var/obj/machinery/abductor/console/found_console in GLOB.machines)
+		for(var/obj/machinery/abductor/console/found_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/console))
 			consoles += found_console
 		console = pick(consoles)
 		if(console)

@@ -17,7 +17,6 @@
 	health = 10
 	minbodytemp = 0
 	maxbodytemp = 1500
-	healable = 0
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/effects/supermatter.ogg'

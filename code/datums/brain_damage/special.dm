@@ -2,6 +2,7 @@
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
+	abstract_type = /datum/brain_trauma/special
 
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
@@ -45,7 +46,7 @@
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
-	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name)
+	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name, TRUE)
 
 /datum/brain_trauma/special/bluespace_prophet
 	name = "Bluespace Prophecy"

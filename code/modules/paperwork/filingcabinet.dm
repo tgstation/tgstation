@@ -13,7 +13,7 @@
 /obj/structure/filingcabinet
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
@@ -193,9 +193,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind_ref = target.mind_ref
-		if(mind_ref && ishuman(mind_ref.current))
-			addFile(mind_ref.current)
+		var/datum/mind/filed_mind = target.mind_ref.resolve()
+		if(filed_mind && ishuman(filed_mind.current))
+			addFile(filed_mind.current)
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
 	new /obj/item/paper/employment_contract(src, employee.mind.name)

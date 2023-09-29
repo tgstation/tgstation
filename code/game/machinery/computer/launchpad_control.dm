@@ -66,7 +66,7 @@
 		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
 				launchpads |= M.buffer
-				M.buffer = null
+				M.set_buffer(null)
 				to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
 			else
 				to_chat(user, span_warning("[src] cannot handle any more connections!"))

@@ -5,6 +5,7 @@
 	return response
 
 /datum/tgs_api/v5/proc/ProcessTopicJson(json, check_access_identifier)
+	TGS_DEBUG_LOG("ProcessTopicJson(..., [check_access_identifier])")
 	var/list/result = ProcessRawTopic(json, check_access_identifier)
 	if(!result)
 		result = TopicResponse("Runtime error!")
@@ -25,16 +26,20 @@
 	return response_json
 
 /datum/tgs_api/v5/proc/ProcessRawTopic(json, check_access_identifier)
+	TGS_DEBUG_LOG("ProcessRawTopic(..., [check_access_identifier])")
 	var/list/topic_parameters = json_decode(json)
 	if(!topic_parameters)
+		TGS_DEBUG_LOG("ProcessRawTopic: json_decode failed")
 		return TopicResponse("Invalid topic parameters json: [json]!");
 
 	var/their_sCK = topic_parameters[DMAPI5_PARAMETER_ACCESS_IDENTIFIER]
 	if(check_access_identifier && their_sCK != access_identifier)
-		return TopicResponse("Failed to decode [DMAPI5_PARAMETER_ACCESS_IDENTIFIER]!")
+		TGS_DEBUG_LOG("ProcessRawTopic: access identifier check failed")
+		return TopicResponse("Failed to decode [DMAPI5_PARAMETER_ACCESS_IDENTIFIER] or it does not match!")
 
 	var/command = topic_parameters[DMAPI5_TOPIC_PARAMETER_COMMAND_TYPE]
 	if(!isnum(command))
+		TGS_DEBUG_LOG("ProcessRawTopic: command type check failed")
 		return TopicResponse("Failed to decode [DMAPI5_TOPIC_PARAMETER_COMMAND_TYPE]!")
 
 	return ProcessTopicCommand(command, topic_parameters)
@@ -43,6 +48,7 @@
 	return "response[payload_id]"
 
 /datum/tgs_api/v5/proc/ProcessTopicCommand(command, list/topic_parameters)
+	TGS_DEBUG_LOG("ProcessTopicCommand([command], ...)")
 	switch(command)
 
 		if(DMAPI5_TOPIC_COMMAND_CHAT_COMMAND)
@@ -55,7 +61,6 @@
 			return result
 
 		if(DMAPI5_TOPIC_COMMAND_EVENT_NOTIFICATION)
-			intercepted_message_queue = list()
 			var/list/event_notification = topic_parameters[DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]
 			if(!istype(event_notification))
 				return TopicResponse("Invalid [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
@@ -66,23 +71,25 @@
 
 			var/list/event_parameters = event_notification[DMAPI5_EVENT_NOTIFICATION_PARAMETERS]
 			if(event_parameters && !istype(event_parameters))
-				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_PARAMETERS]!")
+				. = TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_PARAMETERS]!")
+			else
+				var/list/response = TopicResponse()
+				. = response
+				if(event_handler != null)
+					var/list/event_call = list(event_type)
+					if(event_parameters)
+						event_call += event_parameters
 
-			var/list/event_call = list(event_type)
+					intercepted_message_queue = list()
+					event_handler.HandleEvent(arglist(event_call))
+					response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+					intercepted_message_queue = null
+
 			if (event_type == TGS_EVENT_WATCHDOG_DETACH)
 				detached = TRUE
 				chat_channels.Cut() // https://github.com/tgstation/tgstation-server/issues/1490
 
-			if(event_parameters)
-				event_call += event_parameters
-
-			if(event_handler != null)
-				event_handler.HandleEvent(arglist(event_call))
-
-			var/list/response = TopicResponse()
-			response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
-			intercepted_message_queue = null
-			return response
+			return
 
 		if(DMAPI5_TOPIC_COMMAND_CHANGE_PORT)
 			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
@@ -122,8 +129,10 @@
 			return TopicResponse()
 
 		if(DMAPI5_TOPIC_COMMAND_CHAT_CHANNELS_UPDATE)
+			TGS_DEBUG_LOG("ProcessTopicCommand: It's a chat update")
 			var/list/chat_update_json = topic_parameters[DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE]
 			if(!istype(chat_update_json))
+				TGS_DEBUG_LOG("ProcessTopicCommand: failed \"[DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE]\" check")
 				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE]!")
 
 			DecodeChannels(chat_update_json)
@@ -138,7 +147,7 @@
 			return TopicResponse()
 
 		if(DMAPI5_TOPIC_COMMAND_HEALTHCHECK)
-			if(event_handler?.receive_health_checks)
+			if(event_handler && event_handler.receive_health_checks)
 				event_handler.HandleEvent(TGS_EVENT_HEALTH_CHECK)
 			return TopicResponse()
 

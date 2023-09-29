@@ -4,7 +4,7 @@
 	desc = "A sticker with some strong adhesive on the back, sticks to stuff!"
 	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny
 	resistance_flags = FLAMMABLE
-	icon = 'icons/obj/stickers.dmi'
+	icon = 'icons/obj/toys/stickers.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 3
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER

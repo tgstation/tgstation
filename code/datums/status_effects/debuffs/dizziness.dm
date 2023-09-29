@@ -24,7 +24,7 @@
 
 	qdel(src)
 
-/datum/status_effect/dizziness/tick()
+/datum/status_effect/dizziness/tick(seconds_between_ticks)
 	// How much time is left, in seconds
 	var/amount = (duration - world.time) / 10
 	if(amount <= 0)
@@ -34,13 +34,12 @@
 	// If we're resting, the effect is 5x as strong, but also decays 5x fast.
 	// Meaning effectively, 1 tick is actually dizziness_strength ticks of duration
 	var/dizziness_strength = owner.resting ? 5 : 1
-	var/time_between_ticks = initial(tick_interval)
 
 	// How much time will be left, in seconds, next tick
-	var/next_amount = max((amount - (dizziness_strength * time_between_ticks * 0.1)), 0)
+	var/next_amount = max((amount - (dizziness_strength * seconds_between_ticks * 0.1)), 0)
 
 	// If we have a dizziness strength > 1, we will subtract ticks off of the total duration
-	if(remove_duration((dizziness_strength - 1) * time_between_ticks))
+	if(remove_duration((dizziness_strength - 1) * seconds_between_ticks))
 		return
 
 	// Now we can do the actual dizzy effects.

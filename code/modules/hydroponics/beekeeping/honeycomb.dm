@@ -1,13 +1,13 @@
 /obj/item/food/honeycomb
 	name = "honeycomb"
 	desc = "A hexagonal mesh of honeycomb."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "honeycomb"
 	max_volume = 10
 	food_reagents = list(/datum/reagent/consumable/honey = 5)
 	tastes = list("honey" = 1)
 	preserved_food = TRUE
-
+	starting_reagent_purity = 1
 	var/honey_color = ""
 
 /obj/item/food/honeycomb/Initialize(mapload)

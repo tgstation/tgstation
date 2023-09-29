@@ -41,15 +41,16 @@
 
 /datum/component/egg_layer/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(feed_food))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(feed_food))
 
 /datum/component/egg_layer/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
 /datum/component/egg_layer/Destroy(force, silent)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	egg_laid_callback = null
 
 /datum/component/egg_layer/proc/feed_food(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER

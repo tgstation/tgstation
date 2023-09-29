@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/armor
+	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
@@ -27,6 +28,20 @@
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+
+/obj/item/clothing/suit/armor/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+	return ..()
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
@@ -68,6 +83,16 @@
 	acid = 50
 	wound = 20
 
+/datum/armor/pmc
+	melee = 40
+	bullet = 50
+	laser = 60
+	energy = 50
+	bomb = 50
+	bio = 100
+	acid = 50
+	wound = 20
+
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "large tactical armor vest"
 	icon_state = "marine_security"
@@ -80,6 +105,14 @@
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/armor/vest/marine/pmc
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
+	w_class = WEIGHT_CLASS_BULKY
+	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -561,3 +594,23 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/militia
+	name = "station defender's coat"
+	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	icon_state = "militia"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor_type = /datum/armor/coat_militia
+
+/datum/armor/coat_militia
+	melee = 40
+	bullet = 40
+	laser = 30
+	energy = 25
+	bomb = 50
+	fire = 40
+	acid = 50
+	wound = 30

@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(do_after(user,50,target=A))
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user)
-				user.back?.atom_storage?.attempt_insert(src, user)
+				user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)
@@ -81,12 +81,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
-			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
+			balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.add_overlay(balloon2)
 			sleep(0.4 SECONDS)
-			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
+			balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon2)
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(1 SECONDS)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(1 SECONDS)
-			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
+			balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon)
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user,15,target = user) && !QDELETED(src))
+	if(do_after(user, 1.5 SECONDS, target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
 		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 		qdel(src)
@@ -156,6 +156,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "extraction_point"
 	anchored = TRUE
 	density = FALSE
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	var/beacon_network = "station"
 
 /obj/structure/extraction_point/Initialize(mapload)
@@ -167,6 +168,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src
 	return ..()
+
+/obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	balloon_alert_to_viewers("undeploying...")
+	if(!do_after(user, 1.5 SECONDS, src))
+		return
+	new /obj/item/fulton_core(drop_location())
+	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	qdel(src)
 
 /obj/structure/extraction_point/update_overlays()
 	. = ..()

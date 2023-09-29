@@ -147,13 +147,13 @@
 		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	visible_message(span_hierophant_warning("[src] fades out!"))
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
 	forceMove(T)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares(target)
@@ -180,19 +180,15 @@
 /obj/item/clothing/accessory/pandora_hope
 	name = "Hope"
 	desc = "Found at the bottom of Pandora. After all the evil was released, this was the only thing left inside."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "hope"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/accessory/pandora_hope/on_uniform_equip(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L?.mind)
-		L.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
+/obj/item/clothing/accessory/pandora_hope/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	user.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
 
-/obj/item/clothing/accessory/pandora_hope/on_uniform_dropped(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L?.mind)
-		L.clear_mood_event("hope_lavaland")
+/obj/item/clothing/accessory/pandora_hope/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	user.clear_mood_event("hope_lavaland")
 
 #undef SINGULAR_SHOT
 #undef MAGIC_BOX

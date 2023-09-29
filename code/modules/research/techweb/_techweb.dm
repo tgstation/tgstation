@@ -146,7 +146,7 @@
 /datum/techweb/proc/copy_research_to(datum/techweb/receiver) //Adds any missing research to theirs.
 	for(var/i in receiver.hidden_nodes)
 		CHECK_TICK
-		if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
+		if(get_available_nodes()[i] || get_researched_nodes()[i] || get_visible_nodes()[i])
 			receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
@@ -216,7 +216,8 @@
 	else
 		researched_designs[design.id] = TRUE
 
-	hidden_nodes -= design.id
+	for(var/list/datum/techweb_node/unlocked_nodes as anything in design.unlocked_by)
+		hidden_nodes -= unlocked_nodes
 
 	return TRUE
 

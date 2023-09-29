@@ -4,8 +4,8 @@ import { Component } from 'inferno';
 import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
-import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS } from './constants';
-import { Connections } from './Connections';
+import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS, VARIABLE_ASSOC_LIST, VARIABLE_LIST } from './constants';
+import { Connections } from '../common/Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { DisplayComponent } from './DisplayComponent';
 import { VariableMenu } from './VariableMenu';
@@ -574,11 +574,12 @@ export class IntegratedCircuit extends Component {
                 variables={variables}
                 types={global_basic_types}
                 onClose={(event) => this.setState({ variableMenuOpen: false })}
-                onAddVariable={(name, type, asList, event) =>
+                onAddVariable={(name, type, listType, event) =>
                   act('add_variable', {
                     variable_name: name,
                     variable_datatype: type,
-                    is_list: asList,
+                    is_list: listType === VARIABLE_LIST,
+                    is_assoc_list: listType === VARIABLE_ASSOC_LIST,
                   })
                 }
                 onRemoveVariable={(name, event) =>

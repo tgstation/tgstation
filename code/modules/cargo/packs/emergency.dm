@@ -117,8 +117,6 @@
 	contains = list(/obj/item/clothing/head/utility/radiation = 2,
 					/obj/item/clothing/suit/utility/radiation = 2,
 					/obj/item/geiger_counter = 2,
-					/obj/item/clothing/suit/utility/radiation,
-					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/cup/glass/bottle/vodka,
 					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass = 2,
 				)
