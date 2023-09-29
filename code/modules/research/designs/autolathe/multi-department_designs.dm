@@ -605,7 +605,7 @@
 	desc = "A compact recorder and player which can hold up to ten minutes of content."
 	id = "audio_tag"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)
 	build_path = /obj/item/taperecorder/audio_tag
 	category = list(
 		RND_CATEGORY_INITIAL,
