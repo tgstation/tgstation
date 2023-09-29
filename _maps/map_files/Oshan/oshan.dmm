@@ -13337,7 +13337,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "medlobby"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "gMj" = (
 /obj/structure/cable,
