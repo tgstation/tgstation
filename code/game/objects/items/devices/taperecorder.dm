@@ -365,6 +365,17 @@
 /obj/item/taperecorder/empty
 	starting_tape_type = null
 
+// Audio Tags
+// System Shock 2 style audio logs. Cheap to build from an autolathe and can store up to 10 minutes of recording. Should not have an eject function.
+/obj/item/taperecorder/audio_tag
+	name = "audio tag"
+	desc = "A small, independent disk that can hold up to ten minutes of content. Its drive cannot be ejected."
+	// icon_state = "tape_tag" // Remove comment tags once icon state is added.
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/taperecorder/audio_tag/Initialize(mapload)
+	. = ..() //This is probably not the way to inherit all the procs and it's probably not what I want, but I'm gonna try it anyway.
+
 /obj/item/tape
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
