@@ -30,6 +30,7 @@
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
+		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/ammo_box/magazine/m35 = 5, //monkestation edit: Paco sec
 	)
 	refill_canister = /obj/item/vending_refill/security
