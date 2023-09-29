@@ -179,6 +179,12 @@ const GenderButton = (
     false
   );
 
+  // emulating the server's implicit behavior so that the ui can stay in sycn
+  props.gender =
+    props.agender && props.gender !== Gender.Other2
+      ? Gender.Other
+      : props.gender;
+
   return (
     <Popper
       options={{
@@ -215,15 +221,7 @@ const GenderButton = (
           setGenderMenuOpen(!genderMenuOpen);
         }}
         fontSize="22px"
-        icon={
-          GENDERS[
-            props.agender && props.gender !== Gender.Other2
-              ? Gender.Other
-              : props.gender
-          ].icon
-        } // Prevents showing wrong icon on species switch. That being said, they/them
-        //   will still not be highlighted green (until manually selected) as
-        //   it's only an implicit choice (FIXME/TODO)
+        icon={GENDERS[props.gender].icon}
         tooltip="Gender"
         tooltipPosition="top"
       />
