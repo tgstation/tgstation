@@ -530,6 +530,3 @@
 	icon_state = "audiotag_codersprite"
 	unspooled = FALSE
 	unspoolable = TRUE
-/* /obj/item/tape/tag_drive/proc/unspool()
-	return //We don't want the tag drive to unspool, ever.
-*/
