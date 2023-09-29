@@ -445,28 +445,23 @@
 		for(var/i in loot)
 			new i(loc)
 
-/mob/living/simple_animal/death(gibbed, drop_loot = TRUE)
-	if(drop_loot)
-		drop_loot()
-		if(dextrous)
-			drop_all_held_items()
-
+/mob/living/simple_animal/death(gibbed)
+	drop_loot()
+	if(dextrous)
+		drop_all_held_items()
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
 		qdel(src)
-		return
-
-	health = 0
-	icon_state = icon_dead
-	if(flip_on_death)
-		transform = transform.Turn(180)
-
-	ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
-
-	return ..()
+	else
+		health = 0
+		icon_state = icon_dead
+		if(flip_on_death)
+			transform = transform.Turn(180)
+		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
+		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(!isatom(the_target)) // no
