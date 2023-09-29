@@ -62,6 +62,10 @@
 
 /datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
+	if(isliving(user))
+		var/mob/living/living_mob = user
+		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+			return
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
 		return
@@ -69,6 +73,8 @@
 
 /datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
 	var/atom/atom_source = source
 	var/murder
 	if(!user.melee_damage_upper && !user.melee_damage_lower)
@@ -86,6 +92,10 @@
 
 /datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
+	if(isliving(user))
+		var/mob/living/living_mob = user
+		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+			return
 	var/atom/atom_source = source
 	if(iscyborg(user) && atom_source.Adjacent(user))
 		dust_mob(source, user, cause = "cyborg attack")
@@ -98,14 +108,12 @@
 
 /datum/component/supermatter_crystal/proc/hand_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	var/atom/atom_source = source
 	if(user.incorporeal_move || user.status_flags & GODMODE)
 		return
-
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		dust_mob(source, user, cause = "hand")
 		return
-
+	var/atom/atom_source = source
 	if(!user.is_mouth_covered())
 		if(user.combat_mode)
 			dust_mob(source, user,
@@ -187,6 +195,8 @@
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
+		if(user.incorporeal_move || user.status_flags & GODMODE)
+			return
 		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_They()] burst[user.p_s()] into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(source, user, vis_msg, mob_msg)
@@ -200,6 +210,10 @@
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
 	SIGNAL_HANDLER
+	if(isliving(hit_object))
+		var/mob/living/hit_mob = hit_object
+		if(hit_mob.incorporeal_move || hit_mob.status_flags & GODMODE)
+			return
 	var/atom/atom_source = source
 	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
 	if(istype(our_supermatter))
@@ -251,9 +265,9 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
-	var/atom/atom_source = source
 	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
 		return
+	var/atom/atom_source = source
 	if(!vis_msg)
 		vis_msg = span_danger("[nom] reaches out and touches [atom_source], inducing a resonance... [nom.p_their()] body starts to glow and burst into flames before flashing into dust!")
 	if(!mob_msg)
@@ -279,6 +293,9 @@
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
+		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
+			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
+			notify_ghosts("[consumed_mob] has been dusted by [atom_source]!", source = atom_source, action = NOTIFY_JUMP, header = "Polytechnical Difficulties")
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))

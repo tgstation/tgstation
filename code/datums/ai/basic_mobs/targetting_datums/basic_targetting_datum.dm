@@ -124,3 +124,9 @@
 /datum/targetting_datum/basic/of_size/larger
 	find_smaller = FALSE
 	inclusive = FALSE
+
+/datum/targetting_datum/basic/attack_until_dead
+	stat_attack = HARD_CRIT
+
+/datum/targetting_datum/basic/attack_even_if_dead
+	stat_attack = DEAD

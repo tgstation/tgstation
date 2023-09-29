@@ -203,9 +203,9 @@ SUBSYSTEM_DEF(economy)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(
-		"account" = account.account_holder,
+		"account" = "[account.account_holder]",
 		"cost" = price_to_use,
-		"vendor" = vendor,
+		"vendor" = "[vendor]",
 	))
 
 /**

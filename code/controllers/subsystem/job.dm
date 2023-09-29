@@ -1,5 +1,3 @@
-#define VERY_LATE_ARRIVAL_TOAST_PROB 20
-
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = INIT_ORDER_JOBS
@@ -24,6 +22,9 @@ SUBSYSTEM_DEF(job)
 
 	var/list/unassigned = list() //Players who need jobs
 	var/initial_players_to_assign = 0 //used for checking against population caps
+	// Whether to run DivideOccupations pure so that there are no side-effects from calling it other than
+	// a player's assigned_role being set to some value.
+	var/run_divide_occupation_pure = FALSE
 
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()
@@ -296,6 +297,10 @@ SUBSYSTEM_DEF(job)
 		player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		// Any errors with the configs has already been said, we don't need to repeat them here.
+		load_jobs_from_config(silent = TRUE)
+	set_overflow_role(overflow_role)
 	return
 
 
@@ -363,11 +368,11 @@ SUBSYSTEM_DEF(job)
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations()
+/datum/controller/subsystem/job/proc/DivideOccupations(pure = FALSE, allow_all = FALSE)
 	//Setup new player list and get the jobs list
-	JobDebug("Running DO")
-
-	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
+	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
+	run_divide_occupation_pure = pure
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
@@ -435,8 +440,9 @@ SUBSYSTEM_DEF(job)
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
-			if(PopcapReached())
-				RejectPlayer(player)
+			if(!allow_all)
+				if(PopcapReached())
+					RejectPlayer(player)
 
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
@@ -474,7 +480,7 @@ SUBSYSTEM_DEF(job)
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/dead/new_player/player in unassigned)
-		HandleUnassigned(player)
+		HandleUnassigned(player, allow_all)
 	JobDebug("DO, Ending handle unassigned.")
 
 	JobDebug("DO, Handle unrejectable unassigned")
@@ -484,21 +490,23 @@ SUBSYSTEM_DEF(job)
 			if(!AssignRole(player, GetJobType(overflow_role))) //If everything is already filled, make them an assistant
 				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
 				JobDebug("---------------------------------------------------")
+				run_divide_occupation_pure = FALSE
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 	JobDebug("DO, Ending handle unrejectable unassigned")
 
 	JobDebug("All divide occupations tasks completed.")
 	JobDebug("---------------------------------------------------")
-
+	run_divide_occupation_pure = FALSE
 	return TRUE
 
 //We couldn't find a job from prefs for this guy.
-/datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
+/datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player, allow_all = FALSE)
 	var/jobless_role = player.client.prefs.read_preference(/datum/preference/choiced/jobless_role)
 
-	if(PopcapReached())
-		RejectPlayer(player)
-		return
+	if(!allow_all)
+		if(PopcapReached())
+			RejectPlayer(player)
+			return
 
 	switch (jobless_role)
 		if (BEOVERFLOW)
@@ -533,9 +541,7 @@ SUBSYSTEM_DEF(job)
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
 	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
-
 	equipping.on_job_equipping(job)
-
 	job.announce_job(equipping)
 
 	if(player_client?.holder)
@@ -544,29 +550,7 @@ SUBSYSTEM_DEF(job)
 		else
 			handle_auto_deadmin_roles(player_client, job.title)
 
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>As the [job.title] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
-
-	job.radio_help_message(equipping)
-
-	if(player_client)
-		if(job.req_admin_notify)
-			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
-				If you have to disconnect, please notify the admins via adminhelp.</b>"))
-		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
-				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-				have been added to your ID card."))
-
-	if(ishuman(equipping))
-		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
-
-		if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
-			equipping.equip_to_slot_or_del(new /obj/item/food/griddle_toast(equipping), ITEM_SLOT_MASK)
-
 	job.after_spawn(equipping, player_client)
-
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
@@ -665,9 +649,10 @@ SUBSYSTEM_DEF(job)
 	if(PopcapReached())
 		JobDebug("Popcap overflow Check observer located, Player: [player]")
 	JobDebug("Player rejected :[player]")
-	to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
 	unassigned -= player
-	player.ready = PLAYER_NOT_READY
+	if(!run_divide_occupation_pure)
+		to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
+		player.ready = PLAYER_NOT_READY
 
 
 /datum/controller/subsystem/job/Recover()
@@ -912,4 +897,25 @@ SUBSYSTEM_DEF(job)
 
 	return JOB_AVAILABLE
 
-#undef VERY_LATE_ARRIVAL_TOAST_PROB
+/**
+ * Check if the station manifest has at least a certain amount of this staff type.
+ * If a matching head of staff is on the manifest, automatically passes (returns TRUE)
+ *
+ * Arguments:
+ * * crew_threshold - amount of crew to meet the requirement
+ * * jobs - a list of jobs that qualify the requirement
+ * * head_jobs - a list of head jobs that qualify the requirement
+ *
+*/
+/datum/controller/subsystem/job/proc/has_minimum_jobs(crew_threshold, list/jobs = list(), list/head_jobs = list())
+	var/employees = 0
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		if(target.trim in head_jobs)
+			return TRUE
+		if(target.trim in jobs)
+			employees++
+
+	if(employees > crew_threshold)
+		return TRUE
+
+	return FALSE

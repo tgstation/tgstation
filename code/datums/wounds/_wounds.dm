@@ -310,7 +310,7 @@
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
 
-		update_inefficiencies()
+		update_inefficiencies(replaced)
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
 	update_actionspeed_modifier()
@@ -426,7 +426,7 @@
 		update_inefficiencies()
 
 /// Updates our limping and interaction penalties in accordance with our gauze.
-/datum/wound/proc/update_inefficiencies()
+/datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
 	if (wound_flags & ACCEPTS_GAUZE)
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			if(limb.current_gauze?.splint_factor)
@@ -444,7 +444,7 @@
 		if(initial(disabling))
 			set_disabling(!limb.current_gauze)
 
-		limb.update_wounds()
+		limb.update_wounds(replaced_or_replacing)
 
 	start_limping_if_we_should()
 
