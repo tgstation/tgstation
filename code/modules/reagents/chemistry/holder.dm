@@ -883,7 +883,7 @@
  * Signals that metabolization has stopped, triggering the end of trait-based effects
  * Arguments
  *
- * * [C][mmob/living/carbon] - the mob to end metabolization on
+ * * [C][mob/living/carbon] - the mob to end metabolization on
  * * keep_liverless - if true will work without a liver
  */
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
