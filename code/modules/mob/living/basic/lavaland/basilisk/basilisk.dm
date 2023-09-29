@@ -75,6 +75,7 @@
 /datum/ai_controller/basic_controller/basilisk
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_AGGRO_RANGE = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

@@ -74,7 +74,8 @@
 					heal_amt = 3
 				if(WOUND_SEVERITY_CRITICAL)
 					heal_amt = 6
-			if(wound.wound_type == WOUND_BURN)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
+			if (pregen_data.wounding_types_valid(list(WOUND_BURN)))
 				carbie.adjustFireLoss(-heal_amt)
 			else
 				carbie.adjustBruteLoss(-heal_amt)
@@ -235,3 +236,53 @@
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(create_blade)), blade_recharge_time)
+
+/datum/status_effect/caretaker_refuge
+	id = "Caretaker’s Last Refuge"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = -1
+	alert_type = null
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
+
+/datum/status_effect/caretaker_refuge/on_apply()
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.status_flags |= GODMODE
+	animate(owner, alpha = 45,time = 0.5 SECONDS)
+	owner.density = FALSE
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
+	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
+	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
+	return TRUE
+
+/datum/status_effect/caretaker_refuge/on_remove()
+	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.status_flags &= ~GODMODE
+	owner.alpha = initial(owner.alpha)
+	owner.density = initial(owner.density)
+	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
+	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
+	owner.visible_message(
+		span_warning("The haze around [owner] disappears, leaving them materialized!"),
+		span_notice("You exit the refuge."),
+	)
+
+/datum/status_effect/caretaker_refuge/get_examine_text()
+	return span_warning("[owner.p_Theyre()] enveloped in an unholy haze!")
+
+/datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)
+	SIGNAL_HANDLER
+	playsound(get_turf(owner), 'sound/effects/curse1.ogg', 80, TRUE)
+	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
+	owner.remove_status_effect(type)
+
+/datum/status_effect/caretaker_refuge/proc/on_focus_lost()
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
+	owner.remove_status_effect(type)
+
+/datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
+	SIGNAL_HANDLER
+	if(!istype(spell, /datum/action/cooldown/spell/caretaker))
+		owner.balloon_alert(owner, "may not cast spells in refuge!")
+		return SPELL_CANCEL_CAST

@@ -15,6 +15,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "gets his head split open."
@@ -26,7 +27,7 @@
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 15
 
-	ai_controller = /datum/ai_controller/basic_controller/creature
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
@@ -100,16 +101,3 @@
 		exit_jaunt(cast_on)
 		return
 	enter_jaunt(cast_on)
-
-/datum/ai_controller/basic_controller/creature
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
-	)

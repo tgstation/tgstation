@@ -500,7 +500,7 @@
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_features(human_mob)
+				human_species.randomize_active_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)
@@ -541,3 +541,20 @@
 
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

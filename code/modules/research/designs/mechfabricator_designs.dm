@@ -1173,6 +1173,17 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_drink_apparatus
+	name = "Drink Apparatus"
+	id = "borg_upgrade_drink_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/drink_app
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+	
 /datum/design/borg_upgrade_service_apparatus
 	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"
@@ -1509,6 +1520,18 @@
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
+/datum/design/modlink_scryer
+	name = "MODlink Scryer"
+	desc = "A neck-worn piece of gear that can call with another MODlink-compatible device."
+	id = "modlink_scryer"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	construction_time = 5 SECONDS
+	build_path = /obj/item/clothing/neck/link_scryer
 	category = list(
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)

@@ -306,7 +306,7 @@
 		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
 		this gives way to incredible protection against corrosives and thermal protection good enough for \
 		both casual backstroking through molten magma and romantic walks through arctic terrain. \
-		Instead, the suit is capable of using its' anomalous properties to attract and \
+		Instead, the suit is capable of using its anomalous properties to attract and \
 		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
 		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
 		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
@@ -949,11 +949,13 @@
 	default_skin = "syndicate"
 	armor_type = /datum/armor/mod_theme_syndicate
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
+	resistance_flags = FIRE_PROOF
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
@@ -1042,6 +1044,7 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
 	slowdown_inactive = 1
 	slowdown_active = 0.5
@@ -1436,7 +1439,7 @@
 
 /datum/mod_theme/responsory
 	name = "responsory"
-	desc = "A high-speed rescue suit by Nanotrasen, intended for its' emergency response teams."
+	desc = "A high-speed rescue suit by Nanotrasen, intended for its emergency response teams."
 	extended_desc = "A streamlined suit of Nanotrasen design, these sleek black suits are only worn by \
 		elite emergency response personnel to help save the day. While the slim and nimble design of the suit \
 		cuts the ceramics and ablatives in it down, dropping the protection, \

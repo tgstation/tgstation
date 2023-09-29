@@ -27,7 +27,7 @@
 
 /mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
 
 /// Will differentiate into the "scout" giant spider.
@@ -80,7 +80,7 @@
 	melee_damage_upper = 4
 	speed = 0.7
 	web_speed = 0.5
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
@@ -112,7 +112,7 @@
 	melee_damage_upper = 1
 	speed = 0.7
 	web_speed = 0.25
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	poison_per_bite = 2
 	poison_type = /datum/reagent/toxin/acid
 
@@ -151,7 +151,7 @@
 	melee_damage_upper = 10
 	speed = 0.7
 	web_speed = 0.5
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 
 /// Will differentiate into the "viper" giant spider.
 /mob/living/basic/spider/growing/young/viper

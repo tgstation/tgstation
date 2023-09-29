@@ -118,10 +118,7 @@
 		"cabin_air" = gas_mixture_parser(chassis.cabin_air, "cabin"),
 	)
 
-/obj/item/mecha_parts/mecha_equipment/air_tank/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/air_tank/handle_ui_act(action, list/params)
 	switch(action)
 		if("set_cabin_pressure")
 			var/new_pressure = text2num(params["new_pressure"])

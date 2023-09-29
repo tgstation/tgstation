@@ -80,6 +80,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	QDEL_NULL(frost_orbs)
@@ -354,8 +355,8 @@ Difficulty: Extremely Hard
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	var/icon/size_check = icon(owner.icon, owner.icon_state)
-	cube.Scale(size_check.Width(), size_check.Height())
+	var/list/icon_dimensions = get_icon_dimensions(owner.icon)
+	cube.Scale(icon_dimensions["width"], icon_dimensions["height"])
 	owner.add_overlay(cube)
 	return ..()
 

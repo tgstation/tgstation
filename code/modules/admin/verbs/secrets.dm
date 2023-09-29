@@ -220,7 +220,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/result = input(holder, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Species Change", "[result]"))
-				log_admin("[key_name(holder)] turned all humans into [result]", 1)
+				log_admin("[key_name(holder)] turned all humans into [result]")
 				message_admins("\blue [key_name_admin(holder)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
 				for(var/i in GLOB.human_list)
@@ -230,21 +230,21 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All APCs"))
-			log_admin("[key_name(holder)] made all areas powered", 1)
+			log_admin("[key_name(holder)] made all areas powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas powered"))
 			power_restore()
 		if("unpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Depower All APCs"))
-			log_admin("[key_name(holder)] made all areas unpowered", 1)
+			log_admin("[key_name(holder)] made all areas unpowered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas unpowered"))
 			power_failure()
 		if("quickpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All SMESs"))
-			log_admin("[key_name(holder)] made all SMESs powered", 1)
+			log_admin("[key_name(holder)] made all SMESs powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
@@ -587,7 +587,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[selected_game]
 			var/choice = tgui_alert(usr, "[ctf_controller.instagib_mode ? "Return to standard" : "Enable instagib"] mode?", "Instagib Mode", list("Yes", "No"))
-			if(choice == "No")
+			if(choice != "Yes")
 				return
 			ctf_controller.toggle_instagib_mode()
 			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")

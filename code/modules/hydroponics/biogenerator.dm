@@ -2,7 +2,8 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-
+/// Starting purity of reagents made in biogenerator
+#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
 	name = "biogenerator"
@@ -117,13 +118,11 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
+/obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
 	. = ..()
-
-	if(deleting_atom == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-
 
 /obj/machinery/biogenerator/RefreshParts()
 	. = ..()
@@ -389,7 +388,7 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
-		beaker.reagents.add_reagent(design.make_reagent, amount)
+		beaker.reagents.add_reagent(design.make_reagent, amount, added_purity = BIOGEN_REAGENT_PURITY)
 
 	if(design.build_path)
 		if(!use_biomass(design.materials, amount))
@@ -570,3 +569,4 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
+#undef BIOGEN_REAGENT_PURITY

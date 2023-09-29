@@ -27,6 +27,7 @@
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
 	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
 	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
@@ -110,22 +111,19 @@
 /obj/item/gun/proc/add_seclight_point()
 	return
 
-/obj/item/gun/handle_atom_del(atom/A)
-	if(A == pin)
+/obj/item/gun/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == pin)
 		pin = null
-	if(A == chambered)
+	if(gone == chambered)
 		chambered = null
 		update_appearance()
-	if(A == suppressed)
+	if(gone == suppressed)
 		clear_suppressor()
-	return ..()
-
-/obj/item/gun/Exited(atom/movable/gone, direction)
 	if(gone == bayonet)
 		bayonet = null
 		if(!QDELING(src))
 			update_appearance()
-	return ..()
 
 ///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
 /obj/item/gun/proc/clear_suppressor()
@@ -171,7 +169,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	balloon_alert_to_viewers("*click*")
-	playsound(src, dry_fire_sound, 30, TRUE)
+	playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 
 /obj/item/gun/proc/fire_sounds()
 	if(suppressed)

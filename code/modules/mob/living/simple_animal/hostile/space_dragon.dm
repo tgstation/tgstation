@@ -100,13 +100,26 @@
 /mob/living/simple_animal/hostile/space_dragon/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	tiredness = max(tiredness - (0.5 * seconds_per_tick), 0)
-	for(var/mob/living/consumed_mob in src)
-		if(consumed_mob.stat == DEAD)
-			continue
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
-		consumed_mob.forceMove(loc)
-		consumed_mob.Paralyze(50)
+
+/mob/living/simple_animal/hostile/space_dragon/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if (isliving(arrived))
+		RegisterSignal(arrived, COMSIG_MOB_STATCHANGE, PROC_REF(eaten_stat_changed))
+
+/mob/living/simple_animal/hostile/space_dragon/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (isliving(gone))
+		UnregisterSignal(gone, COMSIG_MOB_STATCHANGE)
+
+/// Release consumed mobs if they transition from dead to alive
+/mob/living/simple_animal/hostile/space_dragon/proc/eaten_stat_changed(mob/living/eaten)
+	SIGNAL_HANDLER
+	if (eaten.stat == DEAD)
+		return
+	playsound(src, 'sound/effects/splat.ogg', vol = 50, vary = TRUE)
+	visible_message(span_danger("[src] vomits up [eaten]!"))
+	eaten.forceMove(loc)
+	eaten.Paralyze(5 SECONDS)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)

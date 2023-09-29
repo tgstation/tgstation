@@ -14,3 +14,13 @@
 
 /datum/idle_behavior/idle_random_walk/less_walking
 	walk_chance = 10
+
+/// Only walk if we don't have a target
+/datum/idle_behavior/idle_random_walk/no_target
+	/// Where do we look for a target?
+	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+
+/datum/idle_behavior/idle_random_walk/no_target/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
+	if (!controller.blackboard_key_exists(target_key))
+		return
+	return ..()

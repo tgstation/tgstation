@@ -101,6 +101,9 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
+/obj/item/screwdriver/power/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
 	AddComponent( \

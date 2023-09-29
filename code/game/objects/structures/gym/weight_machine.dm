@@ -125,7 +125,7 @@
  * Weight lifter subtype
  */
 /obj/structure/weightmachine/weightlifter
-	name = "inline bench press"
+	name = "incline bench press"
 	icon_state = "benchpress"
 	base_icon_state = "benchpress"
 

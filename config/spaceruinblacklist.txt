@@ -35,6 +35,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
+#_maps/RandomRuins/SpaceRuins/derelict9.dmm
 #_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/fasttravel.dmm

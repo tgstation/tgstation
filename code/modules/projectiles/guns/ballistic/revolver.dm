@@ -21,13 +21,17 @@
 	last_fire = world.time
 
 
-/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
+	if(chambered)
+		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 	if(spin_cylinder)
 		chambered = magazine.get_round(TRUE)
 	else
 		chambered = magazine.stored_ammo[1]
+	if(chambered)
+		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()

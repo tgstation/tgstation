@@ -105,6 +105,7 @@
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
 
 /obj/item/organ/internal/ears/cybernetic/upgraded
 	name = "cybernetic ears"
@@ -149,4 +150,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	apply_organ_damage(40/severity)
+	apply_organ_damage(20 / severity)

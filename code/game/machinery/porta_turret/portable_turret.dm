@@ -350,8 +350,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, span_notice("You add [src] to multitool buffer."))
+		M.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
@@ -919,6 +919,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(built)
 		locked = FALSE
 	power_change() //Checks power and initial settings
+	find_and_hang_on_wall()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()

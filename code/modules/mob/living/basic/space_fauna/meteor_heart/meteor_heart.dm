@@ -26,9 +26,9 @@
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
 	/// Action which sends a line of spikes chasing a player
-	var/datum/action/cooldown/chasing_spikes/spikes
+	var/datum/action/cooldown/mob_cooldown/chasing_spikes/spikes
 	/// Action which summons areas the player can't stand in
-	var/datum/action/cooldown/spine_traps/traps
+	var/datum/action/cooldown/mob_cooldown/spine_traps/traps
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
 
@@ -77,7 +77,7 @@
 	soundloop.set_mid_length(HEARTBEAT_NORMAL)
 
 /// Animate when using certain abilities
-/mob/living/basic/meteor_heart/proc/used_ability(mob/living/owner, datum/action/cooldown/ability)
+/mob/living/basic/meteor_heart/proc/used_ability(mob/living/owner, datum/action/cooldown/mob_cooldown/ability)
 	SIGNAL_HANDLER
 	if (ability != spikes)
 		return

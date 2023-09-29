@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/basic/mining/ice_whelp)
 
 /obj/structure/spawner/ice_moon/demonic_portal/snowlegion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/portal)
+	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
 
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(24)
 			new /obj/structure/elite_tumor(loc)
 		if(25)
-			new /mob/living/simple_animal/hostile/retaliate/clown/clownhulk(loc)
+			new /mob/living/basic/clown/clownhulk(loc)
 		if(26)
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)

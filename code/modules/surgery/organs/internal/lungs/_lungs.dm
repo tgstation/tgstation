@@ -21,7 +21,6 @@
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
-
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
@@ -417,9 +416,8 @@
 	else
 		healium_euphoria = EUPHORIA_INACTIVE
 	// Stun/Sleep side-effects.
-	if(healium_pp > healium_para_min)
-		// Random chance to stun mob. Timing not in seconds to have a much higher variation
-		breather.Unconscious(rand(3 SECONDS, 5 SECONDS))
+	if(healium_pp > healium_para_min && !breather.IsSleeping() && prob(30))
+		breather.Sleeping(rand(3 SECONDS, 5 SECONDS))
 	// Metabolize to reagent when concentration is high enough.
 	if(healium_pp > healium_sleep_min)
 		breather.reagents.add_reagent(/datum/reagent/healium, max(0, 1 - breather.reagents.get_reagent_amount(/datum/reagent/healium)))
@@ -483,13 +481,13 @@
 			if(prob(5))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(30 to INFINITY)
 			//Higher chance to vomit. Let the horror start
 			if(prob(15))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		else
 			breather.clear_mood_event("smell")
 	// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
@@ -795,6 +793,9 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+#define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
+#define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
+
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -804,6 +805,14 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
+
+/obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+	name = "smoker plasma filter"
+	desc = "A plasma filter that look discolored, a result from smoking a lot."
+	icon_state = "lungs_plasma_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
@@ -817,9 +826,18 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/smoker_lungs
+	name = "smoker lungs"
+	desc = "A pair of lungs that look sickly, a result from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
+	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
@@ -938,6 +956,14 @@
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
 
+/obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+	name = "smoker aeration reticulum"
+	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
+	icon_state = "lungs_ethereal_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/ethereal/Initialize(mapload)
 	. = ..()
 	add_gas_reaction(/datum/gas/water_vapor, while_present = PROC_REF(consume_water))
@@ -954,3 +980,5 @@
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER
+#undef SMOKER_ORGAN_HEALTH
+#undef SMOKER_LUNG_HEALING

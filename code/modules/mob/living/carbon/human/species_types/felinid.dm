@@ -4,6 +4,7 @@
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
+	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
@@ -46,8 +47,9 @@
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
-	return ..()
+	var/list/features = ..()
+	features["ears"] = pick("None", "Cat")
+	return features
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)

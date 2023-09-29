@@ -28,7 +28,7 @@
 			fish_data["temp_max"] = initial(fish.required_temperature_max)
 			fish_data["icon"] = sanitize_css_class_name("[initial(fish.icon)][initial(fish.icon_state)]")
 			fish_data["color"] = initial(fish.color)
-			fish_data["source"] = initial(fish.available_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
+			fish_data["source"] = initial(fish.random_case_rarity) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
 			fish_data["size"] = initial(fish.average_size)
 			fish_data["weight"] = initial(fish.average_weight)
 			var/datum/reagent/food_type = initial(fish.food)
@@ -64,10 +64,9 @@
 	. = list()
 	//// Where can it be found - iterate fish sources, how should this handle key
 	var/list/spot_descriptions = list()
-	for(var/datum/fish_source/fishing_spot_type as anything in subtypesof(/datum/fish_source))
-		var/datum/fish_source/temp = new fishing_spot_type
-		if((fish_type in temp.fish_table) && temp.catalog_description)
-			spot_descriptions += temp.catalog_description
+	for(var/datum/fish_source/source as anything in GLOB.preset_fish_sources)
+		if(source.catalog_description && (fish_type in source.fish_table))
+			spot_descriptions += source.catalog_description
 	.["spots"] = english_list(spot_descriptions, nothing_text = "Unknown")
 	///Difficulty descriptor
 	switch(initial(fishy.fishing_difficulty_modifier))

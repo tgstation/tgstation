@@ -361,7 +361,7 @@
 /turf/open/floor/iron/half,
 /area/awaymission/moonoutpost19/syndicate)
 "cF" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/effect/decal/cleanable/crayon,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -4521,7 +4521,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "Dw" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},

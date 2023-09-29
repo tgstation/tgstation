@@ -133,6 +133,39 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rcd_upgrade/anti_interrupt
+	name = "RCD anti disruption designs upgrade"
+	desc = "Prevents interruption of RCD construction and deconstruction."
+	id = "rcd_upgrade_anti_interrupt"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/rcd_upgrade/anti_interrupt
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/cooling
+	name = "RCD cooling upgrade"
+	desc = "Allows the RCD to more quickly perform multiple actions at once."
+	id = "rcd_upgrade_cooling"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/rcd_upgrade/cooling
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rcd_upgrade/furnishing
 	name = "RCD furnishing upgrade"
 	desc = "Adds the ability to furnish areas using the RCD."

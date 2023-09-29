@@ -64,10 +64,10 @@
 		if("detach")
 			chassis.ui_selected_module_index = null
 			detach(get_turf(src))
-			return TRUE
+			. = TRUE
 		if("toggle")
 			set_active(!active)
-			return TRUE
+			. = TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
 			chassis.balloon_alert(usr, "starting repair")
@@ -75,7 +75,14 @@
 				repair_damage(30)
 			if(get_integrity() == max_integrity)
 				balloon_alert(usr, "repair complete")
-			return FALSE
+			. = FALSE
+	var/result = handle_ui_act(action,params,ui,state)
+	if(result) //if handle_ui_act returned anything at all lets just return that instead
+		. = result
+
+/// called after ui_act, for custom ui act handling
+/obj/item/mecha_parts/mecha_equipment/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(FALSE)
 
 /**
  * Checks whether this mecha equipment can be active

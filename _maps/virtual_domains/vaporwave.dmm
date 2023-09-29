@@ -1,0 +1,1017 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aA" = (
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"bs" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"bF" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"cz" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"cL" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"df" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless{
+	icon_state = "stairs-l"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"eF" = (
+/turf/closed/indestructible/binary,
+/area/space)
+"fx" = (
+/obj/item/statuebust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"fQ" = (
+/obj/structure/flora/tree/palm,
+/turf/open/floor/holofloor/beach,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"gM" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/sunglasses/big{
+	name = "aesthetic sunglasses"
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"hN" = (
+/turf/open/floor/holofloor/beach,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"il" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"iP" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"kj" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"ku" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"kF" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless{
+	icon_state = "stairs-r"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"ll" = (
+/obj/structure/sign/poster/contraband/clown/directional/north,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"lu" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"lB" = (
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"lI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"qm" = (
+/obj/structure/flora/tree/palm,
+/obj/machinery/light/directional/west,
+/turf/open/floor/holofloor/beach,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"qu" = (
+/turf/open/floor/holofloor/beach/water,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"rn" = (
+/obj/structure/statue/sandstone/venus{
+	anchored = 1;
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"xb" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"xp" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"xK" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"ym" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"AX" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Cq" = (
+/obj/item/instrument/eguitar,
+/turf/open/floor/holofloor/beach,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"CR" = (
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Dk" = (
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Es" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Fd" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Hf" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless{
+	icon_state = "recharge_floor_asteroid"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"HA" = (
+/turf/open/floor/holofloor/beach/coast,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"HV" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Jr" = (
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"KO" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"KY" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/airless{
+	icon_state = "stairs-m"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"LG" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"LJ" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"LP" = (
+/obj/structure/flora/tree/palm,
+/obj/machinery/light/directional/east,
+/turf/open/floor/holofloor/beach,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Nz" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"NT" = (
+/turf/open/space/basic,
+/area/space)
+"Qh" = (
+/obj/structure/closet/crate/bin,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Uy" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"UE" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"UV" = (
+/obj/structure/lattice,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Vc" = (
+/obj/structure/flora/tree/palm,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"XJ" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Yo" = (
+/obj/structure/statue/sandstone/venus{
+	anchored = 1;
+	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/virtual_domain)
+"YE" = (
+/mob/living/basic/butterfly,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"ZI" = (
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/space/has_grav/powered/virtual_domain)
+
+(1,1,1) = {"
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+"}
+(2,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(3,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(4,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(5,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+cz
+LJ
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(6,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+cz
+cz
+LJ
+cz
+cz
+LJ
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(7,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+cz
+cz
+cz
+UV
+LJ
+cz
+UV
+cz
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(8,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+cz
+xK
+xK
+lu
+lu
+lu
+xK
+lu
+UE
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(9,1,1) = {"
+eF
+NT
+NT
+NT
+LJ
+Qh
+xK
+fQ
+hN
+qm
+HA
+qu
+xK
+aA
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(10,1,1) = {"
+eF
+NT
+NT
+NT
+LJ
+UV
+lu
+ZI
+Jr
+Jr
+Jr
+Jr
+xK
+bF
+Vc
+cz
+cz
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+ku
+Uy
+NT
+eF
+"}
+(11,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+cz
+xK
+xb
+CR
+CR
+fx
+CR
+xK
+Yo
+il
+UE
+cz
+NT
+NT
+NT
+ku
+iP
+iP
+iP
+ku
+ku
+NT
+eF
+"}
+(12,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+cz
+xK
+ll
+CR
+CR
+CR
+CR
+xK
+Hf
+df
+il
+cz
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+ku
+ku
+NT
+eF
+"}
+(13,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+LJ
+xK
+HV
+Es
+CR
+CR
+CR
+XJ
+bs
+KY
+bs
+il
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+ku
+ku
+NT
+eF
+"}
+(14,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+LJ
+lu
+xp
+gM
+CR
+CR
+cL
+xK
+Hf
+kF
+bs
+il
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+ku
+ku
+NT
+eF
+"}
+(15,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+LJ
+lu
+KO
+KO
+CR
+YE
+lI
+lu
+rn
+il
+UE
+UE
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+lB
+ku
+NT
+eF
+"}
+(16,1,1) = {"
+eF
+NT
+NT
+NT
+LJ
+UV
+xK
+kj
+Dk
+Dk
+Dk
+Nz
+xK
+AX
+Vc
+cz
+cz
+NT
+NT
+NT
+ku
+ku
+ku
+ku
+ku
+LG
+NT
+eF
+"}
+(17,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+cz
+lu
+fQ
+Cq
+LP
+HA
+qu
+lu
+aA
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(18,1,1) = {"
+eF
+NT
+NT
+NT
+cz
+cz
+xK
+xK
+lu
+xK
+lu
+lu
+Fd
+UE
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(19,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+cz
+cz
+cz
+UV
+LJ
+Qh
+UV
+cz
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(20,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+cz
+LJ
+cz
+cz
+LJ
+cz
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(21,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+ym
+cz
+cz
+cz
+cz
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(22,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(23,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(24,1,1) = {"
+eF
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+NT
+eF
+"}
+(25,1,1) = {"
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+"}

@@ -255,7 +255,7 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			cell = weapon
-			balloon_alert(user, "intalled power cell")
+			balloon_alert(user, "installed power cell")
 			diag_hud_set_mechcell()
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("Power cell installed", LOG_MECHA)
@@ -268,7 +268,7 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			scanmod = weapon
-			balloon_alert(user, "intalled scanning module")
+			balloon_alert(user, "installed scanning module")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
@@ -281,7 +281,7 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			capacitor = weapon
-			balloon_alert(user, "intalled capacitor")
+			balloon_alert(user, "installed capacitor")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
@@ -294,7 +294,7 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			servo = weapon
-			balloon_alert(user, "intalled servo")
+			balloon_alert(user, "installed servo")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()

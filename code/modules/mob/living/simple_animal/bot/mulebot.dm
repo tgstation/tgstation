@@ -86,14 +86,14 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
-	if(A == load)
+/mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == load)
 		unload(0)
-	if(A == cell)
+	if(gone == cell)
 		turn_off()
 		cell = null
 		diag_hud_set_mulebotcell()
-	return ..()
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()

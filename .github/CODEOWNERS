@@ -203,6 +203,10 @@
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
 
+# Expensive files that touching basically always cause performance problems
+## Init times
+**/*_EXPENSIVE.dm @Mothblocks @LemonInTheDark
+
 # SIC SEMPER TYRANNIS
 
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

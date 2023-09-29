@@ -123,13 +123,13 @@
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy \
-		shmancy degrees? Just get started with this crate containing a medical duffelbag, \
+		shmancy degrees? Just get started with this crate containing a DeForest surgery tray, \
 		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
-		/obj/item/storage/backpack/duffelbag/med/surgery,
+		/obj/item/surgery_tray/full,
 		/obj/item/reagent_containers/medigel/sterilizine,
-		/obj/item/roller,
+		/obj/item/emergency_bed,
 	)
 	crate_name = "surgical supplies crate"
 

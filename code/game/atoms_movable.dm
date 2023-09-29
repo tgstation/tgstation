@@ -100,10 +100,6 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
-	/// The style of speech this movable makes when speaking.
-	/// Valid values are TTS_VOICE_STYLE_* in the tts.dm defines.
-	var/voice_style = TTS_VOICE_STYLE_SPEECH
-
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
@@ -198,7 +194,6 @@
 		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
 			can_atmos_pass = ATMOS_PASS_YES
 			air_update_turf(TRUE, FALSE)
-		loc.handle_atom_del(src)
 
 	if(opacity)
 		RemoveElement(/datum/element/light_blocking)

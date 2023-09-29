@@ -38,7 +38,7 @@
 	/// Multiplier to apply to web laying speed. Fractional numbers make it faster, because it's a multiplier.
 	var/web_speed = 1
 	/// Type of webbing ability to learn.
-	var/web_type = /datum/action/cooldown/lay_web
+	var/web_type = /datum/action/cooldown/mob_cooldown/lay_web
 	/// The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
@@ -57,7 +57,7 @@
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 
-	var/datum/action/cooldown/lay_web/webbing = new web_type(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/webbing = new web_type(src)
 	webbing.webbing_time *= web_speed
 	webbing.Grant(src)
 	ai_controller?.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)

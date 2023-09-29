@@ -207,10 +207,7 @@
 		"reagents_required" = required_amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return TRUE
+/obj/item/mecha_parts/mecha_equipment/extinguisher/handle_ui_act(action, list/params)
 	switch(action)
 		if("activate")
 			spray_extinguisher(usr)
@@ -261,10 +258,7 @@
 		else
 			return "Someone didnt set this"
 
-/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode++
 		if(mode > MODE_AIRLOCK)
@@ -378,6 +372,11 @@
 		marktwo.capacitor = markone.capacitor
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
+	QDEL_NULL(marktwo.servo)
+	if (markone.servo)
+		marktwo.servo = markone.servo
+		markone.servo.forceMove(marktwo)
+		markone.servo = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))

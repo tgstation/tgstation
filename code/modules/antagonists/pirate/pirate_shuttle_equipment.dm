@@ -55,7 +55,8 @@
 
 /// Handles interrupting research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
-	for(var/obj/machinery/rnd/server/research_server as anything in SSresearch.science_tech.techweb_servers)
+	var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
+	for(var/obj/machinery/rnd/server/research_server as anything in science_web.techweb_servers)
 		if(research_server.machine_stat & (NOPOWER|BROKEN|EMPED))
 			continue
 		research_server.emp_act(EMP_LIGHT)
@@ -182,8 +183,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
-		I.buffer = src
+		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)

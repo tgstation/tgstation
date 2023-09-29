@@ -57,71 +57,71 @@ Stabilized extracts:
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 	effect_desc = "Makes slimes friendly to the owner"
 
 /obj/item/slimecross/stabilized/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 	effect_desc = "Passively tries to increase or decrease the owner's body temperature to normal"
 
 /obj/item/slimecross/stabilized/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	effect_desc = "Provides a regeneration effect"
 
 /obj/item/slimecross/stabilized/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 	effect_desc = "Makes the owner immune to slipping on water, soap or foam. Space lube and ice are still too slippery."
 
 /obj/item/slimecross/stabilized/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	effect_desc = "Every 30 seconds, adds a sheet of material to a random stack in the owner's backpack."
 
 /obj/item/slimecross/stabilized/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Every ten seconds it recharges a device on the owner by 10%."
 
 /obj/item/slimecross/stabilized/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	effect_desc = "Gives you burning fingertips, automatically cooking any microwavable food you hold."
 
 /obj/item/slimecross/stabilized/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 	effect_desc = "Slowly extinguishes the owner if they are on fire, also wets items like monkey cubes, creating a monkey."
 
 /obj/item/slimecross/stabilized/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 	effect_desc = "Slows the rate at which the owner loses nutrition"
 
 /obj/item/slimecross/stabilized/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "On a two minute cooldown, when the owner has taken enough damage, they are teleported to a safe place."
 
 /obj/item/slimecross/stabilized/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Randomly adjusts the owner's speed."
 
 /obj/item/slimecross/stabilized/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates a duplicate of the owner. If the owner dies they will take control of the duplicate, unless the death was from beheading or gibbing."
 
 /obj/item/slimecross/stabilized/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	effect_desc = "Randomly colors the owner every few seconds."
 
 /obj/item/slimecross/stabilized/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 	effect_desc = "Nullifies all equipment based slowdowns."
 
 /obj/item/slimecross/stabilized/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	effect_desc = "Changes the owner's name and appearance while holding this extract."
 
 /obj/item/slimecross/stabilized/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	effect_desc = "As long as no creatures are harmed in the owner's presense, they will not attack you. If the peace is broken it takes two minutes to restore."
 
 /obj/item/slimecross/stabilized/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	effect_desc = "Creates a pet when held."
 	var/mob_type
 	var/datum/mind/saved_mind
@@ -171,23 +171,23 @@ Stabilized extracts:
 		START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 	effect_desc = "The owner will violently explode when they die while holding this extract."
 
 /obj/item/slimecross/stabilized/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	effect_desc = "While strangling someone, the owner's hands melt around their neck, draining their life in exchange for food and healing."
 
 /obj/item/slimecross/stabilized/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 	effect_desc = "The owner moves at high speeds while holding this extract, also stabilizes anyone in critical condition around you using Epinephrine."
 
 /obj/item/slimecross/stabilized/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Owner gains a slight boost in damage resistance to all types."
 
 /obj/item/slimecross/stabilized/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
 	var/obj/item/slimecross/regenerative/regencore
 
