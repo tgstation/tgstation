@@ -103,10 +103,6 @@
 	SSpathfinder.currentrun -= src
 	hand_back(null)
 	avoid = null
-	id = null
-	caller = null
-	open = null
-
 
 /**
  * "starts" off the pathfinding, by storing the values this datum will need to work later on

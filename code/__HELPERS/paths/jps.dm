@@ -87,6 +87,12 @@
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	found_turfs = list()
 
+/datum/pathfind/jps/Destroy(force)
+	. = ..()
+	caller = null
+	end = null
+	open = null
+
 /datum/pathfind/jps/start()
 	start = start || get_turf(caller)
 	. = ..()

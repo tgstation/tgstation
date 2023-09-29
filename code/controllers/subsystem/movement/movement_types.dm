@@ -402,7 +402,7 @@
 
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
-	on_finish_callback = null
+	on_finish_callbacks = null
 	return ..()
 
 ///Tries to calculate a new path for this moveloop.
