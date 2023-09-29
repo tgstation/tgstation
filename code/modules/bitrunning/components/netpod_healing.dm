@@ -59,6 +59,13 @@
 	id = "embryonic"
 	alert_type = /atom/movable/screen/alert/status_effect/embryonic
 
+/datum/status_effect/embryonic/on_apply()
+	ADD_TRAIT(owner, TRAIT_STASIS, TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/embryonic/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_STASIS, TRAIT_STATUS_EFFECT(id))
+
 /atom/movable/screen/alert/status_effect/embryonic
 	name = "Embryonic Stasis"
 	icon_state = "netpod_stasis"
