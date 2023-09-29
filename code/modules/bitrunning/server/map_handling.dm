@@ -174,6 +174,7 @@
 
 		creature.dust() // sometimes mobs just don't die
 
+	avatar_connection_refs.Cut()
 	exit_turfs = list()
 	generated_domain = null
 	generated_safehouse = null
