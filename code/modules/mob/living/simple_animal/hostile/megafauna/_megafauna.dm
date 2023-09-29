@@ -71,11 +71,9 @@
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(gibbed) // in case they've been force dusted
-		SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
-		return
+		return ..()
 
-	if(health > 0)
+	if(health > 0) // prevents instakills
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
@@ -100,8 +98,8 @@
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
-	else
-		..()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/singularity_act()
 	set_health(0)
@@ -110,8 +108,11 @@
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-	else
-		..()
+
+	crusher_loot.Cut()
+	loot.Cut()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	if(recovery_time >= world.time)
