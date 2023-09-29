@@ -655,11 +655,9 @@
 	else
 		return
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-
 	var/cached_amount = amount
 
+	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, available_volume, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return
@@ -707,11 +705,6 @@
 		stack_trace("non finite amount passed to copy_to [amount] amount of reagents")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount < CHEMICAL_VOLUME_MINIMUM)
-		return FALSE
-
 	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
 		target_holder = target
@@ -720,6 +713,7 @@
 			return
 		target_holder = target.reagents
 
+	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount < CHEMICAL_VOLUME_MINIMUM)
 		return
