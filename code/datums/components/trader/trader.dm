@@ -141,7 +141,7 @@
 /datum/component/trader/proc/check_menu(mob/customer)
 	if(!istype(customer))
 		return FALSE
-	if(customer.incapacitated() || !customer.Adjacent(parent))
+	if(IS_DEAD_OR_INCAP(customer) || !customer.Adjacent(parent))
 		return FALSE
 	return TRUE
 
@@ -390,7 +390,7 @@
 ///Is the trader conscious?
 /datum/component/trader/proc/can_trade(mob/customer)
 	var/mob/living/trader = parent
-	if(trader.stat != CONSCIOUS)
+	if(IS_DEAD_OR_INCAP(trader))
 		customer.balloon_alert(trader, "indisposed!")
 		return
 	return TRUE
