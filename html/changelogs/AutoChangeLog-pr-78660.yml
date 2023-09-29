@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "The reverse revolver now looks like a normal Syndicate revolver on inspection."
