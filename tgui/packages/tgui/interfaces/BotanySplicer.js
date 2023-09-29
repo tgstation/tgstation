@@ -154,30 +154,6 @@ export const InsertedSeedTwo = (props, context) => {
   );
 };
 
-export const InsertedBeaker = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { held_beaker, working } = data;
-  const beaker_data = data.beaker || [];
-  if (!held_beaker) {
-    return !working && <NoticeBox info>Please insert a beaker.</NoticeBox>;
-  }
-  return (
-    <Section
-      title="Inserted Beaker"
-      buttons={
-        <Button
-          icon="eject"
-          disabled={!!working}
-          onClick={() => act('eject_beaker')}
-          content="Eject Beaker"
-        />
-      }>
-      {!held_beaker && 'No Beaker detected.'}
-      {!!held_beaker && 'Beaker detected.'}
-    </Section>
-  );
-};
-
 export const SpliceButton = (props, context) => {
   const { act, data } = useBackend(context);
   const { working, seedone, seedtwo } = data;
@@ -214,7 +190,6 @@ export const BotanySplicer = (props, context) => {
         )}
         <InsertedSeedOne />
         <InsertedSeedTwo />
-        <InsertedBeaker />
         <SpliceButton />
       </Window.Content>
     </Window>
