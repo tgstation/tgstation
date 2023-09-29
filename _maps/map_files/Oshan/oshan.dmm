@@ -3601,8 +3601,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/item/clothing/suit/hooded/ablative,
-/obj/item/gun/energy/temperature/security,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/security/armory)
 "bMn" = (
