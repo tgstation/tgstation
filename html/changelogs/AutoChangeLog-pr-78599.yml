@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - balance: "There are now 3 roundstart cyborg job slots open by default."
