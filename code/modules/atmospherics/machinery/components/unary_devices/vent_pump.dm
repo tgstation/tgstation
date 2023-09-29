@@ -34,6 +34,18 @@
 	///area this vent is assigned to
 	var/area/assigned_area
 
+	/// The integrity of the 'fan' for this vent; used to control the vent's ability to pump air.
+	var/fan_integrity = 1
+
+	/// Is this vent currently overclocked, removing pressure limits but damaging the fan?
+	var/fan_overclocked = FALSE
+
+	/// Rate of damage per atmos process to the fan when overclocked. Set to 0 to disable damage.
+	var/fan_damage_rate = 0.01
+
+	/// Datum for managing the overclock sound loop
+	var/datum/looping_sound/vent_pump_overclock/sound_loop
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
 		id_tag = assign_random_name()
@@ -42,15 +54,39 @@
 			tool_screentips = string_assoc_nested_list(list(
 				TOOL_MULTITOOL = list(
 					SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
-				)
+				),
+				TOOL_SCREWDRIVER = list(
+					SCREENTIP_CONTEXT_LMB = "Repair",
+				),
 			))
 		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
+	sound_loop = new(src)
 	assign_to_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
 	. += span_notice("You can link it with an air sensor using a multitool.")
+
+	if(fan_overclocked)
+		. += span_warning("It is currently overclocked causing it to take damage over time.")
+
+	if(fan_integrity > 0)
+		var/condition_string
+		switch(fan_integrity)
+			if(1)
+				condition_string = "perfect"
+			if(0.75 to 0.99)
+				condition_string = "good"
+			if(0.50 to 0.74)
+				condition_string = "okay"
+			if(0.25 to 0.49)
+				condition_string = "bad"
+			else
+				condition_string = "terrible"
+		. += span_notice("The fan is in [condition_string] condition.")
+	else
+		. += span_warning("The fan is broken.")
 
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
@@ -63,8 +99,25 @@
 	multi_tool.set_buffer(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
+	var/time_to_repair = (10 SECONDS) * (1 - fan_integrity)
+	if(!time_to_repair)
+		return FALSE
+
+	balloon_alert(user, "repairing vent...")
+	if(do_after(user, time_to_repair, src))
+		balloon_alert(user, "vent repaired")
+		fan_integrity = 1
+		set_is_operational(TRUE)
+		update_appearance()
+
+	else
+		balloon_alert(user, "interrupted!")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
+	QDEL_NULL(sound_loop)
 
 	var/area/vent_area = get_area(src)
 	if(vent_area)
@@ -107,6 +160,17 @@
 	. = ..()
 	disconnect_from_area(area_to_unregister)
 
+/obj/machinery/atmospherics/components/unary/vent_pump/update_overlays()
+	. = ..()
+	if(!powered())
+		return
+
+	if(fan_integrity <= 0)
+		. += mutable_appearance(icon, "broken")
+
+	else if(fan_overclocked)
+		. += mutable_appearance(icon, "overclocked")
+
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
@@ -144,6 +208,20 @@
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(from_break = FALSE)
+	fan_overclocked = !fan_overclocked
+
+	if(from_break)
+		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		fan_overclocked = FALSE
+
+	if(fan_overclocked)
+		sound_loop.start()
+	else
+		sound_loop.stop()
+
+	update_appearance()
+
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	if(!is_operational)
 		return
@@ -154,6 +232,16 @@
 	var/turf/open/us = loc
 	if(!istype(us))
 		return
+
+	if(fan_overclocked)
+		fan_integrity -= fan_damage_rate
+		if(fan_integrity <= 0)
+			fan_integrity = 0
+			on = FALSE
+			set_is_operational(FALSE)
+			toggle_overclock(from_break = TRUE)
+			return
+
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -168,9 +256,13 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
-				if(environment_pressure >= 50 * ONE_ATMOSPHERE)
+				if(!fan_overclocked && (environment_pressure >= 50 * ONE_ATMOSPHERE))
 					return FALSE
+
 				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				if(!fan_overclocked && (fan_integrity < 1))
+					transfer_moles *= fan_integrity
+
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(!removed || !removed.total_moles())
@@ -187,9 +279,12 @@
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0 && environment.temperature > 0)
-			if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
+			if(!fan_overclocked && (air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE))
 				return FALSE
+
 			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+			if(!fan_overclocked && (fan_integrity < 1))
+				transfer_moles *= fan_integrity
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
