@@ -10,7 +10,7 @@ INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 25);
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 24);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 25);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
