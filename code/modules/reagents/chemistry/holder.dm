@@ -561,10 +561,11 @@
 	if(!round_robin)
 		var/part = 1 / length(cached_reagents)
 
+		var/contribution = amount * part * multiplier
 		for(var/datum/reagent/reagent as anything in cached_reagents)
 			if(remove_blacklisted && !(reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
-			var/transfer_amount = round(min(reagent.volume, amount * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
+			var/transfer_amount = round(min(reagent.volume, contribution), CHEMICAL_QUANTISATION_LEVEL)
 			if(preserve_data)
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
@@ -580,7 +581,7 @@
 		R.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
 
 		for(var/datum/reagent/reagent as anything in reagents_to_remove)
-			var/transfer_amount = round(min(reagent.volume, amount * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
+			var/transfer_amount = round(min(reagent.volume, contribution), CHEMICAL_QUANTISATION_LEVEL)
 			if(methods)
 				reagent.on_transfer(target_atom, methods, transfer_amount)
 			remove_reagent(reagent.type, transfer_amount)
