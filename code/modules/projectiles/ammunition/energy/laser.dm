@@ -1,32 +1,29 @@
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 83
+	e_cost = LASER_SHOTS(12)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = 100
+	e_cost = LASER_SHOTS(10)
 	select_name = "maim"
-
-/obj/item/ammo_casing/energy/laser/hellfire/antique
-	e_cost = 100
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 62.5
+	e_cost = LASER_SHOTS(16)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 200
+	e_cost = LASER_SHOTS(5)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 120
+	e_cost = LASER_SHOTS(8)
 
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket
-	e_cost = 1000
+	e_cost = LASER_SHOTS(1)
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
@@ -38,7 +35,7 @@
 
 /obj/item/ammo_casing/energy/chameleon
 	projectile_type = /obj/projectile/energy/chameleon
-	e_cost = 0
+	e_cost = 0 // Can't really use the macro here, unfortunately
 	var/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()
@@ -78,7 +75,7 @@
 
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/projectile/beam/pulse
-	e_cost = 200
+	e_cost = LASER_SHOTS(5)
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
@@ -100,7 +97,7 @@
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/projectile/beam/xray
-	e_cost = 50
+	e_cost = LASER_SHOTS(20)
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
@@ -116,7 +113,7 @@
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk
 	select_name = "bullet"
-	e_cost = 120
+	e_cost = LASER_SHOTS(8)
 	fire_sound = 'sound/weapons/thermalpistol.ogg'
 
 /obj/item/ammo_casing/energy/nanite/inferno

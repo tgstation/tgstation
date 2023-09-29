@@ -73,3 +73,9 @@
 
 #define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
 #define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
+
+/// The amount of energy that a standard energy weapon cell can hold
+#define ENERGY_WEAPON_MAX_CHARGE 1000
+/// Macro to turn a number of laser shots into an energy cost, based on the above define
+/// e.g. LASER_SHOTS(12) means 12 shots
+#define LASER_SHOTS(X) ((ENERGY_WEAPON_MAX_CHARGE - (1000 % X)) / X) // I wish I could just use round, but it can't be used in datum members
