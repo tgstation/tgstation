@@ -165,6 +165,9 @@
 	return TRUE
 
 /mob/living/basic/blob_act(obj/structure/blob/attacking_blob)
+	. = ..()
+	if (!.)
+		return
 	apply_damage(20, damagetype = BRUTE)
 
 /mob/living/basic/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)

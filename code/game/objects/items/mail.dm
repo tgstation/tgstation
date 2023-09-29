@@ -450,9 +450,10 @@
 	var/list/mail_recipients_for_input = list("Anyone")
 	var/list/used_names = list()
 	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
-		if(isnull(person.mind_ref))
+		var/datum/mind/locked_mind = person.mind_ref.resolve()
+		if(isnull(locked_mind))
 			continue
-		mail_recipients += person.mind_ref
+		mail_recipients += locked_mind
 		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
 
 	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_for_input)
