@@ -1,21 +1,3 @@
-GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
-
-/proc/build_name2reagent()
-	. = list()
-	for (var/t in subtypesof(/datum/reagent))
-		var/datum/reagent/R = t
-		if (length(initial(R.name)))
-			.[ckey(initial(R.name))] = t
-
-GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
-	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
-	/turf/open/indestructible
-)))
-
-//Various reagents
-//Toxin & acid reagents
-//Hydroponics stuff
-
 /// A single reagent
 /datum/reagent
 	/// datums don't have names by default
@@ -50,8 +32,6 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	var/color = "#000000" // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
-	/// appears unused
-	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
@@ -62,8 +42,6 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	var/reagent_weight = 1
 	///is it currently metabolizing
 	var/metabolizing = FALSE
-	/// is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
-	var/harmful = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
@@ -121,7 +99,8 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	if(!mass)
 		mass = rand(10, 800)
 
-/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+/// This should only be called by the holder, so it's already handled clearing its references
+/datum/reagent/Destroy()
 	. = ..()
 	holder = null
 
@@ -207,10 +186,6 @@ Primarily used in reagents/reaction_agents
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
-
-/// Called by [/datum/reagents/proc/conditional_update_move]
-/datum/reagent/proc/on_move(mob/M)
-	return
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)

@@ -6,21 +6,25 @@ GLOBAL_LIST(chemical_reactions_list_reactant_index)
 GLOBAL_LIST(chemical_reactions_list_product_index)
 /// list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list())
-/// names of reagents used by plumbing UI.
-GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
 /// list of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(chemical_reactions_results_lookup_list)
 /// list of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST(fake_reagent_blacklist)
-
+/// Turfs metalgen cant touch
+GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
+	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
+	/turf/open/indestructible
+)))
+/// Names of human readable reagents used by plumbing UI.
+GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
+/// Map of reagent names to its datum path
+GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 
 /// Initialises all /datum/reagent into a list indexed by reagent id
 /proc/init_chemical_reagent_list()
 	var/list/reagent_list = list()
 
-	var/paths = subtypesof(/datum/reagent)
-
-	for(var/path in paths)
+	for(var/datum/reagent/path as anything in subtypesof(/datum/reagent))
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
@@ -32,9 +36,11 @@ GLOBAL_LIST(fake_reagent_blacklist)
 /// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
 /proc/init_chemical_name_list()
 	var/list/name_list = list()
+
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/Reagent = GLOB.chemical_reagents_list[X]
 		name_list += Reagent.name
+
 	return sort_list(name_list)
 
 /**
@@ -46,11 +52,11 @@ GLOBAL_LIST(fake_reagent_blacklist)
  * For chemical reactions list lookup list - creates a bit list of info passed to the UI. This is saved to reduce lag from new windows opening, since it's a lot of data.
  */
 /proc/build_chemical_reactions_lists()
-	//Prevent these reactions from appearing in lookup tables (UI code)
-	var/list/blacklist = typecacheof(/datum/chemical_reaction/randomized)
-
 	if(GLOB.chemical_reactions_list_reactant_index)
 		return
+
+	//Prevent these reactions from appearing in lookup tables (UI code)
+	var/list/blacklist = typecacheof(/datum/chemical_reaction/randomized)
 
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
@@ -102,7 +108,7 @@ GLOBAL_LIST(fake_reagent_blacklist)
 		var/list/product_names = list()
 		var/bitflags = reaction.reaction_tags
 
-		if(!reaction.required_reagents || !reaction.required_reagents.len) //Skip impossible reactions
+		if(!length(reaction.required_reagents)) //Skip impossible reactions
 			continue
 
 		GLOB.chemical_reactions_list[reaction.type] = reaction
@@ -138,3 +144,11 @@ GLOBAL_LIST(fake_reagent_blacklist)
 				if(!GLOB.chemical_reactions_list_product_index[id])
 					GLOB.chemical_reactions_list_product_index[id] = list()
 				GLOB.chemical_reactions_list_product_index[id] += reaction
+
+/// Builds map of reagent name to its datum path
+/proc/build_name2reagentlist()
+	. = list()
+	for (var/datum/reagent/R as anything in subtypesof(/datum/reagent))
+		var/name = initial(R.name)
+		if (length(name))
+			.[ckey(name)] = R
