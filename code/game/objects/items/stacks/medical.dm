@@ -159,6 +159,15 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	var/obj/item/bodypart/gauzed_bodypart
+
+/obj/item/stack/medical/gauze/Destroy(force)
+	. = ..()
+
+	if (gauzed_bodypart)
+		gauzed_bodypart.current_gauze = null
+		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
+	gauzed_bodypart = null
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)

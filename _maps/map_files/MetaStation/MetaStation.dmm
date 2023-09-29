@@ -4532,7 +4532,6 @@
 "bDS" = (
 /obj/structure/chair/office/light,
 /obj/structure/cable,
-/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "bDW" = (
@@ -11004,6 +11003,9 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/cmo,
 /obj/structure/cable,
+/obj/item/stamp/head/cmo{
+	pixel_x = -9
+	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "edq" = (

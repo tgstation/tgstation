@@ -1,0 +1,4 @@
+author: "xPokee"
+delete-after: True
+changes:
+  - bugfix: "fixed the stamp in the metastation CMO office always spawning on the floor"
