@@ -127,12 +127,6 @@
 
 	dump_in_space(enterer)
 
-///Only dump if we don't have the hyperspace cordon movement exemption trait
-/datum/turf_reservation/transit/proc/space_dump_soft(atom/source, atom/movable/enterer)
-	SIGNAL_HANDLER
-
-	if(!HAS_TRAIT(enterer, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT))
-		space_dump(source, enterer)
 
 /// Internal proc which handles reserving the area for the reservation.
 /datum/turf_reservation/proc/_reserve_area(width, height, zlevel)

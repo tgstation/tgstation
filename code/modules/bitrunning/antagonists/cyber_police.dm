@@ -31,7 +31,7 @@
 	carp.teach(player)
 
 	player.add_traits(list(
-		TRAIT_NO_AUGMENTS,
+		//TRAIT_NO_AUGMENTS,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NOBLOOD,
