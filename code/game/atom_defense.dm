@@ -51,12 +51,24 @@
 	if(atom_integrity == new_value)
 		return
 	atom_integrity = new_value
+	on_update_integrity(old_value, new_value)
+	return new_value
+
+/// Handle updates to your atom's integrity
+/atom/proc/on_update_integrity(old_value, new_value)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_INTEGRITY_CHANGED, old_value, new_value)
 
 /// This mostly exists to keep atom_integrity private. Might be useful in the future.
 /atom/proc/get_integrity()
 	SHOULD_BE_PURE(TRUE)
 	return atom_integrity
+
+/// Similar to get_integrity, but returns the percentage as [0-1] instead.
+/atom/proc/get_integrity_percentage()
+	SHOULD_BE_PURE(TRUE)
+	return round(atom_integrity / max_integrity, 0.01)
 
 ///returns the damage value of the attack after processing the atom's various armor protections
 /atom/proc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)

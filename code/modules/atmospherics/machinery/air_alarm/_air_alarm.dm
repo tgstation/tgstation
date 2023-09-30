@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"long_name" = sanitize(vent.name),
 				"power" = vent.on,
 				"overclock" = vent.fan_overclocked,
-				"integrity" = vent.fan_integrity,
+				"integrity" = vent.get_integrity_percentage(),
 				"checks" = vent.pressure_checks,
 				"excheck" = vent.pressure_checks & ATMOS_EXTERNAL_BOUND,
 				"incheck" = vent.pressure_checks & ATMOS_INTERNAL_BOUND,
