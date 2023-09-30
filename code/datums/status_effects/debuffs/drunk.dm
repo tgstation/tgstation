@@ -182,13 +182,8 @@
 	if(drunk_value >= 91)
 		owner.adjustToxLoss(1)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS && prob(20))
-			// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
-			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))
-				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
-
-			else
-				attempt_to_blackout()
+		if(owner.stat == CONSCIOUS)
+			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
@@ -202,6 +197,8 @@
 	else if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
 		to_chat(owner, span_warning("You stumbled and fall over!"))
 		owner.slip(1 SECONDS)
+	else if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
+		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 	else
 		owner.Sleeping(90 SECONDS)
 
