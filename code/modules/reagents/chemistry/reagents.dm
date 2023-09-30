@@ -153,7 +153,7 @@
 Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
 Primarily used in reagents/reaction_agents
 */
-/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target)
+/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount)
 	return FALSE
 
 ///Called after a reagent is transferred
