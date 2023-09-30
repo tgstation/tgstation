@@ -50,7 +50,7 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
+  const { theme, fontFamily, fontSize, freeFontSize, lineHeight } = useSelector(
     context,
     selectSettings
   );
@@ -114,19 +114,34 @@ export const SettingsGeneral = (props, context) => {
           </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
-          <NumberInput
-            width="4em"
-            step={1}
-            stepPixelSize={10}
-            minValue={8}
-            maxValue={32}
-            value={fontSize}
-            unit="px"
-            format={(value) => toFixed(value)}
-            onChange={(e, value) =>
+          {freeFontSize && (
+            <NumberInput
+              width="4em"
+              step={1}
+              stepPixelSize={10}
+              minValue={8}
+              maxValue={32}
+              value={fontSize}
+              unit="px"
+              format={(value) => toFixed(value)}
+              onChange={(e, value) =>
+                dispatch(
+                  updateSettings({
+                    fontSize: value,
+                  })
+                )
+              }
+            />
+          )}
+          <Button
+            content="Override font size"
+            icon={freeFontSize ? 'lock-open' : 'lock'}
+            color={freeFontSize ? 'good' : 'bad'}
+            ml={freeFontSize ? 1 : 0}
+            onClick={() =>
               dispatch(
                 updateSettings({
-                  fontSize: value,
+                  freeFontSize: !freeFontSize,
                 })
               )
             }

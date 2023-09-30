@@ -151,4 +151,4 @@
 
 /datum/wires/explosive/gibtonite/explode()
 	var/obj/item/gibtonite/P = holder
-	P.GibtoniteReaction(null, 2)
+	P.GibtoniteReaction(null, "A wire signal has primed a")

@@ -815,7 +815,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -1350,6 +1350,15 @@
 	name = "\improper Departmental Techfab - Cargo"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
+
+/obj/item/circuitboard/machine/materials_market
+	name = "Galactic Materials Market"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/materials_market
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/card_reader = 1)
 
 //Tram
 /obj/item/circuitboard/machine/crossing_signal
