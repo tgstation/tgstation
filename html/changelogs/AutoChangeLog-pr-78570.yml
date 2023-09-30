@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - code_imp: "Gauze removal is now handled by the gauze's destroy instead of seep_gauze"
