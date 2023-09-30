@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			exterior_text = "exterior"
 	else
 		// If it is not a carbon mob, we will just check biotypes and damage it directly.
-		if(body.mob_biotypes & MOB_MINERAL ||body.mob_biotypes & MOB_ROBOTIC)
+		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
 			exterior_text = "exterior"
 			body.apply_damage(25, BRUTE)
 
@@ -286,5 +286,5 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
 	playsound(body, 'sound/items/poster_ripped.ogg', 100, TRUE)
 	body.do_jitter_animation()
-	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book ? le_book : "the book"], turning into an eldritch shade of blue!"))
+	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
