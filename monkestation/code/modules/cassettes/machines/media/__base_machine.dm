@@ -19,7 +19,7 @@
 /obj/machinery/media/proc/update_music()
 	update_media_source()
 	// Send update to clients.
-	for(var/mob/M in range(15))
+	for(var/mob/M in range(15, get_turf(src))) //15 being the max volume of the radio
 		if(M && M.client)
 			M.update_music()
 
