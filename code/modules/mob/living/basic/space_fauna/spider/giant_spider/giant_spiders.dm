@@ -438,11 +438,14 @@
 	var/datum/action/cooldown/mob_cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
-	var/datum/action/cooldown/mob_cooldown/lay_eggs/make_eggs = new(src)
-	make_eggs.Grant(src)
+	var/datum/action/cooldown/mob_cooldown/lay_eggs/make_eggs_tier1 = new(src)
+	make_eggs_tier1.Grant(src)
 
-	var/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/make_better_eggs = new(src)
-	make_better_eggs.Grant(src)
+	var/datum/action/cooldown/mob_cooldown/lay_eggs/abnormal/make_eggs_tier2 = new(src)
+	make_eggs_tier2.Grant(src)
+
+	var/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/make_eggs_tier3 = new(src)
+	make_eggs_tier3.Grant(src)
 
 	var/datum/action/cooldown/mob_cooldown/set_spider_directive/give_orders = new(src)
 	give_orders.Grant(src)
