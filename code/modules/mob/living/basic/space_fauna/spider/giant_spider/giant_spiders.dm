@@ -286,11 +286,10 @@
 	icon_dead = "breacher_dead"
 	maxHealth = 120
 	health = 120
-	melee_damage_lower = 15
-	melee_damage_upper = 25
+	melee_damage_lower = 5
+	melee_damage_upper = 10
 	attack_verb_continuous = "butchers"
 	attack_verb_simple = "butcher"
-	environment_smash = ENVIRONMENT_SMASH_WALLS
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 700
@@ -299,6 +298,7 @@
 	bare_wound_bonus = 100
 	sharpness = SHARP_EDGED
 	obj_damage = 50
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	limb_destroyer = 10
 	var/tearing_wall = FALSE
 	speed = 5
