@@ -51,10 +51,7 @@
 	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
 	var/datum/status_effect/food/crafted_food_buff = null
 
-/obj/item/food/Initialize(mapload, starting_reagent_purity, no_base_reagents = FALSE)
-	src.starting_reagent_purity = starting_reagent_purity
-	if(no_base_reagents)
-		food_reagents = null
+/obj/item/food/Initialize(mapload)
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
 	. = ..()

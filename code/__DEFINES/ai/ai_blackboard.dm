@@ -8,6 +8,11 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///Path we should use next time we use the JPS movement datum
 #define BB_PATH_TO_USE "BB_path_to_use"
+///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
+#define BB_AGGRO_RANGE "BB_aggro_range"
+
+///Turf we want a mob to move to
+#define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
 ///song instrument blackboard, set by instrument subtrees
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
@@ -41,9 +46,13 @@
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
 #define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+#define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
+#define DEFAULT_BASIC_FLEE_DISTANCE 9
 
 /// Generic key for a non-specific targetted action
 #define BB_TARGETTED_ACTION "BB_targetted_action"
+/// Generic key for a non-specific action
+#define BB_GENERIC_ACTION "BB_generic_action"
 
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
@@ -83,3 +92,14 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+///should we skip the faction check for the targetting datum?
+#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"
+
+///currently only used by clowns, a list of what can the mob speak randomly
+#define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
+#define BB_EMOTE_SAY "emote_say"
+#define BB_EMOTE_HEAR "emote_hear"
+#define BB_EMOTE_SEE "emote_see"
+#define BB_EMOTE_SOUND "emote_sound"
+#define BB_EMOTE_CHANCE "emote_chance"

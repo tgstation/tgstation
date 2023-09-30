@@ -59,11 +59,6 @@
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 
-/// Key containing overwatch ability information
-#define BB_WATCHER_OVERWATCH "BB_watcher_overwatch"
-/// Key containing gazae ability information
-#define BB_WATCHER_GAZE "BB_watcher_gaze"
-
 // eyeball keys
 ///the death glare ability
 #define BB_GLARE_ABILITY "BB_glare_ability"
@@ -135,3 +130,26 @@
 #define BB_AUTOMATED_MINING "automated_mining"
 /// key that stores the nearest dead human
 #define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+
+//seedling keys
+/// the water can we will pick up
+#define BB_WATERCAN_TARGET "watercan_target"
+/// the hydrotray we will heal
+#define BB_HYDROPLANT_TARGET "hydroplant_target"
+/// minimum weed levels for us to cure
+#define BB_WEEDLEVEL_THRESHOLD "weedlevel_threshold"
+/// minimum water levels for us to refill
+#define BB_WATERLEVEL_THRESHOLD "waterlevel_threshold"
+/// key holds our solarbeam ability
+#define BB_SOLARBEAM_ABILITY "solarbeam_ability"
+/// key holds our rapid seeds ability
+#define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
+/// key holds the tray we will beam
+#define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
+
+/// Corpse we have consumed
+#define BB_LEGION_CORPSE "legion_corpse"
+/// Things our target recently said
+#define BB_LEGION_RECENT_LINES "legion_recent_lines"
+/// The creator of our legion skull
+#define BB_LEGION_BROOD_CREATOR "legion_brood_creator"

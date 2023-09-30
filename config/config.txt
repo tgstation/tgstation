@@ -126,11 +126,14 @@ VOTE_PERIOD 600
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## disable abandon mob
-NORESPAWN
+## Determines if players can respawn after death
+## 0 = Cannot respawn (default)
+## 1 = Can respawn
+## 2 = Can respawn if choosing a different character
+ALLOW_RESPAWN 0
 
-## Respawn delay (deciseconds), which doesn't allow to return to lobby (default 10 minutes)
-#RESPAWN_DELAY 6000
+## Respawn delay (deciseconds), which doesn't allow to return to lobby
+RESPAWN_DELAY 0
 
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
@@ -381,7 +384,7 @@ CLIENT_ERROR_BUILD 1421
 ## Set to 0 or comment out to disable.
 SECOND_TOPIC_LIMIT 10
 
-MINUTE_TOPIC_LIMIT 100
+MINUTE_TOPIC_LIMIT 200
 
 
 ## CLICK RATE LIMITING

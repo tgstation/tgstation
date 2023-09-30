@@ -51,12 +51,13 @@
 	held_state = "mouse_[body_color]" // not handled by variety element
 	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	AddComponent(/datum/component/squeak, list('sound/creatures/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
+	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
@@ -116,7 +117,8 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc, /* starting_reagent_purity = */ null, /* no_base_reagents = */ FALSE, /* dead_critter = */ src)
+		var/obj/item/food/deadmouse/mouse = new(loc)
+		mouse.copy_corpse(src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -301,15 +303,17 @@
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload, starting_reagent_purity, no_base_reagents, mob/living/basic/mouse/dead_critter)
+/obj/item/food/deadmouse/Initialize(mapload)
 	. = ..()
-	if(dead_critter)
-		body_color = dead_critter.body_color
-		critter_type = dead_critter.type
-		name = dead_critter.name
-		icon_state = dead_critter.icon_dead
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/// Copy properties from an imminently dead mouse
+/obj/item/food/deadmouse/proc/copy_corpse(mob/living/basic/mouse/dead_critter)
+	body_color = dead_critter.body_color
+	critter_type = dead_critter.type
+	name = dead_critter.name
+	icon_state = dead_critter.icon_dead
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
@@ -377,6 +381,7 @@
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find people to run away from
+		BB_BASIC_MOB_FLEE_DISTANCE = 3,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -397,20 +402,12 @@
 
 /// Don't look for anything to run away from if you are distracted by being adjacent to cheese
 /datum/ai_planning_subtree/flee_target/mouse
-	flee_behaviour = /datum/ai_behavior/run_away_from_target/mouse
-
-/datum/ai_planning_subtree/flee_target/mouse
 
 /datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/hunted_cheese = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	if (!isnull(hunted_cheese))
 		return // We see some cheese, which is more important than our life
 	return ..()
-
-/datum/ai_planning_subtree/flee_target/mouse/select
-
-/datum/ai_behavior/run_away_from_target/mouse
-	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
 
 /// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat

@@ -56,6 +56,13 @@
 		/datum/stock_part/capacitor = 1,
 		/obj/item/electronics/airlock = 1)
 
+/obj/item/circuitboard/machine/mass_driver
+	name = "Mass Driver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/mass_driver
+	req_components = list(
+		/datum/stock_part/servo = 1,)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -808,7 +815,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -1344,17 +1351,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/bepis
-	name = "BEPIS Chamber"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/rnd/bepis
-	req_components = list(
-		/obj/item/stack/cable_coil = 5,
-		/datum/stock_part/capacitor = 1,
-		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1,
-		/datum/stock_part/scanning_module = 1)
-
 //Misc
 /obj/item/circuitboard/machine/sheetifier
 	name = "Sheet-meister 2000"
@@ -1513,4 +1509,23 @@
 		/datum/stock_part/capacitor = 2,
 		/obj/item/mod/module/rad_protection = 1,
 		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/quantum_server
+	name = "Quantum Server"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/quantum_server
+	req_components = list(
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/capacitor = 1,
+	)
+
+/obj/item/circuitboard/machine/netpod
+	name = "Netpod"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/netpod
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 2,
 	)

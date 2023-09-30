@@ -176,6 +176,7 @@
 	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
+	hardcore_random_bonus = TRUE
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
@@ -396,6 +397,9 @@
 	/// List of all ex-revs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/ex_revs = list()
 
+	/// The objective of the heads of staff, aka to kill the headrevs.
+	var/list/datum/objective/mutiny/heads_objective = list()
+
 /// Proc called on periodic timer.
 /// Updates the rev team's objectives to make sure all heads are targets, useful when new heads latejoin.
 /// Propagates all objectives to all revs.
@@ -471,11 +475,34 @@
 
 /// Checks if heads have won
 /datum/team/revolution/proc/check_heads_victory()
-	for(var/datum/mind/rev_mind in get_head_revolutionaries())
-		var/turf/rev_turf = get_turf(rev_mind.current)
-		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
-			return FALSE
-	return TRUE
+	// List of headrevs we're currently tracking
+	var/list/included_headrevs = list()
+	// List of current headrevs
+	var/list/current_headrevs = get_head_revolutionaries()
+	// A copy of the head of staff objective list, since we're going to be modifying the original list.
+	var/list/heads_objective_copy = heads_objective.Copy()
+
+	var/objective_complete = TRUE
+	// Here, we check current head of staff objectives and remove them if the target doesn't exist as a headrev anymore
+	for(var/datum/objective/mutiny/objective in heads_objective_copy)
+		if(!(objective.target in current_headrevs))
+			heads_objective -= objective
+			continue
+		if(!objective.check_completion())
+			objective_complete = FALSE
+		included_headrevs += objective.target
+
+	// Here, we check current headrevs and add them as objectives if they didn't exist as a head of staff objective before.
+	// Additionally, we make sure the objective is not completed by running the check_completion check on them.
+	for(var/datum/mind/rev_mind as anything in current_headrevs)
+		if(!(rev_mind in included_headrevs))
+			var/datum/objective/mutiny/objective = new()
+			objective.target = rev_mind
+			if(!objective.check_completion())
+				objective_complete = FALSE
+			heads_objective += objective
+
+	return objective_complete
 
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
