@@ -252,11 +252,11 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_SPLASHED, PROC_REF(on_splashed))
+	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
-	UnregisterSignal(owner, COMSIG_CARBON_SPLASHED)
+	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
 
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER
