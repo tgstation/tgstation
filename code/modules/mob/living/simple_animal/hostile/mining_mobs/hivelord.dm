@@ -86,7 +86,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE | PASSMOB
-	density = FALSE
+	density = TRUE
 	del_on_death = 1
 	var/clickbox_state = "hivelord"
 	var/clickbox_max_scale = INFINITY
