@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms, atom/loc)
+/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
 	var/mob/living/body = locate() in selected_atoms
 	if(!body)
 		return
@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		var/mob/living/carbon/carbody = body
 		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
 		ripped_thing = bodypart
-		bodypart.receive_damage(25)
+		bodypart.receive_damage(25, sharpness = SHARP_EDGED)
 		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
 			exterior_text = "exterior"
 	else
@@ -286,5 +286,5 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
 	playsound(body, 'sound/items/poster_ripped.ogg', 100, TRUE)
 	body.do_jitter_animation()
-	loc.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book ? le_book : "the book"], turning into an eldritch shade of blue!"))
+	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book ? le_book : "the book"], turning into an eldritch shade of blue!"))
 	return ..()
