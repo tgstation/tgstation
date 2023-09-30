@@ -509,6 +509,13 @@
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/command/storage/eva)
+"akn" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Escape-4";
+	location = "Escape-3"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/secondary/exit/departure_lounge)
 "akv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -642,6 +649,10 @@
 	},
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 6
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-21";
+	location = "Hall-20"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
@@ -2683,6 +2694,7 @@
 	id = "ticket_machine_med"
 	},
 /obj/effect/turf_decal/trimline/blue/line,
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
 "bsd" = (
@@ -2851,6 +2863,10 @@
 /obj/effect/turf_decal/trimline/white/corner{
 	color = "#009dc4";
 	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-14";
+	location = "Hall-13"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/dorms)
@@ -3388,6 +3404,21 @@
 "bGX" = (
 /turf/open/floor/carpet/blue,
 /area/station/commons/fitness/recreation/entertainment)
+"bHd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-4";
+	location = "Hall-3"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central)
 "bHq" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -9459,6 +9490,7 @@
 	dir = 8
 	},
 /obj/machinery/light/floor/has_bulb,
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "eLS" = (
@@ -10661,6 +10693,22 @@
 "frP" = (
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
+"frU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/white/filled/warning{
+	dir = 1;
+	color = "#009dc4"
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	color = "#009dc4"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-13";
+	location = "Hall-12"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central)
 "fsb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
@@ -12724,6 +12772,10 @@
 /obj/effect/turf_decal/trimline/white/corner{
 	color = "#009dc4"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-18";
+	location = "Hall-17"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "guV" = (
@@ -13982,6 +14034,15 @@
 /obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
+"hbV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Escape-1";
+	location = "Hall-24"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "hcx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -15512,6 +15573,10 @@
 	color = "#009dc4";
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-2";
+	location = "Hall-1"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "hSR" = (
@@ -16268,6 +16333,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 1
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-24";
+	location = "Hall-23"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "ioX" = (
@@ -16520,6 +16589,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"ivC" = (
+/obj/machinery/duct/industrial/waste,
+/mob/living/simple_animal/bot/cleanbot/autopatrol,
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "ivH" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -16677,6 +16751,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-22";
+	location = "Hall-21"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
 "iAJ" = (
@@ -16751,6 +16829,15 @@
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
+"iDY" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-9";
+	location = "Hall-8"
+	},
+/turf/open/floor/iron/chapel{
+	dir = 4
+	},
+/area/station/service/chapel)
 "iEa" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
@@ -18195,6 +18282,22 @@
 /obj/structure/altar_of_gods,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
+"jqM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/white/filled/warning{
+	dir = 1;
+	color = "#009dc4"
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	color = "#009dc4"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-15";
+	location = "Hall-14"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central)
 "jrg" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
@@ -18271,6 +18374,7 @@
 	pixel_x = -26
 	},
 /obj/machinery/light/floor/has_bulb,
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "jtJ" = (
@@ -20370,6 +20474,10 @@
 /obj/effect/turf_decal/trimline/green/corner{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-16";
+	location = "Hall-15"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "kwp" = (
@@ -21212,6 +21320,10 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 1
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-8";
+	location = "Hall-7"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "kOM" = (
@@ -21922,6 +22034,10 @@
 	dir = 1;
 	color = "#009dc4"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-12";
+	location = "Hall-11"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "lhr" = (
@@ -22337,6 +22453,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/mid_joiner,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-5";
+	location = "Hall-4"
+	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/hallway/primary/central)
 "ltZ" = (
@@ -23478,6 +23598,10 @@
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 9
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-17";
+	location = "Hall-16"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "lVD" = (
@@ -24410,6 +24534,10 @@
 /area/station/commons/fitness/recreation/entertainment)
 "myB" = (
 /obj/item/kirbyplants/random,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-11";
+	location = "Hall-10"
+	},
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "mzD" = (
@@ -25129,9 +25257,6 @@
 "mTs" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/structure/railing{
-	dir = 8
-	},
 /turf/open/floor/wood,
 /area/station/service/hydroponics/upper)
 "mTt" = (
@@ -27376,6 +27501,10 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-23";
+	location = "Hall-22"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
@@ -30313,6 +30442,14 @@
 /obj/structure/closet/crate,
 /turf/open/floor/carpet/executive,
 /area/station/command/bridge)
+"pzZ" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-10";
+	location = "Hall-9"
+	},
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "pAg" = (
 /obj/machinery/computer/security/mining{
 	dir = 4
@@ -32572,6 +32709,9 @@
 /area/station/tcommsat/server)
 "qEb" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/upper)
 "qEi" = (
@@ -34770,6 +34910,10 @@
 /obj/effect/turf_decal/trimline/purple/corner{
 	dir = 1
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-6";
+	location = "Hall-5"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "rIM" = (
@@ -35790,6 +35934,10 @@
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-7";
+	location = "Hall-6"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
@@ -40355,6 +40503,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"uFD" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/station/service/hydroponics/upper)
 "uFS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -41657,6 +41812,10 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L2"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Escape-2";
+	location = "Escape-1"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
 "vlo" = (
@@ -42243,6 +42402,10 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-19";
+	location = "Hall-18"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/lounge)
@@ -44423,6 +44586,10 @@
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-3";
+	location = "Hall-2"
+	},
 /turf/open/floor/plastic,
 /area/station/hallway/primary/central)
 "wMO" = (
@@ -44781,6 +44948,14 @@
 	color = "#D381C9"
 	},
 /area/station/science/robotics)
+"wVs" = (
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Escape-3";
+	location = "Escape-2"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/secondary/exit/departure_lounge)
 "wVt" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/white/filled/warning{
@@ -44789,6 +44964,10 @@
 	},
 /obj/effect/turf_decal/trimline/white/warning{
 	color = "#009dc4"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-20";
+	location = "Hall-19"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
@@ -45214,6 +45393,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery/theatre)
+"xfO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/dark_blue/filled/warning,
+/obj/effect/turf_decal/trimline/dark_blue/warning{
+	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-25";
+	location = "Hall-24"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "xfS" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/sand/plating,
@@ -46859,6 +47051,10 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Hall-1";
+	location = "Escape-4"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xWF" = (
@@ -64246,7 +64442,7 @@ beP
 eQp
 wAH
 uGB
-vSI
+jqM
 bBP
 hJv
 kBt
@@ -64760,7 +64956,7 @@ ovT
 fBG
 bec
 uGB
-vSI
+frU
 tYL
 keE
 xwm
@@ -65823,7 +66019,7 @@ lNO
 gDA
 pXi
 hwW
-pXi
+ivC
 pXi
 mnD
 lmO
@@ -67094,7 +67290,7 @@ csW
 csW
 syi
 qEb
-hsV
+uFD
 xyY
 kFH
 iIX
@@ -67584,7 +67780,7 @@ uzV
 uzV
 wlx
 gIZ
-wlx
+iDY
 nMG
 mhY
 rfc
@@ -68600,7 +68796,7 @@ qSI
 bMU
 nLV
 nLV
-myB
+pzZ
 uzV
 vMy
 uzV
@@ -84054,7 +84250,7 @@ mwr
 mwr
 mwr
 mwr
-fHr
+bHd
 bpX
 lrt
 oUd
@@ -84863,7 +85059,7 @@ fkl
 pPR
 vbq
 bcL
-dLe
+hbV
 dLe
 dLe
 dLe
@@ -84871,7 +85067,7 @@ dLe
 dLe
 dLe
 dBk
-rhw
+xfO
 uKT
 pFe
 fHe
@@ -87183,7 +87379,7 @@ ccr
 ccr
 wrG
 sWi
-vBn
+wVs
 xhD
 nSA
 kEj
@@ -88725,7 +88921,7 @@ ieG
 ieG
 ieG
 sWi
-sWi
+akn
 irL
 tSn
 meJ
