@@ -155,7 +155,7 @@
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/chaplain/habit_veil
-	name = "religious habit (veil)"
+	name = "nun veil"
 	desc = "No nunsene clothing."
 	icon_state = "nun_hood_alt"
 	flags_inv = HIDEHAIR | HIDEEARS
