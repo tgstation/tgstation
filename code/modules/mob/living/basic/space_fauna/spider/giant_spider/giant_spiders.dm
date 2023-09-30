@@ -288,6 +288,9 @@
 	health = 120
 	melee_damage_lower = 15
 	melee_damage_upper = 25
+	attack_verb_continuous = "butchers"
+	attack_verb_simple = "butcher"
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 700
@@ -307,42 +310,6 @@
 
 	ADD_TRAIT(src, TRAIT_MESON_VISION, INNATE_TRAIT)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
-
-/mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
-	if(using_special)
-		return
-	if(target == src)
-		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
-		return
-	if(iswallturf(target))
-		if(tearing_wall)
-			return
-		tearing_wall = TRUE
-		var/turf/closed/wall/thewall = target
-		to_chat(src, span_warning("You begin tearing through the wall..."))
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-		var/timetotear = 40
-		if(istype(target, /turf/closed/wall/r_wall))
-			timetotear = 120
-		if(do_after(src, timetotear, target = thewall))
-			if(isopenturf(thewall))
-				return
-			thewall.dismantle_wall(1)
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		tearing_wall = FALSE
-		return
-	if(isliving(target)) //Swallows corpses like a snake to regain health.
-		var/mob/living/L = target
-		if(L.stat == DEAD)
-			to_chat(src, span_warning("You begin to swallow [L] whole..."))
-			if(do_after(src, 30, target = L))
-				if(eat(L))
-					adjustHealth(-L.maxHealth * 0.25)
-			return
-	. = ..()
-	if(ismecha(target))
-		var/obj/vehicle/sealed/mecha/M = target
-		M.take_damage(50, BRUTE, MELEE, 1)
 
 /**
  * ### Tarantula
