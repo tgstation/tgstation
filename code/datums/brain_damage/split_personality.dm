@@ -256,6 +256,7 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
+	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
 	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
 
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
