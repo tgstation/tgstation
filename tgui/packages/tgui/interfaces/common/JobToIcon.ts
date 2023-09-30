@@ -1,5 +1,3 @@
-export type AvailableJob = keyof typeof JOB2ICON;
-
 /** Icon map of jobs to their fontawesome5 (free) counterpart. */
 const BASEICONS = {
   'AI': 'eye',

@@ -4,3 +4,6 @@
 
 /// called when a ghost clicks a spawner role: (mob/living)
 #define COMSIG_GHOSTROLE_SPAWNED "ghostrole_spawned"
+
+
+#define COMSIG_LAZY_TEMPLATE_LOADED "lazy_template_loaded"

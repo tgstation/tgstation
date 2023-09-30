@@ -35,13 +35,13 @@
 	disconnect_damage = BASE_DISCONNECT_DAMAGE
 
 	RegisterSignals(src, list(
-		COMSIG_QDELETING,
+		COMSIG_PARENT_QDELETING,
 		COMSIG_MACHINERY_BROKEN,
 		COMSIG_MACHINERY_POWER_LOST,
 		),
 		PROC_REF(on_broken),
 	)
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_take_damage))
 
 	register_context()
@@ -94,7 +94,7 @@
 	close_machine(target)
 
 /obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		attack_hand(user)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 

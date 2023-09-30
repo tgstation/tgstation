@@ -18,9 +18,6 @@
 	desc = "Needs decrypted at the safehouse to be opened."
 	locked = TRUE
 
-/obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
-	return FALSE
-
 /// The bitrunner den - side of the bitrunning crate. Appears in the receive location.
 /obj/structure/closet/crate/secure/bitrunning/decrypted
 	name = "decrypted cache"

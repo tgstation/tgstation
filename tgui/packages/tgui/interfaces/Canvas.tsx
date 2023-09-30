@@ -2,7 +2,7 @@ import { Color } from 'common/color';
 import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex } from '../components';
+import { Box, Button, Flex, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type PaintCanvasProps = Partial<{

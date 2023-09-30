@@ -53,8 +53,6 @@
 	department_color = COLOR_PRISONER_ORANGE
 	subdepartment_color = COLOR_PRISONER_BLACK
 
-	access = list(ACCESS_HUNTER)
-
 /// Trim for player controlled avatars in the Virtual Domain.
 /datum/id_trim/bit_avatar
 	assignment = "Bit Avatar"

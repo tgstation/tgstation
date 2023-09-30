@@ -12,7 +12,7 @@
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
 	desc = "A high fidelity testing device which unlocks the secrets of the known universe using the two most powerful substances available to man: excessive amounts of electricity and capital."
-	icon = 'icons/obj/machines/bepis.dmi'
+	//icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
 	base_icon_state = "chamber"
 	density = TRUE

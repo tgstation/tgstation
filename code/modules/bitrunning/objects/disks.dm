@@ -18,7 +18,7 @@
 
 	icon_state = "[base_icon_state][rand(0, 7)]"
 	update_icon()
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
 
 /obj/item/bitrunning_disk/proc/on_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -61,7 +61,7 @@
 		return
 
 	balloon_alert(user, "selected")
-	playsound(user, 'sound/items/click.ogg', 50, TRUE)
+	playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 	choice_made = choice
 
 /// Tier 1 programs. Simple, funny, or helpful.
@@ -115,7 +115,7 @@
 			granted_item = thing
 
 	balloon_alert(user, "selected")
-	playsound(user, 'sound/items/click.ogg', 50, TRUE)
+	playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 	choice_made = choice
 
 /// Tier 1 items. Simple, funny, or helpful.

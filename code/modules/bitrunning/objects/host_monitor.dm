@@ -1,7 +1,7 @@
 /obj/item/bitrunning_host_monitor
 	name = "host monitor"
 
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = 200)
 	desc = "A complex medical device that, when attached to an avatar's data stream, can detect the user of their host's health."
 	flags_1 = CONDUCT_1
 	icon = 'icons/obj/device.dmi'
