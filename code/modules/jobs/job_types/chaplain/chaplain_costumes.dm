@@ -51,7 +51,7 @@
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/chaplainsuit/habit
-	name = "tunic"
+	name = "religious tunic"
 	desc = "No nunsene clothing."
 	icon_state = "habit"
 	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
