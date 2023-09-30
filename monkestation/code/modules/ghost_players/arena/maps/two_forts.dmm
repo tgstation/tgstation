@@ -19,6 +19,11 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/centcom/tdome/arena/actual)
+"eJ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
 "hA" = (
 /obj/structure/flora/bush/reed/style_3,
 /turf/open/water{
@@ -98,6 +103,11 @@
 /turf/open/water{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
+/area/centcom/tdome/arena/actual)
+"Cu" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/sandy_dirt,
 /area/centcom/tdome/arena/actual)
 "Fc" = (
 /obj/effect/turf_decal/sand/plating,
@@ -232,10 +242,10 @@ Pg
 Pg
 Fc
 Pg
+Cu
 Pg
 Pg
-Pg
-Pg
+Cu
 Pg
 Pg
 Pg
@@ -258,7 +268,7 @@ Zu
 VF
 VF
 hL
-Mj
+eJ
 VF
 BT
 VF
@@ -306,7 +316,7 @@ VF
 BT
 VF
 hL
-Mj
+eJ
 VF
 VF
 Zu
@@ -328,10 +338,10 @@ PS
 Pg
 Pg
 Pg
+Cu
 Pg
 Pg
-Pg
-Pg
+Cu
 Pg
 Pg
 Pg

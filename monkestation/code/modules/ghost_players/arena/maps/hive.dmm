@@ -134,6 +134,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
+"HZ" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
 "Is" = (
 /obj/structure/alien/weeds{
 	obj_flags = null
@@ -205,11 +212,11 @@ Fp
 ih
 ih
 lO
-ih
+HZ
 rX
 rX
 ih
-ih
+HZ
 ih
 ih
 "}
@@ -254,9 +261,9 @@ ih
 ih
 ih
 lO
-ih
+HZ
 rX
-ih
+HZ
 ih
 ih
 ih
@@ -278,9 +285,9 @@ sd
 rt
 ih
 ih
-ih
+HZ
 rX
-ih
+HZ
 gC
 ih
 ih
@@ -325,11 +332,11 @@ ih
 ih
 ih
 lO
-ih
+HZ
 rX
 rX
 nn
-ih
+HZ
 ih
 ih
 "}

@@ -56,6 +56,8 @@
 	var/manifest_can_fail = TRUE
 	///Boolean on whether the manifest can be cancelled through cargo consoles.
 	var/can_be_cancelled = TRUE
+	///the account we charge for this purchase
+	var/account_to_charge = ACCOUNT_CAR
 
 /datum/supply_order/New(
 	datum/supply_pack/pack,
@@ -70,6 +72,7 @@
 	manifest_can_fail = TRUE,
 	cost_type = "cr",
 	can_be_cancelled = TRUE,
+	account_to_charge = ACCOUNT_CAR,
 )
 	id = SSshuttle.order_number++
 	src.cost_type = cost_type
@@ -84,6 +87,7 @@
 	src.charge_on_purchase = charge_on_purchase
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
+	src.account_to_charge = account_to_charge
 
 //returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
 /datum/supply_order/proc/get_final_cost()
@@ -128,6 +132,7 @@
 		manifest_paper.name += " - Purchased by [owner]"
 	manifest_text += "Order[packname?"":"s"]: [id]<br/>"
 	manifest_text += "Destination: [station_name]<br/>"
+	manifest_text += "Paid For By: [account_to_charge]<br/>"
 	if(packname)
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"

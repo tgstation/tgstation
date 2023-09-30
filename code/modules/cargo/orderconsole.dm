@@ -39,6 +39,10 @@
 	/// are we currently_sending to an ocean point?
 	var/currently_sending = FALSE
 
+	///department specific locks
+	var/can_send_shuttle = TRUE
+	var/can_remove_orders = TRUE
+
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
 	desc = "Used to request supplies from cargo."
@@ -248,7 +252,7 @@
 				applied_coupon = coupon_check
 				break
 
-		var/datum/supply_order/SO = new(pack = pack ,orderer = name, orderer_rank = rank, orderer_ckey = ckey, reason = reason, paying_account = account, coupon = applied_coupon)
+		var/datum/supply_order/SO = new(pack = pack ,orderer = name, orderer_rank = rank, orderer_ckey = ckey, reason = reason, paying_account = account, coupon = applied_coupon, account_to_charge = params["account_to_charge"])
 		if(requestonly && !self_paid)
 			SSshuttle.request_list += SO
 		else
@@ -271,6 +275,9 @@
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(order.id != id)
 			continue
+		if(!can_remove_orders && order.account_to_charge != cargo_account)
+			say("ERROR: This console lacks permission to remove orders not added by them!")
+			return
 		if(order.department_destination)
 			say("Only the department that ordered this item may cancel it.")
 			return
@@ -298,6 +305,9 @@
 		return
 	switch(action)
 		if("send")
+			if(!can_send_shuttle)
+				say("ERROR: This console lacks permission to call or send the Shuttle")
+				return
 			if(currently_sending)
 				say("Contents are already on their way")
 				return
@@ -341,7 +351,7 @@
 				else
 					usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 					say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-					SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
+					SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE, cargo_account)
 			else
 				if(!length(GLOB.cargo_launch_points))
 					stack_trace("Erm, we are attempting to launch cargo crates on a map with no cargo landing points")
@@ -364,7 +374,10 @@
 								price += 700
 								paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing 700 credit S&H fee.")
 						else
-							paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+							paying_for_this = SSeconomy.get_dep_account(order.account_to_charge)
+							if(order.account_to_charge != ACCOUNT_CAR)
+								var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+								cargo.adjust_money(order.pack.get_cost() * 0.1) // give some back for actually getting the crates
 						if(paying_for_this)
 							if(!paying_for_this.adjust_money(-price, "Cargo: [order.pack.name]"))
 								if(order.paying_account)
@@ -412,12 +425,14 @@
 				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
+			params += "account_to_charge"
+			params["account_to_charge"] = cargo_account
 			return add_item(params)
 		if("add_by_name")
 			var/supply_pack_id = name_to_id(params["order_name"])
 			if(!supply_pack_id)
 				return
-			return add_item(list("id" = supply_pack_id, "amount" = 1))
+			return add_item(list("id" = supply_pack_id, "amount" = 1, "account_to_charge" = cargo_account))
 		if("remove")
 			var/order_name = params["order_name"]
 			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
@@ -446,7 +461,7 @@
 			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
 			if(!supply_pack_id)
 				return
-			return add_item(list("id" = supply_pack_id, "amount" = amount))
+			return add_item(list("id" = supply_pack_id, "amount" = amount, "account_to_charge" = cargo_account))
 		if("clear")
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()

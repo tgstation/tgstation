@@ -17,6 +17,7 @@
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "o" = (
@@ -25,6 +26,11 @@
 /area/centcom/tdome/arena/actual)
 "r" = (
 /obj/item/food/honey_roll,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"t" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "u" = (
@@ -77,6 +83,10 @@
 "V" = (
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
+"X" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
 "Y" = (
 /obj/structure/flora/bush/grassy/style_random,
 /mob/living/basic/butterfly,
@@ -110,12 +120,12 @@ V
 (3,1,1) = {"
 V
 V
-V
+X
 V
 M
 V
 S
-V
+X
 V
 C
 "}
@@ -158,12 +168,12 @@ C
 (7,1,1) = {"
 C
 V
-P
+t
 V
 S
 V
 V
-V
+X
 V
 V
 "}
@@ -184,7 +194,7 @@ S
 C
 V
 V
-V
+X
 m
 V
 V
@@ -206,12 +216,12 @@ f
 (11,1,1) = {"
 I
 V
-V
+X
 V
 I
 V
 S
-P
+t
 V
 V
 "}
@@ -254,12 +264,12 @@ A
 (15,1,1) = {"
 V
 M
-V
+X
 V
 I
 V
 V
-P
+t
 V
 C
 "}

@@ -12,7 +12,7 @@
 	var/scream_delay = 50
 	var/last_scream = 0
 	/// List of traits to add/remove when someone gets this mutation.
-	var/static/list/mutation_traits = list(
+	var/list/mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
@@ -255,5 +255,18 @@
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
+
+/datum/mutation/human/hulk/wizardly
+	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
+	health_req = 0
+	instability = 0
+	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
+	/// List of traits to add/remove when someone gets this mutation.
+	mutation_traits = list(
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+	) // no chunk
 
 #undef HULK_TAILTHROW_STEPS

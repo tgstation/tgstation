@@ -1,13 +1,14 @@
 /obj/structure/cable/industrial
 	name = "industrial grade power cable"
 	cable_color = CABLE_COLOR_CYAN
+	color = CABLE_COLOR_CYAN
 	cable_tag = "industrial"
 
 /obj/structure/cable/industrial/deconstruct(disassembled = TRUE)
 	if(!do_after(usr, 2 SECONDS, src))
 		return
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
+		var/obj/item/stack/cable_coil/industrial/cable = new(drop_location(), 1)
 		cable.set_cable_color(cable_color)
 	qdel(src)
 

@@ -17,6 +17,7 @@
 /area/centcom/tdome/arena/actual)
 "bE" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
 /area/centcom/tdome/arena/actual)
 "dq" = (
@@ -153,6 +154,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 9
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "uz" = (
@@ -210,6 +212,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
 /area/centcom/tdome/arena/actual)
 "BT" = (
@@ -227,6 +230,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
 /area/centcom/tdome/arena/actual)
 "Ed" = (
@@ -254,6 +258,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 10
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "Hl" = (
@@ -289,6 +294,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 6
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "MZ" = (
@@ -356,6 +362,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/centcom/tdome/arena/actual)
 "VF" = (
@@ -401,6 +408,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
 /area/centcom/tdome/arena/actual)
 "YL" = (
