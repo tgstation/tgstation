@@ -78,4 +78,4 @@
 #define ENERGY_WEAPON_MAX_CHARGE 1000
 /// Macro to turn a number of laser shots into an energy cost, based on the above define
 /// e.g. LASER_SHOTS(12) means 12 shots
-#define LASER_SHOTS(X) ((ENERGY_WEAPON_MAX_CHARGE - (ENERGY_WEAPON_MAX_CHARGE % X)) / X) // I wish I could just use round, but it can't be used in datum members
+#define LASER_SHOTS(X) (((100 * ENERGY_WEAPON_MAX_CHARGE) - ((100 * ENERGY_WEAPON_MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
