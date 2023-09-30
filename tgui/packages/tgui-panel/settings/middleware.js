@@ -10,16 +10,43 @@ import { loadSettings, updateSettings, addHighlightSetting, removeHighlightSetti
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 
+let overrideRule = null;
+let overrideFontFamily = null;
+let overrideFontSize = null;
+
+const updateGlobalOverrideRule = () => {
+  let fontFamily = '';
+  let fontSize = '';
+
+  if (overrideFontFamily !== null) {
+    fontFamily = `font-family: ${overrideFontFamily} !important;`;
+  }
+
+  if (overrideFontSize !== null) {
+    fontSize = `font-size: ${overrideFontSize} !important;`;
+  }
+
+  const constructedRule = `body * :not(.Icon) {
+    ${fontFamily}
+    ${fontSize}
+  }`;
+
+  if (overrideRule === null) {
+    overrideRule = document.createElement('style');
+    document.querySelector('head').append(overrideRule);
+  }
+
+  // no other way to force a CSS refresh other than to update its innerText
+  overrideRule.innerText = constructedRule;
+};
+
 const setGlobalFontSize = (fontSize) => {
-  document.documentElement.style.setProperty('font-size', fontSize + 'px');
-  document.body.style.setProperty('font-size', fontSize + 'px');
+  overrideFontSize = fontSize ? `${fontSize}px` : null;
 };
 
 const setGlobalFontFamily = (fontFamily) => {
   if (fontFamily === FONTS_DISABLED) fontFamily = null;
-
-  document.documentElement.style.setProperty('font-family', fontFamily);
-  document.body.style.setProperty('font-family', fontFamily);
+  overrideFontFamily = fontFamily;
 };
 
 export const settingsMiddleware = (store) => {
@@ -48,8 +75,9 @@ export const settingsMiddleware = (store) => {
       next(action);
       const settings = selectSettings(store.getState());
       // Update global UI font size
-      setGlobalFontSize(settings.fontSize);
+      setGlobalFontSize(settings.freeFontSize ? settings.fontSize : null);
       setGlobalFontFamily(settings.fontFamily);
+      updateGlobalOverrideRule();
       // Save settings to the web storage
       storage.set('panel-settings', settings);
       return;

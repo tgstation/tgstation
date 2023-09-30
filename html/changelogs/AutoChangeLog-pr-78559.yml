@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - rscdel: "An easter egg plushie that was spawning where it shouldn't has been brought back home."
+  - rscadd: "The secure closet can now spawn live gibtonite, enjoy your free bomb."
