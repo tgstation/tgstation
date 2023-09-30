@@ -8628,6 +8628,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/mod,
+/obj/item/mod/module/longfall,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "dTv" = (
@@ -31049,6 +31050,10 @@
 /area/space)
 "nLN" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/mod/module/longfall{
+	pixel_y = 18;
+	pixel_x = -8
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
