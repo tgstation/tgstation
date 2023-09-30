@@ -245,10 +245,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
-	else
-		return
 
-	if(prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby)) && CONFIG_GET(flag/disallow_title_music))
+	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
 	if(!SSmedia_tracks.lobby_tracks.len || !media)
