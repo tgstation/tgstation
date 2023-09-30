@@ -69,11 +69,8 @@
 	var/list/loaded_turfs = list()
 	var/list/loaded_areas = list()
 
-	// list which matches a type to a list of things for that type
-	var/list/type_to_list = list(
-		/obj/structure/cable = list(),
-		/obj/machinery/atmospherics = list(),
-	)
+	var/list/obj/structure/cable/loaded_cables = list()
+	var/list/obj/machinery/atmospherics/loaded_atmospherics = list()
 
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
@@ -94,20 +91,17 @@
 			// atoms can actually be in the contents of two or more turfs based on its icon/bound size
 			// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
 			for(var/thing in (turf.get_all_contents() - turf))
-				// check for specific type handling
-				for(var/load_type in type_to_list)
-					if(!istype(thing, load_type))
-						continue
-					type_to_list[load_type] += thing
-					break
-
+				if(istype(thing, /obj/structure/cable))
+					loaded_cables += thing
+				else if(istype(thing, /obj/machinery/atmospherics))
+					loaded_atmospherics += thing
 				loaded_atom_movables |= thing
 
 	SSatoms.InitializeAtoms(loaded_areas)
 	SSatoms.InitializeAtoms(loaded_atom_movables)
 	SSatoms.InitializeAtoms(loaded_turfs)
-	SSmachines.setup_template_powernets(type_to_list[/obj/structure/cable])
-	SSair.setup_template_machinery(type_to_list[/obj/machinery/atmospherics])
+	SSmachines.setup_template_powernets(loaded_cables)
+	SSair.setup_template_machinery(loaded_atmospherics)
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
