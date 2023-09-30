@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - balance: "Head revolutionaries and heads of staff are no longer immediately considered disqualified when going AFK or disconnecting and are given a 2 minute grace period."
-  - admin: "Admins now get a log when a head revolutionary or head of staff disconnects or goes AFK during a revolution. They also get the same log 1 minute after to give them a chance to act on the information."

@@ -5,6 +5,7 @@
 /obj/machinery/quantum_server/proc/cool_off()
 	is_ready = TRUE
 	update_appearance()
+	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY)
 
 /// Attempts to connect to a quantum console
 /obj/machinery/quantum_server/proc/find_console()
