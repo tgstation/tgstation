@@ -312,7 +312,7 @@
 ///The player is no longer around to play the minigame, so we interrupt it.
 /datum/fishing_challenge/proc/on_user_logout(datum/source)
 	SIGNAL_HANDLER
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/win_anyway()
 	if(!completed)
