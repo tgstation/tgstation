@@ -207,19 +207,20 @@
 	lure_turf?.balloon_alert(user, message)
 
 /datum/fishing_challenge/proc/on_spot_gone(datum/source)
+	SIGNAL_HANDLER
 	send_alert("fishing spot gone!")
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/interrupt_challenge(datum/source, reason)
 	if(reason)
 		send_alert(reason)
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
 	// If fishing line breaks los / rod gets dropped / deleted
-	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(interrupt))
+	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
@@ -227,6 +228,12 @@
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
 	playsound(lure, 'sound/effects/splash.ogg', 100)
+
+/datum/fishing_challenge/proc/on_line_deleted(datum/source)
+	SIGNAL_HANDLER
+	fishing_line = null
+	send_alert(user.is_holding(used_rod) ? "line snapped" : "rod dropped")
+	interrupt()
 
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
@@ -241,12 +248,9 @@
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Challenge interrupted by something external
-/datum/fishing_challenge/proc/interrupt(datum/source, balloon_alert = TRUE)
-	SIGNAL_HANDLER
+/datum/fishing_challenge/proc/interrupt()
 	if(!completed)
 		experience_multiplier *= 0.5
-		if(balloon_alert)
-			send_alert(user.is_holding(used_rod) ? "line snapped" : "tool dropped")
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/on_attack_self(obj/item/source, mob/user)
@@ -278,7 +282,8 @@
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /datum/fishing_challenge/proc/start_baiting_phase()
 	deltimer(next_phase_timer)
@@ -307,7 +312,7 @@
 ///The player is no longer around to play the minigame, so we interrupt it.
 /datum/fishing_challenge/proc/on_user_logout(datum/source)
 	SIGNAL_HANDLER
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/win_anyway()
 	if(!completed)

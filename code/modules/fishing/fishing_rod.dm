@@ -30,13 +30,10 @@
 	var/obj/item/currently_hooked_item
 
 	/// Fishing line visual for the hooked item
-	var/datum/beam/hooked_item_fishing_line
+	var/datum/beam/fishing_line/fishing_line
 
 	/// Are we currently casting
 	var/casting = FALSE
-
-	/// List of fishing line beams
-	var/list/fishing_lines = list()
 
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
@@ -66,9 +63,7 @@
 	return NONE
 
 /obj/item/fishing_rod/Destroy(force)
-	. = ..()
-	//Remove any leftover fishing lines
-	QDEL_LIST(fishing_lines)
+	return ..()
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
@@ -140,7 +135,7 @@
 		// Should probably respect and used force move later
 		step_towards(currently_hooked_item, get_turf(src))
 		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
-			clear_hooked_item()
+			QDEL_NULL(fishing_line)
 
 /obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -159,30 +154,28 @@
 	var/mob/user = loc
 	if(!istype(user))
 		return
+	if(fishing_line)
+		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
-	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
-	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
-	RegisterSignal(fishing_line_beam, COMSIG_QDELETING, PROC_REF(clear_line))
-	fishing_lines += fishing_line_beam
-	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF(/datum/beam/, Start))
+	fishing_line = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
+	fishing_line.lefthand = user.get_held_index_of_item(src) % 2 == 1
+	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
+	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
+	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
 	user.update_held_items()
-	return fishing_line_beam
+	return fishing_line
 
 /obj/item/fishing_rod/proc/clear_line(datum/source)
 	SIGNAL_HANDLER
-	fishing_lines -= source
 	if(ismob(loc))
 		var/mob/user = loc
 		user.update_held_items()
+	fishing_line = null
+	currently_hooked_item = null
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
-	if(currently_hooked_item)
-		clear_hooked_item()
-	for(var/datum/beam/fishing_line in fishing_lines)
-		SEND_SIGNAL(fishing_line, COMSIG_FISHING_LINE_SNAPPED)
-	QDEL_LIST(fishing_lines)
+	QDEL_NULL(fishing_line)
 
 /// Hooks the item
 /obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
@@ -191,28 +184,20 @@
 	if(!can_be_hooked(target_atom))
 		return
 	currently_hooked_item = target_atom
-	hooked_item_fishing_line = create_fishing_line(target_atom)
-	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(clear_hooked_item))
+	create_fishing_line(target_atom)
 
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
 	// Could be made dependent on actual hook, ie magnet to hook metallic items
 	return isitem(target)
 
-/obj/item/fishing_rod/proc/clear_hooked_item()
-	SIGNAL_HANDLER
-
-	if(!QDELETED(hooked_item_fishing_line))
-		QDEL_NULL(hooked_item_fishing_line)
-	currently_hooked_item = null
-
 // Checks fishing line for interruptions and range
 /obj/item/fishing_rod/proc/check_los(datum/beam/source)
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!isturf(source.origin.loc) || !isturf(source.target.loc) || !CheckToolReach(src, source.target, cast_range))
-		SEND_SIGNAL(source, COMSIG_FISHING_LINE_SNAPPED) //Stepped out of range or los interrupted
+	if(!CheckToolReach(src, source.target, cast_range))
+		qdel(source)
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -300,7 +285,7 @@
 	reel_overlay.color = line_color
 	. += reel_overlay
 	/// if we don't have anything hooked show the dangling hook & line
-	if(isinhands && length(fishing_lines) == 0)
+	if(isinhands && !fishing_line)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay")
 		line_overlay.appearance_flags |= RESET_COLOR
 		line_overlay.color = line_color
@@ -507,8 +492,8 @@
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	update_appearance(UPDATE_OVERLAYS)
-	if(currently_hooked_item)
-		clear_hooked_item()
+	if(fishing_line)
+		QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/fishing_rod/telescopic/master
