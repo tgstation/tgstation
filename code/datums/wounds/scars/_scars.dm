@@ -61,7 +61,7 @@
 		return
 
 	required_limb_biostate = pregen_data.required_limb_biostate
-	check_any_biostates = pregen_data.check_for_any
+	check_any_biostates = pregen_data.require_any_biostate
 
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
@@ -81,7 +81,10 @@
 		qdel(src)
 		return
 
-	description = pick_list(W.get_scar_file(BP, add_to_scars), W.get_scar_keyword(BP, add_to_scars)) || "general disfigurement"
+	description = pick_list(scar_file, scar_keyword)
+	if (!description)
+		stack_trace("no valid description found for scar! file: [scar_file] keyword: [scar_keyword] wound: [W.type]")
+		description = "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
 	switch(W.severity)
@@ -103,7 +106,7 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD, char_slot, check_any_biostates = FALSE)
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD_UNJOINTED, char_slot, check_any_biostates = FALSE)
 	if(!BP.scarrable)
 		qdel(src)
 		return
@@ -178,7 +181,7 @@
 		if((human_victim.wear_mask && (human_victim.wear_mask.flags_inv & HIDEFACE)) || (human_victim.head && (human_victim.head.flags_inv & HIDEFACE)))
 			return FALSE
 	else if(limb.scars_covered_by_clothes)
-		var/num_covers = LAZYLEN(human_victim.clothingonpart(limb))
+		var/num_covers = LAZYLEN(human_victim.get_clothing_on_part(limb))
 		if(num_covers + get_dist(viewer, victim) >= visibility)
 			return FALSE
 

@@ -265,7 +265,7 @@
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -278,7 +278,7 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -408,7 +408,9 @@
 
 	var/still_bleeding = FALSE
 	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
-		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[bleeding_thing.type]
+
+		if(pregen_data.wounding_types_valid(list(WOUND_SLASH)) && bleeding_thing.severity > WOUND_SEVERITY_MODERATE && bleeding_thing.blood_flow > 0)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)

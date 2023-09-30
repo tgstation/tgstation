@@ -189,7 +189,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
+		if(human_user.physique == FEMALE)
 			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
 		else
 			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
@@ -531,6 +531,8 @@
 	key_third_person = "yawns"
 	message = "yawns."
 	message_mime = "acts out an exaggerated silent yawn."
+	message_robot = "symphathetically yawns."
+	message_AI = "symphathetically yawns."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	cooldown = 5 SECONDS
 

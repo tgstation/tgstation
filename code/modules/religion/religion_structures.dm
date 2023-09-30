@@ -61,7 +61,10 @@
 		. += list(span_notice("Chaplains: [chaplains]."))
 
 /obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
-	if(GLOB.religious_sect)
+	if(isnull(GLOB.religious_sect))
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+	else
 		sect_to_altar = GLOB.religious_sect
 		if(sect_to_altar.altar_icon)
 			icon = sect_to_altar.altar_icon

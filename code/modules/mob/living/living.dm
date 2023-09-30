@@ -479,7 +479,7 @@
 		return TRUE
 	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
 		return TRUE
-	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
 		return TRUE
 	return FALSE
 
@@ -1315,14 +1315,13 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || notransform || (GODMODE & status_flags))
+	if(stat == DEAD || (GODMODE & status_flags) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
-	notransform = TRUE
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), MAGIC_TRAIT)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT
@@ -1405,6 +1404,7 @@
 			var/picked_animal = pick(
 				/mob/living/basic/bat,
 				/mob/living/basic/bear,
+				/mob/living/basic/blob_minion/blobbernaut,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
@@ -1430,7 +1430,6 @@
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/hostile/retaliate/goat,

@@ -116,7 +116,8 @@
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE
 	unauthorized = FALSE
-	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
+	if(syphoning_credits > 0)
+		new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
 	syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)

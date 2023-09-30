@@ -1,3 +1,4 @@
+
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
 #define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
@@ -112,10 +113,13 @@
 	. = ..()
 	if(!.)
 		return
-	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
+	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
+	if (severity == EMP_HEAVY)
+		knockdown_time *= 2
+	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -154,10 +158,13 @@
 	. = ..()
 	if(!.)
 		return
-	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
+	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
+	if (severity == EMP_HEAVY)
+		knockdown_time *= 2
+	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -192,18 +199,29 @@
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
 
+	robotic_emp_paralyze_damage_percent_threshold = 0.6
+
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
 	if(!.)
 		return
-	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
-	if(severity == EMP_HEAVY)
-		owner.Stun(6 SECONDS)
-		owner.Shake(pixelshiftx = 5, pixelshifty = 2, duration = 4 SECONDS)
-		return
 
-	owner.Stun(3 SECONDS)
-	owner.Shake(pixelshiftx = 3, pixelshifty = 0, duration = 2.5 SECONDS)
+	var/stun_time = 0
+	var/shift_x = 3
+	var/shift_y = 0
+	var/shake_duration = AUGGED_CHEST_EMP_SHAKE_TIME
+
+	if(severity == EMP_HEAVY)
+		stun_time = AUGGED_CHEST_EMP_STUN_TIME
+
+		shift_x = 5
+		shift_y = 2
+
+	var/damage_percent_to_max = (get_damage() / max_damage)
+	if (stun_time && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
+		to_chat(owner, span_danger("Your [src]'s logic boards temporarily become unresponsive!"))
+		owner.Stun(stun_time)
+	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -322,9 +340,11 @@
 	. = ..()
 	if(!.)
 		return
-	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
+	to_chat(owner, span_danger("Your [src]'s optical transponders glitch out and malfunction!"))
 
-	var/glitch_duration = severity == EMP_HEAVY ? 15 SECONDS : 7.5 SECONDS
+	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
+	if (severity == EMP_HEAVY)
+		glitch_duration *= 2
 
 	owner.add_client_colour(/datum/client_colour/malfunction)
 
@@ -408,7 +428,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -419,7 +439,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -430,7 +450,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -441,7 +461,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 

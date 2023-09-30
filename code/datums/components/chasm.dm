@@ -29,6 +29,7 @@
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/effect/constructing_effect,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -157,7 +158,7 @@
 	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
 	if (isliving(dropped_thing))
 		var/mob/living/falling_mob = dropped_thing
-		falling_mob.notransform = TRUE
+		ADD_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
 		falling_mob.Paralyze(20 SECONDS)
 
 	var/oldtransform = dropped_thing.transform
@@ -198,7 +199,7 @@
 
 	else if(isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
-		fallen_mob.notransform = FALSE
+		REMOVE_TRAIT(fallen_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if (fallen_mob.stat != DEAD)
 			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
 			fallen_mob.death(TRUE)
@@ -235,13 +236,13 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if (isliving(arrived))
+	if(isliving(arrived))
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		GLOB.chasm_fallen_mobs += arrived
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if (isliving(gone))
+	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 		GLOB.chasm_fallen_mobs -= gone
 

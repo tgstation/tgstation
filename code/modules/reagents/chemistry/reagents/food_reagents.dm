@@ -268,8 +268,9 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
-	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 100 // Hyperglycaemic shock
+	metabolization_rate = 5 * REAGENTS_METABOLISM
+	creation_purity = 1 // impure base reagents are a big no-no
+	overdose_threshold = 120 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
@@ -281,11 +282,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
-	M.AdjustSleeping(600)
+	M.AdjustSleeping(20 SECONDS)
 	. = TRUE
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M, seconds_per_tick, times_fired)
-	M.AdjustSleeping(40 * REM * seconds_per_tick)
+	M.adjust_drowsiness_up_to((5 SECONDS * REM * seconds_per_tick), 60 SECONDS)
 	..()
 	. = TRUE
 
@@ -444,7 +445,7 @@
 			if(prob(10))
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
-				victim.vomit()
+				victim.vomit(VOMIT_CATEGORY_DEFAULT)
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
@@ -467,6 +468,40 @@
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
 	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/salt)
+
+/datum/reagent/consumable/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_salt(reac_volume, carbies)
+
+// Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals, and it might soak up the body's water as well!
+// A saltwater mixture would be best, but we're making improvised chems here, not real ones.
+/datum/wound/proc/on_salt(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume, initial_flow * 0.6) // 20u of a salt shacker * 0.1 = -1.6~ blood flow, but is always clamped to, at best, third blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	gauzed_clot_rate *= 0.65
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/slash/flesh/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.1 * reac_volume, initial_flow * 0.5) // 20u of a salt shacker * 0.1 = -2~ blood flow, but is always clamped to, at best, halve blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	clot_rate *= 0.75
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/burn/flesh/on_salt(reac_volume)
+	// Slightly sanitizes and disinfects, but also increases infestation rate (some bacteria are aided by salt), and decreases flesh healing (can damage the skin from moisture absorption)
+	sanitization += VALUE_PER(0.4, 30) * reac_volume
+	infestation -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
+	infestation_rate += VALUE_PER(0.12, 30) * reac_volume
+	flesh_healing -= max(VALUE_PER(5, 30) * reac_volume, 0)
+	to_chat(victim, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
+
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -606,8 +641,37 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 	default_container = /obj/item/reagent_containers/condiment/flour
+
+/datum/reagent/consumable/flour/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_flour(reac_volume, carbies)
+
+/datum/wound/proc/on_flour(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.015 * reac_volume) // 30u of a flour sack * 0.015 = -0.45~ blood flow, prettay good
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+
+/datum/wound/slash/flesh/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.04 * reac_volume) // 30u of a flour sack * 0.04 = -1.25~ blood flow, pretty good!
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+
+// Don't pour flour onto burn wounds, it increases infection risk! Very unwise. Backed up by REAL info from REAL professionals.
+// https://www.reuters.com/article/uk-factcheck-flour-burn-idUSKCN26F2N3
+/datum/wound/burn/flesh/on_flour(reac_volume)
+	to_chat(victim, span_notice("The flour seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 1)
+	infestation += 0.2
+	return
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -643,6 +707,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/rice
 
+/datum/reagent/consumable/rice_flour
+	name = "Rice Flour"
+	description = "Flour mixed with Rice"
+	reagent_state = SOLID
+	color = "#FFFFFF" // rgb: 0, 0, 0
+	taste_description = "chalky wheat with rice"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."
@@ -673,6 +745,37 @@
 	description = "A slippery solution."
 	color = "#DBCE95"
 	taste_description = "slime"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
+
+// Starch has similar absorbing properties to flour (Stronger here because it's rarer)
+/datum/reagent/consumable/corn_starch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_starch(reac_volume, carbies)
+
+/datum/wound/proc/on_starch(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.03 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/slash/flesh/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/burn/flesh/on_starch(reac_volume, mob/living/carbon/carbies)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 0.5)
+	infestation += 0.1
+	return
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
@@ -712,6 +815,7 @@
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
 		M.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

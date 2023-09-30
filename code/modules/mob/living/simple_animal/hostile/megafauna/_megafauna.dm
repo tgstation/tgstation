@@ -6,7 +6,7 @@
 	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	obj_damage = 400
 	light_range = 3
 	faction = list(FACTION_MINING, FACTION_BOSS)
@@ -70,7 +70,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
-	if(health > 0)
+	if(gibbed) // in case they've been force dusted
+		return ..()
+
+	if(health > 0) // prevents instakills
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
@@ -95,8 +98,8 @@
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
-	else
-		..()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/singularity_act()
 	set_health(0)
@@ -105,8 +108,11 @@
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-	else
-		..()
+
+	crusher_loot.Cut()
+	loot.Cut()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	if(recovery_time >= world.time)
@@ -127,7 +133,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L || L.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
-	celebrate_kill()
+	celebrate_kill(L)
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)

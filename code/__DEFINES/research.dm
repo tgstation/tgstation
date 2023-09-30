@@ -71,3 +71,17 @@
 #define SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER 0.01
 /// How much money is one point of gain worth.
 #define SCIPAPER_GAIN_TO_MONEY 125
+
+///Connects the 'server_var' to a valid research server on your Z level.
+///Used for machines in LateInitialize, to ensure that RND servers are loaded first.
+#define CONNECT_TO_RND_SERVER_ROUNDSTART(server_var, holder) do { \
+	var/list/found_servers = SSresearch.get_available_servers(get_turf(holder)); \
+	var/obj/machinery/rnd/server/selected_server = length(found_servers) ? found_servers[1] : null; \
+	if (selected_server) { \
+		server_var = selected_server.stored_research; \
+	}; \
+	else { \
+		var/datum/techweb/station_fallback_web = locate(/datum/techweb/science) in SSresearch.techwebs; \
+		server_var = station_fallback_web; \
+	}; \
+} while (FALSE)

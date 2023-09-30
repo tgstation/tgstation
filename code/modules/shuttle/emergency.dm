@@ -339,15 +339,9 @@
 
 /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null)
 	if(!isnum(set_coefficient))
-		var/security_num = SSsecurity_level.get_current_level_as_number()
-		switch(security_num)
-			if(SEC_LEVEL_GREEN)
-				set_coefficient = 2
-			if(SEC_LEVEL_BLUE)
-				set_coefficient = 1
-			else
-				set_coefficient = 0.5
-	var/call_time = SSshuttle.emergency_call_time * set_coefficient * engine_coeff
+		set_coefficient = SSsecurity_level.current_security_level.shuttle_call_time_mod
+	alert_coeff = set_coefficient
+	var/call_time = SSshuttle.emergency_call_time * alert_coeff * engine_coeff
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat

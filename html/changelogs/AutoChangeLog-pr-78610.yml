@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - bugfix: "Added warden to list of default required enemies for rulesets."

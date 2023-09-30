@@ -56,8 +56,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/blood_type
 	///The type of mutant race the player is if applicable (i.e. potato-man)
 	var/datum/species/species = new /datum/species/human
-	///first value is mutant color
-	var/list/features = list("FFF")
+	/// Assoc list of feature keys to their value
+	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
+	var/list/features = list("mcolor" = "#FFFFFF")
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
@@ -339,7 +340,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(DNA_LIZARD_MARKINGS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
 		if(DNA_TAIL_BLOCK)
-			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list.Find(features["tail_lizard"]), GLOB.tails_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_human.Find(features["tail_cat"]), GLOB.tails_list_human.len))
+		if(DNA_LIZARD_TAIL_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len))
 		if(DNA_SNOUT_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len))
 		if(DNA_HORNS_BLOCK)
@@ -424,22 +427,37 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(message)
 			to_chat(holder, message)
 
-//used to update dna UI, UE, and dna.real_name.
+/// Updates the UI, UE, and UF of the DNA according to the features, appearance, name, etc. of the DNA / holder.
 /datum/dna/proc/update_dna_identity()
 	unique_identity = generate_unique_identity()
 	unique_enzymes = generate_unique_enzymes()
 	unique_features = generate_unique_features()
 
-/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
+/**
+ * Sets up DNA codes and initializes some features.
+ *
+ * * newblood_type - Optional, the blood type to set the DNA to
+ * * create_mutation_blocks - If true, generate_dna_blocks is called, which is used to set up mutation blocks (what a mob can naturally mutate).
+ * * randomize_features - If true, all entries in the features list will be randomized.
+ */
+/datum/dna/proc/initialize_dna(newblood_type, create_mutation_blocks = TRUE, randomize_features = TRUE)
 	if(newblood_type)
 		blood_type = newblood_type
-	unique_enzymes = generate_unique_enzymes()
-	unique_identity = generate_unique_identity()
-	if(!skip_index) //I hate this
+	if(create_mutation_blocks) //I hate this
 		generate_dna_blocks()
-	features = random_features()
-	unique_features = generate_unique_features()
+	if(randomize_features)
+		var/static/list/all_species_protoypes
+		if(isnull(all_species_protoypes))
+			all_species_protoypes = list()
+			for(var/species_path in subtypesof(/datum/species))
+				all_species_protoypes += new species_path()
 
+		for(var/datum/species/random_species as anything in all_species_protoypes)
+			features |= random_species.randomize_features()
+
+		features["mcolor"] = "#[random_color()]"
+
+	update_dna_identity()
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
 
@@ -475,24 +493,29 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	if(QDELETED(src))
 		CRASH("You're trying to change your species post deletion, this is a recipe for madness")
-	if(mrace && has_dna())
-		var/datum/species/new_race
-		if(ispath(mrace))
-			new_race = new mrace
-		else if(istype(mrace))
-			new_race = mrace
-		else
-			return
-		death_sound = new_race.death_sound
+	if(isnull(mrace))
+		CRASH("set_species called without a species to set to")
+	if(!has_dna())
+		return
 
-		var/datum/species/old_species = dna.species
-		dna.species = new_race
+	var/datum/species/new_race
+	if(ispath(mrace))
+		new_race = new mrace
+	else if(istype(mrace))
+		new_race = mrace
+	else
+		CRASH("set_species called with an invalid mrace [mrace]")
 
-		if (old_species.properly_gained)
-			old_species.on_species_loss(src, new_race, pref_load)
+	death_sound = new_race.death_sound
 
-		dna.species.on_species_gain(src, old_species, pref_load)
-		log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
+	var/datum/species/old_species = dna.species
+	dna.species = new_race
+
+	if (old_species.properly_gained)
+		old_species.on_species_loss(src, new_race, pref_load)
+
+	dna.species.on_species_gain(src, old_species, pref_load)
+	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -855,7 +878,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				var/list/elligible_organs = list()
 				for(var/obj/item/organ/internal/internal_organ in organs) //make sure we dont get an implant or cavity item
 					elligible_organs += internal_organ
-				vomit(20, TRUE)
+				vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 10)
 				if(elligible_organs.len)
 					var/obj/item/organ/O = pick(elligible_organs)
 					O.Remove(src)

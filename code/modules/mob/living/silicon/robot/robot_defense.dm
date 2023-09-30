@@ -439,11 +439,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
 
-/mob/living/silicon/on_hit(obj/projectile/P)
-	if(!has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
-		add_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), (P.throwforce / 10) SECONDS)
-	return ..()
-
-/mob/living/silicon/proc/clear_throw_slowdown()
-	src.remove_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
+/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
+		return
+	apply_status_effect(/datum/status_effect/borg_throw_slow)
