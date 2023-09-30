@@ -60,7 +60,7 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={1060} height={327} theme="dark">
+    <Window title="Tram Controller" width={778} height={327} theme="dark">
       <Window.Content>
         <Stack>
           <Stack.Item grow={4}>
@@ -141,18 +141,18 @@ export const TramController = (props, context) => {
                 color="yellow"
                 my={1}
                 lineHeight={2}
-                width="30%"
+                width="28%"
                 minHeight={2}
                 textAlign="center"
                 onClick={() => act('reset', {})}>
-                Reset/Enable Controller
+                Reset/Enable
               </Button>
               <Button
                 icon="square"
                 color="bad"
                 my={1}
                 lineHeight={2}
-                width="30%"
+                width="28%"
                 minHeight={2}
                 textAlign="center"
                 onClick={() => act('estop', {})}>
@@ -164,7 +164,7 @@ export const TramController = (props, context) => {
                 disabled={statusES || statusSF}
                 my={1}
                 lineHeight={2}
-                width="38%"
+                width="42%"
                 minHeight={2}
                 textAlign="center"
                 onClick={() =>
