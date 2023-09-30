@@ -343,7 +343,7 @@
 
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
-	desc = "It's a bucket."
+	desc = "It's a bucket. Much more fun than crummy pokemon creatures."
 	icon = 'icons/obj/service/janitor.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
