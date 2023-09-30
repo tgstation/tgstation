@@ -21,6 +21,32 @@
 	/// Are we currently being built
 	var/building = FALSE
 
+/// Gets a list of turfs reachable by this path_map from the distance first to the distance second, both inclusive
+/// first > second or first < second are both respected, and the return order will reflect the arg order
+/// We return a list of turf -> distance, or null if we error
+/datum/path_map/proc/turfs_in_range(first, second)
+	var/list/hand_back = list()
+	var/list/distances = src.distances
+	var/smaller = min(first, second)
+	var/larger = max(first, second)
+	var/largest_dist = distances[length(distances)]
+	if(smaller < 0 || larger < 0 || largest_dist < larger || largest_dist < smaller)
+		return null
+	if(first == smaller)
+		for(var/i in 1 to length(distances))
+			if(i > larger)
+				break
+			if(i >= smaller)
+				hand_back[next_closest[i]] = distances[i]
+	else
+		for(var/i in length(distances) to 1 step -1)
+			if(i < smaller)
+				break
+			if(i <= larger)
+				hand_back[next_closest[i]] = distances[i]
+
+	return hand_back
+
 /**
  * Takes a turf to path to, returns the shortest path to it at the time of this datum's creation
  *
