@@ -63,13 +63,13 @@
 		return
 
 	target.rust_heretic_act()
+
+/datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+	SIGNAL_HANDLER
 	for(var/dir in GLOB.cardinals)
 		var/turf/nearby_turf = get_step(target, dir)
 		if(istype(nearby_turf))
 			nearby_turf.rust_heretic_act()
-/datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
-	SIGNAL_HANDLER
-
 	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
 	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
 	if(istype(target, /obj/machinery/door/airlock))
