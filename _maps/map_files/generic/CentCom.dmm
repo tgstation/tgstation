@@ -2207,7 +2207,8 @@
 /area/centcom/tdome/administration)
 "kh" = (
 /obj/machinery/telecomms/allinone/nuclear,
-/turf/open/indestructible/hierophant,
+/obj/structure/sign/poster/contraband/syndicate_pistol/directional/north,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/admin)
 "ki" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4320,7 +4321,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "tW" = (
-/turf/open/indestructible/hierophant/two,
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/admin)
 "ub" = (
 /obj/machinery/door/firedoor,
@@ -7192,10 +7194,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"Ie" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin)
 "If" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -7959,10 +7957,6 @@
 /obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
-"Nk" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin)
 "Nm" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -9535,7 +9529,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "Ux" = (
-/turf/open/indestructible/hierophant,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/admin)
 "Uz" = (
 /obj/effect/turf_decal/stripes/line{
@@ -49390,7 +49384,7 @@ aa
 aa
 aa
 aa
-Ie
+On
 tW
 Ux
 On
@@ -49647,9 +49641,9 @@ aa
 aa
 aa
 aa
-Nk
+On
 kh
-tW
+Ux
 On
 On
 Oc
