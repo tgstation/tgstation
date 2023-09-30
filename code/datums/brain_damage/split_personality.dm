@@ -248,7 +248,7 @@
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
-	var/duration_in_seconds = 120
+	var/duration_in_seconds = 180
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
