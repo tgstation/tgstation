@@ -1351,6 +1351,15 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
+/obj/item/circuitboard/machine/materials_market
+	name = "Galactic Materials Market"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/materials_market
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/card_reader = 1)
+
 //Misc
 /obj/item/circuitboard/machine/sheetifier
 	name = "Sheet-meister 2000"
