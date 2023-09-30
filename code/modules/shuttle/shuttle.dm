@@ -240,8 +240,7 @@
 			T.turf_flags |= NO_RUINS
 
 	if(SSshuttle.initialized)
-		ASYNC
-			SSshuttle.setup_shuttles(list(src))
+		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
