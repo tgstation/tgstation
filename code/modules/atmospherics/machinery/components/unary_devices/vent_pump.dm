@@ -241,7 +241,7 @@
 
 	var/current_integrity = get_integrity()
 	if(fan_overclocked)
-		current_integrity = update_integrity(current_integrity - fan_damage_rate)
+		take_damage(fan_damage_rate, sound_effect=FALSE)
 		if(current_integrity == 0)
 			on = FALSE
 			set_is_operational(FALSE)
