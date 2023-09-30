@@ -101,7 +101,10 @@
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
-		knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
+		if(initial(knowledge.route) == PATH_SIDE)
+			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points + side_path_points)
+		else
+			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
@@ -147,7 +150,7 @@
 
 			// If side path and has path points, buy!
 			var/coupon = FALSE
-			if((initial(researched_path.route) == PATH_SIDE) && (side_path_points > 0))
+			if((initial(researched_path.route) == PATH_SIDE) && side_path_points)
 				coupon = TRUE
 			// else try normal purchase
 			else if(initial(researched_path.cost) > knowledge_points)
