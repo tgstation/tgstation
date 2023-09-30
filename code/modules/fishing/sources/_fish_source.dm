@@ -9,29 +9,29 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * have access to, we got to make do.
  */
 GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
-		/mob/living/basic/carp = FISH_ICON_DEF,
-		/mob/living/basic/mining = FISH_ICON_HOSTILE,
-		/obj/effect/decal/remains = FISH_ICON_BONE,
-		/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
-		/obj/item/coin = FISH_ICON_COIN,
-		/obj/item/fish = FISH_ICON_DEF,
-		/obj/item/fish/armorfish = FISH_ICON_CRAB,
-		/obj/item/fish/boned = FISH_ICON_BONE,
-		/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
-		/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
-		/obj/item/fish/holo/crab = FISH_ICON_CRAB,
-		/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
-		/obj/item/fish/mastodon = FISH_ICON_BONE,
-		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
-		/obj/item/fish/slimefish = FISH_ICON_SLIME,
-		/obj/item/fish/sludgefish = FISH_ICON_SLIME,
-		/obj/item/fish/starfish = FISH_ICON_STAR,
-		/obj/item/storage/wallet = FISH_ICON_COIN,
-		/obj/item/stack/sheet/bone = FISH_ICON_BONE,
-		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
-		/obj/item/stack/ore = FISH_ICON_GEM,
-		/obj/structure/closet/crate = FISH_ICON_COIN,
-	)))
+	/mob/living/basic/carp = FISH_ICON_DEF,
+	/mob/living/basic/mining = FISH_ICON_HOSTILE,
+	/obj/effect/decal/remains = FISH_ICON_BONE,
+	/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
+	/obj/item/coin = FISH_ICON_COIN,
+	/obj/item/fish = FISH_ICON_DEF,
+	/obj/item/fish/armorfish = FISH_ICON_CRAB,
+	/obj/item/fish/boned = FISH_ICON_BONE,
+	/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
+	/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
+	/obj/item/fish/holo/crab = FISH_ICON_CRAB,
+	/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
+	/obj/item/fish/mastodon = FISH_ICON_BONE,
+	/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
+	/obj/item/fish/slimefish = FISH_ICON_SLIME,
+	/obj/item/fish/sludgefish = FISH_ICON_SLIME,
+	/obj/item/fish/starfish = FISH_ICON_STAR,
+	/obj/item/storage/wallet = FISH_ICON_COIN,
+	/obj/item/stack/sheet/bone = FISH_ICON_BONE,
+	/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
+	/obj/item/stack/ore = FISH_ICON_GEM,
+	/obj/structure/closet/crate = FISH_ICON_COIN,
+)))
 
 /**
  * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
@@ -169,21 +169,24 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 			fish_table -= reward_path
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
-	if(!reward) //baloon alert instead
+	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman,pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else // for fishing things like corpses, move them to the turf of the fisherman
+		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot, get_turf(fisherman))
+		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(fisherman, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
 	var/atom/movable/reward = new reward_path(get_turf(fisherman))

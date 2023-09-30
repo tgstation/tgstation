@@ -78,8 +78,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(sizzle)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
-	if(process_effect)
-		QDEL_NULL(process_effect)
+	process_effect = null
 	return ..()
 
 /datum/component/acid/RegisterWithParent()
