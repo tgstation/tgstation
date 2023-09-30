@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "DJ station properly shows its cooldown time"
