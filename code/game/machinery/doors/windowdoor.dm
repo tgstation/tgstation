@@ -136,13 +136,8 @@
 			hitbox_up_directions |= EAST
 
 	// Needed because render targets seem to shift larger then 32x32 icons down constantly. No idea why
-	pixel_z = 16
 	pixel_y = 0
-	// "Up" windows are visually shifted upwards 26 pixels
-	// Lets match that physically
-	if(dir & hitbox_up_directions)
-		pixel_y = 26
-		pixel_z -= 26
+	pixel_z = 16
 
 	if(old_hitbox_directions == hitbox_up_directions)
 		return
