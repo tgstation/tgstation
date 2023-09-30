@@ -310,7 +310,12 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if((feeder.istate & ISTATE_HARM))
+	var/obj/item/food/foodstuff
+
+	if(istype(owner, /obj/item/food))
+		foodstuff = owner
+
+	if((feeder.istate & ISTATE_HARM) && !(foodstuff?.force_feed_on_aggression)) //monkestation edit - add loafing
 		return
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose

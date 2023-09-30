@@ -3,9 +3,10 @@
 	desc = "A barely edible brick of nutrients, designed as a low-cost solution to malnourishment."
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loaf"
+	food_reagents = list(/datum/reagent/consumable/nutraslop = 10)
 	var/loaf_density = 1 //base loaf density
 	var/can_condense = TRUE //for special loaves, make false
-
+	force_feed_on_aggression = TRUE
 	//vars for high level loafs
 	var/atom/movable/warp_effect/warp
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER  //works similar to grav anomaly when hits critical
