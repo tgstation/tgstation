@@ -113,7 +113,7 @@
 	balloon_alert(user, "repairing vent...")
 	if(do_after(user, time_to_repair, src))
 		balloon_alert(user, "vent repaired")
-		update_integrity(max_integrity)
+		repair_damage(max_integrity)
 		set_is_operational(TRUE)
 		update_appearance()
 
