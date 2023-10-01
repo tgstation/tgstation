@@ -18961,7 +18961,6 @@
 	name = "Test Chamber Blast Door"
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/door/window/left/directional/south{
 	dir = 4;
