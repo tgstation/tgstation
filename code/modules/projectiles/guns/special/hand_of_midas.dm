@@ -21,11 +21,11 @@
 	can_hold_up = FALSE
 
 	/// How much gold reagent we have in reserves. Affects the length of the Midas Blight debuff.
-	var/gold_reagent = 1 SECONDS
+	var/gold_reagent = 2.5 SECONDS
 
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
-	. += span_notice("Your next shot will inflict [min(30 SECONDS, round(gold_reagent, 0.2)) / 10] seconds of Midas Blight.")
+	. += span_notice("Your next shot will inflict [gold_time_convert()] second[gold_time_convert() == 1 ? "" : "s"] of Midas Blight.")
 	. += span_notice("Right-Click on enemies to drain gold from their bloodstreams to reload [src].")
 	. += span_notice("[src] can be reloaded using gold coins in a pinch.")
 
@@ -69,9 +69,13 @@
 /// Handles recharging & inserting gold amount
 /obj/item/gun/magic/midas_hand/proc/handle_gold_charges(user, gold_amount)
 	gold_reagent += gold_amount
-	balloon_alert(user, "siphoned [round(gold_amount, 0.2)]u gold")
+	balloon_alert(user, "[gold_time_convert()] second[gold_time_convert() == 1 ? "" : "s"]")
 	if(!charges)
 		instant_recharge()
+
+/// Converts our gold_reagent to time in seconds, for various ballons/examines
+/obj/item/gun/magic/midas_hand/proc/gold_time_convert()
+	return min(30 SECONDS, round(gold_reagent, 0.2)) / 10
 
 /obj/item/ammo_casing/magic/midas_round
 	projectile_type = /obj/projectile/magic/midas_round
@@ -103,6 +107,8 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/my_guy = target
+		if(isskeleton(my_guy)) // No cheap farming
+			return
 		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
 		return
 
@@ -119,4 +125,6 @@
 	var/newcolors = list(rgb(206, 164, 50), rgb(146, 146, 139), rgb(28,28,28), rgb(0,0,0))
 	victim.petrify(statue_timer = INFINITY, save_brain = FALSE, colorlist = newcolors)
 	playsound(victim, 'sound/effects/coin2.ogg', 75, TRUE)
+	charges = 0
+	gold_reagent = 0
 	return OXYLOSS

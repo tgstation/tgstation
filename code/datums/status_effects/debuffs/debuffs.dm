@@ -983,7 +983,9 @@
 
 /datum/status_effect/midas_blight/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	victim.adjustOxyLoss(amount = 0.1, updating_health = TRUE, forced = TRUE) // Blood transmutation probably isn't very good for you
+	// We're transmuting blood, time to lose some.
+	if(victim.blood_volume > BLOOD_VOLUME_SURVIVE + 50 && !HAS_TRAIT(victim, TRAIT_NOBLOOD))
+		victim.blood_volume -= 5 * seconds_between_ticks
 	// This has been hell to try and balance so that you'll actually get anything out of it
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
 	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
