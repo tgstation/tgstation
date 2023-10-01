@@ -1057,9 +1057,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "ann" = (
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9833,9 +9830,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/south,
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "csY" = (
@@ -16930,7 +16924,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -34509,9 +34502,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "jmm" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "jmr" = (
@@ -47713,15 +47703,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
-"mCp" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/textured,
-/area/station/cargo/storage)
 "mCt" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -75371,9 +75352,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tXR" = (
@@ -85662,10 +85640,6 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/openspace,
 /area/space)
-"wIr" = (
-/obj/structure/railing/corner,
-/turf/open/floor/iron/textured_large,
-/area/station/cargo/storage)
 "wIw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -87389,7 +87363,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/port/aft)
 "xeu" = (
-/obj/structure/railing,
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
@@ -120684,7 +120657,7 @@ tJG
 irS
 hMu
 hKN
-wIr
+tHL
 hLP
 hLP
 hLP
@@ -121199,7 +121172,7 @@ jdT
 tGE
 mar
 jmm
-mCp
+ujC
 dpH
 has
 kLn
