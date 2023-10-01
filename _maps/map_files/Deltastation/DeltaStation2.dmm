@@ -92376,7 +92376,6 @@
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/south,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -38

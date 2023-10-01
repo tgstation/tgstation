@@ -13521,7 +13521,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 4
 	},
-/obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -18567,7 +18566,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
 	},
-/obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -24107,7 +24105,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
 	},
-/obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/service)
 "gEK" = (
@@ -28858,7 +28855,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
 	},
-/obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
@@ -46357,7 +46353,6 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
 	},
-/obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -75601,7 +75596,6 @@
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning,
-/obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
