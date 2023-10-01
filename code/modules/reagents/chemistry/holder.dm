@@ -549,6 +549,7 @@
 	amount = FLOOR(min(amount, total_volume, R.maximum_volume - R.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
+	amount *= multiplier
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
@@ -562,7 +563,7 @@
 	if(!round_robin)
 		var/part = 1 / length(cached_reagents)
 
-		var/equal_contribution = amount * part * multiplier
+		var/equal_contribution = amount * part
 		var/final_contribution = 0
 		/**
 		 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
@@ -625,7 +626,7 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))
 				continue
-			var/transfer_amount = FLOOR(min(amount * multiplier, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
+			var/transfer_amount = FLOOR(min(amount, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
 			if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
@@ -741,11 +742,12 @@
 	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return
+	amount *= multiplier
 
 	var/list/cached_reagents = reagent_list
 
 	var/part = 1 / length(cached_reagents)
-	var/equal_contribution = amount * part * multiplier
+	var/equal_contribution = amount * part
 	var/final_contribution = 0
 	var/transfered_amount = 0
 	var/trans_data = null
@@ -758,7 +760,7 @@
 			var/transfer_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
 			if(preserve_data)
 				trans_data = reagent.data
-			if(!target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT))
+			if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT))
 				continue
 			transfered_amount += transfer_amount
 			if(transfered_amount >= amount)
