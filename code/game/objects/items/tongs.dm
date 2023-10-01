@@ -91,7 +91,9 @@
 	. = ..()
 	if (isnull(tonged))
 		return
-	var/mutable_appearance/held_food = mutable_appearance(tonged.icon, tonged.icon_state, layer, src, plane)
+	var/mutable_appearance/held_food = new /mutable_appearance(tonged.appearance)
+	held_food.layer = layer
+	held_food.plane = plane
 	held_food.transform = held_food.transform.Scale(0.7, 0.7)
 	held_food.pixel_x = 6
 	held_food.pixel_y = 6
