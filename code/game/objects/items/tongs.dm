@@ -51,31 +51,26 @@
 	var/turf/location = drop_location()
 	tonged.forceMove(location)
 	tonged.do_drop_animation(location)
-	forget_tonged()
-
-/// Call when we don't want to track our tonged thing any more
-/obj/item/kitchen/tongs/proc/forget_tonged()
-	UnregisterSignal(tonged, COMSIG_QDELETING)
-	tonged = null
-	update_appearance(UPDATE_ICON)
 
 /// Play a clacking sound and appear closed, then open again
 /obj/item/kitchen/tongs/proc/click_clack()
 	COOLDOWN_START(src, clack_cooldown, TONG_CLACK_CD)
-	playsound(get_turf(src), clack_sound, vol = 100, vary = FALSE)
+	playsound(src, clack_sound, vol = 100, vary = FALSE)
 	icon_state = "[base_icon_state]_closed"
 	addtimer(CALLBACK(src, PROC_REF(clack)), 0.5 SECONDS, TIMER_DELETE_ME)
 
 /// Plays a clacking sound and appear open
 /obj/item/kitchen/tongs/proc/clack()
-	playsound(get_turf(src), clack_sound, vol = 100, vary = FALSE)
+	playsound(src, clack_sound, vol = 100, vary = FALSE)
+	icon_state = base_icon_state
 	update_appearance(UPDATE_ICON)
 
-/obj/item/kitchen/tongs/Exit(atom/movable/leaving, direction)
+/obj/item/kitchen/tongs/Exited(atom/movable/leaving, direction)
 	. = ..()
 	if (leaving != tonged)
 		return
-	forget_tonged()
+	tonged = null
+	update_appearance(UPDATE_ICON)
 
 /obj/item/kitchen/tongs/pre_attack(obj/item/attacked, mob/living/user, params)
 	if (!isnull(tonged))
@@ -88,25 +83,16 @@
 	if (!IsEdible(attacked) || attacked.w_class > WEIGHT_CLASS_NORMAL || !isnull(tonged))
 		return ..()
 	tonged = attacked
-	RegisterSignal(tonged, COMSIG_QDELETING, PROC_REF(tonged_deleted))
+	attacked.do_pickup_animation(src)
 	attacked.forceMove(src)
 	update_appearance(UPDATE_ICON)
-
-/// Called if our tonged item is destroyed, like if you feed it to someone
-/obj/item/kitchen/tongs/proc/tonged_deleted()
-	SIGNAL_HANDLER
-	forget_tonged()
-
-/obj/item/kitchen/tongs/update_icon_state()
-	. = ..()
-	icon_state = base_icon_state
 
 /obj/item/kitchen/tongs/update_overlays()
 	. = ..()
 	if (isnull(tonged))
 		return
 	var/mutable_appearance/held_food = mutable_appearance(tonged.icon, tonged.icon_state, layer, src, plane)
-	held_food.transform = matrix().Scale(0.7, 0.7)
+	held_food.transform = held_food.transform.Scale(0.7, 0.7)
 	held_food.pixel_x = 6
 	held_food.pixel_y = 6
 	. += held_food
