@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Security officers can now download the crew manifest PDA app that they start with."
