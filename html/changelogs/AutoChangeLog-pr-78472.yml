@@ -1,8 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "If two cosmic heretics ascend in the same round, their star gazer survival will be linked to each individual heretic and not shared by just one of them."
-  - bugfix: "You can't click the Knock heretic portal to join as a mob while already signed up to become a mob."
-  - balance: "Cosmic heretics can't order the Star Gazer around while jaunting."
-  - balance: "The Knock Heretic portal cannot summon Flesh Worms, but can summon Fire Sharks."
-  - balance: "The Knock Heretic portal will disperse if its creator is killed."

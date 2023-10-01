@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - admin: "Mob abilities can be granted to arbitrary mobs via the VV menu in a similar way to spells."
