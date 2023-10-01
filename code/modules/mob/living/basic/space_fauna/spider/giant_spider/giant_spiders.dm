@@ -502,16 +502,11 @@
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
 		blood_spawn_chance = 5)
-	// It might be easier and more fitting to just replace this with Regenerator
-	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 45,\
-		heal_burn = 45,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
-		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant/hunter/flesh)),\
-		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
-		action_text = "%SOURCE% begins mending themselves...",\
-		complete_text = "%SOURCE%'s wounds mend together.",\
+	AddComponent(\
+		/datum/component/regenerator,\
+		regeneration_delay = 4 SECONDS,\
+		health_per_second = maxHealth / 6,\
+		outline_colour = COLOR_PINK,\
 	)
 
 	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
