@@ -21,11 +21,11 @@
 	can_hold_up = FALSE
 
 	/// How much gold reagent we have in reserves. Affects the length of the Midas Blight debuff.
-	var/gold_reagent = 10
+	var/gold_reagent = 1 SECONDS
 
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
-	. += span_notice("Your next shot will inflict [gold_reagent/10] seconds of Midas Blight.")
+	. += span_notice("Your next shot will inflict [min(30 SECONDS, round(gold_reagent, 0.1)) / 10] seconds of Midas Blight.")
 	. += span_notice("Right-Click on enemies to drain gold from their bloodstreams to reload [src].")
 	. += span_notice("[src] can be reloaded using gold coins in a pinch.")
 
