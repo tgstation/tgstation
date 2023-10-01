@@ -23,14 +23,6 @@
 		/datum/sprite_accessory/hair/mulder,
 	)
 
-/datum/outfit/cyber_police/pre_equip(mob/living/carbon/human/user, visualsOnly)
-	var/datum/sprite_accessory/hair/picked_hair = pick(approved_hairstyles)
-	var/picked_color = pick(approved_hair_colors)
-
-	if(visualsOnly)
-		picked_hair = /datum/sprite_accessory/hair/business
-		picked_color = "#4B3D28"
-
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/user, visualsOnly)
 	var/obj/item/clothing/under/officer_uniform = user.w_uniform
 	if(officer_uniform)
