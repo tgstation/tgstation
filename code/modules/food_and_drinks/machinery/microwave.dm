@@ -22,7 +22,7 @@
 	desc = "Cooks and boils stuff."
 	icon = 'icons/obj/machines/microwave.dmi'
 	base_icon_state = ""
-	icon_state = "map_icon"
+	icon_state = "mw_complete"
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -353,7 +353,7 @@
 				return
 			cell = item
 			balloon_alert(user, "inserted cell")
-			update_overlays()
+			update_appearance()
 		return TRUE
 
 	if(istype(item, /obj/item/reagent_containers/spray))
@@ -453,7 +453,7 @@
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null
-		update_overlays()
+		update_appearance()
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
@@ -823,7 +823,7 @@
 	. = ..()
 	if(mapload)
 		cell = new /obj/item/stock_parts/cell/upgraded/plus
-		update_overlays()
+	update_appearance()
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK

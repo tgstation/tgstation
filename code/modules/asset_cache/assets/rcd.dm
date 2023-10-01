@@ -14,6 +14,7 @@
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
 		'icons/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
 		'icons/obj/structures.dmi' = list("glass_table", "rack", "rwindow0", "reflector_base", "table", "window0", "girder"),
+		'icons/obj/machines/microwave.dmi' = list("engi_mw_complete"),
 	)
 
 	var/icon/icon
