@@ -808,6 +808,7 @@
 	desc = "For the hard-working tradesperson who's in the middle of nowhere and just wants to warm up their pastry-based savoury item purchased from an overpriced vending machine. Includes wireless induction charging!"
 	//We don't use area power, we always use the cell
 	base_icon_state = "engi_"
+	icon_state = "engi_mw_complete"
 	circuit = /obj/item/circuitboard/machine/microwave/engineering
 	use_power = NO_POWER_USE
 	light_color = LIGHT_COLOR_BABY_BLUE
