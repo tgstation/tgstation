@@ -324,7 +324,7 @@
 	speed = 5
 	player_speed_modifier = -4
 	sight = SEE_TURFS
-	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+	menu_description = "Atmos resistant with the ability to destroy walls and limbs alike."
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
