@@ -728,7 +728,7 @@
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
 		if(!istype(potential_item, /obj/item/modular_computer/pda))
-			balloon_alert(cooker, "PDA only!")
+			balloon_alert(cooker, "pda only!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 			eject()
 			return
