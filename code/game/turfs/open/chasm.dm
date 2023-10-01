@@ -14,7 +14,7 @@
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	apply_components()
 
 /// Lets people walk into chasms.
 /turf/open/chasm/CanAllowThrough(atom/movable/mover, border_dir)

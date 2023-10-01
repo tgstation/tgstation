@@ -9,10 +9,6 @@
 "o" = (
 /turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
-"p" = (
-/obj/item/kirbyplants/random/fullysynthetic,
-/turf/open/indestructible/hotelwood,
-/area/virtual_domain/safehouse)
 "s" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
@@ -26,12 +22,6 @@
 /obj/structure/table/wood,
 /obj/item/newspaper,
 /turf/open/indestructible/hotelwood,
-/area/virtual_domain/safehouse)
-"x" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/structure/sign/poster/random/directional/east,
@@ -80,7 +70,7 @@ i
 "}
 (3,1,1) = {"
 G
-p
+a
 o
 o
 T
@@ -97,7 +87,7 @@ G
 (5,1,1) = {"
 G
 a
-x
+o
 o
 T
 G

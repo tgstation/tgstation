@@ -11,7 +11,7 @@
 "g" = (
 /obj/structure/marker_beacon{
 	light_color = "#FFE8AA";
-	light_range = 20
+	light_outer_range = 20
 	},
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)

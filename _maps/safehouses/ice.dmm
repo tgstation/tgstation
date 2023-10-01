@@ -98,9 +98,6 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/snowed,
 /area/virtual_domain/safehouse)

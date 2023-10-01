@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		reebe_loaded = FALSE
 		CRASH("Failed to cache template for loading Reebe.")
 
-	if(!reebe_template.load(bottom_left_turfs[1]))
+	if(!reebe_template.load(reservation.bottom_left_turfs[1]))
 		reebe_loaded = FALSE
 		CRASH("Failed to load the Reebe template.")
 	return TRUE

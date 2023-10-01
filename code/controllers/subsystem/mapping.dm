@@ -988,7 +988,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
 		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
-		z_level_to_stack[level_to_update.z_value] = z_stack
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN

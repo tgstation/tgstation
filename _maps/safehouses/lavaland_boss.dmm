@@ -99,11 +99,7 @@
 	},
 /obj/structure/closet,
 /obj/item/gun/ballistic/rocketlauncher/unrestricted,
-/obj/item/ammo_casing/rocket,
-/obj/item/ammo_casing/rocket,
-/obj/item/ammo_casing/rocket,
 /obj/item/energy_katana,
-/obj/item/ammo_box/magazine/m7mm,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},

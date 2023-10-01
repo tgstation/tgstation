@@ -31,10 +31,6 @@
 		picked_hair = /datum/sprite_accessory/hair/business
 		picked_color = "#4B3D28"
 
-	user.set_facial_hairstyle("Shaved", update = FALSE)
-	user.set_haircolor(picked_color, update = FALSE)
-	user.set_hairstyle(initial(picked_hair.name))
-
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/user, visualsOnly)
 	var/obj/item/clothing/under/officer_uniform = user.w_uniform
 	if(officer_uniform)

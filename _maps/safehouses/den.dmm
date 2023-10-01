@@ -32,12 +32,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
-"l" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
-/area/virtual_domain/safehouse)
 "p" = (
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
@@ -50,7 +44,6 @@
 "u" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
-/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -201,7 +194,7 @@ i
 (5,1,1) = {"
 C
 M
-l
+M
 e
 I
 i
