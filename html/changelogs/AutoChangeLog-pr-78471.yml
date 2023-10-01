@@ -1,6 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "Seeds will no longer be removed from existence after receiving the \"You can't seem to add [seed type] to the seed extractor\" message"
-  - bugfix: "Some seeds that were previously not able to be added to the seed extractor may now be added (starthistle for example)"
-  - bugfix: "fixes replica pod seeds spawning humans in nullspace"

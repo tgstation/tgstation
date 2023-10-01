@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Left-clicking an empty surgery tray will now tell you exactly why it does nothing."

@@ -1,4 +1,0 @@
-author: "MidoriWroth"
-delete-after: True
-changes:
-  - bugfix: "Added complexity factors to foods that were missing them."

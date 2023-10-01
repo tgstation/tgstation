@@ -99,3 +99,9 @@ https://freesound.org/people/FunWithSound/sounds/456965/
 
 beeps_jingle.ogg is adapted from Eponn's "Achievement happy Beeps Jingle", which is public domain (CC 0):
 https://freesound.org/people/Eponn/sounds/619838/
+
+boing.ogg is adapted from reelworldstudio's "Cartoon Boing", which is public domain (CC 0):
+https://freesound.org/people/reelworldstudio/sounds/161122/
+
+arcade_jump.ogg is adapted from se2001's "8-Bit Jump 3", which is public domain (CC 0):
+hhttps://freesound.org/people/se2001/sounds/528568/
