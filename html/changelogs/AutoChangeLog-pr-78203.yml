@@ -1,0 +1,9 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Expanded the fishing portal generator. It now comes with several portal options that can be unlocked by performing fish scanning experiments, which also award a modest amount of techweb points."
+  - balance: "The fishing portal generator is now buildable and no longer orderable. The board can be printed from cargo, service and science lathes."
+  - balance: "Advanced fishing tech is no longer a BEPIS design. It now requires the base fish scanning experiment and 2000 points to be unlocked."
+  - rscadd: "The advanced fishing rod now comes with an incorporated experiscanner specific for fish scanning."
+  - rscadd: "Added a new skillchip that may change the icon of the \"fish\" shown in the minigame UI to less generic ones. Reaching master level in fishing also does that."
+  - qol: "The experiment handler UI no longer shows unselectable experiments."
