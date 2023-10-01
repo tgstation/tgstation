@@ -28,8 +28,11 @@ const updateGlobalOverrideRule = () => {
 
   const constructedRule = `body * :not(.Icon) {
     ${fontFamily}
+  }
+  body {
     ${fontSize}
-  }`;
+  }
+  `;
 
   if (overrideRule === null) {
     overrideRule = document.createElement('style');
