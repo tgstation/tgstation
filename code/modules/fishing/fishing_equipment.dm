@@ -11,7 +11,8 @@
 	desc = "Simple fishing line."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
-	var/fishing_line_traits = NONE
+	///A list of traits that this fishing line has, checked by fish traits and the minigame.
+	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = "#808080"
 
@@ -59,7 +60,8 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	var/fishing_hook_traits = NONE
+	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
+	var/list/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
 	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
@@ -175,7 +177,7 @@
 	name = "jawed hook"
 	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
 	icon_state = "jaws"
-	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_ENSNARE|FISHING_HOOK_KILL
+	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
 
 /obj/item/storage/toolbox/fishing

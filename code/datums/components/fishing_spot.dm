@@ -12,6 +12,7 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
+	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 
