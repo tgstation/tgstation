@@ -24,8 +24,11 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	/// If this departmental order console currently is on cooldown.
 	var/on_cooldown = FALSE
 
+	/// Our radio object we use to talk to our department.
 	var/obj/item/radio/radio
-	var/radio_key
+	/// The radio key typepath that will be instantiated and inserted into our radio.
+	var/obj/item/encryptionkey/radio_key_typepath
+	/// The radio channel we will speak into by default.
 	var/radio_channel
 
 /obj/machinery/computer/department_orders/Initialize(mapload, obj/item/circuitboard/board)
@@ -33,9 +36,9 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	// All maps should have ONLY ONE of each order console roundstart
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
-	if (radio_channel && radio_key)
+	if (radio_channel && radio_key_typepath)
 		radio = new(src)
-		radio.keyslot = new radio_key
+		radio.keyslot = new radio_key_typepath
 		radio.subspace_transmission = TRUE
 		radio.canhear_range = 0
 		radio.recalculateChannels()
@@ -211,7 +214,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_HOP
 	req_one_access = list(ACCESS_SERVICE)
 	dep_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
-	radio_key = /obj/item/encryptionkey/headset_service
+	radio_key_typepath = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 
 /obj/machinery/computer/department_orders/engineering
@@ -221,7 +224,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_CE
 	req_one_access = REGION_ACCESS_ENGINEERING
 	dep_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
-	radio_key = /obj/item/encryptionkey/headset_eng
+	radio_key_typepath = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 
 /obj/machinery/computer/department_orders/science
@@ -231,7 +234,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_RD
 	req_one_access = REGION_ACCESS_RESEARCH
 	dep_groups = list("Science", "Livestock", "Canisters & Materials")
-	radio_key = /obj/item/encryptionkey/headset_sci
+	radio_key_typepath = /obj/item/encryptionkey/headset_sci
 	radio_channel = RADIO_CHANNEL_SCIENCE
 
 /obj/machinery/computer/department_orders/security
@@ -245,7 +248,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_HOS
 	req_one_access = REGION_ACCESS_SECURITY
 	dep_groups = list("Security", "Armory")
-	radio_key = /obj/item/encryptionkey/headset_sec
+	radio_key_typepath = /obj/item/encryptionkey/headset_sec
 	radio_channel = RADIO_CHANNEL_SECURITY
 
 /obj/machinery/computer/department_orders/medical
@@ -260,5 +263,5 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_CMO
 	req_one_access = REGION_ACCESS_MEDBAY
 	dep_groups = list("Medical")
-	radio_key = /obj/item/encryptionkey/headset_med
+	radio_key_typepath = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
