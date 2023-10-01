@@ -222,7 +222,13 @@
 		beaker = null
 
 /obj/machinery/cryo_cell/update_icon_state()
-	icon_state = (state_open) ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
+//determines which iconstate to display depending on temperature
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
+	var/current_temperature = air1.temperature
+	if (current_temperature > 460)
+		icon_state = (state_open) ? "hotpod-open" : ((on && is_operational) ? "hotpod-on" : "hotpod-off")
+	else
+		icon_state = (state_open) ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
 	return ..()
 
 /obj/machinery/cryo_cell/update_icon()
@@ -235,10 +241,20 @@
 		. += "pod-panel"
 	if(state_open)
 		return
-	if(on && is_operational)
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+
+//determines which overlay to display depending on temperature
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
+	var/current_temperature = air1.temperature
+	if(current_temperature > 460)
+		if(on && is_operational)
+			. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "hotcover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+		else
+			. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "hotcover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 	else
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+		if(on && is_operational)
+			. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+		else
+			. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/cryo_cell/nap_violation(mob/violator)
 	open_machine()
@@ -266,6 +282,10 @@
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	..()
+	//updates appearance and icon state to insure the icon and the overlay reflects the temperature
+	update_appearance()
+	update_icon_state()
+
 	if(!occupant)
 		return
 
@@ -387,23 +407,44 @@
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 /obj/machinery/cryo_cell/open_machine(drop = FALSE, density_to_set = FALSE)
-	if(!state_open && !panel_open)
-		set_on(FALSE)
-	for(var/mob/M in contents) //only drop mobs
-		M.forceMove(get_turf(src))
-	set_occupant(null)
-	flick("pod-open-anim", src)
+//determines which door-open animation to play depending on temperature
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
+	var/current_temperature = air1.temperature
+	if(current_temperature > 460)
+		if(!state_open && !panel_open)
+			set_on(FALSE)
+		for(var/mob/M in contents) //only drop mobs
+			M.forceMove(get_turf(src))
+		set_occupant(null)
+		flick("hotpod-open-anim", src)
+	else
+		if(!state_open && !panel_open)
+			set_on(FALSE)
+		for(var/mob/M in contents) //only drop mobs
+			M.forceMove(get_turf(src))
+		set_occupant(null)
+		flick("pod-open-anim", src)
 	return ..()
 
 /obj/machinery/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
-	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		if(loc == user?.loc)
-			to_chat(user, span_warning("You can't close [src] on yourself!"))
-			return
-		flick("pod-close-anim", src)
-		..(user)
-		return occupant
+	//determines which door-close animation to play depending on temperature
+	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
+	var/current_temperature = air1.temperature
+	if(current_temperature > 460)
+		if((isnull(user) || istype(user)) && state_open && !panel_open)
+			if(loc == user?.loc)
+				to_chat(user, span_warning("You can't close [src] on yourself!"))
+				return
+			flick("hotpod-close-anim", src)
+	else
+		if((isnull(user) || istype(user)) && state_open && !panel_open)
+			if(loc == user?.loc)
+				to_chat(user, span_warning("You can't close [src] on yourself!"))
+				return
+			flick("pod-close-anim", src)
+	..(user)
+	return occupant
 
 /obj/machinery/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
