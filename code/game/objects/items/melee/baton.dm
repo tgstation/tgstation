@@ -140,7 +140,7 @@
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
-	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK) || isanimal_or_basicmob(target)) 
 		return BATON_DO_NORMAL_ATTACK
 
 	if(cooldown_check > world.time)
