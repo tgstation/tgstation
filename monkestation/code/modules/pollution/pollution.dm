@@ -240,5 +240,7 @@
 ///Atmos adjacency has been updated on this turf, see if it affects any of our pollutants
 /turf/proc/update_adjacent_pollutants()
 	for(var/turf/open/open_turf as anything in atmos_adjacent_turfs)
+		if(!isopenturf(open_turf))
+			continue
 		if(open_turf.pollution)
 			SET_ACTIVE_POLLUTION(open_turf.pollution)
