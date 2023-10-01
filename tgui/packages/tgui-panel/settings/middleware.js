@@ -16,23 +16,14 @@ let overrideFontSize = null;
 
 const updateGlobalOverrideRule = () => {
   let fontFamily = '';
-  let fontSize = '';
 
   if (overrideFontFamily !== null) {
     fontFamily = `font-family: ${overrideFontFamily} !important;`;
   }
 
-  if (overrideFontSize !== null) {
-    fontSize = `font-size: ${overrideFontSize} !important;`;
-  }
-
   const constructedRule = `body * :not(.Icon) {
     ${fontFamily}
-  }
-  body {
-    ${fontSize}
-  }
-  `;
+  }`;
 
   if (overrideRule === null) {
     overrideRule = document.createElement('style');
@@ -41,10 +32,12 @@ const updateGlobalOverrideRule = () => {
 
   // no other way to force a CSS refresh other than to update its innerText
   overrideRule.innerText = constructedRule;
+
+  document.body.style.setProperty('font-size', overrideFontSize);
 };
 
 const setGlobalFontSize = (fontSize) => {
-  overrideFontSize = fontSize ? `${fontSize}px` : null;
+  overrideFontSize = `${fontSize}px`;
 };
 
 const setGlobalFontFamily = (fontFamily) => {
@@ -78,7 +71,7 @@ export const settingsMiddleware = (store) => {
       next(action);
       const settings = selectSettings(store.getState());
       // Update global UI font size
-      setGlobalFontSize(settings.freeFontSize ? settings.fontSize : null);
+      setGlobalFontSize(settings.fontSize);
       setGlobalFontFamily(settings.fontFamily);
       updateGlobalOverrideRule();
       // Save settings to the web storage
