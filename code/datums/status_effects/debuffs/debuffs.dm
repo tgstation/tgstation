@@ -958,5 +958,74 @@
 /datum/movespeed_modifier/careful_driving
 	multiplicative_slowdown = 3
 
+/datum/status_effect/midas_blight
+	id = "midas_blight"
+	alert_type = /atom/movable/screen/alert/status_effect/midas_blight
+	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
+	processing_speed = STATUS_EFFECT_FAST_PROCESS
+	/// The visual overlay, helps tell both you and enemies how much gold is in your system
+	var/mutable_appearance/midas_overlay
+
+/datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
+	src.duration = duration
+	new_owner.visible_message("[src.duration]")
+	return ..()
+
+/atom/movable/screen/alert/status_effect/midas_blight
+	name = "Midas Blight"
+	desc = "Your blood is being turned to gold, slowing your movements!"
+	icon_state = "midas_blight"
+
+/datum/status_effect/midas_blight/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/soft, update = TRUE)
+	midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_1")
+	midas_overlay.blend_mode = BLEND_MULTIPLY
+	owner.add_overlay(midas_overlay)
+	return ..()
+
+/datum/status_effect/midas_blight/tick(seconds_between_ticks)
+	var/mob/living/carbon/human/victim = owner
+	victim.adjustOxyLoss(amount = 0.1, updating_health = TRUE, forced = TRUE) // Blood transmutation probably isn't very good for you
+	// This has been hell to try and balance so that you'll actually get anything out of it
+	// From what I can tell it only triggers once a second despite being STATUS_EFFECT_FAST_PROCESS, so it's built around that.
+	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = 15, no_react = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
+	switch(current_gold_amount)
+		if(0 to 50)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/soft, update = TRUE)
+			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_1")
+		if(50 to 100)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/medium, update = TRUE)
+			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_2")
+		if(100 to 200)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/hard, update = TRUE)
+			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_3")
+		if(200 to INFINITY)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/gold, update = TRUE)
+			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_3")
+	if(victim.stat == DEAD)
+		victim.remove_status_effect(/datum/status_effect/midas_blight) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
+
+/datum/status_effect/midas_blight/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	owner.cut_overlay(midas_overlay)
+
+/// Get slower the more gold is in your system. Should take about 10 seconds to get to max
+/datum/movespeed_modifier/midas_blight
+	id = MOVESPEED_ID_MIDAS_BLIGHT
+
+/datum/movespeed_modifier/midas_blight/soft
+	multiplicative_slowdown = 0.25
+
+/datum/movespeed_modifier/midas_blight/medium
+	multiplicative_slowdown = 0.75
+
+/datum/movespeed_modifier/midas_blight/hard
+	multiplicative_slowdown = 1.5
+
+/datum/movespeed_modifier/midas_blight/gold
+	multiplicative_slowdown = 2
+
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER

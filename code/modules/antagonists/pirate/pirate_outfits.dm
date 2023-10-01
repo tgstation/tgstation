@@ -35,6 +35,7 @@
 
 	id_trim = /datum/id_trim/pirate/captain
 	head = /obj/item/clothing/head/costume/pirate/armored
+	belt = /obj/item/gun/magic/midas_hand
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"

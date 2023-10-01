@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2
 #define WEAPON_HEAVY 3
-//Gun trigger guards
+//Gun trigger guards 
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
