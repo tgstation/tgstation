@@ -112,6 +112,13 @@
 	cooldown_time = 0 SECONDS
 	webbing_time = 4 SECONDS
 
+/datum/action/cooldown/mob_cooldown/lay_web/reflector
+	name = "Spin Web Reflector"
+	desc = "Spin a web to reflect missiles from the nest."
+	button_icon_state = "lay_web_reflector"
+	cooldown_time = 30 SECONDS
+	webbing_time = 4 SECONDS
+
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage/obstructed_by_other_web()
 	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
 

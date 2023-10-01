@@ -194,6 +194,21 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
+/obj/structure/spider/reflector
+	name = "Reflective silk screen"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 100
+	explosion_block = 5
+	density = TRUE
+	anchored = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+
+/obj/structure/spider/reflector/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
 /obj/structure/spider/effigy
 	name = "web effigy"
 	icon = 'icons/effects/effects.dmi'
@@ -206,17 +221,3 @@
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/temporary_atom, 1 MINUTES)
-
-/obj/structure/spider/reflector
-	name = "Reflective silk screen"
-	icon = 'icons/effects/effects.dmi'
-	desc = "Made up of an extremly reflective silk material looking at it hurts."
-	icon_state = "reflector"
-	max_integrity = 100
-	explosion_block = 5
-	density = TRUE
-	anchored = FALSE
-	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle, /obj/projectile/bullet)
-
-/obj/structure/spider/effigy/Initialize(mapload)
-	. = ..()

@@ -258,18 +258,23 @@
 	icon_state = "tank"
 	icon_living = "tank"
 	icon_dead = "tank_dead"
-	maxHealth = 100
-	health = 100
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 1)
-	melee_damage_lower = 20
-	melee_damage_upper = 25
-	obj_damage = 30
+	maxHealth = 250
+	health = 250
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 0.5)
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	obj_damage = 15
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
 
-/mob/living/basic/giant_spider/tank/Initialize(mapload)
+/mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
+	var/datum/action/cooldown/mob_cooldown/lay_web/reflector/web_reflector = new(src)
+	web_reflector.Grant(src)
+
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
 
@@ -299,12 +304,12 @@
 	limb_destroyer = 50
 	speed = 5
 	player_speed_modifier = -4
+	sight = SEE_TURFS
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_MESON_VISION, INNATE_TRAIT)
 
 	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
