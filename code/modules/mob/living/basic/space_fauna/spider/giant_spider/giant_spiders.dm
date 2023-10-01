@@ -288,27 +288,25 @@
 	health = 120
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	attack_verb_continuous = "butchers"
-	attack_verb_simple = "butcher"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
-	wound_bonus = -10
-	bare_wound_bonus = 100
+	wound_bonus = 25
+	bare_wound_bonus = 50
 	sharpness = SHARP_EDGED
-	obj_damage = 50
-	environment_smash = ENVIRONMENT_SMASH_WALLS
-	limb_destroyer = 10
-	var/tearing_wall = FALSE
+	obj_damage = 60
+	limb_destroyer = 50
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
-/mob/living/basic/giant_spider/breacher/Initialize(mapload)
+/mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()
-
 	ADD_TRAIT(src, TRAIT_MESON_VISION, INNATE_TRAIT)
+
+	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
 
 /**
@@ -342,16 +340,9 @@
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
-
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
-	passage_web.Grant(src)
-
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
-	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/spider/giant/tarantula/Destroy()
