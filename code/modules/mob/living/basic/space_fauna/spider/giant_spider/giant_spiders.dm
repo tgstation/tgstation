@@ -319,6 +319,7 @@
 	bare_wound_bonus = 50
 	sharpness = SHARP_EDGED
 	obj_damage = 60
+	web_speed = 0.25
 	limb_destroyer = 50
 	speed = 5
 	player_speed_modifier = -4

@@ -9,6 +9,25 @@
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()
+	var/turf/open/location = loc
+	if(!istype(location))
+		return
+
+	location.ClearWet()
+	if(location.air)
+		var/datum/gas_mixture/air = location.air
+		air.temperature = T20C
+		for(var/obj/effect/hotspot/fire in location)
+			qdel(fire)
+
+		var/list/gases = air.gases
+		for(var/gas_type in gases)
+			switch(gas_type)
+				if(/datum/gas/oxygen, /datum/gas/nitrogen)
+					continue
+				else
+					air.gases[/datum/gas/oxygen][MOLES] = 100
+
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
