@@ -963,13 +963,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/midas_blight
 	status_type = STATUS_EFFECT_REPLACE
 	remove_on_fullheal = TRUE
-	processing_speed = STATUS_EFFECT_FAST_PROCESS
+
 	/// The visual overlay, helps tell both you and enemies how much gold is in your system
 	var/mutable_appearance/midas_overlay
 
 /datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
+	// Duration is already input in SECONDS
 	src.duration = duration
-	new_owner.visible_message("[src.duration]")
 	return ..()
 
 /atom/movable/screen/alert/status_effect/midas_blight
@@ -1005,7 +1005,7 @@
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/gold, update = TRUE)
 			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_4")
 	if(victim.stat == DEAD)
-		victim.remove_status_effect(/datum/status_effect/midas_blight) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
+		qdel(src) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
 
 /datum/status_effect/midas_blight/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
