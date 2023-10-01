@@ -4,7 +4,7 @@
 	custom_materials = list(/datum/material/iron = 200)
 	desc = "A complex medical device that, when attached to an avatar's data stream, can detect the user of their host's health."
 	flags_1 = CONDUCT_1
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-b"
 	inhand_icon_state = "electronic"
 	item_flags = NOBLUDGEON
