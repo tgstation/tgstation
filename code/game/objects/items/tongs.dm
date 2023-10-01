@@ -78,13 +78,13 @@
 	forget_tonged()
 
 /obj/item/kitchen/tongs/pre_attack(obj/item/attacked, mob/living/user, params)
-	if (isliving(attacked))
-		if (isnull(tonged))
-			if (COOLDOWN_FINISHED(src, clack_cooldown))
-				click_clack()
-			return ..()
+	if (!isnull(tonged))
 		attacked.attackby(tonged, user)
 		return TRUE
+	if (isliving(attacked))
+		if (COOLDOWN_FINISHED(src, clack_cooldown))
+			click_clack()
+		return ..()
 	if (!IsEdible(attacked) || attacked.w_class > WEIGHT_CLASS_NORMAL || !isnull(tonged))
 		return ..()
 	tonged = attacked
