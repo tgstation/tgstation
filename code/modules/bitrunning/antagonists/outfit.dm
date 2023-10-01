@@ -24,9 +24,6 @@
 	)
 
 /datum/outfit/cyber_police/pre_equip(mob/living/carbon/human/user, visualsOnly)
-	var/datum/sprite_accessory/hair/picked_hair = pick(approved_hairstyles)
-	var/picked_color = pick(approved_hair_colors)
-
 	if(visualsOnly)
 		picked_hair = /datum/sprite_accessory/hair/business
 		picked_color = "#4B3D28"
