@@ -37,6 +37,9 @@
 /obj/item/gun/magic/midas_hand/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(victim == user)
+		balloon_alert(user, "can't siphon from self")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!victim.reagents)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!victim.reagents.has_reagent(/datum/reagent/gold, check_subtypes = TRUE))

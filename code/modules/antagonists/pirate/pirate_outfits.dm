@@ -35,6 +35,10 @@
 
 	id_trim = /datum/id_trim/pirate/captain
 	head = /obj/item/clothing/head/costume/pirate/armored
+
+/datum/outfit/pirate/captain/skeleton
+	name = "Space Pirate Captain (Skeleton)"
+
 	belt = /obj/item/gun/magic/midas_hand
 
 /datum/outfit/pirate/space
