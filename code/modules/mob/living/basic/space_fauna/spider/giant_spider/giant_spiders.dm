@@ -479,50 +479,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/weak
 
 /**
- * ### Flesh Spider
- *
- * A subtype of giant spider which only occurs from changelings.
- * Has the base stats of a hunter, but they can heal themselves and spin webs faster.
- * They also occasionally leave puddles of blood when they walk around. Flavorful!
- */
-/mob/living/basic/spider/giant/hunter/flesh
-	name = "flesh spider"
-	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
-	icon = 'icons/mob/simple/arachnoid.dmi'
-	icon_state = "flesh"
-	icon_living = "flesh"
-	icon_dead = "flesh_dead"
-	web_speed = 0.7
-	maxHealth = 90
-	health = 90
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast."
-
-/mob/living/basic/spider/giant/hunter/flesh/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/blood_walk, \
-		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
-		blood_spawn_chance = 5)
-	AddComponent(\
-		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
-		health_per_second = maxHealth / 6,\
-		outline_colour = COLOR_PINK,\
-	)
-
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
-
-	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
-
-/// Prevent you from healing other flesh spiders, or healing when on fire
-/mob/living/basic/spider/giant/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
-	if (on_fire)
-		balloon_alert(src, "on fire!")
-		return FALSE
-	return TRUE
-
-/**
  * ### Viper Spider (Wizard)
  *
  * A spider form for wizards. Has the viper spider's extreme speed and strong venom, with additional health and vent crawling abilities.

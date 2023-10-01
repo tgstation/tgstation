@@ -127,7 +127,8 @@
 
 /obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/spider/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.directive = directive
+	if (isspider(spawned_mob))
+		spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
 	var/datum/antagonist/spider/spider_antag = new granted_datum(directive)
@@ -151,10 +152,11 @@
 	icon_state = "eggs"
 	you_are_text = "You are a flesh spider."
 	flavour_text = "An abomination of nature set upon the station by changelings. Your only goal is to kill, terrorize, and survive."
+	faction = list()
 	directive = null
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/basic/spider/giant/hunter/flesh,
+		/mob/living/basic/flesh_spider,
 	)
 	flash_window = TRUE
 	granted_datum = /datum/antagonist/spider/flesh
