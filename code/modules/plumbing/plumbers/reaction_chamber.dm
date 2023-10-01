@@ -189,9 +189,9 @@
 		if(!buffer.total_volume)
 			return
 
-		//transfer buffer and handle reactions
-		var/ph_diff = reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)
-		if(!buffer.trans_to(reagents, round(max(ph_diff * seconds_per_tick, CHEMICAL_VOLUME_MINIMUM), CHEMICAL_QUANTISATION_LEVEL)))
+		//transfer buffer and handle reactions, not a proven math but looks logical
+		var/transfer_amount = FLOOR((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)) * seconds_per_tick, CHEMICAL_QUANTISATION_LEVEL)
+		if(transfer_amount <= 0 || !buffer.trans_to(reagents, transfer_amount))
 			return
 		reagents.handle_reactions()
 
