@@ -110,7 +110,7 @@
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	if (ruleset_forced != RULESET_NOT_FORCED)
-		return ruleset_force == RULESET_FORCE_ENABLED
+		return ruleset_forced == RULESET_FORCE_ENABLED
 
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)

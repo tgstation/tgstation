@@ -144,9 +144,15 @@
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/dynamic_ruleset_manager(mob/user)
-	for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
-		dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
+	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>"
+	for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+		var/rule_name = initial(rule.name)
+		if (initial(rule_name) == "")
+			continue
+		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
+		dat += "<b>[rule_name] ([initial(rule.ruletype)])</b> <A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force=[text_ref(rule)]'>-> [forced] <-</A><br>"
 
+	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"
