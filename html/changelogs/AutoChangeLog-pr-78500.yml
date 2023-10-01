@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "A new export has arrived in the imports section, the Galactic Materials Market! You can use this to buy and sell minerals for profit or cost, as well as stock your station when you don't have any miners."
-  - rscadd: "Insert sheets of minerals into the Galactic Materials Market to convert them into a stock block, allowing you to lock in your price for 5 minutes. Wait too long and it'll be subject to market value again!"
-  - rscadd: "Minerals can be bought on the market either using the station's cargo budget by cargo crew, or privately by everyone else."
-  - rscdel: "Any material stacks that can be bought and sold on the market before have been removed from the cargo catalog."
