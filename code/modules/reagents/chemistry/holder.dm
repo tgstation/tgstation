@@ -663,7 +663,7 @@
 	amount = 1,
 	preserve_data = 1
 )
-	if (QDELETED(target))
+	if (QDELETED(target) || !total_volume)
 		return
 
 	if(!IS_FINITE(amount))
@@ -676,7 +676,7 @@
 	var/datum/reagents/holder
 	if(istype(target, /datum/reagents))
 		holder = target
-	else if(target.reagents && total_volume > 0 && available_volume)
+	else if(target.reagents && available_volume)
 		holder = target.reagents
 	else
 		return
@@ -716,7 +716,7 @@
  * * no_react - if TRUE will not handle reactions
  */
 /datum/reagents/proc/copy_to(
-	obj/target,
+	atom/target,
 	amount = 1,
 	multiplier = 1,
 	preserve_data = TRUE,
@@ -744,22 +744,40 @@
 
 	var/list/cached_reagents = reagent_list
 
-	var/part = amount / total_volume
+	var/part = 1 / length(cached_reagents)
+	var/equal_contribution = amount * part * multiplier
+	var/final_contribution = 0
+	var/transfered_amount = 0
 	var/trans_data = null
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		var/copy_amount = reagent.volume * part
-		if(preserve_data)
-			trans_data = reagent.data
-		target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+	/**
+	 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
+	 * when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
+	 */
+	for(var/i in 1 to 2)
+		for(var/datum/reagent/reagent as anything in cached_reagents)
+			var/transfer_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
+			if(preserve_data)
+				trans_data = reagent.data
+			if(!target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT))
+				continue
+			transfered_amount += transfer_amount
+			if(transfered_amount >= amount)
+				break
+			if(i == 2)
+				final_contribution = amount - transfered_amount
 
-	if(!no_react)
-		// pass over previous ongoing reactions before handle_reactions is called
-		transfer_reactions(target_holder)
+		if(!no_react)
+			// pass over previous ongoing reactions before handle_reactions is called
+			transfer_reactions(target_holder)
 
-		target_holder.update_total()
-		target_holder.handle_reactions()
+			target_holder.update_total()
+			target_holder.handle_reactions()
 
-	return amount
+		final_contribution = amount - transfered_amount
+		if(final_contribution < CHEMICAL_QUANTISATION_LEVEL)
+			break
+
+	return transfered_amount
 
 /**
  * Multiplies the reagents inside this holder by a specific amount
