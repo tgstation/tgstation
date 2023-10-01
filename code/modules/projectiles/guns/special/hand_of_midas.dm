@@ -25,7 +25,7 @@
 
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] has [gold_reagent]u gold.")
+	. += span_notice("Your next shot will inflict [gold_reagent/10] seconds of Midas Blight.")
 	. += span_notice("Right-Click on enemies to drain gold from their bloodstreams to reload [src].")
 	. += span_notice("[src] can be reloaded using gold coins in a pinch.")
 
