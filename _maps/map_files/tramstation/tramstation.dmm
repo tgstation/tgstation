@@ -1818,7 +1818,6 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/machinery/light/neon_lining{
