@@ -1099,10 +1099,15 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
 "aFE" = (
-/obj/structure/closet/secure_closet/miner,
 /obj/machinery/camera/autoname/directional/north,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/miningoffice)
 "aFP" = (
 /obj/machinery/camera/directional/east{
@@ -2504,6 +2509,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "bou" = (
@@ -5451,6 +5457,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"cQV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "cRm" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -6960,6 +6972,10 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"dBZ" = (
+/obj/structure/closet/wardrobe/miner,
+/turf/open/floor/wood,
+/area/station/cargo/miningoffice)
 "dCe" = (
 /obj/structure/table/glass,
 /obj/structure/showcase/machinery/tv{
@@ -11548,10 +11564,10 @@
 /area/station/medical/medbay/lobby)
 "fUp" = (
 /obj/machinery/light/directional/north,
-/obj/effect/landmark/start/shaft_miner,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "fUy" = (
@@ -12040,6 +12056,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/miningoffice)
 "geH" = (
@@ -14071,6 +14088,10 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
+"hjU" = (
+/obj/machinery/quantum_server,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "hjV" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -15217,10 +15238,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hPo" = (
-/obj/structure/chair/wood{
-	dir = 8
+/obj/machinery/computer/quantum_console{
+	dir = 4
 	},
-/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "hPI" = (
@@ -20108,6 +20128,12 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"ksY" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/station/cargo/miningoffice)
 "ksZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -20817,7 +20843,7 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/customs)
 "kLz" = (
-/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "kLF" = (
@@ -23303,8 +23329,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "lYm" = (
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/computer/order_console/bitrunning,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "lYV" = (
@@ -24091,10 +24117,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "mwD" = (
-/obj/structure/closet/secure_closet/miner,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/netpod,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "mxp" = (
@@ -29006,6 +29032,14 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
+"paC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/engine,
+/area/station/cargo/miningoffice)
 "paJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33570,13 +33604,16 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "rqh" = (
-/obj/structure/closet/wardrobe/miner,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/miningoffice)
 "rqG" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -36762,6 +36799,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"tck" = (
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/engine,
+/area/station/cargo/miningoffice)
 "tct" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/ocean,
@@ -40116,10 +40157,10 @@
 /turf/open/floor/carpet/cyan,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "uPb" = (
-/obj/structure/closet/secure_closet/miner,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/netpod,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "uPg" = (
@@ -42590,16 +42631,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/main)
-"weC" = (
-/obj/structure/fans/tiny/forcefield{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	name = "Mining Dock Shutters";
-	id = "miningdock"
-	},
-/turf/open/floor/engine,
-/area/station/cargo/miningoffice)
 "weN" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -65637,7 +65668,7 @@ iWZ
 twN
 aFE
 rqh
-twN
+ksY
 iWL
 geD
 fXH
@@ -66152,7 +66183,7 @@ wXn
 mDR
 tYW
 rzP
-rzP
+cQV
 gPJ
 lOu
 itp
@@ -66671,7 +66702,7 @@ fMn
 jce
 fZG
 pEa
-sYn
+dBZ
 mIK
 jfI
 ngm
@@ -67439,7 +67470,7 @@ dGk
 nip
 qRY
 jpe
-itp
+hjU
 hPo
 pEa
 hOu
@@ -68203,10 +68234,10 @@ wdT
 koQ
 jkJ
 twN
-dGk
+tck
+paC
 hcx
-hcx
-dGk
+tck
 xBV
 xBV
 xBV
@@ -68460,10 +68491,10 @@ kND
 fQw
 qTc
 kND
-dGk
+tck
 hcx
 hcx
-dGk
+tck
 vSD
 iUK
 xUS
@@ -68720,7 +68751,7 @@ kND
 twN
 wgE
 wgE
-weC
+twN
 vSD
 tIm
 ceU

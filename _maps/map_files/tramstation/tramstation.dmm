@@ -1621,20 +1621,7 @@
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
 "aeA" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "QM #2"
-	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
@@ -1818,25 +1805,11 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "afk" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "QM #1"
-	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/landmark/bitrunning/station_reward_spawn,
@@ -4329,10 +4302,6 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/north,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -4349,10 +4318,6 @@
 	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -7574,15 +7539,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen                                Supply")
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "beF" = (
@@ -8288,9 +8244,6 @@
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 6
-	},
-/obj/structure/railing{
-	dir = 4
 	},
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
@@ -9530,11 +9483,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
-"bLq" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/spider/maintenance,
-/turf/open/floor/iron/smooth,
-/area/station/cargo/drone_bay)
 "bLA" = (
 /obj/structure/table/wood,
 /obj/item/folder{
@@ -11011,9 +10959,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 5
 	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
@@ -11980,10 +11925,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "cyO" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/elevator_control_panel{
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
@@ -13105,10 +13046,6 @@
 /area/station/maintenance/department/medical)
 "cSc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
@@ -13573,25 +13510,15 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/structure/railing{
 	dir = 4
 	},
 /obj/structure/industrial_lift/public,
@@ -15470,9 +15397,6 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
 "dHD" = (
@@ -16558,10 +16482,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -18080,8 +18000,7 @@
 "eyl" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/spawner/random/maintenance/two,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "eyy" = (
@@ -18645,17 +18564,10 @@
 	linked_elevator_id = "tram_sci_lift";
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 9
-	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -20426,11 +20338,6 @@
 /area/station/security/checkpoint/science)
 "foa" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/spider/giant,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
@@ -22368,9 +22275,6 @@
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 10
 	},
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
@@ -24188,9 +24092,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
 "gEE" = (
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
@@ -24199,13 +24100,6 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/public,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -25191,7 +25085,6 @@
 	dir = 10
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
 "gTw" = (
@@ -26448,9 +26341,6 @@
 "hrB" = (
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
-	},
-/obj/structure/railing{
-	dir = 8
 	},
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
@@ -27816,9 +27706,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "hQz" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
 	},
@@ -28965,18 +28852,8 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_cargo_lift"
 	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_cargo_lift"
-	},
-/obj/structure/railing{
-	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
@@ -28986,9 +28863,6 @@
 	linked_elevator_id = "tram_cargo_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
 	req_access = list("mining")
-	},
-/obj/effect/abstract/elevator_music_zone{
-	linked_elevator_id = "tram_cargo_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
@@ -29790,7 +29664,6 @@
 	dir = 10
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "ixq" = (
@@ -29813,7 +29686,6 @@
 "ixs" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "ixu" = (
@@ -31645,10 +31517,6 @@
 /area/station/security/prison/safe)
 "jcJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
@@ -31731,9 +31599,6 @@
 	dir = 9
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 9
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "jdZ" = (
@@ -33166,7 +33031,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "jAH" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 10
 	},
@@ -33792,7 +33656,6 @@
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "jMr" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/trimline/dark_red/warning,
 /obj/structure/industrial_lift/public,
 /turf/open/floor/plating/elevatorshaft,
@@ -34235,10 +34098,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/railing{
 	layer = 3.1;
 	dir = 4
@@ -35922,12 +35781,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
 /obj/item/radio/intercom/directional/north,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
@@ -36391,9 +36245,6 @@
 	dir = 6
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 6
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "kFJ" = (
@@ -39858,10 +39709,6 @@
 	},
 /obj/structure/sign/clock/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -46412,6 +46259,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "nPp" = (
@@ -46502,24 +46350,14 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
@@ -47843,7 +47681,6 @@
 	dir = 5
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "onc" = (
@@ -48906,20 +48743,8 @@
 /area/station/commons/toilet)
 "oHi" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	location = "QM #6"
-	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #6";
-	suffix = "#6"
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/light/small/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/effect/turf_decal/stripes,
@@ -48928,6 +48753,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "oHp" = (
@@ -51915,7 +51741,6 @@
 	dir = 6
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "pFw" = (
@@ -53564,11 +53389,6 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "qgM" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/spider/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -56753,20 +56573,8 @@
 /area/station/science/xenobiology)
 "rec" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "QM #3"
-	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #3";
-	suffix = "#3"
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/light/small/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/closed/wall,
 /area/station/bitrunning/den)
 "rem" = (
@@ -56810,7 +56618,6 @@
 	dir = 10
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "rfk" = (
@@ -58874,10 +58681,6 @@
 	},
 /obj/structure/sign/calendar/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -59324,14 +59127,6 @@
 /area/station/commons/fitness/recreation)
 "rXQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Cargo Storage Maintenance Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/netpod,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth,
@@ -60055,9 +59850,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "skh" = (
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -60532,10 +60324,6 @@
 "ssA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -60885,9 +60673,6 @@
 	},
 /area/station/service/chapel)
 "sxL" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
 	},
@@ -64158,16 +63943,11 @@
 "txd" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/smooth,
@@ -64976,12 +64756,6 @@
 "tLu" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/spawner/random/maintenance/three,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/computer/quantum_console{
 	dir = 1
 	},
@@ -67825,9 +67599,6 @@
 	dir = 5
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
 "uHb" = (
@@ -69060,7 +68831,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "uZy" = (
-/obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -70636,10 +70406,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "vwc" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/elevator_control_panel{
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
@@ -70719,9 +70485,6 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "vyo" = (
@@ -72244,9 +72007,6 @@
 	dir = 9
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "vUu" = (
@@ -73924,9 +73684,6 @@
 	dir = 6
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 6
-	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_perma_lift"
 	},
@@ -74696,9 +74453,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "wIt" = (
-/obj/structure/railing{
-	dir = 9
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
 	},
@@ -75846,18 +75600,12 @@
 	linked_elevator_id = "tram_dorm_lift";
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
-/obj/structure/railing,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning,
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
 	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
 	},
-/obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "xhd" = (
@@ -76610,10 +76358,6 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "xvv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/netpod,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
@@ -78182,9 +77926,6 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "xXL" = (
@@ -193155,7 +192896,7 @@ aac
 xxZ
 mhQ
 mhQ
-bLq
+mhQ
 mhQ
 xxZ
 xxZ
