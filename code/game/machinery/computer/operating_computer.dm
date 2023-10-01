@@ -31,6 +31,7 @@
 		allowed_experiments = list(/datum/experiment/dissection), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		experiment_signals = operating_signals, \
 	)
 
 /obj/machinery/computer/operating/Destroy()
