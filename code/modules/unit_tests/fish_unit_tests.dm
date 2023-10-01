@@ -28,10 +28,10 @@
 	var/obj/structure/aquarium/traits/aquarium = allocate(/obj/structure/aquarium/traits)
 	TEST_ASSERT(!aquarium.sterile.try_to_reproduce(), "The test aquarium's sterile fish managed to reproduce when it shouldn't have")
 	var/obj/item/fish/crossbreeder_jr = aquarium.crossbreeder.try_to_reproduce()
-	TEST_ASSERT(crossbreeder_jr, "The test aquarium's crossbreeder fish didn't manage to reproduce when it should have.")
+	TEST_ASSERT(crossbreeder_jr, "The test aquarium's crossbreeder fish didn't manage to reproduce when it should have")
 	TEST_ASSERT_EQUAL(crossbreeder_jr.type, aquarium.cloner.type, "The test aquarium's crossbreeder fish mated with the wrong type of fish")
 	var/obj/item/fish/cloner_jr = aquarium.cloner.try_to_reproduce()
-	TEST_ASSERT(cloner_jr, "The test aquarium's cloner fish didn't manage to reproduce when it should have.")
+	TEST_ASSERT(cloner_jr, "The test aquarium's cloner fish didn't manage to reproduce when it should have")
 	TEST_ASSERT_NOTEQUAL(cloner_jr.type, aquarium.sterile.type, "The test aquarium's cloner fish mated with the sterile fish")
 
 ///Checks that fish evolutions work correctly.
@@ -41,10 +41,23 @@
 	var/obj/structure/aquarium/evolution/aquarium = allocate(/obj/structure/aquarium/evolution)
 	var/obj/item/fish/evolve_jr = aquarium.evolve.try_to_reproduce()
 	TEST_ASSERT(evolve_jr, "The test aquarium's evolution fish didn't manage to reproduce when it should have")
-	TEST_ASSERT_NOTEQUAL(evolve_jr.type, /obj/item/fish/goldfish, "The test aquarium's evolution fish managed to pass the conditions of an impossible evolution.")
+	TEST_ASSERT_NOTEQUAL(evolve_jr.type, /obj/item/fish/goldfish, "The test aquarium's evolution fish managed to pass the conditions of an impossible evolution")
 	TEST_ASSERT_EQUAL(evolve_jr.type, /obj/item/fish/clownfish, "The test aquarium's evolution fish's offspring isn't of the expected type")
 	TEST_ASSERT(!(/datum/fish_trait/dummy in evolve_jr.fish_traits), "The test aquarium's evolution fish's offspring still has the old trait that ought to be removed by the evolution datum")
 	TEST_ASSERT(/datum/fish_trait/dummy/two in evolve_jr.fish_traits, "The test aquarium's evolution fish's offspring doesn't have the evolution trait")
+
+/datum/unit_test/fish_scanning
+
+/datum/unit_test/fish_scanning/Run()
+	var/scannable_fishes = 0
+	for(var/obj/item/fish/fish_prototype as anything in subtypesof(/obj/item/fish))
+		if(initial(fish_prototype.experisci_scannable))
+			scannable_fishes++
+	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
+		fish_scan = new fish_scan
+		var/scan_key = fish_scan.required_atoms[1]
+		if(fish_scan.required_atoms[scan_key] > scannable_fishes)
+			TEST_FAIL("[fish_scan.type] has requirements higher than the number of scannable fish types in the game: [scannable_fishes]")
 
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy

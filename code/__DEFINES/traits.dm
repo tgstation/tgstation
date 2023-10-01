@@ -319,6 +319,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
+///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
+#define TRAIT_REVEAL_FISH "reveal_fish"
 
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
@@ -909,6 +911,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+#define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -1082,6 +1085,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
+#define SKILL_TRAIT "skill"
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
