@@ -1003,7 +1003,7 @@
 			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_3")
 		if(200 to INFINITY)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/gold, update = TRUE)
-			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_3")
+			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_4")
 	if(victim.stat == DEAD)
 		victim.remove_status_effect(/datum/status_effect/midas_blight) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
 
