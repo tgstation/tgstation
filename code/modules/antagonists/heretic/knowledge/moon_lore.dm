@@ -69,6 +69,7 @@
 	name = "Smile of the moon"
 	desc = "Grants you Smile of the moon, a ranged spell muting, blinding and deafening the target for a short duartion."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
@@ -123,6 +124,7 @@
 			if the item is used on someone with low sanity they go berserk attacking everyone \
 			, if their sanity isnt low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
 		/datum/heretic_knowledge/reroll_targets,
@@ -189,6 +191,7 @@
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
+	adds_sidepath_points = 1
 	route = PATH_MOON
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
