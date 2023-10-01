@@ -86,6 +86,9 @@
 	/// A list, or null, of templates that the ruleset depends on to function correctly
 	var/list/ruleset_lazy_templates
 
+	/// Whether the ruleset has been force enabled or force disabled from the admin tools panel
+	var/ruleset_forced = RULESET_NOT_FORCED
+
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
@@ -106,6 +109,9 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
+	if (ruleset_forced != RULESET_NOT_FORCED)
+		return ruleset_force == RULESET_FORCE_ENABLED
+
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
@@ -175,7 +181,7 @@
 	candidates = list()
 	assigned = list()
 	antag_datum = null
-	
+
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!

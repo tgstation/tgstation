@@ -32,3 +32,9 @@
 #define ROUNDSTART_RULESET "Roundstart"
 #define LATEJOIN_RULESET "Latejoin"
 #define MIDROUND_RULESET "Midround"
+
+#define RULESET_NOT_FORCED 0
+/// Ruleset should run regardless of population and threat available
+#define RULESET_FORCE_ENABLED 1
+/// Ruleset should not run regardless of population and threat available
+#define RULESET_FORCE_DISABLED 2

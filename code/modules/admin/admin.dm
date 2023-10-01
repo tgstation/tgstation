@@ -143,6 +143,11 @@
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
+/datum/admins/proc/dynamic_ruleset_manager(mob/user)
+	for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
+		dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
+
+
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"
 	set name = "Create or modify area"
