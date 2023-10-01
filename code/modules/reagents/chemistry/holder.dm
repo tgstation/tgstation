@@ -407,7 +407,7 @@
 			if(reagent.type in reagent_type_list)
 				weighted_purity += reagent.volume * reagent.purity
 				reagent_amount += reagent.volume
-				remove_reagent(reagent.type, reagent.volume)
+				remove_reagent(reagent.type, reagent.volume * multiplier)
 		reagent_purity = weighted_purity / reagent_amount
 	else
 		var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
