@@ -40,6 +40,7 @@
 	name = "Space Pirate Captain (Skeleton)"
 
 	belt = /obj/item/gun/magic/midas_hand
+	l_pocket = /obj/item/coin/gold/doubloon
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
