@@ -360,6 +360,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"aii" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "ait" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -502,10 +506,10 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "akQ" = (
@@ -1992,6 +1996,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"aJf" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/station/engineering/engine_smes)
 "aJh" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -19721,8 +19731,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "gmW" = (
@@ -24372,6 +24382,16 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/station/security/processing)
+"hSY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/engine_smes)
 "hSZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -24702,6 +24722,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
+"iap" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/engineering/engine_smes)
 "iar" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -53988,6 +54012,7 @@
 	id = "Secure Storage";
 	name = "Secure Storage"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "rqH" = (
@@ -232583,7 +232608,7 @@ xYI
 mNY
 oXX
 mNY
-hpd
+aii
 hpd
 hpd
 wkw
@@ -232840,7 +232865,7 @@ csT
 mNY
 kCn
 mNY
-yaL
+iap
 rqF
 rqF
 yaL
@@ -233098,7 +233123,7 @@ mNY
 kCn
 mNY
 akL
-tvF
+aJf
 tvF
 izF
 gTK
@@ -233355,7 +233380,7 @@ mNY
 kCn
 mNY
 gmR
-tMD
+hSY
 rMG
 lui
 twt
