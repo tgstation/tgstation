@@ -25,7 +25,7 @@
 
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
-	. += span_notice("Your next shot will inflict [min(30 SECONDS, round(gold_reagent, 0.1)) / 10] seconds of Midas Blight.")
+	. += span_notice("Your next shot will inflict [min(30 SECONDS, round(gold_reagent, 0.2)) / 10] seconds of Midas Blight.")
 	. += span_notice("Right-Click on enemies to drain gold from their bloodstreams to reload [src].")
 	. += span_notice("[src] can be reloaded using gold coins in a pinch.")
 
@@ -100,6 +100,6 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/my_guy = target
-		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.1))) // 100u gives 10 seconds
+		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
 		return
 

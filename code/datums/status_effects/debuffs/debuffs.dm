@@ -962,10 +962,13 @@
 	id = "midas_blight"
 	alert_type = /atom/movable/screen/alert/status_effect/midas_blight
 	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.2 SECONDS
 	remove_on_fullheal = TRUE
 
 	/// The visual overlay, helps tell both you and enemies how much gold is in your system
 	var/mutable_appearance/midas_overlay
+	/// How fast the gold in a person's system scales.
+	var/goldscale = 30 // x3.  Gives ~ 15u for 1 second
 
 /datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
 	// Duration is already input in SECONDS
@@ -988,8 +991,7 @@
 	var/mob/living/carbon/human/victim = owner
 	victim.adjustOxyLoss(amount = 0.1, updating_health = TRUE, forced = TRUE) // Blood transmutation probably isn't very good for you
 	// This has been hell to try and balance so that you'll actually get anything out of it
-	// From what I can tell it only triggers once a second despite being STATUS_EFFECT_FAST_PROCESS, so it's built around that.
-	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = 15, no_react = TRUE)
+	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
 	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
 	switch(current_gold_amount)
 		if(0 to 50)
