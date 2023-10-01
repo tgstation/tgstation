@@ -562,9 +562,13 @@
 	if(!round_robin)
 		var/part = 1 / length(cached_reagents)
 
-		var/contribution = amount * part * multiplier
+		var/equal_contribution = amount * part * multiplier
 		var/final_contribution = 0
-		for(var/_ in 1 to 2)
+		/**
+		 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
+		 * when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
+		 */
+		for(var/i in 1 to 2)
 			//clear lists when/if we go to the 2nd iteration
 			r_to_send.Cut()
 			reagents_to_remove.Cut()
@@ -577,7 +581,7 @@
 					trans_data = copy_data(reagent)
 				if(reagent.intercept_reagents_transfer(R, cached_amount))
 					continue
-				var/transfer_amount = FLOOR(min(reagent.volume, final_contribution ? final_contribution : contribution), CHEMICAL_QUANTISATION_LEVEL)
+				var/transfer_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
 				if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 					continue
 				if(methods)
@@ -586,6 +590,8 @@
 				transfered_amount += transfer_amount
 				if(transfered_amount >= amount)
 					break
+				if(i == 2)
+					final_contribution = (amount - transfered_amount)
 
 			//expose target to reagent changes
 			R.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
