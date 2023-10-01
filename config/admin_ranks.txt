@@ -45,7 +45,7 @@ Exclude =
 Edit = 
 
 Name = HeadAdmin
-Include = @Admin +PERMISSIONS +DBRANKS
+Include = @Admin PERMISSIONS DBRANKS
 Exclude =
 Edit =
 
@@ -55,6 +55,6 @@ Exclude =
 Edit = EVERYTHING
 
 Name = Coder
-Include = +DEBUG +VAREDIT +SERVER +SPAWN +POLL
+Include = DEBUG VAREDIT SERVER SPAWN POLL
 Exclude =
 Edit =
