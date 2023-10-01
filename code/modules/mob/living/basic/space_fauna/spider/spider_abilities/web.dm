@@ -113,7 +113,7 @@
 	webbing_time = 4 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/reflector
-	name = "Spin Web Reflector"
+	name = "Spin reflective silk screen"
 	desc = "Spin a web to reflect missiles from the nest."
 	button_icon_state = "lay_web_reflector"
 	cooldown_time = 30 SECONDS
