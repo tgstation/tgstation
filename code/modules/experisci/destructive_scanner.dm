@@ -19,10 +19,17 @@
 // Late load to ensure the component initialization occurs after the machines are initialized
 /obj/machinery/destructive_scanner/LateInitialize()
 	. = ..()
+
+	var/static/list/destructive_signals = list(
+		COMSIG_MACHINERY_DESTRUCTIVE_SCAN = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_destructive_experiment),
+	)
+
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning),\
 		config_mode = EXPERIMENT_CONFIG_CLICK, \
-		start_experiment_callback = CALLBACK(src, PROC_REF(activate)))
+		start_experiment_callback = CALLBACK(src, PROC_REF(activate)), \
+		experiment_signals = destructive_signals, \
+	)
 
 ///Activates the machine; checks if it can actually scan, then starts.
 /obj/machinery/destructive_scanner/proc/activate()
