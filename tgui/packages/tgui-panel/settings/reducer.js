@@ -13,7 +13,6 @@ const defaultHighlightSetting = createDefaultHighlightSetting();
 const initialState = {
   version: 1,
   fontSize: 13,
-  freeFontSize: false,
   fontFamily: FONTS[0],
   lineHeight: 1.2,
   theme: 'light',
