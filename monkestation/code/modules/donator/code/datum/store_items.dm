@@ -26,7 +26,7 @@
 
 //spinnermaster
 /datum/store_item/suit/shark_costume
-	name = "Shark Costume"
+	name = "Blahja Costume"
 	item_path = /obj/item/clothing/suit/hooded/shark_costume
 	item_cost = 8000
 

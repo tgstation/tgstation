@@ -27,6 +27,10 @@
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
+	var/turf/source_turf = get_turf(owner)
+	if(istype(source_turf, /turf/open/floor/plating/ocean))
+		qdel(src)
+		return
 
 	if(isanimal(owner))
 		qdel(src)
@@ -155,6 +159,11 @@
 	var/last_icon_state
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_per_tick, times_fired)
+	var/turf/source_turf = get_turf(owner)
+	if(istype(source_turf, /turf/open/floor/plating/ocean))
+		qdel(src)
+		return TRUE
+
 	if(stacks <= 0)
 		qdel(src)
 		return TRUE
