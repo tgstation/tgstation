@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/strong,
-/area/template_noop)
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a

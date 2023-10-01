@@ -12,7 +12,7 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
-	flags_cover = HEADCOVERSEYES
+	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR
 	dog_fashion = /datum/dog_fashion/head/helmet
 

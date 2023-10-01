@@ -301,7 +301,7 @@
 /area/shuttle/pirate)
 "aW" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "be" = (

@@ -173,6 +173,16 @@
 	cost = 5
 	surplus = 50
 
+/datum/uplink_item/role_restricted/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery Program"
+	desc = "A bootleg copy of an collector item, this disk contains the procedure to perform advanced plastic surgery, allowing you to model someone's face and voice based on a picture taken by a camera on your offhand. \
+	All changes are superficial and does not change ones genetic makeup. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
+	cost = 1
+	surplus = 50
+
 /datum/uplink_item/role_restricted/springlock_module
 	name = "Heavily Modified Springlock MODsuit Module"
 	desc = "A module that spans the entire size of the MOD unit, sitting under the outer shell. \
@@ -325,3 +335,10 @@
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/evil_seedling
+	name = "Evil Seedling"
+	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
+	item = /obj/item/seeds/seedling/evil
+	cost = 8
+	restricted_roles = list(JOB_BOTANIST)

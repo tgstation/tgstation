@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
-	"snakes" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/snake)),
+	"snakes" = typecacheof(list(/mob/living/basic/snake)),
 	"the supernatural" = typecacheof(list(
 		/mob/dead/observer,
 		/mob/living/basic/bat,
@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/storage/pill_bottle,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
-		/obj/machinery/atmospherics/components/unary/cryo_cell,
+		/obj/machinery/cryo_cell,
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/door/airlock/medical,
 		/obj/machinery/sleeper,

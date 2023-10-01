@@ -13,11 +13,16 @@
 	if (!ability_key)
 		CRASH("You forgot to tell this mob where to find its ability")
 
-	var/mob/living/target = controller.blackboard[target_key]
+	if (!controller.blackboard_key_exists(target_key))
+		return
+
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
-	if (QDELETED(target) || QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)
 	if (finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/targeted_mob_ability/continue_planning
+	finish_planning = FALSE

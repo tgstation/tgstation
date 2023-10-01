@@ -135,7 +135,7 @@ SUBSYSTEM_DEF(radiation)
 	for (var/obj/item/bodypart/limb as anything in human.bodyparts)
 		var/protected = FALSE
 
-		for (var/obj/item/clothing as anything in human.clothingonpart(limb))
+		for (var/obj/item/clothing as anything in human.get_clothing_on_part(limb))
 			if (HAS_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING))
 				protected = TRUE
 				break
