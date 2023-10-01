@@ -29,8 +29,5 @@
 /// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
 #define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
 
-/// Sent when fishing line is snapped
-#define COMSIG_FISHING_LINE_SNAPPED "fishing_line_interrupted"
-
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
