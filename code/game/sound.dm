@@ -245,11 +245,20 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
-	else
+
+	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+	if(!SSmedia_tracks.lobby_tracks.len || !media)
+		return
+
+	if(SSmedia_tracks.first_lobby_play)
+		SSmedia_tracks.current_lobby_track = pick(SSmedia_tracks.lobby_tracks)
+		SSmedia_tracks.first_lobby_play = FALSE
+
+	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
+	media.push_music(T.url, world.time, vol * 0.01)
+	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

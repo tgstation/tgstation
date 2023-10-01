@@ -18,3 +18,14 @@
 	color = CABLE_HEX_COLOR_CYAN
 	merge_type = /obj/item/stack/cable_coil/industrial
 	target_type = /obj/structure/cable/industrial
+
+/obj/item/rwd
+	var/cabletype = /obj/item/stack/cable_coil
+	var/industrial = FALSE
+
+/obj/item/rwd/industrial
+	name = "Industrial Rapid Cable Layer"
+	desc = "Industrial varient of the Rapid Cable Layer"
+
+	cabletype = /obj/item/stack/cable_coil/industrial
+	industrial = TRUE
