@@ -83,7 +83,13 @@
 	name = "\improper Nanotrasen-brand microwave"
 	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box."
 	icon = 'icons/obj/machines/microwave.dmi'
-	icon_state = "map_icon"
+	icon_state = "mw_complete"
+
+/obj/structure/showcase/machinery/microwave_engineering
+	name = "\improper Nanotrasen Wave(tm) microwave"
+	desc = "Just when everyone thought Nanotrasen couldn't improve on their famous microwave, they added wireless induction charging for your PDA! Groundbreaking!"
+	icon = 'icons/obj/machines/microwave.dmi'
+	icon_state = "engi_mw_complete"
 
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
