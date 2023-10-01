@@ -22532,7 +22532,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "ftS" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
@@ -22540,7 +22539,6 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ftU" = (
