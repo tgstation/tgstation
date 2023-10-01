@@ -59511,7 +59511,6 @@
 /area/station/medical/virology)
 "pCW" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/rnd/bepis,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";

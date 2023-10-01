@@ -2362,7 +2362,6 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/aft)
 "blk" = (
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
