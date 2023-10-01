@@ -147,19 +147,21 @@
 		if(capacitor.tier >= 2)
 			vampire_charging_capable = TRUE
 			visible_message(span_notice("The [EXAMINE_HINT("Charge Ready")] light on \the [src] flickers to life."))
-			desc = "Cooks and boils stuff. [EXAMINE_HINT("This upgraded version features induction PDA charging!")]"
 			break
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
-	if(cell_powered && !isnull(cell))
-		. += span_notice("Ctrl-click [src] to remove the power cell.")
+	if(vampire_charging_capable)
+		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the Charge mode.")
+
+	if(cell_powered)
+		. += span_notice("This model is wireless, powered by portable cells. [isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell."]")
 
 	if(!operating)
 		if(!operating && vampire_charging_capable)
-			. += span_notice("Alt-click [src] to change default mode.")
+			. += span_notice("[EXAMINE_HINT("Alt-click")] to change default mode.")
 
-		. += span_notice("Right-click [src] to start [vampire_charging_enabled ? "charging" : "cooking"] cycle.")
+		. += span_notice("[EXAMINE_HINT("Right-click")] to start [vampire_charging_enabled ? "charging" : "cooking"] cycle.")
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src]'s contents and display!")
@@ -640,7 +642,7 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(cursed_chef && (metal_amount || prob(5)))
+	if(cursed_chef && (metal_amount || prob(5)))  // If we're unlucky and have metal, we're guaranteed to explode
 		spark()
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
@@ -648,7 +650,7 @@
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
+		if(prob(max(metal_amount / 2, 33)))
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()
@@ -805,13 +807,13 @@
 
 /obj/machinery/microwave/engineering
 	name = "wireless microwave oven"
-	desc = "For the hard-working tradesperson who's in the middle of nowhere and just wants to warm up their pastry-based savoury item purchased from an overpriced vending machine. Includes wireless induction charging!"
-	//We don't use area power, we always use the cell
+	desc = "For the hard-working tradesperson who's in the middle of nowhere and just wants to warm up their pastry-based savoury item from an overpriced vending machine."
 	base_icon_state = "engi_"
 	icon_state = "engi_mw_complete"
 	circuit = /obj/item/circuitboard/machine/microwave/engineering
-	use_power = NO_POWER_USE
 	light_color = LIGHT_COLOR_BABY_BLUE
+	// We don't use area power, we always use the cell
+	use_power = NO_POWER_USE
 	cell_powered = TRUE
 	vampire_charging_capable = TRUE
 	ingredient_shifts_x = list(
@@ -824,6 +826,11 @@
 	. = ..()
 	if(mapload)
 		cell = new /obj/item/stock_parts/cell/upgraded/plus
+	update_appearance()
+
+/obj/machinery/microwave/engineering/cell_included/Initialize(mapload)
+	. = ..()
+	cell = new /obj/item/stock_parts/cell/upgraded/plus
 	update_appearance()
 
 #undef MICROWAVE_NORMAL
