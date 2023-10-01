@@ -793,7 +793,6 @@
 /obj/machinery/microwave/hell
 	desc = "Cooks and boils stuff. This one appears to be a bit... off."
 	use_power = NO_POWER_USE
-	cell_powered = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 
