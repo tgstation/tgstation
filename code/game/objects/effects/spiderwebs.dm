@@ -199,8 +199,7 @@
 	icon = 'icons/effects/effects.dmi'
 	desc = "Made up of an extremly reflective silk material looking at it hurts."
 	icon_state = "reflector"
-	max_integrity = 200
-	explosion_block = 5
+	max_integrity = 30
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
