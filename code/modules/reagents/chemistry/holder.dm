@@ -110,8 +110,8 @@
 	//Split up the reagent if it's in a mob
 	var/has_split = FALSE
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
-		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
-		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
+		var/adjusted_vol = FLOOR(process_mob_reagent_purity(glob_reagent, amount, added_purity), CHEMICAL_QUANTISATION_LEVEL)
+		if(adjusted_vol <= 0) //If we're inverse or FALSE cancel addition
 			return TRUE
 			/* We return true here because of #63301
 			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
@@ -123,7 +123,7 @@
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
-		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
+		amount = FLOOR(maximum_volume - cached_total, CHEMICAL_QUANTISATION_LEVEL) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
 		if(amount <= 0)
 			return FALSE
 
@@ -144,7 +144,7 @@
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
 			iter_reagent.ph = ((iter_reagent.ph*(iter_reagent.volume))+(added_ph*amount))/(iter_reagent.volume+amount)
-			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
+			iter_reagent.volume += FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
@@ -289,7 +289,11 @@
  *
  * * amount - the volume of each reagent
  */
+
 /datum/reagents/proc/remove_all(amount = 1)
+	if(!total_volume)
+		return FALSE
+
 	if(!IS_FINITE(amount))
 		stack_trace("non finite amount passed to remove all reagents [amount]")
 		return FALSE
@@ -300,14 +304,30 @@
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
-	if(total_volume > 0)
-		var/part = amount / total_volume
+	var/removed_amount = 0
+	var/equal_contribution = amount * (1 / length(cached_reagents))
+	var/final_contribution = 0
+	/**
+	 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
+	 * when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
+	 */
+	for(var/i in 1 to 2)
 		for(var/datum/reagent/reagent as anything in cached_reagents)
-			remove_reagent(reagent.type, reagent.volume * part)
+			var/remove_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
+			remove_reagent(reagent.type, remove_amount)
+			removed_amount += remove_amount
+			if(removed_amount >= amount)
+				break
+			if(i == 2)
+				final_contribution = amount - removed_amount
 
-		//finish_reacting() //A just in case - update total is in here - should be unneeded, make sure to test this
-		handle_reactions()
-		return amount
+		final_contribution = amount - removed_amount
+		if(!total_volume || final_contribution < CHEMICAL_QUANTISATION_LEVEL)
+			break
+
+	//finish_reacting() //A just in case - update total is in here - should be unneeded, make sure to test this
+	handle_reactions()
+	return removed_amount
 
 /**
  * Removes all reagent of X type
@@ -634,8 +654,7 @@
 				reagent.on_transfer(target_atom, methods, transfer_amount)
 			remove_reagent(reagent.type, transfer_amount)
 			transfered_amount += transfer_amount
-			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
-			transfer_log[reagent.type] = reagent_qualities
+			transfer_log[reagent.type] = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 
 	if(transferred_by && target_atom)
 		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
