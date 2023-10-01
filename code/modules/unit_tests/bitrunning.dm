@@ -170,7 +170,7 @@
 	var/totalB = ROUND_UP(1 + server.multiplayer_bonus * 2)
 	TEST_ASSERT_EQUAL(totalA, totalB, "Should increase rewards with occupants")
 
-	for(var/datum/stock_part/servo/servo in server.component_parts)
+	for(var/datum/stock_part/manipulator/servo in server.component_parts)
 		server.component_parts -= servo
 		server.component_parts += new /datum/stock_part/servo/tier4
 
