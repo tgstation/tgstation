@@ -30,7 +30,6 @@
 "ct" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/head/costume/pirate/armored,
-/obj/item/clothing/suit/costume/pirate/captain/armored,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/powered)
@@ -67,19 +66,11 @@
 /obj/structure/bonfire/prelit,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"dQ" = (
-/obj/structure/flora/rock/style_4,
-/turf/open/water/beach,
-/area/virtual_domain/powered)
 "eb" = (
 /obj/structure/flora/bush/sparsegrass,
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
 "eD" = (
-/obj/structure/flora/coconuts{
-	pixel_x = 9;
-	pixel_y = -14
-	},
 /obj/structure/flora/tree/palm/style_2,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
@@ -279,9 +270,7 @@
 /area/virtual_domain/powered)
 "nz" = (
 /obj/effect/mob_spawn/corpse/human/pirate,
-/turf/open/misc/beach/coast{
-	dir = 8
-	},
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "nQ" = (
 /obj/machinery/loot_locator,
@@ -300,11 +289,6 @@
 /obj/machinery/smartfridge/drying_rack,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"oU" = (
-/turf/open/misc/beach/coast{
-	dir = 10
-	},
-/area/virtual_domain/powered)
 "pq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -313,10 +297,7 @@
 /obj/structure/headpike/bone{
 	pixel_y = 24
 	},
-/turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
-"pP" = (
-/turf/open/misc/beach/coast,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "pU" = (
 /obj/effect/mob_spawn/corpse/human/pirate,
@@ -420,11 +401,6 @@
 /obj/effect/mine/explosive/light,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"xc" = (
-/turf/open/misc/beach/coast{
-	dir = 4
-	},
-/area/virtual_domain/powered)
 "xg" = (
 /turf/template_noop,
 /area/template_noop)
@@ -439,10 +415,6 @@
 	},
 /obj/structure/fermenting_barrel/gunpowder{
 	pixel_x = 4
-	},
-/obj/item/stack/cannonball/four{
-	pixel_x = -9;
-	pixel_y = -10
 	},
 /obj/item/stack/cannonball{
 	pixel_x = 3;
@@ -530,9 +502,6 @@
 /obj/structure/flora/tree/palm,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"Ct" = (
-/turf/open/misc/beach/coast/corner,
-/area/virtual_domain/powered)
 "Dm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/wood,
@@ -619,11 +588,6 @@
 /mob/living/simple_animal/hostile/pirate/ranged,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
-"HY" = (
-/turf/open/misc/beach/coast{
-	dir = 6
-	},
-/area/virtual_domain/powered)
 "It" = (
 /obj/structure/flora/bush/sparsegrass,
 /obj/structure/flora/bush/lavendergrass,
@@ -659,7 +623,7 @@
 /area/virtual_domain/powered)
 "Jr" = (
 /obj/structure/headpike/bone,
-/turf/open/misc/beach/coast,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Jv" = (
 /obj/effect/turf_decal/siding/wood,
@@ -765,9 +729,6 @@
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "ON" = (
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -8
-	},
 /obj/structure/filingcabinet{
 	pixel_x = 11
 	},
@@ -775,7 +736,7 @@
 /area/virtual_domain/powered)
 "OP" = (
 /obj/structure/flora/bush/stalky,
-/turf/open/misc/beach/coast,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Pq" = (
 /obj/effect/turf_decal/siding/wood{
@@ -842,11 +803,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
-"Tp" = (
-/turf/open/misc/beach/coast/corner{
-	dir = 1
-	},
-/area/virtual_domain/powered)
 "Tt" = (
 /obj/structure/cannon{
 	dir = 1
@@ -868,9 +824,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/turf/open/misc/beach/coast{
-	dir = 6
-	},
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "TQ" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -958,13 +912,6 @@
 	dir = 10
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"Zk" = (
-/obj/structure/flora/coconuts{
-	pixel_x = 12
-	},
-/obj/structure/flora/tree/palm,
-/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "ZZ" = (
 /obj/structure/flora/grass/jungle,
@@ -1339,15 +1286,15 @@ yq
 yq
 Kl
 Kl
-Ct
-xc
-xc
-xc
-xc
-xc
-xc
-xc
-HY
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
+Kl
 VF
 VF
 VF
@@ -1470,8 +1417,8 @@ qj
 Kl
 NI
 xm
-Ct
-HY
+Kl
+Kl
 VF
 VF
 VF
@@ -1514,7 +1461,7 @@ Kl
 Kl
 lC
 kl
-pP
+Kl
 VF
 VF
 VF
@@ -1602,7 +1549,7 @@ Kl
 Kl
 by
 Hp
-pP
+Kl
 VF
 VF
 VF
@@ -1690,7 +1637,7 @@ IM
 Kl
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
@@ -1733,8 +1680,8 @@ gw
 jz
 UE
 Kl
-Zk
-pP
+Cc
+Kl
 VF
 VF
 VF
@@ -1778,7 +1725,7 @@ jz
 Vk
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
@@ -1822,7 +1769,7 @@ yw
 Vk
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
@@ -1866,7 +1813,7 @@ uw
 GG
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
@@ -1910,14 +1857,14 @@ Kl
 Kl
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
 VF
 VF
 VF
-dQ
+VF
 VF
 VF
 VF
@@ -1954,8 +1901,8 @@ Kl
 Kl
 Kl
 Kl
-Tp
-oU
+Kl
+Kl
 VF
 VF
 VF
@@ -1999,9 +1946,9 @@ Kl
 Kl
 Kl
 Kl
-Tp
+Kl
 nz
-oU
+Kl
 VF
 VF
 VF
@@ -2045,7 +1992,7 @@ Kl
 yi
 Kl
 Kl
-pP
+Kl
 VF
 VF
 VF
