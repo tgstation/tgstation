@@ -6,8 +6,8 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	cooldown_time = 20
-	melee_cooldown_time = 5
+	cooldown_time = 20 SECONDS
+	melee_cooldown_time = 5 SECONDS
 	shared_cooldown = NONE
 	click_to_activate = FALSE
 	///How long it takes for a broodmother to lay eggs.
