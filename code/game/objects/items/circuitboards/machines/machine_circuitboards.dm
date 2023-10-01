@@ -1258,10 +1258,8 @@
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/capacitor/tier2 = 1,
-		/obj/item/stock_parts/cell = 1,
 		/obj/item/stack/cable_coil = 4,
 		/obj/item/stack/sheet/glass = 2)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/upgraded/plus)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor
