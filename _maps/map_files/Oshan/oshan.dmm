@@ -3057,6 +3057,7 @@
 /area/station/commons/fitness/recreation)
 "bDv" = (
 /obj/effect/landmark/start/scientist,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bDw" = (
@@ -9292,6 +9293,10 @@
 /obj/machinery/vending/imported/yangyu,
 /turf/open/floor/iron/smooth,
 /area/station/commons/fitness/recreation)
+"eQz" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/science/xenobiology)
 "eQB" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
@@ -12651,6 +12656,7 @@
 /area/station/science/ordnance/office)
 "gCe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "gCo" = (
@@ -12917,6 +12923,7 @@
 "gKd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "gKx" = (
@@ -15741,7 +15748,8 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "medlobby"
+	id_tag = "medlobby";
+	cycle_id = "medbay_lobby"
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
@@ -18957,6 +18965,7 @@
 	name = "Maximum Security Test Chamber";
 	req_access = list("xenobiology")
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "jRX" = (
@@ -22128,6 +22137,7 @@
 "lvt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "lvw" = (
@@ -22795,7 +22805,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "medlobby"
+	id_tag = "medlobby";
+	cycle_id = "medbay_lobby"
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
@@ -24013,7 +24024,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "medlobby"
+	id_tag = "medlobby";
+	cycle_id = "medbay_lobby"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
@@ -24377,6 +24389,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "mCO" = (
@@ -35992,6 +36005,7 @@
 /area/station/maintenance/starboard/aft)
 "swq" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "sws" = (
@@ -41421,6 +41435,7 @@
 	dir = 1
 	},
 /obj/structure/closet/l3closet/scientist,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "vhM" = (
@@ -41547,6 +41562,15 @@
 	},
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
+"vkm" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Xenolab";
+	name = "Test Chamber Blast Door"
+	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "vkw" = (
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/west,
 /obj/machinery/light/directional/east,
@@ -42685,6 +42709,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vQy" = (
+/obj/structure/cable,
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
@@ -45320,7 +45345,8 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "medlobby"
+	id_tag = "medlobby";
+	cycle_id = "medbay_lobby"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/lobby)
@@ -45932,6 +45958,7 @@
 "xvk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "xvl" = (
@@ -100415,7 +100442,7 @@ gro
 dNu
 tvt
 iri
-iri
+eQz
 iri
 tvt
 aZB
@@ -100672,7 +100699,7 @@ ahl
 eRl
 wUP
 iri
-iri
+eQz
 iri
 atC
 gaz
@@ -101956,7 +101983,7 @@ aah
 aah
 pjg
 mtQ
-pjg
+vkm
 jRG
 pjg
 mtQ
