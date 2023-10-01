@@ -1,6 +1,7 @@
 /datum/element/rust_damage
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
+	
 /datum/element/rust_damage/Attach(datum/target)
 	. = ..()
 	if(!isturf(target))
