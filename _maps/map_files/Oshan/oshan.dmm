@@ -832,6 +832,7 @@
 /area/station/engineering/atmos)
 "avq" = (
 /obj/machinery/camera/directional/east,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/station/cargo/miningoffice)
 "avv" = (
@@ -2154,6 +2155,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "bgQ" = (
@@ -2631,7 +2633,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "btu" = (
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/wood/large,
@@ -8859,9 +8861,9 @@
 	},
 /area/station/science/lobby)
 "eGh" = (
-/obj/structure/tank_dispenser/oxygen,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/carpet/neon/simple/orange/nodots,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "eGI" = (
 /obj/machinery/rnd/production/protolathe/department/science,
 /obj/effect/turf_decal/siding/purple,
@@ -15979,7 +15981,7 @@
 "ipR" = (
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "iqc" = (
 /obj/structure/sign/poster/contraband/rebels_unite{
 	pixel_y = 36
@@ -17820,12 +17822,13 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "jpe" = (
-/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "jpm" = (
 /obj/machinery/duct/industrial/waste,
 /obj/structure/disposalpipe/segment{
@@ -20068,6 +20071,13 @@
 /obj/effect/base_turf_modifier/pit,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
+"ktm" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/cargo/miningoffice)
 "kto" = (
 /obj/structure/fans/tiny/forcefield,
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -21243,13 +21253,13 @@
 /area/station/commons/toilet/restrooms)
 "kUY" = (
 /obj/machinery/camera/autoname/directional/north,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/miningoffice)
 "kVq" = (
@@ -29739,7 +29749,7 @@
 	},
 /obj/machinery/netpod,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "pmN" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -36802,7 +36812,7 @@
 	},
 /obj/machinery/netpod,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "sRK" = (
 /obj/structure/sink{
 	pixel_y = 16
@@ -39717,7 +39727,7 @@
 	},
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "usA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input{
 	dir = 1
@@ -39950,8 +39960,9 @@
 /obj/machinery/computer/quantum_console{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "uzj" = (
 /turf/closed/wall/r_wall,
 /area/station/science/robotics)
@@ -44493,8 +44504,9 @@
 /area/station/engineering/atmos/office)
 "wLx" = (
 /obj/machinery/quantum_server,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/miningoffice)
+/area/station/bitrunning/den)
 "wLR" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -44717,11 +44729,11 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/miningoffice)
 "wRB" = (
@@ -44840,6 +44852,9 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery/theatre)
+"wUo" = (
+/turf/closed/wall,
+/area/station/bitrunning/den)
 "wUz" = (
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
@@ -68153,7 +68168,7 @@ bch
 ckl
 kXk
 iSl
-qRY
+wUo
 btg
 eGh
 eGh
@@ -68410,11 +68425,11 @@ hcx
 hcx
 dGk
 nip
-qRY
+wUo
 jpe
 wLx
 uzc
-pEa
+ktm
 hOu
 imE
 lBX
@@ -68667,7 +68682,7 @@ hcx
 hcx
 dGk
 nip
-qRY
+wUo
 ust
 ipR
 ipR
@@ -68924,7 +68939,7 @@ hcx
 hcx
 dGk
 htl
-qRY
+wUo
 sRv
 pmG
 pmG
