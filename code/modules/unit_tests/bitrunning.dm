@@ -29,7 +29,6 @@
 	labrat.mock_client = new()
 
 	var/datum/weakref/initial_mind = labrat.mind
-	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 	pod.occupant = labrat
 
 	var/datum/component/avatar_connection/connection = target.AddComponent( \
@@ -172,7 +171,7 @@
 
 	for(var/datum/stock_part/manipulator/servo in server.component_parts)
 		server.component_parts -= servo
-		server.component_parts += new /datum/stock_part/servo/tier4
+		server.component_parts += new /datum/stock_part/manipulator/tier4
 
 	server.RefreshParts()
 	server.avatar_connection_refs.Cut()
