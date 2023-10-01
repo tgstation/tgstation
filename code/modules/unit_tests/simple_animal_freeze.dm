@@ -178,8 +178,6 @@
 		/mob/living/simple_animal/hostile/skeleton/plasmaminer,
 		/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
 		/mob/living/simple_animal/hostile/skeleton/templar,
-		/mob/living/simple_animal/hostile/smspider,
-		/mob/living/simple_animal/hostile/smspider/overcharged,
 		/mob/living/simple_animal/hostile/space_dragon,
 		/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag,
 		/mob/living/simple_animal/hostile/vatbeast,

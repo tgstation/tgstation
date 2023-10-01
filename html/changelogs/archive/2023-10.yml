@@ -1,0 +1,52 @@
+2023-10-01:
+  ArcaneMusic:
+  - rscadd: A new export has arrived in the imports section, the Galactic Materials
+      Market! You can use this to buy and sell minerals for profit or cost, as well
+      as stock your station when you don't have any miners.
+  - rscadd: Insert sheets of minerals into the Galactic Materials Market to convert
+      them into a stock block, allowing you to lock in your price for 5 minutes. Wait
+      too long and it'll be subject to market value again!
+  - rscadd: Minerals can be bought on the market either using the station's cargo
+      budget by cargo crew, or privately by everyone else.
+  - rscdel: Any material stacks that can be bought and sold on the market before have
+      been removed from the cargo catalog.
+  GPeckman:
+  - bugfix: Security officers can now download the crew manifest PDA app that they
+      start with.
+  Ghommie:
+  - bugfix: Actually fixed the hooked item exploit.
+  Higgin:
+  - bugfix: Added warden to list of default required enemies for rulesets.
+  NPC1314:
+  - image: new chaplain outfit
+  SyncIt21:
+  - bugfix: Aloe and other baked foods that don't have reagents can be baked again
+      without turning to ash
+  carlarctg:
+  - rscadd: Heretic Rebalance
+  - balance: Researching the Main Knowledge paths that unlock Side Paths will grant
+      one Side Point that can be used only on those side paths. You can still spend
+      normal knowledge points on them if you wish.
+  - balance: Rune drawing time has been reduced from 30->20 seconds. Codex drawing
+      time has been reduced from 15->8.
+  - balance: 'Codex Cicatrix is now a roundstart knowledge, works as an amber focus
+      when held in-hand and opened, and has had its recipe changed to: 1 of any non-standard
+      pen (literally anything that isn''t the base pen), any book, and either animal
+      hide OR a corpse, any kind.'
+  - code_imp: Added support for using a list inside ritual requirements and a special
+      'snowflake check' rituals can utilize.
+  - balance: The first non-path knowledge, the Mansus Hand Mark, has had its cost
+      reduced from 2->1 points.
+  distributivgesetz:
+  - qol: Font settings in the chat panel applies to all text now.
+  nikothedude:
+  - balance: Sci now has access to the materials & canisters section in their departmental
+      order console
+  ninjanomnom:
+  - rscdel: An easter egg plushie that was spawning where it shouldn't has been brought
+      back home.
+  - rscadd: The secure closet can now spawn live gibtonite, enjoy your free bomb.
+  san7890:
+  - refactor: Supermatter Spiders have been refactored into basic mobs, on the extremely
+      off chance you spot one and also notice any weird bugs regarding it, please
+      report it.
