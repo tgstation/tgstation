@@ -316,7 +316,7 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">None</TableCell>;
+    return <TableCell color="label">No bandwidth</TableCell>;
   }
 
   if (typeof amount === 'string') {

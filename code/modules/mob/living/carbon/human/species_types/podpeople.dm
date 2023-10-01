@@ -98,6 +98,3 @@
 	))
 
 	return to_add
-
-/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)

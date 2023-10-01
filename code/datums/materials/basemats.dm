@@ -7,6 +7,9 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	minimum_value_override = 0
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -25,6 +28,9 @@
 	shard_type = /obj/item/shard
 	debris_type = /obj/effect/decal/cleanable/glass
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	minimum_value_override = 0
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
 
@@ -56,6 +62,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.075
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -72,6 +80,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
 
@@ -90,6 +100,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	beauty_modifier = 0.3
 	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
 
@@ -106,6 +118,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.3 //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 
@@ -173,6 +187,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 
 /datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
@@ -216,6 +232,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	tradable = TRUE
+	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 

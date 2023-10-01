@@ -34,6 +34,8 @@
 	var/list/datum/weakref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
+	///The radio the console can speak into
+	var/obj/item/radio/radio
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -60,6 +62,12 @@
 	if(isnull(console_ref))
 		find_console()
 
+	radio = new(src)
+	radio.set_frequency(FREQ_SUPPLY)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.recalculateChannels()
+
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -79,6 +87,7 @@
 	QDEL_NULL(receive_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
+	QDEL_NULL(radio)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
@@ -140,4 +149,4 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, scanner_tier)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, servo_rating)
