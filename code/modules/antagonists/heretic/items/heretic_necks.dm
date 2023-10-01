@@ -68,6 +68,7 @@
 				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
 					user.balloon_alert(user, "Their mind is too strong!")
 					hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
+					hit.mob_mood.set_sanity(hit.mob_mood.sanity -= 10)
 				if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
 					user.balloon_alert(user, "Their mind bends to see the truth!")
 					to_chat(hit, span_notice("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!"))

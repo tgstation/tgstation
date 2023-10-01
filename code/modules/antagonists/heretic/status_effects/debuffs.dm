@@ -262,3 +262,8 @@
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+
+/atom/movable/screen/alert/status_effect/moon_converted
+	name = "Moon Converted"
+	desc = "They LIE, SLAY ALL OF THE THEM!!! THE LIARS OF THE SUN MUST FALL!!!"
+	icon_state = "moon_insanity"
