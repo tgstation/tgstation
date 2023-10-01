@@ -12,6 +12,7 @@
 	attack_verb_simple = list("pinch", "tong", "nip")
 	/// What are we holding in our tongs?
 	var/obj/item/tonged
+	/// Sound to play when we click our tongs together
 	var/clack_sound = 'sound/items/handling/component_drop.ogg'
 	/// Have we clacked recently?
 	COOLDOWN_DECLARE(clack_cooldown)
