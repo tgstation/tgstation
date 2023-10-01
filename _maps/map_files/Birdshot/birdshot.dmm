@@ -49479,6 +49479,7 @@
 /obj/structure/table/glass,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ruD" = (
@@ -54929,7 +54930,7 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/hop)
 "tgJ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -59693,7 +59694,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "uMl" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},

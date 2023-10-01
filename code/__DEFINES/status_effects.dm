@@ -37,6 +37,7 @@
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
+#define STASIS_LEGION_EATEN "stasis_eaten"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 

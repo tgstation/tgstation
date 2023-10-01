@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - config: "Adds a config option for player respawning that enables respawns, but forces you pick a new character."
-  - config: "\"NORESPAWN\" has been replaced with \"ALLOW_RESPAWN 0\". Unlimited respawns is \"ALLOW_RESPAWN 1\" and character limited respawns is \"ALLOW_RESPAWN 2\"."

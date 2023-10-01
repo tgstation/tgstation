@@ -36,8 +36,10 @@
 #define COMSIG_BODYPART_ATTACHED "bodypart_removed"
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
-#define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
-#define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
+/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/gauze/applied_gauze, /obj/item/stack/medical/gauze/stack_used)
+#define COMSIG_BODYPART_GAUZED "bodypart_gauzed"
+/// from /obj/item/stack/medical/gauze/Destroy(): (/obj/item/stack/medical/gauze/removed_gauze)
+#define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
 #define COMSIG_BODYPART_CHANGED_OWNER "bodypart_changed_owner"
