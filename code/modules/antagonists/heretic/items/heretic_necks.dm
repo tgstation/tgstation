@@ -26,12 +26,14 @@
 	if(!(slot & ITEM_SLOT_NECK))
 		return
 	ADD_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+	to_chat(user, span_alert("Your heart takes on a strange yet soothing irregular rhythm, and your blood feels significantly less viscous than it used to be. You're not sure if that's a good thing."))
 	AddComponent( \
 		/datum/component/aura_healing, \
 		range = 3, \
 		brute_heal = 0.1, \
 		burn_heal = 0.1, \
 		blood_heal = 0.1, \
+		suffocation_heal = 1, \ // blood gets to where it needs to be quicker
 		simple_heal = 0.6, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_MANSUS_TOUCHED, \
@@ -46,6 +48,7 @@
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
 	REMOVE_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+	to_chat(user, span_notice("Your heart and blood return to their regular boring rhythm and flow."))
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
 	SIGNAL_HANDLER
@@ -62,7 +65,7 @@
 	. = ..()
 
 	if(IS_CULTIST(user))
-		. += span_cultboldtalic("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
+		. += span_cultbold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
 	if(IS_HERETIC_OR_MONSTER(user))
 		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect.")
 /obj/item/clothing/neck/eldritch_amulet

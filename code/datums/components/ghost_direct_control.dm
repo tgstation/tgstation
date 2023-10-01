@@ -144,5 +144,5 @@
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
 	new_body.key = harbinger.key
 	to_chat(new_body, span_boldnotice(assumed_control_message))
-	after_assumed_control?.Invoke(harbinger)
+	after_assumed_control?.Invoke(new_body)
 	qdel(src)

@@ -113,8 +113,27 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 	PATH_BLADE = /obj/item/melee/cultblade/haunted/keen,
 	PATH_RUST = /obj/item/melee/cultblade/haunted/rusted,
 	PATH_COSMOS = /obj/item/melee/cultblade/haunted/astral,
-	//PATH_KNOCK = /obj/item/melee/cultblade/haunted/crux,
+	PATH_KNOCK = /obj/item/melee/cultblade/haunted/crux,
+	PATH_START = /obj/item/melee/cultblade/haunted/callow,
 ))
+
+/* List of issues to fix
+
+1. The heretic soul haunt is completely fucked. Turn soulscythe into a component, only proper solution.
+
+2. Heretivester needs a sprite.
+
+3. Heretivester needs 2 delimb only cultists.
+
+4. Seek the harvest action on heretivester
+
+5. Heretic soul haunt furious steel uses normal knife sprites
+
+6. Spawned proteons can't be joined as with 'ghost candidate selec in prgores' even thoguh poll is disabled
+
+7. check to make sure you cant spawn holes next to eachother doesnt work (fixed?)
+
+*/
 
 /obj/item/melee/cultblade/haunted/ashen
 	name = "ashen ensouled longsword"
@@ -126,7 +145,8 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 /obj/item/melee/cultblade/haunted/ashen/attack(mob/living/attacked, mob/living/user, params)
 	. = ..()
 	attacked.adjust_fire_stacks(1)
-	attacked.ignite_mob()
+	if(prob(15))
+		attacked.ignite_mob()
 
 /obj/item/melee/cultblade/haunted/sanguine
 	name = "sanguine ensouled longsword"
@@ -158,7 +178,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 /obj/item/melee/cultblade/haunted/sanguine/proc/add_blood(atom/bloodied_atom)
 	bloodied_atom.add_blood_DNA(list("ERROR ERROR ERROR ERROR ERROR" = "NULL"))
 	if(ismob(bloodied_atom))
-		to_chat(bloodied_atom, span_cult("Blood gets all over you from the blade's constant drip, drip drip..."))
+		to_chat(bloodied_atom, span_cult("Blood gets all over you from the blade's constant drip, drip, drip..."))
 
 /obj/item/melee/cultblade/haunted/sanguine/proc/ghoulify_target(obj/item/source, mob/living/target_mob, mob/living/user)
 	SIGNAL_HANDLER
@@ -198,7 +218,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 	dark_light_range = 5
 	dark_light_power = -1
 
-	// I feel like the Path of *Blade*'s blade should get some little extra boons.
+// I feel like the Path of *Blade*'s blade should get some little extra boons. We can excuse it by saying it's the best anti-cult path.
 /obj/item/melee/cultblade/haunted/keen
 	name = "keen ensouled longsword"
 	bonus_desc = "It gleams with silver polish, its blade seemingly infinitely sharp."
@@ -227,13 +247,13 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 /obj/item/melee/cultblade/haunted/keen/attack_self(mob/user, modifiers)
 	. = ..()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, REF(src)))
-		ADD_TRAIT(src, TRAIT_NODROP, REF(src))
-		balloon_alert(user, "you tightly grasp it")
-		to_chat(user, span_alertalien("Silver tendrils wrap your hand around [src]'s grip, ensuring you don't drop it."))
-	else
 		REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
 		balloon_alert(user, "you let go of it")
 		to_chat(user, span_alertalien("The silver tendrils let go of your hand."))
+	else
+		ADD_TRAIT(src, TRAIT_NODROP, REF(src))
+		balloon_alert(user, "you tightly grasp it")
+		to_chat(user, span_alertalien("Silver tendrils wrap your hand around [src]'s grip, ensuring you don't drop it."))
 
 /obj/item/melee/cultblade/haunted/rusted
 	name = "rusted ensouled longsword"
@@ -258,7 +278,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 
 /obj/item/melee/cultblade/haunted/rusted/proc/unequip_rust(mob/user, slot)
 	SIGNAL_HANDLER
-	user.RemoveElement(/datum/element/leeching_walk)
+	user?.RemoveElement(/datum/element/leeching_walk)
 
 /obj/item/melee/cultblade/haunted/astral
 	name = "astral ensouled longsword"
@@ -270,7 +290,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 
 /obj/item/melee/cultblade/haunted/crux
 	name = "crux ensouled longsword"
-	bonus_desc = "It glows brightly and proudly, its intricate white engravings promising to decipher and unravel all in its path."
+	bonus_desc = "It glows brightly, its intricate white engravings promising to decipher and unravel all in its path."
 	bare_wound_bonus = 40 // it opens
 	demolition_mod = 5 // it opens.
 	tool_behaviour = TOOL_CROWBAR // IT OPENS
@@ -292,7 +312,6 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 	name = "callow ensouled longsword"
 	bonus_desc = "Dimly, it pulses with potential, forever sealed away."
 
-
 /obj/item/melee/cultblade/haunted
 	name = "ensouled longsword"
 	desc = "An eerie sword with a red hilt and a blade that is less 'black' than it is 'absolute nothingness', covered in strange glowing white runes. It glows with furious, restrained green energy."
@@ -308,17 +327,29 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 	var/dark_light_range = 2.5
 	var/dark_light_power = -0.75
 
-/obj/item/melee/cultblade/haunted/Initialize(mapload)
+/obj/item/melee/cultblade/haunted/Initialize(mapload, mob/transferred_mob, mob/masta)
 	. = ..()
 	desc += "\n" + bonus_desc
-	trapped_heretic_soul = new(src)
-	path_sword_action = new path_sword_action(trapped_heretic_soul)
-	path_sword_action.Grant(trapped_heretic_soul)
+	if(transferred_mob)
+		bind_entity(transferred_mob, masta)
+	else
+		stack_trace("haunted blade created without soul to bind to?")
 	RegisterSignal(trapped_heretic_soul, COMSIG_LIVING_RESIST, PROC_REF(on_resist))
 	RegisterSignal(trapped_heretic_soul, COMSIG_MOB_ATTACK_RANGED, PROC_REF(slash_target))
 	RegisterSignal(trapped_heretic_soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(lunge_target))
 	//RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
 	set_light(dark_light_range, dark_light_power)
+
+/obj/item/melee/cultblade/haunted/proc/bind_entity(mob/transferred_mob, mob/masta)
+	trapped_heretic_soul = new(src)
+	transferred_mob.mind.transfer_to(trapped_heretic_soul)
+	trapped_heretic_soul.mind?.antag_datums |= masta.mind?.antag_datums
+	trapped_heretic_soul.faction = masta.faction.Copy()
+	trapped_heretic_soul.copy_languages(masta, LANGUAGE_MIND)
+	if(ispath(path_wielder_action))
+		path_sword_action = new path_sword_action(trapped_heretic_soul)
+	path_sword_action.Grant(trapped_heretic_soul)
+
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
@@ -885,6 +916,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_typepaths,list(
 	for(var/turf/hole_candidate as anything in turfs_to_scan)
 		if(locate(/obj/structure/spawner/sentient/proteon_spawner) in hole_candidate)
 			to_chat(user, span_cultbold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
+			return
 	to_chat(user, span_cultboldtalic("You focus on [src] and direct it into the ground. It rumbles..."))
 
 	var/turf/open/hole_spot = get_turf(user)

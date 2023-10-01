@@ -11,6 +11,8 @@
 	var/drawing_a_rune = FALSE
 	/// The message displayed when the parent is examined, if supplied.
 	var/examine_message
+	/// If true we to attack_self_secondary to draw runes. Used for cursed blades
+	var/secondary_attack_self = FALSE
 	/// A list of turfs that we scribe runes at double speed on.
 	var/list/turfs_that_boost_us
 	/// A list of all shields surrounding us while drawing certain runes (Nar'sie).
@@ -22,6 +24,7 @@
 	examine_message,
 	action = /datum/action/item_action/cult_dagger,
 	turfs_that_boost_us = /turf/open/floor/engine/cult,
+	secondary_attack_self = FALSE,
 	)
 
 	if(!isitem(parent))
@@ -45,7 +48,10 @@
 	return ..()
 
 /datum/component/cult_ritual_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(try_scribe_rune))
+	if(secondary_attack_self)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(try_scribe_rune))
+	else
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(try_scribe_rune))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_purge_holywater))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_hit_object))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))

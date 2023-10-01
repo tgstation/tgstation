@@ -174,7 +174,7 @@
 	)
 	return
 
-/obj/structure/spawner/sentient/proc/became_player_controlled(mob/harbingus)
+/obj/structure/spawner/sentient/proc/became_player_controlled(mob/proteon)
 	return
 
 /obj/structure/spawner/sentient/proteon_spawner
@@ -183,6 +183,7 @@
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state = "hole"
 	light_power = 2
+	light_color = COLOR_CULT_RED
 	max_integrity = 50
 	density = FALSE
 	max_mobs = 2
@@ -192,6 +193,7 @@
 	faction = list(FACTION_CULT)
 	role_name = "A proteon cult construct"
 	assumed_control_message = null
+
  // not AI
 /obj/structure/spawner/sentient/proteon_spawner/examine_status(mob/user)
 	if(IS_CULTIST(user) || !isliving(user))
@@ -223,21 +225,21 @@
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/luser = user
 		luser.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
-		. += span_danger("The voices of the damned echo relentlessly in your mind, worsening the more you focus on [src]. Best keep away...")
+		. += span_danger("The voices of the damned echo relentlessly in your mind, rebounding on the walls of your self ever stronger the more you focus on [src]. Best keep away...")
 	else
 		. += span_cult("The gateway will create weak proteon constructs that may be controlled by the spirits of the dead.")
 		. += span_cultbold("You may use a ritual knife to slice your palm open, sending the gateway into a powerful frenzy that doubles its capacity and halves its cooldown, but this will eventually destroy it.")
 		// logic for above handled in cult_ritual_item component
 
-/obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/harbingus)
-	harbingus.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = "#882a2a", "size" = 2))
-	visible_message(span_cultbold("[harbingus] awakens, glowing an eerie red as it stirs from its stupor!")) // only this owrks
-	playsound(harbingus, 'sound/items/haunted/ghostitemattack.ogg', 25, TRUE)
-	harbingus.balloon_alert_to_viewers("awoken!")
-	addtimer(CALLBACK(src, PROC_REF(remove_player_outline), harbingus), 8 SECONDS)
+/obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/proteon)
+	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
+	visible_message(span_cultbold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!")) // only this owrks
+	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+	proteon.balloon_alert_to_viewers("awoken!")
+	addtimer(CALLBACK(src, PROC_REF(remove_player_outline), proteon), 8 SECONDS)
 
-/obj/structure/spawner/sentient/proteon_spawner/proc/remove_player_outline(mob/harbingus)
-	harbingus.remove_filter("awoken_proteon")
+/obj/structure/spawner/sentient/proteon_spawner/proc/remove_player_outline(mob/proteon)
+	proteon.remove_filter("awoken_proteon")
 	return
 
 /obj/structure/spawner/sentient/proteon_spawner/proc/buff_spawner(mob/living/carbon/human/cultist)
@@ -268,32 +270,32 @@
 	var/obj/item/bodypart/bodypart = cultist.get_active_hand()
 	if(!bodypart) // ???
 		return
-	bodypart.receive_damage(brute = 7)
-	var/datum/wound/slash/flesh/moderate/slash_wound = new()
-	slash_wound.apply_wound(bodypart)
+	bodypart.receive_damage(brute = 15, sharpness = SHARP_EDGED)
 	to_chat(cultist, span_cultitalic("You slash your palm open, spreading blood all over [src]. It tastes the blood, and goes into a frenzy!"))
 
 // The integrity divisions are meant to make the effects wackier and stronger until the gateway breaks apart completely.
 /obj/structure/spawner/sentient/proteon_spawner/process(seconds_per_tick)
 	. = ..()
-	take_damage(VALUE_PER(max_integrity, 2.5 MINUTES * seconds_per_tick))
+	take_damage(VALUE_PER(max_integrity, 2.5 MINUTES))
 	if(get_integrity() <= 0) // avoids dividing by zero
 		deconstruct()
 
-	Shake(3 / (get_integrity() * 0.1), seconds_per_tick) // the lower integrity is, the more it rumbles
+	var/practical_integrity = min(get_integrity(), 0.1)
+
+	Shake(3 / practical_integrity, seconds_per_tick) // the lower integrity is, the more it rumbles
 	if(prob(25 * seconds_per_tick))
 		visible_message(span_cultbold("[src] rumbles and quakes, bits of it falling off around the edges!"))
 
-	light_power = 10 / (get_integrity() * 0.1)
+	light_power = 10 / practical_integrity
 
 	var/filter = get_filter("frenzied_gateway")
 	if(!filter)
 		return
 
-	animate(filter, size = 5 / (get_integrity() * 0.1), time = seconds_per_tick)
+	animate(filter, size = 5 / practical_integrity, time = seconds_per_tick)
 
 /obj/structure/spawner/sentient/proteon_spawner/deconstruct(disassembled)
-	playsound('sound/hallucinations/veryfar_noise.ogg', 50)
+	playsound('sound/hallucinations/veryfar_noise.ogg', 125)
 	visible_message(span_cultbold("[src] completely falls apart, the screams of the damned peaking before slowly fading away..."))
 	return ..()
 

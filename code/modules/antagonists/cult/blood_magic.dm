@@ -36,7 +36,7 @@
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
 			blood_spell.positioned = first_available_slot
 
-#define COMSIG_CULT_EMPOWER "gingus"
+#define COMSIG_CULT_EMPOWER "gingus1"
 
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
