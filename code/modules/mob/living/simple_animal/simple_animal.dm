@@ -463,7 +463,7 @@
 	icon_state = icon_dead
 	if(flip_on_death)
 		transform = transform.Turn(180)
-	ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
+	//ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	return ..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
