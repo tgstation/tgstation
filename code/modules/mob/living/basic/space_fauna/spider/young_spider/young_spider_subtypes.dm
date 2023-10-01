@@ -154,6 +154,27 @@
 	melee_damage_upper = 15
 	speed = 1
 
+/mob/living/basic/spider/growing/young/tank/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 5,\
+		heal_burn = 5,\
+		heal_time = 2 SECONDS,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
+
+/// Prevent you from healing other tangle spiders, or healing when on fire
+/mob/living/basic/spider/growing/young/tank/proc/can_mend(mob/living/source, mob/living/target)
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
+
 	/// Will differentiate into the "breacher" giant spider.
 /mob/living/basic/spider/growing/young/breacher
 	grow_as = /mob/living/basic/spider/giant/breacher

@@ -6,8 +6,8 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	cooldown_time = 0
-	melee_cooldown_time = 0
+	cooldown_time = 20
+	melee_cooldown_time = 5
 	shared_cooldown = NONE
 	click_to_activate = FALSE
 	///How long it takes for a broodmother to lay eggs.
@@ -72,6 +72,7 @@
 	name = "Lay Enriched Eggs"
 	desc = "Lay a cluster of eggs, which will soon grow into a rare spider.  Requires you drain a human per cluster of these eggs."
 	button_icon_state = "lay_enriched_eggs"
+	cooldown_time = 60 SECONDS
 	egg_type = /obj/effect/mob_spawn/ghost_role/spider/enriched
 	/// How many charges we have to make eggs
 	var/charges = 0

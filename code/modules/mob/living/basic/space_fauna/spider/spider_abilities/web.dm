@@ -112,19 +112,11 @@
 	cooldown_time = 0 SECONDS
 	webbing_time = 4 SECONDS
 
-/datum/action/cooldown/mob_cooldown/lay_web/reflector
-	name = "Spin reflective silk screen"
-	desc = "Spin a web to reflect missiles from the nest."
-	button_icon_state = "lay_web_reflector"
-	cooldown_time = 30 SECONDS
-	webbing_time = 4 SECONDS
-
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage/obstructed_by_other_web()
 	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/passage(target_turf)
-
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web
 	name = "Spin Sticky Web"
@@ -179,3 +171,16 @@
 /datum/action/cooldown/mob_cooldown/web_effigy/Activate()
 	new /obj/structure/spider/effigy(get_turf(owner))
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector
+	name = "Spin reflective silk screen"
+	desc = "Spin a web to reflect missiles from the nest."
+	button_icon_state = "lay_web_reflector"
+	cooldown_time = 30 SECONDS
+	webbing_time = 4 SECONDS
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/reflector) in get_turf(owner))
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/reflector(target_turf)

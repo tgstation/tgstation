@@ -199,11 +199,13 @@
 	icon = 'icons/effects/effects.dmi'
 	desc = "Made up of an extremly reflective silk material looking at it hurts."
 	icon_state = "reflector"
-	max_integrity = 100
+	max_integrity = 200
 	explosion_block = 5
 	density = TRUE
+	opacity = TRUE
 	anchored = TRUE
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
 
 /obj/structure/spider/reflector/Initialize(mapload)
 	. = ..()

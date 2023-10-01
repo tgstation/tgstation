@@ -258,9 +258,9 @@
 	icon_state = "tank"
 	icon_living = "tank"
 	icon_dead = "tank_dead"
-	maxHealth = 250
-	health = 250
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 0.5)
+	maxHealth = 500
+	health = 500
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 15
@@ -270,13 +270,31 @@
 
 /mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lay_web/reflector/web_reflector = new(src)
-	web_reflector.Grant(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_reflector/reflector_web = new(src)
+	reflector_web.Grant(src)
 
 	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 50,\
+		heal_burn = 50,\
+		heal_time = 5 SECONDS,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
+/// Prevent you from healing other tangle spiders, or healing when on fire
+/mob/living/basic/spider/giant/tank/proc/can_mend(mob/living/source, mob/living/target)
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
 
 /**
  * ### Spider Breacher
@@ -310,6 +328,8 @@
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()
+	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
 
 	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
