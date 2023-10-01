@@ -66,7 +66,7 @@
 /// Handles recharging & inserting gold amount
 /obj/item/gun/magic/midas_hand/proc/handle_gold_charges(user, gold_amount)
 	gold_reagent += gold_amount
-	balloon_alert(user, "siphoned [gold_amount]u gold")
+	balloon_alert(user, "siphoned [round(gold_amount, 0.2)]u gold")
 	if(!charges)
 		instant_recharge()
 
@@ -103,3 +103,17 @@
 		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
 		return
 
+/obj/item/gun/magic/midas_hand/suicide_act(mob/living/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/victim = user
+	victim.visible_message(span_suicide("[victim] holds the barrel of [src] to [victim.p_their()] head, lighting the fuse. It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!do_after(victim, 1.5 SECONDS))
+		return
+	playsound(src, 'sound/weapons/gun/rifle/shot.ogg', 75, TRUE)
+	to_chat(victim, span_danger("You don't even have the time to register the gunshot by the time your body has completely converted into a golden statue."))
+	var/newcolors = list(rgb(206, 164, 50), rgb(146, 146, 139), rgb(28,28,28), rgb(0,0,0))
+	victim.petrify(statue_timer = INFINITY, save_brain = FALSE, colorlist = newcolors)
+	playsound(victim, 'sound/effects/coin2.ogg', 75, TRUE)
+	return OXYLOSS

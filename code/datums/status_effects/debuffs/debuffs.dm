@@ -965,27 +965,21 @@
 	tick_interval = 0.2 SECONDS
 	remove_on_fullheal = TRUE
 
-	/// The visual overlay, helps tell both you and enemies how much gold is in your system
-	var/mutable_appearance/midas_overlay
+	/// The visual overlay state, helps tell both you and enemies how much gold is in your system
+	var/midas_state = "midas_1"
 	/// How fast the gold in a person's system scales.
-	var/goldscale = 30 // x3.  Gives ~ 15u for 1 second
+	var/goldscale = 30 // x2.8 - Gives ~ 15u for 1 second
 
 /datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
 	// Duration is already input in SECONDS
 	src.duration = duration
+	RegisterSignal(new_owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	return ..()
 
 /atom/movable/screen/alert/status_effect/midas_blight
 	name = "Midas Blight"
 	desc = "Your blood is being turned to gold, slowing your movements!"
 	icon_state = "midas_blight"
-
-/datum/status_effect/midas_blight/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/soft, update = TRUE)
-	midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_1")
-	midas_overlay.blend_mode = BLEND_MULTIPLY
-	owner.add_overlay(midas_overlay)
-	return ..()
 
 /datum/status_effect/midas_blight/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
@@ -994,26 +988,36 @@
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
 	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
 	switch(current_gold_amount)
-		if(0 to 50)
+		if(-INFINITY to 50)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/soft, update = TRUE)
-			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_1")
+			midas_state = "midas_1"
 		if(50 to 100)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/medium, update = TRUE)
-			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_2")
+			midas_state = "midas_2"
 		if(100 to 200)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/hard, update = TRUE)
-			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_3")
+			midas_state = "midas_3"
 		if(200 to INFINITY)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/gold, update = TRUE)
-			midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', "midas_4")
+			midas_state = "midas_4"
+	victim.update_icon()
 	if(victim.stat == DEAD)
 		qdel(src) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
 
+/datum/status_effect/midas_blight/proc/on_update_overlays(atom/parent_atom, list/overlays)
+	SIGNAL_HANDLER
+
+	if(midas_state)
+		var/mutable_appearance/midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', midas_state)
+		midas_overlay.blend_mode = BLEND_MULTIPLY
+		overlays += midas_overlay
+
 /datum/status_effect/midas_blight/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
-	owner.cut_overlay(midas_overlay)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon()
 
-/// Get slower the more gold is in your system. Should take about 10 seconds to get to max
+/// Get slower the more gold is in your system.
 /datum/movespeed_modifier/midas_blight
 	id = MOVESPEED_ID_MIDAS_BLIGHT
 
