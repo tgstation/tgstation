@@ -892,6 +892,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
 
+/// Trait given to a living mob to prevent wizards from making it immortal
+#define TRAIT_PERMANENTLY_MORTAL "permanently_mortal"
+
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
@@ -993,6 +996,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MOTOR_LACK_TRAIT "motor-lack"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
+/// Trait associated with ctf
+#define CTF_TRAIT "ctf"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes

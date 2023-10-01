@@ -198,6 +198,7 @@
 
 	for(var/i in 1 to worm_length)
 		current = new type(drop_location(), FALSE)
+		ADD_TRAIT(current, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 		current.icon_state = "armsy_mid"
 		current.icon_living = "armsy_mid"
 		current.AIStatus = AI_OFF
