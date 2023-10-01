@@ -110,7 +110,7 @@
 	if(choking_on && iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		// This will yeet the thing we're choking on out of us
-		carbon_owner.vomit(lost_nutrition = 20, force = TRUE, distance = 2)
+		carbon_owner.vomit(vomit_flags = (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_FORCE), lost_nutrition = 20, distance = 2)
 
 /datum/status_effect/choke/proc/on_vomit(mob/source, distance, force)
 	SIGNAL_HANDLER

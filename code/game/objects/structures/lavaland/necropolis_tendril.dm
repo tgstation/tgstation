@@ -23,7 +23,7 @@
 	mob_types = list(/mob/living/basic/mining/goliath)
 
 /obj/structure/spawner/lavaland/legion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
+	mob_types = list(/mob/living/basic/mining/legion/spawner_made)
 
 /obj/structure/spawner/lavaland/icewatcher
 	mob_types = list(/mob/living/basic/mining/watcher/icewing)

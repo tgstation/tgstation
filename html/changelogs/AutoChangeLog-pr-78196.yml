@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Haunted 8-ball no longer requires the ghost orbit the petitioner to submit votes"
-  - qol: "Haunted 8-ball ghosts can now change their vote after submitting it"
-  - bugfix: "Haunted 8-ball no longer always reports \"yes\""
-  - bugfix: "Haunted 8-ball no longer always reports default \"yes\", \"no\", or \"maybe\" and now gives a proper eight ball response"
-  - bugfix: "Haunted 8-ball can be picked up via the stat panel"

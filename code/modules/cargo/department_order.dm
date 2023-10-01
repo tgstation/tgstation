@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		if(GLOB.areas_by_type[delivery_area_type])
 			chosen_delivery_area = delivery_area_type
 			break
-			
+
 	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	department_delivery_areas = list(/area/station/science/research)
 	override_access = ACCESS_RD
 	req_one_access = REGION_ACCESS_RESEARCH
-	dep_groups = list("Science", "Livestock")
+	dep_groups = list("Science", "Livestock", "Canisters & Materials")
 
 /obj/machinery/computer/department_orders/security
 	name = "security order console"

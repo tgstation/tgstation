@@ -70,7 +70,8 @@
 	affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, TRUE, affected_biotype)
 	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
 	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
 	name = "Quantum Medicine"
@@ -136,6 +137,7 @@
 		if(prob(30))
 			SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
 	..()
+	return TRUE
 
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
@@ -346,7 +348,7 @@
 	color = "#6D6374"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustBruteLoss(-0.25 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -379,6 +381,10 @@
 /datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
 	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.3
+	burn_wound.flesh_healing += 0.5
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -496,6 +502,7 @@
 		affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, required_biotype = affected_biotype)
 
 	..()
+	return TRUE
 
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
@@ -590,7 +597,7 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(10 * (1-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
+	if(SPT_PROB(10 * (1.5-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
 		var/obj/item/I = affected_mob.get_active_held_item()
 		if(I && affected_mob.dropItemToGround(I))
 			to_chat(affected_mob, span_notice("Your hands spaz out and you drop what you were holding!"))
@@ -726,20 +733,22 @@
 	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
-		eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
-		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
-			// While healing, gives some eye blur
-			if(affected_mob.is_blind_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
-				affected_mob.adjust_eye_blur(20 SECONDS)
-			else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
-				to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
-				affected_mob.adjust_eye_blur(5 SECONDS)
+	if(isnull(eyes))
+		return ..()
 
-	return ..()
+	// Healing eye damage will cure nearsightedness and blindness from ... eye damage
+	eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
+	// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+	if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		// While healing, gives some eye blur
+		if(affected_mob.is_blind_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
+			affected_mob.adjust_eye_blur(20 SECONDS)
+		else if(affected_mob.is_nearsighted_from(EYE_DAMAGE))
+			to_chat(affected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+			affected_mob.adjust_eye_blur(5 SECONDS)
+
+	return ..() || TRUE
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
@@ -779,6 +788,7 @@
 		return ..()
 	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
 	..()
+	return TRUE
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
@@ -844,14 +854,13 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = TRUE
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2 * REM * seconds_per_tick)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * REM * seconds_per_tick)
 		if(SPT_PROB(10, seconds_per_tick))
 			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
 		..()
-		return
+		return FALSE
 	if(affected_mob.health <= affected_mob.crit_threshold)
 		affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -868,6 +877,7 @@
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
 	..()
+	return TRUE
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
@@ -983,7 +993,8 @@
 	var/damage_at_random = rand(0, 250)/100 //0 to 2.5
 	affected_mob.adjustBruteLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
@@ -1000,6 +1011,7 @@
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
+	return TRUE
 
 //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
 /datum/reagent/medicine/mannitol/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -1109,6 +1121,14 @@
 	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick * normalise_creation_purity())
 	..()
 	. = TRUE
+
+/datum/reagent/medicine/antihol/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
+		surgery.speed_modifier = max(surgery.speed_modifier  - 0.1, -0.9)
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
@@ -1228,7 +1248,7 @@
 /datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) //wtb flavortext messages that hint that you're vomitting up robots
 	if(SPT_PROB(13, seconds_per_tick))
 		affected_mob.reagents.remove_reagent(type, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
-		affected_mob.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
+		affected_mob.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/nanites, lost_nutrition = 20) // nanite safety protocols make your body expel them to prevent harmies
 	..()
 	. = TRUE
 
@@ -1539,7 +1559,7 @@
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 	..()
 
 /datum/reagent/medicine/silibinin
@@ -1731,4 +1751,5 @@
 		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
 		M.adjustStaminaLoss(10)
+		. = TRUE
 	M.adjust_disgust(-10 * REM * seconds_per_tick)

@@ -36,6 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)

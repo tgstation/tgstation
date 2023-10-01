@@ -24,8 +24,5 @@
 #define COMSIG_FISHING_ROD_CAST "fishing_rod_cast"
 	#define FISHING_ROD_CAST_HANDLED (1 << 0)
 
-/// Sent when fishing line is snapped
-#define COMSIG_FISHING_LINE_SNAPPED "fishing_line_interrupted"
-
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"

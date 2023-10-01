@@ -8,6 +8,7 @@
 	nutriment_factor = 0
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	creation_purity = 1 // impure base reagents are a big no-no
 	ph = 7.33
 	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
 	burning_volume = 0.1
@@ -56,6 +57,20 @@
 			booze_power *= 0.7
 		if(HAS_TRAIT(drinker, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
+
+		// water will dilute alcohol effects
+		var/total_water_volume = 0
+		var/total_alcohol_volume = 0
+		for(var/datum/reagent/water/sobriety in drinker.reagents.reagent_list)
+			total_water_volume += sobriety.volume
+
+		for(var/datum/reagent/consumable/ethanol/alcohol in drinker.reagents.reagent_list)
+			total_alcohol_volume += alcohol.volume
+
+		var/combined_dilute_volume = total_alcohol_volume + total_water_volume
+		if(combined_dilute_volume) // safety check to prevent division by zero
+			booze_power *= (total_alcohol_volume / combined_dilute_volume)
+
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
 		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
@@ -2143,7 +2158,7 @@
 		if(SPT_PROB(5, seconds_per_tick))
 			stored_teleports += rand(2, 6)
 			if(prob(70))
-				drinker.vomit(vomit_type = VOMIT_PURPLE)
+				drinker.vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/purple)
 	return ..()
 
 /datum/reagent/consumable/ethanol/planet_cracker

@@ -352,3 +352,6 @@
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/effect/spawner/random/decoration/generic(src)
+
+/obj/structure/closet/crate/add_to_roundstart_list()
+	return

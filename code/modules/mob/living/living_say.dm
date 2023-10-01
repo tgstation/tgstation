@@ -389,13 +389,29 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			tts_message_to_use = message_raw
 
 		var/list/filter = list()
+		var/list/special_filter = list()
+		var/voice_to_use = voice
+		var/use_radio = FALSE
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
+		if(ishuman(src))
+			var/mob/living/carbon/human/human_speaker = src
+			if(human_speaker.wear_mask)
+				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
+				if(worn_mask.voice_override)
+					voice_to_use = worn_mask.voice_override
+				if(worn_mask.voice_filter)
+					filter += worn_mask.voice_filter
+				use_radio = worn_mask.use_radio_beeps_tts
+		if(use_radio)
+			special_filter += TTS_FILTER_RADIO
+		if(issilicon(src))
+			special_filter += TTS_FILTER_SILICON
 
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = message_range, pitch = pitch, silicon = tts_silicon_voice_effect)
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)

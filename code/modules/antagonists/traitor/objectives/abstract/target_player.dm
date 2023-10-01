@@ -16,3 +16,18 @@
 
 	/// The target that we need to target.
 	var/mob/living/target
+
+/datum/traitor_objective/target_player/Destroy(force)
+	set_target(null)
+	return ..()
+
+/datum/traitor_objective/target_player/proc/set_target(mob/living/new_target)
+	if(target)
+		UnregisterSignal(target, COMSIG_QDELETING)
+	target = new_target
+	if(target)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(target_deleted))
+
+/datum/traitor_objective/target_player/proc/target_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_target(null)
