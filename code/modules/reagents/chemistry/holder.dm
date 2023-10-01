@@ -546,10 +546,9 @@
 	var/cached_amount = amount
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount, total_volume, R.maximum_volume - R.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = FLOOR(min(amount, total_volume, R.maximum_volume - R.total_volume) * multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
-	amount *= multiplier
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
@@ -739,10 +738,9 @@
 		target_holder = target.reagents
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume) * multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return
-	amount *= multiplier
 
 	var/list/cached_reagents = reagent_list
 
