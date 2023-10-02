@@ -152,7 +152,7 @@
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(vampire_charging_capable)
-		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave™ allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the Charge mode.")
+		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave™ allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the charge mode.")
 
 	if(cell_powered)
 		. += span_notice("This model is wireless, powered by portable cells. [isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell."]")
@@ -348,14 +348,19 @@
 		return
 
 	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+		var/swapped = FALSE
 		if(!isnull(cell))
-			to_chat(user, span_warning("You have already inserted a cell!"))
-		else
-			if(!user.transferItemToLoc(item, src))
-				return
-			cell = item
-			balloon_alert(user, "inserted cell")
+			cell.forceMove(drop_location())
+			if(!issilicon(user) && Adjacent(user))
+				user.put_in_hands(cell)
+			cell = null
+			swapped = TRUE
+		if(!user.transferItemToLoc(item, src))
 			update_appearance()
+			return TRUE
+		cell = item
+		balloon_alert(user, "[swapped ? "swapped" : "inserted"] cell")
+		update_appearance()
 		return TRUE
 
 	if(istype(item, /obj/item/reagent_containers/spray))
@@ -387,7 +392,7 @@
 		return TRUE
 
 	if(vampire_charging_capable && istype(item, /obj/item/modular_computer/pda) && ingredients.len > 0)
-		balloon_alert(user, "only 1 charging cable!")
+		balloon_alert(user, "max 1 pda!")
 		return FALSE
 
 	if(istype(item, /obj/item/storage))
