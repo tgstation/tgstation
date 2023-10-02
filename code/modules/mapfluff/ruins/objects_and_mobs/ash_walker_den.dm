@@ -56,10 +56,10 @@
 				visible_message(span_notice("Serrated tendrils eagerly pull [H] apart, but find nothing of interest."))
 				return
 
-			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.key || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
+			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.ckey || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
 				visible_message(span_warning("Serrated tendrils carefully pull [H] to [src], absorbing the body and creating it anew."))
 				var/datum/mind/deadmind
-				if(H.key)
+				if(H.ckey)
 					deadmind = H
 				else
 					deadmind = H.get_ghost(FALSE, TRUE)
@@ -76,8 +76,8 @@
 				meat_counter++
 			visible_message(span_warning("Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs."))
 			playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
-			var/deliverykey = H.fingerprintslast //key of whoever brought the body
-			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said key
+			var/deliverykey = H.fingerprintslast //ckey of whoever brought the body
+			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
 			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
 			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (deliverykey in ashies.players_spawned) && (prob(40)))
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
