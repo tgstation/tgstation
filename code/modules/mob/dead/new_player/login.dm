@@ -47,8 +47,6 @@
 		client.media.open()
 		client.media.update_music()
 
-	client.playtitlemusic()
-
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
 	if(!client) // client disconnected during asset transit
@@ -71,3 +69,5 @@
 		to_chat(src, "Please set up your character and select \"Ready\". The game will start [tl > 0 ? "in about [DisplayTimeText(tl)]" : "soon"].")
 
 
+	spawn(4 SECONDS)
+		client.playtitlemusic()
