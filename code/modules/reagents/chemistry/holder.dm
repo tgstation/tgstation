@@ -1365,9 +1365,7 @@
 	. = 0 // This is a relatively hot proc.
 	var/total_ph = 0 // I know I know, I'm sorry
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if((reagent.volume < 0.05) && !is_reacting)
-			del_reagent(reagent.type)
-		else if(reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)//For clarity
+		if(reagent.volume < CHEMICAL_QUANTISATION_LEVEL)//For clarity
 			del_reagent(reagent.type)
 		else
 			. += reagent.volume
