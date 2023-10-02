@@ -181,11 +181,6 @@
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
-	if(length(attached_accessories) >= max_number_of_accessories)
-		if(user)
-			balloon_alert(user, "too many accessories!")
-		return
-
 	if(!accessory.can_attach_accessory(src, user))
 		return
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
@@ -240,6 +235,15 @@
 	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color
+
+/// Updates the accessory's worn overlay mutable appearance
+/obj/item/clothing/under/proc/update_accessory_overlay()
+	if(isnull(accessory_overlay))
+		return
+
+	cut_overlay(accessory_overlay)
+	create_accessory_overlay()
+	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -12,19 +12,15 @@
 	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(to_insert.get_all_contents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= resolve_parent
 
-	if(istype(to_insert, /obj/item/storage/backpack/holding) || matching.len)
-		INVOKE_ASYNC(src, PROC_REF(recursive_insertion), to_insert, user)
+	if((istype(to_insert, /obj/item/storage/backpack/holding) || matching.len) && can_insert(to_insert, user))
+		INVOKE_ASYNC(src, PROC_REF(recursive_insertion), to_insert, user, resolve_parent)
 		return
 
 	return ..()
 
-/datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user)
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
+/datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user, atom/resolve_parent)
 	var/safety = tgui_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [to_insert.name]?", list("Proceed", "Abort"))
-	if(safety != "Proceed" || QDELETED(to_insert) || QDELETED(resolve_parent) || QDELETED(user) || !iscarbon(user) || !user.can_perform_action(resolve_parent, NEED_DEXTERITY))
+	if(safety != "Proceed" || QDELETED(to_insert) || QDELETED(resolve_parent) || QDELETED(user) || !iscarbon(user) || !user.can_perform_action(resolve_parent, NEED_DEXTERITY) || !can_insert(to_insert, user))
 		return
 
 	var/turf/loccheck = get_turf(resolve_parent)

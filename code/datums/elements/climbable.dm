@@ -2,21 +2,23 @@
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	argument_hash_start_idx = 2
 	///Time it takes to climb onto the object
-	var/climb_time = (2 SECONDS)
+	var/climb_time
 	///Stun duration for when you get onto the object
-	var/climb_stun = (2 SECONDS)
+	var/climb_stun
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
 
-/datum/element/climbable/Attach(datum/target, climb_time, climb_stun)
+/datum/element/climbable/Attach(
+	datum/target,
+	climb_time = 2 SECONDS,
+	climb_stun = 2 SECONDS,
+)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
-	if(climb_time)
-		src.climb_time = climb_time
-	if(climb_stun)
-		src.climb_stun = climb_stun
+	src.climb_time = climb_time
+	src.climb_stun = climb_stun
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -68,6 +70,9 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
+	if(HAS_TRAIT(user, TRAIT_SETTLER)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
+		adjusted_climb_time *= 1.5
+		adjusted_climb_stun *= 1.5
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed

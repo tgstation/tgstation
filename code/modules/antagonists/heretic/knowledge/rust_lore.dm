@@ -80,11 +80,12 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/entropy_pulse,
 	)
 	cost = 1
 	route = PATH_RUST
@@ -155,7 +156,10 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/rifle,
+	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
@@ -165,6 +169,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
@@ -194,10 +199,11 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
+	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1

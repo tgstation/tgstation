@@ -262,6 +262,19 @@
 /obj/structure/sign/picture_frame/showroom/four
 	persistence_id = "frame_showroom4"
 
+// for the hall of fame escape shuttle
+/obj/structure/sign/picture_frame/hall_of_fame/one
+	persistence_id = "frame_hall_of_fame_1"
+
+/obj/structure/sign/picture_frame/hall_of_fame/two
+	persistence_id = "frame_hall_of_fame_2"
+
+/obj/structure/sign/picture_frame/hall_of_fame/three
+	persistence_id = "frame_hall_of_fame_3"
+
+/obj/structure/sign/picture_frame/hall_of_fame/four
+	persistence_id = "frame_hall_of_fame_4"
+
 /obj/structure/sign/picture_frame/portrait/bar
 	persistence_id = "frame_bar"
 	del_id_on_destroy = TRUE

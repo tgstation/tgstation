@@ -131,7 +131,7 @@
 	if(!attacking_item.is_open_container())
 		return
 	if(!isnull(container))
-		to_chat(span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
+		to_chat(user, span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
 			What if it cross contaminates?"))
 		return COMPONENT_NO_AFTERATTACK
 

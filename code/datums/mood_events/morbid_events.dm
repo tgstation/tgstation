@@ -32,6 +32,11 @@ Intended to push a creepy, mad scientist/doctor vibe, or someone who is downrigh
 	mood_change = 2
 	timeout = 2 MINUTES
 
+/datum/mood_event/morbid_hauntium
+	description = "I feel a better connection with the spirits, I love this!"
+	mood_change = 3
+	timeout = 6 MINUTES
+
 // Negative Events - We helped someone stay alive.
 
 /datum/mood_event/morbid_tend_wounds

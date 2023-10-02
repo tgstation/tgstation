@@ -79,6 +79,21 @@
 /datum/supply_pack/proc/generate_supply_packs()
 	return
 
+///Easily send a supplypod to an area
+/proc/send_supply_pod_to_area(contents, area_type, pod_type = /obj/structure/closet/supplypod)
+	var/list/areas = get_areas(area_type)
+	if(!LAZYLEN(areas))
+		return FALSE
+	var/list/open_turfs = list()
+	for(var/turf/open/floor/found_turf in get_area_turfs(pick(areas), subtypes = TRUE))
+		open_turfs += found_turf
+
+	if(!length(open_turfs))
+		return FALSE
+
+	new /obj/effect/pod_landingzone (pick(open_turfs), new pod_type (), contents)
+	return TRUE
+
 /**
  * Custom supply pack
  * The contents are given on New rather than being static
@@ -93,5 +108,17 @@
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
 	name = "[purchaser]'s Mining Order"
+	src.cost = cost
+	src.contains = contains
+
+/datum/supply_pack/custom/minerals
+	name = "materials order"
+	crate_name = "galactic materials market delivery crate"
+	access = list()
+	crate_type = /obj/structure/closet/crate/cardboard
+
+/datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
+	. = ..()
+	name = "[purchaser]'s Materials Order"
 	src.cost = cost
 	src.contains = contains

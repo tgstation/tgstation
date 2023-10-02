@@ -3,6 +3,7 @@
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	req_access = list("tcomms")
+	multi_tile = TRUE
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
 	/// Are the doors in a malfunctioning state (dangerous)
@@ -99,6 +100,8 @@
 /obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	if(filler)
+		filler.set_density(FALSE) // tram doors allow you to stand on the tile
 	INVOKE_ASYNC(src, PROC_REF(open))
 	GLOB.tram_doors += src
 	find_tram()

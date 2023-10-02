@@ -168,7 +168,7 @@
 	if(!T)
 		return null
 
-	var/fdir = turn(dir, 180) // flip the movement direction
+	var/fdir = REVERSE_DIR(dir) // flip the movement direction
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			if(QDELING(P))

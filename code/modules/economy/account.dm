@@ -7,6 +7,10 @@
 	var/account_balance = 0
 	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
 	var/mining_points = 0
+	/// Points for bit runner's vendor. Awarded for completing virtual domains.
+	var/bitrunning_points = 0
+	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
+	var/account_debt = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.
@@ -88,16 +92,6 @@
 	being_dumped = TRUE
 
 /**
- * Performs the math component of adjusting a bank account balance.
- * Arguments:
- * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
- */
-/datum/bank_account/proc/_adjust_money(amount)
-	account_balance += amount
-	if(account_balance < 0)
-		account_balance = 0
-
-/**
  * Returns TRUE if a bank account has more than or equal to the amount, amt.
  * Otherwise returns false.
  * Arguments:
@@ -114,11 +108,29 @@
  */
 /datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
-		_adjust_money(amount)
+		var/debt_collected = 0
+		if(account_debt > 0 && amount > 0)
+			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)
+		if(debt_collected)
+			pay_debt(debt_collected, FALSE)
 		return TRUE
 	return FALSE
+
+///Called when a portion of a debt is to be paid. It'll return the amount of credits put forwards to extinguish the debt.
+/datum/bank_account/proc/pay_debt(amount, is_payment = TRUE)
+	var/amount_to_pay = min(amount, account_debt)
+	if(is_payment)
+		if(!adjust_money(-amount, "Other: Debt Payment"))
+			return 0
+	else
+		add_log_to_history(-amount, "Other: Debt Collection")
+	log_econ("[amount_to_pay] credits were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+	account_debt -= amount_to_pay
+	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
+	return amount_to_pay
 
 /**
  * Performs a transfer of credits to the bank_account datum from another bank account.
@@ -195,7 +207,7 @@
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(card, /mob)
 		if(ismob(card_holder)) //If on a mob
-			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+			if(!card_holder.client || (!(get_chat_toggles(card_holder.client) & CHAT_BANKCARD) && !force))
 				return
 
 			if(card_holder.can_hear())
@@ -204,7 +216,7 @@
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
 			for(var/mob/potential_hearer in hearers(1,card_location))
-				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(potential_hearer.can_hear())
 					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
@@ -212,7 +224,7 @@
 		else
 			var/atom/sound_atom
 			for(var/mob/potential_hearer in card.loc) //If inside a container with other mobs (e.g. locker)
-				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
@@ -269,6 +281,20 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.departmental_accounts += src
+
+/datum/bank_account/department/adjust_money(amount, reason)
+	. = ..()
+	if(department_id != ACCOUNT_CAR)
+		return
+	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
+	if(account_balance >= CARGO_CRATE_VALUE * 3)
+		return
+	// We only allow people to actually buy the shuttle once the round gets going - otherwise you'd just be able to do it roundstart (Not really intended)
+	var/minimum_allowed_purchase_time = (CONFIG_GET(number/shuttle_refuel_delay) * 0.6)
+	if((world.time - SSticker.round_start_time) > minimum_allowed_purchase_time)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = TRUE
+	else
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = FALSE
 
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE

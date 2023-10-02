@@ -54,16 +54,16 @@
 	max_mobs = 15
 	spawn_time = 15 SECONDS
 	mob_types = list(
-		/mob/living/simple_animal/hostile/retaliate/clown,
-		/mob/living/simple_animal/hostile/retaliate/clown/banana,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus,
-		/mob/living/simple_animal/hostile/retaliate/clown/fleshclown,
-		/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton,
-		/mob/living/simple_animal/hostile/retaliate/clown/honkling,
-		/mob/living/simple_animal/hostile/retaliate/clown/longface,
-		/mob/living/simple_animal/hostile/retaliate/clown/lube,
+		/mob/living/basic/clown,
+		/mob/living/basic/clown/banana,
+		/mob/living/basic/clown/clownhulk,
+		/mob/living/basic/clown/clownhulk/chlown,
+		/mob/living/basic/clown/clownhulk/honkmunculus,
+		/mob/living/basic/clown/fleshclown,
+		/mob/living/basic/clown/mutant/glutton,
+		/mob/living/basic/clown/honkling,
+		/mob/living/basic/clown/longface,
+		/mob/living/basic/clown/lube,
 	)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_CLOWN)
@@ -77,18 +77,18 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(
+		/mob/living/basic/mining/basilisk,
+		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath/ancient,
+		/mob/living/basic/mining/legion,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/asteroid/basilisk,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub,
-		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)
 	faction = list(FACTION_MINING)
 
 /obj/structure/spawner/mining/goldgrub
 	name = "goldgrub den"
 	desc = "A den housing a nest of goldgrubs, annoying but arguably much better than anything else you'll find in a nest."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	mob_types = list(/mob/living/basic/mining/goldgrub)
 
 /obj/structure/spawner/mining/goliath
 	name = "goliath den"
@@ -98,12 +98,12 @@
 /obj/structure/spawner/mining/hivelord
 	name = "hivelord den"
 	desc = "A den housing a nest of hivelords."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord)
+	mob_types = list(/mob/living/basic/mining/hivelord)
 
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"
 	desc = "A den housing a nest of basilisks, bring a coat."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk)
+	mob_types = list(/mob/living/basic/mining/basilisk)
 
 /obj/structure/spawner/mining/wumborian
 	name = "wumborian fugu den"

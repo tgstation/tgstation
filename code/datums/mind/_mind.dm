@@ -8,7 +8,7 @@
 		ghost.mind is however used as a reference to the ghost's corpse
 
 	- When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
-		the existing mind of the old mob should be transfered to the new mob like so:
+		the existing mind of the old mob should be transferred to the new mob like so:
 
 			mind.transfer_to(new_mob)
 
@@ -200,12 +200,11 @@
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
 	antag_hud = new_character.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", src)
-	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
-		var/datum/antagonist/A = a
-		A.on_body_transfer(old_current, current)
+	for(var/datum/antagonist/antag_datum as anything in antag_datums) //Makes sure all antag datums effects are applied in the new body
+		antag_datum.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
-		var/mob/living/carbon/C = new_character
-		C.last_mind = src
+		var/mob/living/carbon/carbon_character = new_character
+		carbon_character.last_mind = src
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
@@ -357,6 +356,41 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
+
+	else if(href_list["obj_prompt_custom"])
+		var/datum/antagonist/target_antag
+		if(href_list["target_antag"])
+			var/datum/antagonist/found_datum = locate(href_list["target_antag"]) in antag_datums
+			if(found_datum)
+				target_antag = found_datum
+		if(isnull(target_antag))
+			switch(length(antag_datums))
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sort_list(antag_datums) + "(new custom antag)"
+					if (QDELETED(target))
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
+		var/replace_existing = input("Replace existing objectives?","Replace objectives?") in list("Yes", "No")
+		if (isnull(replace_existing))
+			return
+		replace_existing = replace_existing == "Yes"
+		var/replace_escape
+		if (!replace_existing)
+			replace_escape = FALSE
+		else
+			replace_escape = input("Replace survive/escape/martyr objectives?","Replace objectives?") in list("Yes", "No")
+			if (isnull(replace_escape))
+				return
+			replace_escape = replace_escape == "Yes"
+		target_antag.submit_player_objective(retain_existing = !replace_existing, retain_escape = !replace_escape, force = TRUE)
+		log_admin("[key_name(usr)] prompted [current] to enter their own objectives for [target_antag].")
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
@@ -533,11 +567,9 @@
 	if(assigned_role != new_role)
 		return
 
-	to_chat(incoming_client || src, span_infoplain("<b>You are the [new_role.title].</b>"))
-
-	var/related_policy = get_policy(new_role.title)
-	if(related_policy)
-		to_chat(incoming_client || src, related_policy)
+	var/intro_message = new_role.get_spawn_message()
+	if(incoming_client && intro_message)
+		to_chat(incoming_client, intro_message)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)

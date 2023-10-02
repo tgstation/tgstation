@@ -87,6 +87,12 @@
 	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
+		
+	rest_icon = new /atom/movable/screen/rest(null, src)
+	rest_icon.icon = ui_style
+	rest_icon.screen_loc = ui_above_intent
+	rest_icon.update_appearance()
+	static_inventory += rest_icon
 
 //begin indicators
 

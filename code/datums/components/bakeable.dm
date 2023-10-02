@@ -67,6 +67,9 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
+	if(baked_result.reagents) //make space and tranfer reagents if it has any
+		baked_result.reagents.clear_reagents()
+		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
@@ -104,4 +107,4 @@
 		else if(current_bake_time <= required_bake_time)
 			examine_list += span_notice("[parent] seems to be almost finished baking!")
 	else
-		examine_list += span_danger("[parent] should probably not be baked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put in the oven.")

@@ -26,16 +26,6 @@ export type Material = {
   amount: number;
 
   /**
-   * The number of sheets.
-   */
-  sheets: number;
-
-  /**
-   * Whether the material can be removed.
-   */
-  removable: BooleanLike;
-
-  /**
    * The color of the material.
    */
   color: string;
@@ -98,6 +88,11 @@ export type FabricatorData = {
    * The materials available to the fabricator, via ore silo or local storage.
    */
   materials: Material[];
+
+  /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
 
   /**
    * The name of the fabricator, as displayed on the title bar.

@@ -80,9 +80,9 @@
 
 	var/list/available_nodes = stored_research.researched_designs.Copy()
 	if(imported_designs.len)
-		available_nodes += imported_designs
+		available_nodes |= imported_designs
 	if(obj_flags & EMAGGED)
-		available_nodes += stored_research.hacked_designs
+		available_nodes |= stored_research.hacked_designs
 
 	for(var/design_id in available_nodes)
 		var/datum/design/limb_design = SSresearch.techweb_design_by_id(design_id)
@@ -291,4 +291,4 @@
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
 		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
-			imported_designs += found_design.id
+			imported_designs |= found_design.id

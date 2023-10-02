@@ -1,5 +1,0 @@
-author: "scriptis"
-delete-after: True
-changes:
-  - qol: "techfabs now use sheets(TM) as the default unit of measurement"
-  - bugfix: "mechfab icons aren't perpetually gray"

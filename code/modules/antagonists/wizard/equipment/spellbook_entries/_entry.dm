@@ -79,9 +79,9 @@
  * * user - the mob who's bought the spell
  * * book - what book they've bought the spell from
  *
- * Return TRUE if the purchase was successful, FALSE otherwise
+ * Return truthy if the purchase was successful, FALSE otherwise
  */
-/datum/spellbook_entry/proc/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
+/datum/spellbook_entry/proc/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	var/datum/action/cooldown/spell/existing = locate(spell_type) in user.actions
 	if(existing)
 		var/before_name = existing.name
@@ -94,20 +94,23 @@
 
 		//we'll need to update the cooldowns for the spellbook
 		set_spell_info()
-		log_spellbook("[key_name(user)] improved their knowledge of [initial(existing.name)] to level [existing.spell_level] for [cost] points")
-		SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[existing.spell_level]"))
-		log_purchase(user.key)
-		return TRUE
+
+		if(log_buy)
+			log_spellbook("[key_name(user)] improved their knowledge of [initial(existing.name)] to level [existing.spell_level] for [cost] points")
+			SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[existing.spell_level]"))
+			log_purchase(user.key)
+		return existing
 
 	//No same spell found - just learn it
 	var/datum/action/cooldown/spell/new_spell = new spell_type(user.mind || user)
 	new_spell.Grant(user)
 	to_chat(user, span_notice("You have learned [new_spell.name]."))
 
-	log_spellbook("[key_name(user)] learned [new_spell] for [cost] points")
-	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	log_purchase(user.key)
-	return TRUE
+	if(log_buy)
+		log_spellbook("[key_name(user)] learned [new_spell] for [cost] points")
+		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+		log_purchase(user.key)
+	return new_spell
 
 /datum/spellbook_entry/proc/log_purchase(key)
 	if(!islist(GLOB.wizard_spellbook_purchases_by_key[key]))
@@ -194,12 +197,13 @@
 	/// Typepath of what item we create when purchased
 	var/obj/item/item_path
 
-/datum/spellbook_entry/item/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
-	var/atom/spawned_path = new item_path(get_turf(user))
-	log_spellbook("[key_name(user)] bought [src] for [cost] points")
-	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+/datum/spellbook_entry/item/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
+	var/atom/spawned_path = new item_path(user.loc)
+	if(log_buy)
+		log_spellbook("[key_name(user)] bought [src] for [cost] points")
+		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+		log_purchase(user.key)
 	try_equip_item(user, spawned_path)
-	log_purchase(user.key)
 	return spawned_path
 
 /// Attempts to give the item to the buyer on purchase.
@@ -214,10 +218,11 @@
 	refundable = FALSE
 	buy_word = "Cast"
 
-/datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
-	log_spellbook("[key_name(user)] cast [src] for [cost] points")
-	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	log_purchase(user.key)
+/datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
+	if(log_buy)
+		log_spellbook("[key_name(user)] cast [src] for [cost] points")
+		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+		log_purchase(user.key)
 	book.update_static_data(user) // updates "times" var
 	return TRUE
 

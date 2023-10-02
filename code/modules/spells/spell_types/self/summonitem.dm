@@ -15,22 +15,40 @@
 	///The obj marked for recall
 	var/obj/marked_item
 
+/datum/action/cooldown/spell/summonitem/New(Target, original)
+	. = ..()
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(get_marked)))
+
+/datum/action/cooldown/spell/summonitem/Destroy()
+	if(!isnull(marked_item))
+		unmark_item()
+	return ..()
+
+/// For use in callbacks to get the marked item
+/datum/action/cooldown/spell/summonitem/proc/get_marked()
+	return marked_item
+
 /datum/action/cooldown/spell/summonitem/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
 /// Set the passed object as our marked item
 /datum/action/cooldown/spell/summonitem/proc/mark_item(obj/to_mark)
-	name = "Recall [to_mark]"
 	marked_item = to_mark
 	RegisterSignal(marked_item, COMSIG_QDELETING, PROC_REF(on_marked_item_deleted))
 
+	name = "Recall [marked_item]"
+	build_all_button_icons()
+
 /// Unset our current marked item
 /datum/action/cooldown/spell/summonitem/proc/unmark_item()
-	name = initial(name)
 	UnregisterSignal(marked_item, COMSIG_QDELETING)
 	marked_item = null
 
-/// Signal proc for COMSIG_QDELETING on our marked item, unmarks our item if it's deleted
+	if(!QDELING(src))
+		name = initial(name)
+		build_all_button_icons()
+
+/// Signal proc for [COMSIG_QDELETING] on our marked item, unmarks our item if it's deleted
 /datum/action/cooldown/spell/summonitem/proc/on_marked_item_deleted(datum/source)
 	SIGNAL_HANDLER
 
@@ -50,6 +68,12 @@
 
 	try_recall_item(cast_on)
 
+/// Checks if the passed item is a valid item that can be marked / linked to summon.
+/datum/action/cooldown/spell/summonitem/proc/can_link_to(obj/item/potential_mark, mob/living/caster)
+	if(potential_mark.item_flags & ABSTRACT)
+		return FALSE
+	return TRUE
+
 /// If we don't have a marked item, attempts to mark the caster's held item.
 /datum/action/cooldown/spell/summonitem/proc/try_link_item(mob/living/caster)
 	var/obj/item/potential_mark = caster.get_active_held_item()
@@ -61,7 +85,7 @@
 		return FALSE
 
 	var/link_message = ""
-	if(potential_mark.item_flags & ABSTRACT)
+	if(!can_link_to(potential_mark, caster))
 		return FALSE
 	if(SEND_SIGNAL(potential_mark, COMSIG_ITEM_MARK_RETRIEVAL, src, caster) & COMPONENT_BLOCK_MARK_RETRIEVAL)
 		return FALSE
@@ -156,18 +180,29 @@
 
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"
-	desc = "Activating this would activate your linked baton emergency teleport protocol and recall it back to your hand, Takes a long time for translocation crystals to be enriched after use. REMINDER: YOU NEED TO LINK YOUR BATON MANUALLY!"
-	button_icon = 'icons/obj/antags/abductor.dmi'
-	button_icon_state = "wonderprodStun"
+	desc = "Activating this will trigger your baton's emergency translocation protocol, \
+		recalling it to your hand. Takes a long time for the translocation crystals to reset after use."
+	sound = 'sound/effects/phasein.ogg'
 
+	school = SCHOOL_UNSET
 	cooldown_time = 3.5 MINUTES
 
+	spell_requirements = NONE
 	invocation_type = INVOCATION_NONE
 
-/datum/action/cooldown/spell/summonitem/abductor/try_link_item(mob/living/caster)
-	var/obj/item/potential_mark = caster.get_active_held_item()
-	if(!istype(potential_mark, /obj/item/melee/baton/abductor))
-		to_chat(caster, span_warning("Object is unable to be marked, Ensure that the object you are trying to mark is a baton of our origin"))
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
+/datum/action/cooldown/spell/summonitem/abductor/can_link_to(obj/item/potential_mark, mob/living/caster)
+	. = ..()
+	if(!.)
+		return .
+
+	if(!istype(potential_mark, /obj/item/melee/baton/abductor))
+		to_chat(caster, span_warning("[potential_mark] has no translocation crystals to link to!"))
 		return FALSE
-	return  ..()
+
+	return TRUE
+
+/datum/action/cooldown/spell/summonitem/abductor/try_unlink_item(mob/living/caster)
+	to_chat(caster, span_warning("You can't unlink [marked_item]'s translocation crystals."))
+	return FALSE

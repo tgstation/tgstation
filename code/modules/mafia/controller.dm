@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	var/client/role_client = GLOB.directory[rewarded.body.client]
+	var/client/role_client = rewarded.body.client
 	role_client?.give_award(award, rewarded.body)
 
 /**
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	for(var/datum/mafia_role/role as anything in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
-		H.add_traits(list(TRAIT_NOFIRE, TRAIT_NOBREATH, TRAIT_CANNOT_CRYSTALIZE), MAFIA_TRAIT)
+		H.add_traits(list(TRAIT_NOFIRE, TRAIT_NOBREATH, TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL), MAFIA_TRAIT)
 		H.equipOutfit(outfit_to_distribute)
 		H.status_flags |= GODMODE
 		RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))

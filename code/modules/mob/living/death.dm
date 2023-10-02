@@ -58,6 +58,7 @@
 
 	dust_animation()
 	spawn_dust(just_ash)
+	ghostize()
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /mob/living/proc/dust_animation()
@@ -82,7 +83,7 @@
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
-	tod = station_time_timestamp()
+	station_timestamp_timeofdeath = station_time_timestamp()
 	var/turf/death_turf = get_turf(src)
 	var/area/death_area = get_area(src)
 	// Display a death message if the mob is a player mob (has an active mind)

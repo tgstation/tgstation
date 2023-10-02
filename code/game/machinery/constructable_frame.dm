@@ -183,7 +183,7 @@
 					set_anchored(!anchored)
 				return
 
-			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+			if(!circuit && istype(P, /obj/item/storage/part_replacer) && P.contents.len)
 				var/obj/item/storage/part_replacer/replacer = P
 				// map of circuitboard names to the board
 				var/list/circuit_boards = list()
@@ -208,12 +208,12 @@
 					attackby(replacer, user, params)
 					return
 
-			if(istype(P, /obj/item/circuitboard/machine))
+			if(!circuit && istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/machine_board = P
 				install_board(machine_board, user, TRUE)
 				return
 
-			else if(istype(P, /obj/item/circuitboard))
+			else if(!circuit && istype(P, /obj/item/circuitboard))
 				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 
@@ -269,15 +269,7 @@
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new circuit.build_path(loc)
 					if(istype(new_machine))
-						// Machines will init with a set of default components. Move to nullspace so we don't trigger handle_atom_del, then qdel.
-						// Finally, replace with this frame's parts.
-						if(new_machine.circuit)
-							// Move to nullspace and delete.
-							new_machine.circuit.moveToNullspace()
-							QDEL_NULL(new_machine.circuit)
-						for(var/obj/old_part in new_machine.component_parts)
-							old_part.moveToNullspace()
-							qdel(old_part)
+						new_machine.clear_components()
 
 						// Set anchor state
 						new_machine.set_anchored(anchored)

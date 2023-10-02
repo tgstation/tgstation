@@ -886,7 +886,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
-		ADD_TRAIT(new_human, TRAIT_NOBREATH, INNATE_TRAIT)
+		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
@@ -1019,8 +1019,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			images += A
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
-			var/construct = pick("floater","artificer","behemoth")
-			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			var/construct = pick("wraith","artificer","juggernaut")
+			var/image/B = image('icons/mob/nonhuman-player/cult.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"mob_apoc",TRUE), duration)

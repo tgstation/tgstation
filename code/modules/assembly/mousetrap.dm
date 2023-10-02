@@ -138,11 +138,7 @@
 	else if(ismouse(target))
 		var/mob/living/basic/mouse/splatted = target
 		visible_message(span_boldannounce("SPLAT!"))
-		if(splatted.health <= 5)
-			splatted.splat()
-		else
-			splatted.adjust_health(5)
-			splatted.Stun(1 SECONDS)
+		splatted.splat() // mousetraps are instadeath for mice
 
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
@@ -196,7 +192,7 @@
 			if(!(MM.movement_type & FLYING))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
-					if(H.m_intent == MOVE_INTENT_RUN)
+					if(H.move_intent == MOVE_INTENT_RUN)
 						INVOKE_ASYNC(src, PROC_REF(triggered), H)
 						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
 							span_warning("You accidentally step on [src]"))

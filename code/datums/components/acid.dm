@@ -78,8 +78,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(sizzle)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
-	if(process_effect)
-		QDEL_NULL(process_effect)
+	process_effect = null
 	return ..()
 
 /datum/component/acid/RegisterWithParent()
@@ -167,6 +166,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	// Snowflake code for handling acid melting walls.
 	// We really should consider making turfs use atom_integrity, but for now this is just for acids.
+
+	//Strong walls will never get melted
+	if(target_turf.get_explosive_block() >= 2)
+		return
+	//Reinforced floors never get melted
+	if(istype(target_turf, /turf/open/floor/engine))
+		return
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
@@ -250,7 +256,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/mob/living/crosser = arrived
 	if(crosser.movement_type & FLYING)
 		return
-	if(crosser.m_intent == MOVE_INTENT_WALK)
+	if(crosser.move_intent == MOVE_INTENT_WALK)
 		return
 	if(prob(60))
 		return

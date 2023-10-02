@@ -31,6 +31,7 @@
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"
+#define LANGUAGE_PAI "pai"
 #define LANGUAGE_SOFTWARE "software"
 #define LANGUAGE_STONER "stoner"
 #define LANGUAGE_VOICECHANGE "voicechange"

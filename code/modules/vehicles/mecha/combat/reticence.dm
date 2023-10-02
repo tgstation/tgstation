@@ -11,16 +11,17 @@
 	destruction_sleep_duration = 40
 	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/reticence
-	operation_req_access = list(ACCESS_THEATRE)
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | QUIET_STEPS | QUIET_TURNS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_RETICENCE
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	step_energy_drain = 3
+	step_energy_drain = 4
 	color = "#87878715"
 
 /datum/armor/mecha_reticence
@@ -40,11 +41,9 @@
 		MECHA_ARMOR = list(),
 	)
 
-/obj/vehicle/sealed/mecha/reticence/add_cell()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
-
-/obj/vehicle/sealed/mecha/reticence/add_scanmod()
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-
-/obj/vehicle/sealed/mecha/reticence/add_capacitor()
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+/obj/vehicle/sealed/mecha/reticence/loaded/populate_parts()
+	cell = new /obj/item/stock_parts/cell/hyper(src)
+	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+	capacitor = new /obj/item/stock_parts/capacitor/super(src)
+	servo = new /obj/item/stock_parts/servo/pico(src)
+	update_part_values()

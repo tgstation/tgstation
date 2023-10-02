@@ -56,7 +56,7 @@
 
 /// Makes free golems slow and sad on the space station
 /obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
-	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin)) + typecacheof(/area/misc/survivalpod)
+	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin, /area/misc/survivalpod, /area/golem))
 	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
 	new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
 
@@ -101,7 +101,7 @@
 		CRASH("[type] created a golem without a mind.")
 
 	new_spawn.mind.enslave_mind_to_creator(real_owner)
-	to_chat(new_spawn, span_userdanger("Serve [real_owner], and assist [real_owner.p_them()] in completing [real_owner.p_their()] goals at any cost."))
+	to_chat(new_spawn, span_userdanger("Serve [real_owner.real_name], and assist [real_owner.p_them()] in completing [real_owner.p_their()] goals at any cost."))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/name_mob(mob/living/spawned_mob, forced_name)
 	if(forced_name || !iscarbon(spawned_mob))

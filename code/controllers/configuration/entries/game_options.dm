@@ -428,3 +428,5 @@
 /datum/config_entry/str_list/tts_voice_blacklist
 
 /datum/config_entry/flag/give_tutorials_without_db
+
+/datum/config_entry/string/new_player_alert_role_id

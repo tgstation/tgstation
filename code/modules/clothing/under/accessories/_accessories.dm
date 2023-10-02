@@ -17,6 +17,7 @@
 	inhand_icon_state = "" //no inhands
 	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NOBLUDGEON
 	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = TRUE
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -46,7 +47,28 @@
 			attach_to.balloon_alert(user, "can't attach there!")
 		return FALSE
 
+	if(length(attach_to.attached_accessories) >= attach_to.max_number_of_accessories)
+		if(user)
+			attach_to.balloon_alert(user, "too many accessories!")
+		return FALSE
+
 	return TRUE
+
+// If accessory is being worn, make sure it updates on the player
+/obj/item/clothing/accessory/update_greyscale()
+	. = ..()
+
+	var/obj/item/clothing/under/attached_to = loc
+	
+	if(!istype(attached_to))
+		return
+
+	var/mob/living/carbon/human/wearer = attached_to.loc
+
+	if(!istype(wearer))
+		return
+
+	attached_to.update_accessory_overlay()
 
 /**
  * Actually attach this accessory to the passed clothing article.
@@ -139,10 +161,12 @@
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	dropped(user)
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to

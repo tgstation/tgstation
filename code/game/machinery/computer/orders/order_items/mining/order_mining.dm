@@ -102,3 +102,7 @@
 /datum/orderable_item/mining/style_meter
 	item_path = /obj/item/style_meter
 	cost_per_order = 1500
+
+/datum/orderable_item/mining/weather_radio
+	item_path = /obj/item/radio/weather_monitor
+	cost_per_order = 400

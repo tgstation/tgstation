@@ -31,6 +31,7 @@
 /obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/machinery/ticket_machine/Destroy()
 	for(var/obj/item/ticket_machine_ticket/ticket in tickets)
@@ -54,8 +55,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	M.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.

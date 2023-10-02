@@ -20,6 +20,14 @@
 	var/list/buffer
 	var/ready = TRUE
 	var/cooldown = 200
+	/// genetic makeup data that's scanned
+	var/list/genetic_makeup_buffer = list()
+
+/obj/item/sequence_scanner/examine(mob/user)
+	. = ..()
+	. += span_notice("Use primary attack to scan mutations, Secondary attack to scan genetic makeup")
+	if(LAZYLEN(genetic_makeup_buffer) > 0)
+		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
 /obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
 	add_fingerprint(user)
@@ -31,6 +39,31 @@
 		gene_scan(target, user)
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
+
+/obj/item/sequence_scanner/attack_secondary(mob/living/target, mob/living/carbon/human/user, max_interact_count = 1)
+	add_fingerprint(user)
+	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
+	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA) && !HAS_TRAIT(target, TRAIT_NO_DNA_COPY))
+		user.visible_message(span_warning("[user] is scanning [target]'s genetic makeup."))
+		if(!do_after(user, 3 SECONDS))
+			balloon_alert(user, "scan failed!")
+			user.visible_message(span_warning("[user] fails to scan [target]'s genetic makeup."))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		makeup_scan(target, user)
+		balloon_alert(user, "makeup scanned")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	else
+		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic makeup."), span_warning("[target] has no readable genetic makeup!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/sequence_scanner/afterattack_secondary(obj/object, mob/user, proximity)
+	. = ..()
+	if(!istype(object) || !proximity)
+		return
+	if(istype(object, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/console = object
+		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
+		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -51,6 +84,7 @@
 		else
 			to_chat(user,span_warning("No database to update from."))
 
+///proc for scanning someone's mutations
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
 	if(!iscarbon(target) || !target.has_dna())
 		return
@@ -70,6 +104,19 @@
 			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
 		else
 			to_chat(user, span_notice("[get_display_name(mutation)]"))
+
+///proc for scanning someone's genetic makeup
+/obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
+	if(!iscarbon(target) || !target.has_dna())
+		return
+
+	genetic_makeup_buffer = list(
+	"label"="Analyzer Slot:[target.real_name]",
+	"UI"=target.dna.unique_identity,
+	"UE"=target.dna.unique_enzymes,
+	"UF"=target.dna.unique_features,
+	"name"=target.real_name,
+	"blood_type"=target.dna.blood_type)
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)

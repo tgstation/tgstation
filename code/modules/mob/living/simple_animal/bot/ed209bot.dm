@@ -12,6 +12,8 @@
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 
+	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/voice/ed209_20sec.ogg')
+
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
@@ -53,6 +55,10 @@
 		if(all_targets.stat != DEAD && !all_targets.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shoot_at(all_targets)
 	..()
+
+/mob/living/simple_animal/bot/secbot/ed209/threat_react(threatlevel)
+	speak("Level [threatlevel] infraction alert!")
+	playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'

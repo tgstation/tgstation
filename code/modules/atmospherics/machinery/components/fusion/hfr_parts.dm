@@ -181,7 +181,7 @@
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	var/turf/T = get_step(src,turn(dir,180))
+	var/turf/T = get_step(src,REVERSE_DIR(dir))
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())

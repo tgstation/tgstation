@@ -28,7 +28,7 @@
 	playsound(src, P.hitsound, 50, TRUE)
 	var/damage
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
+		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration)
 	if(P.suppressed != SUPPRESSED_VERY)
 		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
@@ -144,7 +144,7 @@
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
+			buckled_mob.electrocute_act((clamp(round(strength * 3.125e-6), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)

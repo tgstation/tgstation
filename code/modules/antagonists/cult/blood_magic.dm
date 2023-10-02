@@ -83,7 +83,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			human_owner.bleed(40 - rune*32)
-		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner)
+		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner.mind)
 		new_spell.Grant(owner, src)
 		spells += new_spell
 		Positioning()

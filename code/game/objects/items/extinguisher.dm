@@ -43,6 +43,15 @@
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
 
+/obj/item/extinguisher/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/extinguisher/empty
 	starting_water = FALSE
 
@@ -67,7 +76,7 @@
 
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
-	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
+	desc = "Spraycan turned coolant dispenser. Can be sprayed on containers to cool them. Refill using water."
 	icon_state = "coolant0"
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
@@ -163,7 +172,7 @@
 			balloon_alert(user, "already full!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
+		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
@@ -205,10 +214,10 @@
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
-			var/movementdirection = turn(direction,180)
+			var/movementdirection = REVERSE_DIR(direction)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 1)
 		else
-			user.newtonian_move(turn(direction, 180))
+			user.newtonian_move(REVERSE_DIR(direction))
 
 		//Get all the turfs that can be shot at
 		var/turf/T = get_turf(target)
@@ -231,7 +240,7 @@
 			var/datum/reagents/water_reagents = new /datum/reagents(5)
 			water.reagents = water_reagents
 			water_reagents.my_atom = water
-			reagents.trans_to(water, 1, transfered_by = user)
+			reagents.trans_to(water, 1, transferred_by = user)
 
 		//Make em move dat ass, hun
 		move_particles(water_particles)

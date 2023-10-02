@@ -14,7 +14,7 @@
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 
 	heatmod = 1.5
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	meat = /obj/item/food/meat/slab/human/mutant/plant
 	exotic_blood = /datum/reagent/water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -98,6 +98,3 @@
 	))
 
 	return to_add
-
-/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)

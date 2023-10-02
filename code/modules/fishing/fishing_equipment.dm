@@ -11,7 +11,8 @@
 	desc = "Simple fishing line."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
-	var/fishing_line_traits = NONE
+	///A list of traits that this fishing line has, checked by fish traits and the minigame.
+	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = "#808080"
 
@@ -59,11 +60,12 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	var/fishing_hook_traits = NONE
+	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
+	var/list/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
 	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
-	var/chasm_detritus_type = /obj/item/chasm_detritus
+	var/chasm_detritus_type = /datum/chasm_detritus
 
 
 /**
@@ -100,7 +102,7 @@
 	desc = "Won't make catching fish any easier, but it might help with looking for other things."
 	icon_state = "treasure"
 	rod_overlay_icon_state = "hook_treasure_overlay"
-	chasm_detritus_type = /obj/item/chasm_detritus/restricted/objects
+	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
 
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
@@ -129,7 +131,7 @@
 	desc = "An unwieldy hook meant to help with the rescue of those that have fallen down in chasms. You can tell there's no way you'll catch any fish with this, and that it won't be of any use outside of chasms."
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
-	chasm_detritus_type = /obj/item/chasm_detritus/restricted/bodies
+	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
 
 
 // This hook can only fish in chasms.
@@ -150,7 +152,7 @@
 
 /obj/item/fishing_hook/bone
 	name = "bone hook"
-	desc = "a simple hook carved from sharpened bone"
+	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
 
 /datum/crafting_recipe/bone_hook
@@ -159,6 +161,24 @@
 	reqs = list(/obj/item/stack/sheet/bone = 1)
 	time = 2 SECONDS
 	category = CAT_TOOLS
+
+/obj/item/fishing_hook/stabilized
+	name = "gyro-stabilized hook"
+	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the bait both and up and down when reeling in, otherwise keeping it in place."
+	icon_state = "gyro"
+	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
+	rod_overlay_icon_state = "hook_gyro_overlay"
+
+/obj/item/fishing_hook/stabilized/examine(mob/user)
+	. = ..()
+	. += span_notice("While fishing, you can hold the <b>Right</b> Mouse Button to move the bait down, rather than up.")
+
+/obj/item/fishing_hook/jaws
+	name = "jawed hook"
+	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
+	icon_state = "jaws"
+	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
+	rod_overlay_icon_state = "hook_jaws_overlay"
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
@@ -170,11 +190,30 @@
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
-	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)
+	var/static/list/exception_cache = typecacheof(
+		/obj/item/fishing_rod,
+		/obj/item/fishing_line,
+	)
 	atom_storage.exception_hold = exception_cache
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
+	new /obj/item/fishing_rod(src)
+	new /obj/item/fishing_hook(src)
+	new /obj/item/fishing_line(src)
+
+/obj/item/storage/toolbox/fishing/small
+	name = "compact fishing toolbox"
+	desc = "Contains everything you need for your fishing trip. Except for the bait."
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 5
+	throwforce = 5
+
+/obj/item/storage/toolbox/fishing/small/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //It can still hold a fishing rod
+
+/obj/item/storage/toolbox/fishing/small/PopulateContents()
 	new /obj/item/fishing_rod(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
@@ -196,7 +235,6 @@
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
-
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

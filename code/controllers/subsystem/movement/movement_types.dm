@@ -113,9 +113,14 @@
 		return
 
 	var/visual_delay = controller.visual_delay
+	var/old_dir = moving.dir
+	var/old_loc = moving.loc
 
 	owner?.processing_move_loop_flags = flags
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+	if(moving)
+		var/direction = get_dir(old_loc, moving.loc)
+		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
 	owner?.processing_move_loop_flags = NONE
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
@@ -379,7 +384,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	movement_path = initial_path.Copy()
+	movement_path = initial_path?.Copy()
 	if(isidcard(id))
 		RegisterSignal(id, COMSIG_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
@@ -400,6 +405,7 @@
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
 	avoid = null
+	on_finish_callback = null
 	return ..()
 
 /datum/move_loop/has_target/jps/proc/handle_no_id()

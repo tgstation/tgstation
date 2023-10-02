@@ -6,9 +6,9 @@
 	agent = "Stars"
 	cures = list(/datum/reagent/bluespace)
 	viable_mobtypes = list(/mob/living/carbon/human)
-	required_organs = list(/obj/item/organ/internal/stomach)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
+	required_organ = ORGAN_SLOT_STOMACH
 	max_stages = 5
 
 /datum/disease/advance/nebula_nausea/New()

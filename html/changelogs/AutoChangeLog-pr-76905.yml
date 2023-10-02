@@ -1,5 +1,0 @@
-author: "tommysalami3"
-delete-after: True
-changes:
-  - rscadd: "Ambient tracks for icebox."
-  - rscadd: "Independent global_list for icebox."

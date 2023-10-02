@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Fixes a runtime on inserting the vorpal scythe into your arm. You should now gain the Morbid trait, as expected."

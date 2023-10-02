@@ -15,6 +15,9 @@
 /// Used to make a material type able to be instantiated on demand after roundstart.
 #define MATERIAL_INIT_BESPOKE (1<<1)
 
+/// Makes sure only integer values are used when consuming, removing & checking for mats
+#define OPTIMAL_COST(cost)(max(1, round(cost)))
+
 //Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1<<0)
@@ -72,3 +75,13 @@
 #define MATERIAL_SLOWDOWN_PLASTEEL (0.05)
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of alien alloy.
 #define MATERIAL_SLOWDOWN_ALIEN_ALLOY (0.1)
+
+//Stock market stock values.
+/// How much quantity of a material stock exists for common materials like iron & glass.
+#define MATERIAL_QUANTITY_COMMON 25000
+/// How much quantity of a material stock exists for uncommon materials like silver & titanium.
+#define MATERIAL_QUANTITY_UNCOMMON 10000
+/// How much quantity of a material stock exists for rare materials like gold, uranium, & diamond.
+#define MATERIAL_QUANTITY_RARE 2500
+/// How much quantity of a material stock exists for exotic materials like diamond & bluespace crystals.
+#define MATERIAL_QUANTITY_EXOTIC 500

@@ -8,6 +8,10 @@
 	desc = "You have no idea what this strange ball of bones does."
 	icon_state = "liver-bone"
 	organ_traits = list(TRAIT_STABLELIVER)
+	///Var for brute healing via milk
+	var/milk_brute_healing = 2.5
+	///Var for burn healing via milk
+	var/milk_burn_healing = 2.5
 
 /obj/item/organ/internal/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
@@ -43,7 +47,7 @@
 		if(chem.volume > 50)
 			organ_owner.reagents.remove_reagent(chem.type, (chem.volume - 50))
 			to_chat(organ_owner, span_warning("The excess milk is dripping off your bones!"))
-		organ_owner.heal_bodypart_damage(2.5 * REM * seconds_per_tick)
+		organ_owner.heal_bodypart_damage(milk_brute_healing * REM * seconds_per_tick, milk_burn_healing * REM * seconds_per_tick)
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
 			iter_wound.on_xadone(1 * REM * seconds_per_tick)
 		return // Do normal metabolism

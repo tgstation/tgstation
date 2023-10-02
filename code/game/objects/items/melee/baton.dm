@@ -95,6 +95,15 @@
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
 
+/obj/item/melee/baton/apply_fantasy_bonuses(bonus)
+	. = ..()
+	stamina_damage = modify_fantasy_variable("stamina_damage", stamina_damage, bonus * 4)
+
+
+/obj/item/melee/baton/remove_fantasy_bonuses(bonus)
+	stamina_damage = reset_fantasy_variable("stamina_damage", stamina_damage)
+	return ..()
+
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
 		return NONE

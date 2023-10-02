@@ -69,7 +69,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 	owner.remove_filter(id)
 
-/datum/status_effect/realignment/tick(seconds_per_tick, times_fired)
+/datum/status_effect/realignment/tick(seconds_between_ticks)
 	owner.adjustStaminaLoss(-5)
 	owner.AdjustAllImmobility(-0.5 SECONDS)
 

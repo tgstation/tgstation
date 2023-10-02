@@ -9,7 +9,7 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "space_helmet"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -134,11 +134,11 @@
 	return ..()
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/clothing/suit/space/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		thermal_on = FALSE
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell()

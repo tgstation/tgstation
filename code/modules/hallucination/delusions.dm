@@ -141,7 +141,7 @@
 	delusion_name = "???"
 
 /datum/hallucination/delusion/preset/monkey
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "monkey"
 	delusion_name = "monkey"
 
@@ -160,18 +160,18 @@
 	delusion_name = "carp"
 
 /datum/hallucination/delusion/preset/skeleton
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "skeleton"
 	delusion_name = "skeleton"
 
 /datum/hallucination/delusion/preset/zombie
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "zombie"
 	delusion_name = "zombie"
 
 /datum/hallucination/delusion/preset/demon
-	delusion_icon_file = 'icons/mob/simple/mob.dmi'
-	delusion_icon_state = "daemon"
+	delusion_icon_file = 'icons/mob/simple/demon.dmi'
+	delusion_icon_state = "slaughter_demon"
 	delusion_name = "demon"
 
 /datum/hallucination/delusion/preset/cyborg

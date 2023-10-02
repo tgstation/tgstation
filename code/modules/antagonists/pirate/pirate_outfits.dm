@@ -113,7 +113,6 @@
 	gloves = null
 	head = /obj/item/clothing/head/costume/irs
 	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/radio/headset/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt
 
 /datum/outfit/pirate/irs/auditor

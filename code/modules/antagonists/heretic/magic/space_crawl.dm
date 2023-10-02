@@ -60,10 +60,10 @@
  */
 /datum/action/cooldown/spell/jaunt/space_crawl/proc/try_enter_jaunt(turf/our_turf, mob/living/jaunter)
 	// Begin the jaunt
-	jaunter.notransform = TRUE
+	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	var/obj/effect/dummy/phased_mob/holder = enter_jaunt(jaunter, our_turf)
-	if(!holder)
-		jaunter.notransform = FALSE
+	if(isnull(holder))
+		REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 		return FALSE
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
@@ -82,14 +82,14 @@
 	new /obj/effect/temp_visual/space_explosion(our_turf)
 	jaunter.extinguish_mob()
 
-	jaunter.notransform = FALSE
+	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	return TRUE
 
 /**
  * Attempts to Exit the passed space or misc turf.
  */
 /datum/action/cooldown/spell/jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/jaunter)
-	if(jaunter.notransform)
+	if(HAS_TRAIT_FROM(jaunter, TRAIT_NO_TRANSFORM, REF(src)))
 		to_chat(jaunter, span_warning("You cannot exit yet!!"))
 		return FALSE
 

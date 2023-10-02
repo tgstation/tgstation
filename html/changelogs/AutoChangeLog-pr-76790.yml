@@ -1,6 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "the penguin is a basic animal"
-  - rscadd: "the penguin now layed eggs"
-  - rscadd: "the penguin and the chicken babys will go look for adult penguin or chicken and be happy when he is near the adult"

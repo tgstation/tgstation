@@ -41,7 +41,7 @@
 	to_chat(usr, span_info("You requested: \"[request_url]\" to be played."), confidential = TRUE)
 	request_url = span_adminnotice("<b><font color='cyan'>MUSIC REQUEST: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(request_url)] [ADMIN_PLAY_INTERNET(request_url, credit)]")
 	for(var/client/admin_client in GLOB.admins)
-		if(admin_client.prefs.chat_toggles & CHAT_PRAYER)
+		if(get_chat_toggles(admin_client) & CHAT_PRAYER)
 			to_chat(admin_client, request_url, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "music_request", 1, "Music Request") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

@@ -234,9 +234,8 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
-			stock_list -= item
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
@@ -260,6 +259,7 @@
 	data["current_stock"] = remaining_stock
 	data["shop_locked"] = uplink_handler.shop_locked
 	data["purchased_items"] = length(uplink_handler.purchase_log?.purchase_log)
+	data["can_renegotiate"] = user.mind == uplink_handler.owner && uplink_handler.can_replace_objectives?.Invoke() == TRUE
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -301,6 +301,9 @@
 			if(!lockable)
 				return TRUE
 			lock_uplink()
+		if("renegotiate_objectives")
+			uplink_handler.replace_objectives?.Invoke()
+			SStgui.update_uis(src)
 
 	if(!uplink_handler.has_objectives)
 		return TRUE

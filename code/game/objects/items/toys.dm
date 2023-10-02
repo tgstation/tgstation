@@ -62,7 +62,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, span_warning("[src] is full."))
 		else
-			A.reagents.trans_to(src, 10, transfered_by = user)
+			A.reagents.trans_to(src, 10, transferred_by = user)
 			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_appearance()
@@ -77,7 +77,7 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
-				I.reagents.trans_to(src, 10, transfered_by = user)
+				I.reagents.trans_to(src, 10, transferred_by = user)
 				update_appearance()
 	else if(I.get_sharpness())
 		balloon_burst()
@@ -285,7 +285,7 @@
 	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
 		user.visible_message(span_danger("[user] regurgitates [src]!")) // I swear i dont have a fetish
-		user.vomit(100, TRUE, distance = 0)
+		user.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 100, distance = 0)
 		user.adjustOxyLoss(120)
 		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
 		user.set_suicide(FALSE)
@@ -663,7 +663,7 @@
 	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
+		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
 			to_chat(M, span_danger("You step on the snap pop!"))
 			pop_burst(2, 0)
 
@@ -917,6 +917,7 @@
 	icon = 'icons/obj/toys/balls.dmi'
 	icon_state = "baseball"
 	inhand_icon_state = "baseball"
+	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 9
 	throw_speed = 0.5
 

@@ -519,3 +519,28 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	return .
 
+/// Sends a fax to a fax machine in an area! fax_area is a type, where all subtypes are also queried. If multiple machines, one is randomly picked
+/// If force is TRUE, we send a droppod with a fax machine and fax the message to that fax machine
+/proc/send_fax_to_area(obj/item/fax_item, area_type, sender, force = FALSE, force_pod_type)
+	var/list/fax_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax)
+	var/list/valid_fax_machines = list()
+
+	for(var/obj/machinery/fax as anything in fax_machines) //get valid fax machines
+		var/area/fax_area = get_area(fax)
+		if(istype(fax_area, area_type))
+			valid_fax_machines += fax
+
+	// Pick a fax machine and send the fax
+	if(valid_fax_machines.len)
+		var/obj/machinery/fax/target_fax = pick(valid_fax_machines)
+		target_fax.receive(fax_item, sender)
+
+	else if(force) //no fax machines but we really gotte send? SEND A FAX MACHINE
+		var/obj/machinery/fax/new_fax_machine = new ()
+		send_supply_pod_to_area(new_fax_machine, area_type, force_pod_type)
+		addtimer(CALLBACK(new_fax_machine, TYPE_PROC_REF(/obj/machinery/fax, receive), fax_item, sender), 10 SECONDS)
+
+	else
+		return FALSE
+	return TRUE
+

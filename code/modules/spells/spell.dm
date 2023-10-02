@@ -142,7 +142,9 @@
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return FALSE
-	if(!is_valid_target(target))
+	if(target == owner)
+		target = get_caster_from_target(target)
+	if(isnull(target) || !is_valid_target(target))
 		return FALSE
 
 	return Activate(target)
@@ -178,18 +180,13 @@
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
 		return FALSE
 
-	if(!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
-		if(feedback)
-			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
-		return FALSE
-
 	if(!try_invoke(owner, feedback = feedback))
 		return FALSE
 
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
-			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
@@ -199,19 +196,28 @@
 				return FALSE
 
 	else
-		// If the spell requires wizard equipment and we're not a human (can't wear robes or hats), that's just a given
-		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
+		// If you strictly need to be a human, well, goodbye.
+		if(spell_requirements & SPELL_REQUIRES_HUMAN)
 			if(feedback)
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
+		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
+		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
+			var/any_casting = FALSE
+			for(var/obj/item/clothing/item in owner)
+				if(item.clothing_flags & CASTING_CLOTHES)
+					any_casting = TRUE
+					break
+
+			if(!any_casting)
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				return FALSE
+
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
-			return FALSE
-
-		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
-		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
 			return FALSE
 
 	return TRUE
@@ -225,6 +231,24 @@
  */
 /datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	return TRUE
+
+/**
+ * Used to get the cast_on atom if a self cast spell is being cast.
+ *
+ * Allows for some atoms to be used as casting sources if a spell caster is located within.
+ */
+/datum/action/cooldown/spell/proc/get_caster_from_target(atom/target)
+	var/atom/cast_loc = target.loc
+	if(isnull(cast_loc))
+		return null // No magic in nullspace
+
+	if(isturf(cast_loc))
+		return target // They're just standing around, proceed as normal
+
+	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
+		return cast_loc // They're in an atom which allows casting, so redirect the caster to loc
+
+	return null
 
 // The actual cast chain occurs here, in Activate().
 // You should generally not be overriding or extending Activate() for spells.
@@ -272,6 +296,31 @@
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
+
+	// Bonus invocation check done here:
+	// If the caster has no tongue and it's a verbal spell,
+	// Or has no hands and is a gesture spell - cancel it,
+	// and show a funny message that they tried
+	if(ishuman(owner) && !(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION))
+		var/mob/living/carbon/human/caster = owner
+		switch(invocation_type)
+			if(INVOCATION_WHISPER, INVOCATION_SHOUT)
+				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
+					invocation(caster)
+					to_chat(caster, span_warning("Your lack of tongue is making it difficult to say the correct words to cast [src]..."))
+					StartCooldown(2 SECONDS)
+					return SPELL_CANCEL_CAST
+
+			if(INVOCATION_EMOTE)
+				if(caster.usable_hands <= 0)
+					var/arm_describer = (caster.num_hands >= 2 ? "arms limply" : (caster.num_hands == 1 ? "arm wildly" : "arm stumps"))
+					caster.visible_message(
+						span_warning("[caster] wiggles around [caster.p_their()] [arm_describer]."),
+						ignored_mobs = caster,
+					)
+					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
+					StartCooldown(2 SECONDS)
+					return SPELL_CANCEL_CAST
 
 	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
 	if(owner)
@@ -407,6 +456,7 @@
 
 	spell_level++
 	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
@@ -427,12 +477,9 @@
 	else
 		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
-
-/datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	name = "[get_spell_title()][initial(name)]"
-	return ..()
 
 /// Gets the title of the spell based on its level.
 /datum/action/cooldown/spell/proc/get_spell_title()

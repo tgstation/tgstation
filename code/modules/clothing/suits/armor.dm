@@ -29,6 +29,20 @@
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
 
+/obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+
+/obj/item/clothing/suit/armor/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+	return ..()
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."
@@ -93,10 +107,11 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/marine/pmc
-	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing."
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
+	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/suit/armor/vest/old

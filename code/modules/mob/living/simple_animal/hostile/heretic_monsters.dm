@@ -26,7 +26,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	healable = FALSE
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
@@ -146,7 +145,7 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	obj_damage = 200
 	ranged_cooldown_time = 5
 	ranged = TRUE
@@ -199,6 +198,7 @@
 
 	for(var/i in 1 to worm_length)
 		current = new type(drop_location(), FALSE)
+		ADD_TRAIT(current, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 		current.icon_state = "armsy_mid"
 		current.icon_living = "armsy_mid"
 		current.AIStatus = AI_OFF

@@ -22,7 +22,7 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 
-/datum/status_effect/void_chill/tick()
+/datum/status_effect/void_chill/tick(seconds_between_ticks)
 	owner.adjust_bodytemperature(cooling_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /datum/status_effect/void_chill/major
@@ -48,7 +48,7 @@
 	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
 	return TRUE
 
-/datum/status_effect/amok/tick()
+/datum/status_effect/amok/tick(seconds_between_ticks)
 	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE)
 
@@ -102,7 +102,7 @@
 	to_chat(owner, span_userdanger("Your body starts to break apart!"))
 	return TRUE
 
-/datum/status_effect/corrosion_curse/tick()
+/datum/status_effect/corrosion_curse/tick(seconds_between_ticks)
 	. = ..()
 	if(!ishuman(owner))
 		return
@@ -110,7 +110,7 @@
 	var/chance = rand(0, 100)
 	switch(chance)
 		if(0 to 10)
-			human_owner.vomit()
+			human_owner.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(20 to 30)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
@@ -168,7 +168,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(istype(owner, /mob/living/basic/star_gazer))
+	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
 	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
@@ -192,3 +192,25 @@
 
 /datum/status_effect/star_mark/extended
 	duration = 3 MINUTES
+
+// Last Resort
+/datum/status_effect/heretic_lastresort
+	id = "heretic_lastresort"
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
+	duration = 12 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = -1
+
+/atom/movable/screen/alert/status_effect/heretic_lastresort
+	name = "Last Resort"
+	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
+	icon_state = "lastresort"
+
+/datum/status_effect/heretic_lastresort/on_apply()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_userdanger("You are on the brink of losing consciousness, run!"))
+	return TRUE
+
+/datum/status_effect/heretic_lastresort/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)

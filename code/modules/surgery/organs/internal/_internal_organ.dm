@@ -64,6 +64,9 @@
 	if(!damage) // No sense healing if you're not even hurt bro
 		return
 
+	if(IS_ROBOTIC_ORGAN(src)) // Robotic organs don't naturally heal
+		return
+
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = healing_factor
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health

@@ -8,6 +8,7 @@
 	icon_state = "liver-p"
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_PLASMA_LOVER_METABOLISM)
+	milk_burn_healing = 0
 
 /obj/item/organ/internal/liver/bone/plasmaman/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()

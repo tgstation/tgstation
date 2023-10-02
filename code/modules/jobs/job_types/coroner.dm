@@ -39,7 +39,7 @@
 
 	family_heirlooms = list(/obj/item/clothing/head/helmet/skull, /obj/item/table_clock, /obj/item/shovel, /obj/item/storage/fancy/pickles_jar)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 	rpg_title = "Undertaker"
 
@@ -52,7 +52,7 @@
 	backpack_contents = list(
 		/obj/item/storage/box/bodybags = 1,
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/storage/medkit/coroner/large = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 
 	belt = /obj/item/modular_computer/pda/coroner
@@ -69,5 +69,6 @@
 	backpack = /obj/item/storage/backpack/coroner
 	satchel = /obj/item/storage/backpack/satchel/coroner
 	duffelbag = /obj/item/storage/backpack/duffelbag/coroner
+	messenger = /obj/item/storage/backpack/messenger/coroner
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)

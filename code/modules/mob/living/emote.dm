@@ -189,7 +189,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
+		if(human_user.physique == FEMALE)
 			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
 		else
 			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
@@ -368,6 +368,13 @@
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
+/datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sigh")
+	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
+
 /datum/emote/living/sit
 	key = "sit"
 	key_third_person = "sits"
@@ -524,6 +531,8 @@
 	key_third_person = "yawns"
 	message = "yawns."
 	message_mime = "acts out an exaggerated silent yawn."
+	message_robot = "symphathetically yawns."
+	message_AI = "symphathetically yawns."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	cooldown = 5 SECONDS
 

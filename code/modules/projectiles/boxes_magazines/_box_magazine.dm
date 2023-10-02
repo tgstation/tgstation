@@ -50,6 +50,15 @@
 	QDEL_LIST(stored_ammo)
 	return ..()
 
+/obj/item/ammo_box/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone in stored_ammo)
+		remove_from_stored_ammo(gone)
+
+/obj/item/ammo_box/proc/remove_from_stored_ammo(atom/movable/gone)
+	stored_ammo -= gone
+	update_appearance()
+
 /obj/item/ammo_box/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
 
@@ -87,16 +96,16 @@
 		stored_ammo += new round_check(src)
 	update_appearance()
 
-///gets a round from the magazine, if keep is TRUE the round will stay in the gun
+///gets a round from the magazine, if keep is TRUE the round will be moved to the bottom of the list.
 /obj/item/ammo_box/proc/get_round(keep = FALSE)
-	if (!stored_ammo.len)
+	var/ammo_len = length(stored_ammo)
+	if (!ammo_len)
 		return null
-	else
-		var/b = stored_ammo[stored_ammo.len]
-		stored_ammo -= b
-		if (keep)
-			stored_ammo.Insert(1,b)
-		return b
+	var/casing = stored_ammo[ammo_len]
+	if (keep)
+		stored_ammo -= casing
+		stored_ammo.Insert(1,casing)
+	return casing
 
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
@@ -173,6 +182,7 @@
 	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
 
 /obj/item/ammo_box/update_icon_state()
+	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
@@ -180,20 +190,19 @@
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 
+/obj/item/ammo_box/update_overlays()
+	. = ..()
 	if(ammo_band_color && ammo_band_icon)
-		update_ammo_band()
-
-	return ..()
+		. += update_ammo_band()
 
 /obj/item/ammo_box/proc/update_ammo_band()
-	overlays.Cut()
 	var/band_icon = ammo_band_icon
 	if(!(length(stored_ammo)) && ammo_band_icon_empty)
 		band_icon = ammo_band_icon_empty
 	var/image/ammo_band_image = image(icon, src, band_icon)
 	ammo_band_image.color = ammo_band_color
 	ammo_band_image.appearance_flags = RESET_COLOR|KEEP_APART
-	overlays += ammo_band_image
+	return ammo_band_image
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
@@ -204,11 +213,8 @@
 	return boolets
 
 ///list of every bullet in the magazine
-/obj/item/ammo_box/magazine/proc/ammo_list(drop_list = FALSE)
-	var/list/L = stored_ammo.Copy()
-	if(drop_list)
-		stored_ammo.Cut()
-	return L
+/obj/item/ammo_box/magazine/proc/ammo_list()
+	return stored_ammo.Copy()
 
 ///drops the entire contents of the magazine on the floor
 /obj/item/ammo_box/magazine/proc/empty_magazine()
@@ -216,7 +222,3 @@
 	for(var/obj/item/ammo in stored_ammo)
 		ammo.forceMove(turf_mag)
 		stored_ammo -= ammo
-
-/obj/item/ammo_box/magazine/handle_atom_del(atom/A)
-	stored_ammo -= A
-	update_appearance()

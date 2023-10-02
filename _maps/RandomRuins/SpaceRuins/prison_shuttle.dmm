@@ -18,12 +18,8 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/carpet/red/airless,
 /area/ruin/space/prison_shuttle)
-"f" = (
-/obj/machinery/modular_computer,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/ruin/space/prison_shuttle)
 "g" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk{
+/mob/living/basic/mining/basilisk{
 	environment_smash = 0
 	},
 /turf/open/misc/asteroid/airless,
@@ -38,6 +34,17 @@
 "j" = (
 /turf/open/floor/carpet/red/airless,
 /area/ruin/space/prison_shuttle)
+"k" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"l" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
 "m" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -49,7 +56,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "q" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/prison_shuttle)
 "r" = (
@@ -66,21 +73,22 @@
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
-"u" = (
-/obj/structure/closet/secure_closet/security,
-/obj/machinery/light/broken/directional/north,
+"v" = (
+/obj/structure/closet/secure_closet/contraband{
+	name = "confiscation locker"
+	},
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "w" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "x" = (
 /turf/open/floor/mineral/titanium/tiled/airless,
-/area/ruin/space/prison_shuttle)
-"y" = (
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "z" = (
 /obj/machinery/door/airlock/security,
@@ -88,8 +96,18 @@
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
+"A" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
 "B" = (
 /turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"D" = (
+/obj/structure/closet/secure_closet/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "E" = (
 /turf/open/misc/asteroid/airless,
@@ -104,20 +122,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
-"H" = (
-/obj/structure/closet/secure_closet/contraband{
-	name = "confiscation locker"
-	},
-/obj/effect/spawner/random/exotic/antag_gear,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
-/obj/effect/spawner/random/contraband/prison,
-/obj/effect/spawner/random/contraband/prison,
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/ruin/space/prison_shuttle)
-"J" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/tiled/airless,
+"K" = (
+/obj/machinery/modular_computer,
+/turf/closed/mineral/random/stationside/asteroid,
 /area/ruin/space/prison_shuttle)
 "L" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left,
@@ -159,26 +166,8 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/template_noop,
 /area/ruin/space/prison_shuttle)
-"S" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/prison_shuttle)
 "T" = (
 /obj/effect/decal/cleanable/vomit/old,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/prison_shuttle)
-"U" = (
-/obj/effect/spawner/random/contraband/narcotics,
-/obj/machinery/light/broken{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
@@ -191,6 +180,10 @@
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"W" = (
+/obj/machinery/light/small/broken/directional/south,
+/turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "X" = (
 /obj/structure/bed,
@@ -235,9 +228,9 @@ c
 h
 h
 h
-u
+D
 x
-H
+v
 h
 h
 h
@@ -256,10 +249,10 @@ p
 h
 w
 x
-B
+W
 h
 M
-S
+k
 V
 Z
 F
@@ -288,7 +281,7 @@ E
 Y
 Y
 d
-f
+K
 m
 r
 h
@@ -313,10 +306,10 @@ E
 t
 x
 B
-x
+l
 h
 P
-U
+A
 X
 Z
 F
@@ -330,9 +323,9 @@ Y
 c
 c
 h
-y
+B
 x
-J
+x
 h
 h
 h

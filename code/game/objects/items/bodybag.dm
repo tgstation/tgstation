@@ -20,6 +20,12 @@
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
 
+/obj/item/bodybag/attempt_pickup(mob/user)
+	// can't pick ourselves up if we are inside of the bodybag, else very weird things may happen
+	if(contains(user))
+		return TRUE
+	return ..()
+
 /**
  * Creates a new body bag item when unfolded, at the provided location, replacing the body bag item.
  * * mob/user: User opening the body bag.

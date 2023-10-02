@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - code_imp: "apc's update_icon_state proc will no longer set the icon file path"

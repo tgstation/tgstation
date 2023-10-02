@@ -154,7 +154,7 @@
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	//landed on a turf without transit tube or not in our direction
-	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))
+	if(!TT || (!(dir in TT.tube_dirs) && !(REVERSE_DIR(dir) in TT.tube_dirs)))
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
@@ -187,7 +187,7 @@
 	for(var/obj/structure/transit_tube/station/station in loc)
 		if(station.pod_moving)
 			return
-		if(direction == turn(station.boarding_dir,180))
+		if(direction == REVERSE_DIR(station.boarding_dir))
 			if(station.open_status == STATION_TUBE_OPEN)
 				user.forceMove(loc)
 				update_appearance()

@@ -67,7 +67,6 @@
 "M" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "R" = (

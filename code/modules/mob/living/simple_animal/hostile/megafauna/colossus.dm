@@ -55,7 +55,6 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -157,11 +156,6 @@
 		return TRUE
 	var/mob/living/carbon/human/human_victim = victim
 	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -425,7 +419,7 @@
 	name = "lavaland"
 	floor = /turf/open/floor/fakebasalt
 	wall = /turf/closed/wall/mineral/cult
-	flora_and_fauna = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	flora_and_fauna = list(/mob/living/basic/mining/goldgrub)
 	flora_and_fauna_chance = 1
 
 // Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
@@ -594,8 +588,7 @@
 	. = ..()
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/possessor = arrived
-		possessor.notransform = TRUE
-		ADD_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
 		possessor.status_flags |= GODMODE
 		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
@@ -604,9 +597,8 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	for(var/mob/living/possessor in src)
-		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
 		possessor.status_flags &= ~GODMODE
-		possessor.notransform = FALSE
 		if(kill || !isanimal_or_basicmob(loc))
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)

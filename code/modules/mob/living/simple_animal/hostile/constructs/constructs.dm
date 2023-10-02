@@ -26,10 +26,9 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	healable = 0
 	faction = list(FACTION_CULT)
 	pressure_resistance = 100
-	unique_name = 1
+	unique_name = TRUE
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
