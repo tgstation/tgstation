@@ -205,19 +205,19 @@
 		var/explanation = ""
 		if (!active)
 			if (rule.weight <= 0)
-				explanation = " - Weight is zero."
+				explanation = " - Weight is zero"
 			else if (forced == RULESET_FORCE_DISABLED)
-				explanation = " - Forcibly disabled."
+				explanation = " - Forcibly disabled"
 			else if (forced == RULESET_FORCE_ENABLED)
-				explanation = " - Failed spawn conditions."
+				explanation = " - Failed spawn conditions"
 			else if (!rule.is_valid_population(pop_count))
-				explanation = " - Invalid player count."
+				explanation = " - Invalid player count"
 			else if (!rule.is_valid_threat(pop_count, threat_level))
-				explanation = " - Insufficient threat."
+				explanation = " - Insufficient threat"
 			else
-				explanation = " - Failed spawn conditions."
+				explanation = " - Failed spawn conditions"
 		else if (forced == RULESET_FORCE_ENABLED)
-			explanation = " - Forcibly enabled."
+			explanation = " - Forcibly enabled"
 		active = active ? "Active" : "Inactive"
 
 		dat += "<tr><td><b>[rule.name]</b></td>\
