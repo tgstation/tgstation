@@ -12376,9 +12376,6 @@
 	pixel_x = -5;
 	pixel_y = 12
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
@@ -21017,10 +21014,10 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "jeq" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "jes" = (
@@ -23608,7 +23605,7 @@
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
