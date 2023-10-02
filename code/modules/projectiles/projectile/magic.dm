@@ -481,7 +481,7 @@
 	speed = 0.3
 
 	/// The power of the zap itself when it electrocutes someone
-	var/zap_power = 20000
+	var/zap_power = 8e6
 	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
 	/// The flags of the zap itself when it electrocutes someone
@@ -503,7 +503,7 @@
 	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
-	zap_power = 10000
+	zap_power = 4e6
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 

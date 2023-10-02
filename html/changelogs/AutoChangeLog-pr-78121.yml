@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Added the Hippocrates bust to medbay heirlooms. Paramedics don't get one."
-  - rscadd: "You can now swear the Hippocratic oath with these busts! It'll give you pacifism but nothing else. The process is reversible."
-  - rscadd: "There's a very small chance that the Hippocrates bust was once wielded by a certain German doctor. This chance is increased for coroner heirlooms."

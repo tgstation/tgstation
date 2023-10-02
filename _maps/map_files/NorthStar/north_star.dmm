@@ -13175,7 +13175,7 @@
 /area/station/maintenance/floor3/port/fore)
 "dss" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/wirerod,
+/obj/item/melee/baton/security/cattleprod,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/aft)
 "dsv" = (
@@ -15286,6 +15286,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "dVt" = (
@@ -42923,7 +42924,13 @@
 /area/station/medical/chemistry)
 "lkI" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 6
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/storage)
 "lkP" = (
@@ -66098,7 +66105,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/psychology)
 "rku" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
@@ -82092,9 +82099,12 @@
 /area/station/science/explab)
 "vxL" = (
 /obj/structure/table/glass,
-/obj/item/storage/medkit/regular,
-/obj/item/reagent_containers/syringe,
 /obj/item/radio/intercom/directional/south,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "vxT" = (
@@ -84174,7 +84184,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/aft)
 "waA" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 8
 	},
 /obj/structure/sign/poster/official/random/directional/east,
@@ -86833,6 +86843,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "wHP" = (
