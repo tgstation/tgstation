@@ -231,7 +231,7 @@
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [export_mat?.name].")
+	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
 	if(fluid)
 		. += span_warning("\The [src] is currently liquid! It's value is based on the market price.")
 	else
