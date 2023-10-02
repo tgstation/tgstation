@@ -1,5 +1,3 @@
-#define TONG_CLACK_CD (2 SECONDS)
-
 /// Tongs, let you pick up and feed people food from further away.
 /obj/item/kitchen/tongs
 	name = "tongs"
@@ -14,6 +12,8 @@
 	var/obj/item/tonged
 	/// Sound to play when we click our tongs together
 	var/clack_sound = 'sound/items/handling/component_drop.ogg'
+	/// Time to wait between clacking sounds
+	var/clack_delay = 2 SECONDS
 	/// Have we clacked recently?
 	COOLDOWN_DECLARE(clack_cooldown)
 
@@ -54,16 +54,16 @@
 
 /// Play a clacking sound and appear closed, then open again
 /obj/item/kitchen/tongs/proc/click_clack()
-	COOLDOWN_START(src, clack_cooldown, TONG_CLACK_CD)
+	COOLDOWN_START(src, clack_cooldown, clack_delay)
 	playsound(src, clack_sound, vol = 100, vary = FALSE)
 	icon_state = "[base_icon_state]_closed"
-	addtimer(CALLBACK(src, PROC_REF(clack)), 0.5 SECONDS, TIMER_DELETE_ME)
+	var/delay = min(0.5 SECONDS, clack_delay / 2) // Just in case someone's been fucking with the cooldown
+	addtimer(CALLBACK(src, PROC_REF(clack)), delay, TIMER_DELETE_ME)
 
 /// Plays a clacking sound and appear open
 /obj/item/kitchen/tongs/proc/clack()
 	playsound(src, clack_sound, vol = 100, vary = FALSE)
 	icon_state = base_icon_state
-	update_appearance(UPDATE_ICON)
 
 /obj/item/kitchen/tongs/Exited(atom/movable/leaving, direction)
 	. = ..()
@@ -98,5 +98,3 @@
 	held_food.pixel_x = 6
 	held_food.pixel_y = 6
 	. += held_food
-
-#undef TONG_CLACK_CD
