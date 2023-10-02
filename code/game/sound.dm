@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
-
+	UNTIL(fully_created)
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
 
