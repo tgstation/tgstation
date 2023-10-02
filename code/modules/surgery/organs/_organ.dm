@@ -110,7 +110,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		wash(CLEAN_TYPE_BLOOD)
 		organ_flags &= ~ORGAN_VIRGIN
 
-		//add_blood_DNA(blood_dna_info)
 
 	// Apply unique side-effects. Return value does not matter.
 	on_insert(receiver, special)
