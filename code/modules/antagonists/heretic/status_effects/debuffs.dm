@@ -225,7 +225,7 @@
 	///used to track damage
 	var/damage_sustained = 0
 	///overlay used to indicate that someone is marked
-	var/mutable_appearance/cosmic_overlay
+	var/mutable_appearance/moon_insanity_overlay
 	/// icon file for the overlay
 	var/effect_icon = 'icons/effects/eldritch.dmi'
 	/// icon state for the overlay
@@ -236,6 +236,9 @@
 	desc = "THEY LIE, THEY ALL LIE!!! SLAY THEM!!! BURN THEM!!! MAKE THEM SEE THE TRUTH!!!"
 	icon_state = "lastresort"
 
+/datum/status_effect/moon_converted/on_creation()
+	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
+
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Some light healing is applied to make the ability a bit stronger
@@ -244,7 +247,8 @@
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = TRUE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
-	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
