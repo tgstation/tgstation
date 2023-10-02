@@ -451,13 +451,12 @@
 /area/centcom/wizard_station)
 "xd" = (
 /obj/structure/table/wood,
-/obj/item/radio/headset/syndicate/alt{
-	pixel_y = 4;
-	pixel_x = 1
+/obj/item/radio/headset{
+	pixel_y = 6;
+	pixel_x = 5
 	},
-/obj/item/encryptionkey/syndicate{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/radio/headset{
+	pixel_y = 2
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
