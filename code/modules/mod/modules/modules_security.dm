@@ -366,7 +366,7 @@
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
