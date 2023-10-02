@@ -14,19 +14,24 @@
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
-
-	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
+	/// has this tendril been tagged/analyzed by a mining scanner?
+	var/gps_tagged = FALSE
+	/// what tag does this tendril use?
+	var/tagged_id = "WT"
 
 
 /obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/basic/mining/goliath)
+	tagged_id = "GL"
 
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/basic/mining/legion/spawner_made)
+	tagged_id = "LG"
 
 /obj/structure/spawner/lavaland/icewatcher
 	mob_types = list(/mob/living/basic/mining/watcher/icewing)
+	tagged_id = "IW"
 
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)
@@ -49,6 +54,23 @@ GLOBAL_LIST_INIT(tendrils, list())
 	examine_messages += span_notice("You'll only have a few moments to run up, grab some loot with an open hand, and get out with it.")
 	return examine_messages
 
+/obj/structure/spawner/lavaland/attackby(obj/item/item, mob/user, params)
+	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
+		return ..()
+	gps_tag(user)
+
+/// Tag the necropolis tendril, appending a mob-based tag and randomized numeric identifier.
+/obj/structure/spawner/lavaland/proc/gps_tag(mob/user)
+	if(gps_tagged)
+		balloon_alert(user, "already tagged!")
+		return
+
+	balloon_alert(user, "tagged on GPS!")
+
+	gps_tagged = TRUE
+	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
+	our_gps.gpstag = "\[[tagged_id]-[rand(100,999)]\] " + our_gps.gpstag
+
 /obj/structure/spawner/lavaland/Destroy()
 	var/last_tendril = TRUE
 	if(GLOB.tendrils.len>1)
@@ -63,7 +85,6 @@ GLOBAL_LIST_INIT(tendrils, list())
 				L.client.give_award(/datum/award/score/tendril_score, L) //Progresses score by one
 	GLOB.tendrils -= src
 	QDEL_NULL(emitted_light)
-	QDEL_NULL(gps)
 	return ..()
 
 /obj/effect/light_emitter/tendril
