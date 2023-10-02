@@ -63,6 +63,7 @@
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, REF(src))
 	human_target.become_husk(MAGIC_TRAIT)
 	human_target.faction |= FACTION_HERETIC
+	ADD_TRAIT(human_target, TRAIT_NO_SLAB_INVOKE, REF(src)) //monkestation edit
 
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -92,6 +93,7 @@
 	human_target.cure_husk(MAGIC_TRAIT)
 	human_target.faction -= FACTION_HERETIC
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
+	REMOVE_TRAIT(human_target, TRAIT_NO_SLAB_INVOKE, REF(src)) //monkestation edit
 
 	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
 	if(!QDELETED(src))

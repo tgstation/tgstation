@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(!(gamer in gamers))
 		gamers[gamer] = 0
 
-	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
+	gamers[gamer]++ // How many games the gamer has 'gamed' (massacred their crew)
 
 	if(gamers[gamer] > ORION_GAMER_REPORT_THRESHOLD && prob(20 * gamers[gamer]))
 

@@ -73,17 +73,15 @@
 	var/likes_pets = TRUE
 
 	///unique ability for chicken
-	var/unique_ability = null
-	///cooldown of ability
-	var/cooldown_time = DEFAULT_CHICKEN_ABILITY_COOLDOWN
-	/// is it a combat ability?
-	var/combat_ability = FALSE
+	var/self_ability = null
+	///targeted ability of this chicken
+	var/targeted_ability = null
 	/// probability for ability
 	var/ability_prob = 3
 	///what type of projectile do we shoot?
 	var/projectile_type = null
 	///probabilty of firing a shot on any given attack
-	var/shoot_prob = 0
+	var/ranged_cooldown = 1 SECONDS
 
 	///Glass Chicken exclusive: reagents for eggs
 	var/list/glass_egg_reagents = list()
@@ -101,10 +99,29 @@
 	var/is_marked = FALSE
 	///the current visual effect applied
 	var/mutable_appearance/applied_visual
+	///the self ability planning tree
+	var/ability_planning_tree = /datum/ai_planning_subtree/use_mob_ability/chicken
+	///the targeted ability planning tree
+	var/targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/chicken,
+		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/play_dead,
+	)
+	///how much extra fertile we are
+	var/fertility_boosting = 0
+	///extra chance of mutation
+	var/instability = 0
+	///modifier to the egg laying cooldown
+	var/egg_laying_boosting = 0
 
 #undef DEFAULT_CHICKEN_ABILITY_COOLDOWN
 
 /obj/item/food/egg
+	name = "White Egg"
 	///the amount the chicken is grown
 	var/amount_grown = 0
 	///the type of chicken that laid this egg
@@ -127,3 +144,14 @@
 	var/fresh_mutation = FALSE
 	///is this egg fertile? used when picked up / dropped
 	var/is_fertile = FALSE
+	///the holder of our factions used so that we keep faction friends through generations
+	var/list/faction_holder = list()
+	///our stored_glass_egg_reagents from the parent
+	var/list/glass_egg_reagents = list()
+
+/datum/action/cooldown/mob_cooldown/chicken
+	melee_cooldown_time =  1 // dumb
+	var/datum/ai_behavior/targeted_mob_ability/min_range/chicken/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+
+/datum/pet_command/point_targetting/attack/chicken
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/chicken

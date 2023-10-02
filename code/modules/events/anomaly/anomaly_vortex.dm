@@ -13,6 +13,7 @@
 	start_when = ANOMALY_START_DANGEROUS_TIME
 	announce_when = ANOMALY_ANNOUNCE_DANGEROUS_TIME
 	anomaly_path = /obj/effect/anomaly/bhole
+	oshan_blocked = TRUE
 
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
 	priority_announce("Localized high-intensity vortex anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name]", "Anomaly Alert")

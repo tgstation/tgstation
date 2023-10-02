@@ -92,6 +92,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
 	/client/proc/spawn_pollution,
+	/client/proc/view_player_camera,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -115,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/delay_command_report,
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
+	/client/proc/flip_ghost_spawn,
 	/client/proc/forceEvent,
 	/client/proc/generate_bulk_code, //monkestation addition
 	/client/proc/generate_code, //monkestation addition

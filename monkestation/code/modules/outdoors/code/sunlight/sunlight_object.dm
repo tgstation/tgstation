@@ -73,6 +73,11 @@ Sunlight System
 	affecting_corners = null
 
 /atom/movable/outdoor_effect/proc/process_state()
+	if(source_turf != loc)
+		var/turf/turf = get_turf(src)
+		if(turf.turf_flags & TURF_WEATHER)
+			turf.turf_flags &= ~TURF_WEATHER
+		Move(source_turf)
 	switch(state)
 		if(SKY_BLOCKED)
 			disable_sunlight() /* Do our indoor processing */
@@ -223,7 +228,7 @@ Sunlight System
 			.["WEATHERPROOF"] |= ceilingStat["WEATHERPROOF"]
 
 	var/area/turf_area = get_area(src)
-	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || !SSmapping.level_trait(src.z, ZTRAIT_STATION))
+	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || (!SSmapping.level_trait(src.z, ZTRAIT_DAYCYCLE) && !SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT)))
 		.["SKYVISIBLE"]   =  FALSE
 		.["WEATHERPROOF"] =  TRUE
 

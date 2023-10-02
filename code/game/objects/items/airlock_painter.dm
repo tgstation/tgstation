@@ -219,6 +219,14 @@
 
 	if(isfloorturf(target) && use_paint(user))
 		paint_floor(target)
+	//monkestation edit start
+	if(iswallturf(target) && use_paint(user) && stored_custom_color)
+		var/turf/closed/wall/temp = target
+		if(user.istate & ISTATE_SECONDARY)
+			temp.change_trim_color(stored_custom_color)
+		else
+			temp.change_paint_color(stored_custom_color)
+	//monkestation edit end
 
 /**
  * Actually add current decal to the floor.

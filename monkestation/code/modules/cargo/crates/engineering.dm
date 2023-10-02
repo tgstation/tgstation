@@ -112,3 +112,13 @@
 					)
 	crate_name = "Replacement Science Protolathe"
 	crate_type = /obj/structure/closet/crate/secure/engineering
+
+/datum/supply_pack/engineering/trench_explorer
+	name = "Trench Explorer Kit"
+	desc = "A pack of 5 ladders and breaching charges to explore the pit."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(
+		/obj/item/mining_charge = 5,
+		/obj/item/trench_ladder_kit = 5
+	)
+	crate_name = "engineering vent crate"

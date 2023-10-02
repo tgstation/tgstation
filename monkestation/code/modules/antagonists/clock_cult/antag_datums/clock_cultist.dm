@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/cult
 	suicide_cry = ",r For Ratvar!!!"
 	ui_name = "AntagInfoClock"
-	show_to_ghosts = TRUE //to make testing easier
+	show_to_ghosts = TRUE
 	antag_hud_name = "clockwork"
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new
@@ -187,7 +187,7 @@
 
 	else if(iscyborg(converted_silicon))
 		var/mob/living/silicon/robot/converted_borg = converted_silicon
-		converted_borg.set_connected_ai(null)
+		converted_borg.UnlinkSelf()
 		converted_borg.set_clockwork(TRUE)
 
 	if(converted_silicon.laws && istype(converted_silicon.laws, /datum/ai_laws/ratvar))

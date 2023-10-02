@@ -9,7 +9,7 @@
 	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
+	mob_types = list(/mob/living/basic/mining/watcher)
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
@@ -18,15 +18,16 @@
 	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
 
+	var/deconstruct_override = FALSE // Monkestation addition: override for ocean tendrils
 
 /obj/structure/spawner/lavaland/goliath
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
+	mob_types = list(/mob/living/basic/mining/goliath)
 
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
 /obj/structure/spawner/lavaland/icewatcher
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
+	mob_types = list(/mob/living/basic/mining/watcher/icewing)
 
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)
@@ -40,6 +41,10 @@ GLOBAL_LIST_INIT(tendrils, list())
 	GLOB.tendrils += src
 
 /obj/structure/spawner/lavaland/deconstruct(disassembled)
+	// Monkestation addition start: override for ocean tendrils
+	if(deconstruct_override)
+		return ..()
+	// Monkestation addition end
 	new /obj/effect/collapse(loc)
 	return ..()
 

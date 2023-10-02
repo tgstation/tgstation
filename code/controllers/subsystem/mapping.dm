@@ -93,10 +93,12 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_templates = list()
 	var/list/random_bar_templates = list()
 	var/list/random_engine_templates = list()
+	var/list/random_arena_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
 	var/list/random_bar_spawners = list()
+	var/list/random_arena_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -355,6 +357,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	random_engine_templates = SSmapping.random_engine_templates
 	random_bar_templates = SSmapping.random_bar_templates
+	random_arena_templates = SSmapping.random_arena_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -478,6 +481,26 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(bar_spawner)
 	random_bar_spawners = null
 	INIT_ANNOUNCE("Loaded Random Bars in [(REALTIMEOFDAY - start_time)/10]s!")
+
+/datum/controller/subsystem/mapping/proc/load_random_arena()
+	var/start_time = REALTIMEOFDAY
+	for(var/obj/effect/spawner/random_arena_spawner/arena_spawner as() in random_arena_spawners)
+		var/list/possible_arena_templates = list()
+		var/datum/map_template/random_room/random_arena/arena_candidate
+		shuffle_inplace(random_arena_templates)
+		for(var/ID in random_arena_templates)
+			arena_candidate = random_arena_templates[ID]
+			if(arena_candidate.weight == 0)
+				arena_candidate = null
+				continue
+			possible_arena_templates[arena_candidate] = arena_candidate.weight
+		if(possible_arena_templates.len)
+			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arena_templates)
+			template.stationinitload(get_turf(arena_spawner), centered = template.centerspawner)
+		SSmapping.random_arena_spawners -= arena_spawner
+		qdel(arena_spawner)
+	random_arena_spawners = null
+	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time)/10]s!")
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -497,6 +520,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	load_random_engines()
 	load_random_bars()
+	load_random_arena()
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -680,6 +704,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/random_room/random_bar/E = new room_type()
 		random_bar_templates[E.room_id] = E
 		map_templates[E.room_id] = E
+
+	for(var/item in subtypesof(/datum/map_template/random_room/random_arena))
+		var/datum/map_template/random_room/random_arena/room_type = item
+		if(!(initial(room_type.mappath)))
+			message_admins("Arena Template [initial(room_type.name)] found without mappath. Yell at coders")
+			continue
+		var/datum/map_template/random_room/random_arena/E = new room_type()
+		random_arena_templates[E.room_id] = E
+		map_templates[E.room_id] = E
+
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename

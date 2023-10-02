@@ -96,7 +96,7 @@ export const FishCatalog = (props, context) => {
                   <LabeledList.Item label="Average weight">
                     {currentFish.weight} g
                   </LabeledList.Item>
-                  <LabeledList.Item label="Fishing tips">
+                  <LabeledList.Item label="Fishing and Aquarium tips">
                     <LabeledList>
                       <LabeledList.Item label="Fishing locations">
                         {currentFish.fishing_tips.spots}

@@ -170,6 +170,8 @@
 
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
+	///Are we a centcom spawned one if so ignore req_access
+	var/admin_spawned = FALSE
 
 /obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
@@ -194,7 +196,7 @@
 	if(!used_id)
 		return ..()
 
-	if(!(linked_venue.req_access in used_id.GetAccess()))
+	if(!(linked_venue.req_access in used_id.GetAccess()) && !admin_spawned)
 		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 
@@ -207,7 +209,7 @@
 
 	var/obj/item/card/id/used_id = I
 
-	if(!(linked_venue.req_access in used_id.GetAccess()))
+	if(!(linked_venue.req_access in used_id.GetAccess())&& !admin_spawned)
 		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 
@@ -228,7 +230,7 @@
 
 	turned_on_portal = WEAKREF(user)
 
-	if(!(chosen_venue.req_access in used_id.GetAccess()))
+	if(!(chosen_venue.req_access in used_id.GetAccess()) && !admin_spawned)
 		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 

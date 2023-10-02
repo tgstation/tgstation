@@ -31,6 +31,14 @@
 	///the held head item
 	var/obj/item/head
 
+/mob/living/basic/possession_holder/Destroy()
+	. = ..()
+	stored_item = null
+	if(id)
+		id.forceMove(get_turf(src))
+	if(head)
+		head.forceMove(get_turf(src))
+
 /mob/living/basic/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = list(0, 0, 0, 0), _r_y_shift = list(0, 0, 0, 0), _r_x_shift = list(0, 0, 0, 0), _l_x_shift = list(0, 0, 0, 0), _head_y_shift = list(0, 0, 0, 0), _head_x_shift = list(0, 0, 0, 0))
 	. = ..()
 	if(!_stored_item)
@@ -142,7 +150,7 @@
 			return
 
 	//Call back for item being equipped to drone
-	I.equipped(src, slot)
+	I.on_equipped(src, slot)
 
 /mob/living/basic/possession_holder/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())

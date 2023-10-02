@@ -64,6 +64,10 @@
 	var/sustaining_precent = 0
 	///do we let self sustaining increase plant stats overtime?
 	var/self_growing = FALSE
+	///the multi these get for exisitng
+	var/multi = 1
+	///helping tray
+	var/helping_tray = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -251,11 +255,11 @@
 			needs_update = TRUE
 			growth += 3
 			if(self_sustaining && self_growing)
-				if(myseed.potency < 50)
+				if(myseed.potency < 50 * multi)
 					myseed.adjust_potency(2)
-				if(myseed.yield < 5)
+				if(myseed.yield < 5 * multi)
 					myseed.adjust_yield(1)
-				if(myseed.lifespan < 70)
+				if(myseed.lifespan < 70 * multi)
 					myseed.adjust_lifespan(2)
 /**
  * Nutrients
@@ -388,7 +392,8 @@
 
 		if(myseed)
 			SEND_SIGNAL(myseed, COMSIG_SEED_ON_GROW, src)
-
+	if(helping_tray)
+		helpful_stuff()
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
@@ -756,6 +761,17 @@
 
 
 /**
+ * Bee pollinate proc.
+ * Checks if the bee can pollinate the plant
+ */
+/obj/machinery/hydroponics/proc/can_bee_pollinate()
+	if(isnull(myseed))
+		return FALSE
+	if(plant_status == HYDROTRAY_PLANT_DEAD || recent_bee_visit)
+		return FALSE
+	return TRUE
+
+/**
  * Pest Mutation Proc.
  * When a tray is mutated with high pest values, it will spawn spiders.
  * * User - Person who last added chemicals to the tray for logging purposes.
@@ -765,7 +781,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
 		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
-		spawn_atom_to_turf(/mob/living/basic/spiderling/hunter, src, 3, FALSE)
+		spawn_atom_to_turf(/mob/living/basic/spider/growing/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
 
@@ -1117,7 +1133,7 @@
  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/basic/killer_tomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)
@@ -1141,6 +1157,13 @@
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
+
+/obj/machinery/hydroponics/soil/Initialize(mapload)
+	. = ..()
+	if(SSmapping.level_trait(src.z, ZTRAIT_MINING))
+		multi = 5
+		self_growing = TRUE
+		self_sustaining = TRUE
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()

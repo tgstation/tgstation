@@ -15,7 +15,16 @@
 	. = ..()
 	SSoutdoor_effects.sunlighting_planes |= src
 	color = SSoutdoor_effects.last_color
-	SSoutdoor_effects.transition_sunlight_color(src)
+
+	var/daylight = FALSE
+	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
+			daylight = TRUE
+			continue
+	if(!daylight)
+		SSoutdoor_effects.transition_sunlight_color(src, 1)
+	else
+		SSoutdoor_effects.transition_sunlight_color(src)
 
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Destroy()
 	. = ..()

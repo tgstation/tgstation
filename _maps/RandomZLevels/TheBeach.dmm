@@ -171,7 +171,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "aB" = (
-/mob/living/simple_animal/crab/kreb,
+/mob/living/basic/crab/kreb,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "aC" = (
@@ -211,7 +211,7 @@
 /turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "aK" = (
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "aO" = (

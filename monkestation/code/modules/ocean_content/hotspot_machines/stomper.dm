@@ -32,6 +32,19 @@
 /obj/machinery/power/stomper/Initialize(mapload)
 	. = ..()
 	installed_cell = new(src)
+	register_context()
+
+/obj/machinery/power/stomper/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item)
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = opened ? "Open Panel" : "Close Panel"
+
+	if(!held_item && anchored)
+		context[SCREENTIP_CONTEXT_LMB] = on ? "Turn Off" : "Turn On"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/stomper/should_have_node()
 	return anchored
@@ -41,12 +54,13 @@
 	opened = !opened
 	to_chat(user, span_notice("You [opened ? "Open" : "Close"] the access panel on the [src]."))
 	toggle_power(FALSE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return TRUE
 
 /obj/machinery/power/stomper/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
+	to_chat(user, span_notice("You [anchored ? "Un-anchor" : "Anchor"] the [src] to the [get_turf(src)]."))
 	set_anchored(!anchored)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return TRUE
 
 /obj/machinery/power/stomper/proc/toggle_power(state)
 	on = state
@@ -121,7 +135,7 @@
 		playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 
 	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(source_turf))
-		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 1)///giving a 1 tile leeway on stomps
+		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 2)///giving a 1 tile leeway on stomps
 			continue
 		say("Hotspot Pinned")
 	playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
