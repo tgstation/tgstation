@@ -239,12 +239,13 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	S.status = SOUND_UPDATE
 	SEND_SOUND(src, S)
 
-/client/proc/playtitlemusic(vol = 85)
+/client/proc/playtitlemusic(vol = 0.85)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 	UNTIL(fully_created)
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
-		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
+		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
+			vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
 
 	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
@@ -262,7 +263,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 		SSmedia_tracks.first_lobby_play = FALSE
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
-	media.push_music(T.url, world.time, vol * 0.01)
+	media.push_music(T.url, world.time, vol)
 	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
 
 /proc/get_rand_frequency()
