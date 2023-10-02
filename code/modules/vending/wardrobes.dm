@@ -522,6 +522,8 @@
 		/obj/item/storage/backpack/cultpack = 1,
 		/obj/item/storage/fancy/candle_box = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/suit/chaplainsuit/habit = 1,
+		/obj/item/clothing/head/chaplain/habit_veil = 1,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
