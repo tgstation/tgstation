@@ -86,9 +86,6 @@
 	/// A list, or null, of templates that the ruleset depends on to function correctly
 	var/list/ruleset_lazy_templates
 
-	/// Whether the ruleset has been force enabled or force disabled from the admin tools panel
-	var/ruleset_forced = RULESET_NOT_FORCED
-
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
@@ -109,8 +106,13 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
+	var/ruleset_forced = GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED
 	if (ruleset_forced != RULESET_NOT_FORCED)
-		return ruleset_forced == RULESET_FORCE_ENABLED
+		if (ruleset_forced == RULESET_FORCE_ENABLED)
+			return TRUE
+		else
+			log_dynamic("FAIL: [src] was disabled in admin panel.")
+			return FALSE
 
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)

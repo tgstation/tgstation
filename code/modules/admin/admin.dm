@@ -21,6 +21,7 @@
 
 	var/dat = "<center><B>Game Panel</B></center><hr>"
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
@@ -30,6 +31,8 @@
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+		if(istype(SSticker.mode, /datum/game_mode/dynamic))
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 	dat += {"
 		<BR>
 		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
@@ -144,15 +147,43 @@
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/dynamic_ruleset_manager(mob/user)
-	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>"
-	for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
-		var/rule_name = initial(rule.name)
-		if (initial(rule_name) == "")
-			continue
-		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
-		dat += "<b>[rule_name] ([initial(rule.ruletype)])</b> <A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force=[text_ref(rule)]'>-> [forced] <-</A><br>"
+	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>\
+		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
+		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
+		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config)."
+
+	var/static/list/rulesets_by_context = list()
+	if (!length(rulesets_by_context))
+		for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+			if (initial(rule.name) == "")
+				continue
+			LAZYADD(rulesets_by_context[initial(rule.ruletype)], rule)
+
+	if (SSticker.current_state <= GAME_STATE_PREGAME) // Don't bother displaying after the round has started
+		dat += dynamic_ruleset_category_display("Roundstart", ROUNDSTART_RULESET, rulesets_by_context)
+	dat += dynamic_ruleset_category_display("Latejoin", LATEJOIN_RULESET, rulesets_by_context)
+	dat += dynamic_ruleset_category_display("Midround", MIDROUND_RULESET, rulesets_by_context)
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
+/datum/admins/proc/dynamic_ruleset_category_display(title, category, list/all_rulesets)
+	var/dat = "<B><h3>[title]</h3></B>"
+	for (var/datum/dynamic_ruleset/rule as anything in all_rulesets[category])
+		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
+		dat += "<b>[initial(rule.name)]</b> - \[[forced]\] - \
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-on=[text_ref(rule)]'> force enabled </A> / \
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-off=[text_ref(rule)]'> force disabled </A> / \
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-reset=[text_ref(rule)]'> reset </A><br>"
+	return dat
+
+/datum/admins/proc/set_dynamic_ruleset_forced(mob/user, var/datum/dynamic_ruleset/type, force_value)
+	if (isnull(type))
+		return
+	GLOB.dynamic_forced_rulesets[type] = force_value
+	dynamic_ruleset_manager(user)
+	var/logged_message = "[key_name(user)] set '[initial(type.name)] ([initial(type.ruletype)])' to [GLOB.dynamic_forced_rulesets[type]]."
+	log_admin(logged_message)
+	message_admins(logged_message)
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"
