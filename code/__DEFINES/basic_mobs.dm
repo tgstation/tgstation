@@ -13,9 +13,5 @@
 /// Mob never takes damage from unarmed attacks
 #define IMMUNE_TO_FISTS (1<<4)
 
-/// Temporary trait applied when an attack forecast animation has completed
-#define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
-#define INTERACTION_BASIC_ATTACK_FORCEAST "interaction_basic_attack_forecast"
-
 /// Above this speed we stop gliding because it looks silly
 #define END_GLIDE_SPEED 10

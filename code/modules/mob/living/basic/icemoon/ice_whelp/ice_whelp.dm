@@ -42,7 +42,7 @@
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
+	AddComponent(/datum/component/swing_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 	var/datum/action/cooldown/mob_cooldown/ice_breath/flamethrower = new(src)
 	var/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/wide_flames = new(src)
 	flamethrower.Grant(src)

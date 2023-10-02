@@ -1312,3 +1312,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
+
+/// Temporary trait applied when an attack forecast animation has completed
+#define TRAIT_SWING_FORECAST_COMPLETE "trait_swing_forecast_complete"

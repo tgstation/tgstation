@@ -32,6 +32,10 @@
 		var/atom/movable/screen/inventory/hand/handy = hud_used.hand_slots[hand]
 		handy.update_appearance()
 
+/// Returns the click cooldown which should be applied following a swing
+/mob/living/proc/get_swing_nextmove(default_swing_cooldown, cooldown_multiplier)
+	return default_swing_cooldown * cooldown_multiplier
+
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
  * remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.

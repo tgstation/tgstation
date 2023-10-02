@@ -48,7 +48,11 @@
 	return ..()
 
 /mob/living/basic/mining/brimdemon/click_on_without_item_at_range(atom/target, modifiers)
-	beam.Trigger(target = target)
+	if (!combat_mode)
+		return ..()
+	if (beam.Trigger(target = target))
+		return
+	return ..()
 
 /mob/living/basic/mining/brimdemon/death(gibbed)
 	. = ..()

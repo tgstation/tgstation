@@ -44,8 +44,6 @@
 	COOLDOWN_DECLARE(ability_animation_cooldown)
 	/// Our base tentacles ability
 	var/datum/action/cooldown/mob_cooldown/goliath_tentacles/tentacles
-	/// Our long-ranged tentacles ability
-	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/tentacle_line
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
@@ -56,7 +54,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddComponent(/datum/component/ai_target_timer)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
+	AddComponent(/datum/component/swing_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
 		AddComponent(\
@@ -72,7 +70,7 @@
 	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
-	tentacle_line = new (src)
+	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/tentacle_line = new (src)
 	tentacle_line.Grant(src)
 	AddComponent(/datum/component/revenge_ability, tentacle_line, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
 
@@ -84,7 +82,6 @@
 
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)
-	QDEL_NULL(tentacle_line)
 	return ..()
 
 /mob/living/basic/mining/goliath/examine(mob/user)
@@ -170,11 +167,8 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 
-/mob/living/basic/mining/goliath/click_on_without_item_at_range(atom/atom_target, modifiers)
-	tentacles?.Trigger(target = atom_target)
-
 /mob/living/basic/mining/goliath/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
-	tentacle_line?.Trigger(target = atom_target)
+	tentacles?.Trigger(target = atom_target)
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient

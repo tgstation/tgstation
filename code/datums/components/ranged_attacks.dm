@@ -60,9 +60,10 @@
 	COOLDOWN_START(src, fire_cooldown, cooldown_time)
 	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
 	if(isnull(burst_shots))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	for(var/i in 1 to (burst_shots - 1))
 		addtimer(CALLBACK(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers), i * burst_intervals)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Actually fire the damn thing
 /datum/component/ranged_attacks/proc/async_fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)

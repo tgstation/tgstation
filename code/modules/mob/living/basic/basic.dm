@@ -188,6 +188,12 @@
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 
+// Substitute the basic swing cooldown for our own when melee attacking
+/mob/living/basic/get_swing_nextmove(default_swing_cooldown, cooldown_multiplier)
+	if (!combat_mode)
+		return ..()
+	return melee_attack_cooldown * cooldown_multiplier
+
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	return melee_attack(attack_target, modifiers)
 

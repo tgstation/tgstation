@@ -103,7 +103,11 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 
 /// Shoot when you click away from you
 /mob/living/basic/carp/magic/click_on_without_item_at_range(atom/atom_target, modifiers)
-	spell.Trigger(target = atom_target)
+	if (!combat_mode)
+		return ..()
+	if (spell.Trigger(target = atom_target))
+		return
+	return ..()
 
 /***
  * # Chaos Magicarp
