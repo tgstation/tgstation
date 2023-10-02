@@ -23,9 +23,9 @@
 	var/static/list/body_parts = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	AddElement(/datum/element/death_drops, body_parts)
 	AddComponent(/datum/component/focused_attacker)
-	var/static/on_link_message = "You feel something new enter your sphere of mind... \
+	var/on_link_message = "You feel something new enter your sphere of mind... \
 		You hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."
-	var/static/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
+	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
 	AddComponent( \
 		/datum/component/mind_linker/active_linking, \
 		network_name = "Mansus Link", \
