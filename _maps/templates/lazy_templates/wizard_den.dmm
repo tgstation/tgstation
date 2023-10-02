@@ -7,15 +7,6 @@
 /area/centcom/wizard_station)
 "ae" = (
 /obj/structure/dresser,
-/obj/item/storage/backpack/satchel,
-/obj/item/clothing/head/wizard/hood,
-/obj/item/clothing/head/wizard/marisa,
-/obj/item/clothing/suit/wizrobe/marisa,
-/obj/item/clothing/head/wizard/santa,
-/obj/item/clothing/suit/wizrobe/yellow{
-	pixel_y = 1
-	},
-/obj/item/clothing/suit/wizrobe/santa,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "cm" = (
@@ -70,9 +61,6 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "eI" = (
-/obj/structure/railing{
-	dir = 6
-	},
 /obj/machinery/light/small/directional/north,
 /turf/open/lava,
 /area/centcom/wizard_station)
@@ -122,7 +110,7 @@
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "hj" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/purple,
 /area/centcom/wizard_station)
 "hq" = (
@@ -170,6 +158,8 @@
 /obj/machinery/door/airlock/wood{
 	name = "Ship Engine"
 	},
+/obj/structure/railing/corner/end/flip,
+/obj/structure/railing/corner/end,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "jD" = (
@@ -211,6 +201,7 @@
 	pixel_x = 6;
 	pixel_y = -10
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "mc" = (
@@ -279,8 +270,8 @@
 	pixel_y = 5;
 	pixel_x = -11
 	},
-/obj/item/clothing/head/wizard/yellow{
-	pixel_y = 13;
+/obj/item/clothing/head/wizard{
+	pixel_y = 14;
 	pixel_x = 4
 	},
 /turf/open/floor/plastic,
@@ -338,6 +329,10 @@
 "qg" = (
 /obj/structure/railing{
 	layer = 3.1
+	},
+/obj/structure/railing{
+	layer = 3.1;
+	dir = 1
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -415,7 +410,7 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "ut" = (
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/purple,
 /area/centcom/wizard_station)
 "uy" = (
@@ -438,6 +433,10 @@
 	pixel_x = -5
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/coin/antagtoken{
+	pixel_x = -9;
+	pixel_y = 5
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "wk" = (
@@ -493,6 +492,7 @@
 /obj/structure/chair/wood/wings{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "ya" = (
@@ -500,6 +500,7 @@
 /obj/item/skub{
 	pixel_y = 16
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "yO" = (
@@ -507,6 +508,15 @@
 	dir = 4
 	},
 /turf/open/floor/plastic,
+/area/centcom/wizard_station)
+"yX" = (
+/obj/structure/railing{
+	layer = 3.1
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "zB" = (
 /turf/open/floor/iron,
@@ -537,6 +547,7 @@
 "Df" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/chair/wood,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "Do" = (
@@ -545,6 +556,9 @@
 	},
 /obj/machinery/door/airlock/wood{
 	name = "Storage"
+	},
+/obj/structure/railing/corner/end{
+	dir = 8
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -595,6 +609,12 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "II" = (
@@ -607,9 +627,6 @@
 /area/centcom/wizard_station)
 "IZ" = (
 /obj/structure/filingcabinet,
-/obj/effect/spawner/random/bureaucracy/paper,
-/obj/effect/spawner/random/bureaucracy/paper,
-/obj/effect/spawner/random/bureaucracy/paper,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Jn" = (
@@ -650,6 +667,18 @@
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"KL" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "Lt" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 1;
@@ -672,8 +701,9 @@
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "Ol" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/carpet/red,
+/obj/machinery/computer/camera_advanced,
+/obj/machinery/light/directional/north,
+/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "OV" = (
 /obj/machinery/door/airlock/wood{
@@ -683,6 +713,10 @@
 	note_info = "Don't forget the book above your desk. Also, your other clothes are in your dresser. -Mom"
 	},
 /turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
+"Pb" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "Pz" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -743,6 +777,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/wizard,
+/obj/machinery/light/directional/west,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "SD" = (
@@ -775,11 +810,11 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "TX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
 /obj/structure/destructible/cult/item_dispenser/forge/engine,
-/turf/open/lava,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Ug" = (
 /obj/structure/closet/crate,
@@ -791,10 +826,6 @@
 /area/centcom/wizard_station)
 "UC" = (
 /obj/structure/table/reinforced,
-/obj/item/coin/antagtoken{
-	pixel_x = -9;
-	pixel_y = 5
-	},
 /obj/item/paper_bin/carbon{
 	pixel_y = 12;
 	pixel_x = 7
@@ -810,7 +841,7 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "UG" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "UX" = (
@@ -863,10 +894,8 @@
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "XJ" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/lava,
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "XV" = (
 /obj/machinery/door/airlock/wood{
@@ -876,8 +905,6 @@
 /area/centcom/wizard_station)
 "Ya" = (
 /obj/structure/filingcabinet,
-/obj/effect/spawner/random/bureaucracy/paper,
-/obj/effect/spawner/random/bureaucracy/paper,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -1291,7 +1318,7 @@ kZ
 kZ
 kZ
 kZ
-Hk
+dk
 GE
 op
 op
@@ -1365,7 +1392,7 @@ op
 VB
 TM
 kZ
-UG
+kZ
 VB
 VB
 hj
@@ -1411,7 +1438,7 @@ TG
 VB
 SD
 kZ
-kZ
+UG
 VB
 UX
 tz
@@ -1519,7 +1546,7 @@ kZ
 uy
 VB
 TX
-qg
+yX
 VB
 VB
 op
@@ -1543,7 +1570,7 @@ op
 op
 op
 TG
-Sg
+Ol
 kZ
 kZ
 dp
@@ -1564,7 +1591,7 @@ kZ
 kZ
 uy
 VB
-TX
+fX
 qg
 fX
 VB
@@ -1596,7 +1623,7 @@ LU
 LU
 LU
 LU
-LU
+Pb
 LU
 tz
 tz
@@ -1608,7 +1635,7 @@ hT
 VB
 pA
 LU
-LU
+cy
 VB
 eI
 qg
@@ -1656,7 +1683,7 @@ YT
 LU
 LU
 jp
-kZ
+KL
 HX
 Ad
 Ad
@@ -1685,10 +1712,10 @@ xd
 LU
 LU
 LU
-Ol
 LU
-Ol
 LU
+LU
+XJ
 LU
 tz
 tz
@@ -1702,7 +1729,7 @@ Xt
 LU
 cy
 VB
-XJ
+fX
 qg
 fX
 fX
@@ -1727,7 +1754,7 @@ op
 op
 op
 TG
-Sg
+Ol
 kZ
 kZ
 xn
@@ -1748,7 +1775,7 @@ kZ
 kZ
 uy
 VB
-TX
+fX
 qg
 fX
 VB
@@ -1794,7 +1821,7 @@ kZ
 kZ
 uy
 VB
-TX
+fX
 qg
 VB
 VB
@@ -2027,7 +2054,7 @@ kZ
 wY
 kZ
 fF
-Hk
+dk
 GE
 op
 op
