@@ -216,6 +216,7 @@
 	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
 
 
+
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
 	id = "moon converted"
@@ -238,6 +239,11 @@
 
 /datum/status_effect/moon_converted/on_creation()
 	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
+	return ..()
+
+/datum/status_effect/moon_converted/Destroy()
+	QDEL_NULL(moon_insanity_overlay)
+	return ..()
 
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
@@ -245,7 +251,7 @@
 	owner.adjustBruteLoss(-75) //The most common way for this to be made is using the moon blade upgrade
 	owner.adjustFireLoss(-75)
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
-	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = TRUE)
+	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
@@ -276,11 +282,12 @@
 	to_chat(owner, span_notice("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
 	owner.balloon_alert(owner, "your mind clears and you return to normal!")
 	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
-	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
+	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
-	QDEL_NULL(moon_insanity_overlay)
 	owner.update_appearance(UPDATE_OVERLAYS)
+	return ..()
 
 
 /atom/movable/screen/alert/status_effect/moon_converted
