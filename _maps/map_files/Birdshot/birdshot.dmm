@@ -49648,6 +49648,10 @@
 "rxu" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/south,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
 /obj/item/clipboard{
 	pixel_x = 4;
 	pixel_y = 4
@@ -66589,16 +66593,17 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/stack/medical/gauze{
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/stack/medical/gauze{
-	pixel_x = 2;
-	pixel_y = 1
-	},
 /obj/item/radio/intercom/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/stack/medical/gauze{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/stack/medical/gauze,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "wSH" = (
