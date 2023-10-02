@@ -46,3 +46,12 @@
 	)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
+
+/datum/crafting_recipe/bandage
+	name = "Makeshift Bandage"
+	reqs = list(
+		/obj/item/stack/sheet/cloth = 3,
+		/datum/reagent/medicine/c2/libital = 10,
+	)
+	result = /obj/item/stack/medical/bandage/makeshift
+	category = CAT_TOOLS
