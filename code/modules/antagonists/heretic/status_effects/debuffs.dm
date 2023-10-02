@@ -250,10 +250,11 @@
 	// Adds damage to the damage sustained
 	damage_sustained += damage
 
-	// If the damage_sustained is above or equal to 75 remove the status effect
-	if (damage_sustained>=75)
+	// If the damage_sustained is less than 75 don't remove the status effect
+	if (damage_sustained<75)
+		return
 	// Remove the status effect
-		owner.remove_status_effect(/datum/status_effect/moon_converted)
+	owner.remove_status_effect(src)
 
 /datum/status_effect/moon_converted/on_remove()
 	to_chat(owner, span_notice("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
