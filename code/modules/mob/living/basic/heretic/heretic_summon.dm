@@ -13,6 +13,7 @@
 	unsuitable_heat_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	speed = 0
+	melee_attack_cooldown = CLICK_CD_MELEE
 
 	attack_sound = 'sound/weapons/punch1.ogg'
 	response_help_continuous = "thinks better of touching"
