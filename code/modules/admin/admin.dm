@@ -150,7 +150,10 @@
 	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>\
 		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
 		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
-		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config)."
+		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config).<br/>\
+		\[<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_on=1'>force enable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_off=1'>force disable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_reset=1'>reset all</A>\]"
 
 	var/static/list/rulesets_by_context = list()
 	if (!length(rulesets_by_context))
@@ -167,16 +170,28 @@
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/dynamic_ruleset_category_display(title, category, list/all_rulesets)
-	var/dat = "<B><h3>[title]</h3></B>"
+	var/dat = "<B><h3>[title]</h3></B><table class='ml-2'>"
 	for (var/datum/dynamic_ruleset/rule as anything in all_rulesets[category])
 		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
-		dat += "<b>[initial(rule.name)]</b> - \[[forced]\] - \
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-on=[text_ref(rule)]'> force enabled </A> / \
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-off=[text_ref(rule)]'> force disabled </A> / \
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force-reset=[text_ref(rule)]'> reset </A><br>"
+		dat += "<tr><td><b>[initial(rule.name)]</b></td><td>\[[forced]\]</td><td>\[\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule)]'>force enabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule)]'>force disabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule)]'>reset</A>\]</td></tr>"
+	dat += "</table>"
 	return dat
 
-/datum/admins/proc/set_dynamic_ruleset_forced(mob/user, var/datum/dynamic_ruleset/type, force_value)
+/datum/admins/proc/force_all_rulesets(mob/user, force_value)
+	if (force_value == RULESET_NOT_FORCED)
+		GLOB.dynamic_forced_rulesets = list()
+	else
+		for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+			GLOB.dynamic_forced_rulesets[rule] = force_value
+	var/logged_message = "[key_name(user)] set all dynamic rulesets to [force_value]."
+	log_admin(logged_message)
+	message_admins(logged_message)
+	dynamic_ruleset_manager(user)
+
+/datum/admins/proc/set_dynamic_ruleset_forced(mob/user, datum/dynamic_ruleset/type, force_value)
 	if (isnull(type))
 		return
 	GLOB.dynamic_forced_rulesets[type] = force_value

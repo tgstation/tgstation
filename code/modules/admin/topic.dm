@@ -434,21 +434,30 @@
 		if(!check_rights(R_ADMIN))
 			return
 		dynamic_ruleset_manager(usr)
-
-	else if (href_list["f_dynamic_ruleset_force-on"])
+	else if (href_list["f_dynamic_ruleset_force_all_on"])
 		if(!check_rights(R_ADMIN))
 			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force-on"]), RULESET_FORCE_ENABLED)
-
-	else if (href_list["f_dynamic_ruleset_force-off"])
+		force_all_rulesets(usr, RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_off"])
 		if(!check_rights(R_ADMIN))
 			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force-off"]), RULESET_FORCE_DISABLED)
-
-	else if (href_list["f_dynamic_ruleset_force-reset"])
+		force_all_rulesets(usr, RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_reset"])
 		if(!check_rights(R_ADMIN))
 			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force-reset"]), RULESET_NOT_FORCED)
+		force_all_rulesets(usr, RULESET_NOT_FORCED)
+	else if (href_list["f_dynamic_ruleset_force_on"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_on"]), RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_off"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_off"]), RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_reset"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_reset"]), RULESET_NOT_FORCED)
 
 	else if (href_list["f_dynamic_options"])
 		if(!check_rights(R_ADMIN))
