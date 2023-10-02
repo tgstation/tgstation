@@ -95,7 +95,6 @@
 	return back.adjustBruteLoss()
 
 /mob/living/basic/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_bodytype)
-
 	if(isnull(back))
 		return ..()
 	return back.adjustFireLoss()
@@ -141,16 +140,24 @@
 	QDEL_NULL(back)
 	return ..()
 
+/mob/living/basic/heretic_summon/armsy/RangedAttack(atom/target, modifiers)
+	. = ..()
+	if (. || isfloorturf(target) || target == back || target == front)
+		return
+	back?.melee_attack(target, modifiers)
+
 /mob/living/basic/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(istype(target, /obj/item/bodypart/arm))
+		visible_message(span_warning("[src] devours [target]!"))
 		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		qdel(target)
 		on_arm_eaten()
 		return
+
 	if(target == back || target == front)
 		return
 	back?.melee_attack(target, modifiers, ignore_cooldown)
-	if(!Adjacent(target))
+	if (!Adjacent(target) || (!ignore_cooldown && world.time < next_move))
 		return
 
 	. = ..()
@@ -171,17 +178,12 @@
 
 	if(!length(parts_to_remove) || prob(90))
 		return
-	if(parts_to_remove.len && prob(10))
-		var/obj/item/bodypart/lost_arm = pick(parts_to_remove)
-		lost_arm.dismember()
-
+	var/obj/item/bodypart/lost_arm = pick(parts_to_remove)
+	lost_arm.dismember()
 
 /*
  * Handle healing our chain.
- *
- * Eating arms off the ground heals us,
- * and if we eat enough arms while above
- * a certain health threshold,  we even gain back parts!
+ * Eating arms off the ground heals us, and if we eat enough arms while above a certain health threshold we get longer!
  */
 /mob/living/basic/heretic_summon/armsy/proc/on_arm_eaten()
 	if(!isnull(back))
@@ -198,6 +200,7 @@
 	if(current_stacks < stacks_to_grow)
 		return
 
+	visible_message(span_boldwarning("[src] flexes and expands!"))
 	current_stacks = 0
 	var/mob/living/basic/heretic_summon/armsy/prev = new type(drop_location(), FALSE)
 	back = prev
@@ -218,6 +221,9 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "worm_contract"
 	cooldown_time = 30 SECONDS
+	melee_cooldown_time = 0 SECONDS
+	click_to_activate = FALSE
+	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/worm_contract/IsAvailable(feedback)
 	return ..() && istype(owner, /mob/living/basic/heretic_summon/armsy)
