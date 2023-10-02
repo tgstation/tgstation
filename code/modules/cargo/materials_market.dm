@@ -92,12 +92,12 @@
 		else if(SSstock_market.materials_trends[traded_mat] == -1)
 			trend_string = "down"
 		var/color_string = ""
-		if(traded_mat.color)
-			color_string = traded_mat.color
-		else if (traded_mat.greyscale_colors)
-			color_string = splicetext(traded_mat.greyscale_colors, 6, length(traded_mat.greyscale_colors), "") //slice it to a standard 6 char hex
+		if (initial(traded_mat.greyscale_colors))
+			color_string = splicetext(initial(traded_mat.greyscale_colors), 7, length(initial(traded_mat.greyscale_colors)), "") //slice it to a standard 6 char hex
+		else if(initial(traded_mat.color))
+			color_string = initial(traded_mat.color)
 		material_data += list(list(
-			"name" = traded_mat.name,
+			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
@@ -144,7 +144,7 @@
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
-				if(mat.name == material_str)
+				if(initial(mat.name) == material_str)
 					material_bought = mat
 					break
 			if(!material_bought)
@@ -159,7 +159,7 @@
 
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 
-			sheet_to_buy = material_bought.sheet_type
+			sheet_to_buy = initial(material_bought.sheet_type)
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
 			if(!account_payable)
