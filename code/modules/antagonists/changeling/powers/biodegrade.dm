@@ -37,7 +37,7 @@
 		if(!istype(S))
 			return FALSE
 		user.visible_message(span_warning("[user] vomits a glob of acid across the front of [user.p_their()] [S]!"), \
-			span_warning("We vomit acidic ooze onto our [user.wear_suit]!"))
+			span_warning("We vomit acidic ooze onto our [user.wear_suit.name]!"))
 		addtimer(CALLBACK(src, PROC_REF(dissolve_straightjacket), user, S), 30)
 		log_combat(user, user.wear_suit, "melted [user.wear_suit]", addition = "(biodegrade)")
 		..()
