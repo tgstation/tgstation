@@ -220,10 +220,16 @@
 /datum/status_effect/moon_converted
 	id = "moon converted"
 	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
-	alert_type = null
 	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
+	///used to track damage
 	var/damage_sustained = 0
+	///overlay used to indicate that someone is marked
+	var/mutable_appearance/cosmic_overlay
+	/// icon file for the overlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the overlay
+	var/effect_icon_state = "moon_insanity_overlay"
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"
@@ -238,6 +244,7 @@
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = TRUE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
+	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
@@ -256,6 +263,11 @@
 	// Remove the status effect
 	owner.remove_status_effect(src)
 
+/datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays += moon_insanity_overlay
+
 /datum/status_effect/moon_converted/on_remove()
 	to_chat(owner, span_notice("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
 	owner.balloon_alert(owner, "your mind clears and you return to normal!")
@@ -263,8 +275,12 @@
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	QDEL_NULL(moon_insanity_overlay)
+	owner.update_appearance(UPDATE_OVERLAYS)
+
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"
 	desc = "They LIE, SLAY ALL OF THE THEM!!! THE LIARS OF THE SUN MUST FALL!!!"
 	icon_state = "moon_insanity"
+
