@@ -1155,6 +1155,14 @@
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/syndicate_mothership/control)
+"nF" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "nH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/closet/syndicate/personal,
@@ -1777,6 +1785,16 @@
 "uX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
+"ve" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "vv" = (
 /obj/structure/table/reinforced,
@@ -2734,8 +2752,29 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
+"GU" = (
+/obj/effect/turf_decal/syndicateemblem/top/right{
+	dir = 1
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "Hc" = (
 /turf/open/floor/plating/icemoon,
+/area/centcom/syndicate_mothership/control)
+"Hm" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Ho" = (
 /obj/effect/light_emitter{
@@ -2996,6 +3035,15 @@
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"JX" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "Ka" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 4
@@ -3912,6 +3960,15 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "TY" = (
+/obj/effect/turf_decal/syndicateemblem/top/right{
+	dir = 1
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Un" = (
@@ -3943,6 +4000,19 @@
 "UE" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/plating,
+/area/centcom/syndicate_mothership/control)
+"Va" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/syndicateemblem/middle/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Vm" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -5253,7 +5323,7 @@ yf
 na
 PD
 zE
-TY
+Hm
 lt
 ws
 Wz
@@ -5355,7 +5425,7 @@ Ge
 Ge
 xf
 zE
-TY
+nF
 lt
 ZO
 JJ
@@ -5457,7 +5527,7 @@ eu
 hN
 PD
 zE
-TY
+JX
 yP
 RD
 RD
@@ -5559,7 +5629,7 @@ nQ
 nQ
 nQ
 zE
-TY
+Va
 JL
 RD
 SD
@@ -5661,7 +5731,7 @@ Ht
 In
 VK
 zE
-TY
+GU
 lt
 FM
 wM
@@ -5763,7 +5833,7 @@ pU
 lt
 XQ
 zE
-TY
+ve
 lt
 Lu
 ae
