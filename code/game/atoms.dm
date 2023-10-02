@@ -751,7 +751,7 @@
 		for(var/atom/maybe_not_an_atom as anything in unknown_new_overlays)
 			if(isnull(maybe_not_an_atom))
 				continue
-			if(istext(maybe_not_an_atom))
+			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
 				new_overlays += maybe_not_an_atom
 				continue
 			new_overlays += maybe_not_an_atom.appearance
