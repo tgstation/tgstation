@@ -114,22 +114,30 @@
 			log_dynamic("FAIL: [src] was disabled in admin panel.")
 			return FALSE
 
-	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
-
-	if(minimum_players > population)
-		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
+	if(!is_valid_population(population))
+		var/range = maximum_players > 0 ? "([minimum_players] - [maximum_players])" : "(minimum: [minimum_players])"
+		log_dynamic("FAIL: [src] failed acceptable: min/max players out of range [range] vs population ([population])")
 		return FALSE
 
-	if(maximum_players > 0 && population > maximum_players)
-		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
-		return FALSE
-
-	if (threat_level < requirements[indice_pop])
+	if (!is_valid_threat(population, threat_level))
 		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
 		return FALSE
 
 	return TRUE
+
+/// Returns true if we have enough players to run
+/datum/dynamic_ruleset/proc/is_valid_population(population)
+	if(minimum_players > population)
+		return FALSE
+	if(maximum_players > 0 && population > maximum_players)
+		return FALSE
+	return TRUE
+
+/// Sets the current threat indices and returns true if we're inside of them
+/datum/dynamic_ruleset/proc/is_valid_threat(population, threat_level)
+	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	return threat_level >= requirements[indice_pop]
 
 /// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
