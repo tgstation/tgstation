@@ -16,7 +16,8 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot()
-	if(!length(receive_turfs) && !locate_receive_turfs())
+	if(!locate_receive_turfs())
+		say(src, "No nearby byteforges detected.")
 		return FALSE
 
 	points += generated_domain.reward_points

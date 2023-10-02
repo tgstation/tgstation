@@ -107,12 +107,12 @@
 
 	return shuffle(mutation_candidate_refs)
 
-/// Locates any turfs with crate out landmarks
+/// Locates any turfs with forges on them
 /obj/machinery/quantum_server/proc/locate_receive_turfs()
-	for(var/obj/effect/landmark/bitrunning/station_reward_spawn/spawner in GLOB.landmarks_list)
-		if(IN_GIVEN_RANGE(src, spawner, MAX_DISTANCE))
-			receive_turfs += get_turf(spawner)
-			qdel(spawner)
+	QDEL_NULL(receive_turfs)
+
+	for(var/obj/machinery/byteforge/forge in oview(MAX_DISTANCE, src))
+		receive_turfs += get_turf(forge)
 
 	return length(receive_turfs) > 0
 

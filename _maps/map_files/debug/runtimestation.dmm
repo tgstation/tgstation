@@ -2184,7 +2184,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "FW" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
 /turf/open/floor/circuit/green,
 /area/station/bitrunning/den)
 "Ht" = (
@@ -3196,7 +3196,7 @@ aa
 aa
 aa
 uI
-FW
+hU
 hU
 jR
 Oq
@@ -3288,8 +3288,8 @@ aa
 aa
 aa
 uI
-FW
 hU
+FW
 jR
 Oq
 uI
