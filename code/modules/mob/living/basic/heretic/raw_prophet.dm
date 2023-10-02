@@ -15,6 +15,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	ai_controller = /datum/ai_controller/basic_controller/raw_prophet
 
 /mob/living/basic/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -37,7 +38,7 @@
 		unlink_message = on_unlink_message, \
 	)
 
-	// We don't use these for AI so we can just repeat the same process
+	// We don't use these for AI so we can just repeat the same adding process
 	var/static/list/add_abilities = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
 		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
@@ -72,3 +73,19 @@
 /mob/living/basic/heretic_summon/raw_prophet/ascended
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+
+
+/// Walk and attack people, blind them when we can
+/datum/ai_controller/basic_controller/raw_prophet
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
