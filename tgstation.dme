@@ -5481,6 +5481,7 @@
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\modules\admin\antag_tokens.dm"
 #include "monkestation\code\modules\admin\camera_view.dm"
+#include "monkestation\code\modules\admin\ggg\where_are_your_fingers.dm"
 #include "monkestation\code\modules\aesthetics\airlock\airlock.dm"
 #include "monkestation\code\modules\aesthetics\items\clothing.dm"
 #include "monkestation\code\modules\aesthetics\mobs\slime.dm"
