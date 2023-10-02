@@ -4,6 +4,7 @@
 	icon = 'icons/obj/tram/tram_display.dmi'
 	icon_state = "desto_blank"
 	base_icon_state = "desto"
+	use_power = NO_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
@@ -26,6 +27,7 @@
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	icon_state = "indi_blank"
 	base_icon_state = "indi"
+	use_power = IDLE_POWER_USE
 	max_integrity = 50
 	light_range = 2
 	light_power = 0.7
@@ -104,12 +106,12 @@
 /obj/machinery/transport/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform)
 	SIGNAL_HANDLER
 
-	if(machine_stat & (NOPOWER|BROKEN) || isnull(destination_platform))
+	if(machine_stat & (NOPOWER|BROKEN))
 		sign_face = null
 		update_appearance()
 		return
 
-	if(!controller || !controller.controller_operational)
+	if(!controller || !controller.controller_operational || isnull(destination_platform))
 		sign_face = "[base_icon_state]_NIS"
 		sign_color = COLOR_DISPLAY_RED
 		update_appearance()

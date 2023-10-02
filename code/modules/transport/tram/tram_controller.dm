@@ -154,6 +154,7 @@
 
 		if(initial_destination)
 			idle_platform = initial_destination
+			destination_platform = initial_destination
 
 		if(beacon)
 			nav_beacon = beacon

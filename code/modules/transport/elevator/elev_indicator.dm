@@ -16,7 +16,7 @@
 
 	light_range = 1
 	light_power = 1
-	light_color = LIGHT_COLOR_FAINT_CYAN
+	light_color = COLOR_DISPLAY_BLUE
 	luminosity = 1
 
 	maptext_x = 18
