@@ -37,9 +37,7 @@
 /area/centcom/wizard_station)
 "cF" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	name = "Syndicate Radio Intercom"
-	},
+/obj/item/radio/intercom,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "dk" = (
