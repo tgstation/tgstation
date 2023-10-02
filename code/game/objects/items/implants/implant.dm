@@ -73,7 +73,7 @@
 		if(!force)
 			if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
 				security_implants++
-				if(security_implants >= SECURITY_IMPLANT_CAP) //We've found too many security implants in this mob, and will reject implantation (unless forced)
+				if(security_implants >= SECURITY_IMPLANT_CAP) //We've found too many security implants in this mob, and will reject implantation by normal means
 					balloon_alert_to_viewers("too many security implants!", vision_distance = 3)
 					return FALSE
 		if(flags & COMPONENT_DELETE_NEW_IMPLANT)
