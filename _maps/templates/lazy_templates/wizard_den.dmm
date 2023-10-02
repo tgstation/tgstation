@@ -256,7 +256,11 @@
 /obj/item/storage/dice{
 	icon_state = "magicdicebag";
 	pixel_y = 12;
-	pixel_x = -1
+	pixel_x = -4
+	},
+/obj/item/dice/d20{
+	pixel_y = 4;
+	pixel_x = 2
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -372,7 +376,14 @@
 /area/centcom/wizard_station)
 "qM" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/wizard/black,
+/obj/item/clothing/suit/wizrobe/black{
+	pixel_y = 3;
+	pixel_x = -1
+	},
+/obj/item/clothing/head/wizard/black{
+	pixel_y = 13;
+	pixel_x = 6
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "sx" = (
@@ -535,14 +546,18 @@
 /obj/machinery/door/airlock/wood{
 	name = "Storage"
 	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Dq" = (
-/obj/item/storage/toolbox/syndicate{
-	pixel_y = 8
-	},
 /obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = -8;
+	pixel_y = 17
+	},
+/obj/item/pai_card{
+	pixel_y = 8;
+	pixel_x = 4
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Dy" = (
@@ -674,8 +689,10 @@
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
 "PF" = (
-/obj/structure/table/wood,
-/obj/item/clothing/suit/wizrobe/black,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 11;
+	pixel_y = 17
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "PK" = (
@@ -769,6 +786,7 @@
 /obj/item/staff/tape,
 /obj/effect/spawner/random/exotic/languagebook,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/crayons,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "UC" = (
@@ -1435,7 +1453,7 @@ op
 TG
 TG
 qM
-PF
+nc
 VB
 tv
 kZ
@@ -2036,7 +2054,7 @@ op
 op
 VB
 VB
-kZ
+PF
 Yq
 tQ
 uT
