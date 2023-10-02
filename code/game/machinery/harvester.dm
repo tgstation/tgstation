@@ -77,10 +77,7 @@
 		return
 	var/mob/living/carbon/carbon_occupant = occupant
 	if(!allow_clothing)
-		for(var/occupant_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
-			if(!isitem(occupant_item))
-				continue
-			var/obj/item/abiotic_item = occupant_item
+		for(var/obj/item/abiotic_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
 			if(!(HAS_TRAIT(abiotic_item, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
@@ -129,7 +126,7 @@
 		end_harvesting(success = TRUE)
 		return
 	var/turf/target = get_step(src, output_dir)
-	for(var/obj/item/bodypart/limb_to_remove in operation_order) //first we do non-essential limbs
+	for(var/obj/item/bodypart/limb_to_remove as anything in operation_order) //first we do non-essential limbs
 		limb_to_remove.drop_limb()
 		carbon_occupant.emote("scream")
 		if(limb_to_remove.body_zone != "chest")
@@ -154,7 +151,7 @@
 		say("Subject has been successfully harvested.")
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
-/obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/some_screwdriver)
+/obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(..())
 		return
@@ -164,20 +161,20 @@
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
 		return
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), some_screwdriver))
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
 		return
 	return FALSE
 
-/obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/some_crowbar)
-	if(default_pry_open(some_crowbar))
+/obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool))
 		return TRUE
-	if(default_deconstruction_crowbar(some_crowbar))
+	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/harvester/default_pry_open(obj/item/some_crowbar) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && some_crowbar.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
+/obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
-		some_crowbar.play_tool_sound(src, 50)
+		tool.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 
