@@ -4361,6 +4361,7 @@
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_moonicorn.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_wisdom.dm"
 #include "code\modules\mob\living\basic\heretic\fire_shark.dm"
+#include "code\modules\mob\living\basic\heretic\flesh_worm.dm"
 #include "code\modules\mob\living\basic\heretic\heretic_summon.dm"
 #include "code\modules\mob\living\basic\heretic\star_gazer.dm"
 #include "code\modules\mob\living\basic\icemoon\ice_whelp\ice_whelp.dm"
