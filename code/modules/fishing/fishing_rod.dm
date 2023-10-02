@@ -67,7 +67,6 @@
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> in your active hand to access its slots UI"
 	var/list/equipped_stuff = list()
 	if(line)
 		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
@@ -79,6 +78,7 @@
 		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
 	else
 		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
+	. += span_notice("<b>Right-Click</b> in your active hand to access its slots UI")
 
 /**
  * Catch weight modifier for the given fish_type (or FISHING_DUD)
@@ -185,6 +185,7 @@
 		return
 	currently_hooked_item = target_atom
 	create_fishing_line(target_atom)
+	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
@@ -508,15 +509,33 @@
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
 	desc = "An embedded universal constructor along with micro-fusion generator makes this marvel of technology never run out of bait. Interstellar treaties prevent using it outside of recreational fishing. And you can fish with this. "
-	ui_description = "This rod has an infinite supply of synthetic bait."
+	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
+
+	var/static/list/fishing_signals = list(
+		COMSIG_FISHING_ROD_HOOKED_ITEM = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_FISHING_ROD_CAUGHT_FISH = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_PRE_ATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),
+	)
+	AddComponent(/datum/component/experiment_handler, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		allowed_experiments = list(/datum/experiment/scanning/fish), \
+		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
+		experiment_signals = fishing_signals, \
+	)
+
 	var/obj/item/food/bait/doughball/synthetic/infinite_supply_of_bait = new(src)
 	bait = infinite_supply_of_bait
 	update_icon()
+
+/obj/item/fishing_rod/tech/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
 
 /obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
 	return

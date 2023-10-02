@@ -1,9 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Heretic Rebalance"
-  - balance: "Researching the Main Knowledge paths that unlock Side Paths will grant one Side Point that can be used only on those side paths. You can still spend normal knowledge points on them if you wish."
-  - balance: "Rune drawing time has been reduced from 30->20 seconds. Codex drawing time has been reduced from 15->8."
-  - balance: "Codex Cicatrix is now a roundstart knowledge, works as an amber focus when held in-hand and opened, and has had its recipe changed to: 1 of any non-standard pen (literally anything that isn't the base pen), any book, and either animal hide OR a corpse, any kind."
-  - code_imp: "Added support for using a list inside ritual requirements and a special 'snowflake check' rituals can utilize."
-  - balance: "The first non-path knowledge, the Mansus Hand Mark, has had its cost reduced from 2->1 points."

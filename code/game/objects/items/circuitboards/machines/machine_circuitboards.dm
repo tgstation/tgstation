@@ -1303,6 +1303,15 @@
 	req_components = list(
 		/datum/stock_part/card_reader = 1)
 
+/obj/item/circuitboard/machine/fishing_portal_generator
+	name = "Fishing Portal Generator"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/fishing_portal_generator
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/capacitor = 1)
+	needs_anchored = FALSE
+
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption"
