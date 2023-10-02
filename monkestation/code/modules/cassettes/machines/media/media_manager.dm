@@ -20,7 +20,8 @@
 // Set up player on login.
 /client/New()
 	. = ..()
-	media = new /datum/media_manager(src)
+	if(!media)
+		media = new /datum/media_manager(src)
 	media.open()
 	media.update_music()
 

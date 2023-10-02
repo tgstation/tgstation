@@ -42,6 +42,11 @@
 
 	add_sight(SEE_TURFS)
 
+	if(!client.media)
+		client.media = new /datum/media_manager(client)
+		client.media.open()
+		client.media.update_music()
+
 	client.playtitlemusic()
 
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
