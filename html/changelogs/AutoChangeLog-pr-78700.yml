@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Kudzu will now be destroyed by adverse weather."
+  - balance: "Kudzu will no longer spread over holes."
