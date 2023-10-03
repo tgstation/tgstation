@@ -250,7 +250,7 @@
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/bodypart/arm/left = 1,
 	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
+	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
 	cost = 1
 	route = PATH_FLESH
 
