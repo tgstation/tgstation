@@ -329,3 +329,7 @@
 
 /obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
 	return "razor"
+
+#undef UPPER_LIP
+#undef MIDDLE_LIP
+#undef LOWER_LIP
