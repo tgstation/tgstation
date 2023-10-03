@@ -21,14 +21,14 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	///Previous segment in the chain
+	///Previous segment in the chain, we hold onto this purely to keep track of how long we currently are and to attach new growth to the back
 	var/mob/living/basic/heretic_summon/armsy/back
-	///Next segment in the chain
-	var/mob/living/basic/heretic_summon/armsy/front
 	///How many arms do we have to eat to expand?
 	var/stacks_to_grow = 5
 	///Currently eaten arms
 	var/current_stacks = 0
+	///Types of limb we will amputate on attack
+	var/static/list/target_limbs = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 
 /*
  * Arguments
@@ -38,22 +38,32 @@
 /mob/living/basic/heretic_summon/armsy/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 6)
 	. = ..()
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
+	AddElement(\
+		/datum/element/amputating_limbs,\
+		surgery_time = 0 SECONDS,\
+		surgery_verb = "tearing",\
+		minimum_stat = CONSCIOUS,\
+		snip_chance = 10,\
+		target_zones = target_limbs,\
+	)
 	AddComponent(\
 		/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/tracks, \
 		target_dir_change = TRUE,\
 	)
 
-	if(worm_length < MINIMUM_ARMSY_LENGTH)
-		stack_trace("[type] created with invalid len ([worm_length]). Reverting to 3.")
-		worm_length = MINIMUM_ARMSY_LENGTH
 	if(spawn_bodyparts)
 		build_tail(worm_length)
 
-	var/datum/action/cooldown/mob_cooldown/worm_contract/shrink = new (src)
-	shrink.Grant(src)
+// We are a vessel of otherworldly destruction, we bring our gravity with us
+/mob/living/basic/heretic_summon/armsy/has_gravity(turf/gravity_turf)
+	return TRUE
+
+/mob/living/basic/heretic_summon/armsy/can_be_pulled()
+	return FALSE
 
 /mob/living/basic/heretic_summon/armsy/proc/build_tail(worm_length)
+	worm_length = max(worm_length, MINIMUM_ARMSY_LENGTH)
 	// Sets the hp of the head to be exactly the (length * hp), so the head is de facto the hardest to destroy.
 	maxHealth = worm_length * maxHealth
 	health = maxHealth
@@ -63,15 +73,32 @@
 	var/mob/living/basic/heretic_summon/armsy/current
 
 	for(var/i in 1 to worm_length)
-		current = new type(drop_location(), FALSE)
-		ADD_TRAIT(current, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
-		current.front = prev
-		current.update_appearance(UPDATE_ICON_STATE)
-		current.AddComponent(/datum/component/mob_chain, front = prev)
-		prev.back = current
+		current = new_segment(behind = prev)
 		prev = current
 	prev.update_appearance(UPDATE_ICON_STATE)
 	update_appearance(UPDATE_ICON_STATE)
+
+/// Record that we got another guy on our ass
+/mob/living/basic/heretic_summon/armsy/proc/register_behind(mob/living/tail)
+	if(!isnull(back)) // Shouldn't happen but just in case
+		UnregisterSignal(back, COMSIG_QDELETING)
+	back = tail
+	update_appearance(UPDATE_ICON_STATE)
+	if(!isnull(back))
+		RegisterSignal(back, COMSIG_QDELETING, PROC_REF(tail_deleted))
+
+/// When our tail is gone stop holding a reference to it
+/mob/living/basic/heretic_summon/armsy/proc/tail_deleted
+	SIGNAL_HANDLER
+	register_behind(null)
+
+/// Grows a new segment behind the passed mob
+/mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/behind)
+	var/mob/living/segment = new type(drop_location(), FALSE)
+	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+	segment.AddComponent(/datum/component/mob_chain, front = behind)
+	behind.register_behind(segment)
+	return segment
 
 /mob/living/basic/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_bodytype)
 	if(isnull(back))
@@ -83,20 +110,6 @@
 		return ..()
 	return back.adjustFireLoss()
 
-// We are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
-/mob/living/basic/heretic_summon/armsy/has_gravity(turf/gravity_turf)
-	return TRUE
-
-/mob/living/basic/heretic_summon/armsy/can_be_pulled()
-	return FALSE
-
-/// Updates every body in the chain to force move onto a single tile.
-/mob/living/basic/heretic_summon/armsy/proc/contract_next_chain_into_single_tile()
-	if(isnull(back))
-		return
-	back.forceMove(loc)
-	back.contract_next_chain_into_single_tile()
-
 /*
  * Recursively get the length of our chain.
  */
@@ -106,46 +119,13 @@
 		return
 	. += back.get_length()
 
-/mob/living/basic/heretic_summon/armsy/RangedAttack(atom/target, modifiers)
-	. = ..()
-	if (. || isfloorturf(target) || target == back || target == front)
-		return
-	back?.melee_attack(target, modifiers)
-
 /mob/living/basic/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
-	if(istype(target, /obj/item/bodypart/arm))
-		visible_message(span_warning("[src] devours [target]!"))
-		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-		qdel(target)
-		on_arm_eaten()
-		return
-
-	if(target == back || target == front)
-		return
-	back?.melee_attack(target, modifiers, ignore_cooldown)
-	if (!Adjacent(target) || (!ignore_cooldown && world.time < next_move))
-		return
-
-	. = ..()
-
-	if(!iscarbon(target))
-		return
-	var/mob/living/carbon/carbon_target = target
-	if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-		return
-
-	var/list/parts_to_remove = list()
-	for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
-		if(bodypart.body_part == HEAD || bodypart.body_part == CHEST || bodypart.body_part == LEG_LEFT || bodypart.body_part == LEG_RIGHT)
-			continue
-		if(bodypart.bodypart_flags & BODYPART_UNREMOVABLE)
-			continue
-		parts_to_remove += bodypart
-
-	if(!length(parts_to_remove) || prob(90))
-		return
-	var/obj/item/bodypart/lost_arm = pick(parts_to_remove)
-	lost_arm.dismember()
+	if(!istype(target, /obj/item/bodypart/arm))
+		return ..()
+	visible_message(span_warning("[src] devours [target]!"))
+	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	qdel(target)
+	on_arm_eaten()
 
 /*
  * Handle healing our chain.
@@ -168,34 +148,6 @@
 
 	visible_message(span_boldwarning("[src] flexes and expands!"))
 	current_stacks = 0
-	var/mob/living/basic/heretic_summon/armsy/prev = new type(drop_location(), FALSE)
-	back = prev
-	update_appearance(UPDATE_ICON_STATE)
-	prev.front = src
-	prev.update_appearance(UPDATE_ICON_STATE)
-
-
-/**
- * Shrink the worm into one tile.
- * I don't particularly love an action which calls a proc on a specific mob typepath, but what can you do?
- */
-/datum/action/cooldown/mob_cooldown/worm_contract
-	name = "Force Contract"
-	desc = "Forces your body to contract onto a single tile."
-	background_icon_state = "bg_heretic"
-	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "worm_contract"
-	cooldown_time = 30 SECONDS
-	melee_cooldown_time = 0 SECONDS
-	click_to_activate = FALSE
-	shared_cooldown = NONE
-
-/datum/action/cooldown/mob_cooldown/worm_contract/IsAvailable(feedback)
-	return ..() && istype(owner, /mob/living/basic/heretic_summon/armsy)
-
-/datum/action/cooldown/mob_cooldown/worm_contract/Activate(atom/target)
-	var/mob/living/basic/heretic_summon/armsy/worm_guy = owner
-	worm_guy.contract_next_chain_into_single_tile()
+	new_segment(behind = src)
 
 #undef MINIMUM_ARMSY_LENGTH

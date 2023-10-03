@@ -184,3 +184,5 @@
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
+/// Sent from a 'contract chain' button on a mob chain
+#define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"

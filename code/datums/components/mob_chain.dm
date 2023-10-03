@@ -35,16 +35,39 @@
 /datum/component/mob_chain/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_GAINED_CHAIN_TAIL, PROC_REF(on_gained_tail))
 	RegisterSignal(parent, COMSIG_MOB_LOST_CHAIN_TAIL, PROC_REF(on_lost_tail))
+	RegisterSignal(parent, COMSIG_MOB_CHAIN_CONTRACT, PROC_REF(on_contracted))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revived))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
+	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_MOB_ATTACK_RANGED), PROC_REF(on_attack))
 	if (vary_icon_state)
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 		update_mob_appearance()
 
+	var/datum/action/cooldown/worm_contract/shrink = new(parent)
+	shrink.Grant(parent)
+
 /datum/component/mob_chain/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_GAINED_CHAIN_TAIL, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_CAN_BE_PULLED,
+		COMSIG_ATOM_UPDATE_ICON_STATE,
+		COMSIG_HUMAN_EARLY_UNARMED_ATTACK,
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_REVIVE,
+		COMSIG_LIVING_UNARMED_ATTACK,
+		COMSIG_MOB_ATTACK_RANGED,
+		COMSIG_MOB_CHAIN_CONTRACT,
+		COMSIG_MOB_GAINED_CHAIN_TAIL,
+		COMSIG_MOB_LOST_CHAIN_TAIL,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+	))
+
+	var/mob/living/living_parent = parent
+	var/datum/action/cooldown/worm_contract/shrink = locate() in living_parent.actions
+	qdel(shrink)
 
 /// Update how we look
 /datum/component/mob_chain/proc/update_mob_appearance()
@@ -64,6 +87,17 @@
 	SIGNAL_HANDLER
 	back = null
 	update_mob_appearance()
+
+/// Called when our tail gets pulled up to our body
+/datum/component/mob_chain/proc/on_contracted(mob/living/shrinking)
+	SIGNAL_HANDLER
+	if (isnull(back))
+		return
+	back.forceMove(shrinking.loc)
+	var/datum/action/cooldown/worm_contract/shrink = locate() in back.actions
+	if (isnull(shrink))
+		return
+	INVOKE_ASYNC(shrink, TYPE_PROC_REF(/datum/action, Trigger))
 
 /// If we die so does the guy behind us
 /datum/component/mob_chain/proc/on_death()
@@ -106,3 +140,35 @@
 	if (isanimal_or_basicmob(our_mob))
 		var/mob/living/basic/basic_parent = our_mob
 		basic_parent.icon_living = current_icon_state
+
+/// Do not allow someone to be pulled out of the chain
+/datum/component/mob_chain/proc/on_pulled(mob/living/our_mob)
+	SIGNAL_HANDLER
+	if (!isnull(front))
+		return COMSIG_ATOM_CAN_BE_PULLED
+
+/// Tell our tail to attack too
+/datum/component/mob_chain/proc/on_attack(mob/living/our_mob, atom/target)
+	SIGNAL_HANDLER
+	if (target == back || target == front)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if (isnull(back) || QDELETED(target) || isfloorturf(target))
+		return
+	INVOKE_ASYNC(back, TYPE_PROC_REF(/mob, ClickOn), target)
+
+/**
+ * Shrink the chain of mobs into one tile.
+ */
+/datum/action/cooldown/worm_contract
+	name = "Force Contract"
+	desc = "Forces your body to contract onto a single tile."
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "worm_contract"
+	cooldown_time = 30 SECONDS
+	melee_cooldown_time = 0 SECONDS
+
+/datum/action/cooldown/worm_contract/Activate(atom/target)
+	SEND_SIGNAL(owner, COMSIG_MOB_CHAIN_CONTRACT)
+	StartCooldown()
