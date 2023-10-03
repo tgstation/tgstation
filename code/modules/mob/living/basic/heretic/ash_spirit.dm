@@ -1,4 +1,6 @@
-/// Fire-themed mob which is fast, can jaunt a short distance, and is dangerous at close range
+/**
+ * Player-only mob which is fast, can jaunt a short distance, and is dangerous at close range
+ */
 /mob/living/basic/heretic_summon/ash_spirit
 	name = "Ash Spirit"
 	real_name = "Ashy"
