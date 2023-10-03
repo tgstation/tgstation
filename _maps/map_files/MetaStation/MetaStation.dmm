@@ -4701,6 +4701,10 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "bHr" = (
@@ -8280,7 +8284,7 @@
 /obj/item/bedsheet/red,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/flasher/directional/north{
-	id = "IsolationCell"
+	id = "IsolationFlash"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
@@ -11984,6 +11988,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "esK" = (
+/obj/machinery/firealarm/directional/east,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
@@ -16191,9 +16196,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fYC" = (
@@ -18269,14 +18271,18 @@
 /area/station/medical/abandoned)
 "gMg" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
-/obj/item/reagent_containers/cup/bottle/epinephrine,
-/obj/item/reagent_containers/cup/bottle/multiver,
-/obj/item/reagent_containers/syringe,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/storage/medkit/regular,
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "gMt" = (
@@ -20068,7 +20074,6 @@
 	},
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
-/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "hwg" = (
@@ -26967,14 +26972,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "jJp" = (
+/obj/machinery/button/flasher{
+	id = "IsolationFlash";
+	pixel_x = -23;
+	pixel_y = 8
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/status_display/door_timer{
-	id = "IsolationCell";
-	name = "Isolation Cell";
-	pixel_x = -32
-	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "jJC" = (
@@ -38304,7 +38309,6 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -42019,7 +42023,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "pdX" = (
@@ -55048,9 +55051,6 @@
 /obj/item/mod/module/plasma_stabilizer{
 	pixel_x = 16
 	},
-/obj/item/mod/module/signlang_radio{
-	pixel_x = 16
-	},
 /obj/item/mod/module/thermal_regulator{
 	pixel_x = 16
 	},
@@ -56964,7 +56964,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "urs" = (
@@ -57722,9 +57721,7 @@
 	dir = 4;
 	id = "garbage"
 	},
-/obj/machinery/recycler{
-	dir = 8
-	},
+/obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "uEO" = (
