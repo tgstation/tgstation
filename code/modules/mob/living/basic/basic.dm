@@ -194,6 +194,7 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	var/atom/hlelo = target
 	face_atom(target)
 	if (!ignore_cooldown)
 		changeNext_move(melee_attack_cooldown)
