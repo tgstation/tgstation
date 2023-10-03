@@ -153,7 +153,3 @@
 #define BB_LEGION_RECENT_LINES "legion_recent_lines"
 /// The creator of our legion skull
 #define BB_LEGION_BROOD_CREATOR "legion_brood_creator"
-
-// venus human trap keys
-///the vine tangle ability
-#define BB_HUMANTRAP_VINE_TANGLE "BB_venushumantrap_tangle"

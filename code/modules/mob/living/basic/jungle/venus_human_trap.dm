@@ -136,14 +136,10 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/human_trap,
+		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-/datum/ai_planning_subtree/targeted_mob_ability/human_trap
-	ability_key = BB_HUMANTRAP_VINE_TANGLE
-	finish_planning = FALSE
 	
 /mob/living/basic/venus_human_trap
 	name = "venus human trap"
@@ -191,7 +187,7 @@
 	AddElement(/datum/element/lifesteal, 5)
 	var/datum/action/cooldown/mob_cooldown/vine_tangle/tangle = new(src)
 	tangle.Grant(src)
-	ai_controller.set_blackboard_key(BB_HUMANTRAP_VINE_TANGLE, tangle)
+	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
 /mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
