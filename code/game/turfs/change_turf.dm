@@ -224,6 +224,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(new_turf)
 	else
+		for(var/turf/open/adjacent_turf as anything in atmos_adjacent_turfs)
+			adjacent_turf.atmos_adjacent_turfs -= src
+		atmos_adjacent_turfs = null
 		if(pollution)
 			qdel(pollution)
 		if(excited || excited_group)
