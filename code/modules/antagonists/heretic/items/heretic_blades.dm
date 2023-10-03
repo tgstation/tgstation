@@ -88,6 +88,23 @@
 	inhand_icon_state = "flesh_blade"
 	after_use_message = "The Marshal hears your call..."
 
+/obj/item/melee/sickly_blade/flesh/Initialize(mapload)
+	. = ..()
+
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("Unknown DNA" = "X*"),\
+		diseases = null,\
+	)
+
 // Path of Void's blade
 /obj/item/melee/sickly_blade/void
 	name = "\improper void blade"
