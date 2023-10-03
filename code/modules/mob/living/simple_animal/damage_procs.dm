@@ -50,7 +50,7 @@
 	else if(damage_coeff[TOX])
 		. = adjustHealth(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(on_damage_adjustment(CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
 	if(forced)
