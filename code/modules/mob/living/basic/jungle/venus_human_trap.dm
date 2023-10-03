@@ -191,7 +191,7 @@
 
 /mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(!..())
+	if(!.)
 		return FALSE
 	var/list/kudzu_in_area = range(2, src)
 
@@ -208,15 +208,14 @@
 	///how many vines can we handle
 	var/max_vines = 2
 	/// An assoc list of all the plant's vines (beam = leash)
-	var/list/vines = list()
+	var/list/datum/beam/vines = list()
 	/// How far away a plant can attach a vine to something
 	var/vine_grab_distance = 4
 	/// how long does a vine attached to something last (and its leash)
 	var/vine_duration = 1.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/vine_tangle/Remove(mob/remove_from)
-	for(var/datum/beam/vine as anything in vines)
-		qdel(vine)
+	QDEL_LIST(vines)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/vine_tangle/Activate(atom/target_atom)
@@ -231,7 +230,7 @@
 			if(blockade.density)
 				return
 
-	var/datum/beam/newVine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type=/obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/newVine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
 	RegisterSignal(newVine, COMSIG_QDELETING, PROC_REF(remove_vine), newVine)
 	vines[newVine] = component
