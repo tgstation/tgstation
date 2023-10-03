@@ -135,6 +135,16 @@
 	icon_state = "cshell"
 	projectile_type = null
 
+/obj/item/ammo_casing/shotgun/techshell/Initialize(mapload)
+	. = ..()
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug, /datum/crafting_recipe/laserslug)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"
 	desc = "A dart for use in shotguns. Can be injected with up to 15 units of any chemical."
