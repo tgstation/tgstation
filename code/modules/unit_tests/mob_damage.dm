@@ -201,9 +201,6 @@
 
 ///	Sanity tests damage and healing using adjustToxLoss, adjustBruteLoss, etc
 /datum/unit_test/mob_damage/proc/test_sanity_simple(mob/living/carbon/human/consistent/dummy)
-	// Heal up, so that errors from the previous tests we won't cause this one to fail
-	dummy.fully_heal(HEAL_DAMAGE)
-
 	// Apply 5 damage and then heal it
 	if(!test_apply_damage(dummy, amount = 5))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
@@ -253,21 +250,24 @@
 	TEST_ASSERT_EQUAL(damage_returned, 5, \
 		"heal_bodypart_damage() should have returned 5, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 1, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 1, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_bodypart_damage did not apply its healing correctly on the mob!")
 
 	// heal 1 brute, 1 burn
 	damage_returned = round(dummy.heal_overall_damage(1, 1, updating_health = FALSE), 1)
 	TEST_ASSERT_EQUAL(damage_returned, 2, \
 		"heal_overall_damage() should have returned 2, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mob!")
 
 	// take 50 brute, 50 burn
 	damage_returned = round(dummy.take_overall_damage(50, 50, updating_health = FALSE), 1)
 	TEST_ASSERT_EQUAL(damage_returned, -100, \
 		"take_overall_damage() should have returned -100, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("take_overall_damage did not apply its damage correctly on the mob!")
 
 	// testing negative damage amount args with the overall damage procs - the sign should be ignored for these procs
 
@@ -287,7 +287,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, 10, \
 		"heal_overall_damage() should have returned 10, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healingcorrectly on the mob!")
 
 	// testing overhealing
 
@@ -295,7 +296,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, 100, \
 		"heal_overall_damage() should have returned 100, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its dhealing correctly on the mob!")
 
 ///	Tests damage procs with godmode on
 /datum/unit_test/mob_damage/proc/test_godmode(mob/living/carbon/human/consistent/dummy)
@@ -367,11 +369,11 @@
 	dummy.setOxyLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more oxyloss damage with TRAIT_NOBREATH. It should not work.
-	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = 2, included_types = OXYLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getOxyLoss(), included_types = OXYLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob took oxyloss damage while having TRAIT_NOBREATH")
 
 	// Make sure we are still be able to heal the oxyloss. This should work.
-	if(!test_apply_damage(dummy, -2, amount_after = 0, included_types = OXYLOSS))
+	if(!test_apply_damage(dummy, -2, amount_after = dummy.getOxyLoss()-2, included_types = OXYLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob could not heal oxyloss damage while having TRAIT_NOBREATH")
 
 	REMOVE_TRAIT(dummy, TRAIT_NOBREATH, TRAIT_SOURCE_UNIT_TESTS)
@@ -387,11 +389,11 @@
 	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more toxloss damage with TRAIT_TOXINLOVER. It should heal instead.
-	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = 0, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from toxin damage with TRAIT_TOXINLOVER")
 
 	// If we try to heal the toxloss we should take damage instead
-	if(!test_apply_damage(dummy, -2, expected = -2, amount_after = 2, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, -2, expected = -2, amount_after = dummy.getToxLoss()+2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not take damage from toxin healing with TRAIT_TOXINLOVER")
 
 	// TOXIMMUNE trait should prevent the damage you get from being healed by toxins medicines while having TRAIT_TOXINLOVER
@@ -401,11 +403,11 @@
 	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// try to 'heal' again - this time it should just do nothing because we should be immune to any sort of toxin damage - including from inverted healing
-	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = 2, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getToxLoss(), included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob should not have taken any damage or healing with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	// ok, let's try taking 'damage'. The inverted damage should still heal mobs with the TOXIMMUNE trait.
-	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = 0, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from taking toxin damage with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	REMOVE_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
@@ -413,20 +415,23 @@
 
 /// Testing cloneloss with TRAIT_NOCLONELOSS
 /datum/unit_test/mob_damage/proc/test_nocloneloss(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
+
 	// TRAIT_TRAIT_NOCLONELOSS is supposed to prevent cloneloss damage and healing. Let's make sure that's the case.
 	ADD_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
 	// force some cloneloss here
 	dummy.setCloneLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more cloneloss damage with TRAIT_NOCLONELOSS. It should not work.
-	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = 2, included_types = CLONELOSS))
+	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob took cloneloss damage with TRAIT_NOCLONELOSS")
 
 	// Healing the cloneloss should not work either, unless we force it
-	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = 2, included_types = CLONELOSS))
+	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob healed cloneloss damage with TRAIT_NOCLONELOSS")
 	// so let's force it
-	if(!test_apply_damage(dummy, -2, expected = 2, amount_after = 0, included_types = CLONELOSS, forced = TRUE))
+	if(!test_apply_damage(dummy, -2, expected = 2, amount_after = dummy.getCloneLoss()-2, included_types = CLONELOSS, forced = TRUE))
 		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob could not heal cloneloss damage with forced = TRUE and TRAIT_NOCLONELOSS")
 
 	REMOVE_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
@@ -512,8 +517,6 @@
 	return TRUE
 
 /datum/unit_test/mob_damage/basic/test_sanity_simple(mob/living/basic/mouse/gray/gusgus)
-	// Heal up, so that errors from the previous tests we won't cause this one to fail
-	gusgus.fully_heal(HEAL_DAMAGE)
 	// check to see if basic mob damage works
 
 	// Simple damage and healing
@@ -535,9 +538,11 @@
 	// overhealing
 
 	// heal 11 points of toxloss (should take care of all 5 brute damage remaining)
-	apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS)
+	if(!apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! toxloss was not applied correctly")
 	// heal the remaining point of staminaloss
-	apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS)
+	if(!apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! failed to heal staminaloss correctly")
 	// heal 35 points of each type, we should already be at full health so nothing should happen
 	if(!test_apply_damage(gusgus, amount = -35, expected = 0))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! overhealing was not applied correctly")
@@ -583,7 +588,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, -6, \
 		"take_overall_damage() should have returned -6, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS))
+		TEST_FAIL("take_overall_damage did not apply its damage correctly on the mouse!")
 
 	// testing negative args with the overall damage procs
 
@@ -603,7 +609,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, 2, \
 		"heal_overall_damage() should have returned 2, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")
 
 	// testing overhealing
 
@@ -611,4 +618,5 @@
 	TEST_ASSERT_EQUAL(damage_returned, 6, \
 		"heal_overall_damage() should have returned 6, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 0, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 0, included_types = BRUTELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")
