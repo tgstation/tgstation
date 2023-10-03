@@ -24,7 +24,6 @@
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
 	req_access = list(ACCESS_HOP)
-	icon_state = "hop"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()

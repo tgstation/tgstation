@@ -9,6 +9,7 @@
 	description = "The perfect shuttle for rectangle enthuasiasts, this long and slender shuttle has been known for it's incredible(Citation Needed) safety rating."
 	admin_notes = "Has airlocks on both sides of the shuttle and will probably ram deltastation's maint wing below medical. Oh well?"
 	credit_cost = CARGO_CRATE_VALUE * 4
+	occupancy_limit = 45
 
 /*----- Black Market Shuttle Datum + related code -----*/
 /datum/map_template/shuttle/ruin/blackmarket_chevvy
@@ -19,7 +20,6 @@
 /obj/machinery/computer/shuttle/caravan/blackmarket_chevvy
 	name = "Chevvy Shuttle Console"
 	desc = "Used to control the affectionately named 'Chevvy'."
-	req_access = list(208)
 	circuit = /obj/item/circuitboard/computer/blackmarket_chevvy
 	shuttleId = "blackmarket_chevvy"
 	possible_destinations = "blackmarket_chevvy_custom;blackmarket_chevvy_home;whiteship_home"
@@ -100,10 +100,13 @@
 	outfit = /datum/outfit/guild/slaver/captain
 
 /obj/item/radio/headset/guild
-	keyslot = new /obj/item/encryptionkey/headset_guild
+	keyslot = new /obj/item/encryptionkey/headset_syndicate/guild
 
 /obj/item/radio/headset/guild/command
 	command = TRUE
+
+/datum/outfit/guild
+	name = "Guild Default Outfit"
 
 /datum/outfit/guild/slaver
 	name = "Privateer Slaver"
@@ -117,20 +120,15 @@
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
 	belt = /obj/item/storage/belt/military
-	r_pocket = /obj/item/storage/bag/ammo
-	l_pocket = /obj/item/gun/energy/disabler/bolt_disabler
+	r_pocket = /obj/item/storage/pouch/ammo
+	l_pocket = /obj/item/gun/energy/e_gun/mini
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	backpack_contents = list(
 		/obj/item/storage/box/survival/engineer/radio,
 		/obj/item/melee/baton/telescopic,
-		/obj/item/gun/ballistic/automatic/pistol/cfa_snub/empty,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_snub,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_snub,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_snub/ap,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_snub/rubber,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_snub/rubber,
+		/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/wespe,
 		/obj/item/grenade/c4,
 		/obj/item/grenade/smokebomb
 	)
@@ -147,26 +145,22 @@
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
 	belt = /obj/item/storage/belt/military
-	r_pocket = /obj/item/storage/bag/ammo
-	l_pocket = /obj/item/gun/energy/disabler/bolt_disabler
+	r_pocket = /obj/item/storage/pouch/ammo
+	l_pocket = /obj/item/gun/energy/e_gun/mini
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	backpack_contents = list(
 		/obj/item/storage/box/survival/engineer/radio,
 		/obj/item/melee/baton/telescopic,
-		/obj/item/gun/ballistic/automatic/pistol/cfa_ruby/empty,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_ruby/ap,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_ruby/ap,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_ruby/rubber,
-		/obj/item/ammo_box/magazine/multi_sprite/cfa_ruby/rubber,
+		/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/skild,
 		/obj/item/megaphone/command
 	)
 
 /*----- Tarkon Shuttle Datum + related code -----*/
 /datum/map_template/shuttle/ruin/tarkon_driver
-	prefix = "_maps/skyrat/shuttles/"
-	suffix = "tarkon_driver"
+	prefix = "_maps/shuttles/skyrat/"
+	suffix = "tarkon_driverdc54"
 	name = "Tarkon Drill Driver"
 
 /obj/machinery/computer/shuttle/tarkon_driver
@@ -186,6 +180,12 @@
 	view_range = 0
 
 /obj/item/circuitboard/computer/tarkon_driver
-	name = "Chevvy Control Console (Computer Board)"
+	name = "Tarkon Driver Control Console (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/tarkon_driver
+
+/datum/map_template/shuttle/ruin/tarkon_driver/defcon3
+	suffix = "tarkon_driverdc3"
+
+/datum/map_template/shuttle/ruin/tarkon_driver/defcon2
+	suffix = "tarkon_driverdc2"
 /*----- End of Tarkon Shuttle Code -----*/

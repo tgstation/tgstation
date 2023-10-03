@@ -49,8 +49,6 @@
 */
 
 /obj/effect/spawner/armory_spawn/microfusion
-	icon_state = "random_rifle"
-	gun_count = 4
 	guns = list(
 		/obj/item/gun/microfusion/mcr01,
 		/obj/item/gun/microfusion/mcr01,

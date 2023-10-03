@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/automatic/pistol/pepperball
 	name = "\improper Bolt Pepperball AHG"
 	desc = "An incredibly mediocre 'firearm' designed to fire soft pepper balls meant to easily subdue targets."
-	icon = 'modular_skyrat/modules/sec_haul/icons/guns/pepperball.dmi'
+	icon = 'modular_skyrat/modules/modular_weapons/icons/obj/pepperball/pepperball.dmi'
 	icon_state = "peppergun"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/pepperball
@@ -25,7 +25,7 @@
 /obj/item/ammo_box/magazine/pepperball
 	name = "pistol magazine (pepperball)"
 	desc = "A gun magazine filled with balls."
-	icon = 'modular_skyrat/modules/sec_haul/icons/guns/pepperball.dmi'
+	icon = 'modular_skyrat/modules/modular_weapons/icons/obj/pepperball/pepperball.dmi'
 	icon_state = "pepperball"
 	ammo_type = /obj/item/ammo_casing/pepperball
 	caliber = CALIBER_PEPPERBALL
@@ -41,7 +41,7 @@
 
 /obj/projectile/bullet/pepperball
 	name = "pepperball orb"
-	icon = 'modular_skyrat/modules/sec_haul/icons/guns/projectiles.dmi'
+	icon = 'modular_skyrat/modules/modular_weapons/icons/obj/pepperball/projectiles.dmi'
 	icon_state = "pepperball"
 	damage = 0
 	stamina = 5
@@ -72,8 +72,16 @@
 
 /obj/item/ammo_box/advanced/pepperballs
 	name = "pepperball ammo box"
-	icon = 'modular_skyrat/modules/sec_haul/icons/guns/ammoboxes.dmi'
+	icon = 'modular_skyrat/modules/modular_weapons/icons/obj/pepperball/ammoboxes.dmi'
 	icon_state = "box10x24"
 	ammo_type = /obj/item/ammo_casing/pepperball
 	custom_materials = list(/datum/material/iron = 5000)
 	max_ammo = 15
+
+// Gunset for the pepperball pistol
+
+/obj/item/storage/toolbox/guncase/skyrat/pistol/pepperball
+	name = "Pepperball AHG gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/pepperball
+	extra_to_spawn = /obj/item/ammo_box/magazine/pepperball

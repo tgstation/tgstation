@@ -1,11 +1,3 @@
-/obj/item/gun/energy/e_gun
-	icon = 'modular_skyrat/modules/aesthetics/guns/icons/energy.dmi'
-	lefthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_lefthand.dmi'
-	righthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_righthand.dmi'
-	worn_icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns_back.dmi'
-	worn_icon_state = "energy"
-	ammo_x_offset = 2
-
 /obj/item/gun/energy/e_gun/advtaser
 	worn_icon = null
 	worn_icon_state = "gun"
@@ -38,42 +30,6 @@
 	icon = 'modular_skyrat/modules/aesthetics/guns/icons/energy.dmi'
 	lefthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_lefthand.dmi'
 	righthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_righthand.dmi'
-
-/obj/item/gun/energy/laser
-	icon = 'modular_skyrat/modules/aesthetics/guns/icons/energy.dmi'
-	lefthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_lefthand.dmi'
-	righthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_righthand.dmi'
-
-/obj/item/gun/energy/e_gun/stun
-	charge_sections = 5
-	ammo_x_offset = 2
-
-/obj/item/gun/ballistic/shotgun/riot
-	name = "\improper Peacekeeper shotgun"
-	desc = "A Nanotrasen-made riot control shotgun fitted with an extended tube and a fixed tactical stock."
-	icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns.dmi'
-	worn_icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns_back.dmi'
-	lefthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_lefthand.dmi'
-	righthand_file = 'modular_skyrat/modules/aesthetics/guns/icons/guns_righthand.dmi'
-	inhand_icon_state = "riot_shotgun"
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
-	can_suppress = TRUE
-	suppressed_sound = 'modular_skyrat/modules/aesthetics/guns/sound/suppressed_shotgun.ogg'
-	suppressed_volume = 100
-	vary_fire_sound = TRUE
-	fire_sound = 'modular_skyrat/modules/aesthetics/guns/sound/shotgun_light.ogg'
-
-/obj/item/gun/ballistic/shotgun/riot/syndicate
-	name = "\improper Peacebreaker shotgun"
-	desc = "A Scarborough riot control shotgun fitted with a crimson furnishing and a wooden tactical stock. You swear you've seen this model elsewhere before..."
-	icon_state = "riotshotgun_syndie"
-	inhand_icon_state = "riot_shotgun_syndie"
-	can_be_sawn_off = FALSE
-	can_suppress = FALSE
-
-/obj/item/gun/ballistic/shotgun/riot/syndicate/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "\improper Peacekeeper combat shotgun"
@@ -312,30 +268,241 @@
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns.dmi'
 
-/obj/item/gun/ballistic/automatic/c20r/unrestricted/cmg1
-	name = "\improper NT CMG-1"
-	desc = "A bullpup three-round burst .45 PDW with an eerily familiar design. It has a foldable stock and a dot sight."
-	icon_state = "cmg1"
-	icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns.dmi'
-	company_flag = COMPANY_NANOTRASEN
+// GUBMAN3 - FULL BULLET RENAME
+// i loathe the above
 
-/obj/item/gun/ballistic/automatic/ar/modular/model75
-	name = "\improper NT ARG-75"
-	desc = "A contemporary rifle that just exited its prototype phase and has started production, a rare sight for now. It's equipped with a heavy duty integrally suppressed barrel, 1.4 times scope and a topmounted laser sight."
-	icon_state = "arg75"
-	icon = 'modular_skyrat/modules/aesthetics/guns/icons/guns.dmi'
-	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	fire_delay = 5
-	fire_sound_volume = 90
-	mag_type = /obj/item/ammo_box/magazine/multi_sprite/ostwind/arg75
+// overrides for .310 Strilka-derived ammo, e.g. lionhunter ammo, because you don't want to give security the ability to print infinite wallhack ammo, right?
+/obj/item/ammo_casing/strilka310/lionhunter
+	name = "hunter's rifle round"
+	can_be_printed = FALSE // trust me bro you dont wanna give security homing wallhack Better Rubbers
 
-/obj/item/gun/ballistic/automatic/ar/modular/model75/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+/obj/item/ammo_casing/strilka310/enchanted
+	name = "enchanted rifle round"
+	can_be_printed = FALSE // these are Really Really Better Rubbers
 
-/obj/item/ammo_box/magazine/multi_sprite/ostwind/arg75
-	name = "7.62mm straight magazine"
-	icon = 'modular_skyrat/modules/sec_haul/icons/guns/mags.dmi'
-	icon_state = "pcr"
-	ammo_type = /obj/item/ammo_casing/a762
-	caliber = CALIBER_A762
-	max_ammo = 20
+// overrides for tgcode's .223 (formerly 5.56), used in the M90-gl - renamed to .277 Aestus
+/obj/item/ammo_casing/a223
+	name = ".277 Aestus casing"
+	desc = "A .277 bullet casing."
+
+/obj/item/ammo_casing/a223/phasic
+	name = ".277 Aestus phasic casing"
+	desc = "A .277 Aestus bullet casing.\
+	<br><br>\
+	<i>PHASIC: Ignores all surfaces except organic matter.</i>"
+	advanced_print_req = TRUE
+	custom_materials = AMMO_MATS_PHASIC
+
+// shotgun ammo overrides moved to modular_skyrat\modules\shotgunrebalance\code\shotgun.dm
+
+// overrides for tgcode .50cal, used in their sniper/anti-materiel rifles
+/obj/item/ammo_casing/p50
+	name = ".416 Stabilis polymer casing"
+	desc = "A .416 bullet casing."
+	advanced_print_req = TRUE // you are NOT printing more ammo for this without effort.
+	// then again the offstations with ammo printers and sniper rifles come with an ammo disk anyway, so
+
+/obj/item/ammo_casing/p50/disruptor
+	name = ".416 Stabilis disruptor casing"
+	desc = "A .416 bullet casing that specialises in sending the target to sleep rather than hell.\
+	<br><br>\
+	<i>DISRUPTOR: Forces humanoid targets to sleep, does heavy damage against cyborgs, EMPs struck targets.</i>"
+
+/obj/item/ammo_casing/p50/penetrator
+	name = ".416 Stabilis APFSDS ++P bullet casing"
+	desc = "A .416 round casing designed to go through basically everything. A label warns not to use the round if the weapon cannot handle pressures greater than 85000 PSI.\
+	<br><br>\
+	<i>PENETRATOR: Goes through every surface, and every mob. Goes through everything. Yes, really.</i>"
+
+// overrides for tgcode 4.6x30mm, used in the WT-550
+/obj/item/ammo_casing/c46x30mm
+	name = "8mm Usurpator bullet casing"
+	desc = "An 8mm bullet casing."
+
+/obj/item/ammo_casing/c46x30mm/ap
+	name = "8mm Usurpator armor-piercing bullet casing"
+	desc = "An 8mm armor-piercing bullet casing.\
+	<br><br>\
+	<i>ARMOR PIERCING: Increased armor piercing capabilities. What did you expect?</i>"
+	custom_materials = AMMO_MATS_AP
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c46x30mm/inc
+	name = "8mm Usurpator incendiary bullet casing"
+	desc = "An 8mm incendiary bullet casing.\
+	<br><br>\
+	<i>INCENDIARY: Leaves a trail of fire when shot, sets targets aflame.</i>"
+	custom_materials = AMMO_MATS_TEMP
+	advanced_print_req = TRUE
+
+// overrides for tgcode .45, used in the M1911 and C20-r
+/obj/item/ammo_casing/c45
+	name = ".460 Ceres bullet casing"
+	desc = "A .460 bullet casing."
+
+/obj/item/ammo_casing/c45/ap
+	name = ".460 Ceres armor-piercing bullet casing"
+	desc = "An armor-piercing .460 bullet casing.\
+	<br><br>\
+	<i>ARMOR PIERCING: Increased armor piercing capabilities. What did you expect?</i>"
+	custom_materials = AMMO_MATS_AP
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c45/inc
+	name = ".460 Ceres incendiary bullet casing"
+	desc = "An incendiary .460 bullet casing.\
+	<br><br>\
+	<i>INCENDIARY: Leaves a trail of fire when shot, sets targets aflame.</i>"
+	custom_materials = AMMO_MATS_TEMP
+	advanced_print_req = TRUE
+
+// overrides for .50AE, used in the deagle
+/obj/item/ammo_casing/a50ae
+	name = ".454 Trucidator bullet casing"
+	desc = "A .454 Trucidator bullet casing. Extremely powerful.\
+	<br><br>\
+	<i>HAND CANNON: Fired out of a handgun, deals disproportionately large damage.</i>"
+
+// overrides for .357, used in the .357 revolver
+/obj/item/ammo_casing/a357    //We can keep the Magnum classic.
+	name = ".357 bullet casing"
+	desc = "A .357 bullet casing.\
+	<br><br>\
+	<i>HAND CANNON: Fired out of a handgun, deals disproportionately large damage.</i>"
+
+/obj/item/ammo_casing/a357/match
+	desc = "A .357 bullet casing, manufactured to exceedingly high standards.\
+	<br><br>\
+	<i>MATCH: Ricochets everywhere. Like crazy.</i>"
+
+/obj/item/ammo_casing/a357/phasic
+	desc = "A .357 phasic bullet casing.\
+	<br><br>\
+	<i>PHASIC: Ignores all surfaces except organic matter.</i>"
+	advanced_print_req = TRUE
+	custom_materials = AMMO_MATS_PHASIC
+
+/obj/item/ammo_casing/a357/heartseeker
+	desc = "A .357 heartseeker bullet casing.\
+	<br><br>\
+	<i>HEARTSEEKER: Has homing capabilities, methodology unknown.</i>"
+	advanced_print_req = TRUE
+	custom_materials = AMMO_MATS_HOMING // meme ammo. meme print cost
+
+// overrides for .38 Special, used in the .38 revolvers, including the det's
+/obj/item/ammo_box/c38
+	caliber = CALIBER_38
+
+/obj/item/ammo_casing/c38/trac
+	custom_materials = AMMO_MATS_TRAC
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c38/dumdum
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c38/hotshot
+	custom_materials = AMMO_MATS_TEMP
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c38/iceblox
+	custom_materials = AMMO_MATS_TEMP // plasma's wack.
+	advanced_print_req = TRUE
+
+// The ones above are the casings for the ammo, whereas the ones below are the actual projectiles that give you feedback when you're shot
+
+/obj/projectile/bullet/a223
+	name = ".277 Aestus bullet"
+
+/obj/projectile/bullet/a223/phasic
+	name = ".277 phasic bullet"
+
+/obj/projectile/bullet/c9mm
+	name = "9x25mm bullet"
+
+/obj/projectile/bullet/c9mm/ap
+	name = "9x25mm armor-piercing bullet"
+
+/obj/projectile/bullet/c9mm/hp
+	name = "9x25mm fragmenting bullet"
+
+/obj/projectile/bullet/incendiary/c9mm
+	name = "9x25mm incendiary bullet"
+
+/obj/projectile/bullet/c45
+	name = ".460 bullet"
+
+/obj/projectile/bullet/c45/ap
+	name = ".460 armor-piercing bullet"
+
+/obj/projectile/bullet/incendiary/c45
+	name = ".460 incendiary bullet"
+
+/obj/projectile/bullet/c46x30mm
+	name = "8mm Usurpator bullet"
+
+/obj/projectile/bullet/c46x30mm/ap
+	name = "8mm armor-piercing bullet"
+
+/obj/projectile/bullet/incendiary/c46x30mm
+	name = "8mm incendiary bullet"
+
+/obj/projectile/bullet/p50
+	name = ".416 Stabilis bullet"
+
+/obj/projectile/bullet/p50/disruptor
+	name = ".416 disruptor bullet"
+
+/obj/projectile/bullet/p50/penetrator
+	name = ".416 penetrator bullet"
+
+/obj/projectile/bullet/a50ae
+	name = ".454 Trucidator bullet"
+
+
+// MAGAZINES UPDATED TO MATCH STUFF
+
+/obj/item/ammo_box/magazine/wt550m9
+	name = "\improper WT-550 magazine"
+	desc = "A 20-round toploaded 8mm Usurpator magazine that fits neatly in the WT-550."
+
+/obj/item/ammo_box/magazine/wt550m9/wtap
+	name = "\improper WT-550 AP magazine"
+
+/obj/item/ammo_box/magazine/wt550m9/wtic
+	name = "\improper WT-550 IND magazine"
+
+/obj/item/ammo_box/magazine/smgm45
+	name = ".460 Ceres SMG magazine"
+	desc = "A magazine chambered for .460 meant to fit in submachine guns."
+
+/obj/item/ammo_box/magazine/smgm45/ap
+	name = ".460 Ceres AP SMG magazine"
+
+/obj/item/ammo_box/magazine/smgm45/incen
+	name = ".460 Ceres IND SMG magazine"
+
+/obj/item/ammo_box/magazine/tommygunm45
+	name = "\improper Tommy Gun .460 Ceres drum"
+	desc = "A disc magazine chambered for .460 Ceres."
+
+/obj/item/ammo_box/magazine/m556
+	name = ".277 Aestus toploading magazine"
+	desc = "A toploading magazine chambered for .277 Aestus."
+
+/obj/item/ammo_box/magazine/m556/phasic
+	name = ".277 PHASE toploading magazine"
+
+/obj/item/ammo_box/magazine/sniper_rounds
+	name = "anti-materiel rifle magazine"
+	desc = "A heavy magazine chambered for .416 Stabilis."
+
+/obj/item/ammo_box/magazine/sniper_rounds/soporific
+	desc = "A magazine with soporific .416 Stabilis ammo, designed for happy days and dead quiet nights."
+
+/obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	name = "anti-materiel rifle ++P magazine"
+	desc = "A heavy magazine with over the top, overpressurized, and frankly over the top .416 penetrator ammo."
+
+/obj/item/ammo_box/magazine/m50
+	name = ".454 Trucidator handcannon magazine"
+	desc = "An absurdly THICK magazine possibly meant for a heavy hitting pistol, if you can call it that."
