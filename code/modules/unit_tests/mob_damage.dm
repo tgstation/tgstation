@@ -210,7 +210,7 @@
 
 	// Apply 15 damage and heal 3
 	if(!test_apply_damage(dummy, amount = 15))
-		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
 	if(!test_apply_damage(dummy, amount = -3))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! underhealing was not applied correctly")
