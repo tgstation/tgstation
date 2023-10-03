@@ -30,7 +30,6 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
-	item_flags = NOBLUDGEON
 	attack_style_path = null
 
 	/// Icon state to use when capped
@@ -558,9 +557,6 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
-
-/obj/item/toy/crayon/attack(mob/living/target_mob, mob/living/user, params)
-	use_on(target_mob, user, params)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
