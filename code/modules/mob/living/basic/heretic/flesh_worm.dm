@@ -27,9 +27,6 @@
 	var/stacks_to_grow = 5
 	///Currently eaten arms
 	var/current_stacks = 0
-	///Types of limb we will amputate on attack
-	var/static/list/target_limbs = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-
 /*
  * Arguments
  * * spawn_bodyparts - whether we spawn additional armsy bodies until we reach length.
@@ -44,7 +41,7 @@
 		surgery_verb = "tearing",\
 		minimum_stat = CONSCIOUS,\
 		snip_chance = 10,\
-		target_zones = target_limbs,\
+		target_zones = GLOB.arm_zones,\
 	)
 	AddComponent(\
 		/datum/component/blood_walk, \
