@@ -5,9 +5,13 @@
 #define COMSIG_TRAM_COLLISION "tram_collided"
 
 // Sent to and from SStransport for control between various components
+/// Requesting transport move to a destination
 #define COMSIG_TRANSPORT_REQUEST "!REQ"
+/// Response to a COMSIG_TRANSPORT_REQUEST request signal
 #define COMSIG_TRANSPORT_RESPONSE "!RESP"
+/// Transport controller 'active' (busy) status
 #define COMSIG_TRANSPORT_ACTIVE "!ACTV"
+/// Transport controller destination change signal
 #define COMSIG_TRANSPORT_DESTINATION "!DEST"
-#define COMSIG_TRANSPORT_LIGHTS "!LITE"
+/// Transport controller communication status (tram malfunction event)
 #define COMSIG_COMMS_STATUS "!COMM"
