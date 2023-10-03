@@ -2802,12 +2802,12 @@
 /turf/open/openspace/airless,
 /area/space)
 "bqV" = (
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/maintenance{
+	name = "Research Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
 "brk" = (
@@ -5987,6 +5987,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"cFD" = (
+/obj/structure/table,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/food/grown/carrot{
+	pixel_y = 3;
+	pixel_x = -1
+	},
+/obj/item/food/grown/banana/bunch,
+/obj/item/food/grown/corn,
+/turf/open/floor/glass,
+/area/station/science/zoo)
 "cFF" = (
 /turf/closed/wall,
 /area/station/science/ordnance/storage)
@@ -11600,6 +11613,15 @@
 /obj/item/camera_film,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
+"fdT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/station/science/zoo)
 "fei" = (
 /obj/machinery/door/airlock/research{
 	glass = 1;
@@ -23604,8 +23626,7 @@
 /area/station/maintenance/solars/port/aft)
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
-	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	name = "\improper APLU \";\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -25009,12 +25030,12 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/lobby)
 "kOm" = (
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/maintenance{
+	name = "Research Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/science/research)
 "kOu" = (
@@ -29037,6 +29058,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
+"mAz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/railing,
+/turf/open/floor/glass,
+/area/station/science/zoo)
 "mAO" = (
 /obj/item/clothing/head/costume/shrine_wig,
 /turf/open/floor/plating/airless,
@@ -33181,7 +33209,15 @@
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "opU" = (
-/obj/item/food/grown/banana/bunch,
+/obj/structure/table,
+/obj/item/camera{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/camera_film{
+	pixel_x = -13;
+	pixel_y = 4
+	},
 /turf/open/floor/glass,
 /area/station/science/zoo)
 "opX" = (
@@ -34782,6 +34818,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
+"paB" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/glass,
+/area/station/science/zoo)
 "paI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -42472,6 +42512,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/zoo)
 "snQ" = (
@@ -43984,6 +44025,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"sZy" = (
+/obj/structure/table,
+/turf/open/floor/glass,
+/area/station/science/zoo)
 "sZB" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -54700,17 +54745,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "xCa" = (
-/obj/item/food/grown/carrot{
-	pixel_y = 3;
-	pixel_x = -1
-	},
-/obj/item/food/grown/carrot{
-	pixel_y = 3;
-	pixel_x = -1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/glass,
 /area/station/science/zoo)
 "xCf" = (
@@ -160540,7 +160575,7 @@ sUu
 iQX
 vtT
 vtT
-bVY
+mAz
 qKq
 bQH
 low
@@ -160795,10 +160830,10 @@ cdq
 xuZ
 nUw
 iQX
+xCa
 vtT
-vtT
-bVY
-vtT
+fdT
+cFD
 bQH
 low
 cwP
@@ -161052,10 +161087,10 @@ xuZ
 pTw
 qYW
 iQX
-vtT
+paB
 vtT
 bVY
-vtT
+sZy
 bQH
 low
 cwP
@@ -161311,7 +161346,7 @@ eBu
 vtc
 iAB
 iAB
-xCa
+bVY
 opU
 tGN
 low
