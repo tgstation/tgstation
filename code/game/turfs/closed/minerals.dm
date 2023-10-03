@@ -112,7 +112,8 @@
  */
 /turf/closed/mineral/proc/proximity_ore_chance()
 	var/distance = prox_to_vent()
-	ASSERT(distance != 0)
+	if(distance == 0) //We asked for a random chance but we could not successfully find a vent, so 0.
+		return 0
 
 	if(distance < VENT_PROX_VERY_HIGH)
 		return VENT_CHANCE_VERY_HIGH
