@@ -24,7 +24,7 @@
 	M.Scale(1.8, 1.2)
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
 
-/mob/living/carbon/gib(drop_bitflags=DROP_ALL_REMAINS) //no_brain, no_organs, no_bodyparts, safe_gib = FALSE)
+/mob/living/carbon/gib(drop_bitflags=DROP_ALL_REMAINS)
 	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
 	if(drop_bitflags & DROP_ITEMS)
 		for(var/obj/item/W in src)
@@ -37,7 +37,7 @@
 		visible_message(span_danger("[M] bursts out of [src]!"))
 	return ..()
 
-/mob/living/carbon/spill_organs(drop_bitflags=DROP_ALL_REMAINS)//no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
 	var/atom/Tsec = drop_location()
 
 	for(var/obj/item/organ/organ as anything in organs)

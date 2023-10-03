@@ -8,7 +8,7 @@
  * * DROP_ITEMS - Gibbed mob will drop carried items (otherwise they get deleted)
  * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes DROP_ITEMS causing any carried items to be deleted)
 **/
-/mob/living/proc/gib(drop_bitflags=DROP_ALL_REMAINS) //no_brain, no_organs, no_bodyparts)
+/mob/living/proc/gib(drop_bitflags=DROP_ALL_REMAINS)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
@@ -16,13 +16,13 @@
 	if(!prev_lying)
 		gib_animation()
 
-	spill_organs(drop_bitflags)//no_brain, no_organs, no_bodyparts)
+	spill_organs(drop_bitflags)
 
-	if(drop_bitflags & DROP_BODYPARTS)//no_bodyparts)
-		spread_bodyparts(drop_bitflags)//no_brain, no_organs)
+	if(drop_bitflags & DROP_BODYPARTS)
+		spread_bodyparts(drop_bitflags)
 
-	spawn_gibs(drop_bitflags) //no_bodyparts)
-	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags) //, no_brain, no_organs, no_bodyparts)
+	spawn_gibs(drop_bitflags)
+	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
