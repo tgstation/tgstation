@@ -934,7 +934,7 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_enemies = list(4, 4, 4, 3, 3, 2, 2, 1, 0, 0)
 	required_candidates = 1
-	weight = 1
+	weight = 2
 	cost = 8
 	minimum_players = 30
 	minimum_round_time = 55 MINUTES
