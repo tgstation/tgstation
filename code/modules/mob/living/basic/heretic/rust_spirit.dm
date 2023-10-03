@@ -1,3 +1,4 @@
+/// Pretty simple mob which creates areas of rust and has a rust-creating projectile spell
 /mob/living/basic/heretic_summon/rust_spirit
 	name = "Rust Walker"
 	real_name = "Rusty"

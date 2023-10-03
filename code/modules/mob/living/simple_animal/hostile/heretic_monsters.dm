@@ -351,39 +351,3 @@
 	var/matrix/matrix_transformation = matrix()
 	matrix_transformation.Scale(1.4, 1.4)
 	transform = matrix_transformation
-
-/mob/living/simple_animal/hostile/heretic_summon/ash_spirit
-	name = "Ash Man"
-	real_name = "Ashy"
-	desc = "An incomprehensible abomination. As it moves, a thin trail of ash follows, appearing from seemingly nowhere."
-	icon_state = "ash_walker"
-	icon_living = "ash_walker"
-	status_flags = CANPUSH
-	maxHealth = 75
-	health = 75
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	sight = SEE_TURFS
-	actions_to_add = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-		/datum/action/cooldown/spell/pointed/cleave,
-		/datum/action/cooldown/spell/fire_sworn,
-	)
-
-/mob/living/simple_animal/hostile/heretic_summon/stalker
-	name = "Flesh Stalker"
-	real_name = "Flesh Stalker"
-	desc = "An abomination made from several limbs and organs. Every moment you stare at it, it appears to shift and change unnaturally."
-	icon_state = "stalker"
-	icon_living = "stalker"
-	status_flags = CANPUSH
-	maxHealth = 150
-	health = 150
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	sight = SEE_MOBS
-	actions_to_add = list(
-		/datum/action/cooldown/spell/shapeshift/eldritch,
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-		/datum/action/cooldown/spell/emp/eldritch,
-	)
