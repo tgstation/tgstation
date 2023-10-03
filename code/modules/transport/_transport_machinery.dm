@@ -58,7 +58,11 @@
 		if(tram.specific_transport_id != configured_transport_id)
 			continue
 		transport_ref = WEAKREF(tram)
+		log_transport("[id_tag]: Successfuly linked to transport ID [tram.specific_transport_id] [transport_ref]")
 		break
+
+	if(isnull(transport_ref))
+		log_transport("[id_tag]: Tried to find a transport with ID [configured_transport_id], but failed!")
 
 /obj/machinery/transport/proc/local_fault()
 	if(malfunctioning || !isnull(repair_signals))
