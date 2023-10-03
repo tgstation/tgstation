@@ -1,6 +1,0 @@
-author: "Fazzie"
-delete-after: True
-changes:
-  - rscadd: "Added a budget solar crate to the derelict teleporter room"
-  - rscadd: "Added a solar panel control to the north derelict solar"
-  - qol: "The derelict's AI coridoor is now shorter and prettier"
