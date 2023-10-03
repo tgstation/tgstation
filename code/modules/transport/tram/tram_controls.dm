@@ -111,7 +111,7 @@
 			if(isnull(destination_platform))
 				return FALSE
 
-			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
+			SStransport.incoming_request(src, specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
 /obj/machinery/computer/tram_controls/proc/update_display(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform)

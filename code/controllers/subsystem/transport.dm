@@ -49,20 +49,20 @@ PROCESSING_SUBSYSTEM_DEF(transport)
  * or error details (if the request is rejected/fails)
  *
  * Arguments: source: the device sending the request
- *            transport_network: the network this request is for, such as tram line 1 or 2
+ *            transport_id: the transport this request is for, such as tram line 1 or 2
  *            platform: the requested destination to dispatch the tram
  *            options: additional flags for the request (ie: bypass doors, emagged request)
  */
-/datum/controller/subsystem/processing/transport/proc/incoming_request(obj/source, obj/effect/landmark/transport/nav_beacon/tram/transport_network, platform, options)
+/datum/controller/subsystem/processing/transport/proc/incoming_request(obj/source, transport_id, platform, options)
 	SIGNAL_HANDLER
 
-	log_transport("Sub: Received request from [source.name] [source.id_tag]. Contents: [transport_network] [platform] [options]")
+	log_transport("Sub: Received request from [source.name] [source.id_tag]. Contents: [transport_id] [platform] [options]")
 	var/relevant
 	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination
 	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(candidate_controller.specific_transport_id == transport_network)
+		if(candidate_controller.specific_transport_id == transport_id)
 			transport_controller = candidate_controller
 			break
 
@@ -72,7 +72,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	// Check for various failure states
 	// The transport controller datum is qdel'd
 	if(isnull(transport_controller))
-		log_transport("Sub: Transport [transport_network] has no controller datum! Someone deleted it or something catastrophic happened.")
+		log_transport("Sub: Transport [transport_id] has no controller datum! Someone deleted it or something catastrophic happened.")
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, BROKEN_BEYOND_REPAIR)
 		log_transport("Sub: Sending response to [source.id_tag]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
@@ -101,7 +101,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	// gets out of sync with it's actual physical location, it can be reset
 
 	// Since players can set the platform ID themselves, make sure it's a valid platform we're aware of
-	var/network = LAZYACCESS(nav_beacons, transport_network)
+	var/network = LAZYACCESS(nav_beacons, transport_id)
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/potential_destination in network)
 		if(potential_destination.platform_code == platform)
 			destination = potential_destination
