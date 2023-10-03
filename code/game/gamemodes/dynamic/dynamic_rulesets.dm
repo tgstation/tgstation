@@ -106,22 +106,38 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
-	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	var/ruleset_forced = GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED
+	if (ruleset_forced != RULESET_NOT_FORCED)
+		if (ruleset_forced == RULESET_FORCE_ENABLED)
+			return TRUE
+		else
+			log_dynamic("FAIL: [src] was disabled in admin panel.")
+			return FALSE
 
-	if(minimum_players > population)
-		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
+	if(!is_valid_population(population))
+		var/range = maximum_players > 0 ? "([minimum_players] - [maximum_players])" : "(minimum: [minimum_players])"
+		log_dynamic("FAIL: [src] failed acceptable: min/max players out of range [range] vs population ([population])")
 		return FALSE
 
-	if(maximum_players > 0 && population > maximum_players)
-		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
-		return FALSE
-
-	if (threat_level < requirements[indice_pop])
+	if (!is_valid_threat(population, threat_level))
 		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
 		return FALSE
 
 	return TRUE
+
+/// Returns true if we have enough players to run
+/datum/dynamic_ruleset/proc/is_valid_population(population)
+	if(minimum_players > population)
+		return FALSE
+	if(maximum_players > 0 && population > maximum_players)
+		return FALSE
+	return TRUE
+
+/// Sets the current threat indices and returns true if we're inside of them
+/datum/dynamic_ruleset/proc/is_valid_threat(population, threat_level)
+	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	return threat_level >= requirements[indice_pop]
 
 /// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
@@ -175,7 +191,7 @@
 	candidates = list()
 	assigned = list()
 	antag_datum = null
-	
+
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
