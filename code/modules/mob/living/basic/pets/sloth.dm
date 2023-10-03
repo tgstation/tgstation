@@ -32,7 +32,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	melee_damage_upper = 18
 	health = 50
 	maxHealth = 50
-	speed = 10
+	speed = 0.1
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
@@ -43,9 +43,11 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
 
+	if(!mapload || isnull(GLOB.cargo_sloth) || !is_station_level(z))
+		return
+
 	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now
-	if(!GLOB.cargo_sloth && mapload && is_station_level(z))
-		GLOB.cargo_sloth = src
+	GLOB.cargo_sloth = src
 
 /mob/living/basic/sloth/Destroy()
 	if(GLOB.cargo_sloth == src)
@@ -72,7 +74,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)
