@@ -2,13 +2,13 @@
  * Blow up the mob into giblets
  *
  * drop_bitflags: (see code/__DEFINES/blood.dm)
- * * DROP_BRAIN - Gibbed mobs will drop a brain
- * * DROP_ORGANS - Gibbed mobs will drop organs
- * * DROP_BODYPARTS - Gibbed mobs will drop bodyparts (arms, legs, etc.)
- * * DROP_ITEMS - Gibbed mobs will drop items and not be deleted
- * * DROP_ALL_REMAINS - Gibbed mobs will drop everything
+ * * DROP_BRAIN - Gibbed mob will drop a brain
+ * * DROP_ORGANS - Gibbed mob will drop organs
+ * * DROP_BODYPARTS - Gibbed mob will drop bodyparts (arms, legs, etc.)
+ * * DROP_ITEMS - Gibbed mob will drop items and not be deleted
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
 **/
-/mob/living/proc/gib(drop_bitflags) //no_brain, no_organs, no_bodyparts)
+/mob/living/proc/gib(drop_bitflags=DROP_ALL_REMAINS) //no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
@@ -28,23 +28,36 @@
 /mob/living/proc/gib_animation()
 	return
 
-/mob/living/proc/spawn_gibs()
+/**
+ * Spawn bloody gib mess on the floor
+ *
+ * drop_bitflags: (see code/__DEFINES/blood.dm)
+ * * DROP_BODYPARTS - Mob will drop bodyparts (arms, legs, etc.)
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+**/
+/mob/living/proc/spawn_gibs(drop_bitflags=DROP_ALL_REMAINS)
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /**
- * Drops the mobs organs on the floor
+ * Drops a mob's organs on the floor
  *
  * drop_bitflags: (see code/__DEFINES/blood.dm)
- * * DROP_BRAIN - Mobs will drop a brain
- * * DROP_ORGANS - Mobs will drop organs
- * * DROP_BODYPARTS - Mobs will drop bodyparts (arms, legs, etc.)
- * * DROP_ITEMS - Mobs will drop items
- * * DROP_ALL_REMAINS - Mobs will drop everything
+ * * DROP_BRAIN - Mob will drop a brain
+ * * DROP_ORGANS - Mob will drop organs
+ * * DROP_BODYPARTS - Mob will drop bodyparts (arms, legs, etc.)
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
 **/
-/mob/living/proc/spill_organs(drop_bitflags)
+/mob/living/proc/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
 	return
 
-/mob/living/proc/spread_bodyparts()
+/**
+ * Dismembers and drops the mob's limbs on the floor
+ *
+ * drop_bitflags: (see code/__DEFINES/blood.dm)
+ * * DROP_BRAIN - Mob will drop a head
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+**/
+/mob/living/proc/spread_bodyparts(drop_bitflags=DROP_ALL_REMAINS)
 	return
 
 /**
