@@ -16,6 +16,10 @@ SUBSYSTEM_DEF(media_tracks)
 	var/list/jukebox_tracks = list()
 	/// Lobby music tracks
 	var/list/lobby_tracks = list()
+	///have we picked our lobby song yet?
+	var/first_lobby_play = TRUE
+	///current picked lobby song
+	var/datum/media_track/current_lobby_track
 
 /datum/controller/subsystem/media_tracks/Initialize(timeofday)
 	load_tracks()

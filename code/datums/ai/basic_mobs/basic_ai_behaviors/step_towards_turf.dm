@@ -9,22 +9,24 @@
 	/// How far ahead do we plot movement per action? Further means longer until we return to the decision tree, fewer means jerkier movement
 	/// This can still result in long moves because this is "a tile x tiles away" not "only move x tiles", you might path around some walls
 	var/step_distance = 3
+	var/overwrites_main = FALSE
 
 /datum/ai_behavior/step_towards_turf/setup(datum/ai_controller/controller, turf_key)
-	var/turf/target_turf = controller.blackboard[turf_key]
-	if (QDELETED(target_turf) || target_turf.is_blocked_turf(exclude_mobs = TRUE))
-		target_turf = find_destination_turf(args)
-		if (!target_turf)
+	if(!overwrites_main)
+		var/turf/target_turf = controller.blackboard[turf_key]
+		if (QDELETED(target_turf) || target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			target_turf = find_destination_turf(args)
+			if (!target_turf)
+				return FALSE
+			controller.set_blackboard_key(turf_key, target_turf)
+
+		if (target_turf.z != controller.pawn.z)
 			return FALSE
-		controller.set_blackboard_key(turf_key, target_turf)
 
-	if (target_turf.z != controller.pawn.z)
-		return FALSE
-
-	var/turf/destination = plot_movement(controller, target_turf)
-	if (!destination)
-		return FALSE
-	set_movement_target(controller, destination)
+		var/turf/destination = plot_movement(controller, target_turf)
+		if (!destination)
+			return FALSE
+		set_movement_target(controller, destination)
 	return ..()
 
 /**

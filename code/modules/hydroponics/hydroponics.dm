@@ -66,6 +66,8 @@
 	var/self_growing = FALSE
 	///the multi these get for exisitng
 	var/multi = 1
+	///helping tray
+	var/helping_tray = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -390,7 +392,8 @@
 
 		if(myseed)
 			SEND_SIGNAL(myseed, COMSIG_SEED_ON_GROW, src)
-
+	if(helping_tray)
+		helpful_stuff()
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()

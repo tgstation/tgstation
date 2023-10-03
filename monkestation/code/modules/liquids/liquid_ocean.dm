@@ -55,6 +55,9 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
+/turf/open/floor/plating
+	///do we still call parent but dont want other stuff?
+	var/overwrites_attack_by = FALSE
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -72,6 +75,13 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	planetary_atmos = TRUE
 	initial_gas_mix = OSHAN_DEFAULT_ATMOS
 
+	upgradable = FALSE
+	attachment_holes = FALSE
+
+	resistance_flags = INDESTRUCTIBLE
+
+	overwrites_attack_by = TRUE
+
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C
@@ -88,6 +98,9 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	var/obj/item/stack/dig_result = /obj/item/stack/ore/glass
 	/// Whether the turf has been dug or not
 	var/dug = FALSE
+
+	/// do we build a catwalk or plating with rods
+	var/catwalk = FALSE
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
@@ -114,6 +127,44 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	SSliquids.ocean_turfs -= src
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
+
+/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+	if(..())
+		return
+	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
+		if (R.get_amount() < 2)
+			to_chat(user, span_warning("You need two rods to make a [catwalk ? "catwalk" : "plating"]!"))
+			return
+		else
+			to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
+			if(do_after(user, 30, target = src))
+				if (R.get_amount() >= 2 && !catwalk)
+					PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+					R.use(2)
+					to_chat(user, span_notice("You reinforce the [src]."))
+				else if(R.get_amount() >= 2 && catwalk)
+					new /obj/structure/lattice/catwalk(src)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+					R.use(2)
+					to_chat(user, span_notice("You build a catwalk over the [src]."))
+
+	if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
+		to_chat(user, span_notice("You begin constructing a ladder..."))
+		if(do_after(user, 30, target = src))
+			qdel(C)
+			new /obj/structure/trench_ladder(src)
+
+	if(istype(C, /obj/item/mining_charge) && !catwalk)
+		to_chat(user, span_notice("You begin laying down a breaching charge..."))
+		if(do_after(user, 15, target = src))
+			var/obj/item/mining_charge/boom = C
+			user.dropItemToGround(boom)
+			boom.Move(src)
+			boom.set_explosion()
+			to_chat(user, span_warning("You lay down a breaching charge, you better run."))
+
 
 /// Drops itemstack when dug and changes icon
 /turf/open/floor/plating/ocean/proc/getDug()
@@ -194,11 +245,14 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	else if(src in SSliquids.active_ocean_turfs)
 		SSliquids.active_ocean_turfs -= src
 
-/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+/turf/open/attackby(obj/item/C, mob/user, params)
 	. = ..()
 	if(istype(C, /obj/item/dousing_rod))
 		var/obj/item/dousing_rod/attacking_rod = C
 		attacking_rod.deploy(src)
+
+/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+	. = ..()
 
 	if(C.tool_behaviour == TOOL_SHOVEL || C.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
@@ -583,17 +637,28 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon = 'goon/icons/turf/outdoors.dmi'
 	icon_state = "pit"
 	baseturfs = /turf/open/floor/plating/ocean/pit
+	catwalk = TRUE
 
 /turf/open/floor/plating/ocean/pit/wall
 	icon_state = "pit_wall"
 
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(is_safe())
+		return
+	if(arrived.movement_type & FLYING)
+		return
 	if(isprojectile(arrived))
 		return
 	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
 	visible_message("[arrived] falls helplessly into \the [src]")
 	arrived.forceMove(turf)
+
+/turf/open/floor/plating/ocean/proc/is_safe()
+	//if anything matching this typecache is found in the lava, we don't drop things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/lattice/lava))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
+	return LAZYLEN(found_safeties)
 
 /turf/closed/mineral/random/ocean/gets_drilled(mob/user, give_exp)
 	SShotspots.disturb_turf(src)

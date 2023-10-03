@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(challenges)
 	name = "Challenges"
 	wait = 10 SECONDS
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	priority = FIRE_PRIOTITY_LIQUIDS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	///list of challenges that have something we need to process

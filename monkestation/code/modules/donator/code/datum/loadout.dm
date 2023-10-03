@@ -3,12 +3,10 @@
 /datum/loadout_item/suit/cirno_outfit
 	name = "Cirno Outfit"
 	item_path = /obj/item/clothing/suit/costume/cirno
-	donator_only = TRUE
 
 /datum/loadout_item/head/cirno
 	name = "Cirno Wig"
 	item_path = /obj/item/clothing/head/costume/cirno
-	donator_only = TRUE
 
 /datum/loadout_item/pocket_items/donator/cirno
 	name = "Pet Delivery Beacon - Cirno"
@@ -22,7 +20,6 @@
 /datum/loadout_item/head/pot
 	name = "Dented Pot"
 	item_path = /obj/item/clothing/head/costume/pot
-	donator_only = TRUE
 
 /datum/loadout_item/pocket_items/donator/spycrab
 	name = "Pet Delivery Beacon - Spycrab"
@@ -43,7 +40,6 @@
 /datum/loadout_item/suit/shark_costume
 	name = "Blahaj Costume"
 	item_path = /obj/item/clothing/suit/hooded/shark_costume
-	donator_only = TRUE
 
 //ruby_flamewing
 

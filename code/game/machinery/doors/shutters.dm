@@ -9,6 +9,8 @@
 	armor_type = /datum/armor/poddoor_shutters
 	max_integrity = 200
 	recipe_type = /datum/crafting_recipe/shutters
+	open_sound = 'monkestation/sound/machines/poddoors/shutters_open.ogg'
+	close_sound = 'monkestation/sound/machines/poddoors/shutters_close.ogg'
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"

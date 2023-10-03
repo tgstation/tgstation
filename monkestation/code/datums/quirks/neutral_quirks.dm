@@ -26,7 +26,7 @@
 		/obj/item/organ/external/anime_bottom,
 		)
 
-/datum/quirk/anime/post_add()
+/datum/quirk/anime/add(client/client_source)
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species

@@ -1,0 +1,344 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"b" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"d" = (
+/turf/closed/wall,
+/area/centcom/tdome/arena/actual)
+"i" = (
+/obj/structure/chair/stool/directional/west,
+/obj/item/soap/nanotrasen,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"j" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/decal/cleanable/food/pie_smudge,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"l" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"m" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
+/obj/item/clothing/under/costume/jabroni,
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"o" = (
+/obj/structure/chair/stool/directional/east,
+/obj/item/soap/nanotrasen,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"p" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"q" = (
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"t" = (
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"x" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/shower/directional/east,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"z" = (
+/obj/machinery/shower/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"C" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/shower/directional/west,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"E" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"H" = (
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"I" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
+/obj/item/clothing/under/pants/jeans,
+/obj/effect/turf_decal/tile/dark_blue/full,
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"K" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"N" = (
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"O" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"P" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"S" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"V" = (
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"Y" = (
+/obj/machinery/shower/directional/east,
+/turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+l
+a
+A
+S
+S
+o
+S
+A
+a
+l
+"}
+(2,1,1) = {"
+l
+a
+a
+l
+l
+l
+l
+a
+a
+l
+"}
+(3,1,1) = {"
+l
+a
+a
+l
+m
+l
+l
+a
+a
+l
+"}
+(4,1,1) = {"
+l
+a
+A
+O
+j
+O
+E
+A
+a
+l
+"}
+(5,1,1) = {"
+l
+a
+a
+a
+a
+a
+H
+a
+a
+l
+"}
+(6,1,1) = {"
+l
+a
+b
+d
+d
+d
+d
+K
+a
+l
+"}
+(7,1,1) = {"
+l
+a
+a
+p
+Y
+Y
+x
+a
+a
+l
+"}
+(8,1,1) = {"
+l
+a
+a
+q
+q
+q
+q
+a
+a
+l
+"}
+(9,1,1) = {"
+l
+a
+a
+q
+V
+P
+q
+a
+a
+l
+"}
+(10,1,1) = {"
+l
+a
+a
+q
+q
+q
+q
+a
+a
+l
+"}
+(11,1,1) = {"
+l
+a
+a
+z
+N
+N
+C
+a
+a
+l
+"}
+(12,1,1) = {"
+l
+a
+b
+d
+d
+d
+d
+K
+a
+l
+"}
+(13,1,1) = {"
+l
+a
+a
+t
+a
+a
+a
+a
+a
+l
+"}
+(14,1,1) = {"
+l
+a
+A
+S
+S
+S
+S
+A
+a
+l
+"}
+(15,1,1) = {"
+l
+a
+a
+l
+l
+I
+l
+a
+a
+l
+"}
+(16,1,1) = {"
+l
+a
+a
+l
+l
+l
+l
+a
+a
+l
+"}
+(17,1,1) = {"
+l
+a
+A
+O
+i
+O
+O
+A
+a
+l
+"}

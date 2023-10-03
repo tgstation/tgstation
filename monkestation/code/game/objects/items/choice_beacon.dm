@@ -6,6 +6,14 @@
 	company_message = span_bold("Pet request received. Your friend is on the way.")
 	var/default_name = "Stinko"
 
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/play_dead,
+	)
+
 /obj/item/choice_beacon/pet/generate_display_names()
 	var/static/list/pet_list
 	if(!pet_list)
@@ -20,8 +28,8 @@
 			/mob/living/simple_animal/parrot,
 			/mob/living/basic/butterfly,
 			/mob/living/basic/bee/friendly,
-			/mob/living/simple_animal/crab,
-			/mob/living/simple_animal/crab/spycrab,
+			/mob/living/basic/crab,
+			/mob/living/basic/crab/spycrab,
 			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
 			/mob/living/simple_animal/pet/cat,
@@ -63,6 +71,20 @@
 	your_pet.name = name
 	your_pet.real_name = name
 
+	if(isbasicmob(your_pet))
+		var/mob/living/basic/pet = your_pet
+		pet.befriend(user)
+		var/datum/component/obeys_commands/checking = pet.GetComponent(/datum/component/obeys_commands)
+		if(!checking)
+			pet.AddComponent(/datum/component/obeys_commands, pet_commands)
+
+		var/list/new_planning_subtree = list()
+		new_planning_subtree |= /datum/ai_planning_subtree/pet_planning
+
+		for(var/datum/ai_planning_subtree/listed_tree as anything in pet.ai_controller.planning_subtrees)
+			new_planning_subtree |= listed_tree.type
+		pet.ai_controller.replace_planning_subtrees(new_planning_subtree)
+
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 	uses--
@@ -71,3 +93,13 @@
 		return
 
 	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
+
+/obj/item/choice_beacon/jukebox //this is probably a terrible way to do this, but its the first that worked.
+	name = "jukebox beacon"
+	desc = "Deploys a jukebox! Also comes wrenched down to the floor for you on delivery! How convenient!"
+/obj/item/choice_beacon/jukebox/interact(mob/user)
+	to_chat(user, span_hear("You hear a crackle before a message plays through [src]: \"Thank you for picking Dave's Instant Jukebox Shipping! This beacon will now self destruct.\""))
+	new /obj/machinery/media/jukebox(get_turf(user))
+	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
+	do_sparks(3, source = src)
+	qdel(src)
