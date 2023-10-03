@@ -925,5 +925,60 @@
 		return pick(possible_targets)
 	return FALSE
 
+/// Midround Slaughter Demon Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
+	name = "Stray Slaugther Demon"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
+	antag_datum = /datum/antagonist/slaughter
+	antag_flag = ROLE_SLAUGHTER_DEMON
+	required_enemies = list(4, 4, 4, 3, 3, 2, 2, 1, 0, 0)
+	required_candidates = 1
+	weight = 1 //very rare
+	cost = 8
+	minimum_players = 30
+	minimum_round_time = 55 MINUTES
+	///List of potential spawn locs (it spawns in space, just like ninjas and many others)
+	var/list/spawn_locs = list()
+	///Which kind of demon it spawns
+	var/spawn_type = /mob/living/basic/demon/slaughter
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/forget_startup()
+	spawn_locs = list()
+	antag_datum = initial(antag_datum)
+	name = initial(name)
+	spawn_type = initial(spawn_type)
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/execute()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+	if(prob(13) || check_holidays(APRIL_FOOLS))
+		name = "Stray Laughter Demon"
+		antag_datum = /datum/antagonist/slaughter/laughter
+		spawn_type = /mob/living/basic/demon/slaughter/laughter
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/basic/demon/slaughter/demon = new spawn_type(pick(spawn_locs))
+	new /obj/effect/dummy/phased_mob(demon.loc, demon)
+
+	player_mind.transfer_to(demon)
+	demon.generate_antagonist_status()
+
+	message_admins("[ADMIN_LOOKUPFLW(demon)] has been made into a slaughter demon by the midround ruleset.")
+	demon.log_message("was spawned as a slaughter demon by the midround ruleset.", LOG_GAME)
+
+	return demon
+
+
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
