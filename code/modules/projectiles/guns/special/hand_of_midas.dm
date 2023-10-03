@@ -22,6 +22,8 @@
 
 	/// The length of the Midas Blight debuff, dependant on the amount of gold reagent we've sucked up.
 	var/gold_timer = 3 SECONDS
+	/// The range that we can suck gold out of people's bodies
+	var/gold_suck_range = 2
 
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
@@ -36,7 +38,7 @@
 
 // Siphon gold from a victim, recharging our gun & removing their Midas Blight debuff in the process.
 /obj/item/gun/magic/midas_hand/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
-	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
+	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, gold_suck_range))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(victim == user)
 		balloon_alert(user, "can't siphon from self")
@@ -47,7 +49,7 @@
 		balloon_alert(user, "no gold in bloodstream")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/gold_beam = user.Beam(victim, icon_state="drain_gold")
-	if(!do_after(user, 1 SECONDS, victim))
+	if(!do_after(user = user, delay = 1 SECONDS, target = victim, timed_action_flags = (IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE), extra_checks = CALLBACK(src, PROC_REF(check_gold_range), user, victim)))
 		qdel(gold_beam)
 		balloon_alert(user, "link broken")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -78,6 +80,10 @@
 /// Converts our gold_timer to time in seconds, for various ballons/examines
 /obj/item/gun/magic/midas_hand/proc/gold_time_convert()
 	return min(30 SECONDS, round(gold_timer, 0.2)) / 10
+
+/// Checks our range to the person we're sucking gold out of. Double the initial range, so you need to get in close to start.
+/obj/item/gun/magic/midas_hand/proc/check_gold_range(mob/living/user, mob/living/victim)
+	return IN_GIVEN_RANGE(user, victim, gold_suck_range*2)
 
 /obj/item/ammo_casing/magic/midas_round
 	projectile_type = /obj/projectile/magic/midas_round
