@@ -11,6 +11,9 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
+#define isappearance(thing) (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+
 #define isgenerator(A) (istype(A, /generator))
 
 //Turfs
