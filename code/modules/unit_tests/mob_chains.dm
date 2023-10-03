@@ -14,8 +14,8 @@
 
 	var/test_damage = 15
 	centipede_head.apply_damage(test_damage, BRUTE)
-	TEST_ASSERT(centipede_head.bruteloss == 0, "Centipede head took damage which should have been passed to its tail.")
-	TEST_ASSERT(centipede_tail.bruteloss == test_damage, "Centipede tail did not take damage which should have originated from its head.")
+	TEST_ASSERT_EQUAL(centipede_head.bruteloss, 0, "Centipede head took damage which should have been passed to its tail.")
+	TEST_ASSERT_EQUAL(centipede_tail.bruteloss, test_damage, "Centipede tail did not take damage which should have originated from its head.")
 
 	var/expected_damage = 5
 	for (var/mob/living/segment as anything in segments)
@@ -25,7 +25,7 @@
 
 	var/mob/living/victim = allocate(/mob/living/basic/pet/dog)
 	centipede_head.ClickOn(victim)
-	TEST_ASSERT(victim.bruteloss == (expected_damage * 3), "Centipede failed to do damage with all of its segments.")
+	TEST_ASSERT_EQUAL(victim.bruteloss, expected_damage * 3, "Centipede failed to do damage with all of its segments.")
 
 	centipede_head.death()
-	TEST_ASSERT(centipede_tail.stat == DEAD, "Centipede tail failed to die with head.")
+	TEST_ASSERT_EQUAL(centipede_tail.stat, DEAD, "Centipede tail failed to die with head.")
