@@ -297,7 +297,7 @@
 		"heal_overall_damage() should have returned 100, but returned [damage_returned] instead!")
 
 	if(!verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS))
-		TEST_FAIL("heal_overall_damage did not apply its dhealing correctly on the mob!")
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mob!")
 
 ///	Tests damage procs with godmode on
 /datum/unit_test/mob_damage/proc/test_godmode(mob/living/carbon/human/consistent/dummy)
@@ -456,7 +456,7 @@
 	TEST_ASSERT_EQUAL(dummy.getFireLoss(), 10, \
 		"[src] should have 10 burn damage, but has [dummy.getFireLoss()] instead!")
 	TEST_ASSERT_EQUAL(dummy.getToxLoss(), 20, \
-		"[src] should have 2 toxin damage, but has [dummy.getToxLoss()] instead!")
+		"[src] should have 20 toxin damage, but has [dummy.getToxLoss()] instead!")
 
 	// Now heal the remaining 30, overhealing by 5.
 	damage_returned = round(dummy.heal_ordered_damage(35, list(BRUTE, BURN, TOX)), 1)
