@@ -4,13 +4,13 @@
 	desc = "A grinding, clanking construct which leaches life from its surroundings with every armoured step."
 	icon_state = "rust_walker_s"
 	icon_living = "rust_walker_s"
-	status_flags = CANPUSH
 	maxHealth = 75
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-	ai_controller = /datum/ai_controller/rust_walker
+	speed = 1
+	ai_controller = /datum/ai_controller/basic_controller/rust_walker
 
 /mob/living/basic/heretic_summon/rust_spirit/Initialize(mapload)
 	. = ..()
@@ -37,18 +37,18 @@
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
-		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
+		adjustFireLoss(-1.5 * seconds_per_tick, TRUE)
 
 	return ..()
 
-/// Converts unconverted terrain, sprays pocket sand
-/datum/ai_controller/rust_walker
+/// Converts unconverted terrain, sprays pocket sand around
+/datum/ai_controller/basic_controller/rust_walker
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/idle_random_walk/rust
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/use_mob_ability/rust_walker,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -57,6 +57,20 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
+/// Moves a lot if healthy and on rust (to find more tiles to rust) or unhealthy and not on rust (to find healing rust)
+/// Still moving in random directions though we're not really seeking it out
+/datum/idle_behavior/idle_random_walk/rust
+
+/datum/idle_behavior/idle_random_walk/rust/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/our_mob = controller.pawn
+	var/turf/our_turf = get_turf(our_mob)
+	if (HAS_TRAIT(our_turf, TRAIT_RUSTY))
+		walk_chance = (our_mob.health < our_mob.maxHealth) ? 10 : 50
+	else
+		walk_chance = (our_mob.health < our_mob.maxHealth) ? 50 : 10
+	return ..()
+
+/// Use if we're not stood on rust right now
 /datum/ai_planning_subtree/use_mob_ability/rust_walker
 
 /datum/ai_planning_subtree/use_mob_ability/rust_walker/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
