@@ -64,12 +64,18 @@
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
+	// lists kept for overall loading
 	var/list/loaded_atom_movables = list()
 	var/list/loaded_turfs = list()
 	var/list/loaded_areas = list()
+
+	var/list/obj/structure/cable/loaded_cables = list()
+	var/list/obj/machinery/atmospherics/loaded_atmospherics = list()
+
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
+
 		load_map(
 			file(load_path),
 			bottom_left.x,
@@ -81,12 +87,20 @@
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf
 			loaded_areas |= get_area(turf)
-			for(var/thing in turf.get_all_contents())
-				// atoms can actually be in the contents of two or more turfs based on its icon/bound size
-				// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
+
+			// atoms can actually be in the contents of two or more turfs based on its icon/bound size
+			// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
+			for(var/thing in (turf.get_all_contents() - turf))
+				if(istype(thing, /obj/structure/cable))
+					loaded_cables += thing
+				else if(istype(thing, /obj/machinery/atmospherics))
+					loaded_atmospherics += thing
 				loaded_atom_movables |= thing
 
-	SSatoms.InitializeAtoms(loaded_atom_movables + loaded_turfs + loaded_areas)
+	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
+	SSmachines.setup_template_powernets(loaded_cables)
+	SSair.setup_template_machinery(loaded_atmospherics)
+
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
 	return reservation
