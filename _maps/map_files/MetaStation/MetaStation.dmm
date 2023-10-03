@@ -22465,9 +22465,7 @@
 /area/station/science/xenobiology)
 "imy" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -56385,9 +56383,7 @@
 /area/station/security/office)
 "uew" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8

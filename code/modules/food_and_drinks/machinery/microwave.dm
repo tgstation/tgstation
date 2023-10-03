@@ -55,15 +55,20 @@
 	var/list/ingredients = list()
 	/// When this is the nth ingredient, whats its pixel_x?
 	var/list/ingredient_shifts_x = list(
-		0,
-		3,
-		-3,
-		4,
-		-4,
-		2,
 		-2,
+		1,
+		-5,
+		2,
+		-6,
+		0,
+		-4,
 	)
-	var/ingredient_shifts_y = -4
+	/// When this is the nth ingredient, whats its pixel_y?
+	var/list/ingredient_shifts_y = list(
+		-4,
+		-2,
+		-3,
+	)
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
 	var/static/radial_cook = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_cook")
@@ -220,11 +225,11 @@
 			MICROWAVE_INGREDIENT_OVERLAY_SIZE / icon_dimensions["height"],
 		)
 
-		ingredient_overlay.pixel_y = ingredient_shifts_y
+		ingredient_overlay.pixel_x = ingredient_shifts_x[(ingredient_count % ingredient_shifts_x.len) + 1]
+		ingredient_overlay.pixel_y = ingredient_shifts_y[(ingredient_count % ingredient_shifts_y.len) + 1]
 		ingredient_overlay.layer = FLOAT_LAYER
 		ingredient_overlay.plane = FLOAT_PLANE
 		ingredient_overlay.blend_mode = BLEND_INSET_OVERLAY
-		ingredient_overlay.pixel_x = ingredient_shifts_x[(ingredient_count % ingredient_shifts_x.len) + 1]
 
 		ingredient_count += 1
 
@@ -365,6 +370,7 @@
 
 	if(istype(item, /obj/item/reagent_containers/spray))
 		var/obj/item/reagent_containers/spray/clean_spray = item
+		open(autoclose = 2 SECONDS)
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
@@ -381,6 +387,7 @@
 			var/obj/item/soap/used_soap = item
 			cleanspeed = used_soap.cleanspeed
 		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
+		open(autoclose = cleanspeed + 1 SECONDS)
 		if(do_after(user, cleanspeed, target = src))
 			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
 			dirty = 0
@@ -415,6 +422,7 @@
 				loaded++
 				ingredients += tray_item
 		if(loaded)
+			open(autoclose = 0.6 SECONDS)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 			update_appearance()
 		return
@@ -428,6 +436,7 @@
 			return FALSE
 
 		ingredients += item
+		open(autoclose = 0.6 SECONDS)
 		user.visible_message(span_notice("[user] adds \a [item] to \the [src]."), span_notice("You add [item] to \the [src]."))
 		update_appearance()
 		return
@@ -500,7 +509,7 @@
 	var/atom/drop_loc = drop_location()
 	for(var/atom/movable/movable_ingredient as anything in ingredients)
 		movable_ingredient.forceMove(drop_loc)
-	open()
+	open(autoclose = 1.4 SECONDS)
 
 /**
  * Begins the process of cooking the included ingredients.
@@ -684,13 +693,13 @@
 	set_light(l_on = FALSE)
 	soundloop.stop()
 	eject()
-	open()
+	open(autoclose = 2 SECONDS)
 
-/obj/machinery/microwave/proc/open()
+/obj/machinery/microwave/proc/open(autoclose = 2 SECONDS)
 	open = TRUE
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(close)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(close)), autoclose)
 
 /obj/machinery/microwave/proc/close()
 	open = FALSE
@@ -760,14 +769,14 @@
 		charge_loop_finish(cooker)
 		return
 
-	var/charge_rate = vampire_cell.chargerate * efficiency
+	var/charge_rate = vampire_cell.chargerate * (1 + ((efficiency - 1) * 0.25))
 	if(charge_rate > vampire_charge_amount)
 		charge_rate = vampire_charge_amount
 
 	if(cell_powered && !cell.use(charge_rate))
 		charge_loop_finish(cooker)
 
-	vampire_cell.give(charge_rate * (0.7 + efficiency * 0.05)) // we lose a tiny bit of power in the transfer as heat
+	vampire_cell.give(charge_rate * (0.85 + (efficiency * 0.5))) // we lose a tiny bit of power in the transfer as heat
 	use_power(charge_rate)
 
 	vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
@@ -793,6 +802,7 @@
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
 
+	// playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
 	after_finish_loop()
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
@@ -823,9 +833,16 @@
 	vampire_charging_capable = TRUE
 	ingredient_shifts_x = list(
 		0,
+		5,
+		-5,
 		3,
+		-3,
 	)
-	ingredient_shifts_y = 0
+	ingredient_shifts_y = list(
+		0,
+		2,
+		-2,
+	)
 
 /obj/machinery/microwave/engineering/Initialize(mapload)
 	. = ..()
