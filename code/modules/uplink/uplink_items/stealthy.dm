@@ -67,7 +67,7 @@
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
 	progression_minimum = 10 MINUTES
 	cost = 4
-	surplus = 0
+	surplus = 50 //monkestation edit: from 0 to 50
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
 
@@ -78,7 +78,7 @@
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
 	cost = 13
-	surplus = 0
+	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_weapons/crossbow

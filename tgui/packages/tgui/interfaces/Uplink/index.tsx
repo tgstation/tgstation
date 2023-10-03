@@ -59,6 +59,7 @@ type UplinkData = {
   maximum_potential_objectives: number;
   purchased_items: number;
   shop_locked: BooleanLike;
+  locked_entries: string[];
 };
 
 type UplinkState = {
@@ -176,6 +177,7 @@ export class Uplink extends Component<{}, UplinkState> {
       lockable,
       purchased_items,
       shop_locked,
+      locked_entries,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
@@ -199,6 +201,7 @@ export class Uplink extends Component<{}, UplinkState> {
         stock = null;
       }
       const canBuy = telecrystals >= item.cost && (stock === null || stock > 0);
+      const locked = locked_entries.includes(item.id);
       items.push({
         id: item.id,
         name: item.name,
@@ -231,7 +234,11 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled: !canBuy || (item.lock_other_purchases && purchased_items > 0),
+        disabled:
+          !canBuy ||
+          (item.lock_other_purchases && purchased_items > 0) ||
+          locked,
+        is_locked: locked,
         extraData: {
           ref: item.ref,
         },

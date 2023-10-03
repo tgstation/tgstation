@@ -70,7 +70,7 @@
 		and returning to you even if you miss. WARNING: DO NOT ATTEMPT TO STAND ON SHIELD WHILE DEPLOYED, EVEN IF WEARING ANTI-SLIP SHOES."
 	item = /obj/item/shield/energy/bananium
 	cost = 16
-	surplus = 0
+	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/clownsword
@@ -79,7 +79,7 @@
 	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
 	item = /obj/item/melee/energy/sword/bananium
 	cost = 3
-	surplus = 0
+	surplus = 100 //monkestation edit: from 0 to 100(its funny)
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/clownoppin
@@ -122,7 +122,7 @@
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/shield/energy
 	cost = 16
-	surplus = 20
+	surplus = 40 //monkestation edit: from 20 to 40
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/machinegun
@@ -131,7 +131,7 @@
 			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
-	surplus = 0
+	surplus = 10 //monkestation edit: from 0 to 10
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/carbine
@@ -172,7 +172,7 @@
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade darts with a 20-round magazine."
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
-	surplus = 0
+	surplus = 70 //monkestation edit: from 0 to 70
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/foammachinegun
@@ -181,7 +181,7 @@
 			riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
-	surplus = 0
+	surplus = 70 //monkestation edit: from 0 to 70
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/stealthy_weapons/cqc
@@ -190,7 +190,7 @@
 	item = /obj/item/book/granter/martial/cqc
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	cost = 13
-	surplus = 0
+	surplus = 60 //monkestation edit: from 0 to 60
 
 /datum/uplink_item/ammo/pistol_nukeop
 	name = "10mm Handgun Magazine"
@@ -440,7 +440,7 @@
 		a few seconds after the banana is eaten."
 	item = /obj/item/food/grown/banana/bombanana
 	cost = 4 //it is a bit cheaper than a minibomb because you have to take off your helmet to eat it, which is how you arm it
-	surplus = 0
+	surplus = 60 //monkestation edit: from 0 to 60
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/explosives/clown_bomb_clownops
@@ -485,7 +485,7 @@
 	item = /obj/item/storage/belt/grenade/full
 	purchasable_from = UPLINK_NUKE_OPS
 	cost = 22
-	surplus = 0
+	surplus = 70 //monkestation edit: from 0 to 70
 
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -503,7 +503,7 @@
 		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
 	cost = 3
-	surplus = 0
+	surplus = 80 //monkestation edit: from 0 to 80
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/explosives/viscerators
@@ -522,7 +522,7 @@
 	purchasable_from = UPLINK_CLOWN_OPS
 	limited_stock = 1
 	cost = 12 //This is effectively the clown ops version of the grenadier belt where you should on average get 8 explosives if you use a weapon with exactly 10 force.
-	surplus = 0
+	surplus = 60 //monkestation edit: from 0 to 60
 
 //Support and Mechs
 /datum/uplink_category/support
@@ -615,7 +615,7 @@
 		squeak significantly louder."
 	item = /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
 	cost = 6
-	surplus = 0
+	surplus = 100 //monkestation edit: from 0 to 100 HONK
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
@@ -717,7 +717,7 @@
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 12
-	surplus = 0
+	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/microbomb
@@ -743,7 +743,7 @@
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
-	surplus = 0
+	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/thermals
@@ -751,7 +751,7 @@
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
-	surplus = 0
+	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/xray
@@ -759,7 +759,7 @@
 	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/xray_eyes
 	cost = 10
-	surplus = 0
+	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/deathrattle

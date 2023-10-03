@@ -13,6 +13,6 @@
 	cost = 2
 	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = list(SPECIES_MOTH)
-	surplus = 0
+	surplus = 80 //monkestation edit: from 0 to 80
 
 

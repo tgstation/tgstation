@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useLocalState, useSharedState } from '../../backend';
-import { Box, Button, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
+import { Box, Button, Input, Section, Tabs, NoticeBox, Stack, Dimmer } from '../../components';
 import type { InfernoNode } from 'inferno';
 
 type GenericUplinkProps = {
@@ -95,6 +95,7 @@ export type Item<ItemData = {}> = {
   cost: InfernoNode | string;
   desc: InfernoNode | string;
   disabled: BooleanLike;
+  is_locked: BooleanLike;
   extraData?: ItemData;
 };
 
@@ -111,17 +112,32 @@ const ItemList = (props: ItemListProps, context: any) => {
     <Stack vertical>
       {items.map((item, index) => (
         <Stack.Item key={index}>
-          <Section
-            key={item.name}
-            title={item.name}
-            buttons={
-              <Button
-                content={item.cost}
-                disabled={item.disabled}
-                onClick={(e) => handleBuy(item)}
-              />
-            }>
-            {compactMode ? null : item.desc}
+          <Section>
+            <Section
+              key={item.name}
+              title={item.name}
+              buttons={
+                <Button
+                  content={item.cost}
+                  disabled={item.disabled}
+                  onClick={(e) => handleBuy(item)}
+                />
+              }>
+              {compactMode ? null : item.desc}
+            </Section>
+            {(item.is_locked && (
+              <Dimmer>
+                <Box
+                  color="red"
+                  fontFamily={'Bahnschrift'}
+                  fontSize={2}
+                  align={'top'}
+                  as="span">
+                  ENTRY LOCKED
+                </Box>
+              </Dimmer>
+            )) ||
+              null}
           </Section>
         </Stack.Item>
       ))}
