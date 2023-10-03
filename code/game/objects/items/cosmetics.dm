@@ -62,7 +62,7 @@
 		MIDDLE_LIP = icon('icons/hud/radial.dmi', MIDDLE_LIP),
 		LOWER_LIP = icon('icons/hud/radial.dmi', LOWER_LIP),
 	)
-	var/pick = show_radial_menu(user, src, style_options, custom_check = CALLBACK(src, PROC_REF(check_menu), radius = 36, require_near = TRUE))
+	var/pick = show_radial_menu(user, src, style_options, custom_check = CALLBACK(src, PROC_REF(check_menu)), radius = 36, require_near = TRUE)
 	if(!pick)
 		return TRUE
 
