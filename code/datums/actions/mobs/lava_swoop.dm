@@ -66,6 +66,7 @@
 			return
 	animate(owner, alpha = 100, transform = matrix()*0.7, time = 7)
 	owner.status_flags |= GODMODE
+	ADD_TRAIT(owner, TRAIT_NO_TRANSFORM, SWOOPING_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_SWOOP_INVULNERABILITY_STARTED)
 
 	owner.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -116,6 +117,7 @@
 	if(!lava_success)
 		SEND_SIGNAL(owner, COMSIG_LAVA_ARENA_FAILED)
 	owner.status_flags &= ~GODMODE
+	REMOVE_TRAIT(owner, TRAIT_NO_TRANSFORM, SWOOPING_TRAIT)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_pools(atom/target, amount = 30, delay = 0.8)
 	if(!target)

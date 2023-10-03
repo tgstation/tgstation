@@ -48,8 +48,10 @@
 	if(cleaner.combat_mode)
 		return DO_NOT_CLEAN_ALLOW_ATTACK
 	if(clean_blacklist[atom_to_clean.type])
-		return DO_NOT_CLEAN
+		return DO_NOT_CLEAN_ALLOW_ATTACK
 	if(reagents.total_volume < 0.1)
+		if(atom_to_clean.reagents.total_volume > 0)
+			return DO_NOT_CLEAN_ALLOW_ATTACK // try wetting
 		cleaner.balloon_alert(cleaner, "mop is dry!")
 		return DO_NOT_CLEAN
 	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)

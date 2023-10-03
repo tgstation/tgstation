@@ -22,7 +22,8 @@
 	var/can_dismember_limbs = FALSE
 
 /datum/attack_style/unarmed/generic_damage/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
-	attacker.resolve_unarmed_attack(blocking_us)
+	if(!ishuman(attacker)) // Do stuff like attack_animal, but not attack_hand
+		attacker.resolve_unarmed_attack(blocking_us)
 	return ATTACK_SWING_BLOCKED
 
 /datum/attack_style/unarmed/generic_damage/check_pacifism(mob/living/attacker, obj/item/weapon, right_clicking)

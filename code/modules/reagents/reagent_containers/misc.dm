@@ -159,5 +159,6 @@
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(reagents.total_volume > 0 && iscarbon(atom_to_clean))
 		return DO_NOT_CLEAN_ALLOW_ATTACK
-
-	return (src in cleaner)
+	if(src in cleaner)
+		return NONE
+	return DO_NOT_CLEAN

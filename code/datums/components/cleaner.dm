@@ -78,6 +78,10 @@
 			if(DO_NOT_CLEAN)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	// Hacky but: Put the thing in the storage if we can store it, clean if we can't
+	if(isitem(source) && target.atom_storage?.can_insert(source, target, messages = FALSE, force = FALSE))
+		return NONE
+
 	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

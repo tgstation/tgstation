@@ -263,23 +263,9 @@
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
+			wash(CLEAN_WASH)
 		else
-			to_chat(user, span_warning("You need more space cleaner!"))
-		return TRUE
-
-	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/cup/rag))
-		var/cleanspeed = 50
-		if(istype(O, /obj/item/soap))
-			var/obj/item/soap/used_soap = O
-			cleanspeed = used_soap.cleanspeed
-		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
-		if(do_after(user, cleanspeed, target = src))
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
+			balloon_alert(user, "not enough cleaner!")
 		return TRUE
 
 	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
@@ -324,6 +310,12 @@
 		return
 
 	return ..()
+
+/obj/machinery/microwave/wash(clean_types)
+	if(clean_types & CLEAN_SCRUB)
+		dirty = 0
+		update_appearance()
+	return ..() || TRUE
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src, ALLOW_SILICON_REACH))

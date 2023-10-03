@@ -11,7 +11,7 @@
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
+	item_flags = NO_MAT_REDEMPTION
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
 	var/prox_check = TRUE //If the emag requires you to be in range
@@ -55,9 +55,6 @@
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/window/tram/)) //list of all typepaths that require a specialized emag to hack.
-
-/obj/item/card/emag/attack()
-	return
 
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
 	. = ..()

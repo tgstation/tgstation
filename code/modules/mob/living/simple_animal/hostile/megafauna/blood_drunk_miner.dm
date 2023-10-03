@@ -130,24 +130,30 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/execute_unarmed_attack_style(atom/attack_target, list/modifiers)
+	var/swing_success = miner_saw.attack_style.process_attack(src, miner_saw, attack_target)
+	if(guidance && (swing_success & (ATTACK_SWING_HIT|ATTACK_SWING_BLOCKED)))
+		adjustHealth(-2)
+	return TRUE
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget()
 	if(QDELETED(target))
 		return
+	. = TRUE
 	face_atom(target)
-	if(isliving(target))
-		var/mob/living/living_target = target
-		if(living_target.stat == DEAD)
-			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
-				if(guidance)
-					adjustHealth(-living_target.maxHealth)
-				else
-					adjustHealth(-(living_target.maxHealth * 0.5))
-			devour(living_target)
-			return TRUE
-	changeNext_move(CLICK_CD_MELEE)
-	miner_saw.melee_attack_chain(src, target)
-	if(guidance)
-		adjustHealth(-2)
+	if(!isliving(target))
+		return
+
+	var/mob/living/living_target = target
+	if(living_target.stat != DEAD)
+		return
+
+	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
+		if(guidance)
+			adjustHealth(-living_target.maxHealth)
+		else
+			adjustHealth(-(living_target.maxHealth * 0.5))
+	devour(living_target)
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)

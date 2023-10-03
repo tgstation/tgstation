@@ -559,16 +559,18 @@
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 
-/obj/item/toy/crayon/pre_attack(atom/A, mob/living/user, params) // melbert todo check
+/obj/item/toy/crayon/attack(mob/living/target_mob, mob/living/user, params)
+	use_on(target_mob, user, params)
+
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
-	if(.)
+	if(!proximity)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if (!check_allowed_items(target))
 		return
 
-	if (!check_allowed_items(A))
-		return
-
-	use_on(A, user, params)
-	return TRUE
+	use_on(target, user, params)
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(

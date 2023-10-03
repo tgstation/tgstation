@@ -196,7 +196,6 @@
 		hit_style = default_harm_style
 
 	if(hit_style)
-		// changeNext_move(hit_style.cd * 0.8)
 		hit_style.process_attack(src, null, attack_target)
 		return TRUE
 	return FALSE
