@@ -5,7 +5,7 @@
 
 //Fragile but highly aggressive wanderers that pose a large threat in numbers.
 //They'll attempt to leap at their target from afar using their hatchets.
-/mob/living/basic/mook
+/mob/living/basic/mining/mook
 	name = "wanderer"
 	desc = "This unhealthy looking primitive is wielding a rudimentary hatchet, swinging it with wild abandon. One isn't much of a threat, but in numbers they can quickly overwhelm a superior opponent."
 	icon = 'icons/mob/simple/jungle/mook.dmi'
@@ -13,25 +13,63 @@
 	icon_living = "mook"
 	icon_dead = "mook_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	maxHealth = 45
-	health = 45
+	maxHealth = 150
+	health = 150
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	pass_flags_self = LETPASSTHROW
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_sound = 'sound/voice/mook_death.ogg'
+	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
+	///the ore we are holding if any
+	var/obj/held_ore
 
-
-/mob/living/basic/mook/Initialize(mapload)
+/mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	var/datum/action/cooldown/mob_cooldown/mook_leap/leap = new(src)
-	leap.Grant(src)
+	if(gender == MALE)
+		var/datum/action/cooldown/mob_cooldown/mook_leap/leap = new(src)
+		leap.Grant(src)
+	update_appearance()
 
-/mob/living/basic/mook/proc/pre_attack(atom/target)
+/mob/living/basic/mining/mook/Entered(atom/movable/mover)
+	if(istype(mover, /obj/item/stack/ore))
+		held_ore = mover
+		update_appearance(UPDATE_OVERLAYS)
+
+	return ..()
+
+/mob/living/basic/mining/mook/Exited(atom/movable/mover)
+	. = ..()
+	if(held_ore != mover)
+		return
+	held_ore = null
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/mook/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	. = ..()
+
+	if(!. || !proximity_flag || held_ore)
+		return
+
+	if(!istype(attack_target, /obj/item/stack/ore))
+		return
+
+	var/obj/item/ore_target = attack_target
+	ore_target.forceMove(src)
+
+/mob/living/basic/mining/mook/proc/pre_attack(mob/living/attacker, atom/target)
 	SIGNAL_HANDLER
+
+	if(istype(target, /obj/structure/material_stand))
+		if(held_ore)
+			held_ore.forceMove(target)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(gender == FEMALE) //females dont have an axe
+		return
 
 	if(attack_state == MOOK_ATTACK_STRIKE)
 		return COMPONENT_HOSTILE_NO_ATTACK
@@ -39,11 +77,11 @@
 	change_combatant_state(state = MOOK_ATTACK_STRIKE)
 	addtimer(CALLBACK(src, PROC_REF(change_combatant_state), MOOK_ATTACK_NEUTRAL), 0.3 SECONDS)
 
-/mob/living/basic/mook/proc/change_combatant_state(state)
+/mob/living/basic/mining/mook/proc/change_combatant_state(state)
 	attack_state = state
-	update_appearance(UPDATE_ICON)
+	update_appearance()
 
-/mob/living/basic/mook/update_icon_state()
+/mob/living/basic/mining/mook/update_icon_state()
 	. = ..()
 	if(stat == DEAD)
 		return
@@ -57,27 +95,41 @@
 		if(MOOK_ATTACK_STRIKE)
 			icon_state = "mook_strike"
 
-/mob/living/basic/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/basic/mining/mook/update_overlays()
+	. = ..()
+	if(stat == DEAD)
+		return
+
+	if(attack_state != MOOK_ATTACK_NEUTRAL)
+		return
+
+	if(held_ore)
+		. +=  mutable_appearance(icon, "mook_ore_overlay")
+
+	if(gender == MALE)
+		. += mutable_appearance(icon, "mook_axe_overlay")
+
+/mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	return ..()
 
-/mob/living/basic/mook/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/mob/living/basic/mining/mook/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	change_combatant_state(state = MOOK_ATTACK_NEUTRAL)
 
-/mob/living/basic/mook/CanAllowThrough(atom/movable/mover, border_dir)
+/mob/living/basic/mining/mook/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
-	if(!istype(mover, /mob/living/basic/mook))
+	if(!istype(mover, /mob/living/basic/mining/mook))
 		return FALSE
 
-	var/mob/living/basic/mook/mook_moover = mover
+	var/mob/living/basic/mining/mook/mook_moover = mover
 	if(mook_moover.attack_state == MOOK_ATTACK_ACTIVE)
 		return TRUE
 
-/mob/living/simple_animal/hostile/jungle/mook/death()
+/mob/living/basic/mining/mook/death()
 	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..."//Can you guess the twist
 	return ..()
 
@@ -102,7 +154,7 @@
 	. = ..()
 	if(isnull(owner))
 		return
-	is_mook = istype(owner, /mob/living/basic/mook)
+	is_mook = istype(owner, /mob/living/basic/mining/mook)
 
 /datum/action/cooldown/mob_cooldown/mook_leap/IsAvailable(feedback)
 	. = ..()
@@ -113,7 +165,7 @@
 	if(!is_mook)
 		return TRUE
 
-	var/mob/living/basic/mook/mook_owner = owner
+	var/mob/living/basic/mining/mook/mook_owner = owner
 	if(mook_owner.attack_state != MOOK_ATTACK_NEUTRAL)
 		if(feedback)
 			mook_owner.balloon_alert(mook_owner, "still recovering!")
@@ -127,7 +179,7 @@
 		return TRUE
 
 	if(is_mook)
-		var/mob/living/basic/mook/mook_owner = owner
+		var/mob/living/basic/mining/mook/mook_owner = owner
 		mook_owner.change_combatant_state(state = MOOK_ATTACK_WARMUP)
 
 	addtimer(CALLBACK(src, PROC_REF(launch_towards_target), target), wind_up_time)

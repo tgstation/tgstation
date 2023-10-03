@@ -6,7 +6,7 @@
 	icon_state = "material_stand"
 	density = TRUE
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
 	bound_width = 64
 	bound_height = 64
 

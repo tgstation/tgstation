@@ -43,12 +43,17 @@
 /obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
+"l" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "m" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "n" = (
-/mob/living/basic/mook,
+/mob/living/basic/mining/mook,
+/obj/structure/flora/ash/fireblossom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "o" = (
@@ -126,6 +131,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"I" = (
+/mob/living/basic/mining/mook,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "J" = (
 /obj/structure/railing{
 	dir = 8
@@ -179,7 +188,7 @@ a
 a
 a
 a
-a
+l
 a
 a
 a
@@ -200,13 +209,13 @@ a
 a
 a
 a
+l
 a
 a
 a
 a
 a
-a
-n
+I
 a
 a
 t
@@ -294,7 +303,7 @@ a
 a
 a
 a
-n
+I
 a
 a
 A
@@ -312,14 +321,14 @@ c
 c
 r
 a
-n
+I
 a
 a
 a
 a
 a
-a
-a
+l
+l
 Y
 V
 V
@@ -340,7 +349,7 @@ w
 w
 w
 Z
-n
+I
 a
 a
 a
@@ -377,7 +386,7 @@ a
 a
 a
 a
-n
+I
 a
 u
 y
@@ -385,8 +394,8 @@ y
 E
 d
 a
-n
-a
+I
+l
 a
 a
 a
@@ -394,8 +403,8 @@ a
 (11,1,1) = {"
 a
 a
-a
-a
+l
+l
 a
 a
 a
@@ -467,17 +476,17 @@ h
 h
 a
 a
+l
 a
 a
+I
+l
+l
 a
-n
-a
-a
-a
-n
-a
+I
 a
 a
+l
 "}
 (15,1,1) = {"
 g
@@ -487,9 +496,9 @@ g
 q
 g
 g
+l
 a
-a
-n
+I
 a
 a
 a
@@ -533,7 +542,7 @@ c
 c
 r
 a
-n
+I
 a
 a
 h
@@ -577,7 +586,7 @@ h
 h
 a
 a
-a
+l
 a
 a
 h
