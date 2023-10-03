@@ -24,6 +24,7 @@
 	src.vary_icon_state = vary_icon_state
 	if (!isnull(front))
 		SEND_SIGNAL(front, COMSIG_MOB_GAINED_CHAIN_TAIL, parent)
+		parent.AddComponent(/datum/component/leash, owner = front, distance = 1) // Handles catching up gracefully
 
 /datum/component/mob_chain/Destroy(force, silent)
 	if (!isnull(front))
@@ -37,7 +38,6 @@
 	RegisterSignal(parent, COMSIG_MOB_LOST_CHAIN_TAIL, PROC_REF(on_lost_tail))
 	RegisterSignal(parent, COMSIG_MOB_CHAIN_CONTRACT, PROC_REF(on_contracted))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revived))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
@@ -56,10 +56,10 @@
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_CAN_BE_PULLED,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
+		COMSIG_CARBON_LIMB_DAMAGED,
 		COMSIG_HUMAN_EARLY_UNARMED_ATTACK,
 		COMSIG_LIVING_ADJUST_DAMAGE,
 		COMSIG_LIVING_DEATH,
-		COMSIG_LIVING_REVIVE,
 		COMSIG_LIVING_UNARMED_ATTACK,
 		COMSIG_MOB_ATTACK_RANGED,
 		COMSIG_MOB_CHAIN_CONTRACT,
@@ -68,7 +68,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_QDELETING,
 	))
-
+	qdel(parent.GetComponent(/datum/component/leash))
 	var/mob/living/living_parent = parent
 	var/datum/action/cooldown/worm_contract/shrink = locate() in living_parent.actions
 	qdel(shrink)
@@ -109,11 +109,6 @@
 	back?.death()
 	qdel(src)
 
-/// If we return from the dead so does the guy behind us
-/datum/component/mob_chain/proc/on_revived(mob/living/lazarus, full_heal_flags)
-	SIGNAL_HANDLER
-	back?.revive(full_heal_flags)
-
 /// If we get deleted so does the guy behind us
 /datum/component/mob_chain/proc/on_deletion()
 	SIGNAL_HANDLER
@@ -123,9 +118,6 @@
 /// Pull our tail behind us when we move
 /datum/component/mob_chain/proc/on_moved(mob/living/mover, turf/old_loc)
 	SIGNAL_HANDLER
-	if(!isnull(front) && !mover.Adjacent(front) && !isnull(front.loc))
-		mover.forceMove(front.loc)
-		return
 	if(isnull(back) || back.loc == old_loc)
 		return
 	back.Move(old_loc)

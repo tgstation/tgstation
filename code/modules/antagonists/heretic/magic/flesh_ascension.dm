@@ -37,7 +37,7 @@
 
 /datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
 	if(istype(caster))
-		segment_length = caster.get_length()
+		segment_length = caster.get_length() - 1 // Don't count the head
 
 	return ..()
 

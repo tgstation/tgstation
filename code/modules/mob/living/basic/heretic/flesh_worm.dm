@@ -1,12 +1,12 @@
 /// Armsy starts to look a bit funky if he's shorter than this
-#define MINIMUM_ARMSY_LENGTH 3
+#define MINIMUM_ARMSY_LENGTH 2
 
 // What if we took a linked list... But made it a mob?
 /// The "Terror of the Night" / Armsy, a large worm made of multiple bodyparts that occupies multiple tiles
 /mob/living/basic/heretic_summon/armsy
 	name = "Lord of the Night"
 	real_name = "Master of Decay"
-	desc = "An abomination made from dozens and dozens of severed and malformed limbs piled onto each other."
+	desc = "An abomination made from dozens and dozens of severed and malformed limbs grasping onto each other."
 	icon_state = "armsy_start"
 	icon_living = "armsy_start"
 	base_icon_state = "armsy"
@@ -33,7 +33,7 @@
 /*
  * Arguments
  * * spawn_bodyparts - whether we spawn additional armsy bodies until we reach length.
- * * worm_length - the length of the worm we're creating. Below 3 doesn't work very well.
+ * * worm_length - the length of the worm we're creating. Below 2 doesn't work very well.
  */
 /mob/living/basic/heretic_summon/armsy/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 6)
 	. = ..()
