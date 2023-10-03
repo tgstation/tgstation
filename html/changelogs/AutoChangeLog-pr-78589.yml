@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Fixed zombies being able to infect headless corpses (Including former zombies)"
-  - bugfix: "Fixed bio armor being totally useless against zombies. Now it checks how hurt your limb is: If it's more than the bio armor value, you get infected. THICKMATERIAL clothing guarantees at least 25 damage required to infect you, non-thick clothing reduces effective defence by 25. In practice this means people with MODsuits, biosuits will resist infection unless they're pummeled into crit, and wearing a firesuit will save you from the first few slashes."
-  - bugfix: "Fixed the bomb hood armor not having the same bio armor value as bomb armor."
-  - qol: "Added a message to the zed when they succesfully infect someone."
-  - code_imp: "Turned some proc names into snake_case rather than, uh, nospacecase."

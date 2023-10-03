@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - qol: "Departmental order consoles now alert their department via radio when their cooldown expires"

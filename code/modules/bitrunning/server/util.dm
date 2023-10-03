@@ -5,6 +5,7 @@
 /obj/machinery/quantum_server/proc/cool_off()
 	is_ready = TRUE
 	update_appearance()
+	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY)
 
 /// Attempts to connect to a quantum console
 /obj/machinery/quantum_server/proc/find_console()
@@ -57,10 +58,10 @@
 			"health" = creature.health,
 			"name" = creature.name,
 			"pilot" = pilot,
-			"brute" = creature.get_damage_amount(BRUTE),
-			"burn" = creature.get_damage_amount(BURN),
-			"tox" = creature.get_damage_amount(TOX),
-			"oxy" = creature.get_damage_amount(OXY),
+			"brute" = creature.get_current_damage_of_type(BRUTE),
+			"burn" = creature.get_current_damage_of_type(BURN),
+			"tox" = creature.get_current_damage_of_type(TOX),
+			"oxy" = creature.get_current_damage_of_type(OXY),
 		))
 
 	return hosted_avatars

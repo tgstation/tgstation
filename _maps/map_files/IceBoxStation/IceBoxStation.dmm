@@ -33607,7 +33607,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "krx" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -48325,8 +48325,12 @@
 /area/station/engineering/lobby)
 "oQa" = (
 /obj/structure/table,
-/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/food/cheesiehonkers,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oQn" = (
@@ -59510,7 +59514,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "slK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -72971,8 +72975,12 @@
 /area/mine/laborcamp)
 "wzz" = (
 /obj/structure/rack,
-/obj/item/healthanalyzer,
 /obj/machinery/light/cold/directional/north,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "wAq" = (
