@@ -218,12 +218,9 @@
 	/// how long does a vine attached to something last (and its leash)
 	var/vine_duration = 1.5 SECONDS
 
-/datum/action/cooldown/mob_cooldown/vine_tangle/Grant(mob/grant_to)
-	. = ..()
-	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(remove_vines))
-
 /datum/action/cooldown/mob_cooldown/vine_tangle/Remove(mob/remove_from)
-	UnregisterSignal(owner, COMSIG_QDELETING)
+	for(var/datum/beam/vine as anything in vines)
+		qdel(vine)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/vine_tangle/Activate(atom/target_atom)
@@ -247,12 +244,6 @@
 		L.Knockdown(2 SECONDS)
 	StartCooldown()
 	return TRUE
-
-
-/datum/action/cooldown/mob_cooldown/vine_tangle/proc/remove_vines(datum/source)
-	SIGNAL_HANDLER
-	for(var/datum/beam/vine as anything in vines)
-		qdel(vine) // reference is automatically deleted by remove_vine
 
 /**
  * Removes a vine from the list.
