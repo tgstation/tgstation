@@ -32,7 +32,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	melee_damage_upper = 18
 	health = 50
 	maxHealth = 50
-	speed = 0.1
+	speed = 10 // speed is fucking weird man. they aren't fast though don't worry
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
