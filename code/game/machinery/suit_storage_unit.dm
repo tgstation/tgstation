@@ -81,12 +81,13 @@
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots
+	suit_type = /obj/item/clothing/suit/space/hardsuit/engine //Monkestation Edit
 	mod_type = /obj/item/mod/control/pre_equipped/engineering
 
 /obj/machinery/suit_storage_unit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/watertank/atmos
-	suit_type = /obj/item/clothing/suit/space/hardsuit/atmos
+	suit_type = /obj/item/clothing/suit/space/hardsuit/atmos //Monkestation Edit
 	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
 
 /obj/machinery/suit_storage_unit/ce

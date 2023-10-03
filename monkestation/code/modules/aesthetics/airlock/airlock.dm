@@ -22,7 +22,21 @@
 #define AIRLOCK_FRAME_OPEN "open"
 #define AIRLOCK_FRAME_OPENING "opening"
 
+/obj/machinery/door
+	/// What door types do we want to align with if any
+	var/door_align_type
+	var/align_to_windows = FALSE
+	var/auto_dir_align = TRUE
+
+/obj/machinery/door/window
+	auto_dir_align = FALSE
+
+/obj/machinery/door/firedoor/border_only
+	auto_dir_align = FALSE
 /obj/machinery/door/airlock
+	align_to_windows = TRUE
+	door_align_type = /obj/machinery/door/airlock
+
 	doorOpen = 'monkestation/code/modules/aesthetics/airlock/sound/open.ogg'
 	doorClose = 'monkestation/code/modules/aesthetics/airlock/sound/close.ogg'
 	boltUp = 'monkestation/code/modules/aesthetics/airlock/sound/bolts_up.ogg'
@@ -186,6 +200,68 @@
 					floorlight.pixel_x = -32
 					floorlight.pixel_y = 0
 			. += floorlight
+
+/obj/machinery/door/LateInitialize()
+	. = ..()
+	// Automatically align the direction of the airlock
+	auto_dir_align()
+
+/obj/machinery/door/proc/auto_dir_align()
+	if(!auto_dir_align)
+		return
+	// Set directional facing
+	var/turf/my_turf = get_turf(src)
+	var/turf/north_turf = get_step(my_turf, NORTH)
+	var/turf/south_turf = get_step(my_turf, SOUTH)
+	//If south or north is blocked, face towards west
+	var/block_dir = SOUTH
+	var/align_dir
+	for(var/i in 1 to 2)
+		var/turf/check_turf = i == 1 ? north_turf : south_turf
+		if(!check_turf)
+			continue
+		if(!check_turf.density)
+			//Adjacent turf is not dense, check if we can maybe align with a window or a low wall
+			if(align_to_windows)
+				var/obj/structure/window/window = locate() in check_turf
+				var/obj/structure/window_sill/low_wall = locate() in check_turf
+				if(!low_wall && (!window || !window.fulltile))
+					continue
+			else
+				continue
+		block_dir = WEST
+		break
+
+	if(door_align_type)
+		var/turf/west_turf = get_step(my_turf, WEST)
+		var/turf/east_turf = get_step(my_turf, EAST)
+		for(var/i in 1 to 4)
+			var/dir_to_align
+			var/turf/check_turf
+			switch(i)
+				if(1)
+					check_turf = north_turf
+					dir_to_align = WEST
+				if(2)
+					check_turf = south_turf
+					dir_to_align = WEST
+				if(3)
+					check_turf = east_turf
+					dir_to_align = SOUTH
+				if(4)
+					check_turf = west_turf
+					dir_to_align = SOUTH
+			if(!check_turf)
+				continue
+			var/obj/machinery/door/found_door = locate(door_align_type) in check_turf
+			if(found_door)
+				align_dir = dir_to_align
+				break
+
+	if(align_dir)
+		setDir(align_dir)
+	else
+		setDir(block_dir)
 
 //STATION AIRLOCKS
 /obj/machinery/door/airlock
@@ -545,9 +621,20 @@
 /obj/structure/door_assembly/door_assembly_hydro
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/botany.dmi'
 
-/obj/structure/door_assembly/
+/obj/structure/door_assembly
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/public.dmi'
 	overlays_file = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/overlays.dmi'
+
+/obj/machinery/door/poddoor/shutters
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/shutters.dmi'
+	door_align_type = /obj/machinery/door/poddoor/shutters
+
+/obj/machinery/door/password
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
+
+/obj/machinery/door/poddoor
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
+	door_align_type = /obj/machinery/door/poddoor
 
 //SKYRAT EDIT ADDITION BEGIN - AESTHETICS
 #undef AIRLOCK_LIGHT_POWER
@@ -572,3 +659,12 @@
 #undef AIRLOCK_FRAME_CLOSING
 #undef AIRLOCK_FRAME_OPEN
 #undef AIRLOCK_FRAME_OPENING
+
+
+/obj/machinery/door/poddoor/shutters/cc
+	obj_flags = INDESTRUCTIBLE
+
+/obj/machinery/door/poddoor/shutters/cc/xcc
+	id = "XCCsec1"
+	name = "XCC Checkpoint 1 Shutters"
+	max_integrity = 3000000

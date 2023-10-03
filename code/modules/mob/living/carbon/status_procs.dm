@@ -13,11 +13,9 @@
 	return
 
 /mob/living/carbon/stamina_stun()
-	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
-		return
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
 		return
-	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
+	if(check_stun_immunity(CANKNOCKDOWN))
 		return
 	var/chance = STAMINA_SCALING_STUN_BASE + (STAMINA_SCALING_STUN_SCALER * stamina.current * STAMINA_STUN_THRESHOLD_MODIFIER)
 	if(!prob(chance))

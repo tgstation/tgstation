@@ -90,8 +90,7 @@
 	///the current icon state of our combined shape as we have color permutations
 	var/lining_icon_state = 1
 	///the built string for use in icon updates
-	var/built_lining_string = "base2"
-
+	var/built_lining_string = "pink2_1"
 
 /obj/machinery/light/neon_lining/update_appearance(updates)
 	. = ..()

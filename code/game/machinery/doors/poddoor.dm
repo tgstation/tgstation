@@ -17,6 +17,8 @@
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
+	var/open_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
+	var/close_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -132,10 +134,10 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, open_sound, 30, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, close_sound, 30, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
@@ -174,10 +176,11 @@
 /obj/machinery/door/poddoor/shuttledock
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
+	max_integrity = 100000 ///lol
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)
-	if(!istype(turf, turftype))
+	if(!istype(turf, turftype) && SSticker.current_state == GAME_STATE_PLAYING)
 		INVOKE_ASYNC(src, PROC_REF(open))
 	else
 		INVOKE_ASYNC(src, PROC_REF(close))

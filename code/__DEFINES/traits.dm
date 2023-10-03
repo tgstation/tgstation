@@ -191,6 +191,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISFIGURED "disfigured"
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
+/// This mob is immune to stun causing status effects and stamcrit.
+/// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
@@ -671,6 +673,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
 /// Makes the feedback message when someone else is putting this item on you more noticeable
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
+/// determines whether or not objects are haunted and teleport/attack randomly
+#define TRAIT_HAUNTED "haunted"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -714,6 +718,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KLEPTOMANIAC		"kleptomaniac"
 #define TRAIT_ANIME				"anime"
 #define TRAIT_CAT				"cat"
+#define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
+#define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -909,7 +915,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
-#define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
@@ -919,6 +924,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NANITES_TRAIT "nanites"
 #define FLASHLIGHT_EYES "flashlight_eyes"
 #define IMPURE_OCULINE "impure_oculine"
+#define HAUNTIUM_REAGENT_TRAIT "hauntium_reagent_trait"
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
@@ -1017,6 +1023,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
+/// Trait given by [/datum/status_effect/blessing_of_insanity]
+#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 
 /**

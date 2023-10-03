@@ -43,7 +43,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = opened ? "Open Panel" : "Close Panel"
 
 	if(!held_item && anchored)
-		context[SCREENTIP_CONTEXT_LMB] = on ? "Turn On" : "Turn Off"
+		context[SCREENTIP_CONTEXT_LMB] = on ? "Turn Off" : "Turn On"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/stomper/should_have_node()
 	return anchored
@@ -57,6 +58,7 @@
 
 /obj/machinery/power/stomper/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
+	to_chat(user, span_notice("You [anchored ? "Un-anchor" : "Anchor"] the [src] to the [get_turf(src)]."))
 	set_anchored(!anchored)
 	return TRUE
 
@@ -133,7 +135,7 @@
 		playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 
 	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(source_turf))
-		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 1)///giving a 1 tile leeway on stomps
+		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 2)///giving a 1 tile leeway on stomps
 			continue
 		say("Hotspot Pinned")
 	playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)

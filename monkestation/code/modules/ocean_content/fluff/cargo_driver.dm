@@ -1,5 +1,7 @@
+/obj/machinery/computer/pod/var/looping_time = FALSE
+
 /obj/machinery/mass_driver/cargo_driver
-	name = "cargo_driver"
+	name = "Cargo Driver"
 	id = MASSDRIVER_CARGO
 
 /obj/machinery/mass_driver/drive(amount)
@@ -10,8 +12,12 @@
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
 		if(!O.anchored || ismecha(O)) //Mechs need their launch platforms.
-			if(ismob(O) && !isliving(O))
-				continue
+			if(ismob(O))
+				if(isliving(O))
+					audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
+					break
+				else
+					continue
 			O_limit++
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
@@ -63,6 +69,8 @@
 
 	var/list/deletors = list()
 	for(var/atom/movable/listed_atom in ex.exported_atoms_source)
+		if(isliving(listed_atom))
+			continue
 		if(listed_atom in contents_self)
 			deletors += listed_atom
 			contents_self -= listed_atom

@@ -1,0 +1,378 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cO" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/bed/nest,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"eU" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/alien/egg/burst,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"gC" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"ja" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"lO" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/alien/weeds/node{
+	obj_flags = null
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"nn" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"qe" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"rt" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"rX" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"sd" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"tg" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"wG" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/alien/egg/burst,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"xn" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"ya" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"Cy" = (
+/obj/structure/alien/resin/membrane,
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"CI" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/structure/alien/weeds/node{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"Fp" = (
+/obj/structure/alien/resin/membrane,
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"HZ" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"Is" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"Ix" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/corpse/human/laborer,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"NG" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"Xl" = (
+/obj/structure/alien/weeds{
+	obj_flags = null
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/laborer,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+Fp
+rX
+rX
+ih
+rX
+rX
+ih
+rX
+rX
+Fp
+"}
+(2,1,1) = {"
+Fp
+gC
+rX
+ih
+rX
+ih
+lO
+rX
+Ix
+Fp
+"}
+(3,1,1) = {"
+Cy
+Is
+ih
+ih
+rX
+ih
+ih
+wG
+ih
+Fp
+"}
+(4,1,1) = {"
+ih
+ih
+lO
+HZ
+rX
+rX
+ih
+HZ
+ih
+ih
+"}
+(5,1,1) = {"
+ih
+ih
+ih
+ih
+ih
+ih
+ih
+ih
+ih
+ih
+"}
+(6,1,1) = {"
+ih
+ih
+rX
+xn
+eU
+Fp
+ih
+rX
+ih
+ih
+"}
+(7,1,1) = {"
+ih
+rX
+cO
+ih
+sd
+Fp
+ih
+ja
+rX
+ih
+"}
+(8,1,1) = {"
+ih
+ih
+ih
+lO
+HZ
+rX
+HZ
+ih
+ih
+ih
+"}
+(9,1,1) = {"
+ih
+Fp
+ya
+ih
+ih
+qe
+ih
+ih
+Fp
+ih
+"}
+(10,1,1) = {"
+sd
+rt
+ih
+ih
+HZ
+rX
+HZ
+gC
+ih
+ih
+"}
+(11,1,1) = {"
+ih
+rX
+nn
+ih
+ih
+Fp
+CI
+cO
+rX
+ih
+"}
+(12,1,1) = {"
+ih
+ih
+rX
+ih
+ih
+Fp
+eU
+rX
+ih
+ih
+"}
+(13,1,1) = {"
+ih
+ih
+ih
+ih
+ih
+ih
+ih
+gC
+ih
+ih
+"}
+(14,1,1) = {"
+ih
+ih
+lO
+HZ
+rX
+rX
+nn
+HZ
+ih
+ih
+"}
+(15,1,1) = {"
+Fp
+sd
+ih
+ih
+rX
+NG
+ih
+Is
+Is
+Fp
+"}
+(16,1,1) = {"
+Fp
+eU
+rX
+ih
+rX
+ih
+lO
+tg
+Xl
+Fp
+"}
+(17,1,1) = {"
+Fp
+rX
+rX
+ih
+rX
+rX
+ih
+rX
+rX
+Fp
+"}
