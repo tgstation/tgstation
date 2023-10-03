@@ -5,8 +5,8 @@
  * * DROP_BRAIN - Gibbed mob will drop a brain
  * * DROP_ORGANS - Gibbed mob will drop organs
  * * DROP_BODYPARTS - Gibbed mob will drop bodyparts (arms, legs, etc.)
- * * DROP_ITEMS - Gibbed mob will drop items and not be deleted
- * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+ * * DROP_ITEMS - Gibbed mob will drop carried items (otherwise they get deleted)
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes DROP_ITEMS causing any carried items to be deleted)
 **/
 /mob/living/proc/gib(drop_bitflags=DROP_ALL_REMAINS) //no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
@@ -32,10 +32,9 @@
  * Spawn bloody gib mess on the floor
  *
  * drop_bitflags: (see code/__DEFINES/blood.dm)
- * * DROP_BODYPARTS - Mob will drop bodyparts (arms, legs, etc.)
- * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+ * * DROP_BODYPARTS - Gibs will spawn with bodypart limbs present
 **/
-/mob/living/proc/spawn_gibs(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/proc/spawn_gibs(drop_bitflags=DROP_BODYPARTS)
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /**
@@ -45,19 +44,18 @@
  * * DROP_BRAIN - Mob will drop a brain
  * * DROP_ORGANS - Mob will drop organs
  * * DROP_BODYPARTS - Mob will drop bodyparts (arms, legs, etc.)
- * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+ * * DROP_ALL_REMAINS - Mob will drop everything
 **/
 /mob/living/proc/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
 	return
 
 /**
- * Dismembers and drops the mob's limbs on the floor
+ * Launches all bodyparts away from the mob
  *
  * drop_bitflags: (see code/__DEFINES/blood.dm)
- * * DROP_BRAIN - Mob will drop a head
- * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes items)
+ * * DROP_BRAIN - Detaches the head from the mob and launches it away from the body
 **/
-/mob/living/proc/spread_bodyparts(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/proc/spread_bodyparts(drop_bitflags=DROP_BRAIN)
 	return
 
 /**
