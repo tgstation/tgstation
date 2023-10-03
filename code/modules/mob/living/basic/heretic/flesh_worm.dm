@@ -60,7 +60,7 @@
 	return TRUE
 
 /mob/living/basic/heretic_summon/armsy/can_be_pulled()
-	return FALSE
+	return FALSE // The component does this but not on the head. We don't want the head to be pulled either.
 
 /mob/living/basic/heretic_summon/armsy/proc/build_tail(worm_length)
 	worm_length = max(worm_length, MINIMUM_ARMSY_LENGTH)
@@ -69,17 +69,14 @@
 	health = maxHealth
 
 	AddComponent(/datum/component/mob_chain, vary_icon_state = TRUE) // We're the front
-	var/mob/living/basic/heretic_summon/armsy/prev = src
-	var/mob/living/basic/heretic_summon/armsy/current
 
+	var/mob/living/basic/heretic_summon/armsy/prev = src
 	for(var/i in 1 to worm_length)
-		current = new_segment(behind = prev)
-		prev = current
-	prev.update_appearance(UPDATE_ICON_STATE)
+		prev = new_segment(behind = prev)
 	update_appearance(UPDATE_ICON_STATE)
 
 /// Grows a new segment behind the passed mob
-/mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/behind)
+/mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/basic/heretic_summon/armsy/behind)
 	var/mob/living/segment = new type(drop_location(), FALSE)
 	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	segment.AddComponent(/datum/component/mob_chain, front = behind, vary_icon_state = TRUE)
@@ -96,7 +93,7 @@
 		RegisterSignal(back, COMSIG_QDELETING, PROC_REF(tail_deleted))
 
 /// When our tail is gone stop holding a reference to it
-/mob/living/basic/heretic_summon/armsy/proc/tail_deleted
+/mob/living/basic/heretic_summon/armsy/proc/tail_deleted()
 	SIGNAL_HANDLER
 	register_behind(null)
 

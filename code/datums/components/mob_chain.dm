@@ -99,10 +99,11 @@
 		return
 	INVOKE_ASYNC(shrink, TYPE_PROC_REF(/datum/action, Trigger))
 
-/// If we die so does the guy behind us
+/// If we die so does the guy behind us, then stop following the leader
 /datum/component/mob_chain/proc/on_death()
 	SIGNAL_HANDLER
 	back?.death()
+	qdel(src)
 
 /// If we return from the dead so does the guy behind us
 /datum/component/mob_chain/proc/on_revived(mob/living/lazarus, full_heal_flags)
