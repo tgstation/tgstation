@@ -21,6 +21,7 @@
 
 	var/dat = "<center><B>Game Panel</B></center><hr>"
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
@@ -30,6 +31,8 @@
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+		if(istype(SSticker.mode, /datum/game_mode/dynamic))
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 	dat += {"
 		<BR>
 		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
@@ -142,6 +145,111 @@
 		"}
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
+/datum/admins/proc/dynamic_ruleset_manager(mob/user)
+	if (SSticker.current_state > GAME_STATE_PREGAME && !istype(SSticker.mode, /datum/game_mode/dynamic))
+		return // Not running dynamic
+
+	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>\
+		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
+		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
+		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config).<br/>\
+		\[<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_on=1'>force enable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_off=1'>force disable all</A> / \
+		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_reset=1'>reset all</A>\]"
+
+	if (SSticker.current_state <= GAME_STATE_PREGAME) // Don't bother displaying after the round has started
+		var/static/list/rulesets_by_context = list()
+		if (!length(rulesets_by_context))
+			for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+				if (initial(rule.name) == "")
+					continue
+				LAZYADD(rulesets_by_context[initial(rule.ruletype)], rule)
+
+		dat += dynamic_ruleset_category_pre_start_display("Roundstart", rulesets_by_context[ROUNDSTART_RULESET])
+		dat += dynamic_ruleset_category_pre_start_display("Latejoin", rulesets_by_context[LATEJOIN_RULESET])
+		dat += dynamic_ruleset_category_pre_start_display("Midround", rulesets_by_context[MIDROUND_RULESET])
+		user << browse(dat, "window=dyn_mode_options;size=900x650")
+		return
+
+	var/datum/game_mode/dynamic/current_mode = SSticker.mode
+	var/pop_count = length(GLOB.alive_player_list)
+	var/threat_level = current_mode.threat_level
+	dat += dynamic_ruleset_category_during_round_display("Latejoin", current_mode.latejoin_rules, pop_count, threat_level)
+	dat += dynamic_ruleset_category_during_round_display("Midround", current_mode.midround_rules, pop_count, threat_level)
+	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
+/datum/admins/proc/dynamic_ruleset_category_pre_start_display(title, list/rules)
+	var/dat = "<B><h3>[title]</h3></B><table class='ml-2'>"
+	for (var/datum/dynamic_ruleset/rule as anything in rules)
+		var/forced = GLOB.dynamic_forced_rulesets[rule] || RULESET_NOT_FORCED
+		var/color = COLOR_BLACK
+		switch (forced)
+			if (RULESET_FORCE_ENABLED)
+				color = COLOR_GREEN
+			if (RULESET_FORCE_DISABLED)
+				color = COLOR_RED
+		dat += "<tr><td><b>[initial(rule.name)]</b></td><td>\[<font color=[color]>[forced]</font>\]</td><td>\[\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule)]'>force enabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule)]'>force disabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule)]'>reset</A>\]</td></tr>"
+	dat += "</table>"
+	return dat
+
+/datum/admins/proc/dynamic_ruleset_category_during_round_display(title, list/rules, pop_count, threat_level)
+	var/dat = "<B><h3>[title]</h3></B><table class='ml-2'>"
+	for (var/datum/dynamic_ruleset/rule as anything in rules)
+		var/active = rule.acceptable(population = pop_count, threat_level = threat_level) && rule.weight > 0
+		var/forced = GLOB.dynamic_forced_rulesets[rule.type] || RULESET_NOT_FORCED
+		var/color = (active) ? COLOR_GREEN : COLOR_RED
+		var/explanation = ""
+		if (!active)
+			if (rule.weight <= 0)
+				explanation = " - Weight is zero"
+			else if (forced == RULESET_FORCE_DISABLED)
+				explanation = " - Forcibly disabled"
+			else if (forced == RULESET_FORCE_ENABLED)
+				explanation = " - Failed spawn conditions"
+			else if (!rule.is_valid_population(pop_count))
+				explanation = " - Invalid player count"
+			else if (!rule.is_valid_threat(pop_count, threat_level))
+				explanation = " - Insufficient threat"
+			else
+				explanation = " - Failed spawn conditions"
+		else if (forced == RULESET_FORCE_ENABLED)
+			explanation = " - Forcibly enabled"
+		active = active ? "Active" : "Inactive"
+
+		dat += "<tr><td><b>[rule.name]</b></td>\
+			<td>\[Weight : [rule.weight]\]\
+			<td>\[<font color=[color]>[active][explanation]</font>\]</td><td>\[\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule.type)]'>force enabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule.type)]'>force disabled</A> /\
+			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule.type)]'>reset</A>\]</td>\
+			<td>\[<A href='?src=[REF(src)];[HrefToken()];f_inspect_ruleset=[text_ref(rule)]'>VV</A>\]</td></tr>"
+	dat += "</table>"
+	return dat
+
+
+/datum/admins/proc/force_all_rulesets(mob/user, force_value)
+	if (force_value == RULESET_NOT_FORCED)
+		GLOB.dynamic_forced_rulesets = list()
+	else
+		for (var/datum/dynamic_ruleset/rule as anything in subtypesof(/datum/dynamic_ruleset))
+			GLOB.dynamic_forced_rulesets[rule] = force_value
+	var/logged_message = "[key_name(user)] set all dynamic rulesets to [force_value]."
+	log_admin(logged_message)
+	message_admins(logged_message)
+	dynamic_ruleset_manager(user)
+
+/datum/admins/proc/set_dynamic_ruleset_forced(mob/user, datum/dynamic_ruleset/type, force_value)
+	if (isnull(type))
+		return
+	GLOB.dynamic_forced_rulesets[type] = force_value
+	dynamic_ruleset_manager(user)
+	var/logged_message = "[key_name(user)] set '[initial(type.name)] ([initial(type.ruletype)])' to [GLOB.dynamic_forced_rulesets[type]]."
+	log_admin(logged_message)
+	message_admins(logged_message)
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"

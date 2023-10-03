@@ -1,0 +1,4 @@
+author: "Coded by Jacquerel, Sprited by Dalmationer"
+delete-after: True
+changes:
+  - rscadd: "Added tongs to the kitchen, which you can use to manipulate food from further away"
