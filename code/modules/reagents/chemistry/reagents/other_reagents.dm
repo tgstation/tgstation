@@ -3035,8 +3035,6 @@
 			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
-		..()
-		return TRUE
 
 // The same as gold just with a slower metabolism rate, to make using the Hand of Midas easier.
 /datum/reagent/gold/cursed
