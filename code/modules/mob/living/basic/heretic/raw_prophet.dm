@@ -15,7 +15,8 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	ai_controller = /datum/ai_controller/basic_controller/raw_prophet
+	/// Some ability we use to make people go blind
+	var/blind_action_type = /datum/action/cooldown/spell/pointed/blind/eldritch
 
 /mob/living/basic/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -48,7 +49,7 @@
 		var/datum/action/new_action = new ability_type(src)
 		new_action.Grant(src)
 
-	var/datum/action/cooldown/spell/pointed/blind/eldritch/blind = new (src)
+	var/datum/action/cooldown/blind = new blind_action_type(src)
 	blind.Grant(src)
 	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, blind)
 
@@ -74,6 +75,10 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 
+/// NPC variant with a less bullshit ability
+/mob/living/basic/heretic_summon/raw_prophet/ruins
+	ai_controller = /datum/ai_controller/basic_controller/raw_prophet
+	blind_action_type = /datum/action/cooldown/mob_cooldown/watcher_gaze
 
 /// Walk and attack people, blind them when we can
 /datum/ai_controller/basic_controller/raw_prophet
