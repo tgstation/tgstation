@@ -55,7 +55,7 @@
 
 		qdel(organ)
 
-/mob/living/carbon/spread_bodyparts(drop_bitflags=DROP_BRAIN) //skip_head = FALSE)
+/mob/living/carbon/spread_bodyparts(drop_bitflags=DROP_BRAIN)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(!(drop_bitflags & DROP_BRAIN) && part.body_zone == BODY_ZONE_HEAD)
 			continue
