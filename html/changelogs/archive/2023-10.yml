@@ -70,3 +70,21 @@
       life
   distributivgesetz:
   - bugfix: Font scaling in TGUI chat has been reverted to its original implementation.
+2023-10-03:
+  ArcaneMusic:
+  - image: Railings have had a visual update.
+  CoiledLamb:
+  - rscadd: adds boxes of bandages, a quick healing item
+  Fazzie:
+  - rscadd: Added a budget solar crate to the derelict teleporter room
+  - rscadd: Added a solar panel control to the north derelict solar
+  - qol: The derelict's AI coridoor is now shorter and prettier
+  Ical92:
+  - bugfix: fixed misplaced door on syndicate listening post
+  Jacquerel:
+  - bugfix: Spiders, Morphs, Fire Sharks, and Regal Rats no longer have a reduced
+      click speed.
+  - balance: Kudzu will now be destroyed by adverse weather.
+  - balance: Kudzu will no longer spread over holes.
+  timothymtorres:
+  - bugfix: Fix organs having no DNA and become bloody when violently removed.
