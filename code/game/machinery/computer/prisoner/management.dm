@@ -67,12 +67,16 @@
 		if(length(GLOB.tracked_beacon_implants))
 			dat += "<HR>Beacon Implants<BR>"
 			for(var/obj/item/implant/beacon/beacon_implant in GLOB.tracked_beacon_implants)
-				var/turf/implant_turf = get_turf(beacon_implant)
 				dat += "ID: [beacon_implant.imp_in.name]<BR>"
-				if(is_safe_turf(implant_turf))
-					dat += "Implant carrier is safe to teleport to<BR>"
+				var/area/destination_area = get_area(beacon_implant.imp_in)
+				if(!destination_area || destination_area.area_flags & NOTELEPORT)
+					dat += "<font class='bad'><i>Implant carrier teleport signal cannot be reached!</i></font><BR>"
 				else
-					dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)<BR>"
+					var/turf/turf_to_check = get_turf(beacon_implant.imp_in)
+					if(is_safe_turf(turf_to_check, dense_atoms = TRUE))
+						dat += "Implant carrier is in a safe environment.<BR>"
+					else
+						dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment!</i></font>)<BR>"
 				dat += add_destroy_topic(beacon_implant)
 				dat += "********************************<BR>"
 

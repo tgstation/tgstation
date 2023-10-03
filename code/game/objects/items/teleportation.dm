@@ -24,7 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
-	var/tracking_range = 20
+	var/tracking_range = 30
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
