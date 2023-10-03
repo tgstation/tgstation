@@ -173,7 +173,6 @@
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
 	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
-	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	speed = 1.2
@@ -225,11 +224,8 @@
 	if(get_dist(owner, target_atom) > vine_grab_distance || vines.len >= max_vines)
 		return
 	for(var/turf/blockage in get_line(owner, target_atom))
-		if (blockage.density)
+		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
 			return
-		for(var/obj/blockade in blockage)
-			if(blockade.density)
-				return
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
