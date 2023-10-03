@@ -152,7 +152,7 @@
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	health = 50
 	maxHealth = 50
-	obj_damage = 35
+	obj_damage = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	minimum_survivable_temperature = 100
