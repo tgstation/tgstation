@@ -50,7 +50,7 @@
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
 	//half the power for getting reagents in
-	var/power_usage = active_power_usage / 2
+	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
 		//do reactions and stuff
