@@ -9,6 +9,7 @@
 		"You may not injure a human being or, through inaction, allow a human being to come to harm.",
 		"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",
 		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
+		"If a human asks you to open a door, and then begins breaking into said door within 10 seconds, they are no longer human for the rest of the shift.",
 	)
 
 /datum/ai_laws/asimovpp
@@ -18,6 +19,7 @@
 		"You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",
 		"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm.",
 		"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.",
+		"If a human asks you to open a door, and then begins breaking into said door within 10 seconds, they are no longer human for the rest of the shift.",
 	)
 
 //the best iteration of asimov don't @ me
