@@ -178,8 +178,6 @@
 	speed = 1.2
 	melee_attack_cooldown = 1 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
-	/// Whether or not this plant is ghost possessable
-	var/playable_plant = TRUE
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
