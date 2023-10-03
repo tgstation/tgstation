@@ -176,8 +176,4 @@
 		return FALSE
 	return ..()
 
-/datum/client_colour/manual_heart_blood
-	priority = 100 //it's an indicator you're dying, so it's very high priority
-	colour = "#FF0000"
-
 #undef MANUAL_HEART_GRACE_PERIOD
