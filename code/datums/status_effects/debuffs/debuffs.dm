@@ -1000,16 +1000,20 @@
 	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
 	switch(current_gold_amount)
 		if(-INFINITY to 50)
-			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/soft, update = TRUE)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/soft, update = TRUE)
 			midas_state = "midas_1"
 		if(50 to 100)
-			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/medium, update = TRUE)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/medium, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/medium, update = TRUE)
 			midas_state = "midas_2"
 		if(100 to 200)
-			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/hard, update = TRUE)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/hard, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/hard, update = TRUE)
 			midas_state = "midas_3"
 		if(200 to INFINITY)
-			victim.add_movespeed_modifier(/datum/movespeed_modifier/midas_blight/gold, update = TRUE)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/gold, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/gold, update = TRUE)
 			midas_state = "midas_4"
 	victim.update_icon()
 	if(victim.stat == DEAD)
@@ -1025,24 +1029,9 @@
 
 /datum/status_effect/midas_blight/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	owner.remove_actionspeed_modifier(ACTIONSPEED_ID_MIDAS_BLIGHT, update = TRUE)
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon()
-
-/// Get slower the more gold is in your system.
-/datum/movespeed_modifier/midas_blight
-	id = MOVESPEED_ID_MIDAS_BLIGHT
-
-/datum/movespeed_modifier/midas_blight/soft
-	multiplicative_slowdown = 0.25
-
-/datum/movespeed_modifier/midas_blight/medium
-	multiplicative_slowdown = 0.75
-
-/datum/movespeed_modifier/midas_blight/hard
-	multiplicative_slowdown = 1.5
-
-/datum/movespeed_modifier/midas_blight/gold
-	multiplicative_slowdown = 2
 
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
