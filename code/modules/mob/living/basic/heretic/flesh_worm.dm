@@ -25,8 +25,6 @@
 	var/mob/living/basic/heretic_summon/armsy/back
 	///Next segment in the chain
 	var/mob/living/basic/heretic_summon/armsy/front
-	///Your old location
-	var/atom/old_loc
 	///How many arms do we have to eat to expand?
 	var/stacks_to_grow = 5
 	///Currently eaten arms
@@ -46,9 +44,6 @@
 		target_dir_change = TRUE,\
 	)
 
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(update_chain_links))
-
-	old_loc = loc
 	if(worm_length < MINIMUM_ARMSY_LENGTH)
 		stack_trace("[type] created with invalid len ([worm_length]). Reverting to 3.")
 		worm_length = MINIMUM_ARMSY_LENGTH
@@ -63,6 +58,7 @@
 	maxHealth = worm_length * maxHealth
 	health = maxHealth
 
+	AddComponent(/datum/component/mob_chain) // We're the front
 	var/mob/living/basic/heretic_summon/armsy/prev = src
 	var/mob/living/basic/heretic_summon/armsy/current
 
@@ -71,23 +67,11 @@
 		ADD_TRAIT(current, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 		current.front = prev
 		current.update_appearance(UPDATE_ICON_STATE)
+		current.AddComponent(/datum/component/mob_chain, front = prev)
 		prev.back = current
 		prev = current
-
-	prev.icon_state = "armsy_end"
-	prev.icon_living = "armsy_end"
 	prev.update_appearance(UPDATE_ICON_STATE)
 	update_appearance(UPDATE_ICON_STATE)
-
-/mob/living/basic/heretic_summon/armsy/update_icon_state()
-	. = ..()
-	if(isnull(front))
-		icon_living = "[base_icon_state]_start"
-	else if(isnull(back))
-		icon_living = "[base_icon_state]_end"
-	else
-		icon_living = "[base_icon_state]_mid"
-	icon_state = icon_living
 
 /mob/living/basic/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_bodytype)
 	if(isnull(back))
@@ -121,24 +105,6 @@
 	if(isnull(back))
 		return
 	. += back.get_length()
-
-/// Updates the next mob in the chain to move to our last location. Fixes the chain if somehow broken.
-/mob/living/basic/heretic_summon/armsy/proc/update_chain_links()
-	SIGNAL_HANDLER
-	if(!isnull(back) && back.loc != old_loc)
-		back.Move(old_loc)
-	// self fixing properties if somehow broken
-	if(!isnull(front) && loc != front.old_loc)
-		forceMove(front.old_loc)
-	old_loc = loc
-
-/mob/living/basic/heretic_summon/armsy/Destroy()
-	if(!isnull(front))
-		front.update_appearance(UPDATE_ICON_STATE)
-		front.back = null
-		front = null
-	QDEL_NULL(back)
-	return ..()
 
 /mob/living/basic/heretic_summon/armsy/RangedAttack(atom/target, modifiers)
 	. = ..()

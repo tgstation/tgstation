@@ -179,3 +179,8 @@
 
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
+
+/// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
+/// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
