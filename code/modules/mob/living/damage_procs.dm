@@ -337,9 +337,7 @@
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && ((status_flags & GODMODE) || required_biotype && !(mob_biotypes & required_biotype)))
 		return 0
 	if(on_damage_adjustment(STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
