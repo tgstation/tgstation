@@ -352,22 +352,6 @@
 			return TRUE
 		return
 
-	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
-		var/swapped = FALSE
-		if(!isnull(cell))
-			cell.forceMove(drop_location())
-			if(!issilicon(user) && Adjacent(user))
-				user.put_in_hands(cell)
-			cell = null
-			swapped = TRUE
-		if(!user.transferItemToLoc(item, src))
-			update_appearance()
-			return TRUE
-		cell = item
-		balloon_alert(user, "[swapped ? "swapped" : "inserted"] cell")
-		update_appearance()
-		return TRUE
-
 	if(istype(item, /obj/item/reagent_containers/spray))
 		var/obj/item/reagent_containers/spray/clean_spray = item
 		open(autoclose = 2 SECONDS)
@@ -393,6 +377,26 @@
 			dirty = 0
 			update_appearance()
 		return TRUE
+
+	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+		var/swapped = FALSE
+		if(!isnull(cell))
+			cell.forceMove(drop_location())
+			if(!issilicon(user) && Adjacent(user))
+				user.put_in_hands(cell)
+			cell = null
+			swapped = TRUE
+		if(!user.transferItemToLoc(item, src))
+			update_appearance()
+			return TRUE
+		cell = item
+		balloon_alert(user, "[swapped ? "swapped" : "inserted"] cell")
+		update_appearance()
+		return TRUE
+
+	if(!anchored)
+		balloon_alert(user, "not secured!")
+		return ..()
 
 	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
 		balloon_alert(user, "it's too dirty!")
@@ -465,7 +469,7 @@
 
 /obj/machinery/microwave/CtrlClick(mob/user)
 	. = ..()
-	if(cell_powered && !isnull(cell))
+	if(cell_powered && !isnull(cell) && anchored)
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null
@@ -474,7 +478,10 @@
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(!anchored)
+		balloon_alert(user, "not secured!")
+		return
+	if(operating || panel_open || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(isAI(user) && (machine_stat & NOPOWER))
 		return
