@@ -14,6 +14,7 @@
 	verb_yell = "bellows"
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = 20
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
@@ -27,6 +28,7 @@
 
 /mob/living/basic/blob_minion/zombie/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT) // This mob doesn't function visually without a corpse and wouldn't respawn with one
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/blob_minion/zombie/death(gibbed)
