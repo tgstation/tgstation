@@ -11,6 +11,7 @@
 		finish_action(controller, FALSE, ability_key, target_key)
 		return
 	var/mob/pawn = controller.pawn
+	pawn.face_atom(target)
 	var/result = ability.InterceptClickOn(pawn, null, target)
 	finish_action(controller, result, ability_key, target_key)
 

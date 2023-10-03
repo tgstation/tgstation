@@ -352,46 +352,6 @@
 	matrix_transformation.Scale(1.4, 1.4)
 	transform = matrix_transformation
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit
-	name = "Rust Walker"
-	real_name = "Rusty"
-	desc = "An incomprehensible abomination. Everywhere it steps, it appears to be actively seeping life out of its surroundings."
-	icon_state = "rust_walker_s"
-	icon_living = "rust_walker_s"
-	status_flags = CANPUSH
-	maxHealth = 75
-	health = 75
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	sight = SEE_TURFS
-	actions_to_add = list(
-		/datum/action/cooldown/spell/aoe/rust_conversion/small,
-		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
-	)
-
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/setDir(newdir)
-	. = ..()
-	if(newdir == NORTH)
-		icon_state = "rust_walker_n"
-	else if(newdir == SOUTH)
-		icon_state = "rust_walker_s"
-	update_appearance(UPDATE_ICON_STATE)
-
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
-
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stat == DEAD)
-		return ..()
-
-	var/turf/our_turf = get_turf(src)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
-		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
-
-	return ..()
-
 /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
 	name = "Ash Man"
 	real_name = "Ashy"

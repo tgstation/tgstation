@@ -7,7 +7,7 @@
 	die_with_shapeshifted_form = FALSE
 	possible_shapes = list(
 		/mob/living/simple_animal/hostile/heretic_summon/raw_prophet,
-		/mob/living/simple_animal/hostile/heretic_summon/rust_spirit,
+		/mob/living/basic/heretic_summon/rust_spirit,
 		/mob/living/simple_animal/hostile/heretic_summon/ash_spirit,
 		/mob/living/simple_animal/hostile/heretic_summon/stalker,
 	)

@@ -109,7 +109,6 @@
 		/mob/living/simple_animal/hostile/heretic_summon/ash_spirit,
 		/mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror,
 		/mob/living/simple_animal/hostile/heretic_summon/raw_prophet,
-		/mob/living/simple_animal/hostile/heretic_summon/rust_spirit,
 		/mob/living/simple_animal/hostile/heretic_summon/stalker,
 		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/simple_animal/hostile/illusion/escape,
