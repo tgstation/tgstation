@@ -10,7 +10,7 @@
 	var/objective_verb = "Kill"
 	var/datum/mind/summoner
 
-/datum/antagonist/get_preview_icon()
+/datum/antagonist/slaughter/get_preview_icon()
 	return finish_preview_icon(icon('icons/mob/simple/demon.dmi', "slaughter_demon"))
 
 /datum/antagonist/slaughter/on_gain()
