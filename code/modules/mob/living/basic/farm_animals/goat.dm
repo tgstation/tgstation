@@ -1,5 +1,5 @@
-//goat
-/mob/living/simple_animal/hostile/retaliate/goat
+/// The Greatest (animal) Of All Time. Cud chewing, shin-kicking, kitchen-dwelling nuisance.
+/mob/living/basic/goat
 	name = "goat"
 	desc = "Not known for their pleasant disposition."
 	icon_state = "goat"
@@ -36,12 +36,12 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
+/mob/living/basic/goat/Initialize(mapload)
 	AddComponent(/datum/component/udder)
 	AddElement(/datum/element/cliff_walking) //we walk the cliff
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
@@ -72,16 +72,16 @@
 		if(vine || mushroom || flower)
 			Move(step, get_dir(src, step))
 
-/mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
+/mob/living/basic/goat/Retaliate()
 	..()
 	src.visible_message(span_danger("[src] gets an evil-looking gleam in [p_their()] eye."))
 
-/mob/living/simple_animal/hostile/retaliate/goat/Move()
+/mob/living/basic/goat/Move()
 	. = ..()
 	if(!stat)
 		eat_plants()
 
-/mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
+/mob/living/basic/goat/proc/eat_plants()
 	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
 	if(vine)
 		vine.eat(src)
@@ -98,7 +98,7 @@
 		say("Nom") // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
+/mob/living/basic/goat/AttackingTarget()
 	. = ..()
 
 	if(!. || !isliving(target))
@@ -119,3 +119,8 @@
 
 	plant_target.visible_message(span_warning("[src] takes a big chomp out of [plant_target]!"), \
 							span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"))
+
+/mob/living/basic/goat/pete // Pete!
+	name = "Pete"
+	gender = MALE
+	desc = "He doesn't seem to be too bothered about the cold." // maybe special examine?
