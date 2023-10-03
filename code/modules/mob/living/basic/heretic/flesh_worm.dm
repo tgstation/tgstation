@@ -68,7 +68,7 @@
 	maxHealth = worm_length * maxHealth
 	health = maxHealth
 
-	AddComponent(/datum/component/mob_chain) // We're the front
+	AddComponent(/datum/component/mob_chain, vary_icon_state = TRUE) // We're the front
 	var/mob/living/basic/heretic_summon/armsy/prev = src
 	var/mob/living/basic/heretic_summon/armsy/current
 
@@ -77,6 +77,14 @@
 		prev = current
 	prev.update_appearance(UPDATE_ICON_STATE)
 	update_appearance(UPDATE_ICON_STATE)
+
+/// Grows a new segment behind the passed mob
+/mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/behind)
+	var/mob/living/segment = new type(drop_location(), FALSE)
+	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+	segment.AddComponent(/datum/component/mob_chain, front = behind, vary_icon_state = TRUE)
+	behind.register_behind(segment)
+	return segment
 
 /// Record that we got another guy on our ass
 /mob/living/basic/heretic_summon/armsy/proc/register_behind(mob/living/tail)
@@ -91,14 +99,6 @@
 /mob/living/basic/heretic_summon/armsy/proc/tail_deleted
 	SIGNAL_HANDLER
 	register_behind(null)
-
-/// Grows a new segment behind the passed mob
-/mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/behind)
-	var/mob/living/segment = new type(drop_location(), FALSE)
-	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
-	segment.AddComponent(/datum/component/mob_chain, front = behind)
-	behind.register_behind(segment)
-	return segment
 
 /mob/living/basic/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_bodytype)
 	if(isnull(back))

@@ -14,7 +14,7 @@
 	/// Mob behind us in the chain
 	var/mob/living/back
 
-/datum/component/mob_chain/Initialize(mob/living/front, pass_damage_back = TRUE, vary_icon_state = TRUE)
+/datum/component/mob_chain/Initialize(mob/living/front, pass_damage_back = TRUE, vary_icon_state = FALSE)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
