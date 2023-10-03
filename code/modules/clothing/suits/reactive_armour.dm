@@ -226,7 +226,7 @@
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
 	/// How strong are the zaps we give off?
-	var/zap_power = 25000
+	var/zap_power = 1e7
 	/// How far to the zaps we give off go?
 	var/zap_range = 20
 	/// What flags do we pass to the zaps we give off?

@@ -6,7 +6,7 @@
 	visual = FALSE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
-
+	item_flags = NO_BLOOD_ON_ITEM
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = 2.5 * STANDARD_ORGAN_DECAY //designed to fail around 6 minutes after death
 
@@ -133,6 +133,7 @@
 	base_icon_state = "heart-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+	failing_desc = "seems to be broken."
 
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine

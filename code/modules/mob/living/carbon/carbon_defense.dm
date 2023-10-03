@@ -55,6 +55,13 @@
 
 	return null
 
+/mob/living/carbon/is_ears_covered()
+	for(var/obj/item/worn_thing as anything in get_equipped_items())
+		if(worn_thing.flags_cover & EARS_COVERED)
+			return worn_thing
+
+	return null
+
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -392,7 +399,7 @@
 		bodypart.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
-/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
 	. = ..()
 	if(!.)
 		return
@@ -413,22 +420,30 @@
 		//Found our victims, now lets shock them all
 		for(var/victim in shocking_queue)
 			var/mob/living/carbon/C = victim
-			C.electrocute_act(shock_damage*0.75, src, 1, flags)
+			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	if(should_stun)
-		Paralyze(40)
+	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
+	if (immediately_stun)
+		if (paralyze)
+			Paralyze(stun_duration)
+		else
+			Knockdown(stun_duration)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
-	adjust_jitter(20 SECONDS)
-	adjust_stutter(4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(secondary_shock), should_stun), 2 SECONDS)
+	adjust_jitter(jitter_time)
+	adjust_stutter(stutter_time)
+	if (should_stun)
+		addtimer(CALLBACK(src, PROC_REF(secondary_shock), paralyze, stun_duration * 1.5), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(should_stun)
-	if(should_stun)
-		Paralyze(60)
+/mob/living/carbon/proc/secondary_shock(paralyze, stun_duration)
+	if (paralyze)
+		Paralyze(stun_duration)
+	else
+		Knockdown(stun_duration)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
@@ -676,7 +691,7 @@
 		amount = min(amount, 0) //Prevents oxy damage but not healing
 
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /mob/living/carbon/proc/get_interaction_efficiency(zone)
 	var/obj/item/bodypart/limb = get_bodypart(zone)
@@ -685,12 +700,12 @@
 
 /mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /**
 * Check to see if we should be passed out from oyxloss
 */
-/mob/living/carbon/proc/check_passout(oxyloss)
+/mob/living/carbon/proc/check_passout()
 	if(!isnum(oxyloss))
 		return
 	if(oxyloss <= 50)

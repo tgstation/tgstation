@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Raw Prophets now use the basic mob framework. Please report any unusual behaviour."

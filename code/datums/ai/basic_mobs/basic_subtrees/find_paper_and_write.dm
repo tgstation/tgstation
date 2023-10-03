@@ -1,10 +1,9 @@
 /datum/ai_planning_subtree/find_paper_and_write
 
 /datum/ai_planning_subtree/find_paper_and_write/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/obj/item/inhand_paper = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
 	var/mob/living/basic/wizard = controller.pawn
 
-	if(!QDELETED(inhand_paper))
+	if(controller.blackboard_key_exists(BB_SIMPLE_CARRY_ITEM))
 		controller.queue_behavior(/datum/ai_behavior/write_on_paper, BB_SIMPLE_CARRY_ITEM, BB_WRITING_LIST)
 		return SUBTREE_RETURN_FINISH_PLANNING
 

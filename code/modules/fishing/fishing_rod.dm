@@ -30,13 +30,10 @@
 	var/obj/item/currently_hooked_item
 
 	/// Fishing line visual for the hooked item
-	var/datum/beam/hooked_item_fishing_line
+	var/datum/beam/fishing_line/fishing_line
 
 	/// Are we currently casting
 	var/casting = FALSE
-
-	/// List of fishing line beams
-	var/list/fishing_lines = list()
 
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
@@ -66,13 +63,10 @@
 	return NONE
 
 /obj/item/fishing_rod/Destroy(force)
-	. = ..()
-	//Remove any leftover fishing lines
-	QDEL_LIST(fishing_lines)
+	return ..()
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> in your active hand to access its slots UI"
 	var/list/equipped_stuff = list()
 	if(line)
 		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
@@ -84,6 +78,7 @@
 		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
 	else
 		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
+	. += span_notice("<b>Right-Click</b> in your active hand to access its slots UI")
 
 /**
  * Catch weight modifier for the given fish_type (or FISHING_DUD)
@@ -140,7 +135,7 @@
 		// Should probably respect and used force move later
 		step_towards(currently_hooked_item, get_turf(src))
 		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
-			clear_hooked_item()
+			QDEL_NULL(fishing_line)
 
 /obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -159,30 +154,28 @@
 	var/mob/user = loc
 	if(!istype(user))
 		return
+	if(fishing_line)
+		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
-	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
-	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
-	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
-	RegisterSignal(fishing_line_beam, COMSIG_QDELETING, PROC_REF(clear_line))
-	fishing_lines += fishing_line_beam
-	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF(/datum/beam/, Start))
+	fishing_line = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
+	fishing_line.lefthand = user.get_held_index_of_item(src) % 2 == 1
+	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
+	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
+	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
 	user.update_held_items()
-	return fishing_line_beam
+	return fishing_line
 
 /obj/item/fishing_rod/proc/clear_line(datum/source)
 	SIGNAL_HANDLER
-	fishing_lines -= source
 	if(ismob(loc))
 		var/mob/user = loc
 		user.update_held_items()
+	fishing_line = null
+	currently_hooked_item = null
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
-	if(currently_hooked_item)
-		clear_hooked_item()
-	for(var/datum/beam/fishing_line in fishing_lines)
-		SEND_SIGNAL(fishing_line, COMSIG_FISHING_LINE_SNAPPED)
-	QDEL_LIST(fishing_lines)
+	QDEL_NULL(fishing_line)
 
 /// Hooks the item
 /obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
@@ -191,28 +184,21 @@
 	if(!can_be_hooked(target_atom))
 		return
 	currently_hooked_item = target_atom
-	hooked_item_fishing_line = create_fishing_line(target_atom)
-	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(clear_hooked_item))
+	create_fishing_line(target_atom)
+	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
 	// Could be made dependent on actual hook, ie magnet to hook metallic items
 	return isitem(target)
 
-/obj/item/fishing_rod/proc/clear_hooked_item()
-	SIGNAL_HANDLER
-
-	if(!QDELETED(hooked_item_fishing_line))
-		QDEL_NULL(hooked_item_fishing_line)
-	currently_hooked_item = null
-
 // Checks fishing line for interruptions and range
 /obj/item/fishing_rod/proc/check_los(datum/beam/source)
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!isturf(source.origin.loc) || !isturf(source.target.loc) || !CheckToolReach(src, source.target, cast_range))
-		SEND_SIGNAL(source, COMSIG_FISHING_LINE_SNAPPED) //Stepped out of range or los interrupted
+	if(!CheckToolReach(src, source.target, cast_range))
+		qdel(source)
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -300,7 +286,7 @@
 	reel_overlay.color = line_color
 	. += reel_overlay
 	/// if we don't have anything hooked show the dangling hook & line
-	if(isinhands && length(fishing_lines) == 0)
+	if(isinhands && !fishing_line)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay")
 		line_overlay.appearance_flags |= RESET_COLOR
 		line_overlay.color = line_color
@@ -507,8 +493,8 @@
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	update_appearance(UPDATE_OVERLAYS)
-	if(currently_hooked_item)
-		clear_hooked_item()
+	if(fishing_line)
+		QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/fishing_rod/telescopic/master
@@ -523,15 +509,33 @@
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
 	desc = "An embedded universal constructor along with micro-fusion generator makes this marvel of technology never run out of bait. Interstellar treaties prevent using it outside of recreational fishing. And you can fish with this. "
-	ui_description = "This rod has an infinite supply of synthetic bait."
+	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
+
+	var/static/list/fishing_signals = list(
+		COMSIG_FISHING_ROD_HOOKED_ITEM = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_FISHING_ROD_CAUGHT_FISH = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_PRE_ATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),
+	)
+	AddComponent(/datum/component/experiment_handler, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		allowed_experiments = list(/datum/experiment/scanning/fish), \
+		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
+		experiment_signals = fishing_signals, \
+	)
+
 	var/obj/item/food/bait/doughball/synthetic/infinite_supply_of_bait = new(src)
 	bait = infinite_supply_of_bait
 	update_icon()
+
+/obj/item/fishing_rod/tech/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
 
 /obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
 	return
@@ -577,6 +581,31 @@
 	// Is the fishing rod held in left side hand
 	var/lefthand = FALSE
 
+	// Make these inline with final sprites
+	var/righthand_s_px = 13
+	var/righthand_s_py = 16
+
+	var/righthand_e_px = 18
+	var/righthand_e_py = 16
+
+	var/righthand_w_px = -20
+	var/righthand_w_py = 18
+
+	var/righthand_n_px = -14
+	var/righthand_n_py = 16
+
+	var/lefthand_s_px = -13
+	var/lefthand_s_py = 15
+
+	var/lefthand_e_px = 24
+	var/lefthand_e_py = 18
+
+	var/lefthand_w_px = -17
+	var/lefthand_w_py = 16
+
+	var/lefthand_n_px = 13
+	var/lefthand_n_py = 15
+
 /datum/beam/fishing_line/Start()
 	update_offsets(origin.dir)
 	. = ..()
@@ -605,29 +634,3 @@
 		if(NORTH)
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
-
-// Make these inline with final sprites
-/datum/beam/fishing_line
-	var/righthand_s_px = 13
-	var/righthand_s_py = 16
-
-	var/righthand_e_px = 18
-	var/righthand_e_py = 16
-
-	var/righthand_w_px = -20
-	var/righthand_w_py = 18
-
-	var/righthand_n_px = -14
-	var/righthand_n_py = 16
-
-	var/lefthand_s_px = -13
-	var/lefthand_s_py = 15
-
-	var/lefthand_e_px = 24
-	var/lefthand_e_py = 18
-
-	var/lefthand_w_px = -17
-	var/lefthand_w_py = 16
-
-	var/lefthand_n_px = 13
-	var/lefthand_n_py = 15
