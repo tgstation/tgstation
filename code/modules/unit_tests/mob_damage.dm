@@ -37,15 +37,47 @@
 	// testing with godmode enabled
 	test_godmode(dummy)
 
+/**
+ * Test whether the adjust damage procs return the correct values and that the mob's health is the expected value afterwards.
+ *
+ * By default this calls apply_damage(amount) followed by verify_damage(amount_after) and returns TRUE if both succeeded.
+ * amount_after defaults to the mob's current stamina loss but can be overridden as needed.
+ *
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * amount_after - in case you want to specify what the damage amount on the mob should be afterwards
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
 /datum/unit_test/mob_damage/proc/test_apply_damage(mob/living/testing_mob, amount, expected = -amount, amount_after, included_types, biotypes, bodytypes, forced)
 	if(isnull(amount_after))
-		amount_after = testing_mob.getStaminaLoss() - expected
+		amount_after = testing_mob.getStaminaLoss() - expected // stamina loss applies to both carbon and basic mobs the same way, so that's why we're using it here
 	if(!apply_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
 		return FALSE
 	if(!verify_damage(testing_mob, amount_after, included_types))
 		return FALSE
 	return TRUE
 
+/**
+ * Test whether the set damage procs return the correct values and that the mob's health is the expected value afterwards.
+ *
+ * By default this calls set_damage(amount) followed by verify_damage(amount_after) and returns TRUE if both succeeded.
+ * amount_after defaults to the mob's current stamina loss but can be overridden as needed.
+ *
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * amount_after - in case you want to specify what the damage amount on the mob should be afterwards
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
 /datum/unit_test/mob_damage/proc/test_set_damage(mob/living/testing_mob, amount, expected, amount_after, included_types, biotypes, bodytypes, forced)
 	if(isnull(amount_after))
 		amount_after = testing_mob.getStaminaLoss() - expected
