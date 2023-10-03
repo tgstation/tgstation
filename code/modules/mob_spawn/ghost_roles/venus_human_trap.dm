@@ -4,7 +4,7 @@
 	desc = "A large pulsating plant..."
 	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "bud0"
-	mob_type = /mob/living/simple_animal/hostile/venus_human_trap
+	mob_type = /mob/living/basic/venus_human_trap
 	density = FALSE
 	prompt_name = "venus human trap"
 	you_are_text = "You are a venus human trap."
@@ -23,7 +23,7 @@
 		flower_bud = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap)
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/basic/venus_human_trap/spawned_human_trap)
 	if(spawned_human_trap && flower_bud)
 		if(flower_bud.trait_flags & SPACEVINE_HEAT_RESISTANT)
 			spawned_human_trap.unsuitable_heat_damage = 0
