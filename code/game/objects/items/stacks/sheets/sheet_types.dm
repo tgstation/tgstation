@@ -609,7 +609,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs, check_density = FALSE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed, check_density = FALSE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps, check_density = FALSE, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, check_density = FALSE, category = CAT_CONTAINERS)
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("bandage box", /obj/item/storage/box/bandages, check_density = FALSE, category = CAT_CONTAINERS)
 		)),
 
 	null, \

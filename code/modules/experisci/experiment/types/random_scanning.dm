@@ -8,7 +8,7 @@
 	/// Max amount of a requirement per type
 	var/max_requirement_per_type = 100
 
-/datum/experiment/scanning/random/New()
+/datum/experiment/scanning/random/New(datum/techweb/techweb)
 	// Generate random contents
 	if (possible_types.len)
 		var/picked = 0
