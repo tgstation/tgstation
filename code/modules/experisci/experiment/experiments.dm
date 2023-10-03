@@ -323,7 +323,7 @@
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
-/datum/experiment/scanning/random/mecha_damage_scan/New()
+/datum/experiment/scanning/random/mecha_damage_scan/New(datum/techweb/techweb)
 	. = ..()
 	damage_percent = rand(15, 95)
 	//updating the description with the damage_percent var set

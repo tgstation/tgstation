@@ -70,9 +70,9 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/summon/fire_shark,
 	)
@@ -114,6 +114,7 @@
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
 		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
@@ -160,8 +161,11 @@
 	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
-	target.adjustFireLoss(4)
-	target.adjustCloneLoss(2)
+	var/need_mob_update = FALSE
+	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
+	need_mob_update += target.adjustCloneLoss(2, updating_health = FALSE)
+	if(need_mob_update)
+		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
@@ -170,13 +174,19 @@
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
-		second_target_resolved.adjustFireLoss(10)
-		second_target_resolved.adjustCloneLoss(6)
+		need_mob_update = FALSE
+		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustCloneLoss(6, updating_health = FALSE)
+		if(need_mob_update)
+			target.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
-			third_target_resolved.adjustFireLoss(20)
-			third_target_resolved.adjustCloneLoss(12)
+			need_mob_update = FALSE
+			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustCloneLoss(12, updating_health = FALSE)
+			if(need_mob_update)
+				target.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)
@@ -208,6 +218,7 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
@@ -253,7 +264,7 @@
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
-	user.AddElement(/datum/element/death_linked, star_gazer_mob)
+	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
 	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
 	star_gazer_mob.befriend(user)

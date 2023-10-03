@@ -33602,6 +33602,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/item/storage/box/bandages,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "kVV" = (
@@ -57450,13 +57451,17 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
 /obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/syringe,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "txh" = (

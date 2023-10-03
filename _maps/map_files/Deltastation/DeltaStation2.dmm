@@ -44747,11 +44747,15 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/belt/utility,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lfD" = (
@@ -85138,11 +85142,15 @@
 /area/station/service/cafeteria)
 "vmo" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/cup/bottle/morphine,
-/obj/item/reagent_containers/syringe,
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/siding/dark_red,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/bottle/morphine,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "vmr" = (

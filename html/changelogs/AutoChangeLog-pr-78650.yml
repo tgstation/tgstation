@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Blob Zombies and Blobbernauts have had their attack speed restored to its original value"

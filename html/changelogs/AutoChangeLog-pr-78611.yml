@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - code_imp: "Robot Customers have recently been touched codewise, please report any bugs or unexpected behavior as there really should not be any."

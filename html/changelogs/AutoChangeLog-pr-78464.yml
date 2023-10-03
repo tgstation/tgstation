@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Splattercasting resets your blood to normal values when you transsform into a vampire."
-  - bugfix: "Gaining a new species will set your blood volume down to the normal volume levels if higher than normal."

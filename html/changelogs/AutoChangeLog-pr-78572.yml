@@ -1,4 +1,0 @@
-author: "yorii"
-delete-after: True
-changes:
-  - bugfix: "dead bodies now cool down to room temperature over time"

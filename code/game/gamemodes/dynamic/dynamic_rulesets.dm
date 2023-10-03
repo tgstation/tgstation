@@ -33,6 +33,7 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
 	)
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
