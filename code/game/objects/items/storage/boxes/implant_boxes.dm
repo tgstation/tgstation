@@ -54,7 +54,8 @@
 
 /obj/item/storage/box/beaconimp
 	name = "boxed beacon implant kit"
-	desc = "Contains a set of beacon implants. There's a warning label on the side advising "
+	desc = "Contains a set of beacon implants. There's a warning label on the side warning to always check the safety of your teleport destination, \
+		accompanied by a cheery drawing of a security officer saying 'look before you leap!'"
 	illustration = "implant"
 
 /obj/item/storage/box/beaconimp/PopulateContents()
