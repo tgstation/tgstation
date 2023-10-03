@@ -347,7 +347,7 @@
 		affected_mob.adjustToxLoss(2, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
-	
+
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/affected_mob)
 	to_chat(affected_mob, span_userdanger("You can't stop shaking, your heart beats faster and faster..."))
@@ -824,4 +824,4 @@
 		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-"),
 	)
 	new /obj/structure/bouncy_castle(gored.loc, gored)
-	gored.gib(TRUE, TRUE, TRUE) //no brain, no organs, no bodyparts
+	gored.gib(NONE)

@@ -80,7 +80,7 @@
 		if(confirm == "Yes")
 			living_victim.gib()
 		else
-			living_victim.gib(TRUE)
+			living_victim.gib(DROP_ORGANS|DROP_BODYPARTS)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
@@ -97,7 +97,7 @@
 
 	var/mob/living/ourself = mob
 	if (istype(ourself))
-		ourself.gib(TRUE, TRUE, TRUE)
+		ourself.gib(NONE)
 
 /client/proc/everyone_random()
 	set category = "Admin.Fun"
