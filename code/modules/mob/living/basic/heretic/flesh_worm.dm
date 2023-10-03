@@ -97,25 +97,6 @@
 	SIGNAL_HANDLER
 	register_behind(null)
 
-/mob/living/basic/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_bodytype)
-	if(isnull(back))
-		return ..()
-	return back.adjustBruteLoss()
-
-/mob/living/basic/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_bodytype)
-	if(isnull(back))
-		return ..()
-	return back.adjustFireLoss()
-
-/*
- * Recursively get the length of our chain.
- */
-/mob/living/basic/heretic_summon/armsy/proc/get_length()
-	. = 1
-	if(isnull(back))
-		return
-	. += back.get_length()
-
 /mob/living/basic/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(!istype(target, /obj/item/bodypart/arm))
 		return ..()
@@ -146,5 +127,14 @@
 	visible_message(span_boldwarning("[src] flexes and expands!"))
 	current_stacks = 0
 	new_segment(behind = src)
+
+/*
+ * Recursively get the length of our chain.
+ */
+/mob/living/basic/heretic_summon/armsy/proc/get_length()
+	. = 1
+	if(isnull(back))
+		return
+	. += back.get_length()
 
 #undef MINIMUM_ARMSY_LENGTH

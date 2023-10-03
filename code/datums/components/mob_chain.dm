@@ -45,6 +45,9 @@
 	if (vary_icon_state)
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 		update_mob_appearance()
+	if (pass_damage_back)
+		RegisterSignal(parent, COMSIG_LIVING_ADJUST_DAMAGE, PROC_REF(on_adjust_damage))
+		RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 
 	var/datum/action/cooldown/worm_contract/shrink = new(parent)
 	shrink.Grant(parent)
@@ -54,6 +57,7 @@
 		COMSIG_ATOM_CAN_BE_PULLED,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
 		COMSIG_HUMAN_EARLY_UNARMED_ATTACK,
+		COMSIG_LIVING_ADJUST_DAMAGE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_REVIVE,
 		COMSIG_LIVING_UNARMED_ATTACK,
@@ -119,7 +123,7 @@
 /// Pull our tail behind us when we move
 /datum/component/mob_chain/proc/on_moved(mob/living/mover, turf/old_loc)
 	SIGNAL_HANDLER
-	if(!isnull(front) && !mover.Adjacent(front))
+	if(!isnull(front) && !mover.Adjacent(front) && !isnull(front.loc))
 		mover.forceMove(front.loc)
 		return
 	if(isnull(back) || back.loc == old_loc)
@@ -146,7 +150,7 @@
 /datum/component/mob_chain/proc/on_pulled(mob/living/our_mob)
 	SIGNAL_HANDLER
 	if (!isnull(front))
-		return COMSIG_ATOM_CAN_BE_PULLED
+		return COMSIG_ATOM_CANT_PULL
 
 /// Tell our tail to attack too
 /datum/component/mob_chain/proc/on_attack(mob/living/our_mob, atom/target)
@@ -156,6 +160,40 @@
 	if (isnull(back) || QDELETED(target) || isfloorturf(target))
 		return
 	INVOKE_ASYNC(back, TYPE_PROC_REF(/mob, ClickOn), target)
+
+/// On damage or heal, affect our furthest segment
+/datum/component/mob_chain/proc/on_adjust_damage(mob/living/our_mob, type, amount, forced)
+	SIGNAL_HANDLER
+	if (isnull(back) || forced)
+		return
+	if (type == STAMINA)
+		back.adjustStaminaLoss(amount, forced = forced)
+		return // Pass stamina changes all the way along so we maintain consistent speed
+	switch (type)
+		if(BRUTE)
+			back.adjustBruteLoss(amount, forced = forced)
+		if(BURN)
+			back.adjustFireLoss(amount, forced = forced)
+		if(TOX)
+			back.adjustToxLoss(amount, forced = forced)
+		if(OXY) // If all segments are suffocating we pile damage backwards until our ass starts dying forwards
+			back.adjustOxyLoss(amount, forced = forced)
+		if(CLONE)
+			back.adjustCloneLoss(amount, forced = forced)
+	return COMPONENT_IGNORE_CHANGE
+
+/// Special handling for if damage is delegated to a mob's limbs instead of its overall damage
+/datum/component/mob_chain/proc/on_limb_damage(mob/living/our_mob, limb, brute, burn)
+	SIGNAL_HANDLER
+	if (isnull(back))
+		return
+	if (brute != 0)
+		back.adjustBruteLoss(brute, updating_health = FALSE)
+	if (burn != 0)
+		back.adjustFireLoss(burn, updating_health = FALSE)
+	if (brute != 0 || burn != 0)
+		back.updatehealth()
+	return COMPONENT_PREVENT_LIMB_DAMAGE
 
 /**
  * Shrink the chain of mobs into one tile.

@@ -55,6 +55,10 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_OBJECT_ON_BANING "obj_on_baning"
 
+///from base of mob/living/on_damage_adjustment
+#define COMSIG_LIVING_ADJUST_DAMAGE "living_adjust_damage"
+	#define COMPONENT_IGNORE_CHANGE (1<<0)
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)

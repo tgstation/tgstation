@@ -17,7 +17,9 @@
 
 /mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BRUTE])
@@ -25,7 +27,9 @@
 
 /mob/living/basic/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BURN])
@@ -33,7 +37,9 @@
 
 /mob/living/basic/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[OXY])
@@ -41,7 +47,9 @@
 
 /mob/living/basic/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[TOX])
@@ -49,7 +57,9 @@
 
 /mob/living/basic/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[CLONE])
@@ -57,7 +67,9 @@
 
 /mob/living/basic/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(forced)
 		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + amount))
 	else

@@ -190,6 +190,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
+	/client/proc/create_mob_worm,
 	/client/proc/Debug2,
 	/client/proc/debug_controller,
 	/client/proc/debug_hallucination_weighted_list_per_type,

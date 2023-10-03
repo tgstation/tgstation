@@ -458,8 +458,11 @@
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
-	if(owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
+	if(!isnull(owner))
+		if (owner.status_flags & GODMODE)
+			return FALSE
+		if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
+			return FALSE
 	if(required_bodytype && !(bodytype & required_bodytype))
 		return FALSE
 
