@@ -193,11 +193,12 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/list/kudzu_in_area = range(2, src)
 
-	if(!(locate(/obj/structure/spacevine) in kudzu_in_area))
-		apply_damage(10, BRUTE, BODY_ZONE_CHEST) //tick 5 times to die
-		balloon_alert(src, "do not leave vines!")
+	if(locate(/obj/structure/spacevine) in range(2, src))
+		return
+	
+	apply_damage(10, BRUTE, BODY_ZONE_CHEST) //tick 5 times to die
+	balloon_alert(src, "do not leave vines!")
 
 /datum/action/cooldown/mob_cooldown/vine_tangle
 	name = "Tangle"
@@ -230,13 +231,13 @@
 			if(blockade.density)
 				return
 
-	var/datum/beam/newVine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
-	RegisterSignal(newVine, COMSIG_QDELETING, PROC_REF(remove_vine), newVine)
-	vines[newVine] = component
+	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
+	vines[new_vine] = component
 	if(isliving(target_atom))
-		var/mob/living/L = target_atom
-		L.Knockdown(2 SECONDS)
+		var/mob/living/victim = target_atom
+		victim.Knockdown(2 SECONDS)
 	StartCooldown()
 	return TRUE
 
