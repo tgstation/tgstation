@@ -196,7 +196,7 @@
 		reagents.handle_reactions()
 
 		//some power for accurate ph balancing
-		use_power((active_power_usage / 5) * seconds_per_tick)
+		use_power((active_power_usage * 0.2) * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
