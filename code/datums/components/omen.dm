@@ -270,7 +270,9 @@
 
 	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
-	player.spread_bodyparts(skip_head = TRUE)
+	// this needs to be tested
+	// maybe refactor all of this into the gib proc?
+	player.spread_bodyparts(NONE)
 	player.spawn_gibs()
 
 	return
