@@ -34,7 +34,7 @@
  * drop_bitflags: (see code/__DEFINES/blood.dm)
  * * DROP_BODYPARTS - Gibs will spawn with bodypart limbs present
 **/
-/mob/living/proc/spawn_gibs(drop_bitflags=DROP_BODYPARTS)
+/mob/living/proc/spawn_gibs(drop_bitflags=NONE)
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /**

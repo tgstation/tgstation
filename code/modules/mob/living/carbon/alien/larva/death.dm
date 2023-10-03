@@ -6,7 +6,7 @@
 
 	update_icons()
 
-/mob/living/carbon/alien/larva/spawn_gibs(drop_bitflags=DROP_BODYPARTS)
+/mob/living/carbon/alien/larva/spawn_gibs(drop_bitflags=NONE)
 	if(drop_bitflags & DROP_BODYPARTS)
 		new /obj/effect/gibspawner/larva(drop_location(), src)
 	else

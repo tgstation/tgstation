@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/spawn_gibs(drop_bitflags=DROP_BODYPARTS)
+/mob/living/carbon/alien/spawn_gibs(drop_bitflags=NONE)
 	if(drop_bitflags & DROP_BODYPARTS)
 		new /obj/effect/gibspawner/xeno(drop_location(), src)
 	else
