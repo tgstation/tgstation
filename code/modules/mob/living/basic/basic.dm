@@ -260,3 +260,9 @@
 	else if(on_fire && !isnull(last_icon_state))
 		return last_icon_state
 	return null
+
+/mob/living/basic/get_body_temp_heat_damage_limit()
+	return maximum_survivable_temperature
+
+/mob/living/basic/get_body_temp_cold_damage_limit()
+	return minimum_survivable_temperature

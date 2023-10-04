@@ -4,7 +4,7 @@
 		we will snatch their arms off and instantly finalize our stasis."
 	helptext = "This ability is passive, and will trigger when a defibrillator paddle is applied to our chest \
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
-	needs_button = FALSE
+	owner_has_control = FALSE
 	dna_cost = 0
 
 	/// Flags to pass to fully heal when we get zapped
