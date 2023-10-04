@@ -72,6 +72,7 @@
 			style = "lipstick_lower"
 		if(UPPER_LIP)
 			style = "lipstick_upper"
+	return TRUE
 
 /obj/item/lipstick/proc/check_menu(mob/living/user)
 	if(!istype(user))
