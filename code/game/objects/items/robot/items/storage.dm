@@ -56,19 +56,21 @@
 	stored.forceMove(user.drop_location())
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
+	// Checking for TRAIT_NODROP prevents edge cases where borgs can grab their own modules.
 	if(!stored)
-		var/itemcheck = FALSE
-		for(var/storable_type in storable)
-			if(istype(atom, storable_type))
-				itemcheck = TRUE
-				break
-		if(itemcheck)
-			var/obj/item/item = atom
-			item.forceMove(src)
-			stored = item
-			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-			update_appearance()
-			return TRUE
+		if(!HAS_TRAIT(atom, TRAIT_NODROP))
+			var/itemcheck = FALSE
+			for(var/storable_type in storable)
+				if(istype(atom, storable_type))
+					itemcheck = TRUE
+					break
+			if(itemcheck)
+				var/obj/item/item = atom
+				item.forceMove(src)
+				stored = item
+				RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+				update_appearance()
+				return TRUE
 	else
 		stored.melee_attack_chain(user, atom, params)
 		return TRUE
