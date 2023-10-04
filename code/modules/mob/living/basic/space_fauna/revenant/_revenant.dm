@@ -208,11 +208,9 @@
 		return
 
 	if(ishuman(A))
-		//Humans are tagged, so this is fine
-		if(REF(A) in drained_mobs)
-			to_chat(src, span_revenwarning("[A]'s soul is dead and empty.") )
+
 		else if(in_range(src, A))
-			Harvest(A)
+			attempt_harvest(A)
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
@@ -310,6 +308,23 @@
 	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	return ..()
+
+/mob/living/basic/revenant/update_icon_state()
+	. = ..()
+
+	if(revealed)
+		icon_state = icon_reveal
+		return
+
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		if(draining)
+			icon_state = icon_drain
+		else
+			icon_state = icon_stun
+
+		return
+
+	icon_state = icon_idle
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -413,24 +428,6 @@
 
 	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
-
-/mob/living/basic/revenant/update_icon_state()
-	. = ..()
-
-	if(revealed)
-		icon_state = icon_reveal
-		return
-
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		if(draining)
-			icon_state = icon_drain
-		else
-			icon_state = icon_stun
-
-		return
-
-	icon_state = icon_idle
-
 
 /mob/living/basic/revenant/proc/cast_check(essence_cost)
 	if(QDELETED(src))

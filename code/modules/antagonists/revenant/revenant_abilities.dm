@@ -1,18 +1,25 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-/// Container proc for `harvest()`, handles the pre-checks as well as potential early-exits for any reason
+/// Container proc for `harvest()`, handles the pre-checks as well as potential early-exits for any reason.
+/// Will return FALSE if we can't execute `harvest()`, or will otherwise the result of `harvest()`: a boolean value.
 /mob/living/basic/revenant/proc/attempt_harvest(mob/living/carbon/human/target)
+	if(REF(target) in drained_mobs)
+		to_chat(src, span_revenwarning("[target]'s soul is dead and empty."))
+		return FALSE
+
 	if(!cast_check(0))
-		return
+		return FALSE
 
 	if(draining)
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
-		return
+		return FALSE
 
 	draining = TRUE
-	harvest(target)
+	var/value_to_return = harvest(target)
 	draining = FALSE
+
+	return value_to_return
 
 /// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
