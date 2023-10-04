@@ -233,16 +233,16 @@
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return
 
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
-	target.adjustFireLoss(3)
-	target.adjustCloneLoss(1)
-	return
+	var/need_mob_update
+	need_mob_update = target.adjustFireLoss(3, updating_health = FALSE)
+	need_mob_update += target.adjustCloneLoss(1, updating_health = FALSE)
+	if(need_mob_update)
+		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
-	return

@@ -447,6 +447,7 @@
 
 /**
  * Check if this holder contains this reagent. Reagent takes a PATH to a reagent
+ * Needs matabolizing takes into consideration if the chemical is metabolizing when it's checked.
  * Arguments
  *
  * * [target_reagent][datum/reagent] - the reagent typepath to check for
