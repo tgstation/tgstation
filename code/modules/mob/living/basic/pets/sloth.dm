@@ -42,6 +42,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	AddElement(/datum/element/pet_bonus, "slowly smiles!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
+	AddComponent(/datum/component/tree_climber)
 
 	if(!mapload || isnull(GLOB.cargo_sloth) || !is_station_level(z))
 		return
@@ -87,6 +88,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/climb_trees,
 		/datum/ai_planning_subtree/random_speech/sloth,
 	)
 
