@@ -209,6 +209,7 @@
 		update_appearance()
 		return
 	drop_bolt(user)
+	
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
 	if(do_after(user, 3 SECONDS, target = src))
 		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)

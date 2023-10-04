@@ -11,6 +11,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 0.5 SECONDS
 	category = CAT_WEAPON_AMMO
+
 /datum/crafting_recipe/rebarsyndie
 	name = "jagged iron rod"
 	result = /obj/item/ammo_casing/rebar/syndie
