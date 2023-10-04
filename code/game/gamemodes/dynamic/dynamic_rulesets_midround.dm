@@ -925,21 +925,22 @@
 		return pick(possible_targets)
 	return FALSE
 
-/// Midround Slaughter Demon Ruleset (From Ghosts)
+/// Midround Slaughter Demon Ruleset (From Ghosts). Unavailable, though it's been a thing a long, long time ago, before dynamic accidentally disabled it.
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
 	name = "Stray Slaugther Demon"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/slaughter
 	antag_flag = ROLE_SLAUGHTER_DEMON
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_enemies = list(4, 4, 4, 3, 3, 2, 2, 1, 0, 0)
 	required_candidates = 1
-	weight = 1 //very rare
+	weight = 2
 	cost = 8
 	minimum_players = 30
 	minimum_round_time = 55 MINUTES
 	///List of potential spawn locs (it spawns in space, just like ninjas and many others)
 	var/list/spawn_locs = list()
-	///Which kind of demon it spawns
+	///The spawned mob type, which may be a laughter demon at times.
 	var/spawn_type = /mob/living/basic/demon/slaughter
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/forget_startup()
