@@ -138,6 +138,7 @@
 /mob/living/basic/death(gibbed)
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0

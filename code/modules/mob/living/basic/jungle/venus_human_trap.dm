@@ -176,13 +176,13 @@
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	speed = 1.2
-	melee_attack_cooldown = 1 SECONDS
+	melee_attack_cooldown = 1.2 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
-	var/datum/action/cooldown/mob_cooldown/vine_tangle/tangle = new(src)
+	var/datum/action/cooldown/vine_tangle/tangle = new(src)
 	tangle.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
@@ -204,7 +204,7 @@
 		balloon_alert(src, "do not leave vines!")
 	apply_damage(10 * (vines_in_range ? -0.5 : 1), BRUTE, BODY_ZONE_CHEST) //every life tick take 10 brute if not near vines or heal 5 if near vines
 
-/datum/action/cooldown/mob_cooldown/vine_tangle
+/datum/action/cooldown/vine_tangle
 	name = "Tangle"
 	button_icon = 'icons/mob/spacevines.dmi'
 	button_icon_state = "Light1"
@@ -219,12 +219,12 @@
 	/// how long does a vine attached to something last (and its leash) (lasts twice as long on nonliving things)
 	var/vine_duration = 2 SECONDS
 
-/datum/action/cooldown/mob_cooldown/vine_tangle/Remove(mob/remove_from)
+/datum/action/cooldown/vine_tangle/Remove(mob/remove_from)
 	QDEL_LIST(vines)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/vine_tangle/Activate(atom/target_atom)
-	if(isturf(target_atom))
+/datum/action/cooldown/vine_tangle/Activate(atom/target_atom)
+	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance || vines.len >= max_vines)
 		return
@@ -250,7 +250,7 @@
  * Arguments:
  * * datum/beam/vine - The vine to be removed from the list.
  */
-/datum/action/cooldown/mob_cooldown/vine_tangle/proc/remove_vine(datum/beam/vine)
+/datum/action/cooldown/vine_tangle/proc/remove_vine(datum/beam/vine)
 	SIGNAL_HANDLER
 
 	qdel(vines[vine])
