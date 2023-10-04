@@ -130,6 +130,6 @@
 			qdel(target)
 			eaten = TRUE
 
-	if(prob(10))
+	if(eaten && prob(10))
 		say("Nom") // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
