@@ -2,7 +2,7 @@
 	var/target_amount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(350, 600)
+	target_amount = rand(350, 600)
 	explanation_text = "Absorb [target_amount] points of essence from humans."
 	return ..()
 
@@ -13,9 +13,7 @@
 	if(QDELETED(owner_mob) || owner_mob.stat == DEAD)
 		return FALSE
 	var/essence_stolen = owner_mob.essence_accumulated
-	if(essence_stolen < targetAmount)
-		return FALSE
-	return TRUE
+	return essence_stolen >= target_amount
 
 /datum/objective/revenant_fluff
 

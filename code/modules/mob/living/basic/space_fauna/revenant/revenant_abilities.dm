@@ -102,7 +102,7 @@
 		if(target)
 			target.visible_message(
 				span_warning("[target] slumps onto the ground."),
-				Span_revenwarning("Violet lights, dancing in your vision, receding--"),
+				span_revenwarning("Violet lights, dancing in your vision, receding--"),
 			)
 		qdel(draining_beam)
 		return FALSE
@@ -225,7 +225,7 @@
 	if(reveal_duration > 0 SECONDS)
 		cast_on.reveal(reveal_duration)
 	if(stun_duration > 0 SECONDS)
-		cast_on.stun(stun_duration)
+		cast_on.temporary_freeze(stun_duration)
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /datum/action/cooldown/spell/aoe/revenant/overload

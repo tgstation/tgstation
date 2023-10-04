@@ -69,6 +69,9 @@
 	/// Have we already given this revenant abilities?
 	var/generated_objectives_and_spells = FALSE
 
+	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
+	var/list/drained_mobs = null
+
 	/// The resource, and health, of revenants.
 	var/essence = 75
 	/// The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -409,7 +412,7 @@
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
 		balloon_alert("blocked by salt!")
 		reveal(2 SECONDS)
-		stun(2 SECONDS)
+		temporary_freeze(2 SECONDS)
 		return FALSE
 
 	if(locate(/obj/effect/blessing) in step_turf)
