@@ -97,9 +97,6 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	random_revenant_name()
 
-/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
-	return FALSE
-
 /mob/living/basic/revenant/Login()
 	. = ..()
 	if(!. || isnull(client))
@@ -125,7 +122,7 @@
 /mob/living/basic/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stasis)
 		return
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/change_in_time = DELTA_WORLD_TIME(SSmobs)
 	if(revealed && essence <= 0)
 		death()
 	if(unreveal_time && world.time >= unreveal_time)
@@ -139,7 +136,7 @@
 		REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 		to_chat(src, span_revenboldnotice("You can move again!"))
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
-		essence = min(essence + (essence_regen_amount * delta_time), essence_regen_cap)
+		essence = min(essence + (essence_regen_amount * change_in_time), essence_regen_cap)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
@@ -160,12 +157,6 @@
 		else if(!essence)
 			essencecolor = "#1D2953" //oh jeez you're dying
 		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
-
-/mob/living/basic/revenant/med_hud_set_health()
-	return //we use no hud
-
-/mob/living/basic/revenant/med_hud_set_status()
-	return //we use no hud
 
 /mob/living/basic/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(!message)
@@ -192,12 +183,20 @@
 	if(!essence)
 		death()
 
+/mob/living/basic/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/basic/revenant/med_hud_set_status()
+	return //we use no hud
+
 /mob/living/basic/revenant/dust(just_ash, drop_items, force)
 	death()
 
 /mob/living/basic/revenant/gib()
 	death()
 
+/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
+	return FALSE
 
 /mob/living/basic/revenant/ex_act(severity, target)
 	return FALSE //Immune to the effects of explosions.
@@ -249,12 +248,6 @@
 		update_health_hud()
 	if(!essence)
 		death()
-
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
-	death()
-
-/mob/living/basic/revenant/gib()
-	death()
 
 /mob/living/basic/revenant/orbit(atom/target)
 	setDir(SOUTH) // reset dir so the right directional sprites show up
@@ -369,7 +362,7 @@
 	return TRUE
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
-	if(!src)
+	if(QDELETED(src))
 		return
 	if(essence + essence_amt < 0)
 		return
