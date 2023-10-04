@@ -1,4 +1,4 @@
-/** AI defines */
+// AI defines
 
 #define DEFAULT_AI_LAWID "default"
 #define LAW_ZEROTH "zeroth"
@@ -27,7 +27,10 @@
 ///Malfunctioning AI hijacking mecha
 #define AI_MECH_HACK 3
 
-/** Cyborg defines */
+// Cyborg defines
+
+/// If an item does this or more throwing damage it will slow a borg down on hit
+#define CYBORG_THROW_SLOWDOWN_THRESHOLD 10
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1

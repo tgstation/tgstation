@@ -1,5 +1,5 @@
 
-/mob/living/silicon/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
+/mob/living/silicon/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	var/hit_percent = (100-blocked)/100
 	if((!damage || (!forced && hit_percent <= 0)))
 		return 0
@@ -18,19 +18,19 @@
 /mob/living/silicon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype) //immune to tox damage
 	return FALSE
 
-/mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	return FALSE
 
-/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
+/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype) //immune to clone damage
 	return FALSE
 
-/mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	return FALSE
 
 /mob/living/silicon/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype) //immune to stamina damage.
 	return FALSE
 
-/mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE)
+/mob/living/silicon/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	return FALSE
 
 /mob/living/silicon/adjustOrganLoss(slot, amount, maximum = 500, required_organ_flag) //immune to organ damage (no organs, duh)
@@ -45,7 +45,7 @@
 
 	return FALSE
 
-/mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+/mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, forced = FALSE, required_biotype)
 	if(isAI(src)) //ditto
 		return ..()
 

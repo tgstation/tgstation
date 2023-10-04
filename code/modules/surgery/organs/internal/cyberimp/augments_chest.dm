@@ -94,22 +94,25 @@
 		if(can_defib_owner == DEFIB_POSSIBLE) 
 			owner.notify_ghost_cloning("You are being revived by [src]!")
 			owner.grab_ghost()
-
+	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
+	var/need_mob_update = FALSE
 	if(owner.getOxyLoss())
-		owner.adjustOxyLoss(-5)
+		need_mob_update += owner.adjustOxyLoss(-5, updating_health = FALSE)
 		revive_cost += 5
 	if(owner.getBruteLoss())
-		owner.adjustBruteLoss(-2)
+		need_mob_update += owner.adjustBruteLoss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
 	if(owner.getFireLoss())
-		owner.adjustFireLoss(-2)
+		need_mob_update += owner.adjustFireLoss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
 	if(owner.getToxLoss())
-		owner.adjustToxLoss(-1)
+		need_mob_update += owner.adjustToxLoss(-1, updating_health = FALSE)
 		revive_cost += 40
+	if(need_mob_update)
+		owner.updatehealth()
 
 	if(body_damage_patched)
 		if(prob(35)) // healing is called every few seconds, not every tick

@@ -1,6 +1,3 @@
-#define AUGGED_LIMB_EMP_BRUTE_DAMAGE 3
-#define AUGGED_LIMB_EMP_BURN_DAMAGE 2
-
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
@@ -155,7 +152,7 @@
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/current_gauze
+	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
@@ -199,6 +196,8 @@
 	var/any_existing_wound_can_mangle_our_exterior
 	/// If false, no wound that can be applied to us can mangle our interior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
 	var/any_existing_wound_can_mangle_our_interior
+	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
+	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -215,7 +214,6 @@
 	burn_modifier = reset_fantasy_variable("burn_modifier", burn_modifier)
 	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
 	return ..()
-
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
@@ -346,7 +344,6 @@
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
 		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
-
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
 
@@ -405,10 +402,10 @@
 	var/atom/drop_loc = drop_location()
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ in get_organs())
+	QDEL_NULL(current_gauze)
+	for(var/obj/item/organ/bodypart_organ as anything in get_organs())
 		bodypart_organ.transfer_to_limb(src, owner)
-	for(var/obj/item/organ/external/external in external_organs)
+	for(var/obj/item/organ/external/external as anything in external_organs)
 		external.remove_from_limb()
 		external.forceMove(drop_loc)
 	for(var/obj/item/item_in_bodypart in src)
@@ -453,15 +450,15 @@
  * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
  * damage_source - The source of damage, typically a weapon.
  */
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
-	if(owner && (owner.status_flags & GODMODE))
+	if(!forced && owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
-	if(required_bodytype && !(bodytype & required_bodytype))
+	if(!forced && required_bodytype && !(bodytype & required_bodytype))
 		return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
@@ -633,10 +630,10 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, required_bodytype, updating_health = TRUE)
+/obj/item/bodypart/proc/heal_damage(brute, burn, updating_health = TRUE, forced = FALSE, required_bodytype)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(!forced && required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)
@@ -652,7 +649,6 @@
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
-
 ///Sets the damage of a bodypart when it is created.
 /obj/item/bodypart/proc/set_initial_damage(brute_damage, burn_damage)
 	set_brute_dam(brute_damage)
@@ -667,7 +663,6 @@
 	. = brute_dam
 	brute_dam = new_value
 
-
 ///Proc to hook behavior associated to the change of the burn_dam variable's value.
 /obj/item/bodypart/proc/set_burn_dam(new_value)
 	PROTECTED_PROC(TRUE)
@@ -679,8 +674,7 @@
 
 //Returns total damage.
 /obj/item/bodypart/proc/get_damage()
-	var/total = brute_dam + burn_dam
-	return total
+	return brute_dam + burn_dam
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
@@ -723,7 +717,6 @@
 		last_maxed = FALSE
 		set_disabled(FALSE)
 
-
 ///Proc to change the value of the `disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_disabled(new_disabled)
 	SHOULD_CALL_PARENT(TRUE)
@@ -738,7 +731,6 @@
 		return
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-
 
 ///Proc to change the value of the `owner` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_owner(new_owner)
@@ -833,7 +825,6 @@
 				))
 		set_disabled(FALSE)
 
-
 ///Called when TRAIT_PARALYSIS is added to the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_gain(obj/item/bodypart/source)
 	PROTECTED_PROC(TRUE)
@@ -841,7 +832,6 @@
 
 	if(can_be_disabled)
 		set_disabled(TRUE)
-
 
 ///Called when TRAIT_PARALYSIS is removed from the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_loss(obj/item/bodypart/source)
@@ -851,14 +841,12 @@
 	if(can_be_disabled)
 		update_disabled()
 
-
 ///Called when TRAIT_NOLIMBDISABLE is added to the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_gain(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
 
 	set_can_be_disabled(FALSE)
-
 
 ///Called when TRAIT_NOLIMBDISABLE is removed from the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)
@@ -1179,12 +1167,12 @@
 		if(BLEED_OVERLAY_LOW to BLEED_OVERLAY_MED)
 			new_bleed_icon = "[body_zone]_1"
 		if(BLEED_OVERLAY_MED to BLEED_OVERLAY_GUSH)
-			if(owner.body_position == LYING_DOWN || IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_2"
 		if(BLEED_OVERLAY_GUSH to INFINITY)
-			if(IS_IN_STASIS(owner) || owner.stat == DEAD)
+			if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 				new_bleed_icon = "[body_zone]_2s"
 			else
 				new_bleed_icon = "[body_zone]_3"
@@ -1213,17 +1201,18 @@
  * Arguments:
  * * gauze- Just the gauze stack we're taking a sheet from to apply here
  */
-/obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
-	if(!istype(gauze) || !gauze.absorption_capacity)
+/obj/item/bodypart/proc/apply_gauze(obj/item/stack/medical/gauze/new_gauze)
+	if(!istype(new_gauze) || !new_gauze.absorption_capacity)
 		return
 	var/newly_gauzed = FALSE
 	if(!current_gauze)
 		newly_gauzed = TRUE
 	QDEL_NULL(current_gauze)
-	current_gauze = new gauze.type(src, 1)
-	gauze.use(1)
+	current_gauze = new new_gauze.type(src, 1)
+	new_gauze.use(1)
+	current_gauze.gauzed_bodypart = src
 	if(newly_gauzed)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, gauze)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
 
 /**
  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
@@ -1240,7 +1229,6 @@
 	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 
 ///Loops through all of the bodypart's external organs and update's their color.
 /obj/item/bodypart/proc/recolor_external_organs()
@@ -1292,12 +1280,13 @@
 	. = ..()
 	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
 		return FALSE
-	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
-	// with defines at the time of writing, this is 3 brute and 2 burn
-	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
-	// 60 * 0.8 = 48
-	var/time_needed = 10 SECONDS
+	// with defines at the time of writing, this is 2 brute and 1.5 burn
+	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
+	// 42 * 0.8 = 33.6
+	// 3 hits to crit with an ion rifle on someone fully augged at a total of 100.8 damage, although im p sure mood can boost max hp above 100
+	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles or grenades
+	var/time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
 	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
 	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
 	if(severity == EMP_HEAVY)
@@ -1307,8 +1296,11 @@
 
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
-	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
+	var/damage_percent_to_max = (get_damage() / max_damage)
+	if (time_needed && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
+		owner.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
+		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+		addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
 	return TRUE
 
 /obj/item/bodypart/proc/un_paralyze()

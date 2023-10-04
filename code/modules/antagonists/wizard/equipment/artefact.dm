@@ -86,7 +86,7 @@
 /obj/item/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
+	spawn_type = /mob/living/basic/clown
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
@@ -97,7 +97,7 @@
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus. This one gleams with a special light."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
+	spawn_type = /mob/living/basic/clown/clownhulk
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
@@ -311,7 +311,7 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
+	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25

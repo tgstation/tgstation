@@ -45,6 +45,7 @@
 				current_record["rank"] = person.rank
 				current_record["species"] = person.species
 				current_record["wanted"] = person.wanted_status
+				current_record["voice"] = person.voice
 
 				all_records += list(current_record)
 		if("medical")

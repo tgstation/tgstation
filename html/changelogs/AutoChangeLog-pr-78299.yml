@@ -1,4 +1,0 @@
-author: "Donglesplonge"
-delete-after: True
-changes:
-  - bugfix: "adds the bolted and welded helper to the bar backroom/kitchen coldroom airlock on birdshot, as to prevent chefs from being able to access armor and sunglasses roundstart with barely any work involved"

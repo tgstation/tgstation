@@ -154,6 +154,13 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/chaplain/habit_veil
+	name = "nun veil"
+	desc = "No nunsene clothing."
+	icon_state = "nun_hood_alt"
+	flags_inv = HIDEHAIR | HIDEEARS
+	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
+
 /obj/item/clothing/head/chaplain/bishopmitre
 	name = "bishop mitre"
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
@@ -205,6 +212,116 @@
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
+
+///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
+/obj/item/clothing/head/fedora/inspector_hat
+	name = "inspector's fedora"
+	desc = "There's only one man can try to stop an evil villian."
+	armor_type = /datum/armor/fedora_det_hat
+	icon_state = "detective"
+	inhand_icon_state = "det_hat"
+	dog_fashion = /datum/dog_fashion/head/detective
+	///prefix our phrases must begin with
+	var/prefix = "go go gadget"
+	///an assoc list of phrase = item (like gun = revolver)
+	var/list/items_by_phrase = list()
+	///how many gadgets can we hold
+	var/max_items = 4
+	///items above this weight cannot be put in the hat
+	var/max_weight = WEIGHT_CLASS_NORMAL
+
+/obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
+	. = ..()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	QDEL_NULL(atom_storage)
+
+/obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
+	. = ..()
+	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
+	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
+	for(var/phrase in items_by_phrase)
+		var/obj/item/item = items_by_phrase[phrase]
+		. += span_notice("[icon2html(item, user)] You can remove [item] by saying <b>\"[prefix] [phrase]\"</b>!")
+
+/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	. = ..()
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || speaker != wearer) //if we are worn
+		return FALSE
+
+	raw_message = htmlrendertext(raw_message)
+	var/prefix_index = findtext(raw_message, prefix)
+	if(prefix_index != 1)
+		return FALSE
+
+	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
+	var/obj/item/result = items_by_phrase[the_phrase]
+	if(!result)
+		return FALSE
+
+	if(wearer.put_in_active_hand(result))
+		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
+	else
+		balloon_alert(wearer, "cant put in hands!")
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
+	. = ..()
+
+	if(LAZYLEN(contents) >= max_items)
+		balloon_alert(user, "full!")
+		return
+	if(item.w_class > max_weight)
+		balloon_alert(user, "too big!")
+		return
+
+	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!input)
+		return
+	if(input in items_by_phrase)
+		balloon_alert(user, "already used!")
+		return
+
+	if(item.loc != user || !user.transferItemToLoc(item, src))
+		return
+
+	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	items_by_phrase[input] = item
+
+/obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
+	. = ..()
+	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
+	if(!phrase)
+		return
+	user.put_in_inactive_hand(items_by_phrase[phrase])
+
+/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
+	. = ..()
+	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
+	if(!new_prefix)
+		return
+	prefix = new_prefix
+
+/obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/phrase in items_by_phrase)
+		var/obj/item/result = items_by_phrase[phrase]
+		if(gone == result)
+			items_by_phrase -= phrase
+			return
+
+/obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
+	for(var/phrase in items_by_phrase)
+		var/obj/item/result = items_by_phrase[phrase]
+		result.forceMove(drop_location())
+	items_by_phrase = null
+	return ..()
+
+/obj/item/clothing/head/fedora/inspector_hat/Destroy()
+	QDEL_LIST_ASSOC(items_by_phrase)
+	return ..()
 
 //Mime
 /obj/item/clothing/head/beret
@@ -481,6 +598,83 @@
 	name = "black surgery cap"
 	icon_state = "surgicalcapblack"
 	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/utility/head_mirror
+	name = "head mirror"
+	desc = "Used by doctors to look into a patient's eyes, ears, and mouth. \
+		A little useless now, given the technology available, but it certainly completes the look."
+	icon_state = "headmirror"
+	body_parts_covered = NONE
+
+/obj/item/clothing/head/utility/head_mirror/examine(mob/user)
+	. = ..()
+	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
+
+/obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & slot_flags)
+		RegisterSignal(user, COMSIG_MOB_EXAMINING_MORE, PROC_REF(examining))
+	else
+		UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
+	SIGNAL_HANDLER
+	if(!ishuman(examining) || examining == examiner || examiner.is_blind() || !examiner.Adjacent(examining))
+		return
+	var/mob/living/carbon/human/human_examined = examining
+	if(!human_examined.get_bodypart(BODY_ZONE_HEAD))
+		return
+	if(!examiner.has_light_nearby())
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but it's too dark. Should've invested in a head lamp.")
+		return
+	if(examiner.dir == examining.dir) // disallow examine from behind - every other dir is OK
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but [examining.p_theyre()] facing the wrong way.")
+		return
+
+	var/list/final_message = list("You examine [examining]'s head closer with your [name], you notice [examining.p_they()] [examining.p_have()]...")
+	if(human_examined.is_mouth_covered())
+		final_message += "\tYou can't see [examining.p_their()] mouth."
+	else
+		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/pill_count = 0
+		for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
+			pill_count++
+
+		if(pill_count >= 1 && has_tongue)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, and \a [has_tongue]."
+		else if(pill_count >= 1)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, but oddly no tongue."
+		else if(has_tongue)
+			final_message += "\t\A [has_tongue] in [examining.p_their()] mouth - go figure."
+		else
+			final_message += "\tNo tongue in [examining.p_their()] mouth, oddly enough."
+
+	if(human_examined.is_ears_covered())
+		final_message += "\tYou can't see [examining.p_their()] ears."
+	else
+		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		if(has_ears)
+			if(has_ears.deaf)
+				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
+			else
+				final_message += "\tA set of [has_ears.damage ? "" : "healthy "][has_ears.name]."
+		else
+			final_message += "\tNo eardrums and empty ear canals... how peculiar."
+
+	if(human_examined.is_eyes_covered())
+		final_message += "\tYou can't see [examining.p_their()] eyes."
+	else
+		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		if(has_eyes)
+			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
+		else
+			final_message += "\tEmpty eye sockets."
+
+	examine_list += span_notice("<i>[jointext(final_message, "\n")]</i>")
 
 //Engineering
 /obj/item/clothing/head/beret/engi

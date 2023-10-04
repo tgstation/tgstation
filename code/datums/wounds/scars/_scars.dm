@@ -81,7 +81,10 @@
 		qdel(src)
 		return
 
-	description = pick_list(W.get_scar_file(BP, add_to_scars), W.get_scar_keyword(BP, add_to_scars)) || "general disfigurement"
+	description = pick_list(scar_file, scar_keyword)
+	if (!description)
+		stack_trace("no valid description found for scar! file: [scar_file] keyword: [scar_keyword] wound: [W.type]")
+		description = "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
 	switch(W.severity)
@@ -178,7 +181,7 @@
 		if((human_victim.wear_mask && (human_victim.wear_mask.flags_inv & HIDEFACE)) || (human_victim.head && (human_victim.head.flags_inv & HIDEFACE)))
 			return FALSE
 	else if(limb.scars_covered_by_clothes)
-		var/num_covers = LAZYLEN(human_victim.clothingonpart(limb))
+		var/num_covers = LAZYLEN(human_victim.get_clothing_on_part(limb))
 		if(num_covers + get_dist(viewer, victim) >= visibility)
 			return FALSE
 
