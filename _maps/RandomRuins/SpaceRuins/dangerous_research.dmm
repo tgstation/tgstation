@@ -1307,10 +1307,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "re" = (
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet{
-	AIStatus = 1;
-	stop_automated_movement = 0
-	},
+/mob/living/basic/heretic_summon/raw_prophet/ruins,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "ri" = (
@@ -2020,10 +2017,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints,
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet{
-	AIStatus = 1;
-	stop_automated_movement = 0
-	},
+/mob/living/basic/heretic_summon/raw_prophet/ruins,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)

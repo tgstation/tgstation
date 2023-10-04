@@ -33,13 +33,14 @@
 	// Adds up to 100, don't mess it up
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 40,
-		/obj/item/reagent_containers/cup/bottle/caramel = 8,
-		/obj/item/reagent_containers/condiment/flour = 8,
-		/obj/item/reagent_containers/condiment/rice = 8,
-		/obj/item/reagent_containers/condiment/ketchup = 8,
-		/obj/item/reagent_containers/condiment/enzyme = 8,
-		/obj/item/reagent_containers/condiment/soymilk = 8,
+		/obj/item/reagent_containers/cup/bottle/caramel = 7,
+		/obj/item/reagent_containers/condiment/flour = 7,
+		/obj/item/reagent_containers/condiment/rice = 7,
+		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/enzyme = 7,
+		/obj/item/reagent_containers/condiment/soymilk = 7,
 		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2,
 	)

@@ -206,6 +206,7 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
+		var/need_mob_update = FALSE
 		if(healing > 0)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
@@ -219,10 +220,12 @@
 					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
 
 			if(health_ratio > 0.8) // only heals minor physical damage
-				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
-		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
+				need_mob_update += owner.adjustBruteLoss(-0.4 * healing * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustFireLoss(-0.4 * healing * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustToxLoss(-0.2 * healing * seconds_between_ticks, updating_health = FALSE, forced = TRUE, required_biotype = MOB_ORGANIC)
+		need_mob_update += owner.adjustStaminaLoss(min(-0.4 * healing * seconds_between_ticks, -0.4 * HEALING_SLEEP_DEFAULT * seconds_between_ticks), updating_stamina = FALSE)
+		if(need_mob_update)
+			owner.updatehealth()
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
 
@@ -265,7 +268,7 @@
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -278,7 +281,7 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -307,9 +310,12 @@
 	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
-	owner.adjustBruteLoss(0.1)
-	owner.adjustFireLoss(0.1)
-	owner.adjustToxLoss(0.2, TRUE, TRUE)
+	var/need_mob_update
+	need_mob_update = owner.adjustBruteLoss(0.04 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(0.04 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustToxLoss(0.08 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	if(need_mob_update)
+		owner.updatehealth()
 
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"
@@ -818,7 +824,8 @@
 
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	var/need_mob_update
+	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.0016) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -831,20 +838,22 @@
 				if (1 to 8) //16% Chance
 					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
 					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
-					hed.receive_damage(1,0)
+					need_mob_update += hed.receive_damage(brute = 0.4 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if (9 to 29) //40% chance
 					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
 					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
-					arm.receive_damage(3,0)
+					need_mob_update += arm.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if (30 to 49) //38% chance
 					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
 					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
-					leg.receive_damage(3,0)
+					need_mob_update += leg.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
 					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
+	if(need_mob_update)
+		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
 		victim.remove_status_effect(/datum/status_effect/ants) //If this person has no more ants on them or are dead, they are no longer affected.
 
@@ -957,6 +966,72 @@
 
 /datum/movespeed_modifier/careful_driving
 	multiplicative_slowdown = 3
+
+/datum/status_effect/midas_blight
+	id = "midas_blight"
+	alert_type = /atom/movable/screen/alert/status_effect/midas_blight
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.2 SECONDS
+	remove_on_fullheal = TRUE
+
+	/// The visual overlay state, helps tell both you and enemies how much gold is in your system
+	var/midas_state = "midas_1"
+	/// How fast the gold in a person's system scales.
+	var/goldscale = 30 // x2.8 - Gives ~ 15u for 1 second
+
+/datum/status_effect/midas_blight/on_creation(mob/living/new_owner, duration = 1)
+	// Duration is already input in SECONDS
+	src.duration = duration
+	RegisterSignal(new_owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	return ..()
+
+/atom/movable/screen/alert/status_effect/midas_blight
+	name = "Midas Blight"
+	desc = "Your blood is being turned to gold, slowing your movements!"
+	icon_state = "midas_blight"
+
+/datum/status_effect/midas_blight/tick(seconds_between_ticks)
+	var/mob/living/carbon/human/victim = owner
+	// We're transmuting blood, time to lose some.
+	if(victim.blood_volume > BLOOD_VOLUME_SURVIVE + 50 && !HAS_TRAIT(victim, TRAIT_NOBLOOD))
+		victim.blood_volume -= 5 * seconds_between_ticks
+	// This has been hell to try and balance so that you'll actually get anything out of it
+	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
+	switch(current_gold_amount)
+		if(-INFINITY to 50)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/soft, update = TRUE)
+			midas_state = "midas_1"
+		if(50 to 100)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/medium, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/medium, update = TRUE)
+			midas_state = "midas_2"
+		if(100 to 200)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/hard, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/hard, update = TRUE)
+			midas_state = "midas_3"
+		if(200 to INFINITY)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/gold, update = TRUE)
+			victim.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/midas_blight/gold, update = TRUE)
+			midas_state = "midas_4"
+	victim.update_icon()
+	if(victim.stat == DEAD)
+		qdel(src) // Dead people stop being turned to gold. Don't want people sitting on dead bodies.
+
+/datum/status_effect/midas_blight/proc/on_update_overlays(atom/parent_atom, list/overlays)
+	SIGNAL_HANDLER
+
+	if(midas_state)
+		var/mutable_appearance/midas_overlay = mutable_appearance('icons/mob/effects/debuff_overlays.dmi', midas_state)
+		midas_overlay.blend_mode = BLEND_MULTIPLY
+		overlays += midas_overlay
+
+/datum/status_effect/midas_blight/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	owner.remove_actionspeed_modifier(ACTIONSPEED_ID_MIDAS_BLIGHT, update = TRUE)
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon()
 
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER

@@ -39,3 +39,12 @@
 
 /datum/targetting_datum/not_friends/attack_closed_turfs
 	attack_closed_turf = TRUE
+
+/// Subtype that allows us to target items while deftly avoiding attacking our allies. Be careful when it comes to targetting items as an AI could get trapped targetting something it can't destroy.
+/datum/targetting_datum/basic/not_friends/allow_items
+
+/datum/targetting_datum/basic/not_friends/allow_items/can_attack(mob/living/living_mob, atom/the_target)
+	. = ..()
+	if(isitem(the_target))
+		// trust fall exercise
+		return TRUE

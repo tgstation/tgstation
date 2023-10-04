@@ -997,3 +997,255 @@
   - sound: Added new sound effects for chicks, chickens, crabs, and insects
   xPokee:
   - image: adds a frog holoform for pAIs
+2023-09-27:
+  Helg2:
+  - bugfix: '[Tramstation] Mass Driver in chapel now has tiny fan so you don''t space
+      yourself.'
+  Jacquerel:
+  - bugfix: Blob spores will respond to rallies more reliably (it won't runtime every
+      time they try and pathfind).
+  - bugfix: Blobbernaut pain animation overlays should align with the direction the
+      mob is facing instead of always facing South
+  - refactor: Blob spores, zombies, and blobbernauts now all use the basic mob framework.
+      They should work the same, but please report any issues.
+  Sealed101:
+  - bugfix: fixed Strong Stone ruin generation
+  Vekter:
+  - rscadd: Added a holodeck to Birdshot Station. It can be reached via the Crew Facilities
+      hallway.
+  Watermelon914:
+  - bugfix: Fixed job configs not being loaded properly.
+  admeeer:
+  - rscadd: Added a candle box crate for all your candle needs!
+2023-09-28:
+  CoiledLamb:
+  - rscdel: removes surgical duffelbags
+  - bugfix: the surgery supply order now comes with a surgery tray
+  GPeckman:
+  - bugfix: The flight potion wings will no longer fail to work on lavaland/icemoon
+      on rare occasions.
+  Iamgoofball:
+  - qol: Gas masks now muffle your voice with TTS.
+  - qol: Security Hailer masks now disguise your voice to protect your right to brutalize
+      greytiders.
+  - qol: Lizards, Ethereals, and Xenomorphs now have a vocal effect.
+  - qol: Security Records now show someone's voice name.
+  Jacquerel:
+  - bugfix: Throwing things at cyborgs will now slow them down, as intended
+  - balance: Adjusted the calculation of throwforce -> slowdown for cyborgs such that
+      it is simply a flat duration for anything above a certain damage threshold (the
+      value of throwing iron rods)
+  - refactor: Hivelords and Legions now use the basic mob framework. Please report
+      any unusual behaviour.
+  - rscadd: Hivelords shed more spawn when they are attacked.
+  - rscadd: Legions have learned how to fling their skulls across long distances.
+  - rscadd: Legions can heal other lavaland mobs with their skulls.
+  - rscadd: Legions are better at preserving corpses they consume, and sometimes make
+      use of their radios.
+  - rscadd: Legions may leave behind an unpleasant surprise after you are rescued
+      from them.
+  - balance: The crew monitoring console will now display you as dead if you are dead,
+      an critically injured if in crit, rather than setting those icons purely based
+      on your current health.
+  - qol: You won't continue burning to a husk if consumed by a snow legion after being
+      set on fire by an ice drake.
+  Melbert:
+  - rscadd: Doctors can now get head mirrors from their clothes vendor, to complete
+      the doctor outfit
+  - config: Adds a config option for player respawning that enables respawns, but
+      forces you pick a new character.
+  - config: '"NORESPAWN" has been replaced with "ALLOW_RESPAWN 0". Unlimited respawns
+      is "ALLOW_RESPAWN 1" and character limited respawns is "ALLOW_RESPAWN 2".'
+  MidoriWroth:
+  - bugfix: Added complexity factors to foods that were missing them.
+  Profakos:
+  - rscadd: Added the BEPIS' minor rewards as purchasable products to the bitrunning
+      order console.
+  - rscdel: Removed the base BEPIS disk from the bitrunner console
+  Sealed101:
+  - qol: you can undeploy fulton beacons by clicking them with an empty hand
+  - qol: you can rename fulton beacons with a pen
+  - bugfix: fixed geysers spawning on turfs with plants
+  Tattle:
+  - qol: drones now have individual names, instead of just "drone"
+  Toastgoats:
+  - balance: Gave the bluespace geode pirates 4 more teleporter bolt turrets.
+  - bugfix: The bluespace geode pirates no longer have a bluespace portal to the bottomless
+      pit dimension.
+  - rscadd: Station-safe dirt tiles for all your mapping needs, but surely no station
+      maps use the chasm baseturf ones, right? Right?
+  Watermelon914:
+  - spellcheck: Tweaks the message that players get when not being able to qualify
+      for roundstart antag to be more accurate as to what's happening.
+  Xander3359:
+  - rscadd: Contractor baton in traitor uplink for 12 TC
+  - balance: Ebow no longer has a reputation requirement.
+  carlarctg:
+  - bugfix: Fixed zombies being able to infect headless corpses (Including former
+      zombies)
+  - bugfix: 'Fixed bio armor being totally useless against zombies. Now it checks
+      how hurt your limb is: If it''s more than the bio armor value, you get infected.
+      THICKMATERIAL clothing guarantees at least 25 damage required to infect you,
+      non-thick clothing reduces effective defence by 25. In practice this means people
+      with MODsuits, biosuits will resist infection unless they''re pummeled into
+      crit, and wearing a firesuit will save you from the first few slashes.'
+  - bugfix: Fixed the bomb hood armor not having the same bio armor value as bomb
+      armor.
+  - qol: Added a message to the zed when they succesfully infect someone.
+  - code_imp: Turned some proc names into snake_case rather than, uh, nospacecase.
+  - bugfix: Fixes full advanced surgery trays spawning with 'nothing'
+  - refactor: Turned slapcrafting into a component! You can examine compatible items
+      to see what recipes they can be used in, and what the ingredients for them are.
+      For example, spears and the head-on-spear crafting recipe.
+  - bugfix: Valentines and ERTs will no longer get mood boosts from traitor moodener
+      items
+  lizardqueenlexi:
+  - bugfix: Left-clicking an empty surgery tray will now tell you exactly why it does
+      nothing.
+  mc-oofert:
+  - bugfix: you can now deconstruct exodrone scanner arrays
+  - bugfix: the tree in space exodrone adventure no longer softlocks you
+  - qol: the exodrone launchers now tell you on examine how to remove their fuel canister
+      if you somehow needed to do that
+  - balance: exodrone wide scans are now capped at 10 minutes
+  - balance: exodrone travel times are 18% faster
+  - balance: you can now upgrade scanner arrays for faster wide scan
+  - balance: exodrone point scan and deep scan are faster
+  - spellcheck: fixes several typos related to exodrones and gives scanner control
+      console a description
+  nikothedude:
+  - bugfix: You can no longer break the game by AI rolling in a card or APC
+  - qol: AI Roll now doesnt require you to click the exact turf to move you
+  - qol: AI roll cooldown and roll time is now a variable, making it possible for
+      AIs to become terrifying catamari damacy balls
+  timothymtorres:
+  - bugfix: Fix altars not allowing items to be sacrificed
+  vinylspiders:
+  - bugfix: Seeds will no longer be removed from existence after receiving the "You
+      can't seem to add [seed type] to the seed extractor" message
+  - bugfix: Some seeds that were previously not able to be added to the seed extractor
+      may now be added (starthistle for example)
+  - bugfix: fixes replica pod seeds spawning humans in nullspace
+2023-09-29:
+  A.C.M.O.:
+  - bugfix: Fixes the death sandwich, making it safe to examine.
+  BurgerBB:
+  - bugfix: Scrubbers and Vents will no longer reset their settings on map load.
+  GPeckman:
+  - admin: There is now a tool to apply a DNA Infuser entry to any human.
+  Ghilker:
+  - code_imp: adds a gas connector component that allows connection to the atmos piping
+      system without the need of repathing
+  - refactor: changes the cryo machine to use this new system
+  Ghommie:
+  - bugfix: Fixed crabs not correctly (kinda) walking sideway.
+  Higgin:
+  - balance: Diabetics rejoice! Nerfed sugar OD/hyperglycaemic shock to be an immediate
+      KO followed by drowsiness afterwards until the OD is gone.
+  Jacquerel:
+  - bugfix: The Nuke Op MODsuit AI downloader only works once per purchase, as intended.
+  - bugfix: Blob Zombies and Blobbernauts have had their attack speed restored to
+      its original value
+  JohnFulpWillard:
+  - code_imp: Your bodytype now decides what gendered sounds you make.
+  - balance: You can now remove and replace power cells from PDAs (with screwdriver).
+  - balance: PDAs now drain their power cells harder, and also take into account active
+      programs & their flashlight being on.
+  - balance: PDAs running out of charge now turn their flashlights off.
+  Melbert:
+  - qol: Examine blocked out roundstart / latejoin job information.
+  - qol: Captain gets a little bit more information about how their radio works roundstart.
+  - bugfix: Fixed roundstart players not getting radio information.
+  - balance: Transformation sting now lasts 8 minutes, down from permanent. However,
+      the effect is paused for dead and stasis mobs, making it permanent SO LONG AS
+      they stay dead or in stasis. The effect is also permanent if used on a monkey.
+  - balance: Transformation sting now costs 33 chemicals, down from 50.
+  - balance: Transformation sting now costs 2 dna points, down from 3.
+  - bugfix: Transformation sting works on monkeys again.
+  - refactor: Refactored a bit of human randomization.
+  Rhials:
+  - bugfix: The Polymorph Belt should now update its sprite when active.
+  - qol: The freedom implant has received minor feedback and other minor usage improvements.
+  Sealed101:
+  - bugfix: fixed lobstrosities becoming unmovable when killed during their charge
+      windup
+  SyncIt21:
+  - bugfix: removes incorrect stack traces when using some admin secrets
+  Vekter:
+  - bugfix: Fixes the missing grinder in Birdshot's Virology department
+  Vincent983:
+  - bugfix: the parole status and discharged status are now green and blue respectively
+      in the security record interface
+  Watermelon914:
+  - balance: Head revolutionaries and heads of staff are no longer immediately considered
+      disqualified when going AFK or disconnecting and are given a 2 minute grace
+      period.
+  - admin: Admins now get a log when a head revolutionary or head of staff disconnects
+      or goes AFK during a revolution. They also get the same log 1 minute after to
+      give them a chance to act on the information.
+  necromanceranne:
+  - bugfix: Splattercasting resets your blood to normal values when you transsform
+      into a vampire.
+  - bugfix: Gaining a new species will set your blood volume down to the normal volume
+      levels if higher than normal.
+  san7890:
+  - code_imp: Robot Customers have recently been touched codewise, please report any
+      bugs or unexpected behavior as there really should not be any.
+  - refactor: Snakes have been refactored into basic mobs. This means that they are
+      a bit more intelligent than previous snakes, making them more docile and averse
+      to harming people (unless otherwise provoked). They do chomp all sorts of mice
+      though. You can feed them a dead mouse to make them your friend if you'd want
+      that.
+  - sound: If you listen closely to snakes, you might be able to hear a small hissing
+      sound...
+  timothymtorres:
+  - bugfix: Fix water puddle runtime when washing items
+  - rscadd: Add drinking water causes drunk mobs to become sober
+  - rscadd: Add candle design to biogenerator
+  yorii:
+  - bugfix: dead bodies now cool down to room temperature over time
+  - qol: allowed names to start with a number if AI/Borg
+2023-09-30:
+  DrDiasyl aka DrTuxedo:
+  - balance: Holsters can now be clipped to any suit, and house Captain antique gun
+      and HoS gun. You now can buy holsters from the SecTech premium section.
+  Helg2:
+  - rscadd: SM crystal can now dust someone or something if it falls on it.
+  Jacquerel:
+  - bugfix: If two cosmic heretics ascend in the same round, their star gazer survival
+      will be linked to each individual heretic and not shared by just one of them.
+  - bugfix: You can't click the Knock heretic portal to join as a mob while already
+      signed up to become a mob.
+  - balance: Cosmic heretics can't order the Star Gazer around while jaunting.
+  - balance: The Knock Heretic portal cannot summon Flesh Worms, but can summon Fire
+      Sharks.
+  - balance: The Knock Heretic portal will disperse if its creator is killed.
+  - admin: Mob abilities can be granted to arbitrary mobs via the VV menu in a similar
+      way to spells.
+  - bugfix: Lavaland syndicate operatives can no longer trivially use the jetpack
+      on their modsuit to fly over the lava.
+  JohnFulpWillard:
+  - bugfix: PDA flashlights wont cause the cell to constantly drain faster and faster.
+  Singul0:
+  - bugfix: Fixes missing baseturfs and clowns in mining planet VDOM..
+  SyncIt21:
+  - code_imp: removed some redundant code for airlocks
+  Timberpoes:
+  - balance: There are now 3 roundstart cyborg job slots open by default.
+  admeeer:
+  - bugfix: You can now spray paint the SM without getting dusted
+  jlsnow301:
+  - rscadd: Quantum servers now talk over supply channel when they're done cooling
+      off. Go outside!
+  - bugfix: You can no longer use dragon swoop to bypass cordons.
+  - bugfix: Netpod brain damage is now properly reduced upon server upgrades.
+  - bugfix: Fixed an bug where swapping bodies in vdom prevented you from disconnecting.
+  - bugfix: Fixed a bug where a quantum server could get locked out of loading new
+      domains.
+  - bugfix: Changed quantum console UI to display "no bandwidth" rather than "none"
+  lizardqueenlexi:
+  - bugfix: The reverse revolver now looks like a normal Syndicate revolver on inspection.
+  nikothedude:
+  - code_imp: Gauze removal is now handled by the gauze's destroy instead of seep_gauze
+  xPokee:
+  - bugfix: fixed the stamp in the metastation CMO office always spawning on the floor

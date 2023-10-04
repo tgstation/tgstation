@@ -232,6 +232,8 @@
 /datum/forensics/proc/check_blood()
 	if(!parent || !isitem(parent.resolve()))
 		return
+	if(isorgan(parent.resolve())) // organs don't spawn with blood decals by default
+		return
 	if(!length(blood_DNA))
 		return
 	var/atom/parent_atom = parent.resolve()
