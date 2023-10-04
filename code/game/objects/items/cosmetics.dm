@@ -30,8 +30,7 @@
 
 /obj/item/lipstick/examine(mob/user)
 	. = ..()
-
-	. += "Alt-click on [src] to change the style."
+	. += "Alt-click to change the style."
 
 /obj/item/lipstick/update_icon_state()
 	icon_state = "lipstick[open ? "_uncap" : null]"
@@ -51,7 +50,7 @@
 	if(.)
 		return
 
-	if(ismob(user) && !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return FALSE
 
 	return display_radial_menu(user)
