@@ -946,7 +946,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		affecting = null
 		rune_in_use = FALSE
 
-/mob/living/carbon/human/cult_ghost/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/carbon/human/cult_ghost/spill_organs(drop_bitflags=NONE)
 	drop_bitflags &= ~DROP_BRAIN //cult ghosts never drop a brain
 	. = ..()
 

@@ -37,7 +37,7 @@
 		visible_message(span_danger("[M] bursts out of [src]!"))
 	return ..()
 
-/mob/living/carbon/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/carbon/spill_organs(drop_bitflags=NONE)
 	var/atom/Tsec = drop_location()
 
 	for(var/obj/item/organ/organ as anything in organs)
@@ -55,7 +55,7 @@
 
 		qdel(organ)
 
-/mob/living/carbon/spread_bodyparts(drop_bitflags=DROP_BRAIN)
+/mob/living/carbon/spread_bodyparts(drop_bitflags=NONE)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(!(drop_bitflags & DROP_BRAIN) && part.body_zone == BODY_ZONE_HEAD)
 			continue

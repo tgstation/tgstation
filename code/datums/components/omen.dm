@@ -272,7 +272,7 @@
 	var/mob/living/carbon/player = our_guy
 	// this needs to be tested
 	// maybe refactor all of this into the gib proc?
-	player.spread_bodyparts(NONE)
+	player.spread_bodyparts()
 	player.spawn_gibs()
 
 	return

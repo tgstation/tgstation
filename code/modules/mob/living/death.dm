@@ -46,7 +46,7 @@
  * * DROP_BODYPARTS - Mob will drop bodyparts (arms, legs, etc.)
  * * DROP_ALL_REMAINS - Mob will drop everything
 **/
-/mob/living/proc/spill_organs(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/proc/spill_organs(drop_bitflags=NONE)
 	return
 
 /**
@@ -55,7 +55,7 @@
  * drop_bitflags: (see code/__DEFINES/blood.dm)
  * * DROP_BRAIN - Detaches the head from the mob and launches it away from the body
 **/
-/mob/living/proc/spread_bodyparts(drop_bitflags=DROP_BRAIN)
+/mob/living/proc/spread_bodyparts(drop_bitflags=NONE)
 	return
 
 /**
