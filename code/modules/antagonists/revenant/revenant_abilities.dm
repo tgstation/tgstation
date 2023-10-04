@@ -1,8 +1,8 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-/// Harvest; activated by clicking a target, will try to drain their essence.
-/mob/living/basic/revenant/proc/harvest(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
+/// Container proc for `harvest()`, handles the pre-checks as well as potential early-exits for any reason
+/mob/living/basic/revenant/proc/attempt_harvest(mob/living/carbon/human/target)
 	if(!cast_check(0))
 		return
 
@@ -10,22 +10,27 @@
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
 		return
 
+	draining = TRUE
+	harvest(target)
+	draining = FALSE
+
+/// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
+/// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
+/mob/living/basic/revenant/proc/harvest(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
 	if(target.stat == CONSCIOUS)
 		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
-		return
+		return FALSE
 
 	log_combat(src, target, "started to harvest")
 	face_atom(target)
-	draining = TRUE
 	var/essence_drained = rand(15, 20)
 
 	to_chat(src, span_revennotice("You search for the soul of [target]."))
 
 	if(!do_after(src, (rand(10, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
-		draining = FALSE
-		return
+		return FALSE
 
 	var/target_has_client = !isnull(target.client)
 	if(target_has_client)
@@ -36,7 +41,7 @@
 		to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
 		essence_drained += rand(40, 50)
 
-	if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target_has_client)
+	if(!target_has_client && HAS_TRAIT(target, TRAIT_WEAK_SOUL))
 		to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
 		essence_drained = 5
 
@@ -44,8 +49,7 @@
 
 	if(!do_after(src, (rand(15, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM))
 		to_chat(src, span_revennotice("The harvest is abandoned."))
-		draining = FALSE
-		return
+		return FALSE
 
 	switch(essence_drained)
 		if(1 to 30)
@@ -59,14 +63,12 @@
 
 	if(!do_after(src, (rand(15, 25) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
 		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken."))
-		draining = FALSE
-		return
+		return FALSE
 
 	if(target.stat == CONSCIOUS)
 		to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining!"))
-		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding."))
-		draining = FALSE
-		return //hey, wait a minute...
+		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
+		return FALSE
 
 	to_chat(src, span_revenminor("You begin siphoning essence from [target]'s soul."))
 	if(target.stat != DEAD)
@@ -85,8 +87,7 @@
 			span_warning("[target] slumps onto the ground."),
 			span_revenwarning("Violet lights, dancing in your vision, receding--"),
 		)
-		draining = FALSE
-		return
+		return FALSE
 
 	var/datum/beam/draining_beam = Beam(target, icon_state = "drain_life")
 	if(!do_after(src, 4.6 SECONDS, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
@@ -98,7 +99,7 @@
 			)
 		draining = FALSE
 		qdel(draining_beam)
-		return
+		return FALSE
 
 	change_essence_amount(essence_drained, FALSE, target)
 
@@ -123,6 +124,7 @@
 	target.death(FALSE)
 
 	qdel(draining_beam)
+	return TRUE
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
