@@ -95,6 +95,7 @@
 	toolbox_go_bonk.Grant(src)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	random_revenant_name()
 
 	GLOB.revenant_relay_mobs |= src
@@ -260,7 +261,7 @@
 
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
-		return FALSE
+		return 0
 
 	. = amount
 
@@ -312,6 +313,16 @@
 	built_name += pick(strings(REVENANT_NAME_FILE, "theme"))
 	name = built_name
 
+/mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
+	visible_message(
+		span_warning("[src] violently flinches!"),
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"),
+	)
+	inhibited = TRUE
+	update_mob_action_buttons()
+	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
+
 //reveal, stun, icon updates, cast checks, and essence changing
 /mob/living/basic/revenant/proc/reveal(time)
 	if(QDELETED(src))
@@ -331,17 +342,21 @@
 	orbiting?.end_orbit(src)
 
 /mob/living/basic/revenant/proc/stun(time)
-	if(!src)
+	if(QDELETED(src))
 		return
+
 	if(time <= 0)
 		return
+
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-	if(!unstun_time)
+
+	if(unstun_time <= 0)
 		balloon_alert(src, "can't move!")
 		unstun_time = world.time + time
 	else
 		balloon_alert(src, "can't move!")
 		unstun_time = unstun_time + time
+
 	update_spooky_icon()
 	orbiting?.end_orbit(src)
 
