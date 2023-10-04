@@ -61,11 +61,11 @@
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
 
-/datum/map_template/ruin/icemoon/underground/unlucky_engineer
+/datum/map_template/ruin/icemoon/unlucky_engineer
 	name = "Ruined Engineering Outpost"
 	id = "unlucky_engineer"
 	description = "A bloody hand reaches for a ruined APC. Is whoever - or whatever destroyed this place still lurking in its shadows?"
-	suffix = "icemoon_unlucky_engineer.dmm"
+	suffix = "icemoon_surface_unlucky_engineer.dmm"
 	always_place = TRUE
 
 // above and below ground together
