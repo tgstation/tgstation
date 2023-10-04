@@ -96,6 +96,12 @@
 	else
 		resulting_mob = do_shapeshift(cast_on)
 
+	// Make sure that if you shapechanged into a bot, the AI can't just turn you off.
+	var/mob/living/simple_animal/bot/polymorph_bot = resulting_mob
+	if (istype(polymorph_bot))
+		polymorph_bot.bot_cover_flags |= BOT_COVER_EMAGGED
+		polymorph_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
+
 	// The shift is done, let's make sure they're in a valid state now
 	// If we're not ventcrawling, we don't need to mind
 	if(!currently_ventcrawling || !resulting_mob)
