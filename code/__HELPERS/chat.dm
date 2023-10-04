@@ -97,3 +97,9 @@ it will be sent to all connected chats.
 	for(var/mob/creature as anything in GLOB.blob_telepathy_mobs)
 		to_chat(creature, message)
 	send_to_observers(message, source)
+
+/// Sends a message to all revenants and observers
+/proc/revenant_relay(message, source)
+	for(var/mob/creature as anything in GLOB.revenant_relay_mobs)
+		to_chat(creature, message)
+	send_to_observers(message, source)
