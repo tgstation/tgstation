@@ -71,7 +71,7 @@
 		/obj/item/bodypart/head = 1,
 		/obj/item/book = 1,
 		)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
+	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT

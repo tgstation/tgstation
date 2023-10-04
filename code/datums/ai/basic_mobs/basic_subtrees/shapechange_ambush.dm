@@ -10,7 +10,7 @@
 
 /datum/ai_planning_subtree/shapechange_ambush/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	var/is_shifted = living_pawn.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	var/is_shifted = ismob(living_pawn.loc)
 	var/has_target = controller.blackboard_key_exists(target_key)
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
 
@@ -19,15 +19,15 @@
 			return // We're busy
 
 		if (using_action?.IsAvailable())
-			controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SHAPESHIFT_ACTION) // Unshift
+			controller.queue_behavior(/datum/ai_behavior/use_mob_ability/shapeshift, BB_SHAPESHIFT_ACTION) // Shift
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	if (!has_target)
+	if (!has_target || !using_action?.IsAvailable())
 		return SUBTREE_RETURN_FINISH_PLANNING // Lie in wait
 	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
 	if (time_on_target < minimum_target_time)
 		return // Wait a bit longer
-	controller.queue_behavior(/datum/ai_behavior/use_mob_ability/shapeshift, BB_SHAPESHIFT_ACTION)// Surprise!
+	controller.queue_behavior(/datum/ai_behavior/use_mob_ability/shapeshift, BB_SHAPESHIFT_ACTION) // Surprise!
 
 /// Selects a random shapeshift ability before shifting
 /datum/ai_behavior/use_mob_ability/shapeshift

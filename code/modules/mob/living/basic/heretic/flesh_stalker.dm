@@ -10,6 +10,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_MOBS
+	ai_controller = /datum/ai_controller/basic_controller/stalker
 
 /mob/living/basic/heretic_summon/stalker/Initialize(mapload)
 	. = ..()
@@ -28,6 +29,7 @@
 
 /// Changes shape and lies in wait when it has no target, uses EMP and attacks once it does
 /datum/ai_controller/basic_controller/stalker
+	ai_traits = CAN_ACT_IN_STASIS
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
