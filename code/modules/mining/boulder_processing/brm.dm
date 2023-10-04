@@ -118,7 +118,6 @@
 	return TRUE
 
 /obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
-	balloon_alert_to_viewers("bzzap!")
 	flick("brm-flash", src)
 	if(QDELETED(random_boulder))
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)

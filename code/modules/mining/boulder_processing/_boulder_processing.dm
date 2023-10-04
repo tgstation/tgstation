@@ -117,6 +117,7 @@
 		return TRUE
 	if(.)
 		return
+
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -207,7 +208,7 @@
 		return FALSE
 	if(QDELETED(chosen_boulder))
 		return FALSE
-	if(!chosen_boulder.custom_materials)
+	if(!length(chosen_boulder.custom_materials))
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
@@ -245,7 +246,7 @@
 	qdel(disposable_boulder)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
-	if(!chosen_boulder.custom_materials.len)
+	if(!length(chosen_boulder.custom_materials))
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(is_artifact)
 			points_held = round(points_held + MINER_POINT_MULTIPLIER) /// Artifacts give bonus points!
@@ -257,7 +258,6 @@
 	chosen_boulder.reset_processing_cooldown() //So that we don't pick it back up!
 	chosen_boulder.durability = rand(chosen_boulder.boulder_size, chosen_boulder.boulder_size + BOULDER_SIZE_SMALL) //Reset durability to a random value between the boulder's size and a little more.
 	remove_boulder(chosen_boulder)
-
 	return TRUE
 
 /**

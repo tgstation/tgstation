@@ -4263,7 +4263,7 @@
 #include "code\modules\mining\mine_items.dm"
 #include "code\modules\mining\money_bag.dm"
 #include "code\modules\mining\ores_coins.dm"
-#include "code\modules\mining\satchel_ore_boxdm.dm"
+#include "code\modules\mining\satchel_ore_box.dm"
 #include "code\modules\mining\shelters.dm"
 #include "code\modules\mining\voucher_sets.dm"
 #include "code\modules\mining\boulder_processing\_boulder_processing.dm"
