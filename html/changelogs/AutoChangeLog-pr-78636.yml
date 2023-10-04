@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - code_imp: "exploration drone adventures are now file-based and not database-based"

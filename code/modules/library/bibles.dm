@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 	if(length(hurt_limbs))
 		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
+			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
 				built_in_his_image.update_damage_overlays()
 		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
 		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))

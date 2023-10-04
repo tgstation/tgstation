@@ -75,11 +75,12 @@
 		var/hp_gained = target.maxHealth
 		target.investigate_log("has been devoured by a zombie.", INVESTIGATE_DEATHS)
 		target.gib()
-		// zero as argument for no instant health update
-		user.adjustBruteLoss(-hp_gained, 0)
-		user.adjustToxLoss(-hp_gained, 0)
-		user.adjustFireLoss(-hp_gained, 0)
-		user.adjustCloneLoss(-hp_gained, 0)
-		user.updatehealth()
-		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		var/need_mob_update
+		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjustFireLoss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjustCloneLoss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
+		if(need_mob_update)
+			user.updatehealth()
