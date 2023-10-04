@@ -20,7 +20,7 @@
 	unscrewed = TRUE
 
 /obj/item/radio/intercom/prison
-	name = "prison intercom"
+	name = "receive-only intercom"
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
 
 /obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
