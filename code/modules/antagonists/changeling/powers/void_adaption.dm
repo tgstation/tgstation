@@ -33,15 +33,20 @@
 	var/list/active_reasons = list()
 
 	var/datum/gas_mixture/environment = void_adapted.loc.return_air()
-
 	if (!isnull(environment))
-		if (environment.return_temperature() < void_adapted.get_body_temp_cold_damage_limit())
-			active_reasons += "cold"
+		var/vulnerable_temperature = void_adapted.get_body_temp_cold_damage_limit()
+		var/affected_temperature = environment.return_temperature()
 		if (ishuman(void_adapted))
 			var/mob/living/carbon/human/special_boy = void_adapted
+			var/cold_protection = special_boy.get_cold_protection(affected_temperature)
+			vulnerable_temperature *= (1 - cold_protection)
+
 			var/affected_pressure = special_boy.calculate_affecting_pressure(environment.return_pressure())
 			if (affected_pressure < HAZARD_LOW_PRESSURE)
 				active_reasons += "vacuum"
+
+		if (affected_temperature < vulnerable_temperature)
+			active_reasons += "cold"
 
 	var/should_be_active = !!length(active_reasons)
 	if (currently_active == should_be_active)
