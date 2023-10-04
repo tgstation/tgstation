@@ -66,8 +66,6 @@
 	var/draining = FALSE
 	/// Have we already given this revenant abilities?
 	var/generated_objectives_and_spells = FALSE
-	/// Have we already given this revenant abilities?
-	var/generated_objectives_and_spells = FALSE
 
 	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
 	var/list/drained_mobs = null
@@ -173,7 +171,7 @@
 		to_chat(src, span_revenboldnotice("You can move again!"))
 
 	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
-		var/change_in_time = DELTA_ WORLD_TIME(SSmobs)
+		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 
@@ -215,16 +213,6 @@
 	src.log_talk(message, LOG_SAY)
 	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
 	revenant_relay(rendered, src)
-
-/mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && !revealed)
-		return FALSE
-	. = amount
-	essence = max(0, essence-amount)
-	if(updating_health)
-		update_health_hud()
-	if(!essence)
-		death()
 
 /mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
 	var/list/modifiers = params2list(params)
@@ -272,14 +260,13 @@
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/reforming_essence = max_essence //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
 	goop.old_ckey = client.ckey //If the essence reforms, the old revenant is put back in the body
 	goop.revenant = src
 	revealed = FALSE
 	forceMove(goop)
 
-/mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return 0
 

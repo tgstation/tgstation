@@ -78,8 +78,8 @@
 		potential_mind.transfer_to(revenant)
 		user_name = potential_user.ckey
 
-	message_admins("[user_name] has been [old_key == user_name ? "re":""]made into a revenant by reforming ectoplasm.")
-	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
+	message_admins("[user_name] has been [old_ckey == user_name ? "re":""]made into a revenant by reforming ectoplasm.")
+	revenant.log_message("was [old_ckey == user_name ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.death_reset()

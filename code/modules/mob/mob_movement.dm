@@ -254,8 +254,8 @@
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
 						var/mob/living/basic/revenant/R = L
-						R.reveal(20)
-						R.stun(20)
+						R.reveal(2 SECONDS)
+						R.temporary_freeze(2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))

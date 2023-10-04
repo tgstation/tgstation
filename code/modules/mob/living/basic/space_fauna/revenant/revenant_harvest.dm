@@ -15,14 +15,14 @@
 		return FALSE
 
 	draining = TRUE
-	var/value_to_return = harvest(target)
+	var/value_to_return = harvest_soul(target)
 	draining = FALSE
 
 	return value_to_return
 
 /// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
-/mob/living/basic/revenant/proc/harvest(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
+/mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
 	if(target.stat == CONSCIOUS)
 		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
 		if(prob(10))

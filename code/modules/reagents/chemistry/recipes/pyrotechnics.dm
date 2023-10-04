@@ -132,9 +132,9 @@
 			else
 				deity = "Christ"
 			to_chat(R, span_userdanger("The power of [deity] compels you!"))
-			R.stun(20)
-			R.reveal(100)
-			R.adjustHealth(50)
+			R.temporary_freeze(2 SECONDS)
+			R.reveal(10 SECONDS)
+			R.adjust_health(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
 			if(IS_CULTIST(C))
 				to_chat(C, span_userdanger("The divine explosion sears you!"))

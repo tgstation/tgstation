@@ -1,5 +1,4 @@
 /datum/objective/revenant
-	var/target_amount = 100
 
 /datum/objective/revenant/New()
 	target_amount = rand(350, 600)
