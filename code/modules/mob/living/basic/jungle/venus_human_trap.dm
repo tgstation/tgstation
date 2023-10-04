@@ -186,16 +186,23 @@
 	tangle.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
+/mob/living/basic/venus_human_trap/RangedAttack(atom/target)
+	if(!combat_mode)
+		return
+	var/datum/action/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	if(!istype(tangle_ability))
+		return
+	tangle_ability.Trigger(target = target)
+
 /mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(locate(/obj/structure/spacevine) in range(2, src))
-		return
-	
-	apply_damage(10, BRUTE, BODY_ZONE_CHEST) //tick 5 times to die
-	balloon_alert(src, "do not leave vines!")
+	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
+	if(!vines_in_range)
+		balloon_alert(src, "do not leave vines!")
+	apply_damage(10 * (vines_in_range ? -0.5 : 1), BRUTE, BODY_ZONE_CHEST) //every life tick take 10 brute if not near vines or heal 5 if near vines
 
 /datum/action/cooldown/mob_cooldown/vine_tangle
 	name = "Tangle"
@@ -209,8 +216,8 @@
 	var/list/datum/beam/vines = list()
 	/// How far away a plant can attach a vine to something
 	var/vine_grab_distance = 4
-	/// how long does a vine attached to something last (and its leash)
-	var/vine_duration = 1.5 SECONDS
+	/// how long does a vine attached to something last (and its leash) (lasts twice as long on nonliving things)
+	var/vine_duration = 2 SECONDS
 
 /datum/action/cooldown/mob_cooldown/vine_tangle/Remove(mob/remove_from)
 	QDEL_LIST(vines)
@@ -225,7 +232,7 @@
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
 			return
 
-	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration, beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
 	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component
