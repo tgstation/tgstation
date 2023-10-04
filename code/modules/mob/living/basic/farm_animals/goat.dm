@@ -104,32 +104,45 @@
 /mob/living/basic/goat/proc/add_udder()
 	AddComponent(/datum/component/udder)
 
-/mob/living/basic/goat/Move()
+/mob/living/basic/goat/Move() // hmm
 	. = ..()
 	if(!stat)
 		eat_plants()
 
-/mob/living/basic/goat/proc/eat_plants()
-	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
-	if(vine)
+/// Proc that handles dealing with the various types of plants we might eat
+/mob/living/basic/goat/proc/eat_plant(atom/target)
+	var/eaten = FALSE
+
+	if(istype(target, /obj/structure/spacevine))
+		var/obj/structure/spacevine/vine = target
 		vine.eat(src)
+		eaten = TRUE
 
-	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
-	if(flower)
-		flower.take_damage(rand(30, 50), BRUTE, 0)
+	if(istype(target, /obj/structure/alien/resin/flower_bud))
+		target.take_damage(rand(30, 50), BRUTE, 0)
+		eaten = TRUE
 
-	var/obj/structure/glowshroom/mushroom = locate(/obj/structure/glowshroom) in loc
-	if(mushroom)
-		qdel(mushroom)
+	if(istype(target, /obj/structure/glowshroom))
+		qdel(target)
+		eaten = TRUE
 
-	if((vine || flower || mushroom) && prob(10))
+	if(!eaten)
+		stack_trace("Goat [src] somehow had eat_plant() callen on it with [target] ([target.type]), and there was no behavior to handle it!")
+		return
+
+	if(prob(10))
 		say("Nom") // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 
 /mob/living/basic/goat/pete // Pete!
 	name = "Pete"
 	gender = MALE
-	desc = "He doesn't seem to be too bothered about the cold." // maybe special examine?
+
+/mob/living/basic/goat/pete/examine()
+	. = ..()
+	var/area/goat_area = get_area(src)
+	if((bodytemperature < T20C) || istype(goat_area, /area/station/service/kitchen/coldroom))
+		. = span_notice("[p_They()] [p_do()]n't seem to be too bothered about the cold.") // special for pete
 
 /mob/living/basic/goat/pete/add_udder()
-	return //no
+	return //no thank you
