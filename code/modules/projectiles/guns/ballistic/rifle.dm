@@ -23,6 +23,7 @@
 		bolt_locked = TRUE
 		update_appearance()
 		return
+	drop_bolt(user)
 
 
 /obj/item/gun/ballistic/rifle/can_shoot()
