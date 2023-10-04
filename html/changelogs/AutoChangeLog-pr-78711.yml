@@ -1,6 +1,0 @@
-author: "FIoppie"
-delete-after: True
-changes:
-  - sound: "*flap now makes a fluttering noise for moth wings"
-  - sound: "Moths now have a death sound"
-  - qol: "*tremble emote now is just \"trembles!\" instead of \"trembles in fear!\""

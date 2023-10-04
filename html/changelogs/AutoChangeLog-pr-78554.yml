@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Your heart will no longer be deleted if an admin heals you while you have corazargh in your system."
-  - refactor: "The cursed heart has been streamlined a bit, and now gives you a visual cooldown for when you can beat your heart again."

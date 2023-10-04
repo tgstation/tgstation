@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - admin: "Admins can turn off dynamic rulesets (or force them on despite not meeting the qualification criteria) on a per-round basis."
