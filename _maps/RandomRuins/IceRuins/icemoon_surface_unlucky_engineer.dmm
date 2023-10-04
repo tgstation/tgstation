@@ -1,0 +1,3679 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/planetengi)
+"al" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/engineering{
+	name = "Power Access Hatch"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ay" = (
+/obj/item/clipboard{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"aF" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"aH" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/machinery/airalarm/directional/north,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"aL" = (
+/obj/structure/closet/crate/solarpanel_small,
+/obj/item/paper/guides/jobs/engi/solars,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aY" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/item/mop,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/mop_bucket,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "lavalandsyndieplasma";
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"bl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"bv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/corner/directional/north,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"bF" = (
+/obj/item/chair,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"bH" = (
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "lavalandsyndien2";
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"bM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bO" = (
+/obj/structure/broken_flooring/side/directional,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"bQ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/airlock_controller/incinerator_syndicatelava{
+	pixel_x = -8;
+	pixel_y = -26
+	},
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux{
+	pixel_x = -8;
+	pixel_y = -40
+	},
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main{
+	pixel_x = 6;
+	pixel_y = -40
+	},
+/obj/machinery/button/ignition/incinerator/syndicatelava{
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toner,
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bX" = (
+/obj/structure/bed/maint,
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/item/reagent_containers/cup/glass/bottle/hooch,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/planetengi)
+"ch" = (
+/obj/item/pickaxe/rusted,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"cj" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/lavaland/surface/outdoors)
+"co" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"ct" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/suit_storage_unit/radsuit,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/north,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cL" = (
+/obj/structure/sign/poster/official/safety_internals/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/lavaland/surface/outdoors)
+"cN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cO" = (
+/obj/structure/broken_flooring/singular/directional,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cP" = (
+/mob/living/basic/bear/snow,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"cU" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/orange/visible{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cV" = (
+/obj/machinery/door/poddoor/incinerator_syndicatelava_main{
+	id = "syndicatelava_mainvent_outer"
+	},
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"cW" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/machinery/incident_display/delam/directional/north,
+/obj/item/reagent_containers/cup/glass/coffee_cup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"db" = (
+/obj/machinery/photocopier,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dw" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/suit_storage_unit/radsuit,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dB" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/planetengi)
+"dC" = (
+/obj/effect/mapping_helpers/apc/no_charge,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/planetengi)
+"dH" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/broken_flooring/corner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"dN" = (
+/turf/closed/mineral/random/snow,
+/area/lavaland/surface/outdoors)
+"dO" = (
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/flare,
+/obj/item/trash/energybar,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"dV" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/north,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/mob/living/basic/regal_rat,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"dY" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"dZ" = (
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible,
+/obj/machinery/portable_atmospherics/canister,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ec" = (
+/obj/structure/table_frame,
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/stock_parts/capacitor,
+/obj/item/t_scanner,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ed" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/structure/broken_flooring/side/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"eG" = (
+/obj/structure/table,
+/obj/item/holosign_creator/atmos{
+	pixel_x = -5
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 7
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/item/flashlight/flare,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"eS" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"eT" = (
+/obj/machinery/power/turbine/turbine_outlet{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"eX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	target_pressure = 4500
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"fc" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"fe" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"fo" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"fu" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"fy" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = -6
+	},
+/obj/item/phone{
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"fE" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"fW" = (
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump/on/orange/visible/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"fX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"gh" = (
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/planetengi)
+"gs" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"gz" = (
+/obj/effect/decal/cleanable/generic,
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"gJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"gO" = (
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	pixel_x = 7;
+	pixel_y = -7
+	},
+/obj/structure/broken_flooring/corner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"hg" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/structure/sign/poster/ripped/directional/east,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"hn" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"hr" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"hs" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"hu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"hA" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"hV" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ii" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"im" = (
+/obj/structure/lattice/catwalk,
+/obj/item/trash/energybar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"iw" = (
+/obj/structure/broken_flooring/pile/directional,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"iz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"iE" = (
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"iF" = (
+/obj/structure/broken_flooring/side/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/assembly/igniter,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"iR" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"iW" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "lavalandsyndieco2"
+	},
+/turf/open/floor/engine/co2,
+/area/ruin/planetengi)
+"iY" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/shard,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"je" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jf" = (
+/obj/structure/broken_flooring/side/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jn" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jr" = (
+/obj/structure/broken_flooring/plating/directional,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 16
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ju" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jx" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/bubblegum,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jC" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"jD" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/energybar,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"jJ" = (
+/obj/structure/tank_holder/oxygen/yellow,
+/obj/structure/cable,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"jW" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/planetengi)
+"jY" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Engineering Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"kg" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"kj" = (
+/obj/structure/broken_flooring/side/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"kl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"kq" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/lavaland/surface/outdoors)
+"kz" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"kD" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"kN" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"kX" = (
+/obj/effect/decal/cleanable/blood/gibs/bubblegum,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"le" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"lz" = (
+/obj/structure/broken_flooring,
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"lF" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/structure/broken_flooring/pile/directional/north,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"lL" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/directional/west,
+/obj/item/food/energybar,
+/obj/item/reagent_containers/cup/soda_cans/volt_energy,
+/obj/structure/noticeboard/directional/north{
+	name = "Chief Engineer's Notice Board"
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"lM" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"lS" = (
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"lZ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"mJ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"mT" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ng" = (
+/obj/item/pillow/random,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/trash/flare,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nv" = (
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/snow,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nA" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/obj/item/flashlight/flare,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/corner/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nO" = (
+/obj/structure/table_frame,
+/obj/item/reagent_containers/medigel/aiuri{
+	pixel_x = 7
+	},
+/obj/item/pai_card{
+	pixel_x = -6
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"nQ" = (
+/obj/structure/table,
+/obj/item/crowbar/red,
+/obj/item/clothing/mask/gas/atmos,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nS" = (
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer4{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"nV" = (
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"nW" = (
+/mob/living/basic/mining_drone,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"oc" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron/solarpanel,
+/area/ruin/planetengi)
+"ok" = (
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_exterior,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"oH" = (
+/obj/machinery/igniter/incinerator_syndicatelava,
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"oQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/trash/flare,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"oW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"oY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/build/directional/north,
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"pd" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"pF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/plating/directional/south,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/turf_decal/caution,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"pH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"pI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"pN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"pO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"qb" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"qg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/snow,
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"qi" = (
+/obj/structure/fence/cut/large{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"qA" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/singular/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"qD" = (
+/obj/structure/table/reinforced,
+/obj/item/radio{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/paper/crumpled/bloody,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"qW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"qX" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/item/wirebrush,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"rD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"rG" = (
+/obj/structure/table,
+/obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stock_parts/micro_laser,
+/obj/item/storage/fancy/cigarettes/cigpack_uplift,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"rH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"rS" = (
+/obj/structure/table,
+/obj/item/weldingtool,
+/obj/item/analyzer,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"rW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/plastic,
+/obj/item/trash/energybar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"sA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/portable_atmospherics/canister,
+/obj/structure/broken_flooring/singular/directional/west,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"sD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/corner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"sF" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"sO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/cable,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"sQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/north,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"tp" = (
+/obj/machinery/power/solar{
+	id = "forestarboard";
+	name = "Fore-Starboard Solar Array"
+	},
+/turf/open/floor/iron/solarpanel,
+/area/ruin/planetengi)
+"tA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"tH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"tY" = (
+/obj/structure/closet/toolcloset,
+/obj/item/pickaxe/emergency,
+/obj/item/airlock_painter/decal,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ue" = (
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/machinery/duct,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/planetengi)
+"us" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"uD" = (
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"uM" = (
+/obj/structure/sign/poster/ripped/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"uR" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/broken_flooring/plating/directional/south,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ve" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil/cut,
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vf" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vg" = (
+/obj/structure/sign/poster/official/wtf_is_co2/directional/north{
+	dir = 1
+	},
+/turf/open/floor/engine/co2,
+/area/ruin/planetengi)
+"vh" = (
+/obj/structure/table_frame,
+/obj/item/folder/blue{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/folder/yellow{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"vl" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/structure/broken_flooring/plating/directional,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vr" = (
+/obj/structure/sign/warning/engine_safety/directional/west,
+/obj/item/kirbyplants/random/dead,
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vM" = (
+/obj/structure/table_frame,
+/obj/structure/closet/mini_fridge/grimy,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/coffee_cartridge/fancy,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vV" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/broken_flooring/plating/directional/south,
+/obj/item/flashlight/flare,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"vZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"wa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Tech Storage"
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"wd" = (
+/obj/structure/sign/warning/fire/directional/east,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/greenglow,
+/obj/item/flashlight/flare,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"wm" = (
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"wr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ws" = (
+/obj/structure/broken_flooring/side/directional/south,
+/obj/item/radio/intercom/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"xm" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
+/turf/open/floor/engine/co2,
+/area/ruin/planetengi)
+"xt" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"xu" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"xN" = (
+/mob/living/basic/bear/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"xS" = (
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"xU" = (
+/obj/structure/closet/emcloset,
+/obj/structure/sign/warning/xeno_mining/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/obj/item/shovel,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ye" = (
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/closed/wall,
+/area/ruin/planetengi)
+"yr" = (
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"yH" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/broken_flooring/side/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"yJ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"yT" = (
+/obj/structure/broken_flooring/corner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ze" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Turbine Exhaust Chamber Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "You are expected to build the cooling system for the exhaust yourself."
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zp" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/item/stamp/head/ce{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zA" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/machinery/light_switch/directional/west,
+/obj/item/trash/shok_roks/lanternfruit,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zB" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	dir = 8;
+	chamber_id = "lavalandsyndien2"
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"zH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/plating/directional/north,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/microwave,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zM" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"zW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"Ag" = (
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -16
+	},
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Ah" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"Ar" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	dir = 8;
+	chamber_id = "lavalandsyndieo2"
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Aw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"AA" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"AB" = (
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"AR" = (
+/obj/structure/broken_flooring/side/directional/south,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"AZ" = (
+/obj/structure/cable,
+/obj/machinery/door/window/brigdoor{
+	name = "Turbine Access"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/end,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Bf" = (
+/obj/machinery/air_sensor{
+	chamber_id = "lavalandsyndien2"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Bm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Bq" = (
+/obj/machinery/airalarm/directional/east,
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"CC" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"CF" = (
+/obj/structure/fence,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"CJ" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"CN" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high/empty,
+/obj/item/clothing/head/utility/welding{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/structure/sign/poster/official/safety_eye_protection/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Df" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"Dh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"Dl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Dp" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Dz" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 3;
+	pixel_y = -8
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"DB" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/lavaland/surface/outdoors)
+"DF" = (
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/moth_epi/directional/north,
+/obj/effect/mob_spawn/corpse/human/engineer,
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"DK" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"DT" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"DY" = (
+/obj/structure/table,
+/obj/machinery/status_display/ai/directional/north,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/machinery/firealarm/directional/west,
+/obj/item/geiger_counter{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ec" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/atmos/glass{
+	name = "Turbine Generator Access"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Ev" = (
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/greenglow,
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Ey" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"EO" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/planetengi)
+"ES" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Fb" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/planetengi)
+"Fp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/frame/computer,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Fq" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/engineering{
+	name = "Tech Storage"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Fr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/greenglow,
+/obj/structure/sign/warning/no_smoking/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"FB" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Engineering Maintenance"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"FS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"FX" = (
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Gc" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Gg" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Gl" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Go" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Gu" = (
+/obj/structure/cable,
+/obj/machinery/power/turbine/core_rotor{
+	dir = 4;
+	mapping_id = "syndie_lavaland_incineratorturbine"
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"GD" = (
+/obj/structure/flora/tree/dead,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"GG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"GK" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"GM" = (
+/obj/structure/fence/door/opened{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"GO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -16
+	},
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"GT" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/structure/broken_flooring/plating/directional/south,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Hk" = (
+/obj/structure/sign/poster/official/moth_hardhat/directional/north,
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/closet/crate/bin,
+/obj/item/coupon,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Hv" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light_switch/directional/east,
+/obj/item/storage/medkit/fire,
+/obj/item/stock_parts/cell/high/empty,
+/obj/item/rcd_ammo/large,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Hw" = (
+/obj/effect/mapping_helpers/apc/no_charge,
+/turf/closed/wall/r_wall,
+/area/ruin/planetengi)
+"HB" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"HK" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/item/pillow/random,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/airalarm/directional/east,
+/obj/item/coffee_cartridge/bootleg,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"HN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/singular/directional/north,
+/obj/structure/cable,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"HV" = (
+/obj/structure/sink/directional/south,
+/obj/machinery/duct,
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/planetengi)
+"IG" = (
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump/on/cyan/visible/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump/on/orange/visible/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"IP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"IU" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"IV" = (
+/obj/machinery/computer/monitor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Jb" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Jm" = (
+/obj/machinery/atmospherics/miner/plasma,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Jn" = (
+/obj/structure/rack,
+/obj/machinery/status_display/ai/directional/north,
+/obj/item/crowbar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/wrench,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/gps/engineering{
+	gpstag = "CE0"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Jx" = (
+/obj/effect/spawner/random/trash/box,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/stack/ducts/fifty,
+/obj/item/reagent_containers/cup/bucket,
+/obj/effect/spawner/random/trash/janitor_supplies,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/snow,
+/obj/item/coffee_cartridge/bootleg,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Jz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/trash/flare,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"JP" = (
+/obj/structure/fence/corner{
+	dir = 9
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Kc" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/effect/spawner/random/trash/caution_sign,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Kq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ky" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"KL" = (
+/obj/structure/grille/broken,
+/obj/item/assembly/mousetrap,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/generic,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/planetengi)
+"KN" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"KR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"KY" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	dir = 1;
+	atmos_chambers = list("lavalandsyndieo2"="Oxygen Supply","lavalandsyndien2"="Nitrogen Supply","lavalandsyndieco2"="Carbon Dioxide Supply","lavalandsyndieplasma"="Plasma Supply")
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"KZ" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/planetengi)
+"Lh" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/item/hatchet,
+/obj/structure/door_assembly,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Lk" = (
+/obj/item/shard,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Lp" = (
+/obj/structure/broken_flooring,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Lv" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/lavaland/surface/outdoors)
+"Lz" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"LF" = (
+/obj/machinery/door/poddoor/incinerator_syndicatelava_main,
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"LI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/firealarm/directional/south,
+/obj/item/storage/fancy/cigarettes/cigpack_carp,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Mf" = (
+/obj/item/stack/cable_coil/cut,
+/obj/structure/broken_flooring/side/directional/west,
+/obj/structure/sign/poster/ripped/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ML" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/fireplace,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/west,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ng" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Nq" = (
+/obj/machinery/computer/turbine_computer{
+	dir = 1;
+	mapping_id = "syndie_lavaland_incineratorturbine"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"NA" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/circuitboard/machine/coffeemaker,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"NU" = (
+/obj/structure/statue/snow/snowlegion,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Og" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Oh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/side/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Om" = (
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Or" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Pi" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Pr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/west,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ps" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"PJ" = (
+/obj/structure/table_frame,
+/obj/structure/broken_flooring/corner/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/item/storage/toolbox/electrical,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"PN" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/stack/sheet/iron/fifty,
+/obj/machinery/light_switch/directional/west,
+/obj/item/stack/cable_coil/five,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Qa" = (
+/obj/structure/sign/warning/cold_temp/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Qe" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"Qj" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Utilities Closet"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Qo" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"Qp" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Qt" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Qu" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	dir = 8;
+	chamber_id = "lavalandsyndieplasma"
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Qy" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/walk/directional/north,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"QG" = (
+/obj/effect/mapping_helpers/apc/no_charge,
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
+"QH" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/machinery/firealarm/directional/north,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"QR" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Tech Storage"
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"QV" = (
+/obj/item/kirbyplants/random/dead,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Rc" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Rn" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Rq" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/corner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Rr" = (
+/obj/structure/table_frame,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/effect/spawner/random/entertainment/wallet_storage,
+/obj/item/binoculars,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Rw" = (
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -16
+	},
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"RC" = (
+/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/reagent_containers/medigel/libital,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"RD" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/item/trash/flare,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"RJ" = (
+/obj/machinery/door/airlock/command{
+	name = "Chief Engineer's Quarters"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/ce,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Sz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood,
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"SC" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/flare,
+/obj/machinery/firealarm/directional/west,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"SD" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"SK" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"SM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/west,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ST" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/clothing/glasses/meson/engine,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"SV" = (
+/turf/open/floor/iron/solarpanel,
+/area/ruin/planetengi)
+"SX" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"Tl" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/atmos/glass{
+	name = "Turbine Generator Access"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Tv" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/item/pillow/random,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"TQ" = (
+/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Uf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ur" = (
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
+"UH" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"UJ" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/north,
+/mob/living/basic/mining/legion/snow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"UP" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/machine,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"US" = (
+/obj/structure/closet/crate/rcd,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stock_parts/cell/lead,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/storage/toolbox/emergency,
+/obj/item/rcd_ammo,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"UY" = (
+/obj/machinery/power/turbine/inlet_compressor{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"Vb" = (
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
+"Vg" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Vj" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Vm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Vo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Vq" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/knife/combat/survival,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"VB" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/legion_brood/snow,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"VD" = (
+/obj/machinery/atmospherics/components/trinary/mixer/layer2{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"VF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/trash/can/food/envirochow,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"VU" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"VW" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/item/assembly/mousetrap/armed,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Wi" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "lavalandsyndieco2"
+	},
+/turf/open/floor/engine/co2,
+/area/ruin/planetengi)
+"Wn" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/planetengi)
+"Wq" = (
+/obj/structure/grille/broken,
+/obj/item/shard,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Ws" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Wu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/turf_decal/caution,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"WH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"WL" = (
+/obj/effect/decal/cleanable/blood,
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
+"WP" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"WQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "lavalandsyndieo2";
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"WX" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Xc" = (
+/obj/machinery/air_sensor{
+	chamber_id = "lavalandsyndieo2"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Xf" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Xg" = (
+/obj/structure/closet/emcloset,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Xk" = (
+/obj/machinery/air_sensor{
+	chamber_id = "lavalandsyndieplasma"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"Xo" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/lavaland/surface/outdoors)
+"Xu" = (
+/obj/item/radio/intercom/command/directional/west,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/closet/crate/bin,
+/obj/item/blank_coffee_cartridge,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/computer_disk/engineering,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"XF" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/item/mining_scanner,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"XQ" = (
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"XR" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/pipe_dispenser,
+/obj/item/turbine_parts/compressor{
+	current_tier = 3
+	},
+/obj/item/turbine_parts/stator{
+	current_tier = 2
+	},
+/obj/item/turbine_parts/rotor{
+	current_tier = 3
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/rcd_ammo,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Yb" = (
+/obj/machinery/atmospherics/components/binary/pump/on/cyan/visible/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Yj" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/north,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Yy" = (
+/obj/structure/fireaxecabinet/empty,
+/turf/closed/wall,
+/area/ruin/planetengi)
+"Yz" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"YF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"YI" = (
+/obj/machinery/air_sensor{
+	id_tag = "lavalandsyndieturbinecool"
+	},
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"YJ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"YL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/coffee,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"YP" = (
+/turf/closed/wall,
+/area/ruin/planetengi)
+"YS" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"Zg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/pdapainter/engineering,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Zh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Zl" = (
+/obj/structure/table/reinforced,
+/obj/machinery/fax{
+	fax_name = "Chief Engineer's Office";
+	name = "Chief Engineer's Fax Machine"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Zn" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/ready_donk,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Zu" = (
+/obj/effect/decal/cleanable/ash,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Zz" = (
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/planetengi)
+"ZB" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/broken_flooring/corner/directional/north,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ZE" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ZQ" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/pen/screwdriver{
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+
+(1,1,1) = {"
+dN
+Pi
+hs
+Gl
+hs
+Gl
+hs
+hs
+hs
+hs
+hs
+hs
+hs
+aF
+Gl
+hs
+hs
+hs
+hs
+hs
+hs
+Gl
+hs
+dN
+dN
+dN
+dN
+dN
+dN
+"}
+(2,1,1) = {"
+hs
+hs
+aF
+hs
+Gl
+Pi
+Ur
+jn
+Ur
+YP
+Gl
+hs
+hs
+Gl
+hs
+hs
+Gl
+Jb
+hs
+hs
+hs
+aF
+Gl
+hs
+dN
+hs
+dN
+dN
+dN
+"}
+(3,1,1) = {"
+dN
+Gl
+hs
+hs
+hs
+aF
+YP
+cN
+Xg
+Ur
+Rn
+Gl
+hs
+hs
+hs
+Gl
+Rn
+Gl
+hs
+hs
+Pi
+hs
+hs
+hs
+hs
+hs
+hs
+dN
+dN
+"}
+(4,1,1) = {"
+Gl
+hs
+GD
+Ur
+ye
+QG
+Ur
+lM
+jW
+jW
+lS
+jW
+Lk
+Rc
+qb
+jW
+lS
+JP
+GM
+CF
+Lz
+Gl
+hs
+Pi
+hs
+Gl
+GD
+hs
+dN
+"}
+(5,1,1) = {"
+Rn
+Gl
+YP
+Yy
+eG
+nQ
+jJ
+IU
+YL
+Pr
+jW
+lL
+RD
+UP
+Zg
+Xu
+lS
+jW
+uM
+cj
+xt
+hs
+Gl
+hs
+Gl
+Rn
+hs
+hs
+dN
+"}
+(6,1,1) = {"
+Jb
+hs
+Ur
+DF
+XF
+bF
+ST
+Gg
+dH
+rD
+jW
+cW
+Lp
+fE
+iw
+vZ
+vr
+jW
+cL
+xN
+DB
+hs
+aF
+hs
+Jb
+hs
+Gl
+hs
+hs
+"}
+(7,1,1) = {"
+Gl
+hs
+Ur
+tY
+jf
+vZ
+yT
+Vo
+hr
+kX
+lS
+vM
+ay
+AA
+Rr
+ZQ
+IU
+qb
+cj
+cj
+HB
+Rn
+Gl
+nW
+hs
+hs
+hs
+hs
+hs
+"}
+(8,1,1) = {"
+Gl
+gz
+Vg
+VW
+bR
+je
+sO
+HN
+XQ
+le
+qb
+Zl
+vZ
+cO
+vh
+zp
+IU
+qb
+cj
+hs
+Lv
+hs
+hs
+hs
+hs
+Gl
+hs
+Gl
+hs
+"}
+(9,1,1) = {"
+hs
+Qo
+Ur
+YP
+vf
+hu
+vf
+Ur
+Qy
+YJ
+qb
+db
+jr
+lz
+qD
+GT
+zM
+kg
+hs
+cj
+DB
+hs
+cj
+hs
+aF
+hs
+hs
+hs
+Gl
+"}
+(10,1,1) = {"
+Gl
+Dh
+tp
+tp
+Qo
+SV
+SV
+Go
+qW
+Ws
+vl
+gs
+bO
+Ag
+fy
+jC
+kj
+Wq
+cj
+cj
+qi
+Gl
+Rn
+Gl
+hs
+Gl
+Rn
+hs
+dN
+"}
+(11,1,1) = {"
+Rn
+SX
+tp
+oc
+Wn
+tp
+SV
+vf
+SM
+iY
+Rc
+Vj
+Bm
+gO
+nO
+dO
+vZ
+qb
+hs
+cj
+HB
+Jb
+Gl
+hs
+hs
+FX
+hs
+hs
+dN
+"}
+(12,1,1) = {"
+hs
+pd
+Qo
+Wn
+Qo
+pO
+Wn
+ZE
+Wu
+oW
+jW
+Jn
+Hv
+Ky
+AR
+Lp
+QV
+lS
+Ur
+Ur
+YP
+YP
+hs
+hs
+hs
+hs
+hs
+hs
+dN
+"}
+(13,1,1) = {"
+Gl
+Qo
+tp
+SV
+pO
+SV
+tp
+Ur
+Qa
+WH
+jW
+jW
+jW
+RJ
+Hw
+qb
+Zz
+jW
+nv
+bX
+qg
+Ur
+hs
+Rn
+hs
+hs
+Gl
+Gl
+dN
+"}
+(14,1,1) = {"
+hs
+Qo
+SV
+tp
+Qo
+tp
+oc
+vf
+Fp
+Sz
+FB
+Aw
+wr
+eS
+pH
+Oh
+yJ
+Qj
+VF
+nA
+ac
+EO
+GD
+hs
+hs
+fu
+ch
+Rn
+dN
+"}
+(15,1,1) = {"
+hs
+Qo
+SX
+pO
+im
+Wn
+Qo
+KN
+pF
+Or
+jY
+ve
+yH
+ZB
+aY
+kD
+AB
+YP
+qX
+Jx
+Fb
+KL
+Xo
+hs
+SD
+cP
+Gl
+dN
+dN
+"}
+(16,1,1) = {"
+Gl
+Qo
+tp
+SV
+pO
+SV
+tp
+Ur
+xU
+cE
+YP
+WL
+Ur
+DT
+YP
+jY
+Ur
+YP
+Ur
+Ur
+KZ
+Ur
+hs
+hs
+hs
+aF
+Qp
+dN
+dN
+"}
+(17,1,1) = {"
+hs
+Qo
+oc
+tp
+Qo
+SV
+SV
+Ur
+SK
+LI
+YP
+dV
+qA
+dY
+uR
+oQ
+Kc
+lF
+US
+Ur
+kq
+aF
+NU
+hs
+hs
+Gl
+hs
+dN
+GD
+"}
+(18,1,1) = {"
+Gl
+Qo
+Ur
+Rc
+CC
+Ur
+hn
+YP
+YP
+Mf
+Ur
+QH
+Dz
+Ur
+Ur
+Ec
+YP
+YP
+Ur
+Vb
+Ur
+Rn
+Gl
+hs
+Rn
+hs
+hs
+Rn
+hs
+"}
+(19,1,1) = {"
+Gl
+Jb
+YP
+Gc
+Dp
+ws
+UH
+rG
+YP
+QR
+YP
+Fq
+YP
+YP
+DY
+Zu
+zA
+CJ
+CN
+rS
+YP
+jW
+jW
+lS
+jW
+jW
+jW
+lS
+Gl
+"}
+(20,1,1) = {"
+hs
+hs
+YP
+IV
+hV
+kz
+vV
+ec
+Vb
+aH
+ct
+lZ
+PN
+YP
+Hk
+nH
+TQ
+FS
+xS
+GK
+Dl
+Fr
+Df
+WP
+Df
+Ah
+oH
+lS
+hs
+"}
+(21,1,1) = {"
+Gl
+aF
+Ur
+iR
+fo
+Kq
+zi
+Vm
+wa
+Jz
+Og
+Vq
+mT
+Tl
+bM
+mJ
+xu
+Yj
+Ps
+Ng
+Rq
+WX
+uD
+Qe
+ok
+bl
+Yz
+jW
+Gl
+"}
+(22,1,1) = {"
+Rn
+Ur
+Ur
+YP
+NA
+Bq
+ES
+PJ
+Ur
+oY
+dw
+VU
+aL
+lS
+sQ
+tH
+zH
+Uf
+tH
+GG
+Zh
+bQ
+fX
+eX
+zW
+UY
+jW
+jW
+dN
+"}
+(23,1,1) = {"
+hs
+YP
+ue
+Ur
+YP
+Vb
+al
+QG
+YP
+Ur
+lS
+dC
+jW
+Hw
+kN
+Xf
+VB
+jx
+ju
+cU
+pI
+rW
+rH
+iz
+AZ
+Gu
+lS
+Rn
+dN
+"}
+(24,1,1) = {"
+hs
+YP
+HV
+Ur
+ML
+SC
+bv
+jD
+QG
+Jb
+jW
+vg
+Wi
+ii
+dZ
+ed
+KR
+YF
+VD
+nS
+tA
+gJ
+GO
+Nq
+lS
+eT
+jW
+Gl
+dN
+"}
+(25,1,1) = {"
+hs
+YP
+gh
+Lh
+iF
+fe
+zc
+zL
+Ur
+Gl
+lS
+xm
+iW
+Ey
+kl
+UJ
+IP
+vZ
+hA
+sD
+VB
+us
+pN
+KY
+jW
+LF
+lS
+lS
+Rn
+"}
+(26,1,1) = {"
+hs
+Ur
+dB
+Ur
+Tv
+Zn
+ng
+bH
+iE
+Rn
+jW
+lS
+jW
+lS
+sA
+Yb
+XR
+Ev
+IG
+Qt
+fc
+fW
+vZ
+wd
+ze
+DK
+nV
+cV
+hs
+"}
+(27,1,1) = {"
+hs
+Ur
+YP
+YP
+hg
+HK
+RC
+YS
+Rc
+hs
+aF
+Gl
+Rn
+jW
+jW
+Om
+yr
+lS
+Om
+Om
+lS
+yr
+Om
+lS
+jW
+YI
+Rw
+jW
+hs
+"}
+(28,1,1) = {"
+hs
+Pi
+Gl
+Ur
+Ur
+Vb
+Rc
+wm
+Ur
+Gl
+hs
+Gl
+hs
+aF
+jW
+bK
+zB
+jW
+WQ
+Ar
+lS
+bf
+Qu
+jW
+lS
+jW
+jW
+jW
+Gl
+"}
+(29,1,1) = {"
+dN
+Gl
+hs
+hs
+Rn
+Gl
+Gl
+hs
+hs
+hs
+Gl
+Jb
+hs
+hs
+lS
+Bf
+sF
+jW
+Xc
+co
+jW
+Xk
+Jm
+jW
+Jb
+Gl
+Rn
+hs
+dN
+"}
+(30,1,1) = {"
+dN
+dN
+hs
+hs
+aF
+hs
+Rn
+hs
+hs
+aF
+hs
+GD
+Gl
+hs
+jW
+jW
+lS
+lS
+jW
+jW
+jW
+lS
+jW
+jW
+Rn
+hs
+hs
+dN
+dN
+"}
+(31,1,1) = {"
+dN
+dN
+dN
+dN
+hs
+Jb
+hs
+Gl
+hs
+hs
+hs
+hs
+hs
+hs
+Pi
+hs
+Gl
+hs
+hs
+hs
+Gl
+Gl
+hs
+hs
+hs
+hs
+dN
+dN
+dN
+"}

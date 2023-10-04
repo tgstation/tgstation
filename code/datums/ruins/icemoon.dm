@@ -24,12 +24,6 @@
 	description = "Surprised to see us here?"
 	suffix = "icemoon_surface_asteroid.dmm"
 
-/datum/map_template/ruin/icemoon/engioutpost
-	name = "Engineer Outpost"
-	id = "engioutpost"
-	description = "Blown up by an unfortunate accident."
-	suffix = "icemoon_surface_engioutpost.dmm"
-
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
 	id = "ice_fountain"
@@ -66,6 +60,13 @@
 	id = "smoking_room"
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
+
+/datum/map_template/ruin/icemoon/underground/unlucky_engineer
+	name = "Ruined Engineering Outpost"
+	id = "unlucky_engineer"
+	description = "A bloody hand reaches for a ruined APC. Is whoever - or whatever destroyed this place still lurking in its shadows?"
+	suffix = "icemoon_unlucky_engineer.dmm"
+	always_place = TRUE
 
 // above and below ground together
 
