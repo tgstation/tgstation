@@ -15,6 +15,8 @@
 			new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[layertext]"
 		new_overlay.color = passed_color
 		return_list += new_overlay
+		if(added_accessory.is_emissive)
+			return_list += emissive_appearance_copy(new_overlay, host)
 
 	for(var/list_item in added_accessory.body_slots)
 		if(!host.get_bodypart(list_item) && !istype(host, /mob/living/carbon/human/dummy/extra_tall))
@@ -26,6 +28,9 @@
 			new_overlay.icon_state = "m_[list_item]_[added_accessory.icon_state]_[layertext]"
 		new_overlay.color = passed_color
 		return_list += new_overlay
+		if(added_accessory.is_emissive)
+			return_list += emissive_appearance_copy(new_overlay, host)
+
 	if(istype(host, /mob/living/carbon/human/dummy/extra_tall))
 		var/mob/living/carbon/human/dummy/extra_tall/bleh = host
 		bleh.extra_bodyparts += return_list
