@@ -25,13 +25,24 @@
 	speed = 5
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
+	///are we wielding a weapon?
+	var/weapon_wielder = FALSE
 	///the ore we are holding if any
 	var/obj/held_ore
-	///do we telegraph the attack?
-	var/telegraph_attack = FALSE
+	///overlay for neutral stance
+	var/mutable_appearance/neutral_stance
+	///overlay for attacking stance
+	var/mutable_appearance/attack_stance
+	///overlay when we hold an ore
+	var/mutable_appearance/ore_overlay
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
+
+	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
+	neutral_stance = mutable_appearance(icon, "mook_axe_overlay")
+	attack_stance = mutable_appearance(icon, "axe_strike_overlay")
+
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_smasher)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
@@ -39,7 +50,7 @@
 	if(gender == MALE)
 		var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
 		leap.Grant(src)
-		telegraph_attack = TRUE
+		weapon_wielder = TRUE
 
 	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
 	jump.Grant(src)
@@ -60,28 +71,18 @@
 	held_ore = null
 	update_appearance(UPDATE_OVERLAYS)
 
-/mob/living/basic/mining/mook/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-
-	if(!. || !proximity_flag || held_ore)
-		return
-
-	if(!istype(attack_target, /obj/item/stack/ore))
-		return
-
-	var/obj/item/ore_target = attack_target
-	ore_target.forceMove(src)
-
 /mob/living/basic/mining/mook/proc/pre_attack(mob/living/attacker, atom/target)
 	SIGNAL_HANDLER
+
+	if(istype(target, /obj/item/stack/ore) && isnull(held_ore))
+		var/obj/item/ore_target = target
+		ore_target.forceMove(src)
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(istype(target, /obj/structure/material_stand))
 		if(held_ore)
 			held_ore.forceMove(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
-
-	if(!telegraph_attack) //we might not have an axe
-		return
 
 	if(attack_state == MOOK_ATTACK_STRIKE)
 		return COMPONENT_HOSTILE_NO_ATTACK
@@ -112,14 +113,18 @@
 	if(stat == DEAD)
 		return
 
+	if(attack_state == MOOK_ATTACK_STRIKE && weapon_wielder)
+		. += attack_stance
+		return
+
 	if(attack_state != MOOK_ATTACK_NEUTRAL)
 		return
 
 	if(held_ore)
-		. +=  mutable_appearance(icon, "mook_ore_overlay")
+		. +=  ore_overlay
 
-	if(gender == MALE)
-		. += mutable_appearance(icon, "mook_axe_overlay")
+	if(weapon_wielder)
+		. += neutral_stance
 
 /mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
@@ -154,30 +159,16 @@
 	attack_sound = 'sound/weapons/stringsmash.ogg'
 	death_sound = 'sound/voice/mook_death.ogg'
 //	ai_controller = /datum/ai_controller/basic_controller/mook/bard
-	telegraph_attack = TRUE
+	weapon_wielder = TRUE
 	///our guitar
 	var/obj/item/instrument/guitar/held_guitar
 
 /mob/living/basic/mining/mook/bard/Initialize(mapload)
 	. = ..()
+	neutral_stance = mutable_appearance(icon, "bard_overlay")
+	attack_stance = mutable_appearance(icon, "bard_strike")
 	held_guitar = new(src)
-	update_appearance(UPDATE_OVERLAYS)
-
-/mob/living/basic/mining/mook/bard/update_overlays()
-	. = ..()
-	if(stat == DEAD)
-		return
-
-	if(isnull(held_guitar))
-		return
-
-	switch(attack_state)
-		if(MOOK_ATTACK_NEUTRAL)
-			. += mutable_appearance(icon, "mook_bard")
-		if(MOOK_ATTACK_STRIKE)
-			. += mutable_appearance(icon, "bard_strike") //smash them with the guitar
-
-
+	update_appearance()
 
 
 /datum/action/cooldown/mob_cooldown/mook_ability
