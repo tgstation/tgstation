@@ -381,18 +381,22 @@
 	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
 
-/mob/living/basic/revenant/update_icon()
+/mob/living/basic/revenant/update_icon_state()
 	. = ..()
 	if(revealed)
-		if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-			if(draining)
-				icon_state = icon_drain
-			else
-				icon_state = icon_stun
+		icon_state = icon_reveal
+		return
+
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		if(draining)
+			icon_state = icon_drain
 		else
-			icon_state = icon_reveal
-	else
-		icon_state = icon_idle
+			icon_state = icon_stun
+
+		return
+
+	icon_state = icon_idle
+
 
 /mob/living/basic/revenant/proc/cast_check(essence_cost)
 	if(QDELETED(src))
