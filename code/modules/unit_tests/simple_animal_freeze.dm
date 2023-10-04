@@ -106,7 +106,6 @@
 		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/heretic_summon/armsy,
 		/mob/living/simple_animal/hostile/heretic_summon/armsy/prime,
-		/mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror,
 		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/simple_animal/hostile/illusion/escape,
 		/mob/living/simple_animal/hostile/illusion/mirage,
