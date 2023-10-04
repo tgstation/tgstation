@@ -155,7 +155,7 @@
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(revealed && essence <= 0)
-		death()
+		INVOKE_ASYNC(src, PROC_REF(death))
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(unreveal_time && world.time >= unreveal_time)
