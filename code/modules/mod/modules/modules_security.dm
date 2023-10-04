@@ -412,6 +412,8 @@
 
 /// Swaps around where a creature is, when they move or when they're first detected
 /obj/item/mod/module/active_sonar/proc/sort_creature_angle(mob/living/creature, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
 	if(keyed_creatures[creature])
 		var/oldgroup = keyed_creatures[creature]
 		sorted_creatures[oldgroup] -= creature
@@ -425,6 +427,8 @@
 
 /// Swaps all creatures when mod.wearer moves
 /obj/item/mod/module/active_sonar/proc/sort_all_creatures(mob/living/wearer, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
 	for(var/mob/living/creature as anything in keyed_creatures)
 		sort_creature_angle(creature) // Kinda spaghetti but it honestly seems like the shortest path to the same result
 
@@ -454,9 +458,8 @@
 		return
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [detect_living_creatures()] living beings nearby!"))
-	for(var/list/sublist in sorted_creatures)
-		for(var/mob/living/creature in sublist)
-			new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
+	for(var/mob/living/creature as anything in keyed_creatures)
+		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
 
 #define SHOOTING_ASSISTANT_OFF "Currently Off"
 #define STORMTROOPER_MODE "Quick Fire Stormtrooper"
