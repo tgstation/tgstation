@@ -5,7 +5,7 @@
 	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
 	// Typecache for similarly handled objects in attackby_proc
-	var/list/attackby_typecache
+	var/list/attackby_hit_typecache
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
@@ -24,7 +24,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-	attackby_typecache = typecacheof(list(
+	attackby_hit_typecache = typecacheof(list(
 		/obj/item/melee/roastingstick,
 		/obj/item/toy/crayon/spraycan,
 		/obj/item/clothing/mask/cigarette
@@ -160,7 +160,7 @@
 	var/atom/atom_source = source
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(is_type_in_typecache(item, attackby_typecache))
+	if(is_type_in_typecache(item, attackby_hit_typecache))
 		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
