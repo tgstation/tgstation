@@ -147,9 +147,6 @@
 /obj/structure/window/plasma/spawner/directional/east,
 /obj/structure/window/plasma/spawner/directional/north,
 /obj/machinery/clonepod{
-	desc = "A seemingly older and different piece of technology that was capable of near perfect clones over much longer timeframes than now almost completely banned cloning vat technology.<br>The glass dome seems to be dirty and frosted over, obscuring the contents of the vat. The status and operating panel seems to have been hijacked, a familiar 'card' connected to its operations interface."
-	},
-/obj/machinery/clonepod{
 	desc = "A seemingly older and different piece of technology that was capable of near perfect clones over much longer timeframes than now almost completely banned cloning vat technology.<br>The glass dome seems to be dirty and frosted over, obscuring the contents of the vat. The status and operating panel seems to have been hijacked, a familiar 'card' connected to its operations interface.";
 	name = "biovat"
 	},
