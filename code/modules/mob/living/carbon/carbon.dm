@@ -459,17 +459,18 @@
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 
+	var/need_mob_update = FALSE
 	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		adjustToxLoss(-3)
+		need_mob_update += adjustToxLoss(-3, updating_health = FALSE)
 
 	for(var/i = 0 to distance)
 		if(blood)
 			if(location)
 				add_splatter_floor(location)
 			if(vomit_flags & MOB_VOMIT_HARM)
-				adjustBruteLoss(3)
+				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
 		else
 			if(location)
 				location.add_vomit_floor(src, vomit_type, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
@@ -477,6 +478,8 @@
 		location = get_step(location, starting_dir)
 		if (location?.is_blocked_turf())
 			break
+	if(need_mob_update) // so we only have to call updatehealth() once as opposed to n times
+		updatehealth()
 
 	return TRUE
 
