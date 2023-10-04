@@ -4,7 +4,7 @@
 	var/datum/callback/tool_act_callback
 	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
-
+	// Typecache for similarly handled objects in attackby_proc
 	var/list/attackby_typecache
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
@@ -24,7 +24,6 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-	// Cache similarly-handled objects
 	attackby_typecache = typecacheof(list(
 		/obj/item/melee/roastingstick,
 		/obj/item/toy/crayon/spraycan,
