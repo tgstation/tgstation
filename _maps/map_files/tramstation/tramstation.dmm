@@ -26376,7 +26376,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -32991,11 +32990,6 @@
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
-"kMw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron,
-/area/station/maintenance/disposal/incinerator)
 "kMD" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38842,10 +38836,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
-"mNo" = (
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "mNp" = (
 /obj/structure/chair/sofa/middle{
 	dir = 8
@@ -43448,7 +43438,6 @@
 "ovK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/light/small/directional/south{
 	dir = 1
 	},
@@ -43640,7 +43629,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "ozM" = (
@@ -53398,10 +53386,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
-"scF" = (
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/carpet,
-/area/station/cargo/miningdock)
 "scO" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
@@ -60934,20 +60918,6 @@
 	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
-"uEr" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/white/warning{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/maintenance/tram/left)
 "uEw" = (
 /obj/machinery/button/door/directional/east{
 	id = "miningdorm3";
@@ -64687,18 +64657,6 @@
 	dir = 1
 	},
 /area/station/commons/fitness)
-"vSc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/white/warning,
-/turf/open/floor/iron,
-/area/station/maintenance/tram/right)
 "vSI" = (
 /turf/open/openspace,
 /area/station/cargo/storage)
@@ -65069,7 +65027,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vZc" = (
-/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -90537,7 +90494,7 @@ qQq
 hvm
 qQq
 qQq
-uEr
+lyV
 ncF
 elr
 elr
@@ -100097,7 +100054,7 @@ sZA
 daJ
 gqp
 gqp
-mNo
+gqp
 gqp
 qHs
 aaa
@@ -110109,7 +110066,7 @@ hkW
 rCd
 fFa
 gqV
-kMw
+gqV
 tTK
 xWj
 cdN
@@ -114674,7 +114631,7 @@ kDi
 cJX
 uGW
 kot
-scF
+sOS
 iRL
 abM
 arE
@@ -115203,7 +115160,7 @@ abM
 abM
 aaa
 mbJ
-vSc
+wip
 hFC
 hFC
 dBM
