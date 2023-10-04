@@ -176,8 +176,8 @@
 			Requires a reload every shot - you can use a wrench on crossbar to try and force a second rod in, but risks a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
-	inhand_icon_state = "speargun"
-	worn_icon_state = "speargun"
+	inhand_icon_state = "rebarxbow"
+	worn_icon_state = "rebarxbow"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	must_hold_to_load = FALSE
 	mag_display = FALSE
@@ -233,8 +233,8 @@
 			Holds three shots, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbowsyndie"
-	inhand_icon_state = "speargun"
-	worn_icon_state = "speargun"
+	inhand_icon_state = "rebarxbowsyndie"
+	worn_icon_state = "rebarxbowsyndie"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	must_hold_to_load = FALSE
 	mag_display = FALSE
