@@ -37,8 +37,7 @@
 
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
-		adjustFireLoss(-1.5 * seconds_per_tick, TRUE)
+		adjustBruteLoss(-3 * seconds_per_tick)
 
 	return ..()
 
