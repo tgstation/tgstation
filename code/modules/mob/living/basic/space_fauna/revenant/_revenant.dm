@@ -23,6 +23,8 @@
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 35
 
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	response_disarm_continuous = "swings through"
@@ -31,13 +33,11 @@
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = INFINITY
-	harm_intent_damage = 0
-	friendly_verb_continuous = "touches"
-	friendly_verb_simple = "touch"
-	status_flags = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
+
+	status_flags = NONE
 	density = FALSE
 	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
@@ -47,27 +47,46 @@
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/revenant
 
+	/// The icon we use while just floating around.
 	var/icon_idle = "revenant_idle"
+	/// The icon we use while in a revealed state.
 	var/icon_reveal = "revenant_revealed"
+	/// The icon we use when stunned (temporarily frozen)
 	var/icon_stun = "revenant_stun"
+	/// The icon we use while draining someone.
 	var/icon_drain = "revenant_draining"
-	/// Are we currently in stasis (ectoplasm)
-	var/stasis = FALSE
-	var/essence = 75 //The resource, and health, of revenants.
-	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
-	var/essence_regenerating = TRUE //If the revenant regenerates essence or not
-	var/essence_regen_amount = 2.5 //How much essence regenerates per second
-	var/essence_accumulated = 0 //How much essence the revenant has stolen
-	var/essence_excess = 0 //How much stolen essence avilable for unlocks
-	var/revealed = FALSE //If the revenant can take damage from normal sources.
-	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
-	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
-	var/inhibited = FALSE //If the revenant's abilities are blocked by a chaplain's power.
 
-	var/draining = FALSE //If the revenant is draining someone.
-	var/list/drained_mobs = list() //Cannot harvest the same mob twice
-	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
+	/// Are we currently dormant (ectoplasm'd)?
+	var/dormant = FALSE
+	/// If the revenant can take damage from normal sources.
+	var/revealed = FALSE
+	/// If the revenant's abilities are blocked by a holy power.
+	var/inhibited = FALSE
+	/// Are we currently draining someone?
+	var/draining = FALSE
+	/// Have we already given this revenant abilities?
 	var/generated_objectives_and_spells = FALSE
+	/// Have we already given this revenant abilities?
+	var/generated_objectives_and_spells = FALSE
+
+	/// The resource, and health, of revenants.
+	var/essence = 75
+	/// The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
+	var/max_essence = 75
+	/// If the revenant regenerates essence or not
+	var/essence_regenerating = TRUE
+	/// How much essence regenerates per second
+	var/essence_regen_amount = 2.5
+	/// How much essence the revenant has stolen
+	var/essence_accumulated = 0
+	/// How much stolen essence is available for unlocks
+	var/essence_excess = 0
+	/// How long the revenant is revealed for, is about 2 seconds times this var.
+	var/unreveal_time = 0
+	/// How long the revenant is stunned for, is about 2 seconds times this var.
+	var/unstun_time = 0
+	/// How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
+	var/perfectsouls = 0
 
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
@@ -128,23 +147,28 @@
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/basic/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stasis)
+	if(dormant)
 		return
+
 	var/change_in_time = DELTA_WORLD_TIME(SSmobs)
+
 	if(revealed && essence <= 0)
 		death()
+
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, span_revenboldnotice("You are once more concealed."))
+
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
 		REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 		to_chat(src, span_revenboldnotice("You can move again!"))
-	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
-		essence = min(essence + (essence_regen_amount * change_in_time), essence_regen_cap)
+
+	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
+		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
@@ -152,7 +176,7 @@
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"] E"
+	. += "Current Essence: [essence >= max_essence ? essence : "[essence] / [max_essence]"] E"
 	. += "Total Essence Stolen: [essence_accumulated] SE"
 	. += "Unused Stolen Essence: [essence_excess] SE"
 	. += "Perfect Souls Stolen: [perfectsouls]"
@@ -162,7 +186,7 @@
 		return
 
 	var/essencecolor = "#8F48C6"
-	if(essence > essence_regen_cap)
+	if(essence > max_essence)
 		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 	else if(essence <= 0)
 		essencecolor = "#1D2953" //oh jeez you're dying
@@ -223,10 +247,10 @@
 	orbit(target, orbitsize)
 
 /mob/living/basic/revenant/death()
-	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
+	if(!revealed || dormant) //Revenants cannot die if they aren't revealed //or are already dead
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-	stasis = TRUE
+	dormant = TRUE
 
 	visible_message(
 		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
@@ -244,7 +268,7 @@
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
+	var/reforming_essence = max_essence //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
 	goop.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	goop.old_key = client.key //If the essence reforms, the old revenant is put back in the body
@@ -323,7 +347,7 @@
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/basic/revenant/bullet_act()
-	if(!revealed || stasis)
+	if(!revealed || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
@@ -473,7 +497,7 @@
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	alpha = 255
-	stasis = FALSE
+	dormant = FALSE
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(QDELETED(src))

@@ -110,13 +110,13 @@
 	change_essence_amount(essence_drained, FALSE, target)
 
 	if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-		essence_regen_cap += 5
-		to_chat(src, span_revenboldnotice("The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
+		max_essence += 5
+		to_chat(src, span_revenboldnotice("The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [max_essence]."))
 
 	if(essence_drained > 90)
-		essence_regen_cap += 15
+		max_essence += 15
 		perfectsouls++
-		to_chat(src, span_revenboldnotice("The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
+		to_chat(src, span_revenboldnotice("The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [max_essence]."))
 
 	to_chat(src, span_revennotice("[target]'s soul has been considerably weakened and will yield no more essence for the time being."))
 	target.visible_message(

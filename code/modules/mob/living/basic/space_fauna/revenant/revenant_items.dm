@@ -83,7 +83,7 @@
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.essence = essence
-	revenant.essence_regen_cap = essence
+	revenant.max_essence = essence
 	revenant.death_reset()
 	revenant.key = key_of_revenant
 	revenant = null
