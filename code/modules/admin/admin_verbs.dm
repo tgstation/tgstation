@@ -1158,7 +1158,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		"Enter typepath of a mob you'd like to make your chain from.",
 		"Typepath",
 		"[/mob/living/basic/pet/dog/corgi/ian]",
-	) as null|text
+	)
 
 	if (isnull(attempted_target_path))
 		return //The user pressed "Cancel"
