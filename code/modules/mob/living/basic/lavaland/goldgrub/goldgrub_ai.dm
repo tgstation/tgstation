@@ -123,16 +123,6 @@
 /datum/ai_behavior/use_mob_ability/burrow
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-///mine walls to look for food!
-/datum/ai_planning_subtree/mine_walls
-
-/datum/ai_planning_subtree/mine_walls/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_WALL))
-		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_TARGET_MINERAL_WALL)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_TARGET_MINERAL_WALL)
-
-
 /datum/pet_command/grub_spit
 	command_name = "Spit"
 	command_desc = "Ask your grub pet to spit out its ores."

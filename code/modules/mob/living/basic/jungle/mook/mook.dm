@@ -22,19 +22,25 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_sound = 'sound/voice/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook
+	speed = 5
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
 	///the ore we are holding if any
 	var/obj/held_ore
+	///do we telegraph the attack?
+	var/telegraph_attack = FALSE
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_smasher)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
 	if(gender == MALE)
 		var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
 		leap.Grant(src)
+		telegraph_attack = TRUE
+
 	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
 	jump.Grant(src)
 	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
@@ -74,7 +80,7 @@
 			held_ore.forceMove(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(gender == FEMALE) //females dont have an axe
+	if(!telegraph_attack) //we might not have an axe
 		return
 
 	if(attack_state == MOOK_ATTACK_STRIKE)
@@ -138,6 +144,41 @@
 /mob/living/basic/mining/mook/death()
 	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..."//Can you guess the twist
 	return ..()
+
+/mob/living/basic/mining/mook/bard
+	desc = "It's holding a guitar??"
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	gender = FEMALE
+	pass_flags_self = LETPASSTHROW
+	attack_sound = 'sound/weapons/stringsmash.ogg'
+	death_sound = 'sound/voice/mook_death.ogg'
+//	ai_controller = /datum/ai_controller/basic_controller/mook/bard
+	telegraph_attack = TRUE
+	///our guitar
+	var/obj/item/instrument/guitar/held_guitar
+
+/mob/living/basic/mining/mook/bard/Initialize(mapload)
+	. = ..()
+	held_guitar = new(src)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/mook/bard/update_overlays()
+	. = ..()
+	if(stat == DEAD)
+		return
+
+	if(isnull(held_guitar))
+		return
+
+	switch(attack_state)
+		if(MOOK_ATTACK_NEUTRAL)
+			. += mutable_appearance(icon, "mook_bard")
+		if(MOOK_ATTACK_STRIKE)
+			. += mutable_appearance(icon, "bard_strike") //smash them with the guitar
+
+
+
 
 /datum/action/cooldown/mob_cooldown/mook_ability
 	///are we a mook?
@@ -283,6 +324,7 @@
 	base_pixel_y = -16
 	base_pixel_x = -16
 	duration = 10
+
 
 #undef MOOK_ATTACK_NEUTRAL
 #undef MOOK_ATTACK_WARMUP

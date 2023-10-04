@@ -28,7 +28,8 @@
 		return
 	if(get_dist(living_pawn, home) < controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
 		return
-	if(locate(/obj/item/stack/ore) in living_pawn || storm_approaching)
+	if(storm_approaching || (locate(/obj/item/stack/ore) in living_pawn))
+		controller.clear_blackboard_key(BB_TARGET_MINERAL_WALL)
 		return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook
@@ -82,7 +83,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
 	///if we have ores to deposit or a storm is approaching, dont wander away
-	if(locate(/obj/item/stack/ore) in living_pawn || storm_approaching)
+	if(storm_approaching || (locate(/obj/item/stack/ore) in living_pawn))
 		return
 
 	if(controller.blackboard_key_exists(BB_HOME_VILLAGE))
