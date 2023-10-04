@@ -144,7 +144,7 @@
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence + (essence_regen_amount * change_in_time), essence_regen_cap)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
-	update_spooky_icon()
+	update_appearance(UPDATE_ICON)
 	update_health_hud()
 	..()
 
@@ -322,6 +322,28 @@
 	update_mob_action_buttons()
 	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
 
+/// Incorporeal move check: blocked by holy-watered tiles and salt piles.
+/mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
+	var/turf/open/floor/step_turf = get_turf(destination)
+	if(isnull(step_turf))
+		return TRUE // what? whatever let it happen
+
+	if(step_turf.turf_flags & NOJAUNT)
+		to_chat(src, span_warning("Some strange aura is blocking the way."))
+		return FALSE
+
+	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
+		balloon_alert("blocked by salt!")
+		reveal(2 SECONDS)
+		stun(2 SECONDS)
+		return FALSE
+
+	if(locate(/obj/effect/blessing) in step_turf)
+		to_chat(src, span_warning("Holy energies block your path!"))
+		return FALSE
+
+	return TRUE
+
 //reveal, stun, icon updates, cast checks, and essence changing
 /mob/living/basic/revenant/proc/reveal(time)
 	if(QDELETED(src))
@@ -337,7 +359,7 @@
 	else
 		to_chat(src, span_revenwarning("You have been revealed!"))
 		unreveal_time = unreveal_time + time
-	update_spooky_icon()
+	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
 
 /mob/living/basic/revenant/proc/stun(time)
@@ -356,10 +378,11 @@
 		balloon_alert(src, "can't move!")
 		unstun_time = unstun_time + time
 
-	update_spooky_icon()
+	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
 
-/mob/living/basic/revenant/proc/update_spooky_icon()
+/mob/living/basic/revenant/update_icon()
+	. = ..()
 	if(revealed)
 		if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 			if(draining)
@@ -404,6 +427,18 @@
 	update_mob_action_buttons()
 	return TRUE
 
+/mob/living/basic/revenant/proc/death_reset()
+	revealed = FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+	unreveal_time = 0
+	unstun_time = 0
+	inhibited = FALSE
+	draining = FALSE
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
+	invisibility = INVISIBILITY_REVENANT
+	alpha = 255
+	stasis = FALSE
+
 /mob/living/basic/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(QDELETED(src))
 		return
@@ -421,35 +456,5 @@
 		else
 			to_chat(src, span_revenminor("Lost [essence_amt]E[source ? " from [source]":""]."))
 	return 1
-
-/mob/living/basic/revenant/proc/death_reset()
-	revealed = FALSE
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-	unreveal_time = 0
-	unstun_time = 0
-	inhibited = FALSE
-	draining = FALSE
-	incorporeal_move = INCORPOREAL_MOVE_JAUNT
-	invisibility = INVISIBILITY_REVENANT
-	alpha = 255
-	stasis = FALSE
-
-/// Incorporeal move check: blocked by holy-watered tiles and salt piles.
-/mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
-	var/turf/open/floor/stepTurf = get_turf(destination)
-	if(stepTurf)
-		var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
-		if(salt)
-			to_chat(src, span_warning("[salt] bars your passage!"))
-			reveal(20)
-			stun(20)
-			return FALSE
-		if(stepTurf.turf_flags & NOJAUNT)
-			to_chat(src, span_warning("Some strange aura is blocking the way."))
-			return FALSE
-		if(locate(/obj/effect/blessing) in stepTurf)
-			to_chat(src, span_warning("Holy energies block your path!"))
-			return FALSE
-	return TRUE
 
 #undef REVENANT_STUNNED_TRAIT
