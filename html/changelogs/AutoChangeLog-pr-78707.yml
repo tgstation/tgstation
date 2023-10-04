@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Moved a lot of maintenance spawnpoints out of non-maintenance rooms. Some antags (paradox clone, fugitives, nightmares, spiders) are now less likely to spawn in obvious places like the morgue, tech storage, or dorms rooms."
