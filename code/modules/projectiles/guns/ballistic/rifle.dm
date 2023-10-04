@@ -23,7 +23,7 @@
 		bolt_locked = TRUE
 		update_appearance()
 		return
-	drop_bolt(user)
+
 
 /obj/item/gun/ballistic/rifle/can_shoot()
 	if (bolt_locked)
@@ -168,6 +168,122 @@
 	. = ..()
 	if(.)
 		name = "\improper Obrez Moderna" // wear it loud and proud
+
+/obj/item/gun/ballistic/rifle/rebarxbow
+	name = "Heated Rebar Crossbow"
+	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
+			Requires a reload every shot - you can use a wrench on crossbar to try and force a second rod in, but risks a misfire, or worse..."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "rebarxbow"
+	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	must_hold_to_load = FALSE
+	mag_display = FALSE
+	empty_indicator = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	can_modify_ammo = TRUE
+	initial_caliber = CALIBER_REBAR
+	alternative_caliber = CALIBER_REBAR_FORCED
+	alternative_ammo_misfires = TRUE
+	bolt_wording = "bowstring"
+	magazine_wording = "rod"
+	cartridge_wording = "rod"
+	misfire_probability = 25
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow
+	fire_sound = 'sound/items/syringeproj.ogg'
+	can_be_sawn_off = FALSE
+	tac_reloads = FALSE
+	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
+	if (bolt_locked == FALSE)
+		balloon_alert(user, "bowstring loosened")
+		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+		process_chamber(FALSE, FALSE, FALSE)
+		bolt_locked = TRUE
+		update_appearance()
+		return
+	drop_bolt(user)
+/obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
+	if(do_after(user, 3 SECONDS, target = src))
+		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
+		if (user)
+			balloon_alert(user, "bowstring drawn")
+		chamber_round()
+		bolt_locked = FALSE
+		update_appearance()
+
+
+/obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
+	if (bolt_locked)
+		return FALSE
+	return ..()
+
+/obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
+	. = ..()
+	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
+
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie
+	name = "Syndicate Rebar Crossbow"
+	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed.\
+			Holds three shots, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "rebarxbowsyndie"
+	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	must_hold_to_load = FALSE
+	mag_display = FALSE
+	empty_indicator = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	can_modify_ammo = TRUE
+	initial_caliber = CALIBER_REBAR_SYNDIE
+	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
+	alternative_ammo_misfires = FALSE
+	bolt_wording = "bowstring"
+	magazine_wording = "rod"
+	cartridge_wording = "rod"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbowsyndie
+	fire_sound = 'sound/items/syringeproj.ogg'
+	can_be_sawn_off = FALSE
+	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie/rack(mob/user = null)
+	if (bolt_locked == FALSE)
+		balloon_alert(user, "bowstring loosened")
+		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+		process_chamber(FALSE, FALSE, FALSE)
+		bolt_locked = TRUE
+		update_appearance()
+		return
+	drop_bolt(user)
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie/drop_bolt(mob/user = null)
+	if(do_after(user, 1 SECONDS, target = src)) //shorter delay as it wasnt made by some idiot in a closet, plus it has the 3 shots
+		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
+		if (user)
+			balloon_alert(user, "bowstring drawn")
+		chamber_round()
+		bolt_locked = FALSE
+		update_appearance()
+
+
+
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie/can_shoot()
+	if (bolt_locked)
+		return FALSE
+	return ..()
+
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie/examine(mob/user)
+	. = ..()
+	. += "The crossbow is [bolt_locked ? "ready" : "not ready"] to fire."
+/obj/item/gun/ballistic/rifle/rebarxbowsyndie/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"

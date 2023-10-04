@@ -47,3 +47,34 @@
 	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -5
 	shrapnel_type = /obj/item/ammo_casing/harpoon
+
+// Rebar (Rebar Crossbow)
+/obj/projectile/bullet/rebar
+	name = "rebar"
+	icon_state = "rebar"
+	damage = 40
+	stamina = 20
+	speed = 0.4
+	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
+	armour_penetration = 12
+	wound_bonus = 0
+	bare_wound_bonus = 20
+	embedding = list(embed_chance=60, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=10)
+	embed_falloff_tile = -5
+	wound_falloff_tile = -2
+	shrapnel_type = /obj/item/stack/rods
+
+/obj/projectile/bullet/rebarsyndie
+	name = "rebar"
+	icon_state = "rebar"
+	damage = 50
+	stamina = 20
+	speed = 0.4
+	dismemberment = 4 //It's a budget sniper rifle.
+	armour_penetration = 25 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
+	wound_bonus = 10
+	bare_wound_bonus = 30
+	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
+	embed_falloff_tile = -3
+	shrapnel_type = /obj/item/stack/rods
+
