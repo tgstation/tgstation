@@ -186,13 +186,13 @@
 	tangle.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
-/mob/living/basic/venus_human_trap/RangedAttack(atom/target)
+/mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
 		return
-	var/datum/action/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
 	if(!istype(tangle_ability))
 		return
-	tangle_ability.Trigger(target = target)
+	tangle_ability.Trigger(target = victim)
 
 /mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
