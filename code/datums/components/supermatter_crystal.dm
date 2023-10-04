@@ -26,8 +26,7 @@
 
 	attackby_hit_typecache = typecacheof(list(
 		/obj/item/melee/roastingstick,
-		/obj/item/toy/crayon/spraycan,
-		/obj/item/clothing/mask/cigarette
+		/obj/item/toy/crayon/spraycan
 	))
 
 /datum/component/supermatter_crystal/Destroy(force, silent)
