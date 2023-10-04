@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - refactor: "fixed many instances of updatehealth() either being called needlessly or not at all within on_mob_life() and in various other parts of the code"
-  - refactor: "damage procs now return useful information--the actual net change in damage on the mob. added a unit test for this"

@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Modify the threat level for station traits before dynamic can be Initialized. List(instance = threat_reduction)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
+/// Rulesets which have been forcibly enabled or disabled
+GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
 /datum/game_mode/dynamic
 	// Threat logging vars
