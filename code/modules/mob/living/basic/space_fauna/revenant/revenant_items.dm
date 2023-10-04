@@ -13,29 +13,20 @@
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(try_reform)), 600)
-
-/obj/item/ectoplasm/revenant/proc/scatter()
-	qdel(src)
-
-/obj/item/ectoplasm/revenant/proc/try_reform()
-	if(reforming)
-		reforming = FALSE
-		reform()
-	else
-		inert = TRUE
-		visible_message(span_warning("[src] settles down and seems lifeless."))
+	addtimer(CALLBACK(src, PROC_REF(try_reform)), 1 MINUTES)
 
 /obj/item/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
 		return ..()
-	user.visible_message(span_notice("[user] scatters [src] in all directions."), \
-		span_notice("You scatter [src] across the area. The particles slowly fade away."))
+	user.visible_message(
+		span_notice("[user] scatters [src] in all directions."),
+		span_notice("You scatter [src] across the area. The particles slowly fade away."),
+	)
 	user.dropItemToGround(src)
 	scatter()
 
 /obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	. = ..()
 	if(inert)
 		return
 	visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
@@ -47,6 +38,17 @@
 		. += span_revennotice("It seems inert.")
 	else if(reforming)
 		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
+
+/obj/item/ectoplasm/revenant/proc/scatter()
+	qdel(src)
+
+/obj/item/ectoplasm/revenant/proc/try_reform()
+	if(reforming)
+		reforming = FALSE
+		reform()
+	else
+		inert = TRUE
+		visible_message(span_warning("[src] settles down and seems lifeless."))
 
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)

@@ -277,6 +277,7 @@
 	goop.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	goop.old_key = client.key //If the essence reforms, the old revenant is put back in the body
 	goop.revenant = src
+	forceMove(goop)
 
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
@@ -494,14 +495,15 @@
 /mob/living/basic/revenant/proc/death_reset()
 	revealed = FALSE
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+	forceMove(get_turf(src))
 	unreveal_time = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
+	dormant = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	alpha = 255
-	dormant = FALSE
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
 	if(QDELETED(src))
