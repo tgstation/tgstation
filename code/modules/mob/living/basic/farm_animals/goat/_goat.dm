@@ -130,10 +130,6 @@
 			qdel(target)
 			eaten = TRUE
 
-	if(!eaten)
-		stack_trace("Goat [src] somehow had eat_plant() callen on it with [english_list(plants)], and there was no behavior to handle it!")
-		return
-
 	if(prob(10))
 		say("Nom") // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
