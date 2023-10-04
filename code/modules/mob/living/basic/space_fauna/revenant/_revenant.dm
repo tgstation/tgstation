@@ -116,6 +116,7 @@
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
+	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	set_random_revenant_name()
 
 	GLOB.revenant_relay_mobs |= src
@@ -145,15 +146,16 @@
 	mind.add_antag_datum(/datum/antagonist/revenant)
 	return TRUE
 
-//Life, Stat, Hud Updates, and Say
-/mob/living/basic/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(dormant)
-		return
+/// Signal Handler Injection to handle Life() stuff for revenants
+/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+	SIGNAL_HANDLER
 
-	var/change_in_time = DELTA_WORLD_TIME(SSmobs)
+	if(dormant)
+		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(revealed && essence <= 0)
 		death()
+		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
@@ -168,11 +170,12 @@
 		to_chat(src, span_revenboldnotice("You can move again!"))
 
 	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
+		var/change_in_time = DELTA_ WORLD_TIME(SSmobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
+
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
-	..()
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
@@ -220,7 +223,7 @@
 	if(!essence)
 		death()
 
-/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
@@ -232,10 +235,8 @@
 		ranged_secondary_attack(A, modifiers)
 		return
 
-	if(ishuman(A))
-
-		else if(in_range(src, A))
-			attempt_harvest(A)
+	if(ishuman(A) && in_range(src, A))
+		attempt_harvest(A)
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
