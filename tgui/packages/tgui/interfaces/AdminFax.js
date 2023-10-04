@@ -91,7 +91,7 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Nanotrasen Offical Report')}>
+            onClick={() => setPaperName('Nanotrasen Official Report')}>
             Nanotrasen
           </Button>
           <Button
