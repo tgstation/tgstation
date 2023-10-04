@@ -209,11 +209,19 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/planetengi)
+"cu" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/door/airlock/engineering,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "unlucky_solars"
+	},
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cL" = (
@@ -484,7 +492,6 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "fE" = (
-/obj/effect/decal/cleanable/oil/slippery,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -510,6 +517,7 @@
 /obj/machinery/duct,
 /obj/structure/mirror/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/bot/medbot,
 /turf/open/floor/iron/freezer,
 /area/ruin/planetengi)
 "gs" = (
@@ -578,6 +586,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/legion_brood/snow,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "hs" = (
@@ -648,7 +657,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/spawner/random/trash/food_packaging,
-/mob/living/simple_animal/bot/medbot,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "iR" = (
@@ -668,12 +676,15 @@
 /area/ruin/planetengi)
 "iY" = (
 /obj/structure/broken_flooring/plating/directional/north,
-/obj/item/shard,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil/cut,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/door/airlock/engineering,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "unlucky_solars"
+	},
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "je" = (
@@ -696,8 +707,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -825,17 +834,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/mob_spawn/corpse/human/plasmaman,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "le" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/mob/living/basic/legion_brood/snow,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
@@ -883,8 +891,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -1602,18 +1608,11 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "xU" = (
-/obj/structure/sign/warning/xeno_mining/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/utility/hardhat,
-/obj/item/shovel,
-/obj/item/storage/medkit/emergency,
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/closed/wall/rust,
 /area/ruin/planetengi)
 "yr" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
@@ -1673,11 +1672,12 @@
 /obj/machinery/door/airlock/external/ruin{
 	name = "Turbine Exhaust Chamber Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/effect/mapping_helpers/airlock_note_placer{
 	note_info = "You are expected to build the cooling system for the exhaust yourself."
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "zi" = (
@@ -2060,6 +2060,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/sign/warning/xeno_mining/directional/north,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "Fq" = (
@@ -2390,16 +2391,6 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/planetengi)
-"KN" = (
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/turf/open/floor/plating,
-/area/ruin/planetengi)
 "KR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/blood,
@@ -2540,13 +2531,19 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
+"OZ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/ice,
+/area/ruin/planetengi)
 "Pg" = (
 /obj/effect/spawner/random/structure/closet_private,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/reagent_containers/medigel/libital,
 /obj/item/storage/toolbox/emergency,
 /obj/item/modular_computer/pda/clear,
-/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant{
+	mob_species = /datum/species/human/felinid
+	},
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -2607,6 +2604,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/emcloset,
+/obj/item/storage/medkit/emergency,
+/obj/item/shovel,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "Qe" = (
@@ -2755,15 +2758,14 @@
 /obj/machinery/door/airlock/command{
 	name = "Chief Engineer's Quarters"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/ce,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/ce,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "Sz" = (
@@ -2772,7 +2774,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/asteroid/wolf,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
@@ -2797,7 +2798,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/rust,
 /area/ruin/planetengi)
 "ST" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2997,7 +2998,10 @@
 "VU" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/mob_spawn/corpse/human/engineer/mod,
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
+	mob_species = /datum/species/moth;
+	mob_type = /mob/living/carbon/species/moth
+	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
@@ -3044,6 +3048,7 @@
 /obj/structure/cable,
 /obj/structure/broken_flooring/pile/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/item/shard,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "Wu" = (
@@ -3235,6 +3240,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "YL" = (
@@ -3321,10 +3327,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "unlucky_solars"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "ZQ" = (
@@ -3658,7 +3663,7 @@ Ae
 Wn
 tp
 SV
-vf
+OZ
 SM
 iY
 Rc
@@ -3720,7 +3725,7 @@ SV
 pO
 SV
 tp
-Ur
+xP
 Qa
 WH
 jW
@@ -3751,7 +3756,7 @@ tp
 zE
 tp
 oc
-vf
+cu
 Fp
 Sz
 FB
@@ -3782,7 +3787,7 @@ pO
 im
 Wn
 Qo
-KN
+ZE
 pF
 Or
 dK
@@ -3813,7 +3818,7 @@ SV
 pO
 tt
 tp
-Ur
+xP
 xU
 cE
 YP
@@ -3844,7 +3849,7 @@ tp
 zE
 SV
 SV
-Ur
+xP
 SK
 LI
 YP
