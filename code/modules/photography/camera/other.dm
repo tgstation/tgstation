@@ -9,8 +9,8 @@
 			continue
 
 		// time to steal your soul
-		if(istype(target, /mob/living/simple_animal/revenant))
-			var/mob/living/simple_animal/revenant/peek_a_boo = target
+		if(istype(target, /mob/living/basic/revenant))
+			var/mob/living/basic/revenant/peek_a_boo = target
 			peek_a_boo.reveal(2 SECONDS) // no hiding
 			if(!peek_a_boo.unstun_time)
 				peek_a_boo.stun(2 SECONDS)

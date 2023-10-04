@@ -2,7 +2,7 @@
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
 
-/mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
@@ -21,7 +21,7 @@
 		else if(in_range(src, A))
 			Harvest(A)
 
-/mob/living/simple_animal/revenant/ranged_secondary_attack(atom/target, modifiers)
+/mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
@@ -31,7 +31,7 @@
 	orbit(target, orbitsize)
 
 //Harvest; activated by clicking the target, will try to drain their essence.
-/mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+/mob/living/basic/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
 		return
 	if(draining)
@@ -171,7 +171,7 @@
 		stack_trace("[type] was owned by a non-revenant mob, please don't.")
 		return FALSE
 
-	var/mob/living/simple_animal/revenant/ghost = owner
+	var/mob/living/basic/revenant/ghost = owner
 	if(ghost.inhibited)
 		return FALSE
 	if(locked && ghost.essence_excess <= unlock_amount)
@@ -184,7 +184,7 @@
 /datum/action/cooldown/spell/aoe/revenant/get_things_to_cast_on(atom/center)
 	return RANGE_TURFS(aoe_radius, center)
 
-/datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
+/datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/basic/revenant/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -206,7 +206,7 @@
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
 
-/datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/simple_animal/revenant/cast_on)
+/datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/basic/revenant/cast_on)
 	. = ..()
 	if(reveal_duration > 0 SECONDS)
 		cast_on.reveal(reveal_duration)
@@ -230,7 +230,7 @@
 	/// The damage the shcoskf rom the lgihts do
 	var/shock_damage = 15
 
-/datum/action/cooldown/spell/aoe/revenant/overload/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/overload/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/obj/machinery/light/light in victim)
 		if(!light.on)
 			continue
@@ -242,7 +242,7 @@
 		new /obj/effect/temp_visual/revenant(get_turf(light))
 		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 20)
 
-/datum/action/cooldown/spell/aoe/revenant/overload/proc/overload_shock(obj/machinery/light/to_shock, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/overload/proc/overload_shock(obj/machinery/light/to_shock, mob/living/basic/revenant/caster)
 	flick("[to_shock.base_state]2", to_shock)
 	for(var/mob/living/carbon/human/human_mob in view(shock_range, to_shock))
 		if(human_mob == caster)
@@ -267,7 +267,7 @@
 	reveal_duration = 4 SECONDS
 	stun_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/obj/effect/blessing/blessing in victim)
 		qdel(blessing)
 		new /obj/effect/temp_visual/revenant(victim)
@@ -316,7 +316,7 @@
 	unlock_amount = 125
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
-/datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/mob/living/simple_animal/bot/bot in victim)
 		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
@@ -357,7 +357,7 @@
 	cast_amount = 50
 	unlock_amount = 75
 
-/datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/mob/living/mob in victim)
 		if(mob == caster)
 			continue
@@ -430,7 +430,7 @@
 
 	return things
 
-/datum/action/cooldown/spell/aoe/revenant/haunt_object/cast_on_thing_in_aoe(obj/item/victim, mob/living/simple_animal/revenant/caster)
+/datum/action/cooldown/spell/aoe/revenant/haunt_object/cast_on_thing_in_aoe(obj/item/victim, mob/living/basic/revenant/caster)
 	var/distance_from_caster = get_dist(get_turf(victim), get_turf(caster))
 	var/chance_of_haunting = 150 * (1 / distance_from_caster)
 	if(!prob(chance_of_haunting))

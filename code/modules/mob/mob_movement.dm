@@ -253,7 +253,7 @@
 				if(salt)
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
+						var/mob/living/basic/revenant/R = L
 						R.reveal(20)
 						R.stun(20)
 					return
