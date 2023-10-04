@@ -138,6 +138,8 @@
 	var/list/already_processed_cache = SSpollution.processed_this_run
 	var/list/potential_activers = list()
 	for(var/turf/open/open_turf as anything in my_turf.atmos_adjacent_turfs)
+		if(!istype(open_turf))
+			continue
 		if(!already_processed_cache[open_turf])
 			if(can_share_with(open_turf))
 				sharing_turfs[open_turf] = TRUE
