@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Aloe and other baked foods that don't have reagents can be baked again without turning to ash"
