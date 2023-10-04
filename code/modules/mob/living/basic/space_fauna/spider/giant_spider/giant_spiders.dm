@@ -266,7 +266,7 @@
 	obj_damage = 15
 	speed = 5
 	player_speed_modifier = -4
-	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain and heal it."
 
 /mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
