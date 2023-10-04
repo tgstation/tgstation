@@ -274,14 +274,10 @@
 
 	var/reforming_essence = max_essence //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
-	goop.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
-	goop.old_key = client.key //If the essence reforms, the old revenant is put back in the body
+	goop.old_ckey = client.ckey //If the essence reforms, the old revenant is put back in the body
 	goop.revenant = src
-	forceMove(goop)
-
-	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
-	ghostize(FALSE) //Don't re-enter invisible corpse
+	forceMove(goop)
 
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
