@@ -132,7 +132,7 @@
 
 	var/mob/camera/blob/blob_cam = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(blob_cam)
-	old_body.gib(DROP_ALL_REMAINS)
+	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
 	playsound(get_turf(blob_cam), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
 	blobtag.has_already_popped = TRUE

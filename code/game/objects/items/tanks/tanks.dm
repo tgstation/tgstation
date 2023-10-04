@@ -168,7 +168,7 @@
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
 		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		human_user.inflate_gib(DROP_ALL_REMAINS)
+		human_user.inflate_gib()
 		return MANUAL_SUICIDE
 	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME

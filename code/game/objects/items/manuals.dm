@@ -431,7 +431,7 @@
 		H.gib_animation()
 		sleep(0.3 SECONDS)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
-		// why the fuck don't we just use the gib proc?
+		// if we use gib() then the body gets deleted
 		H.spawn_gibs()
 		H.spill_organs(DROP_ALL_REMAINS)
 		H.spread_bodyparts(DROP_BRAIN)

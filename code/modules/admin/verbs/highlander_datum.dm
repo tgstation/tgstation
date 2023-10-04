@@ -27,13 +27,13 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 		if(AI.deployed_shell)
 			AI.deployed_shell.undeploy()
 		AI.change_mob_type_unchecked(/mob/living/silicon/robot)
-		AI.gib(DROP_ALL_REMAINS)
+		AI.gib()
 
 	for(var/mob/living/silicon/robot/robot in GLOB.player_list)
 		if(!istype(robot) || robot.stat == DEAD)
 			continue
 		if(robot.shell)
-			robot.gib(DROP_ALL_REMAINS)
+			robot.gib()
 			continue
 		robot.make_scottish()
 	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
