@@ -22,6 +22,7 @@
 	lighting_cutoff_red = 20
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 35
+
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	response_disarm_continuous = "swings through"
@@ -61,7 +62,7 @@
 	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = FALSE //If the revenant's abilities are blocked by a chaplain's power.
-	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
+
 	var/draining = FALSE //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
@@ -95,7 +96,7 @@
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
-	random_revenant_name()
+	set_random_revenant_name()
 
 	GLOB.revenant_relay_mobs |= src
 
@@ -162,7 +163,7 @@
 	var/essencecolor = "#8F48C6"
 	if(essence > essence_regen_cap)
 		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
-	else if(!essence)
+	else if(essence <= 0)
 		essencecolor = "#1D2953" //oh jeez you're dying
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
@@ -194,37 +195,33 @@
 	if(!essence)
 		death()
 
-/mob/living/basic/revenant/med_hud_set_health()
-	return //we use no hud
+/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		ShiftClickOn(A)
+		return
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		AltClickNoInteract(src, A)
+		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		ranged_secondary_attack(A, modifiers)
+		return
 
-/mob/living/basic/revenant/med_hud_set_status()
-	return //we use no hud
+	if(ishuman(A))
+		//Humans are tagged, so this is fine
+		if(REF(A) in drained_mobs)
+			to_chat(src, span_revenwarning("[A]'s soul is dead and empty.") )
+		else if(in_range(src, A))
+			Harvest(A)
 
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
-	death()
+/mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
+	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
+		return
 
-/mob/living/basic/revenant/gib()
-	death()
-
-/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
-	return FALSE
-
-/mob/living/basic/revenant/ex_act(severity, target)
-	return FALSE //Immune to the effects of explosions.
-
-/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
-	return //blah blah blobs aren't in tune with the spirit world, or something.
-
-/mob/living/basic/revenant/singularity_act()
-	return //don't walk into the singularity expecting to find corpses, okay?
-
-/mob/living/basic/revenant/narsie_act()
-	return //most humans will now be either bones or harvesters, but we're still un-alive.
-
-/mob/living/basic/revenant/bullet_act()
-	if(!revealed || stasis)
-		return BULLET_ACT_FORCE_PIERCE
-	return ..()
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+	orbit(target, orbitsize)
 
 /mob/living/basic/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
@@ -257,6 +254,38 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
 	ghostize(FALSE) //Don't re-enter invisible corpse
+
+/mob/living/basic/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/basic/revenant/med_hud_set_status()
+	return //we use no hud
+
+/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+	death()
+
+/mob/living/basic/revenant/gib()
+	death()
+
+/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
+	return FALSE
+
+/mob/living/basic/revenant/ex_act(severity, target)
+	return FALSE //Immune to the effects of explosions.
+
+/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
+	return //blah blah blobs aren't in tune with the spirit world, or something.
+
+/mob/living/basic/revenant/singularity_act()
+	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/basic/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
+
+/mob/living/basic/revenant/bullet_act()
+	if(!revealed || stasis)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
@@ -304,13 +333,13 @@
 	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
 	return returnable_list
 
-/mob/living/basic/revenant/proc/random_revenant_name()
-	var/built_name = ""
-	built_name += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
-	built_name += " of "
-	built_name += pick(strings(REVENANT_NAME_FILE, "adverb"))
-	built_name += pick(strings(REVENANT_NAME_FILE, "theme"))
-	name = built_name
+/mob/living/basic/revenant/proc/set_random_revenant_name()
+	var/list/built_name_strings = list()
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
+	built_name_strings += " of "
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "adverb"))
+	built_name_strings += pick(strings(REVENANT_NAME_FILE, "theme"))
+	name = built_name_strings.Join("")
 
 /mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER
@@ -321,6 +350,10 @@
 	inhibited = TRUE
 	update_mob_action_buttons()
 	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
+
+/mob/living/basic/revenant/proc/reset_inhibit()
+	inhibited = FALSE
+	update_mob_action_buttons()
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
@@ -362,7 +395,7 @@
 	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
 
-/mob/living/basic/revenant/proc/stun(time)
+/mob/living/basic/revenant/proc/temporary_freeze(time)
 	if(QDELETED(src))
 		return
 
@@ -383,6 +416,7 @@
 
 /mob/living/basic/revenant/update_icon_state()
 	. = ..()
+
 	if(revealed)
 		icon_state = icon_reveal
 		return

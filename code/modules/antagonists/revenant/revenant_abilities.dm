@@ -1,122 +1,128 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-
-/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
-		ShiftClickOn(A)
-		return
-	if(LAZYACCESS(modifiers, ALT_CLICK))
-		AltClickNoInteract(src, A)
-		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		ranged_secondary_attack(A, modifiers)
-		return
-
-	if(ishuman(A))
-		//Humans are tagged, so this is fine
-		if(REF(A) in drained_mobs)
-			to_chat(src, span_revenwarning("[A]'s soul is dead and empty.") )
-		else if(in_range(src, A))
-			Harvest(A)
-
-/mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
-	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
-		return
-
-	var/list/icon_dimensions = get_icon_dimensions(target.icon)
-	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
-	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
-	orbit(target, orbitsize)
-
-//Harvest; activated by clicking the target, will try to drain their essence.
-/mob/living/basic/revenant/proc/Harvest(mob/living/carbon/human/target)
+/// Harvest; activated by clicking a target, will try to drain their essence.
+/mob/living/basic/revenant/proc/harvest(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
 	if(!cast_check(0))
 		return
+
 	if(draining)
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
 		return
-	if(!target.stat)
+
+	if(target.stat == CONSCIOUS)
 		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
+
 	log_combat(src, target, "started to harvest")
 	face_atom(target)
 	draining = TRUE
-	essence_drained += rand(15, 20)
+	var/essence_drained = rand(15, 20)
+
 	to_chat(src, span_revennotice("You search for the soul of [target]."))
-	if(do_after(src, rand(10, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
-		if(target.ckey)
-			to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
-			essence_drained += rand(20, 30)
-		if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-			to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
-			essence_drained += rand(40, 50)
-		if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target.ckey)
-			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
-			essence_drained = 5
-		else
-			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and faltering."))
-		if(do_after(src, rand(15, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted NOW?
-			switch(essence_drained)
-				if(1 to 30)
-					to_chat(src, span_revennotice("[target] will not yield much essence. Still, every bit counts."))
-				if(30 to 70)
-					to_chat(src, span_revennotice("[target] will yield an average amount of essence."))
-				if(70 to 90)
-					to_chat(src, span_revenboldnotice("Such a feast! [target] will yield much essence to you."))
-				if(90 to INFINITY)
-					to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
-			if(do_after(src, rand(15, 25), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
-				if(!target.stat)
-					to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining."))
-					to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding."))
-					draining = 0
-					essence_drained = 0
-					return //hey, wait a minute...
-				to_chat(src, span_revenminor("You begin siphoning essence from [target]'s soul."))
-				if(target.stat != DEAD)
-					to_chat(target, span_warning("You feel a horribly unpleasant draining sensation as your grip on life weakens..."))
-				if(target.stat == SOFT_CRIT)
-					target.Stun(46)
-				reveal(46)
-				stun(46)
-				target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
-				if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
-					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
-					target.visible_message(span_warning("[target] slumps onto the ground."), \
-					span_revenwarning("Violet lights, dancing in your vision, receding--"))
-					draining = FALSE
-					return
-				var/datum/beam/B = Beam(target,icon_state="drain_life")
-				if(do_after(src, 46, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					change_essence_amount(essence_drained, FALSE, target)
-					if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-						essence_regen_cap += 5
-						to_chat(src, span_revenboldnotice("The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
-					if(essence_drained > 90)
-						essence_regen_cap += 15
-						perfectsouls++
-						to_chat(src, span_revenboldnotice("The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
-					to_chat(src, span_revennotice("[target]'s soul has been considerably weakened and will yield no more essence for the time being."))
-					target.visible_message(span_warning("[target] slumps onto the ground."), \
-										   span_revenwarning("Violets lights, dancing in your vision, getting clo--"))
-					drained_mobs += REF(target)
-					if(target.stat != DEAD)
-						target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
-					target.death(FALSE)
-				else
-					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_Theyve()]"] been drawn out of your grasp. The link has been broken."))
-					if(target) //Wait, target is WHERE NOW?
-						target.visible_message(span_warning("[target] slumps onto the ground."), \
-											   span_revenwarning("Violets lights, dancing in your vision, receding--"))
-				qdel(B)
-			else
-				to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken."))
-	draining = FALSE
-	essence_drained = 0
+
+	if(!do_after(src, (rand(10, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
+		draining = FALSE
+		return
+
+	var/target_has_client = !isnull(target.client)
+	if(target_has_client)
+		to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
+		essence_drained += rand(20, 30)
+
+	if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
+		to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
+		essence_drained += rand(40, 50)
+
+	if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target_has_client)
+		to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
+		essence_drained = 5
+
+	to_chat(src, span_revennotice("[target.p_Their()] soul is weak and faltering. It's time to harvest."))
+
+	if(!do_after(src, (rand(15, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM))
+		to_chat(src, span_revennotice("The harvest is abandoned."))
+		draining = FALSE
+		return
+
+	switch(essence_drained)
+		if(1 to 30)
+			to_chat(src, span_revennotice("[target] will not yield much essence. Still, every bit counts."))
+		if(30 to 70)
+			to_chat(src, span_revennotice("[target] will yield an average amount of essence."))
+		if(70 to 90)
+			to_chat(src, span_revenboldnotice("Such a feast! [target] will yield much essence to you."))
+		if(90 to INFINITY)
+			to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
+
+	if(!do_after(src, (rand(15, 25) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
+		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken."))
+		draining = FALSE
+		return
+
+	if(target.stat == CONSCIOUS)
+		to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining!"))
+		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding."))
+		draining = FALSE
+		return //hey, wait a minute...
+
+	to_chat(src, span_revenminor("You begin siphoning essence from [target]'s soul."))
+	if(target.stat != DEAD)
+		to_chat(target, span_warning("You feel a horribly unpleasant draining sensation as your grip on life weakens..."))
+	if(target.stat == SOFT_CRIT)
+		target.Stun(46)
+
+	reveal(5 SECONDS)
+	temporary_freeze(5 SECONDS)
+
+	target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
+
+	if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
+		target.visible_message(
+			span_warning("[target] slumps onto the ground."),
+			span_revenwarning("Violet lights, dancing in your vision, receding--"),
+		)
+		draining = FALSE
+		return
+
+	var/datum/beam/draining_beam = Beam(target, icon_state = "drain_life")
+	if(!do_after(src, 4.6 SECONDS, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+		to_chat(src, span_revenwarning("[target ? "[target]'s soul has" : "[target.p_Theyre()]"] been drawn out of your grasp. The link has been broken."))
+		if(target) //Wait, target is WHERE NOW?
+			target.visible_message(
+				span_warning("[target] slumps onto the ground."),
+				Span_revenwarning("Violet lights, dancing in your vision, receding--"),
+			)
+		draining = FALSE
+		qdel(draining_beam)
+		return
+
+	change_essence_amount(essence_drained, FALSE, target)
+
+	if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
+		essence_regen_cap += 5
+		to_chat(src, span_revenboldnotice("The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
+
+	if(essence_drained > 90)
+		essence_regen_cap += 15
+		perfectsouls++
+		to_chat(src, span_revenboldnotice("The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap]."))
+
+	to_chat(src, span_revennotice("[target]'s soul has been considerably weakened and will yield no more essence for the time being."))
+	target.visible_message(
+		span_warning("[target] slumps onto the ground."),
+		span_revenwarning("Violet lights, dancing in your vision, getting clo--"),
+	)
+
+	drained_mobs += REF(target)
+	if(target.stat != DEAD)
+		target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
+	target.death(FALSE)
+
+	qdel(draining_beam)
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
