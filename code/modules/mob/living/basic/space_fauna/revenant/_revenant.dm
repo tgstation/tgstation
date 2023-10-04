@@ -37,7 +37,6 @@
 	friendly_verb_continuous = "touches"
 	friendly_verb_simple = "touch"
 	status_flags = 0
-	wander = FALSE
 	density = FALSE
 	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
@@ -372,23 +371,30 @@
 	else
 		icon_state = icon_idle
 
-/mob/living/basic/revenant/proc/castcheck(essence_cost)
-	if(!src)
+/mob/living/basic/revenant/proc/cast_check(essence_cost)
+	if(QDELETED(src))
 		return
-	var/turf/T = get_turf(src)
-	if(isclosedturf(T))
+
+	var/turf/current = get_turf(src)
+
+	if(isclosedturf(current))
 		to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
 		return FALSE
-	for(var/obj/O in T)
-		if(O.density && !O.CanPass(src, get_dir(T, src)))
-			to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
-			return FALSE
-	if(inhibited)
-		to_chat(src, span_revenwarning("Your powers have been suppressed by nulling energy!"))
+
+	for(var/obj/thing in current)
+		if(!thing.density || thing.CanPass(src, get_dir(current, src)))
+			continue
+		to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
 		return FALSE
+
+	if(inhibited)
+		to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
+		return FALSE
+
 	if(!change_essence_amount(essence_cost, TRUE))
 		to_chat(src, span_revenwarning("You lack the essence to use that ability."))
 		return FALSE
+
 	return TRUE
 
 /mob/living/basic/revenant/proc/unlock(essence_cost)

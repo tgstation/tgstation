@@ -32,7 +32,7 @@
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/basic/revenant/proc/Harvest(mob/living/carbon/human/target)
-	if(!castcheck(0))
+	if(!cast_check(0))
 		return
 	if(draining)
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
@@ -202,7 +202,7 @@
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
 
-	if(!cast_on.castcheck(-cast_amount))
+	if(!cast_on.cast_check(-cast_amount))
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
 
