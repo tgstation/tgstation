@@ -16,6 +16,8 @@
 	melee_damage_upper = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	death_message = "shatters and vanishes, releasing a gust of cold air."
+	/// Whether we take damage when someone looks at us
+	var/harmed_by_examine = TRUE
 	/// How often being examined by a specific mob can hurt us
 	var/recent_examine_damage_cooldown = 10 SECONDS
 	/// A list of REFs to people who recently examined us
@@ -41,7 +43,7 @@
 // Examining them will harm them, on a cooldown.
 /mob/living/basic/heretic_summon/maid_in_the_mirror/examine(mob/user)
 	. = ..()
-	if(!isliving(user) || user.stat == DEAD || IS_HERETIC_OR_MONSTER(user) || user == src)
+	if(!harmed_by_examine || !isliving(user) || user.stat == DEAD || IS_HERETIC_OR_MONSTER(user) || user == src)
 		return
 
 	var/user_ref = REF(user)

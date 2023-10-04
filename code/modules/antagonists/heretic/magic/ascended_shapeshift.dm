@@ -8,7 +8,7 @@
 	possible_shapes = list(
 		/mob/living/basic/heretic_summon/ash_spirit,
 		/mob/living/basic/heretic_summon/raw_prophet/ascended,
-		/mob/living/basic/heretic_summon/rust_spirit,
+		/mob/living/basic/heretic_summon/rust_walker,
 		/mob/living/basic/heretic_summon/stalker,
 	)
 

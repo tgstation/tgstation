@@ -1,9 +1,10 @@
 /// Pretty simple mob which creates areas of rust and has a rust-creating projectile spell
-/mob/living/basic/heretic_summon/rust_spirit
+/mob/living/basic/heretic_summon/rust_walker
 	name = "Rust Walker"
 	real_name = "Rusty"
 	desc = "A grinding, clanking construct which leaches life from its surroundings with every armoured step."
 	icon_state = "rust_walker_s"
+	base_icon_state = "rust_walker"
 	icon_living = "rust_walker_s"
 	maxHealth = 75
 	health = 75
@@ -13,7 +14,7 @@
 	speed = 1
 	ai_controller = /datum/ai_controller/basic_controller/rust_walker
 
-/mob/living/basic/heretic_summon/rust_spirit/Initialize(mapload)
+/mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
 	var/datum/action/cooldown/spell/aoe/rust_conversion/small/conversion = new(src)
@@ -24,17 +25,23 @@
 	wave.Grant(src)
 	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, wave)
 
-/mob/living/basic/heretic_summon/rust_spirit/setDir(newdir)
+/mob/living/basic/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()
-	if(dir & NORTH)
-		icon_state = "rust_walker_n"
-	else if(dir & SOUTH)
-		icon_state = "rust_walker_s"
+	update_appearance(UPDATE_ICON_STATE)
 
-/mob/living/basic/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/heretic_summon/rust_walker/update_icon_state()
+	. = ..()
+	if(stat == DEAD) // We usually delete on death but just in case
+		return
+	if(dir & NORTH)
+		icon_state = "[base_icon_state]_n"
+	else if(dir & SOUTH)
+		icon_state = "[base_icon_state]_s"
+	icon_living = icon_state
+
+/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
-
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		adjustBruteLoss(-3 * seconds_per_tick)
