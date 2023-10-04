@@ -99,12 +99,11 @@
 	var/datum/beam/draining_beam = Beam(target, icon_state = "drain_life")
 	if(!do_after(src, 4.6 SECONDS, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 		to_chat(src, span_revenwarning("[target ? "[target]'s soul has" : "[target.p_Theyre()]"] been drawn out of your grasp. The link has been broken."))
-		if(target) //Wait, target is WHERE NOW?
+		if(target)
 			target.visible_message(
 				span_warning("[target] slumps onto the ground."),
 				Span_revenwarning("Violet lights, dancing in your vision, receding--"),
 			)
-		draining = FALSE
 		qdel(draining_beam)
 		return FALSE
 

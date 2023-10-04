@@ -51,6 +51,7 @@
 	var/icon_reveal = "revenant_revealed"
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
+	/// Are we currently in stasis (ectoplasm)
 	var/stasis = FALSE
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -253,38 +254,6 @@
 	revealed = FALSE
 	ghostize(FALSE) //Don't re-enter invisible corpse
 
-/mob/living/basic/revenant/med_hud_set_health()
-	return //we use no hud
-
-/mob/living/basic/revenant/med_hud_set_status()
-	return //we use no hud
-
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
-	death()
-
-/mob/living/basic/revenant/gib()
-	death()
-
-/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
-	return FALSE
-
-/mob/living/basic/revenant/ex_act(severity, target)
-	return FALSE //Immune to the effects of explosions.
-
-/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
-	return //blah blah blobs aren't in tune with the spirit world, or something.
-
-/mob/living/basic/revenant/singularity_act()
-	return //don't walk into the singularity expecting to find corpses, okay?
-
-/mob/living/basic/revenant/narsie_act()
-	return //most humans will now be either bones or harvesters, but we're still un-alive.
-
-/mob/living/basic/revenant/bullet_act()
-	if(!revealed || stasis)
-		return BULLET_ACT_FORCE_PIERCE
-	return ..()
-
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return 0
@@ -325,6 +294,38 @@
 		return
 
 	icon_state = icon_idle
+
+/mob/living/basic/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/basic/revenant/med_hud_set_status()
+	return //we use no hud
+
+/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+	death()
+
+/mob/living/basic/revenant/gib()
+	death()
+
+/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
+	return FALSE
+
+/mob/living/basic/revenant/ex_act(severity, target)
+	return FALSE //Immune to the effects of explosions.
+
+/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
+	return //blah blah blobs aren't in tune with the spirit world, or something.
+
+/mob/living/basic/revenant/singularity_act()
+	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/basic/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
+
+/mob/living/basic/revenant/bullet_act()
+	if(!revealed || stasis)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
