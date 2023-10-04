@@ -6,14 +6,7 @@
 	icon_living = "goat"
 	icon_dead = "goat_dead"
 
-	speak = list("EHEHEHEHEH","eh?")
 	speak_emote = list("brays")
-	emote_hear = list("brays.")
-	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
-
-	speak_chance = 1
-	turns_per_move = 5
-
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -60,7 +53,9 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
-/// Called when we attack something in order to piece together the intent of the AI/user and provide desired behavior
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
+
+/// Called when we attack something in order to piece together the intent of the AI/user and provide desired behavior. The element might be okay here but I'd rather the fluff.
 /// Goats are really good at beating up plants by taking bites out of them, but we use the default attack for everything else
 /mob/living/basic/goat/proc/on_pre_attack(datum/source, atom/target)
 	if(is_type_in_list(target, edibles))
@@ -92,7 +87,7 @@
 
 /// If we are being attacked by someone who we are already retaliating against, give a nice fluff message.
 /mob/living/basic/goat/proc/on_attacked(datum/source, atom/attacker, attack_flags)
-	var/is_attacker_shitlisted = locate(attacker in ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+	var/is_attacker_shitlisted = locate(attacker) in ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 	if(!is_attacker_shitlisted)
 		return
 
@@ -133,16 +128,3 @@
 	if(prob(10))
 		say("Nom") // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
-
-/mob/living/basic/goat/pete // Pete!
-	name = "Pete"
-	gender = MALE
-
-/mob/living/basic/goat/pete/examine()
-	. = ..()
-	var/area/goat_area = get_area(src)
-	if((bodytemperature < T20C) || istype(goat_area, /area/station/service/kitchen/coldroom))
-		. = span_notice("[p_They()] [p_do()]n't seem to be too bothered about the cold.") // special for pete
-
-/mob/living/basic/goat/pete/add_udder()
-	return //no thank you
