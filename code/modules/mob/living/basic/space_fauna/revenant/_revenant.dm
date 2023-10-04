@@ -100,14 +100,6 @@
 /mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
 	return FALSE
 
-/mob/living/basic/revenant/proc/random_revenant_name()
-	var/built_name = ""
-	built_name += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
-	built_name += " of "
-	built_name += pick(strings(REVENANT_NAME_FILE, "adverb"))
-	built_name += pick(strings(REVENANT_NAME_FILE, "theme"))
-	name = built_name
-
 /mob/living/basic/revenant/Login()
 	. = ..()
 	if(!. || isnull(client))
@@ -128,19 +120,6 @@
 	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 	mind.add_antag_datum(/datum/antagonist/revenant)
 	return TRUE
-
-/// Generates the information the player needs to know how to play their role, and returns it as a list.
-/mob/living/basic/revenant/proc/create_login_string()
-	RETURN_TYPE(/list)
-	var/list/returnable_list = list()
-	returnable_list += span_deadsay(span_boldbig("You are a revenant."))
-	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.")
-	returnable_list += span_bold("You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.")
-	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
-	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
-	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
-	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
-	return returnable_list
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/basic/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
@@ -168,9 +147,9 @@
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"]E"
-	. += "Total Essence Stolen: [essence_accumulated]SE"
-	. += "Unused Stolen Essence: [essence_excess]SE"
+	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"] E"
+	. += "Total Essence Stolen: [essence_accumulated] SE"
+	. += "Unused Stolen Essence: [essence_excess] SE"
 	. += "Perfect Souls Stolen: [perfectsouls]"
 
 /mob/living/basic/revenant/update_health_hud()
@@ -203,39 +182,6 @@
 			to_chat(M, "[link] [rendered]")
 	return
 
-
-//Immunities
-
-/mob/living/basic/revenant/ex_act(severity, target)
-	return FALSE //Immune to the effects of explosions.
-
-/mob/living/basic/revenant/blob_act(obj/structure/blob/B)
-	return //blah blah blobs aren't in tune with the spirit world, or something.
-
-/mob/living/basic/revenant/singularity_act()
-	return //don't walk into the singularity expecting to find corpses, okay?
-
-/mob/living/basic/revenant/narsie_act()
-	return //most humans will now be either bones or harvesters, but we're still un-alive.
-
-/mob/living/basic/revenant/bullet_act()
-	if(!revealed || stasis)
-		return BULLET_ACT_FORCE_PIERCE
-	return ..()
-
-//damage, gibbing, and dying
-/mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
-	SIGNAL_HANDLER
-	visible_message(span_warning("[src] violently flinches!"), \
-		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
-	inhibited = TRUE
-	update_mob_action_buttons()
-	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
-
-/mob/living/basic/revenant/proc/reset_inhibit()
-	inhibited = FALSE
-	update_mob_action_buttons()
-
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return FALSE
@@ -251,6 +197,24 @@
 
 /mob/living/basic/revenant/gib()
 	death()
+
+
+/mob/living/basic/revenant/ex_act(severity, target)
+	return FALSE //Immune to the effects of explosions.
+
+/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
+	return //blah blah blobs aren't in tune with the spirit world, or something.
+
+/mob/living/basic/revenant/singularity_act()
+	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/basic/revenant/narsie_act()
+	return //most humans will now be either bones or harvesters, but we're still un-alive.
+
+/mob/living/basic/revenant/bullet_act()
+	if(!revealed || stasis)
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /mob/living/basic/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
@@ -268,14 +232,70 @@
 		alpha = i
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
-	var/obj/item/ectoplasm/revenant/R = new(get_turf(src))
-	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
-	R.old_key = client.key //If the essence reforms, the old revenant is put back in the body
-	R.revenant = src
+	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
+	goop.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
+	goop.old_key = client.key //If the essence reforms, the old revenant is put back in the body
+	goop.revenant = src
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
-	ghostize(0)//Don't re-enter invisible corpse
+	ghostize(FALSE)//Don't re-enter invisible corpse
 
+/mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !revealed)
+		return FALSE
+	. = amount
+	essence = max(0, essence-amount)
+	if(updating_health)
+		update_health_hud()
+	if(!essence)
+		death()
+
+/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+	death()
+
+/mob/living/basic/revenant/gib()
+	death()
+
+/mob/living/basic/revenant/orbit(atom/target)
+	setDir(SOUTH) // reset dir so the right directional sprites show up
+	return ..()
+
+/mob/living/basic/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	if(!orbiting) // only needed when orbiting
+		return ..()
+	if(incorporeal_move_check(src))
+		return ..()
+
+	// back back back it up, the orbitee went somewhere revenant cannot
+	orbiting?.end_orbit(src)
+	abstract_move(old_loc) // gross but maybe orbit component will be able to check pre move in the future
+
+/mob/living/basic/revenant/stop_orbit(datum/component/orbiter/orbits)
+	// reset the simple_flying animation
+	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	return ..()
+
+/// Generates the information the player needs to know how to play their role, and returns it as a list.
+/mob/living/basic/revenant/proc/create_login_string()
+	RETURN_TYPE(/list)
+	var/list/returnable_list = list()
+	returnable_list += span_deadsay(span_boldbig("You are a revenant."))
+	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.")
+	returnable_list += span_bold("You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.")
+	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
+	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
+	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
+	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
+	return returnable_list
+
+/mob/living/basic/revenant/proc/random_revenant_name()
+	var/built_name = ""
+	built_name += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
+	built_name += " of "
+	built_name += pick(strings(REVENANT_NAME_FILE, "adverb"))
+	built_name += pick(strings(REVENANT_NAME_FILE, "theme"))
+	name = built_name
 
 //reveal, stun, icon updates, cast checks, and essence changing
 /mob/living/basic/revenant/proc/reveal(time)
@@ -375,28 +395,8 @@
 	draining = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
-	alpha=255
+	alpha = 255
 	stasis = FALSE
-
-/mob/living/basic/revenant/orbit(atom/target)
-	setDir(SOUTH) // reset dir so the right directional sprites show up
-	return ..()
-
-/mob/living/basic/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	if(!orbiting) // only needed when orbiting
-		return ..()
-	if(incorporeal_move_check(src))
-		return ..()
-
-	// back back back it up, the orbitee went somewhere revenant cannot
-	orbiting?.end_orbit(src)
-	abstract_move(old_loc) // gross but maybe orbit component will be able to check pre move in the future
-
-/mob/living/basic/revenant/stop_orbit(datum/component/orbiter/orbits)
-	// reset the simple_flying animation
-	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	return ..()
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
