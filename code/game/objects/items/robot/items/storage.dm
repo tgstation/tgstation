@@ -56,9 +56,9 @@
 	stored.forceMove(user.drop_location())
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	// Checking for TRAIT_NODROP prevents edge cases where borgs can grab their own modules.
 	if(!stored)
-		if(!HAS_TRAIT(atom, TRAIT_NODROP))
+		// Borgs should not be grabbing their own modules
+		if(!istype(atom.loc, /mob/living/silicon/robot))
 			var/itemcheck = FALSE
 			for(var/storable_type in storable)
 				if(istype(atom, storable_type))
