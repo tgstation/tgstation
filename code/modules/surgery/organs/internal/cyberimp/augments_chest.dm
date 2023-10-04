@@ -52,21 +52,25 @@
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
+	/// revival/defibrillation possibility flag that gathered from owner's .can_defib() proc
 	var/can_defib_owner
 	COOLDOWN_DECLARE(reviver_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	on_life() // Allowes implant to work even on dead people
+	try_heal() // Allowes implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
+	try_heal()
+
+/obj/item/organ/internal/cyberimp/chest/reviver/proc/try_heal()
 	if(reviving)
 		switch(owner.stat)
-			if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT, DEAD)
-				addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-			else
+			if(CONSCIOUS)
 				COOLDOWN_START(src, reviver_cooldown, revive_cost)
 				reviving = FALSE
 				to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
+			else
+				addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
@@ -83,7 +87,7 @@
 	if(can_defib_owner == DEFIB_POSSIBLE)
 		revive_dead()
 		can_defib_owner = null
-		revive_cost += 6000 // Additional 10 minutes cooldown after revival.
+		revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
 	// this check goes after revive_dead() to delay revival a bit
 	if(owner.stat == DEAD)
 		can_defib_owner = owner.can_defib()
@@ -108,7 +112,8 @@
 		revive_cost += 40
 
 	if(body_damage_patched)
-		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
+		if(prob(35)) // healing is called every few seconds, not every tick
+			owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
 		
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
