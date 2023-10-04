@@ -31,7 +31,6 @@
 
 	minimum_survivable_temperature = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
 
-	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	ai_controller = /datum/ai_controller/basic_controller/goat
@@ -52,6 +51,7 @@
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
 
@@ -59,7 +59,7 @@
 /// Goats are really good at beating up plants by taking bites out of them, but we use the default attack for everything else
 /mob/living/basic/goat/proc/on_pre_attack(datum/source, atom/target)
 	if(is_type_in_list(target, edibles))
-		eat_plant(target)
+		eat_plant(list(target))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(!isliving(target))
@@ -95,34 +95,43 @@
 		span_danger("[src] gets an evil-looking gleam in [p_their()] eye."),
 	)
 
+/// Handles automagically eating a plant when we move into a turf that has one.
+/mob/living/basic/goat/proc/on_move(datum/source, atom/entering_loc)
+	SIGNAL_HANDLER
+	if(!isturf(entering_loc))
+		return
+
+	var/list/edible_plants = list()
+	for(var/obj/target in entering_loc)
+		if(is_type_in_list(target, edibles))
+			edible_plants += target
+
+	INVOKE_ASYNC(src, PROC_REF(eat_plant), edible_plants)
+
 /// When invoked, adds an udder. Overridden on subtypes
 /mob/living/basic/goat/proc/add_udder()
 	AddComponent(/datum/component/udder)
 
-/mob/living/basic/goat/Move() // hmm
-	. = ..()
-	if(!stat)
-		eat_plants()
-
-/// Proc that handles dealing with the various types of plants we might eat
-/mob/living/basic/goat/proc/eat_plant(atom/target)
+/// Proc that handles dealing with the various types of plants we might eat. Assumes that a valid list of type(s) will be passed in.
+/mob/living/basic/goat/proc/eat_plant(list/plants)
 	var/eaten = FALSE
 
-	if(istype(target, /obj/structure/spacevine))
-		var/obj/structure/spacevine/vine = target
-		vine.eat(src)
-		eaten = TRUE
+	for(var/atom/target as anything in plants)
+		if(istype(target, /obj/structure/spacevine))
+			var/obj/structure/spacevine/vine = target
+			vine.eat(src)
+			eaten = TRUE
 
-	if(istype(target, /obj/structure/alien/resin/flower_bud))
-		target.take_damage(rand(30, 50), BRUTE, 0)
-		eaten = TRUE
+		if(istype(target, /obj/structure/alien/resin/flower_bud))
+			target.take_damage(rand(30, 50), BRUTE, 0)
+			eaten = TRUE
 
-	if(istype(target, /obj/structure/glowshroom))
-		qdel(target)
-		eaten = TRUE
+		if(istype(target, /obj/structure/glowshroom))
+			qdel(target)
+			eaten = TRUE
 
 	if(!eaten)
-		stack_trace("Goat [src] somehow had eat_plant() callen on it with [target] ([target.type]), and there was no behavior to handle it!")
+		stack_trace("Goat [src] somehow had eat_plant() callen on it with [english_list(plants)], and there was no behavior to handle it!")
 		return
 
 	if(prob(10))
