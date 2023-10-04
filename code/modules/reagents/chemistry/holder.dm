@@ -1189,7 +1189,7 @@
 * This ends a single instance of an ongoing reaction
 *
 * Arguments:
-* * E - the equilibrium that will be ended
+* * [equilibrium][datum/equilibrium] - the equilibrium that will be ended
 * Returns:
 * * mix_message - the associated mix message of a reaction
 */
@@ -1214,7 +1214,6 @@
 
 /*
 * This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
-*
 * Also resets reaction variables to be null/empty/FALSE so that it can restart correctly in the future
 */
 /datum/reagents/proc/finish_reacting()
@@ -1420,25 +1419,21 @@
 
 	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
 
-/// Same as [/datum/reagents/proc/expose] but only for one reagent
-/datum/reagents/proc/expose_single(datum/reagent/R, atom/A, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
-	if(isnull(A))
-		return null
-
-	if(ispath(R))
-		R = get_reagent(R)
-	if(isnull(R))
-		return null
-
-	// Yes, we need the parentheses.
-	return A.expose_reagents(list((R) = R.volume * volume_modifier), src, methods, volume_modifier, show_message)
-
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
 	return total_volume >= maximum_volume
 
-/// Get the amount of this reagent
-/datum/reagents/proc/get_reagent_amount(reagent, include_subtypes = FALSE)
+/**
+ * Get the amount of this reagent or the sum of all its subtypes if specified
+ * Arguments
+ * * [reagent][datum/reagent] - the typepath of the reagent to look for
+ * * include_subtypes - if TRUE returns the sum of volumes of all subtypes of the above param reagent
+ */
+/datum/reagents/proc/get_reagent_amount(datum/reagent/reagent, include_subtypes = FALSE)
+	if(!ispath(reagent))
+		stack_trace("invalid path passed to get_reagent_amount [reagent]")
+		return 0
+
 	var/list/cached_reagents = reagent_list
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
@@ -1446,6 +1441,11 @@
 			total_amount += FLOOR(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return total_amount
 
+/**
+ * Gets the sum of volumes of all reagent type paths present in the list
+ * Arguments
+ * * [reagents][list] - list of reagent typepaths
+ */
 /datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
 	var/list/cached_reagents = reagent_list
 	var/total_amount = 0
@@ -1454,22 +1454,38 @@
 			total_amount += FLOOR(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return total_amount
 
-/// Get the purity of this reagent
-/datum/reagents/proc/get_reagent_purity(reagent)
+/**
+ * Get the purity of this reagent
+ * Arguments
+ * * [reagent][datum/reagent] - the typepath of the specific reagent to get purity of
+ */
+/datum/reagents/proc/get_reagent_purity(datum/reagent/reagent)
+	if(!ispath(reagent))
+		stack_trace("invalid reagent typepath passed to get_reagent_purity [reagent]")
+		return 0
+
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
 	return 0
 
-/// Directly set the purity of all contained reagents to a new value
+/**
+ * Directly set the purity of all contained reagents to a new value
+ * Arguments
+ * * new_purity - the new purity value
+ */
 /datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		cached_reagent.purity = max(0, new_purity)
 
-/// Get the average purity of all reagents (or all subtypes of provided typepath)
-/datum/reagents/proc/get_average_purity(parent_type = null)
+/**
+ * Get the average purity of all reagents (or all subtypes of provided typepath)
+ * Arguments
+ * * [parent_type][datum/reagent] - the typepath of specific reagents to look for
+ */
+/datum/reagents/proc/get_average_purity(datum/reagent/parent_type = null)
 	var/total_amount
 	var/weighted_purity
 	var/list/cached_reagents = reagent_list
@@ -1480,7 +1496,11 @@
 		weighted_purity += reagent.volume * reagent.purity
 	return weighted_purity / total_amount
 
-/// Shallow copies (deep copy of viruses) data from the provided reagent into our copy of that reagent
+/**
+ * Shallow copies (deep copy of viruses) data from the provided reagent into our copy of that reagent
+ * Arguments
+ * [current_reagent][datum/reagent] - the reagent(not typepath) to copy data from
+ */
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
 	if(!current_reagent || !current_reagent.data)
 		return null
@@ -1502,7 +1522,11 @@
 
 	return trans_data
 
-/// Get a reference to the reagent if it exists
+/**
+ * Get a reference to the reagent if it exists
+ * Arguments
+ * * [type][datum/reagent] - the typepath of the reagent to look up
+ */
 /datum/reagents/proc/get_reagent(datum/reagent/type)
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
@@ -1569,8 +1593,14 @@
 		return // no div/0 please
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
 
-/// Applies heat to this holder
-/datum/reagents/proc/expose_temperature(temperature, coeff=0.02)
+/**
+ * Applies heat to this holder
+ * Arguments
+ *
+ * * temperature - the temperature we to heat/cool by
+ * * coeff - multiplier to be applied on temp diff between param temp and current temp
+ */
+/datum/reagents/proc/expose_temperature(temperature, coeff = 0.02)
 	if(istype(my_atom,/obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RCs = my_atom
 		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
@@ -1645,12 +1675,7 @@
 
 	return english_list(data)
 
-/**
- * Outputs a log-friendly list of reagents based on the internal reagent_list.
- *
- * Arguments:
- * * external_list - Assoc list of (reagent_type) = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
- */
+/// Outputs a log-friendly list of reagents based on the internal reagent_list.
 /datum/reagents/proc/get_reagent_log_string()
 	if(!length(reagent_list))
 		return "no reagents"
