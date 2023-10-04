@@ -10400,6 +10400,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"Qn" = (
+/obj/structure/mirror/magic,
+/turf/closed/indestructible/riveted,
+/area/centcom/tdome/observation)
 "Qp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -12225,7 +12229,6 @@
 /area/centcom/central_command_areas/evacuation)
 "Xl" = (
 /obj/structure/sink/directional/north,
-/obj/structure/mirror/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "Xm" = (
@@ -51635,7 +51638,7 @@ bi
 bi
 bi
 Xl
-QC
+Qn
 gT
 Vr
 pI
