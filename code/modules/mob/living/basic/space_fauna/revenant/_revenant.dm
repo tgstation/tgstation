@@ -500,22 +500,26 @@
 	alpha = 255
 	dormant = FALSE
 
-/mob/living/basic/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
+/mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
 	if(QDELETED(src))
-		return
-	if(essence + essence_amt < 0)
-		return
-	essence = max(0, essence+essence_amt)
+		return FALSE
+
+	if((essence + essence_to_change_by) < 0)
+		return FALSE
+
+	essence = max(0, essence + essence_to_change_by)
 	update_health_hud()
-	if(essence_amt > 0)
-		essence_accumulated = max(0, essence_accumulated+essence_amt)
-		essence_excess = max(0, essence_excess+essence_amt)
+
+	if(essence_to_change_by > 0)
+		essence_accumulated = max(0, essence_accumulated + essence_to_change_by)
+		essence_excess = max(0, essence_excess + essence_to_change_by)
+
 	update_mob_action_buttons()
 	if(!silent)
-		if(essence_amt > 0)
-			to_chat(src, span_revennotice("Gained [essence_amt]E[source ? " from [source]":""]."))
+		if(essence_to_change_by > 0)
+			to_chat(src, span_revennotice("Gained [essence_to_change_by]E [source ? "from [source]":""]."))
 		else
-			to_chat(src, span_revenminor("Lost [essence_amt]E[source ? " from [source]":""]."))
-	return 1
+			to_chat(src, span_revenminor("Lost [essence_to_change_by]E [source ? "from [source]":""]."))
+	return TRUE
 
 #undef REVENANT_STUNNED_TRAIT
