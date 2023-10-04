@@ -6,7 +6,7 @@
 	visual = FALSE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
-
+	item_flags = NO_BLOOD_ON_ITEM
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = 2.5 * STANDARD_ORGAN_DECAY //designed to fail around 6 minutes after death
 
@@ -104,19 +104,11 @@
 	icon_state = "cursedheart-off"
 	base_icon_state = "cursedheart"
 	decay_factor = 0
-	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
-	var/last_pump = 0
-	var/add_colour = TRUE //So we're not constantly recreating colour datums
-	/// How long between needed pumps; you can pump one second early
 	var/pump_delay = 3 SECONDS
-	/// How much blood volume you lose every missed pump, this is a flat amount not a percentage!
-	var/blood_loss = (BLOOD_VOLUME_NORMAL / 5) // 20% of normal volume, missing five pumps is instant death
-
-	//How much to heal per pump, negative numbers would HURT the player
+	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/heal_oxy = 0
-
 
 /obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
 	if(accursed == user && istype(accursed))
@@ -126,75 +118,13 @@
 	else
 		return ..()
 
-/// Worker proc that checks logic for if a pump can happen, and applies effects/notifications from doing so
-/obj/item/organ/internal/heart/cursed/proc/on_pump(mob/owner)
-	var/next_pump = last_pump + pump_delay - (1 SECONDS) // pump a second early
-	if(world.time < next_pump)
-		to_chat(owner, span_userdanger("Too soon!"))
-		return
-
-	last_pump = world.time
-	playsound(owner,'sound/effects/singlebeat.ogg', 40, TRUE)
-	to_chat(owner, span_notice("Your heart beats."))
-
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/accursed = owner
-
-	if(HAS_TRAIT(accursed, TRAIT_NOBLOOD) || !accursed.dna)
-		return
-	accursed.blood_volume = min(accursed.blood_volume + (blood_loss * 0.5), BLOOD_VOLUME_MAXIMUM)
-	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-	add_colour = TRUE
-	accursed.adjustBruteLoss(-heal_brute)
-	accursed.adjustFireLoss(-heal_burn)
-	accursed.adjustOxyLoss(-heal_oxy)
-
-/obj/item/organ/internal/heart/cursed/on_life(seconds_per_tick, times_fired)
-	if(!owner.client || !ishuman(owner)) // Let's be fair, if you're not here to pump, you're not here to suffer.
-		last_pump = world.time
-		return
-
-	if(world.time <= (last_pump + pump_delay))
-		return
-
-	var/mob/living/carbon/human/accursed = owner
-	if(HAS_TRAIT(accursed, TRAIT_NOBLOOD) || !accursed.dna)
-		return
-
-	accursed.blood_volume = max(accursed.blood_volume - blood_loss, 0)
-	to_chat(accursed, span_userdanger("You have to keep pumping your blood!"))
-	if(add_colour)
-		accursed.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
-		add_colour = FALSE
-
 /obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
 	. = ..()
-	last_pump = world.time // give them time to react
-	to_chat(accursed, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
+	accursed.AddComponent(/datum/component/manual_heart, pump_delay = pump_delay, blood_loss = blood_loss, heal_brute = heal_brute, heal_burn = heal_burn, heal_oxy = heal_oxy)
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
-	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-
-/datum/action/item_action/organ_action/cursed_heart
-	name = "Pump your blood"
-	check_flags = NONE
-
-//You are now brea- pumping blood manually
-/datum/action/item_action/organ_action/cursed_heart/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
-	var/obj/item/organ/internal/heart/cursed/cursed_heart = target
-	if(!istype(cursed_heart))
-		CRASH("Cursed heart pump action created on non-cursed heart!")
-	cursed_heart.on_pump(owner)
-
-/datum/client_colour/cursed_heart_blood
-	priority = 100 //it's an indicator you're dying, so it's very high priority
-	colour = "#FF0000"
+	qdel(accursed.GetComponent(/datum/component/manual_heart))
 
 /obj/item/organ/internal/heart/cybernetic
 	name = "basic cybernetic heart"
