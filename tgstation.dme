@@ -2316,6 +2316,7 @@
 #include "code\game\objects\items\implants\security\implant_beacon.dm"
 #include "code\game\objects\items\implants\security\implant_chem.dm"
 #include "code\game\objects\items\implants\security\implant_exile.dm"
+#include "code\game\objects\items\implants\security\implant_noteleport.dm"
 #include "code\game\objects\items\implants\security\implant_track.dm"
 #include "code\game\objects\items\kirby_plants\kirbyplants.dm"
 #include "code\game\objects\items\kirby_plants\organic_plants.dm"

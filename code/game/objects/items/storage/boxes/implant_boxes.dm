@@ -49,6 +49,7 @@
 	var/static/items_inside = list(
 		/obj/item/implantcase/exile = 5,
 		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -60,7 +61,20 @@
 
 /obj/item/storage/box/beaconimp/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/implantcase/beacon = 5,
+		/obj/item/implantcase/beacon = 3,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/teleport_blocker
+	name = "boxed bluespace grounding implant kit"
+	desc = "Box of bluespace grounding implants. There's a drawing on the side -- A figure wearing some intimidating robes, frowning and shedding a single tear."
+	illustration = "implant"
+
+/obj/item/storage/box/teleport_blocker/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/implantcase/teleport_blocker = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 	)

@@ -331,3 +331,10 @@
 	cost = CARGO_CRATE_VALUE * 5.5
 	contains = list(/obj/item/storage/box/beaconimp)
 	crate_name = "beacon implant crate"
+
+/datum/supply_pack/security/armory/teleport_blocker_imp
+	name = "Bluespace Grounding Implants Crate"
+	desc = "Contains five Bluespace Grounding implants."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/storage/box/teleport_blocker)
+	crate_name = "bluespace grounding implant crate"
