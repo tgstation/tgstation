@@ -40,6 +40,9 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	route = PATH_MOON
 
+/datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	add_traits(TRAIT_EMPATH, our_heretic)
+
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass, \
@@ -143,7 +146,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now deals brain damage, causes them random hallucinations and does sanity damage."
+	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	cost = 1
@@ -153,14 +156,10 @@
 	if(source == target)
 		return
 
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 80)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"upgraded path of moon blades", \
-			duration = 15 SECONDS, \
-			affects_us = TRUE, \
-			affects_others = TRUE, \
-			skip_nearby = FALSE, \
 		)
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood.set_sanity(target.mob_mood.sanity -= 10)
@@ -177,7 +176,7 @@
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/eldritch_coin,
 	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
+	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 	route = PATH_MOON
 

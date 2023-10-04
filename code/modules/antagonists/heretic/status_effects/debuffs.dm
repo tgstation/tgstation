@@ -247,14 +247,23 @@
 
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
-	// Some light healing is applied to make the ability a bit stronger
-	owner.adjustBruteLoss(-75) //The most common way for this to be made is using the moon blade upgrade
-	owner.adjustFireLoss(-75)
+	// Healing based on how low their sanity is
+	owner.adjustBruteLoss(100-owner.mob_mood.sanity)
+	owner.adjustFireLoss(100-owner.mob_mood.sanity)
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
+	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/moon, \
+		"[id] status effect", \
+		duration = duration, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+	)
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
@@ -279,7 +288,7 @@
 	overlays += moon_insanity_overlay
 
 /datum/status_effect/moon_converted/on_remove()
-	to_chat(owner, span_notice("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
+	to_chat(owner, span_notice("<span class='warning'>Your mind is cleared from the effect of the manus, your alligiences are as they were before</span>"))
 	owner.balloon_alert(owner, "your mind clears and you return to normal!")
 	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)

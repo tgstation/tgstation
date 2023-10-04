@@ -55,11 +55,10 @@
 // The amulette conversion tool used by moon heretics
 /obj/item/clothing/neck/heretic_focus/moon_amulette
 	name = "Moonlight Amulette"
-	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and you feel tendrils reach into your mind whispering of laughter and joy."
+	desc = "A piece of the mind, the sight and the moon. Gazing into it makes your head spin and hear whispers of laughter and joy."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
-
 
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
@@ -69,14 +68,15 @@
 				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
 					user.balloon_alert(user, "Their mind is too strong!")
 					hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-					hit.mob_mood.set_sanity(hit.mob_mood.sanity -= 10)
+					hit.mob_mood.set_sanity(hit.mob_mood.sanity -= 20)
 				if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
 					user.balloon_alert(user, "Their mind bends to see the truth!")
-					to_chat(hit, span_notice("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!"))
+					to_chat(hit, span_notice("<span class='warning'>THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>"))
 					hit.apply_status_effect(/datum/status_effect/moon_converted)
 					user.log_message("made [target] insane.", LOG_GAME)
 					message_admins("[ADMIN_LOOKUPFLW(user)] made, [ADMIN_LOOKUPFLW(target)] insane.")
 	else
 		user.balloon_alert(user, "You feel a presence watching you")
 		user.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
+		user.mob_mood.set_sanity(user.mob_mood.sanity -= 50)
 	. = ..()

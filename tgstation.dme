@@ -2923,6 +2923,7 @@
 #include "code\modules\antagonists\heretic\magic\mansus_grasp.dm"
 #include "code\modules\antagonists\heretic\magic\mirror_walk.dm"
 #include "code\modules\antagonists\heretic\magic\moon_parade.dm"
+#include "code\modules\antagonists\heretic\magic\moon_ringleader.dm"
 #include "code\modules\antagonists\heretic\magic\moon_smile.dm"
 #include "code\modules\antagonists\heretic\magic\nightwatcher_rebirth.dm"
 #include "code\modules\antagonists\heretic\magic\realignment.dm"
