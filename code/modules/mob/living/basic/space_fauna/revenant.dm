@@ -9,11 +9,6 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "revenant_idle"
-	var/icon_idle = "revenant_idle"
-	var/icon_reveal = "revenant_revealed"
-	var/icon_stun = "revenant_stun"
-	var/icon_drain = "revenant_draining"
-	var/stasis = FALSE
 	mob_biotypes = MOB_SPIRIT
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
@@ -52,6 +47,11 @@
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/revenant
 
+	var/icon_idle = "revenant_idle"
+	var/icon_reveal = "revenant_revealed"
+	var/icon_stun = "revenant_stun"
+	var/icon_drain = "revenant_draining"
+	var/stasis = FALSE
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
 	var/essence_regenerating = TRUE //If the revenant regenerates essence or not
@@ -110,21 +110,37 @@
 
 /mob/living/basic/revenant/Login()
 	. = ..()
-	if(!. || !client)
+	if(!. || isnull(client))
 		return FALSE
-	to_chat(src, span_deadsay("<span class='big bold'>You are a revenant.</span>"))
-	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
-	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
-	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
-	to_chat(src, "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>")
-	to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
-	to_chat(src, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>")
-	if(!generated_objectives_and_spells)
-		generated_objectives_and_spells = TRUE
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/revenant))
-		mind.special_role = ROLE_REVENANT
-		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
-		mind.add_antag_datum(/datum/antagonist/revenant)
+
+	var/static/cached_string = null
+	if(isnull(cached_string))
+		cached_string = examine_block(jointext(create_login_string(), "\n"))
+
+	to_chat(src, cached_string, type = MESSAGE_TYPE_INFO)
+
+	if(generated_objectives_and_spells)
+		return TRUE
+
+	generated_objectives_and_spells = TRUE
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/revenant))
+	mind.special_role = ROLE_REVENANT
+	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
+	mind.add_antag_datum(/datum/antagonist/revenant)
+	return TRUE
+
+/// Generates the information the player needs to know how to play their role, and returns it as a list.
+/mob/living/basic/revenant/proc/create_login_string()
+	RETURN_TYPE(/list)
+	var/list/returnable_list = list()
+	returnable_list += span_deadsay(span_boldbig("You are a revenant."))
+	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.")
+	returnable_list += span_bold("You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.")
+	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
+	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
+	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
+	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
+	return returnable_list
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/basic/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
