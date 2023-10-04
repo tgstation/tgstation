@@ -413,17 +413,20 @@
 /// Swaps around where a creature is, when they move or when they're first detected
 /obj/item/mod/module/active_sonar/proc/sort_creature_angle(mob/living/creature, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
-
-	if(keyed_creatures[creature])
+	if(keyed_creatures[creature] && (creature.stat == DEAD || get_dist(get_turf(mod.wearer), get_turf(creature)) > world.view))
 		var/oldgroup = keyed_creatures[creature]
 		sorted_creatures[oldgroup] -= creature
-		if(get_dist(get_turf(mod.wearer), get_turf(creature)) > world.view || creature.stat == DEAD)
-			keyed_creatures -= creature
-			UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
-			return
+		keyed_creatures -= creature
+		UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
+		return
 	var/newgroup = round(get_angle(mod.wearer, creature) / (360 / radar_slices)) + 1
-	keyed_creatures[creature] = newgroup
+	if(keyed_creatures[creature])
+		var/oldgroup = keyed_creatures[creature]
+		if(oldgroup != newgroup)
+			sorted_creatures[oldgroup] -= creature
+
 	sorted_creatures[newgroup] += creature
+	keyed_creatures[creature] = newgroup
 
 /// Swaps all creatures when mod.wearer moves
 /obj/item/mod/module/active_sonar/proc/sort_all_creatures(mob/living/wearer, atom/old_loc, movement_dir, forced)
