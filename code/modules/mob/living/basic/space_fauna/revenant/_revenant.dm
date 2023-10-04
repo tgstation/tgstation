@@ -163,7 +163,7 @@
 		revealed = FALSE
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
-		to_chat(src, span_revenboldnotice("You are once more concealed."))
+		to_chat(src, span_revenboldnotice("You are once again concealed."))
 
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
