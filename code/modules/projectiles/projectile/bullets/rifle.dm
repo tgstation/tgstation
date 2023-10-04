@@ -67,13 +67,13 @@
 /obj/projectile/bullet/rebarsyndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 50
+	damage = 45
 	stamina = 20
 	speed = 0.4
-	dismemberment = 4 //It's a budget sniper rifle.
+	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 25 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
-	bare_wound_bonus = 30
+	bare_wound_bonus = 20
 	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/stack/rods
