@@ -66,7 +66,7 @@
 	. = ..()
 	icon_state = "[base_icon_state]"
 
-/obj/item/ammo_casing/rebarsyndie
+/obj/item/ammo_casing/rebar/syndie
 	name = "Jagged iron rod"
 	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
 	caliber = CALIBER_REBAR_SYNDIE
@@ -74,10 +74,10 @@
 	base_icon_state = "rod_jagged"
 	projectile_type = /obj/projectile/bullet/rebarsyndie
 
-/obj/item/ammo_casing/rebarsyndie/Initialize(mapload)
+/obj/item/ammo_casing/rebar/syndie/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/caseless, TRUE)
 
-/obj/item/ammo_casing/rebarsyndie/update_icon_state()
+/obj/item/ammo_casing/rebar/syndie/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]"

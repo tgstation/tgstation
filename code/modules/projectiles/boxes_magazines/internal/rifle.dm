@@ -34,17 +34,15 @@
 	caliber = CALIBER_REBAR
 	ammo_type = /obj/item/ammo_casing/rebar
 
-/obj/item/ammo_box/magazine/internal/boltaction/rebarxbowforce
+/obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 	max_ammo = 2
 	caliber = CALIBER_REBAR_FORCED
-	ammo_type = /obj/item/ammo_casing/rebar
 
-/obj/item/ammo_box/magazine/internal/boltaction/rebarxbowsyndie
+/obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	max_ammo = 3
 	caliber = CALIBER_REBAR_SYNDIE
-	ammo_type = /obj/item/ammo_casing/rebarsyndie
+	ammo_type = /obj/item/ammo_casing/rebar/syndie
 
-/obj/item/ammo_box/magazine/internal/boltaction/rebarxbowsyndienormal
-	max_ammo = 3
+/obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie/normal
 	caliber = CALIBER_REBAR_SYNDIE_NORMAL
 	ammo_type = /obj/item/ammo_casing/rebar

@@ -187,6 +187,7 @@
 	internal_magazine = TRUE
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_REBAR
+	slot_flags = ITEM_SLOT_BACK
 	alternative_caliber = CALIBER_REBAR_FORCED
 	alternative_ammo_misfires = TRUE
 	bolt_wording = "bowstring"
@@ -227,7 +228,7 @@
 	. = ..()
 	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
 
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "Syndicate Rebar Crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed.\
 			Holds three shots, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
@@ -249,21 +250,12 @@
 	bolt_wording = "bowstring"
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbowsyndie
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	fire_sound = 'sound/items/syringeproj.ogg'
 	can_be_sawn_off = FALSE
 	SET_BASE_PIXEL(0, 0)
 
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie/rack(mob/user = null)
-	if (bolt_locked == FALSE)
-		balloon_alert(user, "bowstring loosened")
-		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
-		process_chamber(FALSE, FALSE, FALSE)
-		bolt_locked = TRUE
-		update_appearance()
-		return
-	drop_bolt(user)
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie/drop_bolt(mob/user = null)
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie/drop_bolt(mob/user = null)
 	if(do_after(user, 1 SECONDS, target = src)) //shorter delay as it wasnt made by some idiot in a closet, plus it has the 3 shots
 		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 		if (user)
@@ -272,17 +264,7 @@
 		bolt_locked = FALSE
 		update_appearance()
 
-
-
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie/can_shoot()
-	if (bolt_locked)
-		return FALSE
-	return ..()
-
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie/examine(mob/user)
-	. = ..()
-	. += "The crossbow is [bolt_locked ? "ready" : "not ready"] to fire."
-/obj/item/gun/ballistic/rifle/rebarxbowsyndie/Initialize(mapload)
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 

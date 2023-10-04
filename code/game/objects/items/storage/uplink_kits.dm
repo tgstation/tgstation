@@ -346,7 +346,7 @@
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
 	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
-	new /obj/item/gun/ballistic/rifle/rebarxbowsyndie(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"

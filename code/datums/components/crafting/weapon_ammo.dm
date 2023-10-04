@@ -13,7 +13,7 @@
 	category = CAT_WEAPON_AMMO
 /datum/crafting_recipe/rebarsyndie
 	name = "jagged iron rod"
-	result = /obj/item/ammo_casing/rebarsyndie
+	result = /obj/item/ammo_casing/rebar/syndie
 	reqs = list(
 		/obj/item/stack/rods = 1,
 	)
