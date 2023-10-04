@@ -7,7 +7,7 @@
 
 /// Checks if we can take a picture at this moment. Returns TRUE if we can, FALSE if we can't.
 /obj/item/camera/siliconcam/proc/can_take_picture(mob/living/silicon/clicker)
-	if(clicker.stat != CONSCIOUS || clicker.incapacitated() || clicker.IsParalyzed() || clicker.IsStun())
+	if(clicker.stat != CONSCIOUS || clicker.incapacitated())
 		return FALSE
 	return TRUE
 
@@ -100,7 +100,6 @@
 	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
-	var/mob/living/silicon/robot/R = loc
 	if(istype(user) && user.connected_ai)
 		user.picturesync()
 		return user.connected_ai.aicamera.selectpicture(user)
