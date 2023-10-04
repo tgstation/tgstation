@@ -1,6 +1,6 @@
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 
-//same lvl as acclimator
+/// coefficient to convert temperature to joules. same lvl as acclimator
 #define HEATER_COEFFICIENT 0.05
 
 /obj/machinery/plumbing/reaction_chamber
@@ -173,13 +173,10 @@
 	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	while(TRUE)
+	while(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
 		if(machine_stat & NOPOWER)
 			return
 
-		//not too acidic nor too basic. work done
-		if(reagents.ph >= acidic_limit && reagents.ph <= alkaline_limit)
-			return
 		/**
 		 * figure out which buffer to transfer to restore balance
 		 * if solution is getting too basic(high ph) add some acid to lower it's value
@@ -191,12 +188,11 @@
 
 		//transfer buffer and handle reactions, not a proven math but looks logical
 		var/transfer_amount = FLOOR((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)) * seconds_per_tick, CHEMICAL_QUANTISATION_LEVEL)
-		if(transfer_amount <= 0 || !buffer.trans_to(reagents, transfer_amount))
+		if(transfer_amount <= CHEMICAL_QUANTISATION_LEVEL || !buffer.trans_to(reagents, transfer_amount))
 			return
-		reagents.handle_reactions()
 
 		//some power for accurate ph balancing
-		use_power((active_power_usage * 0.2) * seconds_per_tick)
+		use_power(active_power_usage * 0.2 * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
