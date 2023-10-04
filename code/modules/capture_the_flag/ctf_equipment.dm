@@ -181,7 +181,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/target_mob = target
 		target_mob.visible_message(span_danger("[target_mob] explodes into a shower of gibs!"))
-		target_mob.gib()
+		target_mob.gib(DROP_ALL_REMAINS)
 
 // SHIELDED VEST
 

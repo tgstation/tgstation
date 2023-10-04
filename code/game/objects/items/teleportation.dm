@@ -484,7 +484,7 @@
 	destination.ex_act(EXPLODE_HEAVY)
 	victim.unequip_everything()
 	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
 /obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.

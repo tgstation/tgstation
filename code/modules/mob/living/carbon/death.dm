@@ -24,7 +24,7 @@
 	M.Scale(1.8, 1.2)
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
 
-/mob/living/carbon/gib(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/carbon/gib(drop_bitflags=NONE)
 	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
 	if(drop_bitflags & DROP_ITEMS)
 		for(var/obj/item/W in src)

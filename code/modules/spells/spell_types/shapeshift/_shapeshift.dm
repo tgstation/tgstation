@@ -132,7 +132,7 @@
 	// Gib our caster, and make sure to leave nothing behind
 	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
 	cast_on.investigate_log("has been gibbed by shapeshifting while ventcrawling.", INVESTIGATE_DEATHS)
-	cast_on.gib(NONE)
+	cast_on.gib()
 
 /// Callback for the radial that allows the user to choose their species.
 /datum/action/cooldown/spell/shapeshift/proc/check_menu(mob/living/caster)

@@ -8,7 +8,7 @@
  * * DROP_ITEMS - Gibbed mob will drop carried items (otherwise they get deleted)
  * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes DROP_ITEMS causing any carried items to be deleted)
 **/
-/mob/living/proc/gib(drop_bitflags=DROP_ALL_REMAINS)
+/mob/living/proc/gib(drop_bitflags=NONE)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)

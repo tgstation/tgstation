@@ -23,7 +23,7 @@
 /obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user]'s [src] is reacting to the radio signal, warping [user.p_their()] body!"))
 	user.set_suicide(TRUE)
-	user.gib()
+	user.gib(DROP_ALL_REMAINS)
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return

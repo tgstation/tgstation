@@ -78,7 +78,7 @@
 	if (istype(living_victim))
 		living_victim.investigate_log("has been gibbed by an admin.", INVESTIGATE_DEATHS)
 		if(confirm == "Yes")
-			living_victim.gib()
+			living_victim.gib(DROP_ALL_REMAINS)
 		else
 			living_victim.gib(DROP_ORGANS|DROP_BODYPARTS)
 
@@ -97,7 +97,7 @@
 
 	var/mob/living/ourself = mob
 	if (istype(ourself))
-		ourself.gib(NONE)
+		ourself.gib()
 
 /client/proc/everyone_random()
 	set category = "Admin.Fun"

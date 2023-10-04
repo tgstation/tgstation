@@ -32,7 +32,7 @@
 /mob/living/circuit_drone/updatehealth()
 	. = ..()
 	if(health < 0)
-		gib(NONE)
+		gib()
 
 /mob/living/circuit_drone/welder_act(mob/living/user, obj/item/tool)
 	. = ..()

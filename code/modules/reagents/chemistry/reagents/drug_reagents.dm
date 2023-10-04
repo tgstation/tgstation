@@ -855,4 +855,4 @@
 		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-"),
 	)
 	new /obj/structure/bouncy_castle(gored.loc, gored)
-	gored.gib(NONE)
+	gored.gib()

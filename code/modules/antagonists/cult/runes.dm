@@ -370,7 +370,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
-		sacrificial.gib()
+		sacrificial.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /obj/effect/rune/empower
