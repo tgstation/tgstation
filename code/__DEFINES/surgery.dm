@@ -24,6 +24,8 @@
 #define ORGAN_UNREMOVABLE (1<<8)
 /// Can't be seen by scanners, doesn't anger body purists
 #define ORGAN_HIDDEN (1<<9)
+/// Has the organ already been inserted inside someone
+#define ORGAN_VIRGIN (1<<10)
 
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
