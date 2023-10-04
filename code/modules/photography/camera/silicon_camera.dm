@@ -62,6 +62,11 @@
 	name = "AI photo camera"
 	flash_enabled = FALSE
 
+/obj/item/camera/siliconcam/ai_camera/can_take_picture(mob/living/silicon/ai/clicker)
+	if(clicker.control_disabled)
+		return FALSE
+	return ..()
+
 /obj/item/camera/siliconcam/ai_camera/balloon_alert(mob/viewer, text)
 	if(isAI(loc))
 		// redirects balloon alerts on us to balloon alerts on our ai eye
