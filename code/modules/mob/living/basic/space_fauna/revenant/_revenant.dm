@@ -156,13 +156,15 @@
 	. += "Perfect Souls Stolen: [perfectsouls]"
 
 /mob/living/basic/revenant/update_health_hud()
-	if(hud_used)
-		var/essencecolor = "#8F48C6"
-		if(essence > essence_regen_cap)
-			essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
-		else if(!essence)
-			essencecolor = "#1D2953" //oh jeez you're dying
-		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
+	if(isnull(hud_used))
+		return
+
+	var/essencecolor = "#8F48C6"
+	if(essence > essence_regen_cap)
+		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
+	else if(!essence)
+		essencecolor = "#1D2953" //oh jeez you're dying
+	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/basic/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if (!message)
@@ -227,36 +229,48 @@
 /mob/living/basic/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return
-	stasis = TRUE
-	to_chat(src, span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."))
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+	stasis = TRUE
+
+	visible_message(
+		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
+		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
+	)
+
 	revealed = TRUE
 	invisibility = 0
-	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
-	visible_message(span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"))
 	icon_state = "revenant_draining"
+	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
+
 	for(var/i = alpha, i > 0, i -= 10)
-		stoplag()
 		alpha = i
+		CHECK_TICK
+
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
+
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
 	goop.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	goop.old_key = client.key //If the essence reforms, the old revenant is put back in the body
 	goop.revenant = src
+
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
-	ghostize(FALSE)//Don't re-enter invisible corpse
+	ghostize(FALSE) //Don't re-enter invisible corpse
 
 /mob/living/basic/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return FALSE
+
 	. = amount
-	essence = max(0, essence-amount)
+
+	essence = max(0, essence - amount)
 	if(updating_health)
 		update_health_hud()
-	if(!essence)
+	if(essence == 0)
 		death()
+
+	return .
 
 /mob/living/basic/revenant/orbit(atom/target)
 	setDir(SOUTH) // reset dir so the right directional sprites show up
@@ -301,7 +315,7 @@
 
 //reveal, stun, icon updates, cast checks, and essence changing
 /mob/living/basic/revenant/proc/reveal(time)
-	if(!src)
+	if(QDELETED(src))
 		return
 	if(time <= 0)
 		return
