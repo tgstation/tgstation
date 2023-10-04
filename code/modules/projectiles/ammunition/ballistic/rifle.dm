@@ -73,11 +73,3 @@
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
 	projectile_type = /obj/projectile/bullet/rebarsyndie
-
-/obj/item/ammo_casing/rebar/syndie/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/caseless, TRUE)
-
-/obj/item/ammo_casing/rebar/syndie/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]"
