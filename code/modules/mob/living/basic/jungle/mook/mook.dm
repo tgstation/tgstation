@@ -37,7 +37,7 @@
 		leap.Grant(src)
 	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
 	jump.Grant(src)
-	ai_coller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
+	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
 	update_appearance()
 
 /mob/living/basic/mining/mook/Entered(atom/movable/mover)
@@ -238,7 +238,7 @@
 	cooldown_time = 14 SECONDS
 	shared_cooldown = NONE
 	melee_cooldown_time = 0 SECONDS
-	click_to_activate = TRUE
+	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/Activate(atom/target)
 	var/obj/effect/landmark/drop_zone = locate(/obj/effect/landmark/mook_village) in GLOB.landmarks_list

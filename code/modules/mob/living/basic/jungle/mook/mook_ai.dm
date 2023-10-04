@@ -1,13 +1,8 @@
-#define BB_HOME_VILLAGE "home_village"
-#define BB_MAXIMUM_DISTANCE_TO_VILLAGE "maximum_distance_to_village"
-#define BB_MATERIAL_STAND_TARGET "material_stand_target"
-#define BB_MOOK_JUMP_ABILITY "mook_jump_ability"
-
 /datum/ai_controller/basic_controller/mook
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
-		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
+		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 7,
 		BB_STORM_APPROACHING = FALSE,
 	)
 
@@ -27,6 +22,12 @@
 
 /datum/ai_planning_subtree/use_mob_ability/mook_jump/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
+	var/mob/living/living_pawn = controller.pawn
+	var/obj/effect/home = controller.blackboard[BB_HOME_VILLAGE]
+	if(QDELETED(home))
+		return
+	if(get_dist(living_pawn, home) < controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
+		return
 	if(locate(/obj/item/stack/ore) in living_pawn || storm_approaching)
 		return ..()
 
@@ -63,45 +64,25 @@
 	if (QDELETED(hunt_target))
 		return FALSE
 	var/list/possible_turfs = list()
-	possible_turfs += get_step(hunt_target, SOUTH)
-	possible_turfs += get_step(hunt_target, SOUTHEAST)
-	for(var/turf/possible_turf in possible_turfs)
-		if(possible_turf.is_blocked_turf())
-			possible_turfs -= possible_turf
+	var/list/directions = list(SOUTH, SOUTHEAST)
+
+	for(var/direction in directions)
+		var/turf/bottom_turf = get_step(hunt_target, direction)
+		if(!bottom_turf.is_blocked_turf())
+			possible_turfs += bottom_turf
+
 	if(!length(possible_turfs))
 		return FALSE
 	set_movement_target(controller, pick(possible_turfs))
 
-/datum/ai_planning_subtree/travel_to_point/village
-	location_key = BB_HOME_VILLAGE
-	travel_behaviour = /datum/ai_behavior/travel_towards/village
-
-/datum/ai_planning_subtree/travel_to_point/village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
-
-	var/obj/effect/village_mark = controller.blackboard[location_key]
-	if(QDELETED(village_mark))
-		return
-
-	//no reason to return if we dont have ores to deposit or no storm is coming
-	if(!(locate(/obj/item/stack/ore) in living_pawn))
-		return
-
-	if(get_dist(living_pawn, village_mark) < controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
-		return
-
-	return ..()
-
-/datum/ai_behavior/travel_towards/village
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 /datum/ai_planning_subtree/wander_away_from_village
 
-
 /datum/ai_planning_subtree/wander_away_from_village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
+	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
 	///if we have ores to deposit or a storm is approaching, dont wander away
-	if(locate(/obj/item/stack/ore) in living_pawn)
+	if(locate(/obj/item/stack/ore) in living_pawn || storm_approaching)
 		return
 
 	if(controller.blackboard_key_exists(BB_HOME_VILLAGE))
@@ -133,6 +114,9 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/effect/target = controller.blackboard[village_key]
 	if(QDELETED(target))
+		return FALSE
+
+	if(target.z != living_pawn.z)
 		return FALSE
 
 	var/list/angle_directions = list()
