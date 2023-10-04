@@ -149,7 +149,7 @@
 	SIGNAL_HANDLER
 	if (target == back || target == front)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if (isnull(back) || QDELETED(target) || isfloorturf(target))
+	if (isnull(back) || QDELETED(target))
 		return
 	INVOKE_ASYNC(back, TYPE_PROC_REF(/mob, ClickOn), target)
 

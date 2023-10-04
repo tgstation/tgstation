@@ -948,51 +948,6 @@
 /proc/cmp_timer_data(list/a, list/b)
 	return b["count"] - a["count"]
 
-/client/proc/create_mob_worm()
-	set category = "Debug"
-	set name = "Create Mob Worm"
-	set desc = "Attached a linked list of mobs to a marked mob"
-	if (!check_rights(R_DEBUG))
-		return
-	if(isnull(holder))
-		return
-	if(!isliving(holder.marked_datum))
-		to_chat(usr, span_warning("Error: Please mark a mob to attach mobs to."))
-		return
-	var/mob/living/head = holder.marked_datum
-
-	var/attempted_target_path = input(
-		usr,
-		"Enter typepath of a mob you'd like to make your chain from.",
-		"Typepath",
-		"[/mob/living/basic/pet/dog/corgi/ian]",
-	) as null|text
-
-	if (isnull(attempted_target_path))
-		return //The user pressed "Cancel"
-
-	var/desired_mob = text2path(attempted_target_path)
-	if(!ispath(desired_mob))
-		var/static/list/mob_paths = make_types_fancy(subtypesof(/mob/living))
-		desired_mob = pick_closest_path(attempted_target_path, mob_paths)
-	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
-		return //The user pressed "Cancel"
-
-	var/amount = tgui_input_number(usr, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
-	if (isnull(amount) || amount < 1 || QDELETED(head))
-		return
-	head.AddComponent(/datum/component/mob_chain)
-	var/mob/living/previous = head
-	for (var/i in 1 to amount)
-		var/mob/living/segment = new desired_mob(head.drop_location())
-		if (QDELETED(segment)) // ffs mobs which replace themselves with other mobs
-			i--
-			continue
-		ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
-		QDEL_NULL(segment.ai_controller)
-		segment.AddComponent(/datum/component/mob_chain, front = previous)
-		previous = segment
-
 #ifdef TESTING
 /client/proc/check_missing_sprites()
 	set category = "Debug"

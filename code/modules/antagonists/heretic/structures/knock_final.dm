@@ -20,8 +20,8 @@
 	var/static/list/monster_types
 	/// A static list of heretic summons which we should not create
 	var/static/list/monster_types_blacklist = list(
-		/mob/living/basic/heretic_summon/star_gazer,
 		/mob/living/basic/heretic_summon/armsy,
+		/mob/living/basic/heretic_summon/star_gazer,
 	)
 
 /obj/structure/knock_tear/Initialize(mapload, datum/mind/ascendant_mind)
