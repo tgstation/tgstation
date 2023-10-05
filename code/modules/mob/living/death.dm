@@ -6,7 +6,7 @@
  * * DROP_ORGANS - Gibbed mob will drop organs
  * * DROP_BODYPARTS - Gibbed mob will drop bodyparts (arms, legs, etc.)
  * * DROP_ITEMS - Gibbed mob will drop carried items (otherwise they get deleted)
- * * DROP_ALL_REMAINS - Gibbed mob will drop everything (excludes DROP_ITEMS causing any carried items to be deleted)
+ * * DROP_ALL_REMAINS - Gibbed mob will drop everything
 **/
 /mob/living/proc/gib(drop_bitflags=NONE)
 	var/prev_lying = lying_angle

@@ -30,5 +30,5 @@
 /// Mobs will drop items
 #define DROP_ITEMS (1<<3)
 
-/// Mobs will drop everything (except items)
-#define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS)
+/// Mobs will drop everything
+#define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS | DROP_ITEMS)
