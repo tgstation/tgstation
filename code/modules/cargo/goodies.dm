@@ -129,6 +129,12 @@
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/storage/medkit/toxin)
 
+/datum/supply_pack/goody/bandagebox_singlepack
+	name = "Box of Bandages Single-Pack"
+	desc = "A single box of DeForest brand bandages. For when you don't want to see your doctor."
+	cost = PAYCHECK_CREW * 3
+	contains = list(/obj/item/storage/box/bandages)
+
 /datum/supply_pack/goody/toolbox // mostly just to water down coupon probability
 	name = "Mechanical Toolbox"
 	desc = "A fully stocked mechanical toolbox, for when you're too lazy to just print them out."

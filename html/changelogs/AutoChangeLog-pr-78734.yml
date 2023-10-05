@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - rscadd: "Buffs the Active Sonar module with a radial scan, and makes the power costs more in-line with other modules."

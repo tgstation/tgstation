@@ -132,9 +132,10 @@
 	taste_mult = 1.3
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(volume >= 10)
-		M.adjustToxLoss(5 * REM * seconds_per_tick, 0)
-	..()
+		if(M.adjustToxLoss(5 * REM * seconds_per_tick, updating_health = FALSE))
+			. = UPDATE_MOB_HEALTH
 
 /obj/effect/temp_visual/leaper_crush
 	name = "grim tidings"
