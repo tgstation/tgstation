@@ -147,6 +147,10 @@
 	if(!on_fire)
 		return TRUE
 
+	if(HAS_TRAIT(owner, TRAIT_HUSK))
+		qdel(src)
+		return TRUE
+
 	adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
 
 	if(stacks <= 0)
@@ -220,7 +224,7 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/ignite(silent = FALSE)
-	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(HAS_TRAIT(owner, TRAIT_NOFIRE) || HAS_TRAIT(owner, TRAIT_HUSK))
 		return FALSE
 
 	on_fire = TRUE
