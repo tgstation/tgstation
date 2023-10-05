@@ -959,6 +959,7 @@
 #include "code\datums\components\connect_range.dm"
 #include "code\datums\components\construction.dm"
 #include "code\datums\components\conveyor_movement.dm"
+#include "code\datums\components\corpse_description.dm"
 #include "code\datums\components\cracked.dm"
 #include "code\datums\components\crank_recharge.dm"
 #include "code\datums\components\crate_carrier.dm"

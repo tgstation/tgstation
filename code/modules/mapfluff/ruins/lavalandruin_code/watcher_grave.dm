@@ -1,5 +1,18 @@
 
 
+/obj/effect/mob_spawn/corpse/goliath/pierced
+	corpse_description = "Seems to have been pierced through the heart by a Watcher spike."
+	naive_corpse_description = "It's got a pretty big boo-boo, might need one of the large plasters."
+
+/obj/effect/mob_spawn/corpse/watcher/goliath_chewed
+	corpse_description = "Prior to its death, it was badly mangled by the jaws of a Goliath."
+	naive_corpse_description = "It's all tuckered out after playing rough with a Goliath."
+
+/obj/effect/mob_spawn/corpse/watcher/crushed
+	corpse_description = "Crushed by a rockslide, it seemed to have been scraping frantically at the rocks even as it perished."
+	naive_corpse_description = "All of those rocks probably don't make a comfortable blanket."
+
+
 /// A cute pet who will occasionally attack lavaland mobs for you
 /obj/item/watcher_hatchling
 	name = "watcher hatchling"
