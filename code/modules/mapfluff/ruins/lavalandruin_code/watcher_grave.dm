@@ -12,6 +12,79 @@
 	corpse_description = "Crushed by a rockslide, it seemed to have been scraping frantically at the rocks even as it perished."
 	naive_corpse_description = "All of those rocks probably don't make a comfortable blanket."
 
+#define WATCHER_HATCH_STEPS 300
+#define WATCHER_LIVELY_STEPS 250
+#define WATCHER_ACTIVE_STEPS 150
+
+/// Egg which hatches into a helpful pet. Or you can eat it if you want.
+/obj/item/food/egg/watcher
+	name = "watcher egg"
+	desc = "A lonely egg still pulsing with life, somehow untouched by the corruption of the Necropolis."
+	chick_throw_prob = 100
+	tastes = list("ocular fluid" = 6, "loneliness" = 1)
+	preserved_food = TRUE
+	/// How far have we moved?
+	var/steps_travelled = 0
+	/// How far should we travel to hatch?
+	var/steps_to_hatch = WATCHER_HATCH_STEPS
+	/// Datum used to measure our steps
+	var/datum/movement_detector/pedometer
+
+/obj/item/food/egg/watcher/Initialize(mapload)
+	. = ..()
+	pedometer = new(src, CALLBACK(src, PROC_REF(on_stepped)))
+
+/obj/item/food/egg/watcher/Destroy(force)
+	. = ..()
+	QDEL_NULL(pedometer)
+
+/obj/item/food/egg/watcher/spawn_impact_chick(turf/spawn_turf)
+	new /obj/effect/spawner/random/lavaland_mob/watcher(spawn_turf)
+
+/obj/item/food/egg/watcher/examine_more(mob/user)
+	. = ..()
+	if (steps_travelled < WATCHER_LIVELY_STEPS)
+		return . + span_notice("Something stirs listlessly inside.")
+	if (steps_travelled < WATCHER_ACTIVE_STEPS)
+		return . + span_notice("Something is moving actively inside.")
+	return . + span_boldnotice("It's jiggling wildly, it's about to hatch!")
+
+/// Called when we are moved, whether inside an inventory or by ourself somehow
+/obj/item/food/egg/watcher/proc/on_stepped(atom/movable/egg, atom/mover, atom/old_loc, direction)
+	var/new_loc = get_turf(egg)
+	if (isnull(new_loc) || new_loc == get_turf(old_loc))
+		return // Didn't actually go anywhere
+	steps_travelled++
+	if (steps_travelled == steps_to_hatch)
+		visible_message(span_boldnotice("[src] splits and unfurls into a baby Watcher!"))
+		playsound(new_loc, 'sound/effects/splat.ogg', 50, TRUE)
+		new /obj/item/watcher_hatchling(new_loc)
+		qdel(src)
+		return
+	if (steps_travelled == WATCHER_ACTIVE_STEPS)
+		jiggle()
+
+/// Animate the egg
+/obj/item/food/egg/watcher/proc/jiggle()
+	var/animation = rand(1, 3)
+	switch(animation)
+		if (1)
+			animate(src, pixel_y = 8, time = 0.5 SECONDS, easing = SINE_EASING | EASE_OUT)
+			animate(pixel_y = 0, time = 0.5 SECONDS, easing = SINE_EASING | EASE_IN)
+			animate(pixel_y = 4, time = 0.5 SECONDS, easing = SINE_EASING | EASE_OUT)
+			animate(pixel_y = 0, time = 0.5 SECONDS, easing = BOUNCE_EASING | EASE_IN)
+		if (2)
+			animate(src, transform = transform.Scale(1.2), time = 1 SECONDS, easing = BOUNCE_EASING)
+			animate(transform = matrix(), time = 0.5, easing = SINE_EASING | EASE_IN)
+		if (3)
+			Shake(pixelshiftx = 2, pixelshifty = 0, shake_interval = 0.3 SECONDS)
+	var/next_jiggle = rand(5 SECONDS, 10 SECONDS) / (steps_travelled >= WATCHER_LIVELY_STEPS ? 2 : 1)
+	addtimer(PROC_REF(src, jiggle), next_jiggle, TIMER_DELETE_ME)
+
+#undef WATCHER_HATCH_STEPS
+#undef WATCHER_LIVELY_STEPS
+#undef WATCHER_ACTIVE_STEPS
+
 
 /// A cute pet who will occasionally attack lavaland mobs for you
 /obj/item/watcher_hatchling
@@ -94,6 +167,7 @@
 
 /obj/effect/watcher_orbiter/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(tracker)
 	return ..()
 
 /obj/effect/watcher_orbiter/process(seconds_per_tick)

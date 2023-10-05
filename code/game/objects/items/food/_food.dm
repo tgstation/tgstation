@@ -115,7 +115,7 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 ///Requires /datum/component/germ_sensitive to detect exposure
 /obj/item/food/proc/make_germ_sensitive(mapload)
-	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+	if(!isnull(trash_type))
 		return // You don't eat the package and it protects from decomposing
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
