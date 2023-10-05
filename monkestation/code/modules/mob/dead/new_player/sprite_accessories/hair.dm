@@ -90,6 +90,7 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Long and Messy"
 	icon_state = "long_messy"
+
 /datum/sprite_accessory/hair/monkeyking
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Monkey king"
