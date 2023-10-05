@@ -283,3 +283,11 @@
 	suffix = "lavaland_battle_site.dmm"
 	allow_duplicates = TRUE
 	cost = 3
+
+/datum/map_template/ruin/lavaland/watcher_grave
+	name = "Watchers' Grave"
+	id = "watcher-grave"
+	description = "A lonely cave where an orphaned child awaits a new parent."
+	suffix = "lavaland_surface_watcher_grave.dmm"
+	cost = 5
+	allow_duplicates = FALSE

@@ -177,7 +177,7 @@
 	if (!COOLDOWN_FINISHED(src, shot_cooldown))
 		return
 	for (var/mob/living/potential_target in oview(5, src))
-		if (!ismining(potential_target))
+		if (!ismining(potential_target) || potential_target.stat == DEAD)
 			continue
 		if (!faction_check(target_faction, potential_target.faction))
 			continue

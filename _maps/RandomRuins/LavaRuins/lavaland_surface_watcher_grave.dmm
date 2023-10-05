@@ -1,0 +1,345 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/item/food/egg/watcher,
+/turf/open/misc/asteroid/basalt/wasteland/basin,
+/area/lavaland/surface/outdoors)
+"c" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"f" = (
+/obj/structure/stone_tile/cracked{
+	pixel_x = 16
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"g" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"h" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"i" = (
+/obj/structure/stone_tile/cracked{
+	pixel_y = -16
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"j" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/indestructible/riveted/boss/wasteland,
+/area/lavaland/surface/outdoors)
+"l" = (
+/turf/closed/mineral/gibtonite/volcanic,
+/area/lavaland/surface/outdoors)
+"m" = (
+/turf/open/chasm/lavaland,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/effect/mob_spawn/corpse/goliath/pierced,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"q" = (
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"r" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"t" = (
+/obj/structure/stone_tile/cracked{
+	pixel_x = 16
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"u" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"v" = (
+/obj/effect/mob_spawn/corpse/watcher/crushed,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"y" = (
+/obj/structure/stone_tile/block/cracked{
+	pixel_y = -16
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"A" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"B" = (
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"C" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"D" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"E" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"I" = (
+/turf/template_noop,
+/area/template_noop)
+"J" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"M" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"R" = (
+/turf/closed/indestructible/riveted/boss/wasteland,
+/area/lavaland/surface/outdoors)
+"U" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/effect/mob_spawn/corpse/watcher/goliath_chewed,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/lavaland/surface/outdoors)
+"W" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+I
+I
+I
+I
+a
+I
+W
+W
+M
+I
+I
+I
+I
+"}
+(3,1,1) = {"
+I
+I
+I
+l
+a
+a
+a
+t
+a
+a
+I
+I
+I
+"}
+(4,1,1) = {"
+I
+I
+a
+a
+R
+R
+R
+j
+R
+a
+a
+I
+I
+"}
+(5,1,1) = {"
+I
+a
+a
+R
+R
+u
+R
+q
+R
+m
+a
+I
+I
+"}
+(6,1,1) = {"
+I
+a
+a
+R
+A
+f
+q
+f
+m
+m
+m
+I
+I
+"}
+(7,1,1) = {"
+I
+I
+a
+R
+D
+U
+h
+q
+C
+m
+m
+m
+I
+"}
+(8,1,1) = {"
+I
+l
+a
+R
+y
+b
+g
+B
+q
+q
+m
+m
+I
+"}
+(9,1,1) = {"
+I
+a
+a
+R
+c
+i
+o
+r
+q
+R
+a
+a
+I
+"}
+(10,1,1) = {"
+I
+I
+a
+R
+R
+A
+u
+h
+c
+R
+a
+l
+I
+"}
+(11,1,1) = {"
+I
+I
+a
+a
+R
+R
+R
+q
+R
+R
+a
+I
+I
+"}
+(12,1,1) = {"
+I
+I
+I
+a
+a
+a
+R
+j
+R
+a
+a
+I
+I
+"}
+(13,1,1) = {"
+I
+I
+I
+I
+I
+W
+M
+J
+E
+W
+I
+I
+I
+"}
+(14,1,1) = {"
+I
+I
+I
+I
+I
+I
+t
+v
+W
+I
+I
+I
+I
+"}
+(15,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+W
+W
+I
+I
+I
+I
+"}
