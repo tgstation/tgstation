@@ -230,32 +230,6 @@
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 	orbit(target, orbitsize)
 
-/mob/living/basic/revenant/death()
-	if(!revealed || dormant) //Revenants cannot die if they aren't revealed //or are already dead
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-	dormant = TRUE
-
-	visible_message(
-		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
-		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
-	)
-
-	revealed = TRUE
-	invisibility = 0
-	icon_state = "revenant_draining"
-	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
-
-	animate(src, alpha = 0, time = 3 SECONDS)
-	sleep(3 SECONDS)
-	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
-
-	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
-	goop.old_ckey = client.ckey
-	goop.revenant = src
-	revealed = FALSE
-	forceMove(goop)
-
 /mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return 0
@@ -322,6 +296,38 @@
 	if(!revealed || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
+
+/mob/living/basic/revenant/death()
+	if(!revealed || dormant) //Revenants cannot die if they aren't revealed //or are already dead
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+	dormant = TRUE
+
+	visible_message(
+		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
+		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
+	)
+
+	revealed = TRUE
+	invisibility = 0
+	icon_state = "revenant_draining"
+	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
+
+	animate(src, alpha = 0, time = 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(move_to_ectoplasm)), 3 SECONDS)
+
+/// Forces the mob, once dormant, to move inside ectoplasm until it can regenerate.
+/mob/living/basic/revenant/proc/move_to_ectoplasm()
+	if(QDELETED(src) || !dormant) // something fucky happened, abort. we MUST be dormant to go inside the ectoplasm.
+		return
+
+	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
+
+	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
+	goop.old_ckey = client.ckey
+	goop.revenant = src
+	revealed = FALSE
+	forceMove(goop)
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
