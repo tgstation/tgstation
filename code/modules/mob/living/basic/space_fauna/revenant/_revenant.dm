@@ -276,12 +276,6 @@
 	setDir(SOUTH) // reset dir so the right directional sprites show up
 	return ..()
 
-/mob/living/basic/revenant/stop_orbit(datum/component/orbiter/orbits)
-	// reset the simple_flying animation
-	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	return ..()
-
 /mob/living/basic/revenant/update_icon_state()
 	. = ..()
 
