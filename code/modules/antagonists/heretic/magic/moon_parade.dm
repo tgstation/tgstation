@@ -65,7 +65,7 @@
 		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 		//Lowers sanity
-		victim.mob_mood.set_sanity(victim.mob_mood.sanity -= 20)
+		victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 	return PROJECTILE_PIERCE_PHASE
 
 
