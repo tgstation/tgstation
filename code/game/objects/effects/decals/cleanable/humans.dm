@@ -223,6 +223,7 @@
 	var/drips = 1
 	dryname = "drips of blood"
 	drydesc = "It's red."
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
 	return TRUE
