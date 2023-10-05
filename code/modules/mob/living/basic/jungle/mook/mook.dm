@@ -169,7 +169,7 @@
 	return ..()
 
 /mob/living/basic/mining/mook/bard
-	desc = "It's holding a guitar??"
+	desc = "It's holding a guitar?"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	pass_flags_self = LETPASSTHROW
@@ -194,16 +194,27 @@
 	gender = FEMALE
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-//	ai_controller = /datum/ai_controller/basic_controller/mook/support
+	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
 	is_healer = TRUE
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/point_targetting/attack,
+		/datum/pet_command/point_targetting/fetch,
+	)
+
+/mob/living/basic/mining/mook/support/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining/mook/tribal_chief
 	name = "tribal chief"
-	desc = "Acknowledge him"
+	desc = "Acknowledge him!"
 	gender = MALE
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	ai_controller = /datum/ai_controller/basic_controller/mook/tribal_chief
 	///overlay in our neutral state
 	var/mutable_appearance/chief_neutral
 	///overlay in our striking state

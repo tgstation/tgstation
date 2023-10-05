@@ -1,3 +1,7 @@
+GLOBAL_LIST_INIT(mook_commands, list(
+	new /datum/pet_command/point_targetting/attack(),
+))
+
 /datum/ai_controller/basic_controller/mook
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
@@ -32,6 +36,7 @@
 /datum/ai_planning_subtree/use_mob_ability/mook_jump
 	ability_key = BB_MOOK_JUMP_ABILITY
 
+///jump towards the village when we have found ore or there is a storm coming
 /datum/ai_planning_subtree/use_mob_ability/mook_jump/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
 	var/mob/living/living_pawn = controller.pawn
@@ -44,6 +49,7 @@
 		controller.clear_blackboard_key(BB_TARGET_MINERAL_WALL)
 		return ..()
 
+///hunt ores that we will haul off back to the village
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook
 
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -52,6 +58,7 @@
 		return
 	return ..()
 
+///deposit ores into the stand!
 /datum/ai_planning_subtree/find_and_hunt_target/material_stand
 	target_key = BB_MATERIAL_STAND_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand
@@ -89,6 +96,7 @@
 	set_movement_target(controller, pick(possible_turfs))
 
 
+///explore the lands away from the village to look for ore
 /datum/ai_planning_subtree/wander_away_from_village
 
 /datum/ai_planning_subtree/wander_away_from_village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -151,7 +159,7 @@
 		if(distance_from_target <= get_dist(target, wander_destination))
 			continue
 		wander_destination = test_turf
-		if(distance_from_target == wander_distance) //we already got the max running distance
+		if(distance_from_target == wander_distance)
 			break
 
 	set_movement_target(controller, wander_destination)
@@ -180,18 +188,130 @@
 		return FALSE
 	return ..()
 
-
+///bard mook plays nice music for the village
 /datum/ai_controller/basic_controller/mook/bard
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
+		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
 		/datum/ai_planning_subtree/generic_play_instrument,
 	)
+
+///healer mooks guard the village from intruders and heal the miner mooks when they come home
+/datum/ai_controller/basic_controller/mook/support
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
+		BB_STORM_APPROACHING = FALSE,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/acknowledge_chief,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/find_and_hunt_target/injured_mooks,
+	)
+
+///tree to find and register our leader
+/datum/ai_planning_subtree/acknowledge_chief/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(controller.blackboard_key_exists(BB_MOOK_TRIBAL_CHIEF))
+		return
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/find_chief, BB_MOOK_TRIBAL_CHIEF, /mob/living/basic/mining/mook/tribal_chief)
+
+/datum/ai_behavior/find_and_set/find_chief/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/chief = locate(locate_path) in oview(search_range, controller.pawn)
+	if(isnull(chief))
+		return null
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.befriend(chief)
+	return chief
+
+///find injured miner mooks after they come home from a long day of work
+/datum/ai_planning_subtree/find_and_hunt_target/injured_mooks
+	target_key = BB_INJURED_MOOK
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
+	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_mooks
+	hunt_targets = list(/mob/living/basic/mining/mook)
+	hunt_range = 9
+
+///we only heal when the mooks are home during a storm
+/datum/ai_planning_subtree/find_and_hunt_target/injured_mooks/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(controller.blackboard[BB_STORM_APPROACHING])
+		return ..()
+
+
+/datum/ai_behavior/find_hunt_target/injured_mooks
+
+/datum/ai_behavior/find_hunt_target/injured_mooks/valid_dinner(mob/living/source, mob/living/injured_mook)
+	if(injured_mook.gender == FEMALE) //healer mooks cant heal one another
+		return FALSE
+	return (injured_mook.health < injured_mook.maxHealth)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
+	always_reset_target = TRUE
+	hunt_cooldown = 10 SECONDS
+
+
+///the chief would rather command his mooks to attack people than attack them himself
+/datum/ai_controller/basic_controller/mook/tribal_chief
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_STORM_APPROACHING = FALSE,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/leap,
+		/datum/ai_planning_subtree/issue_commands,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
+		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
+	)
+
+/datum/ai_planning_subtree/issue_commands
+	///how far we look for a mook to command
+	var/command_distance = 5
+
+/datum/ai_planning_subtree/issue_commands/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	if(locate(/mob/living/basic/mining/mook/support) in oview(command_distance, controller.pawn))
+		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targetting/attack)
+
+/datum/ai_behavior/issue_commands
+	action_cooldown = 5 SECONDS
+
+/datum/ai_behavior/issue_commands/perform(seconds_per_tick, datum/ai_controller/controller, target_key, command_path)
+	. = ..()
+	var/mob/living/basic/living_pawn = controller.pawn
+	//if we have an attack target, rule our gangsters to kill him
+	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+
+	if(isnull(target))
+		finish_action(controller, FALSE)
+		return
+
+	var/datum/pet_command/to_command = locate(command_path) in GLOB.mook_commands
+	if(isnull(to_command))
+		finish_action(controller, FALSE)
+		return
+
+	var/issue_command = pick(to_command.speech_commands)
+	living_pawn.say(issue_command, forced = "controller")
+	living_pawn._pointed(target)

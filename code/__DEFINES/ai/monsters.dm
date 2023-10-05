@@ -165,3 +165,7 @@
 #define BB_MOOK_JUMP_ABILITY "mook_jump_ability"
 /// our leap ability
 #define BB_MOOK_LEAP_ABILITY "mook_leap_ability"
+/// the chief we must obey
+#define BB_MOOK_TRIBAL_CHIEF "mook_tribal_chief"
+/// the injured mook we must heal
+#define BB_INJURED_MOOK "injured_mook"
