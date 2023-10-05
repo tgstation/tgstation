@@ -103,7 +103,7 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
 
-	for(var/ability as anything in abilities)
+	for(var/ability in abilities)
 		var/datum/action/spell = new ability(src)
 		spell.Grant(src)
 
