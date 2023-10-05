@@ -32,6 +32,7 @@
 	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	melee_attack_cooldown = CLICK_CD_MELEE
 	death_message = "screams in agony as it sublimates into a sulfurous smoke."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
