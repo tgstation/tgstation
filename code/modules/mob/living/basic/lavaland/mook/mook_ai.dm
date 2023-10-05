@@ -1,3 +1,4 @@
+///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
 	new /datum/pet_command/point_targetting/attack(),
 ))
@@ -300,7 +301,6 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/issue_commands/perform(seconds_per_tick, datum/ai_controller/controller, target_key, command_path)
 	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
-	//if we have an attack target, rule our gangsters to kill him
 	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 
 	if(isnull(target))

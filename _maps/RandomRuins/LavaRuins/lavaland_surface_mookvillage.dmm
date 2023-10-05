@@ -3,7 +3,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/obj/structure/bonfire,
+/obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
@@ -13,6 +13,11 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/structure/flora/ash/fireblossom,
+/mob/living/basic/mining/mook/tribal_chief,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "f" = (
@@ -48,7 +53,9 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "m" = (
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern{
+	on = 1
+	},
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "n" = (
@@ -104,6 +111,10 @@
 "y" = (
 /turf/open/misc/grass/jungle,
 /area/lavaland/surface/outdoors)
+"z" = (
+/mob/living/basic/mining/mook/bard,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "A" = (
 /obj/structure/chair/pew/right,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -153,9 +164,19 @@
 /obj/item/storage/belt/champion/wrestling,
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
+"P" = (
+/mob/living/basic/mining/mook/support,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Q" = (
 /obj/structure/flora/tree/jungle/style_5,
 /turf/open/misc/grass/jungle,
+/area/lavaland/surface/outdoors)
+"S" = (
+/obj/item/flashlight/lantern{
+	on = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "V" = (
 /obj/structure/chair/pew{
@@ -210,12 +231,12 @@ a
 a
 a
 l
+S
 a
 a
 a
 a
 a
-I
 a
 a
 t
@@ -276,14 +297,14 @@ g
 c
 c
 a
+S
 a
 a
 a
 a
+P
 a
-a
-a
-a
+S
 F
 a
 a
@@ -292,7 +313,7 @@ a
 "}
 (6,1,1) = {"
 c
-c
+m
 c
 c
 c
@@ -300,10 +321,10 @@ c
 r
 n
 a
+P
 a
 a
 a
-I
 a
 a
 A
@@ -328,7 +349,7 @@ a
 a
 a
 l
-l
+e
 Y
 V
 V
@@ -374,7 +395,7 @@ d
 a
 a
 a
-a
+P
 a
 a
 "}
@@ -394,7 +415,7 @@ y
 E
 d
 a
-I
+a
 l
 a
 a
@@ -428,7 +449,7 @@ a
 a
 a
 a
-a
+P
 a
 a
 a
@@ -461,7 +482,7 @@ J
 H
 a
 a
-a
+P
 a
 a
 a
@@ -474,8 +495,8 @@ h
 h
 h
 h
-a
-a
+z
+S
 l
 a
 a
@@ -498,7 +519,7 @@ g
 g
 l
 a
-I
+a
 a
 a
 a
@@ -536,7 +557,7 @@ a
 c
 c
 c
-c
+m
 c
 c
 c
@@ -588,7 +609,7 @@ a
 a
 l
 a
-a
+S
 h
 m
 c

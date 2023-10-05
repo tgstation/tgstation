@@ -59,9 +59,8 @@
 		return //healers cant leap
 
 	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
-	ai_controller.set_blackboard_key(BB_MOOK_LEAP_ABILITY, leap)
 	leap.Grant(src)
-
+	ai_controller.set_blackboard_key(BB_MOOK_LEAP_ABILITY, leap)
 
 /mob/living/basic/mining/mook/proc/grant_healer_abilities()
 	AddComponent(\
@@ -165,7 +164,7 @@
 		return TRUE
 
 /mob/living/basic/mining/mook/death()
-	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..."//Can you guess the twist
+	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..." //Can you guess the twist
 	return ..()
 
 /mob/living/basic/mining/mook/bard
@@ -197,6 +196,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
 	is_healer = TRUE
+	///commands we follow
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
@@ -274,8 +274,6 @@
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap
 	name = "Mook leap"
-	button_icon = 'icons/effects/beam.dmi'
-	button_icon_state = "solar_beam"
 	desc = "Leap towards the enemy!"
 	cooldown_time = 7 SECONDS
 	shared_cooldown = NONE
@@ -339,8 +337,6 @@
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump
 	name = "Mook Jump"
-	button_icon = 'icons/effects/beam.dmi'
-	button_icon_state = "solar_beam"
 	desc = "Soar high in the air!"
 	cooldown_time = 14 SECONDS
 	shared_cooldown = NONE
