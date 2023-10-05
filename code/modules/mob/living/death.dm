@@ -16,6 +16,7 @@
 	if(!prev_lying)
 		gib_animation()
 
+	ghostize()
 	spill_organs(drop_bitflags)
 
 	if(drop_bitflags & DROP_BODYPARTS)

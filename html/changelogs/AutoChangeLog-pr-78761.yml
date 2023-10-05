@@ -1,0 +1,8 @@
+author: "EricZilla"
+delete-after: True
+changes:
+  - image: "We have received a new shipment of IDs, as the old ones were found out to be haunted."
+  - image: "Laser tag red team ID has received a massive nerf"
+  - image: "Station budget cards have gotten a facelift"
+  - image: "Emags and Doorjacks"
+  - bugfix: "Numbered prisoner IDs will now be legible"
