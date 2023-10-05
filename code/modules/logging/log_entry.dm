@@ -109,7 +109,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		in_error_recovery = TRUE; \
 		logger.Log(LOG_CATEGORY_INTERNAL_ERROR, "attempting to perform file error recovery: [file]"); \
 		logger.init_log_category(logger.log_categories[category]?.type); \
-		call(src, UNLINT(__PROC__))(args); \
+		call(src, UNLINT(__PROC__))(arglist(args)); \
 		return; \
 	}
 
