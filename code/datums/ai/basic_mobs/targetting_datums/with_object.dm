@@ -23,11 +23,11 @@
 	src.object_type_path = object_type_path
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)
+/datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range, check_faction = FALSE)
 	if (object_type_path == null)
 		return FALSE // no op
-	// Check if our parent behaviour agrees we can attack this target, ignoring factions
-	var/can_attack = ..(living_mob, target, vision_range, FALSE)
+	// Check if our parent behaviour agrees we can attack this target (we ignore faction by default)
+	var/can_attack = ..()
 	if(can_attack && living_mob.is_holding_item_of_type(object_type_path))
 		return TRUE // they have the item
 	// No valid target
