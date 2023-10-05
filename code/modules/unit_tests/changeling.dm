@@ -48,6 +48,10 @@
 	if(isnull(final_icon))
 		final_icon = icon('icons/effects/effects.dmi', "nothing")
 
+	// If we have a lot of dna features with a lot of parts (icons)
+	// This'll eventually runtime into a bad icon operation
+	// So we're recaching the icons here to prevent it from failing
+	final_icon = icon(final_icon)
 	final_icon.Insert(getFlatIcon(ling, no_anim = TRUE), dir = SOUTH, frame = last_frame)
 	final_icon.Insert(getFlatIcon(victim, no_anim = TRUE), dir = NORTH, frame = last_frame)
 
