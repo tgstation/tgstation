@@ -11,11 +11,11 @@
 	var/currency_name = "credits"
 	///The initial products that the trader offers
 	var/list/initial_products = list(
-		/obj/item/food/burger/ghost = list(200, INFINITY),
+		/obj/item/food/burger/ghost = list(PAYCHECK_CREW * 4, INFINITY),
 	)
 	///The initial products that the trader buys
 	var/list/initial_wanteds = list(
-		/obj/item/ectoplasm = list(100, INFINITY, ""),
+		/obj/item/ectoplasm = list(PAYCHECK_CREW * 2, INFINITY, ""),
 	)
 	///The speech data of the trader
 	var/list/say_phrases = list(
@@ -79,16 +79,16 @@
 	sell_sound = 'sound/voice/hiss2.ogg'
 
 	initial_products = list(
-		/obj/item/clothing/head/helmet/skull = list(150, INFINITY),
-		/obj/item/clothing/mask/bandana/skull/black = list(50, INFINITY),
-		/obj/item/food/cookie/sugar/spookyskull = list(10, INFINITY),
-		/obj/item/instrument/trombone/spectral = list(10000, INFINITY),
-		/obj/item/shovel/serrated = list(150, INFINITY),
+		/obj/item/clothing/head/helmet/skull = list(PAYCHECK_CREW * 3, INFINITY),
+		/obj/item/clothing/mask/bandana/skull/black = list(PAYCHECK_CREW, INFINITY),
+		/obj/item/food/cookie/sugar/spookyskull = list(PAYCHECK_CREW * 0.2, INFINITY),
+		/obj/item/instrument/trombone/spectral = list(PAYCHECK_CREW * 200, INFINITY),
+		/obj/item/shovel/serrated = list(PAYCHECK_CREW * 3, INFINITY),
 	)
 
 	initial_wanteds = list(
-		/obj/item/reagent_containers/condiment/milk = list(1000, INFINITY, ""),
-		/obj/item/stack/sheet/bone = list(420, INFINITY, ", per sheet of bone"),
+		/obj/item/reagent_containers/condiment/milk = list(PAYCHECK_CREW * 20, INFINITY, ""),
+		/obj/item/stack/sheet/bone = list(PAYCHECK_CREW * 8.4, INFINITY, ", per sheet of bone"),
 	)
 
 	say_phrases = list(
