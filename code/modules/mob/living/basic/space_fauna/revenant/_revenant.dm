@@ -189,20 +189,20 @@
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/basic/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if (!message)
+	if(!message)
 		return
 
-	if (src.client)
+	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
 			return
-		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message, MUTE_IC))
+		if (!(ignore_spam || forced) && client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	src.log_talk(message, LOG_SAY)
+	log_talk(message, LOG_SAY)
 	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
 	relay_to_list_and_observers(rendered, GLOB.revenant_relay_mobs, src)
 
