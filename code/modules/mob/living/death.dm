@@ -14,6 +14,7 @@
 	if(!prev_lying)
 		gib_animation()
 
+	ghostize()
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
 	if(!no_bodyparts)
