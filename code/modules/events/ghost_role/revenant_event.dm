@@ -55,10 +55,11 @@
 		return MAP_ERROR
 
 	var/mob/living/basic/revenant/revvie = new(pick(spawn_locs))
-	revvie.key = selected.key
+	selected.mind.transfer_to(revvie)
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie
+	qdel(selected)
 	return SUCCESSFUL_SPAWN
 
 #undef REVENANT_SPAWN_THRESHOLD

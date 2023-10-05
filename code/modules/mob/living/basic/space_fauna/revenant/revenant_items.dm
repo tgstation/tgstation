@@ -77,6 +77,7 @@
 
 		potential_mind.transfer_to(revenant)
 		user_name = potential_user.ckey
+		qdel(potential_user)
 
 	message_admins("[user_name] has been [old_ckey == user_name ? "re":""]made into a revenant by reforming ectoplasm.")
 	revenant.log_message("was [old_ckey == user_name ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)

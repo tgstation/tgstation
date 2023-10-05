@@ -200,7 +200,6 @@
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
-		/mob/living/basic/revenant,
 		/mob/living/simple_animal/shade,
 		/mob/living/simple_animal/slime,
 		/mob/living/simple_animal/slime/pet,
