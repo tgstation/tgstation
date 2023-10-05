@@ -69,6 +69,15 @@
 
 	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
 	var/list/drained_mobs = null
+	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
+	var/static/list/datum/action/abilities = list(
+		/datum/action/cooldown/spell/aoe/revenant/blight,
+		/datum/action/cooldown/spell/aoe/revenant/defile,
+		/datum/action/cooldown/spell/aoe/revenant/haunt_object,
+		/datum/action/cooldown/spell/aoe/revenant/malfunction,
+		/datum/action/cooldown/spell/aoe/revenant/overload,
+		/datum/action/cooldown/spell/list_target/telepathy/revenant,
+	)
 
 	/// The resource, and health, of revenants.
 	var/essence = 75
@@ -94,26 +103,9 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
 
-	// Starting spells
-
-	var/datum/action/cooldown/spell/list_target/telepathy/revenant/telepathy = new(src)
-	telepathy.Grant(src)
-
-	// Starting spells that start locked
-	var/datum/action/cooldown/spell/aoe/revenant/overload/lights_go_zap = new(src)
-	lights_go_zap.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/defile/windows_go_smash = new(src)
-	windows_go_smash.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/blight/botany_go_mad = new(src)
-	botany_go_mad.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/malfunction/shuttle_go_emag = new(src)
-	shuttle_go_emag.Grant(src)
-
-	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
-	toolbox_go_bonk.Grant(src)
+	for(var/ability as anything in abilities)
+		var/datum/action/spell = new ability(src)
+		spell.Grant(src)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
