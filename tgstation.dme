@@ -4194,6 +4194,7 @@
 #include "code\modules\mapfluff\ruins\lavalandruin_code\sloth.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\surface.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\syndicate_base.dm"
+#include "code\modules\mapfluff\ruins\lavalandruin_code\watcher_grave.dm"
 #include "code\modules\mapfluff\ruins\objects_and_mobs\ash_walker_den.dm"
 #include "code\modules\mapfluff\ruins\objects_and_mobs\cursed_slot_machine.dm"
 #include "code\modules\mapfluff\ruins\objects_and_mobs\necropolis_gate.dm"
