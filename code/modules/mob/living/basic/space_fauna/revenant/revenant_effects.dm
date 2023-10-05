@@ -26,8 +26,6 @@
 	owner.update_appearance(UPDATE_ICON)
 	owner.update_mob_action_buttons()
 
-	owner.balloon_alert(owner, "revealed!")
-
 /datum/status_effect/revenant/revealed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_REVEALED, TRAIT_STATUS_EFFECT(id))
 
@@ -35,8 +33,6 @@
 	owner.invisibility = INVISIBILITY_REVENANT
 	owner.update_appearance(UPDATE_ICON)
 	owner.update_mob_action_buttons()
-
-	owner.balloon_alert(owner, "concealed")
 	return ..()
 
 /datum/status_effect/revenant/inhibited
