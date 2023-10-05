@@ -2,7 +2,7 @@
 "ac" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "al" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13,7 +13,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "ay" = (
 /obj/item/clipboard{
 	pixel_x = 4;
@@ -24,7 +24,10 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
+"aA" = (
+/turf/closed/wall,
+/area/ruin/unlucky_engineer/maints)
 "aF" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -44,7 +47,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "aL" = (
 /obj/structure/closet/crate/solarpanel_small,
 /obj/item/paper/guides/jobs/engi/solars,
@@ -55,8 +58,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "aT" = (
 /obj/structure/bed{
 	dir = 4
@@ -72,7 +76,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "aY" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
@@ -86,32 +90,32 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "bf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lavalandsyndieplasma";
 	dir = 8
 	},
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/plasma,
+/area/ruin/unlucky_engineer/turbine)
 "bl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "bF" = (
 /obj/item/chair,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "bK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lavalandsyndien2";
 	dir = 8
 	},
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/n2,
+/area/ruin/unlucky_engineer/turbine)
 "bM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -124,7 +128,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "bO" = (
 /obj/structure/broken_flooring/side/directional,
 /obj/effect/decal/cleanable/dirt,
@@ -133,7 +137,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "bQ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airlock_controller/incinerator_syndicatelava{
@@ -157,7 +161,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "bR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toner,
@@ -168,14 +172,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "bX" = (
 /obj/structure/bed/maint,
 /obj/effect/spawner/random/entertainment/drugs,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "ch" = (
 /obj/item/pickaxe/rusted,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -187,7 +191,7 @@
 "co" = (
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "cs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -197,7 +201,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "ct" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
@@ -210,11 +214,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "cu" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/rust,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/north,
@@ -226,7 +230,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "cL" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/sign/poster/ripped/directional/north,
@@ -243,7 +247,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "cO" = (
 /obj/structure/broken_flooring/singular/directional,
 /obj/structure/broken_flooring/plating/directional/north,
@@ -251,7 +255,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "cP" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -262,13 +266,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "cV" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_main{
 	id = "syndicatelava_mainvent_outer"
 	},
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "cW" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp{
@@ -284,7 +288,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "db" = (
 /obj/machinery/photocopier,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -292,7 +296,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "dw" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/suit_storage_unit/open,
@@ -300,13 +304,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "dB" = (
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "dH" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/broken_flooring/corner/directional/south,
@@ -315,7 +319,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "dK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Engineering Maintenance"
@@ -325,7 +329,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "dN" = (
 /turf/closed/mineral/random/snow,
 /area/lavaland/surface/outdoors)
@@ -339,7 +343,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "dV" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood,
@@ -353,9 +357,11 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "dY" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 6
@@ -368,7 +374,7 @@
 /obj/structure/broken_flooring/plating/directional/north,
 /obj/item/assembly/mousetrap/armed,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "dZ" = (
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible,
 /obj/machinery/portable_atmospherics/canister,
@@ -377,7 +383,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "ec" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -389,14 +395,14 @@
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "ed" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
 /obj/structure/broken_flooring/side/directional/west,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "eG" = (
 /obj/structure/table,
 /obj/item/holosign_creator/atmos{
@@ -416,7 +422,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "eS" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -433,13 +439,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "eT" = (
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "eX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
@@ -449,13 +455,13 @@
 	target_pressure = 4500
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "fc" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "fe" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/broken_flooring/singular/directional/east,
@@ -467,7 +473,7 @@
 /obj/item/pizzabox,
 /obj/item/reagent_containers/cup/glass/waterbottle/empty,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "fo" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -478,7 +484,7 @@
 	},
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "fy" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
@@ -494,12 +500,12 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "fE" = (
 /obj/item/stack/sheet/cardboard,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "fW" = (
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible{
 	dir = 8
@@ -512,11 +518,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "fX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/r_wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "gh" = (
 /obj/structure/sink/directional/south,
 /obj/machinery/duct,
@@ -524,7 +530,7 @@
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/bot/medbot,
 /turf/open/floor/iron/freezer,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "gs" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/plastic,
@@ -533,7 +539,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "gz" = (
 /obj/effect/decal/cleanable/generic,
 /mob/living/basic/mining/lobstrosity,
@@ -543,7 +549,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "gO" = (
 /obj/item/clothing/mask/cigarette/cigar/cohiba{
 	pixel_x = 7;
@@ -555,7 +561,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "gQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/simple_animal/hostile/asteroid/wolf,
@@ -575,7 +581,7 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "hi" = (
 /obj/structure/flora/rock/pile/style_random,
 /mob/living/basic/mining/legion/snow,
@@ -585,16 +591,18 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "hr" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "hs" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors)
@@ -603,7 +611,7 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "hA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -612,7 +620,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
+"hQ" = (
+/turf/closed/wall/ice,
+/area/ruin/unlucky_engineer/rest)
 "hV" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -621,25 +632,27 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/generic,
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/space)
 "ii" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "im" = (
 /obj/item/trash/energybar,
 /obj/structure/lattice/catwalk/mining,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "iw" = (
 /obj/structure/broken_flooring/pile/directional,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "iz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
@@ -652,12 +665,12 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "iE" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "iF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/fireplace,
@@ -665,7 +678,7 @@
 /obj/item/radio/intercom/directional/west,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "iR" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -674,13 +687,13 @@
 	},
 /obj/structure/sign/poster/official/moth_hardhat/directional/north,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "iW" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "lavalandsyndieco2"
 	},
 /turf/open/floor/engine/co2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "iY" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -694,7 +707,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "je" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/sofa/bench/left{
@@ -704,13 +717,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "jf" = (
 /obj/structure/broken_flooring/side/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "jn" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access"
@@ -726,7 +739,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "jr" = (
 /obj/structure/broken_flooring/plating/directional,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -734,7 +747,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "ju" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
 	dir = 4
@@ -742,7 +755,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "jx" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/bubblegum,
@@ -750,12 +763,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "jC" = (
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "jJ" = (
 /obj/structure/tank_holder/oxygen/yellow,
 /obj/structure/cable,
@@ -764,7 +777,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "jU" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/cleanable/dirt,
@@ -773,36 +786,35 @@
 /obj/item/hatchet,
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "jW" = (
 /turf/closed/wall/r_wall/rust,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "jY" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Engineering Maintenance"
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "kg" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "kj" = (
 /obj/structure/broken_flooring/side/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "kl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "kq" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -821,7 +833,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "kD" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -829,7 +841,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "kN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
@@ -840,7 +852,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "kX" = (
 /obj/effect/decal/cleanable/blood/gibs/bubblegum,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -851,7 +863,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/mob_spawn/corpse/human/plasmaman,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "le" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/fuel_pool,
@@ -864,7 +876,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "lz" = (
 /obj/structure/broken_flooring,
 /obj/item/clothing/mask/cigarette/cigar/cohiba{
@@ -876,7 +888,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "lF" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /obj/structure/broken_flooring/pile/directional/north,
@@ -884,7 +896,7 @@
 	pixel_x = -7
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "lL" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/cobweb,
@@ -904,7 +916,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "lM" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access"
@@ -919,14 +931,14 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "lP" = (
 /mob/living/basic/mining/lobstrosity,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors)
 "lS" = (
 /turf/closed/wall/r_wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "lV" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -938,7 +950,7 @@
 /obj/structure/broken_flooring/corner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "lZ" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -951,7 +963,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "mJ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -959,7 +971,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "mT" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -975,7 +987,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "ng" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -986,7 +998,7 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "nv" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -996,7 +1008,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "nA" = (
 /obj/effect/decal/cleanable/robot_debris/old,
 /obj/item/flashlight/flare,
@@ -1005,7 +1017,7 @@
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "nF" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp{
@@ -1026,20 +1038,20 @@
 /obj/structure/sign/poster/official/pda_ad/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "nH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "nM" = (
 /obj/structure/toilet{
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "nO" = (
 /obj/structure/table_frame,
 /obj/item/reagent_containers/medigel/aiuri{
@@ -1049,11 +1061,10 @@
 	pixel_x = -6
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "nQ" = (
 /obj/structure/table,
 /obj/item/crowbar/red,
-/obj/item/clothing/mask/gas/atmos,
 /obj/machinery/recharger{
 	pixel_x = -6;
 	pixel_y = 2
@@ -1065,18 +1076,20 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/item/wrench,
+/obj/item/clothing/mask/gas/atmos,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "nS" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/layer4{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "nV" = (
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "nW" = (
 /mob/living/basic/mining_drone,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1084,7 +1097,7 @@
 "oc" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "ok" = (
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_exterior,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -1094,7 +1107,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "oG" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1103,18 +1116,21 @@
 	dir = 4
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "oH" = (
 /obj/machinery/igniter/incinerator_syndicatelava,
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "oQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/item/trash/flare,
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
+"oT" = (
+/turf/closed/wall/rust,
+/area/ruin/unlucky_engineer/smes)
 "oW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1122,7 +1138,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "oY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/build/directional/north,
@@ -1131,14 +1147,16 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "pd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
-/mob/living/basic/legion_brood/snow,
 /obj/structure/lattice/catwalk/mining,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "pg" = (
 /obj/structure/flora/grass/brown/style_random,
 /mob/living/basic/legion_brood/snow,
@@ -1154,12 +1172,15 @@
 /obj/structure/broken_flooring/plating/directional/south,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/turf_decal/caution,
-/mob/living/basic/legion_brood/snow,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/east,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "pH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1168,24 +1189,24 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "pI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "pN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "qb" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "qg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
@@ -1195,7 +1216,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "qi" = (
 /obj/structure/fence/cut/large{
 	dir = 4
@@ -1212,7 +1233,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/broken_flooring/singular/directional/west,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "qB" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -1223,7 +1244,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "qD" = (
 /obj/structure/table/reinforced,
 /obj/item/radio{
@@ -1232,7 +1253,10 @@
 	},
 /obj/item/paper/crumpled/bloody,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
+"qG" = (
+/turf/closed/wall/rust,
+/area/ruin/unlucky_engineer/gear)
 "qW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -1240,8 +1264,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "qX" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/item/wirebrush,
@@ -1256,13 +1281,13 @@
 	dir = 5
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "rD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "rG" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/firealarm/directional/west,
@@ -1272,7 +1297,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "rH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
@@ -1283,7 +1308,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "rS" = (
 /obj/structure/table,
 /obj/item/weldingtool,
@@ -1295,7 +1320,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "rW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/corner{
@@ -1308,13 +1333,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "rZ" = (
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors)
 "sA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/machinery/portable_atmospherics/canister,
 /obj/structure/broken_flooring/singular/directional/west,
 /obj/effect/decal/cleanable/cobweb{
@@ -1325,7 +1351,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "sB" = (
 /obj/structure/broken_flooring,
 /obj/effect/decal/cleanable/dirt,
@@ -1333,17 +1359,17 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "sD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "sF" = (
 /obj/machinery/atmospherics/miner/nitrogen,
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/n2,
+/area/ruin/unlucky_engineer/turbine)
 "sO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/singular/directional/south,
@@ -1353,7 +1379,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -1365,30 +1391,30 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "tp" = (
 /obj/machinery/power/solar{
 	id = "forestarboard";
 	name = "Fore-Starboard Solar Array"
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "tt" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "tA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "tH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "tY" = (
 /obj/structure/closet/toolcloset,
 /obj/item/pickaxe/emergency,
@@ -1402,7 +1428,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "us" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -1410,14 +1436,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "uD" = (
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "uM" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/statue/snow/snowman,
@@ -1431,7 +1457,10 @@
 /obj/structure/broken_flooring/plating/directional/south,
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
+"vb" = (
+/turf/closed/wall/rust,
+/area/ruin/unlucky_engineer/rest)
 "ve" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -1441,22 +1470,22 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "vf" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "vg" = (
 /obj/structure/sign/poster/official/wtf_is_co2/directional/north{
 	dir = 1
 	},
 /turf/open/floor/engine/co2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "vh" = (
 /obj/machinery/modular_computer/preset/civilian,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "vl" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1466,7 +1495,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "vr" = (
 /obj/structure/sign/warning/engine_safety/directional/west,
 /obj/item/kirbyplants/random/dead,
@@ -1477,7 +1506,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "vM" = (
 /obj/structure/table_frame,
 /obj/structure/closet/mini_fridge/grimy{
@@ -1497,7 +1526,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
+"vN" = (
+/obj/structure/lattice/catwalk/mining,
+/obj/structure/cable,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/unlucky_engineer/solars)
 "vV" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/broken_flooring/plating/directional/south,
@@ -1507,7 +1541,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "vW" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear,
 /obj/effect/decal/cleanable/blood,
@@ -1517,7 +1551,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "wa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1534,7 +1568,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "wd" = (
 /obj/structure/sign/warning/fire/directional/east,
 /obj/effect/turf_decal/stripes/line,
@@ -1544,17 +1578,19 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "wm" = (
 /obj/structure/bed{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/legion_brood/snow,
 /obj/structure/broken_flooring/singular/directional/south,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -1562,7 +1598,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "wr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1572,28 +1608,29 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "ws" = (
 /obj/structure/broken_flooring/side/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
 /obj/item/stock_parts/micro_laser,
-/obj/item/storage/toolbox/electrical,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "xh" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "xm" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "xt" = (
 /obj/structure/fence/cut/medium{
 	dir = 4
@@ -1607,7 +1644,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "xN" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/cleanable/blood,
@@ -1615,7 +1652,7 @@
 /area/lavaland/surface/outdoors)
 "xP" = (
 /turf/closed/wall/ice,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "xS" = (
 /obj/effect/decal/cleanable/ash{
 	pixel_x = 2;
@@ -1623,7 +1660,7 @@
 	},
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "yr" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
@@ -1631,7 +1668,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "yH" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/broken_flooring/side/directional/east,
@@ -1647,7 +1684,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "yJ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1658,7 +1695,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "yT" = (
 /obj/structure/broken_flooring/corner/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -1666,7 +1703,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "zc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1675,7 +1712,7 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "ze" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Turbine Exhaust Chamber Access"
@@ -1687,7 +1724,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "zi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1696,7 +1733,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "zp" = (
 /obj/structure/broken_flooring/pile/directional/south,
 /obj/item/stamp/head/ce{
@@ -1705,7 +1742,7 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "zA" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/decal/cleanable/dirt,
@@ -1719,14 +1756,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "zB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	dir = 8;
 	chamber_id = "lavalandsyndien2"
 	},
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/n2,
+/area/ruin/unlucky_engineer/turbine)
 "zH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1734,7 +1771,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/plating/directional/north,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
+"zI" = (
+/turf/closed/wall/ice,
+/area/ruin/unlucky_engineer/smes)
 "zL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood/hitsplatter{
@@ -1746,24 +1786,24 @@
 /obj/structure/broken_flooring/corner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "zM" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "zW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Ae" = (
 /obj/effect/decal/cleanable/generic,
 /mob/living/basic/mining/legion/snow,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "Ag" = (
 /obj/item/cigbutt/cigarbutt{
 	pixel_x = 5;
@@ -1777,20 +1817,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Ah" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Ar" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	dir = 8;
 	chamber_id = "lavalandsyndieo2"
 	},
 /turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Aw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1800,7 +1840,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "AA" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -1808,7 +1848,7 @@
 /obj/item/trash/flare,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "AB" = (
 /obj/structure/table_frame,
 /obj/effect/decal/cleanable/blood,
@@ -1818,7 +1858,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "AR" = (
 /obj/structure/broken_flooring/side/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -1828,7 +1868,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "AZ" = (
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor{
@@ -1841,19 +1881,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/end,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Bf" = (
 /obj/machinery/air_sensor{
 	chamber_id = "lavalandsyndien2"
 	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/n2,
+/area/ruin/unlucky_engineer/turbine)
 "Bm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Bq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/drip,
@@ -1861,7 +1901,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
+"BJ" = (
+/turf/closed/wall,
+/area/ruin/unlucky_engineer/turbine)
 "Cs" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/structure/flora/grass/brown/style_random,
@@ -1872,7 +1915,7 @@
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "CF" = (
 /obj/structure/fence,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1888,7 +1931,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "CN" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -1902,11 +1945,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Df" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/closed/wall/r_wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Dl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -1916,7 +1959,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Dp" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -1927,7 +1970,10 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
+"Dv" = (
+/turf/closed/wall/rust,
+/area/ruin/unlucky_engineer/foyer)
 "Dz" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -1945,7 +1991,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "DB" = (
 /obj/structure/fence{
 	dir = 4
@@ -1963,7 +2009,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "DI" = (
 /obj/structure/flora/rock/pile/style_random,
 /mob/living/simple_animal/hostile/asteroid/wolf,
@@ -1972,7 +2018,7 @@
 "DK" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "DT" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -1984,7 +2030,7 @@
 /obj/structure/cable,
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "DY" = (
 /obj/structure/table,
 /obj/machinery/status_display/ai/directional/north,
@@ -2004,7 +2050,12 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
+"Ea" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/icemoon,
+/area/ruin/unlucky_engineer/foyer)
 "Ec" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/atmos/glass{
@@ -2013,36 +2064,38 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Ev" = (
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Ey" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "EE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "EO" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "ES" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Fb" = (
 /obj/effect/spawner/random/trash/moisture_trap,
 /obj/effect/decal/cleanable/blood/old,
@@ -2050,7 +2103,7 @@
 	on = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Fj" = (
 /mob/living/basic/mining/legion/snow,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2065,7 +2118,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/xeno_mining/directional/north,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Fq" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -2079,7 +2132,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Fr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /obj/effect/turf_decal/stripes/line,
@@ -2090,7 +2143,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "FB" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Engineering Maintenance"
@@ -2101,13 +2154,19 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
+"FF" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/unlucky_engineer/ce)
+"FQ" = (
+/turf/closed/wall/ice,
+/area/ruin/unlucky_engineer/foyer)
 "FS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "FX" = (
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2120,14 +2179,14 @@
 	},
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Gg" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Gl" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2136,7 +2195,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Gu" = (
 /obj/structure/cable,
 /obj/machinery/power/turbine/core_rotor{
@@ -2144,7 +2203,7 @@
 	mapping_id = "syndie_lavaland_incineratorturbine"
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "GD" = (
 /obj/structure/flora/tree/dead,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2156,12 +2215,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "GK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "GM" = (
 /obj/structure/fence/door/opened{
 	dir = 4
@@ -2176,7 +2235,7 @@
 	},
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "GT" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -2185,7 +2244,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Hk" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -2198,7 +2257,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Ho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -2206,7 +2265,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Hv" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -2219,13 +2278,20 @@
 /obj/item/stock_parts/cell/high/empty,
 /obj/item/reagent_containers/hypospray/medipen/survival,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "HB" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors)
+"HC" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/unlucky_engineer/smes)
+"HH" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unlucky_engineer/ce)
 "HK" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/cable,
@@ -2236,7 +2302,7 @@
 	},
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "HN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/broken_flooring/singular/directional/north,
@@ -2246,7 +2312,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "HV" = (
 /obj/machinery/shower/directional/south,
 /obj/structure/curtain,
@@ -2262,7 +2328,7 @@
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "IG" = (
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible{
 	dir = 8
@@ -2278,17 +2344,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "IP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "IU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "IV" = (
 /obj/machinery/computer/monitor,
 /obj/effect/turf_decal/stripes/line{
@@ -2296,15 +2362,15 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Jb" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors)
 "Jm" = (
 /obj/machinery/atmospherics/miner/plasma,
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/plasma,
+/area/ruin/unlucky_engineer/turbine)
 "Jn" = (
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
@@ -2323,7 +2389,7 @@
 	},
 /obj/item/rcd_ammo/large,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Jx" = (
 /obj/effect/spawner/random/trash/box,
 /obj/item/reagent_containers/cup/glass/waterbottle/empty,
@@ -2338,7 +2404,7 @@
 /obj/item/storage/box/lights/mixed,
 /obj/item/reagent_containers/medigel/libital,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Jz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2354,7 +2420,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "JP" = (
 /obj/structure/fence/corner{
 	dir = 9
@@ -2366,7 +2432,7 @@
 /obj/effect/spawner/random/trash/caution_sign,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Kq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -2376,7 +2442,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Ky" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2387,21 +2453,21 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "KL" = (
 /obj/structure/grille/broken,
 /obj/item/assembly/mousetrap,
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "KR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "KY" = (
 /obj/machinery/computer/atmos_control/noreconnect{
 	dir = 1;
@@ -2410,22 +2476,22 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "KZ" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "Lk" = (
 /obj/item/shard,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Lp" = (
 /obj/structure/broken_flooring,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Lv" = (
 /obj/structure/fence/cut/medium{
 	dir = 4
@@ -2435,7 +2501,7 @@
 "Lw" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Lz" = (
 /obj/structure/fence/corner{
 	dir = 1
@@ -2445,7 +2511,7 @@
 "LF" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_main,
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "LI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2457,7 +2523,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Mf" = (
 /obj/item/stack/cable_coil/cut,
 /obj/structure/broken_flooring/side/directional/west,
@@ -2468,7 +2534,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "MN" = (
 /obj/structure/flora/grass/brown/style_random,
 /mob/living/simple_animal/hostile/asteroid/polarbear,
@@ -2480,7 +2546,7 @@
 /obj/structure/broken_flooring/plating/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Nq" = (
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
@@ -2489,12 +2555,12 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Nu" = (
 /obj/effect/decal/cleanable/plastic,
 /obj/structure/grille/broken,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "NA" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/decal/cleanable/dirt,
@@ -2507,7 +2573,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "NU" = (
 /obj/structure/statue/snow/snowlegion,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2520,7 +2586,7 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "Oh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2531,25 +2597,25 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Om" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Or" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "OZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/ice,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Pg" = (
 /obj/effect/spawner/random/structure/closet_private,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -2560,7 +2626,7 @@
 /obj/item/modular_computer/pda/clear,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "Pi" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2573,12 +2639,12 @@
 	dir = 10
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Ps" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "PJ" = (
 /obj/structure/broken_flooring/corner/directional/east,
 /obj/structure/cable,
@@ -2589,7 +2655,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "PN" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
@@ -2602,14 +2668,18 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "PP" = (
 /obj/structure/cable,
 /obj/structure/fluff/paper/stack,
 /obj/structure/lattice/catwalk/mining,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
+"PS" = (
+/turf/closed/wall,
+/area/ruin/unlucky_engineer/smes)
 "Qa" = (
 /obj/structure/sign/warning/cold_temp/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -2625,14 +2695,19 @@
 /obj/item/clothing/head/utility/hardhat,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Qe" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
+"Qi" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating/icemoon,
+/area/ruin/unlucky_engineer/smes)
 "Qj" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities Closet"
@@ -2648,7 +2723,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer)
 "Qn" = (
 /mob/living/basic/mining/legion/snow,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -2656,7 +2731,7 @@
 "Qo" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "Qp" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2667,14 +2742,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Qu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	dir = 8;
 	chamber_id = "lavalandsyndieplasma"
 	},
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/plasma,
+/area/ruin/unlucky_engineer/turbine)
 "Qy" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
@@ -2683,14 +2758,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "QG" = (
 /obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "QH" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -2699,10 +2774,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/broken_flooring/singular/directional/east,
-/obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/vomit,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
+"QN" = (
+/turf/closed/wall/ice,
+/area/ruin/unlucky_engineer/turbine)
 "QR" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/cable,
@@ -2715,7 +2792,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "QV" = (
 /obj/item/kirbyplants/random/dead,
 /obj/machinery/airalarm/directional/east,
@@ -2726,11 +2803,11 @@
 	dir = 6
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Rc" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "Rn" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2741,7 +2818,7 @@
 /obj/structure/broken_flooring/corner/directional/south,
 /mob/living/basic/mining/legion/snow,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Rr" = (
 /obj/structure/table_frame,
 /obj/structure/broken_flooring/plating/directional/north,
@@ -2749,13 +2826,13 @@
 /obj/item/binoculars,
 /obj/item/computer_disk/engineering,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Rw" = (
 /obj/effect/decal/cleanable/ash{
 	pixel_x = -16
 	},
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "RC" = (
 /obj/item/pillow/random,
 /obj/structure/cable,
@@ -2764,7 +2841,7 @@
 /obj/structure/broken_flooring/pile/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "RD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -2773,7 +2850,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "RJ" = (
 /obj/machinery/door/airlock/command{
 	name = "Chief Engineer's Quarters"
@@ -2787,7 +2864,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/ce,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Sz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2798,7 +2875,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "SD" = (
 /obj/structure/flora/grass/brown/style_random,
 /obj/effect/decal/cleanable/blood/footprints,
@@ -2811,15 +2888,15 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "ST" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "SV" = (
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "Tl" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/atmos/glass{
@@ -2835,7 +2912,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Tv" = (
 /obj/structure/broken_flooring/side/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -2846,17 +2923,22 @@
 	},
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "TA" = (
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/lavaland/surface/outdoors)
+"TK" = (
+/turf/closed/wall,
+/area/ruin/unlucky_engineer/gear)
 "TQ" = (
 /obj/effect/decal/cleanable/robot_debris/down,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Uf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2864,10 +2946,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Ur" = (
 /turf/closed/wall/rust,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "UH" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/decal/cleanable/dirt,
@@ -2878,7 +2960,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "UJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -2888,7 +2970,10 @@
 /obj/structure/broken_flooring/singular/directional/north,
 /mob/living/basic/mining/basilisk,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
+"UO" = (
+/turf/closed/wall,
+/area/ruin/unlucky_engineer/rest)
 "UP" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -2898,7 +2983,7 @@
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "US" = (
 /obj/structure/closet/crate/rcd,
 /obj/effect/decal/cleanable/dirt,
@@ -2909,13 +2994,13 @@
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "UY" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Vb" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -2926,13 +3011,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Vg" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Vj" = (
 /obj/structure/broken_flooring/side/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -2942,7 +3027,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Vm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2954,7 +3039,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/smes)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2965,7 +3050,7 @@
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Vq" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -2977,13 +3062,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
 "VB" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/legion_brood/snow,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "VD" = (
 /obj/machinery/atmospherics/components/trinary/mixer/layer2{
 	dir = 8
@@ -2991,7 +3078,7 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "VF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3006,12 +3093,12 @@
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "VQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "VU" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -3026,7 +3113,10 @@
 	mob_species = /datum/species/moth
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/gear)
+"VV" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/unlucky_engineer/foyer)
 "VW" = (
 /obj/structure/broken_flooring/side/directional/north,
 /obj/item/assembly/mousetrap/armed,
@@ -3036,24 +3126,24 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Wi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lavalandsyndieco2"
 	},
 /turf/open/floor/engine/co2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Wn" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk/mining,
 /turf/open/floor/plating/snowed/icemoon,
-/area/lavaland/surface/outdoors)
+/area/ruin/unlucky_engineer/solars)
 "Wq" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Ws" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
@@ -3066,7 +3156,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/item/shard,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Wu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -3075,19 +3165,20 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "WH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "WL" = (
 /obj/effect/decal/cleanable/blood,
 /turf/closed/wall/rust,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/maints)
 "WP" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 8
@@ -3096,14 +3187,14 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "WQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lavalandsyndieo2";
 	dir = 8
 	},
 /turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "WX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -3112,21 +3203,21 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Xc" = (
 /obj/machinery/air_sensor{
 	chamber_id = "lavalandsyndieo2"
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Xf" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Xg" = (
 /obj/structure/closet/emcloset,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -3136,14 +3227,14 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/end,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Xk" = (
 /obj/machinery/air_sensor{
 	chamber_id = "lavalandsyndieplasma"
 	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/engine/o2,
-/area/ruin/planetengi)
+/turf/open/floor/engine/plasma,
+/area/ruin/unlucky_engineer/turbine)
 "Xo" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/blood/footprints,
@@ -3161,7 +3252,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "XF" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3171,7 +3262,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "XQ" = (
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/decal/cleanable/blood,
@@ -3179,7 +3270,7 @@
 /obj/structure/cable,
 /mob/living/basic/mining/basilisk,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "XR" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/pipe_dispenser,
@@ -3198,7 +3289,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Yb" = (
 /obj/machinery/atmospherics/components/binary/pump/on/cyan/visible/layer2{
 	dir = 8
@@ -3210,7 +3301,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Yj" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -3218,35 +3309,35 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Yx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Yy" = (
 /obj/structure/fireaxecabinet/empty,
 /turf/closed/wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "Yz" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "YF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "YI" = (
 /obj/machinery/air_sensor{
 	id_tag = "lavalandsyndieturbinecool"
 	},
 /turf/open/floor/engine/vacuum,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "YJ" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -3258,7 +3349,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "YL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/coffee,
@@ -3266,10 +3357,10 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "YP" = (
 /turf/closed/wall,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "YS" = (
 /obj/item/bedsheet/dorms{
 	dir = 4
@@ -3284,7 +3375,7 @@
 /obj/structure/broken_flooring/side/directional/north,
 /obj/item/pen/survival,
 /turf/open/floor/plating/snowed/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "Zg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/pdapainter/engineering,
@@ -3292,13 +3383,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Zh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "Zl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
@@ -3310,7 +3401,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
 "Zn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -3318,7 +3409,7 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/item/flashlight/flare,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/rest)
 "Zu" = (
 /obj/effect/decal/cleanable/ash,
 /obj/structure/cable,
@@ -3327,7 +3418,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/turbine)
 "ZB" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -3342,7 +3433,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "ZE" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -3352,7 +3443,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/foyer)
 "ZQ" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -3364,7 +3455,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
-/area/ruin/planetengi)
+/area/ruin/unlucky_engineer/ce)
+"ZZ" = (
+/turf/closed/wall/ice,
+/area/ruin/unlucky_engineer/gear)
 
 (1,1,1) = {"
 kw
@@ -3404,10 +3498,10 @@ aF
 hs
 Gl
 Pi
-xP
+FQ
 jn
-Ur
-xP
+Dv
+FQ
 Gl
 dN
 hs
@@ -3435,10 +3529,10 @@ hs
 hs
 hs
 aF
-xP
+FQ
 cN
 Xg
-Ur
+Dv
 Rn
 Gl
 hs
@@ -3463,20 +3557,20 @@ qt
 qt
 NU
 GD
-xP
+FQ
 YP
-Ur
-Ur
+Dv
+Dv
 lM
-jW
-jW
-lS
-jW
+VV
+VV
+HH
+FF
 Lk
 xh
 Lw
-jW
-lS
+FF
+HH
 JP
 GM
 CF
@@ -3493,7 +3587,7 @@ qt
 (5,1,1) = {"
 qt
 Gl
-xP
+FQ
 Yy
 eG
 nQ
@@ -3501,14 +3595,14 @@ jJ
 cs
 YL
 Pr
-jW
+FF
 lL
 RD
 UP
 Zg
 Xu
-lS
-jW
+HH
+FF
 uM
 gQ
 xt
@@ -3524,7 +3618,7 @@ qt
 (6,1,1) = {"
 Jb
 hs
-Ur
+Dv
 DF
 XF
 bF
@@ -3532,14 +3626,14 @@ ST
 Gg
 dH
 rD
-jW
+FF
 cW
 Lp
 fE
 iw
 wq
 vr
-jW
+FF
 cL
 xN
 DB
@@ -3555,15 +3649,15 @@ qt
 (7,1,1) = {"
 Gl
 hs
-xP
+FQ
 tY
 jf
-EE
+Ea
 yT
 Vo
 hr
 kX
-lS
+HH
 vM
 ay
 AA
@@ -3617,12 +3711,12 @@ qt
 (9,1,1) = {"
 hs
 Qo
-xP
+FQ
 VQ
 vf
 hu
 VQ
-Ur
+Dv
 Qy
 YJ
 xh
@@ -3685,9 +3779,9 @@ Wn
 tp
 SV
 OZ
-Ur
+Dv
 iY
-lS
+HH
 Vj
 Bm
 gO
@@ -3718,14 +3812,14 @@ Wn
 ZE
 Wu
 oW
-jW
+FF
 Jn
 Hv
 Ky
 AR
 sB
 QV
-lS
+HH
 xP
 Ur
 xP
@@ -3746,17 +3840,17 @@ SV
 Wn
 SV
 tp
-xP
+FQ
 Qa
 WH
-jW
-jW
-jW
+FF
+FF
+FF
 RJ
-lS
+HH
 qb
-jW
-jW
+FF
+FF
 nv
 bX
 qg
@@ -3802,7 +3896,7 @@ qt
 "}
 (15,1,1) = {"
 hs
-Qo
+vN
 Qo
 Wn
 im
@@ -3839,17 +3933,17 @@ SV
 Wn
 tt
 tp
-xP
-Ur
+FQ
+Dv
 cE
-YP
+aA
 WL
 Ur
 DT
-YP
+aA
 jY
 Ur
-YP
+aA
 xP
 xP
 KZ
@@ -3870,10 +3964,10 @@ tp
 Qo
 SV
 SV
-xP
+FQ
 SK
 LI
-YP
+aA
 dV
 qA
 dY
@@ -3896,12 +3990,12 @@ GD
 (18,1,1) = {"
 Gl
 Qo
-Ur
-Rc
+oT
+HC
 CC
-VQ
+Qi
 hn
-YP
+PS
 YP
 Mf
 Ur
@@ -3910,11 +4004,11 @@ Dz
 Ur
 Ur
 Ec
-YP
-YP
+aA
+aA
 Ur
-xP
-xP
+QN
+QN
 Rn
 Gl
 hs
@@ -3927,25 +4021,25 @@ hs
 (19,1,1) = {"
 Gl
 Jb
-xP
+zI
 Gc
 Dp
 ws
 UH
 rG
-YP
+TK
 QR
-YP
+aA
 Fq
-YP
-YP
+aA
+BJ
 DY
 Zu
 zA
 CJ
 CN
 rS
-xP
+QN
 jW
 jW
 lS
@@ -3958,18 +4052,18 @@ Gl
 (20,1,1) = {"
 hs
 hs
-xP
+zI
 IV
 hV
 kz
 vV
 ec
-Ur
+qG
 aH
 ct
 lZ
 PN
-YP
+BJ
 Hk
 nH
 TQ
@@ -3989,7 +4083,7 @@ hs
 (21,1,1) = {"
 Gl
 aF
-Ur
+oT
 iR
 fo
 Kq
@@ -4020,13 +4114,13 @@ Gl
 (22,1,1) = {"
 Rn
 Gl
-xP
-Ur
+zI
+oT
 NA
 Bq
 ES
 PJ
-Ur
+qG
 oY
 dw
 VU
@@ -4050,15 +4144,15 @@ dN
 "}
 (23,1,1) = {"
 dN
-xP
-xP
-xP
+hQ
+hQ
+zI
 qB
 Vb
 oG
 QG
-xP
-xP
+ZZ
+ZZ
 lS
 jW
 jW
@@ -4081,14 +4175,14 @@ dN
 "}
 (24,1,1) = {"
 dN
-xP
+hQ
 HV
-Ur
-YP
-Ur
+vb
+UO
+vb
 al
-Ur
-YP
+vb
+UO
 Jb
 jW
 vg
@@ -4112,14 +4206,14 @@ dN
 "}
 (25,1,1) = {"
 dN
-xP
+hQ
 gh
-Ur
+vb
 iF
 fe
 zc
 nF
-Ur
+vb
 Gl
 lS
 xm
@@ -4143,14 +4237,14 @@ Rn
 "}
 (26,1,1) = {"
 hs
-Ur
+vb
 dB
 jU
 Tv
 Zn
 ng
 zL
-xP
+hQ
 Rn
 jW
 lS
@@ -4174,9 +4268,9 @@ hs
 "}
 (27,1,1) = {"
 dN
-xP
+hQ
 nM
-Ur
+vb
 hg
 HK
 RC
@@ -4205,9 +4299,9 @@ dN
 "}
 (28,1,1) = {"
 dN
-Ur
-xP
-xP
+vb
+hQ
+hQ
 lV
 aT
 Pg
@@ -4238,12 +4332,12 @@ Gl
 qt
 Pi
 Gl
-xP
-Ur
-xP
+hQ
+vb
+hQ
 Rc
 Nu
-xP
+hQ
 dN
 Gl
 Jb

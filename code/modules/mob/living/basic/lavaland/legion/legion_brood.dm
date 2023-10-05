@@ -31,6 +31,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
 	/// Reference to a guy who made us
 	var/mob/living/created_by
+	//determines if we have an automatic death timer
+	var/lifetime = 10 SECONDS
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
@@ -38,7 +40,8 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
-	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
+	if(lifetime)
+		addtimer(CALLBACK(src, PROC_REF(death)), lifetime)
 
 /mob/living/basic/legion_brood/death(gibbed)
 	if (!gibbed)

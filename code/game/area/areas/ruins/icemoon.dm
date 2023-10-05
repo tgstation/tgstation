@@ -42,9 +42,6 @@
 /area/ruin/pizzeria/kitchen
 	name = "\improper Moffuchi's Kitchen"
 
-/area/ruin/planetengi
-	name = "\improper Engineering Outpost"
-
 /area/ruin/smoking_room/house
 	name = "\improper Tobacco House"
 	sound_environment = SOUND_ENVIRONMENT_CITY
@@ -63,3 +60,41 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
+/area/ruin/unlucky_engineer/foyer
+	name = "\improper Abandoned Engineering Foyer"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
+/area/ruin/unlucky_engineer/solars
+	name = "\improper Desolate Solars"
+
+/area/ruin/unlucky_engineer/turbine
+	name = "\improper Ruined Turbine"
+	sound_environment = SOUND_ENVIRONMENT_DIZZY
+	mood_bonus = -1
+	mood_message = "Those creatures must've burst the pipes... It's so hard to think in here..."
+
+/area/ruin/unlucky_engineer/ce
+	name = "\improper Ransacked Chief Engineer's Office"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+	mood_bonus = -3
+	mood_message = "It's so cold in here... Do I hear something scratching around, outside?"
+
+/area/ruin/unlucky_engineer/gear
+	name = "\improper Looted Gear Storage"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
+/area/ruin/unlucky_engineer/smes
+	name = "\improper Burnt Out Work Room"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
+/area/ruin/unlucky_engineer/rest
+	name = "\improper Frozen Bunk Room"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	mood_bonus = 1
+	mood_message = "It's cold in here... But I can bear it and press on."
+
+/area/ruin/unlucky_engineer/maints
+	name = "\improper Decrepit Passageway"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	mood_bonus = -4
+	mood_message = "It's so cold and dark in here... I want to leave."
