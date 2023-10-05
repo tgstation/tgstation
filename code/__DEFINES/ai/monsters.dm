@@ -154,7 +154,14 @@
 /// The creator of our legion skull
 #define BB_LEGION_BROOD_CREATOR "legion_brood_creator"
 
+//mook keys
+/// our home landmark
 #define BB_HOME_VILLAGE "home_village"
+/// maximum distance we can be from home during a storm
 #define BB_MAXIMUM_DISTANCE_TO_VILLAGE "maximum_distance_to_village"
+/// stand where we deposit our ores
 #define BB_MATERIAL_STAND_TARGET "material_stand_target"
+/// our jump ability
 #define BB_MOOK_JUMP_ABILITY "mook_jump_ability"
+/// our leap ability
+#define BB_MOOK_LEAP_ABILITY "mook_leap_ability"

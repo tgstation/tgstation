@@ -13,10 +13,12 @@
 	icon_living = "mook"
 	icon_dead = "mook_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	gender = MALE
 	maxHealth = 150
+	faction = list("neutral", "mining")
 	health = 150
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	pass_flags_self = LETPASSTHROW
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
@@ -25,8 +27,8 @@
 	speed = 5
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
-	///are we wielding a weapon?
-	var/weapon_wielder = FALSE
+	///are we a healer?
+	var/is_healer = FALSE
 	///the ore we are holding if any
 	var/obj/held_ore
 	///overlay for neutral stance
@@ -39,23 +41,36 @@
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
 
+	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
+	jump.Grant(src)
+	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
+
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 	neutral_stance = mutable_appearance(icon, "mook_axe_overlay")
 	attack_stance = mutable_appearance(icon, "axe_strike_overlay")
+	update_appearance()
 
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_smasher)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
-	if(gender == MALE)
-		var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
-		leap.Grant(src)
-		weapon_wielder = TRUE
+	if(is_healer)
+		grant_healer_abilities()
+		return //healers cant leap
 
-	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
-	jump.Grant(src)
-	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
-	update_appearance()
+	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
+	ai_controller.set_blackboard_key(BB_MOOK_LEAP_ABILITY, leap)
+	leap.Grant(src)
+
+
+/mob/living/basic/mining/mook/proc/grant_healer_abilities()
+	AddComponent(\
+		/datum/component/healing_touch,\
+		heal_brute = melee_damage_upper,\
+		heal_burn = melee_damage_upper,\
+		heal_time = 0,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/mining/mook)),\
+	)
 
 /mob/living/basic/mining/mook/Entered(atom/movable/mover)
 	if(istype(mover, /obj/item/stack/ore))
@@ -74,6 +89,9 @@
 /mob/living/basic/mining/mook/proc/pre_attack(mob/living/attacker, atom/target)
 	SIGNAL_HANDLER
 
+	if(attack_state == MOOK_ATTACK_STRIKE)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
 	if(istype(target, /obj/item/stack/ore) && isnull(held_ore))
 		var/obj/item/ore_target = target
 		ore_target.forceMove(src)
@@ -84,8 +102,8 @@
 			held_ore.forceMove(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(attack_state == MOOK_ATTACK_STRIKE)
-		return COMPONENT_HOSTILE_NO_ATTACK
+	if(is_healer) //healers dont have a weapon to swing!
+		return
 
 	change_combatant_state(state = MOOK_ATTACK_STRIKE)
 	addtimer(CALLBACK(src, PROC_REF(change_combatant_state), MOOK_ATTACK_NEUTRAL), 0.3 SECONDS)
@@ -113,7 +131,7 @@
 	if(stat == DEAD)
 		return
 
-	if(attack_state == MOOK_ATTACK_STRIKE && weapon_wielder)
+	if(attack_state == MOOK_ATTACK_STRIKE && !is_healer)
 		. += attack_stance
 		return
 
@@ -123,7 +141,7 @@
 	if(held_ore)
 		. +=  ore_overlay
 
-	if(weapon_wielder)
+	if(!is_healer)
 		. += neutral_stance
 
 /mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
@@ -152,14 +170,13 @@
 
 /mob/living/basic/mining/mook/bard
 	desc = "It's holding a guitar??"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	gender = FEMALE
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	pass_flags_self = LETPASSTHROW
+	gender = MALE
 	attack_sound = 'sound/weapons/stringsmash.ogg'
 	death_sound = 'sound/voice/mook_death.ogg'
-//	ai_controller = /datum/ai_controller/basic_controller/mook/bard
-	weapon_wielder = TRUE
+	ai_controller = /datum/ai_controller/basic_controller/mook/bard
 	///our guitar
 	var/obj/item/instrument/guitar/held_guitar
 
@@ -168,8 +185,55 @@
 	neutral_stance = mutable_appearance(icon, "bard_overlay")
 	attack_stance = mutable_appearance(icon, "bard_strike")
 	held_guitar = new(src)
+	ai_controller.set_blackboard_key(BB_SONG_INSTRUMENT, held_guitar)
 	update_appearance()
 
+/mob/living/basic/mining/mook/support
+	name = "wanderer"
+	desc = "This unhealthy looking primitive seems to be talented at administiring health care."
+	gender = FEMALE
+	melee_damage_lower = 8
+	melee_damage_upper = 8
+//	ai_controller = /datum/ai_controller/basic_controller/mook/support
+	speed = 5
+	is_healer = TRUE
+
+/mob/living/basic/mining/mook/tribal_chief
+	name = "tribal chief"
+	desc = "Acknowledge him"
+	gender = MALE
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	///overlay in our neutral state
+	var/mutable_appearance/chief_neutral
+	///overlay in our striking state
+	var/mutable_appearance/chief_strike
+	///overlay in our active state
+	var/mutable_appearance/chief_active
+	///overlay in our warmup state
+	var/mutable_appearance/chief_warmup
+
+/mob/living/basic/mining/mook/tribal_chief/Initialize(mapload)
+	. = ..()
+	chief_neutral = mutable_appearance(icon, "mook_chief")
+	chief_strike = mutable_appearance(icon, "mook_chief_strike")
+	chief_active = mutable_appearance(icon, "mook_chief_leap")
+	chief_warmup = mutable_appearance(icon, "mook_chief_warmup")
+	update_appearance()
+
+/mob/living/basic/mining/mook/tribal_chief/update_overlays()
+	. = ..()
+	if(stat == DEAD)
+		return
+	switch(attack_state)
+		if(MOOK_ATTACK_NEUTRAL)
+			. += chief_neutral
+		if(MOOK_ATTACK_WARMUP)
+			. += chief_warmup
+		if(MOOK_ATTACK_ACTIVE)
+			. += chief_active
+		if(MOOK_ATTACK_STRIKE)
+			. += chief_strike
 
 /datum/action/cooldown/mob_cooldown/mook_ability
 	///are we a mook?

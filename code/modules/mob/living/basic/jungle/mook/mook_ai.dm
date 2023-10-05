@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/mook
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 7,
 		BB_STORM_APPROACHING = FALSE,
@@ -9,6 +9,9 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/leap,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook,
@@ -16,6 +19,15 @@
 		/datum/ai_planning_subtree/wander_away_from_village,
 	)
 
+///check for faction if not a ash walker, otherwise just attack
+/datum/targetting_datum/basic/mook/faction_check(mob/living/living_mob, mob/living/the_target)
+	if(isashwalker(the_target))
+		return FALSE
+
+	return ..()
+
+/datum/ai_planning_subtree/targeted_mob_ability/leap
+	ability_key = BB_MOOK_LEAP_ABILITY
 
 /datum/ai_planning_subtree/use_mob_ability/mook_jump
 	ability_key = BB_MOOK_JUMP_ABILITY
@@ -167,3 +179,19 @@
 	if(is_type_in_list(target_wall, forbidden_turfs))
 		return FALSE
 	return ..()
+
+
+/datum/ai_controller/basic_controller/mook/bard
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_SONG_LINES = MOOK_SONG,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
+		/datum/ai_planning_subtree/generic_play_instrument,
+	)
