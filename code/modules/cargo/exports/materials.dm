@@ -161,4 +161,4 @@
 	var/sale_value = sold_block.export_value
 	SSstock_market.materials_quantity[sold_block.export_mat] += sold_block.quantity
 	SSstock_market.materials_prices[sold_block.export_mat] -= round((sale_value) * (sold_block.quantity / (sold_block.quantity + SSstock_market.materials_quantity[sold_block.export_mat])))
-	SSstock_market.materials_prices[sold_block.export_mat] = round(clamp(SSstock_market.materials_prices[sold_block.export_mat], sold_block.export_mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5 , sold_block.export_mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3))
+	SSstock_market.materials_prices[sold_block.export_mat] = round(clamp(SSstock_market.materials_prices[sold_block.export_mat], initial(sold_block.export_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5 , initial(sold_block.export_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3))
