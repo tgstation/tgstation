@@ -246,14 +246,12 @@
 	icon_state = "revenant_draining"
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 
-	for(var/i = alpha, i > 0, i -= 10)
-		alpha = i
-		CHECK_TICK
-
+	animate(src, alpha = 0, time = 3 SECONDS)
+	sleep(3 SECONDS)
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src))
-	goop.old_ckey = client.ckey //If the essence reforms, the old revenant is put back in the body
+	goop.old_ckey = client.ckey
 	goop.revenant = src
 	revealed = FALSE
 	forceMove(goop)
