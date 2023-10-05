@@ -63,7 +63,9 @@
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(amount > 0)
 		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
@@ -86,7 +88,9 @@
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
+	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return 0
 	if(amount > 0)
 		take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else

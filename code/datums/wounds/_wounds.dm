@@ -261,6 +261,60 @@
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
+/// Setter for [interaction_efficiency_penalty]. Updates the actionspeed of our actionspeed mod.
+/datum/wound/proc/set_interaction_efficiency_penalty(new_value)
+	var/should_update = (new_value != interaction_efficiency_penalty)
+
+	interaction_efficiency_penalty = new_value
+
+	if (should_update)
+		update_actionspeed_modifier()
+
+/// Returns a "adjusted" interaction_efficiency_penalty that will be used for the actionspeed mod.
+/datum/wound/proc/get_effective_actionspeed_modifier()
+	return interaction_efficiency_penalty - 1
+
+/// Returns the decisecond multiplier of any click interactions, assuming our limb is being used.
+/datum/wound/proc/get_action_delay_mult()
+	SHOULD_BE_PURE(TRUE)
+
+	return interaction_efficiency_penalty
+
+/// Returns the decisecond increment of any click interactions, assuming our limb is being used.
+/datum/wound/proc/get_action_delay_increment()
+	SHOULD_BE_PURE(TRUE)
+
+	return 0
+
+/// Signal proc for if gauze has been applied or removed from our limb.
+/datum/wound/proc/gauze_state_changed()
+	SIGNAL_HANDLER
+
+	if (wound_flags & ACCEPTS_GAUZE)
+		update_inefficiencies()
+
+/// Updates our limping and interaction penalties in accordance with our gauze.
+/datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
+	if (wound_flags & ACCEPTS_GAUZE)
+		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			if(limb.current_gauze?.splint_factor)
+				limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
+				limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
+			else
+				limp_slowdown = initial(limp_slowdown)
+				limp_chance = initial(limp_chance)
+		else if(limb.body_zone in GLOB.arm_zones)
+			if(limb.current_gauze?.splint_factor)
+				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
+			else
+				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
+
+		if(initial(disabling))
+			set_disabling(isnull(limb.current_gauze))
+
+		limb.update_wounds(replaced_or_replacing)
+
+	start_limping_if_we_should()
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
