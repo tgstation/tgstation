@@ -48,7 +48,7 @@
 /obj/item/lipstick/AltClick(mob/user)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return FALSE
