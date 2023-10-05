@@ -92,7 +92,7 @@
 /datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/basic/revenant/cast_on)
 	. = ..()
 	if(reveal_duration > 0 SECONDS)
-		cast_on.reveal(reveal_duration)
+		cast_on.apply_status_effect(/datum/status_effect/revenant_revealed, reveal_duration)
 	if(stun_duration > 0 SECONDS)
 		cast_on.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, stun_duration)
 

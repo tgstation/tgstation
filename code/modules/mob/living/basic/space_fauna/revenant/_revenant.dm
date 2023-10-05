@@ -58,8 +58,6 @@
 
 	/// Are we currently dormant (ectoplasm'd)?
 	var/dormant = FALSE
-	/// If the revenant can take damage from normal sources.
-	var/revealed = FALSE
 	/// If the revenant's abilities are blocked by a holy power.
 	var/inhibited = FALSE
 	/// Are we currently draining someone?
@@ -144,16 +142,9 @@
 	if(dormant)
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
-	if(revealed && essence <= 0)
+	if(HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && essence <= 0)
 		INVOKE_ASYNC(src, PROC_REF(death))
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
-
-	if(unreveal_time && world.time >= unreveal_time)
-		unreveal_time = 0
-		revealed = FALSE
-		incorporeal_move = INCORPOREAL_MOVE_JAUNT
-		invisibility = INVISIBILITY_REVENANT
-		to_chat(src, span_revenboldnotice("You are once again concealed."))
 
 	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
 		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
@@ -215,7 +206,7 @@
 		attempt_harvest(A)
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
-	if(revealed || inhibited || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
+	if(inhibited || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
@@ -224,7 +215,7 @@
 	orbit(target, orbitsize)
 
 /mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && !revealed)
+	if(!forced && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
 		return 0
 
 	. = amount
@@ -244,7 +235,7 @@
 /mob/living/basic/revenant/update_icon_state()
 	. = ..()
 
-	if(revealed)
+	if(HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
 		icon_state = icon_reveal
 		return
 
@@ -286,12 +277,12 @@
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/basic/revenant/bullet_act()
-	if(!revealed || dormant)
+	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
 /mob/living/basic/revenant/death()
-	if(!revealed || dormant) //Revenants cannot die if they aren't revealed //or are already dead
+	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant) //Revenants cannot die if they aren't revealed //or are already dead
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	dormant = TRUE
@@ -301,7 +292,6 @@
 		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
 	)
 
-	revealed = TRUE
 	invisibility = 0
 	icon_state = "revenant_draining"
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
@@ -319,7 +309,6 @@
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
 	goop.old_ckey = client.ckey
 	goop.revenant = src
-	revealed = FALSE
 	forceMove(goop)
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
@@ -382,7 +371,7 @@
 
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
 		balloon_alert(src, "blocked by salt!")
-		reveal(2 SECONDS)
+		apply_status_effect(/datum/status_effect/revenant_revealed, 2 SECONDS)
 		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 		return FALSE
 
@@ -391,24 +380,6 @@
 		return FALSE
 
 	return TRUE
-
-//reveal, stun, icon updates, cast checks, and essence changing
-/mob/living/basic/revenant/proc/reveal(time)
-	if(QDELETED(src))
-		return
-	if(time <= 0)
-		return
-	revealed = TRUE
-	invisibility = 0
-	incorporeal_move = FALSE
-	if(!unreveal_time)
-		to_chat(src, span_revendanger("You have been revealed!"))
-		unreveal_time = world.time + time
-	else
-		to_chat(src, span_revenwarning("You have been revealed!"))
-		unreveal_time = unreveal_time + time
-	update_appearance(UPDATE_ICON)
-	orbiting?.end_orbit(src)
 
 /mob/living/basic/revenant/proc/cast_check(essence_cost)
 	if(QDELETED(src))
@@ -444,7 +415,6 @@
 	return TRUE
 
 /mob/living/basic/revenant/proc/death_reset()
-	revealed = FALSE
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	forceMove(get_turf(src))
 	unreveal_time = 0
