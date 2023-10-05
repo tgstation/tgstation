@@ -39,7 +39,7 @@
 		return FALSE
 
 	var/target_has_client = !isnull(target.client)
-	if(target_has_client)
+	if(target_has_client || target.ckey) // any target that has been occupied with a ckey is considered "intelligent"
 		to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
 		essence_drained += rand(20, 30)
 
