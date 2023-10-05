@@ -16,6 +16,8 @@
 
 	draining = TRUE
 	var/value_to_return = harvest_soul(target)
+	if(!value_to_return)
+		log_combat(src, target, "stopped the harvest of")
 	draining = FALSE
 
 	return value_to_return
@@ -23,8 +25,17 @@
 /// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
 /mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
+	if(QDELETED(target)) // what
+		return FALSE
+
+	// cache pronouns in case they get deleted as well as be a nice micro-opt due to the multiple times we use them
+	var/target_their = target.p_thier()
+	var/target_Their = target.p_Their()
+	var/target_Theyre = target.p_Theyre()
+	var/target_They_have = "[target.p_They()] [target.p_have()]"
+
 	if(target.stat == CONSCIOUS)
-		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
+		to_chat(src, span_revennotice("[target_Their] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return FALSE
@@ -40,18 +51,18 @@
 
 	var/target_has_client = !isnull(target.client)
 	if(target_has_client || target.ckey) // any target that has been occupied with a ckey is considered "intelligent"
-		to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
+		to_chat(src, span_revennotice("[target_Their] soul burns with intelligence."))
 		essence_drained += rand(20, 30)
 
 	if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-		to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
+		to_chat(src, span_revennotice("[target_Their] soul blazes with life!"))
 		essence_drained += rand(40, 50)
 
 	if(!target_has_client && HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-		to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
+		to_chat(src, span_revennotice("[target_Their] soul is weak and underdeveloped. They won't be worth very much."))
 		essence_drained = 5
 
-	to_chat(src, span_revennotice("[target.p_Their()] soul is weak and faltering. It's time to harvest."))
+	to_chat(src, span_revennotice("[target_Their] soul is weak and faltering. It's time to harvest."))
 
 	if(!do_after(src, (rand(15, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM))
 		to_chat(src, span_revennotice("The harvest is abandoned."))
@@ -68,11 +79,11 @@
 			to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
 
 	if(!do_after(src, (rand(15, 25) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
-		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken."))
+		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s" : "[target_their]"] soul. The link has been broken."))
 		return FALSE
 
 	if(target.stat == CONSCIOUS)
-		to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining!"))
+		to_chat(src, span_revenwarning("[target_Theyre] now powerful enough to fight off your draining!"))
 		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
 		return FALSE
 
@@ -85,7 +96,7 @@
 	reveal(5 SECONDS)
 	temporary_freeze(5 SECONDS)
 
-	target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
+	target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target_their] skin turning an ashy gray."))
 
 	if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 		to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
@@ -97,7 +108,7 @@
 
 	var/datum/beam/draining_beam = Beam(target, icon_state = "drain_life")
 	if(!do_after(src, 4.6 SECONDS, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-		to_chat(src, span_revenwarning("[target ? "[target]'s soul has" : "[target.p_Theyre()]"] been drawn out of your grasp. The link has been broken."))
+		to_chat(src, span_revenwarning("[target ? "[target]'s soul has" : "[target_They_have]"] been drawn out of your grasp. The link has been broken."))
 		if(target)
 			target.visible_message(
 				span_warning("[target] slumps onto the ground."),
