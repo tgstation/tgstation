@@ -42,10 +42,16 @@
 
 	for(var/obj/item/organ/organ as anything in organs)
 		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/internal/brain))
+			if(drop_bitflags & DROP_BODYPARTS)
+				continue // the head will drop, so the brain should stay inside
+
+			organ.Remove(src)
+			organ.forceMove(Tsec)
+			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
 		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/internal/brain))
-			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) == BODY_ZONE_CHEST))
+			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST))
 				continue // only chest & groin organs will be ejected
 
 			organ.Remove(src)
