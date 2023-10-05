@@ -55,6 +55,10 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_OBJECT_ON_BANING "obj_on_baning"
 
+///from base of mob/living/on_damage_adjustment
+#define COMSIG_LIVING_ADJUST_DAMAGE "living_adjust_damage"
+	#define COMPONENT_IGNORE_CHANGE (1<<0)
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)
@@ -179,3 +183,10 @@
 
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
+
+/// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
+/// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
+/// Sent from a 'contract chain' button on a mob chain
+#define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
