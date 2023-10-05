@@ -14,14 +14,24 @@
 	var/spawn_text = "emerges from"
 	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
-	/// is this spawner taggable with a mining scanner?
+	/// Is this spawner taggable with a mining scanner?
 	var/scanner_taggable = FALSE
-	/// has this tendril been tagged/analyzed by a mining scanner?
+	/// Has this spawner been tagged/analyzed by a mining scanner?
 	var/gps_tagged = FALSE
-	/// short identifier for the mob it spawns. probably stick around 3 characters or less?
+	/// A short identifier for the mob it spawns. Keep around 3 characters or less?
 	var/mob_gps_id = "???"
-	/// short identifier for what kind of spawner it is.
+	/// A short identifier for what kind of spawner it is, for use in putting together its GPS tag.
 	var/spawner_gps_id = "Creature Nest"
+	/// A complete identifier. Generated on tag (if tagged), used for its examine.
+	var/assigned_tag
+
+/obj/structure/spawner/examine(mob/user)
+	. = ..()
+	if(scanner_taggable)
+		if(!gps_tagged)
+			. += span_notice("It looks like you could probably scan and tag it with a <b>mining analyzer</b>.")
+		else
+			. += span_notice("A holotag's been attached, projecting \"<b>[assigned_tag]</b>\".")
 
 /obj/structure/spawner/attackby(obj/item/item, mob/user, params)
 	if(scanner_taggable)
@@ -36,12 +46,12 @@
 		return
 	balloon_alert(user, "tagged on GPS!")
 	gps_tagged = TRUE
-	var/new_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
+	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
 	if(our_gps)
-		our_gps.gpstag = new_tag
+		our_gps.gpstag = assigned_tag
 		return
-	AddComponent(/datum/component/gps, new_tag)
+	AddComponent(/datum/component/gps, assigned_tag)
 
 /obj/structure/spawner/Initialize(mapload)
 	. = ..()
