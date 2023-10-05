@@ -26,9 +26,14 @@
 /datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range, check_faction = FALSE)
 	if (object_type_path == null)
 		return FALSE // no op
+	if(!ismob(target))
+		return FALSE // no hands no problems
+
+	// Look at me, type casting like a grown up
+	var/mob/targetmob = target
 	// Check if our parent behaviour agrees we can attack this target (we ignore faction by default)
 	var/can_attack = ..()
-	if(can_attack && target.is_holding_item_of_type(object_type_path))
+	if(can_attack && targetmob.is_holding_item_of_type(object_type_path))
 		return TRUE // they have the item
 	// No valid target
 	return FALSE
