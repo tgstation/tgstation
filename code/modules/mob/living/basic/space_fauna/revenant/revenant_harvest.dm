@@ -29,7 +29,7 @@
 		return FALSE
 
 	// cache pronouns in case they get deleted as well as be a nice micro-opt due to the multiple times we use them
-	var/target_their = target.p_thier()
+	var/target_their = target.p_their()
 	var/target_Their = target.p_Their()
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
