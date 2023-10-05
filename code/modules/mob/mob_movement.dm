@@ -254,7 +254,7 @@
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
 						var/mob/living/basic/revenant/ghostie = L
-						ghostie.apply_status_effect(/datum/status_effect/revenant_revealed, 2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
 						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)

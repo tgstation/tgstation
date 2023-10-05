@@ -349,7 +349,7 @@
 		span_warning("[src] violently flinches!"),
 		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"),
 	)
-	apply_status_effect(/datum/status_effect/revenant_inhibited, 3 SECONDS)
+	apply_status_effect(/datum/status_effect/revenant/inhibited, 3 SECONDS)
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
@@ -363,7 +363,7 @@
 
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
 		balloon_alert(src, "blocked by salt!")
-		apply_status_effect(/datum/status_effect/revenant_revealed, 2 SECONDS)
+		apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
 		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 		return FALSE
 
@@ -410,9 +410,9 @@
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	forceMove(get_turf(src))
 	// clean slate, so no more debilitating effects
-	remove_status_effect(/datum/status_effect/revenant_revealed)
+	remove_status_effect(/datum/status_effect/revenant/revealed)
 	remove_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant)
-	remove_status_effect(/datum/status_effect/revenant_inhibited)
+	remove_status_effect(/datum/status_effect/revenant/inhibited)
 	draining = FALSE
 	dormant = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT

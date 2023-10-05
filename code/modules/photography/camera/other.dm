@@ -11,7 +11,7 @@
 		// time to steal your soul
 		if(istype(target, /mob/living/basic/revenant))
 			var/mob/living/basic/revenant/peek_a_boo = target
-			peek_a_boo.apply_status_effect(/datum/status_effect/revenant_revealed, 2 SECONDS) // no hiding
+			peek_a_boo.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS) // no hiding
 			peek_a_boo.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 
 		target.visible_message(

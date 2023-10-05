@@ -1,7 +1,20 @@
-/datum/status_effect/revenant_revealed
+/// Parent type for all unique revenant status effects
+/datum/status_effect/revenant
+
+/datum/status_effect/revenant/on_creation(mob/living/new_owner, duration)
+	if(isnum(duration))
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/revenant/revealed
 	id = "revenant_revealed"
 
-/datum/status_effect/revenant_revealed/on_apply()
+/datum/status_effect/revenant/revealed/on_creation(mob/living/new_owner, duration)
+	if(isnum(duration))
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/revenant/revealed/on_apply()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -15,7 +28,7 @@
 
 	owner.balloon_alert(owner, "revealed!")
 
-/datum/status_effect/revenant_revealed/on_remove()
+/datum/status_effect/revenant/revealed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_REVEALED, TRAIT_STATUS_EFFECT(id))
 
 	owner.incorporeal_move = INCORPOREAL_MOVE_JAUNT
@@ -26,10 +39,15 @@
 	owner.balloon_alert(owner, "concealed")
 	return ..()
 
-/datum/status_effect/revenant_inhibited
+/datum/status_effect/revenant/inhibited
 	id = "revenant_inhibited"
 
-/datum/status_effect/revenant_inhibited/on_apply()
+/datum/status_effect/revenant/inhibited/on_creation(mob/living/new_owner, duration)
+	if(isnum(duration))
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/revenant/inhibited/on_apply()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -40,7 +58,7 @@
 
 	owner.balloon_alert(owner, "inhibited!")
 
-/datum/status_effect/revenant_inhibited/on_remove()
+/datum/status_effect/revenant/inhibited/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_INHIBITED, TRAIT_STATUS_EFFECT(id))
 	owner.update_appearance(UPDATE_ICON)
 
