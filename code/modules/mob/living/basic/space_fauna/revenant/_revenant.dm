@@ -58,8 +58,6 @@
 
 	/// Are we currently dormant (ectoplasm'd)?
 	var/dormant = FALSE
-	/// If the revenant's abilities are blocked by a holy power.
-	var/inhibited = FALSE
 	/// Are we currently draining someone?
 	var/draining = FALSE
 	/// Have we already given this revenant abilities?
@@ -146,7 +144,7 @@
 		INVOKE_ASYNC(src, PROC_REF(death))
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
-	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
+	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
 		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
@@ -206,7 +204,7 @@
 		attempt_harvest(A)
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
-	if(inhibited || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
+	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
@@ -351,13 +349,7 @@
 		span_warning("[src] violently flinches!"),
 		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"),
 	)
-	inhibited = TRUE
-	update_mob_action_buttons()
-	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
-
-/mob/living/basic/revenant/proc/reset_inhibit()
-	inhibited = FALSE
-	update_mob_action_buttons()
+	apply_status_effect(/datum/status_effect/revenant_inhibited, 3 SECONDS)
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
@@ -397,7 +389,7 @@
 		to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
 		return FALSE
 
-	if(inhibited)
+	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
 		to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
 		return FALSE
 
@@ -417,8 +409,10 @@
 /mob/living/basic/revenant/proc/death_reset()
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	forceMove(get_turf(src))
-	unreveal_time = 0
-	inhibited = FALSE
+	// clean slate, so no more debilitating effects
+	remove_status_effect(/datum/status_effect/revenant_revealed)
+	remove_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant)
+	remove_status_effect(/datum/status_effect/revenant_inhibited)
 	draining = FALSE
 	dormant = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT

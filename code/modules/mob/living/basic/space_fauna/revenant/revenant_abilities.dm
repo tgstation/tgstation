@@ -55,7 +55,7 @@
 		return FALSE
 
 	var/mob/living/basic/revenant/ghost = owner
-	if(ghost.inhibited || ghost.dormant)
+	if(ghost.dormant || HAS_TRAIT(ghost, TRAIT_REVENANT_INHIBITED))
 		return FALSE
 	if(locked && ghost.essence_excess <= unlock_amount)
 		return FALSE
