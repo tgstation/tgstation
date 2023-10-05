@@ -141,7 +141,7 @@
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && essence <= 0)
-		INVOKE_ASYNC(src, PROC_REF(death))
+		death()
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
