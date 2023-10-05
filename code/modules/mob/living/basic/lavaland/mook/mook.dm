@@ -15,7 +15,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	maxHealth = 150
-	faction = list("neutral", "mining")
+	faction = list(FACTION_MINING, FACTION_NEUTRAL)
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 15

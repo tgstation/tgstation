@@ -21,7 +21,7 @@ type Data = {
 
 export const MaterialStand = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { ores } = data;
+  const { ores = [] } = data;
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
   const search = createSearch(searchItem, (ores) => ores.name);
   const ores_filtered =
@@ -30,8 +30,8 @@ export const MaterialStand = (props, context) => {
     <Window title="MaterialStand" width={550} height={400}>
       <Window.Content>
         <Stack fill vertical>
-          <Section>
-            <Stack.Item>
+          <Stack.Item>
+            <Section>
               <Input
                 autofocus
                 position="relative"
@@ -46,8 +46,8 @@ export const MaterialStand = (props, context) => {
                 }}
                 fluid
               />
-            </Stack.Item>
-          </Section>
+            </Section>
+          </Stack.Item>
           <Section title="Stock" fill scrollable>
             <Stack.Item>
               <Flex wrap>
@@ -86,7 +86,7 @@ export const MaterialStand = (props, context) => {
 
 const RetrieveIcon = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { ore_images } = data;
+  const { ore_images = [] } = data;
   const { ore } = props;
 
   let icon_display = ore_images.find((icon) => icon.name === ore.name);
