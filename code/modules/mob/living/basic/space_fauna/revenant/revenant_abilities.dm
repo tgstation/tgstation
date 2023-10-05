@@ -94,7 +94,7 @@
 	if(reveal_duration > 0 SECONDS)
 		cast_on.reveal(reveal_duration)
 	if(stun_duration > 0 SECONDS)
-		cast_on.temporary_freeze(stun_duration)
+		cast_on.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, stun_duration)
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /datum/action/cooldown/spell/aoe/revenant/overload
@@ -110,7 +110,7 @@
 
 	/// The range the shocks from the lights go
 	var/shock_range = 2
-	/// The damage the shcoskf rom the lgihts do
+	/// The damage the shocks from the lights do
 	var/shock_damage = 15
 
 /datum/action/cooldown/spell/aoe/revenant/overload/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)

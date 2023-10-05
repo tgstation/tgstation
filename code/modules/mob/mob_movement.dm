@@ -255,7 +255,7 @@
 					if(isrevenant(L))
 						var/mob/living/basic/revenant/ghostie = L
 						ghostie.reveal(2 SECONDS)
-						ghostie.temporary_freeze(2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))

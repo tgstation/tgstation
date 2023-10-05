@@ -94,7 +94,7 @@
 		target.Stun(46)
 
 	reveal(5 SECONDS)
-	temporary_freeze(5 SECONDS)
+	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)
 
 	target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target_their] skin turning an ashy gray."))
 

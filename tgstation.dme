@@ -4474,6 +4474,7 @@
 #include "code\modules\mob\living\basic\space_fauna\regal_rat\regal_rat_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\_revenant.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_abilities.dm"
+#include "code\modules\mob\living\basic\space_fauna\revenant\revenant_effects.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_harvest.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_items.dm"
 #include "code\modules\mob\living\basic\space_fauna\revenant\revenant_objectives.dm"

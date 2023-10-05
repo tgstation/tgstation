@@ -12,10 +12,12 @@
 		if(istype(target, /mob/living/basic/revenant))
 			var/mob/living/basic/revenant/peek_a_boo = target
 			peek_a_boo.reveal(2 SECONDS) // no hiding
-			if(!peek_a_boo.unstun_time)
-				peek_a_boo.temporary_freeze(2 SECONDS)
-		target.visible_message(span_warning("[target] violently flinches!"), \
-			span_revendanger("You feel your essence draining away from having your picture taken!"))
+			peek_a_boo.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
+
+		target.visible_message(
+			span_warning("[target] violently flinches!"),
+			span_revendanger("You feel your essence draining away from having your picture taken!"),
+		)
 		target.apply_damage(rand(10, 15))
 
 /obj/item/camera/spooky/badmin

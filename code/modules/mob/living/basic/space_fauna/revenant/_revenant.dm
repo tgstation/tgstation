@@ -93,8 +93,6 @@
 	var/essence_excess = 0
 	/// How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unreveal_time = 0
-	/// How long the revenant is stunned for, is about 2 seconds times this var.
-	var/unstun_time = 0
 	/// How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/perfectsouls = 0
 
@@ -156,11 +154,6 @@
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, span_revenboldnotice("You are once again concealed."))
-
-	if(unstun_time && world.time >= unstun_time)
-		unstun_time = 0
-		REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-		to_chat(src, span_revenboldnotice("You can move again!"))
 
 	if(essence_regenerating && !inhibited && essence < max_essence) //While inhibited, essence will not regenerate
 		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
@@ -331,10 +324,14 @@
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // just in case it occurs, need to provide some feedback
+		balloon_alert(src, "can't move!")
+		return
+
 	if(isnull(orbiting) || incorporeal_move_check(entering_loc))
 		return
 
-	// we're about to go somewhere we aren't meant to, end the orbit and block the move
+	// we're about to go somewhere we aren't meant to, end the orbit and block the move. feedback will be given in `incorporeal_move_check()`
 	orbiting.end_orbit(src)
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
@@ -386,7 +383,7 @@
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
 		balloon_alert(src, "blocked by salt!")
 		reveal(2 SECONDS)
-		temporary_freeze(2 SECONDS)
+		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 		return FALSE
 
 	if(locate(/obj/effect/blessing) in step_turf)
@@ -410,25 +407,6 @@
 	else
 		to_chat(src, span_revenwarning("You have been revealed!"))
 		unreveal_time = unreveal_time + time
-	update_appearance(UPDATE_ICON)
-	orbiting?.end_orbit(src)
-
-/mob/living/basic/revenant/proc/temporary_freeze(time)
-	if(QDELETED(src))
-		return
-
-	if(time <= 0)
-		return
-
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-
-	if(unstun_time <= 0)
-		balloon_alert(src, "can't move!")
-		unstun_time = world.time + time
-	else
-		balloon_alert(src, "can't move!")
-		unstun_time = unstun_time + time
-
 	update_appearance(UPDATE_ICON)
 	orbiting?.end_orbit(src)
 
@@ -470,7 +448,6 @@
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	forceMove(get_turf(src))
 	unreveal_time = 0
-	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
 	dormant = FALSE
