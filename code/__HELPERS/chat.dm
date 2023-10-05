@@ -92,14 +92,8 @@ it will be sent to all connected chats.
 		var/link = FOLLOW_LINK(observer, source)
 		to_chat(observer, "[link] [message]")
 
-/// Sends a message to everyone with blob telepathy, and all observers
-/proc/blob_telepathy(message, source)
-	for(var/mob/creature as anything in GLOB.blob_telepathy_mobs)
-		to_chat(creature, message)
-	send_to_observers(message, source)
-
-/// Sends a message to all revenants and observers
-/proc/revenant_relay(message, source)
-	for(var/mob/creature as anything in GLOB.revenant_relay_mobs)
+/// Sends a message to everyone within the list, as well as all observers.
+/proc/relay_to_list_and_observers(message, list/mob_list, source)
+	for(var/mob/creature as anything in mob_list)
 		to_chat(creature, message)
 	send_to_observers(message, source)
