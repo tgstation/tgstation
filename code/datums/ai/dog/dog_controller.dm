@@ -31,8 +31,8 @@
 		/datum/ai_planning_subtree/make_babies, // Ian WILL prioritise sex over following your instructions
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/dog_harassment,
-		// Find targets to run away from when humans are nearby.
-		/datum/ai_planning_subtree/simple_find_target/not_while_observed,
+		// Find targets to run away from (uses the targetting datum from above)
+		/datum/ai_planning_subtree/simple_find_target
 		// Flee from that target
 		/datum/ai_planning_subtree/flee_target,
 	)
