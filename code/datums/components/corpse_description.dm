@@ -26,7 +26,7 @@
 	SIGNAL_HANDLER
 	if (corpse.stat != DEAD || !description_text)
 		return // Why the hell you put this on them then
-	if (naive_description && HAS_TRAIT(corpse_inspector, TRAIT_NAIVE))
+	if (naive_description && HAS_MIND_TRAIT(corpse_inspector, TRAIT_NAIVE))
 		examine_list += span_notice(naive_description)
 		return
 	examine_list += span_notice(description_text)
