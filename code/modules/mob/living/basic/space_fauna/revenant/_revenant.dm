@@ -394,7 +394,7 @@
 		return FALSE
 
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
-		balloon_alert("blocked by salt!")
+		balloon_alert(src, "blocked by salt!")
 		reveal(2 SECONDS)
 		temporary_freeze(2 SECONDS)
 		return FALSE
