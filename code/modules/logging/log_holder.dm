@@ -206,13 +206,26 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	return category_tree
 
+#define UPDATE_NEW_CATEGORY_INSTANCE_FROM_OLD_IF_NEEDED(instance_ident, log_error) \
+	if(##instance_ident.category in log_categories) { \
+		var/datum/log_category/sacrifical_pawn = log_categories[##instance_ident.category]; \
+		##instance_ident.entry_count = sacrifical_pawn.entry_count; \
+		##instance_ident.entries = sacrifical_pawn.entries; \
+		if(UNLINT(log_error)) { \
+			Log(LOG_CATEGORY_INTERNAL_ERROR, "re-initializing a log category that has already been initialized.", list("category" = ##instance_ident.category)); \
+		} \
+	}
+
 /// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
 	var/datum/log_category/category_instance = new category_type
+	UPDATE_NEW_CATEGORY_INSTANCE_FROM_OLD_IF_NEEDED(category_instance, TRUE)
 
 	var/list/contained_categories = list()
 	for(var/datum/log_category/sub_category as anything in sub_categories)
 		sub_category = new sub_category
+		UPDATE_NEW_CATEGORY_INSTANCE_FROM_OLD_IF_NEEDED(sub_category, FALSE)
+
 		var/sub_category_actual = sub_category.category
 		sub_category.master_category = category_instance
 		log_categories[sub_category_actual] = sub_category
@@ -239,9 +252,25 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		LOG_HEADER_CATEGORY = category_instance.category,
 	)
 
-	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))
+	var/target_file = category_instance.get_output_file(null)
+	var/target_human_readable_file = category_instance.get_output_file(null, "log")
+
+	var/static/overwite_counter = list()
+	var/overwriting = fexists(target_file)
+	if(overwriting)
+		var/overwrite_count = (overwite_counter[category_instance.category] || 0) + 1
+		overwite_counter[category_instance.category] = overwrite_count
+		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, target_file)
+		fcopy(target_file, "[target_file].[overwrite_count]")
+		if(human_readable_enabled)
+			rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, target_human_readable_file)
+			fcopy(target_human_readable_file, "[target_human_readable_file].[overwrite_count]")
+
+	rustg_file_write("[json_encode(category_header)]\n", target_file)
 	if(human_readable_enabled)
 		rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", category_instance.get_output_file(null, "log"))
+
+#undef UPDATE_NEW_CATEGORY_INSTANCE_FROM_OLD_IF_NEEDED
 
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
@@ -273,7 +302,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		stack_trace("Logging with a non-text message")
 
 	if(!category)
-		category = LOG_CATEGORY_NOT_FOUND
+		category = LOG_CATEGORY_INTERAL_CATEGORY_NOT_FOUND
 		stack_trace("Logging with a null or empty category")
 
 	if(data && !islist(data))
@@ -289,7 +318,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	var/datum/log_category/log_category = log_categories[category]
 	if(!log_category)
-		Log(LOG_CATEGORY_NOT_FOUND, message, data)
+		Log(LOG_CATEGORY_INTERAL_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
 
 	var/list/semver_store = null
