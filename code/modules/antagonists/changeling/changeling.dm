@@ -1047,9 +1047,6 @@
 
 /datum/outfit/changeling_space
 	name = "Changeling (Space)"
-
-	head = /obj/item/clothing/head/helmet/space
-	suit = /obj/item/clothing/suit/space
 	l_hand = /obj/item/melee/arm_blade
 
 #undef FORMAT_CHEM_CHARGES_TEXT
