@@ -28,7 +28,7 @@
 		return FALSE // no op
 	// Check if our parent behaviour agrees we can attack this target (we ignore faction by default)
 	var/can_attack = ..()
-	if(can_attack && living_mob.is_holding_item_of_type(object_type_path))
+	if(can_attack && target.is_holding_item_of_type(object_type_path))
 		return TRUE // they have the item
 	// No valid target
 	return FALSE
