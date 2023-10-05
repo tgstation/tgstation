@@ -32,7 +32,7 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/dog_harassment,
 		// Find targets to run away from (uses the targetting datum from above)
-		/datum/ai_planning_subtree/simple_find_target
+		/datum/ai_planning_subtree/simple_find_target,
 		// Flee from that target
 		/datum/ai_planning_subtree/flee_target,
 	)
