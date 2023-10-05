@@ -40,5 +40,5 @@
 	cast_on.adjust_silence(moon_smile_duration SECONDS)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 	//Lowers sanity
-	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 10)
+	cast_on.mob_mood.set_sanity(cast_on.mob_mood.sanity - 10)
 	return TRUE

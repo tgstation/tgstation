@@ -17,27 +17,7 @@
 
 	aoe_radius = 4
 
-// Before the cast, we do some small AOE damage around the caster
-/datum/action/cooldown/spell/aoe/wave_of_desperation/before_cast(mob/living/carbon/cast_on)
-	. = ..()
-	if(. & SPELL_CANCEL_CAST)
-		return
-
-	if(cast_on.handcuffed)
-		cast_on.visible_message(span_danger("[cast_on.handcuffed] on [cast_on] shatter!"))
-		QDEL_NULL(cast_on.handcuffed)
-	if(cast_on.legcuffed)
-		cast_on.visible_message(span_danger("[cast_on.legcuffed] on [cast_on] shatters!"))
-		QDEL_NULL(cast_on.legcuffed)
-
-	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)
-	new /obj/effect/temp_visual/knockblast(get_turf(cast_on))
-
-	for(var/mob/living/victim in get_things_to_cast_on(cast_on, radius_override = 1))
-		victim.AdjustKnockdown(3 SECONDS)
-		victim.AdjustParalyzed(0.5 SECONDS)
-
-/datum/action/cooldown/spell/aoe/wave_of_desperation/get_things_to_cast_on(atom/center, radius_override)
+/datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	. = list()
 	for(var/atom/nearby in orange(center, radius_override ? radius_override : aoe_radius))
 		if(nearby == owner || nearby == center || isarea(nearby))
@@ -55,7 +35,7 @@
 
 		. += nearby_mob
 
-/datum/action/cooldown/spell/aoe/wave_of_desperation/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(atom/victim, atom/caster)
 	if(!ismob(victim))
 		SEND_SIGNAL(owner, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim)
 
