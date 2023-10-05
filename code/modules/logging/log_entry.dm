@@ -111,7 +111,8 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		logger.init_log_category(logger.log_categories[category]?.type); \
 		call(src, UNLINT(__PROC__))(arglist(args)); \
 		return; \
-	}
+	}; \
+	in_error_recovery = FALSE;
 
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
