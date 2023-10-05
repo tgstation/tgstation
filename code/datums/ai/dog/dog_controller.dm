@@ -18,6 +18,8 @@
 /datum/ai_controller/basic_controller/dog/corgi
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
+		// IF you dont have this fleeing behavviour will just refuse to work, isn't that funny ha ha
+		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 		// Find nearby mobs with tongs in hand.
