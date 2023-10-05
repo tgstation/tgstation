@@ -168,6 +168,10 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
+// Shuttle rotation fucks with our position, we just want to stick with our guy
+/obj/effect/watcher_orbiter/shuttleRotate(rotation, params)
+	return
+
 /obj/effect/watcher_orbiter/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(tracker)
@@ -243,6 +247,7 @@
 	SIGNAL_HANDLER
 	visible_message(span_notice("[src] chirps happily as [parent] suddenly gasps for breath!"))
 	fire_delay *= on_death_multiplier
+
 
 /// Beam fired by a baby watcher, doesn't actually do less damage than its parent
 /obj/projectile/baby_watcher_blast
