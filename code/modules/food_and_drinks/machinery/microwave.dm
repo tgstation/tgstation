@@ -31,7 +31,10 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
-	var/wire_disabled = FALSE // is its internal wire cut?
+	/// Is its function wire cut?
+	var/wire_disabled = FALSE
+	/// Wire cut to run mode backwards
+	var/wire_mode_swap = FALSE
 	var/operating = FALSE
 	/// How dirty is it?
 	var/dirty = 0
@@ -452,10 +455,8 @@
 		if(!length(ingredients))
 			balloon_alert(user, "it's empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(vampire_charging_enabled)
-			charge(user)
-		else
-			cook(user)
+
+		start_cycle(user)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -506,9 +507,11 @@
 		if("eject")
 			eject()
 		if("cook")
-			cook(user)
+			vampire_charging_enabled = FALSE
+			start_cycle(user)
 		if("charge")
-			charge(user)
+			vampire_charging_enabled = TRUE
+			start_cycle(user)
 		if("examine")
 			examine(user)
 
@@ -517,6 +520,19 @@
 	for(var/atom/movable/movable_ingredient as anything in ingredients)
 		movable_ingredient.forceMove(drop_loc)
 	open(autoclose = 1.4 SECONDS)
+
+/obj/machinery/microwave/proc/start_cycle(mob/user)
+	if(wire_mode_swap)
+		spark()
+		if(vampire_charging_enabled)
+			cook(user)
+		else
+			charge(user)
+
+	else if(vampire_charging_enabled)
+		charge(user)
+	else
+		cook(user)
 
 /**
  * Begins the process of cooking the included ingredients.
