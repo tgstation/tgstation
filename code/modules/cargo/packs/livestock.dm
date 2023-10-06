@@ -140,7 +140,7 @@
 	name = "Goat Crate"
 	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	contains = list(/mob/living/basic/goat)
 	crate_name = "goat crate"
 
 /datum/supply_pack/critter/rabbit

@@ -607,7 +607,7 @@
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			holder_animal.gib()
+			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()
 	return ..()
 

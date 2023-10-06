@@ -18358,9 +18358,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
+/mob/living/basic/goat/pete,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/service/kitchen/coldroom)
 "fvn" = (

@@ -336,7 +336,7 @@
 	if(owner)
 		shake_camera(owner, 2, 5)
 		owner.investigate_log("has been gibbed by something inside [owner.p_their()] stomach.", INVESTIGATE_DEATHS)
-		owner.gib()
+		owner.gib(DROP_ALL_REMAINS)
 	qdel(src)
 
 /obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)

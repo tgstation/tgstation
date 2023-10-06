@@ -162,7 +162,6 @@
 		/mob/living/simple_animal/hostile/pirate/ranged,
 		/mob/living/simple_animal/hostile/pirate/ranged/space,
 		/mob/living/simple_animal/hostile/retaliate,
-		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 		/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,

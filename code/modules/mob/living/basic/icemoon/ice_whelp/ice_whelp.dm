@@ -87,5 +87,5 @@
 	balloon_alert(src, "devouring...")
 	if(!do_after(src, 5 SECONDS, target))
 		return
-	target.gib()
+	target.gib(DROP_ALL_REMAINS)
 	adjustBruteLoss(-1 * heal_on_cannibalize)

@@ -733,6 +733,6 @@
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
 	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
 		selected_atoms -= sacrifice
-		sacrifice.gib()
+		sacrifice.gib(DROP_ALL_REMAINS)
 
 	return ..()

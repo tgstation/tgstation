@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Fish analyzers can now be used to perform fish scanning experiments."
+  - balance: "They can now be singularly bought as a goodie pack for 125 cr each, instead of a crate of three for 500 cr."
