@@ -288,7 +288,7 @@
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/stalker
+	mob_to_summon = /mob/living/basic/heretic_summon/stalker
 	cost = 1
 	route = PATH_FLESH
 

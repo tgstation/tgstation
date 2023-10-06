@@ -19,7 +19,8 @@
 		return
 
 	controller.clear_blackboard_key(target_key)
-	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
+
+	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
 
 	for(var/HM in typecache_filter_list(range(vision_range, living_mob), hostile_machines)) //Can we see any hostile machines?
 		if(can_see(living_mob, HM, vision_range))

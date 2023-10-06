@@ -51,8 +51,30 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
-	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
-	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+	"aliens" = typecacheof(list(
+		/mob/living/carbon/alien,
+		/mob/living/simple_animal/slime,
+	)),
+	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
+	"birds" = typecacheof(list(
+		/mob/living/basic/chick,
+		/mob/living/basic/chicken,
+		/mob/living/basic/pet/penguin,
+		/mob/living/simple_animal/parrot,
+	)),
+	"conspiracies" = typecacheof(list(
+		/mob/living/simple_animal/bot/secbot,
+		/mob/living/simple_animal/drone,
+		/mob/living/basic/pet/penguin,
+	)),
+	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
+	"heresy" = typecacheof(list(
+		/mob/living/basic/heretic_summon,
+	)),
+	"insects" = typecacheof(list(
+		/mob/living/basic/cockroach,
+		/mob/living/basic/bee,
+	)),
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 	"robots" = typecacheof(list(
@@ -74,7 +96,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
