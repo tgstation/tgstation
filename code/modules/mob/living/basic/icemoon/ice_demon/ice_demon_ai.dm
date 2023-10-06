@@ -14,8 +14,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon,
-		/datum/ai_planning_subtree/teleport_away_from_target,
 		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
+		/datum/ai_planning_subtree/teleport_away_from_target,
 		/datum/ai_planning_subtree/ranged_skirmish,
 		/datum/ai_planning_subtree/find_and_hunt_target/teleport_destination,
 		/datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages,
@@ -25,50 +25,8 @@
 /datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon
 	maximum_distance = 7
 
-
-/datum/ai_planning_subtree/teleport_away_from_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		return
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/distance_from_target = get_dist(target, controller.pawn)
-	if(distance_from_target >= controller.blackboard[BB_MINIMUM_DISTANCE_RANGE])
-		controller.clear_blackboard_key(BB_ESCAPE_DESTINATION)
-		return
-	var/datum/action/cooldown/ability = controller.blackboard[BB_DEMON_TELEPORT_ABILITY]
-	if(!ability?.IsAvailable())
-		return
-	if(controller.blackboard_key_exists(BB_ESCAPE_DESTINATION))
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target, BB_DEMON_TELEPORT_ABILITY, BB_ESCAPE_DESTINATION)
-		return
-	controller.queue_behavior(/datum/ai_behavior/find_furthest_turf_from_target, BB_BASIC_MOB_CURRENT_TARGET, BB_ESCAPE_DESTINATION, controller.blackboard[BB_MINIMUM_DISTANCE_RANGE])
-
-///find furtherst turf target so we may teleport to it
-/datum/ai_behavior/find_furthest_turf_from_target
-
-/datum/ai_behavior/find_furthest_turf_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, set_key, range)
-	var/mob/living/living_target = controller.blackboard[target_key]
-	if(QDELETED(living_target))
-		return
-
-	var/distance = 0
-	var/turf/chosen_turf
-	for(var/turf/open/potential_destination in oview(living_target, range))
-		if(potential_destination.is_blocked_turf())
-			continue
-		var/new_distance_to_target = get_dist(potential_destination, living_target)
-		if(new_distance_to_target > distance)
-			chosen_turf = potential_destination
-			distance = new_distance_to_target
-		if(distance == range)
-			break //we have already found the max distance
-
-	if(isnull(chosen_turf))
-		finish_action(controller, FALSE)
-		return
-
-	controller.set_blackboard_key(set_key, chosen_turf)
-	finish_action(controller, TRUE)
-
+/datum/ai_planning_subtree/teleport_away_from_target
+	ability_key = BB_DEMON_TELEPORT_ABILITY
 
 /datum/ai_planning_subtree/find_and_hunt_target/teleport_destination
 	target_key = BB_TELEPORT_DESTINATION
@@ -97,7 +55,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	for(var/turf/open/potential_turf in oview(target, hunt_range)) //we check for turfs around the target
+	for(var/turf/open/potential_turf in oview(hunt_range, target)) //we check for turfs around the target
 		if(potential_turf.is_blocked_turf())
 			continue
 		if(!can_see(target, potential_turf, hunt_range))

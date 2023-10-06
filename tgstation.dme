@@ -835,6 +835,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\stare_at_thing.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\target_retaliate.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\targeted_mob_ability.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\teleport_away_from_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\tipped_subtree.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\travel_to_point.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\use_mob_ability.dm"

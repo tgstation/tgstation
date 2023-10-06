@@ -100,7 +100,7 @@
 	var/required_distance = minimum_distance - get_dist(controller.pawn, target) //the distance we need to move
 	var/distance = 0
 	var/turf/chosen_turf
-	for(var/turf/open/potential_turf in oview(controller.pawn, required_distance))
+	for(var/turf/open/potential_turf in oview(required_distance, controller.pawn))
 		var/new_distance_from_target = get_dist(potential_turf, target)
 		if(potential_turf.is_blocked_turf())
 			continue
