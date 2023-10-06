@@ -243,9 +243,6 @@
 	initial_caliber = CALIBER_REBAR_SYNDIE
 	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
 	alternative_ammo_misfires = FALSE
-	bolt_wording = "bowstring"
-	magazine_wording = "rod"
-	cartridge_wording = "rod"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	fire_sound = 'sound/items/syringeproj.ogg'
 
