@@ -66,8 +66,8 @@
 	b1 = GETBLUEPART(default_color)
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
-	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	refresh_light_color(new_ethereal)
@@ -82,11 +82,13 @@
 			limb.update_limb(is_creating = TRUE)
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/former_ethereal, datum/species/new_species, pref_load)
-	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_HIT_BY_SABOTEUR)
-	UnregisterSignal(former_ethereal, COMSIG_LIVING_HEALTH_UPDATE)
+	UnregisterSignal(former_ethereal, list(
+		COMSIG_ATOM_EMAG_ACT,
+		COMSIG_ATOM_EMP_ACT,
+		COMSIG_HIT_BY_SABOTEUR,
+		COMSIG_LIGHT_EATER_ACT,
+		COMSIG_LIVING_HEALTH_UPDATE,
+	))
 	QDEL_NULL(ethereal_light)
 	return ..()
 
