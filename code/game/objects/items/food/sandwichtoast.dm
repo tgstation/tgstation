@@ -302,5 +302,5 @@
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
 	qdel(src)
-	user.gib(TRUE, TRUE, TRUE)
+	user.gib()
 	return MANUAL_SUICIDE

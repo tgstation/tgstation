@@ -53,7 +53,7 @@ among other potential differences. This granularity is helpful for things like t
 		if(random_crit_gib)
 			var/mob/living/gibbed_dude = target
 			new /obj/effect/temp_visual/crit(get_turf(gibbed_dude))
-			gibbed_dude.gib()
+			gibbed_dude.gib(DROP_ALL_REMAINS)
 
 /// PM9 HEAP rocket - the anti-anything missile you always craved.
 /obj/projectile/bullet/rocket/heap

@@ -67,8 +67,9 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
-	baked_result.reagents.clear_reagents()
-	original_object.reagents?.trans_to(baked_result, original_object.reagents.total_volume)
+	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
+		baked_result.reagents.clear_reagents()
+		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
