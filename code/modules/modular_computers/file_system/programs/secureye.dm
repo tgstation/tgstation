@@ -100,18 +100,19 @@
 
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
+			ref = REF(active_camera),
 			status = active_camera.status,
 		)
 	return data
 
 /datum/computer_file/program/secureye/ui_static_data(mob/user)
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["can_spy"] = !!spying
 	var/list/cameras = get_camera_list(network)
@@ -120,6 +121,7 @@
 		var/obj/machinery/camera/C = cameras[i]
 		data["cameras"] += list(list(
 			name = C.c_tag,
+			ref = REF(C),
 		))
 
 	return data
@@ -130,13 +132,14 @@
 		return
 	switch(action)
 		if("switch_camera")
-			var/c_tag = format_text(params["name"])
-			var/list/cameras = get_camera_list(network)
-			var/obj/machinery/camera/selected_camera = cameras[c_tag]
-			camera_ref = WEAKREF(selected_camera)
+			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+			if(selected_camera)
+				camera_ref = WEAKREF(selected_camera)
+			else
+				camera_ref = null
 			if(!spying)
 				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-			if(!selected_camera)
+			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker && internal_tracker.tracking)
 				internal_tracker.set_tracking(FALSE)

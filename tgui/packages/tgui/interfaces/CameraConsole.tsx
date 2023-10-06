@@ -16,6 +16,7 @@ type Data = {
 
 type Camera = {
   name: string;
+  ref: string;
 };
 
 /**
@@ -29,10 +30,8 @@ const prevNextCamera = (
   if (!activeCamera) {
     return [];
   }
-  const index = cameras.findIndex(
-    (camera) => camera?.name === activeCamera.name
-  );
-  return [cameras[index - 1]?.name, cameras[index + 1]?.name];
+  const index = cameras.findIndex((camera) => camera?.ref === activeCamera.ref);
+  return [cameras[index - 1]?.ref, cameras[index + 1]?.ref];
 };
 
 /**
@@ -41,15 +40,15 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
+  const testSearch = createSearch(searchText, (camera: Camera) => camera.ref);
 
   return flow([
     // Null camera filter
-    filter((camera: Camera) => !!camera?.name),
+    filter((camera: Camera) => !!camera?.ref),
     // Optional search term
     searchText && filter(testSearch),
     // Slightly expensive, but way better than sorting in BYOND
-    sortBy((camera: Camera) => camera.name),
+    sortBy((camera: Camera) => camera),
   ])(cameras);
 };
 
@@ -99,7 +98,7 @@ const CameraSelector = (props, context) => {
             // We're not using the component here because performance
             // would be absolutely abysmal (50+ ms for each re-render).
             <div
-              key={camera.name}
+              key={camera.ref}
               title={camera.name}
               className={classes([
                 'candystripe',
@@ -108,12 +107,12 @@ const CameraSelector = (props, context) => {
                 'Button--color--transparent',
                 'Button--ellipsis',
                 activeCamera &&
-                  camera.name === activeCamera.name &&
+                  camera.ref === activeCamera.ref &&
                   'Button--selected',
               ])}
               onClick={() =>
                 act('switch_camera', {
-                  name: camera.name,
+                  camera: camera.ref,
                 })
               }>
               {camera.name}
@@ -130,10 +129,7 @@ const CameraControls = (props, context) => {
   const { activeCamera, can_spy, mapRef } = data;
   const cameras = selectCameras(data.cameras);
 
-  const [prevCameraName, nextCameraName] = prevNextCamera(
-    cameras,
-    activeCamera
-  );
+  const [prevCamera, nextCamera] = prevNextCamera(cameras, activeCamera);
 
   return (
     <Section fill>
@@ -161,10 +157,10 @@ const CameraControls = (props, context) => {
             <Stack.Item>
               <Button
                 icon="chevron-left"
-                disabled={!prevCameraName}
+                disabled={!prevCamera}
                 onClick={() =>
                   act('switch_camera', {
-                    name: prevCameraName,
+                    camera: prevCamera,
                   })
                 }
               />
@@ -173,10 +169,10 @@ const CameraControls = (props, context) => {
             <Stack.Item>
               <Button
                 icon="chevron-right"
-                disabled={!nextCameraName}
+                disabled={!nextCamera}
                 onClick={() =>
                   act('switch_camera', {
-                    name: nextCameraName,
+                    camera: nextCamera,
                   })
                 }
               />
