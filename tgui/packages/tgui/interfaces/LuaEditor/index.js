@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack, ProgressBar } from '../../components';
+import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack, ProgressBar, NoticeBox } from '../../components';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
@@ -72,7 +72,35 @@ export class LuaEditor extends Component {
       showGlobalTable,
       page,
       pageCount,
+      auxtools_enabled,
+      ss_lua_init,
     } = data;
+
+    if (!auxtools_enabled) {
+      return (
+        <Window>
+          <Window.Content>
+            <NoticeBox danger>
+              Auxtools is not enabled. Please ask your server administrator to
+              enable it in the server configuration.
+            </NoticeBox>
+          </Window.Content>
+        </Window>
+      );
+    }
+
+    if (!ss_lua_init) {
+      return (
+        <Window>
+          <Window.Content>
+            <NoticeBox danger>
+              The Lua subsystem is not initialized. Consult your server logs.
+            </NoticeBox>
+          </Window.Content>
+        </Window>
+      );
+    }
+
     const [modal, setModal] = useLocalState(
       this.context,
       'modal',

@@ -11,6 +11,11 @@
 #define SMOOTH_QUEUED (1<<4)
 /// Smooths with objects, and will thus need to scan turfs for contents.
 #define SMOOTH_OBJ (1<<5)
+/// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
+/// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in
+/// it represents the sides of our directional border object that have a neighbor
+/// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
+#define SMOOTH_BORDER_OBJECT (1<<6)
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
@@ -19,8 +24,30 @@ DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
 	"SMOOTH_OBJ" = SMOOTH_OBJ,
+	"SMOOTH_BORDER_OBJECT" = SMOOTH_BORDER_OBJECT,
 ))
 
+/// Components of a smoothing junction
+/// Redefinitions of the diagonal directions so they can be stored in one var without conflicts
+#define NORTH_JUNCTION NORTH //(1<<0)
+#define SOUTH_JUNCTION SOUTH //(1<<1)
+#define EAST_JUNCTION EAST  //(1<<2)
+#define WEST_JUNCTION WEST  //(1<<3)
+#define NORTHEAST_JUNCTION (1<<4)
+#define SOUTHEAST_JUNCTION (1<<5)
+#define SOUTHWEST_JUNCTION (1<<6)
+#define NORTHWEST_JUNCTION (1<<7)
+
+DEFINE_BITFIELD(smoothing_junction, list(
+	"NORTH_JUNCTION" = NORTH_JUNCTION,
+	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
+	"EAST_JUNCTION" = EAST_JUNCTION,
+	"WEST_JUNCTION" = WEST_JUNCTION,
+	"NORTHEAST_JUNCTION" = NORTHEAST_JUNCTION,
+	"SOUTHEAST_JUNCTION" = SOUTHEAST_JUNCTION,
+	"SOUTHWEST_JUNCTION" = SOUTHWEST_JUNCTION,
+	"NORTHWEST_JUNCTION" = NORTHWEST_JUNCTION,
+))
 
 /*smoothing macros*/
 
@@ -102,6 +129,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(57) ///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
 
 #define MAX_S_TURF 59 //Always match this value with the one above it.
 
@@ -132,6 +160,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(23) ///obj/structure/window/bronze/fulltile
 #define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
 #define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
+
+#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/window/reinforced/tram
 
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk

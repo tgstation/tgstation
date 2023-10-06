@@ -5,7 +5,7 @@
 	icon_state = "sleeper"
 	base_icon_state = "sleeper"
 	density = FALSE
-	obj_flags = NO_BUILD
+	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 
@@ -70,8 +70,8 @@
 	min_health = initial(min_health) * matterbin_rating
 
 	available_chems.Cut()
-	for(var/datum/stock_part/manipulator/manipulators in component_parts)
-		for(var/i in 1 to manipulators.tier)
+	for(var/datum/stock_part/servo/servos in component_parts)
+		for(var/i in 1 to servos.tier)
 			available_chems |= possible_chems[i]
 
 	reset_chem_buttons()
@@ -94,12 +94,12 @@
 	if (!state_open)
 		container_resist_act(user)
 
-/obj/machinery/sleeper/open_machine()
+/obj/machinery/sleeper/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 	return ..()
 
-/obj/machinery/sleeper/close_machine(mob/user)
+/obj/machinery/sleeper/close_machine(mob/user, density_to_set = TRUE)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 		..()
@@ -226,7 +226,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
+		data["occupant"]["brainLoss"] = mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -266,16 +266,17 @@
 				if((obj_flags & EMAGGED) && prob(5))
 					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
 
-/obj/machinery/sleeper/emag_act(mob/user)
+/obj/machinery/sleeper/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
-	to_chat(user, span_warning("You scramble the sleeper's user interface!"))
+	balloon_alert(user, "interface scrambled")
 	obj_flags |= EMAGGED
 
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+	return TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))

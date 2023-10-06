@@ -37,10 +37,10 @@
 /datum/component/bakeable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_OVEN_PLACED_IN, PROC_REF(on_baking_start))
 	RegisterSignal(parent, COMSIG_ITEM_OVEN_PROCESS, PROC_REF(on_bake))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/bakeable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_ATOM_EXAMINE))
 
 /// Signal proc for [COMSIG_ITEM_OVEN_PLACED_IN] when baking starts (parent enters an oven)
 /datum/component/bakeable/proc/on_baking_start(datum/source, atom/used_oven, mob/baker)
@@ -50,13 +50,13 @@
 		who_baked_us = REF(baker.mind)
 
 ///Ran every time an item is baked by something
-/datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, delta_time = 1)
+/datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, seconds_per_tick = 1)
 	SIGNAL_HANDLER
 
 	// Let our signal know if we're baking something good or ... burning something
 	var/baking_result = positive_result ? COMPONENT_BAKING_GOOD_RESULT : COMPONENT_BAKING_BAD_RESULT
 
-	current_bake_time += delta_time * 10 //turn it into ds
+	current_bake_time += seconds_per_tick * 10 //turn it into ds
 	if(current_bake_time >= required_bake_time)
 		finish_baking(used_oven)
 
@@ -67,6 +67,9 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
+	if(baked_result.reagents) //make space and tranfer reagents if it has any
+		baked_result.reagents.clear_reagents()
+		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
@@ -92,7 +95,10 @@
 
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>baked</b> into \a [initial(bake_result.name)].")
+			if(initial(bake_result.gender) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
 		return
 
 	if(positive_result)
@@ -101,4 +107,4 @@
 		else if(current_bake_time <= required_bake_time)
 			examine_list += span_notice("[parent] seems to be almost finished baking!")
 	else
-		examine_list += span_danger("[parent] should probably not be baked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put in the oven.")

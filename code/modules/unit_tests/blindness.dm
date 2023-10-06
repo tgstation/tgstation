@@ -105,42 +105,42 @@
 
 /datum/unit_test/eye_damage/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/organ/internal/eyes/eyes = dummy.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = dummy.get_organ_slot(ORGAN_SLOT_EYES)
 	TEST_ASSERT_NOTNULL(eyes, "Eye damage unit test spawned a dummy without eyes!")
 
 	// Test blindness due to eye damage
 	// Cause critical eye damage
 	var/critical_damage = eyes.maxHealth
-	eyes.setOrganDamage(critical_damage) // ~50 damage
+	eyes.set_organ_damage(critical_damage) // ~50 damage
 	TEST_ASSERT(dummy.is_blind(), "After sustaining critical eye damage ([critical_damage]), the dummy was not blind.")
 	// Heal eye damage
-	eyes.setOrganDamage(0)
+	eyes.set_organ_damage(0)
 	TEST_ASSERT(!dummy.is_blind(), "After healing from critical eye damage, the dummy was not unblinded.")
 
 	// Test nearsightedness due to eye damage
 	var/datum/status_effect/grouped/nearsighted/nearsightedness
 	// Cause minor eye damage
 	var/minor_damage = eyes.maxHealth * 0.5
-	eyes.applyOrganDamage(minor_damage) //~25 ddamage
+	eyes.apply_organ_damage(minor_damage) //~25 ddamage
 	TEST_ASSERT(dummy.is_nearsighted(), "After sustaining minor eye damage ([minor_damage]), the dummy was not nearsighted.")
 	// Check that the severity is correct
 	nearsightedness = dummy.is_nearsighted()
 	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 1, "After taking minor eye damage, the dummy's nearsightedness was the incorrect severity.")
 	nearsightedness = null
 	// Heal eye damage
-	eyes.setOrganDamage(0)
+	eyes.set_organ_damage(0)
 	TEST_ASSERT(!dummy.is_nearsighted(), "After curing eye damage, the dummy was still nearsighted.")
 
 	// Cause major eye damage
 	var/major_damage = eyes.maxHealth * 0.7
-	eyes.applyOrganDamage(major_damage) //~35 damage
+	eyes.apply_organ_damage(major_damage) //~35 damage
 	TEST_ASSERT(dummy.is_nearsighted(), "After sustaining major eye damage ([major_damage]), the dummy was not nearsighted.")
 	// Check that the severity is correct
 	nearsightedness = dummy.is_nearsighted()
 	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 2, "After taking major eye damage, the dummy's nearsightedness was the incorrect severity.")
 	nearsightedness = null
 	// Heal eye damage
-	eyes.setOrganDamage(0)
+	eyes.set_organ_damage(0)
 	TEST_ASSERT(!dummy.is_nearsighted(), "After curing eye damage, the dummy was still nearsighted.")
 
 #undef HAS_SCREEN_OVERLAY

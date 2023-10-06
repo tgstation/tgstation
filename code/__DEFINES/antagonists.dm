@@ -7,6 +7,8 @@
 #define NUKE_RESULT_NOSURVIVORS 6
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
+#define NUKE_RESULT_HIJACK_DISK 9
+#define NUKE_RESULT_HIJACK_NO_DISK 10
 
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
@@ -77,6 +79,8 @@
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
+#define PATH_COSMIC "Cosmic Path"
+#define PATH_KNOCK "Knock Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -199,6 +203,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 #define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
 
+/// Checks if the given mob is a traitor
+#define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
+
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
@@ -310,6 +317,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
 #define ANTAG_GROUP_BIOHAZARDS "Biohazards"
 #define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
+#define ANTAG_GROUP_CYBERAUTH "Cyber Authority"
 #define ANTAG_GROUP_ERT "Emergency Response Team"
 #define ANTAG_GROUP_HORRORS "Eldritch Horrors"
 #define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
@@ -319,3 +327,45 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+#define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
+#define ANTAG_GROUP_HUNTERS "Bounty Hunters"
+#define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
+
+
+// This flag disables certain checks that presume antagonist datums mean 'baddie'.
+#define FLAG_FAKE_ANTAG (1 << 0)
+
+#define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
+#define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
+#define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
+#define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+
+/// Changeling abilities with DNA cost = this are innately given to all changelings
+#define CHANGELING_POWER_INNATE -1
+/// Changeling abilities with DNA cost = this are not obtainable by changelings - either used for secret unlockable or abstract abilities
+#define CHANGELING_POWER_UNOBTAINABLE -2
+
+/// For changelings, this is how many recent say lines are retained when absorbing a mob
+#define LING_ABSORB_RECENT_SPEECH 8
+
+// Various abductor equipment modes.
+
+#define VEST_STEALTH 1
+#define VEST_COMBAT 2
+
+#define GIZMO_SCAN 1
+#define GIZMO_MARK 2
+
+#define MIND_DEVICE_MESSAGE 1
+#define MIND_DEVICE_CONTROL 2
+
+#define TOOLSET_MEDICAL 1
+#define TOOLSET_HACKING 2
+
+#define BATON_STUN 0
+#define BATON_SLEEP 1
+#define BATON_CUFF 2
+#define BATON_PROBE 3
+#define BATON_MODES 4
+
+#define FREEDOM_IMPLANT_CHARGES 4

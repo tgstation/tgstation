@@ -36,7 +36,6 @@
 	seed = /obj/item/seeds/nettle
 	name = "\improper nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "nettle"
 	inhand_icon_state = "nettle"
 	bite_consumption_mod = 2

@@ -1,27 +1,27 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/effect/spawner/random/medical/memeorgans,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table,
 /obj/effect/spawner/random/medical/surgery_tool,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)
 "p" = (
@@ -33,11 +33,11 @@
 /area/station/maintenance/department/medical)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/door/window/left/directional/east{
 	req_access = list("medical");
 	name = "Cold Storage"
 	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)
 "v" = (
@@ -54,8 +54,8 @@
 /area/station/maintenance/department/medical)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)
 "N" = (

@@ -24,27 +24,27 @@ If you make a derivative work from this code, you must include this notification
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/proc/check_streak(mob/living/A, mob/living/D)
+/datum/martial_art/wrestling/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)
 		if("drop")
 			streak = ""
-			drop(A,D)
+			drop(attacker, defender)
 			return TRUE
 		if("strike")
 			streak = ""
-			strike(A,D)
+			strike(attacker, defender)
 			return TRUE
 		if("kick")
 			streak = ""
-			kick(A,D)
+			kick(attacker, defender)
 			return TRUE
 		if("throw")
 			streak = ""
-			throw_wrassle(A,D)
+			throw_wrassle(attacker, defender)
 			return TRUE
 		if("slam")
 			streak = ""
-			slam(A,D)
+			slam(attacker, defender)
 			return TRUE
 	return FALSE
 
@@ -121,26 +121,26 @@ If you make a derivative work from this code, you must include this notification
 	throw_wrassle.Remove(owner)
 	strike.Remove(owner)
 
-/datum/martial_art/wrestling/harm_act(mob/living/A, mob/living/D)
-	if(check_streak(A,D))
+/datum/martial_art/wrestling/harm_act(mob/living/attacker, mob/living/defender)
+	if(check_streak(attacker, defender))
 		return 1
-	log_combat(A, D, "punched with wrestling")
+	log_combat(attacker, defender, "punched with wrestling")
 	..()
 
-/datum/martial_art/wrestling/proc/throw_wrassle(mob/living/A, mob/living/D)
-	if(!D)
+/datum/martial_art/wrestling/proc/throw_wrassle(mob/living/attacker, mob/living/defender)
+	if(!defender)
 		return
-	if(!A.pulling || A.pulling != D)
-		to_chat(A, span_warning("You need to have [D] in a cinch!"))
+	if(!attacker.pulling || attacker.pulling != defender)
+		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
 		return
-	D.forceMove(A.loc)
-	D.setDir(get_dir(D, A))
+	defender.forceMove(attacker.loc)
+	defender.setDir(get_dir(defender, attacker))
 
-	D.Stun(8 SECONDS)
-	D.visible_message(span_danger("[A] starts spinning around with [D]!"), \
-					span_userdanger("You're spun around by [A]!"), span_hear("You hear aggressive shuffling!"), null, A)
-	to_chat(A, span_danger("You start spinning around with [D]!"))
-	A.emote("scream")
+	defender.Stun(8 SECONDS)
+	defender.visible_message(span_danger("[attacker] starts spinning around with [defender]!"), \
+					span_userdanger("You're spun around by [attacker]!"), span_hear("You hear aggressive shuffling!"), null, attacker)
+	to_chat(attacker, span_danger("You start spinning around with [defender]!"))
+	attacker.emote("scream")
 
 	for (var/i in 1 to 20)
 		var/delay = 5
@@ -156,135 +156,135 @@ If you make a derivative work from this code, you must include this notification
 			if (1 to 5)
 				delay = 3
 
-		if (A && D)
+		if (attacker && defender)
 
-			if (get_dist(A, D) > 1)
-				to_chat(A, span_warning("[D] is too far away!"))
+			if (get_dist(attacker, defender) > 1)
+				to_chat(attacker, span_warning("[defender] is too far away!"))
 				return
 
-			if (!isturf(A.loc) || !isturf(D.loc))
-				to_chat(A, span_warning("You can't throw [D] from here!"))
+			if (!isturf(attacker.loc) || !isturf(defender.loc))
+				to_chat(attacker, span_warning("You can't throw [defender] from here!"))
 				return
 
-			A.setDir(turn(A.dir, 90))
-			var/turf/T = get_step(A, A.dir)
-			var/turf/S = D.loc
-			var/direction = get_dir(D, A)
-			if ((S && isturf(S) && S.Exit(D, direction)) && (T && isturf(T) && T.Enter(A)))
-				D.forceMove(T)
-				D.setDir(direction)
+			attacker.setDir(turn(attacker.dir, 90))
+			var/turf/T = get_step(attacker, attacker.dir)
+			var/turf/S = defender.loc
+			var/direction = get_dir(defender, attacker)
+			if ((S && isturf(S) && S.Exit(defender, direction)) && (T && isturf(T) && T.Enter(attacker)))
+				defender.forceMove(T)
+				defender.setDir(direction)
 		else
 			return
 
 		sleep(delay)
 
-	if (A && D)
+	if (attacker && defender)
 		// These are necessary because of the sleep call.
 
-		if (get_dist(A, D) > 1)
-			to_chat(A, span_warning("[D] is too far away!"))
+		if (get_dist(attacker, defender) > 1)
+			to_chat(attacker, span_warning("[defender] is too far away!"))
 			return
 
-		if (!isturf(A.loc) || !isturf(D.loc))
-			to_chat(A, span_warning("You can't throw [D] from here!"))
+		if (!isturf(attacker.loc) || !isturf(defender.loc))
+			to_chat(attacker, span_warning("You can't throw [defender] from here!"))
 			return
 
-		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
+		defender.forceMove(attacker.loc) // Maybe this will help with the wallthrowing bug.
 
-		D.visible_message(span_danger("[A] throws [D]!"), \
-						span_userdanger("You're thrown by [A]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, A)
-		to_chat(A, span_danger("You throw [D]!"))
-		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		var/turf/T = get_edge_target_turf(A, A.dir)
+		defender.visible_message(span_danger("[attacker] throws [defender]!"), \
+						span_userdanger("You're thrown by [attacker]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, attacker)
+		to_chat(attacker, span_danger("You throw [defender]!"))
+		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
-			if (!D.stat)
-				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF(/mob/living, Paralyze), 20))
-	log_combat(A, D, "has thrown with wrestling")
+			if (!defender.stat)
+				defender.emote("scream")
+			defender.throw_at(T, 10, 4, attacker, TRUE, TRUE, callback = CALLBACK(defender, TYPE_PROC_REF(/mob/living, Paralyze), 20))
+	log_combat(attacker, defender, "has thrown with wrestling")
 	return
 
-/datum/martial_art/wrestling/proc/FlipAnimation(mob/living/D)
+/datum/martial_art/wrestling/proc/FlipAnimation(mob/living/defender)
 	set waitfor = FALSE
-	if (D)
-		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
+	if (defender)
+		animate(defender, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	sleep(1.5 SECONDS)
-	if (D)
-		animate(D, transform = null, time = 1, loop = 0)
+	if (defender)
+		animate(defender, transform = null, time = 1, loop = 0)
 
-/datum/martial_art/wrestling/proc/slam(mob/living/A, mob/living/D)
-	if(!D)
+/datum/martial_art/wrestling/proc/slam(mob/living/attacker, mob/living/defender)
+	if(!defender)
 		return
-	if(!A.pulling || A.pulling != D)
-		to_chat(A, span_warning("You need to have [D] in a cinch!"))
+	if(!attacker.pulling || attacker.pulling != defender)
+		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
 		return
-	D.forceMove(A.loc)
-	A.setDir(get_dir(A, D))
-	D.setDir(get_dir(D, A))
+	defender.forceMove(attacker.loc)
+	attacker.setDir(get_dir(attacker, defender))
+	defender.setDir(get_dir(defender, attacker))
 
-	D.visible_message(span_danger("[A] lifts [D] up!"), \
-					span_userdanger("You're lifted up by [A]!"), span_hear("You hear aggressive shuffling!"), null, A)
-	to_chat(A, span_danger("You lift [D] up!"))
+	defender.visible_message(span_danger("[attacker] lifts [defender] up!"), \
+					span_userdanger("You're lifted up by [attacker]!"), span_hear("You hear aggressive shuffling!"), null, attacker)
+	to_chat(attacker, span_danger("You lift [defender] up!"))
 
 	FlipAnimation()
 
 	for (var/i in 1 to 3)
-		if (A && D)
-			A.pixel_y += 3
-			D.pixel_y += 3
-			A.setDir(turn(A.dir, 90))
-			D.setDir(turn(D.dir, 90))
+		if (attacker && defender)
+			attacker.pixel_y += 3
+			defender.pixel_y += 3
+			attacker.setDir(turn(attacker.dir, 90))
+			defender.setDir(turn(defender.dir, 90))
 
-			switch (A.dir)
+			switch (attacker.dir)
 				if (NORTH)
-					D.pixel_x = A.pixel_x
+					defender.pixel_x = attacker.pixel_x
 				if (SOUTH)
-					D.pixel_x = A.pixel_x
+					defender.pixel_x = attacker.pixel_x
 				if (EAST)
-					D.pixel_x = A.pixel_x - 8
+					defender.pixel_x = attacker.pixel_x - 8
 				if (WEST)
-					D.pixel_x = A.pixel_x + 8
+					defender.pixel_x = attacker.pixel_x + 8
 
-			if (get_dist(A, D) > 1)
-				to_chat(A, span_warning("[D] is too far away!"))
-				A.pixel_x = A.base_pixel_x
-				A.pixel_y = A.base_pixel_y
-				D.pixel_x = D.base_pixel_x
-				D.pixel_y = D.base_pixel_y
+			if (get_dist(attacker, defender) > 1)
+				to_chat(attacker, span_warning("[defender] is too far away!"))
+				attacker.pixel_x = attacker.base_pixel_x
+				attacker.pixel_y = attacker.base_pixel_y
+				defender.pixel_x = defender.base_pixel_x
+				defender.pixel_y = defender.base_pixel_y
 				return
 
-			if (!isturf(A.loc) || !isturf(D.loc))
-				to_chat(A, span_warning("You can't slam [D] here!"))
-				A.pixel_x = A.base_pixel_x
-				A.pixel_y = A.base_pixel_y
-				D.pixel_x = D.base_pixel_x
-				D.pixel_y = D.base_pixel_y
+			if (!isturf(attacker.loc) || !isturf(defender.loc))
+				to_chat(attacker, span_warning("You can't slam [defender] here!"))
+				attacker.pixel_x = attacker.base_pixel_x
+				attacker.pixel_y = attacker.base_pixel_y
+				defender.pixel_x = defender.base_pixel_x
+				defender.pixel_y = defender.base_pixel_y
 				return
 		else
-			if (A)
-				A.pixel_x = A.base_pixel_x
-				A.pixel_y = A.base_pixel_y
-			if (D)
-				D.pixel_x = D.base_pixel_x
-				D.pixel_y = D.base_pixel_y
+			if (attacker)
+				attacker.pixel_x = attacker.base_pixel_x
+				attacker.pixel_y = attacker.base_pixel_y
+			if (defender)
+				defender.pixel_x = defender.base_pixel_x
+				defender.pixel_y = defender.base_pixel_y
 			return
 
 		sleep(0.1 SECONDS)
 
-	if (A && D)
-		A.pixel_x = A.base_pixel_x
-		A.pixel_y = A.base_pixel_y
-		D.pixel_x = D.base_pixel_x
-		D.pixel_y = D.base_pixel_y
+	if (attacker && defender)
+		attacker.pixel_x = attacker.base_pixel_x
+		attacker.pixel_y = attacker.base_pixel_y
+		defender.pixel_x = defender.base_pixel_x
+		defender.pixel_y = defender.base_pixel_y
 
-		if (get_dist(A, D) > 1)
-			to_chat(A, span_warning("[D] is too far away!"))
+		if (get_dist(attacker, defender) > 1)
+			to_chat(attacker, span_warning("[defender] is too far away!"))
 			return
 
-		if (!isturf(A.loc) || !isturf(D.loc))
-			to_chat(A, span_warning("You can't slam [D] here!"))
+		if (!isturf(attacker.loc) || !isturf(defender.loc))
+			to_chat(attacker, span_warning("You can't slam [defender] here!"))
 			return
 
-		D.forceMove(A.loc)
+		defender.forceMove(attacker.loc)
 
 		var/fluff = "body-slam"
 		switch(pick(2,3))
@@ -293,90 +293,90 @@ If you make a derivative work from this code, you must include this notification
 			if (3)
 				fluff = "atomic [fluff]"
 
-		D.visible_message(span_danger("[A] [fluff] [D]!"), \
-						span_userdanger("You're [fluff]ed by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, span_danger("You [fluff] [D]!"))
-		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		if (!D.stat)
-			D.emote("scream")
-			D.Paralyze(4 SECONDS)
+		defender.visible_message(span_danger("[attacker] [fluff] [defender]!"), \
+						span_userdanger("You're [fluff]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		to_chat(attacker, span_danger("You [fluff] [defender]!"))
+		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		if (!defender.stat)
+			defender.emote("scream")
+			defender.Paralyze(4 SECONDS)
 
 			switch(rand(1,3))
 				if (2)
-					D.adjustBruteLoss(rand(20,30))
+					defender.adjustBruteLoss(rand(20,30))
 				if (3)
-					EX_ACT(D, EXPLODE_LIGHT)
+					EX_ACT(defender, EXPLODE_LIGHT)
 				else
-					D.adjustBruteLoss(rand(10,20))
+					defender.adjustBruteLoss(rand(10,20))
 		else
-			EX_ACT(D, EXPLODE_LIGHT)
+			EX_ACT(defender, EXPLODE_LIGHT)
 
 	else
-		if (A)
-			A.pixel_x = A.base_pixel_x
-			A.pixel_y = A.base_pixel_y
-		if (D)
-			D.pixel_x = D.base_pixel_x
-			D.pixel_y = D.base_pixel_y
+		if (attacker)
+			attacker.pixel_x = attacker.base_pixel_x
+			attacker.pixel_y = attacker.base_pixel_y
+		if (defender)
+			defender.pixel_x = defender.base_pixel_x
+			defender.pixel_y = defender.base_pixel_y
 
 
-	log_combat(A, D, "body-slammed")
+	log_combat(attacker, defender, "body-slammed")
 	return
 
-/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/A, turf/T)
-	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
-		A.forceMove(T)
+/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/attacker, turf/T)
+	if (attacker && (T && isturf(T) && get_dist(attacker, T) <= 1))
+		attacker.forceMove(T)
 
-/datum/martial_art/wrestling/proc/strike(mob/living/A, mob/living/D)
-	if(!D)
+/datum/martial_art/wrestling/proc/strike(mob/living/attacker, mob/living/defender)
+	if(!defender)
 		return
-	var/turf/T = get_turf(A)
-	if (T && isturf(T) && D && isturf(D.loc))
+	var/turf/T = get_turf(attacker)
+	if (T && isturf(T) && defender && isturf(defender.loc))
 		for (var/i in 1 to 4)
-			A.setDir(turn(A.dir, 90))
+			attacker.setDir(turn(attacker.dir, 90))
 
-		A.forceMove(D.loc)
-		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), A, T), 4)
+		attacker.forceMove(defender.loc)
+		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 4)
 
-		D.visible_message(span_danger("[A] headbutts [D]!"), \
-						span_userdanger("You're headbutted by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, span_danger("You headbutt [D]!"))
-		D.adjustBruteLoss(rand(10,20))
-		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		D.Unconscious(2 SECONDS)
-	log_combat(A, D, "headbutted")
+		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
+						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		to_chat(attacker, span_danger("You headbutt [defender]!"))
+		defender.adjustBruteLoss(rand(10,20))
+		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		defender.Unconscious(2 SECONDS)
+	log_combat(attacker, defender, "headbutted")
 
-/datum/martial_art/wrestling/proc/kick(mob/living/A, mob/living/D)
-	if(!D)
+/datum/martial_art/wrestling/proc/kick(mob/living/attacker, mob/living/defender)
+	if(!defender)
 		return
-	A.emote("scream")
-	A.emote("flip")
-	A.setDir(turn(A.dir, 90))
+	attacker.emote("scream")
+	attacker.emote("flip")
+	attacker.setDir(turn(attacker.dir, 90))
 
-	D.visible_message(span_danger("[A] roundhouse-kicks [D]!"), \
-					span_userdanger("You're roundhouse-kicked by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-	to_chat(A, span_danger("You roundhouse-kick [D]!"))
-	playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-	D.adjustBruteLoss(rand(10,20))
+	defender.visible_message(span_danger("[attacker] roundhouse-kicks [defender]!"), \
+					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
+	playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+	defender.adjustBruteLoss(rand(10,20))
 
-	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
+	var/turf/T = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 	if (T && isturf(T))
-		D.Paralyze(2 SECONDS)
-		D.throw_at(T, 3, 2)
-	log_combat(A, D, "roundhouse-kicked")
+		defender.Paralyze(2 SECONDS)
+		defender.throw_at(T, 3, 2)
+	log_combat(attacker, defender, "roundhouse-kicked")
 
-/datum/martial_art/wrestling/proc/drop(mob/living/A, mob/living/D)
-	if(!D)
+/datum/martial_art/wrestling/proc/drop(mob/living/attacker, mob/living/defender)
+	if(!defender)
 		return
 	var/obj/surface = null
 	var/turf/ST = null
 	var/falling = 0
 
-	for (var/obj/O in oview(1, A))
+	for (var/obj/O in oview(1, attacker))
 		if (O.density == 1)
-			if (O == A)
+			if (O == attacker)
 				continue
-			if (O == D)
+			if (O == defender)
 				continue
 			if (O.opacity)
 				continue
@@ -386,80 +386,80 @@ If you make a derivative work from this code, you must include this notification
 				break
 
 	if (surface && (ST && isturf(ST)))
-		A.forceMove(ST)
-		A.visible_message(span_danger("[A] climbs onto [surface]!"), \
+		attacker.forceMove(ST)
+		attacker.visible_message(span_danger("[attacker] climbs onto [surface]!"), \
 						span_danger("You climb onto [surface]!"))
-		A.pixel_y = A.base_pixel_y + 10
+		attacker.pixel_y = attacker.base_pixel_y + 10
 		falling = 1
 		sleep(1 SECONDS)
 
-	if (A && D)
+	if (attacker && defender)
 		// These are necessary because of the sleep call.
 
-		if ((falling == 0 && get_dist(A, D) > 1) || (falling == 1 && get_dist(A, D) > 2)) // We climbed onto stuff.
-			A.pixel_y = A.base_pixel_y
+		if ((falling == 0 && get_dist(attacker, defender) > 1) || (falling == 1 && get_dist(attacker, defender) > 2)) // We climbed onto stuff.
+			attacker.pixel_y = attacker.base_pixel_y
 			if (falling == 1)
-				A.visible_message(span_danger("...and dives head-first into the ground, ouch!"), \
+				attacker.visible_message(span_danger("...and dives head-first into the ground, ouch!"), \
 								span_userdanger("...and dive head-first into the ground, ouch!"))
-				A.adjustBruteLoss(rand(10,20))
-				A.Paralyze(60)
-			to_chat(A, span_warning("[D] is too far away!"))
+				attacker.adjustBruteLoss(rand(10,20))
+				attacker.Paralyze(60)
+			to_chat(attacker, span_warning("[defender] is too far away!"))
 			return
 
-		if (!isturf(A.loc) || !isturf(D.loc))
-			A.pixel_y = A.base_pixel_y
-			to_chat(A, span_warning("You can't drop onto [D] from here!"))
+		if (!isturf(attacker.loc) || !isturf(defender.loc))
+			attacker.pixel_y = attacker.base_pixel_y
+			to_chat(attacker, span_warning("You can't drop onto [defender] from here!"))
 			return
 
-		if(A)
-			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
+		if(attacker)
+			animate(attacker, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(1 SECONDS)
-		if(A)
-			animate(A, transform = null, time = 1, loop = 0)
+		if(attacker)
+			animate(attacker, transform = null, time = 1, loop = 0)
 
-		A.forceMove(D.loc)
+		attacker.forceMove(defender.loc)
 
-		D.visible_message(span_danger("[A] leg-drops [D]!"), \
-						span_userdanger("You're leg-dropped by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-		to_chat(A, span_danger("You leg-drop [D]!"))
-		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		A.emote("scream")
+		defender.visible_message(span_danger("[attacker] leg-drops [defender]!"), \
+						span_userdanger("You're leg-dropped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
+		to_chat(attacker, span_danger("You leg-drop [defender]!"))
+		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		attacker.emote("scream")
 
 		if (falling == 1)
-			if (prob(33) || D.stat)
-				EX_ACT(D, EXPLODE_LIGHT)
+			if (prob(33) || defender.stat)
+				EX_ACT(defender, EXPLODE_LIGHT)
 			else
-				D.adjustBruteLoss(rand(20,30))
+				defender.adjustBruteLoss(rand(20,30))
 		else
-			D.adjustBruteLoss(rand(20,30))
+			defender.adjustBruteLoss(rand(20,30))
 
-		D.Paralyze(4 SECONDS)
+		defender.Paralyze(4 SECONDS)
 
-		A.pixel_y = A.base_pixel_y
+		attacker.pixel_y = attacker.base_pixel_y
 
 	else
-		if (A)
-			A.pixel_y = A.base_pixel_y
-	log_combat(A, D, "leg-dropped")
+		if (attacker)
+			attacker.pixel_y = attacker.base_pixel_y
+	log_combat(attacker, defender, "leg-dropped")
 	return
 
-/datum/martial_art/wrestling/disarm_act(mob/living/A, mob/living/D)
-	if(check_streak(A,D))
+/datum/martial_art/wrestling/disarm_act(mob/living/attacker, mob/living/defender)
+	if(check_streak(attacker, defender))
 		return 1
-	log_combat(A, D, "wrestling-disarmed")
+	log_combat(attacker, defender, "wrestling-disarmed")
 	..()
 
-/datum/martial_art/wrestling/grab_act(mob/living/A, mob/living/D)
-	if(check_streak(A,D))
+/datum/martial_art/wrestling/grab_act(mob/living/attacker, mob/living/defender)
+	if(check_streak(attacker, defender))
 		return 1
-	if(A.pulling == D)
+	if(attacker.pulling == defender)
 		return 1
-	A.start_pulling(D)
-	D.visible_message(span_danger("[A] gets [D] in a cinch!"), \
-					span_userdanger("You're put into a cinch by [A]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, A)
-	to_chat(A, span_danger("You get [D] in a cinch!"))
-	D.Stun(rand(6 SECONDS, 10 SECONDS))
-	log_combat(A, D, "cinched")
+	attacker.start_pulling(defender)
+	defender.visible_message(span_danger("[attacker] gets [defender] in a cinch!"), \
+					span_userdanger("You're put into a cinch by [attacker]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, attacker)
+	to_chat(attacker, span_danger("You get [defender] in a cinch!"))
+	defender.Stun(rand(6 SECONDS, 10 SECONDS))
+	log_combat(attacker, defender, "cinched")
 	return 1
 
 /obj/item/storage/belt/champion/wrestling

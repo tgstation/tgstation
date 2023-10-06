@@ -24,10 +24,18 @@
 	caliber = CALIBER_45
 	projectile_type = /obj/projectile/bullet/c45
 
+/obj/item/ammo_casing/c45/spent
+	projectile_type = null
+
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."
 	projectile_type = /obj/projectile/bullet/c45/ap
+
+/obj/item/ammo_casing/c45/hp
+	name = ".45 hollow point bullet casing"
+	desc = "A .45 bullet casing."
+	projectile_type = /obj/projectile/bullet/c45/hp
 
 /obj/item/ammo_casing/c45/inc
 	name = ".45 incendiary bullet casing"

@@ -3,7 +3,7 @@
 /obj/machinery/launchpad
 	name = "bluespace launchpad"
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
@@ -26,8 +26,8 @@
 /obj/machinery/launchpad/RefreshParts()
 	. = ..()
 	var/max_range_multiplier = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		max_range_multiplier += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		max_range_multiplier += servo.tier
 	range = initial(range)
 	range *= max_range_multiplier
 
@@ -77,8 +77,8 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
+				M.set_buffer(src)
+				balloon_alert(user, "saved to multitool buffer")
 				return 1
 
 		if(default_deconstruction_crowbar(I))
@@ -349,7 +349,7 @@
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE
@@ -495,6 +495,11 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
+	if(abs(x_pos.value) > attached_launchpad.range || abs(y_pos.value) > attached_launchpad.range)
+		why_fail.set_output("Out of range!")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	attached_launchpad.set_offset(x_pos.value, y_pos.value)
 
 	if(COMPONENT_TRIGGERED_BY(port, x_pos))
@@ -505,10 +510,6 @@
 		y_pos.set_value(attached_launchpad.y_offset)
 		return
 
-	if(attached_launchpad.range > x_pos || attached_launchpad.range > y_pos)
-		why_fail.set_output("Out of range!")
-		on_fail.set_output(COMPONENT_SIGNAL)
-		return
 
 	var/checks = attached_launchpad.teleport_checks()
 	if(!isnull(checks))

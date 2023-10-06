@@ -13,6 +13,7 @@
 	var/harvesting = FALSE
 	var/warming_up = FALSE
 	var/list/operation_order = list() //Order of wich we harvest limbs.
+	var/output_dir = SOUTH //Direction to drop the limbs in
 	var/allow_clothing = FALSE
 	var/allow_living = FALSE
 
@@ -42,7 +43,7 @@
 	icon_state = base_icon_state
 	return ..()
 
-/obj/machinery/harvester/open_machine(drop = TRUE)
+/obj/machinery/harvester/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(panel_open)
 		return
 	. = ..()
@@ -58,6 +59,12 @@
 
 /obj/machinery/harvester/AltClick(mob/user)
 	. = ..()
+	if(!user.can_perform_action(src))
+		return
+	if(panel_open)
+		output_dir = turn(output_dir, -90)
+		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))
+		return
 	if(!can_interact(user))
 		return
 	if(harvesting || !user || !isliving(user) || state_open)
@@ -91,8 +98,18 @@
 /obj/machinery/harvester/proc/start_harvest()
 	if(!occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
-	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+
+	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(carbon_occupant.stat < UNCONSCIOUS)
+		notify_ghosts(
+			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			source = src,
+			header = "Gruesome!",
+			action = NOTIFY_ORBIT,
+		)
+
+	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("The [name] begins warming up!"))
@@ -104,23 +121,14 @@
 	warming_up = FALSE
 	update_appearance()
 	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
+		end_harvesting(success = FALSE)
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
-		end_harvesting()
+		end_harvesting(success = TRUE)
 		return
-	var/turf/target
-	for(var/adir in list(EAST,NORTH,SOUTH,WEST))
-		var/turf/T = get_step(src,adir)
-		if(!T)
-			continue
-		if(isclosedturf(T))
-			continue
-		target = T
-		break
-	if(!target)
-		target = get_turf(src)
+	var/turf/target = get_step(src, output_dir)
 	for(var/obj/item/bodypart/BP in operation_order) //first we do non-essential limbs
 		BP.drop_limb()
 		C.emote("scream")
@@ -135,12 +143,16 @@
 	use_power(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
-/obj/machinery/harvester/proc/end_harvesting()
+/obj/machinery/harvester/proc/end_harvesting(success = TRUE)
 	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
-	say("Subject has been successfully harvested.")
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	if (!success)
+		say("Protocol interrupted. Aborting harvest.")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	else
+		say("Subject has been successfully harvested.")
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -169,12 +181,14 @@
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 
-/obj/machinery/harvester/emag_act(mob/user)
+/obj/machinery/harvester/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, span_warning("You overload [src]'s lifesign scanners."))
+	allow_clothing = TRUE
+	balloon_alert(!user, "lifesign scanners overloaded")
+	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
@@ -187,6 +201,7 @@
 /obj/machinery/harvester/Exited(atom/movable/gone, direction)
 	if (!state_open && gone == occupant)
 		container_resist_act(gone)
+	return ..()
 
 /obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)
@@ -201,4 +216,4 @@
 	else if(!harvesting)
 		. += span_notice("Alt-click [src] to start harvesting.")
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ.")
+		. += span_notice("The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ. Outputting to the <b>[dir2text(output_dir)]</b>.")

@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe
-	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi'
 	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/proc/update_pipe_icon()
-	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi'
 	var/connections = NONE
 	var/bitfield = NONE
 	for(var/i in 1 to device_type)
@@ -105,9 +105,9 @@
 	icon_state = "[bitfield]_[piping_layer]"
 
 /obj/machinery/atmospherics/pipe/update_icon()
-	. = ..()
 	update_pipe_icon()
 	update_layer()
+	return ..()
 
 /obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)

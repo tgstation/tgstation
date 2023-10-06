@@ -16,13 +16,15 @@
 	send_applicable_messages()
 	final_checkout()
 
-/// Proc that handles changing the suiciding var on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
-/// suicide_state is a boolean, to match the suiciding/suicided var.
-/mob/proc/set_suicide(suicide_state)
-	suiciding = suicide_state
+/// Proc that handles adding the TRAIT_SUICIDED on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
+/// suicide_state is a boolean, and we handle adding/removing the trait in question. Have the trait function reference this mob as the source if we want to do in-depth tracking of where a suicided trait comes from.
+/// For example, the /mob/dead/observer that will inevitably come from the suicidee will inherit the suicided trait upon creation, and keep this reference. Handy for doing checking should we need it.
+/mob/living/proc/set_suicide(suicide_state)
 	if(suicide_state)
+		ADD_TRAIT(src, TRAIT_SUICIDED, REF(src))
 		add_to_mob_suicide_list()
 	else
+		REMOVE_TRAIT(src, TRAIT_SUICIDED, REF(src))
 		remove_from_mob_suicide_list()
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
@@ -46,7 +48,7 @@
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
-	if(suiciding)
+	if(HAS_TRAIT_FROM_ONLY(src, TRAIT_SUICIDED, REF(src)))
 		to_chat(src, span_warning("You are already commiting suicide!"))
 		return FALSE
 

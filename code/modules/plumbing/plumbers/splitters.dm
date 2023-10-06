@@ -6,8 +6,6 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	buffer = 100
 	density = FALSE
-	///category for plumbing RCD
-	category="Distribution"
 
 	///constantly switches between TRUE and FALSE. TRUE means the batch tick goes straight, FALSE means the next batch goes in the side duct.
 	var/turn_straight = TRUE

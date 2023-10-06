@@ -3,7 +3,7 @@
 
 /obj/item/camera
 	name = "camera"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	inhand_icon_state = "camera"
@@ -18,7 +18,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
@@ -187,13 +187,15 @@
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
-	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
+	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
+	///list of human names taken on picture
+	var/list/names = list()
 
-	var/width = size_x * 2
-	var/height = size_y * 2
+	var/width = size_x * 2 + 1
+	var/height = size_y * 2 + 1
 	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
-			placeholder = SSmapping.get_turf_below(placeholder)
+			placeholder = GET_TURF_BELOW(placeholder)
 			if(!placeholder)
 				break
 
@@ -203,6 +205,9 @@
 				mobs += M
 			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
+
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
 
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
@@ -215,8 +220,11 @@
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
+	for(var/mob/living/carbon/human/person in mobs)
+		if(person.is_face_visible())
+			names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
 	blending = FALSE
@@ -225,6 +233,8 @@
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)

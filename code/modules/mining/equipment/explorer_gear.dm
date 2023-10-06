@@ -81,6 +81,9 @@
 	acid = 40
 	wound = 5
 
+/obj/item/clothing/mask/gas/explorer/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
 
@@ -123,9 +126,29 @@
 		/obj/item/spear,
 		/obj/item/tank/internals,
 		)
+	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/cloak_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/hooded/cloak/goliath/AltClick(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/char = user
+		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))
+			to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
+			return
+		if(!user.is_holding(src))
+			to_chat(user, span_warning("You must be holding [src] in order to adjust it!"))
+			return
+		if(slot_flags & ITEM_SLOT_OCLOTHING)
+			slot_flags = ITEM_SLOT_NECK
+			set_armor(/datum/armor/none)
+			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
+		else
+			slot_flags = initial(slot_flags)
+			set_armor(initial(armor_type))
+			user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
 
 /datum/armor/cloak_goliath
 	melee = 35
@@ -146,6 +169,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
+	resistance_flags = FIRE_PROOF
 
 /datum/armor/cloakhood_goliath
 	melee = 35
@@ -305,3 +329,28 @@
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message(span_notice("[user] suddenly revives, as their armor swirls with demonic energy!"), span_notice("You suddenly feel invigorated!"))
 		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
+
+/obj/item/clothing/suit/hooded/explorer/syndicate
+	name = "syndicate explorer suit"
+	desc = "An armoured suit for exploring harsh environments, dyed in the sinister red and black of the Syndicate. This one seems better armored than the ones Nanotrasen gives out."
+	icon_state = "explorer_syndicate"
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/explorer/syndicate
+	armor_type = /datum/armor/hooded_explorer_syndicate
+
+/datum/armor/hooded_explorer_syndicate
+	melee = 30
+	bullet = 15
+	laser = 25
+	energy = 35
+	bomb = 50
+	fire = 60
+	acid = 60
+
+/obj/item/clothing/head/hooded/explorer/syndicate
+	name = "syndicate explorer hood"
+	desc = "An armoured hood for exploring harsh environments."
+	icon_state = "explorer_syndicate"
+	armor_type = /datum/armor/hooded_explorer_syndicate
+

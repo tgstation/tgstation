@@ -1,21 +1,3 @@
-/// If an object needs to be rotated with a wrench
-#define ROTATION_REQUIRE_WRENCH (1<<0)
-/// If ghosts can rotate an object (if the ghost config is enabled)
-#define ROTATION_GHOSTS_ALLOWED (1<<1)
-/// If an object will ignore anchored for rotation (used for chairs)
-#define ROTATION_IGNORE_ANCHORED (1<<2)
-/// If an object will omit flipping from rotation (used for pipes since they use custom handling)
-#define ROTATION_NO_FLIPPING (1<<3)
-/// If an object needs to have an empty spot available in target direction (used for windoors and railings)
-#define ROTATION_NEEDS_ROOM (1<<4)
-
-/// Rotate an object clockwise
-#define ROTATION_CLOCKWISE -90
-/// Rotate an object counterclockwise
-#define ROTATION_COUNTERCLOCKWISE 90
-/// Rotate an object upside down
-#define ROTATION_FLIP 180
-
 /datum/component/simple_rotation
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
@@ -42,15 +24,15 @@
 /datum/component/simple_rotation/proc/AddSignals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(RotateLeft))
 	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, PROC_REF(RotateRight))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(ExamineMessage))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(ExamineMessage))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/simple_rotation/proc/RemoveSignals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddSignals()
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/PostTransfer()
 	//Because of the callbacks which we don't track cleanly we can't transfer this
@@ -60,12 +42,12 @@
 
 /datum/component/simple_rotation/UnregisterFromParent()
 	RemoveSignals()
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/Destroy()
-	QDEL_NULL(AfterRotation)
+	AfterRotation = null
 	//Signals + verbs removed via UnRegister
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/ClearFromParent()
 	return ..()
@@ -132,7 +114,7 @@
 		var/target_dir = turn(rotated_obj.dir, degrees)
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
-		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
+		if(!valid_build_direction(rotated_obj.loc, target_dir, is_fulltile = fulltile))
 			if(!silent)
 				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE

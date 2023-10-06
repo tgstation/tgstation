@@ -6,6 +6,8 @@
 		return TRUE
 	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
 		return FALSE
+	if(HAS_TRAIT(accessor, TRAIT_ALWAYS_NO_ACCESS))
+		return FALSE
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
@@ -29,7 +31,6 @@
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
 	else if(check_access(accessor.get_active_held_item()))
 		return TRUE
-	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
 		if(check_access(human_accessor.wear_id))
@@ -43,7 +44,7 @@
 		var/obj/item/mmi/brain_mmi = accessor.loc
 		if(ismecha(brain_mmi.loc))
 			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-			return check_access_list(big_stompy_robot.operation_req_access)
+			return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
 /obj/item/proc/GetAccess()

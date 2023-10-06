@@ -171,6 +171,10 @@
 	icon_state = "danger"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
+/// Same thing as parent, but uses a different map generator for the icemoon ruin that needs it.
+/area/lavaland/surface/outdoors/unexplored/danger/no_ruins
+	map_generator = /datum/map_generator/cave_generator/lavaland/ruin_version
+
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
@@ -185,6 +189,7 @@
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+	ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/magma.ogg'
 
@@ -196,7 +201,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	min_ambience_cooldown = 70 SECONDS
 	max_ambience_cooldown = 220 SECONDS
@@ -206,6 +210,12 @@
 	outdoors = TRUE
 
 /area/icemoon/surface/outdoors/nospawn // this is the area you use for stuff to not spawn, but if you still want weather.
+
+/area/icemoon/surface/outdoors/nospawn/New() // unless you roll forested trait lol
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED//flip this on, the generator has already disabled dangerous fauna
 
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NOTELEPORT
@@ -227,6 +237,12 @@
 	icon_state = "danger"
 	map_generator = /datum/map_generator/cave_generator/icemoon/surface
 
+/area/icemoon/surface/outdoors/unexplored/rivers/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		area_flags |= MOB_SPAWN_ALLOWED //flip this on, the generator has already disabled dangerous fauna
+
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED
 
@@ -238,7 +254,6 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	min_ambience_cooldown = 70 SECONDS
 	max_ambience_cooldown = 220 SECONDS
@@ -247,6 +262,11 @@
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
 	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+
+/area/icemoon/underground/unexplored/no_rivers
+	icon_state = "norivers"
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED // same rules as "shoreline" turfs since we might need this to pull double-duty
+	map_generator = /datum/map_generator/cave_generator/icemoon
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"

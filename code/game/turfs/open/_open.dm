@@ -8,6 +8,49 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = null
+	var/broken = FALSE
+	var/burnt = FALSE
+
+
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/proc/broken_states()
+	return list()
+
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/proc/burnt_states()
+	return list()
+
+/turf/open/break_tile()
+	if(isnull(damaged_dmi) || broken)
+		return FALSE
+	broken = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/burn_tile()
+	if(isnull(damaged_dmi) || burnt)
+		return FALSE
+	burnt = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/update_overlays()
+	if(isnull(damaged_dmi))
+		return ..()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+	else if(burnt)
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
 	if(direction == DOWN)
@@ -81,6 +124,9 @@
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
 
+/turf/open/indestructible/plating
+	icon_state = "plating"
+
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
@@ -95,7 +141,7 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound = 'sound/effects/clownstep1.ogg'
+	var/sound = 'sound/effects/footstep/clownstep1.ogg'
 
 /turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
@@ -216,7 +262,7 @@
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
 			I.AddElement(/datum/element/frozen)
 
 	for(var/mob/living/L in contents)
@@ -264,7 +310,7 @@
 	else
 		if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 			return FALSE
-		if(slipper.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+		if(slipper.move_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
 			return FALSE
 
 	if(!(lube & SLIDE_ICE))

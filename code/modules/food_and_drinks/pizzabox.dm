@@ -15,7 +15,7 @@
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard =SHEET_MATERIAL_AMOUNT)
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
@@ -44,8 +44,21 @@
 	update_appearance()
 	register_context()
 
+/obj/item/pizzabox/proc/register_bomb(new_bomb)
+	bomb = new_bomb
+	if(istype(bomb))
+		RegisterSignal(bomb, COMSIG_QDELETING, PROC_REF(clear_bomb))
+
+/obj/item/pizzabox/proc/clear_bomb(datum/source)
+	SIGNAL_HANDLER
+	if(isnull(bomb))
+		return
+	UnregisterSignal(bomb, COMSIG_QDELETING)
+	bomb = null
+
 /obj/item/pizzabox/Destroy()
 	unprocess()
+	clear_bomb()
 	return ..()
 
 /obj/item/pizzabox/update_desc()
@@ -87,7 +100,7 @@
 			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
-			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
+			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state, layer = layer + 0.01)
 			bomb_overlay.pixel_y = 8
 			. += bomb_overlay
 		return
@@ -96,13 +109,13 @@
 	for(var/stacked_box in boxes)
 		box_offset += 3
 		var/obj/item/pizzabox/box = stacked_box
-		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state)
+		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state, layer = layer + (box_offset * 0.01))
 		box_overlay.pixel_y = box_offset
 		. += box_overlay
 
 	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
-		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
+		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag", layer = layer + (box_offset * 0.02))
 		tag_overlay.pixel_y = box_offset
 		. += tag_overlay
 
@@ -151,7 +164,7 @@
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
 				balloon_alert(user, "removed bomb")
-				bomb = null
+				clear_bomb()
 				update_appearance()
 				return
 			else
@@ -208,8 +221,8 @@
 		if(open && !bomb)
 			if(!user.transferItemToLoc(I, src))
 				return
-			wires = new /datum/wires/explosive/pizza(src)
-			bomb = I
+			set_wires(new /datum/wires/explosive/pizza(src))
+			register_bomb(I)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
@@ -232,10 +245,10 @@
 			wires.interact(user)
 	..()
 
-/obj/item/pizzabox/process(delta_time)
+/obj/item/pizzabox/process(seconds_per_tick)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
 		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
-		bomb_timer -= delta_time
+		bomb_timer -= seconds_per_tick
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
 			bomb.detonate()
@@ -287,16 +300,17 @@
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	update_appearance()
 
 /obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	if(!pizza)
-		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
+		var/randompizza = pick(subtypesof(/obj/item/food/pizza) - /obj/item/food/pizza/flatbread) //also disincludes another base type
 		pizza = new randompizza(src)
-	bomb = new(src)
-	wires = new /datum/wires/explosive/pizza(src)
+		update_appearance()
+	register_bomb(new /obj/item/bombcore/miniature/pizza(src))
+	set_wires(new /datum/wires/explosive/pizza(src))
 
 /obj/item/pizzabox/bomb/armed
 	bomb_timer = 5
@@ -382,14 +396,14 @@
 		if(pizza.type != pizza_preferences[nommer.ckey])
 			QDEL_NULL(pizza)
 		else
-			pizza.foodtypes = nommer.dna.species.liked_food //make sure it's our favourite
+			pizza.foodtypes = nommer.get_liked_foodtypes() //make sure it's our favourite
 			return
 
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
 	pizza = new favourite_pizza_type
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
-	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+	pizza.foodtypes = nommer.get_liked_foodtypes() //it's our favorite!
 
 ///screentips for pizzaboxes
 /obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)

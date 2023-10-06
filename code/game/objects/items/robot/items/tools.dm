@@ -132,32 +132,32 @@
 	deactivate_field()
 	return ..()
 
-/obj/item/borg/projectile_dampen/process(delta_time)
-	process_recharge(delta_time)
-	process_usage(delta_time)
+/obj/item/borg/projectile_dampen/process(seconds_per_tick)
+	process_recharge(seconds_per_tick)
+	process_usage(seconds_per_tick)
 
-/obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
+/obj/item/borg/projectile_dampen/proc/process_usage(seconds_per_tick)
 	var/usage = 0
 	for(var/obj/projectile/inner_projectile as anything in tracked)
 		if(!inner_projectile.is_hostile_projectile())
 			continue
-		usage += projectile_tick_speed_ecost * delta_time
-		usage += tracked[inner_projectile] * projectile_damage_tick_ecost_coefficient * delta_time
+		usage += projectile_tick_speed_ecost * seconds_per_tick
+		usage += tracked[inner_projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
 
-/obj/item/borg/projectile_dampen/proc/process_recharge(delta_time)
+/obj/item/borg/projectile_dampen/proc/process_recharge(seconds_per_tick)
 	if(!istype(host))
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = clamp(energy + energy_recharge * delta_time, 0, maxenergy)
+			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * delta_time * energy_recharge_cyborg_drain_coefficient)
-		energy += energy_recharge * delta_time
+		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER

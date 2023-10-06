@@ -27,7 +27,7 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(M.id == src.id)
 			if(openclose == null || !sync_doors)
 				openclose = M.density
@@ -75,7 +75,7 @@
 	cooldown = TRUE
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
-	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
@@ -85,7 +85,10 @@
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
-					D.locked = !D.locked
+					if(D.locked)
+						D.unlock()
+					else
+						D.lock()
 					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
@@ -109,19 +112,21 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
-	sleep(1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage2)), 1 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M in GLOB.machines)
+/obj/item/assembly/control/massdriver/proc/activate_stage2()
+	for(var/obj/machinery/mass_driver/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mass_driver))
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage3)), 6 SECONDS)
 
-	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
+/obj/item/assembly/control/massdriver/proc/activate_stage3()
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
@@ -136,15 +141,13 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/sparker/M in GLOB.machines)
+	for(var/obj/machinery/sparker/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/sparker))
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/sparker, ignite))
 
-	for(var/obj/machinery/igniter/M in GLOB.machines)
+	for(var/obj/machinery/igniter/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/igniter))
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 
@@ -156,7 +159,7 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/flasher/M in GLOB.machines)
+	for(var/obj/machinery/flasher/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/flasher))
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/flasher, flash))
 
@@ -185,7 +188,7 @@
 	///ID to link to allow us to link to one specific tram in the world
 	var/specific_lift_id = MAIN_STATION_TRAM
 	///this is our destination's landmark, so we only have to find it the first time.
-	var/datum/weakref/to_where
+	var/datum/weakref/destination_platform
 
 /obj/item/assembly/control/tram/Initialize(mapload)
 	..()
@@ -195,12 +198,12 @@
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
 	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
-		if(our_destination.destination_id == initial_id)
-			to_where = WEAKREF(our_destination)
+		if(our_destination.platform_code == initial_id)
+			destination_platform = WEAKREF(our_destination)
 			break
 
 /obj/item/assembly/control/tram/Destroy()
-	to_where = null
+	destination_platform = null
 	return ..()
 
 /obj/item/assembly/control/tram/activate()
@@ -218,17 +221,23 @@
 	if(!tram || !tram.is_operational) //tram is QDEL or has no power
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
-	if(tram.travelling) //in use
-		say("The tram is already travelling to [tram.from_where].")
+	if(tram.travelling) //already on its way
+		say("The tram is already travelling to [tram.idle_platform].")
 		return
-	if(!to_where)
+	if(tram.controls_locked) //attempting a dispatch or on cooldown
+		say("The tram controller is busy. Try again in a moment.")
 		return
-	var/obj/effect/landmark/tram/current_location = to_where.resolve()
+	if(!destination_platform)
+		return
+	var/obj/effect/landmark/tram/current_location = destination_platform.resolve()
 	if(!current_location)
 		return
-	if(tram.from_where == current_location) //already here
+	if(tram.idle_platform == current_location) //already here
 		say("The tram is already here. Please board the tram and select a destination.")
 		return
 
-	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
-	tram.tram_travel(current_location)
+	if(tram.tram_travel(current_location))
+		say("The tram has been called to [current_location.name]. Please wait for its arrival.")
+		return
+	else
+		say("The tram controller has encountered an error. Try again in a moment.")

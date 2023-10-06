@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 // The dirs are connected turfs in the same space
 // break_if_found is a typecache of turf/area types to return false if found
 // Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
-/proc/detect_room(turf/origin, list/break_if_found, max_size=INFINITY)
+/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY)
 	if(origin.blocks_air)
 		return list(origin)
 
@@ -30,9 +30,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			if(!checkT)
 				continue
 			checked_turfs[sourceT] |= dir
-			checked_turfs[checkT] |= turn(dir, 180)
+			checked_turfs[checkT] |= REVERSE_DIR(dir)
 			.[sourceT] |= dir
-			.[checkT] |= turn(dir, 180)
+			.[checkT] |= REVERSE_DIR(dir)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
 
-/proc/create_area(mob/creator)
+/proc/create_area(mob/creator, new_area_type = /area)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
@@ -100,18 +100,20 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		return
 
 	var/list/apc_map = list()
-	var/list/areas = list("New Area" = /area)
+	var/list/areas = list("New Area" = new_area_type)
 	for(var/i in 1 to turf_count)
-		var/area/place = get_area(turfs[i])
+		var/turf/the_turf = turfs[i]
+		var/area/place = get_area(the_turf)
 		if(blacklisted_areas[place.type])
 			continue
 		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
 			continue // No expanding powerless rooms etc
+		if(!TURF_SHARES(the_turf)) // No expanding areas of walls/something blocking this turf because that defeats the whole point of them used to separate areas
+			continue
 		if(!isnull(place.apc))
 			apc_map[place.name] = place.apc
-		//If we found just one apc we can just convert that to work for our new area. But 2 or more!! nope
-		if(length(apc_map) > 1)
-			creator.balloon_alert(creator, "too many conflicting APCs, only one allowed!")
+		if(length(apc_map) > 1) // When merging 2 or more areas make sure we arent merging their apc into 1 area
+			to_chat(creator, span_warning("Multiple APC's detected in the vicinity. only 1 is allowed."))
 			return
 		areas[place.name] = place
 
@@ -136,7 +138,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	//we haven't done anything. let's get outta here
 	if(newA == oldA)
-		creator.balloon_alert(creator, "no area change!")
+		to_chat(creator, span_warning("Selected choice is same as the area your standing in. No area changes were requested."))
 		return
 
 	/**
@@ -156,7 +158,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		//inform atoms on the turf that their area has changed
 		for(var/atom/stuff as anything in the_turf)
 			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, oldA)
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
 			//register the stuff to its new area. special exception for apc as its not registered to this signal
 			if(istype(stuff, /obj/machinery/power/apc))

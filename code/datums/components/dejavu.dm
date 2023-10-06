@@ -50,7 +50,7 @@
 		tox_loss = L.getToxLoss()
 		oxy_loss = L.getOxyLoss()
 		stamina_loss = L.getStaminaLoss()
-		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
+		brain_loss = L.get_organ_loss(ORGAN_SLOT_BRAIN)
 		rewind_type = PROC_REF(rewind_living)
 
 	if(iscarbon(parent))

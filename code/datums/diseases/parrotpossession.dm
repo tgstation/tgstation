@@ -16,7 +16,7 @@
 	var/mob/living/simple_animal/parrot/poly/ghost/parrot
 
 
-/datum/disease/parrot_possession/stage_act(delta_time, times_fired)
+/datum/disease/parrot_possession/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -25,7 +25,7 @@
 		cure()
 		return FALSE
 
-	if(length(parrot.speech_buffer) && DT_PROB(parrot.speak_chance, delta_time)) // I'm not going to dive into polycode trying to adjust that probability. Enjoy doubled ghost parrot speach
+	if(length(parrot.speech_buffer) && SPT_PROB(parrot.speak_chance, seconds_per_tick)) // I'm not going to dive into polycode trying to adjust that probability. Enjoy doubled ghost parrot speach
 		affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
 
 

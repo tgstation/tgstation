@@ -43,7 +43,7 @@
 	return list(
 		"max_positive_quirks" = MAX_QUIRKS,
 		"quirk_info" = quirk_info,
-		"quirk_blacklist" = SSquirks.quirk_blacklist,
+		"quirk_blacklist" = GLOB.quirk_string_blacklist,
 	)
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)

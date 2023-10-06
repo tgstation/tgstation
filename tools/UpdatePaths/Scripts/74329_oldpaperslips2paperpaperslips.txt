@@ -1,0 +1,1 @@
+/obj/item/paperslip : /obj/item/paper/paperslip{@OLD}

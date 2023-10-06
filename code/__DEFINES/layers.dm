@@ -124,11 +124,11 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (WALL_PLANE) use this.
 
 //FLOOR_PLANE layers
+#define TURF_PLATING_DECAL_LAYER 2.001
+#define TURF_DECAL_LAYER 2.009 //Makes turf decals appear in DM how they will look inworld.
 #define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
-#define TURF_PLATING_DECAL_LAYER 2.031
-#define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
 #define LATTICE_LAYER 2.04
 #define DISPOSAL_PIPE_LAYER 2.042
 #define WIRE_LAYER 2.044
@@ -158,11 +158,13 @@
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
-// Anything aboe this layer is not "on" a turf for the purposes of washing
+// Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
+#define WATER_LEVEL_LAYER 2.61
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
 #define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
@@ -217,6 +219,13 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
+/**
+ * The layer of the visual overlay used in the submerge element.
+ * The vis overlay inherits the planes of the movables it's attached to (that also have KEEP_TOGETHER added)
+ * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
+ */
+#define WATER_VISUAL_OVERLAY_LAYER 1000
+
 //---------- LIGHTING -------------
 
 // LIGHTING_PLANE layers
@@ -249,6 +258,7 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 #define ECHO_LAYER 7
+#define PARRY_LAYER 8
 
 #define FOV_EFFECT_LAYER 100
 
@@ -268,9 +278,20 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for light overlays
+#define LIGHT_DEBUG_LAYER 6
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4
+
+///Layer for lobby menu collapse button
+#define LOBBY_BELOW_MENU_LAYER 2
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+#define LOBBY_MENU_LAYER 3
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 4
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 5
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
@@ -297,4 +318,4 @@
 /// We expect at most 3 layers of multiz
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
-#define MAX_EXPECTED_Z_DEPTH 2
+#define MAX_EXPECTED_Z_DEPTH 3

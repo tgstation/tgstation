@@ -91,7 +91,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space
 	you_are_text = "You are a syndicate agent, assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13."
-	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
+	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
 	important_text = "DO NOT abandon the base."
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload)
@@ -180,7 +180,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	head = /obj/item/clothing/head/hats/hos/syndicate
+	head = /obj/item/clothing/head/hats/hos/cap/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic

@@ -56,15 +56,17 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
 
-/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+/// Checks if the round should be ending, called every ticker tick
+/datum/game_mode/proc/check_finished()
 	if(!SSticker.setup_done)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
 	if(GLOB.station_was_nuked)
 		return TRUE
-	if(force_ending)
+	if(GLOB.revolutionary_win)
 		return TRUE
+	return FALSE
 
 /*
  * Generate a list of station goals available to purchase to report to the crew.
@@ -164,7 +166,7 @@
 				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
-				if(L.suiciding) //Suicider
+				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_boldannounce("Suicide")])\n"
 					failed = TRUE //Disconnected client
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
@@ -178,7 +180,7 @@
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
-					if(L.suiciding) //Suicider
+					if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Suicide")])\n"
 						continue //Disconnected client
 					else

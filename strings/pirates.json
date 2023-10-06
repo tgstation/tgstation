@@ -85,6 +85,7 @@
 		"I Am Become Death",
 		"I Love the Bomb",
 		"Ickity Pickety Startooth Knuckle Dragger",
+		"Khranitel Revolyutsii Escort Desserter",
 		"John Ship",
 		"Lizard Melter",
 		"Lost in Deep Space",
@@ -104,6 +105,7 @@
 		"Space Queen's Revenge",
 		"Star Scraper",
 		"Syndicate Privateer",
+		"The Mazianni",
 		"War as a Business",
 		"Xenophobia"
 	],
@@ -142,6 +144,47 @@
 	"skeleton_names":[
 		"Flying Dutchman"
 	],
+	"interdyne_names":[
+		"Pharmaceutics Biocraft",
+		"Angel Dust",
+		"Black Acid",
+		"Crystal Meth Rocks",
+		"Alpha Product Tester",
+		"Beta Unblocker",
+		"Spaceaids Commander",
+		"Polonium Vessel",
+		"Chemo Therastar",
+		"Lymphocraft",
+		"Diabetes Rusher",
+		"Schistosome Vector"
+	],
+	"grey_names":[
+		"The Space Toolbox",
+		"ISV Maintenance",
+		"S.S. Istant",
+		"Grey eminence",
+		"Gas Maskotron",
+		"Gri Efestar",
+		"Barhopper",
+		"Does-No-Job",
+		"N.R.S.S. Assistant",
+		"Pilk Full 26",
+		"Greytide Shipwide",
+		"The monochrome crash",
+		"Maintrastosphere Omega"
+	],
+	"irs_names":[
+		"Iron Shell Agency",
+		"Auroran Federal Tax Bureau",
+		"TerraGov Internal Revenue Service",
+		"Spinward Federal Taxation Office",
+		"Soviet Taxation Administration, 5th Service",
+		"Hiigaran Ministry of Taxation",
+		"Grand Fleet Tributary Patrol",
+		"Springbok Security Protection Service",
+		"Sindrian Revenue Authority",
+		"Space IRS"
+	],
 	"psyker_names":[
 		"Big Gulchergut for Gore",
 		"Blowkaine",
@@ -175,5 +218,24 @@
 		"The Dreaming",
 		"Ultra Violence",
 		"Where We're Going"
+	],
+	"geode_names":[
+		"Gamma Knife",
+		"Planet B",
+		"Crumbling Castle",
+		"Cubensis Lenses",
+		"High Visceral",
+		"Sugar Tzu",
+		"Snakefinger",
+		"El Valle",
+		"Porselana Teeth",
+		"Constantinople",
+		"Lucidity",
+		"Following Zond",
+		"Elvis' Flaming Star",
+		"Casablanca Moon",
+		"Mass of Fermenting Dregs",
+		"Bloody Valentine",
+		"Wild Nothing"
 	]
 }

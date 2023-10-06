@@ -11,13 +11,17 @@
 /// Numerical define for dangerous severity advanced virus
 #define ADV_DISEASE_DANGEROUS 5
 /// Percentile for low severity advanced virus
-#define ADV_RNG_LOW 30
+#define ADV_RNG_LOW 40
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
-/// Percentile for low transmissibility advanced virus
-#define ADV_SPREAD_LOW 30
-/// Percentile for mid transmissibility advanced virus
-#define ADV_SPREAD_MID 90
+/// Percentile for high vs. low transmissibility
+#define ADV_SPREAD_THRESHOLD 85
+/// Admin custom low spread
+#define ADV_SPREAD_FORCED_LOW 0
+/// Admin custom med spread
+#define ADV_SPREAD_FORCED_MID 70
+/// Admin custom high spread
+#define ADV_SPREAD_FORCED_HIGH 90
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -82,7 +86,7 @@
 	var/datum/disease/virus
 	if(chosen == special_run_option)
 		virus = pick(get_list())
-	else 
+	else
 		virus = chosen
 	event.virus_type = virus
 
@@ -141,14 +145,17 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 10
+	weight = 15
+	min_players = 35 // To avoid shafting lowpop
+	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(
 		/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak,
-		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
-		/datum/event_admin_setup/input_number/disease_outbreak_advanced
+		/datum/event_admin_setup/listed_options/disease_outbreak_advanced/severity,
+		/datum/event_admin_setup/input_number/disease_outbreak_advanced,
+		/datum/event_admin_setup/listed_options/disease_outbreak_advanced/transmissibility
 	)
 
 /**
@@ -157,14 +164,14 @@
  * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
  */
 
-/datum/event_admin_setup/listed_options/disease_outbreak_advanced
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/severity
 	input_text = "Pick a severity!"
-	normal_run_option = "Random Severity"
+	normal_run_option = "Random"
 
-/datum/event_admin_setup/listed_options/disease_outbreak_advanced/get_list()
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/severity/get_list()
 	return list("Medium", "Harmful", "Dangerous")
 
-/datum/event_admin_setup/listed_options/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/severity/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
 	switch(chosen)
 		if("Medium")
 			event.requested_severity = ADV_DISEASE_MEDIUM
@@ -172,8 +179,30 @@
 			event.requested_severity = ADV_DISEASE_HARMFUL
 		if("Dangerous")
 			event.requested_severity = ADV_DISEASE_DANGEROUS
-		else
+		if("Random")
 			event.requested_severity = null
+		else
+			return ADMIN_CANCEL_EVENT
+
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/transmissibility
+	input_text = "Pick a transmissibility!"
+	normal_run_option = "Random"
+
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/transmissibility/get_list()
+	return list("Blood/Fluids", "Skin Contact", "Airborne")
+
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/transmissibility/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+	switch(chosen)
+		if("Blood/Fluids")
+			event.requested_transmissibility = ADV_SPREAD_FORCED_LOW
+		if("Skin Contact")
+			event.requested_transmissibility = ADV_SPREAD_FORCED_MID
+		if("Airborne")
+			event.requested_transmissibility = ADV_SPREAD_FORCED_HIGH
+		if("Random")
+			event.requested_transmissibility = null
+		else
+			return ADMIN_CANCEL_EVENT
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced
 	input_text = "How many symptoms do you want your virus to have?"
@@ -182,15 +211,14 @@
 	min_value = 1
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced/prompt_admins()
-	var/customize_number_of_symptoms = tgui_alert(usr, "Select number of symptoms?", event_control.name, list("Custom", "Random", "Cancel"))
+	var/customize_number_of_symptoms = tgui_alert(usr, "Select number of symptoms?", event_control.name, list("Default", "Custom"))
 	switch(customize_number_of_symptoms)
 		if("Custom")
 			return ..()
-		if("Random")
+		if("Default")
 			chosen_value = null
 		else
 			return ADMIN_CANCEL_EVENT
-	
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
 	event.max_symptoms = chosen_value
@@ -198,7 +226,9 @@
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
 	var/requested_severity
-	//Maximum symptoms for our virus
+	///Transmissibility of our virus
+	var/requested_transmissibility
+	///Maximum symptoms for our virus
 	var/max_symptoms
 
 /**
@@ -212,10 +242,10 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	if(!max_symptoms)
+	if(isnull(max_symptoms))
 		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS)
 
-	if(!requested_severity)
+	if(isnull(requested_severity))
 		var/rng_severity = rand(1, 100)
 		if(rng_severity < ADV_RNG_LOW)
 			requested_severity = ADV_DISEASE_MEDIUM
@@ -226,7 +256,7 @@
 		else
 			requested_severity = ADV_DISEASE_DANGEROUS
 
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, requested_severity)
+	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, requested_severity, requested_transmissibility)
 
 	var/list/name_symptoms = list()
 	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
@@ -260,7 +290,7 @@
  * Uses the parameters to create a list of symptoms, picking from various severities
  * Viral Evolution and Eternal Youth are special modifiers, so we roll separately.
  */
-/datum/disease/advance/random/event/New(max_symptoms, requested_severity)
+/datum/disease/advance/random/event/New(max_symptoms, requested_severity, requested_transmissibility)
 	var/list/datum/symptom/possible_symptoms = list(
 		/datum/symptom/beard,
 		/datum/symptom/chills,
@@ -317,10 +347,37 @@
 
 		symptoms += new_symptom
 
-		//Applies the illness name based on the most severe symptom.
 		if(new_symptom.severity > current_severity)
-			name = "[new_symptom.illness]"
 			current_severity = new_symptom.severity
+
+	visibility_flags |= HIDDEN_SCANNER
+	var/transmissibility = requested_transmissibility
+
+	if(isnull(transmissibility))
+		transmissibility = rand(1,100)
+
+	if(requested_transmissibility == ADV_SPREAD_FORCED_LOW) // Admin forced
+		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
+
+	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH) // Admin forced
+		set_spread(DISEASE_SPREAD_AIRBORNE)
+
+	//If severe enough, alert immediately on scanners, limit transmissibility
+	else if(current_severity >= ADV_DISEASE_DANGEROUS)
+		visibility_flags &= ~HIDDEN_SCANNER
+		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
+
+	else if(transmissibility < ADV_SPREAD_THRESHOLD)
+		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
+
+	else
+		visibility_flags &= ~HIDDEN_SCANNER
+		set_spread(DISEASE_SPREAD_AIRBORNE)
+
+
+	//Illness name from one of the symptoms
+	var/datum/symptom/picked_name = pick(symptoms)
+	name = picked_name.illness
 
 	//Modifiers to keep the disease base stats above 0 (unless RNG gets a really bad roll.)
 	//Eternal Youth for +4 to resistance and stage speed.
@@ -351,36 +408,16 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(make_visible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
-
+	incubation_time = round(world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS))
 	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 	stage_prob = max(0.4 * properties["stage_rate"], 1)
 	set_severity(properties["severity"])
-	visibility_flags |= HIDDEN_SCANNER
 
 	//If we have an advanced (high stage) disease, add it to the name.
 	if(properties["stage_rate"] >= 7)
 		name = "Advanced [name]"
-
-	//If severe enough, alert immediately on scanners
-	if(severity == "Dangerous" || severity == "BIOHAZARD")
-		visibility_flags &= ~HIDDEN_SCANNER
-		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-	else
-		var/transmissibility = rand(1, 100)
-
-		if(transmissibility < ADV_SPREAD_LOW)
-			set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
-
-		else if(transmissibility < ADV_SPREAD_MID)
-			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-		else
-			set_spread(DISEASE_SPREAD_AIRBORNE)
-			visibility_flags &= ~HIDDEN_SCANNER
 
 	generate_cure(properties)
 
@@ -411,7 +448,7 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	var/res = rand(2, 6)
+	var/res = rand(4, 7)
 	cures = list(pick(advance_cures[res]))
 	oldres = res
 	// Get the cure name from the cure_id
@@ -426,5 +463,7 @@
 #undef ADV_DISEASE_DANGEROUS
 #undef ADV_RNG_LOW
 #undef ADV_RNG_MID
-#undef ADV_SPREAD_LOW
-#undef ADV_SPREAD_MID
+#undef ADV_SPREAD_THRESHOLD
+#undef ADV_SPREAD_FORCED_LOW
+#undef ADV_SPREAD_FORCED_MID
+#undef ADV_SPREAD_FORCED_HIGH

@@ -55,11 +55,10 @@
 /datum/station_goal/dna_vault/check_completion()
 	if(..())
 		return TRUE
-	for(var/obj/machinery/dna_vault/V in GLOB.machines)
+	for(var/obj/machinery/dna_vault/V as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/dna_vault))
 		if(V.animal_dna.len >= animal_count && V.plant_dna.len >= plant_count && V.human_dna.len >= human_count)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"
@@ -223,3 +222,11 @@
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)
+
+#undef VAULT_TOXIN
+#undef VAULT_NOBREATH
+#undef VAULT_FIREPROOF
+#undef VAULT_STUNTIME
+#undef VAULT_ARMOUR
+#undef VAULT_SPEED
+#undef VAULT_QUICK

@@ -32,8 +32,8 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/minigunpack/process(delta_time)
-	overheat = max(0, overheat - heat_diffusion * delta_time)
+/obj/item/minigunpack/process(seconds_per_tick)
+	overheat = max(0, overheat - heat_diffusion * seconds_per_tick)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(mob/living/carbon/user, list/modifiers)

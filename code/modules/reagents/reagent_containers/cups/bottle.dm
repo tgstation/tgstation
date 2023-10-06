@@ -7,8 +7,8 @@
 	fill_icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
-	possible_transfer_amounts = list(5, 10, 15, 25, 30)
-	volume = 30
+	possible_transfer_amounts = list(5, 10, 15, 25, 50)
+	volume = 50
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
 /obj/item/reagent_containers/cup/bottle/Initialize(mapload)
@@ -62,7 +62,6 @@
 /obj/item/reagent_containers/cup/bottle/phlogiston
 	name = "Phlogiston bottle"
 	desc = "A small bottle of Phlogiston, that will set you on fire if used."
-	volume = 50
 	list_reagents = list(/datum/reagent/phlogiston = 30)
 
 /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
@@ -434,7 +433,7 @@
 /obj/item/reagent_containers/cup/bottle/clownstears
 	name = "bottle of distilled clown misery"
 	desc = "A small bottle. Contains a mythical liquid used by sublime bartenders; made from the unhappiness of clowns."
-	list_reagents = list(/datum/reagent/consumable/clownstears = 30)
+	list_reagents = list(/datum/reagent/consumable/nutriment/soup/clown_tears = 30)
 
 /obj/item/reagent_containers/cup/bottle/saltpetre
 	name = "saltpetre bottle"
@@ -473,7 +472,6 @@
 	fill_icon_state = "syrup"
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 	possible_transfer_amounts = list(5, 10)
-	volume = 50
 	amount_per_transfer_from_this = 5
 	spillable = FALSE
 	///variable to tell if the bottle can be refilled
@@ -503,7 +501,7 @@
 			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
+		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 

@@ -1,13 +1,3 @@
-///Maximum settable pressure
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
-///Minimum settable pressure
-#define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
-///Defaul pressure, used in the UI to reset the settings
-#define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
-///What direction is the machine pumping (into pump/port or out to the tank/area)?
-#define PUMP_IN TRUE
-#define PUMP_OUT FALSE
-
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "siphon"

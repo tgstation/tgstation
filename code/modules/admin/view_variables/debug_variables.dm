@@ -1,6 +1,6 @@
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
 /// Get displayed variable in VV variable list
-/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE) //if D is a list, name will be index, and value will be assoc value.
+/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	var/header
 	if(D)
 		if(islist(D))
@@ -41,6 +41,10 @@
 		item = "[name_part] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
+	else if(isappearance(value))
+		var/image/actually_an_appearance = value
+		item = "[name_part] = /appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
+
 	else if (isfile(value))
 		item = "[name_part] = <span class='value'>'[value]'</span>"
 
@@ -55,6 +59,7 @@
 				<tr><td>[M.c]</td><td>[M.f]</td><td>1</td></tr>
 			</tbody>
 			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} //TODO link to modify_transform wrapper for all matrices
+
 	else if (isdatum(value))
 		var/datum/DV = value
 		if ("[DV]" != "[DV.type]") //if the thing as a name var, lets use it.
@@ -69,7 +74,7 @@
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD)))
+		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
@@ -90,7 +95,10 @@
 		for (var/i in GLOB.bitfields[name])
 			if (value & GLOB.bitfields[name][i])
 				flags += i
+		if(length(flags))
 			item = "[name_part] = [VV_HTML_ENCODE(jointext(flags, ", "))]"
+		else
+			item = "[name_part] = NONE"
 	else
 		item = "[name_part] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 

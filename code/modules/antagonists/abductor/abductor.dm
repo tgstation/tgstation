@@ -1,5 +1,3 @@
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"
@@ -93,7 +91,7 @@
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
-	var/obj/item/organ/internal/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/abductor/T = H.get_organ_slot(ORGAN_SLOT_TONGUE)
 	T.mothership = "[team.name]"
 
 	H.real_name = "[team.name] [sub_role]"
@@ -195,7 +193,7 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
+	for(var/obj/machinery/abductor/experiment/E as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/experiment))
 		if(!istype(team, /datum/team/abductor_team))
 			return FALSE
 		var/datum/team/abductor_team/T = team

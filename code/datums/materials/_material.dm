@@ -21,8 +21,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
 	///Starlight color of the material
-	///This is the color of light it'll emit if its turf is transparent and over space
-	var/starlight_color = COLOR_STARLIGHT
+	///This is the color of light it'll emit if its turf is transparent and over space. Defaults to COLOR_STARLIGHT if not set
+	var/starlight_color
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
@@ -33,8 +33,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
+	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	var/minimum_value_override = null
+	///Is this material traded on the stock market?
+	var/tradable = FALSE
+	///If this material is tradable, what is the base quantity of the material on the stock market?
+	var/tradable_base_quantity = 0
+
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
@@ -64,7 +72,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		id = type
 
 	if(texture_layer_icon_state)
-		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
+		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
 	return TRUE
 
@@ -154,7 +162,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, starlight_color)
+	on.set_light(2, 0.75, get_starlight_color())
+
+///Gets the space color and possible changed color if space is different
+/datum/material/proc/get_starlight_color()
+	return starlight_color || GLOB.starlight_color
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)

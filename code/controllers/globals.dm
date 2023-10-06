@@ -1,3 +1,4 @@
+// See initialization order in /code/game/world.dm
 GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 /datum/controller/global_vars
@@ -16,8 +17,6 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	gvars_datum_in_built_vars = exclude_these.vars + list(NAMEOF(src, gvars_datum_protected_varlist), NAMEOF(src, gvars_datum_in_built_vars), NAMEOF(src, gvars_datum_init_order))
 	QDEL_IN(exclude_these, 0) //signal logging isn't ready
 
-	log_world("[vars.len - gvars_datum_in_built_vars.len] global variables")
-
 	Initialize()
 
 /datum/controller/global_vars/Destroy(force)
@@ -34,6 +33,12 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 		return FALSE
 	return ..()
 
+/datum/controller/global_vars/vv_get_var(var_name)
+	switch(var_name)
+		if (NAMEOF(src, vars))
+			return debug_variable(var_name, list(), 0, src)
+	return debug_variable(var_name, vars[var_name], 0, src, display_flags = VV_ALWAYS_CONTRACT_LIST)
+
 /datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
 	gvars_datum_protected_varlist = list(NAMEOF(src, gvars_datum_protected_varlist) = TRUE)
@@ -46,9 +51,14 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 			for(var/I in global_procs)
 				expected_global_procs -= replacetext("[I]", "InitGlobal", "")
 			log_world("Missing procs: [expected_global_procs.Join(", ")]")
+
 	for(var/I in global_procs)
 		var/start_tick = world.time
 		call(src, I)()
 		var/end_tick = world.time
 		if(end_tick - start_tick)
 			warning("Global [replacetext("[I]", "InitGlobal", "")] slept during initialization!")
+
+	// Someone make it so this call isn't necessary
+	make_datum_reference_lists()
+

@@ -38,6 +38,7 @@
 	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
 
 /datum/map_template/mafia
+	should_place_on_top = FALSE
 	///A brief background tidbit
 	var/description = ""
 	///What costume will this map force players to start with?

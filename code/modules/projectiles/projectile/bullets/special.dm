@@ -6,7 +6,7 @@
 	movement_type = FLYING
 	projectile_piercing = ALL
 	hitsound = 'sound/items/bikehorn.ogg'
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
 	embedding = null

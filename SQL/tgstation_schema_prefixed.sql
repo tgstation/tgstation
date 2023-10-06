@@ -270,10 +270,10 @@ CREATE TABLE `SS13_library_action` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `book` int(10) unsigned NOT NULL,
   `reason` longtext DEFAULT NULL,
-  `ckey` varchar(11) NOT NULL DEFAULT '',
+  `ckey` varchar(32) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `action` varchar(11) NOT NULL DEFAULT '',
-  `ip_addr` int(11) NOT NULL,
+  `ip_addr` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

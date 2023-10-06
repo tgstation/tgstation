@@ -14,7 +14,6 @@
 	claim_range = BLOB_CORE_CLAIM_RANGE
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
-	max_spores = BLOB_CORE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
 /datum/armor/special_core
@@ -61,6 +60,7 @@
 /obj/structure/blob/special/core/ex_act(severity, target)
 	var/damage = 10 * (severity + 1) //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity
 	take_damage(damage, BRUTE, BOMB, 0)
+	return TRUE
 
 /obj/structure/blob/special/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, overmind_reagent_trigger = 1)
 	. = ..()
@@ -68,7 +68,7 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
-/obj/structure/blob/special/core/process(delta_time)
+/obj/structure/blob/special/core/process(seconds_per_tick)
 	if(QDELETED(src))
 		return
 	if(!overmind)
@@ -77,8 +77,7 @@
 		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
-	reinforce_area(delta_time)
-	produce_spores()
+	reinforce_area(seconds_per_tick)
 	..()
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)

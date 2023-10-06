@@ -47,7 +47,7 @@
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -82,20 +82,24 @@
 			to_chat(user, span_danger("Access denied."))
 	return
 
-/obj/machinery/airalarm/emag_act(mob/user)
+/obj/machinery/airalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	visible_message(span_warning("Sparks fly out of [src]!"), span_notice("You emag [src], disabling its safeties."))
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "authentication sensors scrambled")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, 2)
-		var/obj/item/I = new /obj/item/electronics/airalarm(loc)
-		if(!disassembled)
-			I.take_damage(I.max_integrity * 0.5, sound_effect=FALSE)
-		new /obj/item/stack/cable_coil(loc, 3)
+		if((buildstage == AIR_ALARM_BUILD_NO_WIRES) || (buildstage == AIR_ALARM_BUILD_COMPLETE))
+			var/obj/item/electronics/airalarm/alarm = new(loc)
+			if(!disassembled)
+				alarm.take_damage(alarm.max_integrity * 0.5, sound_effect = FALSE)
+		if((buildstage == AIR_ALARM_BUILD_COMPLETE))
+			new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
@@ -180,7 +184,7 @@
 /obj/item/wallframe/airalarm
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
-	pixel_shift = 24
+	pixel_shift = 27

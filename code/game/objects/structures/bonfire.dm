@@ -10,7 +10,7 @@
 /obj/structure/bonfire
 	name = "bonfire"
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
@@ -50,7 +50,7 @@
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
 				to_chat(user, span_notice("You add a rod to \the [src]."))
-				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
@@ -135,38 +135,40 @@
 		start_burning()
 		visible_message(span_notice("[entered]'s fire spreads to [src], setting it ablaze!"))
 
-/obj/structure/bonfire/proc/bonfire_burn(delta_time = 2)
+/obj/structure/bonfire/proc/bonfire_burn(seconds_per_tick = 2)
 	var/turf/current_location = get_turf(src)
 	if(!grill)
-		current_location.hotspot_expose(1000, 250 * delta_time, 1)
+		current_location.hotspot_expose(1000, 250 * seconds_per_tick, 1)
 	for(var/burn_target in current_location)
 		if(burn_target == src)
 			continue
 		else if(isliving(burn_target))
 			var/mob/living/burn_victim = burn_target
-			burn_victim.adjust_fire_stacks(BONFIRE_FIRE_STACK_STRENGTH * 0.5 * delta_time)
+			burn_victim.adjust_fire_stacks(BONFIRE_FIRE_STACK_STRENGTH * 0.5 * seconds_per_tick)
 			burn_victim.ignite_mob()
-		else if(isobj(burn_target))
-			var/obj/burned_object = burn_target
-			if(grill && isitem(burned_object))
-				var/obj/item/grilled_item = burned_object
-				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
+		else
+			var/atom/movable/burned_movable = burn_target
+			if(grill && isitem(burned_movable))
+				var/obj/item/grilled_item = burned_movable
+				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) //Not a big fan, maybe make this use fire_act() in the future.
 				continue
-			burned_object.fire_act(1000, 250 * delta_time)
+			burned_movable.fire_act(1000, 250 * seconds_per_tick)
 
-/obj/structure/bonfire/process(delta_time)
+/obj/structure/bonfire/process(seconds_per_tick)
 	if(!check_oxygen())
 		extinguish()
 		return
-	bonfire_burn(delta_time)
+	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()
-	if(burning)
-		icon_state = "bonfire"
-		burning = FALSE
-		set_light(0)
-		QDEL_NULL(particles)
-		STOP_PROCESSING(SSobj, src)
+	. = ..()
+	if(!burning)
+		return
+	icon_state = "bonfire"
+	burning = FALSE
+	set_light(0)
+	QDEL_NULL(particles)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)
 	if(..())
@@ -176,20 +178,4 @@
 	if(..())
 		buckled_mob.pixel_y -= 13
 
-/particles/bonfire
-	icon = 'icons/effects/particles/bonfire.dmi'
-	icon_state = "bonfire"
-	width = 100
-	height = 100
-	count = 1000
-	spawning = 4
-	lifespan = 0.7 SECONDS
-	fade = 1 SECONDS
-	grow = -0.01
-	velocity = list(0, 0)
-	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
-	gravity = list(0, 0.95)
-	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
-	rotation = 30
-	spin = generator(GEN_NUM, -20, 20)
+#undef BONFIRE_FIRE_STACK_STRENGTH

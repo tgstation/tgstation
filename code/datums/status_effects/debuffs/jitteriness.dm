@@ -29,11 +29,11 @@
 /datum/status_effect/jitter/get_examine_text()
 	switch(duration - world.time)
 		if(5 MINUTES to INFINITY)
-			return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] convulsing violently!")
+			return span_boldwarning("[owner.p_They()] [owner.p_are()] convulsing violently!")
 		if(3 MINUTES to 5 MINUTES)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] extremely jittery.")
+			return span_warning("[owner.p_They()] [owner.p_are()] extremely jittery.")
 		if(1 MINUTES to 3 MINUTES)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] twitching ever so slightly.")
+			return span_warning("[owner.p_They()] [owner.p_are()] twitching ever so slightly.")
 
 	return null
 
@@ -43,10 +43,10 @@
 
 	qdel(src)
 
-/datum/status_effect/jitter/tick()
+/datum/status_effect/jitter/tick(seconds_between_ticks)
 	// Resting helps against jitter
 	// While resting, we lose 8 seconds of duration (4 additional ticks) per tick
-	if(owner.resting && remove_duration(4 * initial(tick_interval)))
+	if(owner.resting && remove_duration(4 * seconds_between_ticks))
 		return
 
 	var/time_left_in_seconds = (duration - world.time) / 10

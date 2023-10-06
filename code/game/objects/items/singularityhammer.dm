@@ -1,6 +1,7 @@
 /obj/item/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
+	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -78,6 +79,7 @@
 /obj/item/mjollnir
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
+	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjolnir"

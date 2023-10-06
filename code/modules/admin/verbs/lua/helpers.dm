@@ -34,17 +34,3 @@
 #undef PROMISE_PENDING
 #undef PROMISE_RESOLVED
 #undef PROMISE_REJECTED
-
-/**
- * When a datum is created from lua, it gets held in `SSlua.gc_guard`, and later,
- * in the calling state datum's `var/list/references`, just in case it would be garbage
- * collected due to there not being any references that BYOND recognizes. To avoid harddels,
- * we register this proc as a signal handler any time a DM function called from lua returns
- * a datum.
- */
-/datum/proc/lua_reference_cleanup()
-	SIGNAL_HANDLER
-	if(SSlua.gc_guard == src)
-		SSlua.gc_guard = null
-	for(var/datum/lua_state/state in SSlua.states)
-		state.references -= src

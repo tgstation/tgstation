@@ -108,3 +108,4 @@
 	test("a", list("a", "a", "b", "b", "c", "c", "d", "d"), "a")
 
 #undef SECURITY_OFFICER_DEPARTMENTS
+#undef SECURITY_OFFICER_DEPARTMENTS_TO_NAMES

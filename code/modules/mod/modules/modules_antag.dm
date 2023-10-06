@@ -128,8 +128,17 @@
 	qdel(shield)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
-/obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
+/obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text = "the attack",
+	attack_type = MELEE_ATTACK,
+	armour_penetration = 0,
+	damage_type = BRUTE
+)
+	SIGNAL_HANDLER
+
+	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
 		drain_power(use_power_cost)
 		return SHIELD_BLOCK
 	return NONE
@@ -494,3 +503,19 @@
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+
+///Medbeam - Medbeam but built into a modsuit
+/obj/item/mod/module/medbeam
+	name = "MOD Medbeam Module"
+	desc = "A wrist mounted variant of the medbeam gun, allowing the user to heal their allies without the risk of dropping it."
+	icon_state = "chronogun"
+	module_type = MODULE_ACTIVE
+	complexity = 1
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	device = /obj/item/gun/medbeam/mod
+	incompatible_modules = list(/obj/item/mod/module/medbeam)
+	removable = TRUE
+	cooldown_time = 0.5
+
+/obj/item/gun/medbeam/mod
+	name = "MOD medbeam"

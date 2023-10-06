@@ -162,7 +162,7 @@
 		if(tgui_alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
 			if(tgui_alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", list("Yes", "No")) == "Yes")
 				message_admins(span_adminnotice("[key_name_admin(usr)] has ended the round."))
-				SSticker.force_ending = TRUE //Yeah there we go APC destroyed mission accomplished
+				SSticker.force_ending = ADMIN_FORCE_END_ROUND //Yeah there we go APC destroyed mission accomplished
 				return
 			else
 				message_admins(span_adminnotice("[key_name_admin(usr)] decided against ending the round."))
@@ -430,6 +430,39 @@
 		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
 		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
 
+	else if (href_list["f_dynamic_ruleset_manage"])
+		if(!check_rights(R_ADMIN))
+			return
+		dynamic_ruleset_manager(usr)
+	else if (href_list["f_dynamic_ruleset_force_all_on"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_off"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_reset"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_NOT_FORCED)
+	else if (href_list["f_dynamic_ruleset_force_on"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_on"]), RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_off"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_off"]), RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_reset"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_reset"]), RULESET_NOT_FORCED)
+	else if (href_list["f_inspect_ruleset"])
+		if(!check_rights(R_ADMIN))
+			return
+		usr.client.debug_variables(locate(href_list["f_inspect_ruleset"]))
+
 	else if (href_list["f_dynamic_options"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -652,7 +685,7 @@
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/costume/buttondown/slacks/service(observer), ITEM_SLOT_ICLOTHING)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
@@ -819,7 +852,7 @@
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status: [status]"
 			health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
-			health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.getOrganLoss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
+			health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -866,14 +899,13 @@
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
-				var/newtime = null
-				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
-				if(!newtime)
-					to_chat(src.owner, "Setting to amount of positions filled for the job", confidential = TRUE)
-					job.total_positions = job.current_positions
-					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [job.total_positions]")
+				var/newslots = null
+				newslots = input(usr, "How many job slots do you want?", "Add job slots", "[newslots]") as num|null
+				if(!isnull(newslots))
+					to_chat(src.owner, "Job slots for [job.title] set to [newslots]" , confidential = TRUE)
+					job.total_positions = newslots
+					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [newslots]")
 					break
-				job.total_positions = newtime
 
 		src.manage_free_slots()
 
@@ -1061,8 +1093,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
-		var/datum/language_holder/H = M.get_language_holder()
-		H.open_language_menu(usr)
+		M.get_language_holder().open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
@@ -1121,6 +1152,15 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs", confidential = TRUE)
 			return
 		M.mind_initialize()
+
+	else if(href_list["player_ticket_history"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/target_ckey = href_list["player_ticket_history"]
+		GLOB.player_ticket_history.cache_history_for_ckey(target_ckey)
+		GLOB.player_ticket_history.user_selections[usr.ckey] = target_ckey
+		GLOB.player_ticket_history.ui_interact(usr)
+		return
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
@@ -1260,16 +1300,16 @@
 			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
 					break
 		return
 
@@ -1300,7 +1340,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
@@ -1474,20 +1514,22 @@
 	else if(href_list["slowquery"])
 		if(!check_rights(R_ADMIN))
 			return
+
+		var/data = list("key" = usr.key)
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
-			log_query_debug("[usr.key] | Reported a server hang")
 			if(tgui_alert(usr, "Did you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
-					log_query_debug("[usr.key] | [response]")
+					data["response"] = response
+			logger.Log(LOG_CATEGORY_DEBUG_SQL, "server hang", data)
 		else if(answer == "no")
-			log_query_debug("[usr.key] | Reported no server hang")
+			logger.Log(LOG_CATEGORY_DEBUG_SQL, "no server hang", data)
 
 	else if(href_list["ctf_toggle"])
 		if(!check_rights(R_ADMIN))
 			return
-		toggle_id_ctf(usr, "centcom")
+		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
 
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))
@@ -1748,3 +1790,19 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+	else if(href_list["play_internet"])
+		if(!check_rights(R_SOUND))
+			return
+
+		var/credit = href_list["credit"]
+		var/link_url = href_list["play_internet"]
+		if(!link_url)
+			return
+
+		web_sound(usr, link_url, credit)
+
+	else if(href_list["debug_z_levels"])
+		if(!check_rights(R_DEBUG))
+			return
+
+		owner.debug_z_levels()

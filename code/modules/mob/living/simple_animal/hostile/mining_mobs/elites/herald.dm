@@ -19,11 +19,14 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald
 	name = "herald"
 	desc = "A monstrous beast which fires deadly projectiles at threats and prey."
+	icon = 'icons/mob/simple/lavaland/lavaland_elites_64.dmi'
 	icon_state = "herald"
 	icon_living = "herald"
 	icon_aggro = "herald"
 	icon_dead = "herald_dying"
 	icon_gib = "syndicate_gib"
+	pixel_x = -16
+	base_pixel_x = -16
 	health_doll_icon = "herald"
 	maxHealth = 1000
 	health = 1000
@@ -199,6 +202,8 @@
 	maxHealth = 60
 	icon_state = "herald_mirror"
 	icon_aggro = "herald_mirror"
+	pixel_x = -16
+	base_pixel_x = -16
 	death_message = "shatters violently!"
 	death_sound = 'sound/effects/glassbr1.ogg'
 	del_on_death = TRUE
@@ -244,14 +249,15 @@
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	firer.forceMove(get_turf(src))
+	if(!QDELETED(firer))
+		firer.forceMove(get_turf(src))
 
 //Herald's loot: Cloak of the Prophet
 
 /obj/item/clothing/neck/cloak/herald_cloak
 	name = "cloak of the prophet"
 	desc = "A cloak which protects you from the heresy of the world."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "herald_cloak"
 	body_parts_covered = CHEST|GROIN|ARMS
 	hit_reaction_chance = 20
@@ -277,3 +283,8 @@
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
+
+#undef HERALD_TRISHOT
+#undef HERALD_DIRECTIONALSHOT
+#undef HERALD_TELESHOT
+#undef HERALD_MIRROR

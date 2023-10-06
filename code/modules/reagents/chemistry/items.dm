@@ -180,7 +180,7 @@
 				to_chat(user, span_warning("[src] is full."))
 				return
 
-			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
+			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
 			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
 	if(I.heat < 1000)
 		return
@@ -231,6 +231,7 @@
 	update_icon()
 
 /obj/item/burner/extinguish()
+	. = ..()
 	set_lit(FALSE)
 
 /obj/item/burner/attack_self(mob/living/user)
@@ -342,3 +343,6 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+
+#undef DETAILED_CHEM_OUTPUT
+#undef SHORTENED_CHEM_OUTPUT

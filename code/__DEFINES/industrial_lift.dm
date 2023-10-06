@@ -12,18 +12,22 @@
 ///debug lift_id
 #define DEBUG_LIFT_ID "debug"
 
+///used for navigation aids that aren't actual platforms
+#define TRAM_NAV_BEACONS "tram_nav"
+#define IMMOVABLE_ROD_DESTINATIONS "immovable_rod"
 
 //specific_lift_id's
 ///the specific_lift_id of the main station tram landmark for tramstation that spawns roundstart.
 #define MAIN_STATION_TRAM "main station tram"
 ///the specific_lift_id of the tram on the hilbert research station
 #define HILBERT_TRAM "tram_hilbert"
+///the specific_lift_id of the trams on birdshot station
+#define PRISON_TRAM "prison_tram"
+#define MAINTENANCE_TRAM "maint_tram"
 
 // Defines for update_lift_doors
 #define OPEN_DOORS "open"
 #define CLOSE_DOORS "close"
-#define LOCK_DOORS "lock"
-#define UNLOCK_DOORS "unlock"
 
 // Defines for the state of tram destination signs
 #define DESTINATION_WEST_ACTIVE "west_active"

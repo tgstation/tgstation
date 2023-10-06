@@ -5,17 +5,17 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "h" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/east,
-/obj/item/storage/book/bible{
+/obj/structure/window/spawner/directional/east,
+/obj/item/book/bible{
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/storage/book/bible,
-/obj/item/storage/book/bible{
+/obj/item/book/bible,
+/obj/item/book/bible{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -36,14 +36,14 @@
 /area/template_noop)
 "s" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/item/storage/dice,
 /obj/item/storage/dice{
 	pixel_x = 4;
 	pixel_y = 3
 	},
 /obj/effect/spawner/random/entertainment/deck,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -89,21 +89,21 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "P" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/item/storage/crayons,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "W" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/item/modular_computer/laptop/preset/civilian{
 	pixel_y = 4;
 	pixel_x = 4
 	},
 /obj/item/modular_computer/laptop/preset/civilian,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)

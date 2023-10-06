@@ -59,4 +59,5 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/pig,
 	)

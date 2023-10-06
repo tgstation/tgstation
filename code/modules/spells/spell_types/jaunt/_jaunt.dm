@@ -19,6 +19,12 @@
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
+/datum/action/cooldown/spell/jaunt/get_caster_from_target(atom/target)
+	if(istype(target.loc, jaunt_type))
+		return target
+
+	return ..()
+
 /datum/action/cooldown/spell/jaunt/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_FEEDBACK // Don't do the feedback until after we're jaunting
 
@@ -56,11 +62,11 @@
 
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
 	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, PROC_REF(on_jaunt_exited))
-	spell_requirements |= SPELL_CASTABLE_WHILE_PHASED
-	jaunter.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN), REF(src))
+	check_flags &= ~AB_CHECK_PHASED
+	jaunter.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE), REF(src))
 	// Don't do the feedback until we have runechat hidden.
 	// Otherwise the text will follow the jaunt holder, which reveals where our caster is travelling.
-	spell_feedback()
+	spell_feedback(jaunter)
 
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
@@ -100,8 +106,8 @@
  */
 /datum/action/cooldown/spell/jaunt/proc/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	SHOULD_CALL_PARENT(TRUE)
-	spell_requirements &= ~SPELL_CASTABLE_WHILE_PHASED
-	unjaunter.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN), REF(src))
+	check_flags |= AB_CHECK_PHASED
+	unjaunter.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE), REF(src))
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
 

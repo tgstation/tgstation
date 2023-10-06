@@ -4,7 +4,7 @@
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	icon_state = "album"
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
@@ -122,3 +122,8 @@
 
 /obj/item/storage/photo_album/personal
 	icon_state = "album_green"
+
+/obj/item/storage/photo_album/hall_of_fame
+	name = "photo album (Hall of Fame)"
+	icon_state = "album_red"
+	persistence_id = "hall_of_fame"

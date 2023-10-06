@@ -116,13 +116,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"u" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
 "w" = (
 /turf/template_noop,
 /area/template_noop)
@@ -147,9 +140,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"B" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium,
+"C" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "G" = (
 /obj/machinery/conveyor{
@@ -193,7 +187,7 @@ e
 P
 R
 n
-B
+n
 n
 g
 b
@@ -208,7 +202,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (4,1,1) = {"
@@ -220,7 +214,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (5,1,1) = {"
@@ -232,7 +226,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (6,1,1) = {"

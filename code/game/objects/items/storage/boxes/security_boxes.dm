@@ -209,8 +209,8 @@
 		new /obj/item/restraints/handcuffs/alien(src)
 
 /obj/item/storage/box/rubbershot
-	name = "box of rubber shots"
-	desc = "A box full of rubber shots, designed for riot shotguns."
+	name = "box of shotgun shells (Less Lethal - Rubber Shot)"
+	desc = "A box full of rubber shot shotgun shells, designed for shotguns."
 	icon_state = "rubbershot_box"
 	illustration = null
 
@@ -219,8 +219,8 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
-	desc = "A box full of lethal shots, designed for riot shotguns."
+	name = "box of shotgun shells (Lethal)"
+	desc = "A box full of lethal shotgun shells, designed for shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
 
@@ -229,14 +229,24 @@
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
 /obj/item/storage/box/beanbag
-	name = "box of beanbags"
-	desc = "A box full of beanbag shells."
+	name = "box of shotgun shells (Less Lethal - Beanbag)"
+	desc = "A box full of beanbag shotgun shells, designed for shotguns."
 	icon_state = "beanbagshot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/storage/box/breacherslug
+	name = "box of breaching shotgun shells"
+	desc = "A box full of breaching slugs, designed for rapid entry, not very effective against anything else."
+	icon_state = "breacher_box"
+	illustration = null
+
+/obj/item/storage/box/breacherslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/breacher(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"

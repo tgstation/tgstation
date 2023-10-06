@@ -2,7 +2,7 @@
 /obj/machinery/pdapainter
 	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/machines/pda.dmi'
 	icon_state = "pdapainter"
 	base_icon_state = "pdapainter"
 	density = TRUE
@@ -93,11 +93,12 @@
 			if(stored_id_card)
 				SSexplosions.low_mov_atom += stored_id_card
 
-/obj/machinery/pdapainter/handle_atom_del(atom/A)
-	if(A == stored_pda)
+/obj/machinery/pdapainter/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored_pda)
 		stored_pda = null
 		update_appearance(UPDATE_ICON)
-	if(A == stored_id_card)
+	if(gone == stored_id_card)
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 
@@ -110,7 +111,7 @@
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
 		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-			if(!O.tool_start_check(user, amount=0))
+			if(!O.tool_start_check(user, amount=1))
 				return
 			user.visible_message(span_notice("[user] is repairing [src]."), \
 							span_notice("You begin repairing [src]..."), \
@@ -238,6 +239,7 @@
  */
 /obj/machinery/pdapainter/proc/eject_id_card(mob/living/user)
 	if(stored_id_card)
+		GLOB.manifest.modify(stored_id_card.registered_name, stored_id_card.assignment, stored_id_card.get_trim_assignment())
 		if(user && !issilicon(user) && in_range(src, user))
 			user.put_in_hands(stored_id_card)
 		else
@@ -334,6 +336,12 @@
 			stored_pda.icon_state = initial(pda_path.icon_state)
 			stored_pda.desc = initial(pda_path.desc)
 
+			return TRUE
+		if("reset_pda")
+			if((machine_stat & BROKEN) || !stored_pda)
+				return TRUE
+
+			stored_pda.reset_imprint()
 			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)

@@ -20,7 +20,6 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
-
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -65,6 +64,14 @@
 	name = "Derelict Tradepost"
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
+
+/datum/map_template/ruin/space/derelict_construction
+	id = "derelict_construction"
+	suffix = "derelict_construction.dmm"
+	name = "Derelict Construction"
+	description = "Construction supplies are in high demand due to non-trivial damage routinely sustained by most space stations in this sector. \
+	Space pirates who dont attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
+	equipment back to the highest bidder."
 
 /datum/map_template/ruin/space/derelict_sulaco
 	id = "derelict_sulaco"
@@ -118,6 +125,12 @@
 	suffix = "derelict8.dmm"
 	name = "Derelict 8"
 	description = "An auxiliary storage bay might be the least respected room on any functional station, but studies show they are the least likely to be hit in an artillery strike."
+
+/datum/map_template/ruin/space/derelict9
+	id = "derelict9"
+	suffix = "derelict9.dmm"
+	name = "Derelict 9"
+	description = "Someone already found this high-security supply cache already, but were unable to get inside. Perhaps the next visitor will have more luck."
 
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
@@ -190,14 +203,14 @@
 
 /datum/map_template/ruin/space/djstation
 	id = "djstation"
-	suffix = "djstation.dmm"
+	suffix = "dj_station.dmm"
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
-	suffix = "thederelict.dmm"
+	suffix = "russian_derelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
@@ -351,6 +364,18 @@
 	name = "Alternate Sciences Research Center"
 	description = "When you're messing with the occult, who knows what you're going to get?"
 
+/datum/map_template/ruin/space/anomaly_research
+	id = "anomaly_research"
+	suffix = "anomaly_research.dmm"
+	name = "Anomaly Research"
+	description = "A secret research lab embedded in arctic rock, belonging to a Dr Anna Molly. What could she have been researching?"
+
+/datum/map_template/ruin/space/meateor
+	id = "meateor"
+	suffix = "meateor.dmm"
+	name = "Meateor"
+	description = "A big chunk of meat floating in space. How did it get there?"
+
 /datum/map_template/ruin/space/the_faceoff
 	id = "the_faceoff"
 	suffix = "the_faceoff.dmm"
@@ -362,3 +387,99 @@
 	suffix = "meatderelict.dmm"
 	name = "Quantum Research Outpost"
 	description = "A quantum teleportation experiment gone wrong."
+
+/datum/map_template/ruin/space/ghost_restaurant
+	id = "space_ghost_restaurant.dmm"
+	suffix = "space_ghost_restaurant.dmm"
+	name = "Space Ghost Restaurant"
+	description = "Ever wondered where the restaurant robots come from? On this ruined station, NTgrub interns dressed up robots in clothes, and sent them to stations to cook their meal orders for them."
+
+/datum/map_template/ruin/space/atmosasteroidruin
+	id = "atmosasteroidruin"
+	suffix = "atmosasteroidruin.dmm"
+	name = "Atmos Asteroid"
+	description = "A dead atmos tech in a continuously pressurizing ruin."
+
+/datum/map_template/ruin/space/massdriverrouter
+	id = "fasttravel"
+	suffix = "fasttravel.dmm"
+	name = "Mass driver Router"
+	description = "An old, still functional router for some long destroyed system."
+
+/datum/map_template/ruin/space/prey_pod
+	id = "prey"
+	suffix = "prey_pod.dmm"
+	name = "Crashed Mimic Escape Pod"
+	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/travelers_rest
+	id = "travelers_rest"
+	suffix = "travelers_rest.dmm"
+	name = "Traveler's Rest"
+	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/prison_shuttle
+	id = "prison_shuttle"
+	suffix = "prison_shuttle.dmm"
+	name = "Crashed Prisoner Shuttle"
+	description = "A prisoner transport shuttle that had crashed into a stray asteroid long ago."
+
+/datum/map_template/ruin/space/botanical_haven
+	id = "botanical_haven"
+	suffix = "botanical_haven.dmm"
+	name = "Botanical Haven"
+	description = "A small sanctuary for plants and botanists, hidden away in a rusted structure."
+
+/datum/map_template/ruin/space/pod_crash
+	id = "pod_crash"
+	suffix = "pod_crash.dmm"
+	name = "Pod Crash"
+	description = "A tragic display of what happens to drivers who pda and pod."
+
+/datum/map_template/ruin/space/interdyne
+	id = "interdyne"
+	suffix = "interdyne.dmm"
+	name = "Interdyne Spinward Research Base"
+	description = "An Interdyne facility abandoned due to the accidental discovery of Romerol"
+
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+
+/datum/map_template/ruin/space/allamericandiner
+	id = "allamericandiner"
+	suffix = "allamericandiner.dmm"
+	name = "The All-American Diner"
+	description = "A mothballed \"Restaurant\" station of the popular \"The All-American Diner\" franchise."
+
+/datum/map_template/ruin/space/mimesvclowns
+	id = "mimesvclowns"
+	suffix = "mimesvsclowns.dmm"
+	name = "Abandoned Mime Outpost"
+	description = "When you fight mimes, you better bring more than slips."
+
+/datum/map_template/ruin/space/transit_booth
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
+	description = "Make sure to check out the duty-free store!"
+
+/datum/map_template/ruin/space/space_phonebooth
+	id = "Space_phonebooth"
+	suffix = "phonebooth.dmm"
+	name = "Space Phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads."
+
+/datum/map_template/ruin/space/the_outlet
+	id = "the_outlet"
+	suffix = "the_outlet.dmm"
+	name = "calebs krazy clothing outlet"
+	description = "A decrepit clothing store built into an asteroid. It appears long since abandoned and has fallen into disrepair."
+
+/datum/map_template/ruin/space/infested_frigate
+	id = "infested_frigate"
+	suffix = "infested_frigate.dmm"
+	name = "SYN-C Brutus"
+	description = "This wasn't an outbreak, this was a repelled attack."

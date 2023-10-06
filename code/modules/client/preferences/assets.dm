@@ -15,9 +15,8 @@
 		if (!preference.should_generate_icons)
 			continue
 
-		var/list/choices = preference.get_choices_serialized()
-		for (var/preference_value in choices)
-			var/create_icon_of = choices[preference_value]
+		for (var/preference_value in preference.get_choices())
+			var/create_icon_of = preference.icon_for(preference_value)
 
 			var/icon/icon
 			var/icon_state
@@ -31,8 +30,8 @@
 			else
 				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
 
-			to_insert[preference.get_spritesheet_key(preference_value)] = list(icon, icon_state)
-	
+			to_insert[preference.get_spritesheet_key(preference.serialize(preference_value))] = list(icon, icon_state)
+
 	for (var/spritesheet_key in to_insert)
 		var/list/inserting = to_insert[spritesheet_key]
 		Insert(spritesheet_key, inserting[1], inserting[2])

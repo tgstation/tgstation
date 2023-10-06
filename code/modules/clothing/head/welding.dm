@@ -6,7 +6,7 @@
 	inhand_icon_state = "welding"
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor_type = /datum/armor/utility_welding
@@ -15,7 +15,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
-	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 
 /datum/armor/utility_welding
 	melee = 10

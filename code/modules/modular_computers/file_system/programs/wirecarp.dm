@@ -12,9 +12,6 @@
 	program_icon = "network-wired"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("resetIDS")
 			SSmodular_computers.intrusion_detection_alarm = FALSE
@@ -22,56 +19,51 @@
 		if("toggleIDS")
 			SSmodular_computers.intrusion_detection_enabled = !SSmodular_computers.intrusion_detection_enabled
 			return TRUE
+		if("toggle_relay")
+			var/obj/machinery/ntnet_relay/target_relay = locate(params["ref"]) in GLOB.ntnet_relays
+			if(!istype(target_relay))
+				return
+			target_relay.set_relay_enabled(!target_relay.relay_enabled)
+			return TRUE
 		if("purgelogs")
-			SSnetworks.purge_logs()
-			return TRUE
-		if("updatemaxlogs")
-			var/logcount = params["new_number"]
-			SSnetworks.update_max_log_count(logcount)
-			return TRUE
-		if("toggle_function")
-			SSmodular_computers.toggle_function(text2num(params["id"]))
+			SSmodular_computers.purge_logs()
 			return TRUE
 		if("toggle_mass_pda")
-			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
-			if(!istype(target_tablet))
+			if(!(params["ref"] in GLOB.pda_messengers))
 				return
-			for(var/datum/computer_file/program/messenger/messenger_app in target_tablet.stored_files)
-				messenger_app.spam_mode = !messenger_app.spam_mode
+			var/datum/computer_file/program/messenger/target_messenger = GLOB.pda_messengers[params["ref"]]
+			target_messenger.spam_mode = !target_messenger.spam_mode
+			return TRUE
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
 	var/list/data = list()
 
-	data["ntnetstatus"] = SSmodular_computers.check_function()
-	data["ntnetrelays"] = SSmodular_computers.ntnet_relays.len
+	data["ntnetrelays"] = list()
+	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+		var/list/relay_data = list()
+		relay_data["is_operational"] = !!relays.is_operational
+		relay_data["name"] = relays.name
+		relay_data["ref"] = REF(relays)
 
-	data["config_softwaredownload"] = SSmodular_computers.setting_softwaredownload
-	data["config_communication"] = SSmodular_computers.setting_communication
+		data["ntnetrelays"] += list(relay_data)
 
 	data["idsstatus"] = SSmodular_computers.intrusion_detection_enabled
 	data["idsalarm"] = SSmodular_computers.intrusion_detection_alarm
 
 	data["ntnetlogs"] = list()
-	for(var/i in SSnetworks.logs)
+	for(var/i in SSmodular_computers.logs)
 		data["ntnetlogs"] += list(list("entry" = i))
-	data["ntnetmaxlogs"] = SSnetworks.setting_maxlogcount
 
 	data["tablets"] = list()
-	for(var/obj/item/modular_computer/messenger as anything in GetViewableDevices())
-		var/list/tablet_data = list()
-		if(messenger.saved_identification)
-			for(var/datum/computer_file/program/messenger/messenger_app in computer.stored_files)
-				tablet_data["enabled_spam"] += messenger_app.spam_mode
+	for(var/messenger_ref in get_messengers_sorted_by_name())
+		var/datum/computer_file/program/messenger/app = GLOB.pda_messengers[messenger_ref]
+		var/obj/item/modular_computer/pda = app.computer
 
-			tablet_data["name"] += messenger.saved_identification
-			tablet_data["ref"] += REF(messenger)
+		var/list/tablet_data = list()
+		tablet_data["enabled_spam"] = app.spam_mode
+		tablet_data["name"] = pda.saved_identification
+		tablet_data["ref"] = REF(app)
 
 		data["tablets"] += list(tablet_data)
 
-	return data
-
-/datum/computer_file/program/ntnetmonitor/ui_static_data(mob/user)
-	var/list/data = ..()
-	data["minlogs"] = MIN_NTNET_LOGS
-	data["maxlogs"] = MAX_NTNET_LOGS
 	return data

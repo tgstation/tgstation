@@ -29,6 +29,7 @@
 	melee_damage_upper = 0
 	attack_sound = 'sound/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	melee_attack_cooldown = 2.5 SECONDS
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	friendly_verb_continuous = "floats near"
@@ -49,11 +50,13 @@
 
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, loot = list(/obj/item/fugu_gland))
+	AddComponent(/datum/component/seethrough_mob)
+	var/static/list/death_loot = list(/obj/item/fugu_gland)
+	AddElement(/datum/element/death_drops, death_loot)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)
 	expand = new(src)
 	expand.Grant(src)
-	ai_controller.blackboard[BB_FUGU_INFLATE] = WEAKREF(expand)
+	ai_controller.set_blackboard_key(BB_FUGU_INFLATE, expand)
 
 /mob/living/basic/wumborian_fugu/Destroy()
 	QDEL_NULL(expand)

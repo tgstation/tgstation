@@ -12,6 +12,7 @@
 /obj/machinery/ltsrbt
 	name = "Long-To-Short-Range-Bluespace-Transceiver"
 	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
@@ -69,12 +70,12 @@
 		return
 	queue += purchase
 
-/obj/machinery/ltsrbt/process(delta_time)
+/obj/machinery/ltsrbt/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 
 	if(recharge_cooldown > 0)
-		recharge_cooldown -= delta_time
+		recharge_cooldown -= seconds_per_tick
 		return
 
 	var/turf/T = get_turf(src)

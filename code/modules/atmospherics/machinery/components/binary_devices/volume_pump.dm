@@ -1,11 +1,11 @@
-// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+// Every cycle, the pump uses the air in air_in to try and move a specific volume of gas into air_out.
 //
-// node1, air1, network1 correspond to input
-// node2, air2, network2 correspond to output
+// node1, air1, network1 corresponds to input
+// node2, air2, network2 corresponds to output
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
+//     This is the volume of gas available to the pump that may be transferred to the output
 //   air2.volume
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
@@ -23,16 +23,20 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
+	///flashing light overlay which appears on multitooled vol pumps
+	var/mutable_appearance/overclock_overlay
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_volume_pump,
 	))
+	register_context()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
 		set_on(!on)
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 	return ..()
@@ -47,6 +51,14 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
+	var/altlayeroverlay = FALSE
+	if(set_overlay_offset(piping_layer) == 2)
+		altlayeroverlay = TRUE
+	overclock_overlay = mutable_appearance('icons/obj/machines/atmospherics/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
+	if(overclocked && on && is_operational)
+		add_overlay(overclock_overlay)
+	else
+		cut_overlay(overclock_overlay)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 	if(!on || !is_operational)
@@ -60,12 +72,8 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
-
-	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
-		return
-
 
 	var/transfer_ratio = transfer_rate / air1.volume
 
@@ -86,8 +94,17 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
+	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
+	if(held_item && held_item.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "[overclocked ? "En" : "Dis"]able pressure limits"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -134,9 +151,11 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
+		update_icon()
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
+		update_icon()
 	return TRUE
 
 // mapping

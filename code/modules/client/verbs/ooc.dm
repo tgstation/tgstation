@@ -13,6 +13,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(!mob)
 		return
 
+	VALIDATE_CLIENT(src)
+
 	if(!holder)
 		if(!GLOB.ooc_allowed)
 			to_chat(src, span_danger("OOC is globally muted."))
@@ -66,7 +68,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	if(!(prefs.chat_toggles & CHAT_OOC))
+	if(!(get_chat_toggles(src) & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
 
@@ -83,7 +85,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	for(var/client/receiver as anything in GLOB.clients)
 		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
 			continue
-		if(!(receiver.prefs.chat_toggles & CHAT_OOC))
+		if(!(get_chat_toggles(receiver) & CHAT_OOC))
 			continue
 		if(holder?.fakekey in receiver.prefs.ignoring)
 			continue
@@ -417,9 +419,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
-		INVOKE_ASYNC(src, .verb/fit_viewport)
+		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 	else //Delayed to avoid wingets from Login calls.
-		addtimer(CALLBACK(src, .verb/fit_viewport, 1 SECONDS))
+		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
 /client/verb/policy()
 	set name = "Show Policy"
@@ -447,3 +449,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set hidden = TRUE
 
 	init_verbs()
+
+/client/proc/export_preferences()
+	set name = "Export Preferences"
+	set desc = "Export your current preferences to a file."
+	set category = "OOC"
+
+	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
+
+	prefs.savefile.export_json_to_client(usr, ckey)

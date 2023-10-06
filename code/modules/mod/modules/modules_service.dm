@@ -27,7 +27,7 @@
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
@@ -69,7 +69,7 @@
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 
 /obj/item/mod/module/waddle/on_suit_activation()
-	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	mod.wearer.AddElement(/datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)

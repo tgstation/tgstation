@@ -1,3 +1,11 @@
+#define HULL_BREACH 1
+#define LINE_SPACE_MODE 2
+#define FIX_TILE 3
+#define AUTO_TILE 4
+#define PLACE_TILE 5
+#define REPLACE_TILE 6
+#define TILE_EMAG 7
+
 //Floorbot
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
@@ -14,6 +22,7 @@
 	bot_type = FLOOR_BOT
 	hackables = "floor construction protocols"
 	path_image_color = "#FFA500"
+	possessed_message = "You are a floorbot! Repair the hull to the best of your ability!"
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
@@ -26,14 +35,6 @@
 	var/turf/target
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
-
-	#define HULL_BREACH 1
-	#define LINE_SPACE_MODE 2
-	#define FIX_TILE 3
-	#define AUTO_TILE 4
-	#define PLACE_TILE 5
-	#define REPLACE_TILE 6
-	#define TILE_EMAG 7
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
@@ -100,12 +101,13 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/floorbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
-	if(user)
-		to_chat(user, span_danger("[src] buzzes and beeps."))
+	balloon_alert(user, "safeties disabled")
+	audible_message(span_danger("[src] buzzes oddly!"))
+	return TRUE
 
 ///mobs should use move_resist instead of anchored.
 /mob/living/simple_animal/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
@@ -411,3 +413,11 @@
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
+
+#undef HULL_BREACH
+#undef LINE_SPACE_MODE
+#undef FIX_TILE
+#undef AUTO_TILE
+#undef PLACE_TILE
+#undef REPLACE_TILE
+#undef TILE_EMAG

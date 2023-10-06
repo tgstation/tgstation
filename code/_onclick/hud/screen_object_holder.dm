@@ -11,7 +11,7 @@
 
 	src.client = client
 
-	RegisterSignal(client, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
 
 /datum/screen_object_holder/Destroy()
 	clear()

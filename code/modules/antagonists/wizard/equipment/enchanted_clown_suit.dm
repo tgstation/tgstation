@@ -9,6 +9,7 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 	delete_old = FALSE
+	delete_on_failure = FALSE
 	/// Amount of time it takes you to rummage around in there
 	var/cast_time = 3 SECONDS
 	/// True while currently casting the spell
@@ -33,6 +34,7 @@
 		/obj/item/toy/foamblade = 2,
 		/obj/item/toy/gun = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/bikehorn/golden = 1,
 		/obj/item/dualsaber/toy = 1,
 		/obj/item/restraints/legcuffs/beartrap = 1,
@@ -55,7 +57,7 @@
 		return . | SPELL_CANCEL_CAST
 	casting = FALSE
 
-/datum/action/cooldown/spell/conjure_item/clown_pockets/make_item()
+/datum/action/cooldown/spell/conjure_item/clown_pockets/make_item(atom/caster)
 	item_type = pick_weight(clown_items)
 	return ..()
 

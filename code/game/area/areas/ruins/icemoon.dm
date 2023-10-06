@@ -56,3 +56,10 @@
 	sound_environment = SOUND_ENVIRONMENT_DIZZY
 	mood_bonus = -8
 	mood_message = "I can feel my lifespan shortening with every breath."
+
+/area/ruin/powered/icemoon_phone_booth
+	name = "\improper Phonebooth"
+
+/area/ruin/powered/hermit
+	name = "\improper Hermit's Cabin"
+

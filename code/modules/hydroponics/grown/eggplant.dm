@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/eggplant
 	yield = 2
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

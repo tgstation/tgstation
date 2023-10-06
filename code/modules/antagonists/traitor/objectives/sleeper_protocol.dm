@@ -42,7 +42,7 @@
 			disk = new(user.drop_location())
 			user.put_in_hands(disk)
 			AddComponent(/datum/component/traitor_objective_register, disk, \
-				fail_signals = list(COMSIG_PARENT_QDELETING))
+				fail_signals = list(COMSIG_QDELETING))
 
 /datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
@@ -88,7 +88,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
@@ -101,7 +101,13 @@
 		"The Captain is a lizardperson.",
 		"Nanotrasen isn't real.",
 		"They put something in the food to make you forget.",
-		"You are the only real person on the station."
+		"You are the only real person on the station.",
+		"Things would be a lot better on the station if more people were screaming, someone should do something about that.",
+		"The people in charge around here have only ill intentions for the crew.",
+		"Help the crew? What have they ever done for you anyways?",
+		"Does your bag feel lighter? I bet those guys in Security stole something from it. Go get it back.",
+		"Command is incompetent, someone with some REAL authority should take over around here.",
+		"The cyborgs and the AI are stalking you. What are they planning?",
 	)
 
 /datum/surgery_step/brainwash/sleeper_agent/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -2,9 +2,6 @@
 //
 // The datum containing all the chunks.
 
-#define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
-/// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
-#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
 GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
@@ -168,8 +165,9 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
 	var/turf/position = get_turf(target)
+	if(!position)
+		return
 	return checkTurfVis(position)
-
 
 /datum/cameranet/proc/checkTurfVis(turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
@@ -179,6 +177,16 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		if(chunk.visibleTurfs[position])
 			return TRUE
 	return FALSE
+
+/datum/cameranet/proc/getTurfVis(turf/position)
+	RETURN_TYPE(/datum/camerachunk)
+	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
+	if(!chunk)
+		return FALSE
+	if(chunk.changed)
+		chunk.hasChanged(1) // Update now, no matter if it's visible or not.
+	if(chunk.visibleTurfs[position])
+		return chunk
 
 /obj/effect/overlay/camera_static
 	name = "static"

@@ -4,7 +4,7 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
+/proc/spawn_rivers(target_z, nodes, turf_type, whitelist_area, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	var/width = max_x - min_x
@@ -21,15 +21,14 @@
 			num_spawned++
 
 	//make some randomly pathing rivers
-	for(var/A in river_nodes)
-		var/obj/effect/landmark/river_waypoint/W = A
-		if (W.z != target_z || W.connected)
+	for(var/obj/effect/landmark/river_waypoint/waypoints as anything in river_nodes)
+		if (waypoints.z != target_z || waypoints.connected)
 			continue
-		W.connected = TRUE
+		waypoints.connected = TRUE
 		// Workaround around ChangeTurf that's safe because of when this proc is called
-		var/turf/cur_turf = get_turf(W)
+		var/turf/cur_turf = get_turf(waypoints)
 		cur_turf = new turf_type(cur_turf)
-		var/turf/target_turf = get_turf(pick(river_nodes - W))
+		var/turf/target_turf = get_turf(pick(river_nodes - waypoints))
 		if(!target_turf)
 			break
 		var/detouring = FALSE
@@ -61,8 +60,8 @@
 				var/turf/river_turf = new turf_type(cur_turf)
 				river_turf.Spread(25, 11, whitelist_area)
 
-	for(var/WP in river_nodes)
-		qdel(WP)
+	for(var/waypoints_spawned in river_nodes)
+		qdel(waypoints_spawned)
 
 
 /obj/effect/landmark/river_waypoint
