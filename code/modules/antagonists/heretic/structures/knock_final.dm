@@ -28,7 +28,7 @@
 	. = ..()
 	transform *= 3
 	if(isnull(monster_types))
-		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) + subtypesof(/mob/living/basic/heretic_summon) - monster_types_blacklist
+		monster_types = subtypesof(/mob/living/basic/heretic_summon) - monster_types_blacklist
 	if(!isnull(ascendant_mind))
 		ascendee = ascendant_mind
 		RegisterSignals(ascendant_mind.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(end_madness))
