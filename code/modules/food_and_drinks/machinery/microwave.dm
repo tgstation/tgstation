@@ -452,11 +452,11 @@
 		if(!length(ingredients))
 			balloon_alert(user, "it's empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		switch(vampire_charging_enabled)
-			if(TRUE)
-				charge(user)
-			if(FALSE)
-				cook(user)
+		if(vampire_charging_enabled)
+			charge(user)
+		else
+			cook(user)
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/AltClick(mob/user, list/modifiers)
