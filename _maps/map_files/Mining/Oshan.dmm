@@ -365,6 +365,26 @@
 "pu" = (
 /turf/closed/wall,
 /area/station/security/prison/mess)
+"pH" = (
+/obj/structure/rack,
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "qe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -24900,7 +24920,7 @@ mt
 nW
 nW
 nW
-bE
+pH
 Jq
 Ev
 Hv
