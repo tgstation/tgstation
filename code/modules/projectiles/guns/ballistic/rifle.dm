@@ -187,7 +187,7 @@
 	internal_magazine = TRUE
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_REBAR
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
 	alternative_caliber = CALIBER_REBAR_FORCED
 	alternative_ammo_misfires = TRUE
 	bolt_wording = "bowstring"
@@ -238,13 +238,8 @@
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	must_hold_to_load = FALSE
-	mag_display = FALSE
-	empty_indicator = TRUE
-	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
-	internal_magazine = TRUE
-	can_modify_ammo = TRUE
+	w_class = WEIGHT_CLASS_NORMAL
 	initial_caliber = CALIBER_REBAR_SYNDIE
 	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
 	alternative_ammo_misfires = FALSE
@@ -253,7 +248,6 @@
 	cartridge_wording = "rod"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	fire_sound = 'sound/items/syringeproj.ogg'
-	can_be_sawn_off = FALSE
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/drop_bolt(mob/user = null)
