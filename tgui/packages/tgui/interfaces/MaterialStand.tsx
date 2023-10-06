@@ -27,7 +27,7 @@ export const MaterialStand = (props, context) => {
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
   return (
-    <Window title="MaterialStand" width={550} height={400}>
+    <Window title="Material Stand" width={550} height={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -48,9 +48,9 @@ export const MaterialStand = (props, context) => {
               />
             </Section>
           </Stack.Item>
-          <Section title="Stock" fill scrollable>
-            <Stack.Item>
-              <Flex wrap>
+          <Stack.Item grow>
+            <Section title="Stock" fill scrollable>
+              <Stack wrap>
                 {ores_filtered.map((ore) => (
                   <Flex.Item key={ore.id}>
                     <Flex direction="column" m={0.5} textAlign="center">
@@ -75,9 +75,9 @@ export const MaterialStand = (props, context) => {
                     </Flex>
                   </Flex.Item>
                 ))}
-              </Flex>
-            </Stack.Item>
-          </Section>
+              </Stack>
+            </Section>
+          </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
