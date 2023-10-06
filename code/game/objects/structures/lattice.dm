@@ -16,6 +16,8 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
 	var/obj/item/stack/build_material = /obj/item/stack/rods
+
+/datum/armor/structure_lattice
 	melee = 50
 	fire = 80
 	acid = 50

@@ -90,6 +90,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 /// Runs a speed test for all our various types
 /// Measures the average cost of providing vs spawning, and deletion vs stashing
+/// This will take for fucking ever (20 min on my machine). I'm sorry for that
 /datum/controller/subsystem/wardrobe/proc/speed_test(turf/spawn_on, attempt_count = 200)
 	var/old_overflow_lienency = overflow_lienency
 	overflow_lienency = INFINITY
@@ -98,48 +99,53 @@ SUBSYSTEM_DEF(wardrobe)
 	force_stock_wardrobe(attempt_count)
 
 	// List of lists in the form list(type, new_cost, provide_cost, qdel_cost, stash_cost)
+	// I am writing this dumb because it's very hot (lots of shit) and I don't want to add any extra time
 	var/list/type_info = list()
+	var/atom/hh
+	var/stopwatch_start
+	var/new_cost = 0
+	var/provide_cost = 0
+	var/qdel_cost = 0
+	var/stash_cost = 0
 	for(var/atom/movable/type_to_test as anything in preloaded_stock)
-		var/new_cost = 0
-		var/provide_cost = 0
-		var/qdel_cost = 0
-		var/stash_cost = 0
+		new_cost = 0
+		provide_cost = 0
+		qdel_cost = 0
+		stash_cost = 0
 		for(var/i in 1 to attempt_count)
 			// Stopwatches are one per proc, so lets give them their own scope
 			do {
-				STAT_START_STOPWATCH
-				var/atom/hh = new type_to_test(spawn_on)
-				STAT_STOP_STOPWATCH
-				new_cost += STAT_TIME
-				qdel(hh)
+				stopwatch_start = TICK_USAGE
+				hh = new type_to_test(spawn_on)
+				new_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				QDEL_NULL(hh)
 			} while(FALSE)
 			// In case subobjects are also tracked, this avoids any mistakes
 			force_stock_wardrobe(attempt_count)
 			// Now provide()
 			do {
-				STAT_START_STOPWATCH
-				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
-				STAT_STOP_STOPWATCH
-				provide_cost += STAT_TIME
-				qdel(hh)
+				stopwatch_start = TICK_USAGE
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				provide_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				QDEL_NULL(hh)
 			} while(FALSE)
 			force_stock_wardrobe(attempt_count)
 			// qdel()
 			do {
-				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
-				STAT_START_STOPWATCH
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				stopwatch_start = TICK_USAGE
 				qdel(hh)
-				STAT_STOP_STOPWATCH
-				qdel_cost += STAT_TIME
+				qdel_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				hh = null
 			} while(FALSE)
 			force_stock_wardrobe(attempt_count)
 			// stash_object()
 			do {
-				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
-				STAT_START_STOPWATCH
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				stopwatch_start = TICK_USAGE
 				SSwardrobe.stash_object(hh)
-				STAT_STOP_STOPWATCH
-				stash_cost += STAT_TIME
+				stash_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				hh = null
 			} while(FALSE)
 			force_stock_wardrobe(attempt_count)
 		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
@@ -149,28 +155,45 @@ SUBSYSTEM_DEF(wardrobe)
 	var/list/wardrobe_info = list("<B>Performance information ([attempt_count] runs)</B><BR><BR><ol>")
 	sortTim(type_info, cmp=/proc/cmp_wardrobe_performance)
 	for(var/list/deets in type_info)
-		wardrobe_info += "<li><u>[deets[1]]</u><ul>"
-		wardrobe_info += "<li>New: [deets[2]]ms</li>"
-		wardrobe_info += "<li>Provide: [deets[3]]ms</li>"
-		wardrobe_info += "<li>Qdel: [deets[4]]ms</li>"
-		wardrobe_info += "<li>Stash: [deets[5]]ms</li>"
+		wardrobe_info += "<li><u>"
+		wardrobe_info += deets[1]
+		wardrobe_info += "</u></li>"
+
+		wardrobe_info += "<li>New: "
+		wardrobe_info += deets[2]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Provide: "
+		wardrobe_info += deets[3]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Qdel: "
+		wardrobe_info += deets[4]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Stash: "
+		wardrobe_info += deets[5]
+		wardrobe_info += "ms</li>"
 		wardrobe_info += "</ul></li>"
 	wardrobe_info += "</ol>"
 
 	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
 
+/// Sorts the slowest entries up to the top, based off how long the wardrobe version takes vs the normal sort
 /proc/cmp_wardrobe_performance(list/A, list/B)
 	var/create_delta_a = A[3] - A[2]
 	var/create_delta_b = B[3] - B[2]
 	var/del_delta_a = A[5] - A[4]
 	var/del_delta_b = B[5] - B[4]
-	if((create_delta_a + del_delta_a) / 2 > (create_delta_b + del_delta_b) / 2)
+	if(create_delta_a + del_delta_a > create_delta_b + del_delta_b)
 		return 1
 	return -1
 
 /// Stocks the wardrobe to stock_to items, no more no less
 /// Only usable for testing, will not work well in production as it'll likely just get run over by other code
 /datum/controller/subsystem/wardrobe/proc/force_stock_wardrobe(stock_to)
+	var/list/canon_minimum = src.canon_minimum
+	var/list/preloaded_stock = src.preloaded_stock
 	for(var/datum/loaded_type as anything in canon_minimum)
 		var/list/stock_info = preloaded_stock[loaded_type]
 		var/amount_held = 0
@@ -286,7 +309,7 @@ SUBSYSTEM_DEF(wardrobe)
 	one_go_master++
 
 /// Canonizes a typepath if and only if initial(typepath.to_read) is truthy
-#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) \
+#define CANNONIZE_IF_VAR_TYPEPATH(typepath, type_to_make, amount, to_read) \
 	do { \
 		var##typepath/remembered = type_to_make; \
 		if(initial(remembered.##to_read)) { \
@@ -518,7 +541,7 @@ SUBSYSTEM_DEF(wardrobe)
 		CHECK_TICK
 	// I want to be prepared for explosions
 	var/turf/closed/wall/read_from = /turf/closed/wall
-	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
 	read_from = /turf/closed/wall/r_wall
 	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
 	CANNONIZE_IF_VAR(/obj/item/stack/cable_coil, 200, preload)
@@ -531,7 +554,7 @@ SUBSYSTEM_DEF(wardrobe)
 		canonize_type(secret_sauce, 5)
 		CHECK_TICK
 	// I want to be ready for exploisions and massive window shattering
-	CANNONIZE_IF_VAR(/obj/item/shard, /obj/item/shard, 200, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/shard, /obj/item/shard, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_abstract()
 	// We make and delete a LOT of these all at once (explosions, shuttles, etc)
