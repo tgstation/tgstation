@@ -514,6 +514,7 @@
 		if(prob(20))
 			n2o_euphoria = EUPHORIA_ACTIVE
 			breather.emote(pick("giggle", "laugh"))
+			breather.set_drugginess(30 SECONDS)
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
 		return
