@@ -32999,7 +32999,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "lLr" = (
@@ -37944,7 +37944,7 @@
 /obj/effect/turf_decal/box/corners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "nyi" = (

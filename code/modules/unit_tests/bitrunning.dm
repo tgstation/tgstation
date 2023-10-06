@@ -137,13 +137,11 @@
 /datum/unit_test/netpod_disconnect
 
 /datum/unit_test/netpod_disconnect/Run()
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	var/datum/mind/real_mind = WEAKREF(labrat.mind)
 
 	pod.connected = TRUE // fake connection
 	pod.disconnect_occupant()
@@ -236,7 +234,6 @@
 	labrat.mock_client = new()
 
 	var/datum/weakref/initial_mind = labrat.mind
-	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 	pod.occupant = labrat
 
 	var/datum/component/avatar_connection/connection = target.AddComponent( \
@@ -382,10 +379,12 @@
 /datum/unit_test/qserver_generate_rewards/Run()
 	SSair.can_fire = FALSE
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-	var/obj/machinery/byteforge = allocate(/obj/machinery/byteforge, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/machinery/byteforge/forge = allocate(/obj/machinery/byteforge, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	labrat.mind_initialize()
 	labrat.mock_client = new()
+
+	TEST_ASSERT_NOTNULL(forge, "this is just for variable not used error")
 
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
