@@ -129,6 +129,7 @@ SUBSYSTEM_DEF(hotspots)
 			. = TRUE
 		else
 			listed_hotspot.can_drift = FALSE
+			generate_finalized_map()
 
 		///we handle movement and recentering here
 		listed_hotspot.drift_direction = angle2dir(arctan(hotspot_center.x - stomped.x, hotspot_center.y - stomped.y))

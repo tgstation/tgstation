@@ -137,7 +137,11 @@
 	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(source_turf))
 		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 2)///giving a 1 tile leeway on stomps
 			continue
-		say("Hotspot Pinned")
+		if(!listed_hotspot.can_drift)
+			say("Hotspot Pinned!")
+		else
+			say("Hotspot Released!")
+
 	playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)
 
 	for(var/mob/any_mob in viewers(src))
