@@ -161,7 +161,7 @@
 	source = init_source
 	data = init_data
 	var/turf/T = get_turf(source)
-	levels = SSmapping.get_connected_levels(T)
+	levels = list(T.z)
 	if(!("reject" in data))
 		data["reject"] = TRUE
 
