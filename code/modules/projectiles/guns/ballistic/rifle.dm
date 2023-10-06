@@ -236,7 +236,6 @@
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
-	semi_auto = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	initial_caliber = CALIBER_REBAR_SYNDIE
 	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
