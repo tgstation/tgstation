@@ -1,628 +1,1177 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/template_noop,
-/area/template_noop)
-"b" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+"am" = (
+/obj/structure/table,
+/obj/item/tape{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/pen/blue{
+	pixel_x = -5
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"c" = (
-/obj/structure/closet/crate,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/mining_scanner,
-/obj/item/flashlight/lantern,
-/obj/item/card/id/advanced/mining,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"d" = (
-/obj/structure/closet/crate,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/mining_scanner,
-/obj/item/flashlight/lantern,
-/obj/item/card/id/advanced/mining,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"e" = (
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"f" = (
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"g" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"h" = (
-/obj/machinery/power/shuttle_engine/heater{
+"aU" = (
+/obj/structure/chair/office{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"bb" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"bu" = (
+/obj/item/stack/ore/titanium{
+	pixel_y = 10;
+	pixel_x = -10
+	},
+/obj/item/stack/ore/iron{
+	pixel_y = 10;
+	pixel_x = 10
+	},
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"bO" = (
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"ch" = (
+/obj/structure/table,
+/obj/item/chisel{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/obj/item/assembly/signaler{
+	pixel_y = 12;
+	pixel_x = 7
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"cp" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/aquarium_prop/treasure{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/item/storage/crayons,
+/obj/item/pen{
+	pixel_y = -2
+	},
+/obj/item/toy/cards/deck,
+/obj/item/toy/cards/deck/cas/black,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/tarot,
+/obj/item/toy/cards/deck/wizoff,
+/obj/item/stack/spacecash/c500,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"cy" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"cN" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"cP" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 7;
+	pixel_x = 3
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 1;
+	pixel_x = -2
+	},
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"dE" = (
+/obj/structure/table,
+/obj/item/taperecorder{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"dT" = (
+/obj/machinery/griddle,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"ed" = (
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -11;
+	pixel_y = 21
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"eJ" = (
+/obj/item/stack/sheet/glass{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/stack/cable_coil/five{
+	pixel_y = 7;
+	pixel_x = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
-"i" = (
+"fk" = (
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"fS" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"fT" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"gv" = (
+/obj/structure/closet,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"gz" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"hy" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"ir" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"kx" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"lh" = (
+/obj/machinery/computer/order_console/mining/golem,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"lF" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"lH" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/chair/wood{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"mE" = (
+/turf/open/water/jungle,
+/area/ruin/powered/golem_ship)
+"mU" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
-"j" = (
-/obj/machinery/door/airlock/titanium,
+"mX" = (
+/obj/structure/table,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"k" = (
-/obj/machinery/computer/arcade/battle,
+"nz" = (
+/obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"l" = (
+"nP" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"ok" = (
+/obj/structure/table,
+/obj/item/stack/sticky_tape{
+	pixel_y = 12;
+	pixel_x = 4
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
+/obj/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"m" = (
+"oZ" = (
+/obj/structure/closet/crate,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"pE" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"pK" = (
+/obj/item/storage/medkit/brute{
+	pixel_y = 7;
+	pixel_x = -11
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 14;
+	pixel_x = -12
+	},
+/obj/structure/table,
+/obj/item/assembly/timer{
+	pixel_y = -1;
+	pixel_x = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"pS" = (
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"qk" = (
+/obj/structure/light_construct/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"rb" = (
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/ore_redemption/offstation{
+	pixel_y = -13;
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"sa" = (
+/obj/structure/table/reinforced,
+/obj/item/disk/design_disk/golem_shell{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/item/assembly/igniter{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/stock_parts/micro_laser{
+	pixel_x = -2
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"sS" = (
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"te" = (
+/obj/structure/light_construct/directional/south,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"tA" = (
+/obj/effect/turf_decal/tile/dark_red,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"tY" = (
+/obj/item/stack/ore/plasma{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/item/stack/ore/gold{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/item/stack/ore/iron{
+	pixel_y = 5;
+	pixel_x = -10
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"un" = (
+/obj/structure/table/wood,
+/obj/item/areaeditor/blueprints/golem{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/obj/structure/light_construct/small/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"uP" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"uR" = (
+/obj/item/pickaxe,
 /obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"n" = (
-/obj/machinery/computer/order_console/mining/golem,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"o" = (
-/obj/item/resonator,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"q" = (
-/obj/structure/statue/gold/rd,
-/obj/structure/window/reinforced/spawner/directional/east{
-	name = "shrine of the liberator"
+"vr" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 14
 	},
-/obj/machinery/light/directional/west,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 7;
+	pixel_x = -1
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = -1;
+	pixel_x = -1
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"r" = (
-/obj/machinery/computer/shuttle,
+"vZ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"wN" = (
+/turf/template_noop,
+/area/template_noop)
+"wQ" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/fire{
+	pixel_y = 8;
+	pixel_x = 1
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"t" = (
-/obj/structure/extinguisher_cabinet/directional/north,
+"wT" = (
+/obj/structure/table/wood,
+/obj/item/resonator/upgraded{
+	name = "Chief Golem's Resonator";
+	pixel_y = 6;
+	pixel_x = -8
+	},
+/obj/item/paper_bin{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"xa" = (
+/obj/structure/closet,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"u" = (
+"xv" = (
+/obj/structure/table,
+/obj/item/instrument/harmonica{
+	pixel_y = 5;
+	pixel_x = -1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"xR" = (
+/obj/structure/table,
+/obj/item/folder/blue{
+	pixel_y = 1;
+	pixel_x = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/assembly/voice{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"yG" = (
+/obj/effect/turf_decal/tile/dark_red,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"zN" = (
+/obj/machinery/vending/games,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"At" = (
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Az" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Bx" = (
+/obj/item/storage/medkit/fire{
+	pixel_y = 6;
+	pixel_x = -1
+	},
+/obj/item/storage/medkit/fire{
+	pixel_y = 13;
+	pixel_x = -1
+	},
+/obj/structure/table,
+/obj/structure/light_construct/directional/south,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"BN" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"CI" = (
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Df" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/golem_ship)
+"DU" = (
+/obj/structure/light_construct/directional/north,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"DW" = (
+/obj/item/storage/bag/ore{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"EF" = (
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"ET" = (
+/obj/item/stack/ore/gold{
+	pixel_y = 7;
+	pixel_x = -11
+	},
+/obj/item/stack/ore/iron{
+	pixel_y = -17;
+	pixel_x = 10
+	},
+/obj/item/stack/ore/gold{
+	pixel_y = -16;
+	pixel_x = -6
+	},
+/obj/item/stack/ore/iron{
+	pixel_y = 7;
+	pixel_x = 12
+	},
+/obj/structure/statue/gold/rd{
+	name = "Statue of the Liberator";
+	desc = "This is a highly valuable statue made from gold. It represents the creator of your species, the Liberator."
+	},
+/obj/item/stack/ore/gold{
+	pixel_y = 18;
+	pixel_x = -8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"EY" = (
+/obj/item/stack/sheet/glass{
+	pixel_y = 7;
+	pixel_x = 12
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"FD" = (
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"Hp" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Liberator's Shrine"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"Hu" = (
+/obj/item/stack/sheet/glass{
+	pixel_y = -4;
+	pixel_x = 12
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Iu" = (
+/obj/effect/turf_decal/tile/dark_red,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"ID" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"IZ" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"Je" = (
+/obj/structure/closet/crate,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"LN" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"MC" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Ne" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Ni" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Storage"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Pa" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"Pe" = (
+/obj/structure/aquarium,
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"Pq" = (
+/obj/item/stack/sheet/glass{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Qp" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"QX" = (
+/obj/structure/table,
+/obj/item/fishing_line/reinforced{
+	pixel_y = 11;
+	pixel_x = -7
+	},
+/obj/item/fishing_line/reinforced{
+	pixel_y = 4;
+	pixel_x = 2
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Ro" = (
 /obj/structure/table/wood,
 /obj/item/bedsheet/rd/royal_cape{
 	layer = 3;
 	pixel_x = 5;
 	pixel_y = 9
 	},
+/turf/open/floor/wood,
+/area/ruin/powered/golem_ship)
+"Rt" = (
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Ta" = (
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Tn" = (
+/obj/effect/turf_decal/tile/dark_red,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"Ul" = (
+/obj/item/storage/medkit/fire{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/surgical_drapes{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Ux" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"UL" = (
+/obj/item/shovel{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"WL" = (
+/obj/item/stack/ore/gold{
+	pixel_y = 13;
+	pixel_x = -8
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 15
+	},
 /obj/item/book/manual/wiki/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/structure/window/reinforced/spawner/directional/east{
-	name = "shrine of the liberator"
-	},
-/turf/open/floor/mineral/titanium/purple,
+/turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
-"v" = (
-/obj/item/resonator/upgraded,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"w" = (
+"WM" = (
 /obj/machinery/autolathe,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"x" = (
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"y" = (
-/obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"z" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"C" = (
-/obj/item/storage/medkit/brute,
-/obj/structure/table/wood,
-/obj/item/storage/medkit/brute,
-/obj/item/areaeditor/blueprints/golem,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"D" = (
-/obj/item/storage/medkit/brute,
-/obj/structure/table/wood,
-/obj/item/storage/medkit/brute,
-/obj/item/disk/design_disk/golem_shell,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"E" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"F" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"G" = (
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/golem_ship)
-"H" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"I" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"K" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"L" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"M" = (
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"N" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"P" = (
-/obj/structure/table/wood,
-/obj/item/surgical_drapes{
-	pixel_x = 15
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire,
-/obj/item/stock_parts/matter_bin,
-/obj/item/assembly/igniter,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"Q" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"S" = (
-/obj/item/storage/medkit/fire,
-/obj/structure/table/wood,
-/obj/item/storage/medkit/fire,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"T" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"U" = (
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"V" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"W" = (
-/obj/structure/closet/crate,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/shovel,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/mining_scanner,
-/obj/item/flashlight/lantern,
-/obj/item/card/id/advanced/mining,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"X" = (
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/machine/ore_redemption/offstation,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"Y" = (
-/obj/machinery/door/airlock/titanium,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+"Xy" = (
+/obj/effect/turf_decal/tile/dark_red,
+/obj/effect/turf_decal/tile/dark_red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/golem_ship)
+"XK" = (
+/obj/structure/closet/crate/bin,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"Z" = (
-/obj/structure/ore_box,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
+"XR" = (
+/obj/item/aquarium_kit{
+	pixel_y = 12;
+	pixel_x = -5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"ZQ" = (
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"ZS" = (
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-b
-b
-b
-b
-a
-a
-a
-a
-a
-a
+wN
+Df
+lF
+lF
+Df
+wN
+wN
+wN
+lF
+lF
+lF
+lF
+lF
+lF
+wN
+wN
 "}
 (2,1,1) = {"
-a
-a
-a
-a
-a
-a
-b
-q
-u
-G
-a
-a
-a
-a
-a
-a
+Df
+Df
+WL
+Ro
+lF
+wN
+wN
+lF
+lF
+Ta
+xR
+am
+bb
+lF
+lF
+wN
 "}
 (3,1,1) = {"
-a
-a
-a
-b
-b
-H
-b
-r
-l
-G
-T
-b
-b
-a
-a
-a
+Df
+bu
+ET
+tY
+lF
+wN
+wN
+Df
+sa
+Qp
+kx
+kx
+Qp
+Bx
+Df
+wN
 "}
 (4,1,1) = {"
-a
-a
-a
-b
-k
-l
-j
-l
-l
-j
-l
-y
-b
-a
-a
-a
+lF
+cp
+cN
+lH
+Df
+lF
+lF
+Df
+WM
+sS
+sS
+sS
+sS
+pK
+lF
+wN
 "}
 (5,1,1) = {"
-a
-a
-a
-b
-l
-l
-j
-l
-l
-j
-l
-l
-b
-a
-a
-a
+lF
+Pe
+fk
+fk
+ID
+fk
+fk
+Hp
+pE
+sS
+IZ
+IZ
+sS
+mX
+lF
+wN
 "}
 (6,1,1) = {"
-b
-b
-b
-b
-L
-l
-b
-l
-l
-G
-l
-Q
-b
-b
-b
-b
+Df
+gz
+aU
+Pa
+Df
+lF
+lF
+Df
+LN
+sS
+dE
+ch
+sS
+Ul
+lF
+wN
 "}
 (7,1,1) = {"
-b
-W
-f
-j
-l
-l
-b
-l
-Q
-G
-l
-l
-j
-f
-Z
-b
+Df
+gz
+wT
+un
+Df
+wN
+wN
+Df
+uP
+sS
+kx
+kx
+sS
+cP
+Df
+wN
 "}
 (8,1,1) = {"
-b
-c
-f
-j
-l
-l
-b
-l
-l
-G
-l
-l
-j
-f
-F
-b
+Df
+Df
+lF
+Df
+Df
+wN
+Df
+Df
+Df
+qk
+sS
+sS
+nP
+Df
+Df
+wN
 "}
 (9,1,1) = {"
-b
-c
-f
-b
-M
-o
-b
-L
-l
-G
-o
-U
-b
-f
-F
-b
+wN
+wN
+wN
+wN
+wN
+wN
+lF
+zN
+ed
+sS
+sS
+sS
+sS
+dT
+lF
+wN
 "}
 (10,1,1) = {"
-b
-c
-f
-b
-m
-o
-b
-l
-l
-G
-o
-m
-b
-f
-F
-b
+wN
+wN
+mE
+mE
+Df
+Df
+Df
+hy
+sS
+sS
+sS
+XK
+fT
+wQ
+lF
+wN
 "}
 (11,1,1) = {"
-b
-c
-I
-b
-b
-j
-b
-j
-j
-G
-j
-b
-b
-V
-F
-b
+wN
+mE
+mE
+Df
+Df
+vr
+QX
+sS
+sS
+sS
+At
+Df
+Df
+Df
+Df
+Df
 "}
 (12,1,1) = {"
-b
-c
-f
-b
-l
-l
-l
-l
-l
-l
-l
-z
-b
-f
-F
-b
+wN
+mE
+mE
+Df
+bO
+XR
+fS
+fS
+ZQ
+sS
+xv
+Df
+Je
+MC
+nz
+Df
 "}
 (13,1,1) = {"
-b
-d
-f
-j
-l
-l
-l
-l
-l
-l
-l
-l
-j
-f
-F
-b
+wN
+wN
+mE
+lF
+bO
+ir
+Tn
+tA
+vZ
+pE
+Df
+Df
+pE
+MC
+MC
+Df
 "}
 (14,1,1) = {"
-b
-d
-f
-j
-l
-l
-l
-l
-l
-l
-l
-l
-j
-f
-e
-b
+wN
+wN
+wN
+lF
+cy
+ir
+Xy
+Iu
+vZ
+te
+Df
+uR
+pE
+MC
+nz
+Df
 "}
 (15,1,1) = {"
-b
-d
-f
-b
-N
-l
-l
-l
-l
-l
-l
-P
-b
-f
-f
-b
+wN
+wN
+wN
+Df
+ok
+ir
+yG
+pS
+vZ
+pE
+Ni
+pE
+pE
+DW
+MC
+Df
 "}
 (16,1,1) = {"
-T
-e
-I
-b
-l
-l
-l
-l
-l
-v
-l
-S
-b
-V
-f
-T
+wN
+wN
+wN
+lF
+Qp
+FD
+BN
+BN
+ZS
+pE
+Df
+eJ
+EY
+pE
+oZ
+Df
 "}
 (17,1,1) = {"
-T
-f
-f
-b
-l
-l
-X
-l
-l
-w
-l
-C
-b
-f
-f
-T
+wN
+wN
+wN
+lF
+Az
+sS
+EF
+Df
+Ne
+Ne
+Df
+rb
+Hu
+Rt
+gv
+Df
 "}
 (18,1,1) = {"
-b
-g
-g
-b
-n
-l
-b
-Y
-Y
-b
-x
-D
-b
-E
-E
-b
+wN
+wN
+wN
+Df
+Az
+pE
+CI
+Df
+DU
+pE
+Df
+lh
+Pq
+UL
+xa
+Df
 "}
 (19,1,1) = {"
-b
-h
-h
-b
-h
-h
-b
-t
-Q
-b
-h
-h
-b
-h
-h
-b
+wN
+wN
+wN
+Df
+Ux
+Ux
+Df
+Df
+Ne
+Ne
+Df
+Df
+Df
+Ux
+Ux
+Df
 "}
 (20,1,1) = {"
-b
-i
-i
-b
-i
-i
-b
-K
-K
-b
-i
-i
-b
-i
-i
-b
+wN
+wN
+wN
+Df
+mU
+mU
+Df
+wN
+wN
+wN
+wN
+wN
+Df
+mU
+mU
+Df
 "}
