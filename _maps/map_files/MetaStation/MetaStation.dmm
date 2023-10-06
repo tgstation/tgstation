@@ -44641,7 +44641,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "qaN" = (
-/obj/structure/table/wood,
 /obj/machinery/button/ticket_machine{
 	pixel_x = 32
 	},
