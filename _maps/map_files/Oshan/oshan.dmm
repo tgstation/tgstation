@@ -25519,7 +25519,6 @@
 	name = "Maximum Security Test Chamber";
 	req_access = list("xenobiology")
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "mYo" = (
