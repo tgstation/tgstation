@@ -207,6 +207,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	SIGNAL_HANDLER
 	stored_gun = null
 
+/// For use in AI code and other places where we'd want to faction check as if the turret were a mob
+/obj/machinery/porta_turret/proc/faction_check_mob(mob/target, exact_match)
+	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
+		var/list/faction_src = faction.Copy()
+		var/list/faction_target = target.faction.Copy()
+		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+		if(!("[REF(target)]" in faction_src))
+			faction_target -= "[REF(target)]" //same thing here.
+		return faction_check(faction_src, faction_target, TRUE)
+	return faction_check(faction, target.faction, FALSE)
+
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
 	QDEL_NULL(cover)
