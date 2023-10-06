@@ -11685,9 +11685,6 @@
 /obj/machinery/fishing_portal_generator,
 /turf/open/floor/carpet/neon/simple/cyan,
 /area/centcom/central_command_areas/admin)
-"Vc" = (
-/turf/open/space/basic,
-/area/centcom/central_command_areas/control)
 "Vd" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -57514,9 +57511,9 @@ nM
 nM
 nM
 io
-Vc
-Vc
-Vc
+aa
+aa
+aa
 io
 tN
 Ab
@@ -57771,9 +57768,9 @@ Fo
 GC
 nz
 io
-Vc
-Vc
-Vc
+aa
+aa
+aa
 io
 tO
 tN
