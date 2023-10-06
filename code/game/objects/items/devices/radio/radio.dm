@@ -399,7 +399,7 @@
 	var/turf/position = get_turf(src)
 	for(var/zlevel as anything in levels)
 		if(is_valid_z_level(zlevel, position))
-				return TRUE
+			return TRUE
 	return FALSE
 
 /obj/item/radio/proc/on_recieve_message()
