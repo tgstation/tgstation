@@ -216,7 +216,7 @@
 	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE, added_reagents)
 
 /obj/item/food/ready_donk/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type)
+	AddElement(/datum/element/microwavable, warm_type, added_reagents)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	. = ..()
