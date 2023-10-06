@@ -356,3 +356,9 @@
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/meatstation
+	id = "meatderelict"
+	suffix = "meatderelict.dmm"
+	name = "Quantum Research Outpost"
+	description = "A quantum teleportation experiment gone wrong."

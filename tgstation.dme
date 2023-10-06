@@ -3794,6 +3794,7 @@
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_vileworm.dm"
 #include "code\modules\mob\living\basic\pets\dog.dm"
 #include "code\modules\mob\living\basic\pets\pet.dm"
+#include "code\modules\mob\living\basic\ruin_defender\living_floor.dm"
 #include "code\modules\mob\living\basic\ruin_defender\stickman.dm"
 #include "code\modules\mob\living\basic\space_fauna\faithless.dm"
 #include "code\modules\mob\living\basic\space_fauna\garden_gnome.dm"

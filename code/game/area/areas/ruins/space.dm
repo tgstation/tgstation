@@ -574,3 +574,19 @@
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
+
+/area/ruin/space/has_grav/quantumresearch
+	name = "\improper Quantum Research Lobby"
+	area_flags = UNIQUE_AREA | NOTELEPORT
+
+/area/ruin/space/has_grav/quantumresearch/science
+	name = "\improper Quantum Research Science"
+
+/area/ruin/space/has_grav/quantumresearch/waste
+	name = "\improper Quantum Research Waste Disposal"
+
+/area/ruin/space/has_grav/quantumresearch/power
+	name = "\improper Quantum Research Power Closet"
+
+/area/ruin/space/has_grav/quantumresearch/tele
+	name = "\improper Quantum Research Quantum Teleporter"
