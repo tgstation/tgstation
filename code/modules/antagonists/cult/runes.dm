@@ -697,7 +697,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	barrier.Toggle()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		C.apply_damage(2, BRUTE, pick(GLOB.arm_zones))
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
