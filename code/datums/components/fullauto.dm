@@ -8,9 +8,12 @@
 	var/turf/target_loc //For dealing with locking on targets due to BYOND engine limitations (the mouse input only happening when mouse moves).
 	var/autofire_stat = AUTOFIRE_STAT_IDLE
 	var/mouse_parameters
-	var/autofire_shot_delay = 0.3 SECONDS //Time between individual shots.
-	var/mouse_status = AUTOFIRE_MOUSEUP //This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
-	var/allow_akimbo // Should dual wielding be allowed?
+	/// Time between individual shots.
+	var/autofire_shot_delay = 0.3 SECONDS 
+	/// This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
+	var/mouse_status = AUTOFIRE_MOUSEUP 
+	/// Should dual wielding be allowed?
+	var/allow_akimbo 
 
 	///windup autofire vars
 	///Whether the delay between shots increases over time, simulating a spooling weapon
