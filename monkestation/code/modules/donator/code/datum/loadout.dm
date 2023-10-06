@@ -66,3 +66,40 @@
 	name = "Naval Officer Uniform"
 	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
 	donator_only = TRUE
+
+//riddler
+/datum/loadout_item/suit/dark_hos
+	name = "Dark HoS Trenchcoat"
+	item_path = /obj/item/clothing/suit/costume/dark_hos
+	donator_only = TRUE
+
+/datum/loadout_item/head/cirno
+	name = "Dark HoS Hat"
+	item_path = /obj/item/clothing/head/costume/dark_hos
+	donator_only = TRUE
+
+/datum/loadout_item/toys/seam_plush
+	name = "Puck Plush"
+	item_path = /obj/item/toy/plush/seam
+	donator_only = TRUE
+
+//sammi
+/datum/loadout_item/toys/puck_plush
+	name = "Puck Plush"
+	item_path = /obj/item/toy/plush/puck
+	donator_only = TRUE
+
+
+//ADHDBirb
+
+/datum/loadout_item/suit/cirno_outfit
+	name = "Lemon Assault Vest"
+	item_path = /obj/item/clothing/suit/jacket/bomber/lemon
+	donator_only = TRUE
+
+
+//Random
+/datum/loadout_item/toys/spider_plush
+	name = "Spider Plush"
+	item_path = /obj/item/toy/plush/spider
+	donator_only = TRUE
