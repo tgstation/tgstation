@@ -189,7 +189,7 @@
 	return TRUE
 
 /obj/machinery/netpod/ui_interact(mob/user, datum/tgui/ui)
-	if(!is_operational)
+	if(!is_operational || occupant)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)

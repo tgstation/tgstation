@@ -24,7 +24,7 @@
 	points += generated_domain.reward_points
 	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
 
-	var/turf/dest_turf = pick(receive_turfs)
+	var/turf/dest_turf = pick(viable_cache_turfs)
 	if(isnull(dest_turf))
 		stack_trace("Failed to find a turf to spawn loot crate on.")
 		return FALSE

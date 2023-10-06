@@ -82,7 +82,6 @@
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(receive_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
