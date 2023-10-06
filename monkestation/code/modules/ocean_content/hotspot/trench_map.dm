@@ -122,6 +122,7 @@
 	ui_interact(user)
 
 /obj/item/sea_map/ui_interact(mob/user, datum/tgui/ui)
+	user.client << browse_rsc(SShotspots.map, "trenchmap.png")
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TrenchMap", name)
