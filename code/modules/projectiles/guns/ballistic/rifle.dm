@@ -194,7 +194,7 @@
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
 	misfire_probability = 25
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	fire_sound = 'sound/items/syringeproj.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
