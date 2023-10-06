@@ -14,7 +14,6 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
 
@@ -48,6 +47,14 @@
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	inhand_icon_state = "nun"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/chaplainsuit/habit
+	name = "religious tunic"
+	desc = "No nunsene clothing."
+	icon_state = "habit"
+	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT
 
@@ -143,7 +150,6 @@
 	icon_state = "clockwork_cuirass"
 	inhand_icon_state = null
 	slowdown = 0
-	clothing_flags = NONE
 
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
@@ -172,7 +178,6 @@
 	icon_state = "knight_templar"
 	inhand_icon_state = null
 	slowdown = 0
-	clothing_flags = NONE
 
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"

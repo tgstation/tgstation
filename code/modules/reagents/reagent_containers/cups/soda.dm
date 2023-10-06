@@ -21,6 +21,12 @@
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
 
+/obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
+	)
+
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
 	var/T = pick(subtypesof(/obj/item/reagent_containers/cup/soda_cans) - /obj/item/reagent_containers/cup/soda_cans/random)
@@ -36,7 +42,7 @@
 		sleep(1 SECONDS)
 	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
-	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
+	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
 	sleep(0.5 SECONDS)
 	H.say(pick(
 		"Now, Outbomb Cuban Pete, THAT was a game.",
@@ -252,6 +258,21 @@
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch
+	name = "Shambler's juice Eldritch Energy!"
+	desc = "~J'I'CE!~"
+	icon_state = "shamblerseldritch"
+	volume = 40
+	list_reagents = list(/datum/reagent/consumable/shamblers = 30, /datum/reagent/eldritch = 5)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/wellcheers
+	name = "Wellcheers Juice"
+	desc = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	icon_state = "wellcheers"
+	list_reagents = list(/datum/reagent/consumable/wellcheers = 30)
+	drink_type = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/cup/soda_cans/grey_bull
 	name = "Grey Bull"
 	desc = "Grey Bull, it gives you gloves!"
@@ -268,8 +289,51 @@
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/volt_energy
+	name = "24-Volt Energy"
+	desc = "Recharge, with 24-Volt Energy!"
+	icon_state = "volt_energy"
+	list_reagents = list(/datum/reagent/consumable/volt_energy = 30)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/melon_soda
+	name = "Kansumi Melon Soda"
+	desc = "Japan's favourite melon soda, now available in can form!"
+	icon_state = "melon_soda"
+	list_reagents = list(/datum/reagent/consumable/melon_soda = 30)
+	drink_type = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/cup/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+
+/obj/item/reagent_containers/cup/soda_cans/beer
+	name = "space beer"
+	desc = "Canned beer. In space."
+	icon_state = "space_beer"
+	volume = 40
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 40)
+	drink_type = GRAIN
+
+/obj/item/reagent_containers/cup/soda_cans/beer/rice
+	name = "rice beer"
+	desc = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
+	icon_state = "ebisu"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 40)
+
+/obj/item/reagent_containers/cup/soda_cans/beer/rice/Initialize(mapload)
+	. = ..()
+	var/brand = pick("Ebisu Super Dry", "Shimauma Ichiban", "Moonlabor Malt's")
+	name = "[brand]"
+	switch(brand)
+		if("Ebisu Super Dry")
+			icon_state = "ebisu"
+			desc = "Mars' favourite rice beer brand, 200 years running."
+		if("Shimauma Ichiban")
+			icon_state = "shimauma"
+			desc = "Mars' most middling rice beer brand. Not as popular as Ebisu, but it's comfortable in second place."
+		if("Moonlabor Malt's")
+			icon_state = "moonlabor"
+			desc = "Mars' underdog rice beer brand. Popular amongst the Yakuza, for reasons unknown."

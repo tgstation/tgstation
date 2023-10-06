@@ -5,7 +5,7 @@
  */
 /obj/structure/dispenser_bot
 	name = "dispenser"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_drone_arms"
 
 	density = FALSE

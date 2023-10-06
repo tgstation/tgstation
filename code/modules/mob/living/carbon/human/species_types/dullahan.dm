@@ -1,26 +1,20 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/internal/brain/dullahan
 	mutanteyes = /obj/item/organ/internal/eyes/dullahan
 	mutanttongue = /obj/item/organ/internal/tongue/dullahan
 	mutantears = /obj/item/organ/internal/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
@@ -76,10 +70,11 @@
 	human.reset_perspective(human)
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+	. = ..()
 	if(QDELETED(my_head))
 		my_head = null
 		human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
-		human.gib()
+		human.gib(DROP_ALL_REMAINS)
 		return
 
 	if(my_head.loc.name != human.real_name && istype(my_head.loc, /obj/item/bodypart/head))
@@ -92,7 +87,7 @@
 	if(illegal_head)
 		my_head = null
 		human.investigate_log("has been gibbed by having an illegal head put on [human.p_their()] shoulders.", INVESTIGATE_DEATHS)
-		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
+		human.gib(DROP_ALL_REMAINS) // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
 	var/obj/item/organ/internal/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
@@ -164,7 +159,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"
@@ -270,6 +265,6 @@
 		if(isdullahan(human))
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			dullahan_species.my_head = null
-			owner.gib()
+			owner.gib(DROP_ALL_REMAINS)
 	owner = null
 	return ..()

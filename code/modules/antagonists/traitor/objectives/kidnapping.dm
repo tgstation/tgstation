@@ -1,7 +1,7 @@
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
-		You'll get additional reward if %TARGET% is delivered alive."
+		If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
@@ -13,7 +13,7 @@
 	var/pod_called = FALSE
 	/// How much TC do we get from sending the target alive
 	var/alive_bonus = 0
-	/// All stripped targets belongings
+	/// All stripped targets belongings (weakrefs)
 	var/list/target_belongings = list()
 
 	duplicate_type = /datum/traitor_objective/target_player
@@ -157,7 +157,7 @@
 		return FALSE
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
@@ -168,10 +168,11 @@
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	replace_in_name("%AREA%", initial(dropoff_area.name))
+	replace_in_name("%TC%", alive_bonus)
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()
-	target = null
+	set_target(null)
 	dropoff_area = null
 
 /datum/traitor_objective/target_player/kidnapping/on_objective_taken(mob/user)
@@ -233,7 +234,7 @@
 		var/unequipped = sent_mob.transferItemToLoc(belonging)
 		if (!unequipped)
 			continue
-		target_belongings.Add(belonging)
+		target_belongings.Add(WEAKREF(belonging))
 
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
@@ -302,7 +303,10 @@
 			continue
 		sent_mob.dropItemToGround(belonging) // No souvenirs, except shoes and t-shirts
 
-	for(var/obj/item/belonging in target_belongings)
+	for(var/datum/weakref/belonging_ref in target_belongings)
+		var/obj/item/belonging = belonging_ref.resolve()
+		if(!belonging)
+			continue
 		belonging.forceMove(return_pod)
 
 	sent_mob.forceMove(return_pod)

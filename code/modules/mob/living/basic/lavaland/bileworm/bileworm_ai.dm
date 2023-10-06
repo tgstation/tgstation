@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/bileworm
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/bileworm(),
 	)
 
 	planning_subtrees = list(
@@ -9,12 +9,13 @@
 		/datum/ai_planning_subtree/bileworm_execute,
 	)
 
+/datum/targetting_datum/basic/bileworm
+	ignore_sight = TRUE
+
 /datum/ai_planning_subtree/bileworm_attack
 
 /datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(target))
+	if (!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
@@ -31,8 +32,11 @@
 
 /datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
-	if(QDELETED(target) || target.stat < UNCONSCIOUS)
+	var/atom/movable/target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
+	if(QDELETED(target) || !isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.stat < UNCONSCIOUS)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, BB_BILEWORM_DEVOUR, BB_BASIC_MOB_EXECUTION_TARGET)

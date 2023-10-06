@@ -1,6 +1,4 @@
 /datum/crafting_recipe/food
-	/// A rough equivilance for how much nutrition this recipe's result will provide
-	var/total_nutriment_factor = 0
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	SHOULD_CALL_PARENT(TRUE)
@@ -10,12 +8,6 @@
 
 /datum/crafting_recipe/food/New()
 	. = ..()
-	if(ispath(result, /obj/item/food))
-		var/obj/item/food/result_food = new result()
-		for(var/datum/reagent/consumable/nutriment as anything in result_food.food_reagents)
-			total_nutriment_factor += initial(nutriment.nutriment_factor) * result_food.food_reagents[nutriment]
-		qdel(result_food)
-
 	parts |= reqs
 
 /datum/crafting_recipe/food/crafting_ui_data()
@@ -24,7 +16,7 @@
 	if(ispath(result, /obj/item/food))
 		var/obj/item/food/item = result
 		data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-	data["nutriments"] = total_nutriment_factor
+		data["complexity"] = initial(item.crafting_complexity)
 
 	return data
 
@@ -38,15 +30,25 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+	required_other = TRUE
 
 	/// Typepath of food that is created on reaction
 	var/atom/resulting_food_path
+	/// Reagent purity of the result, calculated on reaction
+	var/resulting_reagent_purity
+
+/datum/chemical_reaction/food/pre_reaction_other_checks(datum/reagents/holder)
+	resulting_reagent_purity = holder.get_average_purity(/datum/reagent/consumable)
+	return TRUE
 
 /datum/chemical_reaction/food/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(resulting_food_path)
 		var/atom/location = holder.my_atom.drop_location()
 		for(var/i in 1 to created_volume)
-			new resulting_food_path(location)
+			if(ispath(resulting_food_path, /obj/item/food) && !isnull(resulting_reagent_purity))
+				new resulting_food_path(location, resulting_reagent_purity)
+			else
+				new resulting_food_path(location)
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
@@ -56,7 +58,7 @@
 	resulting_food_path = /obj/item/food/tofu
 
 /datum/chemical_reaction/food/candycorn
-	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 5)
 	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -94,6 +96,10 @@
 	results = list(/datum/reagent/consumable/corn_syrup = 5)
 	required_reagents = list(/datum/reagent/consumable/corn_starch = 1, /datum/reagent/toxin/acid = 1)
 	required_temp = 374
+
+/datum/chemical_reaction/food/rice_flour
+	results = list(/datum/reagent/consumable/rice_flour = 10)
+	required_reagents = list(/datum/reagent/consumable/flour = 5,/datum/reagent/consumable/rice = 5)
 
 /datum/chemical_reaction/food/caramel
 	results = list(/datum/reagent/consumable/caramel = 1)
@@ -147,6 +153,12 @@
 	mix_message = "The ingredients form a dough."
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/dough
+
+/datum/chemical_reaction/food/rice_dough
+	required_reagents = list(/datum/reagent/consumable/rice_flour = 20,/datum/reagent/water = 10)
+	mix_message = "The ingredients form a rice dough."
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/rice_dough
 
 /datum/chemical_reaction/food/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
@@ -202,7 +214,7 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
 
 /datum/chemical_reaction/food/mothic_pizza_dough
-	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/quality_oil = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/nutriment/fat/oil/olive = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
 	mix_message = "The ingredients form a pizza dough."
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/mothic_pizza_dough
@@ -240,18 +252,32 @@
 	mix_message = "The mixture thickens into yoghurt."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/quality_oil_upconvert
-	required_reagents = list(/datum/reagent/consumable/quality_oil = 1, /datum/reagent/consumable/cooking_oil = 2)
-	results = list(/datum/reagent/consumable/quality_oil = 2)
+/datum/chemical_reaction/food/olive_oil_upconvert
+	required_catalysts = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1)
+	required_reagents = list( /datum/reagent/consumable/nutriment/fat/oil = 2)
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/quality_oil
-	results = list(/datum/reagent/consumable/quality_oil = 2)
+/datum/chemical_reaction/food/olive_oil
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/grounding_neutralise
+	results = list(/datum/reagent/consumable/salt = 2)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
+	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
+	mix_sound = 'sound/weapons/taser.ogg'
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/martian_batter
+	results = list(/datum/reagent/consumable/martian_batter = 2)
+	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
+	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT

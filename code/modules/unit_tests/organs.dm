@@ -81,3 +81,37 @@
 
 #undef TEST_ORGAN_INSERT_MESSAGE
 #undef TEST_ORGAN_REMOVE_MESSAGE
+
+/// Tests organ damage cap.
+/// Organ damage should never bypass the cap.
+/// Every internal organ is tested.
+/datum/unit_test/organ_damage
+
+/datum/unit_test/organ_damage/Run()
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	for(var/obj/item/organ/internal/organ_to_test in dummy.organs)
+		test_organ(dummy, organ_to_test)
+
+/datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/internal/test_organ)
+	var/slot_to_use = test_organ.slot
+
+	// Tests [mob/living/proc/adjustOrganLoss]
+	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
+	dummy.fully_heal(HEAL_ORGANS)
+
+	// Tests [mob/living/proc/set_organ_damage]
+	TEST_ASSERT_EQUAL(dummy.setOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+		"Mob level \"set organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
+		"Mob level \"set organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
+	dummy.fully_heal(HEAL_ORGANS)
+
+	// Tests [mob/living/proc/adjustOrganLoss] with a large max supplied
+	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with a large maximum supplied.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
+		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
+	dummy.fully_heal(HEAL_ORGANS)

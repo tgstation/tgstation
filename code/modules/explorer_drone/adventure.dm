@@ -43,6 +43,7 @@
 #define REQ_OPERATOR_FIELD "operator"
 
 #define CURRENT_ADVENTURE_VERSION 1
+#define ADVENTURE_LOOK_PATH "strings/exoadventures/"
 
 /// All possible adventures in raw form
 GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
@@ -50,34 +51,22 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 /// Loads all adventures from DB
 /proc/load_adventures()
 	. = list()
-	if(!SSdbcore.Connect())
-		GLOB.explorer_drone_adventure_db_entries = .
-		return
-	var/datum/db_query/Query = SSdbcore.NewQuery("SELECT id,adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")]")
-	if(!Query.Execute())
-		qdel(Query)
-		return
-	while(Query.NextRow())
+	for(var/filename in flist(ADVENTURE_LOOK_PATH))
+		var/raw_json = file2text(ADVENTURE_LOOK_PATH + filename)
+		var/list/json_decoded = json_decode(raw_json)
 		var/datum/adventure_db_entry/entry = new()
-		entry.id = Query.item[1]
-		entry.raw_json = Query.item[2]
-		entry.uploader = Query.item[3]
-		entry.timestamp = Query.item[4]
-		entry.approved = Query.item[5]
+		entry.filename = filename
+		entry.raw_json = raw_json
+		entry.uploader = json_decoded["author"]
 		entry.extract_metadata()
 		. += entry
-	qdel(Query)
 	GLOB.explorer_drone_adventure_db_entries = .
 
 /datum/adventure_db_entry
-	/// db id or null for freshly created adventures
-	var/id
+	/// filename of the adventure
+	var/filename
 	/// actual adventure json string
 	var/raw_json
-	/// ckey of last change user.
-	var/uploader
-	/// Time of last change.
-	var/timestamp
 	/// Unapproved adventures won't be used for exploration sites.
 	var/approved = FALSE
 	/// Was the adventure used for exploration site this round.
@@ -85,6 +74,8 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 
 	//Variables below are extracted from the JSON
 
+	/// whoever made the json
+	var/uploader
 	/// json version
 	var/version
 	/// adventure name
@@ -100,61 +91,13 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		return FALSE
 	return TRUE
 
-/// Updates this entry from db, if possible.
-/datum/adventure_db_entry/proc/refresh()
-	if(id)
-		//Check if our timestamp is fresh, if not update local and stop
-		var/datum/db_query/SelectQuery = SSdbcore.NewQuery("SELECT adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")] WHERE id = :id",list("id" = id))
-		if(!SelectQuery.warn_execute() || !SelectQuery.NextRow())
-			qdel(SelectQuery)
-			return
-		raw_json = SelectQuery.item[1]
-		uploader = SelectQuery.item[2]
-		timestamp = SelectQuery.item[3]
-		approved = SelectQuery.item[4]
-		extract_metadata()
-		qdel(SelectQuery)
-		return
-	// No ID, nothing to be done.
-
-/// Pushes this entry changes to DB
-/datum/adventure_db_entry/proc/save()
-	if(id)
-		//We're up to date, update db instead
-		var/datum/db_query/UpdateQuery = SSdbcore.NewQuery("UPDATE [format_table_name("text_adventures")] SET adventure_data = :adventure_data,uploader = :uploader,approved = :approved WHERE id = :id AND timestamp < NOW()",
-		list("id" = id, "adventure_data" = raw_json, "uploader" = usr.ckey, "approved" = approved))
-		UpdateQuery.warn_execute()
-		qdel(UpdateQuery)
-	else
-		// Create new entry
-		var/datum/db_query/InsertQuery = SSdbcore.NewQuery("INSERT INTO [format_table_name("text_adventures")] (adventure_data, uploader) VALUES (:raw_json, :uploader)", list("raw_json" = raw_json, "uploader" = usr.ckey))
-		if(!InsertQuery.warn_execute())
-			qdel(InsertQuery)
-			return FALSE
-		id = InsertQuery.last_insert_id
-		qdel(InsertQuery)
-	refresh()
-
-/// Deletes the local AND db entry.
-/datum/adventure_db_entry/proc/remove()
-	if(id)
-		var/datum/db_query/DelQuery = SSdbcore.NewQuery("DELETE FROM [format_table_name("text_adventures")] WHERE id = :id", list("id" = id))
-		if(!DelQuery.warn_execute())
-			qdel(DelQuery)
-			return FALSE
-		log_admin("[key_name(usr)] deleted text adventure with id : [id], name : [name]")
-		qdel(DelQuery)
-	GLOB.explorer_drone_adventure_db_entries -= src
-	qdel(src)
-	return TRUE
-
 /// Extracts fields that are used by adventure browser / generation before instantiating
 /datum/adventure_db_entry/proc/extract_metadata()
 	if(!raw_json)
 		CRASH("Trying to extract metadata from empty adventure")
 	var/list/json_data = json_decode(raw_json)
 	if(!islist(json_data))
-		CRASH("Invalid JSON for adventure with db id:[id]")
+		CRASH("Invalid JSON for adventure with at path:[filename]")
 	version = json_data[ADVENTURE_VERSION_FIELD] || 0
 	name = json_data[ADVENTURE_NAME_FIELD]
 	required_site_traits = json_data[ADVENTURE_REQUIRED_SITE_TRAITS_FIELD]
@@ -169,13 +112,13 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 /datum/adventure_db_entry/proc/try_loading_adventure()
 	var/list/json_data = json_decode(raw_json)
 	if(!islist(json_data))
-		CRASH("Invalid JSON in adventure with id:[id], name:[name]")
+		CRASH("Invalid JSON in adventure with path:[filename], name:[name]")
 
 	//Basic validation of required fields, don't even bother loading if they are missing.
 	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
-			CRASH("Adventure id:[id], name:[name] missing [field] value")
+			CRASH("Adventure path:[filename], name:[name] missing [field] value")
 
 	var/datum/adventure/loaded_adventure = new
 	//load properties
@@ -191,16 +134,16 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		var/datum/adventure_node/node = try_loading_node(node_data)
 		if(node)
 			if(loaded_adventure.nodes[node.id])
-				CRASH("Duplicate [node.id] node in id:[id], name:[name] adventure")
+				CRASH("Duplicate [node.id] node in path:[filename], name:[name] adventure")
 			loaded_adventure.nodes[node.id] = node
 	loaded_adventure.triggers = json_data[ADVENTURE_TRIGGERS_FIELD]
 	if(!loaded_adventure.validate())
-		CRASH("Validation failed for id:[id], name:[name] adventure")
+		CRASH("Validation failed for path:[filename], name:[name] adventure")
 	return loaded_adventure
 
 /datum/adventure_db_entry/proc/try_loading_node(node_data)
 	if(!islist(node_data))
-		CRASH("Invalid adventure node data in id:[id], name:[name] adventure.")
+		CRASH("Invalid adventure node data in path:[filename], name:[name] adventure.")
 	var/datum/adventure_node/fresh_node = new
 	fresh_node.id = node_data[NODE_NAME_FIELD]
 	fresh_node.description = node_data[NODE_DESCRIPTION_FIELD]
@@ -493,6 +436,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		if("exists")
 			return qkey in qualities
 
+#undef ADVENTURE_LOOK_PATH
 #undef ADVENTURE_VERSION_FIELD
 #undef CURRENT_ADVENTURE_VERSION
 

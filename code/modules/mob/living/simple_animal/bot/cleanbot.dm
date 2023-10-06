@@ -19,6 +19,7 @@
 	hackables = "cleaning software"
 	path_image_color = "#993299"
 	greyscale_config = /datum/greyscale_config/buckets_cleanbot
+	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 
@@ -91,7 +92,7 @@
 	)
 
 /mob/living/simple_animal/bot/cleanbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
@@ -127,10 +128,12 @@
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == build_bucket)
 		build_bucket = null
-	return ..()
-
+	if(gone == weapon)
+		weapon = null
+		update_appearance(UPDATE_ICON)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	QDEL_NULL(build_bucket)
@@ -229,9 +232,10 @@
 
 	if(weapon)
 		weapon.force = initial(weapon.force)
-	if(user)
-		to_chat(user, span_danger("[src] buzzes and beeps."))
+	balloon_alert(user, "safeties disabled")
+	audible_message(span_danger("[src] buzzes oddly!"))
 	get_targets() //recalibrate target list
+	return TRUE
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/scan_target)
 	if(iscarbon(scan_target))
@@ -245,12 +249,6 @@
 		return scan_carbon
 	if(is_type_in_typecache(scan_target, target_types))
 		return scan_target
-
-/mob/living/simple_animal/bot/cleanbot/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == weapon)
-		weapon = null
-		update_appearance(UPDATE_ICON)
-	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	. = ..()

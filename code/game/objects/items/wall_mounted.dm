@@ -1,5 +1,5 @@
 /obj/item/wallframe
-	icon = 'icons/obj/wallframe.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2)
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "syringe_kit"
@@ -40,20 +40,19 @@
 			span_hear("You hear clicking."))
 		var/floor_to_wall = get_dir(user, on_wall)
 
-		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
-		O.setDir(floor_to_wall)
-
+		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
+		hanging_object.setDir(floor_to_wall)
 		if(pixel_shift)
 			switch(floor_to_wall)
 				if(NORTH)
-					O.pixel_y = pixel_shift
+					hanging_object.pixel_y = pixel_shift
 				if(SOUTH)
-					O.pixel_y = -pixel_shift
+					hanging_object.pixel_y = -pixel_shift
 				if(EAST)
-					O.pixel_x = pixel_shift
+					hanging_object.pixel_x = pixel_shift
 				if(WEST)
-					O.pixel_x = -pixel_shift
-		after_attach(O)
+					hanging_object.pixel_x = -pixel_shift
+		after_attach(hanging_object)
 
 	qdel(src)
 
@@ -84,7 +83,7 @@
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

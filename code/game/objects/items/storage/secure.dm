@@ -96,14 +96,14 @@
 				lock_code = entered_code
 				lock_set = TRUE
 			else if ((entered_code == lock_code) && lock_set)
-				atom_storage.locked = FALSE
+				atom_storage.locked = STORAGE_NOT_LOCKED
 				update_appearance()
 				entered_code = null
 			else
 				entered_code = "ERROR"
 		else
 			if (href_list["type"] == "R")
-				atom_storage.locked = TRUE
+				atom_storage.locked = STORAGE_FULLY_LOCKED
 				update_appearance()
 				entered_code = null
 				atom_storage.hide_contents(usr)
@@ -181,6 +181,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 	. = ..()
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	find_and_hang_on_wall()
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)
@@ -231,7 +232,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 	update_appearance()
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()

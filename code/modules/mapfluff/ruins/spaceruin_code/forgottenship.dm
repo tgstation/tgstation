@@ -136,7 +136,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	rapid_melee = 1
 	retreat_distance = 2
 	minimum_distance = 4
-	casingtype = /obj/item/ammo_casing/a556/weak
+	casingtype = /obj/item/ammo_casing/a223/weak
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier

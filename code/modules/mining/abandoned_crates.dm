@@ -100,11 +100,13 @@
 			return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(locked)
-		boom(user)
-		return
-	return ..()
+		boom(user) // no feedback since it just explodes, thats its own feedback
+		return TRUE
+	return
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
@@ -183,10 +185,12 @@
 		if(63 to 64)
 			new /obj/item/clothing/shoes/kindle_kicks(src)
 		if(65 to 66)
-			new /obj/item/clothing/suit/costume/ianshirt(src)
+			new /obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
-			new /obj/item/toy/plush/awakenedplushie(src)
+			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
+			free_bomb.quality = rand(1, 3)
+			free_bomb.GibtoniteReaction(null, "A secure loot closet has spawned a live")
 		if(69 to 70)
 			SSwardrobe.provide(/obj/item/stack/ore/bluespace_crystal, src, STACK_AMOUNT(5))
 		if(71 to 72)
@@ -241,7 +245,7 @@
 			new /obj/item/ammo_box/foambox(src)
 		if(98)
 			for(var/i in 1 to 3)
-				new /mob/living/simple_animal/hostile/bee/toxin(src)
+				new /mob/living/basic/bee/toxin(src)
 		if(99)
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)

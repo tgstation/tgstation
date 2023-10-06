@@ -9,7 +9,7 @@
 	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -39,6 +39,21 @@
 	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
 	var/max_skillchip_slots = 5
 
+	/// Size modifier for the sprite
+	var/brain_size = 1
+
+/obj/item/organ/internal/brain/Initialize(mapload)
+	. = ..()
+	// Brain size logic
+	transform = transform.Scale(brain_size)
+
+/obj/item/organ/internal/brain/examine()
+	. = ..()
+	if(brain_size < 1)
+		. += span_notice("It is a bit on the smaller side...")
+	if(brain_size > 1)
+		. += span_notice("It is bigger than average...")
+
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
 	if(!.)
@@ -54,17 +69,23 @@
 		brain_owner.update_body_parts()
 		return
 
-	// Not a ling? Now you get to assume direct control.
 	if(brainmob)
-		if(brain_owner.key)
-			brain_owner.ghostize()
+		// If it's a ling decoy brain, nothing to transfer, just throw it out
+		if(decoy_override)
+			if(brainmob?.key)
+				stack_trace("Decoy override brain with a key assigned - This should never happen.")
 
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(brain_owner)
+		// Not a ling - assume direct control
 		else
-			brain_owner.key = brainmob.key
+			if(brain_owner.key)
+				brain_owner.ghostize()
 
-		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(brain_owner)
+			else
+				brain_owner.key = brainmob.key
+
+			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
 		QDEL_NULL(brainmob)
 	else
@@ -126,8 +147,13 @@
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
-	if(brainmob || decoy_override)
-		return
+	if(brainmob)
+		if(!decoy_override)
+			return
+
+		// it's just a dummy, throw it out
+		QDEL_NULL(brainmob)
+
 	if(!L.mind)
 		return
 	brainmob = new(src)
@@ -146,9 +172,10 @@
 		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
 		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
 			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
-	if(L.mind && L.mind.current)
+
+	if(L.mind && L.mind.current && !decoy_override)
 		L.mind.transfer_to(brainmob)
-	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
+		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
 /obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -214,7 +241,7 @@
 	if(suicided)
 		. += span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
 		return
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
 		if(organ_flags & ORGAN_FAILING)
 			. += span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
 		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
@@ -262,13 +289,11 @@
 		..()
 
 /obj/item/organ/internal/brain/Destroy() //copypasted from MMIs.
-	if(brainmob)
-		QDEL_NULL(brainmob)
+	QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
 
 	destroy_all_skillchips()
-	if(owner?.mind) //You aren't allowed to return to brains that don't exist
-		owner.mind.set_current(null)
+	owner?.mind?.set_current(null) //You aren't allowed to return to brains that don't exist
 	return ..()
 
 /obj/item/organ/internal/brain/on_life(seconds_per_tick, times_fired)
@@ -379,8 +404,25 @@
 	desc = "This collection of sparkling gems somehow allows a golem to think."
 	icon_state = "adamantine_resonator"
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
+/obj/item/organ/internal/brain/lustrous
+	name = "lustrous brain"
+	desc = "This is your brain on bluespace dust. Not even once."
+	icon_state = "random_fly_4"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+
+/obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/obj/item/organ/internal/brain/felinid //A bit smaller than average
+	brain_size = 0.8
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -507,10 +549,10 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
-		return
+		return FALSE
 	if(damage >= 60)
 		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
@@ -529,4 +571,4 @@
 	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
 	qdel(old_brain)
-	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	return Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)

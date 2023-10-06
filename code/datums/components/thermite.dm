@@ -58,7 +58,7 @@
 		deltimer(burn_timer)
 		burn_timer = null
 	if(burn_callback)
-		QDEL_NULL(burn_callback)
+		burn_callback = null
 	if(fakefire)
 		QDEL_NULL(fakefire)
 	return ..()
@@ -99,7 +99,7 @@
 /datum/component/thermite/proc/on_examine(turf/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("[source.p_theyre(TRUE)] covered in thermite.")
+	examine_list += span_warning("[source.p_Theyre()] covered in thermite.")
 
 /// Used to maintain the thermite overlay on the parent [/turf].
 /datum/component/thermite/proc/on_update_overlays(turf/parent_turf, list/overlays)

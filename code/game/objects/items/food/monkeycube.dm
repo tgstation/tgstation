@@ -48,7 +48,7 @@
 		return
 	Expand()
 	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
-	user.gib(null, TRUE, null, TRUE)
+	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
 
 /obj/item/food/monkeycube/syndicate
 	faction = list(FACTION_NEUTRAL, ROLE_SYNDICATE)
@@ -85,4 +85,4 @@
 		/datum/reagent/medicine/strange_reagent = 1,
 	)
 	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/bee
+	spawned_mob = /mob/living/basic/bee

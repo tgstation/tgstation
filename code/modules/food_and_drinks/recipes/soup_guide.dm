@@ -2,16 +2,32 @@
 	machinery = list(/obj/machinery/stove)
 	category = CAT_SOUP
 	non_craftable = TRUE
-
+	/// What contained is this reaction expected to be served in?
+	/// Used to determine the icon to display in the crafting UI.
 	var/expected_container = /obj/item/reagent_containers/cup/bowl
 
+/datum/crafting_recipe/food/reaction/soup/New()
+	// What are ya using this path for if it's not a food reaction?
+	if(!ispath(reaction, /datum/chemical_reaction/food))
+		return ..()
+
+	var/datum/chemical_reaction/food/soup_reaction = reaction
+	// If the reaction has a solid food item result, it is prioritized over reagent results
+	if(ispath(initial(soup_reaction.resulting_food_path), /obj/item/food))
+		result = initial(soup_reaction.resulting_food_path)
+		result_amount = 1
+
+	return ..()
+
 /datum/crafting_recipe/food/reaction/soup/crafting_ui_data()
+	if(ispath(result, /obj/item/food))
+		return ..()
+
 	var/list/data = list()
 
 	var/datum/glass_style/has_foodtype/soup_style = GLOB.glass_style_singletons[expected_container][result]
 	if(istype(soup_style))
 		data["foodtypes"] = bitfield_to_list(soup_style.drink_type, FOOD_FLAGS)
-	data["nutriments"] = total_nutriment_factor
 
 	return data
 
@@ -20,11 +36,7 @@
 	if(!istype(chemical_reaction))
 		return
 	for(var/obj/item/ingredienttype as anything in chemical_reaction.required_ingredients)
-		reqs[ingredienttype] = chemical_reaction.required_ingredients[ingredienttype]
-
-	if(ispath(result, /datum/reagent/consumable))
-		var/datum/reagent/consumable/soup_result = result
-		total_nutriment_factor = initial(soup_result.nutriment_factor) * result_amount
+		LAZYSET(reqs, ingredienttype, chemical_reaction.required_ingredients[ingredienttype])
 
 /datum/crafting_recipe/food/reaction/soup/meatball_soup
 	reaction = /datum/chemical_reaction/food/soup/meatballsoup

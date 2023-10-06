@@ -18,7 +18,7 @@
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
-		_credits += new /atom/movable/screen/credit(null, I, src, credits_icon)
+		_credits += new /atom/movable/screen/credit(null, null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 	remove_verb(src, /client/proc/ClearCredits)
@@ -39,12 +39,12 @@
 	var/client/parent
 	var/matrix/target
 
-/atom/movable/screen/credit/Initialize(mapload, credited, client/P, icon/I)
+/atom/movable/screen/credit/Initialize(mapload, datum/hud/hud_owner, credited, client/P, icon/I)
 	. = ..()
 	icon = I
 	parent = P
 	icon_state = credited
-	maptext = MAPTEXT(credited)
+	maptext = MAPTEXT_PIXELLARI(credited)
 	maptext_x = world.icon_size + 8
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3

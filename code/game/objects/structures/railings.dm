@@ -8,18 +8,20 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
-	/// armor more or less consistent with grille. max_integrity about one time and a half that of a grille.
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
+	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
-	max_integrity = 75
+	max_integrity = 25
 
 	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
 
 /datum/armor/structure_railing
-	melee = 50
-	bullet = 70
-	laser = 70
+	melee = 35
+	bullet = 50
+	laser = 50
 	energy = 100
 	bomb = 10
 
@@ -27,6 +29,12 @@
 	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
+
+/obj/structure/railing/corner/end //end of a segment of railing without making a loop
+	icon_state = "railing_end"
+
+/obj/structure/railing/corner/end/flip //same as above but flipped around
+	icon_state = "railing_end_flip"
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -40,6 +48,19 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Repair",
+		),
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor/Unanchor",
+		),
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_LMB = "Deconstruct",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
@@ -48,7 +69,7 @@
 
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
@@ -64,15 +85,18 @@
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(!anchored)
-		to_chat(user, span_warning("You cut apart the railing."))
-		I.play_tool_sound(src, 100)
-		deconstruct()
-		return TRUE
+	to_chat(user, span_warning("You cut apart the railing."))
+	I.play_tool_sound(src, 100)
+	deconstruct()
+	return TRUE
 
 /obj/structure/railing/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/rods/rod = SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(6))
+		var/obj/item/stack/rods/rod
+		if (istype(src,/obj/structure/railing/corner)) // Corner railings only cost 1 rod
+			rod = SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(1))
+		else
+			rod = SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(2))
 		transfer_fingerprints_to(rod)
 	return ..()
 

@@ -38,3 +38,12 @@
 
 /// Ensures all sheet_type vars on /turf/closed/wall are /obj/item/stacks
 /datum/unit_test/focus_only/non_stack_sheet_type
+
+/// Ensures openspace never spawns on the bottom of a z stack
+/datum/unit_test/focus_only/openspace_clear
+
+/// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
+/datum/unit_test/focus_only/missing_job_datum_variables
+
+/// Checks that the contents of the fish_counts list are also present in fish_table
+/datum/unit_test/focus_only/fish_sources_tables

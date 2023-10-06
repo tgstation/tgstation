@@ -135,7 +135,7 @@
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurences, ...)
 	for(var/atom/movable/AM in container.contents - manifest_paper)
 		container_contents[AM.name]++
-	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
 		for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
 			var/missing_item = pick(container_contents)
 			container_contents[missing_item]--
@@ -187,6 +187,15 @@
 		new I(miscbox)
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
+
+/datum/supply_order/proc/append_order(list/new_contents, cost_increase)
+	for(var/i as anything in new_contents)
+		if(pack.contains[i])
+			pack.contains[i] += new_contents[i]
+		else
+			pack.contains += i
+			pack.contains[i] = new_contents[i]
+	pack.cost += cost_increase
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME

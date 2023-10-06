@@ -1,11 +1,11 @@
-// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+// Every cycle, the pump uses the air in air_in to try and move a specific volume of gas into air_out.
 //
-// node1, air1, network1 correspond to input
-// node2, air2, network2 correspond to output
+// node1, air1, network1 corresponds to input
+// node2, air2, network2 corresponds to output
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
+//     This is the volume of gas available to the pump that may be transferred to the output
 //   air2.volume
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
@@ -54,7 +54,7 @@
 	var/altlayeroverlay = FALSE
 	if(set_overlay_offset(piping_layer) == 2)
 		altlayeroverlay = TRUE
-	overclock_overlay = mutable_appearance('icons/obj/atmospherics/components/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
+	overclock_overlay = mutable_appearance('icons/obj/machines/atmospherics/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
 	if(overclocked && on && is_operational)
 		add_overlay(overclock_overlay)
 	else
@@ -72,12 +72,8 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
-
-	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
-		return
-
 
 	var/transfer_ratio = transfer_rate / air1.volume
 

@@ -53,7 +53,7 @@
 					to_chat(user, span_userdanger("There was something disgusting in the pipes!"))
 					user.visible_message(span_danger("[user] spits out a mouse."))
 					user.adjust_disgust(50)
-					user.vomit(10)
+					user.vomit(VOMIT_CATEGORY_DEFAULT)
 				var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
 				spawned_mob.faction |= "[REF(user)]"
 				if(prob(50))
@@ -101,7 +101,11 @@
 	if(!emagged)
 		emagged = TRUE
 		smokeradius = 2
-		to_chat(user, span_boldwarning("The [emag_card.name] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
+		balloon_alert(user, "toilet broke")
+		if (emag_card)
+			to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
+		return TRUE
+	return FALSE
 
 /obj/structure/toiletbong/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/emag))

@@ -51,6 +51,7 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/vehicle/Destroy(force)
 	QDEL_NULL(trailer)

@@ -1,7 +1,16 @@
 /obj/item/clothing/suit/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/radio)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/radio,
+		/obj/item/storage/belt/holster,
+		)
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -14,7 +23,7 @@
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	greyscale_config = /datum/greyscale_config/sweater
-	greyscale_config_worn = /datum/greyscale_config/sweater_worn
+	greyscale_config_worn = /datum/greyscale_config/sweater/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -23,7 +32,7 @@
 	desc = "An oversized jacket."
 	icon_state = "jacket_oversized"
 	greyscale_config = /datum/greyscale_config/jacket_oversized
-	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
+	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -36,7 +45,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/fancy_coat
-	greyscale_config_worn = /datum/greyscale_config/fancy_coat_worn
+	greyscale_config_worn = /datum/greyscale_config/fancy_coat/worn
 	greyscale_colors = "#EDE3DC#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

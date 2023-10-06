@@ -75,18 +75,6 @@
 "ar" = (
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
-"as" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "at" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
@@ -139,14 +127,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aB" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-11"
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "aC" = (
 /obj/structure/chair/comfy{
 	dir = 1
@@ -164,37 +144,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aE" = (
-/obj/structure/chair/comfy,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "aF" = (
 /obj/structure/chair/comfy{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aG" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/obj/machinery/light/directional/north,
-/obj/item/food/butterdog,
-/obj/item/food/cakeslice/apple,
-/obj/item/food/cakeslice/brioche,
-/obj/item/food/cakeslice/cheese,
-/obj/item/food/cakeslice/chocolate,
-/obj/item/food/cakeslice/lemon,
-/obj/item/food/cakeslice/lime,
-/obj/item/food/cakeslice/orange,
-/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "aH" = (
 /turf/open/floor/mineral/titanium,
@@ -210,14 +165,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aK" = (
-/obj/structure/chair/comfy{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aL" = (
@@ -282,14 +229,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aT" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "aU" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -316,29 +255,6 @@
 "aX" = (
 /obj/machinery/stasis{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"aY" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aZ" = (
-/obj/structure/table/glass,
-/obj/machinery/light/directional/north,
-/obj/item/storage/medkit/regular,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/obj/machinery/vending/wallmed/directional/north{
-	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -376,13 +292,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"bf" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/item/storage/bag/tray,
-/obj/item/clothing/under/suit/waiter,
-/turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/closet/crate,
@@ -423,12 +332,6 @@
 /obj/machinery/vending/cola,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bn" = (
-/obj/structure/closet/crate/preopen,
-/obj/machinery/light/directional/south,
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "bo" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/spawner/directional/north{
@@ -459,12 +362,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bu" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "bv" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -518,21 +415,6 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bG" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"bH" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"bI" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "bK" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Economy Class"
@@ -570,15 +452,140 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
+"eL" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"fa" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"iy" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"jO" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/window/reinforced/spawner/directional/west{
+	layer = 2.9
+	},
+/obj/item/food/butterdog,
+/obj/item/food/cakeslice/apple,
+/obj/item/food/cakeslice/brioche,
+/obj/item/food/cakeslice/cheese,
+/obj/item/food/cakeslice/chocolate,
+/obj/item/food/cakeslice/lemon,
+/obj/item/food/cakeslice/lime,
+/obj/item/food/cakeslice/orange,
+/turf/open/floor/iron/cafeteria,
+/area/shuttle/escape)
+"kE" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"lt" = (
+/obj/machinery/light/directional/north,
+/obj/item/kirbyplants/organic/plant22,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"na" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"np" = (
+/obj/machinery/light/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/kirbyplants/organic/plant11,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"nK" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"rq" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"wZ" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "xt" = (
 /obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Br" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "Lu" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
+"Pb" = (
+/obj/structure/chair/comfy,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"RP" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Ur" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/clothing/under/suit/waiter,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/shuttle/escape)
 "Uu" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
@@ -589,6 +596,20 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"ZM" = (
+/obj/structure/table/glass,
+/obj/item/storage/medkit/regular,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -650,7 +671,7 @@ ap
 aN
 az
 at
-az
+nK
 at
 aD
 ab
@@ -658,7 +679,7 @@ aa
 ab
 aJ
 aM
-aO
+iy
 aM
 aO
 aM
@@ -670,13 +691,13 @@ aX
 bb
 be
 bh
-bl
+kE
 bg
 bg
 ab
 aa
 bs
-bu
+lt
 bw
 bw
 bw
@@ -694,43 +715,43 @@ br
 ab
 aa
 ab
-aE
+Pb
 aV
 aA
 au
 aA
 au
-aK
+Br
 ab
 aa
 ab
-aT
+fa
 au
 aP
 au
 aP
 au
-aY
+rq
 ab
 aa
 ab
-aZ
+ZM
 bb
 bb
 bi
 bl
 bg
-bn
+RP
 ab
 aa
 bs
-bH
+ax
 ax
 ax
 ax
 bA
 ax
-bI
+wZ
 bE
 bc
 "}
@@ -838,43 +859,43 @@ bt
 ab
 aa
 ab
-aE
+Pb
 av
 aA
 au
 aA
 au
-aK
+Br
 ab
 aa
 ab
-aT
+fa
 au
 aP
 au
 aP
 au
-aY
+rq
 ab
 aa
 ab
-aG
+jO
 ba
 bd
 bj
 bj
 bo
-bG
+bq
 ab
 aa
 bs
-bH
+ax
 ax
 ax
 ax
 bA
 ax
-bI
+wZ
 bE
 bc
 "}
@@ -886,9 +907,9 @@ ak
 ab
 aa
 ab
-as
+eL
 aw
-aB
+np
 au
 aC
 au
@@ -897,10 +918,10 @@ ab
 aa
 ab
 aL
-au
+aR
 aQ
-au
-aQ
+aR
+na
 aR
 aU
 ab
@@ -908,7 +929,7 @@ aa
 ab
 aW
 ba
-bf
+Ur
 bk
 bm
 bo
@@ -916,7 +937,7 @@ bq
 ab
 aa
 bs
-bu
+lt
 bx
 bx
 bx

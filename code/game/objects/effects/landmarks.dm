@@ -77,6 +77,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Cargo Technician"
 	icon_state = "Cargo Technician"
 
+/obj/effect/landmark/start/bitrunner
+	name = "Bitrunner"
+	icon_state = "x3"
+
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
 	icon_state = "Bartender"
@@ -466,7 +470,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
-
 
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"

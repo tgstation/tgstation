@@ -64,7 +64,7 @@
 		unlink_mob(remaining_mob)
 	linked_mobs.Cut()
 	QDEL_NULL(master_speech)
-	QDEL_NULL(post_unlink_callback)
+	post_unlink_callback = null
 	return ..()
 
 /datum/component/mind_linker/RegisterWithParent()
@@ -243,7 +243,7 @@
 	var/datum/component/mind_linker/linker = target
 	var/mob/living/linker_parent = linker.parent
 
-	var/message = sanitize(tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy"))
+	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy")
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 

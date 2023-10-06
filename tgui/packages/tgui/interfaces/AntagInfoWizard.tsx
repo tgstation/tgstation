@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const teleportstyle = {
   color: 'yellow',
@@ -36,15 +37,6 @@ const grandritualstyle = {
   color: '#bd54e0',
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
-
 type GrandRitual = {
   remaining: number;
   next_area: string;
@@ -53,11 +45,15 @@ type GrandRitual = {
 type Info = {
   objectives: Objective[];
   ritual: GrandRitual;
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoWizard = (props, context) => {
+  const { data, act } = useBackend<Info>(context);
+  const { ritual, objectives, can_change_objective } = data;
+
   return (
-    <Window width={620} height={620} theme="wizard">
+    <Window width={620} height={630} theme="wizard">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -67,7 +63,20 @@ export const AntagInfoWizard = (props, context) => {
                   You are the Space Wizard!
                 </Stack.Item>
                 <Stack.Item>
-                  <ObjectivePrintout />
+                  <ObjectivePrintout
+                    objectives={objectives}
+                    titleMessage="The Space Wizard Federation has given you the following tasks:"
+                    objectiveFollowup={
+                      <ReplaceObjectivesButton
+                        can_change_objective={can_change_objective}
+                        button_title={'Declare Personal Quest'}
+                        button_colour={'violet'}
+                      />
+                    }
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <RitualPrintout ritual={ritual} />
                 </Stack.Item>
               </Stack>
             </Section>
@@ -143,35 +152,13 @@ export const AntagInfoWizard = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives, ritual } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>
-        The Space Wizards Federation has given you the following tasks:
-      </Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-      <RitualPrintout />
-    </Stack>
-  );
-};
-
-const RitualPrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives, ritual } = data;
+const RitualPrintout = (props: { ritual: GrandRitual }, context) => {
+  const { ritual } = props;
   if (!ritual.next_area) {
-    return <Stack.Item />;
+    return null;
   }
   return (
-    <Stack.Item>
+    <Box>
       Alternately, complete the{' '}
       <span style={grandritualstyle}>Grand Ritual </span>
       by invoking a ritual circle at several nexuses of power.
@@ -181,6 +168,6 @@ const RitualPrintout = (props, context) => {
       <br />
       Your next ritual location is the
       <span style={grandritualstyle}> {ritual.next_area}</span>.
-    </Stack.Item>
+    </Box>
   );
 };

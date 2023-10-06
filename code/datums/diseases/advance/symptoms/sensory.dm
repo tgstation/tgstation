@@ -87,34 +87,34 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 
-/datum/symptom/sensory_restoration/Activate(datum/disease/advance/source_disease)
+/datum/symptom/sensory_restoration/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/ill_mob = source_disease.affected_mob
-	switch(source_disease.stage)
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+	switch(advanced_disease.stage)
 		if(4, 5)
-			var/obj/item/organ/internal/ears/ears = ill_mob.get_organ_slot(ORGAN_SLOT_EARS)
-			if(ears)
+			if(advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EARS))
+				var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 				ears.adjustEarDamage(-4, -4)
 
-			ill_mob.adjust_temp_blindness(-4 SECONDS)
-			ill_mob.adjust_eye_blur(-4 SECONDS)
-
-			var/obj/item/organ/internal/eyes/eyes = ill_mob.get_organ_slot(ORGAN_SLOT_EYES)
-			if(!eyes) // only dealing with eye stuff from here on out
+			if(!advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EYES))
 				return
+
+			var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+			infected_mob.adjust_temp_blindness(-4 SECONDS)
+			infected_mob.adjust_eye_blur(-4 SECONDS)
 
 			eyes.apply_organ_damage(-2)
 			if(prob(20))
-				if(ill_mob.is_blind_from(EYE_DAMAGE))
-					to_chat(ill_mob, span_warning("Your vision slowly returns..."))
-					ill_mob.adjust_eye_blur(20 SECONDS)
+				if(infected_mob.is_blind_from(EYE_DAMAGE))
+					to_chat(infected_mob, span_warning("Your vision slowly returns..."))
+					infected_mob.adjust_eye_blur(20 SECONDS)
 
-				else if(ill_mob.is_nearsighted_from(EYE_DAMAGE))
-					to_chat(ill_mob, span_warning("The blackness in your peripheral vision begins to fade."))
-					ill_mob.adjust_eye_blur(5 SECONDS)
+				else if(infected_mob.is_nearsighted_from(EYE_DAMAGE))
+					to_chat(infected_mob, span_warning("The blackness in your peripheral vision begins to fade."))
+					infected_mob.adjust_eye_blur(5 SECONDS)
 
 		else
 			if(prob(base_message_chance))
-				to_chat(ill_mob, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))
+				to_chat(infected_mob, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

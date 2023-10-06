@@ -34,6 +34,9 @@
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
 
+/// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
+#define UPDATE_MOB_HEALTH 1
+
 // How long do mime drinks silence the drinker (if they are a mime)?
 #define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone
@@ -115,6 +118,8 @@
 #define REAGENT_NO_RANDOM_RECIPE (1<<7)
 ///Does this reagent clean things?
 #define REAGENT_CLEANS (1<<8)
+///Does this reagent affect wounds? Used to check if some procs should be ran.
+#define REAGENT_AFFECTS_WOUNDS (1<<9)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion

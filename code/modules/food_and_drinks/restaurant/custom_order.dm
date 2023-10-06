@@ -34,7 +34,7 @@
  * Return [TRANSACTION_SUCCESS] to denote the order went through successfully (Not generally necessary to include here)
  * Return [TRANSACTION_HANDLED] to not do any further handling of the order by the
  */
-/datum/custom_order/proc/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/proc/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	return NONE
 
 /datum/custom_order/moth_clothing
@@ -115,11 +115,12 @@
 
 /datum/custom_order/icecream/get_order_appearance(datum/venue/our_venue)
 	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
-	var/image/i_scream = image('icons/obj/kitchen.dmi', initial(cone_type.icon_state))
+	var/image/i_scream = image('icons/obj/service/kitchen.dmi', initial(cone_type.icon_state))
 
 	var/added_offset = 0
 	for(var/flavor in wanted_flavors)
-		var/image/scoop = image('icons/obj/kitchen.dmi', GLOB.ice_cream_flavours[flavor].icon_state)
+		var/image/scoop = image('icons/obj/service/kitchen.dmi', "icecream_custom")
+		scoop.color = GLOB.ice_cream_flavours[flavor].color
 		scoop.pixel_y = added_offset
 		i_scream.overlays += scoop
 		added_offset += ICE_CREAM_SCOOP_OFFSET
@@ -152,7 +153,7 @@
 	food_image.add_overlay(drink_image)
 	return food_image
 
-/datum/custom_order/reagent/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	. = TRANSACTION_HANDLED
 
 	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
@@ -183,7 +184,7 @@
 /datum/custom_order/reagent/drink
 	container_needed = /obj/item/reagent_containers/cup/glass/drinkingglass
 
-/datum/custom_order/reagent/drink/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/drink/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] slurps up [order_item] in one go!"),
 		span_danger("You slurp up [order_item] in one go."),
@@ -209,7 +210,7 @@
 /datum/custom_order/reagent/soup/get_order_line(datum/venue/our_venue)
 	return "I'll take a [picked_serving] of [initial(reagent_type.name)]"
 
-/datum/custom_order/reagent/soup/handle_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/custom_order/reagent/soup/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
 		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
 		span_danger("You pour [order_item] down your hatch in one go."),

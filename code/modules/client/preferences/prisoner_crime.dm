@@ -98,11 +98,21 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	name = "Identity Theft of High-Ranking Figure"
 	desc = "Impersonated a high-ranking figure."
 	tattoos = 0 //well, obviously can't impersonate people with tats. if they want to go back to doing that
+	
+/datum/prisoner_crime/jaywalker
+	name = "Jaywalker"
+	desc = "Jaywalked across non-green tram crossings, shuttle docking zones, and/or through space."
+	tattoos = 0 // Or should it be 6?
 
 /datum/prisoner_crime/kidnapping
 	name = "Kidnapping"
 	desc = "Planned and executed a kidnapping."
 	tattoos = 1
+
+/datum/prisoner_crime/mass_murder
+	name = "Mass Murder"
+	desc = "Maliciously planned and executed the slaughter of many people."
+	tattoos = 6
 
 /datum/prisoner_crime/malpractice
 	name = "Medical Malpractice"
@@ -138,8 +148,3 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	name = "Worship of Blacklisted Deities"
 	desc = "Practiced worship of blacklisted deities."
 	tattoos = 1
-
-/datum/prisoner_crime/mass_murder
-	name = "Mass Murder"
-	desc = "Maliciously planned and executed the slaughter of many people."
-	tattoos = 6

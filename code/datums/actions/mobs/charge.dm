@@ -51,6 +51,7 @@
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump), TRUE)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), TRUE)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), TRUE)
+	RegisterSignal(charger, COMSIG_LIVING_DEATH, PROC_REF(charge_end))
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)
 
@@ -80,10 +81,13 @@
 	SIGNAL_HANDLER
 	actively_moving = FALSE
 
-/datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/move_loop/source)
+/datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/source)
 	SIGNAL_HANDLER
-	var/atom/movable/charger = source.moving
-	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
+	var/atom/movable/charger = source
+	if(istype(source, /datum/move_loop))
+		var/datum/move_loop/move_loop_source = source
+		charger = move_loop_source.moving
+	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	actively_moving = FALSE
 	charging -= charger
@@ -175,6 +179,10 @@
 	var/shake_duration = 1 SECONDS
 	/// Intensity of shaking animation
 	var/shake_pixel_shift = 2
+	/// Amount of time to stun self upon impact
+	var/recoil_duration = 0.6 SECONDS
+	/// Amount of time to knock over an impacted target
+	var/knockdown_duration = 0.6 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
 	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)
@@ -190,18 +198,32 @@
 		source.visible_message(span_danger("[source] smashes into [target]!"))
 		if(!living_source)
 			return
-		living_source.Stun(6, ignore_canstun = TRUE)
+		living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 		return
 
 	var/mob/living/living_target = target
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
 		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
-			living_source.Stun(6, ignore_canstun = TRUE)
+			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 
 	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
-	living_target.Knockdown(6)
+	living_target.Knockdown(knockdown_duration)
+
+
+/datum/status_effect/tired_post_charge
+	id = "tired_post_charge"
+	duration = 1 SECONDS
+	alert_type = null
+
+/datum/status_effect/tired_post_charge/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+
+/datum/status_effect/tired_post_charge/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
