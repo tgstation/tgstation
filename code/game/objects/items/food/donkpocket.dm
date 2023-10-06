@@ -24,7 +24,7 @@
 	var/added_reagents = list(/datum/reagent/medicine/omnizine = 6)
 
 /obj/item/food/donkpocket/make_bakeable()
-	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, added_reagents)
 
 /obj/item/food/donkpocket/make_microwaveable()
 	AddElement(/datum/element/microwavable, warm_type, added_reagents)

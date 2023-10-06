@@ -6,6 +6,7 @@
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
 	var/atom/result_typepath
+	/// Reagents that should be added to the result
 	var/list/added_reagents
 
 /datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents = list())
@@ -48,7 +49,7 @@
 		BLACKBOX_LOG_FOOD_MADE(result.type)
 		result.reagents.clear_reagents()
 		source.reagents?.trans_to(result, source.reagents.total_volume)
-		for (var/reagent in added_reagents)
+		for (var/reagent in added_reagents) // Add any new reagents that should be added
 			result.reagents.add_reagent(reagent, added_reagents[reagent])
 
 		if(microwaver && microwaver.mind)
