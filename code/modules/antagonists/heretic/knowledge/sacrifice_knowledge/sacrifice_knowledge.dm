@@ -492,7 +492,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/disembowel_target(mob/living/carbon/human/sac_target)
 	if(heretic_mind)
 		log_combat(heretic_mind.current, sac_target, "disemboweled via sacrifice")
-	sac_target.spill_organs()
+	sac_target.spill_organs(DROP_ALL_REMAINS)
 	sac_target.apply_damage(250, BRUTE)
 	if(sac_target.stat != DEAD)
 		sac_target.investigate_log("has been killed by heretic sacrifice.", INVESTIGATE_DEATHS)

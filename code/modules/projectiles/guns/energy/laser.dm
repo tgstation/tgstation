@@ -35,6 +35,16 @@
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/laser/carbine
+	name = "laser carbine"
+	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
+	icon_state = "laser_carbine"
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+
+/obj/item/gun/energy/laser/carbine/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
 	icon_state = "retro"

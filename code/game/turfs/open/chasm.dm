@@ -105,7 +105,6 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	icon_state = "junglechasm-255"
 	base_icon_state = "junglechasm"
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/jungle
 

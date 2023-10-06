@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Borgs will no longer become permanently upside-down if tipped over by multiple people at the same time."

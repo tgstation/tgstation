@@ -102,7 +102,7 @@
 
 			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
 			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
-			owner.gib()
+			owner.gib(DROP_ALL_REMAINS)
 			qdel(src)
 			return
 

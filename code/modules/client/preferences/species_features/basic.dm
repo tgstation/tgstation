@@ -4,16 +4,13 @@
 		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	if (isnull(sprite_accessory))
-		return head_icon
-
-	ASSERT(istype(sprite_accessory))
-
 	var/icon/final_icon = new(head_icon)
+	if (!isnull(sprite_accessory))
+		ASSERT(istype(sprite_accessory))
 
-	var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
-	head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-	final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
+		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
+		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
 	final_icon.Crop(10, 19, 22, 31)
 	final_icon.Scale(32, 32)

@@ -108,8 +108,8 @@
 				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 	var/threat = round(mode.threat_level/10)
-
-	if (job_check < required_enemies[threat])
+	var/ruleset_forced = (GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED) == RULESET_FORCE_ENABLED
+	if (!ruleset_forced && job_check < required_enemies[threat])
 		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
@@ -360,6 +360,7 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
@@ -372,7 +373,7 @@
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat_level=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
@@ -527,7 +528,7 @@
 	minimum_players = 15
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat_level = 0)
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
 	if(!spawn_loc)
 		return FALSE
@@ -704,7 +705,7 @@
 	spawn_locs = list()
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat_level=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
 	return ..()
@@ -767,7 +768,7 @@
 	minimum_players = 20
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.light_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
@@ -789,7 +790,7 @@
 	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.heavy_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
@@ -867,6 +868,7 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
 	)
 	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
 	required_candidates = 1

@@ -194,7 +194,7 @@
 	var/keep_going = FALSE
 	owner.vomit(vomit_flags = (MOB_VOMIT_BLOOD | MOB_VOMIT_FORCE), lost_nutrition = 0, distance = 3)
 	owner.Stun(15)
-	owner.adjustToxLoss(-15, TRUE, TRUE)
+	owner.adjustToxLoss(-15, forced = TRUE)
 
 	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
