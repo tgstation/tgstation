@@ -244,7 +244,6 @@
 	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
 	alternative_ammo_misfires = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
-	fire_sound = 'sound/items/syringeproj.ogg'
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/drop_bolt(mob/user = null)
 	if(do_after(user, 1 SECONDS, target = src)) //shorter delay as it wasnt made by some idiot in a closet, plus it has the 3 shots
