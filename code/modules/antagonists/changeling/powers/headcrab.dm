@@ -35,7 +35,7 @@
 	user.transfer_observers_to(user_turf) // user is about to be deleted, store orbiters on the turf
 	if(user.stat != DEAD)
 		user.investigate_log("has been gibbed by headslug burst.", INVESTIGATE_DEATHS)
-	user.gib()
+	user.gib(DROP_ALL_REMAINS)
 	. = TRUE
 	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 1 SECONDS)
 

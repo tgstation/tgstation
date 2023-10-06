@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes:
+  - bugfix: "It is no longer possible to chasm yourself on the geode. Again."

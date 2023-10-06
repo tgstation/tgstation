@@ -20,16 +20,15 @@
 	var/static/list/monster_types
 	/// A static list of heretic summons which we should not create
 	var/static/list/monster_types_blacklist = list(
+		/mob/living/basic/heretic_summon/armsy,
 		/mob/living/basic/heretic_summon/star_gazer,
-		/mob/living/simple_animal/hostile/heretic_summon/armsy,
-		/mob/living/simple_animal/hostile/heretic_summon/armsy/prime,
 	)
 
 /obj/structure/knock_tear/Initialize(mapload, datum/mind/ascendant_mind)
 	. = ..()
 	transform *= 3
 	if(isnull(monster_types))
-		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) + subtypesof(/mob/living/basic/heretic_summon) - monster_types_blacklist
+		monster_types = subtypesof(/mob/living/basic/heretic_summon) - monster_types_blacklist
 	if(!isnull(ascendant_mind))
 		ascendee = ascendant_mind
 		RegisterSignals(ascendant_mind.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(end_madness))

@@ -11,7 +11,8 @@
 		finish_action(controller, FALSE, ability_key, target_key)
 		return
 	var/mob/pawn = controller.pawn
-	var/result = ability.InterceptClickOn(pawn, null, target)
+	pawn.face_atom(target)
+	var/result = ability.Trigger(target = target)
 	finish_action(controller, result, ability_key, target_key)
 
 /datum/ai_behavior/targeted_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
