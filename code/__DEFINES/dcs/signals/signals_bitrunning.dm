@@ -29,3 +29,6 @@
 
 /// from /obj/machinery/quantum_server/refreshParts(): (servo rating)
 #define COMSIG_BITRUNNER_SERVER_UPGRADED "bitrunner_server_upgraded"
+
+/// from /obj/machinery/quantum_server/scrub_vdom()
+#define COMSIG_BITRUNNER_DOMAIN_SCRUBBED "bitrunner_domain_scrubbed"

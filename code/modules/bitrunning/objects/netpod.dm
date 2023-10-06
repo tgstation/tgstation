@@ -347,8 +347,9 @@
 		return
 
 	server_ref = WEAKREF(server)
-	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded), override = TRUE)
-	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete), override = TRUE)
+	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded))
+	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
+	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_SCRUBBED, PROC_REF(on_domain_scrubbed))
 
 	return server
 
@@ -395,6 +396,7 @@
 
 	account.bitrunning_points += reward_points * 100
 
+/// User inspects the machine
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
@@ -409,7 +411,15 @@
 	examine_text += span_notice("It is currently occupied by [occupant].")
 	examine_text += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
 
+/// The domain has been fully purged, so we should double check our avatar is deleted
+/obj/machinery/netpod/proc/on_domain_scrubbed(datum/source)
+	SIGNAL_HANDLER
 
+	var/mob/living/current_avatar = avatar_ref?.resolve()
+	if(isnull(current_avatar))
+		return
+
+	QDEL_NULL(current_avatar)
 
 /// When the server is upgraded, drops brain damage a little
 /obj/machinery/netpod/proc/on_server_upgraded(datum/source, servo_rating)
