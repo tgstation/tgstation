@@ -3,7 +3,7 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target || QDELETED(target))
 		return
-	if(get_turf(target) != get_turf(controller.pawn))
+	if(target.loc != controller.pawn.loc)
 		return
 	return ..()
 
