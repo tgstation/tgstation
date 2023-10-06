@@ -1,5 +1,5 @@
 /obj/machinery/conveyor/auto/inside_corners //use me for mapping
-	icon = 'monkestation/code/modules/conveyor/icon/conveyor.dmi'
+	icon = 'monkestation/code/modules/conveyor/icons/conveyor.dmi'
 
 
 /obj/machinery/conveyor/auto/inside_corners/update_move_direction()
