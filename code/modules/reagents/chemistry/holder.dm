@@ -307,10 +307,8 @@
 	var/removed_amount = 0
 	var/equal_contribution = amount * (1 / length(cached_reagents))
 	var/final_contribution = 0
-	/**
-	 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
-	 * when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
-	 */
+	// when i = 1(1st iteration) each reagent contributes equally to the requested amount
+	// when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
 	for(var/i in 1 to 2)
 		for(var/datum/reagent/reagent as anything in cached_reagents)
 			var/remove_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
@@ -585,10 +583,8 @@
 
 		var/equal_contribution = amount * part
 		var/final_contribution = 0
-		/**
-		 * when i = 1(1st iteration) each reagent contributes equally to the requested amount
-		 * when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
-		 */
+		// when i = 1(1st iteration) each reagent contributes equally to the requested amount
+		// when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
 		for(var/i in 1 to 2)
 			//clear lists when/if we go to the 2nd iteration
 			r_to_send.Cut()
