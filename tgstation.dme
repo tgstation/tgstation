@@ -846,6 +846,7 @@
 #include "code\datums\ai\basic_mobs\pet_commands\play_dead.dm"
 #include "code\datums\ai\basic_mobs\targetting_datums\basic_targetting_datum.dm"
 #include "code\datums\ai\basic_mobs\targetting_datums\dont_target_friends.dm"
+#include "code\datums\ai\basic_mobs\targetting_datums\with_object.dm"
 #include "code\datums\ai\cursed\cursed_behaviors.dm"
 #include "code\datums\ai\cursed\cursed_controller.dm"
 #include "code\datums\ai\cursed\cursed_subtrees.dm"
