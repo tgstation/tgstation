@@ -64,23 +64,21 @@
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/try_heal()
 	if(reviving)
-		switch(owner.stat)
-			if(CONSCIOUS)
-				COOLDOWN_START(src, reviver_cooldown, revive_cost)
-				reviving = FALSE
-				to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
-			else
-				addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
+		if(owner.stat == CONSCIOUS)
+			COOLDOWN_START(src, reviver_cooldown, revive_cost)
+			reviving = FALSE
+			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
+		else
+			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
 
-	switch(owner.stat)
-		if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT, DEAD)
-			revive_cost = 0
-			reviving = TRUE
-			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+	if(owner.stat != CONSCIOUS)
+		revive_cost = 0
+		reviving = TRUE
+		to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
@@ -114,8 +112,7 @@
 	if(need_mob_update)
 		owner.updatehealth()
 
-	if(body_damage_patched)
-		if(prob(35)) // healing is called every few seconds, not every tick
+	if(body_damage_patched && prob(35)) // healing is called every few seconds, not every tick
 			owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
 		
 
