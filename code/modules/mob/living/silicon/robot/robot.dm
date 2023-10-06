@@ -893,9 +893,9 @@
 /datum/action/innate/undeployment/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
-	var/mob/living/silicon/robot/R = owner
+	var/mob/living/silicon/robot/shell_to_disconnect = owner
 
-	R.undeploy()
+	shell_to_disconnect.mainframe.disconnect_shell()
 	return TRUE
 
 

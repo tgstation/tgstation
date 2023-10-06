@@ -1112,8 +1112,8 @@
 	SIGNAL_HANDLER
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, span_danger("Your remote connection has been reset!"))
-		deployed_shell.undeploy()
 		UnregisterSignal(deployed_shell, COMSIG_LIVING_DEATH)
+		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
