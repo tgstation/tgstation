@@ -11,21 +11,22 @@
 	melee_damage_upper = 20
 	sight = SEE_MOBS
 	ai_controller = /datum/ai_controller/basic_controller/stalker
+	/// Associative list of action types we would like to have, and what blackboard key (if any) to put it in
+	var/static/list/actions_to_add = list(
+		/datum/action/cooldown/spell/emp/eldritch = BB_GENERIC_ACTION,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash = null,
+		/datum/action/cooldown/spell/shapeshift/eldritch = BB_SHAPESHIFT_ACTION,
+	)
 
 /mob/living/basic/heretic_summon/stalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_target_timer)
-
-	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/jaunt = new(src)
-	jaunt.Grant(src)
-
-	var/datum/action/cooldown/spell/shapeshift/eldritch/change = new(src)
-	change.Grant(src)
-	ai_controller?.set_blackboard_key(BB_SHAPESHIFT_ACTION, change)
-
-	var/datum/action/cooldown/spell/emp/eldritch/emp = new(src)
-	emp.Grant(src)
-	ai_controller?.set_blackboard_key(BB_GENERIC_ACTION, emp)
+	for (var/action_type in actions_to_add)
+		var/datum/action/new_action = new action_type(src)
+		new_action.Grant(src)
+		var/blackboard_key = actions_to_add[action_type]
+		if (!isnull(blackboard_key))
+			ai_controller?.set_blackboard_key(blackboard_key, new_action)
 
 /// Changes shape and lies in wait when it has no target, uses EMP and attacks once it does
 /datum/ai_controller/basic_controller/stalker
