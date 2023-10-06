@@ -101,7 +101,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	//We do this here so anything that doesn't want to persist can clear itself
 	var/list/old_comp_lookup = comp_lookup?.Copy()
 	var/list/old_signal_procs = signal_procs?.Copy()
+	var/carryover_turf_flags = (RESERVATION_TURF | UNUSED_RESERVATION_TURF) & turf_flags
 	var/turf/new_turf = new path(src)
+	new_turf.turf_flags |= carryover_turf_flags
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
@@ -222,6 +224,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(new_turf)
 	else
+		for(var/turf/open/adjacent_turf as anything in atmos_adjacent_turfs)
+			adjacent_turf.atmos_adjacent_turfs -= src
+		atmos_adjacent_turfs = null
 		if(pollution)
 			qdel(pollution)
 		if(excited || excited_group)

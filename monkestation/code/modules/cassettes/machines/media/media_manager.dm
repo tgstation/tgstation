@@ -17,13 +17,6 @@
 #define MP_DEBUG(x)
 #endif
 
-// Set up player on login.
-/client/New()
-	. = ..()
-	media = new /datum/media_manager(src)
-	media.open()
-	media.update_music()
-
 // Stop media when the round ends. I guess so it doesn't play forever or something (for some reason?)
 /proc/stop_all_media()
 	// Stop all music.

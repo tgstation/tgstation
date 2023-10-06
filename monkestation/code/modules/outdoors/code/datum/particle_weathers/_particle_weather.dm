@@ -201,6 +201,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			weather_additional_ongoing_events += new str(src)
 
 /datum/particle_weather/Destroy()
+	messaged_mobs = null
 	for(var/S in current_sounds)
 		var/datum/looping_sound/looping_sound = current_sounds[S]
 		looping_sound.stop()

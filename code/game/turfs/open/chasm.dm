@@ -14,7 +14,7 @@
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	apply_components()
 
 /// Lets people walk into chasms.
 /turf/open/chasm/CanAllowThrough(atom/movable/mover, border_dir)
@@ -74,6 +74,10 @@
 		return
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
+
+/// Handles adding the chasm component to the turf (So stuff falls into it!)
+/turf/open/chasm/proc/apply_components()
+	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src))
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland

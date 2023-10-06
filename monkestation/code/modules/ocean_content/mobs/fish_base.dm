@@ -18,6 +18,17 @@
 	ai_controller = /datum/ai_controller/basic_controller/fish
 
 
+/mob/living/basic/aquatic/fish/Destroy()
+	. = ..()
+	var/datum/group_planning/attached = ai_controller?.blackboard[BB_GROUP_DATUM]
+	if(attached)
+		if(src in attached.group_mobs)
+			attached.group_mobs -= src
+		if(src in attached.in_progress_mobs)
+			attached.in_progress_mobs -= src
+		if(src in attached.finished_mobs)
+			attached.finished_mobs -= src
+
 /mob/living/basic/aquatic/fish/cod
 	name = "Cod"
 	icon_state = "cod"
