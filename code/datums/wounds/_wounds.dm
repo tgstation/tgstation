@@ -435,7 +435,7 @@
 			else
 				limp_slowdown = initial(limp_slowdown)
 				limp_chance = initial(limp_chance)
-		else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		else if(limb.body_zone in GLOB.arm_zones)
 			if(limb.current_gauze?.splint_factor)
 				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
 			else
