@@ -31,7 +31,7 @@
 	finish_planning = TRUE
 
 /datum/ai_planning_subtree/make_carp_rift/panic_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
+	if (controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
 	return ..()
 

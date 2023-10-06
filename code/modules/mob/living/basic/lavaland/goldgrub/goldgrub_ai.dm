@@ -3,7 +3,6 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/iron, /obj/item/stack/ore/glass),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 	)
 
@@ -25,7 +24,6 @@
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/glass),
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/goldgrub),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/goldgrub/baby),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 	)
 

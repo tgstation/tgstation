@@ -49,7 +49,6 @@
 
 /datum/ai_controller/basic_controller/rabbit
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED

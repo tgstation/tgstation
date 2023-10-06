@@ -2,7 +2,6 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/lobster,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_LOBSTROSITY_FINGER_LUST = 0
 	)
 
@@ -26,7 +25,7 @@
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
+	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
 	if (!isnull(controller.blackboard[BB_LOBSTROSITY_TARGET_LIMB]))
 		return
@@ -48,8 +47,8 @@
 		is_vulnerable = TRUE
 		break
 	if (!is_vulnerable)
-		controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, TRUE)
-	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
+		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
+	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		finish_action(controller = controller, succeeded = TRUE, target_key = target_key) // We don't want to clear our target
 		return
 	return ..()
@@ -74,7 +73,7 @@
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue
-		controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
 		finish_action(controller, succeeded = FALSE)
 		return
 

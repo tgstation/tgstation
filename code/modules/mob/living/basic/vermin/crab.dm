@@ -77,7 +77,7 @@
 ///The basic ai controller for crabs
 /datum/ai_controller/basic_controller/crab
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = FALSE,
+		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)
