@@ -386,14 +386,17 @@
 		if(channels[ch_name] & FREQ_LISTENING)
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
 				return TRUE
+	return FALSE
 
-/// Checks if this radio can receive on any of the given levels.
+/// Checks if this radio is on one of the given levels.
 /obj/item/radio/proc/same_zlevel(list/levels)
-	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
-		var/turf/position = get_turf(src)
-		for(var/zlevel as anything in levels)
-			if(is_valid_z_level(zlevel, position))
+	if (levels = RADIO_NO_Z_LEVEL_RESTRICTION)
+		return TRUE
+	var/turf/position = get_turf(src)
+	for(var/zlevel as anything in levels)
+		if(is_valid_z_level(zlevel, position))
 				return TRUE
+	return FALSE
 
 /obj/item/radio/proc/on_recieve_message()
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
