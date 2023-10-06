@@ -1,0 +1,4 @@
+author: "CoiledLamb"
+delete-after: True
+changes:
+  - qol: "allows janitor keys to be stored in janitor wintercoats and janibets"
