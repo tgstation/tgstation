@@ -270,10 +270,10 @@
 		if(current_list_element > cached_reagents.len)
 			current_list_element = 1
 
-		var/datum/reagent/R = cached_reagents[current_list_element]
+		var/datum/reagent/target_holder = cached_reagents[current_list_element]
 		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
 		//min ensures we don't go over amount.
-		remove_reagent(R.type, remove_amt)
+		remove_reagent(target_holder.type, remove_amt)
 
 		current_list_element++
 		total_removed += remove_amt
@@ -323,7 +323,6 @@
 		if(!total_volume || final_contribution < CHEMICAL_QUANTISATION_LEVEL)
 			break
 
-	//finish_reacting() //A just in case - update total is in here - should be unneeded, make sure to test this
 	handle_reactions()
 	return removed_amount
 
@@ -541,10 +540,10 @@
 	var/list/cached_reagents = reagent_list
 
 	var/atom/target_atom
-	var/datum/reagents/R
+	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
-		R = target
-		target_atom = R.my_atom
+		target_holder = target
+		target_atom = target_holder.my_atom
 	else
 		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
@@ -554,24 +553,24 @@
 				if(expel_amount > 0 )
 					eater.expel_ingested(my_atom, expel_amount)
 				return
-			R = belly.reagents
+			target_holder = belly.reagents
 			target_atom = belly
 		else if(!target.reagents)
 			return
 		else
-			R = target.reagents
+			target_holder = target.reagents
 			target_atom = target
 
 	var/cached_amount = amount
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount * multiplier, total_volume, R.maximum_volume - R.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = FLOOR(min(amount * multiplier, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		transfer_reactions(R)
+		transfer_reactions(target_holder)
 
 	var/transfered_amount = 0
 	var/trans_data = null
@@ -596,10 +595,10 @@
 					continue
 				if(preserve_data)
 					trans_data = copy_data(reagent)
-				if(reagent.intercept_reagents_transfer(R, cached_amount))
+				if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 					continue
 				var/transfer_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
-				if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
+				if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 					continue
 				if(methods)
 					r_to_send += reagent
@@ -611,7 +610,7 @@
 					final_contribution = (amount - transfered_amount)
 
 			//expose target to reagent changes
-			R.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
+			target_holder.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
 
 			//remove chemicals that were added above
 			for(var/list/data as anything in reagents_to_remove)
@@ -640,14 +639,14 @@
 				continue
 			if(preserve_data)
 				trans_data = copy_data(reagent)
-			if(reagent.intercept_reagents_transfer(R, cached_amount))
+			if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 				continue
 			var/transfer_amount = FLOOR(min(amount, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
-			if(!R.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
+			if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
-				R.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, transfer_amount, show_message)
+				target_holder.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, transfer_amount, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount)
 			remove_reagent(reagent.type, transfer_amount)
 			transfered_amount += transfer_amount
@@ -658,9 +657,9 @@
 		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
 
 	update_total()
-	R.update_total()
+	target_holder.update_total()
 	if(!no_react)
-		R.handle_reactions()
+		target_holder.handle_reactions()
 		src.handle_reactions()
 	return transfered_amount
 

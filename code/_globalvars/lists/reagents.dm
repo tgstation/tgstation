@@ -27,9 +27,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 	for(var/datum/reagent/path as anything in subtypesof(/datum/reagent))
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
-		var/datum/reagent/D = new path()
-		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
-		reagent_list[path] = D
+		var/datum/reagent/target_object = new path()
+		target_object.mass = rand(10, 800)
+		reagent_list[path] = target_object
 
 	return reagent_list
 
