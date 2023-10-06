@@ -151,14 +151,14 @@
 		healer.balloon_alert(healer, "interrupted!")
 		return
 
+	if (complete_text)
+		healer.visible_message(span_notice("[format_string(complete_text, healer, target)]"))
+
 	target.heal_overall_damage(brute = heal_brute, burn = heal_burn, stamina = heal_stamina, required_bodytype = required_bodytype)
 	new /obj/effect/temp_visual/heal(get_turf(target), heal_color)
 
 	if(show_health && !iscarbon(target))
-		complete_text += " %TARGET% now has <b>[target.health]/[target.maxHealth] health.</b>"
-
-	if (complete_text)
-		healer.visible_message(span_notice("[format_string(complete_text, healer, target)]"))
+		healer.visible_message(span_danger("[format_string("%TARGET% now has <b>[target.health]/[target.maxHealth] health.</b>", healer, target)]"))
 
 /// Reformats the passed string with the replacetext keys
 /datum/component/healing_touch/proc/format_string(string, atom/source, atom/target)
