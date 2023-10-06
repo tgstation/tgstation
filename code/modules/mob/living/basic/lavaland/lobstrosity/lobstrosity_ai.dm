@@ -57,6 +57,12 @@
 /datum/ai_planning_subtree/flee_target/lobster
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/lobster
 
+/datum/ai_planning_subtree/flee_target/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_TARGETTED_ACTION]
+	if (using_action?.IsAvailable())
+		return
+	return ..()
+
 /datum/ai_behavior/run_away_from_target/lobster
 	clear_failed_targets = FALSE
 
@@ -64,6 +70,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(isnull(target))
 		return ..()
+
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue

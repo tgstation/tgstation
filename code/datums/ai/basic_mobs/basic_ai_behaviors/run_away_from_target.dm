@@ -25,7 +25,7 @@
 	if (QDELETED(target) || !can_see(controller.pawn, target, run_distance))
 		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
 		return
-	if (get_dist(controller.pawn, controller.current_movement_target) >= required_distance)
+	if (get_dist(controller.pawn, controller.current_movement_target) > required_distance)
 		return // Still heading over
 	if (plot_path_away_from(controller, target))
 		return
