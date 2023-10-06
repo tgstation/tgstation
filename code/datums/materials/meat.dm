@@ -38,18 +38,23 @@
 		eat_time = 3 SECONDS, \
 		tastes = list("Meaty"))
 
-	source.AddComponent(
-		/datum/component/blood_walk,\
-		blood_type = /obj/effect/decal/cleanable/blood,\
-		blood_spawn_chance = 35,\
-		max_blood = (nutriment_count + oil_count) * 0.3,\
-	)
 
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = (nutriment_count + oil_count) * 0.3,\
 		blood_dna = list("meaty DNA" = "MT-"),\
 		diseases = null,\
+	)
+
+	// Turfs can't handle the meaty goodness of blood walk.
+	if(!ismovable(source))
+		return
+
+	source.AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 35,\
+		max_blood = (nutriment_count + oil_count) * 0.3,\
 	)
 
 /datum/material/meat/mob_meat
