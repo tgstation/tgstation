@@ -167,7 +167,7 @@
 	butcher_callback?.Invoke(butcher, target)
 	target.harvest(butcher)
 	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
-	target.gib(FALSE, FALSE, TRUE)
+	target.gib(DROP_BRAIN|DROP_ORGANS)
 
 ///Enables the butchering mechanic for the mob who has equipped us.
 /datum/component/butchering/proc/enable_butchering(datum/source)

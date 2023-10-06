@@ -200,7 +200,7 @@
 	yolk.underwear = "Nude"
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
-	yolk.gib()
+	yolk.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(egg)
 	return ..()
 

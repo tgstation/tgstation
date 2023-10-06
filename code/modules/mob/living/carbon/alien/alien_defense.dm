@@ -103,7 +103,7 @@ In all, this is a lot like the monkey code. /N
 	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			gib()
+			gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)

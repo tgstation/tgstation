@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes:
-  - admin: "Appearance vars in VV now display instead of being left blank"
