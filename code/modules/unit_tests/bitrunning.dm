@@ -387,13 +387,9 @@
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 
-	var/turf/tiles = get_adjacent_open_turfs(server)
-	TEST_ASSERT_NOTEQUAL(length(tiles), 0, "Sanity: Did not find an open turf")
-
 	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	server.receive_turfs = tiles
 	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
 
 	// This is a pretty shallow test. I keep getting null crates with locate(), so I'm not sure how to test this

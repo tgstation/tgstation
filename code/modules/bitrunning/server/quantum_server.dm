@@ -48,8 +48,6 @@
 	var/servo_bonus = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// The turfs on station where we generate loot.
-	var/turf/receive_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()

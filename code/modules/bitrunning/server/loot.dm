@@ -16,7 +16,8 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot()
-	if(!locate_receive_turfs())
+	var/turf/viable_cache_turfs = locate_cache_turfs()
+	if(!length(viable_cache_turfs))
 		say(src, "No nearby byteforges detected.")
 		return FALSE
 

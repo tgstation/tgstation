@@ -108,13 +108,13 @@
 	return shuffle(mutation_candidate_refs)
 
 /// Locates any turfs with forges on them
-/obj/machinery/quantum_server/proc/locate_receive_turfs()
-	QDEL_NULL(receive_turfs)
+/obj/machinery/quantum_server/proc/locate_cache_turfs()
+	var/turf/cache_spawn_turfs
 
 	for(var/obj/machinery/byteforge/forge in oview(MAX_DISTANCE, src))
-		receive_turfs += get_turf(forge)
+		cache_spawn_turfs += get_turf(forge)
 
-	return length(receive_turfs) > 0
+	return cache_spawn_turfs
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
