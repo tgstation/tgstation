@@ -390,7 +390,7 @@
 
 /// Checks if this radio is on one of the given levels.
 /obj/item/radio/proc/same_zlevel(list/levels)
-	if (levels = RADIO_NO_Z_LEVEL_RESTRICTION)
+	if (levels == RADIO_NO_Z_LEVEL_RESTRICTION)
 		return TRUE
 	var/turf/position = get_turf(src)
 	for(var/zlevel as anything in levels)
