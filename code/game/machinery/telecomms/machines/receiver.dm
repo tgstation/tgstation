@@ -28,13 +28,14 @@
 	use_power(idle_power_usage)
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
-	if (z in signal.levels)
-		return TRUE
+	for(var/zlevel as anything in signal.levels)
+		if(is_valid_z_level(zlevel, z))
+			return TRUE
 
-	for(var/obj/machinery/telecomms/hub/H in links)
-		for(var/obj/machinery/telecomms/relay/R in H.links)
-			if(R.can_receive(signal) && (R.z in signal.levels))
-				return TRUE
+		for(var/obj/machinery/telecomms/hub/H in links)
+			for(var/obj/machinery/telecomms/relay/R in H.links)
+				if(R.can_receive(signal) && (is_valid_z_level(zlevel, R.z)))
+					return TRUE
 
 	return FALSE
 

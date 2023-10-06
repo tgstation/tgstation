@@ -37,7 +37,10 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 
 	var/turf/T = get_turf(src)
 	if (T)
-		signal.levels |= SSmapping.get_connected_levels(T)
+		if(is_station_level(T.z))
+			signal.levels |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+		else
+			signal.levels |= list(T.z)
 
 	GLOB.recentmessages.Add(signal_message)
 

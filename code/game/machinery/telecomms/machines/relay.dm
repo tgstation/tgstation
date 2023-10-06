@@ -20,15 +20,13 @@
 	var/receiving = 1
 
 /obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
-	// Add our level and send it back
+	// Add our level (or levels if multiz station)
 	var/turf/relay_turf = get_turf(src)
 	if(can_send(signal) && relay_turf)
-		// Relays send signals to all ZTRAIT_STATION z-levels
-		if(SSmapping.level_trait(relay_turf.z, ZTRAIT_STATION))
-			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-				signal.levels |= SSmapping.get_connected_levels(z)
+		if(is_station_level(relay_turf.z))
+			signal.levels |= SSmapping.levels_by_trait(ZTRAIT_STATION)
 		else
-			signal.levels |= SSmapping.get_connected_levels(relay_turf)
+			signal.levels |= list(relay_turf.z)
 
 	use_power(idle_power_usage)
 

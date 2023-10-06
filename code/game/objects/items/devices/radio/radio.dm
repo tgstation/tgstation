@@ -368,25 +368,32 @@
 
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
-/// Checks if this radio can receive on the given frequency.
-/obj/item/radio/proc/can_receive(input_frequency, list/levels)
-	// deny checks
-	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
-		var/turf/position = get_turf(src)
-		if(!position || !(position.z in levels))
-			return FALSE
 
+/obj/item/radio/proc/can_receive(input_frequency, list/levels)
+	if(same_frequency(input_frequency))
+		if(same_zlevel(levels))
+			return TRUE
+	return FALSE
+
+/// Checks if this radio can receive on the given frequency.
+/obj/item/radio/proc/same_frequency(input_frequency)
 	if (input_frequency == FREQ_SYNDICATE && !syndie)
 		return FALSE
 
-	// allow checks: are we listening on that frequency?
 	if (input_frequency == frequency)
 		return TRUE
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
 				return TRUE
-	return FALSE
+
+/// Checks if this radio can receive on any of the given levels.
+/obj/item/radio/proc/same_zlevel(list/levels)
+	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
+		var/turf/position = get_turf(src)
+		for(var/zlevel as anything in levels)
+			if(is_valid_z_level(zlevel, position))
+				return TRUE
 
 /obj/item/radio/proc/on_recieve_message()
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
