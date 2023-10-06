@@ -15,7 +15,7 @@
 
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/carbine
-	e_cost = 25 // 40 shots
+	e_cost = LASER_SHOTS(40)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
