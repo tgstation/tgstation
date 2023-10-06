@@ -6,13 +6,16 @@
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
 	var/atom/result_typepath
+	var/list/added_reagents
 
-/datum/element/microwavable/Attach(datum/target, microwave_type)
+/datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents = list())
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	result_typepath = microwave_type || default_typepath
+
+	added_reagents = reagents
 
 	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
@@ -45,6 +48,8 @@
 		BLACKBOX_LOG_FOOD_MADE(result.type)
 		result.reagents.clear_reagents()
 		source.reagents?.trans_to(result, source.reagents.total_volume)
+		for (var/reagent in added_reagents)
+			result.reagents.add_reagent(reagent, added_reagents[reagent])
 
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))

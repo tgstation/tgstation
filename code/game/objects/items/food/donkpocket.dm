@@ -20,12 +20,14 @@
 	var/baking_time_short = 25 SECONDS
 	/// The upper end for how long it takes to bake
 	var/baking_time_long = 30 SECONDS
+	/// The reagents added when microwaved. Needed since microwaving ignores food_reagents
+	var/added_reagents = list(/datum/reagent/medicine/omnizine = 6)
 
 /obj/item/food/donkpocket/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE)
 
 /obj/item/food/donkpocket/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type)
+	AddElement(/datum/element/microwavable, warm_type, added_reagents)
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -68,6 +70,7 @@
 	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy
+	added_reagents = list(/datum/reagent/medicine/omnizine = 2)
 
 /obj/item/food/donkpocket/warm/spicy
 	name = "warm Spicy-pocket"
@@ -94,6 +97,7 @@
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki
+	added_reagents = list(/datum/reagent/medicine/omnizine = 2)
 
 /obj/item/food/donkpocket/warm/teriyaki
 	name = "warm Teriyaki-pocket"
@@ -120,6 +124,7 @@
 	tastes = list("meat" = 2, "dough" = 2, "cheese"= 2)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/pizza
+	added_reagents = list(/datum/reagent/medicine/omnizine = 2)
 
 /obj/item/food/donkpocket/warm/pizza
 	name = "warm Pizza-pocket"
@@ -146,6 +151,10 @@
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/honk
 	crafting_complexity = FOOD_COMPLEXITY_3
+	added_reagents = list(
+		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/laughter = 6,
+	)
 
 /obj/item/food/donkpocket/warm/honk
 	name = "warm Honk-pocket"
@@ -172,6 +181,7 @@
 	tastes = list("dough" = 2, "jam" = 2)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/berry
+	added_reagents = list(/datum/reagent/medicine/omnizine = 2)
 
 /obj/item/food/donkpocket/warm/berry
 	name = "warm Berry-pocket"
@@ -198,6 +208,10 @@
 	foodtypes = GRAIN
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
+	added_reagents = list(
+		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/gondola_mutation_toxin = 5,
+	)
 
 /obj/item/food/donkpocket/warm/gondola
 	name = "warm Gondola-pocket"
