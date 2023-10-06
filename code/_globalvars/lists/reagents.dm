@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		var/preferred_id = null
 		for(var/reagent_id as anything in reaction.required_reagents)
-			if(!preferred_id)
+			if(isnull(preferred_id))
 				preferred_id = reagent_id
 				continue
 			// If we would have less then they would, take it
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 			if(reagent_to_react_count[reagent_id] < reagent_to_react_count[preferred_id])
 				preferred_id = reagent_id
 				continue
-		if (preferred_id != null)
+		if (!isnull(preferred_id))
 			if(!reaction_lookup[preferred_id])
 				reaction_lookup[preferred_id] = list()
 			reaction_lookup[preferred_id] += reaction
