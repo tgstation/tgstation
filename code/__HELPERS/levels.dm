@@ -5,16 +5,22 @@
  * This is because the station's several levels aren't considered the same z, so multi-z stations need this special case.
  *
  * Args:
- * source_loc - turf of the source we're comparing.
- * checking_loc - turf we are comparing to source_loc.
+ * source_loc - z-level or turf of the source we're comparing.
+ * checking_loc - z-level or turf we are comparing to source_loc.
  *
  * returns TRUE if connection is valid, FALSE otherwise.
  */
 /proc/is_valid_z_level(turf/source_loc, turf/checking_loc)
+	var/source_z_level = source_loc
+	var/checking_z_level = checking_loc
+	if(isturf(source_loc))
+		source_z_level = source_loc.z
+	if(isturf(checking_loc))
+		checking_z_level = checking_loc.z
 	// if we're both on "station", regardless of multi-z, we'll pass by.
-	if(is_station_level(source_loc.z) && is_station_level(checking_loc.z))
+	if(is_station_level(source_z_level) && is_station_level(checking_z_level))
 		return TRUE
-	if(source_loc.z == checking_loc.z)
+	if(source_z_level == checking_z_level)
 		return TRUE
 	return FALSE
 
