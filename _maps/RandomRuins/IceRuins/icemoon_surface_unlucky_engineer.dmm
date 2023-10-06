@@ -31,7 +31,7 @@
 "aF" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "aH" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/structure/broken_flooring/singular/directional/south,
@@ -59,6 +59,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron,
 /area/ruin/unlucky_engineer/gear)
 "aT" = (
@@ -109,6 +110,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/foyer)
+"bI" = (
+/mob/living/simple_animal/hostile/asteroid/polarbear,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "bK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
 	chamber_id = "lavalandsyndien2";
@@ -184,10 +189,10 @@
 /obj/item/pickaxe/rusted,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "cj" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "co" = (
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
@@ -235,7 +240,7 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "cN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/north,
@@ -259,7 +264,7 @@
 "cP" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "cU" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible{
 	dir = 8
@@ -332,7 +337,7 @@
 /area/ruin/unlucky_engineer/foyer)
 "dN" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "dO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
@@ -470,8 +475,13 @@
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/turf_decal/weather/snow,
-/obj/item/pizzabox,
-/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/item/trash/flare,
+/obj/item/pen/survival,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "fo" = (
@@ -544,7 +554,7 @@
 /obj/effect/decal/cleanable/generic,
 /mob/living/basic/mining/lobstrosity,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "gJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -566,27 +576,21 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "hg" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms{
-	dir = 4
-	},
-/obj/item/pillow/random,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/corpse/human/assistant,
 /obj/structure/cable,
 /obj/effect/turf_decal/weather/snow,
-/obj/machinery/digital_clock/directional/north,
+/obj/structure/broken_flooring/pile,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/ready_donk,
+/obj/structure/fireplace,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "hi" = (
 /obj/structure/flora/rock/pile/style_random,
 /mob/living/basic/mining/legion/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "hn" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/decal/cleanable/dirt,
@@ -670,10 +674,11 @@
 /area/ruin/unlucky_engineer/rest)
 "iF" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/west,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/item/pizzabox,
+/obj/machinery/digital_clock/directional/north,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "iR" = (
@@ -815,7 +820,7 @@
 "kq" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "kz" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -891,6 +896,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unlucky_engineer/maints)
+"lH" = (
+/mob/living/basic/mining/goldgrub,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "lL" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/cobweb,
@@ -929,20 +938,27 @@
 "lP" = (
 /mob/living/basic/mining/lobstrosity,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "lS" = (
 /turf/closed/wall/r_wall,
 /area/ruin/unlucky_engineer/turbine)
 "lV" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
 /obj/structure/sign/poster/ripped/directional/east,
-/obj/effect/spawner/random/entertainment/deck,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/structure/broken_flooring/corner/directional/west,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/pillow/random,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/snow,
+/obj/structure/broken_flooring/side,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "lZ" = (
@@ -1014,23 +1030,28 @@
 /area/ruin/unlucky_engineer/maints)
 "nF" = (
 /obj/structure/table,
-/obj/item/flashlight/lamp{
-	pixel_x = -7;
-	pixel_y = 5
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/energybar,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/spawner/random/trash/crushed_can{
-	pixel_x = 7;
-	pixel_y = 7
-	},
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
 /obj/structure/sign/poster/official/pda_ad/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lantern/jade{
+	on = 1;
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/item/trash/energybar,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "nH" = (
@@ -1087,7 +1108,7 @@
 "nW" = (
 /mob/living/basic/mining_drone,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "oc" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/snowed/icemoon,
@@ -1155,15 +1176,15 @@
 /obj/structure/flora/grass/brown/style_random,
 /mob/living/basic/legion_brood/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "ps" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "pB" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/basic/legion_brood/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "pF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/plating/directional/south,
@@ -1219,7 +1240,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "qt" = (
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers)
@@ -1339,7 +1360,7 @@
 	lifetime = 0
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "sA" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/structure/broken_flooring/singular/directional/west,
@@ -1399,10 +1420,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
-"tt" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
 "tA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -1429,6 +1446,14 @@
 	},
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/foyer)
+"ue" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk/mining,
+/mob/living/basic/legion_brood/snow{
+	lifetime = 0
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "us" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -1448,7 +1473,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/structure/statue/snow/snowman,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "uR" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
@@ -1546,7 +1571,7 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "vZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -1636,7 +1661,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "xu" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -1649,7 +1674,7 @@
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "xP" = (
 /turf/closed/wall/ice,
 /area/ruin/unlucky_engineer/maints)
@@ -1702,6 +1727,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/greenglow,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/foyer)
 "zc" = (
@@ -1841,6 +1867,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unlucky_engineer/foyer)
+"Az" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "AA" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -1909,7 +1939,7 @@
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "CC" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
@@ -1919,7 +1949,7 @@
 "CF" = (
 /obj/structure/fence,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "CJ" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/decal/cleanable/dirt,
@@ -1997,7 +2027,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "DF" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt,
@@ -2014,7 +2044,7 @@
 /obj/structure/flora/rock/pile/style_random,
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "DK" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/vacuum,
@@ -2099,15 +2129,12 @@
 "Fb" = (
 /obj/effect/spawner/random/trash/moisture_trap,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/flashlight/lantern/jade{
-	on = 1
-	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/unlucky_engineer/maints)
 "Fj" = (
 /mob/living/basic/mining/legion/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Fp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/drip,
@@ -2170,7 +2197,7 @@
 "FX" = (
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Gc" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -2189,8 +2216,9 @@
 /area/ruin/unlucky_engineer/foyer)
 "Gl" = (
 /obj/structure/flora/grass/brown/style_random,
+/mob/living/basic/mining/basilisk,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Go" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -2207,7 +2235,7 @@
 "GD" = (
 /obj/structure/flora/tree/dead,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "GG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2226,7 +2254,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "GO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2284,7 +2312,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "HC" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating/snowed/icemoon,
@@ -2296,11 +2324,11 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/ready_donk,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/effect/turf_decal/weather/snow,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "HN" = (
@@ -2366,7 +2394,7 @@
 "Jb" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Jm" = (
 /obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
@@ -2425,7 +2453,7 @@
 	dir = 9
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Kc" = (
 /obj/structure/broken_flooring/plating/directional/north,
 /obj/effect/spawner/random/trash/caution_sign,
@@ -2496,7 +2524,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Lw" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating/icemoon,
@@ -2506,7 +2534,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "LF" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_main,
 /turf/open/floor/engine/vacuum,
@@ -2538,7 +2566,7 @@
 /obj/structure/flora/grass/brown/style_random,
 /mob/living/simple_animal/hostile/asteroid/polarbear,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Ng" = (
 /obj/structure/cable,
 /obj/structure/fluff/paper/stack,
@@ -2576,7 +2604,7 @@
 "NU" = (
 /obj/structure/statue/snow/snowlegion,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Og" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2629,7 +2657,7 @@
 "Pi" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Pr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/west,
@@ -2726,7 +2754,7 @@
 "Qn" = (
 /mob/living/basic/mining/legion/snow,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Qo" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/open/floor/plating/snowed/icemoon,
@@ -2734,7 +2762,7 @@
 "Qp" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Qt" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -2810,7 +2838,7 @@
 "Rn" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Rq" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -2879,7 +2907,7 @@
 /obj/structure/flora/grass/brown/style_random,
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "SK" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/official/safety_internals/directional/north,
@@ -2928,7 +2956,12 @@
 	lifetime = 0
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
+"TH" = (
+/obj/structure/flora/grass/brown/style_random,
+/mob/living/basic/mining/goldgrub,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "TK" = (
 /turf/closed/wall,
 /area/ruin/unlucky_engineer/gear)
@@ -2992,6 +3025,7 @@
 /obj/item/rcd_ammo,
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating,
 /area/ruin/unlucky_engineer/maints)
 "UY" = (
@@ -3238,7 +3272,7 @@
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "Xu" = (
 /obj/item/radio/intercom/command/directional/west,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -3250,6 +3284,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/ce)
 "XF" = (
@@ -3372,7 +3407,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/broken_flooring/side/directional/north,
-/obj/item/pen/survival,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unlucky_engineer/rest)
 "Zg" = (
@@ -3401,6 +3435,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/ce)
+"Zm" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/turf_decal/weather/snow,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/icemoon,
+/area/ruin/unlucky_engineer/rest)
 "Zn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -3465,7 +3507,7 @@ qt
 qt
 qt
 dN
-Gl
+Az
 ps
 ps
 ps
@@ -3474,14 +3516,14 @@ ps
 dN
 dN
 aF
-Gl
+Az
 dN
 dN
 Rn
 dN
 dN
 ps
-Gl
+Az
 qt
 qt
 qt
@@ -3495,25 +3537,25 @@ qt
 qt
 aF
 ps
-Gl
+Az
 Pi
 FQ
 jn
 Dv
 FQ
-Gl
+Az
 dN
 ps
-Gl
+Az
 ps
 ps
-Gl
+Az
 ps
 dN
 Jb
 ps
 aF
-Gl
+Az
 qt
 qt
 qt
@@ -3533,13 +3575,13 @@ cN
 Xg
 Dv
 Rn
-Gl
+Az
 ps
 lP
 ps
 dN
 Rn
-Gl
+Az
 ps
 ps
 Pi
@@ -3574,18 +3616,18 @@ JP
 GM
 CF
 Lz
-Gl
+Az
 ps
 Pi
 qt
-Gl
+Az
 qt
 qt
 qt
 "}
 (5,1,1) = {"
 qt
-Gl
+Az
 FQ
 Yy
 eG
@@ -3606,9 +3648,9 @@ uM
 gQ
 xt
 ps
-Gl
+TH
 ps
-Gl
+Az
 Rn
 qt
 qt
@@ -3641,12 +3683,12 @@ ps
 GD
 Jb
 ps
-Gl
+Az
 qt
 qt
 "}
 (7,1,1) = {"
-Gl
+Az
 ps
 FQ
 tY
@@ -3668,7 +3710,7 @@ pB
 cj
 HB
 Rn
-Gl
+Az
 nW
 ps
 ps
@@ -3677,7 +3719,7 @@ qt
 qt
 "}
 (8,1,1) = {"
-Gl
+Az
 gz
 Vg
 VW
@@ -3696,13 +3738,13 @@ zp
 IU
 xh
 cj
-Gl
+Az
 Lv
-Gl
+Az
 ps
 ps
 NU
-Gl
+Az
 qt
 qt
 qt
@@ -3739,7 +3781,7 @@ qt
 qt
 "}
 (10,1,1) = {"
-Gl
+Az
 Qo
 tp
 tp
@@ -3760,11 +3802,11 @@ Wq
 ps
 TA
 qi
-Gl
+Az
 hi
-Gl
+Az
 rZ
-Gl
+Az
 Rn
 qt
 qt
@@ -3788,11 +3830,11 @@ nO
 dO
 Yx
 xh
-Gl
+Az
 ps
 HB
 Jb
-Gl
+Az
 ps
 FX
 ps
@@ -3832,7 +3874,7 @@ qt
 qt
 "}
 (13,1,1) = {"
-Gl
+Az
 Qo
 tp
 SV
@@ -3859,7 +3901,7 @@ ps
 ps
 vW
 ps
-Gl
+Az
 qt
 "}
 (14,1,1) = {"
@@ -3899,7 +3941,7 @@ vN
 Qo
 Wn
 im
-Wn
+ue
 Qo
 ZE
 pF
@@ -3925,12 +3967,12 @@ ps
 dN
 "}
 (16,1,1) = {"
-Gl
+Az
 Qo
 tp
 SV
 Wn
-tt
+SV
 tp
 FQ
 Dv
@@ -3956,12 +3998,12 @@ dN
 dN
 "}
 (17,1,1) = {"
-ps
+bI
 Qo
 oc
 tp
 Qo
-SV
+lH
 SV
 FQ
 SK
@@ -3981,13 +4023,13 @@ aF
 Fj
 ps
 ps
-Gl
+Az
 ps
 dN
 GD
 "}
 (18,1,1) = {"
-Gl
+Az
 Qo
 oT
 HC
@@ -4009,7 +4051,7 @@ Ur
 QN
 QN
 Rn
-Gl
+Az
 ps
 Rn
 ps
@@ -4018,7 +4060,7 @@ Rn
 ps
 "}
 (19,1,1) = {"
-Gl
+Az
 Jb
 zI
 Gc
@@ -4080,7 +4122,7 @@ lS
 ps
 "}
 (21,1,1) = {"
-Gl
+Az
 aF
 oT
 iR
@@ -4108,11 +4150,11 @@ ok
 bl
 Yz
 jW
-Gl
+Az
 "}
 (22,1,1) = {"
 Rn
-Gl
+Az
 zI
 oT
 NA
@@ -4200,7 +4242,7 @@ Nq
 lS
 eT
 jW
-Gl
+Az
 dN
 "}
 (25,1,1) = {"
@@ -4213,7 +4255,7 @@ fe
 zc
 nF
 vb
-Gl
+Az
 lS
 xm
 iW
@@ -4277,7 +4319,7 @@ YS
 iE
 ps
 aF
-Gl
+Az
 Rn
 jW
 jW
@@ -4300,15 +4342,15 @@ dN
 dN
 vb
 hQ
-hQ
+Zm
 lV
 aT
 Pg
 wm
 Rc
-Gl
+Az
 NU
-Gl
+Az
 ps
 aF
 jW
@@ -4325,12 +4367,12 @@ lS
 jW
 jW
 jW
-Gl
+Az
 "}
 (29,1,1) = {"
 qt
 Pi
-Gl
+hQ
 hQ
 vb
 hQ
@@ -4338,7 +4380,7 @@ Rc
 Nu
 hQ
 dN
-Gl
+Az
 Jb
 ps
 ps
@@ -4353,7 +4395,7 @@ Xk
 Jm
 jW
 Jb
-Gl
+Az
 Rn
 dN
 qt
@@ -4364,8 +4406,8 @@ qt
 ps
 ps
 DI
-Gl
-Gl
+Az
+Az
 ps
 ps
 aF
@@ -4406,14 +4448,14 @@ ps
 dN
 Pi
 ps
-Gl
+Az
 ps
 dN
 dN
-Gl
-Gl
+Az
+Az
 dN
-Gl
+Az
 dN
 qt
 qt

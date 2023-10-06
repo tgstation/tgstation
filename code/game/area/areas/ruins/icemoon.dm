@@ -70,7 +70,7 @@
 /area/ruin/unlucky_engineer/turbine
 	name = "\improper Ruined Turbine"
 	sound_environment = SOUND_ENVIRONMENT_DIZZY
-	mood_bonus = -1
+	mood_bonus = -2
 	mood_message = "Those creatures must've burst the pipes... It's so hard to think in here..."
 
 /area/ruin/unlucky_engineer/ce
@@ -90,8 +90,8 @@
 /area/ruin/unlucky_engineer/rest
 	name = "\improper Frozen Bunk Room"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
-	mood_bonus = 1
-	mood_message = "It's cold in here... But I can bear it and press on."
+	mood_bonus = -1
+	mood_message = "It's even colder in here... I don't think I can bear it."
 
 /area/ruin/unlucky_engineer/maints
 	name = "\improper Decrepit Passageway"
