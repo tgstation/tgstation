@@ -58599,9 +58599,7 @@
 "pmG" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
+/mob/living/basic/goat/pete,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "pmO" = (

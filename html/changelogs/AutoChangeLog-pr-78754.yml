@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - refactor: "Refactor gib code to be more robust."
+  - qol: "Gibbing a mob will result in all items being dropped instead of getting deleted. There are a few exceptions (like admin gib self) where this will not take place."

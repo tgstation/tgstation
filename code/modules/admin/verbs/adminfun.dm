@@ -78,9 +78,9 @@
 	if (istype(living_victim))
 		living_victim.investigate_log("has been gibbed by an admin.", INVESTIGATE_DEATHS)
 		if(confirm == "Yes")
-			living_victim.gib()
+			living_victim.gib(DROP_ALL_REMAINS)
 		else
-			living_victim.gib(TRUE)
+			living_victim.gib(DROP_ORGANS|DROP_BODYPARTS)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
@@ -97,7 +97,7 @@
 
 	var/mob/living/ourself = mob
 	if (istype(ourself))
-		ourself.gib(TRUE, TRUE, TRUE)
+		ourself.gib()
 
 /client/proc/everyone_random()
 	set category = "Admin.Fun"
