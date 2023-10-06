@@ -78,10 +78,6 @@
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
 			return
-	if(iswallturf(A))
-		var/turf/closed/wall = A
-		SEND_SIGNAL(src, COMSIG_LIVING_WALL_BUMP, wall)
-		return
 
 /mob/living/Bumped(atom/movable/AM)
 	..()

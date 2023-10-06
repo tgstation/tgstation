@@ -363,6 +363,12 @@
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
 
+/turf/closed/wall/Bumped(atom/movable/bumped_atom)
+	. = ..()
+	if(isliving(bumped_atom))
+		var/mob/living/living_bumped = bumped_atom
+		SEND_SIGNAL(living_bumped, COMSIG_LIVING_WALL_BUMP, src)
+
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone))

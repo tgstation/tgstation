@@ -43,7 +43,7 @@
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// What flavor of gunk does this construct drop on death?
-	var/list/remains = list(/obj/item/ectoplasm)
+	var/static/list/remains = list(/obj/item/ectoplasm)
 	/// Can this construct smash walls? Gets the wall_smasher element if so.
 	var/smashes_walls = FALSE
 
@@ -66,9 +66,10 @@
 			show_health = TRUE,\
 			heal_color = COLOR_CULT_RED,\
 		)
+		var/static/list/structure_types = typecacheof(list(/obj/structure/destructible/cult))
 		AddElement(\
 			/datum/element/structure_repair,\
-			structure_types_typecache = typecacheof(list(/obj/structure/destructible/cult)),\
+			structure_types_typecache = structure_types,\
 			)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
 	for(var/spell in construct_spells)
