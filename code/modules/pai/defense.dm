@@ -74,17 +74,17 @@
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
 	return take_holo_damage(amount)
 
 /mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BURN_DAMAGE, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
 	return take_holo_damage(amount)
 
 /mob/living/silicon/pai/adjustStaminaLoss(amount, updating_stamina, forced = FALSE, required_biotype)
-	if(on_damage_adjustment(STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
 	if(forced)
 		take_holo_damage(amount)
