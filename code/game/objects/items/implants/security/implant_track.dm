@@ -18,6 +18,21 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 		global_list = GLOB.tracked_tracking_implants, \
 	)
 
+/obj/item/implant/tracking/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR>
+				<b>Life:</b> 10 minutes after death of host.<BR>
+				<HR>
+				<b>Implant Details:</b> <BR>
+				<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR>
+				<b>Special Features:</b><BR>
+				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
+				a malfunction occurs thereby securing safety of subject. The implant will melt and
+				disintegrate into bio-safe elements.<BR>
+				<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
+				circuitry. As a result neurotoxins can cause massive damage."}
+	return dat
+
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
@@ -44,18 +59,3 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 
 /obj/item/implanter/tracking/gps
 	imp_type = /obj/item/gps/mining/internal
-
-/obj/item/implant/tracking/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR>
-				<b>Life:</b> 10 minutes after death of host.<BR>
-				<HR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR>
-				<b>Special Features:</b><BR>
-				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-				a malfunction occurs thereby securing safety of subject. The implant will melt and
-				disintegrate into bio-safe elements.<BR>
-				<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-				circuitry. As a result neurotoxins can cause massive damage."}
-	return dat
