@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/butterfly,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/cow,
+	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mothroach,
 	/mob/living/basic/mouse/brown/tom,
@@ -14,6 +15,9 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/sheep,
 	/mob/living/basic/sloth,
 	/mob/living/basic/snake,
+	/mob/living/basic/spider/giant/sgt_araneus,
+	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/pet,
 )))
 

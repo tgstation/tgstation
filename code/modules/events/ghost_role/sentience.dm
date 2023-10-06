@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/lizard,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/cow,
+	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
 	/mob/living/basic/pet,
