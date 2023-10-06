@@ -3,7 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_MINERAL | MOB_SPECIAL
 	speak_emote = list("hisses")
 	response_help_continuous = "thinks better of touching"
 	response_help_simple = "think better of touching"
