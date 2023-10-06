@@ -127,21 +127,19 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"iG" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "geodebridge";
+	dir = 4
+	},
+/turf/open/misc/dirt/station,
+/area/shuttle/pirate)
 "jh" = (
 /turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
-"jt" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
-/area/shuttle/pirate)
 "jx" = (
-/turf/closed/mineral/random/jungle{
-	baseturfs = /turf/open/misc/dirt
-	},
+/turf/closed/mineral/random/jungle/space_safe,
 /area/shuttle/pirate)
 "jD" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -465,7 +463,6 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "xg" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/dirt/station,
@@ -514,11 +511,6 @@
 "zZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/misc/dirt/station,
-/area/shuttle/pirate)
-"At" = (
-/turf/closed/mineral/random/jungle{
-	baseturfs = null
-	},
 /area/shuttle/pirate)
 "AT" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -864,14 +856,6 @@
 	},
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
-"Qg" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "geodebridge"
-	},
-/turf/open/misc/dirt/station,
-/area/shuttle/pirate)
 "Qo" = (
 /turf/open/floor/iron/stairs{
 	dir = 1
@@ -948,7 +932,6 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/barricade/wooden/crude,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
@@ -963,7 +946,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "UM" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
@@ -1050,11 +1032,11 @@ mv
 Od
 Pq
 Pq
-At
+jx
 Pq
 Pq
 Pq
-At
+jx
 Pq
 Pq
 Od
@@ -1066,8 +1048,8 @@ lt
 (3,1,1) = {"
 lt
 lt
-At
-At
+jx
+jx
 Od
 Uf
 Uf
@@ -1079,8 +1061,8 @@ Od
 Uf
 Uf
 Od
-At
-At
+jx
+jx
 lt
 lt
 "}
@@ -1212,7 +1194,7 @@ jx
 "}
 (10,1,1) = {"
 lt
-jt
+jx
 Od
 DT
 ZF
@@ -1407,9 +1389,9 @@ jx
 jx
 Od
 Od
-Qg
-Qg
-Qg
+iG
+iG
+iG
 Od
 Od
 Od
