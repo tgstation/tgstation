@@ -1,7 +1,7 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/structures_tall.dmi'
+	icon = 'icons/obj/smooth_structures/windows/normal_thindow.dmi'
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
@@ -19,6 +19,8 @@
 	set_dir_on_move = FALSE
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
+	canSmoothWith = SMOOTH_GROUP_THINDOWS
+	smoothing_groups = SMOOTH_GROUP_THINDOWS
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -65,6 +67,7 @@
 		AddElement(/datum/element/can_barricade)
 		AddComponent(/datum/component/window_smoothing)
 	else
+		smoothing_flags = SMOOTH_BITMASK|SMOOTH_BORDER_OBJECT|SMOOTH_OBJ
 		setDir(dir)
 		AddElement(/datum/element/render_over_keep_hitbox, TRUE)
 
@@ -89,13 +92,11 @@
 	if(fulltile)
 		return
 	// Needed because render targets seem to shift larger then 32x32 icons down constantly. No idea why
-	pixel_z = 16
 	pixel_y = 0
-	// North windows are visually shifted upwards 26 pixels
-	// Lets match that physically
-	if(newdir & NORTH)
-		pixel_y = 26
-		pixel_z -= 26
+	pixel_z = 16
+	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -436,30 +437,202 @@
 
 /obj/structure/window/update_icon_state()
 	. = ..()
-	if(!fulltile)
-		return
-
-	if(locate(/obj/structure/window_frame) in loc)
-		pixel_y = WINDOW_ON_FRAME_Y_OFFSET
+	if(fulltile)
+		if(locate(/obj/structure/window_frame) in loc)
+			pixel_y = WINDOW_ON_FRAME_Y_OFFSET
+		else
+			pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	else
-		pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
+		switch(dir)
+			if(NORTH)
+				icon_state = "body-t"
+			if(SOUTH)
+				icon_state = "body-b"
+			if(EAST)
+				icon_state = "body-r"
+			if(WEST)
+				icon_state = "body-l"
 
-//merges adjacent full-tile windows into one
+//merges adjacent windows, handle cracking for fulltiles
 /obj/structure/window/update_overlays(updates=ALL)
 	. = ..()
-	if(QDELETED(src) || !fulltile)
+	if(QDELETED(src))
 		return
 
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
-	if(ratio > 75)
-		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
+	if(fulltile)
+		var/ratio = atom_integrity / max_integrity
+		ratio = CEILING(ratio*4, 1) * 25
+		cut_overlay(crack_overlay)
+		if(ratio > 75)
+			return
+		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+		. += crack_overlay
+		return .
+
+	var/handled_junctions = NONE
+	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION)
+		handled_junctions |= NORTHEAST_JUNCTION | SOUTHEAST_JUNCTION | EAST_JUNCTION
+		switch(dir)
+			if(NORTH)
+				. += mutable_appearance(icon, "quad-tr")
+			if(SOUTH)
+				. += mutable_appearance(icon, "quad-br")
+	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & WEST_JUNCTION)
+		handled_junctions |= NORTHWEST_JUNCTION | SOUTHWEST_JUNCTION | WEST_JUNCTION
+		switch(dir)
+			if(NORTH)
+				. += mutable_appearance(icon, "quad-tl")
+			if(SOUTH)
+				. += mutable_appearance(icon, "quad-bl")
+	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & SOUTH_JUNCTION)
+		handled_junctions |= SOUTHWEST_JUNCTION | SOUTHEAST_JUNCTION | SOUTH_JUNCTION
+	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & NORTH_JUNCTION)
+		handled_junctions |= NORTHWEST_JUNCTION | NORTHEAST_JUNCTION | NORTH_JUNCTION
+
+	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & WEST_JUNCTION && !(handled_junctions & (NORTHWEST_JUNCTION|WEST_JUNCTION)))
+		switch(dir)
+			if(SOUTH)
+				handled_junctions |= NORTHWEST_JUNCTION | WEST_JUNCTION
+				. += mutable_appearance(icon, "up-triple-bl")
+	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION && !(handled_junctions & (NORTHEAST_JUNCTION|EAST_JUNCTION)))
+		switch(dir)
+			if(SOUTH)
+				handled_junctions |= NORTHEAST_JUNCTION | EAST_JUNCTION
+				. += mutable_appearance(icon, "up-triple-br")
+	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & WEST_JUNCTION && !(handled_junctions & (SOUTHWEST_JUNCTION|WEST_JUNCTION)))
+		switch(dir)
+			if(NORTH)
+				handled_junctions |= SOUTHWEST_JUNCTION | WEST_JUNCTION
+				. += mutable_appearance(icon, "down-triple-tl")
+	if(smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & EAST_JUNCTION && !(handled_junctions & (SOUTHEAST_JUNCTION|EAST_JUNCTION)))
+		switch(dir)
+			if(NORTH)
+				handled_junctions |= SOUTHEAST_JUNCTION | EAST_JUNCTION
+				. += mutable_appearance(icon, "down-triple-tr")
+
+	if(smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & SOUTH_JUNCTION && !(handled_junctions & (SOUTHEAST_JUNCTION|SOUTH_JUNCTION)))
+		switch(dir)
+			if(WEST)
+				handled_junctions |= SOUTHEAST_JUNCTION | SOUTH_JUNCTION | EAST_JUNCTION
+				. += mutable_appearance(icon, "right-triple-bl")
+	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & SOUTH_JUNCTION && !(handled_junctions & (SOUTHWEST_JUNCTION|SOUTH_JUNCTION)))
+		switch(dir)
+			if(EAST)
+				handled_junctions |= SOUTHWEST_JUNCTION | SOUTH_JUNCTION | WEST_JUNCTION
+				. += mutable_appearance(icon, "left-triple-br")
+
+	if(smoothing_junction & NORTHEAST_JUNCTION && smoothing_junction & NORTH_JUNCTION && !(handled_junctions & (NORTHEAST_JUNCTION|NORTH_JUNCTION)))
+		switch(dir)
+			if(WEST)
+				handled_junctions |= NORTHEAST_JUNCTION | NORTH_JUNCTION | EAST_JUNCTION
+				. += mutable_appearance(icon, "right-triple-tl")
+	if(smoothing_junction & NORTHWEST_JUNCTION && smoothing_junction & NORTH_JUNCTION && !(handled_junctions & (NORTHWEST_JUNCTION|NORTH_JUNCTION)))
+		switch(dir)
+			if(EAST)
+				handled_junctions |= NORTHWEST_JUNCTION | NORTH_JUNCTION | WEST_JUNCTION
+				. += mutable_appearance(icon, "left-triple-tr")
+
+	// These cases exist JUST to eat diagonal smooths for NORTH/SOUTH windows
+	if(smoothing_junction & SOUTHWEST_JUNCTION && smoothing_junction & NORTHWEST_JUNCTION)
+		switch(dir)
+			if(NORTH, SOUTH)
+				handled_junctions |= SOUTHWEST_JUNCTION | NORTHWEST_JUNCTION | WEST_JUNCTION | NORTH_JUNCTION | SOUTH_JUNCTION
+	if(smoothing_junction & SOUTHEAST_JUNCTION && smoothing_junction & NORTHEAST_JUNCTION)
+		switch(dir)
+			if(NORTH, SOUTH)
+				handled_junctions |= SOUTHEAST_JUNCTION | NORTHEAST_JUNCTION | EAST_JUNCTION | NORTH_JUNCTION | SOUTH_JUNCTION
+
+	// filter out everything on the tile opposing us
+	handled_junctions |= dir_to_all_junctions(dir)
+
+	if(smoothing_junction & NORTHWEST_JUNCTION && !(handled_junctions & NORTHWEST_JUNCTION))
+		handled_junctions |= NORTH_JUNCTION | WEST_JUNCTION
+		// Only gonna define dirs that allow a body to exist sanely
+		// So South is acceptable
+		// Also want to avoid double application
+		// hhhh
+		switch(dir)
+			if(SOUTH)
+				. += mutable_appearance(icon, "up-right-corner-bl")
+	if(smoothing_junction & NORTHEAST_JUNCTION && !(handled_junctions & NORTHEAST_JUNCTION))
+		handled_junctions |= NORTH_JUNCTION | EAST_JUNCTION
+		switch(dir)
+			if(SOUTH)
+				. += mutable_appearance(icon, "up-left-corner-br")
+	if(smoothing_junction & SOUTHWEST_JUNCTION && !(handled_junctions & SOUTHWEST_JUNCTION))
+		handled_junctions |= SOUTH_JUNCTION | WEST_JUNCTION
+		switch(dir)
+			if(NORTH)
+				. += mutable_appearance(icon, "down-right-corner-tl")
+	if(smoothing_junction & SOUTHEAST_JUNCTION && !(handled_junctions & SOUTHEAST_JUNCTION))
+		handled_junctions |= SOUTH_JUNCTION | EAST_JUNCTION
+		switch(dir)
+			if(NORTH)
+				. += mutable_appearance(icon, "down-left-corner-tr")
+
+	if(!(handled_junctions & WEST_JUNCTION))
+		if(smoothing_junction & WEST_JUNCTION)
+			switch(dir)
+				if(NORTH)
+					. += mutable_appearance(icon, "horizontal-cont-tl")
+				if(SOUTH)
+					. += mutable_appearance(icon, "horizontal-cont-bl")
+		else
+			switch(dir)
+				if(NORTH)
+					. += mutable_appearance(icon, "horizontal-edge-tl")
+				if(SOUTH)
+					. += mutable_appearance(icon, "horizontal-edge-bl")
+
+	if(!(handled_junctions & EAST_JUNCTION))
+		if(smoothing_junction & EAST_JUNCTION)
+			switch(dir)
+				if(NORTH)
+					. += mutable_appearance(icon, "horizontal-cont-tr")
+				if(SOUTH)
+					. += mutable_appearance(icon, "horizontal-cont-br")
+		else
+			switch(dir)
+				if(NORTH)
+					. += mutable_appearance(icon, "horizontal-edge-tr")
+				if(SOUTH)
+					. += mutable_appearance(icon, "horizontal-edge-br")
+
+	if(!(handled_junctions & SOUTH_JUNCTION))
+		if(smoothing_junction & SOUTH_JUNCTION)
+			switch(dir)
+				if(EAST)
+					. += mutable_appearance(icon, "vertical-cont-br")
+				if(WEST)
+					. += mutable_appearance(icon, "vertical-cont-bl")
+		else
+			switch(dir)
+				if(EAST)
+					. += mutable_appearance(icon, "vertical-edge-br")
+				if(WEST)
+					. += mutable_appearance(icon, "vertical-edge-bl")
+
+	if(!(handled_junctions & NORTH_JUNCTION))
+		if(smoothing_junction & NORTH_JUNCTION)
+			switch(dir)
+				if(EAST)
+					. += mutable_appearance(icon, "vertical-cont-tr")
+				if(WEST)
+					. += mutable_appearance(icon, "vertical-cont-tl")
+		else
+			switch(dir)
+				if(EAST)
+					. += mutable_appearance(icon, "vertical-edge-tr")
+				if(WEST)
+					. += mutable_appearance(icon, "vertical-edge-tl")
+
+/obj/structure/window/set_smoothed_icon_state(new_junction)
+	if(fulltile)
+		return ..()
+	smoothing_junction = new_junction
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
@@ -488,7 +661,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
-	icon_state = "rwindow"
+	icon = 'icons/obj/smooth_structures/windows/reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 1600
 	armor_type = /datum/armor/window_reinforced
@@ -621,7 +794,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon_state = "plasmawindow"
+	icon = 'icons/obj/smooth_structures/windows/plasma_thindow.dmi'
 	reinf = FALSE
 	heat_resistance = 25000
 	armor_type = /datum/armor/window_plasma
@@ -650,7 +823,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 /obj/structure/window/reinforced/plasma
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon_state = "plasmarwindow"
+	icon = 'icons/obj/smooth_structures/windows/plasma_reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 50000
 	armor_type = /datum/armor/reinforced_plasma
@@ -679,7 +852,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
-	icon_state = "twindow"
+	icon = 'icons/obj/smooth_structures/windows/tinted_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/spawner, 0)
 

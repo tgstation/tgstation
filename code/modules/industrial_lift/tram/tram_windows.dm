@@ -1,9 +1,7 @@
 /obj/structure/window/reinforced/tram
 	name = "tram window"
 	desc = "A window made out of a titanium-silicate alloy. It looks tough to break. Is that a challenge?"
-	icon = 'icons/obj/smooth_structures/tram_window.dmi'
-	icon_state = "tram_mid"
-	smoothing_flags = SMOOTH_BITMASK|SMOOTH_BORDER_OBJECT
+	icon = 'icons/obj/smooth_structures/windows/tram_thindow.dmi'
 	canSmoothWith = SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM
 	smoothing_groups = SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM
 	reinf = TRUE
@@ -15,37 +13,10 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/titaniumglass
 
-/obj/structure/window/reinforced/tram/Initialize(mapload, direct)
-	. = ..()
-	setDir(dir)
-
-/obj/structure/window/reinforced/tram/setDir(new_dir)
-	. = ..()
-	if(fulltile)
-		return
-	if(dir & NORTH)
-		layer = LOW_ITEM_LAYER
-	else
-		layer = BELOW_OBJ_LAYER
-
-/obj/structure/window/reinforced/tram/set_smoothed_icon_state(new_junction)
-	if(fulltile)
-		return ..()
-	smoothing_junction = new_junction
-	var/smooth_left = (smoothing_junction & turn(dir, 90))
-	var/smooth_right = (smoothing_junction & turn(dir, -90))
-	if(smooth_left && smooth_right)
-		icon_state = "tram_mid"
-	else if (smooth_left)
-		icon_state = "tram_left"
-	else if (smooth_right)
-		icon_state = "tram_right"
-	else
-		icon_state = "tram_mid"
-
 /obj/structure/window/reinforced/tram/front
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with a windscreen installed."
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
 	icon_state = "tram_window-0"
 	base_icon_state = "tram_window"
 	wtype = "shuttle"

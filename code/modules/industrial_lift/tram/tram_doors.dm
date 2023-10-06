@@ -22,10 +22,10 @@
 	base_state = "right"
 
 /obj/machinery/door/window/tram/hilbert
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon = 'icons/obj/doors/windoor.dmi'
 	associated_lift = HILBERT_TRAM
-	icon_state = "windoor"
-	base_state = "windoor"
+	icon_state = "survival"
+	base_state = "survival"
 
 /obj/machinery/door/window/tram/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

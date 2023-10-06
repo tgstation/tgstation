@@ -20,6 +20,7 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	var/atom/movable/atom_target = target
+	atom_target.appearance_flags |= KEEP_TOGETHER
 
 	src.use_position_layering = use_position_layering
 	src.high_directions = high_directions
@@ -72,6 +73,7 @@
 	var/atom/movable/visible = SSvis_overlays.add_vis_overlay(
 		target,
 		plane = MUTATE_PLANE(GAME_PLANE, target),
+		add_appearance_flags = KEEP_APART,
 		unique = TRUE
 	)
 	visible.render_source = target.render_target
@@ -81,6 +83,7 @@
 		target,
 		layer = 0,
 		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
+		add_appearance_flags = KEEP_APART,
 		unique = TRUE
 	)
 	click_catch.render_source = target.render_target
@@ -102,28 +105,17 @@
 	var/turf/our_turf = get_turf(target)
 	//you see mobs under it, but you hit them like they are above it
 	var/click_offset = 0
-	var/visual_offset = 0
 	var/layer = 0
 	// If we're to the north, offset our structure up
 	// But if we're to the south, offset our overlay down
 	// We want north things to draw over things above them, but not below them
-	// So we move their position up, and set their layer to the max
-	// This way they render over things on their tile, above them
-	// For south things, we move them down, and set their layer to draw below things on their tile
+	click_offset = 32
 	if(direction & high_directions)
-		// Ima be honest I have no idea why this works, but it can't be 32 otherwise it'll draw over both top and bottom
-		// I think it has to do with the offsetting of the parent. not sure.
-		layer = HIGHEST_GAME_LAYER
-		// Shift both click and visuals up
-		click_offset = 32
-		visual_offset = 32
-	else
-		// Shift click up (so it renders below people standing on our tile)
-		click_offset = 32
-		// Shift visuals down so they render above stuff on the tile
-		visual_offset = -32
-		// Low layer so standing on the same turf works right
+		// Low layer so we render below anyone on our turf
 		layer = ON_WALL_LAYER
+	else
+		// High layer so we render above anyone on our turf
+		layer = HIGHEST_GAME_LAYER
 
 	// We're gonna disable our own rendering, and rely on the two vis_contents lads to do it for us
 	if(!target.render_target || target.render_target[1] != "*")
@@ -134,8 +126,7 @@
 		target,
 		layer = layer,
 		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
-		pixel_y = visual_offset,
-		pixel_z = -visual_offset,
+		add_appearance_flags = KEEP_APART,
 		unique = TRUE
 	)
 	visible.render_source = target.render_target
@@ -143,6 +134,7 @@
 		target,
 		layer = 0,
 		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
+		add_appearance_flags = KEEP_APART,
 		pixel_y = click_offset,
 		pixel_z = -click_offset,
 		unique = TRUE

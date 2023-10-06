@@ -21,7 +21,7 @@
 	see_in_dark = 1e6
 	// Wallening todo: is this really a good idea?
 	// Is there a better way of handling this?
-	SET_BASE_PIXEL(0, 12)
+	SET_BASE_VISUAL_PIXEL(0, 12)
 	var/shift_to_open_context_menu = TRUE
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed

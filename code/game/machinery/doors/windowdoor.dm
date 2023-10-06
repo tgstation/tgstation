@@ -78,7 +78,7 @@
 
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
-	icon_state = "[base_state][density ? null : "open"]"
+	icon_state = "[base_state][density ? null : "_open"]"
 	refresh_hitbox_rendering()
 
 	if(hasPower() && unres_sides)
@@ -136,13 +136,8 @@
 			hitbox_up_directions |= EAST
 
 	// Needed because render targets seem to shift larger then 32x32 icons down constantly. No idea why
-	pixel_z = 16
 	pixel_y = 0
-	// "Up" windows are visually shifted upwards 26 pixels
-	// Lets match that physically
-	if(dir & hitbox_up_directions)
-		pixel_y = 26
-		pixel_z -= 26
+	pixel_z = 16
 
 	if(old_hitbox_directions == hitbox_up_directions)
 		return
@@ -261,7 +256,7 @@
 
 	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state ="[base_state]open"
+	icon_state ="[base_state]_open"
 	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
@@ -419,10 +414,10 @@
 			windoor_assembly.facing = "l"
 		if("right")
 			windoor_assembly.facing = "r"
-		if("leftsecure")
+		if("left_secure")
 			windoor_assembly.facing = "l"
 			windoor_assembly.secure = TRUE
-		if("rightsecure")
+		if("right_secure")
 			windoor_assembly.facing = "r"
 			windoor_assembly.secure = TRUE
 	windoor_assembly.set_anchored(TRUE)
@@ -475,11 +470,11 @@
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("[base_state]opening", src)
+			flick("[base_state]_opening", src)
 		if("closing")
-			flick("[base_state]closing", src)
+			flick("[base_state]_closing", src)
 		if("deny")
-			flick("[base_state]deny", src)
+			flick("[base_state]_deny", src)
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -497,13 +492,12 @@
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
-	icon_state = "leftsecure"
-	base_state = "leftsecure"
+	icon_state = "left_secure"
+	base_state = "left_secure"
 	var/id = null
 	max_integrity = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
-	use_hitbox_render = FALSE
 
 /obj/machinery/door/window/brigdoor/security/cell
 	name = "cell door"
@@ -525,19 +519,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/right, 0)
 
 /obj/machinery/door/window/brigdoor/right
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
+	icon_state = "right_secure"
+	base_state = "right_secure"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/cell/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/cell/right, 0)
 
 /obj/machinery/door/window/brigdoor/security/cell/right
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
+	icon_state = "right_secure"
+	base_state = "right_secure"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding/right, 0)
 
 /obj/machinery/door/window/brigdoor/security/holding/right
-	icon_state = "rightsecure"
-	base_state = "rightsecure"
+	icon_state = "right_secure"
+	base_state = "right_secure"
