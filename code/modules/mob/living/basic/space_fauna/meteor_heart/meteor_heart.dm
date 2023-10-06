@@ -60,7 +60,6 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
-	. = ..()
 
 	AddComponent(/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
