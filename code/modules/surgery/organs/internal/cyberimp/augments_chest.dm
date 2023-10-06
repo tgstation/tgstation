@@ -113,7 +113,7 @@
 		owner.updatehealth()
 
 	if(body_damage_patched && prob(35)) // healing is called every few seconds, not every tick
-			owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
+		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
 		
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
