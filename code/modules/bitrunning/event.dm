@@ -139,7 +139,7 @@
 /// Spawns a cybercop on the mutation target
 /datum/round_event/ghost_role/bitrunning_glitch/proc/spawn_cybercop(mob/living/mutation_target, datum/mind/player_mind)
 	var/mob/living/carbon/human/new_agent = new(mutation_target.loc)
-	mutation_target.gib()
+	mutation_target.gib(DROP_ALL_REMAINS)
 	mutation_target = null
 
 	player_mind.transfer_to(new_agent)

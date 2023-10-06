@@ -48,11 +48,6 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(A, usr)
-		return
-
 	var/obj/item/W = get_active_held_item()
 
 	if(!W && get_dist(src,A) <= interaction_range)

@@ -238,7 +238,7 @@
 		return ..()
 
 	death_explode(our_guy)
-	our_guy.gib()
+	our_guy.gib(DROP_ALL_REMAINS)
 
 /**
  * The quirk omen. Permanent.
@@ -259,7 +259,7 @@
 
 /datum/component/omen/quirk/check_death(mob/living/our_guy)
 	if(!iscarbon(our_guy))
-		our_guy.gib()
+		our_guy.gib(DROP_ALL_REMAINS)
 		return
 
 	// Don't explode if buckled to a stasis bed
@@ -270,7 +270,7 @@
 
 	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
-	player.spread_bodyparts(skip_head = TRUE)
+	player.spread_bodyparts()
 	player.spawn_gibs()
 
 	return
