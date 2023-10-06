@@ -1,107 +1,219 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/snow,
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "b" = (
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/ruin/unpowered)
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "c" = (
-/obj/structure/closet/toolcloset,
-/obj/item/wrench,
-/obj/item/screwdriver,
-/obj/item/crowbar,
-/obj/item/weldingtool/largetank,
-/obj/item/wirecutters,
-/obj/item/radio/off,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
 "d" = (
 /turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "e" = (
-/obj/item/clothing/suit/hooded/explorer,
-/obj/item/clothing/mask/gas/explorer,
-/obj/item/clothing/gloves/color/black,
-/obj/item/storage/backpack/explorer,
-/obj/item/flashlight/lantern,
-/obj/item/storage/bag/ore,
-/obj/structure/closet,
-/obj/item/clothing/shoes/winterboots/ice_boots,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/ladder,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
 "f" = (
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/obj/structure/railing/corner,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "g" = (
-/obj/structure/fireplace,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "h" = (
-/obj/structure/flora/rock/icy/style_random,
-/turf/closed/mineral/random/snow,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/item/binoculars{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/flashlight/lantern{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"i" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "j" = (
-/obj/structure/sink/kitchen/directional/south,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"k" = (
-/obj/structure/closet/crate/freezer,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"l" = (
-/obj/machinery/vending/dinnerware,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"n" = (
-/obj/structure/mineral_door/wood,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"o" = (
-/obj/item/reagent_containers/cup/glass/bottle/beer,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"p" = (
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"q" = (
-/obj/structure/table/wood,
-/obj/item/pen,
-/obj/machinery/light/broken/directional/west,
-/obj/item/paper/crumpled/bloody{
-	default_raw_text = "help...";
-	text = ""
+/obj/effect/turf_decal/stripes/corner,
+/obj/item/flashlight/glowstick/red{
+	on = 1
 	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"r" = (
-/obj/item/chair/wood,
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/corpse/human/miner/explorer,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"s" = (
-/obj/effect/decal/cleanable/trail_holder,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"l" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"m" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"o" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"p" = (
+/obj/structure/railing/corner/end{
+	dir = 1
+	},
+/obj/structure/railing/corner/end/flip,
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"q" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "t" = (
 /turf/template_noop,
 /area/template_noop)
-"K" = (
-/obj/structure/ladder{
-	travel_time = 40
+"v" = (
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/surface/outdoors/nospawn)
+"w" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/template_noop)
+"x" = (
+/obj/structure/flora/tree/pine,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"z" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 8
 	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/surface/outdoors/nospawn)
+"A" = (
+/turf/open/misc/snow,
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"D" = (
+/obj/structure/railing/corner,
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"E" = (
+/obj/structure/flora/tree/pine/style_3,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"F" = (
+/obj/structure/railing,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"H" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"J" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"K" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"M" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"N" = (
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"O" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"P" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Q" = (
+/obj/structure/railing,
+/obj/structure/flora/rock/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"R" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"T" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
 "W" = (
 /turf/open/openspace/icemoon,
 /area/template_noop)
+"X" = (
+/obj/effect/mob_spawn/corpse/human/minesite/overseer,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "Y" = (
 /turf/open/openspace/icemoon/ruins,
 /area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
+t
+t
 t
 t
 t
@@ -136,17 +248,19 @@ t
 t
 t
 t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
 t
 t
 t
@@ -161,6 +275,9 @@ t
 t
 t
 t
+t
+t
+t
 Y
 Y
 Y
@@ -172,9 +289,8 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
+t
+t
 t
 t
 t
@@ -186,7 +302,9 @@ t
 t
 t
 t
-d
+t
+t
+t
 Y
 Y
 Y
@@ -201,8 +319,8 @@ Y
 Y
 Y
 Y
-Y
-Y
+t
+t
 t
 t
 t
@@ -213,6 +331,10 @@ t
 t
 t
 t
+t
+g
+T
+T
 Y
 Y
 Y
@@ -227,10 +349,8 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
-Y
+t
+t
 t
 t
 t
@@ -239,6 +359,12 @@ t
 (6,1,1) = {"
 t
 t
+t
+t
+g
+g
+c
+K
 Y
 Y
 Y
@@ -253,12 +379,8 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
-Y
-Y
-Y
+t
+t
 t
 t
 t
@@ -266,6 +388,13 @@ t
 (7,1,1) = {"
 t
 t
+t
+g
+g
+g
+g
+q
+l
 Y
 Y
 Y
@@ -280,18 +409,21 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
+t
+t
 t
 t
 "}
 (8,1,1) = {"
 t
+t
+t
+x
+T
+b
+X
+f
+h
 Y
 Y
 Y
@@ -307,18 +439,19 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
+t
 t
 t
 "}
 (9,1,1) = {"
 t
+t
+Y
+Y
+Y
+e
+p
+a
 Y
 Y
 Y
@@ -327,13 +460,6 @@ Y
 Y
 Y
 Y
-b
-b
-b
-b
-b
-b
-b
 Y
 Y
 Y
@@ -342,10 +468,13 @@ Y
 Y
 Y
 Y
+t
+t
 t
 "}
 (10,1,1) = {"
 t
+t
 Y
 Y
 Y
@@ -353,15 +482,6 @@ Y
 Y
 Y
 Y
-b
-b
-b
-b
-b
-b
-b
-b
-b
 Y
 Y
 Y
@@ -369,10 +489,21 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (11,1,1) = {"
 t
+t
 Y
 Y
 Y
@@ -380,15 +511,6 @@ Y
 Y
 Y
 Y
-b
-b
-c
-f
-f
-o
-q
-b
-b
 Y
 Y
 Y
@@ -396,10 +518,21 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (12,1,1) = {"
 t
+t
 Y
 Y
 Y
@@ -407,15 +540,6 @@ Y
 Y
 Y
 Y
-b
-b
-e
-f
-f
-f
-r
-b
-b
 Y
 Y
 Y
@@ -423,10 +547,21 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (13,1,1) = {"
 t
+t
 Y
 Y
 Y
@@ -434,15 +569,6 @@ Y
 Y
 Y
 Y
-b
-b
-f
-f
-f
-f
-s
-b
-b
 Y
 Y
 Y
@@ -450,10 +576,22 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (14,1,1) = {"
 t
+t
+v
 Y
 Y
 Y
@@ -461,15 +599,6 @@ Y
 Y
 Y
 Y
-b
-b
-g
-f
-f
-f
-s
-b
-b
 Y
 Y
 Y
@@ -477,10 +606,22 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (15,1,1) = {"
 t
+v
+v
+v
 Y
 Y
 Y
@@ -488,15 +629,6 @@ Y
 Y
 Y
 Y
-b
-b
-f
-f
-f
-f
-s
-b
-b
 Y
 Y
 Y
@@ -504,10 +636,22 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (16,1,1) = {"
 t
+v
+T
+T
+c
 Y
 Y
 Y
@@ -515,15 +659,6 @@ Y
 Y
 Y
 Y
-b
-b
-j
-f
-f
-f
-s
-b
-b
 Y
 Y
 Y
@@ -531,10 +666,22 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (17,1,1) = {"
 t
+t
+T
+g
+c
+J
 Y
 Y
 Y
@@ -542,15 +689,6 @@ Y
 Y
 Y
 Y
-b
-b
-k
-f
-f
-f
-s
-b
-b
 Y
 Y
 Y
@@ -558,10 +696,21 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (18,1,1) = {"
 t
+t
+E
+i
+g
+Q
 Y
 Y
 Y
@@ -569,15 +718,6 @@ Y
 Y
 Y
 Y
-b
-b
-l
-f
-f
-f
-K
-b
-b
 Y
 Y
 Y
@@ -585,64 +725,79 @@ Y
 Y
 Y
 Y
+Y
+Y
+Y
+Y
+Y
+t
 t
 "}
 (19,1,1) = {"
+w
+A
+c
+g
+g
+F
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
 t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-b
-b
-b
-f
-f
-p
-b
-b
-b
-Y
-Y
-Y
-Y
-Y
-Y
-Y
 t
 "}
 (20,1,1) = {"
+A
+A
+g
+j
+M
+P
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
 t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-b
-b
-b
-f
-b
-b
-b
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
 t
 "}
 (21,1,1) = {"
 t
+H
+c
+O
+Y
+o
 Y
 Y
 Y
@@ -653,9 +808,6 @@ Y
 Y
 Y
 Y
-b
-f
-b
 Y
 Y
 Y
@@ -665,11 +817,16 @@ Y
 Y
 Y
 Y
-Y
+t
 t
 "}
 (22,1,1) = {"
 t
+t
+N
+m
+C
+J
 Y
 Y
 Y
@@ -680,9 +837,6 @@ Y
 Y
 Y
 Y
-b
-f
-b
 Y
 Y
 Y
@@ -692,11 +846,16 @@ Y
 Y
 Y
 Y
-Y
+t
 t
 "}
 (23,1,1) = {"
 t
+t
+v
+T
+D
+R
 Y
 Y
 Y
@@ -707,9 +866,6 @@ Y
 Y
 Y
 Y
-b
-f
-b
 Y
 Y
 Y
@@ -725,6 +881,9 @@ t
 (24,1,1) = {"
 t
 t
+v
+v
+z
 Y
 Y
 Y
@@ -734,9 +893,6 @@ Y
 Y
 Y
 Y
-b
-n
-b
 Y
 Y
 Y
@@ -745,14 +901,17 @@ Y
 Y
 Y
 Y
-d
+Y
+Y
+t
 t
 t
 "}
 (25,1,1) = {"
 t
 t
-t
+v
+v
 Y
 Y
 Y
@@ -760,11 +919,12 @@ Y
 Y
 Y
 Y
-a
-h
-h
-h
-a
+Y
+Y
+Y
+Y
+Y
+Y
 Y
 Y
 Y
@@ -780,25 +940,27 @@ t
 t
 t
 t
+v
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
 d
-Y
-Y
-Y
-Y
-Y
-a
-a
-a
-h
-a
-a
-a
-Y
-Y
-Y
-Y
-d
-d
+t
 t
 t
 t
@@ -812,15 +974,17 @@ d
 Y
 Y
 Y
-a
-a
-a
-a
-a
-a
-a
-a
-a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
 Y
 Y
 d
@@ -837,20 +1001,22 @@ t
 t
 t
 d
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
 d
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 d
-W
 t
 t
 t
@@ -864,18 +1030,78 @@ t
 t
 t
 t
+d
+d
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+d
+W
 t
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+t
+t
+t
+t
+t
+"}
+(30,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(31,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
 t
 t
 t

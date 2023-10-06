@@ -2,34 +2,205 @@
 "a" = (
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
-"b" = (
-/obj/structure/ladder{
-	travel_time = 40
+"c" = (
+/obj/item/paper/crumpled/bloody{
+	default_raw_text = "STRENGTH... UNPARALLELED. UNNATURAL.";
+	color = COLOR_MAROON
 	},
-/turf/open/misc/ice/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "d" = (
 /turf/template_noop,
 /area/template_noop)
-"g" = (
-/obj/item/clothing/suit/hooded/explorer,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/open/misc/ice/icemoon,
+"e" = (
+/obj/item/organ/internal/monster_core/regenerative_core/legion{
+	time_to_decay = 0;
+	pixel_x = 4;
+	pixel_y = 3;
+	icon_state = "legion_core_decayed"
+	},
+/turf/open/misc/snow,
 /area/icemoon/underground/explored)
-"h" = (
-/obj/item/clothing/shoes/winterboots/ice_boots,
-/turf/open/misc/ice/icemoon,
+"f" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
 /area/icemoon/underground/explored)
-"i" = (
-/obj/item/knife/combat/survival,
-/turf/open/misc/ice/icemoon,
+"j" = (
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"k" = (
+/turf/open/misc/ice/smooth,
 /area/icemoon/underground/explored)
 "l" = (
 /turf/closed/indestructible/rock/snow/ice/ore,
 /area/icemoon/underground/explored)
+"m" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"n" = (
+/obj/item/pickaxe/rusted,
+/turf/open/misc/ice/icemoon,
+/area/icemoon/underground/explored)
+"o" = (
+/obj/structure/flora/rock/pile/icy/style_3,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"p" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"q" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/ice/icemoon,
+/area/icemoon/underground/explored)
+"r" = (
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"s" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"t" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/ore/plasma,
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"u" = (
+/obj/item/organ/internal/monster_core/regenerative_core/legion{
+	time_to_decay = 0;
+	pixel_x = -12;
+	pixel_y = -4;
+	icon_state = "legion_core_decayed"
+	},
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"v" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/misc/ice/icemoon,
+/area/icemoon/underground/explored)
+"w" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"y" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"z" = (
+/obj/structure/ladder,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"A" = (
+/obj/item/pickaxe/rusted,
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"B" = (
+/obj/structure/frost_miner_prism,
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"C" = (
+/obj/item/pickaxe/rusted,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"D" = (
+/obj/structure/table,
+/obj/item/flashlight/lantern{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"F" = (
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"H" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/misc/ice/icemoon,
+/area/icemoon/underground/explored)
+"I" = (
+/obj/structure/flora/rock/icy,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"J" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"K" = (
+/obj/item/organ/internal/monster_core/regenerative_core/legion{
+	time_to_decay = 0;
+	pixel_x = 11;
+	pixel_y = 4;
+	icon_state = "legion_core_decayed"
+	},
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"L" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"M" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"N" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"O" = (
+/obj/item/trash/flare,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"P" = (
+/obj/structure/frost_miner_prism,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"Q" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/ice/smooth,
+/area/icemoon/underground/explored)
+"R" = (
+/obj/effect/mob_spawn/corpse/human/minesite,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"S" = (
+/obj/structure/table,
+/obj/effect/spawner/random/bureaucracy/folder,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"T" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
 "V" = (
 /obj/structure/frost_miner_prism,
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
+/obj/effect/decal/cleanable/grand_remains,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"W" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/ice/icemoon,
+/area/icemoon/underground/explored)
+"X" = (
+/obj/structure/flora/rock/icy/style_3,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
+"Y" = (
+/obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "Z" = (
@@ -132,7 +303,7 @@ l
 l
 l
 l
-a
+k
 a
 a
 a
@@ -160,6 +331,9 @@ l
 l
 l
 l
+r
+k
+k
 a
 a
 a
@@ -168,10 +342,7 @@ a
 a
 a
 a
-a
-a
-a
-a
+W
 a
 a
 a
@@ -188,11 +359,11 @@ l
 l
 l
 l
-a
-a
-a
-a
-a
+k
+r
+j
+k
+k
 a
 a
 a
@@ -216,12 +387,12 @@ l
 l
 l
 l
-a
-a
-a
-a
-a
-a
+r
+F
+r
+f
+m
+k
 a
 a
 a
@@ -244,13 +415,13 @@ l
 l
 l
 l
-a
-a
-a
-a
-a
-a
-a
+k
+k
+r
+r
+l
+l
+k
 a
 a
 a
@@ -260,9 +431,9 @@ a
 a
 a
 a
-a
-a
-a
+k
+k
+k
 a
 a
 l
@@ -274,24 +445,24 @@ l
 l
 Z
 a
+k
+z
+r
+l
+k
+k
+a
+a
+a
+W
 a
 a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+X
+k
 a
 a
 Z
@@ -303,11 +474,11 @@ l
 l
 a
 a
-a
-a
-a
-a
-a
+k
+k
+r
+k
+k
 Z
 a
 a
@@ -318,11 +489,11 @@ a
 a
 Z
 a
-a
-a
-a
-a
-a
+k
+k
+s
+J
+v
 a
 l
 l
@@ -333,6 +504,9 @@ l
 a
 a
 a
+k
+k
+k
 a
 a
 a
@@ -343,16 +517,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+k
+r
+R
+k
+H
+q
 l
 l
 "}
@@ -368,20 +539,20 @@ a
 a
 a
 a
+k
+k
+k
+k
+k
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+T
+r
+f
+k
+k
+n
 l
 l
 "}
@@ -396,20 +567,20 @@ a
 a
 a
 a
+k
+k
+f
+r
+r
+k
+k
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+r
+r
+I
+f
+k
 a
 l
 l
@@ -425,20 +596,20 @@ a
 a
 a
 a
+k
+f
+f
+r
+r
+T
+k
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+k
+r
+r
+j
+k
 a
 l
 l
@@ -454,20 +625,20 @@ a
 a
 a
 a
+k
+f
+e
+r
+r
+r
+k
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+k
+k
+r
+k
 a
 l
 l
@@ -475,28 +646,28 @@ l
 (16,1,1) = {"
 l
 l
+B
+k
+k
+a
+a
 Z
+W
 a
-a
-a
-a
-Z
-a
-a
-a
-a
-a
+k
+M
+M
 V
+u
+r
+k
 a
 a
-a
-a
-a
-Z
-a
-a
-a
-a
+B
+k
+k
+k
+Q
 Z
 l
 l
@@ -504,26 +675,26 @@ l
 (17,1,1) = {"
 l
 l
+D
+f
+k
+k
 a
 a
 a
+Y
+k
+m
+r
+K
+r
+r
+k
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+f
+k
 a
 a
 a
@@ -533,26 +704,26 @@ l
 (18,1,1) = {"
 l
 l
+c
+f
+r
+L
+a
+Y
 a
 a
+k
+r
+r
+r
+r
+f
+k
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+m
+k
 a
 a
 a
@@ -562,26 +733,26 @@ l
 (19,1,1) = {"
 l
 l
+t
+w
+m
+k
+k
 a
 a
 a
+k
+k
+r
+f
+f
+k
+k
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-b
-a
-a
-a
-a
-a
-a
+k
+k
+k
 a
 a
 a
@@ -591,20 +762,20 @@ l
 (20,1,1) = {"
 l
 l
+C
+w
+w
+r
+k
 a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+k
+k
+k
+k
 a
 a
 a
@@ -620,11 +791,11 @@ l
 (21,1,1) = {"
 l
 l
-a
-a
-a
-a
-a
+S
+w
+p
+f
+k
 a
 a
 a
@@ -649,6 +820,14 @@ l
 (22,1,1) = {"
 l
 l
+T
+r
+f
+r
+k
+a
+a
+Z
 a
 a
 a
@@ -661,15 +840,7 @@ a
 a
 a
 a
-a
-a
-a
-Z
-a
-a
-a
-a
-a
+W
 a
 a
 l
@@ -678,11 +849,11 @@ l
 (23,1,1) = {"
 l
 l
-Z
-a
-a
-a
-a
+P
+k
+k
+k
+k
 a
 a
 a
@@ -708,6 +879,7 @@ l
 l
 l
 l
+k
 a
 a
 a
@@ -716,13 +888,12 @@ a
 a
 a
 a
-a
-a
-Z
-a
-a
-a
-a
+k
+B
+k
+k
+k
+k
 a
 a
 a
@@ -742,17 +913,17 @@ a
 a
 a
 a
-i
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+k
+k
+f
+f
+k
+o
+k
+k
 a
 a
 a
@@ -771,17 +942,17 @@ l
 a
 a
 a
-g
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
+k
+r
+y
+T
+k
+k
+f
+r
+k
 a
 a
 a
@@ -800,17 +971,17 @@ l
 l
 a
 a
-h
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+W
+k
+m
+N
+O
+k
+k
+k
+k
+k
 a
 a
 l
@@ -831,11 +1002,11 @@ l
 a
 a
 a
-a
-a
-a
-a
-a
+k
+A
+R
+k
+k
 a
 a
 a
@@ -861,9 +1032,9 @@ l
 Z
 a
 a
-a
-a
-Z
+k
+k
+B
 a
 a
 a
