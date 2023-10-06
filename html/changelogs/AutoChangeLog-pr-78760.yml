@@ -1,4 +1,0 @@
-author: "neocloudy"
-delete-after: True
-changes:
-  - bugfix: "MetaStation disposal pipes from Cargo to Disposals/the rest of the station are working again."
