@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - balance: "CQC legsweeps now cause knockdown instead of paralysis."
-  - balance: "CQC kicks now knockout a target on the floor for ten seconds if they reach stam crit. Helmet protection shortens the knockout length."

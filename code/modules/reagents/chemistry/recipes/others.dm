@@ -584,7 +584,7 @@
 	var/location = get_turf(M)
 	if(iscarbon(M))
 		if(ismonkey(M))
-			M.gib()
+			M.gib(DROP_ALL_REMAINS)
 		else
 			M.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey(location, TRUE)

@@ -163,7 +163,7 @@
 			playsound(src, 'sound/voice/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_user.gib()
+			living_user.gib(DROP_ALL_REMAINS)
 			return
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))

@@ -89,7 +89,7 @@
 				if(3) //primal gene (gorilla)
 					magnification.gorillize()
 				if(4) //genetic mass susceptibility (gib)
-					magnification.gib()
+					magnification.gib(DROP_ALL_REMAINS)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
