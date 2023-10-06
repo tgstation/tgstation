@@ -233,7 +233,6 @@
 	name = "Syndicate Rebar Crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed.\
 			Holds three shots, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
