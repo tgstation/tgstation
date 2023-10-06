@@ -402,17 +402,17 @@
 	SIGNAL_HANDLER
 
 	//new /obj/item/cult_bastard(source.loc)
-	var/obj/item/melee/cultblade/haunted/evil_in_a_jar = GLOB.heretic_paths_to_haunted_sword_typepaths[heretic_path]
+	//var/obj/item/melee/cultblade/haunted/evil_in_a_jar = GLOB.heretic_paths_to_haunted_sword_typepaths[heretic_path]
 
-	evil_in_a_jar = new(get_turf(source), source, pick(invokers))
+	new /obj/item/melee/cultblade/haunted(get_turf(source), source, pick(invokers))
 
 	//evil_in_a_jar.trapped_heretic_soul = new(evil_in_a_jar)
 	//source.mind.transfer_to(evil_in_a_jar.trapped_heretic_soul)
 	//evil_in_a_jar.trapped_heretic_soul.mind?.antag_datums |= source.mind?.antag_datums
 	//evil_in_a_jar.activate_path_abilities()
 
-	evil_in_a_jar.trapped_heretic_soul.faction = source.faction.Copy()
-	evil_in_a_jar.trapped_heretic_soul.copy_languages(source, LANGUAGE_MIND)
+	//evil_in_a_jar.trapped_heretic_soul.faction = source.faction.Copy()
+	//evil_in_a_jar.trapped_heretic_soul.copy_languages(source, LANGUAGE_MIND)
 
 	//make it dust heretic
 

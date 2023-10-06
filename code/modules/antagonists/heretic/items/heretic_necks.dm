@@ -27,13 +27,13 @@
 		return
 	ADD_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 	to_chat(user, span_alert("Your heart takes on a strange yet soothing irregular rhythm, and your blood feels significantly less viscous than it used to be. You're not sure if that's a good thing."))
-	AddComponent( \
+	user.AddComponent( \
 		/datum/component/aura_healing, \
 		range = 3, \
 		brute_heal = 0.1, \
 		burn_heal = 0.1, \
 		blood_heal = 0.1, \
-		suffocation_heal = 1, \ // blood gets to where it needs to be quicker
+		suffocation_heal = 1, \
 		simple_heal = 0.6, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_MANSUS_TOUCHED, \
@@ -47,8 +47,16 @@
 /obj/item/clothing/neck/heretic_focus/crimson_focus/dropped(mob/living/user)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_CULT_EMPOWER, COMSIG_ACTION_START_COOLDOWN))
+	user.RemoveComponentSource(REF(src), /datum/component/aura_healing)
 	REMOVE_TRAIT(user, list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
 	to_chat(user, span_notice("Your heart and blood return to their regular boring rhythm and flow."))
+	if(!IS_CULTIST(user))
+		return
+	// Remove the fifth spell slot, if any.
+	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
+	if(!magic_holder)
+		CRASH("cultist with no blood magic holder?")
+	QDEL_NULL(magic_holder.spells[5])
 
 /obj/item/clothing/neck/heretic_focus/crimson_focus/proc/buff_empower(mob/user, signal_return_list)
 	SIGNAL_HANDLER

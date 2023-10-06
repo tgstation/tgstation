@@ -30,7 +30,13 @@
 		/turf/closed/wall/mineral/cult,
 		// Add windows and windoors here when narsie_act() doesn't just change their fuckin' color
 	)
+	var/datum/action/innate/seek_prey/seek
 
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
+	. = ..()
+	seek = new()
+	seek.Grant(src)
+	seek.Activate()
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
 	. = ..()
@@ -52,6 +58,9 @@
 /mob/living/simple_animal/hostile/construct/harvester/proc/snowflake_check(atom/thing)
 	return
 
+/mob/living/simple_animal/hostile/construct/harvester/proc/snowflake_attack_check(mob/target)
+	return TRUE
+
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(!iscarbon(target))
 		return ..()
@@ -59,6 +68,9 @@
 	var/mob/living/carbon/victim = target
 	if(HAS_TRAIT(victim, TRAIT_NODISMEMBER))
 		return ..() //ATTACK!
+
+	if(!snowflake_attack_check(target))
+		return ..()
 
 	var/list/parts = list()
 	var/strong_limbs = 0
@@ -83,12 +95,6 @@
 	var/obj/item/bodypart/limb = pick(parts)
 	limb.dismember()
 	return FALSE
-
-/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
-	. = ..()
-	var/datum/action/innate/seek_prey/seek = new()
-	seek.Grant(src)
-	seek.Activate()
 
 /datum/action/innate/seek_master
 	name = "Seek your Master"
@@ -192,8 +198,16 @@
 	theme = THEME_HERETIC
 	passable_atoms = list()
 
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
+	. = ..()
+	qdel(seek)
+
 /mob/living/simple_animal/hostile/construct/harvester/heretic/snowflake_check(atom/thing)
 	if(HAS_TRAIT(thing, TRAIT_RUSTY))
 		return TRUE
 
 	//thing.AddElement(/datum/element/rust)
+
+// If cultist delimb! If not attack normally.
+/mob/living/simple_animal/hostile/construct/harvester/snowflake_attack_check(mob/target)
+	return IS_CULTIST(target)
