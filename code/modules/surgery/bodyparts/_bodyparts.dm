@@ -1276,9 +1276,10 @@
 	else
 		update_icon_dropped()
 
+// Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
 /obj/item/bodypart/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
+	var/protection = ..()
+	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
 	// with defines at the time of writing, this is 2 brute and 1.5 burn
@@ -1295,16 +1296,14 @@
 		burn_damage *= 2
 
 	receive_damage(brute_damage, burn_damage)
-	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
-	var/damage_percent_to_max = (get_damage() / max_damage)
-	if (time_needed && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		owner.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
-		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-		addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
-	return TRUE
+	do_sparks(number = 1, cardinal_only = FALSE, source = owner || src)
 
-/obj/item/bodypart/proc/un_paralyze()
-	REMOVE_TRAITS_IN(src, EMP_TRAIT)
+	if((get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
+		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_PARALYSIS, EMP_TRAIT), time_needed)
+		owner?.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
+
+	return TRUE
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()

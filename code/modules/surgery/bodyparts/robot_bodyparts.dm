@@ -111,8 +111,9 @@
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
+
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
@@ -156,8 +157,9 @@
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
+
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
@@ -203,7 +205,7 @@
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
 
 	var/stun_time = 0
@@ -338,8 +340,9 @@
 
 /obj/item/bodypart/head/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
+
 	to_chat(owner, span_danger("Your [src]'s optical transponders glitch out and malfunction!"))
 
 	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
