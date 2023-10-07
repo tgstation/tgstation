@@ -107,6 +107,8 @@
 /obj/structure/bonfire/proc/start_burning()
 	if(burning || !check_oxygen())
 		return
+
+	playsound(src, 'sound/items/match_strike.ogg', 40, TRUE)
 	icon_state = burn_icon
 	burning = TRUE
 	set_light(6)
