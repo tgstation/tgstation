@@ -33,24 +33,26 @@
 #DBRANKS = when sql-based admin loading is enabled, allows for non-temporary changes in the permissions panel to be saved (requires DB).
 #EVERYTHING = Simply gives you everything without having to type every flag.
 #@ = special keyword for the current permission type that adds all the keywords that the preceding rank has of the same type.
+#
+#Admins
 
 Name = Trial Admin
-Include = ADMIN SOUND BAN STEALTH
+Include = ADMIN SOUND BAN STEALTH AUTOADMIN
 Exclude =
 Edit =
 
 Name = Admin
-Include = @Trial Admin ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT
+Include = ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT AUTOADMIN
 Exclude =
 Edit =
 
 Name = HeadAdmin
-Include = @Admin PERMISSIONS DBRANKS Admin ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT
+Include = PERMISSIONS DBRANKS ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT AUTOADMIN
 Exclude =
 Edit =
 
-Name = Bratva
-Include = PERMISSIONS DBRANKS Admin ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT
+Name = BadAdmin
+Include = PERMISSIONS DBRANKS ADMIN FUN BAN STEALTH POSSESS POLL BUILD SERVER DEBUG SPAWN VAREDIT AUTOADMIN
 Exclude =
 Edit =
 
@@ -59,7 +61,17 @@ Include = EVERYTHING
 Exclude =
 Edit = EVERYTHING
 
+#Coders
+
 Name = Coder
-Include = DEBUG VAREDIT SERVER SPAWN POLL
+Include = DEBUG VAREDIT SERVER SPAWN POLL AUTOADMIN
 Exclude =
 Edit =
+
+Name = Maintainers
+Include = EVERYTHING
+Exclude =
+Edit =
+
+
+

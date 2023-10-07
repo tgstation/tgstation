@@ -21,6 +21,7 @@
 /v21/**/*
 /v22/**/*
 /config/**/*
+/code/__HELPERS/text.dm
 
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so

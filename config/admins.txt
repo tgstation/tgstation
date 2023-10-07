@@ -6,8 +6,9 @@
 
 wigleg90 = Host
 brotebis = Host
-Graybear98 = BRATVA
-Kebanar = BRATVA
-Hazzi = BRATVA
-Xxskidxx = BRATVA
-reilina = BRATVA
+Graybear98 = BadAdmin
+Kebanar = BadAdmin
+Hazzi = BadAdmin
+Xxskidxx = BadAdmin
+reilina = BadAdmin
+Kirad26 = Maintainers
