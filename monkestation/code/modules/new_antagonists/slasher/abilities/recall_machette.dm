@@ -41,6 +41,8 @@
 	force = 15 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
 
+	tool_behaviour = TOOL_CROWBAR // lets you pry open doors forcibly
+
 	sharpness = SHARP_EDGED
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -50,7 +52,7 @@
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/hit_carbon = hit_atom
 		hit_carbon.blood_volume -= throwforce
-		hit_carbon.Knockdown(1.5 SECONDS)
+		hit_carbon.Knockdown(3 SECONDS)
 		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)

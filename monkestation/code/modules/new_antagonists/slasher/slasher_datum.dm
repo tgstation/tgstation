@@ -18,12 +18,22 @@
 
 	var/obj/item/slasher_machette/linked_machette
 	var/breath_out = FALSE
+	///rallys the amount of souls effects are based on this
+	var/souls_sucked = 0
+	///when we sucked our last soul in world time
+	var/last_soul_sucked = 0
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 
 	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_CLUMSY, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_NODEATH, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_NIGHT_VISION, "slasher")
+
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 
 	///abilities galore
@@ -37,6 +47,8 @@
 	soul_steal.Grant(current_mob)
 	var/datum/action/cooldown/slasher/regenerate/regenerate = new
 	regenerate.Grant(current_mob)
+	var/datum/action/cooldown/slasher/terror/terror = new
+	terror.Grant(current_mob)
 
 	var/mob/living/carbon/human/human = current_mob
 	human.equipOutfit(/datum/outfit/slasher)
@@ -52,7 +64,7 @@
 	for(var/mob/living/carbon/human in view(7, source))
 		if(human == source)
 			continue
-		human.playsound_local(get_turf(human), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 
 	for(var/obj/machinery/light/listed_light in view(3, source))
 		if(prob(10))
@@ -63,4 +75,3 @@
 
 	if(prob(5))
 		new /obj/effect/gibspawner/generic(T)
-

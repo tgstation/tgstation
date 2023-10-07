@@ -6030,6 +6030,7 @@
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\recall_machette.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\slasher_regenerate.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\soul_steal.dm"
+#include "monkestation\code\modules\new_antagonists\slasher\abilities\terror.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_outfit\slasher_footwear.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_outfit\slasher_headgear.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_outfit\slasher_middlewear.dm"
