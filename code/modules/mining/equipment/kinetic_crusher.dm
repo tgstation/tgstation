@@ -442,6 +442,7 @@
 	name = "demonic cube"
 	desc = "A stone cold cube dropped from an ice demon."
 	icon_state = "ice_demon_cube"
+	denied_type = /obj/item/crusher_trophy/ice_demon_cube
 	///how many will we summon?
 	var/summon_amount = 2
 	///cooldown to summon demons upon the target
@@ -456,7 +457,7 @@
 	for(var/i in 1 to summon_amount)
 		var/turf/drop_off = find_dropoff_turf(target, user)
 		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
-		friend.faction = list("neutral")
+		friend.faction = list(FACTION_NEUTRAL)
 		friend.befriend(user)
 		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)

@@ -13,7 +13,7 @@
 	desc = "Teleport towards a destination target!"
 	button_icon = 'icons/obj/ore.dmi'
 	button_icon_state = "bluespace_crystal"
-	cooldown_time = 4 SECONDS
+	cooldown_time = 3 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	///time delay before teleport
 	var/time_delay = 0.5 SECONDS

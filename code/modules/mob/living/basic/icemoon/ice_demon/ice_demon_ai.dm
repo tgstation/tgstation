@@ -14,9 +14,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon,
+		/datum/ai_planning_subtree/ranged_skirmish/ice_demon,
 		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
 		/datum/ai_planning_subtree/teleport_away_from_target,
-		/datum/ai_planning_subtree/ranged_skirmish,
 		/datum/ai_planning_subtree/find_and_hunt_target/teleport_destination,
 		/datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages,
 	)
@@ -38,6 +38,9 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/teleport_destination/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	if(controller.blackboard_key_exists(BB_ESCAPE_DESTINATION))
+		controller.clear_blackboard_key(BB_TELEPORT_DESTINATION)
 		return
 	var/datum/action/cooldown/ability = controller.blackboard[BB_DEMON_TELEPORT_ABILITY]
 	if(!ability?.IsAvailable())
@@ -103,9 +106,13 @@
 			controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_DEMON_SLIP_ABILITY)
 		return ..()
 
+/datum/ai_planning_subtree/ranged_skirmish/ice_demon
+	min_range = 0
+
 /datum/ai_controller/basic_controller/ice_demon/afterimage
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon, //even the afterimages are afraid of flames!
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
