@@ -407,7 +407,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(unforeseen_consequences)
 		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
 		unforeseen_consequences.investigate_log("has been gibbed by using [H] while inside of it.", INVESTIGATE_DEATHS)
-		unforeseen_consequences.gib()
+		unforeseen_consequences.gib(DROP_ALL_REMAINS)
 
 	var/turf/targetturf = find_safe_turf()
 	if(!targetturf)

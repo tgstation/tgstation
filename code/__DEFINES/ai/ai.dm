@@ -32,6 +32,8 @@
 #define CAN_ACT_WHILE_DEAD (1<<1)
 /// Stop processing while in a progress bar
 #define PAUSE_DURING_DO_AFTER (1<<2)
+/// Continue processing while in stasis
+#define CAN_ACT_IN_STASIS (1<<3)
 
 //Base Subtree defines
 

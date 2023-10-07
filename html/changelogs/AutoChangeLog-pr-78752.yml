@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - refactor: "Sloths are now basic mobs, however their overall sluggish behavior shouldn't have changed much- let us know if anything is broken."

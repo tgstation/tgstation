@@ -322,7 +322,7 @@
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
 					crushed.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-					crushed.gib(FALSE, FALSE, FALSE)
+					crushed.gib(DROP_ALL_REMAINS)
 				else
 					// Less violent landing simply crushes every bone in your body.
 					crushed.Paralyze(30 SECONDS, ignore_canstun = TRUE)
