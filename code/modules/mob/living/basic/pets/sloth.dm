@@ -87,7 +87,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/climb_trees,
 		/datum/ai_planning_subtree/random_speech/sloth,
 	)
