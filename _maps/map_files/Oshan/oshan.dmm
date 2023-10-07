@@ -620,16 +620,11 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "aon" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/railing/wrestling,
+/turf/open/floor/bamboo,
 /area/station/commons/fitness)
 "aoV" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -1405,6 +1400,10 @@
 "aNi" = (
 /turf/open/floor/engine,
 /area/station/engineering/main)
+"aNU" = (
+/obj/machinery/barsign,
+/turf/closed/wall,
+/area/station/service/bar)
 "aOa" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -2567,9 +2566,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "bqt" = (
-/obj/structure/railing{
-	dir = 5
-	},
+/obj/structure/railing/wrestling,
 /turf/open/floor/iron/smooth_large{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "boxing"
@@ -7931,12 +7928,10 @@
 	},
 /area/station/engineering/main)
 "egP" = (
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/railing{
+/obj/structure/railing/wrestling{
 	dir = 4
 	},
+/obj/structure/railing/wrestling,
 /turf/open/floor/iron/smooth_large{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "boxing"
@@ -8860,7 +8855,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/closed/wall,
 /area/station/service/bar)
 "eFf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9708,6 +9703,9 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv"
+	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "eZW" = (
@@ -10730,7 +10728,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engiewindow";
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -10878,6 +10876,10 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -11989,12 +11991,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "ggx" = (
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/railing{
+/obj/structure/railing/wrestling{
 	dir = 8
 	},
+/obj/structure/railing/wrestling,
 /turf/open/floor/iron/smooth_large{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "boxing"
@@ -14005,7 +14005,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lobby)
 "hor" = (
-/obj/structure/railing{
+/obj/structure/railing/wrestling{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large{
@@ -16688,8 +16688,9 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/aft)
 "iHJ" = (
-/obj/structure/sign/poster/official/cleanliness,
-/turf/closed/wall,
+/obj/effect/landmark/start/bartender,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet,
 /area/station/service/bar)
 "iHN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18643,9 +18644,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
-	},
-/obj/machinery/door/airlock/atmos/glass{
-	name = "Atmospherics Monitoring"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -22959,6 +22957,9 @@
 "lLc" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv"
+	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "lLl" = (
@@ -23040,6 +23041,9 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv"
+	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "lNZ" = (
@@ -23622,6 +23626,10 @@
 /obj/structure/table/wood,
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -25034,14 +25042,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "mRG" = (
-/obj/structure/railing{
+/obj/structure/table/wood,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engiewindow";
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
+/turf/open/floor/carpet,
+/area/station/service/bar)
 "mRO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -31188,7 +31195,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engiewindow";
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -31940,7 +31947,8 @@
 "qmt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "interropriv"
+	id = "interropriv";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/security/interrogation)
@@ -31983,6 +31991,10 @@
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -33265,7 +33277,6 @@
 "qUe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
@@ -33339,6 +33350,10 @@
 /obj/structure/table/wood,
 /obj/structure/desk_bell{
 	pixel_x = -11
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engiewindow";
+	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
@@ -35830,14 +35845,9 @@
 /turf/open/floor/holofloor/beach/coast_t,
 /area/station/service/library)
 "smw" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet,
+/area/station/service/bar)
 "smC" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock"
@@ -36552,10 +36562,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/command/bridge)
 "sFP" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing{
+/obj/structure/railing/wrestling{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_large{
@@ -38014,6 +38021,10 @@
 	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interropriv";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -40241,7 +40252,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/plating,
-/area/ocean/generated_above)
+/area/station/engineering/atmos)
 "uBf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -43276,11 +43287,9 @@
 /turf/open/floor/carpet/neon/simple/orange/nodots,
 /area/station/cargo/miningoffice)
 "vYW" = (
-/obj/machinery/door/airlock/atmos/glass{
-	name = "Atmospherics Monitoring"
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
+/obj/machinery/light/directional/east,
+/turf/closed/wall,
+/area/station/service/kitchen)
 "vZk" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -47197,7 +47206,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/ocean/generated_above)
+/area/station/engineering/atmos)
 "xTO" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -61158,7 +61167,7 @@ bKO
 kiG
 kiG
 kiG
-oyT
+vYW
 oyT
 xkQ
 oyT
@@ -63999,8 +64008,8 @@ qGs
 mVu
 oWO
 oti
-aYq
 aon
+hor
 hor
 hor
 ggx
@@ -64256,8 +64265,8 @@ jod
 jDu
 oWO
 oti
-aYq
-smw
+aon
+dwx
 dwx
 dwx
 bqt
@@ -64513,8 +64522,8 @@ exP
 sUg
 oWO
 eTm
-aYq
-smw
+aon
+dwx
 dwx
 dwx
 bqt
@@ -64770,10 +64779,10 @@ iru
 lqa
 oWO
 vtb
-aYq
+aon
 sFP
-mRG
-mRG
+sFP
+sFP
 egP
 rYQ
 dPH
@@ -65011,13 +65020,13 @@ kRY
 knL
 sJo
 ykL
-lzc
+aNU
 iQd
 aVb
 qnD
 uGO
-pIL
-ejr
+smw
+iHJ
 uGO
 lNO
 mIS
@@ -65268,14 +65277,14 @@ wgZ
 bow
 kxW
 foP
-iHJ
+lzc
 ydn
 aVb
 wXQ
-uGO
+mRG
 qWx
-uGO
-uGO
+mRG
+mRG
 xKr
 mIS
 mSX
@@ -94505,7 +94514,7 @@ cWz
 gyA
 iAR
 aRd
-vYW
+qax
 xeR
 lvw
 nLI
@@ -97572,7 +97581,7 @@ aah
 aah
 aah
 aah
-qYQ
+sks
 xTD
 ujh
 lyZ
@@ -97829,7 +97838,7 @@ aah
 aah
 aah
 aah
-qYQ
+sks
 uBa
 sks
 sks
