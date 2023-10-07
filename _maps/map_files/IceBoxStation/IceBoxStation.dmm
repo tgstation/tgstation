@@ -30226,6 +30226,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/production)
+"jLk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/plating,
+/area/station/security/prison/safe)
 "jLl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/effect/turf_decal/siding/yellow{
@@ -171215,7 +171222,7 @@ wRa
 vVH
 nRO
 ulz
-ulz
+jLk
 ulz
 pNm
 eOz

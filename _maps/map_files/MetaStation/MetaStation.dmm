@@ -39578,6 +39578,10 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"omE" = (
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "omF" = (
 /obj/machinery/teleport/station,
 /obj/machinery/status_display/evac/directional/north,
@@ -90270,7 +90274,7 @@ aaa
 bxr
 jXu
 rOz
-sHu
+omE
 siY
 jXu
 aaa

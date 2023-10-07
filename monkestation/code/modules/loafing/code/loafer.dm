@@ -105,6 +105,7 @@
 /obj/effect/spawner/random/loafer
 	name = "loafer spawner"
 	spawn_scatter_radius = 5
+	var/spawn_loot_chance = 20
 	layer = DISPOSAL_PIPE_LAYER
 
 /obj/effect/spawner/random/loafer/Initialize(mapload)

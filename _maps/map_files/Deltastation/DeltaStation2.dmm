@@ -84284,6 +84284,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"uCq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
 "uCt" = (
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 1
@@ -151662,7 +151667,7 @@ adM
 uHP
 dth
 fws
-vHY
+uCq
 rYA
 vHY
 hie
