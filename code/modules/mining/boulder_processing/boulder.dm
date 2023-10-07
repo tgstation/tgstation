@@ -65,7 +65,6 @@
 	. = ..()
 	if(istype(mover, /obj/item/boulder)) //This way, boulders can only go one at a time on conveyor belts, but everyone else can go through.
 		return FALSE
-	return TRUE
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
@@ -121,14 +120,9 @@
 		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return
-	else if(durability == 1)
-		to_chat(user, span_notice("\The [src] is close to crumbling!"))
+                var/msg = durability == 1 ? "is crumbling" : "looks weaker"
+		to_chat(user, span_notice("\The [src] [msg]"))
 		manual_process(weapon, user, override_speed, continued = TRUE)
-		return
-	else
-		to_chat(user, span_notice("\The [src], and it looks a bit weaker."))
-		manual_process(weapon, user, override_speed, continued = TRUE)
-		return
 
 /obj/item/boulder/proc/convert_to_ore(weak)
 	for(var/datum/material/picked in custom_materials)

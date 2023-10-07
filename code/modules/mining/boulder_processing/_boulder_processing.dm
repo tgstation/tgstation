@@ -185,9 +185,7 @@
 		return FALSE
 	if(istype(mover, /obj/item/boulder))
 		var/obj/item/boulder/boulder = mover
-		if(boulder.can_get_processed())
-			return TRUE
-		return FALSE
+		return boulder.can_get_processed()
 	return ..()
 
 /obj/machinery/bouldertech/examine(mob/user)
@@ -202,11 +200,9 @@
  * @param chosen_boulder The boulder to being breaking down into minerals.
  */
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
-	if(isnull(chosen_boulder))
+	if(QDELETED(chosen_boulder))
 		return FALSE
 	if(chosen_boulder.loc != src)
-		return FALSE
-	if(QDELETED(chosen_boulder))
 		return FALSE
 	if(!length(chosen_boulder.custom_materials))
 		qdel(chosen_boulder)
@@ -323,7 +319,6 @@
  */
 /obj/machinery/bouldertech/proc/check_for_boosts()
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
-	return
 
 /**
  * Checks if a custom_material is in a list of processable materials in the machine.

@@ -5,8 +5,8 @@
 	id = "b_smelter"
 	build_type = AUTOLATHE
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/circuitboard/machine/smelter
 	category = list(
@@ -21,8 +21,8 @@
 	id = "b_refinery"
 	build_type = AUTOLATHE
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/circuitboard/machine/refinery
 	category = list(

@@ -1111,7 +1111,7 @@
 	name = "Boulder Retrieval Matrix"
 	id = "brm"
 	materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/circuitboard/machine/brm
 	category = list(
