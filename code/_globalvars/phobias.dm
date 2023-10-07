@@ -72,7 +72,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"heresy" = typecacheof(list(
 		/mob/living/basic/heretic_summon,
-		/mob/living/simple_animal/hostile/heretic_summon,
 	)),
 	"insects" = typecacheof(list(
 		/mob/living/basic/cockroach,
@@ -99,7 +98,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,

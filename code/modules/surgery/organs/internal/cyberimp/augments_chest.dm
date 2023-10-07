@@ -77,18 +77,21 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	var/need_mob_update = FALSE
 	if(owner.getOxyLoss())
-		owner.adjustOxyLoss(-5)
+		need_mob_update += owner.adjustOxyLoss(-5, updating_health = FALSE)
 		revive_cost += 5
 	if(owner.getBruteLoss())
-		owner.adjustBruteLoss(-2)
+		need_mob_update += owner.adjustBruteLoss(-2, updating_health = FALSE)
 		revive_cost += 40
 	if(owner.getFireLoss())
-		owner.adjustFireLoss(-2)
+		need_mob_update += owner.adjustFireLoss(-2, updating_health = FALSE)
 		revive_cost += 40
 	if(owner.getToxLoss())
-		owner.adjustToxLoss(-1)
+		need_mob_update += owner.adjustToxLoss(-1, updating_health = FALSE)
 		revive_cost += 40
+	if(need_mob_update)
+		owner.updatehealth()
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
 	. = ..()
