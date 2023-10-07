@@ -159,34 +159,28 @@
 
 	return TRUE
 
-/// Returns a multiplier to apply to a specific kind of damage
-/mob/living/proc/get_damage_mod(damage_type)
-	switch(damage_type)
-		if (OXY)
-			return HAS_TRAIT(src, TRAIT_NOBREATH) ? 0 : 1
-		if (TOX)
-			if (HAS_TRAIT(src, TRAIT_TOXINLOVER))
-				return -1
-			return HAS_TRAIT(src, TRAIT_TOXIMMUNE) ? 0 : 1
-	return 1
-
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/proc/can_adjust_brute_loss(amount, forced, required_bodytype)
 	var/area/target_area = get_area(src)
 	if(target_area)
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
-
-	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
-		return FALSE
 	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	. = bruteloss
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	. -= bruteloss
+	if(!.) // no change, no need to update
+		return 0
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -202,19 +196,28 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
+/mob/living/proc/can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type)
+	var/area/target_area = get_area(src)
+	if(target_area)
+		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+			return FALSE
 	if(!forced)
 		if(status_flags & GODMODE)
-			return 0
+			return FALSE
+		if (required_respiration_type)
+			var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+			if(isnull(affected_lungs))
+				if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
+					return FALSE
+			else
+				if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
+					return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_OXY_DAMAGE, OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
 
-		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-		if(isnull(affected_lungs))
-			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
-				return 0
-		else
-			if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
-				return 0
-	if(on_damage_adjustment(OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
+	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -243,17 +246,20 @@
 /mob/living/proc/getToxLoss()
 	return toxloss
 
+/mob/living/proc/can_adjust_tox_loss(amount, forced, required_biotype)
+	if(!forced && ((status_flags & GODMODE) || !(mob_biotypes & required_biotype)))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_TOX_DAMAGE, TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	var/area/target_area = get_area(src)
 	if(target_area)
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(on_damage_adjustment(TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
-	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
 	. = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
@@ -286,15 +292,19 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/proc/can_adjust_fire_loss(amount, forced, required_bodytype)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BURN_DAMAGE, BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	var/area/target_area = get_area(src)
 	if(target_area)
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
-
-	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
-		return FALSE
-	if(!forced && (status_flags & GODMODE))
+	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	. = fireloss
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -319,14 +329,19 @@
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
+/mob/living/proc/can_adjust_clone_loss(amount, forced, required_biotype)
+	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE || HAS_TRAIT(src, TRAIT_NOCLONELOSS)))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_CLONE_DAMAGE, CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	var/area/target_area = get_area(src)
 	if(target_area)
 		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
 			return FALSE
-	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE || HAS_TRAIT(src, TRAIT_NOCLONELOSS)))
-		return 0
-	if(on_damage_adjustment(CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(!can_adjust_clone_loss(amount, forced, required_biotype))
 		return 0
 	. = cloneloss
 	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)

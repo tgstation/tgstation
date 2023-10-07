@@ -55,9 +55,34 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_OBJECT_ON_BANING "obj_on_baning"
 
-///from base of mob/living/on_damage_adjustment
-#define COMSIG_LIVING_ADJUST_DAMAGE "living_adjust_damage"
-	#define COMPONENT_IGNORE_CHANGE (1<<0)
+// adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
+/// Returned from all the following messages if you actually aren't going to apply any change
+#define COMPONENT_IGNORE_CHANGE (1<<0)
+// Each of these messages sends the damagetype even though it is inferred by the signal so you can pass all of them to the same proc if required
+/// Send when bruteloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_BRUTE_DAMAGE "living_adjust_brute_damage"
+/// Send when fireloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_BURN_DAMAGE "living_adjust_burn_damage"
+/// Send when oxyloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
+/// Send when toxloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
+/// Send when cloneloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
+/// Send when staminaloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
+
+/// List of signals sent when you receive any damage except stamina
+#define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
+	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
+	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
+	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
+)
+/// List of signals sent when you receive any kind of damage at all
+#define COMSIG_LIVING_ADJUST_ALL_DAMAGE_TYPES (COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES + COMSIG_LIVING_ADJUST_STAMINA_DAMAGE)
+
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
