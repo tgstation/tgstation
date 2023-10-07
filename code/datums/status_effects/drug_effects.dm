@@ -84,6 +84,8 @@
 	return TRUE
 
 /datum/status_effect/stoned/on_remove()
+	if(!ishuman(owner))
+		return
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
 	human_owner.eye_color_left = original_eye_color_left
