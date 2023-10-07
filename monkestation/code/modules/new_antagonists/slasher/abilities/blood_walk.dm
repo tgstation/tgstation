@@ -35,11 +35,11 @@
 
 
 /datum/status_effect/blood_trial/proc/on_move(atom/movable/mover, turf/old_loc)
-	SIGNAL_HANDLER
-
 	var/turf/oldLocTurf = get_turf(old_loc)
 	if(prob(5))
 		for(var/mob/living/carbon/human/human in view(7, oldLocTurf))
+			if(human == owner)
+				continue
 			human.emote("scream")
 			human.stamina.adjust(-5)
 			human.Shake(duration = 3 SECONDS)
