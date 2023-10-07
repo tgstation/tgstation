@@ -16,13 +16,19 @@
 
 /datum/action/cooldown/slasher/soul_steal/PreActivate(atom/target)
 	. = ..()
-	var/mob/living/human_target = target
+	if(!ishuman(target))
+		to_chat(owner, span_warning("This is only usable on humans."))
+		return
+	var/mob/living/carbon/human_target = target
 	if(human_target.stat != DEAD)
 		to_chat(owner, span_notice("This target is not dead. You can't steal their soul."))
+		return
 	if(human_target.soul_sucked)
 		to_chat(owner, span_warning("Their soul has already been sucked."))
+		return
 	if(!human_target.mind)
 		to_chat(owner, span_warning("This target doesn't seem to have a soul to suck."))
+		return
 
 /datum/action/cooldown/slasher/soul_steal/Activate(atom/target)
 	. = ..()
@@ -41,7 +47,7 @@
 				human_target.dna.features["mcolor"] = "#FFFFFF"
 				human_target.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 
-			affected_human.update_body(is_creating = TRUE)
+			human_target.update_body(is_creating = TRUE)
 
 			var/datum/antagonist/slasher/slasherdatum = human_owner.mind.has_antag_datum(/datum/antagonist/slasher)
 			if(!slasherdatum)
