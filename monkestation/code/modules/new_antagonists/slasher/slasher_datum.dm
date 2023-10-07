@@ -50,7 +50,10 @@
 	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_NODEATH, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NIGHT_VISION, "slasher")
+
+	var/mob/living/carbon/carbon = current_mob
+	var/obj/item/organ/internal/eyes/shadow/shadow = new
+	shadow.Insert(carbon, drop_if_replaced = FALSE)
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 
