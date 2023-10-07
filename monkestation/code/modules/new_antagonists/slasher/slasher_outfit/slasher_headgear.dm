@@ -7,6 +7,7 @@
 	icon_state = "welding"
 	inhand_icon_state = "welding"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	slowdown = 1
 
 /obj/item/clothing/mask/gas/slasher/Initialize(mapload)
 	. = ..()

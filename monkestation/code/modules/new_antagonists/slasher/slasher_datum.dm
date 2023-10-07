@@ -57,5 +57,5 @@
 	var/turf/TT = get_turf(source)
 	var/turf/T = pick(RANGE_TURFS(4,TT))
 
-	var/obj/effect/gibspawner/generic/new_gib = new(T)
+	new /obj/effect/gibspawner/generic(T)
 
