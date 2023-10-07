@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - rscadd: "The laser carbine, a weak but fully automatic sidegrade to the normal laser gun, can now be ordered from cargo."
