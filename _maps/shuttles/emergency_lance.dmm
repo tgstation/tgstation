@@ -967,8 +967,8 @@
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/surgery_tray,
-/obj/item/surgery_tray{
+/obj/item/surgery_tray/full,
+/obj/item/surgery_tray/full{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{

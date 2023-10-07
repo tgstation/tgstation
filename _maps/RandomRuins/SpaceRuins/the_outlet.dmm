@@ -704,7 +704,7 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "rF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/item/reagent_containers/syringe/lethal/execution,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)

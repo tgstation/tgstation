@@ -768,18 +768,26 @@
  *
  * This sends you back to the lobby creating a new dead mob
  *
- * Only works if flag/norespawn is allowed in config
+ * Only works if flag/allow_respawn is allowed in config
  */
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn))
-		if (!check_rights_for(usr.client, R_ADMIN))
-			to_chat(usr, span_boldnotice("Respawning is not enabled!"))
-			return
-		else if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
-			return
+	switch(CONFIG_GET(flag/allow_respawn))
+		if(RESPAWN_FLAG_NEW_CHARACTER)
+			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
+				return
+
+		if(RESPAWN_FLAG_FREE)
+			pass() // Normal respawn
+
+		if(RESPAWN_FLAG_DISABLED)
+			if (!check_rights_for(usr.client, R_ADMIN))
+				to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+				return
+			if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+				return
 
 	if (stat != DEAD)
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
@@ -809,15 +817,14 @@
 
 	M.key = key
 
+/// Checks if the mob can respawn yet according to the respawn delay
 /mob/proc/check_respawn_delay(override_delay = 0)
 	if(!override_delay && !CONFIG_GET(number/respawn_delay))
 		return TRUE
 
 	var/death_time = world.time - client.player_details.time_of_death
 
-	var/required_delay = override_delay
-	if(!required_delay)
-		required_delay = CONFIG_GET(number/respawn_delay)
+	var/required_delay = override_delay || CONFIG_GET(number/respawn_delay)
 
 	if(death_time < required_delay)
 		if(!check_rights_for(usr.client, R_ADMIN))
@@ -1358,8 +1365,11 @@
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIB, "Gib")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPELL, "Give Spell")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_MOB_ACTION, "Give Mob Ability")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOB_ACTION, "Remove Mob Ability")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DISEASE, "Give Disease")
 	VV_DROPDOWN_OPTION(VV_HK_GODMODE, "Toggle Godmode")
 	VV_DROPDOWN_OPTION(VV_HK_DROP_ALL, "Drop Everything")
@@ -1385,6 +1395,14 @@
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+	if(href_list[VV_HK_GIVE_MOB_ACTION])
+		if(!check_rights(NONE))
+			return
+		usr.client.give_mob_action(src)
+	if(href_list[VV_HK_REMOVE_MOB_ACTION])
+		if(!check_rights(NONE))
+			return
+		usr.client.remove_mob_action(src)
 	if(href_list[VV_HK_GIVE_SPELL])
 		if(!check_rights(NONE))
 			return

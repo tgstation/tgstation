@@ -443,3 +443,8 @@
 		or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
 	icon_state = "syndie_envirohelm"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+	name = "bitrunner's plasma envirosuit helmet"
+	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
+	icon_state = "bitrunner_envirohelm"

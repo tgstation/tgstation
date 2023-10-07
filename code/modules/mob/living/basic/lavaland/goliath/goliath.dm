@@ -44,6 +44,8 @@
 	COOLDOWN_DECLARE(ability_animation_cooldown)
 	/// Our base tentacles ability
 	var/datum/action/cooldown/mob_cooldown/goliath_tentacles/tentacles
+	/// Our long-ranged tentacles ability
+	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/tentacle_line
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
@@ -70,9 +72,9 @@
 	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
-	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/ranged_tentacles = new (src)
-	ranged_tentacles.Grant(src)
-	AddComponent(/datum/component/revenge_ability, ranged_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
+	tentacle_line = new (src)
+	tentacle_line.Grant(src)
+	AddComponent(/datum/component/revenge_ability, tentacle_line, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
 
 	tentacles_ready()
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
@@ -82,6 +84,7 @@
 
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)
+	QDEL_NULL(tentacle_line)
 	return ..()
 
 /mob/living/basic/mining/goliath/examine(mob/user)
@@ -166,6 +169,12 @@
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
 	faction = new_friend.faction.Copy()
+
+/mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
+	tentacles?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
+	tentacle_line?.Trigger(target = atom_target)
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient

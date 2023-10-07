@@ -61,3 +61,12 @@
 #define ALERT_TEMPERATURE "temp"
 #define ALERT_TEMPERATURE_HOT "temphot"
 #define ALERT_TEMPERATURE_COLD "tempcold"
+
+/** Bitrunning */
+#define ALERT_BITRUNNER_CROWBAR "bitrunning_crowbar"
+#define ALERT_BITRUNNER_COMPLETED "bitrunning_complete"
+#define ALERT_BITRUNNER_INTEGRITY "bitrunning_integrity"
+#define ALERT_BITRUNNER_SHUTDOWN "bitrunning_shutdown"
+#define ALERT_BITRUNNER_RESET "bitrunning_reset"
+#define ALERT_BITRUNNER_SPAWN_CYBERCOP "bitrunning_spawn_cybercop"
+#define ALERT_BITRUNNER_THREAT "bitrunning_threat"

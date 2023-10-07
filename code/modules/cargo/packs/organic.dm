@@ -62,18 +62,20 @@
 		including one replica-pod seed and two mystery seeds!"
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_HYDROPONICS
-	contains = list(/obj/item/seeds/nettle,
-					/obj/item/seeds/replicapod,
-					/obj/item/seeds/plump,
-					/obj/item/seeds/liberty,
-					/obj/item/seeds/amanita,
-					/obj/item/seeds/reishi,
-					/obj/item/seeds/bamboo,
-					/obj/item/seeds/eggplant/eggy,
-					/obj/item/seeds/rainbow_bunch,
-					/obj/item/seeds/shrub,
-					/obj/item/seeds/random = 2,
-				)
+	contains = list(
+		/obj/item/seeds/amanita,
+		/obj/item/seeds/bamboo,
+		/obj/item/seeds/eggplant/eggy,
+		/obj/item/seeds/liberty,
+		/obj/item/seeds/nettle,
+		/obj/item/seeds/plump,
+		/obj/item/seeds/replicapod,
+		/obj/item/seeds/reishi,
+		/obj/item/seeds/rainbow_bunch,
+		/obj/item/seeds/seedling,
+		/obj/item/seeds/shrub,
+		/obj/item/seeds/random = 2,
+	)
 	crate_name = "exotic seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -297,10 +299,12 @@
 		ONLY 5000 BUX GET NOW! Contains a grill and fuel."
 	cost = CARGO_CRATE_VALUE * 8
 	crate_type = /obj/structure/closet/crate
-	contains = list(/obj/item/stack/sheet/mineral/coal/five,
-					/obj/machinery/grill/unwrenched,
-					/obj/item/reagent_containers/cup/soda_cans/monkey_energy,
-				)
+	contains = list(
+		/obj/item/stack/sheet/mineral/coal/five,
+		/obj/item/kitchen/tongs,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy,
+		/obj/machinery/grill/unwrenched,
+	)
 	crate_name = "grilling starter kit crate"
 
 /datum/supply_pack/organic/grillfuel

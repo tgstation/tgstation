@@ -61,7 +61,7 @@
 	desc = "A sleek device often given to clowns on their 10th birthdays for protection. You can hear faint scratching coming from within."
 	icon_state = "clown_ball"
 	inhand_icon_state = null
-	spawner_type = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	spawner_type = list(/mob/living/basic/clown/fleshclown, /mob/living/basic/clown/clownhulk, /mob/living/basic/clown/longface, /mob/living/basic/clown/clownhulk/chlown, /mob/living/basic/clown/clownhulk/honkmunculus, /mob/living/basic/clown/mutant/glutton, /mob/living/basic/clown/banana, /mob/living/basic/clown/honkling, /mob/living/basic/clown/lube)
 	deliveryamt = 1
 
 /obj/item/grenade/spawnergrenade/clown_broken
@@ -69,5 +69,5 @@
 	desc = "A sleek device often given to clowns on their 10th birthdays for protection. While a typical C.L.U.W.N.E only holds one creature, sometimes foolish young clowns try to cram more in, often to disasterous effect."
 	icon_state = "clown_broken"
 	inhand_icon_state = null
-	spawner_type = /mob/living/simple_animal/hostile/retaliate/clown/mutant
+	spawner_type = /mob/living/basic/clown/mutant
 	deliveryamt = 5

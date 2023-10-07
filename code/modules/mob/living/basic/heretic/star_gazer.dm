@@ -22,6 +22,7 @@
 	attack_verb_simple = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
@@ -57,6 +58,24 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	set_light(4, l_color = "#dcaa5b")
 
+// Star gazer attacks everything around itself applies a spooky mark
+/mob/living/basic/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if (!. || !isliving(target))
+		return
+
+	target.apply_status_effect(/datum/status_effect/star_mark)
+	target.apply_damage(damage = 5, damagetype = CLONE)
+	var/datum/targetting_datum/target_confirmer = ai_controller.blackboard[BB_TARGETTING_DATUM]
+	for(var/mob/living/nearby_mob in range(1, src))
+		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
+			continue
+		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
+		nearby_mob.apply_damage(10)
+		to_chat(nearby_mob, span_userdanger("\The [src] [attack_verb_continuous] you!"))
+		do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
+		log_combat(src, nearby_mob, "slashed")
+
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/star_gazer(),
@@ -70,38 +89,11 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/star_gazer,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /datum/targetting_datum/basic/star_gazer
 	stat_attack = HARD_CRIT
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/star_gazer
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/star_gazer
-
-/datum/ai_behavior/basic_melee_attack/star_gazer
-	action_cooldown = 0.6 SECONDS
-
-/datum/ai_behavior/basic_melee_attack/star_gazer/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	var/mob/living/living_pawn = controller.pawn
-
-	if(!isliving(target))
-		return
-	var/mob/living/living_target = target
-	living_target.apply_status_effect(/datum/status_effect/star_mark)
-	living_target.apply_damage_type(damage = 5, damagetype = CLONE)
-	if(living_target.pulledby != living_pawn)
-		if(living_pawn.Adjacent(living_target) && isturf(living_target.loc) && living_target.stat == SOFT_CRIT)
-			living_target.grabbedby(living_pawn)
-	for(var/mob/living/nearby_mob in range(1, living_pawn))
-		if(nearby_mob.stat == DEAD || living_target == nearby_mob || faction_check(nearby_mob.faction, list(FACTION_HERETIC)))
-			continue
-		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
-		nearby_mob.adjustBruteLoss(10)
-		living_pawn.do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
-		log_combat(living_pawn, nearby_mob, "slashed")
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
@@ -119,4 +111,4 @@
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"
 	refuse_reaction = "..."
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/star_gazer
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack

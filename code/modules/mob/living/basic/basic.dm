@@ -11,7 +11,7 @@
 
 	var/basic_mob_flags = NONE
 
-	///Defines how fast the basic mob can move. This is a multiplier
+	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second
 	var/stamina_recovery = 5
@@ -35,6 +35,8 @@
 	var/attack_vis_effect
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
+	/// How often can you melee attack?
+	var/melee_attack_cooldown = 2 SECONDS
 
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -191,8 +193,10 @@
 		return
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
-/mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
+	if (!ignore_cooldown)
+		changeNext_move(melee_attack_cooldown)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	var/result = target.attack_basic_mob(src, modifiers)

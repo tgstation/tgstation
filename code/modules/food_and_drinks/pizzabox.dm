@@ -100,7 +100,7 @@
 			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
-			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
+			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state, layer = layer + 0.01)
 			bomb_overlay.pixel_y = 8
 			. += bomb_overlay
 		return
@@ -109,13 +109,13 @@
 	for(var/stacked_box in boxes)
 		box_offset += 3
 		var/obj/item/pizzabox/box = stacked_box
-		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state)
+		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state, layer = layer + (box_offset * 0.01))
 		box_overlay.pixel_y = box_offset
 		. += box_overlay
 
 	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
-		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
+		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag", layer = layer + (box_offset * 0.02))
 		tag_overlay.pixel_y = box_offset
 		. += tag_overlay
 
@@ -306,8 +306,9 @@
 /obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	if(!pizza)
-		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
+		var/randompizza = pick(subtypesof(/obj/item/food/pizza) - /obj/item/food/pizza/flatbread) //also disincludes another base type
 		pizza = new randompizza(src)
+		update_appearance()
 	register_bomb(new /obj/item/bombcore/miniature/pizza(src))
 	set_wires(new /datum/wires/explosive/pizza(src))
 

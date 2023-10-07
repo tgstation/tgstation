@@ -12,9 +12,10 @@
 	if (!rift_behaviour)
 		CRASH("Forgot to specify rift behaviour for [src]")
 
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if (!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_CARP_RIFT]
-	if (QDELETED(target) || QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(rift_behaviour, BB_CARP_RIFT, BB_BASIC_MOB_CURRENT_TARGET)

@@ -140,7 +140,7 @@
 
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src, target) & COMPONENT_BLOCK_ABILITY_START)
 		return FALSE
 	if(target == owner)
 		target = get_caster_from_target(target)
@@ -180,11 +180,6 @@
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
 		return FALSE
 
-	if(!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
-		if(feedback)
-			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
-		return FALSE
-
 	if(!try_invoke(owner, feedback = feedback))
 		return FALSE
 
@@ -209,12 +204,16 @@
 
 		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			for(var/atom/movable/item in owner.contents)
-				var/obj/item/clothing/clothem = item
-				if(istype(clothem) && clothem.clothing_flags & CASTING_CLOTHES)
-					return TRUE
-			to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
-			return FALSE
+			var/any_casting = FALSE
+			for(var/obj/item/clothing/item in owner)
+				if(item.clothing_flags & CASTING_CLOTHES)
+					any_casting = TRUE
+					break
+
+			if(!any_casting)
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				return FALSE
 
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
 			if(feedback)
@@ -297,6 +296,31 @@
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
+
+	// Bonus invocation check done here:
+	// If the caster has no tongue and it's a verbal spell,
+	// Or has no hands and is a gesture spell - cancel it,
+	// and show a funny message that they tried
+	if(ishuman(owner) && !(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION))
+		var/mob/living/carbon/human/caster = owner
+		switch(invocation_type)
+			if(INVOCATION_WHISPER, INVOCATION_SHOUT)
+				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
+					invocation(caster)
+					to_chat(caster, span_warning("Your lack of tongue is making it difficult to say the correct words to cast [src]..."))
+					StartCooldown(2 SECONDS)
+					return SPELL_CANCEL_CAST
+
+			if(INVOCATION_EMOTE)
+				if(caster.usable_hands <= 0)
+					var/arm_describer = (caster.num_hands >= 2 ? "arms limply" : (caster.num_hands == 1 ? "arm wildly" : "arm stumps"))
+					caster.visible_message(
+						span_warning("[caster] wiggles around [caster.p_their()] [arm_describer]."),
+						ignored_mobs = caster,
+					)
+					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
+					StartCooldown(2 SECONDS)
+					return SPELL_CANCEL_CAST
 
 	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
 	if(owner)

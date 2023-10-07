@@ -36,7 +36,6 @@
 	return ..()
 
 /datum/ai_behavior/basic_melee_attack/lobster
-	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	var/mob/living/target = controller.blackboard[target_key]
@@ -53,9 +52,6 @@
 	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
 		finish_action(controller = controller, succeeded = TRUE, target_key = target_key) // We don't want to clear our target
 		return
-	var/mob/living/living_pawn = controller.pawn
-	if (target.stat != CONSCIOUS)
-		living_pawn.start_pulling(target) // No crawling away
 	return ..()
 
 /datum/ai_planning_subtree/flee_target/lobster
@@ -74,6 +70,10 @@
 		controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
 		finish_action(controller, succeeded = FALSE)
 		return
+
+	var/mob/living/us = controller.pawn
+	if (us.pulling == target)
+		us.stop_pulling() // If we're running away from someone, best not to bring them with us
 
 	return ..()
 

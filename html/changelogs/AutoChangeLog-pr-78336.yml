@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - refactor: "heretic sacrifice room is now lazyloaded"

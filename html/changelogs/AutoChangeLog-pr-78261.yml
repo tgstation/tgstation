@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Manually constructed windoors have correct unrestricted accesses applied to them"
-  - bugfix: "Windoors created via RCD now actually have electronics inside them"
-  - bugfix: "Airlocks constructed via RCD have the shell component correctly installed inside them and have no other missing variables"

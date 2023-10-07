@@ -174,7 +174,7 @@
 		head.dismember()
 		qdel(head)
 	else
-		human_user.gib()
+		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
@@ -257,7 +257,8 @@
 	// Using a codex will give you two knowledge points for draining.
 	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
 		var/obj/item/codex_cicatrix/codex = weapon
-		codex.open_animation()
+		if(!codex.book_open)
+			codex.attack_self(user) // open booke
 		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
 		return TRUE
 

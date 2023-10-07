@@ -25,7 +25,7 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/carp_migration,
 	)
 
@@ -48,7 +48,7 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /**
@@ -91,6 +91,6 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/carp_migration,
 	)

@@ -16,6 +16,7 @@
 	preview_outfit = /datum/outfit/traitor
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
+	hardcore_random_bonus = TRUE
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?

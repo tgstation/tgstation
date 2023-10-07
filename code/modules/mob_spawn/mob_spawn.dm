@@ -32,6 +32,8 @@
 	var/facial_haircolor
 	///sets a human's skin tone
 	var/skin_tone
+	/// Weakref to the mob this spawner created - just if you needed to do something with it.
+	var/datum/weakref/spawned_mob_ref
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -44,6 +46,7 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
+	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -223,6 +226,7 @@
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
+	SEND_SIGNAL(src, COMSIG_GHOSTROLE_SPAWNED, created)
 	check_uses() // Now we check if the spawner should delete itself or not
 
 	return created

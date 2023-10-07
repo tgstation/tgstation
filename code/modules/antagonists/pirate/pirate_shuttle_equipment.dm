@@ -183,8 +183,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
 		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)

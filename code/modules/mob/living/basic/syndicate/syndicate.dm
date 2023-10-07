@@ -15,6 +15,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	melee_attack_cooldown = 1.2 SECONDS
 	combat_mode = TRUE
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
