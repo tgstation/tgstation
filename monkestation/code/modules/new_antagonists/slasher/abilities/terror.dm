@@ -10,6 +10,8 @@
 	. = ..()
 	playsound(owner, 'monkestation/sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
 	for(var/mob/living/carbon/human/human in view(7, owner))
+		if(human == owner)
+			continue
 		human.overlay_fullscreen("terror", /atom/movable/screen/fullscreen/curse, 1)
 		human.Shake(duration = 5 SECONDS)
 		human.stamina.adjust(-60)
