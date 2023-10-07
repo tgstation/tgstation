@@ -52,3 +52,22 @@
 	assignment = "Bounty Hunter"
 	department_color = COLOR_PRISONER_ORANGE
 	subdepartment_color = COLOR_PRISONER_BLACK
+
+/// Trim for player controlled avatars in the Virtual Domain.
+/datum/id_trim/bit_avatar
+	assignment = "Bit Avatar"
+	trim_state = "trim_bitavatar"
+	department_color = COLOR_BLACK
+	subdepartment_color = COLOR_GREEN
+
+/// Trim for cyber police in the Virtual Domain.
+/datum/id_trim/cyber_police
+	assignment = "Cyber Police"
+	trim_state = "trim_deathcommando"
+	department_color = COLOR_BLACK
+	subdepartment_color = COLOR_GREEN
+
+/datum/id_trim/cyber_police/New()
+	. = ..()
+
+	access |= SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))

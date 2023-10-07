@@ -825,7 +825,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return
 
 	if(isopenspaceturf(new_turf))
-		var/turf/Z_turf_below = SSmapping.get_turf_below(new_turf)
+		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
 			return
 		if(isspaceturf(Z_turf_below))
