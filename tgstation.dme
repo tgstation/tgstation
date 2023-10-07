@@ -3286,7 +3286,6 @@
 #include "code\modules\bitrunning\virtual_domain\domains\vaporwave.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\wendigo.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\xeno_nest.dm"
-#include "code\modules\bitrunning\virtual_domain\domains\psyker\psyker_domain.dm"
 #include "code\modules\buildmode\bm_mode.dm"
 #include "code\modules\buildmode\buildmode.dm"
 #include "code\modules\buildmode\buttons.dm"
