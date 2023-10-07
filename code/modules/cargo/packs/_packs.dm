@@ -110,3 +110,15 @@
 	name = "[purchaser]'s Mining Order"
 	src.cost = cost
 	src.contains = contains
+
+/datum/supply_pack/custom/minerals
+	name = "materials order"
+	crate_name = "galactic materials market delivery crate"
+	access = list()
+	crate_type = /obj/structure/closet/crate/cardboard
+
+/datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
+	. = ..()
+	name = "[purchaser]'s Materials Order"
+	src.cost = cost
+	src.contains = contains

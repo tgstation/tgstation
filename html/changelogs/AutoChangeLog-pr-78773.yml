@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Engineering borgs can no longer grab and drop their own iron/glass sheet module."

@@ -68,13 +68,6 @@
 	contains = list(/obj/item/storage/fish_case/tiziran = 2)
 	crate_name = "tiziran fish crate"
 
-/datum/supply_pack/misc/fish_analyzers
-	name = "Fish Analyzers"
-	desc = "A pack containing three analyzers to monitor fish's status and traits with."
-	cost = CARGO_CRATE_VALUE * 2.5
-	contains = list(/obj/item/fish_analyzer = 3)
-	crate_name = "fish analyzers crate"
-
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -222,6 +215,13 @@
 				)
 	crate_name = "religious supplies crate"
 
+/datum/supply_pack/misc/candles_bulk
+	name = "Candle Box Crate"
+	desc = "Keep your local chapel lit with three candle boxes!"
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/storage/fancy/candle_box = 3)
+	crate_name = "candle box crate"
+
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
 	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, \
@@ -284,13 +284,6 @@
 /datum/supply_pack/misc/syndicate/custom_value/proc/setup_contents(value, uplink)
 	crate_value = value
 	contents_uplink_type = uplink
-
-/datum/supply_pack/misc/fishing_portal
-	name = "Fishing Portal Generator Crate"
-	desc = "Not enough fish near your location? Fishing portal has your back."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/machinery/fishing_portal_generator)
-	crate_name = "fishing portal crate"
 
 /datum/supply_pack/misc/papercutter
 	name = "Paper Cutters Crate"

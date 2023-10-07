@@ -9,7 +9,6 @@
 #define MALF_AI_ROLL_COOLDOWN 1 SECONDS + MALF_AI_ROLL_TIME
 #define MALF_AI_ROLL_DAMAGE 75
 #define MALF_AI_ROLL_CRIT_CHANCE 5 //percent
-#define MALF_AI_ROLL_MAX_DISTANCE 1 //anything further away than this, and the roll will fail
 
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
@@ -1138,6 +1137,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	enable_text = span_notice("Your inner servos shift as you prepare to roll around. Click adjacent tiles to roll onto them!")
 	disable_text = span_notice("You disengage your rolling protocols.")
 
+	/// How long does it take for us to roll?
+	var/roll_over_time = MALF_AI_ROLL_TIME
+	/// On top of [roll_over_time], how long does it take for the ability to cooldown?
+	var/roll_over_cooldown = MALF_AI_ROLL_COOLDOWN
+
 /datum/action/innate/ai/ranged/core_tilt/New()
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
@@ -1152,7 +1156,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 	var/mob/living/silicon/ai/ai_caller = caller
 
-	if (ai_caller.incapacitated())
+	if (ai_caller.incapacitated() || !isturf(ai_caller.loc))
 		return FALSE
 
 	var/turf/target = get_turf(clicked_on)
@@ -1163,30 +1167,32 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		target.balloon_alert(ai_caller, "can't roll on yourself!")
 		return FALSE
 
-	if (get_dist(ai_caller, target) > MALF_AI_ROLL_MAX_DISTANCE)
-		target.balloon_alert(ai_caller, "too far!")
-		return FALSE
-
 	var/picked_dir = get_dir(ai_caller, target)
+	if (!picked_dir)
+		return FALSE
+	var/turf/temp_target = get_step(ai_caller, picked_dir) // we can move during the timer so we cant just pass the ref
 
-	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, MALF_AI_ROLL_TIME)
+	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
 	ai_caller.balloon_alert_to_viewers("rolling...")
-	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), MALF_AI_ROLL_TIME)
+	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 
-	COOLDOWN_START(src, time_til_next_tilt, MALF_AI_ROLL_COOLDOWN)
+	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
 
 /datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_caller, picked_dir)
+	if (ai_caller.incapacitated() || !isturf(ai_caller.loc)) // prevents bugs where the ai is carded and rolls
+		return
+
 	var/turf/target = get_step(ai_caller, picked_dir) // in case we moved we pass the dir not the target turf
 
 	if (isnull(target))
 		return
 
-	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (MALF_AI_ROLL_COOLDOWN * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
+	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (roll_over_cooldown * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
 
 	return ai_caller.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
 
@@ -1321,4 +1327,3 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 #undef MALF_AI_ROLL_TIME
 #undef MALF_AI_ROLL_DAMAGE
 #undef MALF_AI_ROLL_CRIT_CHANCE
-#undef MALF_AI_ROLL_MAX_DISTANCE

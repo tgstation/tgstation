@@ -70,7 +70,7 @@
 
 /datum/heretic_knowledge/knock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
-	
+
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/mecha = target
 		mecha.dna_lock = null
@@ -89,7 +89,7 @@
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
 	playsound(target, 'sound/magic/hereticknock.ogg', 100, TRUE, -1)
-	
+
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/key_ring
@@ -99,6 +99,7 @@
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
 	gain_text = "Gateways shall open before me, my very will ensnaring reality."
+	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
@@ -143,6 +144,7 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
@@ -171,6 +173,7 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
+	adds_sidepath_points = 1
 	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker

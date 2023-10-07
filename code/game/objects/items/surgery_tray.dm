@@ -152,8 +152,10 @@
 /obj/item/surgery_tray/attack_hand(mob/living/user)
 	if(!user.can_perform_action(src, NEED_HANDS))
 		return ..()
-	var/obj/item/grabbies = pick(contents)
-	if(grabbies)
+	if(!length(contents))
+		balloon_alert(user, "empty!")
+	else
+		var/obj/item/grabbies = pick(contents)
 		atom_storage.remove_single(user, grabbies, drop_location())
 		user.put_in_hands(grabbies)
 	return TRUE
@@ -207,7 +209,7 @@
 	name = "autopsy tray"
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
-	
+
 /obj/item/surgery_tray/full/morgue/populate_contents()
 	new /obj/item/blood_filter(src)
 	new /obj/item/bonesetter(src)
@@ -227,13 +229,13 @@
 /obj/item/surgery_tray/full/advanced
 
 /obj/item/surgery_tray/full/advanced/populate_contents()
-	new /obj/item/scalpel/advanced
-	new /obj/item/retractor/advanced
-	new /obj/item/cautery/advanced
-	new /obj/item/surgical_drapes
-	new /obj/item/reagent_containers/medigel/sterilizine
-	new /obj/item/bonesetter
-	new /obj/item/blood_filter
-	new /obj/item/stack/medical/bone_gel
-	new /obj/item/stack/sticky_tape/surgical
-	new /obj/item/clothing/mask/surgical
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/reagent_containers/medigel/sterilizine(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/clothing/mask/surgical(src)

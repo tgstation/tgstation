@@ -85,7 +85,7 @@
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
-		var/list/clothing = human_wearer.clothingonpart(src)
+		var/list/clothing = human_wearer.get_clothing_on_part(src)
 		for(var/obj/item/clothing/clothes_check as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			if(clothes_check.get_armor_rating(WOUND))
@@ -242,7 +242,7 @@
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		var/list/clothing = human_owner.clothingonpart(src)
+		var/list/clothing = human_owner.get_clothing_on_part(src)
 		for(var/obj/item/clothing/clothes as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.get_armor_rating(WOUND)

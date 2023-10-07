@@ -32,6 +32,8 @@
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
+	examine_text += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+
 	if(capacitor_coefficient < 1)
 		examine_text += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
 

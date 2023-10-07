@@ -80,8 +80,8 @@
 		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath/ancient,
+		/mob/living/basic/mining/legion,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)
 	faction = list(FACTION_MINING)
 
@@ -98,7 +98,7 @@
 /obj/structure/spawner/mining/hivelord
 	name = "hivelord den"
 	desc = "A den housing a nest of hivelords."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord)
+	mob_types = list(/mob/living/basic/mining/hivelord)
 
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"

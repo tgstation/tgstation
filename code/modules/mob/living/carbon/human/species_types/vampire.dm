@@ -44,10 +44,13 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-		vampire.adjustToxLoss(-2 * seconds_per_tick)
-		vampire.adjustOxyLoss(-2 * seconds_per_tick)
-		vampire.adjustCloneLoss(-2 * seconds_per_tick)
+		var/need_mob_update = FALSE
+		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjustCloneLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		if(need_mob_update)
+			vampire.updatehealth()
 		return
 	vampire.blood_volume -= 0.125 * seconds_per_tick
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
