@@ -297,14 +297,14 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
 		if(buildstack)
-			new buildstack(T, buildstackamount)
+			SSwardrobe.provide(buildstack, T, STACK_AMOUNT(buildstackamount))
 		else
 			for(var/datum/material/spawning as anything in custom_materials)
 				SSwardrobe.provide(spawning.sheet_type, T, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
-			new framestack(T, framestackamount)
+			SSwardrobe.provide(framestack, T, STACK_AMOUNT(framestackamount))
 	qdel(src)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

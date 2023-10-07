@@ -21,8 +21,7 @@
 		attacking_item.play_tool_sound(src)
 		if(attacking_item.use_tool(src, user, 30))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			for(var/i in 0 to framestackamount)
-				new framestack(get_turf(src))
+			SSwardrobe.provide(framestack, get_turf(src), STACK_AMOUNT(framestackamount))
 			qdel(src)
 			return
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/abductor))

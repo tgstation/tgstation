@@ -76,7 +76,7 @@
 	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)
-	new framestack(get_turf(src), framestackamount)
+	SSwardrobe.provide(framestack, get_turf(src), STACK_AMOUNT(framestackamount))
 	qdel(src)
 
 /obj/structure/table_frame/narsie_act()

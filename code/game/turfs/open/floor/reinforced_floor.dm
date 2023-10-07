@@ -46,7 +46,7 @@
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
 		if(floor_tile)
-			new floor_tile(src, 2)
+			SSwardrobe.provide(floor_tile, src, STACK_AMOUNT(2))
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
@@ -79,7 +79,7 @@
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
-				new floor_tile(src)
+				SSwardrobe.provide(floor_tile, src)
 				make_plating(TRUE)
 		else if(prob(30))
 			attempt_lattice_replacement()

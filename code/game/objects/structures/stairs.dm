@@ -209,7 +209,7 @@
 	return TRUE
 
 /obj/structure/stairs_frame/deconstruct(disassembled = TRUE)
-	new frame_stack(get_turf(src), frame_stack_amount)
+	SSwardrobe.provide(frame_stack, get_turf(src), STACK_AMOUNT(frame_stack_amount))
 	qdel(src)
 
 /obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)

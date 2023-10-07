@@ -40,6 +40,9 @@ SUBSYSTEM_DEF(wardrobe)
 	var/stock_hit = 0
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
+	// Hit/Miss Tracking
+	var/list/hit_map = list()
+	var/list/miss_map = list()
 
 /datum/controller/subsystem/wardrobe/Initialize()
 	setup_callbacks()
@@ -87,132 +90,6 @@ SUBSYSTEM_DEF(wardrobe)
 				return
 			current_task = SSWARDROBE_STOCK
 			last_inspect_time = world.time
-
-/// Runs a speed test for all our various types
-/// Measures the average cost of providing vs spawning, and deletion vs stashing
-/// This will take for fucking ever (20 min on my machine). I'm sorry for that
-/datum/controller/subsystem/wardrobe/proc/speed_test(turf/spawn_on, attempt_count = 200)
-	var/old_overflow_lienency = overflow_lienency
-	overflow_lienency = INFINITY
-
-	// Stock everything I want IMMEDIATELY
-	force_stock_wardrobe(attempt_count)
-
-	// List of lists in the form list(type, new_cost, provide_cost, qdel_cost, stash_cost)
-	// I am writing this dumb because it's very hot (lots of shit) and I don't want to add any extra time
-	var/list/type_info = list()
-	var/atom/hh
-	var/stopwatch_start
-	var/new_cost = 0
-	var/provide_cost = 0
-	var/qdel_cost = 0
-	var/stash_cost = 0
-	for(var/atom/movable/type_to_test as anything in preloaded_stock)
-		new_cost = 0
-		provide_cost = 0
-		qdel_cost = 0
-		stash_cost = 0
-		for(var/i in 1 to attempt_count)
-			// Stopwatches are one per proc, so lets give them their own scope
-			do {
-				stopwatch_start = TICK_USAGE
-				hh = new type_to_test(spawn_on)
-				new_cost += TICK_USAGE_TO_MS(stopwatch_start)
-				QDEL_NULL(hh)
-			} while(FALSE)
-			// In case subobjects are also tracked, this avoids any mistakes
-			force_stock_wardrobe(attempt_count)
-			// Now provide()
-			do {
-				stopwatch_start = TICK_USAGE
-				hh = SSwardrobe.provide(type_to_test, spawn_on)
-				provide_cost += TICK_USAGE_TO_MS(stopwatch_start)
-				QDEL_NULL(hh)
-			} while(FALSE)
-			force_stock_wardrobe(attempt_count)
-			// qdel()
-			do {
-				hh = SSwardrobe.provide(type_to_test, spawn_on)
-				stopwatch_start = TICK_USAGE
-				qdel(hh)
-				qdel_cost += TICK_USAGE_TO_MS(stopwatch_start)
-				hh = null
-			} while(FALSE)
-			force_stock_wardrobe(attempt_count)
-			// stash_object()
-			do {
-				hh = SSwardrobe.provide(type_to_test, spawn_on)
-				stopwatch_start = TICK_USAGE
-				SSwardrobe.stash_object(hh)
-				stash_cost += TICK_USAGE_TO_MS(stopwatch_start)
-				hh = null
-			} while(FALSE)
-			force_stock_wardrobe(attempt_count)
-		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
-
-	overflow_lienency = old_overflow_lienency
-	// Ok now we have our data, time to print it
-	var/list/wardrobe_info = list("<B>Performance information ([attempt_count] runs)</B><BR><BR><ol>")
-	sortTim(type_info, cmp=/proc/cmp_wardrobe_performance)
-	for(var/list/deets in type_info)
-		wardrobe_info += "<li><u>"
-		wardrobe_info += deets[1]
-		wardrobe_info += "</u></li>"
-
-		wardrobe_info += "<li>New: "
-		wardrobe_info += deets[2]
-		wardrobe_info += "ms</li>"
-
-		wardrobe_info += "<li>Provide: "
-		wardrobe_info += deets[3]
-		wardrobe_info += "ms</li>"
-
-		wardrobe_info += "<li>Qdel: "
-		wardrobe_info += deets[4]
-		wardrobe_info += "ms</li>"
-
-		wardrobe_info += "<li>Stash: "
-		wardrobe_info += deets[5]
-		wardrobe_info += "ms</li>"
-		wardrobe_info += "</ul></li>"
-	wardrobe_info += "</ol>"
-
-	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
-
-/// Sorts the slowest entries up to the top, based off how long the wardrobe version takes vs the normal sort
-/proc/cmp_wardrobe_performance(list/A, list/B)
-	var/create_delta_a = A[3] - A[2]
-	var/create_delta_b = B[3] - B[2]
-	var/del_delta_a = A[5] - A[4]
-	var/del_delta_b = B[5] - B[4]
-	if(create_delta_a + del_delta_a > create_delta_b + del_delta_b)
-		return 1
-	return -1
-
-/// Stocks the wardrobe to stock_to items, no more no less
-/// Only usable for testing, will not work well in production as it'll likely just get run over by other code
-/datum/controller/subsystem/wardrobe/proc/force_stock_wardrobe(stock_to)
-	var/list/canon_minimum = src.canon_minimum
-	var/list/preloaded_stock = src.preloaded_stock
-	for(var/datum/loaded_type as anything in canon_minimum)
-		var/list/stock_info = preloaded_stock[loaded_type]
-		var/amount_held = 0
-		if(stock_info)
-			amount_held = length(stock_info[WARDROBE_STOCK_CONTENTS])
-
-		var/target_delta = amount_held - stock_to
-
-		// If we've got anything over the line, cut it back down
-		if(target_delta > 0)
-			unload_stock(loaded_type, target_delta, force = TRUE)
-			continue
-		// If we have more then we target, just don't you feel me?
-		else if (target_delta == 0)
-			continue
-
-		// If we don't have enough, queue enough to make up the remainder
-		for(var/i in 1 to abs(target_delta))
-			yield_object(new loaded_type())
 
 /// Turns the order list into actual loaded items, this is where most work is done
 /datum/controller/subsystem/wardrobe/proc/stock_wardrobe()
@@ -408,6 +285,7 @@ SUBSYSTEM_DEF(wardrobe)
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
 		stock_miss++
+		miss_map[requested_type]++
 		requested_object = new requested_type()
 		if(length(misc_callbacks))
 			apply_misc_callbacks(requested_object, misc_callbacks)
@@ -423,6 +301,7 @@ SUBSYSTEM_DEF(wardrobe)
 	if(QDELETED(requested_object))
 		stack_trace("We somehow ended up with a qdeleted or null object in SSwardrobe's stock. Something's weird, likely to do with reinsertion. Typepath of [requested_type]")
 		stock_miss++
+		miss_map[requested_type]++
 		requested_object = new requested_type()
 		if(length(misc_callbacks))
 			apply_misc_callbacks(requested_object, misc_callbacks)
@@ -441,6 +320,7 @@ SUBSYSTEM_DEF(wardrobe)
 		do_on_removal.FleetingInvoke(requested_object)
 
 	stock_hit++
+	hit_map[requested_type]++
 	add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
 	if(!(contents_length - 1))
 		preloaded_stock -= requested_type
@@ -541,10 +421,11 @@ SUBSYSTEM_DEF(wardrobe)
 		CHECK_TICK
 	// I want to be prepared for explosions
 	var/turf/closed/wall/read_from = /turf/closed/wall
-	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 800, preload)
 	read_from = /turf/closed/wall/r_wall
 	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
-	CANNONIZE_IF_VAR(/obj/item/stack/cable_coil, 200, preload)
+	CANNONIZE_IF_VAR(/obj/item/stack/cable_coil, 450, preload)
+	CANNONIZE_IF_VAR(/obj/item/stack/rods, 700, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_shards()
 	for(var/obj/item/shard/secret_sauce as anything in subtypesof(/obj/item/shard))
@@ -554,10 +435,174 @@ SUBSYSTEM_DEF(wardrobe)
 		canonize_type(secret_sauce, 5)
 		CHECK_TICK
 	// I want to be ready for exploisions and massive window shattering
-	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/shard, /obj/item/shard, 200, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/shard, /obj/item/shard, 350, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_abstract()
 	// We make and delete a LOT of these all at once (explosions, shuttles, etc)
 	// It's worth caching them, and they have low side effects so it's safe too
 	canonize_type(/obj/effect/abstract/z_holder, 300)
 
+/datum/controller/subsystem/wardrobe/proc/display_consumption_info()
+	var/list/tracked_deets = list()
+	for(var/print in hit_map|miss_map)
+		var/hit_count = hit_map[print] || 0
+		var/miss_count = miss_map[print] || 0
+		tracked_deets += list(list(print, hit_count, miss_count, miss_count ? hit_count / miss_count : 0))
+
+	sortTim(tracked_deets, cmp=/proc/cmp_wardrobe_cache)
+	var/list/trackin_info = list("<B>Cache information</B><BR><BR><ol>")
+	for(var/list/deets in tracked_deets)
+		trackin_info += "<li><u>"
+		trackin_info += deets[1]
+		trackin_info += "</u></li>"
+
+		trackin_info += "<li>Hit: "
+		trackin_info += deets[2]
+		trackin_info += "</li>"
+
+		trackin_info += "<li>Miss: "
+		trackin_info += deets[3]
+		trackin_info += "</li>"
+
+		trackin_info += "<li>Ratio: "
+		trackin_info += deets[4]
+		trackin_info += "%</li>"
+	trackin_info += "</ol>"
+	usr << browse(trackin_info.Join(), "window=wardrobe_perf")
+
+/// Sorts the worst entries up to the top, based off the ratio between hit and miss
+/proc/cmp_wardrobe_cache(list/A, list/B)
+	if(A[4] > B[4])
+		return 1
+	return -1
+
+/// Debug proc, should not use
+/datum/controller/subsystem/wardrobe/proc/clear_consumption_info()
+	hit_map = list()
+	miss_map = list()
+
+/// Runs a speed test for all our various types
+/// Measures the average cost of providing vs spawning, and deletion vs stashing
+/// This will take for fucking ever (20 min on my machine). I'm sorry for that
+/datum/controller/subsystem/wardrobe/proc/speed_test(turf/spawn_on, attempt_count = 200)
+	var/old_overflow_lienency = overflow_lienency
+	overflow_lienency = INFINITY
+
+	// Stock everything I want IMMEDIATELY
+	force_stock_wardrobe(attempt_count)
+
+	// List of lists in the form list(type, new_cost, provide_cost, qdel_cost, stash_cost)
+	// I am writing this dumb because it's very hot (lots of shit) and I don't want to add any extra time
+	var/list/type_info = list()
+	var/atom/hh
+	var/stopwatch_start
+	var/new_cost = 0
+	var/provide_cost = 0
+	var/qdel_cost = 0
+	var/stash_cost = 0
+	for(var/atom/movable/type_to_test as anything in preloaded_stock)
+		new_cost = 0
+		provide_cost = 0
+		qdel_cost = 0
+		stash_cost = 0
+		for(var/i in 1 to attempt_count)
+			// Stopwatches are one per proc, so lets give them their own scope
+			do {
+				stopwatch_start = TICK_USAGE
+				hh = new type_to_test(spawn_on)
+				new_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				QDEL_NULL(hh)
+			} while(FALSE)
+			// In case subobjects are also tracked, this avoids any mistakes
+			force_stock_wardrobe(attempt_count)
+			// Now provide()
+			do {
+				stopwatch_start = TICK_USAGE
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				provide_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				QDEL_NULL(hh)
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// qdel()
+			do {
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				stopwatch_start = TICK_USAGE
+				qdel(hh)
+				qdel_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				hh = null
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// stash_object()
+			do {
+				hh = SSwardrobe.provide(type_to_test, spawn_on)
+				stopwatch_start = TICK_USAGE
+				SSwardrobe.stash_object(hh)
+				stash_cost += TICK_USAGE_TO_MS(stopwatch_start)
+				hh = null
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
+
+	overflow_lienency = old_overflow_lienency
+	// Ok now we have our data, time to print it
+	var/list/wardrobe_info = list("<B>Performance information ([attempt_count] runs)</B><BR><BR><ol>")
+	sortTim(type_info, cmp=/proc/cmp_wardrobe_performance)
+	for(var/list/deets in type_info)
+		wardrobe_info += "<li><u>"
+		wardrobe_info += deets[1]
+		wardrobe_info += "</u></li>"
+
+		wardrobe_info += "<li>New: "
+		wardrobe_info += deets[2]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Provide: "
+		wardrobe_info += deets[3]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Qdel: "
+		wardrobe_info += deets[4]
+		wardrobe_info += "ms</li>"
+
+		wardrobe_info += "<li>Stash: "
+		wardrobe_info += deets[5]
+		wardrobe_info += "ms</li>"
+		wardrobe_info += "</ul></li>"
+	wardrobe_info += "</ol>"
+
+	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
+
+/// Sorts the slowest entries up to the top, based off how long the wardrobe version takes vs the normal sort
+/proc/cmp_wardrobe_performance(list/A, list/B)
+	var/create_ratio_a = A[3] / A[2]
+	var/create_ratio_b = B[3] / B[2]
+	var/del_ratio_a = A[5] / A[4]
+	var/del_ratio_b = B[5] / B[4]
+	if(create_ratio_a + del_ratio_a > create_ratio_b + del_ratio_b)
+		return 1
+	return -1
+
+/// Stocks the wardrobe to stock_to items, no more no less
+/// Only usable for testing, will not work well in production as it'll likely just get run over by other code
+/datum/controller/subsystem/wardrobe/proc/force_stock_wardrobe(stock_to)
+	var/list/canon_minimum = src.canon_minimum
+	var/list/preloaded_stock = src.preloaded_stock
+	for(var/datum/loaded_type as anything in canon_minimum)
+		var/list/stock_info = preloaded_stock[loaded_type]
+		var/amount_held = 0
+		if(stock_info)
+			amount_held = length(stock_info[WARDROBE_STOCK_CONTENTS])
+
+		var/target_delta = amount_held - stock_to
+
+		// If we've got anything over the line, cut it back down
+		if(target_delta > 0)
+			unload_stock(loaded_type, target_delta, force = TRUE)
+			continue
+		// If we have more then we target, just don't you feel me?
+		else if (target_delta == 0)
+			continue
+
+		// If we don't have enough, queue enough to make up the remainder
+		for(var/i in 1 to abs(target_delta))
+			yield_object(new loaded_type())
