@@ -79,7 +79,9 @@
 
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, datum/source)
+#ifndef UNIT_TESTS
 	return_to_old_body()
+#endif
 
 	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve()
 	if(isnull(hosting_netpod) && istype(source, /obj/machinery/netpod))
