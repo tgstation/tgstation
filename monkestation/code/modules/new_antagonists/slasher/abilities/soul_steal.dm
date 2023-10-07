@@ -55,4 +55,5 @@
 			slasherdatum.linked_machette.force += 2.5
 			slasherdatum.linked_machette.throwforce += 2.5
 			slasherdatum.souls_sucked++
+			slasherdatum.check_soul_punishment()
 			slasherdatum.last_soul_sucked = world.time

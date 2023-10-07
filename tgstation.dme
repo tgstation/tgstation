@@ -6024,6 +6024,7 @@
 #include "monkestation\code\modules\mob\living\simple_animal\pets\bees.dm"
 #include "monkestation\code\modules\mob\living\simple_animal\pets\honk_platinum.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_datum.dm"
+#include "monkestation\code\modules\new_antagonists\slasher\slasher_punishment.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\_slasher_base.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\blood_walk.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\incorporealize.dm"

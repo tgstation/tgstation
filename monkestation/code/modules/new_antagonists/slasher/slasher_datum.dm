@@ -22,6 +22,12 @@
 	var/souls_sucked = 0
 	///when we sucked our last soul in world time
 	var/last_soul_sucked = 0
+	///cooldown we should have for soul sucking without downside
+	var/soul_digestion = 5 MINUTES
+	///our current soul punishment state
+	var/soul_punishment = 0
+	///our cached brute_mod
+	var/cached_brute_mod = 0
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -52,6 +58,7 @@
 
 	var/mob/living/carbon/human/human = current_mob
 	human.equipOutfit(/datum/outfit/slasher)
+	cached_brute_mod = human.dna.species.brutemod
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
 	if(breath_out)
