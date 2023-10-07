@@ -93,6 +93,7 @@
 
 /obj/item/pressure_plate/puzzle
 	protected = TRUE
+	anchored = TRUE //this prevents us from being picked up
 	removable_signaller = FALSE
 	var/puzzle_id
 	var/check_range = 6

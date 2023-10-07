@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/basic_melee_attack_subtree/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/atom/target = weak_target?.resolve()
 	if(!target || QDELETED(target))
@@ -10,12 +10,12 @@
 /datum/ai_controller/basic_controller/living_floor
 	max_target_distance = 2
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/syndicate(), //kill people
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead,
 	)
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/on_top
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top
 	)
 
 /mob/living/basic/living_floor
@@ -61,7 +61,7 @@
 	var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
 	var/datum/weakref/weak_target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target?.resolve()
-	if(targetting.can_attack(src, target) && get_dist(src, target) <= 1) //do this at pointblank and when we can attack
+	if(!isnull(target) && targetting.can_attack(src, target) && get_dist(src, target) <= 1) //do this at pointblank and when we can attack
 		icon_state = icon_aggro
 		desc = desc_aggro
 	else
@@ -85,7 +85,7 @@
 		balloon_alert(user, "you start prying it off with all your strength...")
 		if(do_after(user, 5 SECONDS, src))
 			new /obj/effect/gibspawner/generic(loc)
-			qdel(src)
+			qdel(src) //theoretically i could add ghostize but it shouldnt matter since this should never be a player mob anyway
 	else
 		return ..()
 

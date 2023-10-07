@@ -31,11 +31,12 @@
 	var/datum/action/cooldown/mob_cooldown/spine_traps/traps
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
+	/// what do we drop on death
+	var/static/list/death_loot = list(/obj/effect/temp_visual/meteor_heart_death)
 
 /mob/living/basic/meteor_heart/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
-	var/static/list/death_loot = list(/obj/effect/temp_visual/meteor_heart_death)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/relay_attackers)
 

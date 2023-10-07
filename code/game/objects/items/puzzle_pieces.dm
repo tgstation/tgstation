@@ -1,4 +1,4 @@
-//Every time you got lost looking for keycards, incriment: 1
+//Every time you got lost looking for keycards, increment: 2
 //**************
 //*****Keys*******************
 //************** **  **
