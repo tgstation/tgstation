@@ -17,7 +17,7 @@
 	/// Reagents that should be added to the result
 	var/list/added_reagents
 
-/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprit, list/added_reagents = list())
+/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprit, list/added_reagents)
 	. = ..()
 	if(!isitem(parent)) //Only items support baking at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -74,8 +74,9 @@
 	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
 		baked_result.reagents.clear_reagents()
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
-		for (var/reagent in added_reagents) // Add any new reagents that should be added
-			baked_result.reagents.add_reagent(reagent, added_reagents[reagent])
+		if(added_reagents)
+			for (var/reagent in added_reagents) // Add any new reagents that should be added
+				baked_result.reagents.add_reagent(reagent, added_reagents[reagent])
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)

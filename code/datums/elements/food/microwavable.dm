@@ -9,7 +9,7 @@
 	/// Reagents that should be added to the result
 	var/list/added_reagents
 
-/datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents = list())
+/datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -49,8 +49,9 @@
 		BLACKBOX_LOG_FOOD_MADE(result.type)
 		result.reagents.clear_reagents()
 		source.reagents?.trans_to(result, source.reagents.total_volume)
-		for (var/reagent in added_reagents) // Add any new reagents that should be added
-			result.reagents.add_reagent(reagent, added_reagents[reagent])
+		if(added_reagents)
+			for (var/reagent in added_reagents) // Add any new reagents that should be added
+				result.reagents.add_reagent(reagent, added_reagents[reagent])
 
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
