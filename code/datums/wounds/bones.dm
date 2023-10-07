@@ -494,14 +494,10 @@
 /// if the person has been healed by some kind of cult effect, such as the blood rites spell or the offer rune. If we're already healing, we decrease the time we have to wait for the wound to heal.
 /datum/wound/blunt/bone/proc/cult_recovery(amount_healed)
 	if(cult_recovering)
-		regen_ticks_needed -= round(amount_healed)
-	else
-		cult_recovering = TRUE
-		regen_ticks_needed *=2
-
-	if(!processes)
-		processes = TRUE
-
+		return TRUE
+	cult_recovering = TRUE
+	regen_ticks_needed *=2
+	processes = TRUE
 	return TRUE
 
 /datum/wound/blunt/bone/treat(obj/item/I, mob/user)
