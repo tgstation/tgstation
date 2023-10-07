@@ -158,8 +158,8 @@
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(!cargo_sloth)
+	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
+	if(isnull(cargo_sloth))
 		return
 
 	cargorilla = new(cargo_sloth.loc)
