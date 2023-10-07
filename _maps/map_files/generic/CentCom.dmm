@@ -606,6 +606,13 @@
 /obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/plating/abductor,
 /area/centcom/central_command_areas/admin)
+"cI" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Abraxis' Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "cJ" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -978,6 +985,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"eo" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "ep" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/decal/cleanable/dirt,
@@ -1151,6 +1163,10 @@
 /obj/item/taperecorder,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
+"eW" = (
+/obj/structure/closet/secure_closet,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "eX" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -1809,6 +1825,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"hR" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/pizzabox/infinite,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "hS" = (
 /obj/machinery/barsign/all_access/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4284,6 +4305,11 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"qe" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/fax,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "qf" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -4324,6 +4350,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin/storage)
+"qm" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/computer/records/security/laptop,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "qn" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/airalarm/directional/south,
@@ -4800,6 +4831,10 @@
 	icon_state = "clown_carpet"
 	},
 /area/centcom/central_command_areas/fore)
+"sh" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "sm" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/herringbone,
@@ -5348,6 +5383,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/evacuation/ship)
+"ue" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "uf" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/tdome/administration)
@@ -7026,6 +7065,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"AN" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/computer/records/medical/laptop,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
+"AP" = (
+/obj/machinery/nuclearbomb/beer,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "AQ" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
@@ -7638,6 +7686,10 @@
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"CR" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "CS" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
@@ -7729,6 +7781,12 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
+"Dl" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/centcom/central_command_areas/admin)
 "Dn" = (
 /obj/structure/flora/tree/palm,
@@ -7899,6 +7957,11 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"Eb" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/storage/box/cups,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "Eg" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/public/glass{
@@ -8814,6 +8877,9 @@
 /obj/structure/window/plasma/spawner/directional/east,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"ID" = (
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "IE" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -8878,6 +8944,9 @@
 "IS" = (
 /obj/machinery/door/poddoor/shutters/indestructible/preopen,
 /turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/admin)
+"IU" = (
+/turf/open/floor/mineral/titanium/white,
 /area/centcom/central_command_areas/admin)
 "IX" = (
 /obj/machinery/door/firedoor,
@@ -8947,6 +9016,11 @@
 	},
 /turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
+"Jo" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/book/manual/wiki/security_space_law,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "Jq" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
@@ -9046,6 +9120,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
+"JQ" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
+/obj/item/stamp,
+/obj/item/stamp/denied,
+/obj/item/stamp/void,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "JT" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -11410,6 +11493,12 @@
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/central_command_areas/evacuation/ship)
+"Tf" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "Tg" = (
 /obj/item/storage/briefcase{
 	pixel_x = -3;
@@ -12153,6 +12242,10 @@
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"VU" = (
+/obj/structure/chair/comfy/carp,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "VW" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
@@ -12582,6 +12675,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/one)
+"XI" = (
+/obj/structure/table/abductor,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "XJ" = (
 /obj/structure/table/wood,
 /turf/open/floor/iron,
@@ -12671,6 +12768,12 @@
 /obj/machinery/computer/camera_advanced,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
+"Yj" = (
+/obj/machinery/modular_computer/console/preset/id/centcom{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "Yk" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate,
@@ -12782,7 +12885,7 @@
 /obj/structure/table/wood,
 /obj/machinery/fax{
 	fax_id = Waffles;
-	fax_name = Waffles' Fax Machine
+	fax_name = Waffles'FaxMachine
 	},
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/admin)
@@ -12917,6 +13020,10 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
+"Zi" = (
+/obj/item/kirbyplants/fullysynthetic,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "Zj" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -13021,6 +13128,10 @@
 /obj/machinery/biogenerator/admin,
 /turf/open/indestructible/event/plating,
 /area/centcom/tdome/observation)
+"ZD" = (
+/obj/structure/chair/sofa/corp/corner,
+/turf/open/floor/mineral/titanium/white,
+/area/centcom/central_command_areas/admin)
 "ZE" = (
 /obj/effect/landmark/error,
 /turf/open/misc/ashplanet/wateryrock{
@@ -44416,12 +44527,12 @@ cF
 cF
 cF
 On
-pi
-pi
-pi
-uD
-gf
-Hp
+hR
+Eb
+sh
+AN
+qm
+Yj
 On
 aa
 aa
@@ -44673,12 +44784,12 @@ cF
 cF
 cF
 IS
-pi
-pi
-XN
-eU
-pi
-pi
+IU
+ID
+VU
+JQ
+Tf
+IU
 Zf
 aa
 aa
@@ -44929,13 +45040,13 @@ cF
 cF
 cF
 cF
-CS
-pi
-pi
-XN
-NK
-JC
-pi
+cI
+IU
+ID
+VU
+eo
+ID
+Zi
 Zf
 aa
 aa
@@ -45187,12 +45298,12 @@ cF
 cF
 Dx
 On
-pi
-pi
-pi
-pi
-pi
-pi
+ue
+XI
+ID
+ID
+ID
+CR
 Zf
 aa
 aa
@@ -45444,12 +45555,12 @@ cF
 cF
 cF
 On
-cv
-pi
-SI
-SI
-oT
-Ly
+ZD
+Dl
+AP
+eW
+qe
+Jo
 On
 aa
 aa
