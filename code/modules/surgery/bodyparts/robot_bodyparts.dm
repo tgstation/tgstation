@@ -120,7 +120,7 @@
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -166,7 +166,7 @@
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -221,7 +221,7 @@
 
 	var/damage_percent_to_max = (get_damage() / max_damage)
 	if (stun_time && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		to_chat(owner, span_danger("Your [src]'s logic boards temporarily become unresponsive!"))
+		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
 		owner.Stun(stun_time)
 	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
 
@@ -343,7 +343,7 @@
 	if(!. || isnull(owner))
 		return
 
-	to_chat(owner, span_danger("Your [src]'s optical transponders glitch out and malfunction!"))
+	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
 
 	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
 	if (severity == EMP_HEAVY)

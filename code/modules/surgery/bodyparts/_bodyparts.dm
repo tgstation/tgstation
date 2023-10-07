@@ -1298,10 +1298,10 @@
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner || src)
 
-	if((get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
+	if(can_be_disabled && (get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
 		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
 		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_PARALYSIS, EMP_TRAIT), time_needed)
-		owner?.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
+		owner?.visible_message(span_danger("[owner]'s [plaintext_zone] seems to malfunction!"))
 
 	return TRUE
 
