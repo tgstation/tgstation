@@ -104,7 +104,7 @@
 "w" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/misc/snow,
-/area/template_noop)
+/area/icemoon/surface/outdoors/nospawn)
 "x" = (
 /obj/structure/flora/tree/pine,
 /turf/open/misc/snow,
@@ -115,9 +115,6 @@
 	},
 /turf/closed/indestructible/rock/snow/ice/ore,
 /area/icemoon/surface/outdoors/nospawn)
-"A" = (
-/turf/open/misc/snow,
-/area/template_noop)
 "C" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -140,10 +137,6 @@
 /obj/structure/railing,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"H" = (
-/obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
-/area/template_noop)
 "J" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 4
@@ -209,6 +202,9 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Y" = (
 /turf/open/openspace/icemoon/ruins,
+/area/icemoon/surface/outdoors/nospawn)
+"Z" = (
+/turf/template_noop,
 /area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
@@ -706,7 +702,7 @@ t
 "}
 (18,1,1) = {"
 t
-t
+Z
 E
 i
 g
@@ -735,7 +731,7 @@ t
 "}
 (19,1,1) = {"
 w
-A
+c
 c
 g
 g
@@ -763,8 +759,8 @@ t
 t
 "}
 (20,1,1) = {"
-A
-A
+c
+c
 g
 j
 M
@@ -793,7 +789,7 @@ t
 "}
 (21,1,1) = {"
 t
-H
+T
 c
 O
 Y

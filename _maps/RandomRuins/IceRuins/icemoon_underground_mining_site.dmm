@@ -184,6 +184,10 @@
 /obj/structure/flora/rock/pile/icy,
 /turf/open/misc/snow,
 /area/icemoon/underground/explored)
+"U" = (
+/obj/effect/spawner/random/exotic/snow_gear,
+/turf/open/misc/snow,
+/area/icemoon/underground/explored)
 "V" = (
 /obj/structure/frost_miner_prism,
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
@@ -606,7 +610,7 @@ k
 a
 k
 k
-r
+U
 r
 j
 k
@@ -706,7 +710,7 @@ l
 l
 c
 f
-r
+U
 L
 a
 Y
