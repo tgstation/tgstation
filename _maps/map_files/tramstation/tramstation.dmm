@@ -8570,6 +8570,7 @@
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "bSd" = (
@@ -14689,8 +14690,10 @@
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "dYm" = (
@@ -38902,6 +38905,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"mOJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pharmacy_shutters_2";
+	name = "Pharmacy Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "mOM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -51543,11 +51555,12 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/south{
-	dir = 8;
+	dir = 4;
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
 	},
@@ -166314,7 +166327,7 @@ sBr
 jyH
 dYi
 rqE
-bqg
+mOJ
 jyH
 jyH
 jyH
