@@ -46,7 +46,8 @@
 	. = ..()
 	to_chat(owner.current, span_boldwarning("Dont forget, your structures are by default off and must be clicked on to be turned on. Structures that are turned on have passive power use."))
 	to_chat(owner.current, span_userdanger("HEY"))
-	to_chat(owner.current, span_boldwarning("YOUR CLOCKWORK SLAB UI HAS A MORE IN DEPTH GUIDE IN ITS BOTTOM RIGHT HAND SIDE.")) //please please PLEASE read this
+	to_chat(owner.current, span_boldwarning("YOUR CLOCKWORK SLAB UI HAS A MORE IN DEPTH GUIDE IN ITS BOTTOM RIGHT HAND SIDE. \
+											YOU CAN HOVER YOUR MOUSE POINTER OVER SCRIPTURE BUTTONS FOR EXTRA INFO."))
 
 //given_clock_team is provided by conversion methods, although we never use it due to wanting to just set their team to the main clock cult
 /datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
