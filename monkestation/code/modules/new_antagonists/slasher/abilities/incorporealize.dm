@@ -8,7 +8,6 @@
 
 /datum/action/cooldown/slasher/incorporealize/PreActivate(atom/target)
 	. = ..()
-	var/mob/living/carbon/human/human = owner
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	if(slasherdatum && (slasherdatum.soul_punishment >= 2))
 		return FALSE

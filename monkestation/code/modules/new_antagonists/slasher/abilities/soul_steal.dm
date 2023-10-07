@@ -21,7 +21,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/antagonist/slasher/slasherdatum = human_owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	if(slasherdatum)
-		if(last_soul_sucked + soul_digestion > world.time)
+		if(slasherdatum.last_soul_sucked + slasherdatum.soul_digestion > world.time)
 			to_chat(owner, span_boldwarning("You can feel your mind slipping, you feel as though bad things will happen if you absorb another soul so quickly!"))
 			per_soul_suck = 5 SECONDS
 

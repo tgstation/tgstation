@@ -36,6 +36,10 @@
 	var/list/mobs_with_fullscreens = list()
 	///this is needed because it double fires sometimes before finishing
 	var/is_hudchecking = FALSE
+	/// the mob we are stalking
+	var/mob/living/carbon/human/stalked_human
+	/// how close we are in % to finishing stalking
+	var/stalk_precent = 0
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -63,6 +67,8 @@
 	regenerate.Grant(current_mob)
 	var/datum/action/cooldown/slasher/terror/terror = new
 	terror.Grant(current_mob)
+	var/datum/action/cooldown/slasher/stalk_target/stalk_target = new
+	stalk_target.Grant(current_mob)
 
 	var/mob/living/carbon/human/human = current_mob
 	human.equipOutfit(/datum/outfit/slasher)
@@ -83,6 +89,16 @@
 			if(human == source)
 				continue
 			human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+
+	if(stalked_human)
+		for(var/mob/living/carbon/human in view(7, source))
+			if(stalked_human != human)
+				continue
+			if(stalked_human.stat == DEAD)
+				failed_stalking()
+			stalk_precent += (1 / 1.8)
+		if(stalk_precent >= 100)
+			finish_stalking()
 
 	if(!is_hudchecking)
 		is_hudchecking = TRUE
@@ -122,3 +138,19 @@
 			var/turf/turf = get_turf(human)
 			var/list/blood_drop = list(human.get_blood_id() = 10)
 			turf.add_liquid_list(blood_drop, FALSE, 300)
+
+/datum/antagonist/slasher/proc/finish_stalking()
+	to_chat(owner, span_boldwarning("You have finished spooking your victim, and have harvested part of their soul!"))
+	if(linked_machette)
+		linked_machette.force += 2.5
+		linked_machette.throwforce += 2.5
+	qdel(stalked_human.tracking_beacon)
+	stalked_human = null
+
+/datum/antagonist/slasher/proc/failed_stalking()
+	to_chat(owner, span_boldwarning("You let your victim be taken before it was time!"))
+	if(linked_machette)
+		linked_machette.force -= 5
+		linked_machette.throwforce -= 5
+	qdel(stalked_human.tracking_beacon)
+	stalked_human = null

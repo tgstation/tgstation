@@ -11,8 +11,7 @@
 
 /datum/action/cooldown/slasher/summon_machette/Destroy()
 	. = ..()
-	qdel(stored_machette)
-	stored_machette = null
+	QDEL_NULL(stored_machette)
 
 /datum/action/cooldown/slasher/summon_machette/Activate(atom/target)
 	. = ..()
