@@ -23091,7 +23091,6 @@
 /area/station/medical/virology)
 "hGC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
