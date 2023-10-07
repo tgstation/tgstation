@@ -174,7 +174,7 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(HAS_TRAIT(TRAIT_WEB_SURFER))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
