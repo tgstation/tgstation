@@ -16,13 +16,8 @@
  * Tier 1 abilities
  */
 
-/datum/orderable_item/bitrunning_abilities/tier1
+/datum/orderable_item/bitrunning_abilities/conjure_cheese
 	cost_per_order = 1000
-	item_path = /obj/item/bitrunning_disk/ability/tier1
-
-
-
-/datum/orderable_item/bitrunning_abilities/tier1/conjure_cheese
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/conjure_cheese
 
 /obj/item/bitrunning_disk/ability/monkestation_override/conjure_cheese
@@ -32,7 +27,8 @@
 
 
 
-/datum/orderable_item/bitrunning_abilities/tier1/basic_heal
+/datum/orderable_item/bitrunning_abilities/basic_heal
+	cost_per_order = 1000
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/basic_heal
 
 /obj/item/bitrunning_disk/ability/monkestation_override/basic_heal
@@ -44,13 +40,8 @@
  * Tier 2 abilities
  */
 
-/datum/orderable_item/bitrunning_abilities/tier2
+/datum/orderable_item/bitrunning_abilities/fireball
 	cost_per_order = 1500
-	item_path = /obj/item/bitrunning_disk/item/tier2
-
-
-
-/datum/orderable_item/bitrunning_abilities/tier2/fireball
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/fireball
 
 /obj/item/bitrunning_disk/ability/monkestation_override/fireball
@@ -60,7 +51,8 @@
 
 
 
-/datum/orderable_item/bitrunning_abilities/tier2/lightningbolt
+/datum/orderable_item/bitrunning_abilities/lightningbolt
+	cost_per_order = 1500
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/lightningbolt
 
 /obj/item/bitrunning_disk/ability/monkestation_override/lightningbolt
@@ -70,7 +62,8 @@
 
 
 
-/datum/orderable_item/bitrunning_abilities/tier2/forcewall
+/datum/orderable_item/bitrunning_abilities/forcewall
+	cost_per_order = 1500
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/forcewall
 
 /obj/item/bitrunning_disk/ability/monkestation_override/forcewall
@@ -84,13 +77,8 @@
  * Tier 3 abilities
  */
 
-/datum/orderable_item/bitrunning_abilities/tier3
+/datum/orderable_item/bitrunning_abilities/dragon
 	cost_per_order = 2500
-	item_path = /obj/item/bitrunning_disk/item/tier3
-
-
-
-/datum/orderable_item/bitrunning_abilities/tier3/dragon
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/dragon
 
 /obj/item/bitrunning_disk/ability/monkestation_override/dragon
@@ -100,7 +88,8 @@
 
 
 
-/datum/orderable_item/bitrunning_abilities/tier3/polar_bear
+/datum/orderable_item/bitrunning_abilities/polar_bear
+	cost_per_order = 2500
 	item_path = /obj/item/bitrunning_disk/ability/monkestation_override/polar_bear
 
 /obj/item/bitrunning_disk/ability/monkestation_override/polar_bear

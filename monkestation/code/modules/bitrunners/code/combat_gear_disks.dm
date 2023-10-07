@@ -17,13 +17,8 @@
  * Tier 1 combat gear
  */
 
-/datum/orderable_item/bitrunning_combat_gear/tier1
+/datum/orderable_item/bitrunning_combat_gear/pizza
 	cost_per_order = 1000
-	item_path = /obj/item/bitrunning_disk/item/tier1
-
-
-
-/datum/orderable_item/bitrunning_combat_gear/tier1/pizza
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pizza
 
 /obj/item/bitrunning_disk/item/monkestation_override/pizza
@@ -33,7 +28,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier1/medbeam
+/datum/orderable_item/bitrunning_combat_gear/medbeam
+	cost_per_order = 1000
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/medbeam
 
 /obj/item/bitrunning_disk/item/monkestation_override/medbeam
@@ -43,7 +39,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier1/c4
+/datum/orderable_item/bitrunning_combat_gear/c4
+	cost_per_order = 1000
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/c4
 
 /obj/item/bitrunning_disk/item/monkestation_override/c4
@@ -55,13 +52,8 @@
  * Tier 2 combat gear
  */
 
-/datum/orderable_item/bitrunning_combat_gear/tier2
+/datum/orderable_item/bitrunning_combat_gear/chainsaw
 	cost_per_order = 1800
-	item_path = /obj/item/bitrunning_disk/item/tier2
-
-
-
-/datum/orderable_item/bitrunning_combat_gear/tier2/chainsaw
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/chainsaw
 
 /obj/item/bitrunning_disk/item/monkestation_override/chainsaw
@@ -71,7 +63,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier2/pistol
+/datum/orderable_item/bitrunning_combat_gear/pistol
+	cost_per_order = 1800
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pistol
 
 /obj/item/bitrunning_disk/item/monkestation_override/pistol
@@ -81,7 +74,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier2/hardlight_blade
+/datum/orderable_item/bitrunning_combat_gear/hardlight_blade
+	cost_per_order = 1800
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/hardlight_blade
 
 /obj/item/bitrunning_disk/item/monkestation_override/hardlight_blade
@@ -93,13 +87,8 @@
  * Tier 3 combat gear
  */
 
-/datum/orderable_item/bitrunning_combat_gear/tier3
+/datum/orderable_item/bitrunning_combat_gear/tesla_cannon
 	cost_per_order = 3200
-	item_path = /obj/item/bitrunning_disk/item/tier3
-
-
-
-/datum/orderable_item/bitrunning_combat_gear/tier3/tesla_cannon
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/tesla_cannon
 
 /obj/item/bitrunning_disk/item/monkestation_override/tesla_cannon
@@ -109,7 +98,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier3/dualsaber
+/datum/orderable_item/bitrunning_combat_gear/dualsaber
+	cost_per_order = 3200
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/dualsaber
 
 /obj/item/bitrunning_disk/item/monkestation_override/dualsaber
@@ -119,7 +109,8 @@
 
 
 
-/datum/orderable_item/bitrunning_combat_gear/tier3/beesword
+/datum/orderable_item/bitrunning_combat_gear/beesword
+	cost_per_order = 3200
 	item_path = /obj/item/bitrunning_disk/item/monkestation_override/beesword
 
 /obj/item/bitrunning_disk/item/monkestation_override/beesword
