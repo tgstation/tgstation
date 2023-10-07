@@ -116,6 +116,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/surgery/aft)
+"acG" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "acI" = (
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,
@@ -6261,6 +6273,18 @@
 /obj/item/flashlight/seclite,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hos)
+"doG" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "doZ" = (
 /obj/structure/displaycase/labcage,
 /turf/open/floor/wood,
@@ -8804,6 +8828,26 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/office)
+"eEU" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/clothing/gloves/boxing/blue{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/clothing/gloves/boxing/green{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/obj/item/clothing/gloves/boxing/yellow{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/structure/table/wood,
+/turf/open/floor/bamboo,
+/area/station/commons/fitness)
 "eEZ" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
@@ -9242,6 +9286,15 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/ocean,
 /area/ocean/generated_above)
+"ePO" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "ePQ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -9412,6 +9465,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
+"eTm" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "eTz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -11843,6 +11905,15 @@
 /obj/item/book,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/hop)
+"gdB" = (
+/obj/structure/table/wood,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/open/floor/bamboo,
+/area/station/commons/fitness)
 "gdO" = (
 /obj/machinery/duct/industrial/waste,
 /obj/structure/disposalpipe/segment{
@@ -11947,11 +12018,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "ggx" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/bamboo,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
 /area/station/commons/fitness)
 "ggI" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
@@ -20332,6 +20405,18 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
+"kAN" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "kBk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23933,6 +24018,18 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/cargo/lobby)
+"mpP" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "mqy" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 9
@@ -24703,6 +24800,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"mKR" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "mKU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/mime/double,
@@ -42270,6 +42376,15 @@
 "vzd" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/hos)
+"vzj" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/turf/open/floor/bamboo,
+/area/station/commons/fitness)
 "vzp" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -63114,7 +63229,7 @@ pug
 rYQ
 aYq
 aYq
-ggx
+aYq
 rYQ
 rYQ
 pug
@@ -63629,10 +63744,10 @@ kUp
 oWO
 rYQ
 aYq
-dwx
-dwx
-dwx
-dwx
+rYQ
+rYQ
+rYQ
+rYQ
 vUg
 dPH
 bSj
@@ -63886,10 +64001,10 @@ mVu
 oWO
 oti
 aYq
-dwx
-dwx
-dwx
-dwx
+doG
+mKR
+mKR
+acG
 gHM
 dPH
 ieT
@@ -64143,10 +64258,10 @@ jDu
 oWO
 oti
 aYq
+ePO
 dwx
 dwx
-dwx
-dwx
+ggx
 gIB
 dPH
 bSj
@@ -64398,12 +64513,12 @@ oWO
 exP
 sUg
 oWO
-vtb
+vzj
 aYq
+ePO
 dwx
 dwx
-dwx
-dwx
+ggx
 rYQ
 dPH
 oTE
@@ -64657,10 +64772,10 @@ lqa
 oWO
 vtb
 aYq
-dwx
-dwx
-dwx
-dwx
+kAN
+eTm
+eTm
+mpP
 rYQ
 dPH
 oHO
@@ -64912,7 +65027,7 @@ oWO
 ncg
 hdv
 oWO
-rYQ
+vtb
 aYq
 rYQ
 rYQ
@@ -65173,8 +65288,8 @@ rYQ
 cWa
 rYQ
 rYQ
-rYQ
-rYQ
+eEU
+gdB
 gop
 dPH
 lpu
@@ -80342,7 +80457,7 @@ meJ
 meJ
 meJ
 meJ
-rvq
+mdW
 rvq
 vHZ
 rDE
