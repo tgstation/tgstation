@@ -38,6 +38,15 @@
 	SIGNAL_HANDLER
 
 	var/turf/oldLocTurf = get_turf(old_loc)
+	if(prob(5))
+		for(var/mob/living/carbon/human/human in view(7, oldLocTurf))
+			human.emote("scream")
+			human.stamina.adjust(-5)
+			human.Shake(duration = 3 SECONDS)
+			var/turf/turf = get_turf(human)
+			var/list/blood_drop = list(human.get_blood_id() = 3)
+			turf.add_liquid_list(blood_drop, FALSE, 300)
+
 	var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints)
 	if(oldLocFP)
 		// Footprints found in the tile we left, add us to it

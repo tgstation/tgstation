@@ -29,7 +29,7 @@
 		button_icon_state = "corporealize"
 		if(isliving(owner))
 			var/mob/living/owner_mob = owner
-			owner_mob.incorporeal_move = INCORPOREAL_MOVE_BASIC
+			owner_mob.movement_type |= PHASING
 			animate(owner_mob, alpha = 0, time = 1.5 SECONDS)
 	else
 		name = "Incorporealize"
@@ -37,7 +37,7 @@
 		button_icon_state = "incorporealize"
 		if(isliving(owner))
 			var/mob/living/owner_mob = owner
-			owner_mob.incorporeal_move = 0
+			owner_mob.movement_type & ~PHASING
 			animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
 
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
