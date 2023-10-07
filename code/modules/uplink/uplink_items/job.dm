@@ -102,7 +102,6 @@
 	name = "Combat Bakery Kit"
 	desc = "A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword, \
 		a pair of throwing croissants, and the recipe to make more on demand. Once the job is done, eat the evidence."
-	progression_minimum = 15 MINUTES
 	item = /obj/item/storage/box/syndie_kit/combat_baking
 	cost = 7
 	restricted_roles = list(JOB_COOK, JOB_MIME)
