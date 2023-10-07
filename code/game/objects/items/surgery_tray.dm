@@ -20,6 +20,7 @@
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
+		/obj/item/autopsy_scanner,
 	))
 
 /**
