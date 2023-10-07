@@ -19,7 +19,7 @@
 	if(!ishuman(target))
 		to_chat(owner, span_warning("This is only usable on humans."))
 		return
-	var/mob/living/carbon/human_target = target
+	var/mob/living/carbon/human/human_target = target
 	if(human_target.stat != DEAD)
 		to_chat(owner, span_notice("This target is not dead. You can't steal their soul."))
 		return
