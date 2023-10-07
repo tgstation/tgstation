@@ -2,7 +2,7 @@
 	name = "Stalk Target"
 	desc = "Get a target to stalk, standing near them for 3 minutes will rip their soul from their body. YOU MUST PROTECT THEM FROM HARM."
 
-	button_icon_state = "slasher_posses"
+	button_icon_state = "slasher_possession"
 
 	cooldown_time = 5 MINUTES
 
