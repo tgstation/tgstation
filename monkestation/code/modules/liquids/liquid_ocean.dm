@@ -9,10 +9,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	requires_power = TRUE
 	always_unpowered = TRUE
-	static_lighting = FALSE
-
-	base_lighting_alpha = 255
-	base_lighting_color = COLOR_CARP_LIGHT_BLUE
 
 	power_light = FALSE
 	power_equip = FALSE
@@ -30,6 +26,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 /area/ocean/dark
 	base_lighting_alpha = 0
+
 /area/ruin/ocean
 	has_gravity = TRUE
 
@@ -58,6 +55,9 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
+/turf/open/floor/plating
+	///do we still call parent but dont want other stuff?
+	var/overwrites_attack_by = FALSE
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -74,14 +74,19 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	planetary_atmos = TRUE
 	initial_gas_mix = OSHAN_DEFAULT_ATMOS
-	light_power = 0.75
+
+	upgradable = FALSE
+	attachment_holes = FALSE
+
+	resistance_flags = INDESTRUCTIBLE
+
+	overwrites_attack_by = TRUE
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
-	var/static/list/ocean_reagents = list(/datum/reagent/water = 100)
+	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C
 	var/list/ocean_turfs = list()
 	var/list/open_turfs = list()
-	var/has_starlight = TRUE
 
 	///are we captured, this is easier than having to run checks on turfs for vents
 	var/captured = FALSE
@@ -94,8 +99,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	/// Whether the turf has been dug or not
 	var/dug = FALSE
 
-/turf/open/floor/plating/ocean/dark
-	has_starlight = FALSE
+	/// do we build a catwalk or plating with rods
+	var/catwalk = FALSE
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
@@ -123,6 +128,44 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
 
+/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+	if(..())
+		return
+	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
+		if (R.get_amount() < 2)
+			to_chat(user, span_warning("You need two rods to make a [catwalk ? "catwalk" : "plating"]!"))
+			return
+		else
+			to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
+			if(do_after(user, 30, target = src))
+				if (R.get_amount() >= 2 && !catwalk)
+					PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+					R.use(2)
+					to_chat(user, span_notice("You reinforce the [src]."))
+				else if(R.get_amount() >= 2 && catwalk)
+					new /obj/structure/lattice/catwalk(src)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+					R.use(2)
+					to_chat(user, span_notice("You build a catwalk over the [src]."))
+
+	if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
+		to_chat(user, span_notice("You begin constructing a ladder..."))
+		if(do_after(user, 30, target = src))
+			qdel(C)
+			new /obj/structure/trench_ladder(src)
+
+	if(istype(C, /obj/item/mining_charge) && !catwalk)
+		to_chat(user, span_notice("You begin laying down a breaching charge..."))
+		if(do_after(user, 15, target = src))
+			var/obj/item/mining_charge/boom = C
+			user.dropItemToGround(boom)
+			boom.Move(src)
+			boom.set_explosion()
+			to_chat(user, span_warning("You lay down a breaching charge, you better run."))
+
+
 /// Drops itemstack when dug and changes icon
 /turf/open/floor/plating/ocean/proc/getDug()
 	dug = TRUE
@@ -134,29 +177,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 		return TRUE
 	if(user)
 		to_chat(user, span_warning("Looks like someone has dug here already!"))
-
-
-/// Updates starlight. Called when we're unsure of a turf's starlight state
-/// Returns TRUE if we succeed, FALSE otherwise
-/turf/open/floor/plating/ocean/proc/update_starlight()
-	if(!has_starlight)
-		return
-	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		// I've got a lot of cordons near spaceturfs, be good kids
-		if(istype(t, /turf/open/floor/plating/ocean) || istype(t, /turf/cordon))
-			//let's NOT update this that much pls
-			continue
-		enable_starlight()
-		return TRUE
-	set_light(0)
-	return FALSE
-
-/// Turns on the stars, if they aren't already
-/turf/open/floor/plating/ocean/proc/enable_starlight()
-	if(!has_starlight)
-		return
-	if(!light_outer_range)
-		set_light(2)
 
 
 /turf/open/floor/plating/ocean/proc/assume_self()
@@ -225,11 +245,14 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	else if(src in SSliquids.active_ocean_turfs)
 		SSliquids.active_ocean_turfs -= src
 
-/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+/turf/open/attackby(obj/item/C, mob/user, params)
 	. = ..()
 	if(istype(C, /obj/item/dousing_rod))
 		var/obj/item/dousing_rod/attacking_rod = C
 		attacking_rod.deploy(src)
+
+/turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
+	. = ..()
 
 	if(C.tool_behaviour == TOOL_SHOVEL || C.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
@@ -476,6 +499,117 @@ GLOBAL_LIST_INIT(the_lever, list())
 	light_outer_range = 3
 	light_color = LIGHT_COLOR_LAVA
 
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(burn_stuff(arrived))
+		START_PROCESSING(SSobj, src)
+
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(isliving(gone))
+		var/mob/living/leaving_mob = gone
+		if(!islava(leaving_mob.loc))
+			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		if(!leaving_mob.on_fire)
+			leaving_mob.update_fire()
+
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
+
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/process(seconds_per_tick)
+	if(!burn_stuff(null, seconds_per_tick))
+		STOP_PROCESSING(SSobj, src)
+
+///Generic return value of the can_burn_stuff() proc. Does nothing.
+#define LAVA_BE_IGNORING 0
+/// Another. Won't burn the target but will make the turf start processing.
+#define LAVA_BE_PROCESSING 1
+/// Burns the target and makes the turf process (depending on the return value of do_burn()).
+#define LAVA_BE_BURNING 2
+
+///Proc that sets on fire something or everything on the turf that's not immune to lava. Returns TRUE to make the turf start processing.
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/proc/burn_stuff(atom/movable/to_burn, seconds_per_tick = 1)
+	var/thing_to_check = src
+	if (to_burn)
+		thing_to_check = list(to_burn)
+	for(var/atom/movable/burn_target as anything in thing_to_check)
+		switch(can_burn_stuff(burn_target))
+			if(LAVA_BE_IGNORING)
+				continue
+			if(LAVA_BE_BURNING)
+				if(!do_burn(burn_target, seconds_per_tick))
+					continue
+		. = TRUE
+
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/proc/can_burn_stuff(atom/movable/burn_target)
+	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
+		return LAVA_BE_IGNORING
+
+	if(isobj(burn_target))
+		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.
+			return LAVA_BE_IGNORING
+		var/obj/burn_obj = burn_target
+		if((burn_obj.resistance_flags & LAVA_PROOF))
+			return LAVA_BE_PROCESSING
+		return LAVA_BE_BURNING
+
+	if (!isliving(burn_target))
+		return LAVA_BE_IGNORING
+
+	if(HAS_TRAIT(burn_target, TRAIT_LAVA_IMMUNE))
+		return LAVA_BE_PROCESSING
+	var/mob/living/burn_living = burn_target
+	var/atom/movable/burn_buckled = burn_living.buckled
+	if(burn_buckled)
+		if(burn_buckled.movement_type & (FLYING|FLOATING))
+			return LAVA_BE_PROCESSING
+		if(isobj(burn_buckled))
+			var/obj/burn_buckled_obj = burn_buckled
+			if(burn_buckled_obj.resistance_flags & LAVA_PROOF)
+				return LAVA_BE_PROCESSING
+		else if(HAS_TRAIT(burn_buckled, TRAIT_LAVA_IMMUNE))
+			return LAVA_BE_PROCESSING
+
+	if(iscarbon(burn_living))
+		var/mob/living/carbon/burn_carbon = burn_living
+		var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
+			return LAVA_BE_PROCESSING
+
+	return LAVA_BE_BURNING
+
+#undef LAVA_BE_BURNING
+#undef LAVA_BE_PROCESSING
+#undef LAVA_BE_IGNORING
+
+/turf/open/floor/plating/ocean/dark/rock/warm/fissure/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
+	. = TRUE
+	if(isobj(burn_target))
+		var/obj/burn_obj = burn_target
+		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
+			return
+		if(!(burn_obj.resistance_flags & FLAMMABLE))
+			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
+		if(burn_obj.resistance_flags & FIRE_PROOF)
+			burn_obj.resistance_flags &= ~FIRE_PROOF
+		if(burn_obj.get_armor_rating(FIRE) > 50) //obj with 100% fire armor still get slowly burned away.
+			burn_obj.set_armor_rating(FIRE, 50)
+		burn_obj.fire_act(10000, 1000 * seconds_per_tick)
+		if(istype(burn_obj, /obj/structure/closet))
+			var/obj/structure/closet/burn_closet = burn_obj
+			for(var/burn_content in burn_closet.contents)
+				burn_stuff(burn_content)
+		return
+
+	var/mob/living/burn_living = burn_target
+	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	burn_living.update_fire()
+
+	burn_living.adjustFireLoss(20 * seconds_per_tick)
+	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
+		burn_living.adjust_fire_stacks(20 * seconds_per_tick)
+		burn_living.ignite_mob()
 /turf/open/floor/plating/ocean/dark/rock/medium
 	icon_state = "seafloor_med"
 	base_icon_state = "seafloor_med"
@@ -490,10 +624,12 @@ GLOBAL_LIST_INIT(the_lever, list())
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 
 /area/ocean/generated_above
 	map_generator = /datum/map_generator/ocean_generator
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
@@ -501,16 +637,32 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon = 'goon/icons/turf/outdoors.dmi'
 	icon_state = "pit"
 	baseturfs = /turf/open/floor/plating/ocean/pit
+	catwalk = TRUE
 
 /turf/open/floor/plating/ocean/pit/wall
 	icon_state = "pit_wall"
 
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(is_safe())
+		return
+	if(arrived.movement_type & FLYING)
+		return
+	if(isprojectile(arrived))
+		return
 	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+	visible_message("[arrived] falls helplessly into \the [src]")
 	arrived.forceMove(turf)
 
+/turf/open/floor/plating/ocean/proc/is_safe()
+	//if anything matching this typecache is found in the lava, we don't drop things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/lattice/lava))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
+	return LAZYLEN(found_safeties)
 
+/turf/closed/mineral/random/ocean/gets_drilled(mob/user, give_exp)
+	SShotspots.disturb_turf(src)
+	. = ..()
 
 /turf/closed/mineral/random/ocean/above
 	baseturfs = /turf/open/floor/plating/ocean/rock

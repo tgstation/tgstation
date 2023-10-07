@@ -131,8 +131,8 @@
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
-		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
+		overlays += emissive_appearance_copy(eye_left, src, NONE)
+		overlays += emissive_appearance_copy(eye_right, src, NONE)
 
 	if(OFFSET_FACE in parent.dna?.species.offset_features)
 		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
@@ -559,6 +559,13 @@
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	overlay_ignore_lighting = TRUE
+
+
+/obj/item/organ/internal/eyes/lizard
+	name = "lizard eyes"
+	desc = "These eyes seem to glow."
+	overlay_ignore_lighting = TRUE
 
 /obj/item/organ/internal/eyes/snail
 	name = "snail eyes"

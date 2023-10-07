@@ -98,9 +98,10 @@
 		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
 		/mob/living/basic/mining/goldgrub = 10,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/obj/structure/spawner/lavaland/ocean = 2,
+		/obj/structure/spawner/lavaland/ocean/goliath = 3,
+		/obj/structure/spawner/lavaland/ocean/legion = 3,
+		/obj/structure/spawner/lavaland/ocean/fish = 1, // a rare fish challenger approaches!
 	)
 
 	flora_spawn_list = null
@@ -184,8 +185,6 @@
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
-	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
 	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
@@ -193,41 +192,24 @@
 		var/turf/gen_turf = i
 
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
-		if(!closed)
-			continue
 		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
 
-		// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
-		// The old tile hasn't got the chance to init yet
-		new_turf = new new_turf(gen_turf)
+		if(closed)
+			// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
+			// The old tile hasn't got the chance to init yet
+			new_turf = new new_turf(gen_turf)
 
-		if(gen_turf.turf_flags & NO_RUINS)
-			new_turf.turf_flags |= NO_RUINS
+			if(gen_turf.turf_flags & NO_RUINS)
+				new_turf.turf_flags |= NO_RUINS
+
+		if(closed)//Open turfs have some special behavior related to spawning flora and mobs.
+			CHECK_TICK
+			continue
 
 		// If we've spawned something yet
 		var/spawned_something = FALSE
 
 		///Spawning isn't done in procs to save on overhead on the 60k turfs we're going through.
-		//FLORA SPAWNING HERE
-		if(flora_allowed && prob(flora_spawn_chance))
-			var/flora_type = pick(flora_spawn_list)
-			new flora_type(new_turf)
-			spawned_something = TRUE
-
-		//FEATURE SPAWNING HERE
-		if(feature_allowed && prob(feature_spawn_chance))
-			var/can_spawn = TRUE
-
-			var/atom/picked_feature = pick(feature_spawn_list)
-
-			for(var/obj/structure/existing_feature in range(7, new_turf))
-				if(istype(existing_feature, picked_feature))
-					can_spawn = FALSE
-					break
-
-			if(can_spawn)
-				new picked_feature(new_turf)
-				spawned_something = TRUE
 
 		//MOB SPAWNING HERE
 		if(mobs_allowed && !spawned_something && prob(mob_spawn_chance))
@@ -243,19 +225,19 @@
 
 			// prevents tendrils spawning in each other's collapse range
 			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, new_turf))
+				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, gen_turf))
 					can_spawn = FALSE
 					break
 			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
 			else
-				var/list/things_in_range = range(12, new_turf)
+				var/list/things_in_range = range(12, gen_turf)
 				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
-				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, new_turf))
+				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, gen_turf))
 					can_spawn = FALSE
 					break
 
@@ -264,10 +246,9 @@
 					weighted_megafauna_spawn_list.Remove(picked_mob)
 					megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
 					megas_allowed = megas_allowed && length(megafauna_spawn_list)
-				new picked_mob(new_turf)
+				new picked_mob(gen_turf)
 				spawned_something = TRUE
 
 		CHECK_TICK
-
 
 #undef BIOME_RANDOM_SQUARE_DRIFT

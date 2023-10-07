@@ -1,0 +1,451 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/atlantis/column,
+/obj/structure/atlantis/column/lantern,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"b" = (
+/mob/living/basic/aquatic/fish,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"d" = (
+/obj/structure/flora/bush/stalky/style_3,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"g" = (
+/obj/structure/flora/rock/pile/icy/style_2{
+	name = "rocks"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"h" = (
+/obj/structure/flora/rock/icy/style_2{
+	name = "rock"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"i" = (
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"k" = (
+/obj/structure/atlantis/column/broken_1,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"l" = (
+/obj/effect/overlay/water,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"p" = (
+/obj/structure/atlantis/column/broken_2,
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"r" = (
+/obj/structure/atlantis/statue,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"t" = (
+/obj/structure/atlantis/column/lantern,
+/obj/effect/overlay/water,
+/turf/closed/indestructible/iron{
+	name = "ancient stone wall";
+	desc = "A wall with tough stone plating."
+	},
+/area/centcom/tdome/arena/actual)
+"u" = (
+/obj/item/aquarium_prop/seaweed{
+	anchored = 1
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"v" = (
+/obj/structure/flora/rock/pile/icy/style_3{
+	name = "rocks"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"w" = (
+/obj/structure/flora/rock/icy{
+	name = "rock"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"z" = (
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/structure/flora/bush/stalky/style_2,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"B" = (
+/obj/item/aquarium_prop/seaweed_top{
+	anchored = 1
+	},
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"D" = (
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"E" = (
+/obj/structure/flora/bush/stalky,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"G" = (
+/obj/structure/flora/rock/pile/icy{
+	name = "rocks"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"H" = (
+/mob/living/basic/aquatic/fish/gupper,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"K" = (
+/obj/structure/flora/rock/icy/style_3{
+	name = "rock"
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"L" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"N" = (
+/obj/item/aquarium_prop/seaweed_top{
+	anchored = 1
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"P" = (
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"Q" = (
+/obj/structure/atlantis/statue{
+	dir = 1
+	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
+"R" = (
+/obj/structure/flora/bush/reed/style_3,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"T" = (
+/obj/structure/atlantis/column/lantern,
+/obj/structure/atlantis/column/lantern,
+/obj/effect/overlay/water,
+/turf/closed/indestructible/iron{
+	name = "ancient stone wall";
+	desc = "A wall with tough stone plating."
+	},
+/area/centcom/tdome/arena/actual)
+"U" = (
+/obj/structure/flora/bush/reed/style_3,
+/mob/living/basic/aquatic/fish/gupper,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"V" = (
+/mob/living/basic/aquatic/fish/cod,
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"X" = (
+/obj/effect/overlay/water,
+/turf/closed/indestructible/iron{
+	name = "ancient stone wall";
+	desc = "A wall with tough stone plating."
+	},
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+"}
+(2,1,1) = {"
+P
+G
+L
+P
+u
+i
+P
+P
+B
+P
+"}
+(3,1,1) = {"
+P
+P
+N
+P
+P
+P
+A
+P
+P
+P
+"}
+(4,1,1) = {"
+P
+P
+P
+P
+b
+P
+K
+R
+P
+P
+"}
+(5,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+V
+P
+"}
+(6,1,1) = {"
+X
+t
+i
+P
+P
+i
+P
+u
+i
+h
+"}
+(7,1,1) = {"
+z
+X
+r
+z
+z
+k
+z
+z
+a
+z
+"}
+(8,1,1) = {"
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+"}
+(9,1,1) = {"
+z
+z
+D
+z
+z
+l
+z
+z
+D
+z
+"}
+(10,1,1) = {"
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+"}
+(11,1,1) = {"
+z
+X
+Q
+z
+z
+p
+z
+z
+a
+z
+"}
+(12,1,1) = {"
+X
+T
+i
+E
+P
+i
+P
+P
+i
+g
+"}
+(13,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+d
+V
+P
+"}
+(14,1,1) = {"
+P
+P
+u
+P
+U
+P
+w
+P
+P
+P
+"}
+(15,1,1) = {"
+P
+H
+P
+P
+P
+P
+P
+P
+P
+P
+"}
+(16,1,1) = {"
+P
+v
+i
+P
+P
+B
+P
+P
+i
+P
+"}
+(17,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+"}

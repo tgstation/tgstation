@@ -74,6 +74,9 @@ Sunlight System
 
 /atom/movable/outdoor_effect/proc/process_state()
 	if(source_turf != loc)
+		var/turf/turf = get_turf(src)
+		if(turf.turf_flags & TURF_WEATHER)
+			turf.turf_flags &= ~TURF_WEATHER
 		Move(source_turf)
 	switch(state)
 		if(SKY_BLOCKED)
@@ -190,7 +193,6 @@ Sunlight System
 /* pass recursion_started=TRUE when we are checking our ceiling's stats */
 /turf/proc/get_ceiling_status(recursion_started = FALSE)
 	. = list()
-
 	//Check yourself (before you wreck yourself)
 	if(isclosedturf(src)) //Closed, but we might be transparent
 		.["SKYVISIBLE"]   =  istransparentturf(src) // a column of glass should still let the sun in
@@ -225,7 +227,8 @@ Sunlight System
 			.["WEATHERPROOF"] |= ceilingStat["WEATHERPROOF"]
 
 	var/area/turf_area = get_area(src)
-	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || (!SSmapping.level_trait(src.z, ZTRAIT_DAYCYCLE) && !SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT)))
+	var/turf/above_turf = GET_TURF_ABOVE(src)
+	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above_turf && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || (!SSmapping.level_trait(src.z, ZTRAIT_DAYCYCLE) && !SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT)))
 		.["SKYVISIBLE"]   =  FALSE
 		.["WEATHERPROOF"] =  TRUE
 
@@ -331,7 +334,7 @@ Sunlight System
 
 	GLOB.SUNLIGHT_QUEUE_WORK += SunlightUpdates
 
-	var/turf/T = SSmapping.get_turf_below(src)
+	var/turf/T = GET_TURF_BELOW(src)
 	if(T)
 		T.reconsider_sunlight()
 

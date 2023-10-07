@@ -17,13 +17,6 @@
 #define MP_DEBUG(x)
 #endif
 
-// Set up player on login.
-/client/New()
-	. = ..()
-	media = new /datum/media_manager(src)
-	media.open()
-	media.update_music()
-
 // Stop media when the round ends. I guess so it doesn't play forever or something (for some reason?)
 /proc/stop_all_media()
 	// Stop all music.
@@ -146,6 +139,9 @@
 	owner << output(list2params(list(url, (world.time - start_time) / 10, volume * source_volume, balance)), "[WINDOW_ID]:SetMusic")
 
 /datum/media_manager/proc/push_music(var/targetURL, var/targetStartTime, var/targetVolume, var/targetBalance)
+	if(targetVolume != source_volume)
+		push_volume_recalc(targetVolume)
+
 	if (url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime
@@ -192,7 +188,7 @@
 	if (client?.media && !client.media.forced)
 		client.media.recalc_volume()
 
-/datum/media_manager/proc/recalc_volume()
+/datum/media_manager/proc/recalc_volume(datum/source, direction, turf/new_loc)
 	if(!(owner.prefs))
 		return
 
@@ -213,8 +209,8 @@
 
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
-		var/dist = get_dist(owner.mob, M)
-		var/x_dist = -(owner.mob.x - M.x) * 10
+		var/dist = get_dist(new_loc, M)
+		var/x_dist = -(new_loc.x - M.x) * 10
 
 		targetVolume = max(0, M.volume - (dist * 0.1))
 		targetBalance = x_dist

@@ -64,3 +64,76 @@
   - bugfix: Makes prosperity prisms no longer spam runtimes on reagentless mobs.
   - bugfix: Vitality sigils will no longer put borg or clock cult banned players into
       soul vessels.
+2023-09-17:
+  MomoBerri:
+  - bugfix: Signs should be overall nicer!
+  NanoCats:
+  - balance: NTSS Independence balance pass
+  lmenvs:
+  - bugfix: bees are butcherable again
+  - rscadd: friendly maintenance bees are available to summon from the pet beacon
+2023-09-19:
+  KittyNoodle:
+  - rscadd: The Lawbringer now has a lock, however, be careful using it, as it tends
+      to make it upset.
+  - bugfix: Bigshot no longer vents the station while blowing up doors/machines.
+  - balance: Detain now does double the previous damage, as originally intended.
+  - sound: The Lawbringer will now talk/yell at you.
+  - spellcheck: fixed projectile name for clownshot.
+  - code_imp: Lots of code improvements for Lawbringer, redundant code is mostly gone.
+  MilkForever:
+  - rscadd: Engineering hardsuits are obtainable once again.
+  - image: Hardsuit sprites have been reverted to their classic appearance.
+  Salted-Zen:
+  - rscadd: FOUR new crusher weapons to the mining vendor! Get them today for 1250
+      points!
+2023-09-20:
+  MomoBerri:
+  - rscdel: excess vault and upload signs on tram
+  lmenvs:
+  - rscadd: Gold Navy outfit and Shark Costume donator clothing.
+  - rscadd: Big Antler anime implant
+  - bugfix: donator items are now properly flagged for donator purchase only.  If
+      you have purchased one and are not a donator, please request a refund of your
+      monkecoin.
+2023-09-21:
+  Kat:
+  - rscadd: Added some more lights in dark areas
+  - rscdel: Random disposal pipes inside of objects, walls, and under floors that
+      werent connected to anything
+  - qol: Robotics has gotten a fresh coat of paint
+  - bugfix: one specific disposal unit in dorms being not connected
+2023-09-23:
+  Gboster-0:
+  - qol: DJ station now uses left clicking for playing songs
+  KoboldCommando:
+  - bugfix: Spliced seed packs should be named slightly more coherently and have a
+      max length
+2023-09-27:
+  Gboster-0:
+  - rscadd: A new exotic tendril can now spawn on oshan
+  - rscadd: Oshan tendrils now cause fissures to appear instead of chasms (where's
+      the tweak label for changelogs anyway?)
+  NanoCats:
+  - qol: Sec fixes
+  - qol: Innumerable OSHAN fixes
+2023-09-28:
+  KoboldCommando:
+  - rscadd: New visuals for the composter
+  - rscadd: The composter can now compost food and people
+  Tractor Mann:
+  - rscadd: Added jukebox beacons! you can find these in the bartenders closet.
+  githubuser4141:
+  - sound: Changes open/close SFX for shutters and poddoors.
+  wraith-54321:
+  - rscadd: Replaced lesser summon apes with Summon Simians
+  - rscadd: CHEESE WIZARD
+  - rscadd: Hauntium reagent
+2023-09-29:
+  NanoCats:
+  - rscadd: 1 cable
+2023-09-30:
+  Gboster-0:
+  - bugfix: DJ station properly shows its cooldown time
+  KoboldCommando:
+  - bugfix: fixed a couple small annoyances with the Biogenerator UI

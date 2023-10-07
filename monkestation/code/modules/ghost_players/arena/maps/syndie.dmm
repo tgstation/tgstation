@@ -1,0 +1,603 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/toy/plush/ratplush,
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"bd" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"bs" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"cj" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"cT" = (
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"ds" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/centcom/tdome/arena/actual)
+"ez" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/west{
+	id = "syn_arena"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"eP" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"fs" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"fE" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/obj/item/toy/plush/abductor,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"fP" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"gu" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"hA" = (
+/obj/structure/cable,
+/obj/structure/cable/layer3,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/centcom/tdome/arena/actual)
+"hL" = (
+/turf/open/floor/plating/elevatorshaft,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"jA" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"lz" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"mv" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "syn_arena"
+	},
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"mI" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 5;
+	faction = list("neutral")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/tdome/arena/actual)
+"nt" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/dark/arrow_ccw,
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"of" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"qb" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"rl" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/centcom/tdome/arena/actual)
+"rW" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/tdome/arena/actual)
+"wZ" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/centcom/tdome/arena/actual)
+"yt" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 10;
+	faction = list("neutral")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/tdome/arena/actual)
+"yW" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"zW" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Aa" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"BT" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/obj/effect/turf_decal/trimline/dark_red/filled/mid_joiner{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"BY" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"Cb" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Cs" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 9;
+	faction = list("neutral")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/tdome/arena/actual)
+"EP" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/toy/plush/nukeplushie,
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Fc" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/toy/plush/rouny{
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Hl" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"HN" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_cw,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"JE" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Kf" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"KT" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/obj/effect/turf_decal/trimline/dark_red/filled/mid_joiner,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Lu" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw,
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"Lw" = (
+/obj/effect/turf_decal/trimline/dark/arrow_ccw,
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"LN" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Mj" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "syn_arena"
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"MZ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Na" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 6;
+	faction = list("neutral")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/tdome/arena/actual)
+"Pg" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"PC" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"PS" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/dark/arrow_ccw{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"QQ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/toy/plush/carpplushie,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"TW" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"TX" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw,
+/obj/machinery/button/door/directional/east{
+	id = "syn_arena"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"UD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/dark/arrow_cw,
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"VD" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"VF" = (
+/turf/closed/indestructible/opsglass,
+/area/centcom/tdome/arena/actual)
+"Wh" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/toy/plush/narplush,
+/obj/effect/turf_decal/trimline/dark_red/filled,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Yq" = (
+/obj/effect/turf_decal/trimline/dark/arrow_ccw{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"YF" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw,
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"YL" = (
+/obj/structure/cable,
+/obj/structure/cable/layer3,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/tdome/arena/actual)
+"YW" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"Zu" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+rl
+hA
+YL
+YL
+YL
+YL
+YL
+YL
+hA
+rl
+"}
+(2,1,1) = {"
+wZ
+Na
+gu
+YF
+BY
+nt
+jA
+PC
+mI
+hA
+"}
+(3,1,1) = {"
+rW
+cj
+lz
+YW
+bs
+Lw
+MZ
+JE
+TW
+YL
+"}
+(4,1,1) = {"
+rW
+Pg
+cT
+YW
+bs
+Lw
+MZ
+cT
+of
+YL
+"}
+(5,1,1) = {"
+rW
+Pg
+cT
+YW
+bs
+Lw
+MZ
+cT
+of
+YL
+"}
+(6,1,1) = {"
+rW
+Pg
+BT
+TX
+bs
+Lw
+MZ
+KT
+of
+YL
+"}
+(7,1,1) = {"
+rW
+Zu
+cT
+rl
+mv
+mv
+rl
+cT
+fP
+YL
+"}
+(8,1,1) = {"
+wZ
+zW
+ae
+VF
+hL
+hL
+VF
+Fc
+zW
+hA
+"}
+(9,1,1) = {"
+wZ
+eP
+fE
+VF
+hL
+ds
+VF
+QQ
+eP
+hA
+"}
+(10,1,1) = {"
+wZ
+VD
+EP
+VF
+hL
+hL
+VF
+Wh
+VD
+hA
+"}
+(11,1,1) = {"
+rW
+Kf
+cT
+rl
+Mj
+Mj
+rl
+cT
+fs
+YL
+"}
+(12,1,1) = {"
+rW
+Pg
+BT
+HN
+Yq
+Lu
+ez
+KT
+of
+YL
+"}
+(13,1,1) = {"
+rW
+Pg
+cT
+HN
+Yq
+Lu
+ih
+cT
+of
+YL
+"}
+(14,1,1) = {"
+rW
+Pg
+cT
+HN
+Yq
+Lu
+ih
+cT
+of
+YL
+"}
+(15,1,1) = {"
+rW
+yW
+Hl
+HN
+Yq
+Lu
+ih
+qb
+Cb
+YL
+"}
+(16,1,1) = {"
+wZ
+yt
+LN
+HN
+PS
+UD
+Aa
+bd
+Cs
+hA
+"}
+(17,1,1) = {"
+rl
+wZ
+rW
+rW
+rW
+rW
+rW
+rW
+wZ
+rl
+"}

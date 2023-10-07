@@ -93,10 +93,12 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_templates = list()
 	var/list/random_bar_templates = list()
 	var/list/random_engine_templates = list()
+	var/list/random_arena_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
 	var/list/random_bar_spawners = list()
+	var/list/random_arena_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -191,7 +193,7 @@ SUBSYSTEM_DEF(mapping)
 			unused_turfs["[T.z]"] |= T
 			var/area/old_area = T.loc
 			old_area.turfs_to_uncontain += T
-			T.flags_1 |= UNUSED_RESERVATION_TURF
+			T.turf_flags = UNUSED_RESERVATION_TURF
 			world_contents += T
 			world_turf_contents += T
 			packet.len--
@@ -215,13 +217,13 @@ SUBSYSTEM_DEF(mapping)
 	if(multiz_levels.len < z_level)
 		multiz_levels.len = z_level
 
-	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
-	var/linked_up = level_trait(z_level, ZTRAIT_UP)
-	multiz_levels[z_level] = list()
-	if(linked_down)
-		multiz_levels[z_level]["[DOWN]"] = TRUE
-	if(linked_up)
-		multiz_levels[z_level]["[UP]"] = TRUE
+	var/z_above = level_trait(z_level, ZTRAIT_UP)
+	var/z_below = level_trait(z_level, ZTRAIT_DOWN)
+	if(!(z_above == TRUE || z_above == FALSE || z_above == null) || !(z_below == TRUE || z_below == FALSE || z_below == null))
+		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
+	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
+	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
 	if(!isnum(z_level_number) || z_level_number < 1)
@@ -307,6 +309,10 @@ SUBSYSTEM_DEF(mapping)
 		returning += M
 		qdel(T, TRUE)
 
+/datum/controller/subsystem/mapping/proc/get_reservation_from_turf(turf/T)
+	RETURN_TYPE(/datum/turf_reservation)
+	return used_turfs[T]
+
 /* Nuke threats, for making the blue tiles on the station go RED
 Used by the AI doomsday and the self-destruct nuke.
 */
@@ -355,6 +361,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	random_engine_templates = SSmapping.random_engine_templates
 	random_bar_templates = SSmapping.random_bar_templates
+	random_arena_templates = SSmapping.random_arena_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -478,6 +485,26 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(bar_spawner)
 	random_bar_spawners = null
 	INIT_ANNOUNCE("Loaded Random Bars in [(REALTIMEOFDAY - start_time)/10]s!")
+
+/datum/controller/subsystem/mapping/proc/load_random_arena()
+	var/start_time = REALTIMEOFDAY
+	for(var/obj/effect/spawner/random_arena_spawner/arena_spawner as() in random_arena_spawners)
+		var/list/possible_arena_templates = list()
+		var/datum/map_template/random_room/random_arena/arena_candidate
+		shuffle_inplace(random_arena_templates)
+		for(var/ID in random_arena_templates)
+			arena_candidate = random_arena_templates[ID]
+			if(arena_candidate.weight == 0)
+				arena_candidate = null
+				continue
+			possible_arena_templates[arena_candidate] = arena_candidate.weight
+		if(possible_arena_templates.len)
+			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arena_templates)
+			template.stationinitload(get_turf(arena_spawner), centered = template.centerspawner)
+		SSmapping.random_arena_spawners -= arena_spawner
+		qdel(arena_spawner)
+	random_arena_spawners = null
+	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time)/10]s!")
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -497,6 +524,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	load_random_engines()
 	load_random_bars()
+	load_random_arena()
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -681,6 +709,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		random_bar_templates[E.room_id] = E
 		map_templates[E.room_id] = E
 
+	for(var/item in subtypesof(/datum/map_template/random_room/random_arena))
+		var/datum/map_template/random_room/random_arena/room_type = item
+		if(!(initial(room_type.mappath)))
+			message_admins("Arena Template [initial(room_type.name)] found without mappath. Yell at coders")
+			continue
+		var/datum/map_template/random_room/random_arena/E = new room_type()
+		random_arena_templates[E.room_id] = E
+		map_templates[E.room_id] = E
+
+
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("spaceruinblacklist.txt")
@@ -790,26 +828,34 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	num_of_res_levels++
 	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
-	var/datum/turf_reservation/reserve = new type
-	if(turf_type_override)
+/// Requests a /datum/turf_reservation based on the given width, height, and z_size. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
+/datum/controller/subsystem/mapping/proc/request_turf_block_reservation(
+	width,
+	height,
+	z_size = 1,
+	z_reservation = null,
+	reservation_type = /datum/turf_reservation,
+	turf_type_override = null,
+)
+	UNTIL((!z_reservation || reservation_ready["[z_reservation]"]) && !clearing_reserved_turfs)
+	var/datum/turf_reservation/reserve = new reservation_type
+	if(!isnull(turf_type_override))
 		reserve.turf_type = turf_type_override
-	if(!z)
+	if(!z_reservation)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
-			if(reserve.Reserve(width, height, i))
+			if(reserve.reserve(width, height, z_size, i))
 				return reserve
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
 		var/datum/space_level/newReserved = add_reservation_zlevel()
 		initialize_reserved_level(newReserved.z_value)
-		if(reserve.Reserve(width, height, newReserved.z_value))
+		if(reserve.reserve(width, height, z_size, newReserved.z_value))
 			return reserve
 	else
-		if(!level_trait(z, ZTRAIT_RESERVED))
+		if(!level_trait(z_reservation, ZTRAIT_RESERVED))
 			qdel(reserve)
 			return
 		else
-			if(reserve.Reserve(width, height, z))
+			if(reserve.reserve(width, height, z_size, z_reservation))
 				return reserve
 	QDEL_NULL(reserve)
 
@@ -827,7 +873,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/block = block(A, B)
 	for(var/turf/T as anything in block)
 		// No need to empty() these, because they just got created and are already /turf/open/space/basic.
-		T.flags_1 |= UNUSED_RESERVATION_TURF
+		T.turf_flags = UNUSED_RESERVATION_TURF
 		CHECK_TICK
 
 	// Gotta create these suckers if we've not done so already
@@ -924,24 +970,24 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
-	// Yes this will cause infinite loops if our templating is fucked. Fuck off
-	var/below_offset = 0
-	// I'm sorry, it needs to start at 0
-	var/current_level = -1
-	var/current_z = update_with.z_value
+	var/plane_offset = 0
+	var/datum/space_level/current_z = update_with
 	var/list/datum/space_level/levels_checked = list()
-	do
-		current_level += 1
-		current_z += below_offset
-		z_level_to_plane_offset[current_z] = current_level
-		var/datum/space_level/next_level = z_list[current_z]
-		below_offset = next_level.traits[ZTRAIT_DOWN]
-		levels_checked += next_level
-	while(below_offset)
+	var/list/z_stack = list()
+	while(TRUE)
+		var/z_level = current_z.z_value
+		z_stack += z_level
+		z_level_to_plane_offset[z_level] = plane_offset
+		levels_checked += current_z
+		if(!current_z.traits[ZTRAIT_DOWN]) // If there's nothing below, stop looking
+			break
+		// Otherwise, down down down we go
+		current_z = z_list[z_level - 1]
+		plane_offset += 1
 
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
-		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
+		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN
@@ -949,7 +995,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		generate_lighting_appearance_by_z(i)
 
 	var/old_max = max_plane_offset
-	max_plane_offset = max(max_plane_offset, current_level)
+	max_plane_offset = max(max_plane_offset, plane_offset)
 	if(max_plane_offset == old_max)
 		return
 
