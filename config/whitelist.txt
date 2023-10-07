@@ -1,7 +1,0 @@
-###############################################################################################
-# Basically, a list of ckeys who make it past user connection                                 #
-# Case is not important for ckey.                                                             #
-###############################################################################################
-#brotebis
-#graybear98
-#That one penguin who became an admin

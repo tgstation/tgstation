@@ -1,7 +1,0 @@
-<!-- Most valid html will work in here, but you have to use URL links for images. -->
-
-<h1>Добро пожаловать на RedSpace!</h1>
-
-<i>Прочитать правила можете в нашем <a href="https://discord.gg/fZ6zFyFYeQ">дискорд канале</a></i>
-
-
