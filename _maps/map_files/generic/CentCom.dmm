@@ -260,21 +260,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "bk" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Central Command Brig";
-	max_integrity = 1800;
-	normal_integrity = 1800
-	},
-/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
-/obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/turf/open/floor/iron,
+/turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/prison)
 "bm" = (
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -282,6 +271,20 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"bn" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Brig";
+	max_integrity = 1800;
+	normal_integrity = 1800
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "bu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -433,7 +436,7 @@
 /area/centcom/central_command_areas/briefing)
 "bY" = (
 /turf/open/floor/iron,
-/area/space)
+/area/centcom/central_command_areas/prison)
 "ca" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -1072,6 +1075,15 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"eJ" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "eK" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -2658,6 +2670,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"ke" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Brig";
+	max_integrity = 1800;
+	normal_integrity = 1800
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/prison)
 "kg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/closet/crate/secure/freezer/pizza,
@@ -3653,14 +3677,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
-"nM" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "XCC Security Checkpoint Shutters";
-	id = "XCCsecdepartment"
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/prison)
 "nR" = (
 /obj/structure/closet/wardrobe/miner,
 /turf/open/floor/iron/white,
@@ -5404,14 +5420,6 @@
 "uh" = (
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/admin)
-"uj" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/structure/flora/bush/generic/style_random,
-/turf/open/floor/grass,
-/area/centcom/central_command_areas/prison)
 "um" = (
 /obj/machinery/computer/communications{
 	dir = 1
@@ -8481,28 +8489,18 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
-"GC" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Central Command Brig";
-	max_integrity = 1800;
-	normal_integrity = 1800
-	},
-/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
-/obj/effect/mapping_helpers/airlock/access/any/admin/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/prison)
 "GE" = (
 /turf/open/floor/iron/tgmcemblem/center{
 	dir = 8
 	},
+/area/centcom/central_command_areas/prison)
+"GF" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "XCC Security Checkpoint Shutters";
+	id = "XCCsecdepartment"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
 "GH" = (
 /obj/machinery/light/directional/east,
@@ -10044,6 +10042,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"NM" = (
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/prison)
 "NN" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -10700,7 +10701,7 @@
 /area/centcom/central_command_areas/admin)
 "Qc" = (
 /turf/closed/indestructible/fakeglass,
-/area/space)
+/area/centcom/central_command_areas/prison)
 "Qd" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -11056,9 +11057,6 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 32
-	},
 /turf/open/floor/iron/kitchen/diagonal,
 /area/centcom/central_command_areas/fore)
 "Rp" = (
@@ -11140,9 +11138,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"RD" = (
-/turf/closed/indestructible/riveted,
-/area/space)
 "RF" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar/red,
@@ -11788,10 +11783,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin/storage)
-"Uc" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/turf/open/floor/plating,
-/area/centcom/central_command_areas/prison)
 "Ud" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -57135,7 +57126,7 @@ Mn
 rC
 uR
 Qh
-rC
+eJ
 Vx
 Vx
 Vx
@@ -57637,33 +57628,33 @@ aa
 aa
 aa
 aa
-RD
-RD
-RD
-RD
-RD
-RD
-RD
+il
+il
+il
+il
+il
+il
+il
 Qc
 Qc
 Qc
 Qc
 Qc
 Qc
-RD
-RD
-RD
-RD
-RD
-RD
-RD
-RD
-RD
-RD
-io
-io
-io
-io
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
 io
 UN
 tL
@@ -57897,27 +57888,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-io
+il
+bY
+bY
+bY
+NM
+NM
+NM
+NM
+NM
+NM
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
 bY
 bY
 bY
@@ -58154,30 +58145,30 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-io
-RD
-RD
-RD
+il
+bY
+il
+il
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
 io
 tO
 tN
@@ -58411,9 +58402,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -58668,9 +58659,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -58925,9 +58916,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -59182,9 +59173,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -59439,9 +59430,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -59696,9 +59687,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -59935,13 +59926,14 @@ Jb
 Jb
 Jb
 Jb
-Mz
 il
-Uc
+il
+il
 bk
-Uc
+il
 bk
-Uc
+il
+il
 aa
 aa
 aa
@@ -59952,10 +59944,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -60192,13 +60183,14 @@ Dj
 rs
 ze
 Jb
-uj
+bY
+bY
+bY
+bY
+bY
+bY
+bY
 il
-nM
-nM
-nM
-nM
-nM
 aa
 aa
 aa
@@ -60209,10 +60201,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -60451,11 +60442,12 @@ iB
 Jb
 iH
 il
-Uc
-GC
-Uc
-GC
-Uc
+bY
+bY
+bY
+bY
+bY
+il
 aa
 aa
 aa
@@ -60466,10 +60458,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -60713,6 +60704,7 @@ iT
 iT
 iT
 ls
+il
 aa
 aa
 aa
@@ -60723,10 +60715,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+il
+bY
+il
 aa
 aa
 aa
@@ -60970,6 +60961,20 @@ iU
 iU
 jx
 jG
+il
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+il
+bY
+il
 aa
 aa
 aa
@@ -60987,21 +60992,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-RD
+cg
 cg
 cg
 cg
@@ -61227,6 +61218,20 @@ nz
 nz
 jw
 pm
+il
+il
+il
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+il
+bY
+il
 aa
 aa
 aa
@@ -61244,21 +61249,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-RD
+cg
 cg
 PL
 fm
@@ -61484,6 +61475,20 @@ nY
 nz
 jw
 jG
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+bY
+il
 aa
 aa
 aa
@@ -61501,21 +61506,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-RD
+cg
 cg
 cg
 cg
@@ -61741,6 +61732,20 @@ nZ
 il
 jE
 jG
+ke
+GF
+bn
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+bY
+il
 aa
 aa
 aa
@@ -61758,21 +61763,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-RD
+cg
 Cd
 qz
 cg
@@ -61998,6 +61989,20 @@ oa
 nz
 jw
 jG
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
 aa
 aa
 aa
@@ -62015,21 +62020,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-RD
+cg
 qz
 qy
 cg
@@ -62255,6 +62246,9 @@ nz
 nz
 jw
 pm
+il
+il
+il
 aa
 aa
 aa
@@ -62283,10 +62277,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-RD
+cg
 qA
 Cd
 fm
@@ -62512,6 +62503,7 @@ iT
 iT
 jH
 jG
+il
 aa
 aa
 aa
@@ -62542,8 +62534,7 @@ aa
 aa
 aa
 aa
-aa
-RD
+cg
 qy
 qz
 cg
@@ -62769,6 +62760,7 @@ iU
 iU
 iU
 lt
+il
 aa
 aa
 aa
@@ -62799,8 +62791,7 @@ aa
 aa
 aa
 aa
-aa
-RD
+cg
 qy
 qz
 cg
@@ -63026,6 +63017,7 @@ ja
 yR
 ja
 yR
+Hv
 aa
 aa
 aa
@@ -63056,8 +63048,7 @@ aa
 aa
 aa
 aa
-aa
-RD
+cg
 cg
 fm
 cg
@@ -63314,7 +63305,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qB
 qW
 rT
@@ -63571,7 +63562,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qC
 qX
 rU
@@ -63828,7 +63819,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qD
 qY
 rV
@@ -64085,7 +64076,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 cg
 fm
 cg
@@ -64342,7 +64333,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qz
 qy
 cg
@@ -64599,7 +64590,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qy
 YI
 cg
@@ -64856,7 +64847,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 qA
 qy
 fm
@@ -65113,7 +65104,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 hq
 xb
 cg
@@ -65370,7 +65361,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 Yo
 Yo
 Yo
@@ -65627,7 +65618,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 cg
 cg
 cg
@@ -65884,7 +65875,7 @@ aa
 aa
 aa
 aa
-RD
+cg
 cg
 cg
 cg
