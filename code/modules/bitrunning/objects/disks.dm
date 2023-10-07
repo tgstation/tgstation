@@ -28,11 +28,11 @@
 
 	examine_text += span_infoplain("This disk must be carried on your person into a netpod to be used.")
 
-	if(isnull(choice_made))
-		examine_text += span_notice("To make a selection, toggle the disk in hand.")
+	if(monkeystation_override) // monkeystation change, override for disks with single powers/items
 		return
 
-	if(monkeystation_override) // monkeystation change, override for disks with single powers/items
+	if(isnull(choice_made))
+		examine_text += span_notice("To make a selection, toggle the disk in hand.")
 		return
 
 	examine_text += span_info("It has been used to select: <b>[choice_made]</b>.")
