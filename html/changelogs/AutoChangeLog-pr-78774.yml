@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "AI, cyborg, and PAI camera (photo taking) behavior now uses balloon alerts and has sound effects associated"
-  - refactor: "Refactored AI, cyborg, and PAI camera (photo taking) code"
-  - bugfix: "fixed being unable to print photos as a cyborg when below 50% toner, even though photos only take 5%"

@@ -1,4 +1,0 @@
-author: "Kapu1178"
-delete-after: True
-changes:
-  - bugfix: "Blood once again appears as small drops instead of splatters during minor bleeding."
