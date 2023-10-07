@@ -72,6 +72,17 @@
 /// Send when staminaloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
 
+/// List of signals sent when you receive any damage except stamina
+#define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
+	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
+	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
+	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
+)
+/// List of signals sent when you receive any kind of damage at all
+#define COMSIG_LIVING_ADJUST_ALL_DAMAGE_TYPES (COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES + COMSIG_LIVING_ADJUST_STAMINA_DAMAGE)
+
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"

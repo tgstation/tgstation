@@ -49,13 +49,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 		update_mob_appearance()
 	if (pass_damage_back)
-		RegisterSignals(parent, list(
-			COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
-			COMSIG_LIVING_ADJUST_BURN_DAMAGE,
-			COMSIG_LIVING_ADJUST_CLONE_DAMAGE,
-			COMSIG_LIVING_ADJUST_OXY_DAMAGE,
-			COMSIG_LIVING_ADJUST_TOX_DAMAGE,
-		), PROC_REF(on_adjust_damage))
+		RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_adjust_damage))
 		RegisterSignal(parent, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_adjust_stamina))
 		RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 
