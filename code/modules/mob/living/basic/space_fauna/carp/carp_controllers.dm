@@ -59,7 +59,6 @@
  */
 /datum/ai_controller/basic_controller/carp/ranged
 	planning_subtrees = list(
-		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
