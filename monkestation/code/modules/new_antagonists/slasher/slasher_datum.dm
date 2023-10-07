@@ -54,6 +54,10 @@
 			continue
 		human.playsound_local(get_turf(human), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 
+	for(var/obj/machinery/light/listed_light in view(3, source))
+		if(prob(10))
+			listed_light.break_light_tube()
+
 	var/turf/TT = get_turf(source)
 	var/turf/T = pick(RANGE_TURFS(4,TT))
 

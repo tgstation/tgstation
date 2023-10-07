@@ -31,6 +31,7 @@
 			var/mob/living/owner_mob = owner
 			owner_mob.movement_type |= PHASING
 			animate(owner_mob, alpha = 0, time = 1.5 SECONDS)
+			ADD_TRAIT(src, TRAIT_PACIFISM, "slasher")
 	else
 		name = "Incorporealize"
 		desc = " Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being. "
@@ -39,6 +40,7 @@
 			var/mob/living/owner_mob = owner
 			owner_mob.movement_type &= ~PHASING
 			animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
+			REMOVE_TRAIT(src, TRAIT_PACIFISM, "slasher")
 
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -49,6 +51,7 @@
 	flipped = FALSE
 	if(isliving(owner))
 		var/mob/living/owner_mob = owner
-		owner_mob.incorporeal_move = 0
+		owner_mob.movement_type &= ~PHASING
 		animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, "slasher")
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
