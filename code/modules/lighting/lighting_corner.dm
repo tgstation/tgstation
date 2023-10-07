@@ -112,8 +112,10 @@
 	add_r = clamp((lum_r - 1.3) * 0.45, 0, 0.3)
 	add_g = clamp((lum_g - 1.3) * 0.45, 0, 0.3)
 	add_b = clamp((lum_b - 1.3) * 0.45, 0, 0.3)
-
-	applying_additive = add_r || add_b || add_g
+	// Cull additive overlays that would be below 0.09 alpha in any color.
+	applying_additive = max(add_r, add_g, add_b) > 0.09
+	// Cull additive overlays whose color alpha sum is lower than 0.09
+	//applying_additive = (add_r + add_g + add_b) > 0.09
 
 	if (!needs_update)
 		needs_update = TRUE

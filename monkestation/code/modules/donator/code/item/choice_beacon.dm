@@ -27,7 +27,7 @@
 	default_name = "Spy Crab"
 	company_source = "Mann Co."
 	company_message = "Prepare for infiltrator deployment."
-	donator_pet = 	/mob/living/simple_animal/crab/spycrab
+	donator_pet = 	/mob/living/basic/crab/spycrab
 
 /obj/item/choice_beacon/pet/donator/void_mothroach
 	name = "Secret Beacon of the Stars"

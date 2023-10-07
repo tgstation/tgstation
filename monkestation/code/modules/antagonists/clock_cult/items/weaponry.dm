@@ -22,14 +22,14 @@
 	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
 
-/obj/item/clockwork/weapon/attack(mob/living/target, mob/living/user)
+/obj/item/clockwork/weapon/afterattack(mob/living/target, mob/living/user)
 	. = ..()
 	var/turf/gotten_turf = get_turf(user)
 
 	if(!is_type_in_typecache(gotten_turf, effect_turf_typecache))
 		return
 
-	if(!QDELETED(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if((!QDELETED(target) && (!ismob(target) || (ismob(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY)))))
 		hit_effect(target, user)
 
 
@@ -102,7 +102,7 @@
 	overlay_icon_state = ""
 	active_background_icon_state = "bg_clock_active"
 	invocation_type = INVOCATION_NONE
-	cooldown_time = 10 SECONDS
+	cooldown_time = 15 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	///ref to the spear we summon
 	var/obj/item/clockwork/weapon/brass_spear/recalled_spear
@@ -166,7 +166,7 @@
 
 
 /obj/item/clockwork/weapon/brass_battlehammer/hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
-	if(!thrown && !HAS_TRAIT(src, TRAIT_WIELDED))
+	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
 		return
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))

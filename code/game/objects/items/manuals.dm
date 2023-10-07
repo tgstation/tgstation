@@ -241,10 +241,13 @@
 	window_size = "970x710"
 
 /obj/item/book/manual/wiki/attack_self()
-	if(!book_data.content)
-		initialize_wikibook()
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(!wikiurl)
+		return
+	usr.client << link("[wikiurl]/[page_link]")
 	return ..()
 
+/*
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
@@ -267,13 +270,14 @@
 			}
 			</script>
 			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
 			</body>
 
 			</html>
 
 			"}
 		book_data.set_content(wikiinfo, trusted = TRUE)
+*/
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"
@@ -302,7 +306,7 @@
 	icon_state = "bookSpaceLaw"
 	starting_author = "Nanotrasen"
 	starting_title = "Space Law"
-	page_link = "Space_Law"
+	page_link = "space-laws"
 
 /obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] pretends to read \the [src] intently... then promptly dies of laughter!"))

@@ -4,6 +4,7 @@
 	required_rooster = /mob/living/basic/chicken/onagadori
 
 	can_come_from_string = "Spicy Chicken"
+
 /datum/mutation/ranching/chicken/dreamsicle
 	chicken_type = /mob/living/basic/chicken/dreamsicle
 	egg_type = /obj/item/food/egg/dreamsicle

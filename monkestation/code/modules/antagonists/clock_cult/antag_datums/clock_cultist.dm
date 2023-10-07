@@ -187,7 +187,7 @@
 
 	else if(iscyborg(converted_silicon))
 		var/mob/living/silicon/robot/converted_borg = converted_silicon
-		converted_borg.set_connected_ai(null)
+		converted_borg.UnlinkSelf()
 		converted_borg.set_clockwork(TRUE)
 
 	if(converted_silicon.laws && istype(converted_silicon.laws, /datum/ai_laws/ratvar))

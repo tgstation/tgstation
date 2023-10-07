@@ -79,7 +79,7 @@
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
-		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct, new_loc)
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
@@ -156,7 +156,7 @@
 		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
 		// as a result of player input and not because they were pulled or any other magic.
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED, direct, old_dir)
-		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct, new_loc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
@@ -521,7 +521,7 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
@@ -548,7 +548,7 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = SSmapping.get_turf_below(current_turf)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -564,6 +564,14 @@
 
 /mob/abstract_move(atom/destination)
 	var/turf/new_turf = get_turf(destination)
+
+	var/atom/oldloc = loc
+	var/area/oldarea = get_area(oldloc)
+	var/area/newarea = get_area(destination)
+
+	if(oldarea != newarea)
+		newarea.Entered(src, oldarea)
+
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()

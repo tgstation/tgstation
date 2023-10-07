@@ -46,6 +46,21 @@
 	var/list/laser_effects = list()
 	///list of all blocking turfs or objects
 	var/list/blocked_objects = list()
+	///our max load we can set
+	var/max_grid_load = 0
+	///our current grid load
+	var/current_grid_load = 0
+	///out power formatting multiplier used inside tgui to convert to things like mW gW to watts for ease of setting
+	var/power_format_multi = 1
+	///same as above but for output
+	var/power_format_multi_output = 1
+
+	///how much we are inputing pre multiplier
+	var/input_number = 0
+	///how much we are outputting pre multiplier
+	var/output_number = 0
+	///our set input pulling
+	var/input_pulling = 0
 
 /obj/machinery/power/transmission_laser/Initialize(mapload)
 	. = ..()
@@ -59,7 +74,6 @@
 		return
 	terminal.master = src
 	update_appearance()
-	register_context()
 
 /obj/machinery/power/transmission_laser/Destroy()
 	. = ..()
@@ -119,40 +133,94 @@
 		. += "charge_[charge_level]"
 		. += emissive_appearance(icon, "charge_[charge_level]", src)
 
-
-/obj/machinery/power/transmission_laser/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/living/user,
-)
-	context[SCREENTIP_CONTEXT_LMB] = "Turn [turned_on ? "Off" : "On"] the PTL."
-	context[SCREENTIP_CONTEXT_RMB] = "Turn [firing ? "Off" : "On"] the PTL's Firing mechanism."
-	return CONTEXTUAL_SCREENTIP_SET
-
 ///returns the charge level from [0 to 6]
 /obj/machinery/power/transmission_laser/proc/return_charge()
 	if(!output_level)
 		return 0
 	return min(round((charge / abs(output_level)) * 6), 6)
 
-/obj/machinery/power/transmission_laser/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	if(user.istate & ISTATE_SECONDARY)
-		return
-	turned_on = !turned_on
-	to_chat(user, span_notice("You turn the [src] [turned_on ? "On" : "Off"]."))
-	update_appearance()
 
-/obj/machinery/power/transmission_laser/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/power/transmission_laser/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	firing = !firing
-	to_chat(user, span_notice("You turn the firing mode on the [src] to [firing ? "On" : "Off"]."))
-	update_appearance()
-	if(length(laser_effects) && !firing)
-		addtimer(CALLBACK(src, PROC_REF(destroy_lasers)), 5 SECONDS)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TransmissionLaser")
+		ui.open()
+		ui.set_autoupdate(TRUE)
+
+/obj/machinery/power/transmission_laser/ui_data(mob/user)
+	. = ..()
+	var/list/data = list()
+
+	data["output"] = output_level
+	data["total_earnings"] = total_earnings
+	data["unsent_earnings"] = unsent_earnings
+	data["held_power"] = charge
+	data["selling_power"] = selling_power
+	data["max_capacity"] = capacity
+	data["max_grid_load"] = max_grid_load
+
+	data["accepting_power"] = turned_on
+	data["sucking_power"] = inputting
+	data["firing"] = firing
+
+	data["power_format"] = power_format_multi
+	data["input_number"] = input_number
+	data["avalible_input"] = input_available
+	data["output_number"] = output_number
+	data["output_multiplier"] = power_format_multi_output
+	data["input_total"] = input_number * power_format_multi
+	data["output_total"] = output_number * power_format_multi_output
+
+	return data
+
+/obj/machinery/power/transmission_laser/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("toggle_input")
+			turned_on = !turned_on
+			update_appearance()
+		if("toggle_output")
+			firing = !firing
+			update_appearance()
+
+		if("set_input")
+			input_number = clamp(params["set_input"], 0, 999) //multiplies our input by if input
+		if("set_output")
+			output_number = clamp(params["set_output"], 0, 999)
+
+		if("inputW")
+			power_format_multi = 1
+		if("inputKW")
+			power_format_multi = 1 KW
+		if("inputMW")
+			power_format_multi = 1 MW
+		if("inputGW")
+			power_format_multi = 1 GW
+		if("inputTW")
+			power_format_multi = 1 TW
+		if("inputPW")
+			power_format_multi = 1 PW
+
+		if("outputW")
+			power_format_multi_output = 1
+		if("outputKW")
+			power_format_multi_output = 1 KW
+		if("outputMW")
+			power_format_multi_output = 1 MW
+		if("outputGW")
+			power_format_multi_output = 1 GW
+		if("outputTW")
+			power_format_multi_output = 1 TW
+		if("outputPW")
+			power_format_multi = 1 PW
+
 
 /obj/machinery/power/transmission_laser/process()
+	max_grid_load = terminal.surplus()
+	input_available = terminal.surplus()
 	if((machine_stat & BROKEN) || !turned_on)
 		return
 
@@ -161,16 +229,16 @@
 	var/last_fire = firing
 
 	if(terminal && input_attempt)
-		input_available = terminal.surplus()
+		input_pulling = min(terminal.surplus() , input_number * power_format_multi)
 
 		if(inputting)
-			if(input_available > 0)
-				terminal.add_load(input_available)
-				charge += input_available
+			if(input_pulling > 0)
+				terminal.add_load(input_pulling)
+				charge += input_pulling
 			else
 				inputting = FALSE
 		else
-			if(input_attempt && input_available > 0)
+			if(input_attempt && input_pulling > 0)
 				inputting = TRUE
 	else
 		inputting = FALSE
@@ -181,7 +249,7 @@
 		destroy_lasers()
 
 	if(charge > MINIMUM_POWER && firing)
-		output_level = max(clamp((charge * 0.2) + MINIMUM_POWER, 0, charge), MINIMUM_POWER)
+		output_level = min(charge, output_number * power_format_multi_output)
 		if(!length(laser_effects))
 			setup_lasers()
 		if(length(blocked_objects))
@@ -217,11 +285,14 @@
 
 	var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/datum/bank_account/department/engineer = SSeconomy.get_dep_account(ACCOUNT_ENG)
+	var/datum/bank_account/department/security = SSeconomy.get_dep_account(ACCOUNT_SEC)
 
 	///the other 25% will be sent to engineers in the future but for now its stored inside
 	var/cargo_cut = generated_cash * 0.25
 	var/engineering_cut = generated_cash * 0.5
 
+	security.adjust_money(cargo_cut, "Transmission Laser Payout")
+	unsent_earnings -= cargo_cut
 	engineer.adjust_money(engineering_cut, "Transmission Laser Payout")
 	unsent_earnings -= engineering_cut
 	cargo.adjust_money(cargo_cut, "Transmission Laser Payout")
@@ -251,7 +322,7 @@
 
 ///this is called every time something enters our beams
 /obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, atom/movable/arrived)
-	var/mw_power = charge * 0.000001
+	var/mw_power = (output_number * power_format_multi_output) * 0.000001
 	if(mw_power < 25)
 		if(isliving(arrived))
 			var/mob/living/arrived_living = arrived
@@ -278,12 +349,16 @@
 
 /obj/effect/transmission_beam/Initialize(mapload, obj/machinery/power/transmission_laser/creator)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	var/turf/source_turf = get_turf(src)
+	if(source_turf)
+		RegisterSignal(source_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	update_appearance()
 
 /obj/effect/transmission_beam/Destroy(force)
 	. = ..()
-	UnregisterSignal(src, COMSIG_ATOM_ENTERED)
+	var/turf/source_turf = get_turf(src)
+	if(source_turf)
+		UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
 
 /obj/effect/transmission_beam/update_overlays()
 	. = ..()

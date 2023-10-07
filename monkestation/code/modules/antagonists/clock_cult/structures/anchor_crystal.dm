@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 
 #define CRYSTAL_SHIELD_DELAY 50 SECONDS //how long until shields start to recharge
-#define CRYSTAL_CHARGE_TIMER 300 //how long in seconds do crystals take to charge, 5 MINTUES
+#define CRYSTAL_CHARGE_TIMER 360 //how long in seconds do crystals take to charge, 6 MINTUES
 #define CRYSTAL_CHARGING 0 //crystal is currently charging
 #define CRYSTAL_LOCATION_ANNOUNCED 1 //the location of the crystal has been anouced to the crew
 #define FULLY_CHARGED 2 //the crystal is fully charged
