@@ -206,8 +206,7 @@
 				orderer_rank = "Galactic Materials Market",
 				orderer_ckey = living_user.ckey,
 				paying_account = ordering_private ? account_payable : null,
-				cost_type = "credit",
-				can_be_cancelled = FALSE
+				cost_type = "credit"
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.shopping_list += new_order
