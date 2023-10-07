@@ -134,8 +134,8 @@
 	)
 
 /datum/species/monkey/get_physical_attributes()
-	return "Monkeys are slippery, can crawl into vents, and are naturally more dextrous than humans.. if they're trying to steal clothing from them. \
-		However, their paws can't operate much machinery, they are usually too stupid to operate the rest, and Mutadone turns them into a very strange human."
+	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
+		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
 
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
