@@ -545,23 +545,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		see = get_hear(view_range, pos)
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		var/datum/controller/subsystem/mapping/local_mapping = SSmapping
 		for(var/turf/seen in see)
 			if(check_lower)
 				var/turf/visible = seen
 				while(visible && istransparentturf(visible))
-					var/turf/below = local_mapping.get_turf_below(visible)
+					var/turf/below = GET_TURF_BELOW(visible)
 					for(var/turf/adjacent in range(1, below))
 						see += adjacent
 						see += adjacent.contents
 					visible = below
 			if(check_higher)
-				var/turf/above = local_mapping.get_turf_above(seen)
+				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
 					for(var/turf/adjacent in range(1, above))
 						see += adjacent
 						see += adjacent.contents
-					above = local_mapping.get_turf_above(above)
+					above = GET_TURF_ABOVE(above)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

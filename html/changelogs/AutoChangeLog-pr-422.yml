@@ -1,0 +1,4 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - sound: "replaces a surgery sound"

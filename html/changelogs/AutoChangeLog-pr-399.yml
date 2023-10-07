@@ -1,0 +1,5 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - rscadd: "Beakers can be attached to flamethrowers, allowing them to spray chemicals!"
+  - image: "Flamethrowers got a new sprite!"
