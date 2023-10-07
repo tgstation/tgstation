@@ -1,3 +1,4 @@
+#define ONLY_TURF 1
 
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
@@ -119,7 +120,6 @@
 		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
 
 	return TRUE
-#define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/initialize_safehouse()
