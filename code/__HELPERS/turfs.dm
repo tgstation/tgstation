@@ -182,14 +182,31 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/angle = ATAN2(target.x - starting_atom.x, target.y - starting_atom.y)
 	if(offset)
 		angle += offset
-	var/turf/starting_turf = get_turf(starting_atom)
-	for(var/i in 1 to range)
-		var/turf/check = locate(starting_atom.x + cos(angle) * i, starting_atom.y + sin(angle) * i, starting_atom.z)
-		if(!check)
-			break
-		starting_turf = check
+	var/x_per_turf = cos(angle)
+	var/y_per_turf = sin(angle)
+	var/x_change = starting_atom.x + round(x_per_turf * range)
+	var/y_change = starting_atom.y + round(y_per_turf * range)
+	if(clamp(x_change, 0, world.maxx) == x_change && clamp(y_change, 0, world.maxx) == y_change)
+		return locate(x_change, y_change, starting_atom.z)
 
-	return starting_turf
+	// Ok so we weren't in bounds. Time to figure out how many steps there are between us and the border
+	// Read this as "how many steps are we going over?"
+	var/x_steps = 0
+	if(x_change > world.maxx)
+		x_steps = (world.maxx / starting_atom.x) / x_per_turf
+	else if (x_change < 1)
+		x_steps = (starting_atom.x - 1) / x_per_turf
+
+	var/y_steps = 0
+	if(y_change > world.maxy)
+		y_steps = (world.maxy / starting_atom.y) / y_per_turf
+	else if (y_change < 1)
+		y_steps = (starting_atom.y - 1) / y_per_turf
+
+	var/working_range = min(x_steps, y_steps)
+	x_change = starting_atom.x + round(x_per_turf * working_range)
+	y_change = starting_atom.y + round(y_per_turf * working_range)
+	return locate(x_change, y_change, starting_atom.z)
 
 
 /// returns turf relative to target_atom offset in dx and dy tiles, bound to map limits
