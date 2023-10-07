@@ -28,6 +28,14 @@
 	var/soul_punishment = 0
 	///our cached brute_mod
 	var/cached_brute_mod = 0
+	///processes to heartbeat
+	var/heartbeat_processes = 0
+	///processes until wail if above punishment threshold
+	var/wailing_processes = 0
+	///list of mobs that have been given a overlay so we can remove later
+	var/list/mobs_with_fullscreens = list()
+	///this is needed because it double fires sometimes before finishing
+	var/is_hudchecking = FALSE
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -68,10 +76,30 @@
 		source.emote("inhale")
 		breath_out = TRUE
 
-	for(var/mob/living/carbon/human in view(7, source))
-		if(human == source)
-			continue
-		human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+	heartbeat_processes++
+	if(heartbeat_processes >= 4)
+		heartbeat_processes = 0
+		for(var/mob/living/carbon/human in view(7, source))
+			if(human == source)
+				continue
+			human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+
+	if(!is_hudchecking)
+		is_hudchecking = TRUE
+		var/list/starting_humans = list()
+		starting_humans += mobs_with_fullscreens
+		for(var/mob/living/carbon/human in view(7, source))
+			if(!(human in mobs_with_fullscreens))
+				mobs_with_fullscreens += human
+				human.overlay_fullscreen("slasher_prox", /atom/movable/screen/fullscreen/nearby, 1)
+			else
+				starting_humans -= human
+
+		if(length(starting_humans))
+			for(var/mob/living/carbon/human in starting_humans)
+				human.clear_fullscreen("slasher_prox", 15)
+				mobs_with_fullscreens -= human
+		is_hudchecking = FALSE
 
 	for(var/obj/machinery/light/listed_light in view(3, source))
 		if(prob(10))
@@ -82,3 +110,15 @@
 
 	if(prob(5))
 		new /obj/effect/gibspawner/generic(T)
+
+	if(soul_punishment >= 2)
+		wailing_processes++
+		if(wailing_processes >= 8)
+			wailing_processes = 0
+			playsound(owner.current, 'monkestation/sound/voice/terror-cry.ogg', 50, falloff_exponent = 0, use_reverb = FALSE)
+			owner.current.emote("wails")
+			var/mob/living/carbon/human/human = owner.current
+			human.blood_volume -= 10
+			var/turf/turf = get_turf(human)
+			var/list/blood_drop = list(human.get_blood_id() = 10)
+			turf.add_liquid_list(blood_drop, FALSE, 300)

@@ -43,6 +43,7 @@
 			human.emote("scream")
 			human.stamina.adjust(-5)
 			human.Shake(duration = 3 SECONDS)
+			human.emote("cries blood")
 			var/turf/turf = get_turf(human)
 			var/list/blood_drop = list(human.get_blood_id() = 3)
 			turf.add_liquid_list(blood_drop, FALSE, 300)

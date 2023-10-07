@@ -1,7 +1,3 @@
-/atom/movable/screen/fullscreen/soul_punishment
-	icon_state = "soul_punishment"
-
-
 /datum/antagonist/slasher/proc/check_soul_punishment()
 	if(last_soul_sucked + soul_digestion < world.time)
 		return
