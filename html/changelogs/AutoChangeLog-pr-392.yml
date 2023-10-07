@@ -1,0 +1,5 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - rscadd: "You can now right-click botany trays to dump their nutrients onto the floor!"
+  - bugfix: "a couple minor botany tray bugs"
