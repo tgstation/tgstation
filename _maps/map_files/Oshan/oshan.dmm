@@ -9412,13 +9412,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
-"eTm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/bamboo,
-/area/station/commons/fitness)
 "eTz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -27854,7 +27847,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "omn" = (
@@ -44682,7 +44674,6 @@
 "wOJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/bamboo,
 /area/station/commons/fitness)
@@ -63121,7 +63112,7 @@ pqp
 jCA
 pug
 rYQ
-eTm
+aYq
 aYq
 ggx
 rYQ
