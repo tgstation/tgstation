@@ -84,13 +84,6 @@
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/snow,
 /area/icemoon/underground/explored)
-"nS" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8;
-	color = FFFFFF
-	},
-/turf/open/misc/ice/icemoon,
-/area/icemoon/underground/explored)
 "nX" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
@@ -658,7 +651,7 @@ ah
 ep
 ah
 sj
-nS
+hD
 Ya
 Ya
 iB
@@ -685,7 +678,7 @@ Ya
 iB
 ah
 WY
-nS
+hD
 Ya
 Ya
 GB
@@ -706,13 +699,13 @@ Ya
 Ya
 Ya
 Ya
-nS
+hD
 Ya
 Ya
 Ya
 Ya
 Ya
-nS
+hD
 Ya
 Ya
 Ya
