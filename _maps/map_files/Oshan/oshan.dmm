@@ -116,18 +116,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/surgery/aft)
-"acG" = (
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "acI" = (
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,
@@ -631,6 +619,18 @@
 /obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
+"aon" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "aoV" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -2566,6 +2566,15 @@
 /obj/effect/turf_decal/trimline/purple/filled/warning,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"bqt" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "bqD" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners{
@@ -6273,18 +6282,6 @@
 /obj/item/flashlight/seclite,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hos)
-"doG" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "doZ" = (
 /obj/structure/displaycase/labcage,
 /turf/open/floor/wood,
@@ -7933,6 +7930,18 @@
 	dir = 8
 	},
 /area/station/engineering/main)
+"egP" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "egY" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -8828,26 +8837,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/office)
-"eEU" = (
-/obj/item/clothing/gloves/boxing{
-	pixel_x = -8;
-	pixel_y = 1
-	},
-/obj/item/clothing/gloves/boxing/blue{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/gloves/boxing/green{
-	pixel_y = 2;
-	pixel_x = 1
-	},
-/obj/item/clothing/gloves/boxing/yellow{
-	pixel_y = 7;
-	pixel_x = 6
-	},
-/obj/structure/table/wood,
-/turf/open/floor/bamboo,
-/area/station/commons/fitness)
 "eEZ" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
@@ -9286,15 +9275,6 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/ocean,
 /area/ocean/generated_above)
-"ePO" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "ePQ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -9466,13 +9446,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "eTm" = (
-/obj/structure/railing{
-	dir = 4
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -9;
+	pixel_y = 10
 	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
+/turf/open/floor/bamboo,
 /area/station/commons/fitness)
 "eTz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -11905,15 +11885,6 @@
 /obj/item/book,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/hop)
-"gdB" = (
-/obj/structure/table/wood,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/turf/open/floor/bamboo,
-/area/station/commons/fitness)
 "gdO" = (
 /obj/machinery/duct/industrial/waste,
 /obj/structure/disposalpipe/segment{
@@ -12020,6 +11991,9 @@
 "ggx" = (
 /obj/structure/railing{
 	dir = 5
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth_large{
 	icon = 'goon/icons/turf/floors.dmi';
@@ -14030,6 +14004,15 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lobby)
+"hor" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "hoz" = (
 /turf/closed/wall,
 /area/station/medical/surgery/aft)
@@ -20405,18 +20388,6 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
-"kAN" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "kBk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21976,7 +21947,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/bamboo,
 /area/station/commons/fitness)
@@ -24018,18 +23988,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/cargo/lobby)
-"mpP" = (
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "mqy" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 9
@@ -24800,15 +24758,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"mKR" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth_large{
-	icon = 'goon/icons/turf/floors.dmi';
-	icon_state = "boxing"
-	},
-/area/station/commons/fitness)
 "mKU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/mime/double,
@@ -25084,6 +25033,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
+"mRG" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "mRO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -34798,6 +34756,15 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
+"rIZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/open/floor/bamboo,
+/area/station/commons/fitness)
 "rJc" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
@@ -35008,6 +34975,26 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
+"rNP" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/clothing/gloves/boxing/blue{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/clothing/gloves/boxing/green{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/obj/item/clothing/gloves/boxing/yellow{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/structure/table/wood,
+/turf/open/floor/bamboo,
+/area/station/commons/fitness)
 "rNY" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/segment{
@@ -35842,6 +35829,15 @@
 "smo" = (
 /turf/open/floor/holofloor/beach/coast_t,
 /area/station/service/library)
+"smw" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "smC" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock"
@@ -36555,6 +36551,18 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/bridge)
+"sFP" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "boxing"
+	},
+/area/station/commons/fitness)
 "sFY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42376,15 +42384,6 @@
 "vzd" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/hos)
-"vzj" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/waterbottle,
-/obj/item/reagent_containers/cup/glass/waterbottle{
-	pixel_x = -9;
-	pixel_y = 10
-	},
-/turf/open/floor/bamboo,
-/area/station/commons/fitness)
 "vzp" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -64001,10 +64000,10 @@ mVu
 oWO
 oti
 aYq
-doG
-mKR
-mKR
-acG
+aon
+hor
+hor
+ggx
 gHM
 dPH
 ieT
@@ -64258,10 +64257,10 @@ jDu
 oWO
 oti
 aYq
-ePO
+smw
 dwx
 dwx
-ggx
+bqt
 gIB
 dPH
 bSj
@@ -64513,12 +64512,12 @@ oWO
 exP
 sUg
 oWO
-vzj
+eTm
 aYq
-ePO
+smw
 dwx
 dwx
-ggx
+bqt
 rYQ
 dPH
 oTE
@@ -64772,10 +64771,10 @@ lqa
 oWO
 vtb
 aYq
-kAN
-eTm
-eTm
-mpP
+sFP
+mRG
+mRG
+egP
 rYQ
 dPH
 oHO
@@ -65288,8 +65287,8 @@ rYQ
 cWa
 rYQ
 rYQ
-eEU
-gdB
+rNP
+rIZ
 gop
 dPH
 lpu
