@@ -1,37 +1,234 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"ax" = (
+/obj/structure/railing/corner,
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"aT" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"bE" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"cO" = (
+/obj/structure/fence/door/opened{
+	dir = 1
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"ds" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"eu" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"eB" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"eE" = (
 /obj/structure/railing{
 	dir = 6
 	},
+/obj/structure/flora/rock/pile/icy,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"b" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"c" = (
+"fl" = (
+/turf/template_noop,
+/area/template_noop)
+"fK" = (
+/obj/structure/railing,
+/obj/structure/flora/rock/icy,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"d" = (
-/turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"e" = (
+"gv" = (
 /obj/structure/railing{
 	dir = 5
 	},
 /obj/structure/ladder,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"f" = (
-/obj/structure/railing/corner,
+"hM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"g" = (
+"hS" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"jQ" = (
+/obj/structure/fence/door,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"kd" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"kq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"h" = (
+"lo" = (
+/obj/structure/fence/corner{
+	dir = 9
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"lR" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"mP" = (
+/turf/open/openspace/icemoon/ruins,
+/area/icemoon/surface/outdoors/nospawn)
+"nt" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"nT" = (
+/obj/structure/flora/tree/pine,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"op" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"tW" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/icy/style_2,
+/obj/structure/sign/warning/secure_area,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"uy" = (
+/obj/effect/mob_spawn/corpse/human/minesite/overseer,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"vx" = (
+/obj/structure/flora/tree/pine/style_3,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"vJ" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"wg" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"yy" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"yA" = (
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Aq" = (
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"At" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Bv" = (
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Dd" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"DG" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/flora/tree/pine/style_2,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Ep" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Ff" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Fn" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"HU" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Ia" = (
+/obj/structure/railing/corner/end{
+	dir = 1
+	},
+/obj/structure/railing/corner/end/flip,
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"IA" = (
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"KT" = (
 /obj/structure/railing{
 	dir = 6
 	},
@@ -46,1063 +243,982 @@
 	},
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"i" = (
-/obj/structure/flora/rock/pile/icy/style_2,
+"Mp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"j" = (
+"Oe" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Ot" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"PT" = (
+/turf/template_noop,
+/area/icemoon/surface/outdoors/nospawn)
+"Qi" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/item/flashlight/glowstick/red{
 	on = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"l" = (
-/obj/structure/railing/corner/end/flip{
+"Sc" = (
+/obj/structure/fence{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 8
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Tt" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Uz" = (
+/obj/structure/flora/rock/pile/icy,
+/obj/structure/fence{
+	dir = 4
 	},
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"m" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+"UY" = (
+/obj/structure/fence/cut/large{
+	dir = 4
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"o" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"p" = (
-/obj/structure/railing/corner/end{
-	dir = 1
-	},
-/obj/structure/railing/corner/end/flip,
 /obj/structure/flora/rock/pile/icy,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"q" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"t" = (
-/turf/template_noop,
-/area/template_noop)
-"v" = (
-/turf/closed/indestructible/rock/snow/ice/ore,
-/area/icemoon/surface/outdoors/nospawn)
-"w" = (
-/obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"x" = (
-/obj/structure/flora/tree/pine,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"z" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/turf/closed/indestructible/rock/snow/ice/ore,
-/area/icemoon/surface/outdoors/nospawn)
-"C" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"D" = (
-/obj/structure/railing/corner,
-/obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"E" = (
-/obj/structure/flora/tree/pine/style_3,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"F" = (
+"Wg" = (
 /obj/structure/railing,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"J" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"K" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/obj/structure/flora/rock/pile/icy/style_2,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"M" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
+"Wk" = (
+/obj/item/flashlight/glowstick/red{
+	on = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"N" = (
-/obj/structure/flora/rock/icy/style_2,
+"Wr" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/nanotrasen,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"O" = (
+"Wt" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"P" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Q" = (
-/obj/structure/railing,
-/obj/structure/flora/rock/icy,
+"Zn" = (
+/obj/structure/fence/cut/large,
 /turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"R" = (
-/obj/structure/railing{
-	dir = 6
-	},
-/obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"T" = (
-/obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
-"W" = (
-/turf/open/openspace/icemoon,
-/area/template_noop)
-"X" = (
-/obj/effect/mob_spawn/corpse/human/minesite/overseer,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Y" = (
-/turf/open/openspace/icemoon/ruins,
-/area/icemoon/surface/outdoors/nospawn)
-"Z" = (
-/turf/template_noop,
 /area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (2,1,1) = {"
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
+fl
+kd
+kd
+nt
+DG
+Dd
+Dd
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (3,1,1) = {"
-t
-t
-t
-t
-t
-t
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
-t
-t
-t
-t
+IA
+Bv
+lo
+Zn
+Dd
+Dd
+Dd
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (4,1,1) = {"
-t
-t
-t
-t
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
-t
-t
-t
+Bv
+eu
+jQ
+vJ
+Bv
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (5,1,1) = {"
-t
-t
-t
-t
-g
-T
-T
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
-t
-t
+fl
+kd
+Wr
+vJ
+vJ
+kd
+kd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (6,1,1) = {"
-t
-t
-t
-t
-g
-g
-c
-K
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
-t
+fl
+kd
+Dd
+eu
+vJ
+vJ
+Bv
+eB
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
 "}
 (7,1,1) = {"
-t
-t
-t
-g
-g
-g
-g
-q
-l
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
+fl
+Dd
+Dd
+vJ
+vJ
+vJ
+vJ
+Oe
+lR
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
 "}
 (8,1,1) = {"
-t
-t
-t
-x
-T
-b
-X
-f
-h
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
+Dd
+Dd
+PT
+nT
+kd
+yA
+uy
+Ot
+KT
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
 "}
 (9,1,1) = {"
-t
-t
-Y
-Y
-Y
-e
-p
-a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
+Dd
+Dd
+mP
+mP
+mP
+gv
+Ia
+Fn
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
 "}
 (10,1,1) = {"
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
 "}
 (11,1,1) = {"
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
 "}
 (12,1,1) = {"
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Dd
+Dd
 "}
 (13,1,1) = {"
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Dd
+Dd
 "}
 (14,1,1) = {"
-t
-t
-v
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+fl
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+nt
+Dd
+hS
 "}
 (15,1,1) = {"
-t
-v
-v
-v
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+fl
+Dd
+Dd
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+kd
+kd
+Bv
+wg
 "}
 (16,1,1) = {"
-t
-v
-T
-T
-c
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+Dd
+Dd
+kd
+kd
+Bv
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Wk
+vJ
+Bv
+At
 "}
 (17,1,1) = {"
-t
-t
-T
-g
-c
-J
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+Ep
+Bv
+kd
+vJ
+Bv
+HU
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+kd
+vJ
+vJ
+UY
 "}
 (18,1,1) = {"
-t
-Z
-E
-i
-g
-Q
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+ds
+Bv
+vx
+Tt
+vJ
+fK
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Aq
+vJ
+Bv
+Sc
 "}
 (19,1,1) = {"
-w
-c
-c
-g
-g
-F
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+Uz
+Bv
+vJ
+vJ
+vJ
+Wg
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+bE
+nT
+op
 "}
 (20,1,1) = {"
-c
-c
-g
-j
-M
-P
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+cO
+vJ
+vJ
+Qi
+kq
+yy
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+kd
+wg
 "}
 (21,1,1) = {"
-t
-T
-c
-O
-Y
-o
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+tW
+kd
+Bv
+Wt
+mP
+Mp
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Dd
+Dd
 "}
 (22,1,1) = {"
-t
-t
-N
-m
-C
-J
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+hS
+Bv
+Aq
+Ff
+hM
+HU
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+Dd
+fl
 "}
 (23,1,1) = {"
-t
-t
-v
-T
-D
-R
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
+Dd
+Dd
+Dd
+kd
+ax
+eE
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
 "}
 (24,1,1) = {"
-t
-t
-v
-v
-z
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
+fl
+Dd
+Dd
+Dd
+aT
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
 "}
 (25,1,1) = {"
-t
-t
-v
-v
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-d
-t
-t
-t
+fl
+fl
+Dd
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
 "}
 (26,1,1) = {"
-t
-t
-t
-v
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-d
-t
-t
-t
-t
+fl
+fl
+fl
+Dd
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
 "}
 (27,1,1) = {"
-t
-t
-t
-t
-d
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-d
-d
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (28,1,1) = {"
-t
-t
-t
-t
-t
-d
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-d
-d
-t
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (29,1,1) = {"
-t
-t
-t
-t
-t
-t
-d
-d
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-d
-W
-t
-t
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+mP
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (30,1,1) = {"
-t
-t
-t
-t
-t
-t
-t
-t
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-t
-t
-t
-t
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
 (31,1,1) = {"
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
-t
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 "}
