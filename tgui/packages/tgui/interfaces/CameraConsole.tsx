@@ -32,6 +32,17 @@ const prevNextCamera = (
   const index = cameras.findIndex(
     (camera) => camera?.name === activeCamera.name
   );
+
+  // Scroll to last
+  if (index === 0) {
+    return [cameras[cameras.length - 1]?.name, cameras[index + 1]?.name];
+  }
+
+  // Scroll to first
+  if (index === cameras.length - 1) {
+    return [cameras[index - 1]?.name, cameras[0]?.name];
+  }
+
   return [cameras[index - 1]?.name, cameras[index + 1]?.name];
 };
 
@@ -128,7 +139,9 @@ const CameraSelector = (props, context) => {
 const CameraControls = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { activeCamera, can_spy, mapRef } = data;
-  const cameras = selectCameras(data.cameras);
+  const [searchText] = useLocalState(context, 'searchText', '');
+
+  const cameras = selectCameras(data.cameras, searchText);
 
   const [prevCameraName, nextCameraName] = prevNextCamera(
     cameras,
