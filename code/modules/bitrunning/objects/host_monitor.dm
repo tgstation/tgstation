@@ -5,7 +5,7 @@
 	desc = "A complex medical device that, when attached to an avatar's data stream, can detect the user of their host's health."
 	flags_1 = CONDUCT_1
 	icon = 'icons/obj/device.dmi'
-	icon_state = "bitrunner"
+	icon_state = "host_monitor"
 	inhand_icon_state = "electronic"
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
