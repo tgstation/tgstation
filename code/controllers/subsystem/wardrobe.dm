@@ -5,7 +5,7 @@
 /// You should absolutely not spam this system, it will break things in new and wonderful ways
 /// S close enough for government work though.
 /// Fuck you goonstation
-SUBSYSTEM_DEF(wardrobe)
+
 	name = "Wardrobe"
 	wait = 10 // This is more like a queue then anything else
 	flags = SS_BACKGROUND
@@ -472,7 +472,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 /// Sorts the worst entries up to the top, based off the ratio between hit and miss
 /proc/cmp_wardrobe_cache(list/A, list/B)
-	if(A[4] > B[4])
+	if(A[4] < B[4])
 		return 1
 	return -1
 
@@ -572,13 +572,13 @@ SUBSYSTEM_DEF(wardrobe)
 
 	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
 
-/// Sorts the slowest entries up to the top, based off how long the wardrobe version takes vs the normal sort
+/// Sorts the fastest entries up to the top, based off how long the wardrobe version takes vs the normal sort
 /proc/cmp_wardrobe_performance(list/A, list/B)
-	var/create_ratio_a = A[3] / A[2]
-	var/create_ratio_b = B[3] / B[2]
-	var/del_ratio_a = A[5] / A[4]
-	var/del_ratio_b = B[5] / B[4]
-	if(create_ratio_a + del_ratio_a > create_ratio_b + del_ratio_b)
+	var/create_delta_a = A[3] - A[2]
+	var/create_delta_b = B[3] - B[2]
+	var/del_delta_a = A[5] - A[4]
+	var/del_delta_b = B[5] - B[4]
+	if(create_delta_a + del_delta_a > create_delta_b + del_delta_b)
 		return 1
 	return -1
 
