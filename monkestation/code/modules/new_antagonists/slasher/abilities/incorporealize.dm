@@ -8,6 +8,10 @@
 
 /datum/action/cooldown/slasher/incorporealize/PreActivate(atom/target)
 	. = ..()
+	var/mob/living/carbon/human/human = owner
+	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+	if(slasherdatum && (slasherdatum.soul_punishment >= 2))
+		return FALSE
 	if(!flipped)
 		for(var/mob/living/watchers in view(9, target) - target)
 			target.balloon_alert(owner, "you can only vanish unseen.")

@@ -14,8 +14,17 @@
 
 	cooldown_time = 15 SECONDS
 
+	var/per_soul_suck = 1 SECONDS
+
 /datum/action/cooldown/slasher/soul_steal/PreActivate(atom/target)
 	. = ..()
+	var/mob/living/carbon/human/human_owner = owner
+	var/datum/antagonist/slasher/slasherdatum = human_owner.mind.has_antag_datum(/datum/antagonist/slasher)
+	if(slasherdatum)
+		if(last_soul_sucked + soul_digestion > world.time)
+			to_chat(owner, span_boldwarning("You can feel your mind slipping, you feel as though bad things will happen if you absorb another soul so quickly!"))
+			per_soul_suck = 5 SECONDS
+
 	if(!ishuman(target))
 		to_chat(owner, span_warning("This is only usable on humans."))
 		return
@@ -36,7 +45,7 @@
 		return
 	var/mob/living/carbon/human/human_owner = owner
 	var/mob/living/carbon/human/human_target = target
-	while(do_after(owner, 1 SECONDS, target) && !human_target.soul_sucked)
+	while(do_after(owner, per_soul_suck, target) && !human_target.soul_sucked)
 		human_target.sucked_precent += 20
 		if(human_target.sucked_precent >= 100)
 			human_target.soul_sucked = TRUE
