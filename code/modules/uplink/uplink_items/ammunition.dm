@@ -18,7 +18,6 @@
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
