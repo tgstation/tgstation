@@ -30,3 +30,7 @@
 	name = "Mining Site Overseer"
 	outfit = /datum/outfit/minesite/overseer
 	icon_state = "corpsecargotech"
+
+/obj/item/paper/crumpled/bloody/ruins/mining_site
+	name = "blood-written note"
+	default_raw_text = "<br><br><font color='red'>STRENGTH... UNPARALLELED. UNNATURAL.</font>"
