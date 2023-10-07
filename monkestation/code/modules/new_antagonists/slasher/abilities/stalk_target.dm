@@ -1,9 +1,3 @@
-/mob/living
-	/// A weak reference to the team monitor component contained within the monitor holder, used for certain antagoists so they can track
-	var/datum/component/team_monitor/team_monitor
-	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
-	var/datum/component/tracking_beacon/tracking_beacon
-
 /datum/action/cooldown/slasher/stalk_target
 	name = "Stalk Target"
 	desc = "Get a target to stalk, standing near them for 3 minutes will rip their soul from their body. YOU MUST PROTECT THEM FROM HARM."
@@ -26,7 +20,7 @@
 
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	if(slasherdatum && slasherdatum.stalked_human)
-		qdel(stalked_human.tracking_beacon)
+		qdel(slasherdatum.stalked_human.tracking_beacon)
 
 	var/mob/living/living_target = pick(possible_targets)
 	var/mob/living/carbon/human/owner_human = owner
