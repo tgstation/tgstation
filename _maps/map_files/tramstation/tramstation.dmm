@@ -53577,7 +53577,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "sha" = (
-/mob/living/simple_animal/sloth/paperwork,
+/mob/living/basic/sloth/paperwork,
 /turf/open/floor/glass,
 /area/station/cargo/storage)
 "shw" = (

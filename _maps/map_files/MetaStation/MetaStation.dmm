@@ -25335,7 +25335,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/sloth/citrus,
+/mob/living/basic/sloth/citrus,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jhD" = (
