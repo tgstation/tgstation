@@ -456,10 +456,14 @@
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
-	if(!forced && owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
-	if(!forced && required_bodytype && !(bodytype & required_bodytype))
-		return FALSE
+	if (!forced)
+		if(!isnull(owner))
+			if (owner.status_flags & GODMODE)
+				return FALSE
+			if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
+				return FALSE
+		if(required_bodytype && !(bodytype & required_bodytype))
+			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)

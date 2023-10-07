@@ -26,7 +26,7 @@
 	if(isnull(our_controller))
 		return FALSE
 
-	if(isturf(the_target) || !the_target) // bail out on invalids
+	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
 		return FALSE
 
 	if(isobj(the_target.loc))
@@ -35,6 +35,8 @@
 			return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
+		if(living_mob.loc == the_target)
+			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive
 		var/mob/M = the_target
 		if(M.status_flags & GODMODE)
 			return FALSE
@@ -45,7 +47,7 @@
 	if(living_mob.see_invisible < the_target.invisibility) //Target's invisible to us, forget it
 		return FALSE
 
-	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech
+	if(isturf(living_mob.loc) && isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
