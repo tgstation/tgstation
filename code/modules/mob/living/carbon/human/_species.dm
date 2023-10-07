@@ -1852,11 +1852,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /**
+ * Gets a description of the species' *physical* attributes. What makes playing as one different. Used in magic mirrors.
+ *
+ * Returns a string.
+ */
+
+/datum/species/proc/get_physical_attributes()
+	return "An unremarkable species."
+/**
  * Gets a short description for the specices. Should be relatively succinct.
  * Used in the preference menu.
  *
  * Returns a string.
  */
+
 /datum/species/proc/get_species_description()
 	SHOULD_CALL_PARENT(FALSE)
 

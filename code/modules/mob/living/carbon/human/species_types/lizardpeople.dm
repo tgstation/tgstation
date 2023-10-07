@@ -86,6 +86,10 @@
 		'sound/voice/lizard/lizard_scream_3.ogg',
 	)
 
+/datum/species/lizard/get_physical_attributes()
+	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
+		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."
+
 /datum/species/lizard/get_species_description()
 	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \
 		throughout their centuries in the stars to possess a large spacefaring \

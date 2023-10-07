@@ -209,6 +209,11 @@
 		'sound/voice/ethereal/ethereal_scream_3.ogg',
 	)
 
+/datum/species/ethereal/get_physical_attributes()
+	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
+		They do so via their crystal core, the equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
+		However, their skin is very thin and easy to pierce with brute weaponry."
+
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \
 		separated socially by caste, and espouse a dogma of aiding the weak and \
