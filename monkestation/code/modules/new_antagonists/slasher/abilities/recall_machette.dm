@@ -52,3 +52,35 @@
 		hit_carbon.blood_volume -= throwforce
 		hit_carbon.Knockdown(1.5 SECONDS)
 		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
+
+/obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!user.mind.has_antag_datum(/datum/antagonist/slasher))
+			forceMove(get_turf(user))
+			user.emote("scream")
+			living_user.adjustBruteLoss(force)
+			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
+			if(ishuman(user))
+				var/mob/living/carbon/human/human = user
+				var/turf/turf = get_turf(user)
+				var/list/blood_drop = list(human.get_blood_id() = 3)
+				turf.add_liquid_list(blood_drop, FALSE, 300)
+			return FALSE
+	. = ..()
+
+/obj/item/slasher_machette/attack(mob/living/target_mob, mob/living/user, params)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!user.mind.has_antag_datum(/datum/antagonist/slasher))
+			forceMove(get_turf(user))
+			user.emote("scream")
+			living_user.adjustBruteLoss(force)
+			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
+			if(ishuman(user))
+				var/mob/living/carbon/human/human = user
+				var/turf/turf = get_turf(user)
+				var/list/blood_drop = list(human.get_blood_id() = 3)
+				turf.add_liquid_list(blood_drop, FALSE, 300)
+			return FALSE
+	. = ..()
