@@ -13,7 +13,7 @@
 
 
 /datum/status_effect/blood_trial
-	id = "confusion"
+	id = "blood_trial"
 	alert_type = null
 
 /datum/status_effect/blood_trial/on_creation(mob/living/new_owner, duration = 15 SECONDS)

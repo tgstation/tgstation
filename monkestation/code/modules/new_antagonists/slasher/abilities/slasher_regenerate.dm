@@ -12,3 +12,26 @@
 	if(isliving(target))
 		var/mob/living/mob_target = target
 		mob_target.set_timed_status_effect(5 SECONDS, /datum/status_effect/bloody_heal) // should heal most damage over 5 seconds
+
+
+/datum/status_effect/bloody_heal
+	id = "bloody_heal"
+	alert_type = null
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/bloody_heal/on_creation(mob/living/new_owner, duration = 5 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/bloody_heal/tick(seconds_per_tick, times_fired)
+	. = ..()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.exit_stamina_stun()
+	human_owner.AdjustAllImmobility(-20 * seconds_per_tick)
+	human_owner.stamina.adjust(20)
+	human_owner.adjustBruteLoss(-20)
+	human_owner.adjustFireLoss(-20, FALSE)
+	human_owner.adjustOxyLoss(-20)
+	human_owner.adjustToxLoss(-20)
