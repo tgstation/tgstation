@@ -321,7 +321,7 @@
 		stoplag(time_per_item)
 		var/obj/item/new_item
 		if(is_stack)
-			var/obj/item/stack/N = SSwardrobe.provide(being_built.build_path, our_loc, STACK_AMOUNT(multiplier))
+			new_item = SSwardrobe.provide(being_built.build_path, our_loc, STACK_AMOUNT(multiplier))
 		else
 			new_item = new being_built.build_path(our_loc)
 

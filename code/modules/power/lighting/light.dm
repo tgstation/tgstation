@@ -694,7 +694,7 @@
  */
 /obj/machinery/light/proc/knock_down()
 	new /obj/item/wallframe/light_fixture(drop_location())
-	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+	SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location())
 	if(status != LIGHT_BROKEN)
 		break_light_tube(FALSE)
 	if(status != LIGHT_EMPTY)

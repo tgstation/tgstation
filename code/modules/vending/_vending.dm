@@ -984,7 +984,7 @@
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
-				var/obj/item/shard/shard = SSwardrobe.provide(/obj/item/shard, get_turf(C))
+				var/obj/item/shard/shard = SSwardrobe.provide(/obj/item/shard, get_turf(carbon_target))
 				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
 				shard.updateEmbedding()
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
