@@ -1,0 +1,4 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - rscadd: "rollers and bodybags can be printed at medical lathes"
