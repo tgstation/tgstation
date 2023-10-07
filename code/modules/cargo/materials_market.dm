@@ -177,10 +177,10 @@
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			// If we already have a custom order on SSshuttle, we should add the things to order to that order
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
-				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or user account for private purchase
+				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
 				if(order.orderer_rank == "Galactic Materials Market" && ( \
 					(!ordering_private && order.paying_account == null) || \
-					(ordering_private && order.paying_account == account_payable && order.orderer == living_user) \
+					(ordering_private && order.orderer == living_user) \
 				))
 					// Check if this order exceeded its limit
 					var/prior_stacks = 0
