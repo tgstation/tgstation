@@ -10968,10 +10968,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin/storage)
-"Sy" = (
-/obj/structure/lattice,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/supply)
 "Sz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -54641,7 +54637,7 @@ iF
 iF
 iF
 iF
-Sy
+iF
 iF
 iF
 iF
