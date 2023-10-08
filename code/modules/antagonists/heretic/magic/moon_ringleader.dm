@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader
 	name = "Ringleaders Rise"
 	desc = "Big AoE spell that more brain damage the lower the sanity of everyone in the AoE and it also causes hallucinations with those who have less sanity getting more. \
-			The spell then further lowers sanity with the those with higher sanity being affected most."
+			The spell then halves their sanity."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -9,7 +9,7 @@
 	sound = 'sound/magic/swap.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 2 MINUTES
+	cooldown_time = 1 MINUTES
 
 	invocation = "R''S 'E"
 	invocation_type = INVOCATION_SHOUT
@@ -35,19 +35,17 @@
 
 		. += nearby_mob
 
-/datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/human/victim, atom/caster)
 	if(!ismob(victim))
-		SEND_SIGNAL(owner, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim)
+		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70-victim.mob_mood.sanity, 160)
+		repeat_string((100-victim.mob_mood.sanity)/10,victim.cause_hallucination( \
+			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
+			"ringleaders rise", \
+		) )
 
-	var/atom/movable/mover = victim
-	if(!istype(mover))
-		return
+		victim.mob_mood.set_sanity(victim.mob_mood.sanity*0.5)
+		new /obj/effect/temp_visual/knockblast(get_turf(victim))
 
-	if(mover.anchored)
-		return
-	var/our_turf = get_turf(caster)
-	var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(mover, our_turf)))
-	mover.safe_throw_at(throwtarget, 3, 1, force = MOVE_FORCE_STRONG)
 
 /obj/effect/temp_visual/knockblast
 	icon = 'icons/effects/effects.dmi'

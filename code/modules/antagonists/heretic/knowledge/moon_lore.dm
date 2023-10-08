@@ -67,6 +67,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by manus grasp")
+	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity-20)
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
