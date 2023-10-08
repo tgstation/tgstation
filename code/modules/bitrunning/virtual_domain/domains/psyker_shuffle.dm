@@ -7,6 +7,6 @@
 	help_text = "Getting used to echolocation may be difficult. Remember to walk slowly, and carefully inspect every crate you come across."
 	key = "psyker_shuffle"
 	map_name = "psyker_shuffle"
-	reward_points = BITRUNNER_REWARD_LOW
+	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/bathroom
 	forced_outfit = /datum/outfit/echolocator

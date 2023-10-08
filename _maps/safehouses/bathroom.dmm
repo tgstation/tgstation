@@ -3,6 +3,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
+"c" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/safehouse)
 "e" = (
 /obj/effect/spawner/structure/window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
@@ -28,6 +33,7 @@
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "x" = (
@@ -75,6 +81,11 @@
 /obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/safehouse)
 "X" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/freezer,
@@ -104,7 +115,7 @@ G
 "}
 (3,1,1) = {"
 G
-a
+c
 D
 a
 T
@@ -120,7 +131,7 @@ G
 "}
 (5,1,1) = {"
 G
-N
+V
 x
 N
 T

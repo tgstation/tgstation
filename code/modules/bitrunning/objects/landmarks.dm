@@ -82,7 +82,7 @@
 	for(var/obj/structure/closet/crate/crate_to_check in get_area(src))
 		if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
 			encrypted_crate = crate_to_check
-			crate_to_check.desc += " This feels like the crate we're looking for!"
+			crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
 		else
 			crate_list += crate_to_check
 		crate_to_check.name = "Unidentified Crate"

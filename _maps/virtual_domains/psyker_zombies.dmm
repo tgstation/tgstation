@@ -8,9 +8,10 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "c" = (
-/turf/open/space/basic,
-/area/space)
-"f" = (
+/obj/structure/sign/warning/directional/west,
+/turf/open/chasm/lavaland,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"d" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
@@ -19,18 +20,17 @@
 /obj/structure/sign/warning/directional/east,
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"j" = (
-/obj/machinery/door/airlock/abductor,
-/obj/effect/mapping_helpers/airlock/abandoned,
+"m" = (
+/obj/effect/mob_spawn/corpse/human/zombie,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"n" = (
+/obj/structure/mystery_box/guns,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
-"p" = (
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -38,33 +38,30 @@
 "t" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"v" = (
-/obj/effect/mob_spawn/corpse/human/zombie,
+"u" = (
+/obj/effect/mob_spawn/ghost_role/human/zombie,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"w" = (
-/obj/effect/spawner/random/trash/caution_sign,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"B" = (
+"A" = (
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"I" = (
-/obj/effect/mine/shrapnel,
+"D" = (
+/obj/effect/spawner/random/trash/caution_sign,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"J" = (
-/obj/structure/sign/warning/directional/east,
+"G" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"I" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "K" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"L" = (
-/obj/structure/mystery_box/guns,
-/turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "O" = (
 /obj/effect/landmark/bitrunning/safehouse_spawn,
@@ -74,15 +71,12 @@
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "R" = (
-/turf/open/floor/fakespace,
-/area/space)
-"T" = (
-/obj/effect/mob_spawn/ghost_role/human/zombie,
+/obj/effect/mine/shrapnel,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "V" = (
-/obj/structure/sign/warning/directional/west,
-/turf/open/chasm/lavaland,
+/obj/structure/sign/warning/directional/east,
+/turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "W" = (
 /obj/effect/mob_spawn/corpse/human/cyber_police,
@@ -169,7 +163,7 @@ a
 Y
 Y
 Y
-I
+R
 Y
 Y
 Y
@@ -193,7 +187,7 @@ a
 W
 X
 Y
-j
+I
 Y
 Y
 Y
@@ -265,7 +259,7 @@ a
 a
 a
 a
-I
+R
 Y
 a
 o
@@ -288,7 +282,7 @@ a
 Y
 Y
 a
-I
+R
 Y
 Y
 a
@@ -328,13 +322,13 @@ Y
 Y
 a
 a
-a
-a
-a
-a
-a
-a
-a
+o
+o
+o
+o
+o
+o
+o
 "}
 (9,1,1) = {"
 o
@@ -345,7 +339,7 @@ W
 Y
 Y
 Y
-w
+D
 Y
 a
 X
@@ -354,17 +348,17 @@ Y
 Y
 Y
 Y
-I
+R
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (10,1,1) = {"
 o
@@ -387,14 +381,14 @@ Q
 Q
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (11,1,1) = {"
 o
@@ -417,14 +411,14 @@ Q
 Q
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (12,1,1) = {"
 o
@@ -443,18 +437,18 @@ Y
 Y
 Y
 Y
-w
+D
 Y
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (13,1,1) = {"
 o
@@ -472,19 +466,19 @@ a
 Y
 a
 Y
-I
+R
 Y
 Y
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (14,1,1) = {"
 o
@@ -493,7 +487,7 @@ a
 Y
 Y
 Y
-I
+R
 a
 Y
 Y
@@ -507,14 +501,14 @@ Y
 Y
 Y
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (15,1,1) = {"
 o
@@ -537,14 +531,14 @@ Y
 Y
 X
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (16,1,1) = {"
 o
@@ -567,28 +561,28 @@ a
 a
 a
 a
-c
-c
-c
-c
-c
-c
-c
 a
+a
+a
+a
+a
+a
+a
+o
 "}
 (17,1,1) = {"
 o
 o
 a
 Y
-J
+V
 Y
 a
 a
 Y
 Y
 Y
-f
+d
 Y
 Y
 Y
@@ -603,8 +597,8 @@ t
 t
 t
 O
-c
 a
+o
 "}
 (18,1,1) = {"
 o
@@ -624,7 +618,7 @@ Y
 Y
 Y
 a
-L
+n
 Y
 Y
 t
@@ -633,8 +627,8 @@ t
 t
 t
 t
-c
 a
+o
 "}
 (19,1,1) = {"
 o
@@ -644,7 +638,7 @@ Q
 Q
 Q
 a
-a
+X
 Y
 Y
 a
@@ -663,8 +657,8 @@ t
 t
 t
 t
-c
 a
+o
 "}
 (20,1,1) = {"
 o
@@ -674,27 +668,27 @@ Q
 Q
 Q
 a
+Y
+Y
+Y
 a
 Y
 Y
+Y
+Y
+Y
+A
+Y
+Y
+Y
+t
+t
+t
+t
+t
+t
 a
-Y
-Y
-Y
-Y
-Y
-B
-Y
-Y
-Y
-t
-t
-t
-t
-t
-t
-c
-a
+o
 "}
 (21,1,1) = {"
 o
@@ -723,8 +717,8 @@ t
 t
 t
 t
-c
 a
+o
 "}
 (22,1,1) = {"
 o
@@ -744,7 +738,7 @@ Y
 Y
 Y
 a
-L
+n
 Y
 Y
 t
@@ -753,8 +747,8 @@ t
 t
 t
 t
-c
 a
+o
 "}
 (23,1,1) = {"
 o
@@ -783,8 +777,8 @@ t
 t
 t
 r
-c
 a
+o
 "}
 (24,1,1) = {"
 o
@@ -807,25 +801,25 @@ a
 a
 a
 a
-c
-c
-c
-c
-c
-c
-c
 a
+a
+a
+a
+a
+a
+a
+o
 "}
 (25,1,1) = {"
 o
 o
 a
-V
+c
 Q
 a
 a
 a
-B
+A
 a
 a
 a
@@ -833,18 +827,18 @@ a
 a
 a
 Y
-I
+R
 Y
 a
 a
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (26,1,1) = {"
 o
@@ -855,7 +849,7 @@ Q
 a
 a
 W
-T
+u
 W
 a
 a
@@ -866,45 +860,45 @@ Y
 Y
 Y
 a
-R
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (27,1,1) = {"
 o
 o
 a
-I
-Y
-B
-Y
-T
-Y
-a
-a
-a
-Y
-Y
-I
-Y
-Y
-a
-a
 R
-c
-c
-c
-c
-c
-c
-c
+Y
+A
+Y
+u
+Y
 a
+a
+a
+Y
+Y
+R
+Y
+Y
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (28,1,1) = {"
 o
@@ -913,7 +907,7 @@ a
 Y
 X
 a
-p
+G
 X
 X
 a
@@ -923,18 +917,18 @@ Y
 Y
 Y
 Y
-I
-a
-c
 R
-c
-c
-c
-c
-c
-c
-c
 a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (29,1,1) = {"
 o
@@ -955,16 +949,16 @@ a
 a
 a
 a
-c
-R
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (30,1,1) = {"
 o
@@ -985,16 +979,16 @@ Y
 Y
 X
 a
-R
-R
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (31,1,1) = {"
 o
@@ -1012,19 +1006,19 @@ a
 Y
 Y
 Y
-v
+m
 a
 a
-R
-R
-c
-c
-c
-c
-c
-c
-c
-a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
 "}
 (32,1,1) = {"
 o
@@ -1035,7 +1029,7 @@ Y
 Y
 a
 Y
-I
+R
 a
 a
 a
@@ -1048,13 +1042,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+o
+o
+o
+o
+o
+o
+o
 "}
 (33,1,1) = {"
 o
@@ -1091,7 +1085,7 @@ o
 o
 o
 a
-I
+R
 Y
 Y
 Y
@@ -1102,7 +1096,7 @@ a
 a
 a
 Y
-v
+m
 Y
 W
 i
