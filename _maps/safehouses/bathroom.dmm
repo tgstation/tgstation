@@ -22,9 +22,12 @@
 /area/virtual_domain/safehouse)
 "v" = (
 /obj/machinery/light/small/blacklight/directional/east,
-/obj/effect/spawner/random/medical/patient_stretcher,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/vehicle/ridden/wheelchair,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "x" = (
@@ -59,10 +62,8 @@
 /area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
-	dir = 4;
-	pixel_x = -6;
-	pixel_y = 5
+/obj/structure/toiletbong{
+	dir = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
