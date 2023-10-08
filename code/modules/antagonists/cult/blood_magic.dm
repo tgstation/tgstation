@@ -687,9 +687,7 @@
 					var/datum/wound/iter_wound = present_wounds
 					var/potential_healing = max(round(uses * 0.5), 0, 50)
 					if(istype(iter_wound, /datum/wound/blunt/bone))
-						var/datum/wound/blunt/bone/iter_bone_wound = iter_wound
-						if(iter_bone_wound.cult_recovering)
-							continue
+						continue
 					if(potential_healing <= 50)
 						iter_wound.on_cult_heal(potential_healing)
 						to_chat(user,span_danger("You use the last of your blood rites to being to restore [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] wounds as best as you can!"))

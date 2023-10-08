@@ -22,8 +22,6 @@
 	var/gelled
 	/// Have we been taped?
 	var/taped
-	/// Are we being healed by cult magic?
-	var/cult_recovering
 	/// If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default
 	var/regen_ticks_needed
 	/// Our current counter for gel + surgical tape regeneration
@@ -89,7 +87,7 @@
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
 	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
-	if(!gelled || (!taped && !is_bone_limb) || !cult_recovering)
+	if(!gelled || (!taped && !is_bone_limb))
 		return
 
 	regen_ticks_current++
@@ -99,7 +97,7 @@
 		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
 
-	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick) && !cult_recovering)
+	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
 		victim.adjustStaminaLoss(rand(2, severity * 2.5))
 		if(prob(33))
@@ -393,17 +391,13 @@
 		examine_desc = "has an unsettling indent, with bits of skull poking out"
 	. = ..()
 
-/datum/wound/blunt/bone/on_cult_heal(healing_amount)
-	. = ..()
-	cult_recovery(healing_amount)
-
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
 	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
 		return skelly_gel(I, user)
 
-	if(gelled || cult_recovering) //We convince the user that the target has been gelled if they've been cult healed.
+	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
 		return TRUE
 
@@ -443,7 +437,7 @@
 
 /// skellies are less averse to bone gel, since they're literally all bone
 /datum/wound/blunt/bone/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
-	if(gelled || cult_recovering) //We convince the user that the target has been gelled if they've been cult healed.
+	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
 		return
 
@@ -468,7 +462,7 @@
 	if(!gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] must be coated with bone gel to perform this emergency operation!"))
 		return TRUE
-	if(taped || cult_recovering) //We convince the user that the target has been taped if they've been cult healed.
+	if(taped)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already wrapped in [I.name] and reforming!"))
 		return TRUE
 
@@ -488,15 +482,6 @@
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], !"), span_green("You finish applying [I] to your [limb.plaintext_zone], and you immediately begin to feel your bones start to reform!"))
 
 	taped = TRUE
-	processes = TRUE
-	return TRUE
-
-/// if the person has been healed by some kind of cult effect, such as the blood rites spell or the offer rune. If we're already healing, we decrease the time we have to wait for the wound to heal.
-/datum/wound/blunt/bone/proc/cult_recovery(amount_healed)
-	if(cult_recovering)
-		return TRUE
-	cult_recovering = TRUE
-	regen_ticks_needed *=2
 	processes = TRUE
 	return TRUE
 
