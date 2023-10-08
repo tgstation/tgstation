@@ -41,6 +41,8 @@
 /obj/structure/spawner/attackby(obj/item/item, mob/user, params)
 	if(scanner_taggable && is_type_in_list(item, scanner_types))
 		gps_tag(user)
+	else
+		. = ..()
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
 /obj/structure/spawner/proc/gps_tag(mob/user)
