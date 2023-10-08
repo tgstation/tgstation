@@ -25,10 +25,8 @@
 
 	/// The colors we can be
 	var/possible_colors = list(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)
-	/// The color we are. If starlight_color is not set, we also become the starlight color
+	/// The color we are
 	var/parallax_color
-	/// The color we give to starlight
-	var/starlight_color
 
 /atom/movable/screen/parallax_layer/random/space_gas/get_random_look()
 	parallax_color = parallax_color || pick(possible_colors)
@@ -37,13 +35,9 @@
 	parallax_color = twin.parallax_color
 	add_atom_colour(parallax_color, ADMIN_COLOUR_PRIORITY)
 
-/atom/movable/screen/parallax_layer/random/space_gas/apply_global_effects()
-	set_starlight(starlight_color || parallax_color)
-
 /// Space gas but green for the radioactive nebula station trait
 /atom/movable/screen/parallax_layer/random/space_gas/radioactive
 	parallax_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
-	starlight_color = COLOR_VIBRANT_LIME
 
 /// Big asteroid rocks appear in the background
 /atom/movable/screen/parallax_layer/random/asteroids
