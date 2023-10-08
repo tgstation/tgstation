@@ -1268,7 +1268,8 @@
 /area/centcom/tdome/observation)
 "fl" = (
 /obj/machinery/door/airlock/centcom{
-	dir = 4
+	dir = 4;
+	name = "Softie's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/carpet/purple,
@@ -3351,7 +3352,7 @@
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-/obj/effect/spawner/random/special_lighter,
+/obj/item/lighter/skull,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
 "ms" = (
@@ -4910,6 +4911,7 @@
 /area/centcom/central_command_areas/ferry)
 "se" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/belt/utility/full/engi,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/admin)
 "sf" = (
@@ -7792,6 +7794,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"CN" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Vicky's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "CP" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
@@ -8548,7 +8557,7 @@
 /area/centcom/central_command_areas/admin/storage)
 "Gt" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Master Trapp's Office"
+	name = "Trapp's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
@@ -11214,6 +11223,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"Rt" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
+/turf/open/floor/carpet/purple,
+/area/centcom/central_command_areas/admin)
 "Ru" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -12179,6 +12194,8 @@
 /area/centcom/central_command_areas/admin)
 "Vc" = (
 /obj/structure/table/reinforced,
+/obj/item/flashlight/lamp,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/admin)
 "Vd" = (
@@ -12942,7 +12959,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "Yl" = (
-/obj/machinery/door/airlock/wood,
+/obj/machinery/door/airlock/wood{
+	name = "Gabbie's Office"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
@@ -45190,7 +45209,7 @@ Pl
 yC
 yC
 yg
-CS
+CN
 cF
 cF
 cF
@@ -51883,7 +51902,7 @@ NK
 pi
 pi
 On
-Vc
+Rt
 Vc
 DM
 se
