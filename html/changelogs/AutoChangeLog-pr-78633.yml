@@ -1,9 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "Quantum servers now talk over supply channel when they're done cooling off. Go outside!"
-  - bugfix: "You can no longer use dragon swoop to bypass cordons."
-  - bugfix: "Netpod brain damage is now properly reduced upon server upgrades."
-  - bugfix: "Fixed an bug where swapping bodies in vdom prevented you from disconnecting."
-  - bugfix: "Fixed a bug where a quantum server could get locked out of loading new domains."
-  - bugfix: "Changed quantum console UI to display \"no bandwidth\" rather than \"none\""

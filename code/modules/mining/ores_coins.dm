@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			return
 
 	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
-		GibtoniteReaction(user)
+		GibtoniteReaction(user, "A resonator has primed for detonation a")
 		return
 
 	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
@@ -294,14 +294,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return ..()
 
 /obj/item/gibtonite/bullet_act(obj/projectile/P)
-	GibtoniteReaction(P.firer)
+	GibtoniteReaction(P.firer, "A projectile has primed for detonation a")
 	return ..()
 
 /obj/item/gibtonite/ex_act()
-	GibtoniteReaction(null, 1)
+	GibtoniteReaction(null, "An explosion has primed for detonation a")
 	return TRUE
 
-/obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
+/obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by)
 	if(primed)
 		return
 	primed = TRUE
@@ -311,18 +311,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(!is_mining_level(z))//Only annoy the admins ingame if we're triggered off the mining zlevel
 		notify_admins = TRUE
 
-	if(triggered_by == 1)
-		log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
-	else if(triggered_by == 2)
-		var/turf/bombturf = get_turf(src)
-		if(notify_admins)
-			message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-		var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
-		log_game(bomb_message)
-		GLOB.bombers += bomb_message
-	else
+	if(user)
 		user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
-		log_bomber(user, "has primed a", src, "for detonation", notify_admins)
+
+	var/attacher_text = attacher ? "Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]" : null
+
+	if(triggered_by)
+		log_bomber(user, triggered_by, src, attacher_text, notify_admins)
+	else
+		log_bomber(user, "Something has primed a", src, "for detonation.[attacher_text ? " " : ""][attacher_text]", notify_admins)
+
 	det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)

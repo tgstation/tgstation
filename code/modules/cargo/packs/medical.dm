@@ -89,6 +89,7 @@
 					/obj/item/reagent_containers/cup/beaker/large,
 					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/stack/medical/gauze,
+					/obj/item/storage/box/bandages,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
