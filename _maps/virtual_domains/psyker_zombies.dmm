@@ -2,6 +2,10 @@
 "a" = (
 /turf/closed/indestructible/binary,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"b" = (
+/obj/structure/mystery_box/guns,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "c" = (
 /turf/open/space/basic,
 /area/space)
@@ -9,10 +13,6 @@
 /obj/structure/closet/crate/hydroponics,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"l" = (
-/obj/structure/mystery_box/guns,
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
@@ -31,9 +31,6 @@
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"L" = (
-/turf/open/floor/fakespace,
-/area/space)
 "M" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/fakespace,
@@ -42,6 +39,9 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"R" = (
+/turf/open/floor/fakespace,
+/area/space)
 "V" = (
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -279,7 +279,7 @@ V
 V
 V
 V
-V
+a
 a
 a
 a
@@ -309,7 +309,7 @@ V
 V
 V
 V
-V
+a
 c
 c
 c
@@ -339,7 +339,7 @@ V
 a
 a
 V
-V
+a
 c
 c
 c
@@ -369,7 +369,7 @@ V
 V
 a
 V
-V
+a
 c
 c
 c
@@ -459,7 +459,7 @@ W
 W
 W
 W
-W
+a
 c
 c
 c
@@ -489,7 +489,7 @@ W
 W
 W
 W
-W
+a
 c
 c
 c
@@ -519,7 +519,7 @@ W
 W
 W
 W
-W
+a
 c
 c
 c
@@ -549,7 +549,7 @@ W
 W
 W
 W
-W
+a
 t
 t
 t
@@ -579,7 +579,7 @@ W
 W
 W
 W
-W
+a
 t
 t
 t
@@ -609,9 +609,9 @@ W
 W
 W
 W
-W
+a
 t
-l
+b
 t
 t
 t
@@ -669,7 +669,7 @@ W
 W
 W
 W
-W
+a
 t
 t
 t
@@ -699,7 +699,7 @@ W
 W
 W
 W
-W
+a
 t
 t
 t
@@ -729,7 +729,7 @@ W
 W
 W
 W
-W
+a
 t
 t
 t
@@ -759,7 +759,7 @@ W
 W
 W
 W
-W
+a
 c
 c
 c
@@ -786,9 +786,9 @@ V
 V
 V
 V
+W
 a
 a
-V
 a
 c
 c
@@ -816,10 +816,10 @@ V
 V
 V
 V
+W
+W
 a
-V
-V
-L
+R
 c
 c
 c
@@ -847,9 +847,9 @@ a
 V
 V
 V
-V
-V
-L
+a
+a
+R
 c
 c
 c
@@ -877,9 +877,9 @@ a
 A
 V
 V
-V
-L
-L
+a
+R
+R
 c
 c
 c
@@ -907,9 +907,9 @@ a
 A
 V
 V
-V
-L
-L
+a
+R
+R
 c
 c
 c
@@ -937,9 +937,9 @@ a
 V
 V
 V
-V
-V
-L
+a
+a
+R
 c
 c
 c
@@ -968,8 +968,8 @@ V
 V
 a
 a
-V
-L
+a
+R
 c
 c
 c
@@ -998,8 +998,8 @@ V
 V
 V
 a
-V
-V
+a
+a
 a
 a
 a
@@ -1042,7 +1042,7 @@ o
 (34,1,1) = {"
 o
 o
-W
+a
 V
 V
 V
@@ -1079,9 +1079,9 @@ a
 a
 a
 W
-W
-W
-W
+a
+a
+a
 a
 a
 a
