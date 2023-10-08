@@ -488,8 +488,7 @@
 
 			var/datum/wound/bloodiest_wound
 
-			for(var/i in affected_mob.all_wounds)
-				var/datum/wound/iter_wound = i
+			for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 				if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
 					bloodiest_wound = iter_wound
 
