@@ -8,10 +8,6 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
-"i" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
 "o" = (
 /obj/effect/decal/cleanable/wrapping/pinata/syndie,
 /turf/open/floor/iron/freezer,
@@ -19,6 +15,10 @@
 "p" = (
 /obj/item/kirbyplants/fern,
 /obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain/safehouse)
+"q" = (
+/obj/structure/urinal/directional/west,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "s" = (
@@ -59,10 +59,10 @@
 /area/virtual_domain/safehouse)
 "E" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/iron,
+/turf/closed/wall/mineral/silver,
 /area/virtual_domain/safehouse)
 "G" = (
-/turf/closed/wall/mineral/iron,
+/turf/closed/wall/mineral/silver,
 /area/virtual_domain/safehouse)
 "J" = (
 /obj/structure/railing,
@@ -71,6 +71,15 @@
 	dir = 4
 	},
 /turf/open/floor/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/toilet{
+	dir = 4;
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
@@ -94,18 +103,18 @@
 (1,1,1) = {"
 G
 G
-i
+G
 E
 G
 G
 "}
 (2,1,1) = {"
-i
+G
 Z
-N
-D
+M
+q
 y
-i
+G
 "}
 (3,1,1) = {"
 G
@@ -132,7 +141,7 @@ T
 G
 "}
 (6,1,1) = {"
-i
+G
 s
 J
 z
@@ -142,7 +151,7 @@ e
 (7,1,1) = {"
 G
 G
-i
+G
 G
 G
 G
