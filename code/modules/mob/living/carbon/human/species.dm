@@ -875,6 +875,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
+			if(accessory.is_emissive)
+				standing += emissive_appearance_copy(accessory_overlay, source)
 
 			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
 				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
@@ -890,6 +892,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
 
 				standing += inner_accessory_overlay
+				if(accessory.is_emissive)
+					standing += emissive_appearance_copy(accessory_overlay, source)
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()
