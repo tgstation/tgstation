@@ -20,9 +20,14 @@
 
 /obj/machinery/rnd/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		connect_techweb(SSresearch.science_tech)
 	set_wires(new /datum/wires/rnd(src))
+
+/obj/machinery/rnd/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+	if(stored_research)
+		on_connected_techweb()
 
 /obj/machinery/rnd/Destroy()
 	if(stored_research)
@@ -31,10 +36,17 @@
 	QDEL_NULL(wires)
 	return ..()
 
+///Called when attempting to connect the machine to a techweb, forgetting the old.
 /obj/machinery/rnd/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		log_research("[src] disconnected from techweb [stored_research] when connected to [new_techweb].")
 	stored_research = new_techweb
+	if(!isnull(stored_research))
+		on_connected_techweb()
+
+///Called post-connection to a new techweb.
+/obj/machinery/rnd/proc/on_connected_techweb()
+	SHOULD_CALL_PARENT(FALSE)
 
 /obj/machinery/rnd/proc/shock(mob/user, prb)
 	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock

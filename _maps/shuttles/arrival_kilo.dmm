@@ -231,7 +231,8 @@
 /area/shuttle/arrival)
 "aT" = (
 /obj/machinery/requests_console/directional/east{
-	department = "Arrivals shuttle"
+	department = "Arrivals shuttle";
+	name = "Arrival Shuttle Requests Console"
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,

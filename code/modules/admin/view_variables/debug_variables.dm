@@ -41,6 +41,10 @@
 		item = "[name_part] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
+	else if(isappearance(value))
+		var/image/actually_an_appearance = value
+		item = "[name_part] = /appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
+
 	else if (isfile(value))
 		item = "[name_part] = <span class='value'>'[value]'</span>"
 
@@ -55,6 +59,7 @@
 				<tr><td>[M.c]</td><td>[M.f]</td><td>1</td></tr>
 			</tbody>
 			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} //TODO link to modify_transform wrapper for all matrices
+
 	else if (isdatum(value))
 		var/datum/DV = value
 		if ("[DV]" != "[DV.type]") //if the thing as a name var, lets use it.
@@ -90,7 +95,10 @@
 		for (var/i in GLOB.bitfields[name])
 			if (value & GLOB.bitfields[name][i])
 				flags += i
+		if(length(flags))
 			item = "[name_part] = [VV_HTML_ENCODE(jointext(flags, ", "))]"
+		else
+			item = "[name_part] = NONE"
 	else
 		item = "[name_part] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 

@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const hereticRed = {
   color: '#e03c3c',
@@ -46,14 +46,16 @@ type KnowledgeInfo = {
 
 type Info = {
   charges: number;
+  side_charges: number;
   total_sacrifices: number;
   ascended: BooleanLike;
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 const IntroductionSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
+  const { data, act } = useBackend<Info>(context);
+  const { objectives, ascended, can_change_objective } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
@@ -62,20 +64,33 @@ const IntroductionSection = (props, context) => {
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
-
             <GuideSection />
             <Stack.Divider />
-
             <InformationSection />
             <Stack.Divider />
-
-            <Stack.Item>
-              <ObjectivePrintout
-                fill
-                titleMessage="In order to ascend, you have these tasks to fulfill:"
-                objectives={objectives}
-              />
-            </Stack.Item>
+            {!ascended && (
+              <Stack.Item>
+                <ObjectivePrintout
+                  fill
+                  titleMessage={
+                    can_change_objective
+                      ? 'In order to ascend, you have these tasks to fulfill'
+                      : 'Use your dark knowledge to fulfil your personal goal'
+                  }
+                  objectives={objectives}
+                  objectiveFollowup={
+                    <ReplaceObjectivesButton
+                      can_change_objective={can_change_objective}
+                      button_title={'Reject Ascension'}
+                      button_colour={'red'}
+                      button_tooltip={
+                        'Turn your back on the Mansus to accomplish a task of your choosing. Selecting this option will prevent you from ascending!'
+                      }
+                    />
+                  }
+                />
+              </Stack.Item>
+            )}
           </Stack>
         </Section>
       </Stack.Item>
@@ -164,7 +179,7 @@ const GuideSection = () => {
 
 const InformationSection = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { charges, total_sacrifices, ascended } = data;
+  const { charges, side_charges, total_sacrifices, ascended } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
@@ -186,6 +201,13 @@ const InformationSection = (props, context) => {
           <span style={hereticBlue}>
             knowledge point{charges !== 1 ? 's' : ''}
           </span>
+          {!!side_charges && (
+            <span>
+              {' '}
+              and <b>{side_charges}</b> side point
+              {side_charges !== 1 ? 's' : ''}
+            </span>
+          )}{' '}
           .
         </Stack.Item>
         <Stack.Item>
@@ -260,7 +282,7 @@ const KnowledgeShop = (props, context) => {
 
 const ResearchInfo = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { charges } = data;
+  const { charges, side_charges } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
@@ -270,7 +292,14 @@ const ResearchInfo = (props, context) => {
             You have <b>{charges || 0}</b>&nbsp;
             <span style={hereticBlue}>
               knowledge point{charges !== 1 ? 's' : ''}
-            </span>{' '}
+            </span>
+            {!!side_charges && (
+              <span>
+                {' '}
+                and <b>{side_charges}</b> side point
+                {side_charges !== 1 ? 's' : ''}
+              </span>
+            )}{' '}
             to spend.
           </Stack.Item>
           <Stack.Item grow>
@@ -292,7 +321,7 @@ export const AntagInfoHeretic = (props, context) => {
   const [currentTab, setTab] = useLocalState(context, 'currentTab', 0);
 
   return (
-    <Window width={675} height={625}>
+    <Window width={675} height={635}>
       <Window.Content
         style={{
           'background-image': 'none',

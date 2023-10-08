@@ -62,10 +62,3 @@
 		for(var/obj/item/I in D.held_items)
 			I.screen_loc = null
 			D.client.screen -= I
-
-
-//Dextrous simple mobs can use hands!
-/mob/living/simple_animal/create_mob_hud()
-	if(dextrous)
-		hud_type = dextrous_hud_type
-	return ..()

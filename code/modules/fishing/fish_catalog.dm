@@ -28,7 +28,7 @@
 			fish_data["temp_max"] = initial(fish.required_temperature_max)
 			fish_data["icon"] = sanitize_css_class_name("[initial(fish.icon)][initial(fish.icon_state)]")
 			fish_data["color"] = initial(fish.color)
-			fish_data["source"] = initial(fish.available_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
+			fish_data["source"] = initial(fish.random_case_rarity) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
 			fish_data["size"] = initial(fish.average_size)
 			fish_data["weight"] = initial(fish.average_weight)
 			var/datum/reagent/food_type = initial(fish.food)
@@ -64,19 +64,10 @@
 	. = list()
 	//// Where can it be found - iterate fish sources, how should this handle key
 	var/list/spot_descriptions = list()
-	for(var/datum/fish_source/fishing_spot_type as anything in subtypesof(/datum/fish_source))
-		var/datum/fish_source/temp = new fishing_spot_type
-		if((fish_type in temp.fish_table) && temp.catalog_description)
-			spot_descriptions += temp.catalog_description
+	for(var/datum/fish_source/source as anything in GLOB.preset_fish_sources)
+		if(source.catalog_description && (fish_type in source.fish_table))
+			spot_descriptions += source.catalog_description
 	.["spots"] = english_list(spot_descriptions, nothing_text = "Unknown")
-	///Difficulty descriptor
-	switch(initial(fishy.fishing_difficulty_modifier))
-		if(-INFINITY to 10)
-			.["difficulty"] = "Easy"
-		if(20 to 30)
-			.["difficulty"] = "Medium"
-		else
-			.["difficulty"] = "Hard"
 	var/list/fish_list_properties = collect_fish_properties()
 	var/list/fav_bait = fish_list_properties[fishy][NAMEOF(fishy, favorite_bait)]
 	var/list/disliked_bait = fish_list_properties[fishy][NAMEOF(fishy, disliked_bait)]
@@ -92,12 +83,22 @@
 	// Fish traits description
 	var/list/trait_descriptions = list()
 	var/list/fish_traits = fish_list_properties[fishy][NAMEOF(fishy, fish_traits)]
+	var/fish_difficulty = initial(fishy.fishing_difficulty_modifier)
 	for(var/fish_trait in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 		trait_descriptions += trait.catalog_description
+		fish_difficulty += trait.added_difficulty
 	if(!length(trait_descriptions))
 		trait_descriptions += "This fish exhibits no special behavior."
 	.["traits"] = trait_descriptions
+	///Difficulty descriptor
+	switch(fish_difficulty)
+		if(-INFINITY to 9)
+			.["difficulty"] = "Easy"
+		if(10 to 19)
+			.["difficulty"] = "Medium"
+		else
+			.["difficulty"] = "Hard"
 	return .
 
 /obj/item/book/fish_catalog/ui_assets(mob/user)

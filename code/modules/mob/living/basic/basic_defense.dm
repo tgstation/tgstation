@@ -148,7 +148,7 @@
 				apply_damage(500, damagetype = BRUTE)
 			else
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			var/bloss = 60
@@ -165,6 +165,9 @@
 	return TRUE
 
 /mob/living/basic/blob_act(obj/structure/blob/attacking_blob)
+	. = ..()
+	if (!.)
+		return
 	apply_damage(20, damagetype = BRUTE)
 
 /mob/living/basic/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)

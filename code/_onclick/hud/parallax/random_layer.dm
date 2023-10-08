@@ -1,7 +1,7 @@
 /// Parallax layers that vary between rounds. Has come code to make sure we all have the same one
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
-	speed = 3
+	speed = 2
 	layer = 3
 
 /atom/movable/screen/parallax_layer/random/Initialize(mapload, datum/hud/hud_owner, template, atom/movable/screen/parallax_layer/random/twin)

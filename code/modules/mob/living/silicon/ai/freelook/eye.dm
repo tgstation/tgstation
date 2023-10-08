@@ -93,32 +93,33 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/camera/ai_eye/proc/setLoc(destination, force_update = FALSE)
-	if(ai)
-		if(!isturf(ai.loc))
-			return
-		destination = get_turf(destination)
-		if(!force_update && (destination == get_turf(src)) )
-			return //we are already here!
-		if (destination)
-			abstract_move(destination)
-		else
-			moveToNullspace()
-		if(use_static)
-			ai.camera_visibility(src)
-		if(ai.client && !ai.multicam_on)
-			ai.client.set_eye(src)
-		update_ai_detect_hud()
-		update_parallax_contents()
-		//Holopad
-		if(istype(ai.current, /obj/machinery/holopad))
-			var/obj/machinery/holopad/H = ai.current
-			if(!H.move_hologram(ai, destination))
-				H.clear_holo(ai)
+	if(!ai)
+		return
+	if(!isturf(ai.loc))
+		return
+	destination = get_turf(destination)
+	if(!force_update && (destination == get_turf(src)))
+		return //we are already here!
+	if (destination)
+		abstract_move(destination)
+	else
+		moveToNullspace()
+	if(use_static)
+		ai.camera_visibility(src)
+	if(ai.client && !ai.multicam_on)
+		ai.client.set_eye(src)
+	update_ai_detect_hud()
+	update_parallax_contents()
+	//Holopad
+	if(istype(ai.current, /obj/machinery/holopad))
+		var/obj/machinery/holopad/H = ai.current
+		if(!H.move_hologram(ai, destination))
+			H.clear_holo(ai)
 
-		if(ai.camera_light_on)
-			ai.light_cameras()
-		if(ai.master_multicam)
-			ai.master_multicam.refresh_view()
+	if(ai.camera_light_on)
+		ai.light_cameras()
+	if(ai.master_multicam)
+		ai.master_multicam.refresh_view()
 
 /mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()
@@ -149,12 +150,14 @@
 	return ..()
 
 /atom/proc/move_camera_by_click()
-	if(isAI(usr))
-		var/mob/living/silicon/ai/AI = usr
-		if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
-			AI.cameraFollow = null
-			if (isturf(loc) || isturf(src))
-				AI.eyeobj.setLoc(src)
+	if(!isAI(usr))
+		return
+	var/mob/living/silicon/ai/AI = usr
+	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
+		if(AI.ai_tracking_tool.tracking)
+			AI.ai_tracking_tool.set_tracking(FALSE)
+		if (isturf(loc) || isturf(src))
+			AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
@@ -178,8 +181,8 @@
 	else
 		user.sprint = initial
 
-	if(!user.tracking)
-		user.cameraFollow = null
+	if(user.ai_tracking_tool.tracking)
+		user.ai_tracking_tool.set_tracking(FALSE)
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
@@ -188,7 +191,8 @@
 		H.clear_holo(src)
 	else
 		current = null
-	cameraFollow = null
+	if(ai_tracking_tool && ai_tracking_tool.tracking)
+		ai_tracking_tool.set_tracking(FALSE)
 	unset_machine()
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
@@ -227,7 +231,7 @@
 
 /mob/camera/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
+	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && GLOB.cameranet.checkCameraVis(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/effect/overlay/ai_detect_hud

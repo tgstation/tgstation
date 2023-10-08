@@ -52,14 +52,15 @@
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
-			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
-			new /obj/item/switchblade(src) //I'll count this as 2 tc
+			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/implanter/storage(src) // 6 tc
 
 		if(KIT_STEALTHY)
 			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
@@ -116,7 +117,7 @@
 			new /obj/item/ai_module/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
-			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
@@ -137,7 +138,7 @@
 
 		if(KIT_SABOTAGE)
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
-			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
 			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
@@ -366,6 +367,12 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
 
+/obj/item/storage/box/syndie_kit/imp_deniability
+	name = "tactical deniability implant box"
+
+/obj/item/storage/box/syndie_kit/imp_deniability/PopulateContents()
+	new /obj/item/implanter/tactical_deniability(src)
+
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
 
@@ -588,19 +595,30 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+/obj/item/storage/box/syndie_kit/manhack_grenades/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/spawnergrenade/manhacks(src)
+
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
 	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 
+/obj/item/storage/box/syndie_kit/demoman/PopulateContents()
+	new /obj/item/gun/grenadelauncher(src)
+	new /obj/item/storage/belt/grenade/full(src)
+	if(prob(1))
+		new /obj/item/clothing/head/hats/hos/shako(src)
+		new /obj/item/mod/module/hat_stabilizer(src)
+
 /// Surplus Ammo Box
 
-/obj/item/storage/box/syndie_kit/surplus
+/obj/item/storage/box/syndie_kit/sniper_surplus
 	name = "surplus .50 BMG magazine box"
 	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
 
-/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 
@@ -729,13 +747,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
-	var/allowed = FALSE
+	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
-			allowed = TRUE
+		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+			faker = TRUE
 
-	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -759,6 +777,17 @@
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
+
+/obj/item/storage/box/syndie_kit/poster_box
+	name = "syndicate poster pack"
+	desc = "Contains a variety of demotivational posters to ensure minimum productivity for the crew of any Nanotrasen station."
+
+	/// Number of posters this box contains when spawning.
+	var/poster_count = 3
+
+/obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
+	for(var/i in 1 to poster_count)
+		new /obj/item/poster/traitor(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

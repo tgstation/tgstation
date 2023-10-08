@@ -17,7 +17,7 @@
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
 		if(SSparallax.random_layer)
-			C.parallax_layers_cached += new SSparallax.random_layer.type(null, src, SSparallax.random_layer)
+			C.parallax_layers_cached += new SSparallax.random_layer.type(null, src, FALSE, SSparallax.random_layer)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, src)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
@@ -273,6 +273,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
+	// Parallax layers are independant of hud, they care about client
+	// Not doing this will just create a bunch of hard deletes
+	hud = null
 
 	if(template)
 		return

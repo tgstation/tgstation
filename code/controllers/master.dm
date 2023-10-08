@@ -290,6 +290,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS_INIT_NONE,
 		SS_INIT_SUCCESS,
 		SS_INIT_NO_NEED,
+		SS_INIT_NO_MESSAGE,
 	)
 
 	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
@@ -335,7 +336,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if(SS_INIT_FAILURE)
 			message_prefix = "Failed to initialize [subsystem.name] subsystem after"
 			chat_warning = TRUE
-		if(SS_INIT_SUCCESS)
+		if(SS_INIT_SUCCESS, SS_INIT_NO_MESSAGE)
 			message_prefix = "Initialized [subsystem.name] subsystem within"
 		if(SS_INIT_NO_NEED)
 			// This SS is disabled or is otherwise shy.
@@ -348,7 +349,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/message = "[message_prefix] [seconds] second[seconds == 1 ? "" : "s"]!"
 	var/chat_message = chat_warning ? span_boldwarning(message) : span_boldannounce(message)
 
-	to_chat(world, chat_message)
+	if(result != SS_INIT_NO_MESSAGE)
+		to_chat(world, chat_message)
 	log_world(message)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)

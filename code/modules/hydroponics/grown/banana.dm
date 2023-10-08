@@ -25,7 +25,7 @@
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/banana = 0)
+	juice_typepath = /datum/reagent/consumable/banana
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/food/grown/banana/make_edible()
@@ -39,7 +39,7 @@
 		desc += " The curve on this one looks particularly acute."
 
 ///Clowns will always like bananas.
-/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
@@ -49,7 +49,6 @@
 	var/obj/item/grown/bananapeel/peel = .
 	if(istype(peel))
 		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
-		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -170,6 +169,7 @@
 
 /obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
+	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
 	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
 

@@ -29,6 +29,10 @@
 
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
+/datum/component/squashable/Destroy(force, silent)
+	on_squash_callback = null
+	return ..()
+
 ///Handles the squashing of the mob
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
@@ -68,7 +72,7 @@
 
 /datum/component/squashable/proc/Squish(mob/living/target)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
-		target.gib()
+		target.gib(DROP_ALL_REMAINS)
 	else
 		target.adjustBruteLoss(squash_damage)
 

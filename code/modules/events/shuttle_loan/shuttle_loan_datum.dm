@@ -17,6 +17,8 @@
 	. = ..()
 	if(!logging_desc)
 		stack_trace("No logging blurb set for [src.type]!")
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_LOANER_SHUTTLE))
+		bonus_points *= 1.15
 
 /// Spawns paths added to `spawn_list`, and passes empty shuttle turfs so you can spawn more complicated things like dead bodies.
 /datum/shuttle_loan_situation/proc/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
@@ -196,11 +198,11 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/basic/giant_spider)
-	spawn_list.Add(/mob/living/basic/giant_spider)
-	spawn_list.Add(/mob/living/basic/giant_spider/nurse)
+	spawn_list.Add(/mob/living/basic/spider/giant)
+	spawn_list.Add(/mob/living/basic/spider/giant)
+	spawn_list.Add(/mob/living/basic/spider/giant/nurse)
 	if(prob(50))
-		spawn_list.Add(/mob/living/basic/giant_spider/hunter)
+		spawn_list.Add(/mob/living/basic/spider/giant/hunter)
 
 	var/turf/victim_turf = pick_n_take(empty_shuttle_turfs)
 

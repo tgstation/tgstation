@@ -17,6 +17,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	health = 15
 	maxHealth = 15
+	mob_size = MOB_SIZE_SMALL
+	can_be_held = TRUE
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	speak_emote = list("sniffles", "twitches")
@@ -30,7 +32,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	butcher_results = list(/obj/item/food/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 1)
 	unsuitable_cold_damage = 0.5 // Cold damage is 0.5 here to account for low health on the rabbit.
 	unsuitable_heat_damage = 0.5 // Heat damage is 0.5 here to account for low health on the rabbit.
 	ai_controller = /datum/ai_controller/basic_controller/rabbit

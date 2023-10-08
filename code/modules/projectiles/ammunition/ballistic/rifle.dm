@@ -1,35 +1,40 @@
-// 7.62 (Nagant Rifle)
+// .310 Strilka (Sakhno Rifle)
 
-/obj/item/ammo_casing/a762
-	name = "7.62 bullet casing"
-	desc = "A 7.62 bullet casing."
-	icon_state = "762-casing"
-	caliber = CALIBER_A762
-	projectile_type = /obj/projectile/bullet/a762
+/obj/item/ammo_casing/strilka310
+	name = ".310 Strilka bullet casing"
+	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
+	icon_state = "310-casing"
+	caliber = CALIBER_STRILKA310
+	projectile_type = /obj/projectile/bullet/strilka310
 
-/obj/item/ammo_casing/a762/surplus
-	name = "7.62 surplus bullet casing"
-	desc = "A surplus 7.62 bullet casing."
-	projectile_type = /obj/projectile/bullet/a762/surplus
+/obj/item/ammo_casing/strilka310/Initialize(mapload)
+	. = ..()
 
-/obj/item/ammo_casing/a762/enchanted
-	projectile_type = /obj/projectile/bullet/a762/enchanted
+	AddElement(/datum/element/caseless)
 
-// 5.56mm (M-90gl Carbine)
+/obj/item/ammo_casing/strilka310/surplus
+	name = ".310 Strilka surplus bullet casing"
+	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
+	projectile_type = /obj/projectile/bullet/strilka310/surplus
 
-/obj/item/ammo_casing/a556
-	name = "5.56mm bullet casing"
-	desc = "A 5.56mm bullet casing."
-	caliber = CALIBER_A556
-	projectile_type = /obj/projectile/bullet/a556
+/obj/item/ammo_casing/strilka310/enchanted
+	projectile_type = /obj/projectile/bullet/strilka310/enchanted
 
-/obj/item/ammo_casing/a556/phasic
-	name = "5.56mm phasic bullet casing"
-	desc = "A 5.56mm phasic bullet casing."
-	projectile_type = /obj/projectile/bullet/a556/phasic
+// .223 (M-90gl Carbine)
 
-/obj/item/ammo_casing/a556/weak
-	projectile_type = /obj/projectile/bullet/a556/weak
+/obj/item/ammo_casing/a223
+	name = ".223 bullet casing"
+	desc = "A .223 bullet casing."
+	caliber = CALIBER_A223
+	projectile_type = /obj/projectile/bullet/a223
+
+/obj/item/ammo_casing/a223/phasic
+	name = ".223 phasic bullet casing"
+	desc = "A .223 phasic bullet casing."
+	projectile_type = /obj/projectile/bullet/a223/phasic
+
+/obj/item/ammo_casing/a223/weak
+	projectile_type = /obj/projectile/bullet/a223/weak
 
 // 40mm (Grenade Launcher)
 
@@ -39,3 +44,8 @@
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
+
+/obj/item/ammo_casing/a40mm/rubber
+	name = "40mm rubber shell"
+	desc = "A cased rubber slug. The big brother of the beanbag slug, this thing will knock someone out in one. Doesn't do so great against anyone in armor."
+	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm

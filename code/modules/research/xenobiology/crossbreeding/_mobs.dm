@@ -14,8 +14,7 @@ Slimecrossing Mobs
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-	convert_damage = TRUE
-	convert_damage_type = CLONE
+	convert_damage_type = TOX
 	possible_shapes = list(/mob/living/simple_animal/slime/transformed_slime)
 
 	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human

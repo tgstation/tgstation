@@ -40,7 +40,7 @@
 
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/job/psychologist
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	backpack_contents = list(
 		/obj/item/storage/pill_bottle/happinesspsych,
 		/obj/item/storage/pill_bottle/lsdpsych,
@@ -56,6 +56,7 @@
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	messenger = /obj/item/storage/backpack/messenger/med
 
 	pda_slot = ITEM_SLOT_BELT
 	skillchips = list(/obj/item/skillchip/job/psychology)

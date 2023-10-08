@@ -73,7 +73,6 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	small_sprite_type = /datum/action/small_sprite/megafauna/drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -273,7 +272,7 @@
 	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
-		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
 		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall

@@ -93,4 +93,8 @@ SUBSYSTEM_DEF(parallax)
 
 	random_layer = null
 
+/// Called at the end of SSstation setup, in-case we want to run some code that would otherwise be too early to run (like GLOB. stuff)
+/datum/controller/subsystem/parallax/proc/post_station_setup()
+	random_layer?.apply_global_effects()
+
 #undef PARALLAX_NONE

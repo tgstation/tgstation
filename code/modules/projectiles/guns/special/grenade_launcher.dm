@@ -16,6 +16,14 @@
 	. = ..()
 	. += "[grenades.len] / [max_grenades] grenades loaded."
 
+/obj/item/gun/grenadelauncher/apply_fantasy_bonuses(bonus)
+	. = ..()
+	max_grenades = modify_fantasy_variable("max_syringes", max_grenades, bonus, minimum = 1)
+
+/obj/item/gun/grenadelauncher/remove_fantasy_bonuses(bonus)
+	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
+	return ..()
+
 /obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 
 	if(istype(I, /obj/item/grenade/c4))

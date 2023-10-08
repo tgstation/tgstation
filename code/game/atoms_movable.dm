@@ -194,7 +194,6 @@
 		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
 			can_atmos_pass = ATMOS_PASS_YES
 			air_update_turf(TRUE, FALSE)
-		loc.handle_atom_del(src)
 
 	if(opacity)
 		RemoveElement(/datum/element/light_blocking)
@@ -580,6 +579,8 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
+	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
+		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 

@@ -38,6 +38,18 @@
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 
+/obj/item/reagent_containers/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(reagents)
+		reagents.maximum_volume = modify_fantasy_variable("maximum_volume", reagents.maximum_volume, bonus * 10, minimum = 5)
+	volume = modify_fantasy_variable("maximum_volume_beaker", volume, bonus * 10, minimum = 5)
+
+/obj/item/reagent_containers/remove_fantasy_bonuses(bonus)
+	if(reagents)
+		reagents.maximum_volume = reset_fantasy_variable("maximum_volume", reagents.maximum_volume)
+	volume = reset_fantasy_variable("maximum_volume_beaker", volume)
+	return ..()
+
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
 	if(isnum(vol) && vol > 0)
@@ -129,7 +141,7 @@
 		span_danger("You splash the contents of [src] onto [target][punctuation]"),
 		ignored_mobs = target,
 	)
-
+	SEND_SIGNAL(target, COMSIG_ATOM_SPLASHED)
 	if (ismob(target))
 		var/mob/target_mob = target
 		target_mob.show_message(
@@ -180,9 +192,9 @@
  */
 /obj/item/reagent_containers/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	M.losebreath += 2
-	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transfered_by = user, methods = INGEST)
+	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transferred_by = user, methods = INGEST)
 	if(source_item?.reagents)
-		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, methods = TOUCH)
+		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transferred_by = user, methods = TOUCH)
 
 	return ..()
 

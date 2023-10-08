@@ -1,0 +1,4 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - bugfix: "Spider types get properly checked again."

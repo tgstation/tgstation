@@ -1,7 +1,7 @@
 /obj/item/bodypart/head
 	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
-	icon = 'icons/mob/species/human/bodyparts.dmi'
+	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
 	body_zone = BODY_ZONE_HEAD
@@ -93,7 +93,7 @@
 	var/datum/worn_feature_offset/worn_face_offset
 
 /obj/item/bodypart/head/Destroy()
-	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
+	QDEL_NULL(brainmob) //order is sensitive, see warning in Exited() below
 	QDEL_NULL(brain)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
@@ -106,21 +106,21 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/handle_atom_del(atom/head_atom)
-	if(head_atom == brain)
+/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
+	if(gone == brain)
 		brain = null
 		update_icon_dropped()
 		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
 			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
 			brainmob.log_message(", brainmob, was left stranded in [src] without a brain", LOG_GAME)
-	if(head_atom == brainmob)
+	if(gone == brainmob)
 		brainmob = null
-	if(head_atom == eyes)
+	if(gone == eyes)
 		eyes = null
 		update_icon_dropped()
-	if(head_atom == ears)
+	if(gone == ears)
 		ears = null
-	if(head_atom == tongue)
+	if(gone == tongue)
 		tongue = null
 	return ..()
 
@@ -165,7 +165,6 @@
 				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
 			if(brainmob)
 				brainmob.container = null
-				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
@@ -191,9 +190,11 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-	real_name = owner.real_name
-	if(HAS_TRAIT(owner, TRAIT_HUSK))
-		real_name = "Unknown"
+	if(!isnull(owner))
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			real_name = "Unknown"
+		else
+			real_name = owner.real_name
 	update_hair_and_lips(dropping_limb, is_creating)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,8 +207,8 @@
 	if(dropped)
 		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
-			var/image/eye_left = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
-			var/image/eye_right = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
+			var/image/eye_left = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
+			var/image/eye_right = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
 			if(head_flags & HEAD_EYECOLOR)
 				if(eyes.eye_color_left)
 					eye_left.color = eyes.eye_color_left
@@ -226,7 +227,7 @@
 			. += eye_left
 			. += eye_right
 		else if(!eyes && (head_flags & HEAD_EYEHOLES))
-			var/image/no_eyes = image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+			var/image/no_eyes = image('icons/mob/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
@@ -244,9 +245,9 @@
 	return "The head of [real_name]"
 
 /obj/item/bodypart/head/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
@@ -257,8 +258,8 @@
 	head_flags = HEAD_LIPS|HEAD_DEBRAIN
 
 /obj/item/bodypart/head/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_head"
 	limb_id = BODYPART_ID_ALIEN
 	is_dimorphic = FALSE
@@ -270,8 +271,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/larva
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "larva_head"
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE

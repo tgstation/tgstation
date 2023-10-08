@@ -6,6 +6,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
+/obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
+	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
+
+/obj/item/grenade/flashbang/remove_grenade_fantasy_bonuses(quality)
+	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)

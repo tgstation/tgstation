@@ -216,7 +216,7 @@
 			return TRUE
 
 		if("purchase_loadout")
-			wizard_loadout(wizard, locate(params["id"]))
+			wizard_loadout(wizard, params["id"])
 			return TRUE
 
 /// Attempts to purchased the passed entry [to_buy] for [user].

@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/datum/callback/ev
+	var/datum/callback/activated
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
@@ -27,11 +27,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
-	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
+	activated = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
 
 /obj/machinery/keycard_auth/Destroy()
-	GLOB.keycard_events.clearEvent("triggerEvent", ev)
-	QDEL_NULL(ev)
+	GLOB.keycard_events.clearEvent("triggerEvent", activated)
+	activated = null
 	return ..()
 
 /obj/machinery/keycard_auth/ui_state(mob/user)

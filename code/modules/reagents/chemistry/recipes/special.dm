@@ -217,6 +217,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		return FALSE
 	required_reagents = req_reag
 
+	if (required_reagents.len == 0)
+		return FALSE
+
 	var/req_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
 	if(!req_catalysts)
 		return FALSE

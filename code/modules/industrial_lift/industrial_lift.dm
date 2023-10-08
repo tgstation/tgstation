@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
 					crushed.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-					crushed.gib(FALSE, FALSE, FALSE)
+					crushed.gib(DROP_ALL_REMAINS)
 				else
 					// Less violent landing simply crushes every bone in your body.
 					crushed.Paralyze(30 SECONDS, ignore_canstun = TRUE)
@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		var/list/atom/movable/foreign_contents_in_loc = list()
 
 		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
-			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable))
+			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable) && !istype(foreign_movable, /obj/effect/landmark/tram))
 				foreign_contents_in_loc += foreign_movable
 				continue
 

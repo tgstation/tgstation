@@ -102,6 +102,8 @@
 	var/tipped_status = MEDBOT_PANIC_NONE
 	///The name we got when we were tipped
 	var/tipper_name
+	///The trim type that will grant additional access to this medibot
+	var/datum/id_trim/additional_access = /datum/id_trim/job/paramedic
 
 	///Last announced healing a person in critical condition
 	COOLDOWN_DECLARE(last_patient_message)
@@ -111,7 +113,7 @@
 	COOLDOWN_DECLARE(last_tipping_action_voice)
 
 /mob/living/simple_animal/bot/medbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 /mob/living/simple_animal/bot/medbot/stationary
 	medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE
@@ -131,6 +133,41 @@
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
 	heal_amount = 5
+
+/mob/living/simple_animal/bot/medbot/nukie
+	name = "Oppenheimer"
+	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
+	skin = "bezerk"
+	health = 40
+	maxHealth = 40
+	maints_access_required = list(ACCESS_SYNDICATE)
+	radio_key = /obj/item/encryptionkey/syndicate
+	radio_channel = RADIO_CHANNEL_SYNDICATE
+	damagetype_healer = "all"
+	heal_threshold = 0
+	heal_amount = 5
+	additional_access = /datum/id_trim/syndicom/crew
+
+/mob/living/simple_animal/bot/medbot/nukie/Initialize(mapload, new_skin)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))
+	internal_radio.set_frequency(FREQ_SYNDICATE)
+	internal_radio.freqlock = RADIO_FREQENCY_LOCKED
+	faction += ROLE_SYNDICATE //one of us
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_disarm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_FORGIVE, MEDIBOT_VOICED_THANKS, MEDIBOT_VOICED_GOOD_PERSON))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_arm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_WAIT, MEDIBOT_VOICED_DONT, MEDIBOT_VOICED_IM_SCARED))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_detonate()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_THE_END, MEDIBOT_VOICED_NOOO, MEDIBOT_VOICED_SUFFER))
 
 /mob/living/simple_animal/bot/medbot/examine(mob/user)
 	. = ..()
@@ -171,14 +208,20 @@
 	. = ..()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
-	access_card.add_access(para_trim.access + para_trim.wildcard_access)
+	var/datum/id_trim/additional_trim = SSid_access.trim_singletons_by_path[additional_access]
+	access_card.add_access(additional_trim.access + additional_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	skin = new_skin
+	if(!isnull(new_skin))
+		skin = new_skin
 	update_appearance()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
+		skin = "advanced"
+		update_appearance(UPDATE_OVERLAYS)
+		damagetype_healer = "all"
+		if(prob(50))
+			name += ", PhD."
 
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
@@ -187,6 +230,12 @@
 		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
+	return INITIALIZE_HINT_LATELOAD
+
+/mob/living/simple_animal/bot/medbot/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()

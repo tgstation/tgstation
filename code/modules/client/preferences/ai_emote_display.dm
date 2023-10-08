@@ -6,15 +6,13 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ai_emote_display/init_possible_values()
-	var/list/values = list()
+	return assoc_to_keys(GLOB.ai_status_display_emotes)
 
-	values["Random"] = icon('icons/mob/silicon/ai.dmi', "questionmark")
-
-	for(var/emote in GLOB.ai_status_display_emotes)
-		var/emote_icon = GLOB.ai_status_display_emotes[emote]
-		values[emote] = icon('icons/obj/machines/status_display.dmi', emote_icon)
-
-	return values
+/datum/preference/choiced/ai_emote_display/icon_for(value)
+	if (value == "Random")
+		return icon('icons/mob/silicon/ai.dmi', "questionmark")
+	else
+		return icon('icons/obj/machines/status_display.dmi', GLOB.ai_status_display_emotes[value])
 
 /datum/preference/choiced/ai_emote_display/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

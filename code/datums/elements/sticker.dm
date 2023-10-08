@@ -39,7 +39,7 @@
 
 ///Add our stick_type to the target with px and py as pixel x and pixel y respectively
 /datum/element/sticker/proc/do_stick(obj/item/source, atom/target, mob/living/user, px, py)
-	if(length(GET_TRAIT_SOURCES(target, TRAIT_STICKERED)) >= MAX_ALLOWED_STICKERS)
+	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_ALLOWED_STICKERS)
 		source.balloon_alert_to_viewers("sticker won't stick!")
 		return FALSE
 	target.AddComponent(stick_type, px, py, source, user, washable)

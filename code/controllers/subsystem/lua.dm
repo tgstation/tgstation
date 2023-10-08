@@ -18,7 +18,8 @@ SUBSYSTEM_DEF(lua)
 	var/list/current_run = list()
 
 	/// Protects return values from getting GCed before getting converted to lua values
-	var/gc_guard
+	/// Gets cleared every tick.
+	var/list/gc_guard = list()
 
 /datum/controller/subsystem/lua/Initialize()
 	if(!CONFIG_GET(flag/auxtools_enabled))
@@ -99,6 +100,7 @@ SUBSYSTEM_DEF(lua)
 		sleeps.Cut()
 		resumes.Cut()
 
+	gc_guard.Cut()
 	var/list/current_sleeps = current_run["sleeps"]
 	var/list/affected_states = list()
 	while(length(current_sleeps))

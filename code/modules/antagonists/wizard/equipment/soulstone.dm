@@ -24,6 +24,7 @@
 	var/theme = THEME_CULT
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
+	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()

@@ -38,8 +38,8 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
-	/// The configuration key for the preset fishing spot for this type of turf.
-	var/fish_source_type = FISHING_SPOT_PRESET_LAVALAND_LAVA
+	/// The type for the preset fishing spot of this type of turf.
+	var/fish_source_type = /datum/fish_source/lavaland
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -345,7 +345,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
-	fish_source_type = FISHING_SPOT_PRESET_ICEMOON_PLASMA
+	fish_source_type = /datum/fish_source/lavaland/icemoon
 
 	light_range = 3
 	light_power = 0.75
@@ -392,8 +392,11 @@
 		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
-	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
-	burn_human.adjustFireLoss(25)
+	var/need_mob_update
+	need_mob_update += burn_human.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
+	need_mob_update += burn_human.adjustFireLoss(25, updating_health = FALSE)
+	if(need_mob_update)
+		burn_human.updatehealth()
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")

@@ -25,7 +25,7 @@
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
 	foodtypes = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
+	juice_typepath = /datum/reagent/consumable/potato_juice
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
 /obj/item/food/grown/potato/make_bakeable()

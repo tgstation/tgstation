@@ -19,7 +19,7 @@
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
-	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
@@ -31,7 +31,9 @@
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
 	max_occupants = 2
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
@@ -210,7 +212,7 @@
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
 			if(crushed_victim.stat != CONSCIOUS)
 				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
-				crushed_victim.gib(FALSE, FALSE, FALSE)
+				crushed_victim.gib(DROP_ALL_REMAINS)
 				continue
 			crushed_victim.adjustBruteLoss(80)
 

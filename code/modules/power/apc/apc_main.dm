@@ -212,6 +212,7 @@
 
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
+	find_and_hang_on_wall()
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
@@ -260,14 +261,14 @@
 	area.apc = null
 	area = null
 
-/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == cell)
+/obj/machinery/power/apc/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
 		if(!QDELING(src))
 			SStgui.update_uis(src)
-	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()

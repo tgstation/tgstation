@@ -171,8 +171,22 @@
 		if(isflyperson(H))
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
 			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
-			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
+			reagents.trans_to(H, reagents.total_volume, transferred_by = user, methods = INGEST)
 			qdel(src)
+
+/obj/effect/decal/cleanable/vomit/toxic // this has a more toned-down color palette, which may be why it's used as the default in so many spots
+	icon_state = "vomittox_1"
+	random_icon_states = list("vomittox_1", "vomittox_2", "vomittox_3", "vomittox_4")
+
+/obj/effect/decal/cleanable/vomit/purple // ourple
+	icon_state = "vomitpurp_1"
+	random_icon_states = list("vomitpurp_1", "vomitpurp_2", "vomitpurp_3", "vomitpurp_4")
+
+/obj/effect/decal/cleanable/vomit/nanites
+	name = "nanite-infested vomit"
+	desc = "Gosh, you can see something moving in there."
+	icon_state = "vomitnanite_1"
+	random_icon_states = list("vomitnanite_1", "vomitnanite_2", "vomitnanite_3", "vomitnanite_4")
 
 /obj/effect/decal/cleanable/vomit/nebula
 	name = "nebula vomit"
@@ -198,6 +212,10 @@
 	icon_state += "-old"
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
+/obj/effect/decal/cleanable/vomit/old/black_bile
+	name = "black bile"
+	desc = "There's something wiggling in there..."
+	color = COLOR_DARK
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"

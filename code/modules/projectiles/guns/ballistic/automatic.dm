@@ -154,7 +154,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
 	selector_switch_icon = TRUE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m556
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m223
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
@@ -229,7 +229,7 @@
 	icon_state = "arg"
 	inhand_icon_state = "arg"
 	slot_flags = 0
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m556
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m223
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
@@ -238,13 +238,13 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6"
 	inhand_icon_state = "l6closedmag"
 	base_icon_state = "l6"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	accepted_magazine_type = /obj/item/ammo_box/magazine/mm712x82
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m7mm
 	weapon_weight = WEAPON_HEAVY
 	burst_size = 1
 	actions_types = list()
@@ -325,11 +325,6 @@
 	name = "Surplus Rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
-	inhand_icon_state = "moistnugget"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
 	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm/rifle

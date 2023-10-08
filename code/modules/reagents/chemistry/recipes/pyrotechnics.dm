@@ -542,9 +542,9 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
-	var/T2 = created_volume * 50
-	var/T3 = created_volume * 120
+	var/T1 = created_volume * 8e3		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
+	var/T2 = created_volume * 2e4
+	var/T3 = created_volume * 4.8e4
 	var/added_delay = 0.5 SECONDS
 	if(created_volume >= 75)
 		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T1), added_delay)

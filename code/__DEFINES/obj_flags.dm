@@ -42,6 +42,8 @@
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
 #define NO_BLOOD_ON_ITEM (1 << 20)
+/// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
+#define SKIP_FANTASY_ON_SPAWN (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -75,8 +77,8 @@
 #define LARGE_WORN_ICON (1<<12)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<13)
-/// prevents from placing on plasmaman helmet
-#define PLASMAMAN_HELMET_EXEMPT (1<<14)
+/// prevents from placing on plasmaman helmet or modsuit hat holder
+#define STACKABLE_HELMET_EXEMPT (1<<14)
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<15)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)

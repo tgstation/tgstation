@@ -22,21 +22,27 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
-		connect_techweb(SSresearch.science_tech)
-
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
 
+/obj/machinery/component_printer/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
+	if(techweb)
+		on_connected_techweb()
+
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
 		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
-
 	techweb = new_techweb
+	if(!isnull(techweb))
+		on_connected_techweb()
 
+/obj/machinery/component_printer/proc/on_connected_techweb()
 	for (var/researched_design_id in techweb.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
@@ -112,8 +118,7 @@
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.mat_container.use_materials(design.materials, efficiency_coeff)
-	materials.silo_log(src, "printed", -1, design.name, design.materials)
+	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params)
@@ -140,8 +145,8 @@
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design.name]")
-			materials.mat_container.use_materials(design.materials, efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design.name, design.materials)
+
+			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
@@ -381,10 +386,9 @@
 				say("Not enough materials.")
 				return TRUE
 
-			balloon_alert_to_viewers("printed [design["name"]]")
-			materials.mat_container.use_materials(design["materials"], efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design["name"], design["materials"])
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
 			print_module(design)
+			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
