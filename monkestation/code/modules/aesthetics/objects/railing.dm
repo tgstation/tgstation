@@ -137,3 +137,4 @@
 /obj/structure/railing/wrestling
 	name = "boxing ring"
 	icon = 'monkestation/code/modules/aesthetics/icons/railing_wrestling.dmi'
+	material_flags = null
