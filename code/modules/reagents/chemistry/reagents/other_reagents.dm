@@ -467,9 +467,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/fuel/unholywater/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
 	if(IS_CULTIST(affected_mob))
 		ADD_TRAIT(affected_mob, TRAIT_COAGULATING, type)
-	return ..()
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
