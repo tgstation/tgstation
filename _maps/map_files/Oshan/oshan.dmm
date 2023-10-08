@@ -7150,6 +7150,7 @@
 /area/station/medical/treatment_center)
 "dMc" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "dMe" = (
@@ -8374,11 +8375,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "esx" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "esy" = (
@@ -16381,6 +16382,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"iwE" = (
+/obj/machinery/door/airlock/bathroom{
+	name = "Toilet";
+	id_tag = "peepeepoopoo1"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "iwF" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -17268,6 +17276,15 @@
 /area/station/cargo/miningoffice)
 "iWY" = (
 /obj/structure/sink/directional/south,
+/obj/structure/mirror/directional/north,
+/obj/machinery/button/door/directional/north{
+	pixel_x = -8;
+	id = "peepeepoopoo1";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	pixel_y = 32;
+	name = "Restroom Lock"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "iWZ" = (
@@ -23044,10 +23061,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "lLE" = (
-/obj/structure/sink/directional/east{
-	name = "Urinal";
-	desc = "Oh god I washed my hands in it..."
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "lMa" = (
@@ -24089,7 +24103,7 @@
 	pixel_y = 32;
 	name = "Restroom Lock"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "mqX" = (
@@ -26970,7 +26984,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater/abandoned)
 "nJY" = (
-/obj/structure/rack,
+/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "nKc" = (
@@ -32419,6 +32433,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "quU" = (
@@ -33727,11 +33742,9 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "rdF" = (
-/obj/machinery/door/airlock/bathroom{
-	name = "Toilet";
-	id_tag = "peepeepoopoo"
+/obj/structure/toilet{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "rdL" = (
@@ -34311,6 +34324,9 @@
 /area/station/commons/fitness/recreation/entertainment)
 "rta" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "rtb" = (
@@ -35783,6 +35799,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
+"sgu" = (
+/obj/machinery/door/airlock/bathroom{
+	name = "Toilet";
+	id_tag = "peepeepoopoo"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "sgC" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
@@ -40148,10 +40171,10 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "utN" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/showroomfloor,
-/area/station/commons/toilet/locker)
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/hydroponics)
 "utU" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -61631,10 +61654,10 @@ oyT
 fYK
 cbc
 qNu
-nJY
-fYK
 qNu
+sgu
 lLE
+qNu
 fYK
 drg
 rxV
@@ -61891,7 +61914,7 @@ pzs
 esx
 fYK
 iWY
-nJY
+rdF
 fYK
 aGz
 iAJ
@@ -62146,8 +62169,8 @@ fYK
 rvH
 fig
 rta
-rdF
-utN
+fYK
+fYK
 fYK
 fYK
 drg
@@ -62405,7 +62428,7 @@ yjV
 quS
 fYK
 mqN
-quS
+qNu
 fYK
 xlX
 iAJ
@@ -62660,8 +62683,8 @@ fYK
 dMc
 yjV
 nJY
-fYK
-qNu
+iwE
+cfI
 fQi
 fYK
 ecC
