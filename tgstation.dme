@@ -3280,6 +3280,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\legion.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pirates.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\psyker_shuffle.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\stairs_and_cliffs.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\syndicate_assault.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\test_only.dm"

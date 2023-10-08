@@ -83,6 +83,7 @@
 			encrypted_crate = crate_to_check
 		else
 			crate_list += crate_to_check
+		crate_to_check = "Unidentified Crate"
 
 	if(!encrypted_crate)
 		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")
