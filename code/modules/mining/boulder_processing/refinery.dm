@@ -62,7 +62,6 @@
 	name = "boulder smeltery"
 	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "smelter"
-	holds_minerals = TRUE
 	processable_materials = list(
 		/datum/material/iron,
 		/datum/material/titanium,
@@ -73,5 +72,28 @@
 		/datum/material/adamantine,
 		/datum/material/runite,
 	)
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_power = 2
+	light_color = "#ffaf55"
+	light_on = FALSE
 	circuit = /obj/item/circuitboard/machine/smelter
 	usage_sound = 'sound/machines/mining/smelter.ogg'
+
+/obj/machinery/bouldertech/refinery/smelter/RefreshParts()
+	. = ..()
+	light_power = boulders_processing_max
+
+/obj/machinery/bouldertech/refinery/smelter/accept_boulder(obj/item/boulder/new_boulder)
+	. = ..()
+	if(.)
+		set_light_on(TRUE)
+		return TRUE
+
+
+/obj/machinery/bouldertech/refinery/smelter/process()
+	. = ..()
+	if(. == PROCESS_KILL)
+		set_light_on(FALSE)
+		return
+

@@ -173,9 +173,8 @@
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
 	if(!stop_processing_check)
-		STOP_PROCESSING(SSmachines, src)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-		return
+		return PROCESS_KILL
 
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
@@ -237,7 +236,6 @@
 		weapon = disposable_boulder,\
 		multiplier = refining_efficiency,\
 		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
-		context = src \
 		)
 	qdel(disposable_boulder)
 
@@ -264,6 +262,8 @@
 	if(isnull(new_boulder))
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max) //Full already
+		return FALSE
+	if(!istype(new_boulder)) //Can't be processed
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
 		qdel(new_boulder)

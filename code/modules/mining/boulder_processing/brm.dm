@@ -56,14 +56,13 @@
 	if(SSore_generation.available_boulders.len < 1)
 		say("No boulders to collect. Entering idle mode.")
 		toggled_on = FALSE
-		STOP_PROCESSING(SSmachines, src)
 		update_appearance(UPDATE_ICON_STATE)
-		return
+		return PROCESS_KILL
 	for(var/i in 1 to boulders_processing_max)
 		if(!pre_collect_boulder())
 			toggled_on = FALSE
-			STOP_PROCESSING(SSmachines, src)
 			update_appearance(UPDATE_ICON_STATE)
+			return PROCESS_KILL
 	for(var/ground_rocks in loc.contents)
 		if(istype(ground_rocks, /obj/item/boulder))
 			boulders_contained += ground_rocks
@@ -72,7 +71,7 @@
 				STOP_PROCESSING(SSmachines, src)
 				boulders_contained = list()
 				update_appearance(UPDATE_ICON_STATE)
-				return
+				return PROCESS_KILL
 
 /obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -107,10 +106,13 @@
 		balloon_alert_to_viewers("no boulders to collect!")
 		return FALSE //Nothing to collect
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	if(random_boulder.processed_by)
-		return FALSE
 	if(!random_boulder)
 		return FALSE
+	if(!istype(random_boulder))
+		return FALSE
+	if(random_boulder.processed_by)
+		return FALSE
+
 	random_boulder.processed_by = src
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	SSore_generation.available_boulders -= random_boulder
@@ -127,7 +129,7 @@
 	random_boulder.forceMove(drop_location())
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
-	use_power(100)
+	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
 
 /obj/machinery/bouldertech/brm/proc/toggle_auto_on(mob/user)
 	if(panel_open)

@@ -17010,6 +17010,7 @@
 	dir = 8;
 	id = "mining"
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "gog" = (

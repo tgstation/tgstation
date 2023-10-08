@@ -85,7 +85,7 @@
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 	if(ispath(ore_type, /obj/item/boulder))
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
-		spawned_boulder = /obj/item/boulder/gulag/volcanic
+		spawned_boulder = /obj/item/boulder/gulag_expanded
 
 /**
  * Returns the distance to the nearest ore vent, where ore vents are tracked in SSore_generation's possible vents list.
@@ -507,7 +507,7 @@
 
 /turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag/volcanic = 166,
+		/obj/item/boulder/gulag_expanded = 166,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 

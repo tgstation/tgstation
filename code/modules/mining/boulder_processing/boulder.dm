@@ -22,6 +22,28 @@
 	/// Cooldown used to prevents boulders from getting processed back into a machine immediately after being processed.
 	COOLDOWN_DECLARE(processing_cooldown)
 
+	/// Static list of all minerals to populate gulag boulders with.
+	var/list/static/gulag_minerals = list(
+		/datum/material/diamond = 1,
+		/datum/material/gold = 8,
+		/datum/material/iron = 95,
+		/datum/material/plasma = 30,
+		/datum/material/silver = 20,
+		/datum/material/titanium = 8,
+		/datum/material/uranium = 3,
+	)
+	/// Static list of all minerals to populate gulag boulders with, but with bluespace added where safe.
+	var/list/static/expanded_gulag_minerals = list(
+		/datum/material/bluespace = 1,
+		/datum/material/diamond = 1,
+		/datum/material/gold = 8,
+		/datum/material/iron = 94,
+		/datum/material/plasma = 30,
+		/datum/material/silver = 20,
+		/datum/material/titanium = 8,
+		/datum/material/uranium = 3,
+	)
+
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -120,9 +142,9 @@
 		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return
-                var/msg = durability == 1 ? "is crumbling" : "looks weaker"
-		to_chat(user, span_notice("\The [src] [msg]"))
-		manual_process(weapon, user, override_speed, continued = TRUE)
+	var/msg = (durability == 1 ? "is crumbling!" : "looks weaker!")
+	to_chat(user, span_notice("\The [src] [msg]"))
+	manual_process(weapon, user, override_speed, continued = TRUE)
 
 /obj/item/boulder/proc/convert_to_ore(weak)
 	for(var/datum/material/picked in custom_materials)
@@ -185,6 +207,16 @@
 		boulder_string = parent_vent.boulder_icon_state
 	update_appearance(UPDATE_ICON_STATE)
 
+/**
+ * Unique proc for gulag-style boulders, which adds a random amount of minerals to the boulder.
+ */
+/obj/item/boulder/proc/add_gulag_minerals(list_to_pick)
+	var/datum/material/new_material = pick_weight(gulag_minerals)
+	var/list/new_mats = list()
+	new_mats += new_material
+	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1,3) //We only want a few sheets of material in the gulag boulders
+	set_custom_materials(new_mats)
+
 /obj/item/boulder/artifact
 	name = "artifact boulder"
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
@@ -217,40 +249,18 @@
 	return
 
 /obj/item/boulder/gulag
-	name = "boulder"
-	desc = "This rocks. It's also a gulag boulder, so it's probably not worth as much."
-	var/list/pick_minerals = list(
-		/datum/material/diamond = 1,
-		/datum/material/gold = 8,
-		/datum/material/iron = 95,
-		/datum/material/plasma = 30,
-		/datum/material/silver = 20,
-		/datum/material/titanium = 8,
-		/datum/material/uranium = 3,
-	)
+	name = "low-quality boulder"
+	desc = "This rocks. It's a low quality boulder, so it's probably not worth as much."
 
 /obj/item/boulder/gulag/Initialize(mapload)
 	. = ..()
-	add_gulag_minerals()
+	add_gulag_minerals(gulag_minerals)
 
-/**
- * Unique proc for gulag boulders, which adds a random amount of minerals to the boulder.
- */
-/obj/item/boulder/gulag/proc/add_gulag_minerals()
-	var/datum/material/new_material = pick_weight(pick_minerals)
-	var/list/new_mats = list()
-	new_mats += new_material
-	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1,3) //We only want a few sheets of material in the gulag boulders
-	set_custom_materials(new_mats)
+/obj/item/boulder/gulag_expanded
+	name = "low-density boulder"
+	desc = "This rocks. It's not very well packed, and can't contain as many minerals."
 
-/obj/item/boulder/gulag/volcanic
-	pick_minerals = list(
-		/datum/material/bluespace = 1,
-		/datum/material/diamond = 1,
-		/datum/material/gold = 8,
-		/datum/material/iron = 95,
-		/datum/material/plasma = 30,
-		/datum/material/silver = 20,
-		/datum/material/titanium = 8,
-		/datum/material/uranium = 3,
-	)
+/obj/item/boulder/gulag_expanded/Initialize(mapload)
+	. = ..()
+	add_gulag_minerals(expanded_gulag_minerals)
+
