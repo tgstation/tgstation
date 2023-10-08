@@ -295,7 +295,7 @@
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
 
-/////////////////////
+//--------------------
 // GAS VISUALS STUFF
 //
 // If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here

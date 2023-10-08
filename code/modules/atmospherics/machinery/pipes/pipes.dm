@@ -48,7 +48,7 @@
 		qdel(meter)
 	return ..()
 
-/////////////////
+//-----------------
 // PIPENET STUFF
 
 /obj/machinery/atmospherics/pipe/nullify_node(i)
@@ -109,7 +109,7 @@
 /obj/machinery/atmospherics/pipe/return_pipenets()
 	. = list(parent)
 
-////////////////////
+//--------------------
 // APPEARANCE STUFF
 
 /obj/machinery/atmospherics/pipe/update_icon()
