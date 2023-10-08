@@ -4161,10 +4161,9 @@
 /turf/open/floor/plating/ocean,
 /area/ocean)
 "cfI" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured,
-/area/station/service/hydroponics)
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "cfO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -5456,6 +5455,10 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
+"cTu" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "cTx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 1
@@ -15824,6 +15827,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
+"iim" = (
+/obj/machinery/door/airlock/bathroom{
+	name = "Toilet";
+	id_tag = "peepeepoopoo"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "iip" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/chem_master,
@@ -16382,13 +16392,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
-"iwE" = (
-/obj/machinery/door/airlock/bathroom{
-	name = "Toilet";
-	id_tag = "peepeepoopoo1"
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/commons/toilet/locker)
 "iwF" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -23061,7 +23064,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "lLE" = (
-/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "lMa" = (
@@ -26984,7 +26987,9 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater/abandoned)
 "nJY" = (
-/obj/structure/cable,
+/obj/structure/toilet{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "nKc" = (
@@ -33742,11 +33747,10 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "rdF" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/commons/toilet/locker)
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/hydroponics)
 "rdL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -35799,13 +35803,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
-"sgu" = (
-/obj/machinery/door/airlock/bathroom{
-	name = "Toilet";
-	id_tag = "peepeepoopoo"
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/commons/toilet/locker)
 "sgC" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
@@ -40171,10 +40168,12 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "utN" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured,
-/area/station/service/hydroponics)
+/obj/machinery/door/airlock/bathroom{
+	name = "Toilet";
+	id_tag = "peepeepoopoo1"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/locker)
 "utU" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -61632,7 +61631,7 @@ jtn
 uSV
 vme
 qBz
-cfI
+rdF
 nzU
 vrw
 hbh
@@ -61655,8 +61654,8 @@ fYK
 cbc
 qNu
 qNu
-sgu
-lLE
+iim
+cTu
 qNu
 fYK
 drg
@@ -61914,7 +61913,7 @@ pzs
 esx
 fYK
 iWY
-rdF
+nJY
 fYK
 aGz
 iAJ
@@ -62682,8 +62681,8 @@ rss
 fYK
 dMc
 yjV
-nJY
-iwE
+lLE
+utN
 cfI
 fQi
 fYK
@@ -98315,7 +98314,7 @@ aah
 aah
 aah
 aah
-avm
+sks
 sks
 sks
 fxe
