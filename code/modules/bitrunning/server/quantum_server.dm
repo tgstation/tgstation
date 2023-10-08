@@ -88,11 +88,11 @@
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
-		set_light(0)
+		set_light(l_on = FALSE)
 		return ..()
 
 	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(2, 1.5)
+	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
 
 	return ..()
 

@@ -242,20 +242,12 @@
 	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
 	open_machine()
 
-/**
- * ### Disconnect occupant
- * If this goes smoothly, should reconnect a receiving mind to the occupant's body
- *
- * This is the second stage of the process -  if you want to disconn avatars start at the mind first
- */
+/// Handles occupant post-disconnection effects like damage, sounds, etc
 /obj/machinery/netpod/proc/disconnect_occupant(forced = FALSE)
-	var/mob/living/mob_occupant = occupant
-	if(isnull(occupant) || !isliving(occupant))
-		return
-
 	connected = FALSE
 
-	if(mob_occupant.stat == DEAD)
+	var/mob/living/mob_occupant = occupant
+	if(isnull(occupant) || !isliving(occupant) || mob_occupant.stat == DEAD)
 		open_machine()
 		return
 

@@ -108,13 +108,13 @@
 	return shuffle(mutation_candidate_refs)
 
 /// Locates any turfs with forges on them
-/obj/machinery/quantum_server/proc/locate_cache_turfs()
-	var/turf/cache_spawn_turfs
+/obj/machinery/quantum_server/proc/get_nearby_forges()
+	var/list/obj/machinery/byteforge/nearby_forges = list()
 
 	for(var/obj/machinery/byteforge/forge in oview(MAX_DISTANCE, src))
-		cache_spawn_turfs += get_turf(forge)
+		nearby_forges += forge
 
-	return cache_spawn_turfs
+	return nearby_forges
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
@@ -132,10 +132,10 @@
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
 /// Do some magic teleport sparks
-/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
-	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
+/obj/machinery/quantum_server/proc/spark_at_location(obj/cache)
+	playsound(cache, 'sound/magic/blink.ogg', 50, TRUE)
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
-	sparks.set_up(5, 1, get_turf(crate))
+	sparks.set_up(5, 1, get_turf(cache))
 	sparks.start()
 
 #undef REDACTED

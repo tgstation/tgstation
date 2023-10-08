@@ -2,7 +2,7 @@
 	name = "host monitor"
 
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
-	desc = "A complex medical device that, when attached to an avatar's data stream, can detect the user of their host's health."
+	desc = "A complex electronic that will analyze the connection health between host and avatar."
 	flags_1 = CONDUCT_1
 	icon = 'icons/obj/device.dmi'
 	icon_state = "host_monitor"
