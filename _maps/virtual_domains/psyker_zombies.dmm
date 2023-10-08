@@ -11,26 +11,17 @@
 /obj/structure/sign/warning/directional/west,
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"d" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/abductor,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "i" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"m" = (
-/obj/effect/mob_spawn/corpse/human/zombie,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"n" = (
-/obj/structure/mystery_box/guns,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
+"p" = (
+/obj/effect/mob_spawn/ghost_role/human/zombie,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -38,30 +29,31 @@
 "t" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"u" = (
-/obj/effect/mob_spawn/ghost_role/human/zombie,
+"x" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "A" = (
-/obj/machinery/door/airlock/abductor,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"D" = (
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"G" = (
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"I" = (
+"B" = (
 /obj/machinery/door/airlock/abductor,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"F" = (
+/obj/structure/mystery_box/guns,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "K" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"M" = (
+/obj/effect/mob_spawn/corpse/human/zombie,
+/turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "O" = (
 /obj/effect/landmark/bitrunning/safehouse_spawn,
@@ -72,6 +64,14 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "R" = (
 /obj/effect/mine/shrapnel,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"T" = (
+/obj/machinery/door/airlock/abductor,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"U" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "V" = (
@@ -187,7 +187,7 @@ a
 W
 X
 Y
-I
+B
 Y
 Y
 Y
@@ -339,7 +339,7 @@ W
 Y
 Y
 Y
-D
+A
 Y
 a
 X
@@ -437,7 +437,7 @@ Y
 Y
 Y
 Y
-D
+A
 Y
 Y
 a
@@ -525,7 +525,7 @@ a
 a
 Y
 a
-Y
+a
 Y
 Y
 Y
@@ -555,7 +555,7 @@ X
 a
 Y
 Y
-Y
+a
 Y
 a
 a
@@ -582,7 +582,7 @@ a
 Y
 Y
 Y
-d
+x
 Y
 Y
 Y
@@ -618,7 +618,7 @@ Y
 Y
 Y
 a
-n
+F
 Y
 Y
 t
@@ -677,7 +677,7 @@ Y
 Y
 Y
 Y
-A
+T
 Y
 Y
 Y
@@ -738,7 +738,7 @@ Y
 Y
 Y
 a
-n
+F
 Y
 Y
 t
@@ -819,7 +819,7 @@ Q
 a
 a
 a
-A
+T
 a
 a
 a
@@ -849,7 +849,7 @@ Q
 a
 a
 W
-u
+p
 W
 a
 a
@@ -876,9 +876,9 @@ o
 a
 R
 Y
-A
+T
 Y
-u
+p
 Y
 a
 a
@@ -907,7 +907,7 @@ a
 Y
 X
 a
-G
+U
 X
 X
 a
@@ -968,7 +968,7 @@ Y
 Y
 Y
 a
-Y
+a
 Y
 Y
 Y
@@ -1006,7 +1006,7 @@ a
 Y
 Y
 Y
-m
+M
 a
 a
 o
@@ -1096,7 +1096,7 @@ a
 a
 a
 Y
-m
+M
 Y
 W
 i
