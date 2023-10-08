@@ -229,3 +229,30 @@
       There are a few exceptions (like admin gib self) where this will not take place.
   unit0016:
   - bugfix: It is no longer possible to chasm yourself on the geode. Again.
+2023-10-08:
+  Comxy:
+  - bugfix: Spider types get properly checked again.
+  Ghommie:
+  - bugfix: People who are irremediably bald can still grow a beard with barber aid.
+  Hatterhat:
+  - qol: Miners can now tag monster spawners (necropolis tendrils, animal dens, demonic
+      portals, and netherworld links) by using their mining scanner on it, which updates
+      their GPS tag (and/or gives them one) to give it a numerical designation and
+      a short identifier for what it's spawning.
+  Jacquerel:
+  - bugfix: Flesh Worms will move smoothly more consistently.
+  LT3:
+  - image: Text alignment on ID cards slightly adjusted
+  Melbert:
+  - bugfix: Fixed an error from reading an ID card closely when you can't read
+  YehnBeep:
+  - qol: '"prison" intercoms have been renamed to "receive-only" intercoms to make
+      it clearer they cannot transmit.'
+  carlarctg:
+  - qol: Added slapcrafting to unloaded tech shells, click on them with ingredients
+      to quickly craft your shell.
+  san7890:
+  - refactor: Sloths are now basic mobs, however their overall sluggish behavior shouldn't
+      have changed much- let us know if anything is broken.
+  timothymtorres:
+  - bugfix: Fix bodies now lose fire stacks while husked.
