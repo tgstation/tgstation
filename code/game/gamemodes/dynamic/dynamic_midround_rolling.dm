@@ -45,7 +45,11 @@
 			continue
 
 		if (!ruleset.acceptable(GLOB.alive_player_list.len, threat_level))
-			log_dynamic("FAIL: [ruleset] is not acceptable with the current parameters. Alive players: [GLOB.alive_player_list.len], threat level: [threat_level]")
+			var/ruleset_forced = GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED
+			if (ruleset_forced == RULESET_NOT_FORCED)
+				log_dynamic("FAIL: [ruleset] is not acceptable with the current parameters. Alive players: [GLOB.alive_player_list.len], threat level: [threat_level]")
+			else
+				log_dynamic("FAIL: [ruleset] was disabled.")
 			continue
 
 		if (mid_round_budget < ruleset.cost)

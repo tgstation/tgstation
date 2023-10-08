@@ -147,6 +147,22 @@
 /// key holds the tray we will beam
 #define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
 
+//ice demons
+///the list of items we are afraid of
+#define BB_LIST_SCARY_ITEMS "list_scary_items"
+///our teleportation ability
+#define BB_DEMON_TELEPORT_ABILITY "demon_teleport_ability"
+///the destination of our teleport ability
+#define BB_TELEPORT_DESTINATION "teleport_destination"
+///the ability to clone ourself
+#define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
+///our slippery ice ability
+#define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
+///the turf we are escaping too
+#define BB_ESCAPE_DESTINATION "escape_destination"
+///how far away we will be from our target before teleporting
+#define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"
+
 /// Corpse we have consumed
 #define BB_LEGION_CORPSE "legion_corpse"
 /// Things our target recently said

@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "ice demons have been refactored into basic mbos. please report any bugs"
+  - rscadd: "ice demons now have a unique trophy"
