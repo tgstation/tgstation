@@ -70,6 +70,7 @@
 	icon_state = "safehouse"
 
 ///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
+///Randomizes names, so you have to inspect crates manually.
 /obj/effect/landmark/bitrunning/crate_replacer
 	name = "Bitrunning Goal Crate Randomizer"
 	icon_state = "crate"
@@ -81,9 +82,10 @@
 	for(var/obj/structure/closet/crate/crate_to_check in get_area(src))
 		if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
 			encrypted_crate = crate_to_check
+			crate_to_check.desc += " This feels like the crate we're looking for!"
 		else
 			crate_list += crate_to_check
-		crate_to_check = "Unidentified Crate"
+		crate_to_check.name = "Unidentified Crate"
 
 	if(!encrypted_crate)
 		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")

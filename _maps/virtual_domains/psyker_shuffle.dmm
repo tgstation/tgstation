@@ -9,26 +9,30 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "e" = (
 /obj/item/gun/ballistic/shotgun/lethal,
-/obj/structure/closet/crate/eva,
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"j" = (
-/obj/effect/landmark/bitrunning/crate_replacer,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"k" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"m" = (
+"h" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/gun/ballistic/revolver/c38{
-	pixel_x = -1;
-	pixel_y = -3
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /obj/item/gun/ballistic/revolver/c38{
 	pixel_x = -3;
 	pixel_y = -1
+	},
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_x = -1;
+	pixel_y = -3
 	},
 /obj/item/gun/ballistic/revolver/c38{
 	pixel_x = 5;
@@ -36,9 +40,28 @@
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"j" = (
+/mob/living/simple_animal/hostile/mimic,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"k" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"m" = (
+/obj/item/toy/gun{
+	pixel_y = 3
+	},
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
+"q" = (
+/obj/effect/landmark/bitrunning/crate_replacer,
+/turf/closed/indestructible/binary,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /obj/structure/closet/crate/decorations,
 /mob/living/simple_animal/hostile/mimic,
@@ -56,21 +79,11 @@
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "x" = (
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/gun/ballistic/revolver/mateba,
 /obj/structure/closet/crate/preopen,
-/obj/item/gun/ballistic/revolver/c38{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/gun/ballistic/revolver/c38{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/gun/ballistic/revolver/c38{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "A" = (
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -79,6 +92,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "F" = (
 /obj/structure/closet/crate/internals,
+/obj/item/gun/ballistic/revolver/mateba,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "G" = (
@@ -107,6 +121,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "P" = (
 /obj/structure/closet/crate/wooden,
+/obj/item/gun/ballistic/revolver/mateba,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Q" = (
@@ -126,8 +141,11 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "X" = (
-/obj/structure/closet/crate/eva,
 /obj/item/gun/ballistic/shotgun/lethal,
+/obj/structure/closet/crate/preopen,
+/obj/projectile/bullet/shotgun_frag12,
+/obj/projectile/bullet/shotgun_frag12,
+/obj/projectile/bullet/shotgun_frag12,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Y" = (
@@ -313,7 +331,7 @@ A
 a
 A
 A
-A
+Y
 A
 A
 A
@@ -336,7 +354,7 @@ o
 Y
 Y
 Y
-A
+m
 A
 A
 A
@@ -369,11 +387,11 @@ A
 A
 A
 A
-A
+K
 Y
 A
-A
-A
+j
+Y
 A
 Y
 Y
@@ -400,8 +418,8 @@ A
 A
 A
 A
-A
-A
+Y
+Y
 A
 A
 Y
@@ -424,7 +442,7 @@ A
 A
 A
 A
-A
+Y
 A
 A
 A
@@ -452,12 +470,12 @@ b
 A
 O
 A
-A
+Y
 A
 A
 S
 A
-j
+A
 A
 A
 Y
@@ -485,8 +503,8 @@ A
 A
 A
 A
-A
-A
+Y
+Y
 A
 Y
 Y
@@ -513,7 +531,7 @@ A
 A
 A
 A
-A
+Y
 A
 A
 A
@@ -547,8 +565,8 @@ A
 A
 t
 t
-m
-x
+t
+t
 t
 t
 Y
@@ -558,8 +576,8 @@ o
 o
 o
 Y
-Y
-Y
+j
+A
 A
 A
 A
@@ -574,7 +592,7 @@ A
 A
 A
 t
-t
+h
 t
 t
 t
@@ -587,7 +605,7 @@ o
 o
 Y
 A
-A
+Y
 A
 A
 A
@@ -597,9 +615,9 @@ Y
 Y
 a
 A
-a
 A
-a
+A
+A
 A
 t
 t
@@ -615,7 +633,7 @@ o
 o
 Y
 A
-A
+Y
 A
 Y
 Y
@@ -643,7 +661,7 @@ o
 o
 Y
 A
-A
+Y
 A
 A
 P
@@ -701,11 +719,11 @@ Y
 a
 A
 A
+Y
 A
 A
-A
-A
-A
+Y
+Y
 A
 A
 R
@@ -729,7 +747,7 @@ Y
 Y
 A
 A
-A
+Y
 A
 A
 v
@@ -753,7 +771,7 @@ o
 (23,1,1) = {"
 o
 o
-Y
+o
 Y
 Y
 A
@@ -807,8 +825,8 @@ o
 o
 "}
 (25,1,1) = {"
-o
-o
+Y
+Y
 Y
 a
 Y
@@ -835,9 +853,9 @@ o
 o
 "}
 (26,1,1) = {"
-o
-o
 Y
+a
+A
 e
 A
 Y
@@ -863,9 +881,9 @@ o
 o
 "}
 (27,1,1) = {"
-o
-o
 Y
+A
+A
 A
 s
 M
@@ -891,10 +909,10 @@ o
 o
 "}
 (28,1,1) = {"
-o
-o
 Y
-a
+Y
+A
+A
 a
 Y
 A
@@ -919,11 +937,11 @@ o
 o
 "}
 (29,1,1) = {"
-o
-o
 Y
 Y
-Y
+A
+A
+A
 Y
 Y
 Y
@@ -947,19 +965,19 @@ o
 o
 "}
 (30,1,1) = {"
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
 Y
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
 a
 A
 A
@@ -975,21 +993,21 @@ o
 o
 "}
 (31,1,1) = {"
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
+Y
+a
+A
+s
 Y
 Y
-X
+Y
+s
+A
+A
+A
+A
+Y
+Y
+x
 Y
 A
 Y
@@ -1003,24 +1021,24 @@ o
 o
 "}
 (32,1,1) = {"
+Y
+a
+Y
+Y
+Y
 o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
-o
+Y
+Y
+A
+a
 Y
 Y
 Y
 Y
 Y
+Y
+Y
+q
 o
 o
 o
@@ -1031,17 +1049,17 @@ o
 o
 "}
 (33,1,1) = {"
+Y
+Y
+Y
 o
 o
 o
 o
-o
-o
-o
-o
-o
-o
-o
+Y
+Y
+Y
+Y
 o
 o
 o

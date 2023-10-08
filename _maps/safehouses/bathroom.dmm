@@ -8,15 +8,6 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
-"o" = (
-/obj/effect/decal/cleanable/wrapping/pinata/syndie,
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
-"p" = (
-/obj/item/kirbyplants/fern,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
 "q" = (
 /obj/structure/urinal/directional/west,
 /turf/open/floor/iron/freezer,
@@ -32,7 +23,6 @@
 "v" = (
 /obj/machinery/light/small/blacklight/directional/east,
 /obj/effect/spawner/random/medical/patient_stretcher,
-/obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/freezer,
@@ -45,7 +35,6 @@
 /area/virtual_domain/safehouse)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery/white,
 /obj/machinery/light/small/blacklight/directional/west,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
@@ -56,10 +45,6 @@
 /area/virtual_domain/safehouse)
 "D" = (
 /turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
-"E" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/silver,
 /area/virtual_domain/safehouse)
 "G" = (
 /turf/closed/wall/mineral/silver,
@@ -104,7 +89,7 @@
 G
 G
 G
-E
+G
 G
 G
 "}
@@ -118,8 +103,8 @@ G
 "}
 (3,1,1) = {"
 G
-p
-o
+a
+D
 a
 T
 G
