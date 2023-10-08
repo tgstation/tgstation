@@ -74,9 +74,8 @@
 	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
 		baked_result.reagents.clear_reagents()
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
-		if(added_reagents)
-			for (var/reagent in added_reagents) // Add any new reagents that should be added
-				baked_result.reagents.add_reagent(reagent, added_reagents[reagent])
+		if(added_reagents) // Add any new reagents that should be added
+			baked_result.reagents.add_reagent_list(added_reagents)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
