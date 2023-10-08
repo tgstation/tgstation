@@ -11,7 +11,7 @@
 	base_icon_state = "mat_market"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
-	var/list/exportable_material_items = list(
+	var/static/list/exportable_material_items = list(
 		/obj/item/stack/sheet/iron, //God why are we like this
 		/obj/item/stack/sheet/glass, //No really, God why are we like this
 		/obj/item/stack/sheet/mineral,
