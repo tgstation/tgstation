@@ -4,51 +4,23 @@
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "b" = (
-/obj/structure/closet/crate/eva,
-/obj/item/gun/ballistic/shotgun/lethal,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"c" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/template_noop,
-/area/virtual_domain/safehouse)
-"e" = (
 /obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"f" = (
-/obj/structure/closet/crate/secure/bitrunning/encrypted,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"g" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"j" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
-/turf/template_noop,
-/area/virtual_domain/safehouse)
-"k" = (
-/obj/effect/landmark/bitrunning/crate_replacer,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"o" = (
-/turf/template_noop,
-/area/template_noop)
-"r" = (
+"e" = (
 /obj/item/gun/ballistic/shotgun/lethal,
 /obj/structure/closet/crate/eva,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"s" = (
-/obj/structure/closet/crate/decorations,
-/mob/living/simple_animal/hostile/mimic,
+"j" = (
+/obj/effect/landmark/bitrunning/crate_replacer,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"t" = (
-/turf/template_noop,
-/area/virtual_domain/safehouse)
-"u" = (
+"k" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"m" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/gun/ballistic/revolver/c38{
 	pixel_x = -1;
@@ -64,53 +36,26 @@
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"v" = (
-/obj/structure/closet/crate/internals,
+"o" = (
+/turf/template_noop,
+/area/template_noop)
+"r" = (
+/obj/structure/closet/crate/decorations,
+/mob/living/simple_animal/hostile/mimic,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"A" = (
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"G" = (
-/obj/structure/closet/crate,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"I" = (
-/obj/structure/closet/crate/secure/loot,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"J" = (
-/obj/effect/mine/explosive,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"K" = (
+"s" = (
 /mob/living/simple_animal/hostile/mimic/crate,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"L" = (
+"t" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"v" = (
 /obj/structure/closet/crate/hydroponics,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"M" = (
-/obj/structure/closet/crate/eva,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"O" = (
-/obj/machinery/door/airlock/abductor,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"P" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"Q" = (
-/obj/structure/closet/crate/wooden,
-/turf/open/floor/fakespace,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"T" = (
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"U" = (
+"x" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/gun/ballistic/revolver/c38{
 	pixel_x = 4;
@@ -126,8 +71,63 @@
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"X" = (
+"A" = (
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"B" = (
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"F" = (
+/obj/structure/closet/crate/internals,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"G" = (
+/obj/structure/closet/crate,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"J" = (
+/obj/effect/mine/explosive,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"K" = (
+/obj/structure/closet/crate/eva,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"M" = (
+/obj/machinery/door/airlock/abductor,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"N" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"O" = (
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"P" = (
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Q" = (
 /obj/effect/mine/explosive/flame,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"R" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"S" = (
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
+/turf/open/floor/fakespace,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"U" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"X" = (
+/obj/structure/closet/crate/eva,
+/obj/item/gun/ballistic/shotgun/lethal,
 /turf/open/floor/fakespace,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Y" = (
@@ -264,7 +264,7 @@ Y
 Y
 Y
 Y
-g
+k
 o
 o
 o
@@ -279,7 +279,7 @@ o
 o
 Y
 Y
-s
+r
 A
 A
 A
@@ -308,7 +308,7 @@ o
 Y
 Y
 Y
-M
+K
 A
 a
 A
@@ -362,7 +362,7 @@ o
 o
 o
 Y
-b
+X
 Y
 Y
 A
@@ -390,7 +390,7 @@ o
 o
 o
 Y
-e
+b
 A
 Y
 Y
@@ -448,16 +448,16 @@ o
 Y
 a
 A
-e
+b
 A
-P
-A
-A
+O
 A
 A
-f
 A
-k
+A
+S
+A
+j
 A
 A
 Y
@@ -474,7 +474,7 @@ o
 o
 o
 Y
-e
+b
 A
 Y
 A
@@ -522,7 +522,7 @@ t
 t
 t
 t
-j
+U
 Y
 o
 "}
@@ -535,7 +535,7 @@ Y
 Y
 A
 G
-X
+Q
 Y
 Y
 Y
@@ -547,8 +547,8 @@ A
 A
 t
 t
-u
-U
+m
+x
 t
 t
 Y
@@ -591,7 +591,7 @@ A
 A
 A
 A
-P
+O
 Y
 Y
 Y
@@ -646,7 +646,7 @@ A
 A
 A
 A
-Q
+P
 Y
 Y
 A
@@ -663,7 +663,7 @@ t
 t
 t
 t
-T
+B
 Y
 "}
 (20,1,1) = {"
@@ -690,7 +690,7 @@ t
 t
 t
 t
-c
+N
 Y
 Y
 "}
@@ -708,7 +708,7 @@ A
 A
 A
 A
-I
+R
 A
 A
 A
@@ -732,7 +732,7 @@ A
 A
 A
 A
-L
+v
 A
 A
 A
@@ -838,7 +838,7 @@ o
 o
 o
 Y
-r
+e
 A
 Y
 a
@@ -867,8 +867,8 @@ o
 o
 Y
 A
-K
-O
+s
+M
 A
 A
 A
@@ -881,7 +881,7 @@ A
 A
 A
 Y
-o
+Y
 o
 o
 o
@@ -902,14 +902,14 @@ a
 A
 A
 A
-v
+F
 A
 Y
-K
+s
+A
 A
 a
 Y
-o
 o
 o
 o
@@ -933,11 +933,11 @@ Y
 Y
 Y
 Y
+A
+K
+A
+A
 Y
-Y
-Y
-Y
-o
 o
 o
 o
@@ -959,13 +959,13 @@ o
 o
 o
 o
-o
-o
-o
-o
-o
-o
-o
+Y
+a
+A
+A
+A
+K
+Y
 o
 o
 o
@@ -987,13 +987,13 @@ o
 o
 o
 o
-o
-o
-o
-o
-o
-o
-o
+Y
+Y
+X
+Y
+A
+Y
+Y
 o
 o
 o
@@ -1016,11 +1016,11 @@ o
 o
 o
 o
-o
-o
-o
-o
-o
+Y
+Y
+Y
+Y
+Y
 o
 o
 o
