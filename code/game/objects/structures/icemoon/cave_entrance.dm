@@ -20,6 +20,9 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
 	move_resist = INFINITY
 	anchored = TRUE
+	scanner_taggable = TRUE
+	mob_gps_id = "WF" // wolf
+	spawner_gps_id = "Animal Den"
 
 /obj/structure/spawner/ice_moon/Initialize(mapload)
 	. = ..()
@@ -65,6 +68,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	max_mobs = 1
 	spawn_time = 60 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/polarbear)
+	mob_gps_id = "BR" // bear
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()
 	for(var/turf/potential in RANGE_TURFS(1, src))
@@ -76,9 +80,11 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	name = "demonic portal"
 	desc = "A portal that goes to another world, normal creatures couldn't survive there."
 	icon_state = "nether"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
+	mob_types = list(/mob/living/basic/mining/ice_demon)
 	light_range = 1
 	light_color = COLOR_SOFT_RED
+	mob_gps_id = "WT|B" // watcher | bluespace
+	spawner_gps_id = "Netheric Distortion"
 
 /obj/structure/spawner/ice_moon/demonic_portal/Initialize(mapload)
 	. = ..()
@@ -100,9 +106,11 @@ GLOBAL_LIST_INIT(ore_probability, list(
 
 /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp
 	mob_types = list(/mob/living/basic/mining/ice_whelp)
+	mob_gps_id = "ID|W" // ice drake | whelp
 
 /obj/structure/spawner/ice_moon/demonic_portal/snowlegion
 	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
+	mob_gps_id = "LG|S" // legion | snow
 
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"

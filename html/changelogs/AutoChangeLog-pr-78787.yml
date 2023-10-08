@@ -1,0 +1,4 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - bugfix: "Slaughter/Laughter demon melee cooldowns have been fixed and now attack at the regular player character attack speed"

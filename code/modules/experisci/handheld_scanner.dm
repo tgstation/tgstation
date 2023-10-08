@@ -59,6 +59,6 @@
 	icon_state = "experiscanner"
 	remove_atom_colour(ADMIN_COLOUR_PRIORITY, "#FF0000")
 
-	user.gib(FALSE, TRUE, TRUE) //we delete everything but the brain, as it's going to be moved to the cistern
+	user.gib(DROP_BRAIN) //we delete everything but the brain, as it's going to be moved to the cistern
 	toilet_brain.forceMove(result_toilet)
 	result_toilet.w_items += toilet_brain.w_class

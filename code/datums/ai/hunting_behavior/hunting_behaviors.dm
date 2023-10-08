@@ -94,8 +94,6 @@
 	var/atom/hunted = controller.blackboard[hunting_target_key]
 
 	if(QDELETED(hunted))
-		//Target is gone for some reason. forget about this task!
-		controller[hunting_target_key] = null
 		finish_action(controller, FALSE, hunting_target_key)
 	else
 		target_caught(hunter, hunted)
@@ -136,7 +134,7 @@
 
 /datum/ai_behavior/hunt_target/use_ability_on_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
-	if(QDELETED(ability) || !ability.IsAvailable())
+	if(!ability?.IsAvailable())
 		finish_action(controller, FALSE, hunting_target_key)
 	return ..()
 

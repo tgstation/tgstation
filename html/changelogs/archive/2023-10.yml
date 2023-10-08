@@ -149,3 +149,110 @@
   - balance: CQC legsweeps now cause knockdown instead of paralysis.
   - balance: CQC kicks now knockout a target on the floor for ten seconds if they
       reach stam crit. Helmet protection shortens the knockout length.
+2023-10-06:
+  EricZilla:
+  - image: We have received a new shipment of IDs, as the old ones were found out
+      to be haunted.
+  - image: Laser tag red team ID has received a massive nerf
+  - image: Station budget cards have gotten a facelift
+  - image: Emags and Doorjacks
+  - bugfix: Numbered prisoner IDs will now be legible
+  SyncIt21:
+  - bugfix: plumbing reaction chamber now balances the ph of it's solution correctly
+      to the best of it's ability so no guarantees
+  - code_imp: converted plumbing reaction chamber & mixing chamber UI files to Typescript
+  - refactor: plumbing mixing chamber now also accepts an TGUI input list to input
+      it's chemicals
+  Wallem:
+  - rscadd: Buffs the Active Sonar module with a radial scan, and makes the power
+      costs more in-line with other modules.
+  mc-oofert:
+  - bugfix: you are now made a ghost faster if you get gibbed
+  neocloudy:
+  - bugfix: MetaStation disposal pipes from Cargo to Disposals/the rest of the station
+      are working again.
+2023-10-07:
+  CoiledLamb:
+  - qol: allows janitor keys to be stored in janitor wintercoats and janibets
+  - qol: gives empty fireaxe and mech removal crowbars cabinets directional helpers
+  GPeckman:
+  - bugfix: Borgs will no longer become permanently upside-down if tipped over by
+      multiple people at the same time.
+  - bugfix: Adminheal will now properly clear negative mutations as intended.
+  - bugfix: The AI can no longer turn you off if you shapeshift into a robot.
+  - rscadd: The laser carbine, a weak but fully automatic sidegrade to the normal
+      laser gun, can now be ordered from cargo.
+  - bugfix: Engineering borgs can no longer grab and drop their own iron/glass sheet
+      module.
+  - bugfix: Ice whelps can now use spells given to them by admins, and people who
+      have polymorphed into ice whelps can now polymorph back to normal.
+  Ghommie:
+  - bugfix: Fixed silent catwalks.
+  - rscadd: Fish analyzers can now be used to perform fish scanning experiments.
+  - balance: They can now be singularly bought as a goodie pack for 125 cr each, instead
+      of a crate of three for 500 cr.
+  Isratosh:
+  - spellcheck: '"offical" has been officially corrected to "official" in several
+      official locations.'
+  Jacquerel:
+  - refactor: Rust Walkers, Ash Spirits, Flesh Stalkers, and The Maid in the Mirror
+      now use the basic mob framework. Please report any unusual behaviour.
+  Kapu1178:
+  - bugfix: Blood once again appears as small drops instead of splatters during minor
+      bleeding.
+  Likteer:
+  - rscadd: Fake moustaches are now poorly slapped on top of what you're wearing
+  Melbert:
+  - refactor: Refactors how ethereals update their color when damaged.
+  - qol: AI, cyborg, and PAI camera (photo taking) behavior now uses balloon alerts
+      and has sound effects associated
+  - refactor: Refactored AI, cyborg, and PAI camera (photo taking) code
+  - bugfix: fixed being unable to print photos as a cyborg when below 50% toner, even
+      though photos only take 5%
+  ReezeBL:
+  - bugfix: fixed a PDA's messenger TGUI issue with handling of destroyed recipients.
+  Sealed101:
+  - bugfix: fixed bad food not having bad food reagents
+  necromanceranne:
+  - balance: Despite earlier reports suggesting that the famous lethality of the Regal
+      Condor was largely a myth, there has been rumors that the gun has once again
+      started to display its true killing potential on any station that it 'manifests'.
+  oranges:
+  - rscadd: Dogs now react to centrist grillers more realistically
+  san7890:
+  - refactor: Refactored goats into basic mobs! Not much should have changed beyond
+      their endless desire to retaliate should you attack them, they're still just
+      as good as chomping away plant life as ever.
+  timothymtorres:
+  - refactor: Refactor gib code to be more robust.
+  - qol: Gibbing a mob will result in all items being dropped instead of getting deleted.
+      There are a few exceptions (like admin gib self) where this will not take place.
+  unit0016:
+  - bugfix: It is no longer possible to chasm yourself on the geode. Again.
+2023-10-08:
+  Comxy:
+  - bugfix: Spider types get properly checked again.
+  Ghommie:
+  - bugfix: People who are irremediably bald can still grow a beard with barber aid.
+  Hatterhat:
+  - qol: Miners can now tag monster spawners (necropolis tendrils, animal dens, demonic
+      portals, and netherworld links) by using their mining scanner on it, which updates
+      their GPS tag (and/or gives them one) to give it a numerical designation and
+      a short identifier for what it's spawning.
+  Jacquerel:
+  - bugfix: Flesh Worms will move smoothly more consistently.
+  LT3:
+  - image: Text alignment on ID cards slightly adjusted
+  Melbert:
+  - bugfix: Fixed an error from reading an ID card closely when you can't read
+  YehnBeep:
+  - qol: '"prison" intercoms have been renamed to "receive-only" intercoms to make
+      it clearer they cannot transmit.'
+  carlarctg:
+  - qol: Added slapcrafting to unloaded tech shells, click on them with ingredients
+      to quickly craft your shell.
+  san7890:
+  - refactor: Sloths are now basic mobs, however their overall sluggish behavior shouldn't
+      have changed much- let us know if anything is broken.
+  timothymtorres:
+  - bugfix: Fix bodies now lose fire stacks while husked.
