@@ -68,3 +68,32 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn
 	name = "Bitrunning safehouse spawn"
 	icon_state = "safehouse"
+
+///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
+/obj/effect/landmark/bitrunning/crate_replacer
+	name = "Bitrunning Goal Crate Randomizer"
+	icon_state = "crate"
+
+/obj/effect/landmark/bitrunning/crate_replacer/Initialize(mapload)
+	. = ..()
+	var/list/crate_list = list()
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/encrypted_crate
+	for(var/obj/structure/closet/crate/crate_to_check in get_area(src))
+		if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+			encrypted_crate = crate_to_check
+		else
+			crate_list += crate_to_check
+
+	if(!encrypted_crate)
+		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")
+		return
+
+	if(!length(crate_list))
+		stack_trace("Bitrunning Goal Crate Randomizer failed to find any NORMAL crates to swap positions for.")
+		return
+
+	var/original_location = encrypted_crate.loc
+	var/obj/structure/closet/crate/selected_crate = pick(crate_list)
+
+	encrypted_crate.abstract_move(selected_crate.loc)
+	selected_crate.abstract_move(original_location)

@@ -81,8 +81,8 @@
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "X" = (
-/obj/machinery/door/airlock/wood/glass,
 /obj/structure/fans/tiny,
+/obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "Z" = (
