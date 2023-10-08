@@ -1,0 +1,5 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - rscadd: "Hand labelers can now label living things!"
+  - rscadd: "Hand labelers now tell you how to remove labels in their description"
