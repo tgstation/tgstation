@@ -25,12 +25,14 @@
 
 	setup_particles()
 
+/// Adds the particle overlays to the byteforge
 /obj/machinery/byteforge/proc/setup_particles()
 	cut_overlays()
 
 	if(is_operational)
 		add_overlay(byteforge_particles)
 
+/// Begins spawning the crate - lights, overlays, etc
 /obj/machinery/byteforge/proc/start_to_spawn(obj/structure/closet/crate/secure/bitrunning/encrypted/cache)
 	addtimer(CALLBACK(src, PROC_REF(spawn_crate), cache), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
@@ -39,6 +41,7 @@
 
 	set_light(l_range = 2, l_power = 1.5, l_color = LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
 
+/// Sparks, moves the crate to the location
 /obj/machinery/byteforge/proc/spawn_crate(obj/structure/closet/crate/secure/bitrunning/encrypted/cache)
 	if(QDELETED(cache))
 		return
