@@ -4,28 +4,28 @@
 	/// Blackboard key holding target atom
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// What AI behaviour do we actually run?
-	var/datum/ai_behavior/ranged_skirmish/attack_behavior = /datum/ai_behavior/ranged_skirmish
-
-/datum/ai_planning_subtree/ranged_skirmish/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
-	if(!controller.blackboard_key_exists(target_key))
-		return
-	controller.queue_behavior(attack_behavior, target_key, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-
-/// How often will we try to perform our ranged attack?
-/datum/ai_behavior/ranged_skirmish
-	action_cooldown = 1 SECONDS
+	var/attack_behavior = /datum/ai_behavior/ranged_skirmish
 	/// If target is further away than this we don't fire
 	var/max_range = 9
 	/// If target is closer than this we don't fire
 	var/min_range = 2
 
-/datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_planning_subtree/ranged_skirmish/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	. = ..()
+	if(!controller.blackboard_key_exists(target_key))
+		return
+	controller.queue_behavior(attack_behavior, target_key, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
+
+/// How often will we try to perform our ranged attack?
+/datum/ai_behavior/ranged_skirmish
+	action_cooldown = 1 SECONDS
+
+/datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, max_range, min_range)
 	. = ..()
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, max_range, min_range)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))

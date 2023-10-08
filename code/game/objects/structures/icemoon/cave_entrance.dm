@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	name = "demonic portal"
 	desc = "A portal that goes to another world, normal creatures couldn't survive there."
 	icon_state = "nether"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
-	light_outer_range = 1
+	mob_types = list(/mob/living/basic/mining/ice_demon)
+	light_range = 1
 	light_color = COLOR_SOFT_RED
 
 /obj/structure/spawner/ice_moon/demonic_portal/Initialize(mapload)
