@@ -64,7 +64,6 @@
 		/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch,
 		/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 		/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
-		/mob/living/simple_animal/hostile/asteroid/ice_demon,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/lesser,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
