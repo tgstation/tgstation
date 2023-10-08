@@ -180,7 +180,7 @@
 				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
 				if(order.orderer_rank == "Galactic Materials Market" && ( \
 					(!ordering_private && order.paying_account == null) || \
-					(ordering_private && order.orderer == living_user) \
+					(ordering_private && order.paying_account != null && order.orderer == living_user) \
 				))
 					// Check if this order exceeded its limit
 					var/prior_stacks = 0
