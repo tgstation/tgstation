@@ -65,7 +65,7 @@
 /mob/living/silicon/pai/ignite_mob(silent)
 	return FALSE
 
-/mob/living/silicon/pai/proc/take_holo_damage(type, amount)
+/mob/living/silicon/pai/proc/take_holo_damage(amount)
 	holochassis_health = clamp((holochassis_health - amount), -50, HOLOCHASSIS_MAX_HEALTH)
 	if(holochassis_health < 0)
 		fold_in(force = TRUE)
@@ -73,23 +73,17 @@
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
 	return amount
 
-/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	return take_holo_damage(amount)
+/// Called when we take burn or brute damage, pass it to the shell instead
+/mob/living/silicon/pai/proc/on_shell_damaged(datum/hurt, type, amount, forced)
+	SIGNAL_HANDLER
+	take_holo_damage(amount)
+	return COMPONENT_IGNORE_CHANGE
 
-/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	return take_holo_damage(amount)
-
-/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_stamina, forced = FALSE, required_biotype)
-	if(on_damage_adjustment(STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	if(forced)
-		take_holo_damage(amount)
-	else
-		take_holo_damage(amount * 0.25)
+/// Called when we take stamina damage, pass it to the shell instead
+/mob/living/silicon/pai/proc/on_shell_weakened(datum/hurt, type, amount, forced)
+	SIGNAL_HANDLER
+	take_holo_damage(amount * ((forced) ? 1 : 0.25))
+	return COMPONENT_IGNORE_CHANGE
 
 /mob/living/silicon/pai/getBruteLoss()
 	return HOLOCHASSIS_MAX_HEALTH - holochassis_health

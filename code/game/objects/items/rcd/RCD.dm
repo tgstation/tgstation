@@ -106,7 +106,7 @@
 		useResource(16, user)
 		activate()
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		user.gib()
+		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
 	user.visible_message(span_suicide("[user] pulls the trigger... But there is not enough ammo!"))
