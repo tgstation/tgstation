@@ -14,6 +14,8 @@
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
+	/// Whether the smartfridge is welded down to the floor disabling unwrenching
+	var/welded_down = TRUE
 
 	///Boolean on whether the ORM can claim points without being connected to an ore silo.
 	var/requires_silo = TRUE
@@ -65,6 +67,12 @@
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
+	if(welded_down)
+		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+	else if(anchored)
+		. += span_info("It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.")
+	else
+		. += span_info("It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.")
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
@@ -370,7 +378,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
+				materials.use_materials(alloy.materials, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
@@ -423,3 +431,88 @@
 	. += light_in
 	. += light_out
 
+// welding code
+
+/obj/machinery/mineral/ore_redemption/can_be_unfasten_wrench(mob/user, silent)
+	if(welded_down)
+		to_chat(user, span_warning("[src] is welded to the floor!"))
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/mineral/ore_redemption/set_anchored(anchorvalue)
+	. = ..()
+	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded_down = FALSE
+	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, anchorvalue)
+
+/obj/machinery/mineral/ore_redemption/welder_act(mob/living/user, obj/item/tool)
+	..()
+	if(welded_down)
+		if(!tool.tool_start_check(user, amount=2))
+			return TRUE
+		user.visible_message(
+			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("You start to cut [src] free from the floor..."),
+			span_hear("You hear welding."),
+		)
+		if(!tool.use_tool(src, user, delay=100, volume=100))
+			return FALSE
+		welded_down = FALSE
+		to_chat(user, span_notice("You cut [src] free from the floor."))
+		return TRUE
+	if(!anchored)
+		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		return TRUE
+	if(!tool.tool_start_check(user, amount=2))
+		return TRUE
+	user.visible_message(
+		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("You start to weld [src] to the floor..."),
+		span_hear("You hear welding."),
+	)
+	if(!tool.use_tool(src, user, delay=100, volume=100))
+		balloon_alert(user, "cancelled!")
+		return FALSE
+	welded_down = TRUE
+	to_chat(user, span_notice("You weld [src] to the floor."))
+	return TRUE
+
+/obj/machinery/mineral/ore_redemption/welder_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(machine_stat & BROKEN)
+		if(!tool.tool_start_check(user, amount=1))
+			return FALSE
+		user.visible_message(
+			span_notice("[user] is repairing [src]."),
+			span_notice("You begin repairing [src]..."),
+			span_hear("You hear welding."),
+		)
+		if(tool.use_tool(src, user, delay=40, volume=50))
+			if(!(machine_stat & BROKEN))
+				return FALSE
+			balloon_alert(user, "repaired")
+			atom_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_icon()
+			return TRUE
+	else
+		balloon_alert(user, "no repair needed!")
+		return FALSE
+
+/obj/machinery/mineral/ore_redemption/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+		
+	var/tool_tip_set = FALSE
+	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/mineral/ore_redemption))
+		if(welded_down)
+			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+			tool_tip_set = TRUE
+		else if (!welded_down && anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+			tool_tip_set = TRUE
+		if(machine_stat & BROKEN)
+			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+			tool_tip_set = TRUE
+	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
