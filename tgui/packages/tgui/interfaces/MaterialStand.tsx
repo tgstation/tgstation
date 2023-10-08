@@ -23,7 +23,7 @@ export const MaterialStand = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { ores = [] } = data;
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  const search = createSearch(searchItem, (ores) => ores.name);
+  const search = createSearch(searchItem, (ore: Ores) => ore.name);
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
   return (
