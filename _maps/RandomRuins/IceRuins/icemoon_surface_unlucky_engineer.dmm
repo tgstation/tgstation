@@ -195,7 +195,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "co" = (
-/obj/machinery/atmospherics/miner/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine/o2,
 /area/ruin/unlucky_engineer/turbine)
 "cs" = (
@@ -382,11 +382,11 @@
 /area/ruin/unlucky_engineer/maints)
 "dZ" = (
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible,
-/obj/machinery/portable_atmospherics/canister,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/turbine)
 "ec" = (
@@ -595,6 +595,7 @@
 "hn" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unlucky_engineer/smes)
 "hr" = (
@@ -812,10 +813,10 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/ce)
 "kl" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/icemoon,
 /area/ruin/unlucky_engineer/turbine)
 "kq" = (
@@ -1395,7 +1396,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/unlucky_engineer/turbine)
 "sF" = (
-/obj/machinery/atmospherics/miner/nitrogen,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2,
 /area/ruin/unlucky_engineer/turbine)
 "sO" = (
@@ -2427,7 +2428,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Jm" = (
-/obj/machinery/atmospherics/miner/plasma,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/engine/plasma,
 /area/ruin/unlucky_engineer/turbine)
 "Jn" = (
@@ -3376,6 +3377,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/unlucky_engineer/turbine)
+"XY" = (
+/obj/machinery/door/poddoor/incinerator_syndicatelava_aux,
+/turf/open/floor/engine/vacuum,
+/area/ruin/unlucky_engineer/turbine)
 "Yb" = (
 /obj/machinery/atmospherics/components/binary/pump/on/cyan/visible/layer2{
 	dir = 8
@@ -4174,7 +4179,7 @@ WP
 Df
 Ah
 oH
-lS
+XY
 ps
 "}
 (21,1,1) = {"
