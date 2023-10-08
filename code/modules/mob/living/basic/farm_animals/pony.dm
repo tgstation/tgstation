@@ -86,3 +86,13 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/pony
 	)
+
+// A stronger horse is required for our strongest cowboys.
+/mob/living/basic/pony/syndicate
+	health = 150
+	maxHealth = 150
+	faction = list(ROLE_SYNDICATE)
+
+/mob/living/basic/pony/syndicate/Initialize(mapload)
+	. = ..()
+	name = pick("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
