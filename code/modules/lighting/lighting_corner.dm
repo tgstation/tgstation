@@ -205,7 +205,7 @@
 	else
 		display.pixel_y = -16
 
-	display.color = display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
+	display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
 
 	draw_to.add_overlay(display)
 
