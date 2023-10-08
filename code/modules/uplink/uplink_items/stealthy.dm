@@ -90,7 +90,16 @@
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
 	item = /obj/item/gun/energy/recharge/ebow
-	progression_minimum = 30 MINUTES
 	cost = 10
+	surplus = 50
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_weapons/contrabaton
+	name = "Contractor Baton"
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets. \
+	These shocks are capable of affecting the inner circuitry of most robots as well, applying a short stun. \
+	Has the added benefit of affecting the vocal cords of your victim, causing them to slur as if inebriated."
+	item = /obj/item/melee/baton/telescopic/contractor_baton
+	cost = 12
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

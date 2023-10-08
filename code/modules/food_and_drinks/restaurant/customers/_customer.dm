@@ -52,10 +52,10 @@
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
 
-/datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/proc/get_overlays(mob/living/basic/robot_customer/customer)
 	return
 
-/datum/customer_data/proc/get_underlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/proc/get_underlays(mob/living/basic/robot_customer/customer)
 	return
 
 /datum/customer_data/american
@@ -177,7 +177,7 @@
 		),
 	)
 
-/datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/french/get_overlays(mob/living/basic/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
 		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
 		flag.appearance_flags = RESET_COLOR
@@ -224,7 +224,7 @@
 		),
 	)
 
-/datum/customer_data/japanese/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/japanese/get_overlays(mob/living/basic/robot_customer/customer)
 	//leaving and eaten
 	if(type == /datum/customer_data/japanese && customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.ai_controller.blackboard[BB_CUSTOMER_EATING])
 		var/mutable_appearance/you_won_my_heart = mutable_appearance('icons/effects/effects.dmi', "love_hearts")
@@ -303,13 +303,13 @@
 		return FALSE
 	return TRUE
 
-/datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
 		LAZYSET(wings_chosen, customer_ref, GLOB.moth_wings_list[pick(GLOB.moth_wings_list)])
 	return wings_chosen[customer_ref]
 
-/datum/customer_data/moth/get_underlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/get_underlays(mob/living/basic/robot_customer/customer)
 	var/list/underlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
@@ -320,7 +320,7 @@
 
 	return underlays
 
-/datum/customer_data/moth/get_overlays(mob/living/simple_animal/robot_customer/customer)
+/datum/customer_data/moth/get_overlays(mob/living/basic/robot_customer/customer)
 	var/list/overlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)

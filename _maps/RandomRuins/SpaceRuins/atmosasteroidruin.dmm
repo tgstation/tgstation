@@ -637,7 +637,7 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "RK" = (

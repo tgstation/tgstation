@@ -4,7 +4,7 @@
 	action_cooldown = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// How far do we try to run? Further makes for smoother running, but potentially weirder pathfinding
-	var/run_distance = 9
+	var/run_distance = DEFAULT_BASIC_FLEE_DISTANCE
 	/// Clear target if we finish the action unsuccessfully
 	var/clear_failed_targets = TRUE
 
@@ -12,6 +12,7 @@
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
+	run_distance = controller.blackboard[BB_BASIC_MOB_FLEE_DISTANCE] || initial(run_distance)
 	if(!plot_path_away_from(controller, target))
 		return FALSE
 	return ..()
@@ -21,13 +22,12 @@
 	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
 		return
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/escaped =  QDELETED(target) || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
-	if (escaped)
+	if (QDELETED(target) || !can_see(controller.pawn, target, run_distance))
 		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
 		return
-	if (get_dist(controller.pawn, controller.current_movement_target) > required_distance)
-		return
-	if(plot_path_away_from(controller, target))
+	if (get_dist(controller.pawn, controller.current_movement_target) >= required_distance)
+		return // Still heading over
+	if (plot_path_away_from(controller, target))
 		return
 	finish_action(controller, succeeded = FALSE, target_key = target_key, hiding_location_key = hiding_location_key)
 

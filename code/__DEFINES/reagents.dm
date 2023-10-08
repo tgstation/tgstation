@@ -34,6 +34,9 @@
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
 
+/// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
+#define UPDATE_MOB_HEALTH 1
+
 // How long do mime drinks silence the drinker (if they are a mime)?
 #define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone

@@ -75,6 +75,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	return FALSE
 
 /datum/action/changeling/proc/sting_action(mob/living/user, mob/living/target)
+	SHOULD_CALL_PARENT(TRUE)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 	return FALSE
 

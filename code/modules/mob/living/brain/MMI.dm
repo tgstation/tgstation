@@ -268,7 +268,7 @@
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
 		return FALSE
-	if(brain.decoy_override)
+	if(brain?.decoy_override)
 		if(user)
 			to_chat(user, span_warning("This [name] does not seem to fit!"))
 		return FALSE

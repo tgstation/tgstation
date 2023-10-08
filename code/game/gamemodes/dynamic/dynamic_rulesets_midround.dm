@@ -21,6 +21,13 @@
 	/// Abstract root value
 	var/abstract_type = /datum/dynamic_ruleset/midround
 
+/datum/dynamic_ruleset/midround/forget_startup()
+	living_players = list()
+	living_antags = list()
+	dead_players = list()
+	list_observers = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
@@ -75,7 +82,10 @@
 		if (length(exclusive_roles) && !(creature.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 			trimmed_list.Remove(creature)
 			continue
-		if(HAS_TRAIT(creature, TRAIT_MIND_TEMPORARILY_GONE)) // are they in the vdom?
+		if(HAS_TRAIT(creature, TRAIT_MIND_TEMPORARILY_GONE)) // are they out of body?
+			trimmed_list.Remove(creature)
+			continue
+		if(HAS_TRAIT(creature, TRAIT_TEMPORARY_BODY)) // are they an avatar?
 			trimmed_list.Remove(creature)
 			continue
 	return trimmed_list
@@ -98,8 +108,8 @@
 				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 	var/threat = round(mode.threat_level/10)
-
-	if (job_check < required_enemies[threat])
+	var/ruleset_forced = (GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED) == RULESET_FORCE_ENABLED
+	if (!ruleset_forced && job_check < required_enemies[threat])
 		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
@@ -350,6 +360,7 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
@@ -361,10 +372,8 @@
 	flags = HIGH_IMPACT_RULESET
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
-	/// The nuke ops team datum.
-	var/datum/team/nuclear/nuke_team
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat_level=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
@@ -388,7 +397,6 @@
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(index == 1)
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
-		nuke_team = leader_antag_datum.nuke_team
 		new_character.mind.add_antag_datum(leader_antag_datum)
 		return
 	return ..()
@@ -474,6 +482,10 @@
 	repeatable = TRUE
 	var/list/vents = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/forget_startup()
+	vents = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
 	required_candidates += prob(50)
@@ -516,7 +528,7 @@
 	minimum_players = 15
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat_level = 0)
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
 	if(!spawn_loc)
 		return FALSE
@@ -552,6 +564,10 @@
 	minimum_players = 25
 	repeatable = TRUE
 	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/forget_startup()
+	spawn_locs = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
@@ -591,6 +607,10 @@
 
 	var/datum/team/abductor_team/new_team
 
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/forget_startup()
+	new_team = null
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
@@ -622,6 +642,10 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
 
 	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/forget_startup()
+	spawn_locs = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
@@ -677,7 +701,11 @@
 	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/forget_startup()
+	spawn_locs = list()
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat_level=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
 	return ..()
@@ -740,7 +768,7 @@
 	minimum_players = 20
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.light_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
@@ -762,7 +790,7 @@
 	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.heavy_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
@@ -840,6 +868,7 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
 	)
 	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
 	required_candidates = 1
@@ -847,6 +876,10 @@
 	cost = 3
 	repeatable = TRUE
 	var/list/possible_spawns = list() ///places the antag can spawn
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/forget_startup()
+	possible_spawns = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)

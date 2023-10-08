@@ -33,6 +33,7 @@
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE
+	find_server()
 
 	RegisterSignals(src, list(
 		COMSIG_QDELETING,
@@ -397,17 +398,18 @@
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
+	examine_text += span_infoplain("Drag yourself into the pod to engage the link.")
+	examine_text += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
+	examine_text += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+
 	if(isnull(occupant))
-		examine_text += span_infoplain("It is currently unoccupied.")
+		examine_text += span_notice("It is currently unoccupied.")
 		return
 
-	examine_text += span_infoplain("It is currently occupied by [occupant].")
+	examine_text += span_notice("It is currently occupied by [occupant].")
 	examine_text += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
 
-/// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/unprotect_and_signal()
-	unprotect_occupant(occupant)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR, src)
+
 
 /// When the server is upgraded, drops brain damage a little
 /obj/machinery/netpod/proc/on_server_upgraded(datum/source, servo_rating)
@@ -445,6 +447,11 @@
 	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
+
+/// On unbuckle or break, make sure the occupant ref is null
+/obj/machinery/netpod/proc/unprotect_and_signal()
+	unprotect_occupant(occupant)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 /// Removes the occupant from netpod stasis
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)

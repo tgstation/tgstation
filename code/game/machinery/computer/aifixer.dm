@@ -65,10 +65,12 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, FALSE)
-	occupier.adjustFireLoss(-5, FALSE)
-	occupier.adjustBruteLoss(-5, FALSE)
-	occupier.updatehealth()
+	var/need_mob_update = FALSE
+	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustBruteLoss(-5, updating_health = FALSE)
+	if(need_mob_update)
+		occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive()
 		if(!occupier.radio_enabled)

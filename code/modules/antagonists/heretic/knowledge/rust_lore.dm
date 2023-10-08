@@ -80,9 +80,9 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/entropy_pulse,
@@ -126,11 +126,14 @@
 		return
 
 	// Heals all damage + Stamina
-	source.adjustBruteLoss(-2, FALSE)
-	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
-	source.adjustStaminaLoss(-2)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
@@ -169,6 +172,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
@@ -198,6 +202,7 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
@@ -295,11 +300,14 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
-	source.adjustStaminaLoss(-20)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjustOxyLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 
 /**
  * #Rust spread datum

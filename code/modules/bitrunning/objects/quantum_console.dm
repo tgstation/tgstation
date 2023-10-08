@@ -17,7 +17,7 @@
 /obj/machinery/computer/quantum_console/LateInitialize()
 	. = ..()
 
-	if(isnull(server_ref))
+	if(isnull(server_ref?.resolve()))
 		find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
@@ -26,7 +26,7 @@
 	if(!is_operational)
 		return
 
-	if(isnull(server_ref))
+	if(isnull(server_ref?.resolve()))
 		find_server()
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -106,5 +106,3 @@
 			server_ref = WEAKREF(nearby_server)
 			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server
-
-	return
