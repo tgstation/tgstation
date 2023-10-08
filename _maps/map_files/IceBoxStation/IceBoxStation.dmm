@@ -18137,7 +18137,7 @@
 /area/station/maintenance/starboard/aft)
 "fya" = (
 /obj/structure/cable,
-/mob/living/simple_animal/sloth/paperwork,
+/mob/living/basic/sloth/paperwork,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fyc" = (

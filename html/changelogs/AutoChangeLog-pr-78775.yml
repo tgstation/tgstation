@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Ice whelps can now use spells given to them by admins, and people who have polymorphed into ice whelps can now polymorph back to normal."

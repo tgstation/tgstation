@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "The AI can no longer turn you off if you shapeshift into a robot."
