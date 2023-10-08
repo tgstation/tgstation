@@ -107,6 +107,8 @@
 				/obj/item/clothing/under/suit/white_on_white = 1,
 				/obj/item/clothing/head/tragic = 2,
 				/obj/item/clothing/under/costume/tragic = 2,
+				/obj/item/clothing/head/knowingclown = 2,
+				/obj/item/clothing/under/knowingclown = 2,
 			),
 		),
 		list(

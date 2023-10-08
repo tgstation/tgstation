@@ -14,3 +14,11 @@
 	icon_state = "bee"
 	flags_inv = HIDEHAIR
 	worn_y_offset = 2
+
+/obj/item/clothing/head/knowingclown
+	name = "Small but Knowing Clown hat"
+	desc = "The Cap of a Small but All Knowing Clown"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "knowingclownhat"
+	worn_y_offset = 6
