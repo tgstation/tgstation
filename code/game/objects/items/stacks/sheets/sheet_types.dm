@@ -761,6 +761,20 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/bone
 	material_type = /datum/material/bone
 
+/obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
+	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/bonedagger, /datum/crafting_recipe/bonespear, /datum/crafting_recipe/boneaxe,\
+		/datum/crafting_recipe/bonearmor, /datum/crafting_recipe/skullhelm, /datum/crafting_recipe/bracers
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2, check_density = FALSE, category = CAT_FURNITURE), \

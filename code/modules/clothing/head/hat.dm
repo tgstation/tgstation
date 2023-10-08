@@ -90,11 +90,11 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/head/cowboy
-	name = "bounty hunting hat"
+	name = "cowboy hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
 	icon = 'icons/obj/clothing/head/cowboy.dmi'
 	worn_icon = 'icons/mob/clothing/head/cowboy.dmi'
-	icon_state = "cowboy"
+	icon_state = "cowboy_hat_brown"
 	worn_icon_state = "hunter"
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
@@ -126,6 +126,10 @@
 
 /// Bounty hunter's hat, very likely to intercept bullets
 /obj/item/clothing/head/cowboy/bounty
+	name = "bounty hunting hat"
+	desc = "Reach for the skies, pardner."
+	icon_state = "bounty_hunter"
+	worn_icon_state = "hunter"
 	deflect_chance = 50
 
 /obj/item/clothing/head/cowboy/black
