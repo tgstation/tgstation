@@ -4161,12 +4161,10 @@
 /turf/open/floor/plating/ocean,
 /area/ocean)
 "cfI" = (
-/obj/structure/lattice,
-/obj/machinery/conveyor/auto{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/ocean/near_station_powered)
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/service/hydroponics)
 "cfO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -4358,6 +4356,7 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 1
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "clC" = (
@@ -6701,6 +6700,7 @@
 /area/ocean/near_station_powered)
 "dzo" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "dzq" = (
@@ -41413,9 +41413,8 @@
 /turf/closed/wall/r_wall,
 /area/station/service/library)
 "uWO" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbage"
+/obj/machinery/conveyor/auto/inside_corners{
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -43808,6 +43807,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "whs" = (
@@ -61609,7 +61609,7 @@ jtn
 uSV
 vme
 qBz
-dwb
+cfI
 nzU
 vrw
 hbh
@@ -75970,7 +75970,7 @@ jvq
 jWG
 jvq
 iNI
-jvq
+nhC
 sQl
 nvL
 kJN
@@ -78081,7 +78081,7 @@ aah
 meJ
 fXF
 kTL
-cfI
+dyB
 asA
 asA
 qPs
@@ -78339,7 +78339,7 @@ meJ
 fXF
 cfz
 kwO
-cfI
+dyB
 asA
 asA
 fkr
@@ -78597,7 +78597,7 @@ pHU
 cfz
 mdW
 kwO
-cfI
+dyB
 asA
 asA
 pla
@@ -80404,7 +80404,7 @@ meJ
 mdW
 mdW
 kwO
-cfI
+dyB
 rDE
 lCF
 cTE
