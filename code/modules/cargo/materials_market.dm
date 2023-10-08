@@ -130,7 +130,7 @@
 	data["canOrderCargo"] = can_buy_via_budget
 	return data
 
-/obj/machinery/materials_market/ui_act(action, params)
+/obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -148,14 +148,19 @@
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-			var/mob/living/living_user = usr
+			var/mob/living/living_user = ui.user
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(isnull(used_id_card))
 				say("No ID Found")
 				return
 
+			//if multiple users open the UI some of them may not have the required access so we recheck
+			var/is_ordering_private = ordering_private
+			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+				is_ordering_private = TRUE
+
 			var/datum/bank_account/account_payable
-			if(ordering_private)
+			if(is_ordering_private)
 				account_payable = used_id_card.registered_account
 			else if(can_buy_via_budget)
 				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -179,8 +184,8 @@
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
 				if(order.orderer_rank == "Galactic Materials Market" && ( \
-					(!ordering_private && order.paying_account == null) || \
-					(ordering_private && order.paying_account != null && order.orderer == living_user) \
+					(!is_ordering_private && order.paying_account == null) || \
+					(is_ordering_private && order.paying_account != null && order.orderer == living_user) \
 				))
 					// Check if this order exceeded its limit
 					var/prior_stacks = 0
@@ -196,7 +201,7 @@
 
 			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
 			var/datum/supply_pack/custom/minerals/mineral_pack = new(
-				purchaser = ordering_private ? living_user : "Cargo", \
+				purchaser = is_ordering_private ? living_user : "Cargo", \
 				cost = cost, \
 				contains = things_to_order, \
 			)
@@ -205,7 +210,7 @@
 				orderer = living_user,
 				orderer_rank = "Galactic Materials Market",
 				orderer_ckey = living_user.ckey,
-				paying_account = ordering_private ? account_payable : null,
+				paying_account = is_ordering_private ? account_payable : null,
 				cost_type = "credit",
 				can_be_cancelled = FALSE
 			)
