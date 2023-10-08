@@ -5,7 +5,7 @@
 /// You should absolutely not spam this system, it will break things in new and wonderful ways
 /// S close enough for government work though.
 /// Fuck you goonstation
-
+SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
 	wait = 10 // This is more like a queue then anything else
 	flags = SS_BACKGROUND
