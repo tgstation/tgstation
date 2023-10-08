@@ -1,5 +1,46 @@
-///The color of light space emits
-GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
+///The base color of light space emits
+GLOBAL_VAR_INIT(base_starlight_color, default_starlight_color())
+///The color of light space is currently emitting
+GLOBAL_VAR_INIT(starlight_color, default_starlight_color())
+/proc/default_starlight_color()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_color)
+
+///The range of the light space is displaying
+GLOBAL_VAR_INIT(starlight_range, default_starlight_range())
+/proc/default_starlight_range()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_range)
+
+///The power of the light space is throwin out
+GLOBAL_VAR_INIT(starlight_power, default_starlight_power())
+/proc/default_starlight_power()
+	var/turf/open/space/read_from = /turf/open/space
+	return initial(read_from.light_power)
+
+/proc/set_starlight(star_color = null, range = null, power = null)
+	if(isnull(star_color))
+		star_color = GLOB.starlight_color
+	var/old_star_color = GLOB.starlight_color
+	GLOB.starlight_color = star_color
+	// set light color on all lit turfs
+	for(var/turf/open/space/spess as anything in GLOB.starlight)
+		spess.set_light(l_range = range, l_power = power, l_color = star_color)
+
+	if(star_color == old_star_color)
+		return
+
+	var/list/old_star_overlays = list()
+	// Update the base overlays
+	for(var/mutable_appearance/light as anything in GLOB.fullbright_overlays)
+		old_star_overlays += new /mutable_appearance(light)
+		light.color = star_color
+	// Send some signals that'll update everything that uses the overlays OR the global
+	SEND_GLOBAL_SIGNAL(COMSIG_STARLIGHT_COLOR_CHANGED, old_star_color, star_color, old_star_overlays, GLOB.fullbright_overlays)
+	// iterate all areas
+	// iterate all orphaned turfs
+	// iterate all half walls
+
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
@@ -24,6 +65,9 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.75
+	light_range = 2
+	light_color = COLOR_STARLIGHT
+	light_on = FALSE
 	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
@@ -35,6 +79,7 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 	//This is used to optimize the map loader
 	return
 
+GLOBAL_LIST_EMPTY(starlight)
 /**
  * Space Initialize
  *
@@ -56,18 +101,13 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 			stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
-	light_color = GLOB.starlight_color
-
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
-		// Intentionally not add_overlay for performance reasons.
-		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
-		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
-		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		display_starlight()
 
 	if (!mapload)
 		if(requires_activation)
@@ -82,6 +122,10 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 				T.multiz_turf_new(src, UP)
 
 	return INITIALIZE_HINT_NORMAL
+
+/turf/open/space/Destroy()
+	. = ..()
+	GLOB.starlight -= src
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -115,13 +159,15 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 			continue
 		enable_starlight()
 		return TRUE
-	set_light(0)
+	GLOB.starlight -= src
+	set_light(l_on = FALSE)
 	return FALSE
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	if(!light_range)
-		set_light(2)
+	if(!light_on)
+		set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
+		GLOB.starlight += src
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -311,9 +357,10 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 	var/turf/below = GET_TURF_BELOW(src)
 	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
 	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
-	if(!isspaceturf(below))
+	if(!isspaceturf(below) || light_on)
 		return
-	set_light(2)
+	set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
+	GLOB.starlight += src
 
 /turf/open/space/openspace/update_starlight()
 	. = ..()
@@ -326,9 +373,11 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 /turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 	if(isspaceturf(source) && !ispath(path, /turf/open/space))
-		set_light(2)
+		GLOB.starlight += src
+		set_light(l_on = TRUE, l_range = GLOB.starlight_range, l_power = GLOB.starlight_power, l_color = GLOB.starlight_color)
 	else if(!isspaceturf(source) && ispath(path, /turf/open/space))
-		set_light(0)
+		GLOB.starlight -= src
+		set_light(l_on = FALSE)
 
 /turf/open/space/replace_floor(turf/open/new_floor_path, flags)
 	if (!initial(new_floor_path.overfloor_placed))

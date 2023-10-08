@@ -38,7 +38,7 @@
 	add_atom_colour(parallax_color, ADMIN_COLOUR_PRIORITY)
 
 /atom/movable/screen/parallax_layer/random/space_gas/apply_global_effects()
-	GLOB.starlight_color = starlight_color || parallax_color
+	set_starlight(starlight_color || parallax_color)
 
 /// Space gas but green for the radioactive nebula station trait
 /atom/movable/screen/parallax_layer/random/space_gas/radioactive

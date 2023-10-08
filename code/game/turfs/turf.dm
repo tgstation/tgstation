@@ -156,8 +156,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
-		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		add_overlay(overlay)
+		display_starlight()
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
@@ -193,6 +192,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_del(src, UP)
+	if(space_lit)
+		UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -759,3 +760,21 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/// Display starlight COLORING (not the lighting itself) on this turf, rather then doing it through the area or something
+/turf/proc/display_starlight()
+	// Intentionally not add_overlay for performance reasons.
+	// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
+	// queueing compile, cloning appearance, etc etc etc that is not necessary here.
+	overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+	RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, PROC_REF(starlight_color_changed))
+
+/// Clears starlight coloring from this turf
+/turf/proc/remove_starlight()
+	overlays -= GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+
+/turf/proc/starlight_color_changed(datum/source, old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
+	var/offset = GET_TURF_PLANE_OFFSET(src) + 1
+	overlays -= old_lit_overlays[offset]
+	overlays += new_lit_overlays[offset]

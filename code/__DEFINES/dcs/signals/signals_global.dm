@@ -86,3 +86,6 @@
 
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
+
+/// Global signal when starlight color is changed (old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
+#define COMSIG_STARLIGHT_COLOR_CHANGED "!starlight_color_changed"

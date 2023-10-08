@@ -48,6 +48,7 @@
 		add_base_lighting()
 
 /area/proc/remove_base_lighting()
+	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	var/list/z_offsets = SSmapping.z_level_to_plane_offset
 	for(var/turf/T as anything in get_contained_turfs())
 		if(z_offsets[T.z])
@@ -58,13 +59,18 @@
 
 /area/proc/add_base_lighting()
 	lighting_effects = list()
+	var/working_color = base_lighting_color
+	if(working_color == COLOR_STARLIGHT)
+		working_color = GLOB.starlight_color
+		RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, PROC_REF(starlight_changed))
+
 	for(var/offset in 0 to SSmapping.max_plane_offset)
 		var/mutable_appearance/lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
 		SET_PLANE_W_SCALAR(lighting_effect, LIGHTING_PLANE, offset)
 		lighting_effect.layer = LIGHTING_PRIMARY_LAYER
 		lighting_effect.blend_mode = BLEND_ADD
 		lighting_effect.alpha = base_lighting_alpha
-		lighting_effect.color = (base_lighting_color == COLOR_STARLIGHT ? GLOB.starlight_color : base_lighting_color)
+		lighting_effect.color = working_color
 		lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		lighting_effects += lighting_effect
 	add_overlay(lighting_effects[1])
@@ -78,3 +84,22 @@
 			T.add_overlay(lighting_effects[z_offsets[T.z] + 1])
 
 	area_has_base_lighting = TRUE
+
+/area/proc/starlight_changed(datum/source, old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
+	var/mutable_appearance/old_star_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
+	SET_PLANE_W_SCALAR(old_star_effect, LIGHTING_PLANE, 0)
+	old_star_effect.layer = LIGHTING_PRIMARY_LAYER
+	old_star_effect.blend_mode = BLEND_ADD
+	old_star_effect.alpha = base_lighting_alpha
+	old_star_effect.color = old_star
+	old_star_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+	cut_overlay(old_star_effect)
+	var/mutable_appearance/new_star_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
+	SET_PLANE_W_SCALAR(new_star_effect, LIGHTING_PLANE, 0)
+	new_star_effect.layer = LIGHTING_PRIMARY_LAYER
+	new_star_effect.blend_mode = BLEND_ADD
+	new_star_effect.alpha = base_lighting_alpha
+	new_star_effect.color = new_star
+	new_star_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+	add_overlay(new_star_effect)
+	lighting_effects[1] = new_star_effect
