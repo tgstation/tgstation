@@ -9,4 +9,4 @@
 	map_name = "psyker_shuffle"
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/bathroom
-	forced_outfit = /datum/outfit/psyker
+	forced_outfit = /datum/outfit/echolocator
