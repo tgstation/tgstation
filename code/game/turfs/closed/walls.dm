@@ -88,26 +88,11 @@
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			generate_space_underlay(underlay_appearance, src)
-			RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, PROC_REF(underlay_star_changed))
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
-
-/turf/closed/wall/proc/underlay_star_changed(datum/source, old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
-	var/our_space_plane = MUTATE_PLANE(PLANE_SPACE, src)
-	for(var/mutable_appearance/appearance as anything in underlays)
-		if(appearance.plane != our_space_plane)
-			continue
-		if(appearance.icon_state != "space")
-			continue
-		if(appearance.icon != 'icons/turf/space.dmi')
-			continue
-		// alright found it
-		underlays -= appearance
-	var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
-	underlays += generate_space_underlay(underlay_appearance, src)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
@@ -116,8 +101,6 @@
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay)
-		UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	return ..()
 
 

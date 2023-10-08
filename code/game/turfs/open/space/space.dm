@@ -30,17 +30,11 @@ GLOBAL_VAR_INIT(starlight_power, default_starlight_power())
 	if(star_color == old_star_color)
 		return
 
-	var/list/old_star_overlays = list()
 	// Update the base overlays
-	for(var/mutable_appearance/light as anything in GLOB.fullbright_overlays)
-		old_star_overlays += new /mutable_appearance(light)
+	for(var/obj/light as anything in GLOB.starlight_objects)
 		light.color = star_color
-	// Send some signals that'll update everything that uses the overlays OR the global
-	SEND_GLOBAL_SIGNAL(COMSIG_STARLIGHT_COLOR_CHANGED, old_star_color, star_color, old_star_overlays, GLOB.fullbright_overlays)
-	// iterate all areas
-	// iterate all orphaned turfs
-	// iterate all half walls
-
+	// Send some signals that'll update everything that uses the color
+	SEND_GLOBAL_SIGNAL(COMSIG_STARLIGHT_COLOR_CHANGED, old_star_color, star_color)
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
@@ -107,7 +101,10 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
-		display_starlight()
+		// Intentionally not add_overlay for performance reasons.
+		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
+		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
+		overlays += GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 
 	if (!mapload)
 		if(requires_activation)

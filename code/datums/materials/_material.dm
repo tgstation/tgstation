@@ -159,7 +159,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		RegisterSignal(on, COMSIG_QDELETING, PROC_REF(lit_turf_deleted))
 	on.set_light(2, 0.75, starlight_color || GLOB.starlight_color)
 
-/turf/proc/material_starlight_changed(datum/source, old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
+/turf/proc/material_starlight_changed(datum/source, old_star, new_star)
 	if(light_color == old_star)
 		set_light_color(new_star)
 

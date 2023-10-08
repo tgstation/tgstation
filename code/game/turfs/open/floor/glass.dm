@@ -58,7 +58,7 @@
 		UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	set_light(2, 0.75, starlight_color || GLOB.starlight_color)
 
-/turf/open/floor/glass/proc/starlight_changed(datum/source, old_star, new_star, list/old_lit_overlays, list/new_lit_overlays)
+/turf/open/floor/glass/proc/starlight_changed(datum/source, old_star, new_star)
 	if(light_color == old_star)
 		set_light(l_color = new_star)
 

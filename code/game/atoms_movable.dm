@@ -274,7 +274,10 @@
 	QDEL_NULL(em_block)
 	// We're gonna build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
-	var/mutable_appearance/light = new(GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	// Instead of copying the fullbright overlays, we should store a copy of them in the client's screen
+	// made invisible with *, and use render relaying to display them here and anywhere else we use them
+	// That'll save cpu time for only minor clientside cost
+	var/mutable_appearance/light = new(GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(generate_for) + 1])
 	light.appearance_flags |= KEEP_TOGETHER
 	// Now apply a copy of the turf, set to multiply
 	// This will multiply against our light, so we only light up the bits that aren't "on" the wall
