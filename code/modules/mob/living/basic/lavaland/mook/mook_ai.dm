@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_planning_subtree/acknowledge_chief/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(controller.blackboard_key_exists(BB_MOOK_TRIBAL_CHIEF))
 		return
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/find_chief, BB_MOOK_TRIBAL_CHIEF, /mob/living/basic/mining/mook/tribal_chief)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/find_chief, BB_MOOK_TRIBAL_CHIEF, /mob/living/basic/mining/mook/worker/tribal_chief)
 
 /datum/ai_behavior/find_and_set/find_chief/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/chief = locate(locate_path) in oview(search_range, controller.pawn)
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	target_key = BB_INJURED_MOOK
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
 	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_mooks
-	hunt_targets = list(/mob/living/basic/mining/mook)
+	hunt_targets = list(/mob/living/basic/mining/mook/worker)
 	hunt_range = 9
 
 ///we only heal when the mooks are home during a storm
@@ -258,8 +258,6 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/find_hunt_target/injured_mooks
 
 /datum/ai_behavior/find_hunt_target/injured_mooks/valid_dinner(mob/living/source, mob/living/injured_mook)
-	if(injured_mook.gender == FEMALE) //healer mooks cant heal one another
-		return FALSE
 	return (injured_mook.health < injured_mook.maxHealth)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
@@ -292,7 +290,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_planning_subtree/issue_commands/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
-	if(locate(/mob/living/basic/mining/mook/support) in oview(command_distance, controller.pawn))
+	if(locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targetting/attack)
 
 /datum/ai_behavior/issue_commands

@@ -17,7 +17,7 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/flora/ash/fireblossom,
-/mob/living/basic/mining/mook/tribal_chief,
+/mob/living/basic/mining/mook/worker/tribal_chief,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "f" = (
@@ -59,8 +59,8 @@
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "n" = (
-/mob/living/basic/mining/mook,
 /obj/structure/flora/ash/fireblossom,
+/mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "o" = (
@@ -112,7 +112,7 @@
 /turf/open/misc/grass/jungle,
 /area/lavaland/surface/outdoors)
 "z" = (
-/mob/living/basic/mining/mook/bard,
+/mob/living/basic/mining/mook/worker/bard,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "A" = (
@@ -165,7 +165,7 @@
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "P" = (
-/mob/living/basic/mining/mook/support,
+/mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Q" = (
@@ -563,7 +563,7 @@ c
 c
 r
 a
-I
+P
 a
 a
 h
