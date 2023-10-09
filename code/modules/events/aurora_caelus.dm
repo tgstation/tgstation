@@ -1,5 +1,3 @@
-// spacemandmm doesn't really implement gradient() right, so let's just handle that here yeah?
-#define hsl_gradient(index, args...) UNLINT(gradient(args, space = COLORSPACE_HSL, index))
 /datum/round_event_control/aurora_caelus
 	name = "Aurora Caelus"
 	typepath = /datum/round_event/aurora_caelus

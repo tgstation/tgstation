@@ -263,6 +263,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_FISH_CROSSBREEDER" = TRAIT_FISH_CROSSBREEDER,
 		"TRAIT_FISH_FED_LUBE" = TRAIT_FISH_FED_LUBE,
 	),
+	/datum/controller/subsystem/parallax = list(
+		"TRAIT_NARSIE_SUMMON" = TRAIT_NARSIE_SUMMON,
+	),
 ))
 
 /// value -> trait name, generated on use from trait_by_type global

@@ -310,12 +310,23 @@
 	if(!initial(rune_to_scribe.no_scribe_boost) && (our_turf.type in turfs_that_boost_us))
 		scribe_mod *= 0.5
 
+	var/scribe_started = initial(rune_to_scribe.started_creating)
+	var/scribe_failed = initial(rune_to_scribe.failed_to_create)
+	if(scribe_started)
+		var/datum/callback/startup = CALLBACK(GLOBAL_PROC, scribe_started)
+		startup.Invoke()
+	var/datum/callback/failed
+	if(scribe_failed)
+		failed = CALLBACK(GLOBAL_PROC, scribe_failed)
+
 	SEND_SOUND(cultist, sound('sound/weapons/slice.ogg', 0, 1, 10))
 	if(!do_after(cultist, scribe_mod, target = get_turf(cultist), timed_action_flags = IGNORE_SLOWDOWNS))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 
 	cultist.visible_message(
