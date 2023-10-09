@@ -145,13 +145,11 @@
 		. += neutral_stance
 
 /mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	return ..()
 
 /mob/living/basic/mining/mook/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	change_combatant_state(state = MOOK_ATTACK_NEUTRAL)
 
 /mob/living/basic/mining/mook/CanAllowThrough(atom/movable/mover, border_dir)
