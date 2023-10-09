@@ -36,6 +36,11 @@
 	item_path = /obj/item/food/fishmeat/octopus
 	cost_per_order = 12
 
+/datum/orderable_item/milk_eggs/chicken
+	name = "Chicken Breast"
+	item_path = /obj/item/food/meat/slab/chicken
+	cost_per_order = 15
+
 /datum/orderable_item/milk_eggs/spider_eggs
 	name = "Spider Eggs"
 	item_path = /obj/item/food/spidereggs

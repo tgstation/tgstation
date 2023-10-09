@@ -72,7 +72,7 @@
 	if(passed_mode == RCD_FLOORWALL)
 		to_chat(user, span_notice("You build a floor."))
 		var/turf/T = src.loc
-		if(isspaceturf(T))
+		if(isgroundlessturf(T))
 			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE

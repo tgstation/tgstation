@@ -76,6 +76,18 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
+/obj/item/mod/module/stealth/ninja/on_activation()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+
+/obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+
 ///Camera Vision - Prevents flashes, blocks tracking.
 /obj/item/mod/module/welding/camera_vision
 	name = "MOD camera vision module"
@@ -263,7 +275,7 @@
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
 	living_user.investigate_log("has been gibbed by using a MODsuit equipped with [src].", INVESTIGATE_DEATHS)
-	living_user.gib()
+	living_user.gib(DROP_ALL_REMAINS)
 
 /obj/item/mod/module/dna_lock/reinforced/on_emp(datum/source, severity)
 	return

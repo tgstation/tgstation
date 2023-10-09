@@ -1,0 +1,4 @@
+#Repathing for new medical beds
+
+/obj/structure/bed/roller : /obj/structure/bed/medical/emergency{@OLD}
+/obj/item/roller : /obj/item/emergency_bed{@OLD}

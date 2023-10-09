@@ -53,7 +53,7 @@
 	if(cavity_item)
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
-	..()
+	return ..()
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -113,6 +113,8 @@
 	var/datum/worn_feature_offset/worn_glove_offset
 	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
 	var/datum/worn_feature_offset/held_hand_offset
+
+	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/arm/Destroy()
 	QDEL_NULL(worn_glove_offset)
@@ -343,6 +345,8 @@
 	unarmed_stun_threshold = 10
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
+
+	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/leg/Destroy()
 	QDEL_NULL(worn_foot_offset)

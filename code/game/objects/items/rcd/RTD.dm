@@ -91,9 +91,9 @@
 	selected_direction = direction
 
 /**
- * retrive the icon for this tile design based on its direction
+ * retrieve the icon for this tile design based on its direction
  * for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
- * so we check which icons we want to retrive based on its direction
+ * so we check which icons we want to retrieve based on its direction
  * for basic directions its rotated with CSS so there is no need for icon
  */
 /datum/tile_info/proc/get_icon_state()
@@ -110,7 +110,7 @@
 
 /**
  * Stores the decal & overlays on the floor to preserve texture of the design
- * in short its just an wrapper for mutable appearance where we retrive the nessassary information
+ * in short its just an wrapper for mutable appearance where we retrieve the nessassary information
  * to recreate an mutable appearance
  */
 /datum/overlay_info

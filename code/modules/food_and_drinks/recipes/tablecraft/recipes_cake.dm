@@ -141,14 +141,14 @@
 	result = /obj/item/food/cake/hardware_cake
 	category = CAT_CAKE
 
-/datum/crafting_recipe/food/bscccake
-	name = "blackberry and strawberry chocolate cake"
+/datum/crafting_recipe/food/berry_chocolate_cake
+	name = "strawberry chocolate cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/chocolatebar = 2,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/bscc
+	result = /obj/item/food/cake/berry_chocolate_cake
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/pavlovacream
@@ -173,13 +173,13 @@
 	result = /obj/item/food/cake/pavlova/nuts
 	category = CAT_CAKE
 
-/datum/crafting_recipe/food/bscvcake
+/datum/crafting_recipe/food/berry_vanilla_cake
 	name = "blackberry and strawberry vanilla cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/bsvc
+	result = /obj/item/food/cake/berry_vanilla_cake
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/clowncake

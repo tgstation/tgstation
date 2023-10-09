@@ -282,7 +282,7 @@
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddComponent(/datum/component/gags_recolorable)
+	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
@@ -328,7 +328,7 @@
 	butcher_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddComponent(/datum/component/gags_recolorable)
+	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -641,9 +641,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, \
-	speed = 15 SECONDS, \
-	effectiveness = 90, \
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 15 SECONDS, \
+		effectiveness = 90, \
 	)
 
 /obj/item/melee/ghost_sword/Destroy()

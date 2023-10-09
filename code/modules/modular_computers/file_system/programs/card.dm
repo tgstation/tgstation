@@ -79,7 +79,7 @@
 		return FALSE
 	computer.crew_manifest_update = TRUE
 
-/datum/computer_file/program/card_mod/kill_program()
+/datum/computer_file/program/card_mod/kill_program(mob/user)
 	computer.crew_manifest_update = FALSE
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 	if(inserted_auth_card)

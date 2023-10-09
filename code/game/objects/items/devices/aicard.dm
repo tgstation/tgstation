@@ -59,7 +59,7 @@
 	if(isnull(AI))
 		return FALSE
 
-	log_silicon("[key_name(user)] carded [key_name(AI)]", src)
+	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	update_appearance()
 	AI.cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
@@ -142,10 +142,6 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			if(!AI.control_disabled)
-				AI.interaction_range = INFINITY
-			else
-				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))
 			. = TRUE
 		if("radio")

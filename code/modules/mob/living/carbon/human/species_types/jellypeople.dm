@@ -268,12 +268,12 @@
 	if(!isslimeperson(H))
 		return
 	CHECK_DNA_AND_SPECIES(H)
-	H.visible_message("<span class='notice'>[owner] gains a look of \
-		concentration while standing perfectly still.</span>",
-		"<span class='notice'>You focus intently on moving your body while \
-		standing perfectly still...</span>")
+	H.visible_message(
+		span_notice("[owner] gains a look of concentration while standing perfectly still."),
+		span_notice("You focus intently on moving your body while standing perfectly still..."),
+	)
 
-	H.notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 
 	if(do_after(owner, delay = 6 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -283,7 +283,7 @@
 	else
 		to_chat(H, span_warning("...but fail to stand perfectly still!"))
 
-	H.notransform = FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
@@ -302,7 +302,7 @@
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
 	H.blood_volume *= 0.45
-	H.notransform = 0
+	REMOVE_TRAIT(H, TRAIT_NO_TRANSFORM, REF(src))
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
 	origin_datum.bodies |= spare
@@ -312,10 +312,10 @@
 
 	H.transfer_quirk_datums(spare)
 	H.mind.transfer_to(spare)
-	spare.visible_message("<span class='warning'>[H] distorts as a new body \
-		\"steps out\" of [H.p_them()].</span>",
-		"<span class='notice'>...and after a moment of disorentation, \
-		you're besides yourself!</span>")
+	spare.visible_message(
+		span_warning("[H] distorts as a new body \"steps out\" of [H.p_them()]."),
+		span_notice("...and after a moment of disorentation, you're besides yourself!"),
+	)
 
 
 /datum/action/innate/swap_body

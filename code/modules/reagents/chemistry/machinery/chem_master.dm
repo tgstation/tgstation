@@ -27,8 +27,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		/obj/item/reagent_containers/condiment/coldsauce,
 		/obj/item/reagent_containers/condiment/mayonnaise,
 		/obj/item/reagent_containers/condiment/ketchup,
-		/obj/item/reagent_containers/condiment/quality_oil,
-		/obj/item/reagent_containers/condiment/cooking_oil,
+		/obj/item/reagent_containers/condiment/olive_oil,
+		/obj/item/reagent_containers/condiment/vegetable_oil,
 		/obj/item/reagent_containers/condiment/peanut_butter,
 		/obj/item/reagent_containers/condiment/cherryjelly,
 		/obj/item/reagent_containers/condiment/honey,
@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			adjust_item_drop_location(item)
 			item.name = item_name
 			item.reagents.clear_reagents()
-			reagents.trans_to(item, volume_in_each, transfered_by = src)
+			reagents.trans_to(item, volume_in_each, transferred_by = src)
 			printing_progress++
 			item_count--
 		update_appearance(UPDATE_ICON)

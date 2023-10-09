@@ -17,7 +17,7 @@
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.gib()
+	user.gib(DROP_ALL_REMAINS)
 	new product(drop_location())
 	qdel(src)
 	return MANUAL_SUICIDE
@@ -30,7 +30,7 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
+	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	wine_power = 40
 
 /obj/item/food/grown/watermelon/make_processable()
@@ -62,7 +62,7 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/water/holywater = 0)
+	juice_typepath = /datum/reagent/water/holywater
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
@@ -78,7 +78,7 @@
  * Checks whether or not the person eating the holymelon
  * is a holy_role (chaplain), as chaplains love holymelons.
  */
-/obj/item/food/grown/holymelon/proc/check_holyness(fraction, mob/mob_eating)
+/obj/item/food/grown/holymelon/proc/check_holyness(mob/mob_eating)
 	if(!ishuman(mob_eating))
 		return
 	var/mob/living/carbon/human/holy_person = mob_eating

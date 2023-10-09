@@ -321,6 +321,22 @@
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
 	spawn_pipe = FALSE
+	anchored = FALSE
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
+
+/obj/structure/disposalpipe/rotator
+	icon_state = "pipe-r1"
+	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_RIGHT | DISP_DIR_FLIP
+	flip_type = /obj/structure/disposalpipe/rotator/flip
+	/// In what direction the atom travels.
+	var/direction_angle = -90
+
+/obj/structure/disposalpipe/rotator/nextdir(obj/structure/disposalholder/holder)
+	return turn(holder.dir, direction_angle)
+
+/obj/structure/disposalpipe/rotator/flip
+	icon_state = "pipe-r2"
+	flip_type = /obj/structure/disposalpipe/rotator
+	direction_angle = 90

@@ -25,7 +25,7 @@
 	icon_state = "berrypile"
 	gender = PLURAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/berryjuice
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
@@ -48,7 +48,7 @@
 	icon_state = "poisonberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
@@ -74,7 +74,7 @@
 	icon_state = "deathberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
@@ -134,7 +134,7 @@
 	icon_state = "grapes"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
+	juice_typepath = /datum/reagent/consumable/grapejuice
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
 
@@ -185,6 +185,6 @@
 	desc = "A branch with töchtaüse berries on it. They're a favourite on the Mothic Fleet, but not in this form."
 	icon_state = "toechtauese_branch"
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/toechtauese_juice = 0)
+	juice_typepath = /datum/reagent/consumable/toechtauese_juice
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder

@@ -181,10 +181,7 @@
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-
-		silo_mats.mat_container.use_amount_mat(amount * SILO_USE_AMOUNT, /datum/material/iron)
-		var/static/list/mats = list(GET_MATERIAL_REF(/datum/material/iron) = SILO_USE_AMOUNT)
-		silo_mats.silo_log(src, "consume", -amount, "build", mats)
+		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
 		return TRUE
 
 ///shared data for rcd,rld & plumbing

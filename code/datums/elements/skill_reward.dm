@@ -28,7 +28,7 @@
 ///We check if the item can be equipped, otherwise we drop it.
 /datum/element/skill_reward/proc/drop_if_unworthy(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(check_equippable(user) | !(source in user.get_equipped_items(TRUE)))
+	if(check_equippable(user) | !(source in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)))
 		return
 	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [source]."))
 	user.dropItemToGround(src, TRUE)

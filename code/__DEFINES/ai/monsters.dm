@@ -59,11 +59,6 @@
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 
-/// Key containing overwatch ability information
-#define BB_WATCHER_OVERWATCH "BB_watcher_overwatch"
-/// Key containing gazae ability information
-#define BB_WATCHER_GAZE "BB_watcher_gaze"
-
 // eyeball keys
 ///the death glare ability
 #define BB_GLARE_ABILITY "BB_glare_ability"
@@ -106,3 +101,71 @@
 /// our acid slip ability
 #define BB_ARACHNID_SLIP "BB_arachnid_slip"
 
+// goldgrub keys
+/// key that tells if a storm is coming
+#define BB_STORM_APPROACHING "BB_storm_approaching"
+/// key that tells the wall we will mine
+#define BB_TARGET_MINERAL_WALL "BB_target_mineral_wall"
+/// key that holds our spit ability
+#define BB_SPIT_ABILITY "BB_spit_ability"
+/// key that holds our dig ability
+#define BB_BURROW_ABILITY "BB_burrow_ability"
+/// key that holds the ore we will eat
+#define BB_ORE_TARGET "BB_ore_target"
+/// which ore types we will not eat
+#define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+
+// minebot keys
+/// key that stores our toggle light ability
+#define BB_MINEBOT_LIGHT_ABILITY "minebot_light_ability"
+/// key that stores our dump ore ability
+#define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
+/// key that stores our target turf
+#define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+/// key that stores list of the turfs we ignore
+#define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
+/// key that stores the previous blocked wall
+#define BB_PREVIOUS_UNREACHABLE_WALL "previous_unreachable_wall"
+/// key that stores our mining mode
+#define BB_AUTOMATED_MINING "automated_mining"
+/// key that stores the nearest dead human
+#define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+
+//seedling keys
+/// the water can we will pick up
+#define BB_WATERCAN_TARGET "watercan_target"
+/// the hydrotray we will heal
+#define BB_HYDROPLANT_TARGET "hydroplant_target"
+/// minimum weed levels for us to cure
+#define BB_WEEDLEVEL_THRESHOLD "weedlevel_threshold"
+/// minimum water levels for us to refill
+#define BB_WATERLEVEL_THRESHOLD "waterlevel_threshold"
+/// key holds our solarbeam ability
+#define BB_SOLARBEAM_ABILITY "solarbeam_ability"
+/// key holds our rapid seeds ability
+#define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
+/// key holds the tray we will beam
+#define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
+
+//ice demons
+///the list of items we are afraid of
+#define BB_LIST_SCARY_ITEMS "list_scary_items"
+///our teleportation ability
+#define BB_DEMON_TELEPORT_ABILITY "demon_teleport_ability"
+///the destination of our teleport ability
+#define BB_TELEPORT_DESTINATION "teleport_destination"
+///the ability to clone ourself
+#define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
+///our slippery ice ability
+#define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
+///the turf we are escaping too
+#define BB_ESCAPE_DESTINATION "escape_destination"
+///how far away we will be from our target before teleporting
+#define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"
+
+/// Corpse we have consumed
+#define BB_LEGION_CORPSE "legion_corpse"
+/// Things our target recently said
+#define BB_LEGION_RECENT_LINES "legion_recent_lines"
+/// The creator of our legion skull
+#define BB_LEGION_BROOD_CREATOR "legion_brood_creator"

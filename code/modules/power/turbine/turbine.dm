@@ -69,14 +69,14 @@
  * Handles all the calculations needed for the gases, work done, temperature increase/decrease
  */
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
-	//pump gases. if no gases were transfered then no work was done
+	//pump gases. if no gases were transferred then no work was done
 	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
-	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
-	if(!transfered_gases)
+	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	if(!transferred_gases)
 		return 0
 
 	//compute work done
-	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * PRESSURE_MAX(transfered_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	var/work_done = QUANTIZE(transferred_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transferred_gases.temperature * log((transferred_gases.volume * PRESSURE_MAX(transferred_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 

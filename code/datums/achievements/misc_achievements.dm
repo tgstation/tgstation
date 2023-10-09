@@ -20,12 +20,6 @@
 	database_id = MEDAL_TIMEWASTE
 	icon = "timewaste"
 
-/datum/award/achievement/misc/feat_of_strength
-	name = "Feat of Strength"
-	desc = "If the rod is immovable, is it passing you or are you passing it?"
-	database_id = MEDAL_RODSUPLEX
-	icon = "featofstrength"
-
 /datum/award/achievement/misc/round_and_full
 	name = "Round and Full"
 	desc = "Well at least you aren't down the river, I hear they eat people there."
@@ -37,12 +31,6 @@
 	desc = "100 honks later"
 	database_id = MEDAL_THANKSALOT
 	icon = "clownthanks"
-
-/datum/award/achievement/misc/helbitaljanken
-	name = "Helbitaljanken"
-	desc = "You janked hard"
-	database_id = MEDAL_HELBITALJANKEN
-	icon = "helbital"
 
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
@@ -76,11 +64,6 @@
 	desc = "If you saw someone casually club themselves upside the head with a toolbox anywhere in the galaxy but here, you'd probably be pretty concerned for them."
 	database_id = MEDAL_SELFOUCH
 
-/datum/award/achievement/misc/sandman
-	name = "Mister Sandman"
-	desc = "Mechanically speaking, there's no real benefit to being unconscious during surgery. Weird how insistent this doctor is about using the N2O anyway though, huh?"
-	database_id = MEDAL_SANDMAN
-
 /datum/award/achievement/misc/cleanboss
 	name = "One Lean, Mean, Cleaning Machine"
 	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
@@ -97,12 +80,6 @@
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
 	icon = "longshift"
-
-/datum/award/achievement/misc/snail
-	name = "KKKiiilll mmmeee"
-	desc = "You were a little too ambitious, but hey, I guess you're still alive?"
-	database_id = MEDAL_SNAIL
-	icon = "snail"
 
 /datum/award/achievement/misc/lookoutsir
 	name = "Look Out, Sir!"
@@ -121,12 +98,6 @@
 	desc = "Caedite eos. Novit enim Dominus qui sunt eius."
 	database_id = MEDAL_ASCENSION
 	icon = "ascension"
-
-/datum/award/achievement/misc/frenching
-	name = "Frenching"
-	desc = "Just a taste, for science!"
-	database_id = MEDAL_FRENCHING
-	icon = "frenchingthebubble"
 
 /datum/award/achievement/misc/ash_ascension
 	name = "Nightwatcher's Eyes"
@@ -163,6 +134,12 @@
 	desc = "You managed to teleport an entity on the station that really shouldn't be there."
 	database_id = MEDAL_COSMOS_ASCENSION
 	icon = "cosmicascend"
+
+/datum/award/achievement/misc/knock_ascension
+	name = "Secrets behind the Spider Door"
+	desc = "You managed to open a gate into the mansus."
+	database_id = MEDAL_KNOCK_ASCENSION
+	icon = "knockascend"
 
 /datum/award/achievement/misc/grand_ritual_finale
 	name = "Archmage"
@@ -241,3 +218,4 @@
 	desc = "I've paid my dues, shift after shift... I've done my sentence but commited no griff..."
 	database_id = MEDAL_DEBT_EXTINGUISHED
 	icon = "outdebted"
+

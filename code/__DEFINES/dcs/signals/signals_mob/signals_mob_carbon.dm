@@ -25,6 +25,8 @@
 // /mob/living/carbon physiology signals
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound" //from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 #define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound" //from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+/// Called after limb AND victim has been unset
+#define COMSIG_CARBON_POST_LOSE_WOUND "carbon_post_lose_wound" //from /datum/wound/proc/remove_wound() (/datum/wound/lost_wound, /obj/item/bodypart/part, ignore_limb, replaced)
 ///from base of /obj/item/bodypart/proc/can_attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_ATTEMPT_CARBON_ATTACH_LIMB "attempt_carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
@@ -34,8 +36,13 @@
 #define COMSIG_BODYPART_ATTACHED "bodypart_removed"
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
-#define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
-#define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
+///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
+#define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
+	#define COMPONENT_PREVENT_LIMB_DAMAGE (1 << 0)
+/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/gauze/applied_gauze, /obj/item/stack/medical/gauze/stack_used)
+#define COMSIG_BODYPART_GAUZED "bodypart_gauzed"
+/// from /obj/item/stack/medical/gauze/Destroy(): (/obj/item/stack/medical/gauze/removed_gauze)
+#define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
 #define COMSIG_BODYPART_CHANGED_OWNER "bodypart_changed_owner"

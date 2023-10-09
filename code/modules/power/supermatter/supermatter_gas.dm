@@ -17,33 +17,40 @@
 		// Positive is true if more of the amount is a good thing.
 		var/list/numeric_data = list()
 		if(sm_gas.power_transmission)
+			var/list/si_derived_data = siunit_isolated(sm_gas.power_transmission * BASE_POWER_TRANSMISSION_RATE, "W/MeV", 2)
 			numeric_data += list(list(
-				"name" = "Power Transmission",
-				"amount" = sm_gas.power_transmission,
+				"name" = "Power Transmission Bonus",
+				"amount" = si_derived_data["coefficient"],
+				"unit" = si_derived_data["unit"],
 				"positive" = TRUE,
 			))
 		if(sm_gas.heat_modifier)
 			numeric_data += list(list(
 				"name" = "Waste Multiplier",
-				"amount" = sm_gas.heat_modifier,
+				"amount" = 100 * sm_gas.heat_modifier,
+				"unit" = "%",
 				"positive" = FALSE,
 			))
 		if(sm_gas.heat_resistance)
 			numeric_data += list(list(
 				"name" = "Heat Resistance",
-				"amount" = sm_gas.heat_resistance,
+				"amount" = 100 * sm_gas.heat_resistance,
+				"unit" = "%",
 				"positive" = TRUE,
 			))
 		if(sm_gas.heat_power_generation)
+			var/list/si_derived_data = siunit_isolated(sm_gas.heat_power_generation * GAS_HEAT_POWER_SCALING_COEFFICIENT * 1e7 / SSair.wait, "eV/K/s", 2)
 			numeric_data += list(list(
 				"name" = "Heat Power Gain",
-				"amount" = sm_gas.heat_power_generation,
+				"amount" = si_derived_data["coefficient"],
+				"unit" = si_derived_data["unit"],
 				"positive" = TRUE,
 			))
 		if(sm_gas.powerloss_inhibition)
 			numeric_data += list(list(
 				"name" = "Power Decay Negation",
-				"amount" = sm_gas.powerloss_inhibition,
+				"amount" = 100 * sm_gas.powerloss_inhibition,
+				"unit" = "%",
 				"positive" = TRUE,
 			))
 		singular_gas_data["numeric_data"] = numeric_data
@@ -59,8 +66,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 /datum/sm_gas
 	/// Path of the [/datum/gas] involved with this interaction.
 	var/gas_path
-
-	/// Influences zap power without interfering with the crystal's own energy.
+	/// Influences zap power without interfering with the crystal's own energy. Gets scaled by [BASE_POWER_TRANSMISSION_RATE].
 	var/power_transmission = 0
 	/// How much more waste heat and gas the SM generates.
 	var/heat_modifier = 0
@@ -216,7 +222,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	sm.supermatter_zap(
 		sm,
 		range = 6,
-		zap_str = clamp(sm.internal_energy * 2, 4000, 20000),
+		zap_str = clamp(sm.internal_energy * 1600, 3.2e6, 1.6e7),
 		zap_flags = ZAP_MOB_STUN,
 		zap_cutoff = sm.zap_cutoff,
 		power_level = sm.internal_energy,

@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - rscadd: "Pipes now have a colored visual display that shows their contents at a glance."

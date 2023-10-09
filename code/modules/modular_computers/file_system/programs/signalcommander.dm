@@ -19,7 +19,7 @@
 	. = ..()
 	set_frequency(signal_frequency)
 
-/datum/computer_file/program/signal_commander/kill_program()
+/datum/computer_file/program/signal_commander/kill_program(mob/user)
 	. = ..()
 	SSradio.remove_object(computer, signal_frequency)
 

@@ -51,10 +51,10 @@
 		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(width, height, z) //Make the new level creation work with different traits.
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
 	if(!reservation)
 		return
-	var/turf/placement = locate(reservation.bottom_left_coords[1],reservation.bottom_left_coords[2],reservation.bottom_left_coords[3])
+	var/turf/placement = reservation.bottom_left_turfs[1]
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))

@@ -192,7 +192,7 @@
 			if(!(MM.movement_type & FLYING))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
-					if(H.m_intent == MOVE_INTENT_RUN)
+					if(H.move_intent == MOVE_INTENT_RUN)
 						INVOKE_ASYNC(src, PROC_REF(triggered), H)
 						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
 							span_warning("You accidentally step on [src]"))

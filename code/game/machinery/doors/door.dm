@@ -70,8 +70,8 @@
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
-	if(bound_width > world.icon_size)
-		multi_tile = TRUE
+	if(multi_tile)
+		set_bounds()
 		set_filler()
 		update_overlays()
 	update_freelook_sight()

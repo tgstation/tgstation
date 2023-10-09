@@ -75,6 +75,10 @@
 	#endif
 #endif
 
+	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I wanna cover my bases
+	var/harddel_deets_dumped = FALSE
+
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
 #endif
@@ -406,5 +410,6 @@
 
 /// Return text from this proc to provide extra context to hard deletes that happen to it
 /// Optional, you should use this for cases where replication is difficult and extra context is required
+/// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
 /datum/proc/dump_harddel_info()
 	return

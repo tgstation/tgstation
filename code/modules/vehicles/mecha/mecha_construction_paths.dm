@@ -679,7 +679,7 @@
 			"key" = /obj/item/stock_parts/servo,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"desc" = "Capacitor is secured, the <b>micro-servo</b> can be added.",
 			"forward_message" = "added micro-servo",
 			"backward_message" = "unsecured capacitor"
 		),

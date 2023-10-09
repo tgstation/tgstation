@@ -840,6 +840,10 @@
 	name = "None"
 	icon_state = "none"
 
+/datum/sprite_accessory/gradient/full
+	name = "Full"
+	icon_state = "full"
+
 /datum/sprite_accessory/gradient/fadeup
 	name = "Fade Up"
 	icon_state = "fadeup"
@@ -1770,10 +1774,12 @@
 	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/monkey
-	name = "Monkey"
 	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
-	icon_state = "monkey"
 	color_src = FALSE
+
+/datum/sprite_accessory/tails/monkey/standard
+	name = "Monkey"
+	icon_state = "monkey"
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'

@@ -408,53 +408,79 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
+/// Proc that compels the mob to throw up. Returns TRUE if the mob actually threw up.
+/mob/living/carbon/proc/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
+	var/force = (vomit_flags & MOB_VOMIT_FORCE)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
+
+	// cache some stuff that we'll need later (at least multiple times)
 	var/starting_dir = dir
-	if(nutrition < 100 && !blood && !force)
+	var/message = (vomit_flags & MOB_VOMIT_MESSAGE)
+	var/stun = (vomit_flags & MOB_VOMIT_STUN)
+	var/knockdown = (vomit_flags & MOB_VOMIT_KNOCKDOWN)
+	var/blood = (vomit_flags & MOB_VOMIT_BLOOD)
+
+	if(!force && !blood && (nutrition < 100))
 		if(message)
-			visible_message(span_warning("[src] dry heaves!"), \
-							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
+			visible_message(
+				span_warning("[src] dry heaves!"),
+				span_userdanger("You try to throw up, but there's nothing in your stomach!"),
+			)
 		if(stun)
 			Stun(20 SECONDS)
+		if(knockdown)
+			Knockdown(20 SECONDS)
 		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
-			visible_message(span_danger("[src] throws up all over [p_them()]self!"), \
-							span_userdanger("You throw up all over yourself!"))
+			visible_message(
+				span_danger("[src] throws up all over [p_them()]self!"),
+				span_userdanger("You throw up all over yourself!"),
+			)
 			add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
-			visible_message(span_danger("[src] throws up!"), span_userdanger("You throw up!"))
+			visible_message(
+				span_danger("[src] throws up!"),
+				span_userdanger("You throw up!"),
+			)
 			if(!isflyperson(src))
 				add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		Stun(8 SECONDS)
+	if(knockdown)
+		Knockdown(8 SECONDS)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
-	var/turf/T = get_turf(src)
+
+	var/need_mob_update = FALSE
+	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		adjustToxLoss(-3)
+		need_mob_update += adjustToxLoss(-3, updating_health = FALSE)
 
-	for(var/i=0 to distance)
+	for(var/i = 0 to distance)
 		if(blood)
-			if(T)
-				add_splatter_floor(T)
-			if(harm)
-				adjustBruteLoss(3)
+			if(location)
+				add_splatter_floor(location)
+			if(vomit_flags & MOB_VOMIT_HARM)
+				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
 		else
-			if(T)
-				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
-		T = get_step(T, starting_dir)
-		if (T?.is_blocked_turf())
+			if(location)
+				location.add_vomit_floor(src, vomit_type, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
+
+		location = get_step(location, starting_dir)
+		if (location?.is_blocked_turf())
 			break
+	if(need_mob_update) // so we only have to call updatehealth() once as opposed to n times
+		updatehealth()
+
 	return TRUE
 
 /**
@@ -473,7 +499,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents.trans_to(spew, amount, transfered_by = src)
+	bite.reagents.trans_to(spew, amount, transferred_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -597,9 +623,6 @@
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-
-	if(see_override)
-		set_invis_see(see_override)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = NONE
@@ -1165,7 +1188,7 @@
 /mob/living/carbon/proc/hypnosis_vulnerable()
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		return FALSE
-	if(has_status_effect(/datum/status_effect/hallucination))
+	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
 	if(IsSleeping() || IsUnconscious())
 		return TRUE
@@ -1253,12 +1276,17 @@
 			else
 				wound_type = forced_type
 		else
-			wound_type = pick(GLOB.global_all_wound_types)
+			for (var/datum/wound/path as anything in shuffle(GLOB.all_wound_pregen_data))
+				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[path]
+				if (pregen_data.can_be_applied_to(scar_part, random_roll = TRUE))
+					wound_type = path
+					break
 
-		var/datum/wound/phantom_wound = new wound_type
-		scaries.generate(scar_part, phantom_wound)
-		scaries.fake = TRUE
-		QDEL_NULL(phantom_wound)
+		if (wound_type) // can feasibly happen, if its an inorganic limb/cant be wounded/scarred
+			var/datum/wound/phantom_wound = new wound_type
+			scaries.generate(scar_part, phantom_wound)
+			scaries.fake = TRUE
+			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)

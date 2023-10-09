@@ -31,7 +31,7 @@
 		scan()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/computer_file/program/radar/kill_program()
+/datum/computer_file/program/radar/kill_program(mob/user)
 	objects = list()
 	selected = null
 	STOP_PROCESSING(SSfastprocess, src)
@@ -320,7 +320,7 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
-/datum/computer_file/program/radar/fission360/kill_program()
+/datum/computer_file/program/radar/fission360/kill_program(mob/user)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	return ..()
 

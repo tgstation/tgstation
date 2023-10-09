@@ -273,6 +273,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
+	// Parallax layers are independant of hud, they care about client
+	// Not doing this will just create a bunch of hard deletes
+	hud = null
 
 	if(template)
 		return

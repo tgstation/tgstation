@@ -57,7 +57,7 @@
 		if(newbrain.suicided)
 			to_chat(user, span_warning("[newbrain] is completely useless."))
 			return
-		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+		if(!newbrain.brainmob)
 			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
 			if(install != "Yes")
 				return
@@ -73,7 +73,7 @@
 		if(!user.transferItemToLoc(O, src))
 			return
 		var/mob/living/brain/B = newbrain.brainmob
-		if(!B.key)
+		if(!B.key && !newbrain.decoy_override)
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
 		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
 
@@ -241,14 +241,23 @@
 	. = ..()
 	if(radio)
 		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
-	if(brainmob)
-		var/mob/living/brain/B = brainmob
-		if(!B.key || !B.mind || B.stat == DEAD)
-			. += span_warning("\The [src] indicates that the brain is completely unresponsive.")
-		else if(!B.client)
-			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
+
+	if(!isnull(brain))
+		// It's dead, show it as much
+		if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat == DEAD)
+			if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
+				. += span_warning("[src] indicator light is red.")
+			else
+				. += span_warning("[src] indicator light is yellow - perhaps you should check the brain for damage.")
+		// If we have a client, OR it's a decoy brain, show as active
+		else if(brain.decoy_override || brainmob?.client)
+			. += span_notice("[src] indicates that the brain is active.")
+		// If we have a brainmob and it has a mind, it may just be DC'd
+		else if(brainmob?.mind)
+			. += span_warning("[src] indicates that the brain is currently inactive; it might change.")
+		// No brainmob, no mind, and not a decoy, it's a dead brain
 		else
-			. += span_notice("\The [src] indicates that the brain is active.")
+			. += span_warning("[src] indicates that the brain is completely unresponsive.")
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -258,6 +267,10 @@
 	if(!B)
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(brain?.decoy_override)
+		if(user)
+			to_chat(user, span_warning("This [name] does not seem to fit!"))
 		return FALSE
 	if(!B.key || !B.mind)
 		if(user)

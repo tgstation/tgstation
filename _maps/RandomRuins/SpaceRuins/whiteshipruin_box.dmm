@@ -492,7 +492,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "nz" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav/whiteship/box)
@@ -515,7 +515,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/whiteship/box)
 "oe" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},

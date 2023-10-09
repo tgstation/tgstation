@@ -436,3 +436,15 @@
 	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
 	icon_state = "intern_envirohelm"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/syndie
+	name = "tacticool envirosuit helmet"
+	desc = "There's no doubt about it, this helmet puts you above ALL of the other plasmamen. If you see another plasmaman wearing a helmet like this, it's either because they're a fellow badass, \
+		or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
+	icon_state = "syndie_envirohelm"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+	name = "bitrunner's plasma envirosuit helmet"
+	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
+	icon_state = "bitrunner_envirohelm"

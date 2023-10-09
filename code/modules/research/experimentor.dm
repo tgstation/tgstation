@@ -168,11 +168,12 @@
 			for(var/node_id in listin)
 				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N.id])
+				var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
+				if(science_web.researched_nodes[N.id])
 					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N.id])
+				else if(science_web.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id]) //JOY OF DISCOVERY!
+				if(science_web.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output

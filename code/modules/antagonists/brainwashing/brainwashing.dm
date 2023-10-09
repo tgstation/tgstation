@@ -1,30 +1,31 @@
-/proc/brainwash(mob/living/L, directives)
-	if(!L.mind)
+/proc/brainwash(mob/living/brainwash_victim, directives)
+	if(!brainwash_victim.mind)
 		return
 	if(!islist(directives))
 		directives = list(directives)
-	var/datum/mind/M = L.mind
-	var/datum/antagonist/brainwashed/B = M.has_antag_datum(/datum/antagonist/brainwashed)
-	if(B)
+	var/datum/mind/brainwash_mind = brainwash_victim.mind
+	var/datum/antagonist/brainwashed/brainwashed_datum = brainwash_mind.has_antag_datum(/datum/antagonist/brainwashed)
+	if(brainwashed_datum)
 		for(var/O in directives)
 			var/datum/objective/brainwashing/objective = new(O)
-			B.objectives += objective
-		B.greet()
+			brainwashed_datum.objectives += objective
+		brainwashed_datum.greet()
 	else
-		B = new()
+		brainwashed_datum = new()
 		for(var/O in directives)
 			var/datum/objective/brainwashing/objective = new(O)
-			B.objectives += objective
-		M.add_antag_datum(B)
+			brainwashed_datum.objectives += objective
+		brainwash_mind.add_antag_datum(brainwashed_datum)
 
 	var/begin_message = " has been brainwashed with the following objectives: "
 	var/obj_message = english_list(directives)
-	var/end_message = "."
-	var/rendered = begin_message + obj_message + end_message
-	deadchat_broadcast(rendered, "<b>[L]</b>", follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_ANNOUNCEMENT)
+	var/rendered = begin_message + obj_message
+	if(!(rendered[length(rendered)] in list(",",":",";",".","?","!","\'","-")))
+		rendered += "." //Good punctuation is important :)
+	deadchat_broadcast(rendered, "<b>[brainwash_victim]</b>", follow_target = brainwash_victim, turf_target = get_turf(brainwash_victim), message_type=DEADCHAT_ANNOUNCEMENT)
 	if(check_holidays(APRIL_FOOLS))
 		// Note: most of the time you're getting brainwashed you're unconscious
-		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+		brainwash_victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"

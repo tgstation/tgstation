@@ -146,11 +146,10 @@
 	for (var/atom/movable/ingredient as anything in ingredients)
 		var/image/ingredient_overlay = image(ingredient, src)
 
-		var/icon/ingredient_icon = icon(ingredient.icon, ingredient.icon_state)
-
+		var/list/icon_dimensions = get_icon_dimensions(ingredient.icon)
 		ingredient_overlay.transform = ingredient_overlay.transform.Scale(
-			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Width(),
-			MICROWAVE_INGREDIENT_OVERLAY_SIZE / ingredient_icon.Height(),
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / icon_dimensions["width"],
+			MICROWAVE_INGREDIENT_OVERLAY_SIZE / icon_dimensions["height"],
 		)
 
 		ingredient_overlay.pixel_y = -4

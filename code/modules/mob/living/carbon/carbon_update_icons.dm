@@ -272,8 +272,8 @@
 #undef NEXT_PARENT_COMMAND
 
 /mob/living/carbon/regenerate_icons()
-	if(notransform)
-		return 1
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
 	icon_render_keys = list() //Clear this bad larry out
 	update_held_items()
 	update_worn_handcuffs()

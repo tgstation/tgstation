@@ -79,10 +79,6 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
-	/// PDA
-	var/atom/movable/screen/ai/modpc/pda_button
-	/// Photography module
-	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
@@ -115,6 +111,7 @@
 		"crow" = TRUE,
 		"duffel" = TRUE,
 		"fox" = FALSE,
+		"frog" = TRUE,
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"monkey" = TRUE,
@@ -155,7 +152,6 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
@@ -195,8 +191,8 @@
 /mob/living/silicon/pai/Exited(atom/movable/gone, direction)
 	if(gone == atmos_analyzer)
 		atmos_analyzer = null
-	else if(gone == camera)
-		camera = null
+	else if(gone == aicamera)
+		aicamera = null
 	else if(gone == host_scan)
 		host_scan = null
 	else if(gone == internal_gps)
@@ -239,6 +235,8 @@
 	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
+	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()

@@ -138,6 +138,7 @@
 			switch(rand(1, 5))
 				if(1)
 					to_chat(living_guy, span_warning("The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
+					evil_mirror.take_damage(evil_mirror.max_integrity, BRUTE, MELEE, FALSE)
 					if(prob(50 * luck_mod)) // sometimes
 						luck_mod += 0.25
 						damage_mod += 0.25
@@ -237,7 +238,7 @@
 		return ..()
 
 	death_explode(our_guy)
-	our_guy.gib()
+	our_guy.gib(DROP_ALL_REMAINS)
 
 /**
  * The quirk omen. Permanent.
@@ -258,7 +259,7 @@
 
 /datum/component/omen/quirk/check_death(mob/living/our_guy)
 	if(!iscarbon(our_guy))
-		our_guy.gib()
+		our_guy.gib(DROP_ALL_REMAINS)
 		return
 
 	// Don't explode if buckled to a stasis bed
@@ -269,7 +270,7 @@
 
 	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
-	player.spread_bodyparts(skip_head = TRUE)
+	player.spread_bodyparts()
 	player.spawn_gibs()
 
 	return

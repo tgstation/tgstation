@@ -473,3 +473,13 @@
 	if(!istype(charger))
 		return ..()
 	return charger.summoner == user
+
+/datum/component/riding/creature/goldgrub
+
+/datum/component/riding/creature/goldgrub/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(11, 3), TEXT_SOUTH = list(11, 3), TEXT_EAST = list(9, 3), TEXT_WEST = list(14, 3)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)

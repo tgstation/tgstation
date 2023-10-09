@@ -63,7 +63,7 @@
 		loaded_projectile.ignore_source_check = TRUE
 
 	if(reagents && loaded_projectile.reagents)
-		reagents.trans_to(loaded_projectile, reagents.total_volume, transfered_by = user) //For chemical darts/bullets
+		reagents.trans_to(loaded_projectile, reagents.total_volume, transferred_by = user) //For chemical darts/bullets
 		qdel(reagents)
 
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)

@@ -12,8 +12,10 @@
 	var/use_large_steam_sprite = FALSE
 	/// REF() to the mind which placed us on the griddle
 	var/who_placed_us
+	/// Reagents that should be added to the result
+	var/list/added_reagents
 
-/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, list/added_reagents)
 	. = ..()
 	if(!isitem(parent)) //Only items support grilling at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -22,6 +24,7 @@
 	src.required_cook_time = required_cook_time
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
+	src.added_reagents = added_reagents
 
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED, PROC_REF(on_grill_placed))
@@ -99,8 +102,12 @@
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
 
-	if(IS_EDIBLE(grilled_result))
+	if(IsEdible(grilled_result) && positive_result)
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
+		grilled_result.reagents.clear_reagents()
+		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
+		if(added_reagents) // Add any new reagents that should be added
+			grilled_result.reagents.add_reagent_list(added_reagents)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)
@@ -129,7 +136,7 @@
 		else if(current_cook_time <= required_cook_time)
 			examine_list += span_notice("[parent] seems to be almost finished cooking!")
 	else
-		examine_list += span_danger("[parent] should probably not be cooked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put on the grill.")
 
 ///Ran when an object moves from the grill
 /datum/component/grillable/proc/on_moved(atom/source, atom/OldLoc, Dir, Forced)
