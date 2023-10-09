@@ -80,7 +80,7 @@
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
-	if(PERFORM_ALL_TESTS(non_stack_sheet_type))
+	if(PERFORM_ALL_TESTS(focus_only/non_stack_sheet_type))
 		if(!ispath(sheet_type, /obj/item/stack))
 			stack_trace("Non stack [sheet_type] found in [type]'s sheet_type variable")
 
