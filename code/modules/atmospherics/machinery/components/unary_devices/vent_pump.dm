@@ -114,12 +114,20 @@
 	if(do_after(user, time_to_repair, src))
 		balloon_alert(user, "vent repaired")
 		repair_damage(max_integrity)
-		set_is_operational(TRUE)
-		update_appearance()
 
 	else
 		balloon_alert(user, "interrupted!")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
+	set_is_operational(TRUE)
+	update_appearance()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_break(damage_flag)
+	set_is_operational(FALSE)
+	update_appearance()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
