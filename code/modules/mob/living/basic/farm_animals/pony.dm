@@ -49,6 +49,7 @@
 	playsound(src, 'sound/creatures/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
+	new /obj/effect/temp_visual/heart(loc)
 
 	ai_controller.replace_planning_subtrees(list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
@@ -58,6 +59,20 @@
 
 	if(unique_tamer)
 		my_owner = WEAKREF(tamer)
+		RegisterSignal(src, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_prebuckle))
+
+/mob/living/basic/pony/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_PREBUCKLE)
+	return ..()
+
+/mob/living/basic/pony/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
+	SIGNAL_HANDLER
+	var/mob/living/tamer = my_owner?.resolve()
+	if(!unique_tamer || (isnull(tamer) && unique_tamer))
+		return
+	if(buckler != tamer)
+		whinny_angrily()
+		return COMPONENT_BLOCK_BUCKLE
 
 /mob/living/basic/pony/proc/apply_colour()
 	if(!greyscale_config)
@@ -119,6 +134,19 @@
 
 /mob/living/basic/pony/syndicate/Initialize(mapload)
 	. = ..()
+	// Help discern your horse from your allies
+	var/mane_colors = list(
+		COLOR_RED=6,
+		COLOR_BLUE=6,
+		COLOR_PINK=3,
+		COLOR_GREEN=3,
+		COLOR_BLACK=3,
+		COLOR_YELLOW=2,
+		COLOR_ORANGE=1,
+		COLOR_WHITE=1,
+		COLOR_DARK_BROWN=1,
+	)
+	ponycolors = list("#5d566f", pick_weight(weighted_colors))
 	name = pick("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 	// Only one person can tame these fellas, and they only need one apple
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 100, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)), unique = unique_tamer)
