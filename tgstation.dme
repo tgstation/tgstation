@@ -1291,6 +1291,7 @@
 #include "code\datums\elements\death_gases.dm"
 #include "code\datums\elements\delete_on_drop.dm"
 #include "code\datums\elements\deliver_first.dm"
+#include "code\datums\elements\dextrous.dm"
 #include "code\datums\elements\diggable.dm"
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\elements\drag_pickup.dm"
