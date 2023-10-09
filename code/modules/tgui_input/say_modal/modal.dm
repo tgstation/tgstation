@@ -31,12 +31,6 @@
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
-	/// Default params on load
-	var/list/default_params = list(list(
-		"is-visible" = "0",
-		"pos" = "848,100",
-		"size" = "231,30",
-	))
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
