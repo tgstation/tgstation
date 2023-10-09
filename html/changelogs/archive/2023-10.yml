@@ -19,3 +19,10 @@
   - rscadd: rollers and bodybags can be printed at medical lathes
   lmenvs:
   - rscadd: Added donator items for sammi, ADHDbirb, Random, and The Riddler
+2023-10-09:
+  KoboldCommando:
+  - rscadd: Hand labelers can now label living things!
+  - rscadd: Hand labelers now tell you how to remove labels in their description
+  NicoDeLuna:
+  - rscadd: 'New Hat: Small But Knowing Clown hat'
+  - rscadd: 'New suit: Small But Knowing Clown suit'
