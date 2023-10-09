@@ -1,6 +1,7 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
 	new /datum/pet_command/point_targetting/attack(),
+	new /datum/pet_command/point_targetting/fetch(),
 ))
 
 /datum/ai_controller/basic_controller/mook
@@ -197,13 +198,16 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
 	)
-
+	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
 		/datum/ai_planning_subtree/generic_play_instrument,
 	)
+
+/datum/idle_behavior/walk_near_target/mook_village
+	target_key = BB_HOME_VILLAGE
 
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
@@ -213,9 +217,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_STORM_APPROACHING = FALSE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
 	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/acknowledge_chief,
 		/datum/ai_planning_subtree/pet_planning,
@@ -273,9 +275,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
 		BB_STORM_APPROACHING = FALSE,
 	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/leap,

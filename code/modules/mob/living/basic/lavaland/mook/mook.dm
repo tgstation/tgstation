@@ -53,6 +53,7 @@
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_smasher)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
 	if(is_healer)
 		grant_healer_abilities()
@@ -162,6 +163,14 @@
 	var/mob/living/basic/mining/mook/mook_moover = mover
 	if(mook_moover.attack_state == MOOK_ATTACK_ACTIVE)
 		return TRUE
+
+/mob/living/basic/mining/mook/proc/drop_ore(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(isnull(held_ore))
+		return
+	dropItemToGround(held_ore)
+	return COMSIG_KB_ACTIVATED
 
 /mob/living/basic/mining/mook/death()
 	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..." //Can you guess the twist

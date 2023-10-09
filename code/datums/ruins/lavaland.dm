@@ -290,4 +290,5 @@
 	description = "A village hosting a community of friendly mooks!"
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
+	always_place = TRUE
 	cost = 5

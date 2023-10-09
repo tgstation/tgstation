@@ -60,7 +60,7 @@ export const MaterialStand = (props, context) => {
                       <Flex.Item>
                         <Orename ore_name={toTitleCase(ore.name)} />
                       </Flex.Item>
-                      <Flex.Item>Amount: {toTitleCase(ore.amount)}</Flex.Item>
+                      <Flex.Item>Amount: {ore.amount}</Flex.Item>
                       <Flex.Item>
                         <Button
                           content="Withdraw"
