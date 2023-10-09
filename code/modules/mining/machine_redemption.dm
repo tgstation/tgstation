@@ -435,7 +435,7 @@
 
 /obj/machinery/mineral/ore_redemption/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
-		to_chat(user, span_warning("[src] is welded to the floor!"))
+		balloon_alert(user, span_warning("[src] is welded to the floor!"))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -444,14 +444,15 @@
 	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
 		welded_down = FALSE
 	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
-	air_update_turf(TRUE, anchorvalue)
+	air_update_turf(update = TRUE, remove = anchorvalue)
+
 
 /obj/machinery/mineral/ore_redemption/welder_act(mob/living/user, obj/item/tool)
 	..()
 	if(welded_down)
 		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
-		user.visible_message(
+		balloon_alert_to_viewers(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
@@ -459,10 +460,10 @@
 		if(!tool.use_tool(src, user, delay=100, volume=100))
 			return FALSE
 		welded_down = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
+		balloon_alert(user, span_notice("You cut [src] free from the floor."))
 		return TRUE
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		balloon_alert(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
@@ -471,11 +472,10 @@
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
-	if(!tool.use_tool(src, user, delay=100, volume=100))
-		balloon_alert(user, "cancelled!")
+	if(!tool.use_tool(src, user, delay = 10 SECONDS, volume=100))
 		return FALSE
 	welded_down = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
+	balloon_alert(user, span_notice("You weld [src] to the floor."))
 	return TRUE
 
 /obj/machinery/mineral/ore_redemption/welder_act_secondary(mob/living/user, obj/item/tool)
@@ -503,16 +503,3 @@
 /obj/machinery/mineral/ore_redemption/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
 		return NONE
-
-	var/tool_tip_set = FALSE
-	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/mineral/ore_redemption))
-		if(welded_down)
-			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
-			tool_tip_set = TRUE
-		else if (!welded_down && anchored)
-			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
-			tool_tip_set = TRUE
-		if(machine_stat & BROKEN)
-			context[SCREENTIP_CONTEXT_RMB] = "Repair"
-			tool_tip_set = TRUE
-	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
