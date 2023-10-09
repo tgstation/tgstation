@@ -3200,6 +3200,7 @@
 #include "code\modules\atmospherics\machinery\pipes\layermanifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\mapping.dm"
 #include "code\modules\atmospherics\machinery\pipes\multiz.dm"
+#include "code\modules\atmospherics\machinery\pipes\pipe_spritesheet_helper.dm"
 #include "code\modules\atmospherics\machinery\pipes\pipes.dm"
 #include "code\modules\atmospherics\machinery\pipes\smart.dm"
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\he_pipes.dm"
