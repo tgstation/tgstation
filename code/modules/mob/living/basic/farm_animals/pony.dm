@@ -101,6 +101,7 @@
 /mob/living/basic/pony/syndicate
 	health = 300
 	maxHealth = 300
+	desc = "A special breed of horse engineered by the syndicate to be capable of surviving in the deep reaches of space. A modern outlaw's best friend."
 	faction = list(ROLE_SYNDICATE)
 	ponycolors = list("#5d566f", COLOR_RED)
 	pressure_resistance = 200
