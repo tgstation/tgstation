@@ -895,13 +895,14 @@
 		return FALSE
 	var/mob/living/silicon/robot/shell_to_disconnect = owner
 
-	shell_to_disconnect.mainframe.disconnect_shell()
+	shell_to_disconnect.undeploy()
 	return TRUE
 
 
 /mob/living/silicon/robot/proc/undeploy()
 	if(!deployed || !mind || !mainframe)
 		return
+	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src
 	mind.transfer_to(mainframe)
