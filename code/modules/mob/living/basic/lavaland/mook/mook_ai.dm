@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/targeted_mob_ability/leap,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
@@ -99,19 +100,11 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		return FALSE
 	set_movement_target(controller, pick(possible_turfs))
 
+///look for our village
+/datum/ai_planning_subtree/look_for_village
 
-///explore the lands away from the village to look for ore
-/datum/ai_planning_subtree/wander_away_from_village
-
-/datum/ai_planning_subtree/wander_away_from_village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
-	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
-	///if we have ores to deposit or a storm is approaching, dont wander away
-	if(storm_approaching || (locate(/obj/item/stack/ore) in living_pawn))
-		return
-
+/datum/ai_planning_subtree/look_for_village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(controller.blackboard_key_exists(BB_HOME_VILLAGE))
-		controller.queue_behavior(/datum/ai_behavior/wander, BB_HOME_VILLAGE)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/find_village, BB_HOME_VILLAGE)
@@ -128,6 +121,19 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	controller.set_blackboard_key(village_key, home_marker)
 	finish_action(controller, TRUE)
+
+///explore the lands away from the village to look for ore
+/datum/ai_planning_subtree/wander_away_from_village
+
+/datum/ai_planning_subtree/wander_away_from_village/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
+	///if we have ores to deposit or a storm is approaching, dont wander away
+	if(storm_approaching || (locate(/obj/item/stack/ore) in living_pawn))
+		return
+
+	if(controller.blackboard_key_exists(BB_HOME_VILLAGE))
+		controller.queue_behavior(/datum/ai_behavior/wander, BB_HOME_VILLAGE)
 
 /datum/ai_behavior/wander
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -203,6 +209,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
@@ -222,6 +229,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/acknowledge_chief,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -278,6 +286,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/leap,
 		/datum/ai_planning_subtree/issue_commands,
