@@ -1,0 +1,6 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - bugfix: "various oshan fixes"
+  - rscadd: "new conveyor/auto/inside_corners for the missing directional sprites."
+  - rscadd: "new wrestling railing."

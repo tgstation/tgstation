@@ -201,6 +201,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			weather_additional_ongoing_events += new str(src)
 
 /datum/particle_weather/Destroy()
+	messaged_mobs = null
 	for(var/S in current_sounds)
 		var/datum/looping_sound/looping_sound = current_sounds[S]
 		looping_sound.stop()
@@ -269,7 +270,9 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/particle_weather/proc/can_weather(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
-
+	var/area/mob_area = get_area(mob_turf)
+	if(istype(mob_area, /area/shuttle))
+		return
 	if(!mob_turf)
 		return
 

@@ -17,7 +17,11 @@
 
 /datum/round_event/pirates
 	///admin chosen pirate team
-	var/list/datum/pirate_gang/gang_list
+	var/list/datum/pirate_gang/gang_list = list(
+		/datum/pirate_gang/psykers,
+		/datum/pirate_gang/skeletons,
+		/datum/pirate_gang/rogues
+	)
 
 /datum/round_event/pirates/start()
 	send_pirate_threat(gang_list)

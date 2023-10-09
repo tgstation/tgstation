@@ -1,0 +1,10 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - bugfix: "eminence linked abscond and purge reagents can now actually be used again"
+  - bugfix: "vitality matrix servant revival"
+  - balance: "default max servants is now 10 again"
+  - balance: "replica fabricators now build slower on reebe until the cult has stabilized their first anchoring crystal"
+  - balance: "clockwork bows deal double damage to non clockwork machines and structures"
+  - balance: "kindle will now only have less effect on reebe if the ark is active"
+  - balance: "the crew now has 30 extra seconds to prepare before the portals open"

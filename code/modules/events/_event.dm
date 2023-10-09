@@ -143,6 +143,8 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
+	if(round_event.oshan_blocked && SSmapping.config.map_name == "Oshan Station")
+		return
 	if(admin_forced && length(admin_setup))
 		//not part of the signal because it's conditional and relies on usr heavily
 		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
@@ -201,6 +203,8 @@ Runs the event
 	var/fakeable = TRUE
 	/// Whether a admin wants this event to be cancelled
 	var/cancel_event = FALSE
+	///canceled on oshan
+	var/oshan_blocked = FALSE
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly

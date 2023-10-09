@@ -225,6 +225,9 @@ SUBSYSTEM_DEF(throwing)
 
 	if(thrownthing)
 		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)
+		var/turf/landed_turf = get_turf(thrownthing)
+		if(!isnull(landed_turf) && isnull(thrownthing))
+			SEND_SIGNAL(landed_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, thrownthing)
 
 	qdel(src)
 
