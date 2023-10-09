@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+#define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 

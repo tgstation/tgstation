@@ -479,6 +479,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 
+/// Trait added when a revenant is visible.
+#define TRAIT_REVENANT_REVEALED "revenant_revealed"
+/// Trait added when a revenant has been inhibited (typically by the bane of a holy weapon)
+#define TRAIT_REVENANT_INHIBITED "revenant_inhibited"
+
+/// Trait which prevents you from becoming overweight
+#define TRAIT_NOFAT "cant_get_fat"
+
+/// Trait which allows you to eat rocks
+#define TRAIT_ROCK_EATER "rock_eater"
+/// Trait which allows you to gain bonuses from consuming rocks
+#define TRAIT_ROCK_METAMORPHIC "rock_metamorphic"
+
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
 /// This atom is a secluded location, which is counted as out of bounds.
