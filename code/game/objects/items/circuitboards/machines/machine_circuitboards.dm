@@ -1560,22 +1560,3 @@
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/matter_bin = 1,
 	)
-
-/obj/item/circuitboard/machine/quantum_server
-	name = "Quantum Server"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/quantum_server
-	req_components = list(
-		/datum/stock_part/servo = 2,
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/capacitor = 1,
-	)
-
-/obj/item/circuitboard/machine/netpod
-	name = "Netpod"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/netpod
-	req_components = list(
-		/datum/stock_part/servo = 1,
-		/datum/stock_part/matter_bin = 2,
-	)

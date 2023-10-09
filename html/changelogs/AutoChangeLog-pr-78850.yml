@@ -1,0 +1,4 @@
+author: "Melber"
+delete-after: True
+changes:
+  - bugfix: "Wearing bread (or roses, or other non-mask things) no longer prevents you from TTS speaking."

@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			filter += tts_filter.Join(",")
 		if(ishuman(src))
 			var/mob/living/carbon/human/human_speaker = src
-			if(human_speaker.wear_mask)
+			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
 				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
 				if(worn_mask.voice_override)
 					voice_to_use = worn_mask.voice_override
