@@ -6,3 +6,23 @@
   NicoDeLuna:
   - bugfix: front view
   - bugfix: adjust the appearence of the sprite
+2023-10-07:
+  Gboster-0:
+  - rscadd: Added back the anti-matter engine
+  KoboldCommando:
+  - rscadd: You can now right-click botany trays to dump their nutrients onto the
+      floor!
+  - bugfix: a couple minor botany tray bugs
+  - rscadd: Beakers can be attached to flamethrowers, allowing them to spray chemicals!
+  - image: Flamethrowers got a new sprite!
+  - sound: replaces a surgery sound
+  - rscadd: rollers and bodybags can be printed at medical lathes
+  lmenvs:
+  - rscadd: Added donator items for sammi, ADHDbirb, Random, and The Riddler
+2023-10-09:
+  KoboldCommando:
+  - rscadd: Hand labelers can now label living things!
+  - rscadd: Hand labelers now tell you how to remove labels in their description
+  NicoDeLuna:
+  - rscadd: 'New Hat: Small But Knowing Clown hat'
+  - rscadd: 'New suit: Small But Knowing Clown suit'

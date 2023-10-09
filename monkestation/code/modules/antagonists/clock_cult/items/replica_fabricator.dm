@@ -1,5 +1,7 @@
 #define BRASS_POWER_COST 10
 #define REGULAR_POWER_COST (BRASS_POWER_COST / 2)
+//how much to add to the creation_delay while the cult lacks a charged anchoring crystal
+#define SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL 0.2
 
 /obj/item/clockwork/replica_fabricator
 	name = "replica fabricator"
@@ -80,7 +82,13 @@
 	else if(!isopenturf(target))
 		return
 
-	var/calculated_creation_delay = selected_output.creation_delay * (on_reebe(user) ? selected_output.reebe_mult : 1)
+	var/calculated_creation_delay = 1
+	if(on_reebe(user))
+		calculated_creation_delay = selected_output.reebe_mult
+		if(!get_charged_anchor_crystals())
+			calculated_creation_delay += SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
+	calculated_creation_delay = selected_output.creation_delay * calculated_creation_delay
+
 	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, calculated_creation_delay)
 
 	if(!do_after(user, calculated_creation_delay, target))
@@ -311,3 +319,4 @@
 
 #undef BRASS_POWER_COST
 #undef REGULAR_POWER_COST
+#undef SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
