@@ -941,21 +941,21 @@
 		return FALSE
 
 	if(!held_index)
-		held_index = (active_hand_index % held_items.len)+1
+		held_index = (active_hand_index % held_items.len) + 1
 
 	if(!isnum(held_index))
 		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
 
-	var/oindex = active_hand_index
+	var/previous_index = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
-		H = hud_used.hand_slots["[oindex]"]
-		if(H)
-			H.update_appearance()
-		H = hud_used.hand_slots["[held_index]"]
-		if(H)
-			H.update_appearance()
+		var/atom/movable/screen/inventory/hand/held_location
+		held_location = hud_used.hand_slots["[previous_index]"]
+		if(!isnull(held_location))
+			held_location.update_appearance()
+		held_location = hud_used.hand_slots["[held_index]"]
+		if(!isnull(held_location))
+			held_location.update_appearance()
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
