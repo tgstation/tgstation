@@ -11,6 +11,10 @@
 /obj/structure/sign/warning/directional/west,
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"h" = (
+/obj/structure/rack,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "i" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/chasm/lavaland,
@@ -18,6 +22,19 @@
 "o" = (
 /turf/template_noop,
 /area/template_noop)
+"p" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/bottle/rootbeer{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rootbeer{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rootbeer{
+	pixel_y = 1
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -212,7 +229,7 @@ o
 a
 b
 b
-b
+p
 a
 R
 Y
@@ -584,7 +601,7 @@ Y
 Y
 Y
 a
-Y
+h
 Y
 Y
 t
@@ -764,7 +781,7 @@ a
 Y
 Y
 a
-Y
+h
 Y
 Y
 t
