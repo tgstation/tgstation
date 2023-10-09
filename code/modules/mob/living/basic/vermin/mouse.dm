@@ -376,8 +376,7 @@
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
-	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE, // Always cowardly
+	blackboard = list( // Always cowardly
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find people to run away from
