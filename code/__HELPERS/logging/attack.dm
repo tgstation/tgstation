@@ -82,3 +82,22 @@
 
 	if(message_admins)
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")
+
+/**
+ * Log a combat message in the attack log, multiple targets.
+ *
+ * Arguments:
+ * * atom/user - argument is the actor performing the action
+ * * list/targets - argument is the list of targets of the action
+ * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+ */
+
+/proc/log_combat_listed(atom/user, list/targets, what_done)
+	var/target_list_message = ""
+	for(var/target in targets)
+		var/starget = key_name(target)
+		target_list_message += "[starget], "
+
+
+	var/message = "[what_done] [target_list_message]"
+	user.log_message(message, LOG_ATTACK, color="red")
