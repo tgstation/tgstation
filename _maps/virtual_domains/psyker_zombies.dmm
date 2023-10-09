@@ -63,7 +63,7 @@
 /turf/open/chasm/lavaland,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "R" = (
-/obj/effect/mine/shrapnel,
+/obj/effect/mine/explosive/light,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "T" = (
@@ -163,7 +163,7 @@ a
 Y
 Y
 Y
-R
+Y
 Y
 Y
 Y
@@ -192,7 +192,7 @@ Y
 Y
 Y
 Y
-Y
+R
 a
 a
 X
@@ -218,7 +218,7 @@ b
 b
 b
 a
-Y
+R
 Y
 Y
 Y
@@ -259,7 +259,7 @@ a
 a
 a
 a
-R
+Y
 Y
 a
 o
@@ -282,7 +282,7 @@ a
 Y
 Y
 a
-R
+Y
 Y
 Y
 a
@@ -319,7 +319,7 @@ Y
 Y
 Y
 Y
-Y
+R
 a
 a
 o
@@ -348,7 +348,7 @@ Y
 Y
 Y
 Y
-R
+Y
 Y
 a
 o
@@ -466,7 +466,7 @@ a
 Y
 a
 Y
-R
+Y
 Y
 Y
 Y
@@ -487,7 +487,7 @@ a
 Y
 Y
 Y
-R
+Y
 a
 Y
 Y
@@ -515,7 +515,7 @@ o
 o
 a
 Y
-Y
+R
 Y
 a
 a
@@ -704,7 +704,7 @@ Y
 a
 a
 Y
-Y
+R
 Y
 Y
 a
@@ -790,7 +790,7 @@ a
 a
 a
 Y
-X
+Y
 a
 a
 a
@@ -827,8 +827,8 @@ a
 a
 a
 Y
-R
 Y
+R
 a
 a
 o
@@ -874,7 +874,7 @@ o
 o
 o
 a
-R
+Y
 Y
 T
 Y
@@ -966,10 +966,10 @@ o
 a
 Y
 Y
-Y
+R
 a
 a
-Y
+R
 Y
 Y
 Y
@@ -1055,15 +1055,15 @@ o
 o
 a
 a
-Y
-Y
-a
+R
 Y
 a
+Y
+a
 a
 Y
 Y
-Y
+R
 Y
 Y
 Y
@@ -1085,7 +1085,7 @@ o
 o
 o
 a
-R
+Y
 Y
 Y
 Y
