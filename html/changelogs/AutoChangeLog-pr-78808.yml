@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Virtual domain gondola meat will no longer have a small chance to turn you into a weaker gondola variant"
