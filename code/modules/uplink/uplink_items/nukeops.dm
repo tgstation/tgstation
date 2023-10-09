@@ -502,7 +502,7 @@
 	name = "Syndicate Outlaw Kit"
 	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
 	Now you can be just like 'em! \
-	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with complimentary apples to tame. \
+	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with a complimentary apple to tame. \
 	A lighter is also included, though you must supply your own smokes."
 	item = /obj/item/storage/box/syndie_kit/cowboy
 	cost = 18

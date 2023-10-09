@@ -24,6 +24,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pony
+	/// Do we register a unique rider?
+	var/unique_tamer = FALSE
+	/// The person we've been tamed by
+	var/datum/weakref/my_owner
 
 	greyscale_config = /datum/greyscale_config/pony
 	/// Greyscale color config; 1st color is body, 2nd is mane
@@ -37,7 +41,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/waddling)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)), unique = unique_tamer)
 
 /mob/living/basic/pony/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
@@ -51,6 +55,9 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/random_speech/pony/tamed
 	))
+
+	if(unique_tamer)
+		my_owner = WEAKREF(tamer)
 
 /mob/living/basic/pony/proc/apply_colour()
 	if(!greyscale_config)
@@ -108,7 +115,10 @@
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
+	unique_tamer = TRUE
 
 /mob/living/basic/pony/syndicate/Initialize(mapload)
 	. = ..()
 	name = pick("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+	// Only one person can tame these fellas, and they only need one apple
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 100, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)), unique = unique_tamer)

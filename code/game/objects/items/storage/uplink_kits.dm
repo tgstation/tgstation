@@ -801,7 +801,7 @@
 		/obj/item/clothing/under/costume/dutch/syndicate = 1,
 		/obj/item/lighter/skull = 1,
 		/obj/item/sbeacondrop/horse = 1,
-		/obj/item/food/grown/apple = 6,
+		/obj/item/food/grown/apple = 1,
 	), src)
 
 #undef KIT_RECON
