@@ -691,7 +691,7 @@
 
 /datum/status_effect/dna_melt/on_remove()
 	if(!ishuman(owner))
-		owner.gib() //fuck you in particular
+		owner.gib(DROP_ALL_REMAINS) //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
 	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)

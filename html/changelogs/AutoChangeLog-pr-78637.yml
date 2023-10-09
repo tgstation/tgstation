@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "moved some global procs and vars related to reagents to its own dedicated file. removed some unused procs and macros"
+  - code_imp: "heavy auto docs for a lot of procs"
+  - refactor: "adds reagent sanity and bound check code"
+  - refactor: "multiple reagents are more uniformly distributed when transferring them between beakers or dropper & in every other reagent dependent operation"

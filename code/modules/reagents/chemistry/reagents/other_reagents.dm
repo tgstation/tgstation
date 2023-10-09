@@ -303,6 +303,8 @@
 
 /datum/reagent/water/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
@@ -2180,15 +2182,17 @@
 
 /datum/reagent/barbers_aid/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD) || HAS_TRAIT(exposed_mob, TRAIT_SHAVED))
+	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || (HAS_TRAIT(exposed_mob, TRAIT_BALD) && HAS_TRAIT(exposed_mob, TRAIT_SHAVED)))
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
-	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
-	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
-	exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
-	exposed_human.set_hairstyle(picked_hair, update = TRUE)
+	if(!HAS_TRAIT(exposed_human, TRAIT_SHAVED))
+		var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
+		exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
+	if(!HAS_TRAIT(exposed_human, TRAIT_BALD))
+		var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
+		exposed_human.set_hairstyle(picked_hair, update = TRUE)
+	to_chat(exposed_human, span_notice("Hair starts sprouting from your [HAS_TRAIT(exposed_human, TRAIT_BALD) ? "face" : "scalp"]."))
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2201,13 +2205,15 @@
 
 /datum/reagent/concentrated_barbers_aid/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD) || HAS_TRAIT(exposed_mob, TRAIT_SHAVED))
+	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || (HAS_TRAIT(exposed_mob, TRAIT_BALD) && HAS_TRAIT(exposed_mob, TRAIT_SHAVED)))
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
-	exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
-	exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
+	if(!HAS_TRAIT(exposed_human, TRAIT_SHAVED))
+		exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
+	if(!HAS_TRAIT(exposed_human, TRAIT_BALD))
+		exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
+	to_chat(exposed_human, span_notice("Your[HAS_TRAIT(exposed_human, TRAIT_BALD) ? " facial" : ""] hair starts growing at an incredible speed!"))
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2562,11 +2568,12 @@
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
 	penetrates_skin = NONE
+	var/datum/disease/transformation/gondola_disease = /datum/disease/transformation/gondola
 
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
+		exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)
 
 
 /datum/reagent/spider_extract

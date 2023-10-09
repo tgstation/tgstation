@@ -414,14 +414,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		adjustBruteLoss(30)
 	else
 		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
-		gib()
+		gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-			gib()
+			gib(DROP_ALL_REMAINS)
 			return
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
