@@ -65,6 +65,7 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_PREBUCKLE)
 	return ..()
 
+/// Only let us get ridden if the buckler is our owner, if we have a unique owner.
 /mob/living/basic/pony/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
 	SIGNAL_HANDLER
 	var/mob/living/tamer = my_owner?.resolve()
