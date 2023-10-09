@@ -8,7 +8,7 @@
  * Arguments:
  * * atom/user - argument is the actor performing the action
  * * atom/target - argument is the target of the action
- * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+ * * what_done - is a verb describing the action (e.g. punched, thrown, kicked, etc.)
  * * atom/object - is a tool with which the action was made (usually an item)
  * * addition - is any additional text, which will be appended to the rest of the log line
  */
@@ -89,14 +89,13 @@
  * Arguments:
  * * atom/user - argument is the actor performing the action
  * * list/targets - argument is the list of targets of the action
- * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+ * * what_done - is a verb describing the action (e.g. punched, thrown, kicked, etc.)
  */
 
 /proc/log_combat_listed(atom/user, list/targets, what_done)
 	var/target_list_message = ""
 	for(var/target in targets)
-		var/starget = key_name(target)
-		target_list_message += "[starget], "
+		target_list_message += "[key_name(target)], "
 
 
 	var/message = "[what_done] [target_list_message]"
