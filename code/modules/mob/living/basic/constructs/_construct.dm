@@ -31,7 +31,7 @@
 	/// List of spells that this construct can cast
 	var/list/construct_spells = list()
 	/// Flavor text shown to players when they spawn as this construct
-	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/playstyle_string = "You are a generic construct. Your job is to not exist, and you should probably adminhelp this."
 	/// The construct's master
 	var/master = null
 	/// Whether this construct is currently seeking nar nar
@@ -43,14 +43,16 @@
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// What flavor of gunk does this construct drop on death?
-	var/static/list/remains = list(/obj/item/ectoplasm)
+	var/list/remains = list(/obj/item/ectoplasm)
 	/// Can this construct smash walls? Gets the wall_smasher element if so.
 	var/smashes_walls = FALSE
 
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/death_drops, remains)
+	if((length(remains)))
+		remains = string_list(remains)
+		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
 		AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_WALLS)
 	if(can_repair)
@@ -95,7 +97,7 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, playstyle_string)
+	to_chat(src, "[span_bold("[playstyle_string]")]")
 
 /mob/living/basic/construct/examine(mob/user)
 	var/text_span
@@ -111,8 +113,9 @@
 		if(health >= maxHealth/2)
 			. += span_warning("[p_They()] look[p_s()] slightly dented.")
 		else
-			. += span_warning("<b>[p_They()] look[p_s()] severely dented!</b>")
+			. += span_warning(span_bold("[p_They()] look[p_s()] severely dented!"))
 	. += "</span>"
+	return .
 
 /mob/living/basic/construct/narsie_act()
 	return
@@ -143,5 +146,7 @@
 	heal_overall_damage(brute = 5)
 
 	Beam(user, icon_state="sendbeam", time = 4)
-	user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
-				span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
+	user.visible_message(
+		span_danger("[user] repairs some of \the <b>[src]'s</b> dents."),
+		span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."),
+		)

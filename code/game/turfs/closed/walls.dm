@@ -365,15 +365,11 @@
 
 /turf/closed/wall/Bumped(atom/movable/bumped_atom)
 	. = ..()
-	if(isliving(bumped_atom))
-		var/mob/living/living_bumped = bumped_atom
-		SEND_SIGNAL(living_bumped, COMSIG_LIVING_WALL_BUMP, src)
+	SEND_SIGNAL(bumped_atom, COMSIG_LIVING_WALL_BUMP, src)
 
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/living_gone = gone
-		SEND_SIGNAL(living_gone, COMSIG_LIVING_WALL_EXITED, src)
+	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
 
 #undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

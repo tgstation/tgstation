@@ -10,7 +10,7 @@
 /datum/element/structure_repair/Attach(
 	datum/target,
 	heal_amount = 5,
-	structure_types_typecache = typecacheof(list(/obj/structure))
+	structure_types_typecache = typecacheof(list(/obj/structure)),
 )
 	. = ..()
 	if (!isliving(target))
