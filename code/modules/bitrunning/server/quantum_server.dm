@@ -48,8 +48,6 @@
 	var/servo_bonus = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// The turfs on station where we generate loot.
-	var/turf/receive_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -84,18 +82,17 @@
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(receive_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
-		set_light(0)
+		set_light(l_on = FALSE)
 		return ..()
 
 	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(2, 1.5)
+	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
 
 	return ..()
 
