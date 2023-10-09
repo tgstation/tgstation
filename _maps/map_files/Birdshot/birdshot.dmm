@@ -32991,15 +32991,10 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lLq" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "lLr" = (
@@ -37938,13 +37933,10 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/science/xenobiology)
 "nyf" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/structure/table,
+/obj/item/food/cornchips/green,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "nyi" = (
