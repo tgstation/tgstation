@@ -84,7 +84,7 @@
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
 	///If set, overrides the overlays' icon path.
-	var/icon_overlays
+	var/icon_overlays = 'icons/obj/machines/computer_overlays.dmi'
 	///If set, what the icon_state will be if the computer is unpowered.
 	var/icon_state_unpowered
 	///If set, what the icon_state will be if the computer is powered.

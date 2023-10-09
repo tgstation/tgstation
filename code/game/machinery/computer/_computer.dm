@@ -1,6 +1,7 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/machines/computer.dmi'
+	var/icon_overlays = 'icons/obj/machines/computer_overlays.dmi'
 	icon_state = "computer"
 	density = TRUE
 	max_integrity = 200
@@ -37,12 +38,12 @@
 	. = ..()
 	if(icon_keyboard)
 		if(keyboard_change_icon && (machine_stat & NOPOWER))
-			. += "[icon_keyboard]_off"
+			. += mutable_appearance(icon_overlays, "[icon_keyboard]_off")
 		else
-			. += icon_keyboard
+			. += mutable_appearance(icon_overlays, icon_keyboard)
 
 	if(machine_stat & BROKEN)
-		. += mutable_appearance(icon, "[icon_state]_broken")
+		. += mutable_appearance(icon_overlays, "broken")
 		return // If we don't do this broken computers glow in the dark.
 
 	if(machine_stat & NOPOWER) // Your screen can't be on if you've got no damn charge
@@ -50,8 +51,8 @@
 
 	// This lets screens ignore lighting and be visible even in the darkest room
 	if(icon_screen)
-		. += mutable_appearance(icon, icon_screen)
-		. += emissive_appearance(icon, icon_screen, src)
+		. += mutable_appearance(icon_overlays, icon_screen)
+		. += emissive_appearance(icon_overlays, icon_screen, src)
 
 /obj/machinery/computer/power_change()
 	. = ..()

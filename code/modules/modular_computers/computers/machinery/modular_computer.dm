@@ -3,6 +3,7 @@
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
+	var/icon_overlays = 'icons/obj/machines/modular_console_overlays.dmi'
 	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	density = TRUE
@@ -80,17 +81,19 @@
 
 /obj/machinery/modular_computer/update_overlays()
 	. = ..()
+	var/ui_overlay = icon_overlays || initial(icon)
 	if(!cpu)
 		return .
 
 	if(cpu.enabled && cpu.use_power())
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+		. += mutable_appearance(ui_overlay, cpu.active_program?.program_icon_state || screen_icon_state_menu)
 	else if(!(machine_stat & NOPOWER))
-		. += screen_icon_screensaver
+		. += mutable_appearance(ui_overlay, screen_icon_screensaver)
 
 	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
-		. += "bsod"
-		. += "broken"
+		. += mutable_appearance(ui_overlay, "broken")
+		if(!(machine_stat & NOPOWER))
+			. += mutable_appearance(ui_overlay, "bsod")
 	return .
 
 /// Eats the "source" arg because update_icon actually expects args now.
