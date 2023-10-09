@@ -63,6 +63,7 @@
 
 /mob/living/basic/pony/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_PREBUCKLE)
+	my_owner = null
 	return ..()
 
 /// Only let us get ridden if the buckler is our owner, if we have a unique owner.
