@@ -65,10 +65,7 @@
 /obj/structure/material_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
-	if(.)
-		return TRUE
-
-	if(!isliving(usr))
+	if(. || !isliving(usr))
 		return TRUE
 
 	var/mob/living/customer = usr

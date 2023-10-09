@@ -1,7 +1,7 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
-	new /datum/pet_command/point_targetting/attack(),
-	new /datum/pet_command/point_targetting/fetch(),
+	new /datum/pet_command/point_targetting/attack,
+	new /datum/pet_command/point_targetting/fetch,
 ))
 
 /datum/ai_controller/basic_controller/mook
@@ -47,9 +47,11 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		return
 	if(get_dist(living_pawn, home) < controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
 		return
-	if(storm_approaching || (locate(/obj/item/stack/ore) in living_pawn))
-		controller.clear_blackboard_key(BB_TARGET_MINERAL_WALL)
-		return ..()
+	if(!storm_approaching && !(locate(/obj/item/stack/ore) in living_pawn))
+		return
+
+	controller.clear_blackboard_key(BB_TARGET_MINERAL_WALL)
+	return ..()
 
 ///hunt ores that we will haul off back to the village
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook
@@ -129,8 +131,9 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 /datum/ai_behavior/wander
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	var/wander_distance = 9
 	required_distance = 0
+	/// distance we will wander away from the village
+	var/wander_distance = 9
 
 /datum/ai_behavior/wander/setup(datum/ai_controller/controller, village_key)
 	. = ..()
