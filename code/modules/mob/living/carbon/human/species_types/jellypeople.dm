@@ -58,7 +58,7 @@
 	return ..()
 
 /datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
+	if(istype(quirk, /datum/quirk/item_quirk/blooddeficiency))
 		mail_goodies += list(
 			/obj/item/reagent_containers/blood/toxin
 		)
@@ -82,7 +82,7 @@
 
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
+		var/datum/quirk/item_quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/item_quirk/blooddeficiency)
 		if(!isnull(blooddeficiency))
 			blooddeficiency.lose_blood(seconds_per_tick)
 

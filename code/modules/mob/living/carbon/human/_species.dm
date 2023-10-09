@@ -580,7 +580,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
  */
 /datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient)
-	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/blooddeficiency))
+	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/item_quirk/blooddeficiency))
 
 /**
  * Updates the mail goodies of a specific quirk.
@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(length(mail_goodies))
 		quirk.mail_goodies = mail_goodies
 		return
-	if(istype(quirk, /datum/quirk/blooddeficiency))
+	if(istype(quirk, /datum/quirk/item_quirk/blooddeficiency))
 		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))  // TRAIT_NOBLOOD and no exotic blood (yes we have to check for both, jellypeople exist)
 			quirk.mail_goodies = list() // means no blood pack gets sent to them.
 			return

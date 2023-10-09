@@ -34,7 +34,7 @@
 
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
+		var/datum/quirk/item_quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/item_quirk/blooddeficiency)
 		if(!isnull(blooddeficiency))
 			blooddeficiency.lose_blood(seconds_per_tick)
 

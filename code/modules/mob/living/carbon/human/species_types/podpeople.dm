@@ -37,7 +37,7 @@
 		update_mail_goodies(new_podperson)
 
 /datum/species/pod/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
+	if(istype(quirk, /datum/quirk/item_quirk/blooddeficiency))
 		mail_goodies += list(
 			/obj/item/reagent_containers/blood/podperson
 		)
