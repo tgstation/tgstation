@@ -32,6 +32,8 @@
 	var/heartbeat_processes = 0
 	///processes until wail if above punishment threshold
 	var/wailing_processes = 0
+	///our breath processes
+	var/breath_processes = 0
 	///list of mobs that have been given a overlay so we can remove later
 	var/list/mobs_with_fullscreens = list()
 	///this is needed because it double fires sometimes before finishing
@@ -40,6 +42,8 @@
 	var/mob/living/carbon/human/stalked_human
 	/// how close we are in % to finishing stalking
 	var/stalk_precent = 0
+	/// are we corporeal
+	var/corporeal = TRUE
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -78,12 +82,16 @@
 	cached_brute_mod = human.dna.species.brutemod
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
-	if(breath_out)
-		source.emote("exhale")
-		breath_out = FALSE
-	else
-		source.emote("inhale")
-		breath_out = TRUE
+	if(corporeal)
+		breath_processes++
+		if(breath_processes >= 2)
+			breath_processes = 0
+			if(breath_out)
+				source.emote("exhale")
+				breath_out = FALSE
+			else
+				source.emote("inhale")
+				breath_out = TRUE
 
 	heartbeat_processes++
 	if(heartbeat_processes >= 4)

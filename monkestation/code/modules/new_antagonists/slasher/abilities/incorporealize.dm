@@ -23,6 +23,9 @@
 
 /datum/action/cooldown/slasher/incorporealize/Activate(atom/target)
 	. = ..()
+	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+	if(!slasherdatum)
+		return
 
 	flipped = !flipped
 
@@ -32,7 +35,9 @@
 		button_icon_state = "corporealize"
 		if(isliving(owner))
 			var/mob/living/owner_mob = owner
+			slasherdatum.corporeal = FALSE
 			owner_mob.movement_type |= PHASING
+			owner_mob.status_flags |= GODMODE
 			animate(owner_mob, alpha = 0, time = 1.5 SECONDS)
 			ADD_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
 	else
@@ -41,7 +46,9 @@
 		button_icon_state = "incorporealize"
 		if(isliving(owner))
 			var/mob/living/owner_mob = owner
+			slasherdatum.corporeal = TRUE
 			owner_mob.movement_type &= ~PHASING
+			owner_mob.status_flags &= ~GODMODE
 			animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
 			REMOVE_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
 
@@ -54,7 +61,9 @@
 	flipped = FALSE
 	if(isliving(owner))
 		var/mob/living/owner_mob = owner
+		slasherdatum.corporeal = TRUE
 		owner_mob.movement_type &= ~PHASING
+		owner_mob.status_flags &= ~GODMODE
 		animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
 		REMOVE_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
