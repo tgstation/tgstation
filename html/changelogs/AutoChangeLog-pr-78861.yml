@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - bugfix: "Images are once more displayed as images in vv instead of as an appearance"
