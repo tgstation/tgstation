@@ -958,11 +958,10 @@
 			H.update_appearance()
 	return TRUE
 
-/mob/proc/activate_hand(selhand)
-	SEND_SIGNAL(src, COMSIG_MOB_ACTIVATE_HAND, selhand)
+/mob/proc/activate_hand(selected_hand)
+	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
+		return
 
-/// Either swap to the selected hand, or use the item held in it
-/mob/proc/select_active_hand(selected_hand)
 	if(!selected_hand)
 		selected_hand = (active_hand_index % held_items.len)+1
 

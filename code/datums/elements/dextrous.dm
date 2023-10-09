@@ -17,14 +17,12 @@
 	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	ADD_TRAIT(target, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(target, COMSIG_MOB_ACTIVATE_HAND, PROC_REF(on_activate_hand))
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_hand_clicked))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /datum/element/dextrous/Detach(datum/source)
 	. = ..()
 	var/mob/living/mob_parent = source
-	mob_parent.drop_all_held_items()
 	set_available_hands(mob_parent, initial(mob_parent.default_num_hands))
 	var/initial_hud = initial(mob_parent.hud_type)
 	mob_parent.set_hud_used(new initial_hud(source))
@@ -34,10 +32,11 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_UNARMED_ATTACK,
-		COMSIG_MOB_ACTIVATE_HAND,
 	))
 
+/// Set up how many hands we should have
 /datum/element/dextrous/proc/set_available_hands(mob/living/hand_owner, hands_count)
+	hand_owner.drop_all_held_items()
 	var/held_items = list()
 	for (var/i in 1 to hands_count)
 		held_items += null
@@ -49,11 +48,6 @@
 /datum/element/dextrous/proc/on_death(mob/living/died, gibbed)
 	SIGNAL_HANDLER
 	died.drop_all_held_items()
-
-/// Swap hands or use item in hand
-/datum/element/dextrous/proc/on_activate_hand(mob/living/hand_haver, selected_hand)
-	SIGNAL_HANDLER
-	hand_haver.select_active_hand(selected_hand)
 
 /// Try picking up items
 /datum/element/dextrous/proc/on_hand_clicked(mob/living/hand_haver, atom/target, proximity, modifiers)

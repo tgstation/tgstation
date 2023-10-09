@@ -28,9 +28,6 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/activate_hand(selhand)
-	select_active_hand(selhand)
-
 /mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
 	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
