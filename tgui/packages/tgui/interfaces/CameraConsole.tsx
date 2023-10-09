@@ -49,7 +49,7 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.ref);
+  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
 
   return flow([
     filter((camera: Camera) => !!camera.name),
