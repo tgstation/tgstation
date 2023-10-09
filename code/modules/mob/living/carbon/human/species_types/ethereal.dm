@@ -214,7 +214,7 @@
 
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
-		They do so via their crystal core, the equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
+		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
 		However, their skin is very thin and easy to pierce with brute weaponry."
 
 /datum/species/ethereal/get_species_description()
