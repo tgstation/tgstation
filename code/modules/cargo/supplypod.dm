@@ -485,7 +485,8 @@
 	. = ..()
 	if(same_z_layer)
 		return
-	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
+	if(glow_effect)
+		SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -535,7 +536,7 @@
 /obj/effect/supplypod_smoke/proc/drawSelf(amount)
 	alpha = max(0, 255-(amount*20))
 
-/obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
+/obj/effect/supplypod_rubble
 	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'
