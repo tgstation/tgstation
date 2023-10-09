@@ -256,3 +256,20 @@
       have changed much- let us know if anything is broken.
   timothymtorres:
   - bugfix: Fix bodies now lose fire stacks while husked.
+2023-10-09:
+  Ben10Omintrix:
+  - refactor: ice demons have been refactored into basic mbos. please report any bugs
+  - rscadd: ice demons now have a unique trophy
+  IndieanaJones:
+  - bugfix: Slaughter/Laughter demon melee cooldowns have been fixed and now attack
+      at the regular player character attack speed
+  Jacquerel:
+  - balance: The chemical gun and PKA pressure mod traitor items are now purchasable
+      within 15 minutes of the round starting rather than 20/30.
+  - balance: All preset bundle kits, the cash briefcase, the makarov, the revolver,
+      the throwing weapon kit, c4, the detomatix cartridge, the large EMP bomb, gorillas,
+      advanced mimery tome, pie cannon, clown car, His Grace, and the origami kit
+      are now all purchasable at the start of a round.
+  distributivgesetz:
+  - qol: Supermatter shards can now be fastened with right click too. Now, just don't
+      forget to use a wrench.
