@@ -4762,6 +4762,7 @@
 /area/centcom/central_command_areas/fore)
 "rD" = (
 /obj/structure/table/wood,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "rF" = (
@@ -5016,6 +5017,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"sA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/evacuation)
 "sB" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -10217,6 +10225,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"NX" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/evacuation)
 "NZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -63764,7 +63777,7 @@ us
 vh
 vg
 Vd
-Vd
+NX
 Vd
 yB
 vh
@@ -65559,15 +65572,15 @@ Yo
 Yo
 sT
 tU
+sA
 tU
 tU
 tU
+sA
 tU
 tU
 tU
-tU
-tU
-tU
+sA
 tU
 Bc
 DK
