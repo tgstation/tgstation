@@ -172,7 +172,7 @@ statues fixes:
 
 	if(engraving_entries.len)
 		for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
-			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+			var/engraving = pick_n_take(engraving_entries) //engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
 			if(!islist(engraving))
 				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
 				continue
