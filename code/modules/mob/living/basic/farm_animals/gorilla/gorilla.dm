@@ -30,25 +30,41 @@
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	unique_name = TRUE
+	ai_controller = /datum/ai_controller/basic_controller/gorilla
+	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
 	var/oogas = 0
+	/// Types of things we want to find and eat
+	var/static/list/gorilla_food = list(
+		/obj/item/food/bread/banana,
+		/obj/item/food/breadslice/banana,
+		/obj/item/food/cnds/banana_honk,
+		/obj/item/food/grown/banana,
+		/obj/item/food/popsicle/topsicle/banana,
+		/obj/item/food/salad/fruit,
+		/obj/item/food/salad/jungle,
+		/obj/item/food/sundae,
+	)
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_smasher)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
+	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
 	AddElement(
 		/datum/element/amputating_limbs, \
 		surgery_time = 0 SECONDS, \
 		surgery_verb = "punches",\
 	)
+	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
+	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, gorilla_food)
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()
@@ -63,8 +79,11 @@
 
 /mob/living/basic/gorilla/update_held_items()
 	. = ..()
-	// slow down standing gorillas
 	update_appearance(UPDATE_ICON)
+	if (is_holding_items())
+		add_movespeed_modifier(/datum/movespeed_modifier/gorilla_standing)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/gorilla_standing)
 
 /mob/living/basic/gorilla/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -98,7 +117,12 @@
 	if(oogas > 0)
 		return
 	oogas = rand(2,6)
-	playsound(src, 'sound/creatures/gorilla.ogg', 50)
+	emote("ooga")
+
+/// Gorillas are slower when carrying something
+/datum/movespeed_modifier/gorilla_standing
+	blacklisted_movetypes = (FLYING|FLOATING)
+	multiplicative_slowdown = 0.5
 
 /// A smaller gorilla summoned via magic
 /mob/living/basic/gorilla/lesser
@@ -110,6 +134,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	obj_damage = 15
+	ai_controller = /datum/ai_controller/basic_controller/gorilla/lesser
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
 
 /mob/living/basic/gorilla/lesser/Initialize(mapload)
@@ -125,6 +150,7 @@
 	health = 200
 	faction = list(FACTION_NEUTRAL, FACTION_MONKEY, FACTION_JUNGLE)
 	unique_name = FALSE
+	ai_controller = null
 
 /mob/living/basic/gorilla/cargorilla/Initialize(mapload)
 	. = ..()
@@ -151,15 +177,5 @@
 	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cargo_technician))
 	mind.special_role = "Cargorilla"
 	to_chat(src, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
-
-/// Cargorilla's ID card
-/obj/item/card/id/advanced/cargo_gorilla
-	name = "cargorilla ID"
-	desc = "A card used to provide ID and determine access across the station. A gorilla-sized ID for a gorilla-sized cargo technician."
-	trim = /datum/id_trim/job/cargo_technician
-
-
-//stat_attack = HARD_CRIT <= normal gorilla
-//stat_attack = SOFT_CRIT <= young gorilla
 
 #undef GORILLA_HANDS_LAYER

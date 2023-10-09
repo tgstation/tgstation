@@ -62,7 +62,7 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 	)
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/gorilla
+	spawned_mob = /mob/living/basic/gorilla
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"
