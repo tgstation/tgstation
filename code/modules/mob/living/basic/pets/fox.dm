@@ -38,7 +38,6 @@
 
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction,
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction
 	)
