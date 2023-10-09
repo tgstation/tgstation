@@ -431,11 +431,9 @@
 	. += light_in
 	. += light_out
 
-// welding code
-
 /obj/machinery/mineral/ore_redemption/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
-		balloon_alert(user, span_warning("[src] is welded to the floor!"))
+		balloon_alert(user, "it's welded!")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -445,7 +443,7 @@
 		welded_down = FALSE
 	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
 	air_update_turf(update = TRUE, remove = anchorvalue)
-
+	
 
 /obj/machinery/mineral/ore_redemption/welder_act(mob/living/user, obj/item/tool)
 	..()
@@ -453,17 +451,17 @@
 		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		balloon_alert_to_viewers(
-			span_notice("[user.name] starts to cut the [name] free from the floor."),
-			span_notice("You start to cut [src] free from the floor..."),
-			span_hear("You hear welding."),
+			span_notice("[user.name] starts to cut the machine free from the floor."),
+			span_notice("you start to cut the machine free from the floor..."),
+			span_hear("you hear welding."),
 		)
-		if(!tool.use_tool(src, user, delay=100, volume=100))
+		if(!tool.use_tool(src, user, delay = 10 SECONDS, volume=100))
 			return FALSE
 		welded_down = FALSE
-		balloon_alert(user, span_notice("You cut [src] free from the floor."))
+		balloon_alert(user, "you cut it free from the floor.")
 		return TRUE
 	if(!anchored)
-		balloon_alert(user, span_warning("[src] needs to be wrenched to the floor!"))
+		balloon_alert(user, "secure with wrench!")
 		return TRUE
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
@@ -475,31 +473,5 @@
 	if(!tool.use_tool(src, user, delay = 10 SECONDS, volume=100))
 		return FALSE
 	welded_down = TRUE
-	balloon_alert(user, span_notice("You weld [src] to the floor."))
+	balloon_alert(user, "you weld it to the floor.")
 	return TRUE
-
-/obj/machinery/mineral/ore_redemption/welder_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	if(machine_stat & BROKEN)
-		if(!tool.tool_start_check(user, amount=1))
-			return FALSE
-		user.visible_message(
-			span_notice("[user] is repairing [src]."),
-			span_notice("You begin repairing [src]..."),
-			span_hear("You hear welding."),
-		)
-		if(tool.use_tool(src, user, delay=40, volume=50))
-			if(!(machine_stat & BROKEN))
-				return FALSE
-			balloon_alert(user, "repaired")
-			atom_integrity = max_integrity
-			set_machine_stat(machine_stat & ~BROKEN)
-			update_icon()
-			return TRUE
-	else
-		balloon_alert(user, "no repair needed!")
-		return FALSE
-
-/obj/machinery/mineral/ore_redemption/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(isnull(held_item))
-		return NONE
