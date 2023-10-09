@@ -1028,7 +1028,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
@@ -1590,14 +1590,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "fF" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "fG" = (
@@ -2088,28 +2088,28 @@
 /obj/item/ammo_box/a40mm{
 	icon_state = "40mm-4"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = -2;
 	pixel_y = -4
@@ -2475,7 +2475,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/military,
-/obj/item/ammo_box/magazine/mm712x82,
+/obj/item/ammo_box/magazine/m7mm,
 /obj/item/gun/ballistic/automatic/l6_saw,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
@@ -3885,7 +3885,7 @@
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
 "qQ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "qS" = (
@@ -4457,7 +4457,7 @@
 "AJ" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)

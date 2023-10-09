@@ -187,6 +187,10 @@
 	phobia_type = "guns"
 	random_gain = FALSE
 
+/datum/brain_trauma/mild/phobia/heresy
+	phobia_type = "heresy"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/insects
 	phobia_type = "insects"
 	random_gain = FALSE

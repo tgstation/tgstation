@@ -7,6 +7,8 @@
 #define COMSIG_MOB_LOGIN "mob_login"
 ///from base of /mob/Logout(): ()
 #define COMSIG_MOB_LOGOUT "mob_logout"
+///from base of /mob/mind_initialize
+#define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
 ///from base of mob/reagent_check(): (datum/reagent/chem, seconds_per_tick, times_fired)
@@ -182,6 +184,12 @@
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
 ///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
 #define COMSIG_MOB_MINED "mob_mined"
+///Sent by pilot of mech in base of /obj/vehicle/sealed/mecha/relaymove(): (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_DROVE_MECH "mob_drove_mech"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
@@ -208,3 +216,6 @@
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
+
+/// from /mob/proc/change_mob_type_unchecked() : ()
+#define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

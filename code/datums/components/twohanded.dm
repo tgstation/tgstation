@@ -56,8 +56,14 @@
 	if(require_twohands)
 		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
 
+/datum/component/two_handed/Destroy(force, silent)
+	offhand_item = null
+	wield_callback = null
+	unwield_callback = null
+	return ..()
+
 // Inherit the new values passed to the component
-/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
+/datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, attacksound, \
 											force_multiplier, force_wielded, force_unwielded, icon_wielded, \
 											datum/callback/wield_callback, datum/callback/unwield_callback)
 	if(!original)
@@ -166,13 +172,6 @@
  */
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
-		return
-	if(ismonkey(user))
-		if(require_twohands)
-			to_chat(user, span_notice("[parent] is too heavy and cumbersome for you to carry!"))
-			user.dropItemToGround(parent, force=TRUE)
-		else
-			to_chat(user, span_notice("It's too heavy for you to wield fully."))
 		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)

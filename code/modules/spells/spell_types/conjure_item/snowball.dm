@@ -8,3 +8,4 @@
 	antimagic_flags = NONE
 	cooldown_time = 1.5 SECONDS
 	item_type = /obj/item/toy/snowball
+	requires_hands = TRUE

@@ -77,8 +77,8 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
+				M.set_buffer(src)
+				balloon_alert(user, "saved to multitool buffer")
 				return 1
 
 		if(default_deconstruction_crowbar(I))

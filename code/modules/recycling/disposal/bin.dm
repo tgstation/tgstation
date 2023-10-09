@@ -88,8 +88,9 @@
 		trunk = null
 	return ..()
 
-/obj/machinery/disposal/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
+/obj/machinery/disposal/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored && !QDELETED(src))
 		stored = null
 		deconstruct(FALSE)
 
@@ -135,7 +136,7 @@
 		return ..()
 
 /// The regal rat spawns ratty treasures from the disposal
-/obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
+/obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		return
@@ -279,11 +280,13 @@
 	var/turf/T = loc
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
-			stored.forceMove(T)
-			src.transfer_fingerprints_to(stored)
-			stored.set_anchored(FALSE)
-			stored.set_density(TRUE)
-			stored.update_appearance()
+			var/obj/structure/disposalconstruct/construct = stored
+			stored = null
+			construct.forceMove(T)
+			transfer_fingerprints_to(construct)
+			construct.set_anchored(FALSE)
+			construct.set_density(TRUE)
+			construct.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
 	..()
@@ -545,10 +548,13 @@
 	return
 
 /// Handles the signal for the rat king looking inside the disposal
-/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
+	if(king.combat_mode)
+		return
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
+	return COMPONENT_RAT_INTERACTED
 
 /// Handles a carbon mob getting shoved into the disposal bin
 /obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)

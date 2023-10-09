@@ -21,13 +21,17 @@
 	last_fire = world.time
 
 
-/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
+	if(chambered)
+		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 	if(spin_cylinder)
 		chambered = magazine.get_round(TRUE)
 	else
 		chambered = magazine.stored_ammo[1]
+	if(chambered)
+		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
@@ -271,9 +275,14 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = "\improper Syndicate Revolver"
 	clumsy_check = FALSE
 	icon_state = "revolversyndie"
+
+/obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
+	. = ..()
+	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
+	name = initial(syndie_revolver.name)
+	desc = initial(syndie_revolver.desc)
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)

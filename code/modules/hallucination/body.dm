@@ -58,7 +58,7 @@
 
 /datum/hallucination/body/husk
 	random_hallucination_weight = 8
-	body_image_file = 'icons/mob/species/human/human.dmi'
+	body_image_file = 'icons/mob/human/human.dmi'
 	body_image_state = "husk"
 
 /datum/hallucination/body/husk/sideways

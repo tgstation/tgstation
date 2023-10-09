@@ -12,6 +12,9 @@
 	/// The radius of the aoe.
 	var/aoe_radius = 7
 
+/datum/action/cooldown/spell/aoe/is_valid_target(atom/cast_on)
+	return isturf(cast_on.loc)
+
 // At this point, cast_on == owner. Either works.
 // Don't extend this for your spell! Look at cast_on_thing_in_aoe.
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)

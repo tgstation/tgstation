@@ -12,7 +12,7 @@
 	var/scream_delay = 50
 	var/last_scream = 0
 	/// List of traits to add/remove when someone gets this mutation.
-	var/static/list/mutation_traits = list(
+	var/list/mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
@@ -63,13 +63,19 @@
  *arg1 is the arm to evaluate damage of and possibly break.
  */
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
+	var/severity
 	switch(arm.brute_dam)
 		if(45 to 50)
-			arm.force_wound_upwards(/datum/wound/blunt/critical, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_CRITICAL
 		if(41 to 45)
-			arm.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_SEVERE
 		if(35 to 41)
-			arm.force_wound_upwards(/datum/wound/blunt/moderate, wound_source = "hulk smashing")
+			severity = WOUND_SEVERITY_MODERATE
+
+	if (isnull(severity))
+		return
+
+	owner.cause_wound_of_type_and_severity(WOUND_BLUNT, arm, severity, wound_source = "hulk smashing")
 
 /datum/mutation/human/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)
@@ -255,5 +261,18 @@
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
+
+/datum/mutation/human/hulk/wizardly
+	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
+	health_req = 0
+	instability = 0
+	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
+	/// List of traits to add/remove when someone gets this mutation.
+	mutation_traits = list(
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+	) // no chunk
 
 #undef HULK_TAILTHROW_STEPS

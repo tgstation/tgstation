@@ -426,7 +426,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bF" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
@@ -1622,7 +1622,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "iq" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range{
+/mob/living/basic/hivebot/range{
 	desc = "Looks like he's been left behind.";
 	faction = list("russian");
 	maxHealth = 5;
@@ -2594,7 +2594,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "nM" = (
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Medical Bay"
 	},
 /obj/structure/cable,

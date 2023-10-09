@@ -17,14 +17,14 @@
 
 /obj/effect/goliath_tentacle/Initialize(mapload)
 	. = ..()
+	if (ismineralturf(loc))
+		var/turf/closed/mineral/floor = loc
+		floor.gets_drilled()
 	if (!isopenturf(loc) || isspaceturf(loc) || isopenspaceturf(loc))
 		return INITIALIZE_HINT_QDEL
 	for (var/obj/effect/goliath_tentacle/tentacle in loc)
 		if (tentacle != src)
 			return INITIALIZE_HINT_QDEL
-	if (ismineralturf(loc))
-		var/turf/closed/mineral/floor = loc
-		floor.gets_drilled()
 	deltimer(action_timer)
 	action_timer = addtimer(CALLBACK(src, PROC_REF(animate_grab)), 0.7 SECONDS, TIMER_STOPPABLE)
 
@@ -49,6 +49,8 @@
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
 			buckle_mob(victim, TRUE)
 			SEND_SIGNAL(victim, COMSIG_GOLIATH_TENTACLED_GRABBED)
+	for (var/obj/vehicle/sealed/mecha/mech in loc)
+		mech.take_damage(rand(min_damage, max_damage), damage_type = BRUTE, damage_flag = MELEE, sound_effect = TRUE)
 	if (!has_buckled_mobs())
 		retract()
 		return

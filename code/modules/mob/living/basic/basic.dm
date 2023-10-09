@@ -11,7 +11,7 @@
 
 	var/basic_mob_flags = NONE
 
-	///Defines how fast the basic mob can move. This is a multiplier
+	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second
 	var/stamina_recovery = 5
@@ -35,6 +35,8 @@
 	var/attack_vis_effect
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
+	/// How often can you melee attack?
+	var/melee_attack_cooldown = 2 SECONDS
 
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -141,6 +143,19 @@
 		health = 0
 		look_dead()
 
+/mob/living/basic/gib()
+	if(butcher_results || guaranteed_butcher_results)
+		var/list/butcher_loot = list()
+		if(butcher_results)
+			butcher_loot += butcher_results
+		if(guaranteed_butcher_results)
+			butcher_loot += guaranteed_butcher_results
+		var/atom/loot_destination = drop_location()
+		for(var/path in butcher_loot)
+			for(var/i in 1 to butcher_loot[path])
+				new path(loot_destination)
+	return ..()
+
 /**
  * Apply the appearance and properties this mob has when it dies
  * This is called by the mob pretending to be dead too so don't put loot drops in here or something
@@ -178,8 +193,10 @@
 		return
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
-/mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
+	if (!ignore_cooldown)
+		changeNext_move(melee_attack_cooldown)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	var/result = target.attack_basic_mob(src, modifiers)
@@ -205,6 +222,13 @@
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 	SEND_SIGNAL(src, POST_BASIC_MOB_UPDATE_VARSPEED)
 
+/mob/living/basic/update_movespeed()
+	. = ..()
+	if (cached_multiplicative_slowdown > END_GLIDE_SPEED)
+		ADD_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
+
 /mob/living/basic/relaymove(mob/living/user, direction)
 	if(user.incapacitated())
 		return
@@ -222,7 +246,7 @@
 /mob/living/basic/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
-/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/basic/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")

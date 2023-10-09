@@ -1,9 +1,0 @@
-author: "Derpguy3"
-delete-after: True
-changes:
-  - qol: "The Syndicate battlecruiser's fighters have received external cameras to aid its pilots."
-  - qol: "Warning lights have been added to the landing pad of the battlecruiser to (hopefully) reduce incident numbers."
-  - bugfix: "A stray air alarm was removed from the bridge of the Syndicate battlecruiser."
-  - bugfix: "The turret control panel in the bridge of the battlecruiser has been moved to a wall, allowing access without needing to climb the table."
-  - bugfix: "Airlocks on the Syndicate battlecruiser which were missing syndicate access, has had it added."
-  - bugfix: "The Syndicate medibot on the battlecruiser can now be unlocked by its crew."

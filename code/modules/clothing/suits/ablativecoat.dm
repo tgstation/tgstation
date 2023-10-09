@@ -4,6 +4,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
 	icon_state = "ablativehood"
+	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_ablative
 	strip_delay = 30
 	var/hit_reflect_chance = 50

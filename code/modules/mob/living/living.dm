@@ -86,7 +86,7 @@
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
 	//No bumping/swapping/pushing others if you are on walk intent
-	if(m_intent == MOVE_INTENT_WALK)
+	if(move_intent == MOVE_INTENT_WALK)
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
@@ -479,7 +479,7 @@
 		return TRUE
 	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
 		return TRUE
-	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
 		return TRUE
 	return FALSE
 
@@ -760,8 +760,8 @@
  */
 /mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		adjustOxyLoss(-excess_healing, FALSE)
-		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
+		adjustOxyLoss(-excess_healing, updating_health = FALSE)
+		adjustToxLoss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly
 		updatehealth()
 
 	grab_ghost(force_grab_ghost)
@@ -810,13 +810,13 @@
 	var/oxy_to_heal = heal_to - getOxyLoss()
 	var/tox_to_heal = heal_to - getToxLoss()
 	if(brute_to_heal < 0)
-		adjustBruteLoss(brute_to_heal, FALSE)
+		adjustBruteLoss(brute_to_heal, updating_health = FALSE)
 	if(burn_to_heal < 0)
-		adjustFireLoss(burn_to_heal, FALSE)
+		adjustFireLoss(burn_to_heal, updating_health = FALSE)
 	if(oxy_to_heal < 0)
-		adjustOxyLoss(oxy_to_heal, FALSE)
+		adjustOxyLoss(oxy_to_heal, updating_health = FALSE)
 	if(tox_to_heal < 0)
-		adjustToxLoss(tox_to_heal, FALSE, TRUE)
+		adjustToxLoss(tox_to_heal, updating_health = FALSE, forced = TRUE)
 
 	// Run updatehealth once to set health for the revival check
 	updatehealth()
@@ -847,17 +847,17 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(heal_flags & HEAL_TOX)
-		setToxLoss(0, FALSE, TRUE)
+		setToxLoss(0, updating_health = FALSE, forced = TRUE)
 	if(heal_flags & HEAL_OXY)
-		setOxyLoss(0, FALSE, TRUE)
+		setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	if(heal_flags & HEAL_CLONE)
-		setCloneLoss(0, FALSE, TRUE)
+		setCloneLoss(0, updating_health = FALSE, forced = TRUE)
 	if(heal_flags & HEAL_BRUTE)
-		setBruteLoss(0, FALSE, TRUE)
+		setBruteLoss(0, updating_health = FALSE, forced = TRUE)
 	if(heal_flags & HEAL_BURN)
-		setFireLoss(0, FALSE, TRUE)
+		setFireLoss(0, updating_health = FALSE, forced = TRUE)
 	if(heal_flags & HEAL_STAM)
-		setStaminaLoss(0, FALSE, TRUE)
+		setStaminaLoss(0, updating_stamina = FALSE, forced = TRUE)
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
@@ -1205,12 +1205,8 @@
 		loc_temp = ((1 - occupied_space.contents_thermal_insulation) * loc_temp) + (occupied_space.contents_thermal_insulation * bodytemperature)
 	return loc_temp
 
-/mob/living/cancel_camera()
-	..()
-	cameraFollow = null
-
 /// Checks if this mob can be actively tracked by cameras / AI.
-/// Can optionally be passed a user, which is the mob tracking.
+/// Can optionally be passed a user, which is the mob who is tracking src.
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
@@ -1229,7 +1225,7 @@
 	if(invisibility || alpha == 0)//cloaked
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!near_camera(src))
+	if(!GLOB.cameranet.checkCameraVis(src))
 		return FALSE
 	return TRUE
 
@@ -1256,7 +1252,7 @@
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src))
+	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
 		if(issilicon(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				to_chat(src, span_warning("You are too far away!"))
@@ -1319,14 +1315,13 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || notransform || (GODMODE & status_flags))
+	if(stat == DEAD || (GODMODE & status_flags) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
-	notransform = TRUE
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), MAGIC_TRAIT)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT
@@ -1409,6 +1404,7 @@
 			var/picked_animal = pick(
 				/mob/living/basic/bat,
 				/mob/living/basic/bear,
+				/mob/living/basic/blob_minion/blobbernaut,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
@@ -1417,27 +1413,26 @@
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
 				/mob/living/basic/crab,
-				/mob/living/basic/giant_spider,
-				/mob/living/basic/giant_spider/hunter,
-				/mob/living/basic/mining/goliath,
+				/mob/living/basic/goat,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
+				/mob/living/basic/mining/goliath,
+				/mob/living/basic/mining/watcher,
+				/mob/living/basic/morph,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
 				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/basic/pet/dog/corgi,
 				/mob/living/basic/pet/dog/pug,
 				/mob/living/basic/pet/fox,
+				/mob/living/basic/spider/giant,
+				/mob/living/basic/spider/giant/hunter,
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/hostile/morph,
-				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
@@ -1487,6 +1482,12 @@
 	// transfering the mind and observerse, and other miscellaneous
 	// actions that should be done before we delete the original mob.
 	on_wabbajacked(new_mob)
+
+	// Valid polymorph types unlock the Lepton.
+	if((change_flags & (WABBAJACK|MIRROR_MAGIC|MIRROR_PRIDE|RACE_SWAP)) && (SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] != TRUE))
+		to_chat(new_mob, span_revennotice("You have the strangest feeling, for a moment. A fragile, dizzying memory wanders into your mind.. all you can make out is-"))
+		to_chat(new_mob, span_hypnophrase("You sleep so it may wake. You wake so it may sleep. It wakes. Do not sleep."))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] = TRUE
 
 	qdel(src)
 	return new_mob
@@ -1658,7 +1659,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end
@@ -2452,7 +2453,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_mood.clear_mood_event(mood_events[chosen])
 
 /// Adds a mood event to the mob
-/mob/living/proc/add_mood_event(category, type, ...)
+/mob/living/proc/add_mood_event(category, type, timeout_mod, ...)
 	if(QDELETED(mob_mood))
 		return
 	mob_mood.add_mood_event(arglist(args))
@@ -2479,8 +2480,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	revive(HEAL_ALL)
 	befriend(reviver)
 	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
+	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD) || "The lazarus injector has brought you back to life! You are now friendly to everyone."
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
+		if(!isnull(src.mind))
+			src.mind.enslave_mind_to_creator(reviver)
+		to_chat(src, span_userdanger("Serve [reviver.real_name], and assist [reviver.p_them()] in completing [reviver.p_their()] goals at any cost."))
+		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
+	to_chat(src, span_boldnotice(lazarus_policy))
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)

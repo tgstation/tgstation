@@ -307,8 +307,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/heparin
-	results = list(/datum/reagent/toxin/heparin = 4)
-	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1, /datum/reagent/lithium = 1)
+	results = list(/datum/reagent/toxin/heparin = 3)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/consumable/salt = 1, /datum/reagent/lithium = 1)
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
 	is_cold_recipe = FALSE
 	required_temp = 100

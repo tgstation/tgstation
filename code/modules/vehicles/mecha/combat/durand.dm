@@ -5,7 +5,7 @@
 	base_icon_state = "durand"
 	movedelay = 4
 	max_integrity = 400
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40
@@ -14,7 +14,9 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	mech_type = EXOSUIT_MODULE_DURAND
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)

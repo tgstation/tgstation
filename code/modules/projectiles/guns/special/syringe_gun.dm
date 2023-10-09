@@ -38,10 +38,10 @@
 	max_syringes = reset_fantasy_variable("max_syringes", max_syringes)
 	return ..()
 
-/obj/item/gun/syringe/handle_atom_del(atom/A)
+/obj/item/gun/syringe/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A in syringes)
-		syringes.Remove(A)
+	if(gone in syringes)
+		syringes -= gone
 
 /obj/item/gun/syringe/recharge_newshot()
 	if(!syringes.len)
@@ -200,6 +200,6 @@
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] shoots the blowgun!"))
 
-	user.adjustStaminaLoss(20)
+	user.adjustStaminaLoss(20, updating_stamina = FALSE)
 	user.adjustOxyLoss(20)
 	return ..()

@@ -162,6 +162,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system.set_up(2, 1, src)
 	spark_system.attach(src)
 	register_context()
+	find_and_hang_on_wall()
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)

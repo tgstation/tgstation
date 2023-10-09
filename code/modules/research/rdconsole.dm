@@ -45,10 +45,10 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize(mapload)
+/obj/machinery/computer/rdconsole/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
 		stored_research.consoles_accessing += src
 
@@ -107,7 +107,7 @@ Nothing else in the console has ID requirements.
 	var/list/price = TN.get_price(stored_research)
 	if(stored_research.can_afford(price))
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
+		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")

@@ -17,6 +17,19 @@
 		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
+/obj/item/clothing/neck/bowtie
+	name = "bow tie"
+	desc = "A small neosilk bowtie."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "bowtie_greyscale"
+	inhand_icon_state = "" //no inhands
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW
+	greyscale_config = /datum/greyscale_config/ties
+	greyscale_config_worn = /datum/greyscale_config/ties/worn
+	greyscale_colors = "#151516ff"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/neck/tie
 	name = "slick tie"
 	desc = "A neosilk tie."

@@ -9,6 +9,7 @@
 	spell_max_level = 1
 
 	item_type = /obj/item/spellpacket/lightningbolt
+	requires_hands = TRUE
 
 /datum/action/cooldown/spell/conjure_item/spellpacket/cast(mob/living/carbon/cast_on)
 	. = ..()

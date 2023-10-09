@@ -35,7 +35,7 @@
 	if(target.ph <= ph)
 		target.my_atom.audible_message(span_warning("The beaker froths as the buffer is added, to no effect."))
 		playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
-		holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
+		holder.remove_reagent(type, amount)//Remove from holder because it's not transferred
 		return
 	var/ph_change = -((amount/target.total_volume)*strength)
 	target.adjust_all_reagents_ph(ph_change, ph, 14)
@@ -61,7 +61,7 @@
 	if(target.ph >= ph)
 		target.my_atom.audible_message(span_warning("The beaker froths as the buffer is added, to no effect."))
 		playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
-		holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
+		holder.remove_reagent(type, amount)//Remove from holder because it's not transferred
 		return
 	var/ph_change = (amount/target.total_volume)*strength
 	target.adjust_all_reagents_ph(ph_change, 0, ph)

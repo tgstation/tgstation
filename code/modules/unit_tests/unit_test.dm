@@ -50,6 +50,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	/// Do not instantiate if type matches this
 	var/abstract_type = /datum/unit_test
 
+	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
+	var/static/list/uncreatables = null
+
 	var/static/datum/space_level/reservation
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
@@ -59,6 +62,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if (isnull(reservation))
 		var/datum/map_template/unit_tests/template = new
 		reservation = template.load_new_z()
+
+	if (isnull(uncreatables))
+		uncreatables = build_list_of_uncreatables()
 
 	allocated = new
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
@@ -208,6 +214,113 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	test_results[test_path] = list("status" = final_status, "message" = message, "name" = test_path)
 
 	qdel(test)
+
+/// Builds (and returns) a list of atoms that we shouldn't initialize in generic testing, like Create and Destroy.
+/// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
+/datum/unit_test/proc/build_list_of_uncreatables()
+	RETURN_TYPE(/list)
+	var/list/returnable_list = list()
+	// The following are just generic, singular types.
+	returnable_list = list(
+		//Never meant to be created, errors out the ass for mobcode reasons
+		/mob/living/carbon,
+		//And another
+		/obj/item/slimecross/recurring,
+		//This should be obvious
+		/obj/machinery/doomsday_device,
+		//Yet more templates
+		/obj/machinery/restaurant_portal,
+		//Template type
+		/obj/effect/mob_spawn,
+		//Template type
+		/obj/structure/holosign/robot_seat,
+		//Singleton
+		/mob/dview,
+		//Template type
+		/obj/item/bodypart,
+		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
+		/obj/merge_conflict_marker,
+		//briefcase launchpads erroring
+		/obj/machinery/launchpad/briefcase,
+		//Both are abstract types meant to scream bloody murder if spawned in raw
+		/obj/item/organ/external,
+		/obj/item/organ/external/wings,
+	)
+
+	// Everything that follows is a typesof() check.
+
+	//Say it with me now, type template
+	returnable_list += typesof(/obj/effect/mapping_helpers)
+	//This turf existing is an error in and of itself
+	returnable_list += typesof(/turf/baseturf_skipover)
+	returnable_list += typesof(/turf/baseturf_bottom)
+	//This demands a borg, so we'll let if off easy
+	returnable_list += typesof(/obj/item/modular_computer/pda/silicon)
+	//This one demands a computer, ditto
+	returnable_list += typesof(/obj/item/modular_computer/processor)
+	//Very finiky, blacklisting to make things easier
+	returnable_list += typesof(/obj/item/poster/wanted)
+	//This expects a seed, we can't pass it
+	returnable_list += typesof(/obj/item/food/grown)
+	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
+	returnable_list += typesof(/obj/effect/client_image_holder)
+	//Same to above. Needs a client / mob / hallucination to observe it to exist.
+	returnable_list += typesof(/obj/projectile/hallucination)
+	returnable_list += typesof(/obj/item/hallucinated)
+	//We don't have a pod
+	returnable_list += typesof(/obj/effect/pod_landingzone_effect)
+	returnable_list += typesof(/obj/effect/pod_landingzone)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	returnable_list += typesof(/obj/effect/baseturf_helper)
+	//No tauma to pass in
+	returnable_list += typesof(/mob/camera/imaginary_friend)
+	//No pod to gondola
+	returnable_list += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
+	//No heart to give
+	returnable_list += typesof(/obj/structure/ethereal_crystal)
+	//No linked console
+	returnable_list += typesof(/mob/camera/ai_eye/remote/base_construction)
+	//See above
+	returnable_list += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
+	returnable_list += typesof(/obj/effect/anomaly/grav/high)
+	//See above
+	returnable_list += typesof(/obj/effect/timestop)
+	//Invoke async in init, skippppp
+	returnable_list += typesof(/mob/living/silicon/robot/model)
+	//This lad also sleeps
+	returnable_list += typesof(/obj/item/hilbertshotel)
+	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
+	returnable_list += typesof(/obj/effect/sliding_puzzle)
+	//Stacks baseturfs, can't be tested here
+	returnable_list += typesof(/obj/effect/temp_visual/lava_warning)
+	//Stacks baseturfs, can't be tested here
+	returnable_list += typesof(/obj/effect/landmark/ctf)
+	//Our system doesn't support it without warning spam from unregister calls on things that never registered
+	returnable_list += typesof(/obj/docking_port)
+	//Asks for a shuttle that may not exist, let's leave it alone
+	returnable_list += typesof(/obj/item/pinpointer/shuttle)
+	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
+	returnable_list += typesof(/obj/structure/alien/resin/flower_bud)
+	//Needs a linked mecha
+	returnable_list += typesof(/obj/effect/skyfall_landingzone)
+	//Expects a mob to holderize, we have nothing to give
+	returnable_list += typesof(/obj/item/clothing/head/mob_holder)
+	//Needs cards passed into the initilazation args
+	returnable_list += typesof(/obj/item/toy/cards/cardhand)
+	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
+	returnable_list += typesof(/obj/machinery/computer/holodeck)
+	//runtimes if not paired with a landmark
+	returnable_list += typesof(/obj/structure/industrial_lift)
+	// Runtimes if the associated machinery does not exist, but not the base type
+	returnable_list += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
+	// Can't spawn openspace above nothing, it'll get pissy at me
+	returnable_list += typesof(/turf/open/space/openspace)
+	returnable_list += typesof(/turf/open/openspace)
+
+	return returnable_list
 
 /proc/RunUnitTests()
 	CHECK_TICK

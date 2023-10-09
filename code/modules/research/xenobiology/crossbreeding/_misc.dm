@@ -209,9 +209,13 @@ Slimecrossing Items
 	else
 		to_chat(user, span_warning("The device is empty..."))
 
-/obj/item/capturedevice/proc/store(mob/living/M)
-	M.forceMove(src)
+/obj/item/capturedevice/proc/store(mob/living/pokemon)
+	pokemon.forceMove(src)
+	pokemon.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), ABSTRACT_ITEM_TRAIT)
+	pokemon.cancel_camera()
 
 /obj/item/capturedevice/proc/release()
-	for(var/atom/movable/M in contents)
-		M.forceMove(get_turf(loc))
+	for(var/mob/living/pokemon in contents)
+		pokemon.forceMove(get_turf(loc))
+		pokemon.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), ABSTRACT_ITEM_TRAIT)
+		pokemon.cancel_camera()

@@ -704,7 +704,7 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "rF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/item/reagent_containers/syringe/lethal/execution,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -2006,7 +2006,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Wz" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "WC" = (

@@ -105,12 +105,12 @@
 
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
-	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
+	desc = "A homemade shotgun casing filled with crushed glass, used to commmit vandalism and property damage."
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
-	variance = 25
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	pellets = 6
+	variance = 30
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
@@ -134,6 +134,16 @@
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
 	icon_state = "cshell"
 	projectile_type = null
+
+/obj/item/ammo_casing/shotgun/techshell/Initialize(mapload)
+	. = ..()
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug, /datum/crafting_recipe/laserslug)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"

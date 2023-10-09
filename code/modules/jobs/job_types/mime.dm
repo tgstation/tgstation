@@ -97,7 +97,10 @@
 			spell_icons[initial(type.name)] = image(icon = initial(type.button_icon), icon_state = initial(type.button_icon_state))
 		name_to_spell[initial(type.name)] = type
 	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
+	if(!picked_spell)
+		return FALSE
 	granted_action = name_to_spell[picked_spell]
+	return TRUE
 
 /obj/item/book/granter/action/spell/mime/mimery/on_reading_finished(mob/living/user)
 	// Gives the user a vow ability too, if they don't already have one
