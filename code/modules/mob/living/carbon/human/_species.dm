@@ -487,7 +487,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
 		human_who_gained_species.dna.blood_type = random_blood_type()
 
-	//Resets blood if it is excessively high for some reason
+	//Resets blood if it is excessively high so they don't gib
 	normalize_blood(human_who_gained_species)
 
 	if(ishuman(human_who_gained_species))
