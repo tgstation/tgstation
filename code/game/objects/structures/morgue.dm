@@ -335,10 +335,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.ghostize()
 				qdel(M)
 
+		var/list/objects_cremated = list()
 		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
 			if(istype(O, /obj/effect/dummy/phased_mob)) //they're not physical, don't burn em.
 				continue
+			else if(user)
+				objects_cremated += O
 			qdel(O)
+		log_combat_listed(user, objects_cremated, "has cremated the following:")
 
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
 			new/obj/effect/decal/cleanable/ash(src)
