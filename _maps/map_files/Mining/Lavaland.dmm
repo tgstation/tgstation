@@ -366,6 +366,16 @@
 	dir = 8
 	},
 /area/mine/medical)
+"cA" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "cC" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -733,6 +743,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
+"eY" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "fb" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -808,6 +823,10 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface/outdoors)
+"fG" = (
+/obj/structure/mineral_door/sandstone,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1433,6 +1452,13 @@
 	dir = 1
 	},
 /area/mine/storage/public)
+"iF" = (
+/turf/closed/wall/mineral/sandstone,
+/area/lavaland/surface/outdoors)
+"iG" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/closed/wall/mineral/sandstone,
+/area/lavaland/surface/outdoors)
 "iH" = (
 /obj/structure/table,
 /obj/item/kitchen/fork{
@@ -2485,6 +2511,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"nr" = (
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/item/spear/bonespear,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "nt" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -2528,6 +2561,15 @@
 	dir = 1
 	},
 /area/mine/laborcamp)
+"nG" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "nI" = (
 /obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -3114,6 +3156,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface/outdoors)
+"ri" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "rm" = (
 /obj/structure/sign/warning/gas_mask/directional/west,
@@ -3734,6 +3783,12 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/mine/medical)
+"vx" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "vA" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/rack,
@@ -3837,6 +3892,15 @@
 	dir = 1
 	},
 /area/mine/lounge)
+"vT" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "vU" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -4679,6 +4743,13 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron/dark/smooth_corner,
 /area/mine/production)
+"Cl" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/item/clothing/shoes/sandal,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Cm" = (
 /obj/machinery/door/airlock/glass{
 	name = "Canteen"
@@ -5288,6 +5359,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"GV" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "GW" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -5316,6 +5391,12 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
+"Hc" = (
+/obj/effect/decal/remains/human,
+/obj/structure/stone_tile/cracked,
+/obj/item/clothing/mask/gas/tiki_mask/angry,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Hd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5419,6 +5500,16 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
+"HJ" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "HN" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -5689,6 +5780,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/eva)
+"Jr" = (
+/obj/item/chair/wood/wings,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Jt" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -5867,6 +5962,18 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
+"Kb" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Kc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5906,6 +6013,21 @@
 /area/lavaland/surface/outdoors)
 "Kk" = (
 /obj/structure/girder,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Kl" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Km" = (
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kn" = (
@@ -6676,6 +6798,12 @@
 	dir = 1
 	},
 /area/mine/mechbay)
+"Pb" = (
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Pc" = (
 /obj/structure/closet/crate/grave,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -7135,6 +7263,11 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/maintenance/service/disposals)
+"Sf" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Sg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7505,6 +7638,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
+"UH" = (
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "UK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new{
@@ -8238,6 +8375,12 @@
 	},
 /turf/open/floor/iron,
 /area/mine/lounge)
+"Ze" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Zh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8349,6 +8492,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
+"ZQ" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/cave,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ZT" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -62867,8 +63015,8 @@ aa
 ad
 pU
 pU
-pU
-pU
+bQ
+Pb
 pU
 pU
 pU
@@ -63124,7 +63272,7 @@ ad
 pU
 pU
 pU
-pU
+Kj
 pU
 pU
 pU
@@ -63637,8 +63785,8 @@ aa
 pU
 pU
 pU
-pU
-pU
+Ze
+UH
 pU
 pU
 pU
@@ -63893,8 +64041,8 @@ aa
 aa
 pU
 pU
-pU
-pU
+vT
+HJ
 pU
 pU
 pU
@@ -64150,7 +64298,7 @@ aa
 ad
 QJ
 pU
-pU
+Ft
 pU
 pU
 pU
@@ -64407,9 +64555,9 @@ aa
 ad
 ad
 ad
-pU
-pU
-pU
+Kj
+vx
+Jr
 pU
 pU
 pU
@@ -64664,8 +64812,8 @@ aa
 ad
 ai
 ai
-ai
-ai
+fG
+iF
 pU
 pU
 pU
@@ -64919,10 +65067,10 @@ aa
 aa
 aa
 ad
-ai
-ai
-ai
-ai
+nG
+Km
+ri
+iG
 ad
 pU
 pU
@@ -65176,10 +65324,10 @@ aa
 aa
 aa
 ad
-ai
-ai
-ai
-ai
+cA
+Kj
+GV
+sy
 ad
 pU
 pU
@@ -65433,10 +65581,10 @@ aa
 aa
 aa
 ad
-ai
-ai
-ai
-ai
+ZQ
+Sf
+Cl
+pU
 ad
 pU
 pU
@@ -65690,10 +65838,10 @@ aa
 aa
 aa
 ad
-ai
-ai
-ai
-ai
+eY
+GV
+Hc
+Kb
 ad
 pU
 pU
@@ -65948,9 +66096,9 @@ aa
 aa
 Op
 ai
-ai
-ai
-ai
+Kl
+nr
+iG
 ad
 pU
 pU
@@ -66205,9 +66353,9 @@ aa
 aa
 pU
 ai
+iG
 ai
-ai
-ai
+iF
 pU
 pU
 pU

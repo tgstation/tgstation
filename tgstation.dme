@@ -4191,6 +4191,7 @@
 #include "code\modules\mapfluff\ruins\lavalandruin_code\biodome_clown_planet.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\biodome_winter.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\elephantgraveyard.dm"
+#include "code\modules\mapfluff\ruins\lavalandruin_code\gooncave.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\puzzle.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\sloth.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\surface.dm"
