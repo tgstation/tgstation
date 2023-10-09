@@ -397,7 +397,7 @@
 		/mob/living/basic/mining/ice_whelp,
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
-		/mob/living/simple_animal/hostile/asteroid/ice_demon,
+		/mob/living/basic/mining/ice_demon,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
