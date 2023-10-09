@@ -30,10 +30,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/vehicle/ridden/wheelchair,
-/obj/effect/spawner/random/medical/minor_healing,
-/obj/effect/spawner/random/medical/minor_healing,
-/obj/effect/spawner/random/medical/minor_healing,
-/obj/effect/spawner/random/medical/medkit,
+/obj/effect/spawner/random/medical/injector,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "x" = (
@@ -45,6 +42,9 @@
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/blacklight/directional/west,
+/obj/effect/spawner/random/medical/medkit,
+/obj/effect/spawner/random/medical/medkit,
+/obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "z" = (
