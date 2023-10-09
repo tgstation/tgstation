@@ -69162,7 +69162,6 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/bot,
-/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wGD" = (

@@ -70623,7 +70623,6 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/glass,
 /obj/item/food/grown/poppy/geranium,
-/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rlQ" = (

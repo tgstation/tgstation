@@ -8433,7 +8433,6 @@
 /area/station/medical/storage)
 "eDF" = (
 /obj/structure/table,
-/obj/machinery/infuser,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},

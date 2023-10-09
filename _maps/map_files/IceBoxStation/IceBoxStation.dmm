@@ -19169,7 +19169,6 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/infuser,
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
