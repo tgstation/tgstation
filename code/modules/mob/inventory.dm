@@ -286,6 +286,12 @@
 	I.dropped(src)
 	return FALSE
 
+/// Returns true if a mob is holding something
+/mob/proc/is_holding_items()
+	for(var/obj/item/held in held_items)
+		return TRUE
+	return FALSE
+
 /mob/proc/drop_all_held_items()
 	. = FALSE
 	for(var/obj/item/I in held_items)
