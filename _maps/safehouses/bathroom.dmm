@@ -68,7 +68,7 @@
 /area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toiletbong{
+/obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
