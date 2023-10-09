@@ -47,7 +47,7 @@
 		return
 
 	// Determine which status tag to add to the middle of the icon state.
-	var/dead_tag = stat == DEAD ? "_dead" : null
+	var/dead_tag = (stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)) ? "_dead" : null
 	var/rest_tag = has_collar_resting_icon_state && resting ? "_rest" : null
 	var/stat_tag = dead_tag || rest_tag || ""
 
@@ -55,9 +55,8 @@
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]tag")
 
 /mob/living/basic/pet/gib()
-	. = ..()
-
 	remove_collar(drop_location(), update_visuals = FALSE)
+	return ..()
 
 /mob/living/basic/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()

@@ -83,6 +83,10 @@
 	camera_holder = null
 	clear_paper()
 
+/// Determines whether this paper has been written or stamped to.
+/obj/item/paper/proc/is_empty()
+	return !(LAZYLEN(raw_text_inputs) || LAZYLEN(raw_stamp_data))
+
 /// Returns a deep copy list of raw_text_inputs, or null if the list is empty or doesn't exist.
 /obj/item/paper/proc/copy_raw_text()
 	if(!LAZYLEN(raw_text_inputs))

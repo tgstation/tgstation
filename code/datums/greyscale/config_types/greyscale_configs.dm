@@ -233,7 +233,7 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
-	
+
 /datum/greyscale_config/sneakers_marisa/worn
 	name = "Worn Marisa Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
@@ -821,7 +821,7 @@
 
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"
-	icon_file = 'icons/mob/silicon/aibots.dmi'
+	icon_file = 'monkestation/code/modules/aesthetics/icons/cleanbot.dmi' //monkestation edit
 	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
 
 /datum/greyscale_config/buttondown_slacks
@@ -1127,3 +1127,17 @@
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
 
+/datum/greyscale_config/fish_analyzer_inhand_left
+	name = "Held Fish Analyzer, Left"
+	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_inhand_right
+	name = "Held Fish Analyzer, Right"
+	icon_file = 'icons/mob/inhands/items_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_worn
+	name = "Worn Fish Analyzer"
+	icon_file = 'icons/mob/clothing/belt.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'

@@ -102,6 +102,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(57) ///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
 
 #define SMOOTH_GROUP_ELEVATED_PLASTEEL S_TURF(60)
 #define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(61)
@@ -168,6 +169,10 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
 
 #define SMOOTH_GROUP_WATER S_OBJ(73) ///obj/effect/abstract/liquid_turf
+
+#define SMOOTH_GROUP_WINDOW_SILL S_OBJ(74)
+
+#define SMOOTH_GROUP_GRILLE S_OBJ(75)
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.

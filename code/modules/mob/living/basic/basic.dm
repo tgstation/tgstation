@@ -100,6 +100,8 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	create_overlay_index() //monkestation edit
+	populate_shift_list() //monkestation edit
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -151,6 +153,7 @@
 		transform = transform.Turn(180)
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(FALSE)
+	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_DEAD)
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -164,7 +167,8 @@
 	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
-		set_density(initial(density))
+		set_density(FALSE)
+	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
 
 /mob/living/basic/update_sight()
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
@@ -179,7 +183,12 @@
 	return result
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	melee_attack(attack_target, modifiers)
+	//monkestation edit
+	if(advanced_simple && (isitem(attack_target) || !(istate & ISTATE_HARM)))
+		attack_target.attack_hand(src, modifiers)
+	else
+		melee_attack(attack_target, modifiers)
+	//monkestation edit
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	. = ..()
@@ -196,6 +205,13 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 	SEND_SIGNAL(src, POST_BASIC_MOB_UPDATE_VARSPEED)
+
+/mob/living/basic/update_movespeed()
+	. = ..()
+	if (cached_multiplicative_slowdown > END_GLIDE_SPEED)
+		ADD_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
 
 /mob/living/basic/relaymove(mob/living/user, direction)
 	if(user.incapacitated())

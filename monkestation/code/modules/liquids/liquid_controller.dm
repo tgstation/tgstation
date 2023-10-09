@@ -1,8 +1,7 @@
 SUBSYSTEM_DEF(liquids)
 	name = "Liquid Turfs"
 	wait = 0.5 SECONDS
-	flags = SS_KEEP_TIMING | SS_NO_INIT
-	priority = FIRE_PRIOTITY_LIQUIDS
+	flags = SS_POST_FIRE_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/active_groups = list()
 
@@ -27,11 +26,14 @@ SUBSYSTEM_DEF(liquids)
 
 	var/member_counter = 0
 
+	var/list/arrayed_groups = list()
+
+
 /datum/controller/subsystem/liquids/stat_entry(msg)
 	msg += "AG:[active_groups.len]|BT:[burning_turfs.len]|EQ:[evaporation_queue.len]|AO:[active_ocean_turfs.len]|UO:[length(unvalidated_oceans)]"
 	return ..()
 
-/datum/controller/subsystem/liquids/fire(resumed = FALSE)
+/datum/controller/subsystem/liquids/fire(resumed)
 	if(!active_groups.len && !evaporation_queue.len && !active_ocean_turfs.len && !burning_turfs.len && !unvalidated_oceans.len)
 		return
 
@@ -40,6 +42,13 @@ SUBSYSTEM_DEF(liquids)
 			if(MC_TICK_CHECK)
 				return
 			unvalidated_turf.assume_self()
+
+	if(length(arrayed_groups))
+		for(var/g in arrayed_groups)
+			var/datum/liquid_group/LG = g
+			while(!MC_TICK_CHECK && length(LG.splitting_array)) // three at a time until we either finish or over-run, this should be done before anything else
+				LG.work_on_split_queue()
+				LG.cleanse_members()
 
 	if(!length(temperature_queue))
 		for(var/g in active_groups)
@@ -59,12 +68,14 @@ SUBSYSTEM_DEF(liquids)
 					return
 				var/datum/liquid_group/LG = g
 
+				LG.build_turf_reagent()
 				LG.process_cached_edges()
-				LG.process_group()
+				LG.process_group(TRUE)
 				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur
 						evaporation_queue |= listed_turf
+
 		run_type = SSLIQUIDS_RUN_TYPE_TEMPERATURE
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_TEMPERATURE)
@@ -88,7 +99,8 @@ SUBSYSTEM_DEF(liquids)
 					return
 				var/datum/liquid_group/LG = g
 				LG.check_dead()
-				LG.process_turf_disperse()
+				if(!length(LG.splitting_array))
+					LG.process_turf_disperse()
 			for(var/t in evaporation_queue)
 				if(MC_TICK_CHECK)
 					return
@@ -130,7 +142,6 @@ SUBSYSTEM_DEF(liquids)
 		if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
 			for(var/turf/open/floor/plating/ocean/active_ocean in currentrun_active_ocean_turfs)
 				if(MC_TICK_CHECK)
-					run_type = SSLIQUIDS_RUN_TYPE_TURFS /// we have far more important things that to be hung on this, i'd rather liquids spread over worrying about ocean turfs
 					return
 				active_ocean.process_turf()
 			ocean_counter = 0
@@ -148,7 +159,7 @@ SUBSYSTEM_DEF(liquids)
 					continue
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
-						break
+						return
 					LG.process_member(member)
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS

@@ -5,6 +5,7 @@
 	id = SPECIES_LIZARD
 	species_traits = list(
 		MUTCOLORS,
+		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
 	)
@@ -38,6 +39,7 @@
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
+	mutanteyes = /obj/item/organ/internal/eyes/lizard
 	// Lizards are coldblooded and can stand a greater temperature range than humans
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
@@ -123,6 +125,7 @@ Lizard subspecies: ASHWALKERS
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	species_traits = list(
 		MUTCOLORS,
+		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
 	)

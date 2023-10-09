@@ -35,7 +35,7 @@
 		cooling_down = TRUE
 		user.audible_message("[user] <font color='green'>farts.</font>")
 		if(prob(fart_instability))
-			playsound(user, "sound/machines/alarm.ogg", 100, FALSE, 50, ignore_walls=TRUE)
+			playsound(user, "sound/machines/alarm.ogg", 100, FALSE, 50, ignore_walls=TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			minor_announce("The detonation of a nuclear posterior has been detected in your area. All crew are required to exit the blast radius.", "Nanotrasen Atomics", 0)
 			Person.Paralyze(120)
 			Person.electrocution_animation(120)
@@ -44,7 +44,7 @@
 				dyn_explosion(Location, 20,10)
 				cooling_down = FALSE
 		else
-			playsound(user, pick(sound_effect), 50, TRUE)
+			playsound(user, pick(sound_effect), 50, TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			Location.atmos_spawn_air(atmos_gas)
 			spawn(20)
 				cooling_down = FALSE
@@ -285,7 +285,7 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 /mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
 	. = ..()
@@ -303,7 +303,7 @@
 			cooling_down = FALSE
 			return
 		say(joined_text)
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE)
+		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		spawn(20)
 			cooling_down = FALSE
 

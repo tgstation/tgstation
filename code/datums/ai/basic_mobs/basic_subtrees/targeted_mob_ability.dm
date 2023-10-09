@@ -1,7 +1,7 @@
 /// Attempts to use a mob ability on a target
 /datum/ai_planning_subtree/targeted_mob_ability
 	/// Blackboard key for the ability
-	var/ability_key
+	var/ability_key = BB_TARGETTED_ACTION
 	/// Blackboard key for where the target ref is stored
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Behaviour to perform using ability

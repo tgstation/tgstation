@@ -110,8 +110,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 
 	. = list()//output everything that successfully heard the sound
 
-	var/turf/above_turf = SSmapping.get_turf_above(turf_source)
-	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
+	var/turf/below_turf = GET_TURF_BELOW(turf_source)
 
 	if(ignore_walls)
 
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 		//sound volume falloff with distance
 		var/distance = get_dist(turf_loc, turf_source) * distance_multiplier
 
-		if(max_distance) //If theres no max_distance we're not a 3D sound, so no falloff.
+		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff. MONKESTATION EDIT
 			sound_to_use.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * sound_to_use.volume
 			//https://www.desmos.com/calculator/sqdfl8ipgf
 
@@ -239,17 +239,32 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	S.status = SOUND_UPDATE
 	SEND_SOUND(src, S)
 
-/client/proc/playtitlemusic(vol = 85)
+/client/proc/playtitlemusic(vol = 0.85)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
-
+	UNTIL(fully_created)
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
-		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
-	else
+		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
+			vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
+
+	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+	if(!media) ///media is set on creation thats weird
+		media = new /datum/media_manager(src)
+		media.open()
+		media.update_music()
+
+	if(!length(SSmedia_tracks.lobby_tracks))
+		return
+
+	if(SSmedia_tracks.first_lobby_play)
+		SSmedia_tracks.current_lobby_track = pick(SSmedia_tracks.lobby_tracks)
+		SSmedia_tracks.first_lobby_play = FALSE
+
+	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
+	media.push_music(T.url, world.time, vol)
+	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

@@ -51,7 +51,12 @@
 /datum/map_generator/cave_generator/New()
 	. = ..()
 	if(!weighted_mob_spawn_list)
-		weighted_mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
+		weighted_mob_spawn_list = list(
+			/mob/living/basic/mining/basilisk = 4,
+			/mob/living/basic/mining/goldgrub = 1,
+			/mob/living/basic/mining/goliath/ancient = 5,
+			/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+		)
 	mob_spawn_list = expand_weights(weighted_mob_spawn_list)
 	mob_spawn_no_mega_list = expand_weights(weighted_mob_spawn_list - SPAWN_MEGAFAUNA)
 	if(!weighted_megafauna_spawn_list)
@@ -140,9 +145,10 @@
 				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, new_turf))
 					can_spawn = FALSE
 					break
-			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			else if(isminingpath(picked_mob))
-				for(var/mob/living/mob_blocker in range(12, new_turf))
+			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
+			else
+				var/list/things_in_range = range(12, new_turf)
+				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break

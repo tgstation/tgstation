@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	"tgui_shared_states",
 	"gc_destroyed",
 	"_active_timers",
-	"_status_traits",
+	"status_traits",
 	"_signal_procs",
 	"cached_ref",
 	"weak_reference",

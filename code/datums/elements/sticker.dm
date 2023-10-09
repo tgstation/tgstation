@@ -9,7 +9,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))	
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 	if(sticker_type)
 		stick_type = sticker_type
 	washable = cleanable

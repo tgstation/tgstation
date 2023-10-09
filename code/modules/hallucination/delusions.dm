@@ -170,8 +170,8 @@
 	delusion_name = "zombie"
 
 /datum/hallucination/delusion/preset/demon
-	delusion_icon_file = 'icons/mob/simple/mob.dmi'
-	delusion_icon_state = "daemon"
+	delusion_icon_file = 'icons/mob/simple/demon.dmi'
+	delusion_icon_state = "slaughter_demon"
 	delusion_name = "demon"
 
 /datum/hallucination/delusion/preset/cyborg

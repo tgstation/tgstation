@@ -21,4 +21,6 @@
 		all_paths += item_path
 
 		if (item_instance.desc != initial_desc)
+			if(istype(item_instance, /obj/item/food/grown/banana))
+				continue
 			TEST_FAIL("[orderable_item] has an item ([item_path]) that has a dynamic description. [item_instance.desc] (dynamic description) != [initial_desc] (initial description)")

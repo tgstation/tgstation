@@ -4,7 +4,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "dq" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "dD" = (
@@ -30,7 +30,7 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "rf" = (
 /obj/structure/flora/bush/flowers_br/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "ri" = (
@@ -55,7 +55,7 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "uX" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "xc" = (
@@ -190,7 +190,7 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "UZ" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "XG" = (

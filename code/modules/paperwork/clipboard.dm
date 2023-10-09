@@ -85,7 +85,7 @@
 	if(toppaper)
 		. += toppaper.icon_state
 		. += toppaper.overlays
-	if(pen)
+	if(!integrated_pen && pen) //monkestation edit
 		. += "clipboard_pen"
 	. += "clipboard_over"
 

@@ -150,7 +150,7 @@
 
 /obj/item/fishing_hook/bone
 	name = "bone hook"
-	desc = "a simple hook carved from sharpened bone"
+	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
 
 /datum/crafting_recipe/bone_hook
@@ -159,6 +159,24 @@
 	reqs = list(/obj/item/stack/sheet/bone = 1)
 	time = 2 SECONDS
 	category = CAT_TOOLS
+
+/obj/item/fishing_hook/stabilized
+	name = "gyro-stabilized hook"
+	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the hook both and up and down when reeling in, otherwise keeping it stabilized."
+	icon_state = "gyro"
+	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
+	rod_overlay_icon_state = "hook_gyro_overlay"
+
+/obj/item/fishing_hook/stabilized/examine(mob/user)
+	. = ..()
+	. += span_notice("While fishing, you can press the Ctrl key down to move the bait down, rather than up.")
+
+/obj/item/fishing_hook/jaws
+	name = "jawed hook"
+	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever is caught by its jaws."
+	icon_state = "jaws"
+	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_ENSNARE|FISHING_HOOK_KILL
+	rod_overlay_icon_state = "hook_jaws_overlay"
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
@@ -196,7 +214,6 @@
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
-
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

@@ -14,6 +14,10 @@
 	///the color we currently are set to in icon state we set it to item_[lining_color] and placement is [lining_color]{state}_{style}
 	var/lining_color = "pink"
 
+
+/obj/item/stack/neon_lining/twenty
+	amount = 20
+
 /obj/item/stack/neon_lining/attack_self(mob/user, modifiers)
 	. = ..()
 	var/static/list/choices = list(
@@ -90,8 +94,7 @@
 	///the current icon state of our combined shape as we have color permutations
 	var/lining_icon_state = 1
 	///the built string for use in icon updates
-	var/built_lining_string = "base2"
-
+	var/built_lining_string = "pink2_1"
 
 /obj/machinery/light/neon_lining/update_appearance(updates)
 	. = ..()

@@ -108,11 +108,14 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list)
 	if(!GLOB.arachnid_chelicerae_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list)
+	if(!GLOB.goblin_ears_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
 		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
+		"mcolor_secondary" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
 		"tail_cat" = "None",
 		"tail_lizard" = "Smooth",
@@ -139,6 +142,7 @@
 		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list), //Monkestation Addition
 		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list), //Monkestation Addition
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]", //Monkestation Addition
+		"goblin_ears" = pick(GLOB.goblin_ears_list) //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
@@ -605,7 +609,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
-#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
+#define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis) || mob.has_status_effect(/datum/status_effect/embryonic))
 
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.

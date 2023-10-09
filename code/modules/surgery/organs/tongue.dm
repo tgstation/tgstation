@@ -72,7 +72,8 @@
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
-		/datum/language/ratvar, //monkestation edit
+		/datum/language/ratvar, //Monkestation Edit
+		/datum/language/goblin, //Monkestation Addition
 	)
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)

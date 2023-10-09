@@ -64,6 +64,10 @@
 /datum/component/tameable/proc/on_tame(datum/source, mob/living/tamer, atom/food)
 	SIGNAL_HANDLER
 	after_tame?.Invoke(tamer, food)//Run custom behavior if needed
+	
+	if(isliving(source))
+		var/mob/living/potentially_dead_horse = source
+		potentially_dead_horse.faction += FACTION_TAMED
 
 	if(isliving(parent) && isliving(tamer))
 		var/mob/living/tamed = parent

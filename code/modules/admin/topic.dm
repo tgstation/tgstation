@@ -1777,3 +1777,12 @@
 		var/client/user_client = target
 		user_client.saved_tokens.reject_token()
 		message_admins("[user_client]'s token has been rejected, by [owner]")
+
+	else if(href_list["open_music_review"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/id = href_list["open_music_review"]
+		var/datum/cassette_review/cassette_review = fetch_review(id)
+		if(!istype(cassette_review))
+			return
+		cassette_review.ui_interact(usr)

@@ -17,7 +17,7 @@
 	if(randomdir)
 		setDir(pick(GLOB.cardinals))
 
-	timerid = QDEL_IN(src, duration)
+	timerid = QDEL_IN_STOPPABLE(src, duration)
 
 /obj/effect/temp_visual/Destroy()
 	. = ..()

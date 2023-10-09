@@ -343,9 +343,10 @@
 
 /atom/proc/ShiftClick(mob/user)
 	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
+	if(flags & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
-	return
 
 /**
  * Ctrl click
@@ -390,6 +391,7 @@
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
 			human_user.changeNext_move(CLICK_CD_MELEE)
+			human_user.animate_interact(src, INTERACT_GRAB) //monkestation edit
 			return TRUE
 	else if(isalien(user))
 		var/mob/living/carbon/alien/adult/alien_boy = user

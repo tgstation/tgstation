@@ -280,10 +280,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
+	var/hour = round((world.time - SSticker.round_start_time) / 36000)
+	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
+	var/added_xp = round(25 + (minute**0.85))
 	for(var/client/C in GLOB.clients)
 		if(C && C.prefs)
 			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 			C.prefs.adjust_metacoins(C.ckey, C.reward_this_person, "Special Bonus")
+			if(C.mob?.mind?.assigned_role)
+				add_jobxp(C,added_xp, C.mob.mind.assigned_role.title)
 		if(length(C.applied_challenges))
 			if(isliving(C.mob))
 				var/mob/living/client_mob = C.mob

@@ -206,7 +206,9 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/bear/fightpit,
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/bear/fightpit,
+/obj/machinery/light/small/red/dim/directional/east,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aO" = (
@@ -248,7 +250,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/item/kitchen/fork,
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/basic/bear/fightpit,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aW" = (
@@ -524,6 +526,11 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"lA" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/engine,
 /area/shuttle/escape)
 "wq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -863,7 +870,7 @@ aa
 aa
 ab
 aE
-aN
+lA
 aN
 aV
 aD

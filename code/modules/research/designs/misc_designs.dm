@@ -933,10 +933,35 @@
 
 /datum/design/fishing_rod_tech
 	name = "Advanced Fishing Rod"
+	desc = "A fishing rod with an embedded generator dispensing an infinite supply of fishing baits."
 	id = "fishing_rod_tech"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/uranium = 1000, /datum/material/plastic = 2000)
 	build_path = /obj/item/fishing_rod/tech
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/stabilized_hook
+	name = "Gyro-Stabilized Hook"
+	desc = "An advanced fishing hook that gives the user a tighter control on the fish when reeling in."
+	id = "stabilized_hook"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500, /datum/material/gold = 300, /datum/material/titanium = 200)
+	build_path = /obj/item/fishing_hook/stabilized
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "An analyzer used to monitor fish's status and traits with."
+	id = "fish_analyzer"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	build_path = /obj/item/fish_analyzer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)

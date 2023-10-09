@@ -5,12 +5,15 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 
 /datum/pre_round_store
 	var/datum/store_item/bought_item
-	var/mob/owner
 
 /datum/pre_round_store/New(mob/user)
 	. = ..()
-	owner = user
 	ui_interact(user)
+
+/datum/pre_round_store/Destroy(force, ...)
+	. = ..()
+	bought_item = null
+
 /datum/pre_round_store/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -81,7 +84,7 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 /datum/pre_round_store/proc/finalize_purchase_spawn(mob/new_player_mob, mob/new_player_mob_living)
 	var/datum/preferences/owners_prefs = new_player_mob.client.prefs
 	if(!owners_prefs.has_coins(initial(bought_item.item_cost)))
-		to_chat(owner, span_warning("It seems your lacking coins to complete this transaction."))
+		to_chat(new_player_mob, span_warning("It seems your lacking coins to complete this transaction."))
 		return
 	var/obj/item/created_item = new bought_item.item_path
 

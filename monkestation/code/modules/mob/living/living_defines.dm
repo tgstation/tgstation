@@ -3,3 +3,7 @@
 	var/knockdown_diminish = 1
 	var/stun_diminish = 1
 	var/paralyze_diminish = 1
+
+	///The talk chime set to use when speaking.
+	var/voice_type
+

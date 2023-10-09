@@ -84,6 +84,9 @@
 
 /obj/machinery/splicer/proc/splice(obj/item/seeds/first_seed, obj/item/seeds/second_seed)
 
+	if(!first_seed || !second_seed)
+		return
+
 	var/obj/item/seeds/spliced/new_seed = new
 	new_seed.set_potency((first_seed.potency + second_seed.potency) * 0.5)
 	new_seed.set_yield((first_seed.yield + second_seed.yield) * 0.5)
@@ -100,6 +103,7 @@
 	new_seed.icon_dead = first_seed.icon_dead
 	new_seed.growthstages = first_seed.growthstages
 	new_seed.growing_icon = first_seed.growing_icon
+	new_seed.seed_offset = first_seed.seed_offset
 
 	new_seed.reagents_add = first_seed.reagents_add.Copy()
 
@@ -125,10 +129,10 @@
 		var/obj/item/seeds/spliced/spliced_seed = second_seed
 		new_seed.produce_list |= spliced_seed.produce_list
 
-	var/part1 = copytext(first_seed.name, 1, round(length(first_seed.name) * 0.70 + 2))
-	var/part2 = copytext(second_seed.name, round(length(second_seed.name) * 0.40 + 1), 0)
+	var/part1 = copytext(copytext(first_seed.plantname, 1, round(length(first_seed.plantname) * 0.70 + 2)), 1, 50)
+	var/part2 = copytext(copytext(second_seed.plantname, round(length(second_seed.plantname) * 0.40 + 1), 0), -50)
 
-	new_seed.name = "[part1][part2]"
+	new_seed.name = "pack of [part1][part2] seeds"
 	new_seed.plantname = "[part1][part2]"
 
 	for(var/datum/plant_gene/trait/traits in first_seed.genes)

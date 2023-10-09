@@ -84,6 +84,7 @@
 		if(card)
 			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
 			card.registered_account.mining_points += point_value
+			GLOB.lavaland_points_generated += point_value //monkestation edit
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel

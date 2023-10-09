@@ -42,7 +42,7 @@
 	name = "Duct Spider Crate"
 	desc = "Awww! Straight from the Australicus sector to your station's ventilation system!"
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/mob/living/basic/giant_spider/maintenance)
+	contains = list(/mob/living/basic/spider/maintenance)
 	crate_name = "duct spider crate"
 	crate_type = /obj/structure/closet/crate/critter
 
@@ -50,7 +50,7 @@
 	name = "Duct Spider Crate?"
 	desc = "Wait, is this the right crate? It has a frowny face, what does that mean?"
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/mob/living/basic/giant_spider/hunter)
+	contains = list(/mob/living/basic/spider/giant/hunter)
 	contraband = TRUE
 
 /datum/supply_pack/imports/bamboo50

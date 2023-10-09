@@ -4,11 +4,13 @@
 
 /obj/structure/disposalpipe/trunk/multiz
 	name = "Disposal trunk that goes up"
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "pipe-up"
 	var/multiz_dir = MULTIZ_PIPE_UP ///Set the multiz direction of your trunk. 1 = up, 2 = down
 
 /obj/structure/disposalpipe/trunk/multiz/down
 	name = "Disposal trunk that goes down"
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "pipe-down"
 	multiz_dir = MULTIZ_PIPE_DOWN
 
@@ -21,11 +23,11 @@
 		return ..()
 
 	//Are we a trunk that goes up? Or down?
-	var/turf/target = null
+	var/turf/target = get_turf(src)
 	if(multiz_dir == MULTIZ_PIPE_UP)
-		target = SSmapping.get_turf_above(get_turf(src))
+		target = GET_TURF_ABOVE(target)
 	if(multiz_dir == MULTIZ_PIPE_DOWN)
-		target = SSmapping.get_turf_below(get_turf(src))
+		target = GET_TURF_BELOW(target)
 	if(!target) //Nothing located.
 		return
 

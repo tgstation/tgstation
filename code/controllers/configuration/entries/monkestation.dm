@@ -17,3 +17,11 @@
 /datum/config_entry/string/roundend_webhook_name
 
 /datum/config_entry/string/bot_dump_url
+
+//API key for Github Issues.
+/datum/config_entry/string/issue_key
+	protection = CONFIG_ENTRY_HIDDEN
+
+//Endpoint for Github Issues, the `owner/repo` part.
+/datum/config_entry/string/issue_slug
+	protection = CONFIG_ENTRY_LOCKED

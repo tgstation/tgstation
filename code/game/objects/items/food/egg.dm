@@ -160,6 +160,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon_state = "egg-yellow"
 	inhand_icon_state = "egg-yellow"
 
+/obj/item/food/egg/penguin_egg
+	icon = 'icons/mob/simple/penguins.dmi'
+	icon_state = "penguin_egg"
+
 /obj/item/food/egg/fertile
 	name = "fertile-looking egg"
 	desc = "An egg! It looks fertilized.\nQuite how you can tell this just by looking at it is a mystery."
@@ -169,7 +173,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	. = ..()
 
 	AddComponent(/datum/component/fertile_egg,\
-		embryo_type = /mob/living/simple_animal/chick,\
+		embryo_type = /mob/living/basic/chick,\
 		minimum_growth_rate = 1,\
 		maximum_growth_rate = 2,\
 		total_growth_required = 200,\

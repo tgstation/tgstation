@@ -59,6 +59,9 @@
 		to_chat(user, span_warning("You can't bring youself to swing this!"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	if(!(user.istate & ISTATE_SECONDARY))
+		return
+
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(carbon_user.stamina.current > 100)

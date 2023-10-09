@@ -22,7 +22,7 @@
 	small_icon_state = "ash_whelp"
 
 /datum/action/small_sprite/megafauna/colossus
-	small_icon_state = "Basilisk"
+	small_icon_state = "basilisk"
 
 /datum/action/small_sprite/megafauna/bubblegum
 	small_icon_state = "goliath2"

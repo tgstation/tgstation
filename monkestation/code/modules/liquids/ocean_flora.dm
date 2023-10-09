@@ -32,7 +32,7 @@
 	icon_state = "coral"
 	desc = "Beautiful coral."
 	random_variants = 3
-	density = TRUE
+	density = FALSE
 
 #define SCRAP_WELD_LOW 7
 #define SCRAP_WELD_HIGH 12
