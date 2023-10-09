@@ -28,3 +28,10 @@
 					/obj/item/plate/small = 5,
 					/obj/item/a_gift/anything)
 	crate_name = "Birthday Crate"
+
+/datum/supply_pack/service/jukebox
+	name = "Jukebox Beacon Crate"
+	desc = "Last one stolen? Broken? Burnt down in an insurance scam? then this crate is for you. Contains one Jukebox Beacon."
+	cost = CARGO_CRATE_VALUE * 20 //the crew shouldnt be able to just buy 15 jukeboxes all playing among us at the same time
+	contains = list(/obj/item/choice_beacon/jukebox)
+	crate_name = "jukebox beacon crate"
