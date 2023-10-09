@@ -175,8 +175,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
 
-		race_changer.update_body(is_creating = TRUE)
-		race_changer.update_mutations_overlay() // no hulk lizard
+	race_changer.update_body(is_creating = TRUE)
+	race_changer.update_mutations_overlay() // no hulk lizard
 
 // possible Genders: MALE, FEMALE, PLURAL, NEUTER
 // possible Physique: MALE, FEMALE
@@ -207,6 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	sexy.dna.update_ui_block(DNA_GENDER_BLOCK)
 	sexy.update_body()
 	sexy.update_mutations_overlay() //(hulk male/female)
+	sexy.update_clothing(ALL) // update gender variant clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
