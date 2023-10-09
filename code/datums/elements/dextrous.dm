@@ -3,8 +3,6 @@
  * Actual hand performance is managed by code on /living/ and not encapsulated here, we just enable it
  */
 /datum/element/dextrous
-	/// What kind of hud to use now that we have hands
-	var/hud_type
 
 /datum/element/dextrous/Attach(datum/target, hands_count = 2, hud_type = /datum/hud/dextrous)
 	. = ..()
