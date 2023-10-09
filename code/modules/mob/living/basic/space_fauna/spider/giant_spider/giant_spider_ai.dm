@@ -4,7 +4,7 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | PAUSE_DURING_DO_AFTER
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
@@ -45,7 +45,6 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller(), // Hunt mobs our size
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
-		BB_BASIC_MOB_FLEEING = TRUE,
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

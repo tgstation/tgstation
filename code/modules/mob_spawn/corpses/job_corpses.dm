@@ -83,4 +83,4 @@
 	name = JOB_ROBOTICIST
 	outfit = /datum/outfit/job/roboticist
 	icon_state = "corpseroboticist"
-	
+

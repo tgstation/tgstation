@@ -109,7 +109,6 @@
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-	SSshuttle.setup_shuttles(ports)
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(

@@ -96,8 +96,7 @@
 	var/target_key = BB_GOLIATH_HOLE_TARGET
 
 /datum/ai_planning_subtree/goliath_dig/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(target_turf))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(/datum/ai_behavior/goliath_dig, target_key)
 	return SUBTREE_RETURN_FINISH_PLANNING

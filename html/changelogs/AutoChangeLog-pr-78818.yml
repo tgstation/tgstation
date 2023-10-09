@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Added extra checks to bitrunning domain cleanup so avatars are deleted properly."
+  - rscadd: "Quantum servers now look for a new machine called a byteforge to spawn loot on- no longer on an invisible landmark. This should make the rooms rebuildable after disasters."
+  - rscadd: "*Most* bitrunning machinery is now researchable and buildable via circuits in the engineering protolathe."

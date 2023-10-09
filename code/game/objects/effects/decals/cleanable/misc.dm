@@ -212,6 +212,10 @@
 	icon_state += "-old"
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
+/obj/effect/decal/cleanable/vomit/old/black_bile
+	name = "black bile"
+	desc = "There's something wiggling in there..."
+	color = COLOR_DARK
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"

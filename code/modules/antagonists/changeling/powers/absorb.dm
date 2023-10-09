@@ -28,6 +28,8 @@
 	return changeling.can_absorb_dna(target)
 
 /datum/action/changeling/absorb_dna/sting_action(mob/owner)
+	SHOULD_CALL_PARENT(FALSE) // the only reason to call parent is for proper blackbox logging, and we do that ourselves in a snowflake way
+
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = owner.pulling
 	is_absorbing = TRUE
@@ -95,31 +97,14 @@
 	//Some of target's recent speech, so the changeling can attempt to imitate them better.
 	//Recent as opposed to all because rounds tend to have a LOT of text.
 
-	var/list/recent_speech = list()
-	var/list/say_log = list()
-	var/log_source = target.logging
-	for(var/log_type in log_source)
-		var/nlog_type = text2num(log_type)
-		if(nlog_type & LOG_SAY)
-			var/list/reversed = log_source[log_type]
-			if(islist(reversed))
-				say_log = reverse_range(reversed.Copy())
-				break
-
-	if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
-		recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
-	else
-		for(var/spoken_memory in say_log)
-			if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
-				break
-			recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
+	var/list/recent_speech = target.copy_recent_speech()
 
 	if(recent_speech.len)
 		changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
 		to_chat(owner, span_boldnotice("Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!"))
 		for(var/spoken_memory in recent_speech)
-			changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
-			to_chat(owner, span_notice("\"[recent_speech[spoken_memory]]\""))
+			changeling.antag_memory += "\"[spoken_memory]\"<br>"
+			to_chat(owner, span_notice("\"[spoken_memory]\""))
 		changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
 		to_chat(owner, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
 

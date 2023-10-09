@@ -14,8 +14,6 @@
 	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE
-	///Power usage during last tick
-	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 4
 
@@ -73,7 +71,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
+	if(!cpu || !cpu.enabled || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
@@ -85,7 +83,7 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled && cpu.use_power())
+	if(cpu.enabled)
 		. += mutable_appearance(ui_overlay, cpu.active_program?.program_icon_state || screen_icon_state_menu)
 	else if(!(machine_stat & NOPOWER))
 		. += mutable_appearance(ui_overlay, screen_icon_screensaver)
@@ -128,9 +126,9 @@
 		return cpu.screwdriver_act(user, tool)
 	return ..()
 
-/obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
+/obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
 	if(cpu)
-		return cpu.wrench_act(user, tool)
+		return cpu.wrench_act_secondary(user, tool)
 	return ..()
 
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)

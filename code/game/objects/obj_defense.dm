@@ -144,7 +144,7 @@
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
+			buckled_mob.electrocute_act((clamp(round(strength * 3.125e-6), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)

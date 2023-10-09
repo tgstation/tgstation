@@ -392,8 +392,11 @@
 		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
-	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
-	burn_human.adjustFireLoss(25)
+	var/need_mob_update
+	need_mob_update += burn_human.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
+	need_mob_update += burn_human.adjustFireLoss(25, updating_health = FALSE)
+	if(need_mob_update)
+		burn_human.updatehealth()
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")

@@ -28,7 +28,7 @@
 	maxbodytemp = INFINITY
 	faction = list(FACTION_CULT)
 	pressure_resistance = 100
-	unique_name = 1
+	unique_name = TRUE
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE

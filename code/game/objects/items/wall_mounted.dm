@@ -42,8 +42,6 @@
 
 		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
 		hanging_object.setDir(floor_to_wall)
-		on_wall.AddComponent(/datum/component/wall_mounted, hanging_object)
-
 		if(pixel_shift)
 			switch(floor_to_wall)
 				if(NORTH)
@@ -55,7 +53,7 @@
 				if(WEST)
 					hanging_object.pixel_x = -pixel_shift
 		after_attach(hanging_object)
-		hanging_object.find_and_hang_on_wall()
+
 	qdel(src)
 
 /obj/item/wallframe/proc/after_attach(obj/attached_to)
