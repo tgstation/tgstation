@@ -11,13 +11,13 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
+	/mob/living/basic/sloth,
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/sloth,
 )))
 
 /datum/round_event_control/sentience

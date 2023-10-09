@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Rust Walkers, Ash Spirits, Flesh Stalkers, and The Maid in the Mirror now use the basic mob framework. Please report any unusual behaviour."
