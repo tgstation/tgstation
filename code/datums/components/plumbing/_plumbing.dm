@@ -132,7 +132,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.recipient_reagents_holder, amount, methods = methods)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
