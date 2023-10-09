@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "Miners can now tag monster spawners (necropolis tendrils, animal dens, demonic portals, and netherworld links) by using their mining scanner on it, which updates their GPS tag (and/or gives them one) to give it a numerical designation and a short identifier for what it's spawning."
