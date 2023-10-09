@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list(starlight_object(0)))
 /proc/starlight_object(offset)
 	var/obj/starlight_appearance/glow = new()
 	SET_PLANE_W_SCALAR(glow, LIGHTING_PLANE, offset)
+	glow.layer = LIGHTING_PRIMARY_LAYER
+	glow.blend_mode = BLEND_ADD
 	glow.color = GLOB.starlight_color
 	glow.render_target = SPACE_OVERLAY_RENDER_TARGET(offset)
 	return glow
@@ -27,6 +29,8 @@ GLOBAL_LIST_INIT_TYPED(starlight_overlays, /obj, list(starlight_overlay(0)))
 /proc/starlight_overlay(offset)
 	var/mutable_appearance/glow = new /mutable_appearance()
 	SET_PLANE_W_SCALAR(glow, LIGHTING_PLANE, offset)
+	glow.layer = LIGHTING_PRIMARY_LAYER
+	glow.blend_mode = BLEND_ADD
 	glow.render_source = SPACE_OVERLAY_RENDER_TARGET(offset)
 	return glow
 

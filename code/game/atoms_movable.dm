@@ -273,10 +273,11 @@
 	QDEL_NULL(em_block)
 	// We're gonna build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
-	// Instead of copying the fullbright overlays, we should store a copy of them in the client's screen
-	// made invisible with *, and use render relaying to display them here and anywhere else we use them
-	// That'll save cpu time for only minor clientside cost
-	var/mutable_appearance/light = new(GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	// I would like to use GLOB.starbright_overlays here
+	// But that breaks down for... some? reason. I think recieving a render relay breaks keep_together or something
+	// So we're just gonna acept that this'll break with starlight color changing. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
+	var/mutable_appearance/light = new(GLOB.starlight_objects[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	light.render_target = ""
 	light.appearance_flags |= KEEP_TOGETHER
 	// Now apply a copy of the turf, set to multiply
 	// This will multiply against our light, so we only light up the bits that aren't "on" the wall
