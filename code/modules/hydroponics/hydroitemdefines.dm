@@ -181,7 +181,7 @@
 	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
 	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
 	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
-	returned_message += "\nNutrition level: [span_notice("[round(scanned_tray.reagents.total_volume)] / [scanned_tray.maxnutri]")]"
+	returned_message += "\nNutrition level: [span_notice("[round(scanned_tray.reagents.total_volume)] / [scanned_tray.maxnutri]")] Right-click to empty."
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "\nYield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]"
 
