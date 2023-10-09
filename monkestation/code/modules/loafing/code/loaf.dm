@@ -6,9 +6,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutraslop = 10)
 	var/loaf_density = 1 //base loaf density
 	var/can_condense = TRUE //for special loaves, make false
-	force_feed_on_aggression = TRUE
+	force_feed_on_aggression = FALSE
 	//vars for high level loafs
+
+	var/critical = FALSE
 	var/atom/movable/warp_effect/warp
+
+
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER  //works similar to grav anomaly when hits critical
 	var/death_time
 	var/countdown_colour = COLOR_ASSEMBLY_LBLUE
@@ -75,10 +79,16 @@
 	gravShock(AM)
 
 /obj/item/food/prison_loaf/Bump(atom/A)
-	gravShock(A)
+	if(critical)
+		gravShock(A)
+	else
+		return 	..()
 
 /obj/item/food/prison_loaf/Bumped(atom/movable/AM)
-	gravShock(AM)
+	if(critical)
+		gravShock(AM)
+	else
+		return 	..()
 
 /obj/item/food/prison_loaf/proc/gravShock(mob/living/A)
 	if(boing && isliving(A) && !A.stat)
@@ -88,6 +98,7 @@
 		boing = 0
 
 /obj/item/food/prison_loaf/proc/critical()
+	src.critical = TRUE
 	var/turf/T = get_turf(src)
 	notify_ghosts("A [src] has been condensed to the point of criticality!", source=src, action=NOTIFY_ORBIT, header="Loaf Criticality!!")
 	log_game("\A [src] has been condensed to the point of criticality at [AREACOORD(T)].")
@@ -248,9 +259,8 @@
 	unit_name = "loaf"
 	message = "of Nutraloaf"
 	export_types = list(/obj/item/food/prison_loaf)
-	include_subtypes = TRUE
 
-/datum/export/food/loaf/get_cost(obj/O, apply_elastic = TRUE)
+/datum/export/food/loaf/get_cost(obj/O)
 	var/obj/item/food/prison_loaf/loaf = O
 	cost = max(10, loaf.loaf_density / 5)
-
+	return ..()
