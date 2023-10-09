@@ -625,6 +625,7 @@
 	locked = TRUE
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_overlays = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "pod_off"
 	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE

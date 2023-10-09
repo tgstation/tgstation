@@ -33,6 +33,7 @@
 	name = "syndicate assault pod control"
 	desc = "Controls the drop pod's launch system."
 	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_overlays = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "pod_off"
 	icon_keyboard = null
 	icon_screen = "pod_on"

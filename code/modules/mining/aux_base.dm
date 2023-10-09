@@ -16,6 +16,7 @@
 	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
 	interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
 	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_overlays = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "pod_off"
 	icon_keyboard = null
 	icon_screen = "pod_on"
