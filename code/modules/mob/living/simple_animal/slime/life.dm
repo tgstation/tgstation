@@ -199,8 +199,11 @@
 		var/mob/living/animal_victim = prey
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += animal_victim.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_per_tick)
-		totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * seconds_per_tick)
+		var/need_mob_update
+		need_mob_update = totaldamage += animal_victim.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * seconds_per_tick, updating_health = FALSE)
+		if(need_mob_update)
+			animal_victim.updatehealth()
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
 			Feedstop(0, 0)

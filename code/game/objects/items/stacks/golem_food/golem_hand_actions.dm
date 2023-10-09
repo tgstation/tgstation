@@ -35,7 +35,7 @@
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
-	held_gibtonite.GibtoniteReaction(user)
+	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [target] with a thrown and primed")
 	held_gibtonite.throw_at(target, range = 10, speed = 3, thrower = user)
 	held_gibtonite = null
 	qdel(src)
@@ -44,7 +44,7 @@
 /// Called when you can't hold it in any longer and just drop it on the ground
 /obj/item/gibtonite_hand/proc/release_gibtonite()
 	held_gibtonite.forceMove(get_turf(src))
-	held_gibtonite.GibtoniteReaction(isliving(loc) ? loc : null)
+	held_gibtonite.GibtoniteReaction(isliving(loc) ? loc : null, "A [src] has dropped and primed a")
 	held_gibtonite = null
 	qdel(src)
 

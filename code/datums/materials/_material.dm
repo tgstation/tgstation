@@ -33,8 +33,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
+	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	var/minimum_value_override = null
+	///Is this material traded on the stock market?
+	var/tradable = FALSE
+	///If this material is tradable, what is the base quantity of the material on the stock market?
+	var/tradable_base_quantity = 0
+
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.

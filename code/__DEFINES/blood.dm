@@ -19,3 +19,16 @@
 #define BLOOD_STATE_OIL "oil"
 /// No blood is present
 #define BLOOD_STATE_NOT_BLOODY "no blood whatsoever"
+
+// Bitflags for mob dismemberment and gibbing
+/// Mobs will drop a brain
+#define DROP_BRAIN (1<<0)
+/// Mobs will drop organs
+#define DROP_ORGANS (1<<1)
+/// Mobs will drop bodyparts (arms, legs, etc.)
+#define DROP_BODYPARTS (1<<2)
+/// Mobs will drop items
+#define DROP_ITEMS (1<<3)
+
+/// Mobs will drop everything
+#define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS | DROP_ITEMS)

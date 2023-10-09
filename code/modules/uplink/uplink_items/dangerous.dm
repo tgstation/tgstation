@@ -19,7 +19,6 @@
 	name = "Makarov Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -28,7 +27,6 @@
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
 	illegal_tech = FALSE
@@ -95,7 +93,6 @@
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
-	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //nukies get their own version

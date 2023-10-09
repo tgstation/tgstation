@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Necropolis tendrils and other mining mob spawners can be hit in melee again."
