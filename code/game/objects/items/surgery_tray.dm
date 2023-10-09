@@ -6,6 +6,7 @@
 /datum/storage/surgery_tray/New()
 	. = ..()
 	set_holdable(list(
+		/obj/item/autopsy_scanner,
 		/obj/item/blood_filter,
 		/obj/item/bonesetter,
 		/obj/item/cautery,
@@ -20,7 +21,6 @@
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
-		/obj/item/autopsy_scanner,
 	))
 
 /**
