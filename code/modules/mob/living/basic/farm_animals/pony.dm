@@ -25,9 +25,14 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pony
 
+	greyscale_config = /datum/greyscale_config/pony
+	/// Greyscale color config; 1st color is body, 2nd is mane
+	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
+
 /mob/living/basic/pony/Initialize(mapload)
 	. = ..()
 
+	apply_colour()
 	AddElement(/datum/element/pet_bonus, "whickers.")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
@@ -46,6 +51,11 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/random_speech/pony/tamed
 	))
+
+/mob/living/basic/pony/proc/apply_colour()
+	if(!greyscale_config)
+		return
+	set_greyscale(colors = ponycolors)
 
 /mob/living/basic/pony/proc/whinny_angrily()
 	manual_emote("whinnies ANGRILY!")
@@ -89,9 +99,14 @@
 
 // A stronger horse is required for our strongest cowboys.
 /mob/living/basic/pony/syndicate
-	health = 150
-	maxHealth = 150
+	health = 300
+	maxHealth = 300
 	faction = list(ROLE_SYNDICATE)
+	ponycolors = list("#5d566f", COLOR_RED)
+	pressure_resistance = 200
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
 
 /mob/living/basic/pony/syndicate/Initialize(mapload)
 	. = ..()
