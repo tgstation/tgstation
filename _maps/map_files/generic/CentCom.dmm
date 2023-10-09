@@ -1628,7 +1628,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "gI" = (
-/obj/structure/statue/gold/rd,
+/obj/structure/statue/gold/rd{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "gJ" = (
@@ -2740,17 +2742,6 @@
 "kg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/closet/crate/secure/freezer/pizza,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
-/obj/item/grenade/spawnergrenade/clown,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
 "kh" = (
@@ -4669,7 +4660,9 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "rd" = (
-/obj/structure/statue/silver/janitor,
+/obj/structure/statue/silver/janitor{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "rh" = (
@@ -7591,7 +7584,9 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
 "BT" = (
-/obj/structure/statue/sandstone/assistant,
+/obj/structure/statue/sandstone/assistant{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "BU" = (
@@ -8249,7 +8244,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "Fa" = (
-/obj/structure/statue/gold/ce,
+/obj/structure/statue/gold/ce{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "Fb" = (
@@ -8502,7 +8499,9 @@
 	},
 /area/centcom/central_command_areas/prison)
 "Ge" = (
-/obj/structure/statue/gold/hop,
+/obj/structure/statue/gold/hop{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "Gf" = (
@@ -9422,7 +9421,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/evacuation/ship)
 "KI" = (
-/obj/structure/statue/gold/cmo,
+/obj/structure/statue/gold/cmo{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "KJ" = (
@@ -9867,7 +9868,6 @@
 "Mn" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/spawner/random/food_or_drink/pizzaparty,
-/obj/mystery_box_item,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/centcom/central_command_areas/fore)
 "Mo" = (
@@ -11122,7 +11122,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "QZ" = (
-/obj/structure/statue/gold/qm,
+/obj/structure/statue/gold/qm{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "Ra" = (
@@ -12068,7 +12070,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "UE" = (
-/obj/structure/statue/gold/hos,
+/obj/structure/statue/gold/hos{
+	anchored = 1
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
 "UH" = (
