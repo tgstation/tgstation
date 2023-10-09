@@ -1,0 +1,4 @@
+author: "HWSensum"
+delete-after: True
+changes:
+  - balance: "Reviver Implant now able to revive dead people."
