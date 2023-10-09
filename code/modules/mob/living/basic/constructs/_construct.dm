@@ -43,15 +43,14 @@
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// What flavor of gunk does this construct drop on death?
-	var/list/remains = list(/obj/item/ectoplasm)
+	var/static/list/remains = list(/obj/item/ectoplasm)
 	/// Can this construct smash walls? Gets the wall_smasher element if so.
 	var/smashes_walls = FALSE
 
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	if((length(remains)))
-		remains = string_list(remains)
+	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
 		AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_WALLS)
