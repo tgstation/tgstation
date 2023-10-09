@@ -207,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	sexy.dna.update_ui_block(DNA_GENDER_BLOCK)
 	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
 	sexy.update_mutations_overlay() //(hulk male/female)
-	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender variant clothing
+	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
