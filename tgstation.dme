@@ -5541,6 +5541,7 @@
 #include "monkestation\code\modules\admin\camera_view.dm"
 #include "monkestation\code\modules\aesthetics\airlock\airlock.dm"
 #include "monkestation\code\modules\aesthetics\items\clothing.dm"
+#include "monkestation\code\modules\aesthetics\mapping\tilecoloring.dm"
 #include "monkestation\code\modules\aesthetics\mobs\slime.dm"
 #include "monkestation\code\modules\aesthetics\objects\misc.dm"
 #include "monkestation\code\modules\aesthetics\objects\railing.dm"
