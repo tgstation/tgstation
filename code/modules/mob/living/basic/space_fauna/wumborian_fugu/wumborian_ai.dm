@@ -2,7 +2,6 @@
 /datum/ai_controller/basic_controller/wumborian_fugu
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_BASIC_MOB_FLEEING = TRUE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

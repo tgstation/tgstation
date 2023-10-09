@@ -2,7 +2,6 @@
 /datum/ai_controller/basic_controller/legion
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead/legion,
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
