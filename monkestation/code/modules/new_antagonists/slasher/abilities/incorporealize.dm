@@ -61,7 +61,9 @@
 	flipped = FALSE
 	if(isliving(owner))
 		var/mob/living/owner_mob = owner
-		slasherdatum.corporeal = TRUE
+		var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+		if(slasherdatum)
+			slasherdatum.corporeal = TRUE
 		owner_mob.movement_type &= ~PHASING
 		owner_mob.status_flags &= ~GODMODE
 		animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
