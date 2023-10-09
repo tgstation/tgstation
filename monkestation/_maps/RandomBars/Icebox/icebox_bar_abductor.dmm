@@ -104,7 +104,7 @@
 /area/station/service/bar/backroom)
 "hj" = (
 /obj/machinery/firealarm/directional/south,
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
 /turf/open/floor/mineral/fake_abductor,

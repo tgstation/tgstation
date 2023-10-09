@@ -40,7 +40,7 @@
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 15
+#define DNA_FEATURE_BLOCKS 16
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -57,6 +57,7 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+#define DNA_MUTANT_COLOR_SECONDARY 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -78,24 +79,25 @@
 #define DRINKSBLOOD 11
 #define SKINTONES 12
 #define ANIME 13
+#define MUTCOLORS_SECONDARY 14
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 14
-#define AGENDER 15
+#define DYNCOLORS 15
+#define AGENDER 16
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 16
+#define NOEYESPRITES 17
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 17
+#define HAS_MARKINGS 18
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 18
+#define NOBLOODOVERLAY 19
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 19
+#define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 20
+#define BLOOD_CLANS 21
 
-#define REVIVESBYHEALING 21
-#define NOHUSK 22
-#define NOMOUTH 23
+#define REVIVESBYHEALING 22
+#define NOHUSK 23
+#define NOMOUTH 24
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

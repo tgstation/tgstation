@@ -71,6 +71,8 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
+	/// How many pixels on the Y axis this plant should be shifted.
+	var/seed_offset = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -259,6 +261,9 @@
 
 	if(product_count >= 10)
 		product_count = 10 + log(1.02) * (getYield() - 1)
+
+	if(user.client)
+		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 50)
 
 	while(t_amount < product_count)
 		if(prob(25))

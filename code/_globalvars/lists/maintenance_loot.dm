@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/shield/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
-		/obj/item/fishing_rod/master = 1,
+		/obj/item/fishing_rod/telescopic/master = 1,
 		) = 1,
 
 	list(//equipment
@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 
 
 GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer maint tunnels
-		/mob/living/simple_animal/hostile/bee/friendly = 1,
+		/mob/living/basic/bee/friendly = 1,
 	))
 
 

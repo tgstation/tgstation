@@ -42,3 +42,11 @@
 	magic.owner = owner
 	objectives += magic
 	..()
+
+/datum/antagonist/survivalist/magic/on_gain()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/survivalist/magic/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	return..()

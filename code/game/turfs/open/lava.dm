@@ -38,10 +38,13 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
+	/// The configuration key for the preset fishing spot for this type of turf.
+	var/fish_source_type = FISHING_SPOT_PRESET_LAVALAND_LAVA
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+	if(fish_source_type)
+		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
@@ -67,10 +70,10 @@
 	var/border_turf = FALSE
 	var/list/turfs_to_check = RANGE_TURFS(1, src)
 	if(GET_LOWEST_STACK_OFFSET(z))
-		var/turf/above = SSmapping.get_turf_above(src)
+		var/turf/above = GET_TURF_ABOVE(src)
 		if(above)
 			turfs_to_check += RANGE_TURFS(1, above)
-		var/turf/below = SSmapping.get_turf_below(src)
+		var/turf/below = GET_TURF_BELOW(src)
 		if(below)
 			turfs_to_check += RANGE_TURFS(1, below)
 
@@ -92,10 +95,10 @@
 		// We have gone from a lava turf to a non lava turf, time to let them know
 		var/list/turfs_to_check = RANGE_TURFS(1, result)
 		if(GET_LOWEST_STACK_OFFSET(z))
-			var/turf/above = SSmapping.get_turf_above(result)
+			var/turf/above = GET_TURF_ABOVE(result)
 			if(above)
 				turfs_to_check += RANGE_TURFS(1, above)
-			var/turf/below = SSmapping.get_turf_below(result)
+			var/turf/below = GET_TURF_BELOW(result)
 			if(below)
 				turfs_to_check += RANGE_TURFS(1, below)
 		for(var/turf/open/lava/inform in turfs_to_check)
@@ -344,6 +347,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
+	fish_source_type = FISHING_SPOT_PRESET_ICEMOON_PLASMA
 
 	light_outer_range = 3
 	light_power = 0.75
@@ -425,3 +429,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
+	fish_source_type = null
+
+//basketball specific lava (normal atmos, no slowdown)
+/turf/open/lava/smooth/basketball
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	slowdown = 0
+	fish_source_type = null

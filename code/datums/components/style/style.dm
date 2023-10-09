@@ -117,7 +117,7 @@
 		/datum/component/projectile_parry,\
 		list(\
 			/obj/projectile/colossus,\
-			/obj/projectile/temp/basilisk,\
+			/obj/projectile/temp/watcher,\
 			/obj/projectile/kinetic,\
 			/obj/projectile/bileworm_acid,\
 			/obj/projectile/herald,\

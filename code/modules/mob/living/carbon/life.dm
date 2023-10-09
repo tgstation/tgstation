@@ -7,7 +7,10 @@
 		var/turf/open/my_our_turf = loc
 		if(my_our_turf.pollution)
 			my_our_turf.pollution.touch_act(src)
-
+	//monkestation edit start
+	if(SSparticle_weather.running_weather)
+		handle_weather(seconds_per_tick)
+	//monkestation edit end
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()

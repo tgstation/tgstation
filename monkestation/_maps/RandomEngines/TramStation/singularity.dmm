@@ -265,6 +265,7 @@
 	dir = 4
 	},
 /obj/structure/window/plasma/spawner/directional/south,
+/obj/structure/sign/directions/ptl/directional/west,
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/supermatter/room)
 "DD" = (
@@ -407,6 +408,7 @@
 "SQ" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ST" = (
@@ -421,6 +423,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "TZ" = (
@@ -441,6 +444,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/fans/tiny,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "WI" = (
@@ -714,7 +718,7 @@ JE
 Mj
 Ys
 AP
-JE
+GS
 Ho
 Ho
 Ho

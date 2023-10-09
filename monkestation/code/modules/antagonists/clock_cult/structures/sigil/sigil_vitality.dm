@@ -83,8 +83,8 @@
 		if(affected_mob.client)
 			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
-			new_vessel.transfer_personality(affected_mob)
-			new_vessel.brainmob?.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
+			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)))
+				new_vessel.transfer_personality(affected_mob)
 		return
 
 	affected_mob.visible_message(span_clockred("[affected_mob] looks weak as the color fades from their body."), span_clockred("You feel your soul faltering..."))

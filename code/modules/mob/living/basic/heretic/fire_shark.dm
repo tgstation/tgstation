@@ -21,35 +21,21 @@
 	obj_damage = 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	damage_coeff = list(BRUTE = 1, BURN = 0.2, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	faction = list(FACTION_HERETIC)
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "implodes into itself."
-	ai_controller = /datum/ai_controller/basic_controller/fire_shark
+	ai_controller = null
 
 /mob/living/basic/fire_shark/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 5)
+	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2)
 	AddComponent(/datum/component/swarming)
-	AddComponent(/datum/component/regenerator, regeneration_delay = 2 SECONDS, outline_colour = COLOR_DARK_RED)
+	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/datum/ai_controller/basic_controller/fire_shark
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
-	)

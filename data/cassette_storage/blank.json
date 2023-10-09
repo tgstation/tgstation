@@ -1,0 +1,22 @@
+
+{
+	"name": "A blank cassette",
+	"desc": "A blank cassette perfect for mixing.",
+	"side1_icon": "cassette_flip",
+	"side2_icon": "cassette_flip",
+	"author_ckey": "NA",
+	"author_name": "No One",
+	"approved": 0,
+	"songs": {
+		"side1": [
+			],
+		"side2": [
+		]
+	},
+	"song_names": {
+		"side1": [
+		],
+		"side2": [
+		]
+	}
+}

@@ -9,9 +9,8 @@
 
 /datum/ai_behavior/travel_towards/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(isnull(target))
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
 

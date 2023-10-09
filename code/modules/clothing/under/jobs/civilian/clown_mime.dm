@@ -37,6 +37,11 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/clothing/under/rank/civilian/clown/LateInitialize()
+	. = ..()
+	AddComponent(/datum/component/hide_from_people/clown)
 
 /obj/item/clothing/under/rank/civilian/clown/blue
 	name = "blue clown suit"

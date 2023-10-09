@@ -147,6 +147,7 @@
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
+#define INIT_ORDER_MEDIA_TRACKS 60
 #define INIT_ORDER_AI_MOVEMENT 56 //We need the movement setup
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TICKER 55
@@ -171,12 +172,14 @@
 #define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
 #define INIT_ORDER_VOTE -4 // Needs to be after persistence so that recent maps are not loaded.
 #define INIT_ORDER_ASSETS -5
-#define INIT_ORDER_ICON_SMOOTHING -6
-#define INIT_ORDER_OVERLAY -7
+#define INIT_ORDER_ICON_COLORING -6
+#define INIT_ORDER_ICON_SMOOTHING -7
+#define INIT_ORDER_OVERLAY -8
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
-#define INIT_ORDER_SHUTTLE -21
+#define INIT_ORDER_OUTDOOR_EFFECTS -21 //monkestation addition
+#define INIT_ORDER_SHUTTLE -22 //monkestation edit -21 > -22
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
@@ -206,12 +209,12 @@
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
 #define FIRE_PRIORITY_NPC_ACTIONS 22
 #define FIRE_PRIORITY_PATHFINDING 23
+#define FIRE_PRIORITY_CLIFF_FALLING 24
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
 #define FIRE_PRIORITY_HOTSPOT 30
-#define FIRE_PRIOTITY_LIQUIDS 30
 #define FIRE_PRIORITY_SMOOTHING 35
 #define FIRE_PRIORITY_OBJ 40
 #define FIRE_PRIORITY_ACID 40

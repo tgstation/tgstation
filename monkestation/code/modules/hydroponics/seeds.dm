@@ -97,6 +97,7 @@
 	S.icon_dead = icon_dead
 	S.growthstages = growthstages
 	S.growing_icon = growing_icon
+	S.seed_offset = seed_offset
 	S.traits_in_progress = traits_in_progress
 
 	if(istype(src, /obj/item/seeds/spliced))

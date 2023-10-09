@@ -1,6 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - rscadd: "Freerunning now doubles sprint time."
-  - balance: "Changes a lot of quirk costs."
-  - balance: "IPCs are now punished for taking quirks that don't effect them"

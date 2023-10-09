@@ -39,10 +39,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
 		space_tile.enable_starlight()
 
-	for(var/turf/open/floor/plating/ocean/space_tile in RANGE_TURFS(1, affected_turf))
-		if(space_tile.has_starlight)
-			space_tile.enable_starlight()
-
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 

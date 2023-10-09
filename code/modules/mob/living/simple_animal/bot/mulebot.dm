@@ -30,6 +30,7 @@
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
+	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -135,8 +136,6 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
-	if(!paicard)
-		name = "[initial(name)] ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -261,8 +260,9 @@
 	data["autoReturn"] = auto_return
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
-	data["haspai"] = paicard ? TRUE : FALSE
 	data["id"] = id
+	data["allow_possession"] = bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE
+	data["possession_enabled"] = can_be_possessed
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -274,7 +274,7 @@
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
-				. = TRUE
+				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
@@ -285,10 +285,10 @@
 				if(!turn_on())
 					to_chat(usr, span_warning("You can't switch on [src]!"))
 					return
-			. = TRUE
+			return TRUE
 		else
 			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
-			. = TRUE
+			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
@@ -340,8 +340,6 @@
 			auto_pickup = !auto_pickup
 		if("report")
 			report_delivery = !report_delivery
-		if("ejectpai")
-			ejectpairemote(user)
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -656,7 +654,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
-	if(paicard || !isliving(M)) //if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+	if(mind || !isliving(M)) //if there's a sentience controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/L = M
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
@@ -763,11 +761,6 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/pai_card/card)
-	. = ..()
-	if(.)
-		visible_message(span_notice("[src]'s safeties are locked on."))
-
 /// Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
 	SIGNAL_HANDLER
@@ -784,6 +777,10 @@
 	SIGNAL_HANDLER
 
 	cell?.use(cell_move_power_usage)
+
+/mob/living/simple_animal/bot/mulebot/post_possession()
+	. = ..()
+	visible_message(span_notice("[src]'s safeties are locked on."))
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"

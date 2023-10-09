@@ -31,6 +31,8 @@
 			var/datum/mutation/ranching/chicken/mutation = new raw_list_item
 			var/value = 100
 			if(!mutation.cycle_requirements(parent_animal))
+				real_mutation |= mutation
+				real_mutation[mutation] = value * 0.5
 				continue
 			real_mutation |= mutation
 			real_mutation[mutation] = value

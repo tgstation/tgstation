@@ -313,3 +313,109 @@
   - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
   Salted-Zen:
   - image: Replaces bone axe and spear sprites with old ones from 1.0
+2023-08-18:
+  CannibalHunter:
+  - rscadd: Added new hairstyle, Mullet.
+  KittyNoodle:
+  - rscadd: Freerunning now doubles sprint time.
+  - balance: Changes a lot of quirk costs.
+  - balance: IPCs are now punished for taking quirks that don't effect them
+  MilkForever:
+  - sound: Almost all species in the game can scream and laugh, some species get unique
+      sounds.
+  - rscadd: 'Added a new species: Arachnids.'
+  etherware-novice, BetaCentari:
+  - rscadd: Some new emotes.
+  - sound: Added Rattle.ogg which sounds like a well, rattle
+  iamcooldan:
+  - rscadd: Added additional items to the produce order console.
+2023-08-22:
+  BlackCrystalic, Koshenko:
+  - rscadd: day/night cycle that changes brightness and color based on station time
+      to icebox and oshan
+  - rscadd: framework for particle weathers, currently un-used in maps
+  DimWhat:
+  - image: Resprited the janitor jumpsuit/skirt
+  Ebin-Halcyon:
+  - rscadd: Syndicate maid outfit for 4 tc, degenerate.
+  SeeBeeSee:
+  - rscadd: existing Fraxinella mutation to the current plant mutation list
+  dwasint:
+  - rscadd: coconuts and coconut guns
+  - rscadd: wall trim and wall paints, use a decal painter with a custom color on
+      the wall to change the trim or paint
+  iamcooldan:
+  - rscadd: new crates for departmental lathes, and a birthday crate.
+2023-08-23:
+  wraith-54321:
+  - balance: All clockwork weapons are now worse at wounding
+  - balance: Clockwork arrows now deal 25 damage instead of 30
+  - bugfix: Heretic ghouls can no longer use scriptures
+  - bugfix: Clock borgs can no longer be subverted by emags
+  - bugfix: Heretics are now correctly immune to the Kindle scripture
+2023-08-24:
+  MilkForever:
+  - bugfix: Security officers are now given their departmental duster correctly.
+  Salted-Zen:
+  - rscadd: Added two new cloaks to the nanotrasen merch store
+  laurentoun, Comxy, san7890, tf-4, Rhials, Ben10Omintrix, lizardqueenlexi:
+  - code_imp: Adds default multiplicative movespeed for basic mobs, to make them editable
+      in config
+  - config: Default multiplicative movespeed for basic mobs in example config
+  - bugfix: Fixes the speed of all basic mobs.
+  - refactor: Expect to see Killer Tomatoes be a bit smarter as they now are able
+      to juggle multiple targets, lock onto you, and barrel towards you. They're much
+      the same as before, but just a little bit more intelligent, which is especially
+      scary considering they're a fucking plant.
+  - refactor: Lizards (the animal (not the species of people)) are now a bit smarter.
+      Expect to see them avidly hunt down their prey, rather than languish around
+      and wait for it to come to them. Hungry buggers.
+  - image: We now actually implement the previously unused lizard gib animation for
+      those little buggers!
+  - refactor: Converted butterflies to the basic mob system
+  - rscadd: Butterflies can now be grown in cytology
+  - code_imp: Cat Surgeons are a bit more smarter about attacking threats to the world
+      around them on their endless pursuit for those felinid tails.
+  - refactor: Headslugs (the really small slug-like changeling form) are now basic
+      mobs. They only wander around aimlessly now instead of attacking corpses all
+      the time, and examining will let you know what type. Should probably still smash
+      them before they suddenly gain sapience...
+  - refactor: Giant ants are now more capable of distinguishing friend and foe.
+  - code_imp: Spaceman simple mobs have been converted to basic mobs.
+  - refactor: Mushrooms have been refactors, please report any bugs/unintended behavior
+  - rscadd: the mushroom basic mob can eat the mushroom plant to heal itself
+  - bugfix: Carp, Trees, and Festivus Poles will once more sometimes emote at you
+      if they think you are looking at them the wrong way, before they come over to
+      beat you up.
+2023-08-25:
+  MrMelbert:
+  - rscadd: Adds the new teach spellbook entry ritual from TG
+  - bugfix: Chuunibyou casting no longer makes it impossible to cast robed spells
+2023-08-26:
+  epochayur, mrmelbert:
+  - bugfix: RDS no longer tells you when you are rolling a delayed antag.
+  - bugfix: You can no longer hear the voice of people using sign language.
+2023-08-27:
+  Glyphee:
+  - rscadd: Goblin Roundstart Race
+  - rscadd: Gobbish Language
+  KittyNoodle:
+  - rscadd: The Lawbringer, a brand new(kinda), replacement to the multiphasic energy
+      gun the hos starts with.
+  MomoBerri:
+  - rscadd: PTL directional signs for the future PTL
+  Salted-Zen:
+  - rscadd: Added new mothlet grenade for Moth traitors at the cost of 4tc. They love
+      to undo your gear with their tiny hands.
+  SeeBeeSee:
+  - rscadd: Added "Girl", "Boy", "Yes-Man", "Boxfort", "Hotdog", and "Terminal" AI
+      sprites from /vg/ as per a PR we had prior to the tgcode rebase
+2023-08-30:
+  Gboster-0:
+  - bugfix: interaction components finally work
+2023-08-31:
+  Gboster-0:
+  - rscadd: Added PTL lasers to all maps
+  - rscadd: Added SMES units to all maps
+  - qol: Deltastations engine no longer loses power 1 nanosecond into the shift
+  - bugfix: fixed north star's engine being hot-wired round-start

@@ -6,10 +6,15 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /datum/mentors
 	var/name = "someone's mentor datum"
-	var/client/owner // the actual mentor, client type
-	var/target // the mentor's ckey
-	var/href_token // href token for mentor commands, uses the same token used by admins.
+	/// The Mentor's Client
+	var/client/owner
+	/// the Mentor's Ckey
+	var/target
+	/// href token for Mentor commands, uses the same token used by Admins.
+	var/href_token
 	var/mob/following
+	/// Are we a Contributor?
+	var/is_contributor = FALSE
 
 /datum/mentors/New(ckey)
 	if(!ckey)
@@ -20,13 +25,12 @@ GLOBAL_PROTECT(mentor_href_token)
 	name = "[ckey]'s mentor datum"
 	href_token = GenerateToken()
 	GLOB.mentor_datums[target] = src
-	//set the owner var and load commands
+	/// Set the owner var and load commands
 	owner = GLOB.directory[ckey]
 	if(owner)
 		owner.mentor_datum = src
 		owner.add_mentor_verbs()
-		if(!check_rights_for(owner, R_ADMIN)) // don't add admins to mentor list.
-			GLOB.mentors += owner
+		GLOB.mentors += owner
 
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
 	var/auth = href_list["mentor_token"]
@@ -44,12 +48,12 @@ GLOBAL_PROTECT(mentor_href_token)
 /proc/RawMentorHrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.mentor_href_token
 	if(!forceGlobal && usr)
-		var/client/C = usr.client
-		to_chat(world, C)
+		var/client/all_clients = usr.client
+		to_chat(world, all_clients)
 		to_chat(world, usr)
-		if(!C)
+		if(!all_clients)
 			CRASH("No client for HrefToken()!")
-		var/datum/mentors/holder = C.mentor_datum
+		var/datum/mentors/holder = all_clients.mentor_datum
 		if(holder)
 			tok = holder.href_token
 	return tok
@@ -59,18 +63,14 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /proc/load_mentors()
 	GLOB.mentor_datums.Cut()
-	for(var/client/C in GLOB.mentors)
-		C.remove_mentor_verbs()
-		C.mentor_datum = null
+	for(var/client/mentor_clients in GLOB.mentors)
+		mentor_clients.remove_mentor_verbs()
+		mentor_clients.mentor_datum = null
 	GLOB.mentors.Cut()
-	var/list/lines = world.file2list("config/mentors.txt")
+	var/list/lines = world.file2list("[global.config.directory]/mentors.txt")
 	for(var/line in lines)
 		if(!length(line))
 			continue
 		if(findtextEx(line, "#", 1, 2))
 			continue
 		new /datum/mentors(line)
-
-// new client var: mentor_datum. Acts the same way holder does towards admin: it holds the mentor datum. if set, the guy's a mentor.
-/client
-	var/datum/mentors/mentor_datum

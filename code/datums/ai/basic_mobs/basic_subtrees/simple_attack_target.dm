@@ -12,8 +12,8 @@
 /datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/average_speed
 
-//If you give this to something without the element you are a dumbass.
 /datum/ai_planning_subtree/basic_ranged_attack_subtree
+	operational_datums = list(/datum/component/ranged_attacks)
 	var/datum/ai_behavior/basic_ranged_attack/ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

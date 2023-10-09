@@ -8,9 +8,9 @@
 	mutation_list = list(/datum/mutation/ranching/chicken/mime, /datum/mutation/ranching/chicken/clown_sad)
 	minimum_living_happiness = -2000
 
-	cooldown_time = 30 SECONDS
-	unique_ability = CHICKEN_HONK
-	ability_prob = 25
+	targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown
+
+	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/honk
 
 	book_desc = "Tries very hard to be funny and occasionally honks."
 /obj/item/food/egg/clown
@@ -41,3 +41,22 @@
 	. = ..()
 	visible_message("<span class='notice'>The [src.name] bursts upon impact with \the [target.name]!</span>")
 	qdel(src)
+
+
+/datum/action/cooldown/mob_cooldown/chicken/honk
+	name = "Prank Target"
+	desc = "Honk."
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
+	cooldown_time = 30 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	shared_cooldown = NONE
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+
+/datum/action/cooldown/mob_cooldown/chicken/honk/Activate(mob/living/target)
+	target.slip(5 SECONDS, FALSE)
+	StartCooldown()
+	return TRUE

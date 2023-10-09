@@ -233,3 +233,6 @@ Tracy.exe
 
 # From /tools/define_sanity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
 define_sanity_output.txt
+
+#This file contains developer-specific config overrides. These shouldn't be committed.
+config/_config_nogit.txt

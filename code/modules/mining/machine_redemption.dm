@@ -313,6 +313,7 @@
 			if(points)
 				if(user_id_card)
 					user_id_card.registered_account.mining_points += points
+					GLOB.lavaland_points_generated += points //monkestation edit
 					points = 0
 				else
 					to_chat(usr, span_warning("No valid ID detected."))

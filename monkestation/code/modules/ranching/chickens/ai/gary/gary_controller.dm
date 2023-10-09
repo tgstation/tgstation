@@ -1,7 +1,7 @@
 /datum/ai_controller/chicken/gary
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/chicken_tree,
-		/datum/ai_planning_subtree/gary
+		/datum/ai_planning_subtree/gary,
+		/datum/ai_planning_subtree/flee_target/low_health,
 		)
 	idle_behavior = /datum/idle_behavior/chicken
 

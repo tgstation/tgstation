@@ -66,6 +66,9 @@
 			var/turf/oldT = old_turfs[i]
 			if(old_turfs[oldT] & MOVE_TURF)
 				new_hidden_turfs += new_turfs[i]
+				if(oldT.outdoor_effect)
+					oldT.outdoor_effect.process_state()
+
 		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
 	/***************************************************************************************************************/
 

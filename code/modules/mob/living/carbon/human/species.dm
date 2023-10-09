@@ -707,35 +707,35 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
 		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
+		if(markings)
+			if(!HAS_TRAIT(species_human, TRAIT_HUSK))
+				if(noggin && (IS_ORGANIC_LIMB(noggin)))
+					var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
+					markings_head_overlay.pixel_y += height_offset
+					standing += markings_head_overlay
 
-		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
-			if(noggin && (IS_ORGANIC_LIMB(noggin)))
-				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
-				markings_head_overlay.pixel_y += height_offset
-				standing += markings_head_overlay
+				if(chest && (IS_ORGANIC_LIMB(chest)))
+					var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
+					markings_chest_overlay.pixel_y += height_offset
+					standing += markings_chest_overlay
 
-			if(chest && (IS_ORGANIC_LIMB(chest)))
-				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
-				markings_chest_overlay.pixel_y += height_offset
-				standing += markings_chest_overlay
+				if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
+					var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
+					markings_r_arm_overlay.pixel_y += height_offset
+					standing += markings_r_arm_overlay
 
-			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
-				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
-				markings_r_arm_overlay.pixel_y += height_offset
-				standing += markings_r_arm_overlay
+				if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
+					var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
+					markings_l_arm_overlay.pixel_y += height_offset
+					standing += markings_l_arm_overlay
 
-			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
-				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
-				markings_l_arm_overlay.pixel_y += height_offset
-				standing += markings_l_arm_overlay
+				if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
+					var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
+					standing += markings_r_leg_overlay
 
-			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
-				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
-				standing += markings_r_leg_overlay
-
-			if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
-				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
-				standing += markings_l_leg_overlay
+				if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
+					var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
+					standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -787,6 +787,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	var/list/standing = list()
+
+	if(istype(source, /mob/living/carbon/human/dummy/extra_tall))
+		var/mob/living/carbon/human/dummy/extra_tall/bleh = source
+		bleh.extra_bodyparts = list()
 
 	source.remove_overlay(BODY_BEHIND_LAYER)
 	source.remove_overlay(BODY_ADJ_LAYER)
@@ -850,6 +854,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = fixed_mut_color
 							else
 								accessory_overlay.color = source.dna.features["mcolor"]
+						if(MUTCOLORS_SECONDARY)
+							if(fixed_mut_color)
+								accessory_overlay.color = fixed_mut_color
+							else
+								accessory_overlay.color = source.dna.features["mcolor_secondary"]
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = source.dna.features["mcolor"]
@@ -866,6 +875,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
+			if(accessory.is_emissive)
+				standing += emissive_appearance_copy(accessory_overlay, source)
+
+			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
+				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
 
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
@@ -878,6 +892,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
 
 				standing += inner_accessory_overlay
+				if(accessory.is_emissive)
+					standing += emissive_appearance_copy(accessory_overlay, source)
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()
@@ -1304,6 +1320,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/knockdown_duration = 40 + (target.stamina.loss + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
+		return TRUE // monkestation edit
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1315,6 +1332,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_chat(user, span_warning("Your shove at [target] was blocked!"))
 		return FALSE
 	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
+		user.animate_interact(target, INTERACT_DISARM) //monkestation edit
 		return TRUE
 	if(user.body_position != STANDING_UP)
 		return FALSE
@@ -1323,6 +1341,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(user.loc == target.loc)
 		return FALSE
 	user.disarm(target)
+	return TRUE //monkestation edit
 
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -1346,20 +1365,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	SEND_SIGNAL(owner, COMSIG_MOB_ATTACK_HAND, owner, target, attacker_style)
-
+	//monkesstation edit start
 	if(owner.istate & ISTATE_SECONDARY)
 		if(istype(owner.client?.imode, /datum/interaction_mode/intents3))
 			var/datum/interaction_mode/intents3/clients_interaction = owner.client.imode
 			if(clients_interaction.intent != INTENT_DISARM)
 				return // early end because of intent type
-		disarm(owner, target, attacker_style)
+		. = disarm(owner, target, attacker_style)
+		if(.)
+			owner.animate_interact(target, INTERACT_DISARM)
 		return // dont attack after
 	if((owner.istate & ISTATE_HARM))
-		harm(owner, target, attacker_style)
+		. = harm(owner, target, attacker_style)
+		if(.)
+			owner.animate_interact(target, INTERACT_HARM)
 	else if ((owner.istate & ISTATE_CONTROL))
-		grab(owner, target, attacker_style)
+		. = grab(owner, target, attacker_style)
+		if(.)
+			owner.animate_interact(target, INTERACT_GRAB)
 	else
-		help(owner, target, attacker_style)
+		. = help(owner, target, attacker_style)
+		if(.)
+			owner.animate_interact(target, INTERACT_HELP)
+	//monkestation edit end
 
 /datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
 	// Allows you to put in item-specific reactions based on species
@@ -2305,6 +2333,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	target.create_bodyparts(bodypart_overrides)
+	target.regenerate_icons()
 
 /datum/species/proc/spec_revival(mob/living/carbon/human/H)
 	return

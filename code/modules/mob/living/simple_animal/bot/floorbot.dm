@@ -22,6 +22,7 @@
 	bot_type = FLOOR_BOT
 	hackables = "floor construction protocols"
 	path_image_color = "#FFA500"
+	possessed_message = "You are a floorbot! Repair the hull to the best of your ability!"
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection

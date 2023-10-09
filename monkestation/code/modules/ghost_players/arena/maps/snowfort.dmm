@@ -1,0 +1,322 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"b" = (
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"c" = (
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"f" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"g" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"h" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"k" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"l" = (
+/obj/structure/cannon{
+	dir = 4
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"m" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"n" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"u" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"v" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"w" = (
+/obj/item/toy/snowball,
+/obj/item/toy/snowball,
+/obj/item/toy/snowball,
+/obj/item/toy/snowball,
+/obj/item/toy/snowball,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"C" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"E" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"H" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"J" = (
+/obj/structure/cannon{
+	dir = 8
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"N" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"O" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+"Q" = (
+/obj/structure/statue/snow/snowlegion,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"R" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/fakeice/slippery,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+v
+a
+a
+a
+a
+a
+a
+a
+b
+v
+"}
+(2,1,1) = {"
+b
+a
+a
+w
+a
+a
+w
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+h
+l
+l
+h
+a
+a
+a
+"}
+(4,1,1) = {"
+u
+a
+a
+h
+h
+h
+h
+a
+a
+u
+"}
+(5,1,1) = {"
+a
+b
+v
+a
+a
+a
+a
+v
+a
+b
+"}
+(6,1,1) = {"
+b
+a
+a
+a
+m
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+u
+a
+a
+O
+n
+a
+a
+b
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+E
+C
+c
+R
+a
+a
+b
+"}
+(9,1,1) = {"
+a
+Q
+a
+O
+c
+k
+H
+a
+a
+a
+"}
+(10,1,1) = {"
+b
+a
+a
+g
+C
+c
+f
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+u
+a
+a
+g
+H
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+b
+a
+a
+a
+N
+a
+a
+b
+a
+"}
+(13,1,1) = {"
+a
+a
+v
+a
+a
+a
+a
+v
+a
+a
+"}
+(14,1,1) = {"
+u
+a
+a
+h
+h
+h
+h
+a
+a
+u
+"}
+(15,1,1) = {"
+a
+a
+a
+h
+J
+J
+h
+a
+a
+b
+"}
+(16,1,1) = {"
+a
+b
+a
+w
+a
+a
+w
+a
+a
+a
+"}
+(17,1,1) = {"
+v
+a
+a
+a
+a
+a
+a
+a
+b
+v
+"}
