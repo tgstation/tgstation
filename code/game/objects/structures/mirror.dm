@@ -155,7 +155,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!selectable_races[racechoice])
 		return TRUE
 
-	var/datum/species/newrace = selectable_races[racechoice]
+
+	var/datum/species/newrace = new selectable_races[racechoice]
+
+	var/attributes_desc = newrace.get_physical_attributes()
+	qdel(newrace)
+
+	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
+	if(answer != "Yes")
+		change_race(race_changer) // try again
+		return
+
 	race_changer.set_species(newrace, icon_update = FALSE)
 	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
@@ -320,7 +330,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	selectable_races = sort_list(selectable_races)
 
 //Magic mirrors can change hair color as well
-/obj/structure/mirror/magic/mirror/change_hair(mob/living/carbon/human/user)
+/obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
 	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
@@ -336,6 +346,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 	user.update_body_parts()
+
+/obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return TRUE
+
+	if(HAS_TRAIT(user, TRAIT_ADVANCEDTOOLUSER) && HAS_TRAIT(user, TRAIT_LITERATE))
+		return TRUE
+
+	to_chat(user, span_alert("You feel quite intelligent."))
+	// Prevents wizards from being soft locked out of everything
+	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
+	ADD_TRAIT(user, list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
+	return TRUE
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.

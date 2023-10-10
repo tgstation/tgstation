@@ -55,6 +55,11 @@
 		return TRUE
 	return ..()
 
+/datum/species/skeleton/get_physical_attributes()
+	return "These humerus folk lack any fleshy biology, which allows them to resist pressure, temperature, radiation, asphyxiation and even toxins. \
+		However, due to that same fact, it is quite hard to heal them as well. The calcium found in common space milk is highly effective at treating their wounds. \
+		Their limbs are easy to pop off their joints, but they can somehow just slot them back in."
+
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \
 		Every year to spook the crew! \"I've got a BONE to pick with you!\""
