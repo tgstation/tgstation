@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Harvester constructs have been updated to the basic mob framework. This should have very little impact on their behavior, but please report any issues."
