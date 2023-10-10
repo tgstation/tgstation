@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	icon = 'icons/obj/pipes_n_cables/canisters.dmi'
 	icon_state = "#mapme"
 	greyscale_config = /datum/greyscale_config/canister/hazard
-	greyscale_colors = "#ffff00#000000"
+	greyscale_colors = "#6b6b80#000000"
 	density = TRUE
 	volume = 2000
 	armor_type = /datum/armor/portable_atmospherics_canister
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	name = "Air canister"
 	desc = "Pre-mixed air."
 	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#c6c0b5"
+	greyscale_colors = "#eaeaea"
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
