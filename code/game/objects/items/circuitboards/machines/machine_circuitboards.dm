@@ -1260,7 +1260,6 @@
 		/datum/stock_part/capacitor/tier2 = 1,
 		/obj/item/stack/cable_coil = 4,
 		/obj/item/stack/sheet/glass = 2)
-	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
