@@ -77,6 +77,7 @@
 				/obj/item/clothing/head/costume/shrine_wig = 1,
 				/obj/item/clothing/suit/costume/shrine_maiden = 1,
 				/obj/item/gohei = 1,
+				/obj/item/clothing/under/costume/skeleton = 1,
 			),
 		),
 		list(
@@ -107,6 +108,8 @@
 				/obj/item/clothing/under/suit/white_on_white = 1,
 				/obj/item/clothing/head/tragic = 2,
 				/obj/item/clothing/under/costume/tragic = 2,
+				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
+				/obj/item/clothing/shoes/clown_shoes/yellow = 1,
 			),
 		),
 		list(
@@ -122,6 +125,7 @@
 				/obj/item/clothing/under/dress/skirt = 1,
 				/obj/item/clothing/neck/tie = 3,
 				/obj/item/clothing/head/hats/tophat = 1,
+				/obj/item/clothing/head/wonka = 1,
 				/obj/item/clothing/under/costume/kilt = 1,
 				/obj/item/clothing/glasses/monocle =1,
 				/obj/item/clothing/head/hats/bowler = 1,
@@ -132,6 +136,7 @@
 				/obj/item/clothing/suit/costume/changshan_blue = 1,
 				/obj/item/clothing/suit/costume/cheongsam_red = 1,
 				/obj/item/clothing/suit/costume/cheongsam_blue = 1,
+				/obj/item/clothing/under/wonka = 1,
 			),
 		),
 		list(
@@ -145,6 +150,7 @@
 				/obj/item/clothing/suit/hooded/carp_costume = 1,
 				/obj/item/clothing/suit/hooded/ian_costume = 1,
 				/obj/item/clothing/suit/hooded/bee_costume = 1,
+				/obj/item/clothing/suit/hooded/dinojammies = 1,
 				/obj/item/clothing/mask/animal/small/bat = 1,
 				/obj/item/clothing/mask/animal/small/bee = 1,
 				/obj/item/clothing/mask/animal/small/bear = 1,
@@ -156,6 +162,7 @@
 				/obj/item/clothing/mask/animal/pig = 1,
 				/obj/item/clothing/mask/animal/cowmask = 1,
 				/obj/item/clothing/mask/animal/horsehead = 1,
+				/obj/item/clothing/head/lizard = 1,
 			),
 		),
 		list(

@@ -23,3 +23,10 @@
 	icon_state = "lizardhead"
 	flags_inv = HIDEHAIR
 	worn_y_offset = 1
+
+/obj/item/clothing/head/wonka
+	name = "wonky hat"
+	desc = "Come with me, and you'll be, in a world of OSHA violations!"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "wonka"

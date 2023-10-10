@@ -1,13 +1,13 @@
-/datum/job/godzilla
-	title = JOB_SPOOKTOBER_GODZILLA
-	description = "Film a monster movie. Blend in with the lizards. Get arrested for roaring at the crew."
+/datum/job/gorilla
+	title = JOB_SPOOKTOBER_GORILLA
+	description = "Film a monster movie. Battle godzilla. Get arrested for roaring at lizards."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 0
 	supervisors = JOB_HEAD_OF_PERSONNEL
 	exp_granted_type = EXP_TYPE_CREW
 
-	outfit = /datum/outfit/job/godzilla
+	outfit = /datum/outfit/job/gorilla
 	plasmaman_outfit = /datum/outfit/plasmaman
 
 	paycheck = PAYCHECK_LOWER
@@ -22,23 +22,16 @@
 	family_heirlooms = list(/obj/item/megaphone, /obj/item/clothing/head/lizard, /obj/item/clothing/suit/hooded/dinojammies)
 
 	mail_goodies = list(
-		/obj/item/megaphone,
-		/obj/item/food/fried_blood_sausage,
-		/obj/item/food/bread/root,
-		/obj/item/food/lizard_fries
+		/obj/item/food/grown/banana
 	)
 
-	rpg_title = "Lizardman"
+	rpg_title = "Dire Ape"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_SPOOKTOBER
 
-/datum/outfit/job/godzilla
-	name = "Discount Godzilla"
-	jobtype = /datum/job/godzilla
+/datum/outfit/job/gorilla
+	name = "Gorilla"
+	jobtype = /datum/job/gorilla
 
-	head = /obj/item/clothing/head/lizard
-	r_pocket = /obj/item/megaphone
+	suit = /obj/item/clothing/suit/hooded/gorilla
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
-
-/datum/outfit/job/godzilla/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/dinojammies(H), ITEM_SLOT_OCLOTHING)
