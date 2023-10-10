@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "bitrunners will no longer be lumped in with assistants on the crew monitor console's display"
