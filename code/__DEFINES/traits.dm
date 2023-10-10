@@ -522,6 +522,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 
+/// Trait added when a revenant is visible.
+#define TRAIT_REVENANT_REVEALED "revenant_revealed"
+/// Trait added when a revenant has been inhibited (typically by the bane of a holy weapon)
+#define TRAIT_REVENANT_INHIBITED "revenant_inhibited"
+
 /// Trait which prevents you from becoming overweight
 #define TRAIT_NOFAT "cant_get_fat"
 
