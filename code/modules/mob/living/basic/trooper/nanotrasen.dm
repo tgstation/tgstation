@@ -45,17 +45,28 @@
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS
 
-/// Should use "retaliate" AI...
+/// A more peaceful variant that will only attack when attacked, or when another NanoTrasen officer calls for help.
 /mob/living/basic/trooper/nanotrasen/peaceful
 	desc = "An officer of Nanotrasen's private security force."
 	//vision_range = 3
 
-/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Aggro()
+/mob/living/basic/trooper/nanotrasen/peaceful/Initialize(mapload)
+	. = ..()
+	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
+	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
+
+/mob/living/basic/trooper/nanotrasen/peaceful/proc/ai_retaliate_behaviour(mob/living/attacker)
+	if (!istype(attacker))
+		return
+	for (var/mob/living/basic/trooper/nanotrasen/peaceful/potential_trooper in oview(src, 7))
+		potential_trooper.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+
+/* /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Aggro()
 	..()
 	summon_backup(15)
-	say("411 in progress, requesting backup!")
+	say("411 in progress, requesting backup!") */
 
-/mob/living/basic/trooper/nanotrasen/peace/ranged
+/mob/living/basic/trooper/nanotrasen/peaceful/ranged
 	vision_range = 9
 	rapid = 3
 	ranged = 1

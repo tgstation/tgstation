@@ -9,6 +9,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/move_to_reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/trooper
@@ -22,6 +23,15 @@
 
 /datum/ai_behavior/attack_obstructions/trooper
 	action_cooldown = 1.2 SECONDS
+
+/datum/ai_controller/basic_controller/trooper/calls_reinforcements
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/call_for_reinforcements,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/move_to_reinforce,
+	)
 
 /datum/ai_controller/basic_controller/trooper/ranged
 	planning_subtrees = list(

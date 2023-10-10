@@ -4513,6 +4513,7 @@
 #include "code\modules\mob\living\basic\troop\troop_ai.dm"
 #include "code\modules\mob\living\basic\troop\syndicate\russian.dm"
 #include "code\modules\mob\living\basic\troop\syndicate\syndicate.dm"
+#include "code\modules\mob\living\basic\trooper\nanotrasen.dm"
 #include "code\modules\mob\living\basic\vermin\axolotl.dm"
 #include "code\modules\mob\living\basic\vermin\butterfly.dm"
 #include "code\modules\mob\living\basic\vermin\cockroach.dm"
