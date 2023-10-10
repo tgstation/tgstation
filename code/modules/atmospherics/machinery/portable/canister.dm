@@ -202,8 +202,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	name = "Hydrogen canister"
 	gas_type = /datum/gas/hydrogen
 	filled = 1
-	greyscale_config = /datum/greyscale_config/canister/stripe
-	greyscale_colors = "#bdc2c0#ffffff"
+	greyscale_config = /datum/greyscale_config/canister/hazard
+	greyscale_colors = "#bdc2c0#ff0000"
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
