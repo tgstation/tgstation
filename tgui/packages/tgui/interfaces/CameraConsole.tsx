@@ -7,10 +7,10 @@ import { Button, ByondUi, Input, NoticeBox, Section, Stack } from '../components
 import { Window } from '../layouts';
 
 type Data = {
+  activeCamera: Camera & { status: BooleanLike };
+  cameras: Camera[];
   can_spy: BooleanLike;
   mapRef: string;
-  cameras: Camera[];
-  activeCamera: Camera & { status: BooleanLike };
   network: string[];
 };
 
@@ -30,8 +30,17 @@ const prevNextCamera = (
   if (!activeCamera) {
     return [];
   }
-  const index = cameras.findIndex((camera) => camera?.ref === activeCamera.ref);
-  return [cameras[index - 1]?.ref, cameras[index + 1]?.ref];
+  const index = cameras.findIndex((camera) => camera.ref === activeCamera.ref);
+
+  if (index === 0) {
+    return [cameras[cameras.length - 1].ref, cameras[index + 1].ref];
+  }
+
+  if (index === cameras.length - 1) {
+    return [cameras[index - 1].ref, cameras[0].ref];
+  }
+
+  return [cameras[index - 1].ref, cameras[index + 1].ref];
 };
 
 /**
@@ -40,11 +49,10 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.ref);
+  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
 
   return flow([
-    // Null camera filter
-    filter((camera: Camera) => !!camera?.ref),
+    filter((camera: Camera) => !!camera.name),
     // Optional search term
     searchText && filter(testSearch),
     // Slightly expensive, but way better than sorting in BYOND
@@ -101,14 +109,13 @@ const CameraSelector = (props, context) => {
               key={camera.ref}
               title={camera.name}
               className={classes([
-                'candystripe',
                 'Button',
                 'Button--fluid',
                 'Button--color--transparent',
                 'Button--ellipsis',
-                activeCamera &&
-                  camera.ref === activeCamera.ref &&
-                  'Button--selected',
+                activeCamera?.ref === camera.ref
+                  ? 'Button--selected'
+                  : 'candystripe',
               ])}
               onClick={() =>
                 act('switch_camera', {
@@ -127,7 +134,9 @@ const CameraSelector = (props, context) => {
 const CameraControls = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { activeCamera, can_spy, mapRef } = data;
-  const cameras = selectCameras(data.cameras);
+  const [searchText] = useLocalState(context, 'searchText', '');
+
+  const cameras = selectCameras(data.cameras, searchText);
 
   const [prevCamera, nextCamera] = prevNextCamera(cameras, activeCamera);
 
@@ -137,7 +146,7 @@ const CameraControls = (props, context) => {
         <Stack.Item>
           <Stack fill>
             <Stack.Item grow>
-              {activeCamera?.name ? (
+              {activeCamera?.status ? (
                 <NoticeBox info>{activeCamera.name}</NoticeBox>
               ) : (
                 <NoticeBox danger>No input signal</NoticeBox>
