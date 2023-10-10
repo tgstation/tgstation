@@ -6,7 +6,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutraslop = 10)
 	var/loaf_density = 1 //base loaf density
 	var/can_condense = TRUE //for special loaves, make false
-	force_feed_on_aggression = FALSE
+	force_feed_on_aggression = TRUE
 	//vars for high level loafs
 
 	var/critical = FALSE
