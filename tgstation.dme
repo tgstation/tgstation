@@ -2835,6 +2835,7 @@
 #include "code\modules\antagonists\changeling\powers\strained_muscles.dm"
 #include "code\modules\antagonists\changeling\powers\tiny_prick.dm"
 #include "code\modules\antagonists\changeling\powers\transform.dm"
+#include "code\modules\antagonists\changeling\powers\void_adaption.dm"
 #include "code\modules\antagonists\clown_ops\bananium_bomb.dm"
 #include "code\modules\antagonists\clown_ops\clown_weapons.dm"
 #include "code\modules\antagonists\clown_ops\clownop.dm"
