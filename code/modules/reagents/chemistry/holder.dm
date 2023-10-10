@@ -624,6 +624,11 @@
 		if(!total_volume || final_contribution < CHEMICAL_QUANTISATION_LEVEL)
 			break
 
+		//sort the reagents in descending order of their volumes so the highest
+		//volume of reagent gets picked immediatly in the 2nd iteration and quickly
+		//ends its work and is also more realistic
+		cached_reagents = sort_list(cached_reagents, /proc/cmp_reagent_volumes)
+
 	if(transferred_by && target_atom)
 		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
@@ -1332,7 +1337,7 @@
 	. = 0 // This is a relatively hot proc.
 	var/total_ph = 0 // I know I know, I'm sorry
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.volume < CHEMICAL_QUANTISATION_LEVEL)//For clarity
+		if(reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)//For clarity
 			del_reagent(reagent.type)
 		else
 			. += reagent.volume
