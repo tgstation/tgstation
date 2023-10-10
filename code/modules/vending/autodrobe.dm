@@ -110,6 +110,8 @@
 				/obj/item/clothing/under/costume/tragic = 2,
 				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
 				/obj/item/clothing/shoes/clown_shoes/yellow = 1,
+				/obj/item/clothing/head/knowingclown = 2,
+				/obj/item/clothing/under/knowingclown = 2,
 			),
 		),
 		list(

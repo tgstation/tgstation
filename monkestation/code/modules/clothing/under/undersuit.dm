@@ -6,6 +6,14 @@
 	icon_state = "bloodred_pajamas"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/knowingclown
+	name = "Small But Knowing Clown suit"
+	desc = "Suit worn by a small but all knowing clown"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "knowing_clown"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/driscoll
 	name = "O'Driscoll outfit"
 	desc = "All you need now is a holster and six shooter..."

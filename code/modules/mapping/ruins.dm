@@ -51,10 +51,10 @@
 		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(width, height, z) //Make the new level creation work with different traits.
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
 	if(!reservation)
 		return
-	var/turf/placement = locate(reservation.bottom_left_coords[1],reservation.bottom_left_coords[2],reservation.bottom_left_coords[3])
+	var/turf/placement = reservation.bottom_left_turfs[1]
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))
@@ -133,7 +133,7 @@
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
-							if(!SSmapping.get_turf_below(T))
+							if(!GET_TURF_BELOW(T))
 								if(forced_z)
 									continue outer
 								else
@@ -183,7 +183,7 @@
 								if(PLACE_DEFAULT)
 									forced_ruins[linked] = -1
 								if(PLACE_BELOW)
-									forced_ruins[linked] = SSmapping.get_turf_below(placed_turf)
+									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
