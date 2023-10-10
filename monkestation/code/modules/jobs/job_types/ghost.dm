@@ -34,6 +34,7 @@
 
 	suit = /obj/item/clothing/suit/costume/ghost_sheet
 	shoes = null
-	uniform = null
+	id_trim = /datum/id_trim/job/assistant
+	belt = /obj/item/modular_computer/pda/assistant
 
-	backpack_contents = list(/datum/id_trim/job/assistant, /obj/item/modular_computer/pda/assistant)
+	backpack_contents = list()

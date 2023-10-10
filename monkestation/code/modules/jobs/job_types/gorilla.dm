@@ -35,6 +35,7 @@
 	suit = /obj/item/clothing/suit/hooded/gorilla
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
+	r_pocket = /obj/item/megaphone
 
 	backpack_contents = list(
 		/obj/item/food/grown/banana,
