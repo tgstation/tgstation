@@ -1,4 +1,4 @@
-/// This component will intercept bare-handed attacks by the owner on critically injured carbons and amputate random limbs instead
+/// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
 /datum/element/amputating_limbs
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
