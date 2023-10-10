@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Adds a base physical description proc to gameplay species, displays it on magic mirrors. It will give a description of not the lore of the species but in what way they differ from base species."
+  - bugfix: "Fixes a bad subtype on magical mirrors."
+  - bugfix: "Magical mirrors now give the user ADVANCEDTOOLUSER and LITERACY if they lack either of them, so monkey wizards aren't softlocked."
