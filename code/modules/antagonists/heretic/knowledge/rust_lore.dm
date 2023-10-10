@@ -13,6 +13,9 @@
  * Mark of Rust
  * Ritual of Knowledge
  * Rust Construction
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -22,7 +25,7 @@
  * Entropic Plume
  * > Sidepaths:
  *   Rusted Ritual
- *   Blood Cleave
+ *   Rust Charge
  *
  * Rustbringer's Oath
  */
