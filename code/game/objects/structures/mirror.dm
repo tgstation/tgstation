@@ -155,7 +155,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!selectable_races[racechoice])
 		return TRUE
 
-	var/datum/species/newrace = selectable_races[racechoice]
 
 	var/datum/species/newrace = new selectable_races[racechoice]
 
