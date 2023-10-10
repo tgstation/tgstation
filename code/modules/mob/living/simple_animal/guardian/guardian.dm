@@ -6,7 +6,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_SPECIAL
+	sentience_type = SENTIENCE_HUMANOID
 	bubble_icon = "guardian"
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"

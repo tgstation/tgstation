@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - bugfix: "Fixes a few runtimes with TTS and skips some code if TTS isn't enabled."
