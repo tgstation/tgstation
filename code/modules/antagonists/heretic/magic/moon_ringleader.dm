@@ -15,7 +15,7 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	aoe_radius = 4
+	aoe_radius = 7
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	. = list()
@@ -37,8 +37,8 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/human/victim, atom/caster)
 	if(!ismob(victim))
-		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70-victim.mob_mood.sanity, 160)
-		repeat_string((100-victim.mob_mood.sanity)/10,victim.cause_hallucination( \
+		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100-victim.mob_mood.sanity, 160)
+		repeat_string((120-victim.mob_mood.sanity)/10,victim.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"ringleaders rise", \
 		) )

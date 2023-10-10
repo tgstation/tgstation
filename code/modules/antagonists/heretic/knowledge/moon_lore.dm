@@ -194,18 +194,8 @@
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 	adds_sidepath_points = 1
 	route = PATH_MOON
-	/// A static list of all traits we apply on ascension.
-	var/static/list/traits_to_apply = list(
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		TRAIT_NOFIRE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-	)
 
-/datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
 		return
@@ -216,25 +206,37 @@
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
-	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
-	circle_spell.Grant(user)
+	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
+	user.add_traits(TRAIT_MADNESS_IMMUNE)
 
-	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
-	screen_wide_fire_spell.Grant(user)
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
-	if(existing_beam_spell)
-		existing_beam_spell.max_beam_bounces *= 2 // Double beams
-		existing_beam_spell.beam_duration *= 0.66 // Faster beams
-		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
-	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
-	fiery_rebirth?.cooldown_time *= 0.16
+/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 
-	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	if(length(traits_to_apply))
-		user.add_traits(traits_to_apply, MAGIC_TRAIT)
+	for(var/mob/living/carbon/close_carbon in view(5, source))
+		if(IS_HERETIC_OR_MONSTER(close_carbon))
+			continue
+		close_carbon.adjust_confusion(5 SECONDS, 20 SECONDS)
+		close_carbon.mob_mood.set_sanity(close_carbon.mob_mood.sanity-5)
+
+	/// Time passed since the last effect
+	var/ticks = 0
+	/// How many seconds between each hallucination pulse
+	var/release_delay = 5
+
+	ticks += seconds_per_tick
+	if(ticks < release_delay)
+		return
+	ticks -= release_delay
+	visible_hallucination_pulse(
+		center = get_turf(src),
+		radius = 7,
+		hallucination_duration = 50 SECONDS)
+
+
