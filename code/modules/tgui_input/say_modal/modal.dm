@@ -52,6 +52,7 @@
 			fancy = TRUE,
 			inline_css = file("tgui/public/tgui-say.bundle.css"),
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
+			hidden = TRUE,
 	);
 
 /**

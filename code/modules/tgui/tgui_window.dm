@@ -67,6 +67,7 @@
  * optional inline_html string - Custom HTML to inject.
  * optional inline_js string - Custom JS to inject.
  * optional inline_css string - Custom CSS to inject.
+ * optional hidden bool - If TRUE, the window will be hidden on load.
  */
 /datum/tgui_window/proc/initialize(
 		strict_mode = FALSE,
@@ -74,12 +75,16 @@
 		assets = list(),
 		inline_html = "",
 		inline_js = "",
-		inline_css = "")
+		inline_css = "",
+		hidden = FALSE,
+		)
+
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
-	if(!client)
+	if(isnull(client))
 		return
+
 	src.initial_fancy = fancy
 	src.initial_assets = assets
 	src.initial_inline_html = inline_html
@@ -87,17 +92,22 @@
 	src.initial_inline_css = inline_css
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
+
 	// Build window options
-	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
-	// Remove titlebar and resize handles for a fancy window
-	if(fancy)
-		options += "titlebar=0;can_resize=0;"
-	else
-		options += "titlebar=1;can_resize=1;"
+	var/list/options = list()
+	options["window"] = "[id]"
+	options["file"] = "[id].html"
+	options["can_minimize"] = "0"
+	options["auto_format"] = "0"
+	options["titlebar"] = fancy ? "0" : "1"
+	options["can_resize"] = fancy ? "0" : "1"
+	options["is-visible"] = hidden ? "0" : "1"
+
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
+
 	// Inject assets
 	var/inline_assets_str = ""
 	for(var/datum/asset/asset in assets)
@@ -113,19 +123,23 @@
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
 	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
+
 	// Inject inline HTML
 	if (inline_html)
 		html = replacetextEx(html, "<!-- tgui:inline-html -->", isfile(inline_html) ? file2text(inline_html) : inline_html)
+
 	// Inject inline JS
 	if (inline_js)
 		inline_js = "<script>\n'use strict';\n[isfile(inline_js) ? file2text(inline_js) : inline_js]\n</script>"
 		html = replacetextEx(html, "<!-- tgui:inline-js -->", inline_js)
+
 	// Inject inline CSS
 	if (inline_css)
 		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
 		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
+
 	// Open the window
-	client << browse(html, "window=[id];[options]")
+	client << browse(html, list2params(options))
 	// Detect whether the control is a browser
 	is_browser = winexists(client, id) == "BROWSER"
 	// Instruct the client to signal UI when the window is closed.
