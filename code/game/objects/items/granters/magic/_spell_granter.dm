@@ -33,7 +33,7 @@
 	if(!granted_action)
 		CRASH("Someone attempted to learn [type], which did not have an spell set.")
 	if(locate(granted_action) in user.actions)
-		if(IS_WIZARD(user))
+		if(HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 			to_chat(user, span_warning("You're already far more versed in the spell [action_name] \
 				than this flimsy how-to book can provide!"))
 		else
@@ -43,6 +43,7 @@
 
 /obj/item/book/granter/action/spell/on_reading_start(mob/living/user)
 	to_chat(user, span_notice("You start reading about casting [action_name]..."))
+	return TRUE
 
 /obj/item/book/granter/action/spell/on_reading_finished(mob/living/user)
 	to_chat(user, span_notice("You feel like you've experienced enough to cast [action_name]!"))

@@ -11,8 +11,9 @@
 	icon_state = "meat"
 	bite_consumption = 3
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 6,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/fat = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
 	) //Meat has fats that a food processor can process into cooking oil
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
@@ -77,6 +78,7 @@
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtypes = MEAT | RAW | GORE
 	venue_value = FOOD_MEAT_MUTANT
+	starting_reagent_purity = 0.4 // Take a look at their diet
 
 /obj/item/food/meat/slab/human/mutant/lizard/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -147,6 +149,7 @@
 	desc = "A synthetic slab of meat."
 	foodtypes = RAW | MEAT //hurr durr chemicals were harmed in the production of this meat thus its non-vegan.
 	venue_value = FOOD_PRICE_WORTHLESS
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/synthmeat/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -157,6 +160,7 @@
 	desc = "A slab of station reclaimed and chemically processed meat product."
 	tastes = list("meat flavoring" = 2, "modified starches" = 2, "natural & artificial dyes" = 1, "butyric acid" = 1)
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/meatproduct/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -164,6 +168,7 @@
 /obj/item/food/meat/slab/monkey
 	name = "monkey meat"
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3 // Monkeys are considered synthetic life
 
 /obj/item/food/meat/slab/bugmeat
 	name = "bug meat"
@@ -229,7 +234,7 @@
 		/datum/reagent/consumable/nutriment/protein = 16,
 		/datum/reagent/medicine/morphine = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/consumable/cooking_oil = 6,
+		/datum/reagent/consumable/nutriment/fat = 6,
 	)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = RAW | MEAT
@@ -286,7 +291,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/toxin = 5,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
@@ -300,7 +305,7 @@
 /obj/item/food/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/cooking_oil = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/nutriment/fat = 1)
 	icon_state = "meatwheat_clump"
 	bite_consumption = 4
 	tastes = list("meat" = 1, "wheat" = 1)
@@ -312,7 +317,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 7,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 5, //Plenty of fat!
+		/datum/reagent/consumable/nutriment/fat = 5, //Plenty of fat!
 	)
 
 /obj/item/food/meat/rawbacon
@@ -322,10 +327,11 @@
 	bite_consumption = 2
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/rawbacon/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -337,11 +343,11 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
@@ -349,7 +355,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/gondola_mutation_toxin = 5,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	foodtypes = RAW | MEAT | GORE
@@ -366,7 +372,7 @@
 	desc = "A slab of penguin meat."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("beef" = 1, "cod fish" = 1)
 
@@ -384,7 +390,7 @@
 	bite_consumption = 3
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("raw crab" = 1)
 	foodtypes = RAW | MEAT
@@ -399,11 +405,11 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	tastes = list("crab" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/slab/chicken
 	name = "chicken meat"
@@ -411,6 +417,7 @@
 	desc = "A slab of raw chicken. Remember to wash your hands!"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6) //low fat
 	tastes = list("chicken" = 1)
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/chicken/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -428,10 +435,25 @@
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/fat = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Fatty piece
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/pig/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
+/obj/item/food/meat/slab/grassfed
+	name = "eco meat"
+	desc = "A slab of 100% grass fed award-winning farm meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/fat = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Marble
+	starting_reagent_purity = 1
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 /obj/item/food/meat/steak
@@ -439,12 +461,13 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/fat = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
@@ -659,7 +682,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()

@@ -19,7 +19,7 @@
 	base_message_chance = 15
 	symptom_delay_min = 2
 	symptom_delay_max = 15
-	var/spread_range = 1
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Resistance 11" = "The host will drop small items when coughing.",
 		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",
@@ -31,6 +31,7 @@
 	COOLDOWN_DECLARE(cough_cooldown)
 	///if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
 	var/off_cooldown_coughed = FALSE
+	var/spread_range = 1
 
 /datum/symptom/cough/Start(datum/disease/advance/active_disease)
 	. = ..()

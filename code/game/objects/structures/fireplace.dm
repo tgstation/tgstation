@@ -34,7 +34,7 @@
 /// We're offset back into the wall, account for that
 /obj/structure/fireplace/get_light_offset()
 	var/list/hand_back = ..()
-	var/list/dir_offset = dir2offset(turn(dir, 180))
+	var/list/dir_offset = dir2offset(REVERSE_DIR(dir))
 	hand_back[1] += dir_offset[1] * 0.5
 	hand_back[2] += dir_offset[2] * 0.5
 	return hand_back

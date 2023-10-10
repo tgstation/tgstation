@@ -188,6 +188,15 @@
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
 
+/datum/supply_order/proc/append_order(list/new_contents, cost_increase)
+	for(var/i as anything in new_contents)
+		if(pack.contains[i])
+			pack.contains[i] += new_contents[i]
+		else
+			pack.contains += i
+			pack.contains[i] = new_contents[i]
+	pack.cost += cost_increase
+
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
 #undef MANIFEST_ERROR_CONTENTS

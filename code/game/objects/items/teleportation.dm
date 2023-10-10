@@ -460,7 +460,8 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		make_bloods(mobloc, emergency_destination, user)
+		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
+			make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -483,7 +484,7 @@
 	destination.ex_act(EXPLODE_HEAVY)
 	victim.unequip_everything()
 	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
 /obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.

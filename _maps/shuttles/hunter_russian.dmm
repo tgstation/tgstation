@@ -173,10 +173,10 @@
 /obj/structure/closet/crate/secure/weapon{
 	name = "surplus crate"
 	},
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "qF" = (
@@ -342,7 +342,7 @@
 	desc = "A large wood and steel-reinforced crate.";
 	name = "voytek's crate"
 	},
-/mob/living/simple_animal/hostile/bear{
+/mob/living/basic/bear{
 	desc = "A very friendly yet still extremely menacing space-bear. Comrade until the end.";
 	name = "Voytek"
 	},
@@ -381,6 +381,7 @@
 	req_access = list("hunter");
 	specialfunctions = 4
 	},
+/obj/item/soap,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "Dw" = (
@@ -451,8 +452,7 @@
 /area/shuttle/hunter/russian)
 "GF" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/soap,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "IV" = (
@@ -613,7 +613,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/ballistic/automatic/pistol,
 /obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
 /obj/item/crowbar,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)

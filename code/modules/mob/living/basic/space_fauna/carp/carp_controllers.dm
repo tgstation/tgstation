@@ -9,6 +9,7 @@
  */
 /datum/ai_controller/basic_controller/carp
 	blackboard = list(
+		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
 	)
@@ -25,7 +26,7 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/carp_migration,
 	)
 
@@ -35,6 +36,7 @@
  */
 /datum/ai_controller/basic_controller/carp/pet
 	blackboard = list(
+		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
 	)
@@ -48,7 +50,7 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /**
@@ -78,6 +80,7 @@
  */
 /datum/ai_controller/basic_controller/carp/passive
 	blackboard = list(
+		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
 	)
@@ -91,6 +94,6 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/carp_migration,
 	)

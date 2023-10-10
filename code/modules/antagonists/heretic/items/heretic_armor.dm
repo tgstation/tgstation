@@ -92,12 +92,27 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/void_cloak)
-
-/obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
-	. = ..()
 	make_visible()
+
+/obj/item/clothing/suit/hooded/cultrobes/void/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_OCLOTHING)
+		RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(hide_item))
+		RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(show_item))
+
+/obj/item/clothing/suit/hooded/cultrobes/void/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EQUIPPED_ITEM))
+
+/obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(datum/source, obj/item/item, slot)
+	SIGNAL_HANDLER
+	if(slot & ITEM_SLOT_SUITSTORE)
+		ADD_TRAIT(item, TRAIT_NO_STRIP, REF(src)) // i'd use examine hide but its a flag and yeah
+
+/obj/item/clothing/suit/hooded/cultrobes/void/proc/show_item(datum/source, obj/item/item, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(item, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void/examine(mob/user)
 	. = ..()

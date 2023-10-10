@@ -96,15 +96,10 @@
 		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == grilled_item)
 		finish_grill()
 		grilled_item = null
-	return ..()
-
-/obj/machinery/grill/handle_atom_del(atom/A)
-	if(A == grilled_item)
-		grilled_item = null
-	return ..()
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -131,7 +126,7 @@
 	return ..()
 
 /obj/machinery/grill/proc/finish_grill()
-	if(grilled_item)
+	if(!QDELETED(grilled_item))
 		if(grill_time >= 20)
 			grilled_item.AddElement(/datum/element/grilled_item, grill_time)
 		UnregisterSignal(grilled_item, COMSIG_ITEM_GRILLED)

@@ -519,14 +519,13 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "un" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "uG" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/structure/curtain,
 /turf/open/floor/mineral/titanium/tiled/blue,

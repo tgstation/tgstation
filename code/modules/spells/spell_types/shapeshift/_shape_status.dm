@@ -32,7 +32,7 @@
 /datum/status_effect/shapechange_mob/on_apply()
 	caster_mob.mind?.transfer_to(owner)
 	caster_mob.forceMove(owner)
-	caster_mob.notransform = TRUE
+	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
 	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, PROC_REF(on_wabbajacked))
@@ -77,7 +77,7 @@
 	UnregisterSignal(caster_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
 	caster_mob.forceMove(owner.loc)
-	caster_mob.notransform = FALSE
+	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
 	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 	owner.mind?.transfer_to(caster_mob)
 
@@ -115,7 +115,7 @@
 
 	// Our caster inside was gibbed, mirror the gib to our mob
 	if(gibbed)
-		owner.gib()
+		owner.gib(DROP_ALL_REMAINS)
 
 	// Otherwise our caster died, just make our mob die
 	else

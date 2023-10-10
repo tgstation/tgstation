@@ -1,11 +1,11 @@
 #define MECHA_INT_FIRE (1<<0)
 #define MECHA_INT_TEMP_CONTROL (1<<1)
 #define MECHA_INT_SHORT_CIRCUIT (1<<2)
-#define MECHA_INT_TANK_BREACH (1<<3)
+#define MECHA_CABIN_AIR_BREACH (1<<3)
 #define MECHA_INT_CONTROL_LOST (1<<4)
 
-#define ADDING_ACCESS_POSSIBLE (1<<0)
-#define ADDING_MAINT_ACCESS_POSSIBLE (1<<1)
+#define PANEL_OPEN (1<<0)
+#define ID_LOCK_ON (1<<1)
 #define CANSTRAFE (1<<2)
 #define LIGHTS_ON (1<<3)
 #define SILICON_PILOT (1<<4)
@@ -34,11 +34,6 @@
 #define MECHA_POWER "mecha_power"
 #define MECHA_ARMOR "mecha_armor"
 
-#define MECHA_LOCKED 0
-#define MECHA_SECURE_BOLTS 1
-#define MECHA_LOOSE_BOLTS 2
-#define MECHA_OPEN_HATCH 3
-
 // Some mechs must (at least for now) use snowflake handling of their UI elements, these defines are for that
 // when changing MUST update the same-named tsx file constants
 #define MECHA_SNOWFLAKE_ID_SLEEPER "sleeper_snowflake"
@@ -47,6 +42,10 @@
 #define MECHA_SNOWFLAKE_ID_EXTINGUISHER "extinguisher_snowflake"
 #define MECHA_SNOWFLAKE_ID_EJECTOR "ejector_snowflake"
 #define MECHA_SNOWFLAKE_ID_OREBOX_MANAGER "orebox_manager_snowflake"
+#define MECHA_SNOWFLAKE_ID_RADIO "radio_snowflake"
+#define MECHA_SNOWFLAKE_ID_AIR_TANK "air_tank_snowflake"
+#define MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC "ballistic_weapon_snowflake"
+#define MECHA_SNOWFLAKE_ID_GENERATOR "generator_snowflake"
 
 #define MECHA_AMMO_INCENDIARY "Incendiary bullet"
 #define MECHA_AMMO_BUCKSHOT "Buckshot shell"
@@ -55,3 +54,6 @@
 #define MECHA_AMMO_MISSILE_PEP "PEP missile"
 #define MECHA_AMMO_FLASHBANG "Flashbang"
 #define MECHA_AMMO_CLUSTERBANG "Clusterbang"
+#define MECHA_AMMO_PUNCHING_GLOVE "Punching glove"
+#define MECHA_AMMO_BANANA_PEEL "Banana peel"
+#define MECHA_AMMO_MOUSETRAP "Mousetrap"

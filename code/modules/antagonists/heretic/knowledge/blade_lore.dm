@@ -101,10 +101,10 @@
 		towards your attacker. This effect can only trigger once every 20 seconds."
 	gain_text = "The footsoldier was known to be a fearsome duelist. \
 		Their general quickly appointed them as their personal Champion."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 	)
 	cost = 1
@@ -225,7 +225,10 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	next_knowledge = list(
+		/datum/heretic_knowledge/duel_stance,
+		/datum/heretic_knowledge/rifle,
+	)
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
@@ -240,6 +243,7 @@
 		you gain increased resistance to gaining wounds and resistance to batons."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
 		He was without rival, equal, or purpose."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
@@ -369,10 +373,11 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/ultimate/blade_final,
-		/datum/heretic_knowledge/rifle,
+		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
@@ -385,7 +390,7 @@
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
-		Additionally, you become a master of combat, gaining full wound and stun immunity. \
+		Additionally, you become a master of combat, gaining full wound immunity and the ability to shrug off short stuns. \
 		Your Sundered Blades deal bonus damage and heal you on attack for a portion of the damage dealt."
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
@@ -402,12 +407,28 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
-	user.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED), name)
+	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
-
+	user.add_stun_absorption(
+		source = name,
+		message = span_warning("%EFFECT_OWNER throws off the stun!"),
+		self_message = span_warning("You throw off the stun!"),
+		examine_message = span_hypnophrase("%EFFECT_OWNER_THEYRE standing stalwartly."),
+		// flashbangs are like 5-10 seoncds,
+		// a banana peel is ~5 seconds, depending on botany
+		// body throws and tackles are less than 5 seconds,
+		// stun baton / stamcrit detracts no time,
+		// and worst case: beepsky / tasers are 10 seconds.
+		max_seconds_of_stuns_blocked = 45 SECONDS,
+		delete_after_passing_max = FALSE,
+		recharge_time = 2 MINUTES,
+	)
 	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
 	steel_spell?.cooldown_time /= 2
+
+	var/mob/living/carbon/human/heretic = user
+	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

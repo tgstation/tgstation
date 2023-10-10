@@ -55,7 +55,7 @@
 	name = "plague doctor's hat"
 	desc = "These were once used by plague doctors. Will protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
 
@@ -134,6 +134,10 @@
 	icon_state = "cowboy_hat_black"
 	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
+
+/// More likely to intercept bullets, since you're likely to not be wearing your modsuit with this on
+/obj/item/clothing/head/cowboy/black/syndicate
+	deflect_chance = 25
 
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"

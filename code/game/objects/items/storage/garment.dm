@@ -146,6 +146,7 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/cargo/qm(src)
 	new /obj/item/clothing/suit/utility/fire/firefighter(src)
 	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/clothing/suit/jacket/quartermaster(src)
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/neck/cloak/qm(src)

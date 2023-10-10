@@ -161,13 +161,13 @@
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
 			return FALSE
-		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
 
 	if(!cell)
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		return list("mode" = RCD_WALLFRAME, "delay" = 50, "cost" = 10)
+		return list("mode" = RCD_WALLFRAME, "delay" = 5 SECONDS, "cost" = 10)
 
 	balloon_alert(user, "has both board and cell!")
 	return FALSE

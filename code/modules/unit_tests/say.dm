@@ -62,6 +62,8 @@
 	var/list/handle_hearing_result = null
 	var/mob/living/carbon/human/speaker
 	var/mob/living/carbon/human/listener
+	var/obj/item/radio/speaker_radio
+	var/obj/item/radio/listener_radio
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -99,7 +101,14 @@
 
 /datum/unit_test/speech/Run()
 	speaker = allocate(/mob/living/carbon/human/consistent)
+	// Name changes to make understanding breakpoints easier
+	speaker.name = "SPEAKER"
 	listener = allocate(/mob/living/carbon/human/consistent)
+	listener.name = "LISTENER"
+	speaker_radio = allocate(/obj/item/radio)
+	speaker_radio.name = "SPEAKER RADIO"
+	listener_radio = allocate(/obj/item/radio)
+	listener_radio.name = "LISTENER RADIO"
 	// Hear() requires a client otherwise it will early return
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
@@ -113,6 +122,9 @@
 	conversation(distance = 5)
 	// neither speaking or whispering should be hearable
 	conversation(distance = 10)
+
+	// Radio test
+	radio_test()
 
 	// Language test
 	speaker.grant_language(/datum/language/beachbum)
@@ -155,6 +167,40 @@
 
 	handle_speech_result = null
 	handle_hearing_result = null
+
+/datum/unit_test/speech/proc/radio_test()
+	speaker.forceMove(run_loc_floor_bottom_left)
+	listener.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	speaker_radio.forceMove(run_loc_floor_bottom_left)
+	speaker_radio.set_broadcasting(TRUE)
+	listener_radio.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	// Normally speaking, if there isn't a functional telecomms array on the same z-level, then handheld radios
+	// have a short delay before sending the message. We use the centcom frequency to get around this.
+	speaker_radio.set_frequency(FREQ_CENTCOM)
+	speaker_radio.independent = TRUE
+	listener_radio.set_frequency(FREQ_CENTCOM)
+	listener_radio.independent = TRUE
+
+	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
+
+	speaker.say(pangram_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
+	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
+	TEST_ASSERT_EQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were not equal (radio test)")
+
+	handle_speech_result = null
+	handle_hearing_result = null
+
+	speaker_radio.set_frequency(FREQ_CTF_RED)
+	speaker.say(pangram_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
+	TEST_ASSERT_NULL(handle_hearing_result, "Listener erroneously heard radio message (radio test)")
+	TEST_ASSERT_NOTEQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were erroneously equal (radio test)")
+
+	handle_speech_result = null
+	handle_hearing_result = null
+	speaker_radio.set_broadcasting(FALSE)
 
 #undef NORMAL_HEARING_RANGE
 #undef WHISPER_HEARING_RANGE

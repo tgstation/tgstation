@@ -4,7 +4,7 @@
  */
 /datum/ai_planning_subtree/use_mob_ability
 	/// Blackboard key for the ability
-	var/ability_key
+	var/ability_key = BB_GENERIC_ACTION
 	/// Behaviour to perform using ability
 	var/use_ability_behaviour = /datum/ai_behavior/use_mob_ability
 	/// If true we terminate planning after trying to use the ability.
@@ -15,7 +15,7 @@
 		CRASH("You forgot to tell this mob where to find its ability")
 
 	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
-	if (QDELETED(using_action) || !using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key)

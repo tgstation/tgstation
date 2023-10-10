@@ -90,7 +90,7 @@
 
 /datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
-	sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
+	sliced_limb.force_wound_upwards(/datum/wound/slash/flesh/moderate/many_cuts)
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"

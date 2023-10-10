@@ -19,6 +19,7 @@
 	. = ..()
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddComponent(/datum/component/seethrough_mob)
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
 	. = ..()
@@ -56,9 +57,6 @@
 
 	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
 	tail_whip.Grant(src)
-
-	var/datum/action/small_sprite/queen/smallsprite = new(src)
-	smallsprite.Grant(src)
 
 	var/datum/action/cooldown/alien/promote/promotion = new(src)
 	promotion.Grant(src)

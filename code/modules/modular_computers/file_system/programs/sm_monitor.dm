@@ -22,7 +22,7 @@
 	refresh()
 
 /// Apparently destroy calls this [/datum/computer_file/Destroy]. Here just to clean our references.
-/datum/computer_file/program/supermatter_monitor/kill_program()
+/datum/computer_file/program/supermatter_monitor/kill_program(mob/user)
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	return ..()

@@ -100,7 +100,7 @@
 /mob/living/silicon/emp_act(severity)
 	. = ..()
 	to_chat(src, span_danger("Warning: Electromagnetic pulse detected."))
-	if(. & EMP_PROTECT_SELF)
+	if(. & EMP_PROTECT_SELF || QDELETED(src))
 		return
 	switch(severity)
 		if(1)

@@ -67,6 +67,9 @@
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
+	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
+		to_chat(chosen_spirit, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		return
 	bound_spirit = new(parent)
 	bound_spirit.ckey = chosen_spirit.ckey
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")

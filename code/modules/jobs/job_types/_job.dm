@@ -103,7 +103,7 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS)
 	var/job_flags = NONE
 
 	/// Multiplier for general usage of the voice of god.
@@ -126,7 +126,7 @@
 
 	/// custom ringtone for this job
 	var/job_tone
-	
+
 	/// Minimal character age for this job
 	var/required_character_age
 
@@ -169,6 +169,8 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+/// Announce that this job as joined the round to all crew members.
+/// Note the joining mob has no client at this point.
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
 		announce_head(joining_mob, head_announce)
@@ -182,13 +184,21 @@
 /mob/living/proc/on_job_equipping(datum/job/equipping)
 	return
 
+#define VERY_LATE_ARRIVAL_TOAST_PROB 20
+
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping)
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 	bank_account.payday(STARTING_PAYCHECKS, TRUE)
 	account_id = bank_account.account_id
 	bank_account.replaceable = FALSE
+	add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
+
 	dress_up_as_job(equipping)
 
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
+		equip_to_slot_or_del(new /obj/item/food/griddle_toast(src), ITEM_SLOT_MASK)
+
+#undef VERY_LATE_ARRIVAL_TOAST_PROB
 
 /mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
 	return
@@ -258,8 +268,38 @@
 
 	return TRUE
 
-/datum/job/proc/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
+/// Gets the message that shows up when spawning as this job
+/datum/job/proc/get_spawn_message()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	return examine_block(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+
+/// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
+/datum/job/proc/get_spawn_message_information()
+	SHOULD_CALL_PARENT(TRUE)
+	var/list/info = list()
+	info += "<b>You are the [title].</b>\n"
+	var/related_policy = get_policy(title)
+	var/radio_info = get_radio_information()
+	if(related_policy)
+		info += related_policy
+	if(supervisors)
+		info += "As the [title] you answer directly to [supervisors]. Special circumstances may change this."
+	if(radio_info)
+		info += radio_info
+	if(req_admin_notify)
+		info += "<b>You are playing a job that is important for Game Progression. \
+			If you have to disconnect, please notify the admins via adminhelp.</b>"
+	if(CONFIG_GET(number/minimal_access_threshold))
+		info += span_boldnotice("As this station was initially staffed with a \
+			[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+			have been added to your ID card.")
+
+	return info
+
+/// Returns information pertaining to this job's radio.
+/datum/job/proc/get_radio_information()
+	if(job_flags & JOB_CREW_MEMBER)
+		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
 
 /datum/outfit/job
 	name = "Standard Gear"
@@ -279,6 +319,7 @@
 	var/backpack = /obj/item/storage/backpack
 	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
+	var/messenger = /obj/item/storage/backpack/messenger
 
 	var/pda_slot = ITEM_SLOT_BELT
 
@@ -293,10 +334,14 @@
 				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 			if(LSATCHEL)
 				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+			if(GMESSENGER)
+				back = /obj/item/storage/backpack/messenger //Grey messenger bag
 			if(DSATCHEL)
 				back = satchel //Department satchel
 			if(DDUFFELBAG)
 				back = duffelbag //Department duffel bag
+			if(DMESSENGER)
+				back = messenger //Department messenger bag
 			else
 				back = backpack //Department backpack
 
@@ -347,8 +392,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.saved_identification = equipped.real_name
-		pda.saved_job = equipped_job.title
+		pda.imprint_id(equipped.real_name, equipped_job.title)
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 

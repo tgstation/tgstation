@@ -12,6 +12,7 @@
 	creator_desc = "Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item."
 	creator_icon = "dextrous"
 	dextrous = TRUE
+	hud_type = /datum/hud/dextrous/guardian
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
 

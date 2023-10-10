@@ -52,8 +52,9 @@
 	var/loop_started = FALSE
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
-	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
-	var/audio_index = 1
+	///The index of the current song we're playing in the mid_sounds list, only used if in_order is used
+	///This is immediately set to 1, so we start the index at 0
+	var/audio_index = 0
 
 	// Args
 	/// Do we skip the starting sounds?

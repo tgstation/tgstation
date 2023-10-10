@@ -100,6 +100,9 @@
 /datum/movespeed_modifier/fast_web
 	multiplicative_slowdown = 0.2
 
+/datum/movespeed_modifier/young_web
+	multiplicative_slowdown = 0.5
+
 /datum/movespeed_modifier/spiderling_web
 	multiplicative_slowdown = 0.7
 
@@ -108,6 +111,9 @@
 
 /datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/viper_defensive
+	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
@@ -155,3 +161,13 @@
 
 /datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE
+
+/datum/movespeed_modifier/goliath_mount
+	multiplicative_slowdown = -26
+
+/datum/movespeed_modifier/settler
+	multiplicative_slowdown = 0.2
+	blacklisted_movetypes = FLOATING|FLYING
+
+/datum/movespeed_modifier/basilisk_overheat
+	multiplicative_slowdown = -18

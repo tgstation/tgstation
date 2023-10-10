@@ -189,6 +189,7 @@
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
 	update_appearance(UPDATE_ICON)
+	SEND_SIGNAL(hud, COMSIG_HUD_PLAYER_READY_TOGGLE)
 
 ///Shown when the game has started
 /atom/movable/screen/lobby/button/join
@@ -407,6 +408,27 @@
 	screen_loc = "TOP:-82,CENTER:-54"
 	always_shown = TRUE
 
+	var/blip_enabled = TRUE
+
+/atom/movable/screen/lobby/button/collapse/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	switch(SSticker.current_state)
+		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(disable_blip))
+			RegisterSignal(hud, COMSIG_HUD_PLAYER_READY_TOGGLE, PROC_REF(on_player_ready_toggle))
+		if(GAME_STATE_SETTING_UP)
+			blip_enabled = FALSE
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(enable_blip))
+		else
+			blip_enabled = FALSE
+
+	add_overlay(get_blip_overlay())
+	update_icon(UPDATE_OVERLAYS)
+
+/atom/movable/screen/lobby/button/collapse/update_overlays()
+	. = ..()
+	. += get_blip_overlay()
+
 /atom/movable/screen/lobby/button/collapse/Click(location, control, params)
 	. = ..()
 	if(!.)
@@ -435,6 +457,38 @@
 	//we use sleep here so it can work during game setup, as addtimer would not work until the game would finish setting up
 	sleep(2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	set_button_status(TRUE)
+
+///Proc to update the ready blip state upon new player's ready status change
+/atom/movable/screen/lobby/button/collapse/proc/on_player_ready_toggle()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
+
+///Returns a ready blip overlay depending on the player's ready state
+/atom/movable/screen/lobby/button/collapse/proc/get_blip_overlay()
+	var/blip_icon_state = "ready_blip"
+	if(blip_enabled && hud)
+		var/mob/dead/new_player/new_player = hud.mymob
+		blip_icon_state += "_[new_player.ready ? "" : "not_"]ready"
+	else
+		blip_icon_state += "_disabled"
+	var/mutable_appearance/ready_blip = mutable_appearance(icon, blip_icon_state)
+	return ready_blip
+
+///Disables the ready blip; makes us listen for the setup error to re-enable the blip
+/atom/movable/screen/lobby/button/collapse/proc/disable_blip()
+	SIGNAL_HANDLER
+	blip_enabled = FALSE
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(enable_blip))
+	update_appearance(UPDATE_ICON)
+
+///Enables the ready blip; makes us listen for the setup completion and game start to disable the blip
+/atom/movable/screen/lobby/button/collapse/proc/enable_blip()
+	SIGNAL_HANDLER
+	blip_enabled = TRUE
+	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(disable_blip))
+	update_appearance(UPDATE_ICON)
 
 ///Moves the button to the top of the screen, leaving only the screen part in view
 ///Sends a signal on the hud for the menu hud elements to listen to

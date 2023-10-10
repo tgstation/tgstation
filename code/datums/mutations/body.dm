@@ -90,7 +90,7 @@
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
 			var/cough_range = GET_MUTATION_POWER(src) * 4
-			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
+			var/turf/target = get_ranged_target_turf(owner, REVERSE_DIR(owner.dir), cough_range)
 			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
 /datum/mutation/human/paranoia
@@ -484,7 +484,7 @@
 		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		borgo.Paralyze(6 SECONDS)
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
-	owner.gib()
+	owner.gib(DROP_ALL_REMAINS)
 
 /datum/mutation/human/headless
 	name = "H.A.R.S."

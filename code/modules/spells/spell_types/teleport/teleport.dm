@@ -7,7 +7,8 @@
 
 	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 1 MINUTES
-	cooldown_reduction_per_rank = 10 SECONDS
+	cooldown_reduction_per_rank = 20 SECONDS
+	spell_max_level = 3
 
 	invocation = "SCYAR NILA"
 	invocation_type = INVOCATION_SHOUT

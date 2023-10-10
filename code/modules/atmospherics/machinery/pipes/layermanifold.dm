@@ -12,6 +12,7 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
+	has_gas_visuals = FALSE
 
 	///Reference to all the nodes in the front
 	var/list/front_nodes
@@ -84,7 +85,7 @@
 	nodes = list()
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 		var/obj/machinery/atmospherics/foundfront = find_connecting(dir, iter)
-		var/obj/machinery/atmospherics/foundback = find_connecting(turn(dir, 180), iter)
+		var/obj/machinery/atmospherics/foundback = find_connecting(REVERSE_DIR(dir), iter)
 		front_nodes += foundfront
 		back_nodes += foundback
 		if(foundfront && !QDELETED(foundfront))

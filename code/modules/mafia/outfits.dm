@@ -29,7 +29,7 @@
 /datum/outfit/mafia/ninja
 	name = "Mafia Ninja"
 	glasses = /obj/item/clothing/glasses/sunglasses
-	suit = /obj/item/clothing/suit/costume/ianshirt
+	suit = /obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian
 	uniform = /obj/item/clothing/under/pants/jeans
 	shoes = /obj/item/clothing/shoes/sandal
 
@@ -46,7 +46,7 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/costume/gothcoat
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 
 //town
 
@@ -69,7 +69,7 @@
 /datum/outfit/mafia/psychologist
 	name = "Mafia Psychologist"
 
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	neck = /obj/item/clothing/neck/tie/black/tied
 	shoes = /obj/item/clothing/shoes/laceup
 
@@ -155,7 +155,7 @@
 	suit = /obj/item/clothing/suit/apron
 
 /datum/outfit/mafia/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 

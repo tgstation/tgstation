@@ -22,6 +22,12 @@
 	pull_icon.screen_loc = ui_above_movement
 	hotkeybuttons += pull_icon
 
+	rest_icon = new /atom/movable/screen/rest(null, src)
+	rest_icon.icon = ui_style
+	rest_icon.screen_loc = ui_above_intent
+	rest_icon.update_appearance()
+	static_inventory += rest_icon
+
 	using = new/atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_alien_language_menu
 	static_inventory += using

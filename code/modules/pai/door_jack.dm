@@ -35,6 +35,7 @@
 /mob/living/silicon/pai/proc/extend_cable()
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
+	RegisterSignal(hacking_cable, COMSIG_QDELETING, PROC_REF(on_hacking_cable_del))
 	var/mob/living/carbon/hacker = get_holder()
 	if(iscarbon(hacker) && hacker.put_in_hands(hacking_cable)) //important to double check since get_holder can return non-null values that aren't carbons.
 		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which [hacker] quickly grabs."), span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic component and manage to catch the falling cable."))
@@ -89,7 +90,6 @@
  */
 /mob/living/silicon/pai/proc/retract_cable()
 	balloon_alert(src, "cable retracted")
-	untrack_pai()
 	QDEL_NULL(hacking_cable)
 	return TRUE
 
@@ -112,17 +112,11 @@
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
 		balloon_alert(src, "failed! retracting...")
-		untrack_pai()
-		untrack_thing(hacking_cable)
 		QDEL_NULL(hacking_cable)
-		if(!QDELETED(card))
-			card.update_appearance()
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.machine
 	balloon_alert(src, "success")
 	door.open()
-	untrack_pai()
-	untrack_thing(hacking_cable)
 	QDEL_NULL(hacking_cable)
 	return TRUE
 

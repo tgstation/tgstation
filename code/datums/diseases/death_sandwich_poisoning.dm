@@ -14,7 +14,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	visibility_flags = HIDDEN_SCANNER
 	bypasses_immunity = TRUE
-
+	required_organ = ORGAN_SLOT_STOMACH
 
 /datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -47,7 +47,7 @@
 			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.emote("gasp")
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.vomit(20, TRUE)
+				affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your body feels hot!"))
 				if(prob(60))

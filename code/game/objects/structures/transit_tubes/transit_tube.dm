@@ -61,7 +61,7 @@
 
 
 /obj/structure/transit_tube/proc/has_entrance(from_dir)
-	from_dir = turn(from_dir, 180)
+	from_dir = REVERSE_DIR(from_dir)
 
 	for(var/direction in tube_dirs)
 		if(direction == from_dir)

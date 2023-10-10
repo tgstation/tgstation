@@ -16,12 +16,20 @@
 /obj/machinery/light/warm/no_nightlight
 	nightshift_allowed = FALSE
 
+/obj/machinery/light/warm/dim
+	nightshift_allowed = FALSE
+	bulb_power = 0.6
+
 /obj/machinery/light/cold
 	bulb_colour = LIGHT_COLOR_FAINT_BLUE
 	nightshift_light_color = LIGHT_COLOR_FAINT_BLUE
 
 /obj/machinery/light/cold/no_nightlight
 	nightshift_allowed = FALSE
+
+/obj/machinery/light/cold/dim
+	nightshift_allowed = FALSE
+	bulb_power = 0.6
 
 /obj/machinery/light/red
 	bulb_colour = "#FF3232"
@@ -108,11 +116,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm, 0)
 // ---- No nightlight warm light tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/no_nightlight, 0)
 
+// ---- Dim warm light tubes
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/dim, 0)
+
 // ---- Cold light tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold, 0)
 
 // ---- No nightlight cold light tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/no_nightlight, 0)
+
+// ---- Dim cold light tubes
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/dim, 0)
 
 // ---- Red tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/red, 0)

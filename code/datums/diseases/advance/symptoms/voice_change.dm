@@ -20,13 +20,14 @@
 	base_message_chance = 100
 	symptom_delay_min = 60
 	symptom_delay_max = 120
-	var/scramble_language = FALSE
-	var/datum/language/current_language
+	required_organ = ORGAN_SLOT_TONGUE
 	threshold_descs = list(
 		"Transmission 14" = "The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.",
 		"Stage Speed 7" = "Changes voice more often.",
 		"Stealth 3" = "The symptom remains hidden until active."
 	)
+	var/scramble_language = FALSE
+	var/datum/language/current_language
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
 	. = ..()

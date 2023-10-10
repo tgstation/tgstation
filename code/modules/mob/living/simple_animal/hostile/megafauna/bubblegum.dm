@@ -67,7 +67,6 @@ Difficulty: Hard
 	score_achievement_type = /datum/award/score/bubblegum_score
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
@@ -154,7 +153,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/organ/internal/tongue))
-		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
+		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()

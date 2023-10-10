@@ -15,6 +15,10 @@ GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
+/// Modify the threat level for station traits before dynamic can be Initialized. List(instance = threat_reduction)
+GLOBAL_LIST_EMPTY(dynamic_station_traits)
+/// Rulesets which have been forcibly enabled or disabled
+GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
 /datum/game_mode/dynamic
 	// Threat logging vars
@@ -136,7 +140,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// What is the higher bound of when the roundstart annoucement is sent out?
 	var/waittime_h = 1800
 
-	/// Maximum amount of threat allowed to generate.
+	/// A number between 0 and 100. The maximum amount of threat allowed to generate.
 	var/max_threat_level = 100
 
 	/// The extra chance multiplier that a heavy impact midround ruleset will run next time.
@@ -199,7 +203,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "<br/>"
 	dat += "Parameters: centre = [threat_curve_centre] ; width = [threat_curve_width].<br/>"
 	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
-	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
+	dat += "<i>On average, <b>[clamp(peaceful_percentage, 1, 99)]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
 	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
@@ -392,18 +396,22 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
-	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
-	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
+	// At lower pop levels we run a Liner Interpolation against the max threat based proportionally on the number
+	// of players ready. This creates a balanced lorentz curve within a smaller range than 0 to max_threat_level.
+	var/calculated_max_threat = (SSticker.totalPlayersReady < low_pop_player_threshold) ? LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold) : max_threat_level
+	log_dynamic("Calculated maximum threat level based on player count of [SSticker.totalPlayersReady]: [calculated_max_threat]")
 
-	if (SSticker.totalPlayersReady < low_pop_player_threshold)
-		threat_level = min(threat_level, LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))
+	threat_level = lorentz_to_amount(threat_curve_centre, threat_curve_width, calculated_max_threat)
 
-	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
+	for(var/datum/station_trait/station_trait in GLOB.dynamic_station_traits)
+		threat_level = max(threat_level - GLOB.dynamic_station_traits[station_trait], 0)
+		log_dynamic("Threat reduced by [GLOB.dynamic_station_traits[station_trait]]. Source: [type].")
+
+	peaceful_percentage = (threat_level/max_threat_level)*100
 
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
-	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
-	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
+	round_start_budget = lorentz_to_amount(roundstart_split_curve_centre, roundstart_split_curve_width, threat_level, 0.1)
 	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
 
@@ -442,6 +450,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						continue
 					vars[variable] = configuration["Dynamic"][variable]
 
+	configure_station_trait_costs()
 	setup_parameters()
 	setup_hijacking()
 	setup_shown_threat()
@@ -451,11 +460,22 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
+	SSjob.DivideOccupations(pure = TRUE, allow_all = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
-			roundstart_pop_ready++
-			candidates.Add(player)
+			if(is_unassigned_job(player.mind.assigned_role))
+				var/list/job_data = list()
+				var/job_prefs = player.client.prefs.job_preferences
+				for(var/job in job_prefs)
+					var/priority = job_prefs[job]
+					job_data += "[job]: [SSjob.job_priority_level_to_string(priority)]"
+				to_chat(player, span_danger("You were unable to qualify for any roundstart antagonist role this round because your job preferences presented a high chance of all of your selected jobs being unavailable, along with 'return to lobby if job is unavailable' enabled. Increase the number of roles set to medium or low priority to reduce the chances of this happening."))
+				log_admin("[player.ckey] failed to qualify for any roundstart antagonist role because their job preferences presented a high chance of all of their selected jobs being unavailable, along with 'return to lobby if job is unavailable' enabled and has [player.client.prefs.be_special.len] antag preferences enabled. They will be unable to qualify for any roundstart antagonist role. These are their job preferences - [job_data.Join(" | ")]")
+			else
+				roundstart_pop_ready++
+				candidates.Add(player)
+	SSjob.ResetOccupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_dynamic("[candidates.len] candidates.")
@@ -616,8 +636,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.persistent)
 			current_rules += rule
 		new_snapshot(rule)
+		rule.forget_startup()
 		return TRUE
 	rule.clean_up() // Refund threat, delete teams and so on.
+	rule.forget_startup()
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -665,9 +687,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
+				new_rule.forget_startup()
 				return TRUE
 		else if (forced)
 			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	new_rule.forget_startup()
 	return FALSE
 
 /datum/game_mode/dynamic/process()
@@ -777,6 +801,26 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		ruleset.restricted_roles |= JOB_ASSISTANT
 
+/// Get station traits and call for their config
+/datum/game_mode/dynamic/proc/configure_station_trait_costs()
+	if(!CONFIG_GET(flag/dynamic_config_enabled))
+		return
+	for(var/datum/station_trait/station_trait as anything in GLOB.dynamic_station_traits)
+		configure_station_trait(station_trait)
+
+/// Apply configuration for station trait costs
+/datum/game_mode/dynamic/proc/configure_station_trait(datum/station_trait/station_trait)
+	var/list/station_trait_config = LAZYACCESSASSOC(configuration, "Station", station_trait.dynamic_threat_id)
+	var/cost = station_trait_config["cost"]
+
+	if(isnull(cost)) //0 is valid so check for null specifically
+		return
+
+	if(cost != GLOB.dynamic_station_traits[station_trait])
+		log_dynamic("Config set [station_trait.dynamic_threat_id] cost from [station_trait.threat_reduction] to [cost]")
+
+	GLOB.dynamic_station_traits[station_trait] = cost
+
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
 	mid_round_budget = min(threat_level, mid_round_budget + regain)
@@ -807,30 +851,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (!isnull(threat_log))
 		log_threat(-cost, threat_log, reason)
 
-/// Turns the value generated by lorentz distribution to number between 0 and 100.
-/// Used for threat level and splitting the budgets.
-/datum/game_mode/dynamic/proc/lorentz_to_amount(x)
-	switch (x)
-		if (-INFINITY to -20)
-			return rand(0, 10)
-		if (-20 to -10)
-			return RULE_OF_THREE(-40, -20, x) + 50
-		if (-10 to -5)
-			return RULE_OF_THREE(-30, -10, x) + 50
-		if (-5 to -2.5)
-			return RULE_OF_THREE(-20, -5, x) + 50
-		if (-2.5 to -0)
-			return RULE_OF_THREE(-10, -2.5, x) + 50
-		if (0 to 2.5)
-			return RULE_OF_THREE(10, 2.5, x) + 50
-		if (2.5 to 5)
-			return RULE_OF_THREE(20, 5, x) + 50
-		if (5 to 10)
-			return RULE_OF_THREE(30, 10, x) + 50
-		if (10 to 20)
-			return RULE_OF_THREE(40, 20, x) + 50
-		if (20 to INFINITY)
-			return rand(90, 100)
+#define MAXIMUM_DYN_DISTANCE 5
+
+/**
+ * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
+ * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
+ * threat and then rounded to the nearest interval.
+ * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
+ */
+/datum/game_mode/dynamic/proc/lorentz_to_amount(centre = 0, scale = 1.8, max_threat = 100, interval = 1)
+	var/location = RANDOM_DECIMAL(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
+	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, location, scale)
+	var/std_threat = lorentz_result * max_threat
+	///Without these, the amount won't come close to hitting 0% or 100% of the max threat.
+	var/lower_deviation = max(std_threat * (location-centre)/MAXIMUM_DYN_DISTANCE, 0)
+	var/upper_deviation = max((max_threat - std_threat) * (centre-location)/MAXIMUM_DYN_DISTANCE, 0)
+	return clamp(round(std_threat + upper_deviation - lower_deviation, interval), 0, 100)
+
+#undef MAXIMUM_DYN_DISTANCE
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE

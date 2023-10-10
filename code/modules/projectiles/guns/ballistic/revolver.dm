@@ -2,7 +2,7 @@
 	name = "\improper .357 revolver"
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
@@ -21,13 +21,17 @@
 	last_fire = world.time
 
 
-/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
+	if(chambered)
+		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 	if(spin_cylinder)
 		chambered = magazine.get_round(TRUE)
 	else
 		chambered = magazine.stored_ammo[1]
+	if(chambered)
+		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
@@ -100,7 +104,7 @@
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 
@@ -135,6 +139,11 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
+	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
+	//There's already a cowboy sprite in there!
+	icon_state = "lucky"
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
@@ -154,7 +163,7 @@
 	icon_state = "nagant"
 	can_suppress = TRUE
 
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
 
 
 // A gun to play Russian Roulette!
@@ -164,7 +173,7 @@
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	icon_state = "russianrevolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
@@ -271,9 +280,14 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = "\improper Syndicate Revolver"
 	clumsy_check = FALSE
 	icon_state = "revolversyndie"
+
+/obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
+	. = ..()
+	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
+	name = initial(syndie_revolver.name)
+	desc = initial(syndie_revolver.desc)
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)

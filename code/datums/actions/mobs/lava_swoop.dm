@@ -38,7 +38,7 @@
 		return
 	// stop swooped target movement
 	swooping = TRUE
-	owner.set_density(FALSE)
+	ADD_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
 	owner.visible_message(span_boldwarning("[owner] swoops up high!"))
 
 	var/negative
@@ -96,26 +96,21 @@
 	owner.mouse_opacity = initial(owner.mouse_opacity)
 	playsound(owner.loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, owner) - owner)
-		if(L.stat)
-			owner.visible_message(span_warning("[owner] slams down on [L], crushing [L.p_them()]!"))
-			L.investigate_log("has been gibbed by lava swoop.", INVESTIGATE_DEATHS)
-			L.gib()
-		else
-			L.adjustBruteLoss(75)
-			if(L && !QDELETED(L)) // Some mobs are deleted on death
-				var/throw_dir = get_dir(owner, L)
-				if(L.loc == owner.loc)
-					throw_dir = pick(GLOB.alldirs)
-				var/throwtarget = get_edge_target_turf(owner, throw_dir)
-				L.throw_at(throwtarget, 3)
-				owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
+		L.adjustBruteLoss(75)
+		if(!QDELETED(L)) // Some mobs are deleted on death
+			var/throw_dir = get_dir(owner, L)
+			if(L.loc == owner.loc)
+				throw_dir = pick(GLOB.alldirs)
+			var/throwtarget = get_edge_target_turf(owner, throw_dir)
+			L.throw_at(throwtarget, 3)
+			owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
 	for(var/obj/vehicle/sealed/mecha/M in orange(1, owner))
 		M.take_damage(75, BRUTE, MELEE, 1)
 
 	for(var/mob/M in range(7, owner))
 		shake_camera(M, 15, 1)
 
-	owner.set_density(TRUE)
+	REMOVE_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
 	SLEEP_CHECK_DEATH(1, owner)
 	swooping = FALSE
 	if(!lava_success)
@@ -152,7 +147,7 @@
 		if(isindestructiblefloor(T))
 			continue
 		if(!isindestructiblewall(T))
-			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
+			T.TerraformTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening

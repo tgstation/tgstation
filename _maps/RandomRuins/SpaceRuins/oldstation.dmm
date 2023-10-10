@@ -157,6 +157,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/neck/link_scryer/loaded/charlie,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "aS" = (
@@ -837,7 +838,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -1283,6 +1284,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "fw" = (
@@ -1530,9 +1532,9 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "gP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/breath/medical,
+/obj/machinery/computer/operating/oldstation{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "gQ" = (
@@ -2468,6 +2470,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
+/obj/item/clothing/neck/link_scryer/loaded/charlie,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "kO" = (
@@ -2592,6 +2595,12 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"lh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/rnd/server/oldstation,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "lk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -4418,8 +4427,8 @@
 /obj/item/knife/combat,
 /obj/item/clothing/suit/armor/vest/old,
 /obj/item/gun/ballistic/rifle/boltaction,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
@@ -4908,14 +4917,6 @@
 	},
 /turf/template_noop,
 /area/space/nearstation)
-"zW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/garbage,
-/obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/rnd)
 "zX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -5475,29 +5476,7 @@
 "Ej" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/bulb,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
-/obj/item/light/tube,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
 	},
@@ -6734,6 +6713,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/structure/mirror/directional/west,
+/obj/item/clothing/neck/link_scryer/loaded/charlie,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "Mu" = (
@@ -8103,11 +8083,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"WH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/delta/rnd)
 "WI" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/beta/mining)
@@ -14208,9 +14183,9 @@ wx
 Ou
 kw
 Hk
-WH
+kw
 iq
-ze
+lh
 WV
 ob
 hY
@@ -14408,7 +14383,7 @@ kw
 jk
 lF
 hS
-zW
+ze
 WV
 ca
 SI

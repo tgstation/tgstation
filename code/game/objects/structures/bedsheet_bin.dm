@@ -140,7 +140,7 @@ LINEN BINS
 	// double check the canUseTopic args to make sure it's correct
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
-	dir = turn(dir, 180)
+	dir = REVERSE_DIR(dir)
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"

@@ -33,19 +33,20 @@
 	// Adds up to 100, don't mess it up
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 40,
-		/obj/item/reagent_containers/cup/bottle/caramel = 8,
-		/obj/item/reagent_containers/condiment/flour = 8,
-		/obj/item/reagent_containers/condiment/rice = 8,
-		/obj/item/reagent_containers/condiment/ketchup = 8,
-		/obj/item/reagent_containers/condiment/enzyme = 8,
-		/obj/item/reagent_containers/condiment/soymilk = 8,
+		/obj/item/reagent_containers/cup/bottle/caramel = 7,
+		/obj/item/reagent_containers/condiment/flour = 7,
+		/obj/item/reagent_containers/condiment/rice = 7,
+		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/enzyme = 7,
+		/obj/item/reagent_containers/condiment/soymilk = 7,
 		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2,
 	)
 
 	rpg_title = "Tavern Chef"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
@@ -63,7 +64,7 @@
 	jobtype = /datum/job/cook
 
 	id_trim = /datum/id_trim/job/cook/chef
-	uniform = /obj/item/clothing/under/rank/civilian/chef
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
 	backpack_contents = list(
 		/obj/item/choice_beacon/ingredient = 1,

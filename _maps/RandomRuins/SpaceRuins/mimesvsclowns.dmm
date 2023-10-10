@@ -271,7 +271,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/template_noop,
+/turf/open/floor/plating/airless,
 /area/ruin)
 "XA" = (
 /obj/machinery/computer/old{

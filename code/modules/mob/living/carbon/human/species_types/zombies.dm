@@ -9,22 +9,22 @@
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
-		TRAIT_NO_ZOMBIFY,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_ZOMBIFY,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
-		TRAIT_NO_TRANSFORMATION_STING,
 		// HIGH FUNCTIONING UNIQUE
 		TRAIT_NOBLOOD,
 		TRAIT_SUCCUMB_OVERRIDE,
@@ -104,11 +104,12 @@
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_NO_DNA_COPY,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -152,24 +153,27 @@
 	if(.)
 		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
 
-/datum/species/zombie/infectious/spec_life(mob/living/carbon/C, seconds_per_tick, times_fired)
+/datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()
-	C.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
+	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
 
 	//Zombies never actually die, they just fall down until they regenerate enough to rise back up.
 	//They must be restrained, beheaded or gibbed to stop being a threat.
 	if(COOLDOWN_FINISHED(src, regen_cooldown))
 		var/heal_amt = heal_rate
-		if(HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION))
+		if(HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION))
 			heal_amt *= 2
-		C.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick)
-		C.adjustToxLoss(-heal_amt * seconds_per_tick)
-		for(var/i in C.all_wounds)
+		var/need_mob_update = FALSE
+		need_mob_update += carbon_mob.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += carbon_mob.adjustToxLoss(-heal_amt * seconds_per_tick, updating_health = FALSE)
+		if(need_mob_update)
+			carbon_mob.updatehealth()
+		for(var/i in carbon_mob.all_wounds)
 			var/datum/wound/iter_wound = i
 			if(SPT_PROB(2-(iter_wound.severity/2), seconds_per_tick))
 				iter_wound.remove_wound()
-	if(!HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
-		playsound(C, pick(spooks), 50, TRUE, 10)
+	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
+		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
 //Congrats you somehow died so hard you stopped being a zombie
 /datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
