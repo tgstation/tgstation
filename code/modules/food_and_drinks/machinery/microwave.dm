@@ -203,10 +203,7 @@
 		span_notice("- Power: <b>[efficiency * TIER_1_CELL_CHARGE_RATE]W</b>.")
 
 		if(cell_powered)
-			if(!isnull(cell))
-				. += span_notice("- Charge: <b>[round(cell.percent())]%</b>.")
-			else
-				. += span_notice("- Charge: <b>INSERT CELL</b>.")
+			. += span_notice("- Charge: <b>[isnull(cell) ? "INSERT CELL" : "[round(cell.percent())]%"]</b>.")
 
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 
