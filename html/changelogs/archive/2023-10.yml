@@ -19,3 +19,44 @@
   - rscadd: rollers and bodybags can be printed at medical lathes
   lmenvs:
   - rscadd: Added donator items for sammi, ADHDbirb, Random, and The Riddler
+2023-10-09:
+  KoboldCommando:
+  - rscadd: Hand labelers can now label living things!
+  - rscadd: Hand labelers now tell you how to remove labels in their description
+  NicoDeLuna:
+  - rscadd: 'New Hat: Small But Knowing Clown hat'
+  - rscadd: 'New suit: Small But Knowing Clown suit'
+2023-10-10:
+  Dexee:
+  - qol: Evidence lockers on Tramstation now numbered correctly
+  - qol: Two evidence lockers swapped on Tramstation for their secure counterparts
+      to match other stations.
+  - qol: Scrubber and Vent pipes by arrivals on lower Z now properly connect on Tramstation
+  - qol: Added a missing multi-Z cable hub to the bridge on Tramstation. The vault
+      has power again!
+  - rscdel: Removed an errant directional plasmaglass window by the SM cooling loop
+      on Deltastation.
+  DrDiasyl aka DrTuxedo:
+  - balance: Holsters can now be clipped to any suit, and house Captain antique gun
+      and HoS gun. You now can buy holsters from the SecTech premium section.
+  Glyphee:
+  - rscadd: placeholder screams
+  KoboldCommando:
+  - bugfix: dwarf beards and eyes should work properly now
+  - bugfix: giants use the new height system and look a bit less distorted
+  - sound: tweaked the new surgery sound
+  Salted-Zen:
+  - rscadd: Added medical eyepatch and mask to monkey store
+  lmenvs:
+  - bugfix: various oshan fixes
+  - rscadd: new conveyor/auto/inside_corners for the missing directional sprites.
+  - rscadd: new wrestling railing.
+  wraith-54321:
+  - bugfix: eminence linked abscond and purge reagents can now actually be used again
+  - bugfix: vitality matrix servant revival
+  - balance: default max servants is now 10 again
+  - balance: replica fabricators now build slower on reebe until the cult has stabilized
+      their first anchoring crystal
+  - balance: clockwork bows deal double damage to non clockwork machines and structures
+  - balance: kindle will now only have less effect on reebe if the ark is active
+  - balance: the crew now has 30 extra seconds to prepare before the portals open
