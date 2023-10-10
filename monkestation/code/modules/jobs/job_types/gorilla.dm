@@ -19,7 +19,7 @@
 		 /datum/job_department/spooktober,
 		)
 
-	family_heirlooms = list(/obj/item/megaphone, /obj/item/clothing/head/lizard, /obj/item/clothing/suit/hooded/dinojammies)
+	family_heirlooms = list(/obj/item/clothing/suit/hooded/gorilla)
 
 	mail_goodies = list(
 		/obj/item/food/grown/banana
@@ -35,3 +35,9 @@
 	suit = /obj/item/clothing/suit/hooded/gorilla
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
+
+	backpack_contents = list(
+		/obj/item/food/grown/banana,
+		/obj/item/food/grown/banana,
+		/obj/item/food/grown/banana
+	)

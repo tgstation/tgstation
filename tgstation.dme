@@ -5825,6 +5825,7 @@
 #include "monkestation\code\modules\jobs\job_types\dietwizard.dm"
 #include "monkestation\code\modules\jobs\job_types\ghost.dm"
 #include "monkestation\code\modules\jobs\job_types\godzilla.dm"
+#include "monkestation\code\modules\jobs\job_types\gorilla.dm"
 #include "monkestation\code\modules\jobs\job_types\skeleton.dm"
 #include "monkestation\code\modules\jobs\job_types\yellowclown.dm"
 #include "monkestation\code\modules\liquids\drains.dm"

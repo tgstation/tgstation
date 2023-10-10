@@ -13,6 +13,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "dinojammies_hood"
 	worn_icon_state = "dinojammies_hood"
+	flags_inv = HIDEHAIR
 
 /obj/item/clothing/suit/hooded/gorilla
 	name = "gorilla costume"
@@ -22,7 +23,7 @@
 	icon_state = "gorilla"
 	worn_icon_state = "gorilla"
 	hoodtype = /obj/item/clothing/head/hooded/gorilla
-	alternate_screams = list('sound/creatures/gorilla.ogg')
+	alternative_screams = list('sound/creatures/gorilla.ogg')
 
 /obj/item/clothing/head/hooded/gorilla
 	desc = "A gorilla costume hood."
@@ -30,3 +31,4 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "gorilla"
 	worn_icon_state = "gorilla"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
