@@ -33,7 +33,7 @@
 		minimum_stat = CONSCIOUS,\
 	)
 	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
-	var/datum/action/innate/seek_prey/seek = new()
+	var/datum/action/innate/seek_prey/seek = new(src)
 	seek.Grant(src)
 	seek.Activate()
 

@@ -41,7 +41,9 @@
 		return
 
 	var/atom/movable/stored_pulling = passing_mob.pulling
-	if(stored_pulling)
-		stored_pulling.setDir(get_dir(stored_pulling.loc, passing_mob.loc))
-		stored_pulling.forceMove(exited_wall)
-		passing_mob.start_pulling(stored_pulling, supress_message = TRUE)
+	if(isnull(stored_pulling))
+		return
+
+	stored_pulling.setDir(get_dir(stored_pulling.loc, passing_mob.loc))
+	stored_pulling.forceMove(exited_wall)
+	passing_mob.start_pulling(stored_pulling, supress_message = TRUE)

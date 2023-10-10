@@ -96,7 +96,7 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, "[span_bold("[playstyle_string]")]")
+	to_chat(src, span_bold(playstyle_string))
 
 /mob/living/basic/construct/examine(mob/user)
 	var/text_span
@@ -144,11 +144,11 @@
 
 	heal_overall_damage(brute = 5)
 
-	Beam(user, icon_state="sendbeam", time = 4)
+	Beam(user, icon_state = "sendbeam", time = 4)
 	user.visible_message(
 		span_danger("[user] repairs some of \the <b>[src]'s</b> dents."),
 		span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."),
-		)
+	)
 
 /// Construct ectoplasm. Largely a placeholder, since the death drop element needs a unique list.
 /obj/item/ectoplasm/construct
