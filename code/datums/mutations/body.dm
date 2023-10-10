@@ -254,9 +254,9 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
-	glow = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+	glow_power = -1.5
 
 /datum/mutation/human/glow/anti/get_glow_color()
 	return COLOR_BLACK
@@ -484,7 +484,7 @@
 		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		borgo.Paralyze(6 SECONDS)
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
-	owner.gib()
+	owner.gib(DROP_ALL_REMAINS)
 
 /datum/mutation/human/headless
 	name = "H.A.R.S."

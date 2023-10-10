@@ -487,7 +487,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
 		human_who_gained_species.dna.blood_type = random_blood_type()
 
-	//Resets blood if it is excessively high for some reason
+	//Resets blood if it is excessively high so they don't gib
 	normalize_blood(human_who_gained_species)
 
 	if(ishuman(human_who_gained_species))
@@ -1116,9 +1116,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////////////
 // ATTACK PROCS //
 //////////////////
-
-/datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
-	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)

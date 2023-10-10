@@ -148,7 +148,7 @@
 				apply_damage(500, damagetype = BRUTE)
 			else
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			var/bloss = 60

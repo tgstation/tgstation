@@ -61,7 +61,6 @@
 /datum/ai_controller/basic_controller/spiderling
 	blackboard = list(
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger, // Run away from mobs bigger than we are
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)

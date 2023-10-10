@@ -74,7 +74,7 @@
 	if(target.stat == DEAD)
 		var/hp_gained = target.maxHealth
 		target.investigate_log("has been devoured by a zombie.", INVESTIGATE_DEATHS)
-		target.gib()
+		target.gib(DROP_ALL_REMAINS)
 		var/need_mob_update
 		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)

@@ -16,7 +16,6 @@
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It can be attached to almost all objects and has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	progression_minimum = 5 MINUTES
 	item = /obj/item/grenade/c4
 	cost = 1
 
@@ -24,7 +23,6 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
-	progression_minimum = 10 MINUTES
 	cost = 8 //20% discount!
 	cant_discount = TRUE
 
@@ -43,7 +41,6 @@
 	desc = "When inserted into a tablet, this cartridge gives you four opportunities to \
 			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/computer_disk/virus/detomatix
 	cost = 6
 	restricted = TRUE
@@ -64,7 +61,7 @@
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
-	progression_minimum = 30 MINUTES
+	progression_minimum = 15 MINUTES
 	item = /obj/item/pizzabox/bomb
 	cost = 6
 	surplus = 8
@@ -82,7 +79,6 @@
 /datum/uplink_item/explosives/syndicate_bomb/emp
 	name = "Syndicate EMP Bomb"
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
 

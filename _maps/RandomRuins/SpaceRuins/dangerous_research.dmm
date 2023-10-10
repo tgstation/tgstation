@@ -1984,10 +1984,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
 /obj/item/stack/sheet/iron,
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit{
-	AIStatus = 1;
-	stop_automated_movement = 0
-	},
+/mob/living/basic/heretic_summon/rust_walker,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "zR" = (
@@ -3717,10 +3714,7 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/dangerous_research/maint)
 "Xh" = (
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit{
-	AIStatus = 1;
-	stop_automated_movement = 0
-	},
+/mob/living/basic/heretic_summon/rust_walker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -3862,10 +3856,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "YZ" = (
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit{
-	AIStatus = 1;
-	stop_automated_movement = 0
-	},
+/mob/living/basic/heretic_summon/rust_walker,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Zc" = (
