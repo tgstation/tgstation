@@ -8823,7 +8823,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "cBJ" = (
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_y = 5
 	},
 /obj/item/gun/energy/laser/practice,
@@ -42071,7 +42071,7 @@
 "mXq" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/carbine/practice,
 /obj/item/gun/energy/laser/practice,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
@@ -62675,7 +62675,7 @@
 "thc" = (
 /obj/structure/table/reinforced,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = 3;
 	pixel_y = -3
 	},
