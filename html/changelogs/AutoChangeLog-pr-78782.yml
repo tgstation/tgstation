@@ -1,7 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Revenants, the mob that's split between planes of Life and Death, have been refactored into a basic mob. While this alone shouldn't touch behavior, a lot of the backend code has been gutted and refactored to try and furnish a better antagonist experience. This might mean that some weird stuff can come up and around, report something if it's utterly broken."
-  - code_imp: "In order to better facilitate some code, you do not ghost outside of a revenant on death, you simply get transferred into the ectoplasm. You should still be able to speak with your ghost friends on how hard you got wrecked or if you'll be able to resurrect though."
-  - code_imp: "The timing on revenant stuff such as being revealed, stunned, and inhibited (by holy weapons) should be tweaked a bit to allow better management. This should mean that getting unstunned and such should be a bit more precise now."
-  - qol: "Revenant instructions are now relayed in a neat little examine block."
