@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "moved a garbage spawner on Tramstation that was causing random runtimes due to sometimes spawning in space depending on which module got loaded"
