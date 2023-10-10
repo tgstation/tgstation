@@ -227,13 +227,13 @@
 	melee_damage_upper = 20
 	ai_controller = /datum/ai_controller/basic_controller/mook/tribal_chief
 	///overlay in our neutral state
-	var/static/mutable_appearance/chief_neutral = mutable_appearance(icon, "mook_chief")
+	var/static/mutable_appearance/chief_neutral = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief")
 	///overlay in our striking state
-	var/static/mutable_appearance/chief_strike = mutable_appearance(icon, "mook_chief_strike")
+	var/static/mutable_appearance/chief_strike = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_strike")
 	///overlay in our active state
-	var/static/mutable_appearance/chief_active = mutable_appearance(icon, "mook_chief_leap")
+	var/static/mutable_appearance/chief_active = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_leap")
 	///overlay in our warmup state
-	var/static/mutable_appearance/chief_warmup = mutable_appearance(icon, "mook_chief_warmup")
+	var/static/mutable_appearance/chief_warmup = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_warmup")
 
 /mob/living/basic/mining/mook/worker/tribal_chief/Initialize(mapload)
 	. = ..()
