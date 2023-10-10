@@ -1,5 +1,0 @@
-author: "KoboldCommando"
-delete-after: True
-changes:
-  - bugfix: "dwarf beards and eyes should work properly now"
-  - bugfix: "giants use the new height system and look a bit less distorted"
