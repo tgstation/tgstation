@@ -996,7 +996,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/proc/set_invisibility(value)
-	invisibility = value
+	SetInvisibility(value, id=type)
 	set_light_on(!value ? TRUE : FALSE)
 
 
