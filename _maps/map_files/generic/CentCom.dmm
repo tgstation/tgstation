@@ -133,6 +133,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"aD" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/iron/white,
+/area/centcom/tdome/observation)
 "aE" = (
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = 3
@@ -198,6 +202,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"aS" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/book/manual/wiki/tcomms{
+	name = "How to Become a Billionaire";
+	desc = "Huh... I don't think any of us expected there to be a <i>totally</i> legit guide to this."
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "aV" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -436,6 +449,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
+"bO" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Ook's Streamer Den"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "bP" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
@@ -922,6 +943,10 @@
 /obj/effect/mob_spawn/corpse/human/intern,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
+"dU" = (
+/obj/structure/closet/crate/bin,
+/turf/open/misc/grass,
 /area/centcom/central_command_areas/admin)
 "dV" = (
 /obj/structure/table/wood,
@@ -1627,6 +1652,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"gH" = (
+/obj/item/stack/cannonball,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "gI" = (
 /obj/structure/statue/gold/rd{
 	anchored = 1
@@ -1779,6 +1808,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"hp" = (
+/obj/machinery/ntnet_relay{
+	name = "Ook's Modem";
+	is_operational = 0;
+	desc = "A very complex router and transmitter capable of connecting electronic devices together. Did Ook somehow steal this hunk of junk from NT or something??"
+	},
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "hq" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -1834,6 +1871,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"hA" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "hC" = (
 /obj/structure/dresser,
 /turf/open/floor/iron/white,
@@ -3735,6 +3776,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
+"nO" = (
+/obj/structure/cannon{
+	dir = 4;
+	desc = "Resort to the cannon at the top of the stairs loaded with GRAPESHOT!"
+	},
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "nR" = (
 /obj/structure/closet/wardrobe/miner,
 /turf/open/floor/iron/white,
@@ -5496,6 +5544,9 @@
 "uh" = (
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/admin)
+"uk" = (
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "um" = (
 /obj/machinery/computer/communications{
 	dir = 1
@@ -6193,6 +6244,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/evacuation/ship)
+"wQ" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/banhammer{
+	desc = "A terrible weapon that has seen countless use over the ages. It looks like Ook doesn't use this thing much. A good thing for you guys!";
+	force = -10
+	},
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "wR" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe{
 	default_price = 0;
@@ -6458,6 +6517,11 @@
 "xO" = (
 /turf/open/floor/iron/kitchen/herringbone,
 /area/centcom/central_command_areas/fore)
+"xP" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "xQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/south,
@@ -6612,6 +6676,13 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/ghost_spawn)
+"yw" = (
+/obj/structure/table/wood,
+/obj/item/modular_computer/laptop/preset/civilian{
+	desc = "A low-end laptop often used for personal recreation. Looks like Ook's gaming computer. Thankfully these things are at least somewhat robust."
+	},
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "yy" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
@@ -7803,6 +7874,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
+"CO" = (
+/obj/structure/fireaxecabinet/directional/north,
+/turf/open/misc/grass,
 /area/centcom/central_command_areas/admin)
 "CP" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -9155,6 +9230,9 @@
 	},
 /turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
+"Ji" = (
+/turf/open/floor/carpet/neon/simple/white,
+/area/centcom/central_command_areas/admin)
 "Jj" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
@@ -11331,6 +11409,13 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
+"RK" = (
+/obj/machinery/modular_computer/console/preset/id/centcom{
+	dir = 1;
+	desc = "A specialized console to connect to gaming computers to be able to broadcast live. Seriously, where does Ook find this stuff?"
+	},
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "RL" = (
 /obj/machinery/door/airlock/freezer,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
@@ -11389,6 +11474,15 @@
 "RY" = (
 /obj/structure/punching_bag,
 /turf/open/floor/grass/fairy,
+/area/centcom/central_command_areas/admin)
+"RZ" = (
+/obj/structure/chair/bronze{
+	name = "gamer chair mk2"
+	},
+/obj/item/toy/plush/moth/ookplush{
+	name = "Ook"
+	},
+/turf/open/floor/carpet/neon/simple/white,
 /area/centcom/central_command_areas/admin)
 "Sb" = (
 /turf/open/floor/wood,
@@ -11527,6 +11621,14 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"SD" = (
+/obj/machinery/blackbox_recorder{
+	name = "Ook's Backups";
+	desc = "Huh, who would've thought Ook used tape drives to keep his data backed up safe and sound!"
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "SF" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -39836,11 +39938,11 @@ pi
 pi
 Ly
 On
-Tx
-pi
-pi
-pi
-Ly
+hA
+gH
+nO
+uk
+hp
 On
 fC
 xF
@@ -40093,11 +40195,11 @@ pi
 pi
 oT
 On
-gf
-hw
-pi
-pi
-oT
+SD
+uk
+uk
+uk
+RK
 On
 Xi
 fC
@@ -40350,11 +40452,11 @@ NK
 pi
 pi
 On
-lQ
-eU
-NK
-pi
-pi
+CO
+uk
+Ji
+RZ
+yw
 On
 hF
 fC
@@ -40607,11 +40709,11 @@ hw
 pi
 pi
 On
-pi
-pp
-hw
-pi
-pi
+wQ
+uk
+Ji
+uk
+xP
 On
 VD
 VD
@@ -40864,11 +40966,11 @@ pi
 pi
 pi
 On
-pi
-pi
-pi
-pi
-pi
+aS
+uk
+Ji
+uk
+uk
 On
 Fy
 Fy
@@ -41121,11 +41223,11 @@ pi
 pi
 cv
 On
-SI
-SI
-pi
-pi
-cv
+uk
+uk
+Ji
+uk
+dU
 On
 Fy
 Fy
@@ -41380,7 +41482,7 @@ On
 On
 On
 On
-GZ
+bO
 IS
 On
 On
@@ -52234,7 +52336,7 @@ gy
 eL
 PU
 ZV
-bi
+aD
 bi
 bi
 Xl
