@@ -12,6 +12,7 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+		return TRUE
 
 /// Sight here is the mob.sight var, which tells byond what to actually show to our client
 /// See [code\__DEFINES\sight.dm] for more details

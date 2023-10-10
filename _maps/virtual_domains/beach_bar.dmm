@@ -159,7 +159,7 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
 	pixel_y = 8;
 	pixel_x = 5
 	},
@@ -424,8 +424,8 @@
 /area/virtual_domain/powered)
 "uq" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain,
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
 	pixel_x = -4;
 	pixel_y = 8
 	},
@@ -878,11 +878,11 @@
 /area/virtual_domain/powered)
 "Mp" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
 	pixel_y = 7;
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "Mw" = (
