@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "using a magic mirror to change gender or skintone will now update your icon properly to match your selection"
