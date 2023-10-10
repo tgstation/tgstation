@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 			"server_name" = CONFIG_GET(string/servername),
 			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
 			"threat_level" = threat_level,
-			"round_start_budget", round_start_budget,
+			"round_start_budget" = round_start_budget,
 			"parameters" = list(
 				"threat_curve_centre" = threat_curve_centre,
 				"threat_curve_width" = threat_curve_width,
