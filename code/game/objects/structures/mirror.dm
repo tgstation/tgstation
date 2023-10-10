@@ -159,6 +159,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/datum/species/newrace = new selectable_races[racechoice]
 
 	var/attributes_desc = newrace.get_physical_attributes()
+	qdel(newrace)
 
 	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
 	if(answer != "Yes")
