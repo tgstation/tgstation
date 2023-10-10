@@ -429,6 +429,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	SSblackbox.record_feedback(
 		"associative",
 		"dynamic_threat",
+		1,
 		list(
 			"server_name" = CONFIG_GET(string/servername),
 			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
