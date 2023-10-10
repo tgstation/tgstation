@@ -213,10 +213,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#009823#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
-    name = "Nitrogen canister"
-    gas_type = /datum/gas/nitrogen
-    greyscale_config = /datum/greyscale_config/canister/double_stripe
-    greyscale_colors = "#e9ff5c#f4fce8"
+	name = "Nitrogen canister"
+	gas_type = /datum/gas/nitrogen
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#e9ff5c#f4fce8"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
