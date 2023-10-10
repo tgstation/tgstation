@@ -1,6 +1,6 @@
 /datum/job/ghost
 	title = JOB_SPOOKTOBER_GHOST
-	description = "Spook the crew.  Get your bedsheet stolen and run around the station naked.  Starts with no ID."
+	description = "Spook the crew.  Get your bedsheet stolen and run around the station naked."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 0
@@ -33,10 +33,7 @@
 	jobtype = /datum/job/ghost
 
 	suit = /obj/item/clothing/suit/costume/ghost_sheet
-	id = null
-	id_trim = null
-	back = null
 	shoes = null
-	belt = null
 	uniform = null
 
+	backpack_contents = list(/datum/id_trim/job/assistant, /obj/item/modular_computer/pda/assistant)
