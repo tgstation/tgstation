@@ -291,6 +291,8 @@
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
+		for (var/mob/living/mob_in_pod in benis.contents)
+			mob_in_pod.reset_perspective(null)
 		moveToNullspace()
 		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
