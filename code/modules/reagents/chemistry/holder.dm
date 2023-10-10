@@ -469,7 +469,7 @@
 					return FALSE
 				return holder_reagent
 			else
-				if(FLOOR(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+				if(holder_reagent.volume >= amount)
 					if(needs_metabolizing && !holder_reagent.metabolizing)
 						if(check_subtypes)
 							continue
@@ -850,9 +850,9 @@
 		// skip metabolizing effects for small units of toxins
 		if(istype(reagent, /datum/reagent/toxin) && liver && !dead)
 			var/datum/reagent/toxin/toxin = reagent
-			var/amount = FLOOR(toxin.volume, CHEMICAL_QUANTISATION_LEVEL)
+			var/amount = toxin.volume
 			if(belly)
-				amount += belly.reagents.get_reagent_amount(toxin.type)
+				amount = FLOOR(amount + belly.reagents.get_reagent_amount(toxin.type), CHEMICAL_QUANTISATION_LEVEL)
 
 			if(amount <= liver_tolerance)
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
@@ -1038,12 +1038,12 @@
 
 				var/list/cached_required_reagents = reaction.required_reagents
 				for(var/req_reagent in cached_required_reagents)
-					if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*granularity)))
+					if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent] * granularity)))
 						continue reaction_loop
 
 				var/list/cached_required_catalysts = reaction.required_catalysts
 				for(var/_catalyst in cached_required_catalysts)
-					if(!has_reagent(_catalyst, (cached_required_catalysts[_catalyst]*granularity)))
+					if(!has_reagent(_catalyst, (cached_required_catalysts[_catalyst] * granularity)))
 						continue reaction_loop
 
 				if(cached_my_atom)
