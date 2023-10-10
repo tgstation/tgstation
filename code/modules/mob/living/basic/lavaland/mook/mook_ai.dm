@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/targeted_mob_ability/leap,
@@ -28,7 +29,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///check for faction if not a ash walker, otherwise just attack
 /datum/targetting_datum/basic/mook/faction_check(mob/living/living_mob, mob/living/the_target)
-	if(isashwalker(the_target))
+	if(FACTION_ASHWALKER in living_mob.faction)
 		return FALSE
 
 	return ..()
@@ -47,6 +48,8 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(QDELETED(home))
 		return
 	if(get_dist(living_pawn, home) < controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
+		return
+	if(home.z != living_pawn.z)
 		return
 	if(!storm_approaching && !(locate(/obj/item/stack/ore) in living_pawn))
 		return
@@ -191,6 +194,13 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_planning_subtree/mine_walls/mook
 	find_wall_behavior = /datum/ai_behavior/find_mineral_wall/mook
 
+/datum/ai_planning_subtree/mine_walls/mook/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
+	if(storm_approaching || locate(/obj/item/stack/ore) in living_pawn)
+		return
+	return ..()
+
 /datum/ai_behavior/find_mineral_wall/mook
 
 /datum/ai_behavior/find_mineral_wall/mook/check_if_mineable(datum/ai_controller/controller, turf/target_wall)
@@ -209,12 +219,44 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/play_music_for_visitor,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
 		/datum/ai_planning_subtree/generic_play_instrument,
 	)
+
+
+///find an audience to follow and play music for!
+/datum/ai_planning_subtree/play_music_for_visitor
+
+/datum/ai_planning_subtree/play_music_for_visitor/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard_key_exists(BB_MOOK_MUSIC_AUDIENCE))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/music_audience, BB_MOOK_MUSIC_AUDIENCE, /mob/living/carbon/human)
+		return
+	var/atom/home = controller.blackboard[BB_HOME_VILLAGE]
+	if(isnull(home))
+		return
+
+	var/atom/human_target = controller.blackboard[BB_MOOK_MUSIC_AUDIENCE]
+	if(get_dist(human_target, home) > controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE] || controller.blackboard[BB_STORM_APPROACHING])
+		controller.clear_blackboard_key(BB_MOOK_MUSIC_AUDIENCE)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/travel_towards, BB_MOOK_MUSIC_AUDIENCE)
+
+/datum/ai_behavior/find_and_set/music_audience
+
+/datum/ai_behavior/find_and_set/music_audience/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/atom/home = controller.blackboard[BB_HOME_VILLAGE]
+	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
+		if(target.stat > UNCONSCIOUS || !target.mind)
+			continue
+		if(isnull(home) || get_dist(target, home) > controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
+			continue
+		return target
 
 /datum/idle_behavior/walk_near_target/mook_village
 	target_key = BB_HOME_VILLAGE
@@ -229,6 +271,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/acknowledge_chief,
 		/datum/ai_planning_subtree/pet_planning,
@@ -286,6 +329,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/leap,
@@ -293,6 +337,8 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
+		/datum/ai_planning_subtree/find_and_hunt_target/bonfire,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/tribal_chief,
 	)
 
 /datum/ai_planning_subtree/issue_commands
@@ -300,10 +346,20 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	var/command_distance = 5
 
 /datum/ai_planning_subtree/issue_commands/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		return
-	if(locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
+	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targetting/attack)
+		return
+
+	var/atom/ore_target = controller.blackboard[BB_ORE_TARGET]
+	var/mob/living/living_pawn = controller.pawn
+	if(isnull(ore_target))
+		return
+	if(get_dist(ore_target, living_pawn) <= 1)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targetting/fetch)
 
 /datum/ai_behavior/issue_commands
 	action_cooldown = 5 SECONDS
@@ -311,7 +367,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/issue_commands/perform(seconds_per_tick, datum/ai_controller/controller, target_key, command_path)
 	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[target_key]
 
 	if(isnull(target))
 		finish_action(controller, FALSE)
@@ -325,3 +381,46 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	var/issue_command = pick(to_command.speech_commands)
 	living_pawn.say(issue_command, forced = "controller")
 	living_pawn._pointed(target)
+	finish_action(controller, TRUE)
+
+
+///find an ore, only pick it up when a mook brings it close to us
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/tribal_chief
+
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/tribal_chief/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(locate(/obj/item/stack/ore) in living_pawn)
+		return
+
+	var/atom/target_ore = controller.blackboard[BB_ORE_TARGET]
+
+	if(isnull(target_ore))
+		return ..()
+
+	if(!isturf(target_ore.loc)) //picked up by someone else
+		controller.clear_blackboard_key(BB_ORE_TARGET)
+		return
+
+	if(get_dist(target_ore, living_pawn) > 1)
+		return
+
+	return ..()
+
+/datum/ai_planning_subtree/find_and_hunt_target/bonfire
+	target_key = BB_MOOK_BONFIRE_TARGET
+	finding_behavior = /datum/ai_behavior/find_hunt_target/bonfire
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bonfire
+	hunt_targets = list(/obj/structure/bonfire)
+	hunt_range = 9
+
+
+/datum/ai_behavior/find_hunt_target/bonfire
+
+/datum/ai_behavior/find_hunt_target/bonfire/valid_dinner(mob/living/source, obj/structure/bonfire/fire, radius)
+	if(fire.burning)
+		return FALSE
+
+	return can_see(source, fire, radius)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/bonfire
+	always_reset_target = TRUE

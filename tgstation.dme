@@ -4428,6 +4428,7 @@
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity_trophy.dm"
 #include "code\modules\mob\living\basic\lavaland\mook\mook.dm"
+#include "code\modules\mob\living\basic\lavaland\mook\mook_abilities.dm"
 #include "code\modules\mob\living\basic\lavaland\mook\mook_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\mook\mook_village.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher.dm"

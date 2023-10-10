@@ -54,7 +54,7 @@
 	if(is_type_in_list(target, forbidden_ore))
 		return FALSE
 
-	if(target in source)
+	if(!isturf(target.loc))
 		return FALSE
 
 	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]

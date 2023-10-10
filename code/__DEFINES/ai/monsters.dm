@@ -185,3 +185,7 @@
 #define BB_MOOK_TRIBAL_CHIEF "mook_tribal_chief"
 /// the injured mook we must heal
 #define BB_INJURED_MOOK "injured_mook"
+/// the player we will follow and play music for
+#define BB_MOOK_MUSIC_AUDIENCE "music_audience"
+/// the bonfire we will light up
+#define BB_MOOK_BONFIRE_TARGET "bonfire_target"
