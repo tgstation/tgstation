@@ -77,8 +77,8 @@
 /// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
 
-/// Global signal sent when a light mechanism is completed (try_id)
-#define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
+/// Global signal sent when a puzzle piece is completed (light mechanism, etc.) (try_id)
+#define COMSIG_GLOB_PUZZLE_COMPLETED "!puzzle_completed"
 
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)

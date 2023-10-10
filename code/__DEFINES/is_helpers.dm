@@ -11,6 +11,9 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
+#define isappearance(thing) (!istype(thing, /image) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+
 #define isgenerator(A) (istype(A, /generator))
 
 //Turfs
@@ -148,7 +151,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+#define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
@@ -178,7 +181,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
 
 
 //Misc mobs

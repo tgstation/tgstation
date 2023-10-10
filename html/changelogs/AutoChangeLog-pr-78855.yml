@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixed some issues in the security camera UI - pressing next or back will now loop through the cameras"
+  - bugfix: "Fixed some style issues in the camera console where selected cams weren't showing as selected"
+  - bugfix: "Camera console search works again"

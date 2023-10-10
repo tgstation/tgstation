@@ -215,7 +215,6 @@
 	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
 	return ..()
 
-
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
 	if(can_be_disabled)
@@ -345,7 +344,6 @@
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
 		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
-
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
 
@@ -452,16 +450,20 @@
  * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
  * damage_source - The source of damage, typically a weapon.
  */
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
-	if(owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
-	if(required_bodytype && !(bodytype & required_bodytype))
-		return FALSE
+	if (!forced)
+		if(!isnull(owner))
+			if (owner.status_flags & GODMODE)
+				return FALSE
+			if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
+				return FALSE
+		if(required_bodytype && !(bodytype & required_bodytype))
+			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
@@ -632,10 +634,10 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, required_bodytype, updating_health = TRUE)
+/obj/item/bodypart/proc/heal_damage(brute, burn, updating_health = TRUE, forced = FALSE, required_bodytype)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(!forced && required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)
@@ -651,7 +653,6 @@
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
-
 ///Sets the damage of a bodypart when it is created.
 /obj/item/bodypart/proc/set_initial_damage(brute_damage, burn_damage)
 	set_brute_dam(brute_damage)
@@ -666,7 +667,6 @@
 	. = brute_dam
 	brute_dam = new_value
 
-
 ///Proc to hook behavior associated to the change of the burn_dam variable's value.
 /obj/item/bodypart/proc/set_burn_dam(new_value)
 	PROTECTED_PROC(TRUE)
@@ -678,8 +678,7 @@
 
 //Returns total damage.
 /obj/item/bodypart/proc/get_damage()
-	var/total = brute_dam + burn_dam
-	return total
+	return brute_dam + burn_dam
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
@@ -722,7 +721,6 @@
 		last_maxed = FALSE
 		set_disabled(FALSE)
 
-
 ///Proc to change the value of the `disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_disabled(new_disabled)
 	SHOULD_CALL_PARENT(TRUE)
@@ -737,7 +735,6 @@
 		return
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-
 
 ///Proc to change the value of the `owner` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_owner(new_owner)
@@ -832,7 +829,6 @@
 				))
 		set_disabled(FALSE)
 
-
 ///Called when TRAIT_PARALYSIS is added to the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_gain(obj/item/bodypart/source)
 	PROTECTED_PROC(TRUE)
@@ -840,7 +836,6 @@
 
 	if(can_be_disabled)
 		set_disabled(TRUE)
-
 
 ///Called when TRAIT_PARALYSIS is removed from the limb.
 /obj/item/bodypart/proc/on_paralysis_trait_loss(obj/item/bodypart/source)
@@ -850,14 +845,12 @@
 	if(can_be_disabled)
 		update_disabled()
 
-
 ///Called when TRAIT_NOLIMBDISABLE is added to the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_gain(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
 
 	set_can_be_disabled(FALSE)
-
 
 ///Called when TRAIT_NOLIMBDISABLE is removed from the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)
@@ -1287,9 +1280,10 @@
 	else
 		update_icon_dropped()
 
+// Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
 /obj/item/bodypart/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
+	var/protection = ..()
+	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
 	// with defines at the time of writing, this is 2 brute and 1.5 burn
@@ -1306,16 +1300,14 @@
 		burn_damage *= 2
 
 	receive_damage(brute_damage, burn_damage)
-	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
-	var/damage_percent_to_max = (get_damage() / max_damage)
-	if (time_needed && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		owner.visible_message(span_danger("[owner]'s [src] seems to malfunction!"))
-		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-		addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
-	return TRUE
+	do_sparks(number = 1, cardinal_only = FALSE, source = owner || src)
 
-/obj/item/bodypart/proc/un_paralyze()
-	REMOVE_TRAITS_IN(src, EMP_TRAIT)
+	if(can_be_disabled && (get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
+		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_PARALYSIS, EMP_TRAIT), time_needed)
+		owner?.visible_message(span_danger("[owner]'s [plaintext_zone] seems to malfunction!"))
+
+	return TRUE
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()

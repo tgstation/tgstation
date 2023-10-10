@@ -311,7 +311,7 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
+	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25

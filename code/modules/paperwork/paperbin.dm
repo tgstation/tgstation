@@ -54,12 +54,26 @@
 		droppoint = drop_location()
 	if(collapse)
 		visible_message(span_warning("The stack of paper collapses!"))
-	for(var/atom/movable/movable_atom in contents)
-		movable_atom.forceMove(droppoint)
-		if(!movable_atom.pixel_y)
-			movable_atom.pixel_y = rand(-3,3)
-		if(!movable_atom.pixel_x)
-			movable_atom.pixel_x = rand(-3,3)
+	for(var/obj/item/paper/stacked_paper in paper_stack) //first, dump all of the paper that already exists
+		stacked_paper.forceMove(droppoint)
+		if(!stacked_paper.pixel_y)
+			stacked_paper.pixel_y = rand(-3,3)
+		if(!stacked_paper.pixel_x)
+			stacked_paper.pixel_x = rand(-3,3)
+		paper_stack -= stacked_paper
+		total_paper -= 1
+	for(var/i in 1 to total_paper) //second, generate new paper for the remainder
+		var/obj/item/paper/new_paper = generate_paper()
+		new_paper.forceMove(droppoint)
+		if(!new_paper.pixel_y)
+			new_paper.pixel_y = rand(-3,3)
+		if(!new_paper.pixel_x)
+			new_paper.pixel_x = rand(-3,3)
+	if(bin_pen)
+		var/obj/item/pen/pen = bin_pen
+		pen.forceMove(droppoint)
+		bin_pen = null
+	total_paper = 0
 	update_appearance()
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
@@ -212,6 +226,8 @@
 
 /obj/item/paper_bin/bundlenatural/dump_contents(atom/droppoint)
 	. = ..()
+	binding_cable.forceMove(droppoint)
+	binding_cable = null
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/update_overlays()
@@ -225,7 +241,7 @@
 		deconstruct(FALSE)
 
 /obj/item/paper_bin/bundlenatural/deconstruct(disassembled)
-	dump_contents()
+	dump_contents(drop_location())
 	return ..()
 
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)

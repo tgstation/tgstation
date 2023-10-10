@@ -15,6 +15,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)
