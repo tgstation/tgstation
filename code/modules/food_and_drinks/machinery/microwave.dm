@@ -41,8 +41,11 @@
 	var/dirty_anim_playing = FALSE
 	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
+	/// Microwave door position
 	var/open = FALSE
+	/// Microwave max capacity
 	var/max_n_of_items = 10
+	/// Microwave efficiency (power) based on the stock components
 	var/efficiency = 0
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
@@ -52,6 +55,7 @@
 	var/obj/item/stock_parts/cell/vampire_cell
 	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
+	/// Charge contents of microwave instead of cook
 	var/vampire_charging_enabled = FALSE
 	var/datum/looping_sound/microwave/soundloop
 	/// May only contain /atom/movables
