@@ -11,6 +11,7 @@
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -28,58 +29,8 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/perform_hand_swap(held_index)
-	. = ..()
-	if(!.)
-		return
-
-	if(!held_index)
-		held_index = (active_hand_index % held_items.len)+1
-
-	if(!isnum(held_index))
-		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
-
-	var/oindex = active_hand_index
-	active_hand_index = held_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
-		H = hud_used.hand_slots["[oindex]"]
-		if(H)
-			H.update_appearance()
-		H = hud_used.hand_slots["[held_index]"]
-		if(H)
-			H.update_appearance()
-
-
-/mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
-	if(!selhand)
-		selhand = (active_hand_index % held_items.len)+1
-
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-		if(selhand == "right" || selhand == "r")
-			selhand = 2
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-
-	if(selhand != active_hand_index)
-		swap_hand(selhand)
-	else
-		mode() // Activate held item
-
-/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
-	for(var/datum/surgery/operations as anything in surgeries)
-		if((user.istate & ISTATE_HARM))
-			break
-		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
-			continue
-		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
-			continue
-		var/list/modifiers = params2list(params)
-		if(operations.next_step(user, modifiers))
-			return TRUE
-
-	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
+/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
+	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))

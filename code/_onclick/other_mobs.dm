@@ -315,10 +315,7 @@
 
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	GiveTarget(attack_target)
-	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
-		return ..()
-	else
-		AttackingTarget(attack_target)
+	return ..()
 
 #undef LIVING_UNARMED_ATTACK_BLOCKED
 
