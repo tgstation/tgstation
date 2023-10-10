@@ -10151,12 +10151,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "cwd" = (
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/machinery/light/directional/south,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "cwe" = (
@@ -39286,15 +39283,15 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "jKY" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/camera/directional/south,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
+	pixel_x = 5
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "jLa" = (
@@ -86574,10 +86571,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -8;
-	pixel_y = 17
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/holopad,

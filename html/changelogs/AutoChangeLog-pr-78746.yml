@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Added slapcrafting to unloaded tech shells, click on them with ingredients to quickly craft your shell."
