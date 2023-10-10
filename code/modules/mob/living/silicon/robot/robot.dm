@@ -377,7 +377,7 @@
 	else
 		explosion(src, devastation_range = -1, light_impact_range = 2)
 	investigate_log("has self-destructed.", INVESTIGATE_DEATHS)
-	gib()
+	gib(DROP_ALL_REMAINS)
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	set_connected_ai(null)

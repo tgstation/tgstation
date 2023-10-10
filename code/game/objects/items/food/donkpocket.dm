@@ -20,12 +20,16 @@
 	var/baking_time_short = 25 SECONDS
 	/// The upper end for how long it takes to bake
 	var/baking_time_long = 30 SECONDS
+	/// The reagents added when microwaved. Needed since microwaving ignores food_reagents
+	var/static/list/added_reagents = list(/datum/reagent/medicine/omnizine = 6)
+	/// The reagents that most child types add when microwaved. Needed because you can't override static lists.
+	var/static/list/child_added_reagents = list(/datum/reagent/medicine/omnizine = 2)
 
 /obj/item/food/donkpocket/make_bakeable()
-	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, added_reagents)
 
 /obj/item/food/donkpocket/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type)
+	AddElement(/datum/element/microwavable, warm_type, added_reagents)
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -69,6 +73,12 @@
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy
 
+/obj/item/food/donkpocket/spicy/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
+
+/obj/item/food/donkpocket/spicy/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, child_added_reagents)
+
 /obj/item/food/donkpocket/warm/spicy
 	name = "warm Spicy-pocket"
 	desc = "The classic snack food, now maybe a bit too spicy."
@@ -94,6 +104,12 @@
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki
+
+/obj/item/food/donkpocket/teriyaki/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
+
+/obj/item/food/donkpocket/teriyaki/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, child_added_reagents)
 
 /obj/item/food/donkpocket/warm/teriyaki
 	name = "warm Teriyaki-pocket"
@@ -121,6 +137,12 @@
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/pizza
 
+/obj/item/food/donkpocket/pizza/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
+
+/obj/item/food/donkpocket/pizza/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, child_added_reagents)
+
 /obj/item/food/donkpocket/warm/pizza
 	name = "warm Pizza-pocket"
 	desc = "Delicious, cheesy, and even better when hot."
@@ -146,6 +168,16 @@
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/honk
 	crafting_complexity = FOOD_COMPLEXITY_3
+	var/static/list/honk_added_reagents = list(
+		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/consumable/laughter = 6,
+	)
+
+/obj/item/food/donkpocket/honk/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, honk_added_reagents)
+
+/obj/item/food/donkpocket/honk/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, honk_added_reagents)
 
 /obj/item/food/donkpocket/warm/honk
 	name = "warm Honk-pocket"
@@ -173,6 +205,12 @@
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/berry
 
+/obj/item/food/donkpocket/berry/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
+
+/obj/item/food/donkpocket/berry/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, child_added_reagents)
+
 /obj/item/food/donkpocket/warm/berry
 	name = "warm Berry-pocket"
 	desc = "A relentlessly sweet donk-pocket, now warm and delicious."
@@ -198,6 +236,16 @@
 	foodtypes = GRAIN
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
+	var/static/list/gondola_added_reagents = list(
+		/datum/reagent/medicine/omnizine = 2,
+		/datum/reagent/gondola_mutation_toxin = 5,
+	)
+
+/obj/item/food/donkpocket/gondola/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, gondola_added_reagents)
+
+/obj/item/food/donkpocket/gondola/make_microwaveable()
+	AddElement(/datum/element/microwavable, warm_type, gondola_added_reagents)
 
 /obj/item/food/donkpocket/warm/gondola
 	name = "warm Gondola-pocket"

@@ -75,12 +75,13 @@
 
 # ninjanomnom
 
-/code/__DEFINES/dcs/ @ninjanomnom
 /code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+/code/datums/signals.dm @ninjanomnom
+/code/datums/components/_component.dm @ninjanomnom
+/code/datums/elements/_element.dm @ninjanomnom
+/code/datums/greyscale/_greyscale_config.dm @ninjanomnom
+/code/datums/greyscale/json_reader.dm @ninjanomnom
+/code/datums/greyscale/layer.dm @ninjanomnom
 
 # Ryll-Ryll/Shaps
 

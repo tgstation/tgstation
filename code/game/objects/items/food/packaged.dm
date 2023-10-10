@@ -209,11 +209,14 @@
 	/// What type of ready-donk are we warmed into?
 	var/warm_type = /obj/item/food/ready_donk/warm
 
+	/// What reagents should be added when this item is warmed?
+	var/static/list/added_reagents = list(/datum/reagent/medicine/omnizine = 3)
+
 /obj/item/food/ready_donk/make_bakeable()
-	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE, added_reagents)
 
 /obj/item/food/ready_donk/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type)
+	AddElement(/datum/element/microwavable, warm_type, added_reagents)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	. = ..()

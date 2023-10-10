@@ -412,7 +412,7 @@
 						if(EXPLODE_LIGHT)
 							SSexplosions.low_mov_atom += thing
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 				return TRUE
 			else
 				brute_loss = 500
