@@ -4,6 +4,11 @@
 	var/datum/callback/tool_act_callback
 	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
+	// A whitelist of items that can interact with the SM without dusting the user
+	var/static/list/sm_item_whitelist = typecacheof(list(
+		/obj/item/melee/roastingstick,
+		/obj/item/toy/crayon/spraycan
+	))
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
@@ -154,9 +159,7 @@
 	var/atom/atom_source = source
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(istype(item, /obj/item/melee/roastingstick))
-		return FALSE
-	if(istype(item, /obj/item/toy/crayon/spraycan))
+	if(is_type_in_typecache(item, sm_item_whitelist))
 		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item

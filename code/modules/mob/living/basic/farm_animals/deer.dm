@@ -34,7 +34,6 @@
 
 /datum/ai_controller/basic_controller/deer
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)

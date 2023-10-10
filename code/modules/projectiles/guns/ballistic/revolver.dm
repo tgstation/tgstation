@@ -139,6 +139,11 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
+	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
+	//There's already a cowboy sprite in there!
+	icon_state = "lucky"
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
