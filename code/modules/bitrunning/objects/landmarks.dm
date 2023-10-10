@@ -79,21 +79,25 @@
 	. = ..()
 	var/list/crate_list = list()
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/encrypted_crate
-	for(var/obj/structure/closet/crate/crate_to_check in get_area(src))
-		if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
-			encrypted_crate = crate_to_check
-			crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
-		else
-			crate_list += crate_to_check
-		crate_to_check.name = "Unidentified Crate"
+	var/area/my_area = get_area(src)
 
+	for(var/turf/area_turf as anything in my_area.get_contained_turfs())
+		for(var/obj/structure/closet/crate/crate_to_check in area_turf)
+			if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+				encrypted_crate = crate_to_check
+				crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
+			else
+				crate_list += crate_to_check
+			crate_to_check.name = "Unidentified Crate"
+
+	#ifndef UNIT_TESTS
 	if(!encrypted_crate)
 		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")
 		return
-
 	if(!length(crate_list))
 		stack_trace("Bitrunning Goal Crate Randomizer failed to find any NORMAL crates to swap positions for.")
 		return
+	#endif
 
 	var/original_location = encrypted_crate.loc
 	var/obj/structure/closet/crate/selected_crate = pick(crate_list)
