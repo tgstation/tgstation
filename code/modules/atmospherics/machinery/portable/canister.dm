@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	name = "Air canister"
 	desc = "Pre-mixed air."
 	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#eaeaea"
+	greyscale_colors = "#c6c0b5"
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
