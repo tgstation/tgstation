@@ -34,7 +34,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	burning_loop = new(src)
 
-/obj/structure/fireplace/Destroy()
+/obj/structure/bonfire/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(burning_loop)
 	. = ..()
