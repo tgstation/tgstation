@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - qol: "\"prison\" intercoms have been renamed to \"receive-only\" intercoms to make it clearer they cannot transmit."

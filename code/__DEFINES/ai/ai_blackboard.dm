@@ -54,6 +54,9 @@
 /// Generic key for a non-specific action
 #define BB_GENERIC_ACTION "BB_generic_action"
 
+/// Generic key for a shapeshifting action
+#define BB_SHAPESHIFT_ACTION "BB_shapeshift_action"
+
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
