@@ -37,7 +37,7 @@
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
