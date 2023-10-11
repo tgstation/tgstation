@@ -1179,6 +1179,9 @@
 /obj/structure/chair/comfy/carp{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "ec" = (
@@ -9400,6 +9403,7 @@
 /area/centcom/central_command_areas/admin)
 "Ed" = (
 /obj/structure/chair/comfy/carp,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "Ef" = (
@@ -10003,6 +10007,9 @@
 /area/centcom/central_command_areas/borbop)
 "Gr" = (
 /obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/large,
@@ -11831,6 +11838,9 @@
 /obj/structure/chair/comfy/carp{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "Nx" = (
@@ -13464,10 +13474,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"SP" = (
-/obj/structure/fake_stairs/wood/directional/north,
-/turf/open/space/basic,
-/area/centcom/central_command_areas/borbop)
 "SQ" = (
 /obj/structure/filingcabinet/medical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -46145,11 +46151,11 @@ Fr
 Oi
 Sr
 UD
-Ch
-Ch
+YS
+HX
 Nw
-Ch
-Ch
+HX
+LS
 UD
 lY
 aa
@@ -46659,11 +46665,11 @@ vi
 ws
 ui
 UD
-Ch
+cw
 HC
 Nu
 HC
-Ch
+KT
 UD
 lY
 aa
@@ -46915,7 +46921,7 @@ RS
 aA
 kk
 ui
-SP
+IW
 Ed
 HC
 xw
@@ -47172,12 +47178,12 @@ NY
 mg
 gm
 ui
-SP
-Ch
+IW
+cw
 cz
 xw
 cz
-Ch
+KT
 Oo
 lY
 aa
@@ -47429,7 +47435,7 @@ aT
 zg
 kk
 ui
-SP
+IW
 Ed
 HC
 xw
@@ -47687,11 +47693,11 @@ vi
 ZK
 ui
 UD
-Ch
+cw
 HC
 Nu
 HC
-Ch
+KT
 UD
 lY
 aa
@@ -48201,11 +48207,11 @@ Ii
 YQ
 Xu
 UD
-Ch
-Ch
+TP
+mZ
 ea
-Ch
-Ch
+mZ
+CG
 UD
 lY
 aa
