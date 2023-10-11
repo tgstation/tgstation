@@ -7,6 +7,14 @@
 		TRAIT_NOHUNGER,
 		TRAIT_USES_SKINTONES,
 	)
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/dullahan,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
+	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
 	mutantbrain = /obj/item/organ/internal/brain/dullahan
@@ -38,11 +46,8 @@
 	head?.drop_limb()
 	if(QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
 		return
-	head.throwforce = 25
 	my_head = new /obj/item/dullahan_relay(head, human)
 	human.put_in_hands(head)
-	head.show_organs_on_examine = FALSE
-	head.speech_span = null // so we don't look roboty when talking through it
 
 	var/obj/item/organ/internal/brain/brain = locate() in head.contents
 	brain?.on_insert(human) // This is so fucked
@@ -56,7 +61,6 @@
 	human.update_body()
 	head.update_icon_dropped()
 	human.set_safe_hunger_level()
-	toggle_organ_decay(head) // They're happy in there don't worry
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
 
 /// If we gained a new body part, it had better not be a head
