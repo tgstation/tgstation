@@ -5,9 +5,6 @@
 	unit_name = "manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 
-/datum/export/manifest/error_denied/applies_to(obj/O)
-	return FALSE
-
 // Approved manifest.
 // +80 credits flat.
 /datum/export/manifest/correct
