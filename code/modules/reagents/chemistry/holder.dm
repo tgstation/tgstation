@@ -1313,8 +1313,8 @@
 	var/total_ph = 0
 	. = 0
 
-	// we don't call del_reagent() directly cause this proc is HOT and we wan't avoid the extra
-	// proc call overhead so we just copy paste it's code down here & besides
+	// we don't call del_reagent() directly cause this proc is HOT and we wan't to avoid the
+	// extra  proc call overhead so we just copy paste it's code down here & besides
 	// del_reagent() calls update_total() again so we really
 	// should avoid its overhead
 	while(chem_index <= num_reagents)
@@ -1322,7 +1322,7 @@
 		chem_index += 1
 
 		//remove very small amounts of reagents
-		if((reagent.volume <= 0.05 & !is_reacting) || reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)
+		if((reagent.volume <= 0.05 && !is_reacting) || reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)
 			//do the exact same stuff as del_reagent()
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
