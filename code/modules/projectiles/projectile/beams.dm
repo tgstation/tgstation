@@ -33,6 +33,11 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 10
 
+/obj/projectile/beam/laser/carbine/practice
+	name = "practice laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	damage = 0
+
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
