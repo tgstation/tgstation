@@ -168,6 +168,8 @@
 	var/no_weed_damage = 20
 	///how much do we heal in weeds
 	var/weed_heal = 10
+	///if the balloon alert was shown atleast once, reset after healing in weeds
+	var/alert_shown = FALSE
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
@@ -190,8 +192,12 @@
 		return FALSE
 
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
-	if(!vines_in_range)
+	if(!vines_in_range && !alert_shown)
+		alert_shown = TRUE
 		balloon_alert(src, "do not leave vines!")
+	else if(vines_in_range)
+		alert_shown = FALSE
+
 	apply_damage(vines_in_range ? weed_heal : no_weed_damage, BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
