@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"the supernatural" = typecacheof(list(
 		/mob/dead/observer,
 		/mob/living/basic/bat,
+		/mob/living/basic/construct,
 		/mob/living/basic/demon,
 		/mob/living/basic/faithless,
 		/mob/living/basic/ghost,

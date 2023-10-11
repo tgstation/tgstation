@@ -13,6 +13,9 @@
  * Mark of the Blade
  * Ritual of Knowledge
  * Realignment
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -22,7 +25,7 @@
  * Furious Steel
  * > Sidepaths:
  *   Maid in the Mirror
- *   Lionhunter Rifle
+ *   Rust Charge
  *
  * Maelstrom of Silver
  */

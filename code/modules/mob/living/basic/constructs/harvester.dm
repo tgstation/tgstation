@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/construct/harvester
+/mob/living/basic/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A long, thin construct built to herald Nar'Sie's rise. It'll be all over soon."
@@ -24,58 +24,33 @@
 	can_repair = TRUE
 	slowed_by_drag = FALSE
 
-
-/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
+/mob/living/basic/construct/harvester/Initialize(mapload)
 	. = ..()
-	if(!istype(thing, /turf/closed/wall/mineral/cult) || thing == loc)
-		return // we can go through cult walls
-	var/atom/movable/stored_pulling = pulling
-
-	if(stored_pulling)
-		stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
-		stored_pulling.forceMove(loc)
-	forceMove(thing)
-
-	if(stored_pulling)
-		start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
-
-/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
-	if(!iscarbon(target))
-		return ..()
-
-	var/mob/living/carbon/victim = target
-	if(HAS_TRAIT(victim, TRAIT_NODISMEMBER))
-		return ..() //ATTACK!
-
-	var/list/parts = list()
-	var/strong_limbs = 0
-
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
-		if(limb.body_part == HEAD || limb.body_part == CHEST)
-			continue
-		if(!(limb.bodypart_flags & BODYPART_UNREMOVABLE))
-			parts += limb
-		else
-			strong_limbs++
-
-	if(!LAZYLEN(parts))
-		if(strong_limbs) // they have limbs we can't remove, and no parts we can, attack!
-			return ..()
-		victim.Paralyze(60)
-		visible_message(span_danger("[src] knocks [victim] down!"))
-		to_chat(src, span_cultlarge("\"Bring [victim.p_them()] to me.\""))
-		return FALSE
-
-	do_attack_animation(victim)
-	var/obj/item/bodypart/limb = pick(parts)
-	limb.dismember()
-	return FALSE
-
-/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
-	. = ..()
-	var/datum/action/innate/seek_prey/seek = new()
+	AddElement(\
+		/datum/element/amputating_limbs,\
+		surgery_time = 0,\
+		surgery_verb = "slicing",\
+		minimum_stat = CONSCIOUS,\
+	)
+	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
+	var/datum/action/innate/seek_prey/seek = new(src)
 	seek.Grant(src)
 	seek.Activate()
+
+/// If the attack is a limbless carbon, abort the attack, paralyze them, and get a special message from Nar'Sie.
+/mob/living/basic/construct/harvester/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	if(!iscarbon(attack_target))
+		return ..()
+	var/mob/living/carbon/carbon_target = attack_target
+
+	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
+		if(limb.body_part == HEAD || limb.body_part == CHEST)
+			continue
+		return ..() //if any arms or legs exist, attack
+
+	carbon_target.Paralyze(6 SECONDS)
+	visible_message(span_danger("[src] knocks [carbon_target] down!"))
+	to_chat(src, span_cultlarge("\"Bring [carbon_target.p_them()] to me.\""))
 
 /datum/action/innate/seek_master
 	name = "Seek your Master"
@@ -89,7 +64,7 @@
 	/// Where is nar nar? Are we even looking?
 	var/tracking = FALSE
 	/// The construct we're attached to
-	var/mob/living/simple_animal/hostile/construct/the_construct
+	var/mob/living/basic/construct/the_construct
 
 /datum/action/innate/seek_master/Grant(mob/living/player)
 	the_construct = player
@@ -132,7 +107,7 @@
 /datum/action/innate/seek_prey/Activate()
 	if(GLOB.cult_narsie == null)
 		return
-	var/mob/living/simple_animal/hostile/construct/harvester/the_construct = owner
+	var/mob/living/basic/construct/harvester/the_construct = owner
 
 	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"

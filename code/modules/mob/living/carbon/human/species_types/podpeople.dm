@@ -74,6 +74,10 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
+/datum/species/pod/get_physical_attributes()
+	return "Podpeople are in many ways the inverse of shadows, healing in light and starving with the dark. \
+		Their bodies are like tinder and easy to char."
+
 /datum/species/pod/create_pref_unique_perks()
 	var/list/to_add = list()
 
