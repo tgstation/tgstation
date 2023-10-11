@@ -120,7 +120,7 @@
  * The result of a kudzu flower bud, these enemies use vines to drag prey close to them for attack.
  *
  * A carnivorious plant which uses vines to catch and ensnare prey.  Spawns from kudzu flower buds.
- * Carbons are stunned when a vine is attached to them, and movable entities are pulled closer over time.
+ * Each one can attach up to two temporary vines to objects or mobs and drag them around with it.
  * Attempting to attach a vine to something with a vine already attached to it will pull all movable targets closer on command.
  * Once the prey is in melee range, melee attacks from the venus human trap heals itself for 10% of its max health, assuming the target is alive.
  * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
