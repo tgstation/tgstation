@@ -5,12 +5,14 @@
 	sexes = FALSE
 	species_traits = list(
 		MUTCOLORS,
+		MUTCOLORS_SECONDARY
 	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
+		/obj/item/organ/external/floran_leaves = "Furnivour",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
