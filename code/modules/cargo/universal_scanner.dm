@@ -187,7 +187,8 @@
 			message += " (Undeterminable value(s) detected, final value may differ.)"
 	else
 		if(!report.all_contents_scannable)
-			message += " unable to determine final value."
+			message += ", unable to determine value."
+			warning = TRUE
 		else if(price)
 			message += ", value: <b>[price]</b> credits."
 		else
