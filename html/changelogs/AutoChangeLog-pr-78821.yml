@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Cowardly mobs will consistently run away from you instead of getting tired and just sort of standing there after an initial burst of movement."

@@ -37,6 +37,9 @@
 		return 30 //Flyswatters deal 30x damage to flypeople.
 	return 1
 
+/datum/species/fly/get_physical_attributes()
+	return "These hideous creatures suffer from pesticide immensely, eat waste, and are incredibly vulnerable to bright lights. They do have wings though."
+
 /datum/species/fly/get_species_description()
 	return "With no official documentation or knowledge of the origin of \
 		this species, they remain a mystery to most. Any and all rumours among \
