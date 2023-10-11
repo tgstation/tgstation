@@ -8,7 +8,6 @@
 
 /datum/reagent/medicine
 	taste_description = "bitterness"
-	reverse_metabolism_effect = TRUE
 
 /datum/reagent/medicine/New()
 	. = ..()

@@ -74,8 +74,6 @@
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_respiration_type = ALL
-	/// If TRUE, when metabolizing out of a mob, we divide by the mob's metabolism rather than multiply.
-	var/reverse_metabolism_effect = FALSE
 
 	///The default reagent container for the reagent, used for icon generation
 	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
