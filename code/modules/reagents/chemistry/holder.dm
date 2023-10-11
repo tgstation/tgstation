@@ -1314,7 +1314,7 @@
 	. = 0
 
 	// we don't call del_reagent() directly cause this proc is HOT and we wan't to avoid the
-	// extra  proc call overhead so we just copy paste it's code down here & besides
+	// extra proc call overhead so we just copy paste it's code down here & besides
 	// del_reagent() calls update_total() again so we really
 	// should avoid its overhead
 	while(chem_index <= num_reagents)
