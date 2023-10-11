@@ -12,6 +12,18 @@
 
 // above ground only
 
+/datum/map_template/ruin/icemoon/gas
+        name = "Lizard Gas"
+        id = "lizgasruin"
+        description = "An gas station. It appears to still be up and running even while being a ruin."
+        suffix = "icemoon_surface_gas.dmm"
+
+/datum/map_template/ruin/icemoon/bar
+        name = "Rusky Bar"
+        id = "rusbar"
+        description = "An abandoned bar. Appears to be very old."
+        suffix = "icemoon_surface_abandoned_bar.dmm"
+
 /datum/map_template/ruin/icemoon/lust
 	name = "Ruin of Lust"
 	id = "lust"

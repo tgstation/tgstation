@@ -1,0 +1,879 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"aS" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"bS" = (
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/syringe/contraband/space_drugs,
+/turf/open/floor/wood,
+/area/ruin)
+"cs" = (
+/obj/structure/shipping_container/kosmologistika,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"cF" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored)
+"df" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"dU" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/reagent_containers/condiment/peppermill,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"gl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/wood,
+/area/ruin)
+"gn" = (
+/obj/structure/sign/poster/official/twelve_gauge/directional/south,
+/turf/open/floor/wood,
+/area/ruin)
+"gD" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"ho" = (
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/wood,
+/area/ruin)
+"nJ" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/wood,
+/area/ruin)
+"oj" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"or" = (
+/obj/structure/fence/end{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"oV" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"pv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin)
+"qn" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"qx" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"qG" = (
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/turf/open/floor/wood,
+/area/ruin)
+"rv" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin)
+"rB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"rI" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin)
+"rQ" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"sB" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"ub" = (
+/obj/structure/table/wood/poker,
+/obj/item/food/pizzaslice/moldy/bacteria,
+/turf/open/floor/wood,
+/area/ruin)
+"uV" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"vz" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"vF" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin)
+"vG" = (
+/obj/structure/sign/warning/electric_shock/directional/west,
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"vK" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"wL" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin)
+"wW" = (
+/turf/open/floor/wood,
+/area/ruin)
+"xC" = (
+/turf/open/space/basic,
+/area/space)
+"xP" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"yu" = (
+/obj/item/chair/stool/bar{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/calendar/directional/west,
+/turf/open/floor/wood,
+/area/ruin)
+"yT" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"zu" = (
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"zH" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/wood,
+/area/ruin)
+"zI" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"AG" = (
+/obj/structure/table/wood,
+/obj/item/plate{
+	pixel_x = -4
+	},
+/obj/item/food/meat/steak/chicken{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/soda_cans/sodawater{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"Bb" = (
+/obj/item/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"Bf" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/light/small/broken/directional/east,
+/obj/structure/sign/flag/terragov/directional/east,
+/turf/open/floor/wood,
+/area/ruin)
+"Bz" = (
+/obj/structure/fence/corner{
+	dir = 6
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"Cb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/communist_state/directional/north,
+/turf/open/floor/wood,
+/area/ruin)
+"Cy" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"CH" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin)
+"CV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"Db" = (
+/obj/structure/fence/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"Dg" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
+/turf/open/floor/wood,
+/area/ruin)
+"DJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin)
+"Ez" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin)
+"Fn" = (
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin)
+"Gu" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate/wooden,
+/obj/item/ammo_box/n762,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"GS" = (
+/obj/structure/table/wood,
+/obj/item/plate/large,
+/obj/item/food/cakeslice/carrot{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/food/ballpark_pretzel{
+	pixel_y = -2;
+	pixel_x = 4
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"If" = (
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/wood,
+/area/ruin)
+"IN" = (
+/obj/item/wallframe/apc,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin)
+"Jl" = (
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"KZ" = (
+/obj/structure/fence/door{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"La" = (
+/obj/item/chair/wood,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/machinery/light/small/built/directional/south,
+/turf/open/floor/wood,
+/area/ruin)
+"NL" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"Oq" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"OD" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/item/circuitboard/machine/pacman,
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"Pc" = (
+/obj/effect/turf_decal/delivery,
+/obj/item/kitchen/fork,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"Ps" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/sign/poster/contraband/c20r/directional/west,
+/turf/open/floor/wood,
+/area/ruin)
+"PE" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"PF" = (
+/obj/structure/table/wood/poker,
+/obj/item/gun/ballistic/revolver/nagant{
+	desc = s"An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"QA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/wood,
+/area/ruin)
+"QM" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"QZ" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin)
+"RG" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"Tn" = (
+/obj/structure/chair/sofa/right/maroon{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"TL" = (
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"UF" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/reagent_containers/condiment/mayonnaise{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/condiment/ketchup{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"UN" = (
+/obj/structure/chair/sofa/left/maroon{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"Vb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vending/snack,
+/turf/open/floor/wood,
+/area/ruin)
+"VG" = (
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"VK" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+"XI" = (
+/obj/structure/girder,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin)
+"Yc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin)
+"Yh" = (
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin)
+"Yt" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/condiment/hotsauce{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/kitchen,
+/area/ruin)
+"ZC" = (
+/obj/structure/bonfire/prelit,
+/obj/item/food/meat/slab/bear,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
+
+(1,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+"}
+(2,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+xC
+sB
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+"}
+(3,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+xC
+sB
+sB
+xC
+xC
+xC
+xC
+xC
+sB
+RG
+sB
+xC
+xC
+xC
+xC
+"}
+(4,1,1) = {"
+xC
+xC
+xC
+sB
+sB
+RG
+sB
+sB
+zu
+sB
+qx
+sB
+sB
+sB
+sB
+sB
+sB
+xC
+xC
+xC
+"}
+(5,1,1) = {"
+xC
+xC
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+sB
+ZC
+sB
+sB
+xC
+xC
+xC
+"}
+(6,1,1) = {"
+xC
+xC
+sB
+sB
+sB
+wL
+wL
+pv
+wL
+wL
+wL
+uV
+wL
+XI
+zu
+sB
+sB
+xC
+xC
+xC
+"}
+(7,1,1) = {"
+xC
+xC
+xC
+sB
+qx
+wL
+CH
+vK
+Ps
+zH
+yu
+Yc
+bS
+pv
+qn
+sB
+xC
+xC
+xC
+xC
+"}
+(8,1,1) = {"
+xC
+xC
+xC
+Oq
+Gu
+wL
+nJ
+Yc
+DJ
+ho
+TL
+wW
+If
+wL
+sB
+sB
+xC
+xC
+xC
+xC
+"}
+(9,1,1) = {"
+xC
+xC
+xC
+VG
+cs
+wL
+wW
+DJ
+QA
+ho
+Bb
+Yc
+La
+wL
+cF
+cF
+xC
+xC
+xC
+xC
+"}
+(10,1,1) = {"
+xC
+RG
+sB
+QM
+QM
+wL
+vF
+Dg
+Dg
+wW
+wW
+wW
+DJ
+zI
+cF
+cF
+xC
+xC
+xC
+xC
+"}
+(11,1,1) = {"
+xC
+xC
+sB
+QM
+QM
+wL
+Cb
+Yh
+Fn
+wW
+wW
+PF
+UN
+wL
+NL
+NL
+wL
+wL
+xC
+xC
+"}
+(12,1,1) = {"
+xC
+xC
+xC
+oV
+Pc
+wL
+Vb
+Yc
+gl
+Yc
+Yc
+ub
+Tn
+wL
+CV
+Jl
+Yt
+wL
+xC
+xC
+"}
+(13,1,1) = {"
+xC
+xC
+xC
+sB
+sB
+wL
+rv
+qG
+wW
+Bf
+oj
+oj
+wW
+UF
+Jl
+Jl
+xP
+wL
+xC
+xC
+"}
+(14,1,1) = {"
+xC
+xC
+xC
+sB
+sB
+or
+IN
+pv
+uV
+wL
+rI
+AG
+wW
+dU
+df
+df
+Jl
+NL
+xC
+xC
+"}
+(15,1,1) = {"
+xC
+xC
+xC
+VK
+VK
+PE
+OD
+vG
+rQ
+wL
+oj
+oj
+gn
+wL
+Jl
+Cy
+Jl
+NL
+xC
+xC
+"}
+(16,1,1) = {"
+xC
+xC
+xC
+sB
+sB
+aS
+vz
+yT
+rB
+wL
+GS
+rI
+wW
+Ez
+df
+ac
+CV
+wL
+xC
+xC
+"}
+(17,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+aS
+QZ
+rB
+QZ
+wL
+wL
+wL
+wL
+wL
+wL
+wL
+wL
+wL
+xC
+xC
+"}
+(18,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+Db
+KZ
+gD
+gD
+Bz
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+"}
+(19,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+"}
+(20,1,1) = {"
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+xC
+"}
