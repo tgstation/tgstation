@@ -165,9 +165,68 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 1200
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = /atom/movable/screen/alert/status_effect/exercised
+	/// Having any of these reagents in your system gives extends the duration (and gives xp if sleep)
+	var/static/list/supplementary_reagents_bonus = list(
+		/datum/reagent/consumable/ethanol/protein_blend = 15 SECONDS, // protein shakes are very robust
+		/datum/reagent/consumable/eggwhite = 10 SECONDS,
+		/datum/reagent/consumable/eggyolk = 8 SECONDS,
+		/datum/reagent/consumable/nutriment/protein = 7 SECONDS,
+		/datum/reagent/consumable/nutriment/vitamin = 5 SECONDS,
+		/datum/reagent/consumable/milk = 4 SECONDS,
+		/datum/reagent/consumable/soymilk = 2 SECONDS, // darn vegans!
+	)
+
+/datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
+	if(!bonus_time || !new_owner.mind)
+		return 0 SECONDS
+
+	var/modifier = 1
+	if(HAS_TRAIT(new_owner, TRAIT_HULK))
+		modifier += 0.5
+
+	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
+		modifier -= 0.5
+
+	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
+		modifier += 3
+
+	var/food_boost = 0
+	for(var/datum/reagent/workout_reagent in supplementary_reagents_bonus)
+		if(new_owner.reagents.has_reagent(workout_reagent))
+			food_boost += supplementary_reagents_bonus[workout_reagent]
+
+	// every fitness level adds 3 seconds to the duration
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 3 SECONDS
+	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
+
+	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER)
+	if(duration + bonus_time >= exhaustion_limit)
+		duration = exhaustion_limit
+		new_owner.Stun(5 SECONDS)
+		new_owner.balloon_alert(new_owner, "muscles exhausted!")
+		return 0 SECONDS
+
+	return bonus_time
+
+/datum/status_effect/exercised/tick(seconds_between_ticks)
+	owner.reagents.metabolize(owner, seconds_between_ticks * SSMOBS_DT, 0) // doubles the metabolization rate
+
+/datum/status_effect/exercised/on_creation(mob/living/new_owner, bonus_time)
+	duration += workout_duration(new_owner, bonus_time)
+	return ..()
+
+/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
+	duration += workout_duration(new_owner, bonus_time)
+
+/atom/movable/screen/alert/status_effect/exercised
+	name = "Exercise"
+	desc = "You feel well exercised! Sleeping will improve your fitness."
+	icon_state = "exercised"
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
 /datum/status_effect/hippocratic_oath
