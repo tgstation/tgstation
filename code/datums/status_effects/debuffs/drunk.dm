@@ -192,7 +192,7 @@
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
 	var/mob/living/carbon/drunkard = owner
 	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
-		drunk_value -= 50 //So that the drunk personality can spice things up without being killed by liver failure
+		drunk_value -= 70 //So that the drunk personality can spice things up without being killed by liver failure
 		return
 	else if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))
 		if(prob(10))
