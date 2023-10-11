@@ -304,7 +304,7 @@
 	spawned_mob.adjustBruteLoss(brute_damage)
 	spawned_mob.adjustFireLoss(burn_damage)
 	if (corpse_description)
-		spawned_mob.AddComponent(/datum/component/corpse_description, corpse_description, naive_corpse_description)
+		spawned_mob.AddComponent(/datum/component/temporary_description, corpse_description, naive_corpse_description)
 
 /obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
 	. = ..()
