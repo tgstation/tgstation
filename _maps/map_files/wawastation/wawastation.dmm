@@ -237,13 +237,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aex" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen)
+/mob/living/basic/sloth/citrus,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "aez" = (
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -461,7 +457,7 @@
 /area/station/service/kitchen)
 "alW" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "alX" = (
@@ -503,6 +499,17 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Corpse Chute";
+	req_access = list("morgue")
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms)
@@ -1248,6 +1255,16 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/station/service/theater)
+"aFz" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "holodeck"
+	},
+/turf/open/floor/iron,
+/area/station/holodeck/rec_center)
 "aFD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -1400,8 +1417,8 @@
 /area/station/science/xenobiology)
 "aJM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/records/medical/laptop,
 /obj/machinery/light/small/directional/north,
+/obj/item/surgery_tray/full/morgue,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "aJP" = (
@@ -1618,9 +1635,23 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
+"aPR" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "aQL" = (
-/turf/cordon,
-/area/station/commons/fitness/recreation)
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/station/holodeck/rec_center)
 "aQS" = (
 /obj/structure/sign/departments/holy/directional/east,
 /turf/open/floor/iron,
@@ -4996,6 +5027,12 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet/red,
 /area/station/security/warden)
+"cYH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/basic/goat/pete,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen)
 "cYP" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
@@ -5105,10 +5142,9 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "des" = (
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
-/area/space)
+/obj/structure/closet/lasertag/blue,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "deX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -5175,6 +5211,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "dgS" = (
@@ -5394,11 +5433,11 @@
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "medbay1"
 	},
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "dlp" = (
@@ -6159,6 +6198,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "dCI" = (
@@ -8415,6 +8457,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "eZn" = (
@@ -9218,6 +9261,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/bitrunning/den)
+"fzK" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/space)
 "fzL" = (
 /obj/structure/table/wood,
 /obj/item/book/granter/action/spell/smoke/lesser{
@@ -9538,6 +9586,12 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/entry)
+"fHU" = (
+/obj/machinery/computer/holodeck{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
 "fHW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -10242,6 +10296,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"gdf" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/dark,
+/area/station/medical/patients_rooms)
 "gdA" = (
 /obj/structure/chair/sofa/bench/right,
 /turf/open/floor/iron/white,
@@ -10918,8 +10982,14 @@
 /turf/open/floor/carpet/executive,
 /area/space)
 "gvO" = (
-/turf/open/space/basic,
-/area/misc/testroom)
+/obj/machinery/camera/directional/south{
+	c_tag = "Holodeck - Aft";
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/station/holodeck/rec_center)
 "gvR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -10995,7 +11065,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "gya" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/mob/living/simple_animal/sloth/citrus,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14066,6 +14135,24 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms)
+"ioh" = (
+/obj/machinery/door/airlock/medical{
+	name = "Patient Hall"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "iom" = (
 /obj/effect/mapping_helpers/dead_body_placer,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17104,6 +17191,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "kdW" = (
@@ -18344,7 +18432,7 @@
 /area/station/cargo/boutique)
 "kKc" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -20026,8 +20114,12 @@
 	},
 /area/station/engineering/atmos/upper)
 "lIm" = (
-/turf/open/floor/iron/white/side,
-/area/station/commons/fitness)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/locker)
 "lIn" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/structure/window/reinforced{
@@ -21052,14 +21144,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mpA" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Holodeck - Fore";
-	name = "holodeck camera"
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
-/area/space)
+/area/station/commons/fitness)
 "mpH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -21279,11 +21368,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "mvW" = (
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
-/area/space)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/holodeck/rec_center)
 "mwc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21370,8 +21457,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "myk" = (
+/obj/structure/table,
 /turf/open/space/basic,
-/area/station/commons/fitness/recreation)
+/area/space)
 "myG" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/machinery/computer/records/security{
@@ -21472,6 +21560,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
+"mBT" = (
+/obj/structure/weightmachine,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/white/textured_large,
+/area/station/commons/fitness)
 "mBX" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -22034,15 +22128,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "mSK" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Door"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "holodeck"
-	},
-/turf/open/floor/iron,
-/area/space)
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/commons/fitness)
 "mSN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -23106,6 +23194,13 @@
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
+"nvK" = (
+/obj/structure/cable,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 8
+	},
+/area/station/commons/fitness)
 "nvQ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/camera/autoname/directional/south,
@@ -23462,6 +23557,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "nKi" = (
@@ -24332,6 +24428,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
+"osd" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white,
+/area/station/medical/patients_rooms)
 "osp" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
@@ -24452,6 +24556,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ovB" = (
@@ -24473,6 +24580,11 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/service/theater)
+"owj" = (
+/obj/structure/weightmachine,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/white/textured_large,
+/area/station/commons/fitness)
 "owp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -25363,7 +25475,6 @@
 /area/station/asteroid)
 "oVV" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/camera/directional/east{
 	c_tag = "Xenobiology Lab - Secure Pen";
 	network = list("ss13","rd","xeno")
@@ -25498,6 +25609,10 @@
 	},
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
+"oXL" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/holodeck/rec_center)
 "oXW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -25865,6 +25980,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "piS" = (
@@ -26000,6 +26118,22 @@
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/cmo)
+"pme" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/treatment_center)
 "pny" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
@@ -27033,9 +27167,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "pTD" = (
-/obj/structure/weightmachine,
-/turf/open/floor/iron/white/textured_large,
-/area/station/commons/fitness)
+/turf/closed/wall,
+/area/station/holodeck/rec_center)
 "pTJ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -28280,8 +28413,11 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "qKi" = (
-/turf/open/floor/iron/white/smooth_half,
-/area/station/commons/fitness)
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/station/holodeck/rec_center)
 "qKj" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow{
@@ -28688,14 +28824,14 @@
 /turf/open/floor/iron/dark,
 /area/station/bitrunning/den)
 "qZB" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Holodeck - Aft";
+/obj/machinery/camera/directional/north{
+	c_tag = "Holodeck - Fore";
 	name = "holodeck camera"
 	},
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/space)
+/area/station/holodeck/rec_center)
 "qZX" = (
 /obj/structure/sign/xenobio_guide/directional/north,
 /obj/structure/tank_holder/extinguisher,
@@ -29192,6 +29328,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms)
 "rnB" = (
@@ -29463,9 +29602,9 @@
 /area/station/maintenance/department/engine)
 "rvo" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/item/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "rwf" = (
@@ -29659,6 +29798,11 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
+"rzB" = (
+/turf/open/floor/iron/white/smooth_half{
+	dir = 8
+	},
+/area/station/commons/fitness)
 "rzD" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -30732,6 +30876,9 @@
 	req_access = list("morgue_secure")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "saH" = (
@@ -31212,8 +31359,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sok" = (
-/obj/structure/mannequin/skeleton,
 /obj/machinery/newscaster/directional/west,
+/obj/machinery/computer/records/medical/laptop,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "soA" = (
@@ -33317,7 +33465,6 @@
 /area/station/service/kitchen)
 "txF" = (
 /obj/structure/table/optable,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "tyd" = (
@@ -33351,6 +33498,11 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/misc/testroom)
+"tAa" = (
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/maintenance/central/greater)
 "tAf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34401,9 +34553,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ubs" = (
-/obj/effect/spawner/structure/window,
+/obj/structure/closet/lasertag/red,
 /turf/open/floor/iron,
-/area/station/commons/locker)
+/area/station/commons/fitness/recreation)
 "ubV" = (
 /obj/structure/chair{
 	dir = 4
@@ -35174,11 +35326,11 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uxw" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/end{
 	dir = 8
+	},
+/obj/machinery/cryo_cell{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
@@ -35257,6 +35409,10 @@
 "uzH" = (
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"uzQ" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/textured_large,
+/area/station/commons/fitness)
 "uAt" = (
 /obj/structure/table,
 /obj/structure/window{
@@ -35280,7 +35436,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "uAH" = (
-/turf/open/floor/iron/white,
+/obj/structure/punching_bag,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness)
 "uBf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -36842,8 +37000,8 @@
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
 "vAp" = (
-/turf/open/floor/iron/dark,
-/area/station/commons/fitness/recreation)
+/turf/closed/wall,
+/area/station/commons/fitness)
 "vAs" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -39924,6 +40082,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"xmU" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "xmZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/prison/directional/south,
@@ -40006,6 +40176,18 @@
 /obj/effect/landmark/start/cook,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"xpY" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/patients_rooms)
 "xqa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -41259,6 +41441,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "ygj" = (
@@ -58092,9 +58277,9 @@ ckH
 xLN
 xLN
 ioa
-xLN
-ckH
-wat
+xpY
+osd
+gdf
 rnb
 tTl
 jOH
@@ -58349,7 +58534,7 @@ kFT
 phV
 kFT
 kFT
-mhi
+ioh
 dKw
 uOm
 amK
@@ -58572,7 +58757,7 @@ vSt
 umh
 uyL
 fFz
-uyL
+aex
 umh
 uyL
 xrU
@@ -59120,7 +59305,7 @@ uRT
 bhZ
 oPy
 fvo
-wvc
+aPR
 pwn
 bui
 dpf
@@ -59377,7 +59562,7 @@ kFT
 aeI
 kFT
 kFT
-esg
+pme
 nvT
 cBb
 cBb
@@ -59634,7 +59819,7 @@ eUB
 eUB
 lvW
 ixA
-uuu
+xmU
 vOs
 cBb
 dkZ
@@ -68831,20 +69016,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -69088,20 +69273,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-gnl
-gnl
-qvG
-qvG
-mSK
-qvG
-qvG
-mSK
-qvG
-qvG
-qvG
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -69345,20 +69530,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -69602,20 +69787,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -69859,20 +70044,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-mvW
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -70116,20 +70301,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -70146,7 +70331,7 @@ kuP
 enu
 oBU
 aAg
-rNs
+cYH
 aJv
 enu
 drJ
@@ -70373,20 +70558,20 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-mpA
-des
-des
-des
-des
-des
-des
-des
-des
-qZB
-gnl
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
 cLf
 cLf
 cLf
@@ -70403,7 +70588,7 @@ kuP
 enu
 fNy
 rNs
-aex
+rNs
 dCh
 enu
 alP
@@ -70630,26 +70815,26 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
 cLf
 cLf
 cLf
 cLf
 cLf
 cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+fHU
+myk
 cLf
 cLf
 lCk
@@ -70887,20 +71072,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-mvW
-des
-des
-gnl
-lCk
 cLf
 cLf
 cLf
@@ -70910,8 +71081,22 @@ cLf
 cLf
 cLf
 cLf
-gvO
-gvO
+cLf
+cLf
+cLf
+cLf
+pTD
+pTD
+pTD
+pTD
+aFz
+oXL
+oXL
+aFz
+pTD
+pTD
+pTD
+pTD
 iHK
 kuP
 enu
@@ -71144,20 +71329,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
 cLf
 cLf
 cLf
@@ -71167,8 +71338,22 @@ cLf
 cLf
 cLf
 cLf
-gvO
-gvO
+cLf
+cLf
+cLf
+cLf
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 kuP
 enu
@@ -71401,20 +71586,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-qio
-des
-des
-des
-des
-des
-des
-des
-des
-des
-des
-gnl
-lCk
 cLf
 cLf
 cLf
@@ -71424,8 +71595,22 @@ cLf
 cLf
 cLf
 cLf
-gvO
-gvO
+cLf
+cLf
+cLf
+cLf
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 kuP
 enu
@@ -71658,20 +71843,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-gnl
-gnl
-gnl
-gnl
-mSK
-qvG
-qvG
-mSK
-gnl
-gnl
-gnl
-gnl
-lCk
 cLf
 cLf
 cLf
@@ -71681,8 +71852,22 @@ cLf
 cLf
 cLf
 cLf
-gvO
-gvO
+cLf
+cLf
+cLf
+cLf
+mvW
+aQL
+aQL
+qKi
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 kuP
 enu
@@ -71915,20 +72100,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
 cLf
 cLf
 cLf
@@ -71938,8 +72109,22 @@ cLf
 cLf
 cLf
 cLf
-gvO
-gvO
+cLf
+cLf
+cLf
+cLf
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 kuP
 tar
@@ -72173,12 +72358,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-wHa
-qEF
-rUZ
-qEF
-lCk
 cLf
 cLf
 cLf
@@ -72191,12 +72370,18 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-cLf
-cLf
+mvW
+qZB
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
 gvO
-gvO
+pTD
 iHK
 sqx
 enu
@@ -72430,12 +72615,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-lIm
-qKi
-uAH
-mgV
-lCk
 cLf
 cLf
 cLf
@@ -72448,12 +72627,18 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-cLf
-cLf
-gvO
-gvO
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 sqx
 enu
@@ -72687,30 +72872,30 @@ cLf
 cLf
 cLf
 cLf
-lCk
-lIm
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
 qKi
-uAH
-wED
-lCk
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-gvO
-gvO
+aQL
+aQL
+pTD
 iHK
 sqx
 enu
@@ -72944,12 +73129,6 @@ cLf
 cLf
 cLf
 cLf
-lCk
-wHa
-qKi
-uAH
-flH
-lCk
 cLf
 cLf
 cLf
@@ -72962,12 +73141,18 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-cLf
-lCk
-iHK
-iHK
+mvW
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 iHK
 sqx
 sqx
@@ -73201,30 +73386,30 @@ cLf
 cLf
 cLf
 cLf
-lCk
-wHa
-qKi
-uAH
-mgV
-lCk
 cLf
 cLf
 cLf
 cLf
 cLf
 cLf
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+mvW
 aQL
-myk
-xQH
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+aQL
+pTD
 xQH
 xQH
 xQH
@@ -73458,30 +73643,30 @@ cLf
 cLf
 cLf
 cLf
-lCk
-wHa
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+cLf
+gnl
 pTD
-mgV
 pTD
-lCk
-cLf
-cLf
-cLf
-cLf
-cLf
-cLf
-lCk
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-kZw
-xQH
-xQH
+pTD
+oXL
+aFz
+oXL
+oXL
+aFz
+oXL
+pTD
+pTD
+pTD
 cRg
 rUC
 bbh
@@ -73715,28 +73900,28 @@ cLf
 cLf
 cLf
 cLf
-lCk
-lCk
-lCk
-lCk
-lCk
-lCk
 cLf
 cLf
 cLf
 cLf
 cLf
 cLf
-lCk
+cLf
+cLf
+cLf
+cLf
+cLf
+gnl
+uYH
+uYH
+gnl
 uYH
 uYH
 uYH
 uYH
 uYH
 uYH
-uYH
-uYH
-kZw
+des
 xQH
 mCv
 wwD
@@ -73983,17 +74168,17 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
+uYH
+uYH
+gnl
 uYH
 uYH
 uYH
 uYH
 uYH
 uYH
-uYH
-uYH
-kZw
+ubs
 xQH
 vZn
 kqD
@@ -74240,8 +74425,7 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
 uYH
 uYH
 uYH
@@ -74250,7 +74434,8 @@ uYH
 uYH
 uYH
 uYH
-vAp
+uYH
+kZw
 xQH
 mcA
 kqD
@@ -74497,17 +74682,17 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
+gnl
+gnl
+gnl
 uYH
 uYH
 uYH
 uYH
 uYH
 uYH
-uYH
-uYH
-vAp
+kZw
 xQH
 gLp
 dNh
@@ -74754,8 +74939,7 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
 uYH
 uYH
 uYH
@@ -74764,7 +74948,8 @@ uYH
 uYH
 uYH
 uYH
-vAp
+uYH
+kZw
 xQH
 ruE
 kPj
@@ -75011,17 +75196,17 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
+uYH
+uYH
+gnl
 uYH
 uYH
 uYH
 uYH
 uYH
 uYH
-uYH
-uYH
-vAp
+kZw
 xQH
 iwm
 dqr
@@ -75268,17 +75453,17 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
+uYH
+uYH
+gnl
 uYH
 uYH
 uYH
 uYH
 uYH
 uYH
-uYH
-uYH
-vAp
+kZw
 xQH
 fZT
 dAu
@@ -75524,11 +75709,11 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-lCk
-uYH
-uYH
+gnl
+gnl
+gnl
+gnl
+gnl
 uYH
 uYH
 uYH
@@ -75781,9 +75966,9 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-lCk
+gnl
+uYH
+uYH
 uYH
 uYH
 uYH
@@ -76038,11 +76223,11 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-lCk
+gnl
 uYH
 uYH
+uYH
+gnl
 uYH
 uYH
 uYH
@@ -76295,11 +76480,11 @@ cLf
 cLf
 cLf
 cLf
-cLf
-cLf
-lCk
-uYH
-uYH
+gnl
+gnl
+gnl
+gnl
+gnl
 uYH
 uYH
 uYH
@@ -76554,7 +76739,7 @@ cLf
 cLf
 cLf
 cLf
-lCk
+fzK
 uYH
 uYH
 uYH
@@ -76564,10 +76749,10 @@ uYH
 uYH
 uYH
 uYH
-uYH
-uzH
-uzH
-kqD
+jcW
+cOp
+cOp
+lIm
 mNl
 xjj
 ntS
@@ -76810,20 +76995,20 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
+gnl
+gnl
 uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uzH
-xQH
+gnl
+fzK
+vAp
+owj
+mpA
+rzB
+rzB
+nvK
+uAH
+vAp
 xzj
 cOp
 ssS
@@ -77067,20 +77252,20 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
 uYH
 uYH
 uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uzH
-xQH
+gnl
+tEy
+vAp
+mgV
+mSK
+mSK
+mSK
+mSK
+rUZ
+vAp
 ooE
 kqD
 wTT
@@ -77324,22 +77509,22 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
+gnl
 uYH
 uYH
 uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uzH
-xQH
+gnl
+tEy
+vAp
+mBT
+uzQ
+wED
+flH
+mgV
+qEF
+vAp
 iTW
-ubs
+tDa
 eXU
 ahE
 xMg
@@ -77581,20 +77766,20 @@ cLf
 cLf
 cLf
 cLf
-cLf
-lCk
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
-uYH
 gnl
-uZx
-uZx
-xQH
-xQH
+gnl
+gnl
+gnl
+gnl
+fzK
+vAp
+vAp
+vAp
+wHa
+wHa
+vAp
+vAp
+vAp
 aly
 aly
 gwS
@@ -128985,13 +129170,13 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 wTX
 wTX
 wTX
@@ -129242,13 +129427,13 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 wTX
 wTX
 wTX
@@ -136436,15 +136621,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 wAv
 kIB
@@ -136693,15 +136878,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 gYW
 gYW
@@ -136950,17 +137135,17 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-ups
-dwI
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 wAv
 wjI
@@ -137207,15 +137392,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 gYW
 gYW
@@ -137464,15 +137649,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 uSe
 cjp
@@ -137721,15 +137906,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 uSe
 cjp
@@ -137978,15 +138163,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 uSe
 cjp
@@ -138235,15 +138420,15 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 gYW
 gYW
 gYW
@@ -138492,22 +138677,22 @@ hhX
 hhX
 hhX
 hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-hhX
-ups
-dwI
-ups
-wAv
-ups
-dwI
-dwI
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+tAa
+wTX
+wTX
+wTX
 apQ
 apQ
 tYw
@@ -138749,20 +138934,20 @@ hhX
 hhX
 hhX
 hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
 hQF
 hQF
 apQ
@@ -139006,20 +139191,20 @@ hhX
 hhX
 hhX
 hhX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
 hQF
 hQF
 apQ
@@ -139263,15 +139448,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -139520,15 +139705,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -139777,15 +139962,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -140034,15 +140219,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -140291,15 +140476,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -140548,15 +140733,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -140805,15 +140990,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -141062,15 +141247,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -141319,15 +141504,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -141576,15 +141761,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -141833,15 +142018,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -142090,15 +142275,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -142347,15 +142532,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -142604,15 +142789,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -142861,15 +143046,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -143118,15 +143303,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -143375,15 +143560,15 @@ hhX
 hhX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -143632,15 +143817,15 @@ wTX
 wTX
 hhX
 hhX
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
-hQF
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
+wTX
 hQF
 hQF
 hQF
@@ -144192,7 +144377,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -144449,7 +144634,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -144706,7 +144891,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -144963,7 +145148,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -145220,7 +145405,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -145477,7 +145662,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -145734,7 +145919,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -145991,7 +146176,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
@@ -146248,7 +146433,7 @@ dwI
 dwI
 dwI
 wTX
-hhX
+wTX
 hhX
 hhX
 hhX
