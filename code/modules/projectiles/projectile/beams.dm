@@ -94,6 +94,10 @@
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	damage_falloff_tile = -0.45
+	wound_falloff_tile = -2.5
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"

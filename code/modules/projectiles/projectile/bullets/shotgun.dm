@@ -70,17 +70,8 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.25
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
+	damage_falloff_tile = -0.45
+	stamina_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
