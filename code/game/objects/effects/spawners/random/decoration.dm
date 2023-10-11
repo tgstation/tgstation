@@ -96,7 +96,6 @@
 /obj/effect/spawner/random/decoration/microwave
 	name = "microwave showcase spawner"
 	icon_state = "showcase"
-	loot_type_path = /obj/structure/showcase
 	loot = list(
 		/obj/structure/showcase/machinery/microwave,
 		/obj/structure/showcase/machinery/microwave_engineering,
