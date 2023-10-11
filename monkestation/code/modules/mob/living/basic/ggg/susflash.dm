@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
 	held_w_class = WEIGHT_CLASS_TINY
-	gold_core_spawnable = FRIENDLY_SPAWN
+	gold_core_spawnable = NO_SPAWN
 	can_be_held = FALSE //Will be changed when I make a sprite
 	// attacked_sound = ""
 	// death_sound = ""
@@ -37,13 +37,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	// hud_possible = list(ANTAG_HUD)
-
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-
-	// move_force = MOVE_FORCE_OVERPOWERING
-	// move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	// pull_force = MOVE_FORCE_OVERPOWERING
 
 	lighting_cutoff_red = 15
 	lighting_cutoff_green = 10
@@ -54,3 +48,16 @@
 /mob/living/basic/ggg/susflash/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/obj/item/choice_beacon/pet/donator/susflash
+	name = "Ordinary Flash Bulb"
+	default_name = "suspicious flash"
+	company_source = "Saturnian United Systems"
+	company_message = "Here is your completely ordinary flash bulb."
+	donator_pet = 	/mob/living/basic/ggg/susflash
+
+/datum/loadout_item/pocket_items/donator/susflash
+	name = "Pet Delivery Beacon - Ordinary Flash Bulb"
+	item_path = /obj/item/choice_beacon/pet/donator/susflash
+	donator_only = TRUE
+	requires_purchase = FALSE
