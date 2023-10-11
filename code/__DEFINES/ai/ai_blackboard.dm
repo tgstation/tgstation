@@ -27,6 +27,11 @@
 /// Something the mob will remote when calling reinforcements
 #define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
 
+/// Store a single or list of emotes at this key
+#define BB_EMOTE_KEY "BB_emotes"
+/// Chance to perform an emote per second
+#define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 

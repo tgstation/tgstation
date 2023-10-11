@@ -584,10 +584,6 @@ There are several things that need to be remembered:
 			hand_overlay.pixel_y += dna.species.offset_features[OFFSET_HANDS][2]
 
 		hands += hand_overlay
-
-
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
 	return hands
 
 /proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
