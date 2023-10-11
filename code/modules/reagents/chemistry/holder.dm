@@ -1319,7 +1319,6 @@
 	// should avoid its overhead
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
-		chem_index += 1
 
 		//remove very small amounts of reagents
 		if((reagent.volume <= 0.05 && !is_reacting) || reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)
@@ -1338,12 +1337,15 @@
 
 			//move pointer back so we don't overflow & decrease length
 			chem_index -= 1
+			if(!chem_index)
+				chem_index = 1
 			num_reagents -= 1
 			continue
 
 		//compute volume & ph like we would normally
 		. += reagent.volume
 		total_ph += (reagent.ph * reagent.volume)
+		chem_index += 1
 
 	//assign the final values
 	total_volume = .
