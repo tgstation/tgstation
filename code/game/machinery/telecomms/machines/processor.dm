@@ -1,11 +1,10 @@
-/*
-	The processor is a very simple machine that decompresses subspace signals and
-	transfers them back to the original bus. It is essential in producing audible
-	data.
-
-	Link to servers if bus is not present
-*/
-
+/**
+ * The processor is a very simple machine that decompresses subspace signals and
+ * transfers them back to the original bus. It is essential in producing audible
+ * data.
+ *
+ * They'll link to servers if bus is not present, with some delay added to it.
+ */
 /obj/machinery/telecomms/processor
 	name = "processor unit"
 	icon_state = "processor"
@@ -31,7 +30,7 @@
 		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
-//Preset Processors
+// Preset Processors
 
 /obj/machinery/telecomms/processor/preset_one
 	id = "Processor 1"
