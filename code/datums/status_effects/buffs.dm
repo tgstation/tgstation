@@ -222,6 +222,7 @@
 
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
+	duration = max(initial(duration), duration)
 
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
