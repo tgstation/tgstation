@@ -176,7 +176,7 @@
 
 	var/message = "Scanned [target]"
 	var/warning = FALSE
-	if(target.contents.len)
+	if(length(target.contents))
 		message = "Scanned [target] and its contents"
 		if(price)
 			message += ", total value: <b>[price]</b> credits."
