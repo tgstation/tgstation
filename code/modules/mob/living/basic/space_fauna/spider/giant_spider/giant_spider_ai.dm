@@ -30,7 +30,8 @@
 /// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	planning_subtrees = list(

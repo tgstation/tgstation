@@ -818,6 +818,7 @@
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\write_on_paper.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\attack_adjacent_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\attack_obstacle_in_path.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\capricious_retaliate.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\climb_tree.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_food.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_paper_and_write.dm"

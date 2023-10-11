@@ -35,6 +35,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/goat
 
+	/// Who have we gleamed evilly at?
+	var/list/gleamed_mobs = list()
 	/// List of stuff (flora) that we want to eat
 	var/static/list/edibles = list(
 		/obj/structure/alien/resin/flower_bud,
@@ -87,13 +89,20 @@
 
 /// If we are being attacked by someone who we are already retaliating against, give a nice fluff message.
 /mob/living/basic/goat/proc/on_attacked(datum/source, atom/attacker, attack_flags)
-	var/is_attacker_shitlisted = locate(attacker) in ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-	if(!is_attacker_shitlisted)
+	if (locate(attacker) in gleamed_mobs)
 		return
-
 	visible_message(
 		span_danger("[src] gets an evil-looking gleam in [p_their()] eye."),
 	)
+	gleamed_mobs |= attacker
+	addtimer(CALLBACK(src, PROC_REF(ungleam_at), attacker), 20 SECONDS, TIMER_DELETE_ME)
+	RegisterSignal(attacker, COMSIG_QDELETING, PROC_REF(ungleam_at))
+
+/// Either we're ready to gleam evilly at this guy again or they ceased to exist
+/mob/living/basic/goat/proc/ungleam_at(atom/former_enemy)
+	SIGNAL_HANDLER
+	gleamed_mobs -= former_enemy
+	UnregisterSignal(former_enemy, COMSIG_QDELETING)
 
 /// Handles automagically eating a plant when we move into a turf that has one.
 /mob/living/basic/goat/proc/on_move(datum/source, atom/entering_loc)
