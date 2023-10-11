@@ -59,8 +59,13 @@
 // Despite "subspace" in the name, these transmissions can also be RADIO
 // (intercoms and SBRs) or SUPERSPACE (CentCom).
 /datum/signal/subspace/vocal
+	/// The virtualspeaker associated with this vocal transmission.
 	var/atom/movable/virtualspeaker/virt
+	/// The language this vocal transmission was sent in.
 	var/datum/language/language
+
+#define COMPRESSION_VOCAL_SIGNAL_MIN 35
+#define COMPRESSION_VOCAL_SIGNAL_MAX 65
 
 /datum/signal/subspace/vocal/New(
 	obj/source,  // the originating radio
@@ -80,12 +85,15 @@
 		"name" = speaker.name,
 		"job" = speaker.job,
 		"message" = message,
-		"compression" = rand(35, 65),
+		"compression" = rand(COMPRESSION_VOCAL_SIGNAL_MIN, COMPRESSION_VOCAL_SIGNAL_MAX),
 		"language" = lang_instance.name,
 		"spans" = spans,
 		"mods" = message_mods
 	)
 	levels = SSmapping.get_connected_levels(get_turf(source))
+
+#undef COMPRESSION_VOCAL_SIGNAL_MIN
+#undef COMPRESSION_VOCAL_SIGNAL_MAX
 
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
@@ -93,6 +101,10 @@
 	copy.data = data.Copy()
 	copy.levels = levels
 	return copy
+
+/// Past this amount of compression, the resulting gibberish will actually
+/// replace characters, making it even harder to understand.
+#define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30
 
 /// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
@@ -104,7 +116,7 @@
 		return
 	var/compression = data["compression"]
 	if(compression > 0)
-		message = Gibberish(message, compression >= 30)
+		message = Gibberish(message, compression >= COMPRESSION_REPLACE_CHARACTER_THRESHOLD)
 
 	var/list/signal_reaches_every_z_level = levels
 
@@ -188,3 +200,5 @@
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 5 SECONDS)  // Make extra sure the virtualspeaker gets qdeleted
+
+#undef COMPRESSION_REPLACE_CHARACTER_THRESHOLD
