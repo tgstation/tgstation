@@ -266,9 +266,8 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/switch_personalities(reset_to_owner)
 	. = ..()
-	current_controller.overlay_fullscreen("blackimageoverlay", /atom/movable/screen/fullscreen)
-	current_controller.clear_fullscreen(/atom/movable/screen/fullscreen, animated = 2 SECONDS)
-
+	owner.overlay_fullscreen("blackimageoverlay", /atom/movable/screen/fullscreen)
+	owner.clear_fullscreen(/atom/movable/screen/fullscreen, animated = 2 SECONDS)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
