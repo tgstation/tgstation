@@ -167,11 +167,11 @@
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
-		If any victims afflicted are in critical condition, they will also instantly die."
-	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
-		The Nightwatcher was a particular man, always watching."
+	desc = "Grants you Ringleaders Rise, an aoe spell that deals more brain damage the lower the sanity of everyone in the AoE,\
+			causes hallucinations with those who have less sanity getting more. \
+			If their sanity is low enough also applies a trauma, the spell then halves their sanity."
+	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
+		The ringleader pointed up and the dim light of truth illuminated us further."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/moon_final,
 		/datum/heretic_knowledge/summon/ashy,
@@ -182,16 +182,16 @@
 	route = PATH_MOON
 
 /datum/heretic_knowledge/ultimate/moon_final
-	name = "Ashlord's Rite"
+	name = "The Last Act"
 	desc = "The ascension ritual of the Path of Ash. \
 		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
 		You will also become immune to flames, space, and similar environmental hazards."
-	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
-		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
-		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
+	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
+		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
+		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 	adds_sidepath_points = 1
 	route = PATH_MOON
 
@@ -219,24 +219,17 @@
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/carbon/close_carbon in view(5, source))
-		if(IS_HERETIC_OR_MONSTER(close_carbon))
+	for(var/mob/living/carbon/carbon_view in view(7, source))
+		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		close_carbon.adjust_confusion(5 SECONDS, 20 SECONDS)
-		close_carbon.mob_mood.set_sanity(close_carbon.mob_mood.sanity-5)
-
-	/// Time passed since the last effect
-	var/ticks = 0
-	/// How many seconds between each hallucination pulse
-	var/release_delay = 5
-
-	ticks += seconds_per_tick
-	if(ticks < release_delay)
-		return
-	ticks -= release_delay
-	visible_hallucination_pulse(
-		center = get_turf(src),
+		carbon_view.adjust_confusion(5 SECONDS)
+		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
+		visible_hallucination_pulse(
+		center = get_turf(source),
 		radius = 7,
-		hallucination_duration = 50 SECONDS)
+		hallucination_duration = 20 SECONDS)
+
+
+
 
 

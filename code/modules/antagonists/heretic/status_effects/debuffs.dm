@@ -261,8 +261,6 @@
 		duration = duration, \
 		affects_us = FALSE, \
 		affects_others = TRUE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
 	)
 	return TRUE
 

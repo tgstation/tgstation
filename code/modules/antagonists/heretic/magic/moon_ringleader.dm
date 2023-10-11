@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Big AoE spell that more brain damage the lower the sanity of everyone in the AoE and it also causes hallucinations with those who have less sanity getting more. \
-			The spell then halves their sanity."
+	desc = "Big AoE spell that deals more brain damage the lower the sanity of everyone in the AoE and it also causes hallucinations with those who have less sanity getting more. \
+			If their sanity is low enough also applies a trauma, the spell then halves their sanity."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -37,18 +37,20 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/human/victim, atom/caster)
 	if(!ismob(victim))
+		new /obj/effect/temp_visual/knockblast(get_turf(victim))
 		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100-victim.mob_mood.sanity, 160)
 		repeat_string((120-victim.mob_mood.sanity)/10,victim.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"ringleaders rise", \
 		) )
 
+		if(victim.mob_mood.sanity<10)
+			var/trauma_type = pick(/datum/brain_trauma/severe/blindness, /datum/brain_trauma/severe/paralysis/hemiplegic/right, /datum/brain_trauma/severe/paralysis/hemiplegic/left, /datum/brain_trauma/severe/monophobia, /datum/brain_trauma/severe/discoordination )
+			victim.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
 		victim.mob_mood.set_sanity(victim.mob_mood.sanity*0.5)
-		new /obj/effect/temp_visual/knockblast(get_turf(victim))
-
 
 /obj/effect/temp_visual/knockblast
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-flash"
 	alpha = 180
-	duration = 1 SECONDS
+	duration = 5 SECONDS
