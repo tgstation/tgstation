@@ -53087,7 +53087,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
-	dir = 8;
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},

@@ -63484,7 +63484,8 @@
 	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Pharmacy Desk";
-	req_access = list("pharmacy")
+	req_access = list("pharmacy");
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
@@ -68605,6 +68606,7 @@
 	name = "Pharmacy Shutters"
 	},
 /obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rjd" = (
