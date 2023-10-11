@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - qol: "You can now see what drones and gorillas are holding by examining them."
-  - admin: "It's now easier to give handless mobs hands by applying the \"dextrous\" element."
-  - balance: "Spiders and Bears can now climb railings (you know if... they'd rather do that than destroy them)."
