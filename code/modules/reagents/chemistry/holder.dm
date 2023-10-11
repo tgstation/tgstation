@@ -424,10 +424,33 @@
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		del_reagent(reagent.type)
-	SEND_SIGNAL(src, COMSIG_REAGENTS_CLEAR_REAGENTS)
+	var/num_reagents = length(cached_reagents)
 
+	// we just copy paste the same logic from del_reagent() to avoid the extra proc call overhead
+	// reagents poped & removed like a queue
+	while(num_reagents)
+		var/datum/reagent/reagent = cached_reagents[1]
+
+		//do the exact same stuff as del_reagent()
+		if(isliving(my_atom))
+			if(reagent.metabolizing)
+				reagent.metabolizing = FALSE
+				reagent.on_mob_end_metabolize(my_atom)
+			reagent.on_mob_delete(my_atom)
+
+		//removing & sending the signal just like del_reagent()
+		cached_reagents -= reagent
+		LAZYREMOVE(previous_reagent_list, reagent.type)
+		qdel(reagent)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
+
+		//decrease length
+		num_reagents -= 1
+
+	// we know these will be the final values so manually assign them
+	total_volume = 0
+	ph = CHEMICAL_NORMAL_PH
+	SEND_SIGNAL(src, COMSIG_REAGENTS_CLEAR_REAGENTS)
 
 /**
  * Check if this holder contains this reagent. Reagent takes a PATH to a reagent
@@ -1285,22 +1308,49 @@
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
-	. = 0 // This is a relatively hot proc.
-	var/total_ph = 0 // I know I know, I'm sorry
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)//For clarity
-			del_reagent(reagent.type)
-		else
-			. += reagent.volume
-			total_ph += (reagent.ph * reagent.volume)
+	var/chem_index = 1
+	var/num_reagents = length(cached_reagents)
+	var/total_ph = 0
+	. = 0
+
+	// we don't call del_reagent() directly cause this proc is HOT and we wan't avoid the extra
+	// proc call overhead so we just copy paste it's code down here & besides
+	// del_reagent() calls update_total() again so we really
+	// should avoid its overhead
+	while(chem_index <= num_reagents)
+		var/datum/reagent/reagent = cached_reagents[chem_index]
+		chem_index += 1
+
+		//remove very small amounts of reagents
+		if((reagent.volume <= 0.05 & !is_reacting) || reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)
+			//do the exact same stuff as del_reagent()
+			if(isliving(my_atom))
+				if(reagent.metabolizing)
+					reagent.metabolizing = FALSE
+					reagent.on_mob_end_metabolize(my_atom)
+				reagent.on_mob_delete(my_atom)
+
+			//removing & sending the signal just like del_reagent()
+			cached_reagents -= reagent
+			LAZYREMOVE(previous_reagent_list, reagent.type)
+			qdel(reagent)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
+
+			//move pointer back so we don't overflow & decrease length
+			chem_index -= 1
+			num_reagents -= 1
+			continue
+
+		//compute volume & ph like we would normally
+		. += reagent.volume
+		total_ph += (reagent.ph * reagent.volume)
+
+	//assign the final values
 	total_volume = .
-
-	if(!.) // No volume, default to the base
+	if(!.)
 		ph = CHEMICAL_NORMAL_PH
-		return .
-	//Keep limited // should really be defines
-	ph = clamp(total_ph/total_volume, 0, 14)
-
+		return
+	ph = clamp(total_ph / total_volume, 0, 14)
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
