@@ -1,13 +1,26 @@
 // Subtype of /datum/signal with additional processing information.
 /datum/signal/subspace
 	transmission_method = TRANSMISSION_SUBSPACE
+	/// The type of server this signal is meant to be relayed to.
+	/// Not exclusive, the bus will usually try to send it through
+	/// more signals, but for that look for
+	/// `/obj/machinery/telecomms/bus/receive_information()`
 	var/server_type = /obj/machinery/telecomms/server
+	/// The signal that was the origin of this one, in case it was a copy.
 	var/datum/signal/subspace/original
+	/// The levels on which this signal can be received. Generally set by
+	/// a broadcaster, a relay or a message server.
+	/// If this list contains `0`, then it will be receivable on every single
+	/// z-level.
 	var/list/levels
 
 /datum/signal/subspace/New(data)
 	src.data = data || list()
 
+/**
+ * Handles creating a new subspace signal that's a hard copy of this one, linked
+ * to this current signal via the `original` value, so that it can be traced back.
+ */
 /datum/signal/subspace/proc/copy()
 	var/datum/signal/subspace/copy = new
 	copy.original = src
@@ -19,18 +32,26 @@
 	copy.data = data.Copy()
 	return copy
 
+/**
+ * Handles marking the current signal, as well as its original signal,
+ * and their original signals (recursively) as done, in their `data["done"]`.
+ */
 /datum/signal/subspace/proc/mark_done()
 	var/datum/signal/subspace/current = src
 	while (current)
 		current.data["done"] = TRUE
 		current = current.original
 
+/**
+ * Handles sending this signal to every available receiver and mainframe.
+ */
 /datum/signal/subspace/proc/send_to_receivers()
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		R.receive_signal(src)
-	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
-		R.receive_signal(src)
+	for(var/obj/machinery/telecomms/receiver/receiver in GLOB.telecomms_list)
+		receiver.receive_signal(src)
+	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomms_list)
+		all_in_one_receiver.receive_signal(src)
 
+/// Handles broadcasting this signal out, to be implemented by subtypes.
 /datum/signal/subspace/proc/broadcast()
 	set waitfor = FALSE
 
@@ -152,8 +173,8 @@
 	var/spans_part = ""
 	if(length(spans))
 		spans_part = "(spans:"
-		for(var/S in spans)
-			spans_part = "[spans_part] [S]"
+		for(var/span in spans)
+			spans_part = "[spans_part] [span]"
 		spans_part = "[spans_part] ) "
 
 	var/lang_name = data["language"]
@@ -166,4 +187,4 @@
 	else
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
-	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted
+	QDEL_IN(virt, 5 SECONDS)  // Make extra sure the virtualspeaker gets qdeleted
