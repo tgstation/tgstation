@@ -20,7 +20,7 @@
 	var/list/log_entries = list()
 	/// Total trafic, where every signal processed is one gigabyte. Only really
 	/// used for the Server Monitor.
-	var/totaltraffic = 0
+	var/total_traffic = 0
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-vocal signals
@@ -28,7 +28,7 @@
 		return
 
 	if(traffic > 0)
-		totaltraffic += traffic // add current traffic to total traffic
+		total_traffic += traffic // add current traffic to total traffic
 
 	// Delete particularly old logs
 	if (log_entries.len >= MAX_LOG_ENTRIES)
