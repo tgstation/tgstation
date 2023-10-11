@@ -627,12 +627,14 @@
 
 /obj/machinery/door/poddoor/shutters
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/shutters.dmi'
+	door_align_type = /obj/machinery/door/poddoor/shutters
 
 /obj/machinery/door/password
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
 
 /obj/machinery/door/poddoor
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
+	door_align_type = /obj/machinery/door/poddoor
 
 //SKYRAT EDIT ADDITION BEGIN - AESTHETICS
 #undef AIRLOCK_LIGHT_POWER
@@ -657,3 +659,12 @@
 #undef AIRLOCK_FRAME_CLOSING
 #undef AIRLOCK_FRAME_OPEN
 #undef AIRLOCK_FRAME_OPENING
+
+
+/obj/machinery/door/poddoor/shutters/cc
+	obj_flags = INDESTRUCTIBLE
+
+/obj/machinery/door/poddoor/shutters/cc/xcc
+	id = "XCCsec1"
+	name = "XCC Checkpoint 1 Shutters"
+	max_integrity = 3000000

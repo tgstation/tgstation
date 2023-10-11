@@ -39,6 +39,8 @@
 
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 
+#define STASIS_NETPOD_EFFECT "stasis_netpod"
+
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
 /// Cures the mob's blindness from the passed source, removing blindness wholesale if no sources are left
@@ -178,3 +180,8 @@
 #define PETRIFICATION_SPIT /datum/status_effect/ranching/cockatrice_eaten
 ///makes you a mime and gives you the wall ability for the duration
 #define MIME_EGG /datum/status_effect/ranching/mime
+
+#define adjust_static_vision(duration) adjust_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define adjust_static_vision_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/static_vision, up_to)
+#define set_static_vision(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define set_static_vision_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision, TRUE)

@@ -23,6 +23,7 @@
 	var/obj/item/weldingtool/weldtool = null
 	var/obj/item/assembly/igniter/igniter = null
 	var/obj/item/tank/internals/plasma/ptank = null
+	var/obj/item/reagent_containers/cup/beaker/beaker = null
 	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
@@ -42,6 +43,8 @@
 		QDEL_NULL(igniter)
 	if(ptank)
 		QDEL_NULL(ptank)
+	if(beaker)
+		qdel(beaker)
 	return ..()
 
 /obj/item/flamethrower/process()
@@ -69,6 +72,8 @@
 		. += "+ptank"
 	if(lit)
 		. += "+lit"
+	if(beaker)
+		. += "+beaker"
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
@@ -83,7 +88,7 @@
 		if(target_turf)
 			var/turflist = get_line(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
-			flame_turf(turflist)
+			flame_turf(turflist, user)
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
 	. = TRUE
@@ -137,6 +142,20 @@
 		update_appearance()
 		return
 
+	else if(istype(W, /obj/item/reagent_containers/cup/beaker))
+		if(beaker)
+			if(user.transferItemToLoc(W,src))
+				beaker.forceMove(get_turf(src))
+				beaker = W
+				to_chat(user, "<span class='notice'>You swap [beaker] in [src]!</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			return
+		beaker = W
+		to_chat(user, "<span class='notice'>You attach [beaker] to [src]!</span>")
+		update_icon()
+		return
+
 	else
 		return ..()
 
@@ -150,7 +169,12 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(beaker && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		user.put_in_hands(beaker)
+		beaker = null
+		to_chat(user, "<span class='notice'>You remove [beaker] from [src]!</span>")
+		update_icon()
+	else if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
@@ -158,8 +182,18 @@
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
-	if(ptank)
-		. += span_notice("\The [src] has \a [ptank] attached. Alt-click to remove it.")
+	if(beaker)
+		. += "<span class='notice'>\The [src] has \a [beaker] attached. Alt-click to remove it.</span>"
+		if(ptank)
+			. += "<span class='notice'>\The [src] has \a [ptank] attached.</span>"
+		else
+			. += "A plasma tank could be attached."
+	else
+		. += "<span class='notice'>A beaker could be attached.</span>"
+		if(ptank)
+			. += span_notice("\The [src] has \a [ptank] attached. Alt-click to remove it.")
+		else
+			. += "A plasma tank could be attached."
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -192,8 +226,8 @@
 	update_appearance()
 
 //Called from turf.dm turf/dblclick
-/obj/item/flamethrower/proc/flame_turf(turflist)
-	if(!lit || operating)
+/obj/item/flamethrower/proc/flame_turf(turflist, mob/user)
+	if(operating)
 		return
 	operating = TRUE
 	var/turf/previousturf = get_turf(src)
@@ -203,10 +237,15 @@
 		var/list/turfs_sharing_with_prev = previousturf.get_atmos_adjacent_turfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break
-		if(igniter)
-			igniter.ignite_turf(src,T)
-		else
-			default_ignite(T)
+		if(lit)
+			if(igniter)
+				igniter.ignite_turf(src,T)
+			else
+				default_ignite(T)
+		if(beaker)
+			if(beaker.reagents.total_volume)
+				project_reagents(T, user)
+				beaker.reagents.remove_all(beaker.reagents.maximum_volume * 0.05) //only reduce reagents once per shot
 		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
@@ -227,6 +266,34 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
+
+/obj/item/flamethrower/proc/project_reagents(atom/target, mob/user)
+	var/range = max(min(3, get_dist(src, target)), 1)
+
+	var/obj/effect/decal/chempuff/reagent_puff = new /obj/effect/decal/chempuff(get_turf(src))
+
+	reagent_puff.create_reagents(beaker.reagents.maximum_volume * 0.05)
+	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
+	beaker.reagents.copy_to(reagent_puff, beaker.reagents.maximum_volume * 0.05, 1/range)
+	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
+	var/wait_step = max(round(2+3/range), 2)
+
+	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
+	var/turf/src_turf = get_turf(src)
+
+	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
+
+	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
+	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
+
+/obj/item/flamethrower/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	reagent_puff.user = user
+	reagent_puff.sprayer = src
+	reagent_puff.lifetime = puff_reagent_left
+	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
+	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()

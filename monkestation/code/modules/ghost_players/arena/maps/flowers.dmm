@@ -1,0 +1,299 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/beebox,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"f" = (
+/obj/item/food/honeybar,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"g" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"m" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"o" = (
+/obj/item/food/peanuts/honey_roasted,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"r" = (
+/obj/item/food/honey_roll,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"t" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"u" = (
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"B" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"C" = (
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"F" = (
+/obj/item/food/honeybun,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"I" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"L" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/beebox,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"M" = (
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"N" = (
+/obj/structure/beebox,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"P" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"S" = (
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"V" = (
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"X" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+"Y" = (
+/obj/structure/flora/bush/grassy/style_random,
+/mob/living/basic/butterfly,
+/turf/open/floor/grass,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+Y
+V
+V
+V
+V
+V
+V
+P
+C
+V
+"}
+(2,1,1) = {"
+V
+P
+C
+I
+V
+V
+V
+V
+u
+V
+"}
+(3,1,1) = {"
+V
+V
+X
+V
+M
+V
+S
+X
+V
+C
+"}
+(4,1,1) = {"
+C
+M
+N
+V
+P
+V
+V
+b
+V
+V
+"}
+(5,1,1) = {"
+V
+I
+A
+V
+V
+I
+V
+f
+V
+P
+"}
+(6,1,1) = {"
+V
+N
+V
+M
+V
+V
+A
+V
+N
+C
+"}
+(7,1,1) = {"
+C
+V
+t
+V
+S
+V
+V
+X
+V
+V
+"}
+(8,1,1) = {"
+V
+A
+r
+V
+V
+A
+V
+V
+g
+V
+"}
+(9,1,1) = {"
+S
+C
+V
+V
+X
+m
+V
+V
+A
+P
+"}
+(10,1,1) = {"
+V
+V
+V
+V
+V
+V
+M
+V
+C
+f
+"}
+(11,1,1) = {"
+I
+V
+X
+V
+I
+V
+S
+t
+V
+V
+"}
+(12,1,1) = {"
+V
+L
+M
+V
+V
+V
+V
+V
+N
+C
+"}
+(13,1,1) = {"
+C
+V
+o
+V
+P
+V
+V
+M
+F
+V
+"}
+(14,1,1) = {"
+V
+A
+N
+V
+V
+A
+V
+N
+B
+A
+"}
+(15,1,1) = {"
+V
+M
+X
+V
+I
+V
+V
+t
+V
+C
+"}
+(16,1,1) = {"
+V
+C
+P
+S
+V
+V
+V
+V
+M
+P
+"}
+(17,1,1) = {"
+V
+V
+C
+A
+V
+V
+V
+C
+V
+V
+"}

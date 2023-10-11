@@ -1,0 +1,396 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bs" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"cj" = (
+/obj/machinery/light/small/blacklight/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/centcom/tdome/arena/actual)
+"cT" = (
+/obj/structure/fermenting_barrel,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"eJ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"hA" = (
+/obj/structure/flora/bush/reed/style_3,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"hL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"io" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"jA" = (
+/turf/open/floor/stone,
+/area/centcom/tdome/arena/actual)
+"nt" = (
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/tdome/arena/actual)
+"of" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/flora/bush/sparsegrass/style_2,
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"qb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"rl" = (
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"rW" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"wZ" = (
+/obj/machinery/light/directional/north,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"yW" = (
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"zW" = (
+/obj/structure/fermenting_barrel,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"BT" = (
+/obj/structure/flora/bush/reed/style_2,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"Cb" = (
+/obj/machinery/light/directional/south,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"Cu" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"Fc" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"Hl" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/table,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"JE" = (
+/turf/closed/wall/mineral/iron,
+/area/centcom/tdome/arena/actual)
+"Lu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Lw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Mj" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"MZ" = (
+/turf/closed/indestructible/wood,
+/area/centcom/tdome/arena/actual)
+"Pg" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"PS" = (
+/turf/open/water,
+/area/centcom/tdome/arena/actual)
+"TW" = (
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/stone,
+/area/centcom/tdome/arena/actual)
+"UD" = (
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"VF" = (
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"Wh" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/sandy_dirt,
+/area/centcom/tdome/arena/actual)
+"Yq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"YF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/centcom/tdome/arena/actual)
+"YL" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/centcom/tdome/arena/actual)
+"Zu" = (
+/obj/structure/flora/bush/reed,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+jA
+YF
+jA
+nt
+nt
+nt
+nt
+YF
+jA
+jA
+"}
+(2,1,1) = {"
+jA
+jA
+cj
+YF
+nt
+nt
+jA
+TW
+jA
+YF
+"}
+(3,1,1) = {"
+JE
+JE
+JE
+jA
+jA
+YF
+jA
+JE
+JE
+YL
+"}
+(4,1,1) = {"
+Pg
+Pg
+cT
+bs
+bs
+bs
+bs
+Hl
+Pg
+Pg
+"}
+(5,1,1) = {"
+Pg
+Fc
+Pg
+Cu
+Pg
+Pg
+Cu
+Pg
+Pg
+Pg
+"}
+(6,1,1) = {"
+VF
+VF
+VF
+MZ
+qb
+Lw
+MZ
+VF
+VF
+VF
+"}
+(7,1,1) = {"
+VF
+Zu
+VF
+VF
+hL
+eJ
+VF
+BT
+VF
+VF
+"}
+(8,1,1) = {"
+VF
+VF
+VF
+VF
+hL
+Mj
+VF
+VF
+VF
+hA
+"}
+(9,1,1) = {"
+wZ
+VF
+hA
+VF
+hL
+io
+VF
+VF
+VF
+Cb
+"}
+(10,1,1) = {"
+VF
+VF
+VF
+VF
+hL
+Mj
+VF
+VF
+VF
+VF
+"}
+(11,1,1) = {"
+VF
+VF
+BT
+VF
+hL
+eJ
+VF
+VF
+Zu
+VF
+"}
+(12,1,1) = {"
+VF
+VF
+VF
+MZ
+Yq
+Lu
+MZ
+PS
+PS
+PS
+"}
+(13,1,1) = {"
+Pg
+Pg
+Pg
+Cu
+Pg
+Pg
+Cu
+Pg
+Pg
+Pg
+"}
+(14,1,1) = {"
+Pg
+Pg
+Wh
+ih
+ih
+ih
+ih
+zW
+of
+Pg
+"}
+(15,1,1) = {"
+rW
+MZ
+MZ
+rl
+rl
+rl
+rl
+MZ
+MZ
+MZ
+"}
+(16,1,1) = {"
+rl
+rl
+yW
+rl
+UD
+UD
+rl
+yW
+rl
+rl
+"}
+(17,1,1) = {"
+rl
+rl
+rl
+UD
+UD
+UD
+UD
+rl
+rl
+rl
+"}
