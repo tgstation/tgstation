@@ -43,19 +43,23 @@ export const NtosMessenger = (props, context) => {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
 
-    content = (
-      <ChatScreen
-        storedPhotos={stored_photos}
-        selectedPhoto={selected_photo_path}
-        isSilicon={is_silicon}
-        sendingVirus={sending_virus}
-        canReply={openChat ? openChat.can_reply : !!temporaryRecipient}
-        messages={openChat ? openChat.messages : []}
-        recipient={openChat ? openChat.recipient : temporaryRecipient}
-        unreads={openChat ? openChat.unread_messages : 0}
-        chatRef={openChat?.ref}
-      />
-    );
+    if (!openChat && !temporaryRecipient) {
+      content = <ContactsScreen />;
+    } else {
+      content = (
+        <ChatScreen
+          storedPhotos={stored_photos}
+          selectedPhoto={selected_photo_path}
+          isSilicon={is_silicon}
+          sendingVirus={sending_virus}
+          canReply={openChat ? openChat.can_reply : !!temporaryRecipient}
+          messages={openChat ? openChat.messages : []}
+          recipient={openChat ? openChat.recipient : temporaryRecipient}
+          unreads={openChat ? openChat.unread_messages : 0}
+          chatRef={openChat?.ref}
+        />
+      );
+    }
   } else {
     content = <ContactsScreen />;
   }

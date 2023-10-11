@@ -431,9 +431,10 @@
 		H.gib_animation()
 		sleep(0.3 SECONDS)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
+		// if we use gib() then the body gets deleted
 		H.spawn_gibs()
-		H.spill_organs()
-		H.spread_bodyparts()
+		H.spill_organs(DROP_ALL_REMAINS)
+		H.spread_bodyparts(DROP_BRAIN)
 	return BRUTELOSS
 
 /obj/item/book/manual/wiki/plumbing

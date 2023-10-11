@@ -12,7 +12,7 @@
 #define isweakref(D) (istype(D, /datum/weakref))
 
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
-#define isappearance(thing) (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance(thing) (!istype(thing, /image) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
 
 #define isgenerator(A) (istype(A, /generator))
 
@@ -92,6 +92,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
+#define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
@@ -148,10 +149,13 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
 
+/// constructs, which are both simple and basic for now
+#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct) || istype(A, /mob/living/basic/construct))
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+#define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
@@ -175,13 +179,11 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
-
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
 
 
 //Misc mobs

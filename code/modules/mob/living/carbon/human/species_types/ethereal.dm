@@ -55,24 +55,24 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/new_ethereal, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load)
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
-	var/mob/living/carbon/human/ethereal = new_ethereal
-	default_color = ethereal.dna.features["ethcolor"]
+	default_color = new_ethereal.dna.features["ethcolor"]
 	fixed_hair_color = default_color
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
 	b1 = GETBLUEPART(default_color)
-	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
-	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
-	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(ethereal, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-	ethereal_light = ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
-	spec_updatehealth(ethereal)
+	RegisterSignal(new_ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
+	RegisterSignal(new_ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+	RegisterSignal(new_ethereal, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
+	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
+	refresh_light_color(new_ethereal)
 	new_ethereal.set_safe_hunger_level()
-	update_mail_goodies(ethereal)
+	update_mail_goodies(new_ethereal)
 
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
@@ -82,10 +82,13 @@
 			limb.update_limb(is_creating = TRUE)
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/former_ethereal, datum/species/new_species, pref_load)
-	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
-	UnregisterSignal(former_ethereal, COMSIG_HIT_BY_SABOTEUR)
+	UnregisterSignal(former_ethereal, list(
+		COMSIG_ATOM_EMAG_ACT,
+		COMSIG_ATOM_EMP_ACT,
+		COMSIG_HIT_BY_SABOTEUR,
+		COMSIG_LIGHT_EATER_ACT,
+		COMSIG_LIVING_HEALTH_UPDATE,
+	))
 	QDEL_NULL(ethereal_light)
 	return ..()
 
@@ -109,9 +112,9 @@
 	features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 	return features
 
-/datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
-	. = ..()
-	if(!ethereal_light)
+/datum/species/ethereal/proc/refresh_light_color(mob/living/carbon/human/ethereal)
+	SIGNAL_HANDLER
+	if(isnull(ethereal_light))
 		return
 	if(default_color != ethereal.dna.features["ethcolor"])
 		var/new_color = ethereal.dna.features["ethcolor"]
@@ -138,39 +141,38 @@
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(dead_color, override = TRUE, update = TRUE)
 
-/datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity, protection)
+/datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/source, severity, protection)
 	SIGNAL_HANDLER
 	if(protection & EMP_PROTECT_SELF)
 		return
 	EMPeffect = TRUE
-	spec_updatehealth(H)
-	to_chat(H, span_notice("You feel the light of your body leave you."))
+	refresh_light_color(source)
+	to_chat(source, span_notice("You feel the light of your body leave you."))
 	switch(severity)
 		if(EMP_LIGHT)
-			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
+			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
 		if(EMP_HEAVY)
-			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
-/datum/species/ethereal/proc/on_saboteur(datum/source, disrupt_duration)
+/datum/species/ethereal/proc/on_saboteur(mob/living/carbon/human/source, disrupt_duration)
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/our_target = source
 	EMPeffect = TRUE
-	spec_updatehealth(our_target)
-	to_chat(our_target, span_warning("Something inside of you crackles in a bad way."))
-	our_target.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
-	addtimer(CALLBACK(src, PROC_REF(stop_emp), our_target), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
+	refresh_light_color(source)
+	to_chat(source, span_warning("Something inside of you crackles in a bad way."))
+	source.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), source), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return COMSIG_SABOTEUR_SUCCESS
 
-/datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
+/datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/source, mob/user)
 	SIGNAL_HANDLER
 	if(emageffect)
 		return FALSE
 	emageffect = TRUE
 	if(user)
-		to_chat(user, span_notice("You tap [H] on the back with your card."))
-	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
-	handle_emag(H)
-	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+		to_chat(user, span_notice("You tap [source] on the back with your card."))
+	source.visible_message(span_danger("[source] starts flickering in an array of colors!"))
+	handle_emag(source)
+	addtimer(CALLBACK(src, PROC_REF(stop_emag), source), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
 
 /// Special handling for getting hit with a light eater
@@ -179,23 +181,22 @@
 	source.emp_act(EMP_LIGHT)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
-/datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
+/datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/ethereal)
 	EMPeffect = FALSE
-	spec_updatehealth(H)
-	to_chat(H, span_notice("You feel more energized as your shine comes back."))
+	refresh_light_color(ethereal)
+	to_chat(ethereal, span_notice("You feel more energized as your shine comes back."))
 
-
-/datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/H)
+/datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/ethereal)
 	if(!emageffect)
 		return
 	current_color = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-	spec_updatehealth(H)
-	addtimer(CALLBACK(src, PROC_REF(handle_emag), H), 5) //Call ourselves every 0.5 seconds to change color
+	refresh_light_color(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(handle_emag), ethereal), 0.5 SECONDS)
 
-/datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/H)
+/datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/ethereal)
 	emageffect = FALSE
-	spec_updatehealth(H)
-	H.visible_message(span_danger("[H] stops flickering and goes back to their normal state!"))
+	refresh_light_color(ethereal)
+	ethereal.visible_message(span_danger("[ethereal] stops flickering and goes back to their normal state!"))
 
 /datum/species/ethereal/get_features()
 	var/list/features = ..()
@@ -210,6 +211,11 @@
 		'sound/voice/ethereal/ethereal_scream_2.ogg',
 		'sound/voice/ethereal/ethereal_scream_3.ogg',
 	)
+
+/datum/species/ethereal/get_physical_attributes()
+	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
+		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
+		However, their skin is very thin and easy to pierce with brute weaponry."
 
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \
@@ -274,7 +280,7 @@
 		TRAIT_FIXED_MUTANT_COLORS,
 		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
-		TRAIT_TENACIOUS,
+		TRAIT_TENACIOUS, // this doesn't work. tenacity is an element
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
@@ -288,6 +294,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
 	)
+
+/datum/species/ethereal/lustrous/get_physical_attributes()
+	return "Lustrous are what remains of an Ethereal after freebasing esoteric drugs. \
+		They are pressure immune, virus immune, can see bluespace tears in reality, and have a really weird scream. They remain vulnerable to physical damage."
 
 /datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(

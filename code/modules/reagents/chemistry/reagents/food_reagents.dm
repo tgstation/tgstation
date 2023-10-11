@@ -476,6 +476,8 @@
 
 /datum/reagent/consumable/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
@@ -650,6 +652,8 @@
 
 /datum/reagent/consumable/flour/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
@@ -754,6 +758,8 @@
 // Starch has similar absorbing properties to flour (Stronger here because it's rarer)
 /datum/reagent/consumable/corn_starch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return

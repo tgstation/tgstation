@@ -59,7 +59,7 @@
 	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
 		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
-		joining_now.gib(TRUE)
+		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return FALSE
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(joining_now in honor.guilty)
