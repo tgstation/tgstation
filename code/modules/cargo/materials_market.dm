@@ -135,6 +135,13 @@
 	if(.)
 		return
 
+	//You must have an ID to be able to do something
+	var/mob/living/living_user = ui.user
+	var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+	if(isnull(used_id_card))
+		say("No ID Found")
+		return
+
 	switch(action)
 		if("buy")
 			var/material_str = params["material"]
@@ -148,11 +155,6 @@
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-			var/mob/living/living_user = ui.user
-			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			if(isnull(used_id_card))
-				say("No ID Found")
-				return
 
 			//if multiple users open the UI some of them may not have the required access so we recheck
 			var/is_ordering_private = ordering_private
