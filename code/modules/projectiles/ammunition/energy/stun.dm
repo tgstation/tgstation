@@ -23,7 +23,7 @@
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/disabler/hos
-	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(20, 1200)
 
 /obj/item/ammo_casing/energy/disabler/smoothbore
 	projectile_type = /obj/projectile/beam/disabler/smoothbore

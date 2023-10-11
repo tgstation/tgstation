@@ -24,7 +24,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(10, 1200)
 
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket
@@ -80,7 +80,7 @@
 
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/projectile/beam/pulse
-	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(200, 40000)
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
