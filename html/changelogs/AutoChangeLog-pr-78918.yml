@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Gorillas now use the basic mob framework. Please report any unusual side effects."
