@@ -5,6 +5,7 @@
 	k_elasticity = 0
 	unit_name = "approved manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
+	unscannable = TRUE
 
 /datum/export/manifest_correct/applies_to(obj/O)
 	if(!..())
@@ -22,6 +23,7 @@
 	k_elasticity = 0
 	unit_name = "correctly denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
+	unscannable = TRUE
 
 /datum/export/manifest_error_denied/applies_to(obj/O)
 	if(!..())
@@ -44,6 +46,7 @@
 	k_elasticity = 0
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 	allow_negative_cost = TRUE
+	unscannable = TRUE
 
 /datum/export/manifest_error/applies_to(obj/O)
 	if(!..())
@@ -67,6 +70,7 @@
 	unit_name = "erroneously denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 	allow_negative_cost = TRUE
+	unscannable = TRUE
 
 /datum/export/manifest_correct_denied/applies_to(obj/O)
 	if(!..())
