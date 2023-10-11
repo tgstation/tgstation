@@ -21,7 +21,7 @@
 	if(!manifest_can_fail)
 		return
 
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(prob(MANIFEST_ERROR_CHANCE) && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //Too confusing if station name gets changed
 		errors |= MANIFEST_ERROR_NAME
 		investigate_log("Supply order #[order_id] generated a manifest with an incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
