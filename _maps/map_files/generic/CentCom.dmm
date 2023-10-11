@@ -528,6 +528,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"bQ" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/prisonwarp,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "bT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -799,6 +807,7 @@
 "cN" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/landmark/prisonwarp,
+/obj/effect/turf_decal/siding/dark/corner,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/prison/cells)
 "cO" = (
@@ -10602,10 +10611,6 @@
 /obj/structure/window/plasma/spawner/directional/east,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
-"IC" = (
-/obj/effect/turf_decal/siding/dark,
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/prison/cells)
 "ID" = (
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
@@ -14572,12 +14577,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"Wm" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/prison/cells)
 "Wn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -49283,11 +49282,11 @@ aa
 aa
 aa
 Jb
-Wm
-cN
+zD
+bQ
 vw
 cN
-IC
+xv
 Jb
 aa
 aa
@@ -49540,11 +49539,11 @@ aa
 aa
 aa
 Jb
+Jb
 zD
 Nj
-Nj
-Nj
 xv
+Jb
 Jb
 aa
 aa
@@ -49796,13 +49795,13 @@ wc
 wc
 aa
 aa
+aa
 Jb
 Jb
 Jb
 Jb
 Jb
-Jb
-Jb
+aa
 GA
 GA
 mD
