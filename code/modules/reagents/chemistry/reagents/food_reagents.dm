@@ -30,7 +30,7 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.adjust_nutrition(get_nutriment_factor() * REM * seconds_per_tick)
+	affected_human.adjust_nutrition(get_nutriment_factor(affected_mob) * REM * seconds_per_tick)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -55,8 +55,9 @@
 			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
 				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
-/datum/reagent/consumable/proc/get_nutriment_factor()
-	return nutriment_factor * REAGENTS_METABOLISM * (purity * 2)
+/// Gets just how much nutrition this reagent is worth for the passed mob
+/datum/reagent/consumable/proc/get_nutriment_factor(mob/living/carbon/eater)
+	return nutriment_factor * REAGENTS_METABOLISM * purity * 2
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -259,15 +260,12 @@
 	brute_heal = 0
 	burn_heal = 0
 
-/datum/reagent/consumable/nutriment/mineral/on_mob_life(mob/living/carbon/eater, seconds_per_tick, times_fired)
-	if(HAS_TRAIT(eater, TRAIT_ROCK_EATER)) // allow mobs who can eat rocks to do so
+/datum/reagent/consumable/nutriment/mineral/get_nutriment_factor(mob/living/carbon/eater)
+	if(HAS_TRAIT(eater, TRAIT_ROCK_EATER))
 		return ..()
-	else // otherwise just let them pass through the system
-		current_cycle++
-		if(length(reagent_removal_skip_list))
-			return
-		if(holder)
-			holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
+
+	// You cannot eat rocks, it gives no nutrition
+	return 0
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -874,7 +872,7 @@
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.nutrition > NUTRITION_LEVEL_FULL - 25)
-		affected_mob.adjust_nutrition(-3 * REM * get_nutriment_factor() * seconds_per_tick)
+		affected_mob.adjust_nutrition(-3 * REM * get_nutriment_factor(affected_mob) * seconds_per_tick)
 
 ////Lavaland Flora Reagents////
 
