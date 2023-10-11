@@ -1,0 +1,10 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA to be charged wirelessly through microwave frequencies. You can Wave-charge your device by placing it inside a compatible microwave and selecting the charge mode."
+  - rscadd: "Microwaves can be upgraded to add wireless charging"
+  - rscadd: "Cell-swappable microwave for the engineer on-the-go"
+  - rscadd: "Microwave now has a wire to swap charge/cook modes"
+  - rscadd: "Furnishings RCD upgrade now includes wireless microwave"
+  - rscadd: "Tramstation and Birdshot engineering break rooms now have microwave and donk pockets. Some microwaves come pre-equipped with wireless charging and an upgraded cell."
+  - bugfix: "The microwave in the snowdin ruin is now real, not a fluff prop"
