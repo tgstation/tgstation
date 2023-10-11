@@ -173,6 +173,7 @@
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 
 	// Doing this hurts my soul, but simple_animal access reworks are for another day.
 	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
