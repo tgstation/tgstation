@@ -177,13 +177,19 @@
 	var/message = "Scanned [target]"
 	if(target.contents.len)
 		message = "Scanned [target] and its contents"
-	if(price)
-		message += ", value: <b>[price]</b> credits"
+		if(price)
+			message += ", total value: <b>[price]</b> credits."
+		else
+			message += ", no export values."
+		if(!report.all_contents_scannable)
+			message += " (Undeterminable value(s) detected, final value may differ.)"
 	else
-		message += ", no export value"
-	if(report.unscannable_contents)
-		message += " (undeterminable value detected, actual value may differ)"
-	message += "."
+		if(!report.all_contents_scannable)
+			message += " unable to determine final value."
+		else if(price)
+			message += ", value: <b>[price]</b> credits."
+		else
+			message += ", no export value."
 	to_chat(user, span_warning(message))
 
 	if(ishuman(user))
