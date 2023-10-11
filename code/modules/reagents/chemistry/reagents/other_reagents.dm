@@ -348,8 +348,11 @@
 
 /datum/reagent/water/holywater/on_new(list/data)
 	// Tracks the total amount of deciseconds that the reagent has been metab'd for, for the purpose of deconversion
-	if(isnull(data?["deciseconds_metabolized"]))
+	if(isnull(data))
 		data = list("deciseconds_metabolized" = 0)
+	else if(isnull(data["deciseconds_metabolized"]))
+		data["deciseconds_metabolized"] = 0
+
 	return ..()
 
 // Holy water. Unlike water, which is nuked, stays in and heals the plant a little with the power of the spirits. Also ALSO increases instability.
