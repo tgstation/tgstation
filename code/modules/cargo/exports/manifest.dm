@@ -19,7 +19,7 @@
 	return FALSE
 
 // Correctly denied manifest.
-// Refunds half the package cost minus the cost of crate.
+// Refunds package cost minus the value of the crate.
 /datum/export/manifest_error_denied
 	cost = -CARGO_CRATE_VALUE
 	k_elasticity = 0
@@ -38,7 +38,7 @@
 
 /datum/export/manifest_error_denied/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
-	return ..() + (M.order_cost * 0.5)
+	return ..() + M.order_cost
 
 
 // Erroneously approved manifest.
