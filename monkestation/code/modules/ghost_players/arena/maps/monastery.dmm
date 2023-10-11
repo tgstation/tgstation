@@ -280,6 +280,10 @@
 /obj/structure/flora/bush/flowers_br,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
+"TW" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
 "Vg" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/iron/dark,
@@ -338,7 +342,7 @@ xA
 rX
 Tw
 Oz
-Mk
+TW
 Mk
 ox
 ox
@@ -386,7 +390,7 @@ rX
 Oz
 Kv
 bd
-Mk
+TW
 Mk
 EZ
 EZ
@@ -425,7 +429,7 @@ VZ
 Mb
 Mk
 Mk
-Mk
+TW
 Mk
 "}
 (10,1,1) = {"
@@ -458,7 +462,7 @@ rX
 Oz
 Wj
 tC
-Mk
+TW
 Mk
 EZ
 EZ
@@ -506,7 +510,7 @@ rX
 Eb
 rX
 Oz
-Mk
+TW
 Mk
 wf
 wf

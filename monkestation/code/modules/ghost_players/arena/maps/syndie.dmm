@@ -8,6 +8,13 @@
 /obj/effect/turf_decal/trimline/dark_red/filled,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
+"bd" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
 "bs" = (
 /obj/effect/turf_decal/trimline/dark/arrow_cw{
 	dir = 1
@@ -38,6 +45,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
+"eP" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
 "fs" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw,
 /turf/open/floor/mineral/plastitanium,
@@ -50,6 +61,13 @@
 /area/centcom/tdome/arena/actual)
 "fP" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"gu" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
 "hA" = (
@@ -167,6 +185,7 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/mid_joiner{
 	dir = 1
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
 "BY" = (
@@ -237,6 +256,7 @@
 "KT" = (
 /obj/effect/turf_decal/trimline/dark_red,
 /obj/effect/turf_decal/trimline/dark_red/filled/mid_joiner,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
 "Lu" = (
@@ -246,6 +266,13 @@
 "Lw" = (
 /obj/effect/turf_decal/trimline/dark/arrow_ccw,
 /turf/open/floor/pod/dark,
+/area/centcom/tdome/arena/actual)
+"LN" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
 "Mj" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
@@ -283,6 +310,13 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/tdome/arena/actual)
+"PC" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/tdome/arena/actual)
 "PS" = (
@@ -378,12 +412,12 @@ rl
 (2,1,1) = {"
 wZ
 Na
-cj
+gu
 YF
 BY
 nt
 jA
-TW
+PC
 mI
 hA
 "}
@@ -461,14 +495,14 @@ hA
 "}
 (9,1,1) = {"
 wZ
-cT
+eP
 fE
 VF
 hL
 ds
 VF
 QQ
-cT
+eP
 hA
 "}
 (10,1,1) = {"
@@ -546,12 +580,12 @@ YL
 (16,1,1) = {"
 wZ
 yt
-yW
+LN
 HN
 PS
 UD
 Aa
-Cb
+bd
 Cs
 hA
 "}

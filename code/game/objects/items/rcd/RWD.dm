@@ -127,6 +127,8 @@
 
 /obj/item/rwd/AltClick(mob/user)
 	. = ..()
+	if(industrial)
+		return
 	if(!radial_menu)
 		radial_menu = list(
 			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
@@ -172,19 +174,20 @@
 
 /// modify cable properties according to its layer
 /obj/item/rwd/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
-	switch(cable_layer)
-		if(CABLE_LAYER_1)
-			target_cable.set_cable_color(CABLE_COLOR_RED)
-			target_cable.target_type = /obj/structure/cable/layer1
-			target_cable.target_layer = CABLE_LAYER_1
-		if(CABLE_LAYER_2)
-			target_cable.set_cable_color(CABLE_COLOR_YELLOW)
-			target_cable.target_type = /obj/structure/cable
-			target_cable.target_layer = CABLE_LAYER_2
-		else
-			target_cable.set_cable_color(CABLE_COLOR_BLUE)
-			target_cable.target_type = /obj/structure/cable/layer3
-			target_cable.target_layer = CABLE_LAYER_3
+	if(!industrial)
+		switch(cable_layer)
+			if(CABLE_LAYER_1)
+				target_cable.set_cable_color(CABLE_COLOR_RED)
+				target_cable.target_type = /obj/structure/cable/layer1
+				target_cable.target_layer = CABLE_LAYER_1
+			if(CABLE_LAYER_2)
+				target_cable.set_cable_color(CABLE_COLOR_YELLOW)
+				target_cable.target_type = /obj/structure/cable
+				target_cable.target_layer = CABLE_LAYER_2
+			else
+				target_cable.set_cable_color(CABLE_COLOR_BLUE)
+				target_cable.target_type = /obj/structure/cable/layer3
+				target_cable.target_layer = CABLE_LAYER_3
 	return target_cable
 
 /// get cached reference of cable which gets used over time
@@ -193,7 +196,7 @@
 		var/create_amount = min(30, current_amount)
 		if(create_amount <= 0)
 			return null
-		cable = new/obj/item/stack/cable_coil(src, create_amount)
+		cable = new cabletype(src, create_amount)
 	return modify_cable(cable)
 
 /// check if the turf has the same cable layer as this design. If it does don't put cable here

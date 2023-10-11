@@ -52,6 +52,15 @@
 "cK" = (
 /turf/open/floor/iron/smooth_corner,
 /area/centcom/tdome/arena/actual)
+"cS" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
 "cT" = (
 /obj/structure/rack,
 /obj/item/wallframe/extinguisher_cabinet{
@@ -69,6 +78,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/glass,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -108,9 +121,6 @@
 	},
 /area/centcom/tdome/arena/actual)
 "ih" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
@@ -152,6 +162,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark/full,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
 /turf/open/floor/plating{
 	density = 1
 	},
@@ -160,12 +174,18 @@
 /obj/structure/railing,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/generic,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/tdome/arena/actual)
+"nb" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
 "nt" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /turf/open/floor/iron/stairs/right{
 	dir = 1
 	},
@@ -189,7 +209,6 @@
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "rl" = (
-/obj/structure/railing/corner,
 /turf/open/floor/iron/stairs/right,
 /area/centcom/tdome/arena/actual)
 "rW" = (
@@ -206,6 +225,7 @@
 	icon_state = "gibarm";
 	random_icon_states = list("gibarm")
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "xD" = (
@@ -221,6 +241,27 @@
 	color = "#ff0000";
 	pixel_y = -4
 	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"yy" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"zr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "zW" = (
@@ -254,6 +295,9 @@
 /obj/structure/fluff/tram_rail/end{
 	dir = 8
 	},
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	density = 1
 	},
@@ -283,9 +327,6 @@
 	},
 /area/centcom/tdome/arena/actual)
 "Fc" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /turf/open/floor/iron/stairs/left,
 /area/centcom/tdome/arena/actual)
 "Fp" = (
@@ -319,11 +360,13 @@
 	density = 1
 	},
 /area/centcom/tdome/arena/actual)
+"Jk" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
 "Kf" = (
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -350,6 +393,9 @@
 /obj/structure/fluff/tram_rail/end{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	density = 1
 	},
@@ -370,9 +416,6 @@
 /area/centcom/tdome/arena/actual)
 "Mj" = (
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -489,6 +532,10 @@
 	},
 /obj/effect/turf_decal/tile/dark/full,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
 /turf/open/floor/plating{
 	density = 1
 	},
@@ -535,7 +582,7 @@ BT
 Cs
 "}
 (2,1,1) = {"
-pQ
+Jk
 Na
 BT
 TX
@@ -544,7 +591,7 @@ KY
 YL
 Cs
 Cs
-BT
+zr
 "}
 (3,1,1) = {"
 Cs
@@ -601,7 +648,7 @@ cK
 mI
 YF
 mv
-YL
+yy
 cC
 fP
 Na
@@ -646,7 +693,7 @@ Cs
 Cs
 fP
 Fp
-TX
+cS
 BY
 Lu
 ez
@@ -712,7 +759,7 @@ KY
 Aa
 Cb
 Cs
-Cs
+nb
 "}
 (17,1,1) = {"
 cj

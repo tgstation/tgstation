@@ -17,13 +17,6 @@
 #define MP_DEBUG(x)
 #endif
 
-// Set up player on login.
-/client/New()
-	. = ..()
-	media = new /datum/media_manager(src)
-	media.open()
-	media.update_music()
-
 // Stop media when the round ends. I guess so it doesn't play forever or something (for some reason?)
 /proc/stop_all_media()
 	// Stop all music.
@@ -146,6 +139,9 @@
 	owner << output(list2params(list(url, (world.time - start_time) / 10, volume * source_volume, balance)), "[WINDOW_ID]:SetMusic")
 
 /datum/media_manager/proc/push_music(var/targetURL, var/targetStartTime, var/targetVolume, var/targetBalance)
+	if(targetVolume != source_volume)
+		push_volume_recalc(targetVolume)
+
 	if (url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime

@@ -8,6 +8,10 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
+"f" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
 "i" = (
 /obj/structure/flora/bush/grassy/style_3,
 /turf/open/misc/asteroid,
@@ -102,7 +106,7 @@
 /area/centcom/tdome/arena/actual)
 "I" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/railing/corner,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "J" = (
@@ -113,9 +117,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "M" = (
@@ -164,9 +166,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "U" = (
@@ -200,9 +200,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 
@@ -234,10 +232,10 @@ a
 a
 q
 a
+f
 a
 a
-a
-a
+f
 i
 a
 a
@@ -378,10 +376,10 @@ a
 a
 a
 a
+f
 a
 a
-a
-a
+f
 a
 a
 a

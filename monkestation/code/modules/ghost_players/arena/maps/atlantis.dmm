@@ -8,7 +8,7 @@
 	},
 /area/centcom/tdome/arena/actual)
 "b" = (
-/mob/living/simple_animal/fish/greenchromis,
+/mob/living/basic/aquatic/fish,
 /obj/effect/overlay/water,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -39,6 +39,13 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/tdome/arena/actual)
+"i" = (
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
 "k" = (
 /obj/structure/atlantis/column/broken_1,
 /obj/effect/overlay/water,
@@ -51,6 +58,7 @@
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/ashplanet/wateryrock{
 	slowdown = 0
 	},
@@ -58,6 +66,7 @@
 "p" = (
 /obj/structure/atlantis/column/broken_2,
 /obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/ashplanet/wateryrock{
 	slowdown = 0
 	},
@@ -117,6 +126,23 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/tdome/arena/actual)
+"B" = (
+/obj/item/aquarium_prop/seaweed_top{
+	anchored = 1
+	},
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"D" = (
+/obj/effect/overlay/water,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/ashplanet/wateryrock{
+	slowdown = 0
+	},
+/area/centcom/tdome/arena/actual)
 "E" = (
 /obj/structure/flora/bush/stalky,
 /obj/effect/overlay/water,
@@ -133,8 +159,8 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/tdome/arena/actual)
-"J" = (
-/mob/living/simple_animal/fish/angelfish,
+"H" = (
+/mob/living/basic/aquatic/fish/gupper,
 /obj/effect/overlay/water,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -144,6 +170,13 @@
 /obj/structure/flora/rock/icy/style_3{
 	name = "rock"
 	},
+/obj/effect/overlay/water,
+/turf/open/misc/ashplanet/rocky{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/tdome/arena/actual)
+"L" = (
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/overlay/water,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -191,14 +224,14 @@
 /area/centcom/tdome/arena/actual)
 "U" = (
 /obj/structure/flora/bush/reed/style_3,
-/mob/living/simple_animal/fish/guppy,
+/mob/living/basic/aquatic/fish/gupper,
 /obj/effect/overlay/water,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/tdome/arena/actual)
 "V" = (
-/mob/living/simple_animal/fish/plasmatetra,
+/mob/living/basic/aquatic/fish/cod,
 /obj/effect/overlay/water,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -227,13 +260,13 @@ P
 (2,1,1) = {"
 P
 G
-P
+L
 P
 u
+i
 P
 P
-P
-N
+B
 P
 "}
 (3,1,1) = {"
@@ -275,13 +308,13 @@ P
 (6,1,1) = {"
 X
 t
+i
 P
 P
-P
-P
+i
 P
 u
-P
+i
 h
 "}
 (7,1,1) = {"
@@ -311,13 +344,13 @@ z
 (9,1,1) = {"
 z
 z
-z
+D
 z
 z
 l
 z
 z
-z
+D
 z
 "}
 (10,1,1) = {"
@@ -347,13 +380,13 @@ z
 (12,1,1) = {"
 X
 T
-P
+i
 E
 P
+i
 P
 P
-P
-P
+i
 g
 "}
 (13,1,1) = {"
@@ -365,7 +398,7 @@ P
 P
 P
 d
-J
+V
 P
 "}
 (14,1,1) = {"
@@ -382,7 +415,7 @@ P
 "}
 (15,1,1) = {"
 P
-P
+H
 P
 P
 P
@@ -395,13 +428,13 @@ P
 (16,1,1) = {"
 P
 v
+i
 P
 P
-P
-N
-P
+B
 P
 P
+i
 P
 "}
 (17,1,1) = {"

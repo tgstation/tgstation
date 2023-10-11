@@ -47,6 +47,7 @@
 "p" = (
 /obj/machinery/shower/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
 /area/centcom/tdome/arena/actual)
 "q" = (
@@ -62,17 +63,31 @@
 "x" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/shower/directional/east,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
 /area/centcom/tdome/arena/actual)
 "z" = (
 /obj/machinery/shower/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "C" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/shower/directional/west,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
+/area/centcom/tdome/arena/actual)
+"E" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "H" = (
 /obj/structure/sign/poster/official/no_erp{
@@ -126,12 +141,12 @@
 (1,1,1) = {"
 l
 a
-a
+A
 S
 S
 o
 S
-a
+A
 a
 l
 "}
@@ -162,12 +177,12 @@ l
 (4,1,1) = {"
 l
 a
-a
+A
 O
 j
 O
-O
-a
+E
+A
 a
 l
 "}
@@ -282,12 +297,12 @@ l
 (14,1,1) = {"
 l
 a
-a
+A
 S
 S
 S
 S
-a
+A
 a
 l
 "}
@@ -318,12 +333,12 @@ l
 (17,1,1) = {"
 l
 a
-a
+A
 O
 i
 O
 O
-a
+A
 a
 l
 "}
