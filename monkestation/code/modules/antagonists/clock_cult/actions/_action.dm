@@ -69,3 +69,4 @@
 	if(!iseminence(usr))
 		to_chat(usr, span_boldwarning("You are not an eminence and should not have this! Please report this as a bug."))
 		return FALSE
+	return TRUE

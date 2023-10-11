@@ -271,13 +271,15 @@
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
-		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
-		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
 		if(!isopenturf(enemy_tile))
 			continue
+		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
+		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
 		if(enemy_tile.run_later)
 			LAZYADD(share_end, enemy_tile)
 
+		if(!enemy_tile.air)
+			continue
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
 		LINDA_CYCLE_ARCHIVE(enemy_tile)
@@ -345,7 +347,7 @@
 		archive()
 		// We share 100% of our mix in this step. Let's jive
 		var/difference = our_air.share(enemy_mix, 1, 1)
-		if(our_excited_group) //safety check for template loading
+		if(our_excited_group)
 			LAST_SHARE_CHECK
 		if(!difference)
 			continue
@@ -367,6 +369,7 @@
 
 	significant_share_ticker = cached_ticker //Save our changes
 	temperature_expose(our_air, our_air.temperature)
+
 
 //////////////////////////SPACEWIND/////////////////////////////
 
