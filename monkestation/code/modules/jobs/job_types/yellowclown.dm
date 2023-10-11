@@ -37,7 +37,7 @@
 	job_tone = "honk"
 
 
-/datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
+/datum/job/yellowclown/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 	if(!ishuman(spawned))
 		return
@@ -83,24 +83,24 @@
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
 
-/datum/outfit/job/clown/mod
+/datum/outfit/job/yellowclown/mod
 	name = "Clown (MODsuit)"
 
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/cosmohonk
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/job/yellowclown/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
 		backpack_contents[/obj/item/stack/sheet/mineral/bananium/five] = 1
 
-/datum/outfit/job/clown/get_types_to_preload()
+/datum/outfit/job/yellowclown/get_types_to_preload()
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
 		. += /obj/item/stack/sheet/mineral/bananium/five
 
-/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/yellowclown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
