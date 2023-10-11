@@ -37,8 +37,6 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-
 	lighting_cutoff_red = 15
 	lighting_cutoff_green = 10
 	lighting_cutoff_blue = 25

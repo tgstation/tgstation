@@ -12,7 +12,6 @@
 	mob_size = MOB_SIZE_SMALL
 	held_w_class = WEIGHT_CLASS_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 	response_help_continuous = "nuzzles"
 	response_help_simple = "nuzzle"
@@ -41,7 +40,10 @@
 	icon_living = "glerm_cool"
 	icon_dead = "glerm_cool_dead"
 	gold_core_spawnable = NO_SPAWN
-	//playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
+
+/mob/living/basic/ggg/glerm/cool/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
 
 /mob/living/basic/ggg/glerm/Initialize(mapload)
 	. = ..()
