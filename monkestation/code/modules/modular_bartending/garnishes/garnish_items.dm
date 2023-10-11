@@ -122,3 +122,31 @@
 	icon_state = "umbrellagreen"
 	garnish_state = "umbrellagreen"
 	garnish_layer = GARNISH_LEFT
+
+/obj/item/garnish/red_straw
+	name = "striped straw"
+	desc = "A cute straw for a drink."
+	icon_state = "straw-red"
+	garnish_state = "straw-red"
+	garnish_layer = GARNISH_LEFT
+
+/obj/item/garnish/straw
+	name = "straw"
+	desc = "A cute straw for a drink."
+	icon_state = "straw"
+	garnish_state = "straw"
+	garnish_layer = GARNISH_RIGHT
+
+/obj/item/garnish/foam
+	name = "decorative foam"
+	desc = "Some food safe fake foam to add to drinks to make them look nicer."
+	icon_state = "foam"
+	garnish_state = "foam"
+	garnish_layer = GARNISH_ABOVE_RIM
+
+/obj/item/garnish/cherrytopper
+	name = "cherry topper"
+	desc = "Some pierced cherries on a stick."
+	icon_state = "cherrytopper"
+	garnish_state = "cherrytopper"
+	garnish_layer = GARNISH_ABOVE_RIM

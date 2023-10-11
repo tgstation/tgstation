@@ -9,11 +9,12 @@
 #define LARGE_VARIANTS 5
 
 //garnish layer defines, higher numbers go above low ones, add more of these if you manage to get sprites that can fit in a new part of the glass
-#define GARNISH_RIM 1
-#define GARNISH_CENTER 2
-#define GARNISH_RIGHT 3
-#define GARNISH_LEFT 4
-#define GARNISH_MAX 4
+#define GARNISH_ABOVE_RIM 1
+#define GARNISH_RIM 2
+#define GARNISH_CENTER 3
+#define GARNISH_RIGHT 4
+#define GARNISH_LEFT 5
+#define GARNISH_MAX 6
 
 //global list for reskinning
 GLOBAL_LIST_EMPTY(glass_variants)
@@ -110,11 +111,11 @@ GLOBAL_LIST_EMPTY(glass_variants)
   */
 /obj/item/reagent_containers/cup/glass/modglass/update_overlays()
 	. = ..()
-	var/rimtype = garnishes["1"]
+	var/rimtype = garnishes["2"]
 	if(rimtype)
 		var/mutable_appearance/rimbottom = mutable_appearance('monkestation/code/modules/modular_bartending/icons/modglass_garnishes.dmi', "[rimtype]-[rim]")
 		. += rimbottom
-	for(var/i in 2 to GARNISH_MAX)
+	for(var/i in 3 to GARNISH_MAX)
 		var/type = garnishes["[i]"]
 		if(type)
 			var/mutable_appearance/garnish = mutable_appearance('monkestation/code/modules/modular_bartending/icons/modglass_garnishes.dmi', "[type]-[rim]")
@@ -122,3 +123,8 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	if(rimtype)
 		var/mutable_appearance/rimtop = mutable_appearance('monkestation/code/modules/modular_bartending/icons/modglass_garnishes.dmi', "[rimtype]-[rim]-top")
 		. += rimtop
+
+	var/above_rim = garnishes["1"]
+	if(above_rim)
+		var/mutable_appearance/above_rim_ma = mutable_appearance('monkestation/code/modules/modular_bartending/icons/modglass_garnishes.dmi', "[above_rim]-[rim]")
+		. += above_rim_ma
