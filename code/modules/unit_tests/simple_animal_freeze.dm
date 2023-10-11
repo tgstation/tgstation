@@ -73,7 +73,6 @@
 		/mob/living/simple_animal/hostile/construct/artificer/hostile,
 		/mob/living/simple_animal/hostile/construct/artificer/mystic,
 		/mob/living/simple_animal/hostile/construct/artificer/noncult,
-		/mob/living/simple_animal/hostile/construct/harvester,
 		/mob/living/simple_animal/hostile/construct/juggernaut,
 		/mob/living/simple_animal/hostile/construct/juggernaut/angelic,
 		/mob/living/simple_animal/hostile/construct/juggernaut/hostile,

@@ -346,3 +346,64 @@
       (by holy weapons) should be tweaked a bit to allow better management. This should
       mean that getting unstunned and such should be a bit more precise now.
   - qol: Revenant instructions are now relayed in a neat little examine block.
+2023-10-11:
+  GPeckman:
+  - bugfix: Borg modules can no longer be sold by pirates.
+  Iamgoofball:
+  - bugfix: Fixes a few runtimes with TTS and skips some code if TTS isn't enabled.
+  Jacquerel:
+  - balance: The Changeling Space Suit has been replaced by a new ability which makes
+      you passively spaceproof without replacing your clothing.
+  - admin: Editing the atmos sensitivity variables on a basic mob during the game
+      will now actually do something.
+  - qol: You can now see what drones and gorillas are holding by examining them.
+  - admin: It's now easier to give handless mobs hands by applying the "dextrous"
+      element.
+  - balance: Spiders and Bears can now climb railings (you know if... they'd rather
+      do that than destroy them).
+  - bugfix: Heretic mobs will not be summoned with AI enabled, and won't turn into
+      small animals instead of summoning a flesh stalker.
+  JohnFulpWillard:
+  - bugfix: Antiglow now probably has negative glow power.
+  Melbert:
+  - bugfix: Miner's Salve, Sterilizine, and Space Cleaner now all properly affect
+      burn wounds
+  Sealed101:
+  - bugfix: you can no longer polymorph belt into a holoparasite
+  ViktorKoL:
+  - bugfix: fixed some faulty research connections in between heretic's blade and
+      rust paths.
+  carlarctg:
+  - rscadd: Adds practice carbines to all firing ranges. They don't deal damage.
+  - qol: Adds a base physical description proc to gameplay species, displays it on
+      magic mirrors. It will give a description of not the lore of the species but
+      in what way they differ from base species.
+  - bugfix: Fixes a bad subtype on magical mirrors.
+  - bugfix: Magical mirrors now give the user ADVANCEDTOOLUSER and LITERACY if they
+      lack either of them, so monkey wizards aren't softlocked.
+  jlsnow301:
+  - bugfix: Fixed some issues in the security camera UI - pressing next or back will
+      now loop through the cameras
+  - bugfix: Fixed some style issues in the camera console where selected cams weren't
+      showing as selected
+  - bugfix: Camera console search works again
+  lizardqueenlexi:
+  - refactor: Harvester constructs have been updated to the basic mob framework. This
+      should have very little impact on their behavior, but please report any issues.
+  mc-oofert:
+  - bugfix: count station food verb now counts food only onstation
+  necromanceranne:
+  - balance: Unholy water acts as a coagulant for cultists.
+  nikothedude:
+  - bugfix: Wound promotion and demotion no longer removes gauze from the limb
+  timothymtorres:
+  - sound: Add burning sound loop to bonfires and fireplaces
+  - code_imp: Improved fireplaces to only process when lit
+  vinylspiders:
+  - bugfix: fixes a runtime in organ on_death()
+  - bugfix: using a magic mirror to change gender or skintone will now update your
+      icon properly to match your selection
+  - bugfix: bitrunners will no longer be lumped in with assistants on the crew monitor
+      console's display
+  - bugfix: moved a garbage spawner on Tramstation that was causing random runtimes
+      due to sometimes spawning in space depending on which module got loaded

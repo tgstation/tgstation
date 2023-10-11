@@ -21,6 +21,11 @@
 	e_cost = 25 // 40 shots
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/carbine/practice
+	projectile_type = /obj/projectile/beam/laser/carbine/practice
+	select_name = "practice"
+	harmful = FALSE
+
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 200

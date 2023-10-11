@@ -66,6 +66,10 @@
 		return TRUE
 	return ..()
 
+/datum/species/zombie/get_physical_attributes()
+	return "Zombies are undead, and thus completely immune to any enviromental hazard, or any physical threat besides blunt force trauma and burns. \
+		Their limbs are easy to pop off their joints, but they can somehow just slot them back in."
+
 /datum/species/zombie/get_species_description()
 	return "A rotting zombie! They descend upon Space Station Thirteen Every year to spook the crew! \"Sincerely, the Zombies!\""
 
@@ -197,7 +201,7 @@
 
 // Your skin falls off
 /datum/species/human/krokodil_addict
-	name = "\improper Human"
+	name = "\improper Krokodil Human"
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

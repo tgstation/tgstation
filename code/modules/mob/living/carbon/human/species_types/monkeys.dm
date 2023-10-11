@@ -133,6 +133,10 @@
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
 
+/datum/species/monkey/get_physical_attributes()
+	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
+		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
+
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
 		Every year, on Monkey Day, Nanotrasen shows their respect for the little guys by allowing them to roam the station freely."

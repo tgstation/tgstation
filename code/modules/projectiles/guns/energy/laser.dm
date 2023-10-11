@@ -40,10 +40,20 @@
 	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+	var/allow_akimbo = FALSE
 
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = allow_akimbo)
+
+/obj/item/gun/energy/laser/carbine/practice
+	name = "practice laser carbine"
+	desc = "A modified version of the laser carbine, this one fires even less concentrated energy bolts designed for target practice."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine/practice)
+	clumsy_check = FALSE
+	item_flags = NONE
+	gun_flags = NOT_A_REAL_GUN
+	allow_akimbo = TRUE
 
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
