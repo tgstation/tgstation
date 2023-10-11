@@ -4,6 +4,9 @@
  *
  * They transfer uncompressed subspace packets to processor units, and then take
  * the processed packet to a server for logging.
+ *
+ * Can be linked to a telecommunications hub or a broadcaster in the absence
+ * of a server, at the cost of some added latency.
  */
 /obj/machinery/telecomms/bus
 	name = "bus mainframe"
