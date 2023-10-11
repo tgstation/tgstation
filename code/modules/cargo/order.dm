@@ -27,7 +27,7 @@
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
 		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
-	if(prob(MANIFEST_ERROR_CHANCE))
+	else if(prob(MANIFEST_ERROR_CHANCE)) //Content and item errors could remove the same items, so only one at a time
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
