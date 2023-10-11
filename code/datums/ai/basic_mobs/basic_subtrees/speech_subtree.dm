@@ -214,9 +214,6 @@
 	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
 	emote_see = list("stares ferociously.")
 
-/datum/ai_planning_subtree/random_speech/gorilla
-	speech_chance = 40
-
 /datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
 	speech_chance = 1
 
