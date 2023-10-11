@@ -42,7 +42,6 @@
 ///Controller for space bats, has nothing unique, just retaliation.
 /datum/ai_controller/basic_controller/space_bat
 	blackboard = list(
-		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 

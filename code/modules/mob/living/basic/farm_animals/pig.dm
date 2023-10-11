@@ -47,7 +47,6 @@
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(
-		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 

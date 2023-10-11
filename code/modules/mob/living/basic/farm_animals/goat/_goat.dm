@@ -34,9 +34,10 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	ai_controller = /datum/ai_controller/basic_controller/goat
-
-	/// Who have we gleamed evilly at?
-	var/list/gleamed_mobs = list()
+	/// How often will we develop an evil gleam in our eye?
+	var/gleam_delay = 20 SECONDS
+	/// Time until we can next gleam evilly
+	COOLDOWN_DECLARE(gleam_cooldown)
 	/// List of stuff (flora) that we want to eat
 	var/static/list/edibles = list(
 		/obj/structure/alien/resin/flower_bud,
@@ -87,22 +88,14 @@
 
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-/// If we are being attacked by someone who we are already retaliating against, give a nice fluff message.
+/// If we are being attacked by someone, give a nice fluff message. But only once in a while.
 /mob/living/basic/goat/proc/on_attacked(datum/source, atom/attacker, attack_flags)
-	if (locate(attacker) in gleamed_mobs)
+	if (!COOLDOWN_FINISHED(src, gleam_cooldown))
 		return
 	visible_message(
 		span_danger("[src] gets an evil-looking gleam in [p_their()] eye."),
 	)
-	gleamed_mobs |= attacker
-	addtimer(CALLBACK(src, PROC_REF(ungleam_at), attacker), 20 SECONDS, TIMER_DELETE_ME)
-	RegisterSignal(attacker, COMSIG_QDELETING, PROC_REF(ungleam_at))
-
-/// Either we're ready to gleam evilly at this guy again or they ceased to exist
-/mob/living/basic/goat/proc/ungleam_at(atom/former_enemy)
-	SIGNAL_HANDLER
-	gleamed_mobs -= former_enemy
-	UnregisterSignal(former_enemy, COMSIG_QDELETING)
+	COOLDOWN_START(src, gleam_cooldown, gleam_delay)
 
 /// Handles automagically eating a plant when we move into a turf that has one.
 /mob/living/basic/goat/proc/on_move(datum/source, atom/entering_loc)

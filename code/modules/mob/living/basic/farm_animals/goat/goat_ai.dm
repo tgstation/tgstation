@@ -1,7 +1,6 @@
 /// Goats are normally content to sorta hang around and crunch any plant in sight, but they will go ape on someone who attacks them.
 /datum/ai_controller/basic_controller/goat
 	blackboard = list(
-		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
