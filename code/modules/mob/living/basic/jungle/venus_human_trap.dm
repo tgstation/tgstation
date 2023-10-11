@@ -126,20 +126,6 @@
  * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
  *
  */
-
-/datum/ai_controller/basic_controller/human_trap
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 	
 /mob/living/basic/venus_human_trap
 	name = "venus human trap"
@@ -178,6 +164,10 @@
 	speed = 1.2
 	melee_attack_cooldown = 1.2 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
+	///how much damage we take out of weeds
+	var/no_weed_damage = 20
+	///how much do we heal in weeds
+	var/weed_heal = 10
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
@@ -202,7 +192,7 @@
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
 	if(!vines_in_range)
 		balloon_alert(src, "do not leave vines!")
-	apply_damage(20 * (vines_in_range ? -0.5 : 1), BRUTE, BODY_ZONE_CHEST) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	apply_damage(vines_in_range ? weed_heal : no_weed_damage), BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
 	name = "Tangle"
@@ -255,5 +245,19 @@
 
 	qdel(vines[vine])
 	vines -= vine
+
+/datum/ai_controller/basic_controller/human_trap
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
 
 #undef FINAL_BUD_GROWTH_ICON
