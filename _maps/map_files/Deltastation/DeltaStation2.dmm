@@ -53611,7 +53611,7 @@
 /area/station/commons/fitness/recreation)
 "ntU" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)

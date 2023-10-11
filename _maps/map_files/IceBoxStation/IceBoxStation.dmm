@@ -78248,7 +78248,7 @@
 /area/station/engineering/main)
 "xZo" = (
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},

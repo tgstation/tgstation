@@ -76,6 +76,7 @@
 				list(FURNISH_TYPE = /obj/structure/table/glass, ICON = "glass_table", TITLE = "Glass Table"),
 				list(FURNISH_TYPE = /obj/structure/rack, ICON = "rack", TITLE = "Rack"),
 				list(FURNISH_TYPE = /obj/structure/bed, ICON = "bed", TITLE = "Bed"),
+				list(FURNISH_TYPE = /obj/machinery/microwave/engineering, ICON = "engi_mw_complete", TITLE = "Wireless Microwave"),
 			),
 		),
 

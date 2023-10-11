@@ -20092,6 +20092,8 @@
 "hln" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/table,
+/obj/machinery/microwave/engineering/cell_included,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "hlo" = (
@@ -21164,6 +21166,8 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/directional/north,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "hDt" = (

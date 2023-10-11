@@ -2817,6 +2817,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/item/storage/box/donkpockets/donkpocketberry{
+	pixel_y = 10;
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "amA" = (
@@ -55614,7 +55618,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron,
@@ -64512,9 +64516,7 @@
 /area/station/hallway/primary/tram/right)
 "vPo" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
