@@ -824,7 +824,7 @@
  * make_shell: Makes an AI shell out of a cyborg unit
  *
  * Arguments:
- * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
+ * * board - ENIGMA. module board used for transforming the cyborg into AI shell
  */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
 	if(!board)

@@ -1183,7 +1183,7 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
-	
+
 /datum/design/borg_upgrade_service_apparatus
 	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"
@@ -1218,7 +1218,7 @@
 	)
 
 /datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control"
+	name = "ENIGMA. AI-Cyborg Remote Control"
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
