@@ -99,6 +99,12 @@
 	damage_falloff_tile = -0.45
 	wound_falloff_tile = -2.5
 
+/obj/projectile/beam/scatter/pathetic
+	name = "extremely weak laser pellet"
+	damage = 1
+	wound_bonus = 0
+	damage_falloff_tile = -0.1
+
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"

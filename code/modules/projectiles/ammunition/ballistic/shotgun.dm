@@ -129,6 +129,13 @@
 	pellets = 6
 	variance = 35
 
+/obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
+	. = ..()
+	if(prob(40/severity))
+		name = "malfunctioning laser shell"
+		desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. This one appears to be malfunctioning and practically useless."
+		projectile_type = /obj/projectile/beam/scatter/pathetic
+
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
