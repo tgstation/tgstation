@@ -11,5 +11,4 @@
 		playsound(src, (islist(played_sound) ? pick(played_sound) : played_sound), 60)
 	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
 	Shake(0.2, 0.2, shake_duration)
-	sleep(shake_duration)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, explosion_stats[1], explosion_stats[2], explosion_stats[3]), shake_duration)
