@@ -182,7 +182,6 @@
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
 	if(department_destination)
-		manifest_can_fail = FALSE
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)
 	return crate
