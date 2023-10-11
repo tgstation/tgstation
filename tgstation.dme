@@ -6036,6 +6036,7 @@
 #include "monkestation\code\modules\modular_bartending\item_modifications\reagent_modification.dm"
 #include "monkestation\code\modules\modular_bartending\reactions\food_reactions.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\__base_slasher_additions.dm"
+#include "monkestation\code\modules\new_antagonists\slasher\ghost_role.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_datum.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\slasher_punishment.dm"
 #include "monkestation\code\modules\new_antagonists\slasher\abilities\_slasher_base.dm"

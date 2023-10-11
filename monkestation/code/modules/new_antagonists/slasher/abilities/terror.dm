@@ -5,6 +5,12 @@
 
 	cooldown_time = 45 SECONDS
 
+/datum/action/cooldown/slasher/terror/PreActivate(atom/target)
+	. = ..()
+	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+	if(!slasherdatum || !slasherdatum.corporeal)
+		return FALSE
+
 
 /datum/action/cooldown/slasher/terror/Activate(atom/target)
 	. = ..()

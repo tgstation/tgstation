@@ -44,6 +44,8 @@
 	var/stalk_precent = 0
 	/// are we corporeal
 	var/corporeal = TRUE
+	///ALL Powers currently owned
+	var/list/datum/action/cooldown/slasher/powers = list()
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -62,24 +64,21 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 
 	///abilities galore
-	var/datum/action/cooldown/slasher/summon_machette/machete = new
-	machete.Grant(current_mob)
-	var/datum/action/cooldown/slasher/blood_walk/blood_walk = new
-	blood_walk.Grant(current_mob)
-	var/datum/action/cooldown/slasher/incorporealize/incorporealize = new
-	incorporealize.Grant(current_mob)
-	var/datum/action/cooldown/slasher/soul_steal/soul_steal = new
-	soul_steal.Grant(current_mob)
-	var/datum/action/cooldown/slasher/regenerate/regenerate = new
-	regenerate.Grant(current_mob)
-	var/datum/action/cooldown/slasher/terror/terror = new
-	terror.Grant(current_mob)
-	var/datum/action/cooldown/slasher/stalk_target/stalk_target = new
-	stalk_target.Grant(current_mob)
+	for(var/datum/action/cooldown/slasher/listed_slasher as anything in subtypesof(/datum/action/cooldown/slasher))
+		var/datum/action/cooldown/slasher/new_ability = new listed_slasher
+		new_ability.Grant(current_mob)
+		powers |= new_ability
 
 	var/mob/living/carbon/human/human = current_mob
 	human.equipOutfit(/datum/outfit/slasher)
 	cached_brute_mod = human.dna.species.brutemod
+
+
+/datum/antagonist/slasher/on_removal()
+	. = ..()
+	owner.current.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_CLUMSY, TRAIT_NODEATH, TRAIT_DUMB, TRAIT_LIMBATTACHMENT), "slasher")
+	for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
+		listed_slasher.Remove(owner.current)
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
 	if(corporeal)
@@ -155,6 +154,8 @@
 	if(linked_machette)
 		linked_machette.force += 2.5
 		linked_machette.throwforce += 2.5
+	if(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
+		qdel(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
 	qdel(stalked_human.tracking_beacon)
 	stalked_human = null
 
@@ -163,5 +164,7 @@
 	if(linked_machette)
 		linked_machette.force -= 5
 		linked_machette.throwforce -= 5
+	if(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
+		qdel(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
 	qdel(stalked_human.tracking_beacon)
 	stalked_human = null

@@ -1,6 +1,6 @@
 /datum/action/cooldown/slasher/incorporealize
 	name = "Incorporealize"
-	desc = " Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being. "
+	desc = "Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being."
 	button_icon_state = "incorporealize"
 	cooldown_time = 20 SECONDS
 
@@ -42,6 +42,7 @@
 			owner_mob.status_flags |= GODMODE
 			animate(owner_mob, alpha = 0, time = 1.5 SECONDS)
 			ADD_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
+			ADD_TRAIT(owner_mob, TRAIT_HANDS_BLOCKED, "slasher")
 	else
 		name = "Incorporealize"
 		desc = " Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being. "
@@ -53,6 +54,7 @@
 			owner_mob.status_flags &= ~GODMODE
 			animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
 			REMOVE_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
+			REMOVE_TRAIT(owner_mob, TRAIT_HANDS_BLOCKED, "slasher")
 
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -70,4 +72,5 @@
 		owner_mob.status_flags &= ~GODMODE
 		animate(owner_mob, alpha = 255, time = 1.5 SECONDS)
 		REMOVE_TRAIT(owner_mob, TRAIT_PACIFISM, "slasher")
+		REMOVE_TRAIT(owner_mob, TRAIT_HANDS_BLOCKED, "slasher")
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
