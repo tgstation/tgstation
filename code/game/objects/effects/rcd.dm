@@ -13,7 +13,7 @@
 	playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
 
 	var/turf/source_turf = get_turf(source)
-	for(var/turf/open/surrounding_turf in RANGE_TURFS(scan_range, source_turf))
+	for(var/turf/open/surrounding_turf as anything in RANGE_TURFS(scan_range, source_turf))
 		var/rcd_memory = surrounding_turf.rcd_memory
 		if(!rcd_memory)
 			continue
