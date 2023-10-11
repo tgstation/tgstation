@@ -1,8 +1,0 @@
-author: "Dexee"
-delete-after: True
-changes:
-  - qol: "Evidence lockers on Tramstation now numbered correctly"
-  - qol: "Two evidence lockers swapped on Tramstation for their secure counterparts to match other stations."
-  - qol: "Scrubber and Vent pipes by arrivals on lower Z now properly connect on Tramstation"
-  - qol: "Added a missing multi-Z cable hub to the bridge on Tramstation. The vault has power again!"
-  - rscdel: "Removed an errant directional plasmaglass window by the SM cooling loop on Deltastation."
