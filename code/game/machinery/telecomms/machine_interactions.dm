@@ -1,7 +1,6 @@
+// This file is separate from telecommunications.dm to isolate the implementation
+// of basic interactions with the machines.
 
-/**
- * The basic telecomms machinery type, implementing the basic interactions with the machines.
- */
 /obj/machinery/telecomms
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
