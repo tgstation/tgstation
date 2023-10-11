@@ -136,11 +136,15 @@
 	for(var/atom/movable/AM in container.contents - manifest_paper)
 		container_contents[AM.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
-		for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
-			var/missing_item = pick(container_contents)
-			container_contents[missing_item]--
-			if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
-				container_contents -= missing_item
+		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
+		else
+			for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+				var/missing_item = pick(container_contents)
+				container_contents[missing_item]--
+				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+					container_contents -= missing_item
+
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
