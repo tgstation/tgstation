@@ -291,6 +291,7 @@
 		update_held_items()
 
 /mob/living/basic/update_held_items()
+	. = ..()
 	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
 		return
 	var/turf/our_turf = get_turf(src)
