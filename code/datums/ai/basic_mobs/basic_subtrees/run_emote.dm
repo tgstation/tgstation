@@ -1,7 +1,7 @@
 /// Intermittently run an emote
 /datum/ai_planning_subtree/run_emote
 	var/emote_key = BB_EMOTE_KEY
-	var/emote_chance_key = BB_RUN_EMOTE_CHANCE
+	var/emote_chance_key = BB_EMOTE_CHANCE
 
 /datum/ai_planning_subtree/run_emote/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/emote_chance = controller.blackboard[emote_chance_key] || 0

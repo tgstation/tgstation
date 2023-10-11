@@ -3,7 +3,7 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/gorilla,
 		BB_EMOTE_KEY = "ooga",
-		BB_RUN_EMOTE_CHANCE = 40,
+		BB_EMOTE_CHANCE = 40,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -31,5 +31,5 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
 		BB_EMOTE_KEY = "ooga",
-		BB_RUN_EMOTE_CHANCE = 60,
+		BB_EMOTE_CHANCE = 60,
 	)

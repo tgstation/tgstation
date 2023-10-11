@@ -14,7 +14,11 @@
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 2
-	summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/carbon/human/species/monkey/angry, /mob/living/basic/gorilla/lesser)
+	summon_type = list(
+		/mob/living/basic/gorilla/lesser,
+		/mob/living/carbon/human/species/monkey/angry,
+		/mob/living/carbon/human/species/monkey/angry, // Listed twice so it's twice as likely, this class doesn't use pick weight
+	)
 	summon_amount = 4
 
 /datum/action/cooldown/spell/conjure/simian/level_spell(bypass_cap)

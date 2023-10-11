@@ -288,9 +288,7 @@
 
 /// Returns true if a mob is holding something
 /mob/proc/is_holding_items()
-	for(var/obj/item/held in held_items)
-		return TRUE
-	return FALSE
+	return !!locate(/obj/item) in held_items
 
 /mob/proc/drop_all_held_items()
 	. = FALSE
