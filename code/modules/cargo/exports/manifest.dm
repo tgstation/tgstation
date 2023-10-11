@@ -1,3 +1,5 @@
+#define MAX_MANIFEST_PENALTY 500
+
 // Approved manifest.
 // +80 credits flat.
 /datum/export/manifest_correct
@@ -59,7 +61,7 @@
 
 /datum/export/manifest_error/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
-	return -min(M.order_cost * 0.5, 500)
+	return -min(M.order_cost * 0.5, MAX_MANIFEST_PENALTY)
 
 
 // Erroneously denied manifest.
@@ -82,4 +84,6 @@
 
 /datum/export/manifest_correct_denied/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
-	return -min(M.order_cost * 0.5, 500)
+	return -min(M.order_cost * 0.5, MAX_MANIFEST_PENALTY)
+
+#undef MAX_MANIFEST_PENALTY
