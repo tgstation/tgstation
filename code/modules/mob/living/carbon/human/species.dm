@@ -653,23 +653,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
+	species_human.remove_overlay(FACE_LAYER)
 	var/height_offset = species_human.get_top_offset() // From high changed by varying limb height
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
+	var/list/standing_face = list()
 
 	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
 
 	if(noggin && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
 		// lipstick
 		if(species_human.lip_style && (LIPS in species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[species_human.lip_style]", -FACE_LAYER)
 			lip_overlay.color = species_human.lip_color
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				lip_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
 				lip_overlay.pixel_y += species_human.dna.species.offset_features[OFFSET_FACE][2]
 			lip_overlay.pixel_y += height_offset
-			standing += lip_overlay
+			standing_face += lip_overlay
 
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
@@ -687,7 +689,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			add_pixel_y += height_offset
 
 			if(!eye_organ)
-				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -FACE_LAYER)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
@@ -697,7 +699,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!no_eyeslay)
 				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
 					eye_overlay.pixel_y += height_offset
-					standing += eye_overlay
+					standing_face += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
@@ -770,8 +772,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(standing.len)
 		species_human.overlays_standing[BODY_LAYER] = standing
+	if(standing_face.len)
+		species_human.overlays_standing[FACE_LAYER] = standing_face
 
 	species_human.apply_overlay(BODY_LAYER)
+	species_human.apply_overlay(FACE_LAYER)
 	handle_mutant_bodyparts(species_human)
 
 /**
@@ -875,6 +880,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
+			if(accessory.is_emissive)
+				standing += emissive_appearance_copy(accessory_overlay, source)
 
 			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
 				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
@@ -890,6 +897,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
 
 				standing += inner_accessory_overlay
+				if(accessory.is_emissive)
+					standing += emissive_appearance_copy(accessory_overlay, source)
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()

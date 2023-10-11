@@ -10,8 +10,7 @@
 				mob.fully_heal()
 				continue
 			qdel(listed_atom)
-		listed_turf.ScrapeAway()
-
+		listed_turf.baseturfs = list(/turf/open/indestructible/event/plating)
 	var/turf/located = locate(161, 44, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1]) // this grabs the bottom corner turf
 	new /obj/effect/spawner/random_arena_spawner(located)
 

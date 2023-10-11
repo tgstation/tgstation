@@ -130,18 +130,9 @@
 /obj/machinery/media/jukebox/update_icon()
 	. = ..()
 	cut_overlays()
-	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
-		if(machine_stat & BROKEN)
-			icon_state = "[state_base]-broken"
-		else
-			icon_state = "[state_base]-nopower"
-		return
 	icon_state = state_base
 	if(playing)
-		if(obj_flags & EMAGGED)
-			add_overlay("[state_base]-emagged")
-		else
-			add_overlay("[state_base]-running")
+		add_overlay("[state_base]-running")
 	if (panel_open)
 		add_overlay("panel_open")
 

@@ -109,3 +109,31 @@
   KoboldCommando:
   - bugfix: Spliced seed packs should be named slightly more coherently and have a
       max length
+2023-09-27:
+  Gboster-0:
+  - rscadd: A new exotic tendril can now spawn on oshan
+  - rscadd: Oshan tendrils now cause fissures to appear instead of chasms (where's
+      the tweak label for changelogs anyway?)
+  NanoCats:
+  - qol: Sec fixes
+  - qol: Innumerable OSHAN fixes
+2023-09-28:
+  KoboldCommando:
+  - rscadd: New visuals for the composter
+  - rscadd: The composter can now compost food and people
+  Tractor Mann:
+  - rscadd: Added jukebox beacons! you can find these in the bartenders closet.
+  githubuser4141:
+  - sound: Changes open/close SFX for shutters and poddoors.
+  wraith-54321:
+  - rscadd: Replaced lesser summon apes with Summon Simians
+  - rscadd: CHEESE WIZARD
+  - rscadd: Hauntium reagent
+2023-09-29:
+  NanoCats:
+  - rscadd: 1 cable
+2023-09-30:
+  Gboster-0:
+  - bugfix: DJ station properly shows its cooldown time
+  KoboldCommando:
+  - bugfix: fixed a couple small annoyances with the Biogenerator UI

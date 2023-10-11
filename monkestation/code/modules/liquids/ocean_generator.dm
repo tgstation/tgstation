@@ -98,9 +98,10 @@
 		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
 		/mob/living/basic/mining/goldgrub = 10,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/obj/structure/spawner/lavaland/ocean = 2,
+		/obj/structure/spawner/lavaland/ocean/goliath = 3,
+		/obj/structure/spawner/lavaland/ocean/legion = 3,
+		/obj/structure/spawner/lavaland/ocean/fish = 1, // a rare fish challenger approaches!
 	)
 
 	flora_spawn_list = null

@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/costume/cirno
-	name = "\improper Cirno's dress'"
+	name = "\improper Cirno's dress"
 	desc = "A dress that is styled like Cirno's."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
@@ -75,3 +75,28 @@
 	can_adjust = FALSE
 	inhand_icon_state = null
 
+
+/obj/item/clothing/suit/costume/dark_hos
+	name = "\improper Dark Head of Security Trench"
+	desc = "It's like you're authority, but edgier.  There's a syndicate snake embroidered on the back."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dark_hos"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS
+/obj/item/clothing/head/costume/dark_hos
+	name = "\improper Dark Head of Security Cap"
+	desc = "Slip this on and you're gonna be cutting people with that edge."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dark_hos_cap"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/jacket/bomber/lemon
+	name = "lemon assault vest"
+	desc = "You can store combustible lemons in this!  Complete with lemon bandolier."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lemon_bandolier"
+	body_parts_covered = CHEST
+	inhand_icon_state = null

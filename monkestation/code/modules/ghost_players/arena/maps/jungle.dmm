@@ -26,8 +26,18 @@
 /obj/structure/punji_sticks/spikes,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
+"s" = (
+/obj/structure/flora/bush/large/style_random,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
 "u" = (
 /obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
 "B" = (
@@ -40,6 +50,11 @@
 /area/centcom/tdome/arena/actual)
 "F" = (
 /obj/structure/flora/bush/grassy/style_random,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
+"H" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass/jungle,
 /area/centcom/tdome/arena/actual)
 "K" = (
@@ -64,6 +79,10 @@
 /obj/structure/punji_sticks,
 /turf/open/water,
 /area/centcom/tdome/arena/actual)
+"U" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/grass/jungle,
+/area/centcom/tdome/arena/actual)
 "Y" = (
 /obj/structure/flora/bush/lavendergrass/style_3,
 /turf/open/misc/grass/jungle,
@@ -83,14 +102,14 @@ C
 "}
 (2,1,1) = {"
 K
-K
+U
 K
 K
 K
 K
 l
 K
-K
+U
 C
 "}
 (3,1,1) = {"
@@ -123,7 +142,7 @@ K
 K
 K
 K
-h
+s
 K
 q
 K
@@ -144,12 +163,12 @@ K
 (7,1,1) = {"
 a
 a
-F
+H
 K
 K
 Y
 F
-F
+H
 a
 a
 "}
@@ -192,12 +211,12 @@ a
 (11,1,1) = {"
 a
 a
-F
+H
 K
 F
 K
 Y
-F
+H
 a
 a
 "}
@@ -219,7 +238,7 @@ K
 q
 K
 K
-K
+U
 K
 K
 K
@@ -251,14 +270,14 @@ n
 "}
 (16,1,1) = {"
 K
-K
+U
 K
 K
 u
 K
 S
 Y
-u
+A
 K
 "}
 (17,1,1) = {"

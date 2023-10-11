@@ -63,6 +63,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "jL" = (
@@ -81,6 +82,7 @@
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena/actual)
 "lO" = (
@@ -92,6 +94,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"mo" = (
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/tdome/arena/actual)
 "mv" = (
@@ -281,6 +287,7 @@
 	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/blood,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/tdome/arena/actual)
 "Fp" = (
@@ -330,6 +337,10 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
+"Mp" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
 "NQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -359,6 +370,11 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/tdome/arena/actual)
+"Rn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
 "RD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -385,6 +401,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "Vj" = (
@@ -400,6 +417,11 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"WK" = (
+/obj/structure/table/wood/poker,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet,
 /area/centcom/tdome/arena/actual)
 "WQ" = (
 /obj/machinery/gibber,
@@ -434,14 +456,14 @@ GL
 "}
 (2,1,1) = {"
 aQ
-GL
+Mp
 NQ
 GL
 GL
-GL
+Mp
 GL
 JO
-GL
+Mp
 NQ
 "}
 (3,1,1) = {"
@@ -470,14 +492,14 @@ GL
 "}
 (5,1,1) = {"
 um
-ih
+mo
 ih
 Ah
 jL
 Um
 GL
 GL
-GL
+Mp
 ET
 "}
 (6,1,1) = {"
@@ -525,7 +547,7 @@ xl
 lt
 GL
 lO
-vl
+WK
 GL
 "}
 (10,1,1) = {"
@@ -566,14 +588,14 @@ qB
 "}
 (13,1,1) = {"
 go
-ih
+mo
 ih
 FM
 jL
 iS
 NQ
 GL
-NQ
+Rn
 zT
 "}
 (14,1,1) = {"
@@ -602,14 +624,14 @@ GL
 "}
 (16,1,1) = {"
 ix
+Mp
 GL
 GL
 GL
-GL
-GL
+Mp
 GL
 pD
-GL
+Mp
 GL
 "}
 (17,1,1) = {"

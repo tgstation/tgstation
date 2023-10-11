@@ -66,7 +66,7 @@
 		P.attack_self(H)
 	var/obj/item/card/id/advanced/highlander/W = new(H)
 	W.registered_name = H.real_name
-	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER_TRAIT)
 	W.update_label()
 	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
