@@ -275,8 +275,8 @@
 					break
 		if("clear")
 			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
-				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
-					continue //don't cancel other department's orders or orders that can't be cancelled
+				if(!cancelled_order.can_be_cancelled)
+					continue //don't cancel orders that can't be cancelled
 				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")

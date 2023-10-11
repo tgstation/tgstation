@@ -404,8 +404,8 @@
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
 			for(var/datum/supply_order/cancelled_order in shopping_cart)
-				if(cancelled_order.department_destination || !cancelled_order.can_be_cancelled)
-					continue //don't cancel other department's orders or orders that can't be cancelled
+				if(!cancelled_order.can_be_cancelled)
+					continue //don't cancel orders that can't be cancelled
 				remove_item(cancelled_order.id) //remove & properly refund any coupons attached with this order
 		if("approve")
 			var/id = text2num(params["id"])
