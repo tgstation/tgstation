@@ -69,6 +69,10 @@
 		return 2 //Whips deal 2x damage to vampires. Vampire killer.
 	return 1
 
+/datum/species/vampire/get_physical_attributes()
+	return "Vampires are afflicted with the Thirst, needing to sate it by draining the blood out of another living creature. However, they do not need to breathe or eat normally. \
+		They will instantly turn into dust if they run out of blood or enter a holy area. However, coffins stabilize and heal them, and they can transform into bats!"
+
 /datum/species/vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""
 

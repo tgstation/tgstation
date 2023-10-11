@@ -58862,7 +58862,7 @@
 "urm" = (
 /obj/structure/table/glass,
 /obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = -2;
 	pixel_y = 4
 	},

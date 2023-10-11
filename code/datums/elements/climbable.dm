@@ -116,7 +116,7 @@
 	SIGNAL_HANDLER
 	if(user != dropped_atom || !isliving(dropped_atom))
 		return
-	if(!HAS_TRAIT(user, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence?
+	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
 		return
 	var/mob/living/living_target = dropped_atom
 	if(living_target.mobility_flags & MOBILITY_MOVE)

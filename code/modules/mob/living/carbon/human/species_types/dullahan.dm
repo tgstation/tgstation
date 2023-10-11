@@ -114,6 +114,8 @@
 	eyes_toggle_perspective_action?.Trigger()
 	owner_first_client_connection_handled = TRUE
 
+/datum/species/dullahan/get_physical_attributes()
+	return "A dullahan is much like a human, but their head is detached from their body and must be carried around."
 
 /datum/species/dullahan/get_species_description()
 	return "An angry spirit, hanging onto the land of the living for \
