@@ -192,7 +192,7 @@
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
 	if(!vines_in_range)
 		balloon_alert(src, "do not leave vines!")
-	apply_damage(vines_in_range ? weed_heal : no_weed_damage), BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	apply_damage(vines_in_range ? weed_heal : no_weed_damage, BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
 	name = "Tangle"
