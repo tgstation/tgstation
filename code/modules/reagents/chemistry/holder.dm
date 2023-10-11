@@ -1389,7 +1389,8 @@
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
 			total_amount += cached_reagent.volume
-	return FLOOR(total_amount, CHEMICAL_QUANTIZATION_LEVEL)
+
+	return FLOOR(total_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Gets the sum of volumes of all reagent type paths present in the list
