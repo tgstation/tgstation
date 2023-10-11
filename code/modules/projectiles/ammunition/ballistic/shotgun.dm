@@ -133,7 +133,7 @@
 	. = ..()
 	if(prob(40/severity))
 		name = "malfunctioning laser shell"
-		desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. This one appears to be malfunctioning and practically useless."
+		desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
 		projectile_type = /obj/projectile/beam/scatter/pathetic
 
 /obj/item/ammo_casing/shotgun/techshell
