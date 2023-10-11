@@ -103,7 +103,7 @@
 
 /mob/living/basic/trooper/syndicate/ranged
 	loot = list(/obj/effect/gibspawner/human)
-	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	r_hand = /obj/item/gun/ballistic/automatic/pistol
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c9mm
@@ -150,7 +150,7 @@
 /mob/living/basic/trooper/syndicate/ranged/smg
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
-	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged/burst
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS
 	r_hand = /obj/item/gun/ballistic/automatic/c20r
@@ -181,7 +181,7 @@
 
 /mob/living/basic/trooper/syndicate/ranged/shotgun
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a two-round burst
-	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged/shotgunner
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
 	ranged_cooldown = 3 SECONDS
 	burst_shots = 2
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog

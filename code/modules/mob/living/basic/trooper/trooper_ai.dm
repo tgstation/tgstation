@@ -9,7 +9,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/move_to_reinforce,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/trooper
@@ -27,16 +27,27 @@
 /datum/ai_controller/basic_controller/trooper/calls_reinforcements
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/call_for_reinforcements,
+		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/move_to_reinforce,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	)
+
+/datum/ai_controller/basic_controller/trooper/peaceful
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper
@@ -49,7 +60,9 @@
 /datum/ai_controller/basic_controller/trooper/ranged/avoid_friendly_fire
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper/avoid_friendly_fire,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper/avoid_friendly_fire
@@ -61,7 +74,9 @@
 /datum/ai_controller/basic_controller/trooper/ranged/burst
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst
@@ -70,10 +85,35 @@
 /datum/ai_behavior/basic_ranged_attack/trooper_burst
 	action_cooldown = 3 SECONDS
 
+/datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper_burst/avoid_friendly_fire
+
+/datum/ai_behavior/basic_ranged_attack/trooper_burst/avoid_friendly_fire
+	avoid_friendly_fire = TRUE
+
+/datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire/peaceful
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	)
+
 /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun
+		/datum/ai_planning_subtree/maintain_distance,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun

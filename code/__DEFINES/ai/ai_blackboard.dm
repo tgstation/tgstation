@@ -106,3 +106,8 @@
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
 #define BB_EMOTE_CHANCE "emote_chance"
+
+/// A target that has called this mob for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
+/// The next time at which this mob can call for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"

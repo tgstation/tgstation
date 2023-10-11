@@ -1,15 +1,17 @@
+#define REINFORCEMENTS_COOLDOWN (30 SECONDS)
+
 /// Calls all nearby mobs that share a faction to give backup in combat
 /datum/ai_planning_subtree/call_reinforcements
-	/// The range to pull reinforcements from
-	var/reinforcement_range = 15
 	/// Text to say when calling reinforcements
 	var/call_say
 	/// Text to emote when calling reinforcements
 	var/call_emote = "cries for help!"
+	/// Reinforcement-calling behavior to use
+	var/call_type = /datum/ai_behavior/call_reinforcements
 
 /datum/ai_planning_subtree/call_reinforcements/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	if (controller.blackboard[BB_BASIC_REINFORCEMENTS_COOLDOWN] > world.time)
+	if (!decide_to_call(controller) || controller.blackboard[BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN] > world.time)
 		return
 
 	if(!isnull(call_say))
@@ -17,4 +19,30 @@
 	else
 		controller.queue_behavior(/datum/ai_behavior/perform_emote, call_emote)
 
+	controller.queue_behavior(call_type)
 
+/// Decides when to call reinforcements, can be overridden for alternate behavior
+/datum/ai_planning_subtree/call_reinforcements/proc/decide_to_call(datum/ai_controller/controller)
+	return controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && istype(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET], /mob)
+
+/datum/ai_planning_subtree/call_reinforcements/nanotrasen
+	call_say = "411 in progress, requesting backup!"
+
+/// Call out to all mobs in the specified range for help
+/datum/ai_behavior/call_reinforcements
+	/// Range to call reinforcements from
+	var/reinforcements_range = 15
+
+/datum/ai_behavior/call_reinforcements/perform(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+
+	var/mob/pawn_mob = controller.pawn
+	for(var/mob/other_mob in oview(reinforcements_range, pawn_mob))
+		if(pawn_mob.faction_check_mob(other_mob) && !isnull(other_mob.ai_controller))
+			// Add our current target to their retaliate list so that they'll attack our aggressor
+			other_mob.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+			other_mob.ai_controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENT_TARGET, pawn_mob)
+
+	controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN, world.time + REINFORCEMENTS_COOLDOWN)
+
+#undef REINFORCEMENTS_COOLDOWN
