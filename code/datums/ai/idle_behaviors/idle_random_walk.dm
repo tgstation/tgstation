@@ -24,3 +24,44 @@
 	if (!controller.blackboard_key_exists(target_key))
 		return
 	return ..()
+
+/// walk randomly however stick near a target
+/datum/idle_behavior/walk_near_target
+	/// chance to walk
+	var/walk_chance = 25
+	/// distance we are to target
+	var/minimum_distance = 20
+	/// key that holds target
+	var/target_key
+
+/datum/idle_behavior/walk_near_target/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	if(LAZYLEN(living_pawn.do_afters))
+		return
+
+	if(!SPT_PROB(walk_chance, seconds_per_tick) || !(living_pawn.mobility_flags & MOBILITY_MOVE) || !isturf(living_pawn.loc) || living_pawn.pulledby)
+		return
+
+	var/atom/target = controller.blackboard[target_key]
+	var/distance = get_dist(target, living_pawn)
+	if(isnull(target) || distance > minimum_distance) //if we are too far away from target, just walk randomly
+		var/move_dir = pick(GLOB.alldirs)
+		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+		return
+
+	var/list/possible_turfs = list()
+	for(var/direction in GLOB.alldirs)
+		var/turf/possible_step = get_step(living_pawn, direction)
+		if(get_dist(possible_step, target) > minimum_distance)
+			continue
+		if(possible_step.is_blocked_turf())
+			continue
+		possible_turfs += possible_step
+
+	if(!length(possible_turfs))
+		return
+
+	var/turf/picked_turf = pick(possible_turfs)
+
+	living_pawn.Move(picked_turf, get_dir(living_pawn, picked_turf))
