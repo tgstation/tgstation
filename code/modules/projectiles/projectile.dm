@@ -1153,7 +1153,7 @@
 	var/list/ignore = list()
 	for (var/atom/thing as anything in ignore_targets)
 		ignore[thing] = TRUE
-	bullet.impacted = ignore
+	bullet.impacted += ignore
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y
