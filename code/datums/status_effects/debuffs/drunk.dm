@@ -194,9 +194,11 @@
 	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
 		drunk_value -= 50 //So that the drunk personality can spice things up without being killed by liver failure
 		return
-	else if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout) && prob(10))
-		to_chat(owner, span_warning("You stumbled and fall over!"))
-		owner.slip(1 SECONDS)
+	else if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))
+		if(prob(10))
+			to_chat(owner, span_warning("You stumbled and fall over!"))
+			owner.slip(1 SECONDS)
+		return
 	else if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
 		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 	else
