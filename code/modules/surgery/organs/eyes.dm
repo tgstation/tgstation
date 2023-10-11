@@ -121,8 +121,8 @@
 
 	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi'
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -FACE_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -FACE_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
 
 	if(EYECOLOR in parent.dna?.species.species_traits)
@@ -131,8 +131,8 @@
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
-		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
+		overlays += emissive_appearance_copy(eye_left, src, NONE)
+		overlays += emissive_appearance_copy(eye_right, src, NONE)
 
 	if(OFFSET_FACE in parent.dna?.species.offset_features)
 		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
@@ -559,6 +559,13 @@
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	overlay_ignore_lighting = TRUE
+
+
+/obj/item/organ/internal/eyes/lizard
+	name = "lizard eyes"
+	desc = "These eyes seem to glow."
+	overlay_ignore_lighting = TRUE
 
 /obj/item/organ/internal/eyes/snail
 	name = "snail eyes"

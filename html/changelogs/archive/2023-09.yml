@@ -129,3 +129,11 @@
   - rscadd: Replaced lesser summon apes with Summon Simians
   - rscadd: CHEESE WIZARD
   - rscadd: Hauntium reagent
+2023-09-29:
+  NanoCats:
+  - rscadd: 1 cable
+2023-09-30:
+  Gboster-0:
+  - bugfix: DJ station properly shows its cooldown time
+  KoboldCommando:
+  - bugfix: fixed a couple small annoyances with the Biogenerator UI

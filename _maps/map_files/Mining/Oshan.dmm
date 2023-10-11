@@ -120,6 +120,26 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
+"hs" = (
+/obj/structure/rack,
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "hC" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -24900,7 +24920,7 @@ mt
 nW
 nW
 nW
-bE
+hs
 Jq
 Ev
 Hv

@@ -322,7 +322,7 @@
 
 ///this is called every time something enters our beams
 /obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, atom/movable/arrived)
-	var/mw_power = charge * 0.000001
+	var/mw_power = (output_number * power_format_multi_output) * 0.000001
 	if(mw_power < 25)
 		if(isliving(arrived))
 			var/mob/living/arrived_living = arrived

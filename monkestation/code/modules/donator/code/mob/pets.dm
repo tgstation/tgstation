@@ -46,3 +46,11 @@
 	icon_dead = ""
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/lizard/snake
+	name = "Three Headed Snake"
+	desc = "This little fella looks familiar..."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "triple_snake"
+	icon_dead = ""
+	gold_core_spawnable = NO_SPAWN
