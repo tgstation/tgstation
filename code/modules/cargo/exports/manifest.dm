@@ -23,7 +23,7 @@
 	k_elasticity = 0
 	unit_name = "correctly denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
-	scannable = TRUE
+	scannable = FALSE
 
 /datum/export/manifest_error_denied/applies_to(obj/O)
 	if(!..())
