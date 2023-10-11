@@ -1,34 +1,34 @@
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = LASER_SHOTS(12)
+	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(10)
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = LASER_SHOTS(16)
+	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/carbine
-	e_cost = LASER_SHOTS(40)
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = LASER_SHOTS(5)
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = LASER_SHOTS(8)
+	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket
-	e_cost = LASER_SHOTS(1)
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
@@ -80,7 +80,7 @@
 
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/projectile/beam/pulse
-	e_cost = LASER_SHOTS(5)
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
@@ -102,7 +102,7 @@
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/projectile/beam/xray
-	e_cost = LASER_SHOTS(20)
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
@@ -118,7 +118,7 @@
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk
 	select_name = "bullet"
-	e_cost = LASER_SHOTS(8)
+	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/thermalpistol.ogg'
 
 /obj/item/ammo_casing/energy/nanite/inferno

@@ -5,7 +5,7 @@
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
-	e_cost = LASER_SHOTS(3)
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/projectile/energy/declone
@@ -30,12 +30,12 @@
 /obj/item/ammo_casing/energy/flora/revolution
 	projectile_type = /obj/projectile/energy/florarevolution
 	select_name = "revolution"
-	e_cost = LASER_SHOTS(4)
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/projectile/temp
 	select_name = "freeze"
-	e_cost = LASER_SHOTS(4)
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/temp/hot
@@ -60,14 +60,14 @@
 
 /obj/item/ammo_casing/energy/tesla_cannon
 	fire_sound = 'sound/magic/lightningshock.ogg'
-	e_cost = LASER_SHOTS(33)
+	e_cost = LASER_SHOTS(33, STANDARD_CELL_CHARGE)
 	select_name = "shock"
 	projectile_type = /obj/projectile/energy/tesla_cannon
 
 /obj/item/ammo_casing/energy/shrink
 	projectile_type = /obj/projectile/beam/shrink
 	select_name = "shrink ray"
-	e_cost = LASER_SHOTS(5)
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/marksman
 	projectile_type = /obj/projectile/bullet/marksman
@@ -78,5 +78,5 @@
 /obj/item/ammo_casing/energy/fisher
 	projectile_type = /obj/projectile/energy/fisher
 	select_name = "light-buster"
-	e_cost = LASER_SHOTS(4)
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip
