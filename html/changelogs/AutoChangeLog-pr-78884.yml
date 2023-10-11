@@ -1,0 +1,11 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "removed round robin method of transferring reagents which would result in some missing reagents after transferring."
+  - code_imp: "added some more rounding for reagent operations."
+  - code_imp: "cleaned up some plumbing & reaction chamber code"
+  - code_imp: "improves the performance of `update_total()` , `clear_reagents()` & `del_reagent()` procs"
+  - bugfix: "plumbing setups will no longer output 0 or more than maximum available volume of reagents."
+  - bugfix: "removing, copying, transfering reagents is now done proportionally and not equally again."
+  - refactor: "examining individual reagents up close will display their volumes up to 4 decimal places for accuracy."
+  - qol: "droppers & beakers round the amount of reagents transferred before displaying them to chat for easy readibility"
