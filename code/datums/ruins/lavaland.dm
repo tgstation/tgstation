@@ -283,3 +283,11 @@
 	suffix = "lavaland_battle_site.dmm"
 	allow_duplicates = TRUE
 	cost = 3
+
+/datum/map_template/ruin/lavaland/mook_village
+	name = "Mook Village"
+	id = "mook_village"
+	description = "A village hosting a community of friendly mooks!"
+	suffix = "lavaland_surface_mookvillage.dmm"
+	allow_duplicates = FALSE
+	cost = 5

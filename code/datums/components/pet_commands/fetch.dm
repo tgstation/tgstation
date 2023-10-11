@@ -18,6 +18,8 @@
 
 /datum/pet_command/point_targetting/fetch/New(mob/living/parent)
 	. = ..()
+	if(isnull(parent))
+		return
 	parent.AddElement(/datum/element/ai_held_item) // We don't remove this on destroy because they might still be holding something
 
 /datum/pet_command/point_targetting/fetch/add_new_friend(mob/living/tamer)
