@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Wound promotion and demotion no longer removes gauze from the limb"

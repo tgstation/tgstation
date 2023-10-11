@@ -1,0 +1,7 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - refactor: "venus human traps are basicmobs now"
+  - balance: "venus human traps have 100 health"
+  - balance: "venus human traps take damage out of range of kudzu, heal near kudzu, are slightly slower, attack slower, and their damage output is slightly more random"
+  - balance: "also venus human trap tangle ability now needs you to actually move backwards to pull victims"

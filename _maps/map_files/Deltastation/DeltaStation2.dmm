@@ -20284,7 +20284,7 @@
 /area/station/maintenance/space_hut/observatory)
 "eYo" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -84463,7 +84463,7 @@
 /area/station/maintenance/port/fore)
 "vbT" = (
 /obj/structure/rack,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = 3;
 	pixel_y = -3
 	},

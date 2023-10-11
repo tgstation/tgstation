@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - sound: "Add burning sound loop to bonfires and fireplaces"
-  - code_imp: "Improved fireplaces to only process when lit"

@@ -192,6 +192,11 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
 	)
 
+/datum/species/jelly/slime/get_physical_attributes()
+	return "Slimepeople have jelly for blood and their vacuoles can extremely quickly convert plasma to it if they're breathing it in.\
+		They can then use the excess blood to split off an excess body, which their consciousness can transfer to at will or on death.\
+		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
+
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
@@ -492,6 +497,10 @@
 	/// The cooldown of us using exteracts
 	COOLDOWN_DECLARE(extract_cooldown)
 
+/datum/species/jelly/luminescent/get_physical_attributes()
+	return "Luminescent are able to integrate slime extracts into themselves for wondrous effects. \
+		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
+
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
 /datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
@@ -660,6 +669,10 @@
 	examine_limb_id = SPECIES_JELLYPERSON
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action
+
+/datum/species/jelly/stargazer/get_physical_attributes()
+	return "Stargazers can link others' minds with their own, creating a private communication channel. \
+		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
 
 /datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
 	. = ..()
