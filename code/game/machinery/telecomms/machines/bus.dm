@@ -4,8 +4,6 @@
  *
  * They transfer uncompressed subspace packets to processor units, and then take
  * the processed packet to a server for logging.
- *
- * Link to a subspace hub if it can't send to a server.
  */
 /obj/machinery/telecomms/bus
 	name = "bus mainframe"
