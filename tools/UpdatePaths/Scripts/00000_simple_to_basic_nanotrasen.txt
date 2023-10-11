@@ -1,0 +1,5 @@
+/mob/living/basic/syndicate/russian/@SUBTYPES : /mob/living/basic/trooper/russian/@SUBTYPES{@OLD}
+/mob/living/basic/syndicate/@SUBTYPES : /mob/living/basic/trooper/syndicate/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/nanotrasen/elite : /mob/living/basic/trooper/nanotrasen/ranged/elite{@OLD}
+/mob/living/simple_animal/hostile/nanotrasen/@SUBTYPES : /mob/living/basic/trooper/nanotrasen/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/@SUBTYPES : /mob/living/basic/trooper/nanotrasen/peaceful/@SUBTYPES{@OLD}

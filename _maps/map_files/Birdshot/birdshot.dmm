@@ -32885,7 +32885,7 @@
 /area/station/engineering/supermatter/room)
 "lJE" = (
 /obj/structure/chair/stool/directional/west,
-/mob/living/basic/syndicate/russian/ranged/lootless,
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/carpet/orange,
 /area/station/service/abandoned_gambling_den)
 "lJV" = (
@@ -58544,7 +58544,7 @@
 /area/station/science/research)
 "ukT" = (
 /obj/effect/turf_decal/siding/wood,
-/mob/living/basic/syndicate/russian/ranged/lootless,
+/mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "ukV" = (
