@@ -152,8 +152,8 @@
 		var/datum/data_tablet_msg/log_message = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
 		pda_msgs += log_message
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
-		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
+		var/datum/data_rc_msg/msg = new(signal.data["receiving_department"], signal.data["sender_department"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		if(signal.data["sender_department"]) // don't log messages not from a department but allow them to work
 			rc_msgs += msg
 	signal.data["reject"] = FALSE
 
@@ -264,9 +264,9 @@
 
 /datum/data_rc_msg
 	/// The department that sent the request.
-	var/send_dpt = "Unspecified"
+	var/sender_department = "Unspecified"
 	/// The department that was targeted by the request.
-	var/rec_dpt = "Unspecified"
+	var/receiving_department = "Unspecified"
 	/// The message of the request.
 	var/message = "Blank"
 	/// The stamp that authenticated this message, if any.
@@ -278,9 +278,9 @@
 
 /datum/data_rc_msg/New(param_rec, param_sender, param_message, param_stamp, param_id_auth, param_priority)
 	if(param_rec)
-		rec_dpt = param_rec
+		receiving_department = param_rec
 	if(param_sender)
-		send_dpt = param_sender
+		sender_department = param_sender
 	if(param_message)
 		message = param_message
 	if(param_stamp)
