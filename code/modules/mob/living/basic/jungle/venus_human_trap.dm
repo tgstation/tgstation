@@ -150,8 +150,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	health = 50
-	maxHealth = 50
+	health = 100
+	maxHealth = 100
 	obj_damage = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 20
@@ -202,7 +202,7 @@
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
 	if(!vines_in_range)
 		balloon_alert(src, "do not leave vines!")
-	apply_damage(10 * (vines_in_range ? -0.5 : 1), BRUTE, BODY_ZONE_CHEST) //every life tick take 10 brute if not near vines or heal 5 if near vines
+	apply_damage(20 * (vines_in_range ? -0.5 : 1), BRUTE, BODY_ZONE_CHEST) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
 	name = "Tangle"
