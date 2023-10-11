@@ -69,14 +69,17 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 	var/turf/hit_turf = get_turf(hit_atom)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-	if(GLOB.chicks_from_eggs < MAX_CHICKENS && prob(chick_throw_prob))
+	if (prob(chick_throw_prob))
 		spawn_impact_chick(hit_turf)
 	reagents.expose(hit_atom, TOUCH)
 	qdel(src)
 
 /// Spawn a baby chicken from throwing an egg
 /obj/item/food/egg/proc/spawn_impact_chick(turf/spawn_turf)
-	var/spawned_chickens = prob(97) ? 1 : min(4, MAX_CHICKENS - GLOB.chicks_from_eggs) // We don't want to go over the limit
+	var/chickens_remaining = MAX_CHICKENS - GLOB.chicks_from_eggs
+	if (chickens_remaining < 1)
+		return
+	var/spawned_chickens = prob(97) ? 1 : min(4, chickens_remaining) // We don't want to go over the limit
 	if (spawned_chickens > 1) // Chicken jackpot!
 		visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
 	else
