@@ -380,9 +380,12 @@
 
 	if(IS_CULTIST(affected_mob))
 		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
-			to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
+			var/removed_any = FALSE
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				removed_any = TRUE
 				qdel(BS)
+			if(removed_any)
+				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 
 	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
