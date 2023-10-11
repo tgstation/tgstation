@@ -173,10 +173,18 @@
 	var/price = 0
 	for(var/exported_datum in report.total_amount)
 		price += report.total_value[exported_datum]
+
+	var/message = "Scanned [target]"
+	if(target.contents.len)
+		message = "Scanned [target] and its contents"
 	if(price)
-		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
+		message += ", value: <b>[price]</b> credits"
 	else
-		to_chat(user, span_warning("Scanned [target], no export value."))
+		message += ", no export value"
+	if(report.unscannable_contents)
+		message += " (undeterminable value detected, actual value may differ)"
+	message += "."
+	to_chat(user, span_warning(message))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user

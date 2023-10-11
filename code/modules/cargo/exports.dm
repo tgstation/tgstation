@@ -27,6 +27,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/total_amount = list()
 	///export instance => total value of sold objects
 	var/list/total_value = list()
+	///only for dry runs, set to true if any objects were unscannable
+	var/unscannable_contents = FALSE
 
 /*
 	* Handles exporting a movable atom and its contents
@@ -56,6 +58,8 @@ Then the player gets the profit from selling his own wasted time.
 			if(export.applies_to(thing, apply_elastic))
 				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 					break
+				if(export.unscannable)
+					report.unscannable_contents = TRUE
 				sold = export.sell_object(thing, report, dry_run, apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
@@ -89,6 +93,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/include_subtypes = TRUE
 	/// Types excluded from export
 	var/list/exclude_types = list()
+	/// Set to true if the cost shouldn't be determinable by an export scanner
+	var/unscannable = FALSE
 
 	/// cost includes elasticity, this does not.
 	var/init_cost
@@ -166,7 +172,9 @@ Then the player gets the profit from selling his own wasted time.
 
 	// If the signal handled adding it to the report, don't do it now
 	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
-		report.total_value[src] += export_value
+		// If we're doing a dry run, don't add hidden values
+		if(!(dry_run && unscannable))
+			report.total_value[src] += export_value
 		report.total_amount[src] += export_amount * amount_report_multiplier
 
 	if(!dry_run)
