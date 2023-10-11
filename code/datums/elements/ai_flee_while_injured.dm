@@ -29,7 +29,7 @@
 /datum/element/ai_flee_while_injured/proc/on_health_changed(mob/living/source)
 	SIGNAL_HANDLER
 
-	if (!source.ai_controller)
+	if (isnull(source.ai_controller))
 		return
 
 	var/current_health_percentage = source.health / source.maxHealth

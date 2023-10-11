@@ -29,11 +29,11 @@
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
 /mob/living/basic/pig/Initialize(mapload)
+	. = ..()
 	AddElement(/datum/element/pet_bonus, "oinks!")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
-	. = ..()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
