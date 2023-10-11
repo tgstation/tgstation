@@ -1,13 +1,12 @@
-/*
-	The bus mainframe idles and waits for hubs to relay them signals. They act
-	as junctions for the network.
-
-	They transfer uncompressed subspace packets to processor units, and then take
-	the processed packet to a server for logging.
-
-	Link to a subspace hub if it can't send to a server.
-*/
-
+/**
+ * The bus mainframe idles and waits for hubs to relay them signals. They act
+ * as junctions for the network.
+ *
+ * They transfer uncompressed subspace packets to processor units, and then take
+ * the processed packet to a server for logging.
+ *
+ * Link to a subspace hub if it can't send to a server.
+ */
 /obj/machinery/telecomms/bus
 	name = "bus mainframe"
 	icon_state = "bus"
@@ -17,7 +16,9 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
-	var/change_frequency = 0
+	/// The frequency this bus will use to override the received signal's frequency,
+	/// if not `NONE`.
+	var/change_frequency = NONE
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!istype(signal) || !is_freq_listening(signal))
@@ -47,7 +48,7 @@
 
 	use_power(idle_power_usage)
 
-//Preset Buses
+// Preset Buses
 
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
@@ -75,6 +76,8 @@
 
 /obj/machinery/telecomms/bus/preset_four/Initialize(mapload)
 	. = ..()
+	// We want to include every freely-available frequency on this one, so they
+	// get processed quickly when used on-station.
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
