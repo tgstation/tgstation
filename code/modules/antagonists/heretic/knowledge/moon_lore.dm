@@ -224,6 +224,7 @@
 			continue
 		carbon_view.adjust_confusion(5 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
+
 		visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
