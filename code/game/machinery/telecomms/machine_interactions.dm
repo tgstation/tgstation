@@ -6,8 +6,6 @@
 */
 
 /obj/machinery/telecomms
-	/// Output message.
-	var/temp = ""
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
 	var/tempfreq = FREQ_COMMON
