@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 		"dynamic_threat",
 		1,
 		list(
-			"server_name" = CONFIG_GET(string/servername),
+			"server_name" = CONFIG_GET(string/serversqlname),
 			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
 			"threat_level" = threat_level,
 			"round_start_budget" = round_start_budget,
