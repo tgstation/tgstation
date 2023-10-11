@@ -181,10 +181,6 @@
 
 	return lhs - rhs
 
-/// Used to sort reagents in descending order of their volumes so the most abundant reagent gets picked first
-/proc/cmp_reagent_volumes(datum/reagent/A, datum/reagent/B)
-	return B.volume - A.volume
-
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
