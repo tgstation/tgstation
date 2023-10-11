@@ -39,7 +39,7 @@
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddElement(\
 		/datum/element/amputating_limbs,\
-		surgery_verb = "snipping",\
+		surgery_verb = "begins snipping",\
 		target_zones = GLOB.arm_zones,\
 	)
 	charge = new(src)
