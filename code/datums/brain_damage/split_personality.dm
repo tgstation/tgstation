@@ -253,6 +253,7 @@
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
+	owner.overlay_fullscreen("blackimageoverlay", /atom/movable/screen/fullscreen)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
@@ -267,6 +268,7 @@
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
 	if(current_controller == OWNER)
 		switch_personalities()
+		owner.clear_fullscreen(/atom/movable/screen/fullscreen, animated = 10)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
