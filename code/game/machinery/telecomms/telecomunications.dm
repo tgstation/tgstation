@@ -1,19 +1,11 @@
-
-/*
-	Hello, friends, this is Doohl from sexylands. You may be wondering what this
-	monstrous code file is. Sit down, boys and girls, while I tell you the tale.
-
-
-	The telecom machines were designed to be compatible with any radio
-	signals, provided they use subspace transmission. Currently they are only used for
-	headsets, but they can eventually be outfitted for real COMPUTER networks. This
-	is just a skeleton, ladies and gentlemen.
-
-	Look at radio.dm for the prequel to this code.
-*/
-
+/// A list of all of the `/obj/machinery/telecomms` (and subtypes) machines
+/// that exist in the world currently.
 GLOBAL_LIST_EMPTY(telecomms_list)
 
+/**
+ * The basic telecomms machinery type, implementing all of the logic that's
+ * shared between all of the telecomms machinery.
+ */
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
