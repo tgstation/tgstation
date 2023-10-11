@@ -1,4 +1,4 @@
-/// NanoTrasen Private Security forces
+/// Nanotrasen Private Security forces
 /mob/living/basic/trooper/nanotrasen
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer of Nanotrasen's private security force. Seems rather unpleased to meet you."
@@ -73,7 +73,7 @@
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
 	r_hand = /obj/item/gun/energy/pulse/carbine/lethal
 
-/// A more peaceful variant that will only attack when attacked, or when another NanoTrasen officer calls for help.
+/// A more peaceful variant that will only attack when attacked, or when another Nanotrasen officer calls for help.
 /mob/living/basic/trooper/nanotrasen/peaceful
 	desc = "An officer of Nanotrasen's private security force."
 	ai_controller = /datum/ai_controller/basic_controller/trooper/peaceful
