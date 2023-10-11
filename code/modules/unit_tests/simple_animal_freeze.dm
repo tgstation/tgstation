@@ -169,7 +169,6 @@
 		/mob/living/simple_animal/hostile/space_dragon,
 		/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag,
 		/mob/living/simple_animal/hostile/vatbeast,
-		/mob/living/simple_animal/hostile/venus_human_trap,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
 		/mob/living/simple_animal/parrot,
