@@ -32,7 +32,6 @@
 	var/owner_first_client_connection_handled = FALSE
 
 /datum/species/dullahan/check_roundstart_eligible()
-	return TRUE
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
