@@ -796,6 +796,11 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/admin)
+"cN" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/prisonwarp,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "cO" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -3791,7 +3796,7 @@
 /area/centcom/central_command_areas/borbop)
 "lY" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/indestructible/event/plating,
 /area/centcom/central_command_areas/borbop)
 "ma" = (
 /obj/structure/table/wood,
@@ -5431,7 +5436,6 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "rs" = (
-/obj/effect/landmark/prisonwarp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/bed/pod{
 	dir = 4
@@ -6620,14 +6624,6 @@
 /obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/ferry)
-"vc" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/machinery/fax{
-	name = "Admin Meeting Room Fax Machine"
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/borbop)
 "vd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -6734,6 +6730,10 @@
 /obj/item/kirbyplants/random,
 /turf/open/indestructible/hotelwood,
 /area/centcom/central_command_areas/admin)
+"vw" = (
+/obj/effect/landmark/prisonwarp,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "vx" = (
 /turf/open/floor/carpet/neon/simple/cyan,
 /area/centcom/central_command_areas/admin)
@@ -7391,6 +7391,12 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
+"xv" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "xw" = (
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/borbop)
@@ -7985,6 +7991,12 @@
 /obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/control)
+"zD" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "zE" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
@@ -9442,6 +9454,12 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"En" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "Eo" = (
 /obj/structure/railing/wood{
 	dir = 4
@@ -10584,6 +10602,10 @@
 /obj/structure/window/plasma/spawner/directional/east,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"IC" = (
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "ID" = (
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
@@ -11778,6 +11800,12 @@
 "Ng" = (
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/ghost_spawn)
+"Nj" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "Nk" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/indestructible/riveted,
@@ -14544,6 +14572,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"Wm" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "Wn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -14935,6 +14969,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"XB" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "XC" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/vending/imported/yangyu,
@@ -15268,6 +15308,12 @@
 /mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"YJ" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/prison/cells)
 "YM" = (
 /obj/structure/hedge,
 /obj/machinery/light/floor/has_bulb,
@@ -15359,7 +15405,6 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
 "Zd" = (
-/obj/effect/landmark/prisonwarp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/bed/pod{
 	dir = 8
@@ -15553,7 +15598,10 @@
 /obj/structure/railing/wood{
 	dir = 4
 	},
-/obj/structure/fluff/arc,
+/obj/structure/table/reinforced,
+/obj/machinery/fax{
+	name = "Admin Meeting Room Fax Machine"
+	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/borbop)
 "ZM" = (
@@ -48465,9 +48513,9 @@ wc
 wc
 wc
 wc
-UD
-vc
-UD
+Ch
+YA
+Ch
 wc
 lY
 lY
@@ -48720,13 +48768,13 @@ aa
 aa
 aa
 aa
-aa
 wc
 wc
+lY
+lY
+lY
 wc
 wc
-wc
-aa
 aa
 aa
 aa
@@ -48977,13 +49025,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jb
+XB
+En
+En
+En
+YJ
+Jb
 aa
 aa
 aa
@@ -49234,13 +49282,13 @@ wc
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jb
+Wm
+cN
+vw
+cN
+IC
+Jb
 aa
 aa
 aa
@@ -49491,13 +49539,13 @@ wc
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jb
+zD
+Nj
+Nj
+Nj
+xv
+Jb
 aa
 aa
 aa
@@ -49748,13 +49796,13 @@ wc
 wc
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
+Jb
 GA
 GA
 mD
