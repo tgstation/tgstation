@@ -129,7 +129,7 @@
 
 /datum/ai_controller/basic_controller/human_trap
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -208,7 +208,7 @@
 	name = "Tangle"
 	button_icon = 'icons/mob/spacevines.dmi'
 	button_icon_state = "Light1"
-	desc = "Trip and pull things."
+	desc = "Grabs a target with a sticky vine, allowing you to pull it alongside you."
 	cooldown_time = 8 SECONDS
 	///how many vines can we handle
 	var/max_vines = 2
@@ -226,7 +226,7 @@
 /datum/action/cooldown/vine_tangle/Activate(atom/target_atom)
 	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
-	if(get_dist(owner, target_atom) > vine_grab_distance || vines.len >= max_vines)
+	if(length(vines) >= max_vines || get_dist(owner, target_atom) > vine_grab_distance)
 		return
 	for(var/turf/blockage in get_line(owner, target_atom))
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
