@@ -364,6 +364,9 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/neon_lining{
+	icon_state = "pink2_1"
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
 "bx" = (
@@ -1517,6 +1520,12 @@
 /area/centcom/tdome/administration)
 "fC" = (
 /turf/open/floor/stone,
+/area/centcom/central_command_areas/admin)
+"fD" = (
+/obj/machinery/light/neon_lining{
+	icon_state = "pink2_1"
+	},
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/admin)
 "fE" = (
 /obj/structure/chair,
@@ -13690,6 +13699,9 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/neon_lining{
+	icon_state = "pink2_1"
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
 "VI" = (
@@ -49727,7 +49739,7 @@ JM
 ZZ
 Gm
 lX
-lI
+fD
 Lh
 hL
 hL
