@@ -3,7 +3,7 @@
 	var/range_modifier = 1
 	/// Fullscreen object we use for tracking the shots.
 	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
-	/// The client owner of the tracker
+	/// The owner of the tracker's ckey. For comparing with the current owner mob, in case the client has left it (e.g. ghosted).
 	var/tracker_owner_ckey
 	/// Are we zooming currently?
 	var/zooming
