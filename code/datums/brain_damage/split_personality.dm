@@ -284,6 +284,7 @@
 		owner.remove_traits(TRAIT_ADVANCEDTOOLUSER)
 		owner.balloon_alert(src, "dexterity reduced temporarily!")
 		addtimer(TRAIT_CALLBACK_ADD(owner, TRAIT_ADVANCEDTOOLUSER, TRAIT_GENERIC), 5 SECONDS)
+		addtimer(CALLBACK(owner, PROC_REF(balloon_alert), "dexterity regained!"), 5 SECONDS)
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
