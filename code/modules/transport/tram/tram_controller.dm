@@ -129,6 +129,7 @@
 	paired_cabinet = null
 	set_status_code(SYSTEM_FAULT, TRUE)
 	tram_registration.active = FALSE
+	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
 	..()
 

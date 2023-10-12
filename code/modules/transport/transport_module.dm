@@ -455,6 +455,7 @@
 				if(ismob(victim_living) && victim_living.client)
 					if(istype(transport_controller_datum, /datum/transport_controller/linear/tram))
 						SSpersistence.tram_hits_this_round++
+						SSblackbox.record_feedback("amount", "tram_collision", 1)
 						var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
 						tram_controller.register_collision()
 
