@@ -223,6 +223,8 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_green("You find this meal [quality_label].")
 	else if (quality == 0)
 		examine_list += span_notice("You find this meal edible.")
+	else if (quality <= FOOD_QUALITY_DANGEROUS)
+		examine_list += span_warning("You may die from eating this meal.")
 	else if (quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
 		examine_list += span_warning("You find this meal disgusting!")
 	else
@@ -531,8 +533,13 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-	var/food_quality = get_perceived_food_quality(gourmand, parent)
-	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
+	var/food_quality = get_perceived_food_quality(gourmand)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS)
+		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
+			to_chat(gourmand, span_warning("You feel your throat start to itch."))
+			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+
+	else if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
 		to_chat(gourmand,span_warning("What the hell was that thing?!"))
 		gourmand.adjust_disgust(25 + 30 * fraction)
 		gourmand.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
@@ -580,8 +587,12 @@ Behavior that's still missing from this component that original food items had t
 				return DISLIKED_FOOD_QUALITY_CHANGE
 			if(FOOD_TOXIC)
 				return TOXIC_FOOD_QUALITY_THRESHOLD
+			if(FOOD_ALLERGIC)
+				return FOOD_QUALITY_DANGEROUS
 
 	if(ishuman(eater))
+		if(count_matching_foodtypes(foodtypes, eater.get_allergic_foodtypes()))
+			return FOOD_QUALITY_DANGEROUS
 		if(count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())) //if the food is toxic, we don't care about anything else
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		if(HAS_TRAIT(eater, TRAIT_AGEUSIA)) //if you can't taste it, it doesn't taste good
