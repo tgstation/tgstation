@@ -27647,7 +27647,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "hnH" = (
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white/textured,

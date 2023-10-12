@@ -11,6 +11,11 @@
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 
+/// Store a single or list of emotes at this key
+#define BB_EMOTE_KEY "BB_emotes"
+/// Chance to perform an emote per second
+#define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -105,4 +110,4 @@
 #define BB_EMOTE_HEAR "emote_hear"
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
-#define BB_EMOTE_CHANCE "emote_chance"
+#define BB_SPEAK_CHANCE "emote_chance"
