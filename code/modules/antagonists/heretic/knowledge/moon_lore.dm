@@ -183,28 +183,34 @@
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
-		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		You will also become immune to flames, space, and similar environmental hazards."
+	desc = "The ascension ritual of the Path of Moon. \
+		Bring 3  corpses to a transmutation rune anywhere in service to complete the ritual. \
+		When completed, you become a harbinger of madness, all your spells will get a lower cooldown \
+		and become stronger. You will also passivly release hallucinations, decrease sanity, and increase \
+		confusion. If their sanity is low they will gain a trauma and start taking brain damage"
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 	adds_sidepath_points = 1
 	route = PATH_MOON
+	/// A typepath to an area that we must finish the ritual in.
+	var/area/ritual_location = /area/station/service
 
-/datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/moon_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	if(!.)
-		return
+	// This map doesn't have service, for some reason??
+	// Let them complete the ritual anywhere
+	if(!GLOB.areas_by_type[ritual_location])
+		ritual_location = null
 
-	if(sacrifice.on_fire)
-		return TRUE
-	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
-		return TRUE
-	return FALSE
+/datum/heretic_knowledge/ultimate/moon_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(ritual_location)
+		var/area/our_area = get_area(loc)
+		if(!istype(our_area, ritual_location))
+			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!") // "must be in service"
+			return FALSE
+
+	return ..()
 
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
@@ -241,9 +247,10 @@
 			continue
 		carbon_view.adjust_confusion(5 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
-		if(carbon_view.mob_mood.sanity<20)
+		if(carbon_view.mob_mood.sanity<30)
 			carbon_view.balloon_alert(carbon_view, "You feel your mind begining to rend!")
 			carbon_view.gain_trauma(/datum/brain_trauma/mild/phobia/heresy)
+			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 		if(carbon_view.mob_mood.sanity<10)
 			carbon_view.balloon_alert(carbon_view, "IT ECHOES THROUGH YOU!!")
 			visible_hallucination_pulse(
