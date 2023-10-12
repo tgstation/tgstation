@@ -89,6 +89,12 @@
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
+///Minimum pH attainable by a solution
+#define CHEMICAL_MIN_PH 0
+///Maximum pH attainable by a solution
+#define CHEMICAL_MAX_PH 14
+///Ionizing strength of strong acidic/basic buffer (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will change by 0.4
+#define BUFFER_IONIZING_STRENGTH 30
 ///The maximum temperature a reagent holder can attain
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
