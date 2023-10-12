@@ -76,3 +76,5 @@
 		/datum/ai_planning_subtree/opportunistic_ventcrawler,
 		/datum/ai_planning_subtree/random_speech/insect,
 	)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
