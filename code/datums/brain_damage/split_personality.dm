@@ -280,7 +280,7 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
-	if(prob(30) && HAS_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER))
+	if(prob(20) && HAS_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER))
 		REMOVE_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")
 		//We then send a callback to automatically re-add the trait
