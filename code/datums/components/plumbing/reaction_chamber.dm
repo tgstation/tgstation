@@ -29,8 +29,8 @@
 				break
 
 		//compute how much more is needed and round it
-		diff = chamber.required_reagents[required_reagent] - present_amount
-		if(diff > CHEMICAL_QUANTISATION_LEVEL)
+		diff = FLOOR(chamber.required_reagents[required_reagent] - present_amount, CHEMICAL_QUANTISATION_LEVEL)
+		if(diff > 0)
 			process_request(min(diff, MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 			return
 

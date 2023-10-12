@@ -53,9 +53,6 @@
 	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
-		//do reactions and stuff
-		reagents.handle_reactions()
-
 		//adjust temperature of final solution
 		var/temp_diff = target_temperature - reagents.chem_temp
 		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
@@ -188,7 +185,7 @@
 
 		//transfer buffer and handle reactions, not a proven math but looks logical
 		var/transfer_amount = FLOOR((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)) * seconds_per_tick, CHEMICAL_QUANTISATION_LEVEL)
-		if(transfer_amount <= CHEMICAL_QUANTISATION_LEVEL || !buffer.trans_to(reagents, transfer_amount))
+		if(buffer.trans_to(reagents, transfer_amount))
 			return
 
 		//some power for accurate ph balancing
