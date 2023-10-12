@@ -141,7 +141,7 @@
 /datum/keybinding/living/toggle_run_intent
 	hotkey_keys = list("Shift")
 	name = "toggle_run_intent"
-	full_name = "Hold to toggle running"
+	full_name = "Hold to run"
 	description = "Hold to run, release to stop running."
 	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
 
@@ -154,6 +154,21 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_run_intent/up(client/user)
+	var/mob/living/M = user.mob
+	M.toggle_run_intent()
+	return TRUE
+
+/datum/keybinding/living/toggle_run_intent_alternative
+	hotkey_keys = list("Unbound")
+	name = "toggle_run_intent_alt"
+	full_name = "Press to cycle running"
+	description = "Press to cycle running, does not cycle back."
+	keybind_signal = COMSIG_KB_LIVING_TOGGLERUNINTENTALT_DOWN
+
+/datum/keybinding/living/toggle_run_intent_alternative/down(client/user)
+	. = ..()
+	if(.)
+		return
 	var/mob/living/M = user.mob
 	M.toggle_run_intent()
 	return TRUE

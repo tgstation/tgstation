@@ -42,7 +42,7 @@
 			if(staminaloss >= max_stamina * running_minimum_stamina_factor)
 				// force stop sprinting if their exhausted
 				toggle_run_intent()
-				to_chat(src, span_notice("You're to tired to keep running..."))
+				to_chat(src, span_notice("You're too tired to keep running..."))
 			else if (staminaloss >= max_stamina * (running_minimum_stamina_factor - 0.2))
 				// shorter sigh effect as visual effect if about to not be able to run
 				var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', src, "sigh")

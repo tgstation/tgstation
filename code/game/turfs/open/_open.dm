@@ -292,7 +292,7 @@
 			return FALSE
 		if(slipper.move_intent == MOVE_INTENT_SNEAK && (lube & NO_SLIP_WHEN_WALKING))
 			return FALSE
-		if(slipper.move_intent == MOVE_INTENT_WALK && rand(0,3) != 0) // 1 in 3 chance to slip while walking
+		if(slipper.move_intent == MOVE_INTENT_WALK && rand(0,2) != 0) // 50% chance to slip while walking
 			return FALSE
 
 	if(!(lube & SLIDE_ICE))
