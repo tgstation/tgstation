@@ -86,8 +86,7 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(before_attack))
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(after_attack))
+	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(before_attack))
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -126,18 +125,22 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/before_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
 	if(using_special)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(target == src)
 		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(DOING_INTERACTION(src, DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)) // patience grasshopper
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(ismecha(target))
+		target.take_damage(50, BRUTE, MELEE, 1)
+		return // don't block the rest of the attack chain
 
 	if(iswallturf(target))
 		INVOKE_ASYNC(src, PROC_REF(tear_down_wall), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(isliving(target)) //Swallows corpses like a snake to regain health.
 		var/mob/living/living_target = target
@@ -145,12 +148,7 @@
 			return // go ham on slapping the shit out of them buddy
 
 		INVOKE_ASYNC(src, PROC_REF(eat_this_corpse), living_target)
-		return COMPONENT_HOSTILE_NO_ATTACK
-
-/mob/living/simple_animal/hostile/space_dragon/proc/after_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
-	if(ismecha(target))
-		target.take_damage(50, BRUTE, MELEE, 1)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Handles tearing down a wall. Returns TRUE if successful, FALSE otherwise.
 /mob/living/simple_animal/hostile/space_dragon/proc/tear_down_wall(turf/closed/wall/wall_target)
