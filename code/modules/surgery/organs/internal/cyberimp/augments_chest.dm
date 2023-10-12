@@ -57,7 +57,9 @@
 	COOLDOWN_DECLARE(reviver_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	try_heal() // Allowes implant to work even on dead people
+	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
+		return
+	try_heal() // Allows implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	try_heal()
@@ -89,7 +91,7 @@
 	// this check goes after revive_dead() to delay revival a bit
 	if(owner.stat == DEAD)
 		can_defib_owner = owner.can_defib()
-		if(can_defib_owner == DEFIB_POSSIBLE) 
+		if(can_defib_owner == DEFIB_POSSIBLE)
 			owner.notify_ghost_cloning("You are being revived by [src]!")
 			owner.grab_ghost()
 	/// boolean that stands for if PHYSICAL damage being patched
@@ -114,7 +116,7 @@
 
 	if(body_damage_patched && prob(35)) // healing is called every few seconds, not every tick
 		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
-		
+
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
 	owner.grab_ghost()

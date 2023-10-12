@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Robotic bodyparts not attached to people are now properly affected by EMPs."
