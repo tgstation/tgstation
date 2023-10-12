@@ -119,15 +119,19 @@
 
 	if (!SShotspots.finished_map || !SShotspots.map)
 		return
+	user.client << browse_rsc(SShotspots.map, "trenchmap.png")
 	ui_interact(user)
 
 /obj/item/sea_map/ui_interact(mob/user, datum/tgui/ui)
 	user.client << browse_rsc(SShotspots.map, "trenchmap.png")
+	if(!SSassets.cache["trenchmap.png"])
+		SSassets.transport.register_asset("trenchmap.png", SShotspots.finished_map)
+	SSassets.transport.send_assets(user, list("trenchmap.png" = SShotspots.finished_map))
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TrenchMap", name)
 		ui.open()
-
 
 /obj/item/sea_map/ui_data()
 	var/list/data = list()
