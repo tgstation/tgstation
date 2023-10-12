@@ -6,6 +6,9 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 		TRAIT_USES_SKINTONES,
+		TRAIT_ADVANCEDTOOLUSER, // Normally applied by brain but we don't have one
+		TRAIT_LITERATE,
+		TRAIT_CAN_STRIP,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
@@ -47,11 +50,6 @@
 		return
 	my_head = new /obj/item/dullahan_relay(head, human)
 	human.put_in_hands(head)
-
-	var/obj/item/organ/internal/brain/brain = locate() in head.contents
-	brain?.on_insert(human) // This is so fucked
-	brain?.forceMove(head)
-	head.brain = brain
 
 	// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
 	head.eyes = new /obj/item/organ/internal/eyes(head)
