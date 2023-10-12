@@ -20,7 +20,7 @@
 	return GLOB.floran_leaves_list
 
 /datum/bodypart_overlay/mutant/floran_leaves/get_base_icon_state()
-	return sprite_datum?.icon_state
+	return sprite_datum.icon_state
 
 /datum/bodypart_overlay/mutant/floran_leaves/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
