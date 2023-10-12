@@ -1,5 +1,4 @@
-// This whole file is just a container for the spiderling subtypes that actually differentiate into different young spiders. None of them are particularly special as of now.
-
+/// This whole file is just a container for the spiderling subtypes that actually differentiate into different young spiders. None of them are particularly special as of now.
 /// Will differentiate into the base young spider (known colloquially as the "guard" spider).
 /mob/living/basic/spider/growing/spiderling/guard
 	grow_as = /mob/living/basic/spider/growing/young/guard
