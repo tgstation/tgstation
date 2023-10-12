@@ -1,12 +1,13 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
 type BrigTimerContext = {
-  timing: boolean;
+  timing: BooleanLike;
   minutes: number;
   seconds: number;
-  flash_charging: boolean;
+  flash_charging: BooleanLike;
 };
 
 export const BrigTimer = (props, context) => {

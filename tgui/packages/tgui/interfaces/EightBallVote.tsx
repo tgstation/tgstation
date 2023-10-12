@@ -2,9 +2,10 @@ import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, NoticeBox } from '../components';
 import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 
 type EightBallVoteContext = {
-  shaking: boolean;
+  shaking: BooleanLike;
   question: string;
   answers: Answer[];
 };
@@ -12,7 +13,7 @@ type EightBallVoteContext = {
 type Answer = {
   answer: string;
   amount: number;
-  selected: boolean;
+  selected: BooleanLike;
 };
 
 export const EightBallVote = (props, context) => {

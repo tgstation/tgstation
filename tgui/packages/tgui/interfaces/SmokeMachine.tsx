@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -6,7 +7,7 @@ type SmokeMachineContext = {
   tankContents: Reagent[];
   tankCurrentVolume: number;
   tankMaxVolume: number;
-  active: boolean;
+  active: BooleanLike;
   setting: number;
   maxSetting: number;
 };

@@ -1,10 +1,11 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Divider, LabeledList, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
 type ClipboardContext = {
   pen: string;
-  integrated_pen: boolean;
+  integrated_pen: BooleanLike;
   top_paper: string;
   top_paper_ref: string;
   paper: string[];
