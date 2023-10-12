@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = /datum/gas/antinoblium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
-	greyscale_colors = "#333333#ffff00"
+	greyscale_colors = "#333333#fefb30"
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
