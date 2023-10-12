@@ -280,11 +280,12 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
-	if(prob(30) && HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
-		owner.remove_traits(TRAIT_ADVANCEDTOOLUSER)
-		owner.balloon_alert(src, "dexterity reduced temporarily!")
-		addtimer(TRAIT_CALLBACK_ADD(owner, TRAIT_ADVANCEDTOOLUSER, TRAIT_GENERIC), 5 SECONDS)
-		addtimer(CALLBACK(owner, PROC_REF(balloon_alert), "dexterity regained!"), 5 SECONDS)
+	if(prob(30) && HAS_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER))
+		REMOVE_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT)
+		owner.balloon_alert(owner, "dexterity reduced temporarily!")
+		//We then send a callback to automatically re-add the trait
+		addtimer(TRAIT_CALLBACK_ADD(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT), 10 SECONDS)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
