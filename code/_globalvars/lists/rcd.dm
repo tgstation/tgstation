@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_STRUCTURE, RCD_DESIGN_PATH = /obj/structure/floodlight_frame/completed),
 			list(RCD_DESIGN_MODE = RCD_WALLFRAME, RCD_DESIGN_PATH = /obj/item/wallframe/apc),
 			list(RCD_DESIGN_MODE = RCD_WALLFRAME, RCD_DESIGN_PATH = /obj/item/wallframe/airalarm),
-			list(RCD_DESIGN_MODE = RCD_WALLFRAME, RCD_DESIGN_PATH = /obj/item/wallframe/firealarm,),
+			list(RCD_DESIGN_MODE = RCD_WALLFRAME, RCD_DESIGN_PATH = /obj/item/wallframe/firealarm),
 		),
 
 		//Interior Design[construction_mode = RCD_FURNISHING is implied]
