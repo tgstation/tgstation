@@ -3,8 +3,39 @@ import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs } from '../com
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
+type BlackMarketUplinkContext = {
+  categories: string[];
+  markets: Market[];
+  items: Item[];
+  money: number;
+  viewing_market: string;
+  viewing_category: string;
+  buying: boolean;
+  ltsrbt_built: boolean;
+  delivery_methods: DeliveryMethod[];
+  delivery_method_description: Record<string, string>;
+};
+
+type Market = {
+  id: string;
+  name: string;
+};
+
+type Item = {
+  id: string;
+  name: string;
+  desc: string;
+  amount: number;
+  cost: number;
+};
+
+type DeliveryMethod = {
+  name: string;
+  price: number;
+};
+
 export const BlackMarketUplink = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<BlackMarketUplinkContext>(context);
   const {
     categories = [],
     markets = [],
@@ -93,8 +124,16 @@ export const BlackMarketUplink = (props, context) => {
   );
 };
 
+type ShipmentSelectorContext = {
+  buying: boolean;
+  ltsrbt_built: boolean;
+  money: number;
+  delivery_methods: DeliveryMethod[];
+  delivery_method_description: Record<string, string>;
+};
+
 const ShipmentSelector = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ShipmentSelectorContext>(context);
   const { buying, ltsrbt_built, money } = data;
   if (!buying) {
     return null;
