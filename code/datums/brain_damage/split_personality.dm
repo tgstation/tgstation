@@ -280,6 +280,9 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
+	if(prob(30) && HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
+		owner.remove_traits(TRAIT_ADVANCEDTOOLUSER)
+
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
