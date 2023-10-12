@@ -2,8 +2,16 @@ import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
+type BrigTimerContext = {
+  timing: boolean;
+  minutes: number;
+  seconds: number;
+  flash_charging: boolean;
+};
+
 export const BrigTimer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<BrigTimerContext>(context);
+  const { timing, minutes, seconds, flash_charging } = data;
   return (
     <Window width={300} height={138}>
       <Window.Content scrollable>
@@ -13,14 +21,14 @@ export const BrigTimer = (props, context) => {
             <>
               <Button
                 icon="clock-o"
-                content={data.timing ? 'Stop' : 'Start'}
-                selected={data.timing}
-                onClick={() => act(data.timing ? 'stop' : 'start')}
+                content={timing ? 'Stop' : 'Start'}
+                selected={timing}
+                onClick={() => act(timing ? 'stop' : 'start')}
               />
               <Button
                 icon="lightbulb-o"
-                content={data.flash_charging ? 'Recharging' : 'Flash'}
-                disabled={data.flash_charging}
+                content={flash_charging ? 'Recharging' : 'Flash'}
+                disabled={flash_charging}
                 onClick={() => act('flash')}
               />
             </>
@@ -33,8 +41,7 @@ export const BrigTimer = (props, context) => {
             icon="backward"
             onClick={() => act('time', { adjust: -100 })}
           />{' '}
-          {String(data.minutes).padStart(2, '0')}:
-          {String(data.seconds).padStart(2, '0')}{' '}
+          {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}{' '}
           <Button icon="forward" onClick={() => act('time', { adjust: 100 })} />
           <Button
             icon="fast-forward"

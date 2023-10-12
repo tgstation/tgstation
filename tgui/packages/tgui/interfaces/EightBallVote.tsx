@@ -3,8 +3,20 @@ import { Box, Button, Grid, Section, NoticeBox } from '../components';
 import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
 
+type EightBallVoteContext = {
+  shaking: boolean;
+  question: string;
+  answers: Answer[];
+};
+
+type Answer = {
+  answer: string;
+  amount: number;
+  selected: boolean;
+};
+
 export const EightBallVote = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<EightBallVoteContext>(context);
   const { shaking } = data;
   return (
     <Window width={400} height={600}>
@@ -18,7 +30,7 @@ export const EightBallVote = (props, context) => {
 };
 
 const EightBallVoteQuestion = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<EightBallVoteContext>(context);
   const { question, answers = [] } = data;
   return (
     <Section>

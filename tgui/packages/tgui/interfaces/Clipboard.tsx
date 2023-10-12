@@ -2,8 +2,17 @@ import { useBackend } from '../backend';
 import { Box, Button, Divider, LabeledList, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
+type ClipboardContext = {
+  pen: string;
+  integrated_pen: boolean;
+  top_paper: string;
+  top_paper_ref: string;
+  paper: string[];
+  paper_ref: string[];
+};
+
 export const Clipboard = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ClipboardContext>(context);
   const { pen, integrated_pen, top_paper, top_paper_ref, paper, paper_ref } =
     data;
   return (

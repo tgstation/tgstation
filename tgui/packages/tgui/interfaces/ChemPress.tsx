@@ -2,8 +2,30 @@ import { useBackend } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
+type ChemPressContext = {
+  current_volume: number;
+  product_name: string;
+  pill_style: string;
+  pill_styles: Pill[];
+  product: string;
+  min_volume: number;
+  max_volume: number;
+  patch_style: string;
+  patch_styles: Patch[];
+};
+
+type Pill = {
+  id: string;
+  class_name: string;
+};
+
+type Patch = {
+  style: string;
+  class_name: string;
+};
+
 export const ChemPress = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ChemPressContext>(context);
   const {
     current_volume,
     product_name,
