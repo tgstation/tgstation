@@ -264,6 +264,9 @@
 			else if(the_rcd.furnish_type == /obj/structure/bed)
 				cost = 8
 				delay = 1.5 SECONDS
+			else if(the_rcd.furnish_type == /obj/machinery/microwave/engineering)
+				cost = 48
+				delay = 4 SECONDS
 			if(cost == 0)
 				return FALSE
 			return list("mode" = RCD_FURNISHING, "delay" = cost, "cost" = delay)
@@ -380,6 +383,11 @@
 				return FALSE
 			var/atom/new_furnish = new the_rcd.furnish_type(src)
 			new_furnish.setDir(user.dir)
+			if(istype(new_furnish, /obj/machinery/microwave/engineering))
+				var/obj/machinery/microwave/engineering/new_mw = new_furnish
+				var/obj/item/stock_parts/cell/new_cell = new()
+				new_mw.cell = new_cell
+				new_mw.update_appearance()
 			return TRUE
 	return FALSE
 

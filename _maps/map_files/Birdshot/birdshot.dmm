@@ -20105,6 +20105,8 @@
 "hln" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/table,
+/obj/machinery/microwave/engineering/cell_included,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "hlo" = (
@@ -21180,6 +21182,8 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/directional/north,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "hDt" = (
@@ -32967,15 +32971,10 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lLq" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "lLr" = (
@@ -37901,13 +37900,10 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/science/xenobiology)
 "nyf" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/structure/table,
+/obj/item/food/cornchips/green,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "nyi" = (
@@ -53110,7 +53106,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
-	dir = 8;
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
@@ -58894,7 +58889,7 @@
 "urm" = (
 /obj/structure/table/glass,
 /obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = -2;
 	pixel_y = 4
 	},

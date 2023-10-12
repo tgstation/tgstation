@@ -231,6 +231,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/unload_ctf,
 	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
+	/client/proc/GeneratePipeSpritesheet,
 	/client/proc/view_runtimes,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))

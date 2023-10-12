@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Metastation disposals will no longer infinitely loop garbage around the station."
