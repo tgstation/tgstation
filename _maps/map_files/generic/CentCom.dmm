@@ -93,6 +93,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"aw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "ay" = (
 /obj/structure/aquarium,
 /turf/open/floor/carpet/neon/simple/cyan,
@@ -1318,6 +1324,15 @@
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
+"gx" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "gz" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
@@ -4371,6 +4386,12 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+"xp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "xq" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/siding/wood{
@@ -5199,6 +5220,15 @@
 /obj/effect/spawner/random/bureaucracy/folder,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"BA" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "BC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -5215,6 +5245,7 @@
 /obj/structure/closet/crate/syndicrate{
 	max_integrity = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "BR" = (
@@ -5498,6 +5529,13 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
+"DH" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "DL" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -6274,6 +6312,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"Hr" = (
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
+"Ht" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "Hu" = (
 /obj/machinery/biogenerator/admin,
 /obj/effect/turf_decal/siding/wood{
@@ -7517,6 +7570,16 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/hall)
+"Mo" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
+"Mp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "Mt" = (
 /mob/living/simple_animal/bot/cleanbot/medbay,
 /obj/machinery/light/floor/has_bulb,
@@ -7806,6 +7869,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/observation)
 "Oj" = (
@@ -7995,6 +8059,13 @@
 /obj/item/clipboard,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"Pr" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "Pt" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
@@ -8328,6 +8399,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/observation)
 "Ri" = (
@@ -8353,6 +8425,12 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
+"Ro" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "Rp" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/iron/dark/herringbone,
@@ -8858,6 +8936,12 @@
 /obj/machinery/vending/imported/mothic,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
+"TV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "TX" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/contraband/armory,
@@ -8949,6 +9033,7 @@
 /obj/structure/chair/sofa/corp{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/observation)
 "UG" = (
@@ -9443,6 +9528,12 @@
 "Xw" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/admin_hangout)
+"Xx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "Xy" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Ferry Airlock"
@@ -9669,6 +9760,13 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/kitchen)
+"YD" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/observation)
 "YE" = (
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/floor/iron/dark,
@@ -47672,9 +47770,9 @@ fu
 fu
 fu
 fu
-Wb
-Nf
-Wb
+xp
+Pr
+aw
 ae
 ew
 ew
@@ -47922,16 +48020,16 @@ IE
 IE
 Is
 aJ
-Wb
-Wb
+xp
+aw
 nP
-Wb
-Wb
-Wb
+xp
+Ht
+aw
 nP
+TV
 Wb
-Wb
-Wb
+Mo
 pq
 ew
 ew
@@ -48179,16 +48277,16 @@ It
 It
 It
 aJ
-Wb
-Wb
-St
-Wb
-Wb
+TV
 Wb
 St
+TV
 Wb
+Mo
+St
+TV
 qM
-Wb
+Mo
 Jd
 ew
 dh
@@ -48436,16 +48534,16 @@ It
 It
 It
 aJ
-Nf
-Wb
+YD
+Mo
 St
+TV
 Wb
-Wb
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 ew
@@ -48693,16 +48791,16 @@ It
 It
 It
 aJ
-Oh
-Wb
+gx
+Mo
 nP
-Oh
+gx
 Wb
 Oh
 nP
-Wb
+TV
 qM
-Wb
+Mo
 pq
 ew
 GI
@@ -48950,16 +49048,16 @@ It
 It
 It
 aJ
-UC
-Wb
+Hr
+Mo
 HY
-UC
+Hr
 Wb
 UC
 HY
+TV
 Wb
-Wb
-Wb
+Mo
 ae
 ew
 bZ
@@ -49207,16 +49305,16 @@ It
 It
 It
 aJ
-UC
-Wb
+Hr
+Mo
 HY
-UC
+Hr
 Wb
 UC
 HY
-Wb
+TV
 Nf
-Wb
+Mo
 ae
 ew
 Vj
@@ -49464,16 +49562,16 @@ It
 It
 It
 aJ
-Rf
-Wb
+BA
+Mo
 nP
-Rf
+BA
 Wb
 Rf
 nP
+TV
 Wb
-Wb
-Wb
+Mo
 pq
 ew
 gc
@@ -49721,16 +49819,16 @@ It
 It
 It
 aJ
-Wb
-Wb
+TV
+Mo
 St
+TV
 Wb
-Wb
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 ew
@@ -49978,16 +50076,16 @@ It
 It
 It
 aJ
-Nf
-Wb
+YD
+Mo
 St
-Wb
+TV
 ok
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 dh
@@ -50235,16 +50333,16 @@ It
 It
 It
 aJ
-Wb
-Wb
+TV
+Mo
 St
+TV
 Wb
-Wb
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 ew
@@ -50492,16 +50590,16 @@ It
 It
 It
 aJ
-Oh
-Wb
+gx
+Mo
 nP
-Oh
+gx
 Wb
 Oh
 nP
+TV
 Wb
-Wb
-Wb
+Mo
 pq
 ew
 qH
@@ -50749,16 +50847,16 @@ It
 It
 It
 aJ
-UC
-Wb
+Hr
+Mo
 HY
-UC
+Hr
 Wb
 UC
 HY
-Wb
+TV
 Nf
-Wb
+Mo
 ae
 ew
 Fo
@@ -51006,16 +51104,16 @@ It
 It
 It
 aJ
-UC
-Wb
+Hr
+Mo
 HY
-UC
+Hr
 Wb
 UC
 HY
+TV
 Wb
-Wb
-Wb
+Mo
 ae
 ew
 UL
@@ -51263,16 +51361,16 @@ It
 It
 It
 aJ
-Rf
-Wb
+BA
+Mo
 nP
-Rf
+BA
 Wb
 Rf
 nP
-Wb
+TV
 qM
-Wb
+Mo
 pq
 ew
 Ik
@@ -51520,16 +51618,16 @@ It
 It
 It
 aJ
-Nf
-Wb
+YD
+Mo
 St
+TV
 Wb
-Wb
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 ew
@@ -51777,16 +51875,16 @@ It
 It
 It
 aJ
-Wb
-Wb
+TV
+Mo
 St
+TV
 Wb
-Wb
-Wb
+Mo
 St
-Wb
+TV
 qM
-Wb
+Mo
 Jd
 ew
 dh
@@ -52034,16 +52132,16 @@ IJ
 IJ
 Wg
 aJ
-Wb
-Wb
+Xx
+Ro
 nP
-Wb
-Wb
-Wb
+Xx
+Mp
+Ro
 nP
+TV
 Wb
-Wb
-Wb
+Mo
 pq
 ew
 ew
@@ -52298,9 +52396,9 @@ fu
 fu
 fu
 fu
-Wb
-Nf
-Wb
+Xx
+DH
+Ro
 ae
 ew
 ew
