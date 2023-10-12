@@ -237,8 +237,8 @@
 /obj/item/dullahan_relay/process()
 	if(istype(loc, /obj/item/bodypart/head) && !QDELETED(owner))
 		return
-	. = PROCESS_KILL
 	qdel(src)
+	return PROCESS_KILL
 
 /// Updates our names after applying name prefs
 /obj/item/dullahan_relay/proc/update_prefs_name(mob/living/carbon/human/wearer)
