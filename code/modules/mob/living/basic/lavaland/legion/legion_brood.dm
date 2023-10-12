@@ -34,7 +34,7 @@
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)

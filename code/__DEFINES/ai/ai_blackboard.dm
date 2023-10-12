@@ -11,6 +11,11 @@
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 
+/// Store a single or list of emotes at this key
+#define BB_EMOTE_KEY "BB_emotes"
+/// Chance to perform an emote per second
+#define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -54,6 +59,9 @@
 /// Generic key for a non-specific action
 #define BB_GENERIC_ACTION "BB_generic_action"
 
+/// Generic key for a shapeshifting action
+#define BB_SHAPESHIFT_ACTION "BB_shapeshift_action"
+
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
@@ -77,8 +85,8 @@
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
-/// Flag to set on or off if you want your mob to prioritise running away
-#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
+/// Flag to set on if you want your mob to STOP running away
+#define BB_BASIC_MOB_STOP_FLEEING "BB_basic_stop_fleeing"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
@@ -102,4 +110,4 @@
 #define BB_EMOTE_HEAR "emote_hear"
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
-#define BB_EMOTE_CHANCE "emote_chance"
+#define BB_SPEAK_CHANCE "emote_chance"

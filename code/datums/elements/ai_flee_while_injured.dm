@@ -32,14 +32,14 @@
 		return
 
 	var/current_health_percentage = source.health / source.maxHealth
-	if (source.ai_controller.blackboard[BB_BASIC_MOB_FLEEING])
-		if (current_health_percentage < stop_fleeing_at)
+	if (source.ai_controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
+		if (current_health_percentage > start_fleeing_below)
 			return
-		source.ai_controller.CancelActions() // Stop fleeing go back to whatever you were doing
-		source.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+		source.ai_controller.CancelActions()
+		source.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 		return
 
-	if (current_health_percentage > start_fleeing_below)
+	if (current_health_percentage < stop_fleeing_at)
 		return
-	source.ai_controller.CancelActions()
-	source.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, TRUE)
+	source.ai_controller.CancelActions() // Stop fleeing go back to whatever you were doing
+	source.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)

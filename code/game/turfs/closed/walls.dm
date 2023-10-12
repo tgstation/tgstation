@@ -363,5 +363,13 @@
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
 
+/turf/closed/wall/Bumped(atom/movable/bumped_atom)
+	. = ..()
+	SEND_SIGNAL(bumped_atom, COMSIG_LIVING_WALL_BUMP, src)
+
+/turf/closed/wall/Exited(atom/movable/gone, direction)
+	. = ..()
+	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
 #undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

@@ -44,11 +44,6 @@
 
 	qdel(src)
 
-/// Where the crates get ported to station
-/obj/effect/landmark/bitrunning/station_reward_spawn
-	name = "Bitrunning rewards spawn"
-	icon_state = "station"
-
 /// Where the exit hololadder spawns
 /obj/effect/landmark/bitrunning/hololadder_spawn
 	name = "Bitrunning hololadder spawn"

@@ -1205,3 +1205,47 @@
   yorii:
   - bugfix: dead bodies now cool down to room temperature over time
   - qol: allowed names to start with a number if AI/Borg
+2023-09-30:
+  DrDiasyl aka DrTuxedo:
+  - balance: Holsters can now be clipped to any suit, and house Captain antique gun
+      and HoS gun. You now can buy holsters from the SecTech premium section.
+  Helg2:
+  - rscadd: SM crystal can now dust someone or something if it falls on it.
+  Jacquerel:
+  - bugfix: If two cosmic heretics ascend in the same round, their star gazer survival
+      will be linked to each individual heretic and not shared by just one of them.
+  - bugfix: You can't click the Knock heretic portal to join as a mob while already
+      signed up to become a mob.
+  - balance: Cosmic heretics can't order the Star Gazer around while jaunting.
+  - balance: The Knock Heretic portal cannot summon Flesh Worms, but can summon Fire
+      Sharks.
+  - balance: The Knock Heretic portal will disperse if its creator is killed.
+  - admin: Mob abilities can be granted to arbitrary mobs via the VV menu in a similar
+      way to spells.
+  - bugfix: Lavaland syndicate operatives can no longer trivially use the jetpack
+      on their modsuit to fly over the lava.
+  JohnFulpWillard:
+  - bugfix: PDA flashlights wont cause the cell to constantly drain faster and faster.
+  Singul0:
+  - bugfix: Fixes missing baseturfs and clowns in mining planet VDOM..
+  SyncIt21:
+  - code_imp: removed some redundant code for airlocks
+  Timberpoes:
+  - balance: There are now 3 roundstart cyborg job slots open by default.
+  admeeer:
+  - bugfix: You can now spray paint the SM without getting dusted
+  jlsnow301:
+  - rscadd: Quantum servers now talk over supply channel when they're done cooling
+      off. Go outside!
+  - bugfix: You can no longer use dragon swoop to bypass cordons.
+  - bugfix: Netpod brain damage is now properly reduced upon server upgrades.
+  - bugfix: Fixed an bug where swapping bodies in vdom prevented you from disconnecting.
+  - bugfix: Fixed a bug where a quantum server could get locked out of loading new
+      domains.
+  - bugfix: Changed quantum console UI to display "no bandwidth" rather than "none"
+  lizardqueenlexi:
+  - bugfix: The reverse revolver now looks like a normal Syndicate revolver on inspection.
+  nikothedude:
+  - code_imp: Gauze removal is now handled by the gauze's destroy instead of seep_gauze
+  xPokee:
+  - bugfix: fixed the stamp in the metastation CMO office always spawning on the floor

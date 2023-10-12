@@ -129,6 +129,11 @@
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
 	var/base_pixel_y = 0
+	// Use SET_BASE_VISUAL_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_w and z for you
+	///Default pixel w shifting for the atom's icon.
+	var/base_pixel_w = 0
+	///Default pixel z shifting for the atom's icon.
+	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
@@ -665,11 +670,11 @@
 		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
-				if(reagents.total_volume > 0)
+				if(reagents.total_volume)
 					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
-					if(user_sees_reagents) //Show each individual reagent
+					if(user_sees_reagents) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+							. += "&bull; [FLOOR(current_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
 							. += span_warning("It is currently reacting!")
 						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")

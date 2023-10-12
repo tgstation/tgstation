@@ -44,10 +44,13 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-		vampire.adjustToxLoss(-2 * seconds_per_tick)
-		vampire.adjustOxyLoss(-2 * seconds_per_tick)
-		vampire.adjustCloneLoss(-2 * seconds_per_tick)
+		var/need_mob_update = FALSE
+		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjustCloneLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		if(need_mob_update)
+			vampire.updatehealth()
 		return
 	vampire.blood_volume -= 0.125 * seconds_per_tick
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
@@ -65,6 +68,10 @@
 	if(istype(weapon, /obj/item/nullrod/whip))
 		return 2 //Whips deal 2x damage to vampires. Vampire killer.
 	return 1
+
+/datum/species/vampire/get_physical_attributes()
+	return "Vampires are afflicted with the Thirst, needing to sate it by draining the blood out of another living creature. However, they do not need to breathe or eat normally. \
+		They will instantly turn into dust if they run out of blood or enter a holy area. However, coffins stabilize and heal them, and they can transform into bats!"
 
 /datum/species/vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""

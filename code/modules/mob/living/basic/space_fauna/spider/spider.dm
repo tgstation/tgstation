@@ -13,6 +13,7 @@
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
+	melee_attack_cooldown = CLICK_CD_MELEE
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
@@ -48,7 +49,7 @@
 
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
+	add_traits(list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")

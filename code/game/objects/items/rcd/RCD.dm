@@ -76,6 +76,7 @@
 				list(FURNISH_TYPE = /obj/structure/table/glass, ICON = "glass_table", TITLE = "Glass Table"),
 				list(FURNISH_TYPE = /obj/structure/rack, ICON = "rack", TITLE = "Rack"),
 				list(FURNISH_TYPE = /obj/structure/bed, ICON = "bed", TITLE = "Bed"),
+				list(FURNISH_TYPE = /obj/machinery/microwave/engineering, ICON = "engi_mw_complete", TITLE = "Wireless Microwave"),
 			),
 		),
 
@@ -259,7 +260,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		useResource(16, user)
 		activate()
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		user.gib()
+		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
 	user.visible_message(span_suicide("[user] pulls the trigger... But there is not enough ammo!"))

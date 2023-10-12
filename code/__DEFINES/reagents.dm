@@ -34,6 +34,9 @@
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
 
+/// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
+#define UPDATE_MOB_HEALTH 1
+
 // How long do mime drinks silence the drinker (if they are a mime)?
 #define MIMEDRINK_SILENCE_DURATION (1 MINUTES)
 ///Health threshold for synthflesh and rezadone to unhusk someone
@@ -82,12 +85,8 @@
 #define DEFAULT_REAGENT_TEMPERATURE 300
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
-///stops floating point errors causing issues with checking reagent amounts
+///the minimum volume of reagents than can be operated on.
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
-///The smallest amount of volume allowed - prevents tiny numbers
-#define CHEMICAL_VOLUME_MINIMUM 0.001
-///Round to this, to prevent extreme decimal magic and to keep reagent volumes in line with perceived values.
-#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 ///The maximum temperature a reagent holder can attain

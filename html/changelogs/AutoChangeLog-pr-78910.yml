@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "The Holy Hand Grenade's effect on revealing a revenant had its duration accidentally nerfed, it is now back to 10 seconds."
+  - bugfix: "Revenant midrounds should now properly run."
+  - bugfix: "Revenant harvesting should now let you actually pass the final do_after so you can harvest that sweet essence."
