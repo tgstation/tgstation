@@ -4071,16 +4071,6 @@
 "we" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/medical)
-"wf" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 9
-	},
-/obj/effect/turf_decal/siding/dark/corner,
-/obj/structure/hedge,
-/obj/machinery/light/floor/has_bulb,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/white/herringbone,
-/area/centcom/central_command_areas/kitchen)
 "wh" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
@@ -8633,7 +8623,7 @@
 	dir = 1
 	},
 /obj/structure/fans/tiny/forcefield,
-/turf/open/space/basic,
+/turf/open/floor/stone,
 /area/centcom/central_command_areas/admin_hangout)
 "SF" = (
 /obj/effect/turf_decal/tile/green{
@@ -52067,7 +52057,7 @@ aa
 aa
 mQ
 mQ
-wf
+Rm
 Ac
 RN
 Nx
