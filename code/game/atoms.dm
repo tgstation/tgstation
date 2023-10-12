@@ -733,7 +733,6 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
-	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
