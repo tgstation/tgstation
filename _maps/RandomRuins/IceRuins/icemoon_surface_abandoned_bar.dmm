@@ -343,7 +343,7 @@
 "PF" = (
 /obj/structure/table/wood/poker,
 /obj/item/gun/ballistic/revolver/nagant{
-	desc = s"An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	},
 /turf/open/floor/wood,
 /area/ruin)
