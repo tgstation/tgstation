@@ -191,7 +191,7 @@
 
 		//transfer buffer and handle reactions
 		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
-		var/buffer_amount = ((ph_change * reagents.total_volume) / BUFFER_IONIZING_STRENGTH) / num_of_reagents
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
 		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
 			return
 
