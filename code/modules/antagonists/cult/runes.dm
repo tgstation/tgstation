@@ -893,7 +893,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		if(ghost_to_spawn.mind && ghost_to_spawn.mind.current)
-			ghost_to_spawn.AddComponent( \
+			new_human.AddComponent( \
 				/datum/component/temporary_body, \
 				old_mind = ghost_to_spawn.mind, \
 				old_body = ghost_to_spawn.mind.current, \
