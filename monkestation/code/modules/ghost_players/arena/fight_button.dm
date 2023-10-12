@@ -138,14 +138,14 @@
 	player_two.fully_heal()
 
 	var/obj/item/one_weapon = new weapon_of_choice(src)
-	var/turf/one_spot = locate(161, 49, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
+	var/turf/one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_one.forceMove(one_spot)
 	player_one.equipOutfit(/datum/outfit/job/assistant)
 	player_one.put_in_active_hand(one_weapon, TRUE)
 	player_one.dueling = TRUE
 
 	var/obj/item/two_weapon = new weapon_of_choice(src)
-	var/turf/two_spot = locate(177, 49, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
+	var/turf/two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_two.forceMove(two_spot)
 	player_two.equipOutfit(/datum/outfit/job/assistant)
 	player_two.put_in_active_hand(two_weapon, TRUE)
