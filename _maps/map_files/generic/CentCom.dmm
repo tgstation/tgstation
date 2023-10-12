@@ -54,6 +54,7 @@
 "an" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/machinery/light/floor/has_bulb,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/borbop)
 "ap" = (
@@ -6426,6 +6427,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"uq" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/borbop)
 "us" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -50299,7 +50305,7 @@ VH
 Lh
 Px
 VF
-Jm
+uq
 DB
 ui
 Jm
@@ -50556,7 +50562,7 @@ fD
 Lh
 Jm
 Jm
-Jm
+uq
 Iy
 ui
 Jm
@@ -50813,7 +50819,7 @@ bv
 Lh
 po
 fe
-Jm
+uq
 DB
 ui
 Jm
