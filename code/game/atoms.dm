@@ -746,21 +746,29 @@
 		if(LAZYLEN(managed_vis_overlays))
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
-		var/list/unknown_new_overlays = update_overlays(updates)
-		var/list/new_overlays = list()
-		for(var/atom/maybe_not_an_atom as anything in unknown_new_overlays)
+		var/list/new_overlays = update_overlays(updates)
+		var/nulls = 0
+		for(var/i in 1 to length(new_overlays))
+			var/atom/maybe_not_an_atom = new_overlays[i]
 			if(isnull(maybe_not_an_atom))
+				nulls++
 				continue
 			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
-				new_overlays += maybe_not_an_atom
 				continue
-			new_overlays += maybe_not_an_atom.appearance
+			new_overlays[i] = maybe_not_an_atom.appearance
+		if(nulls)
+			stack_trace("Nulls should not be returned by update_overlays()")
+			for(var/i in 1 to nulls)
+				new_overlays -= null
 
 		var/identical = FALSE
-		if(!islist(managed_overlays))
-			if(length(new_overlays) == 1 && managed_overlays == new_overlays[1])
+		var/new_length = length(new_overlays)
+		if(!managed_overlays && !new_length)
+			identical = TRUE
+		else if(!islist(managed_overlays))
+			if(new_length == 1 && managed_overlays == new_overlays[1])
 				identical = TRUE
-		else if(length(managed_overlays) == length(new_overlays))
+		else if(length(managed_overlays) == new_length)
 			identical = TRUE
 			for(var/i in 1 to length(managed_overlays))
 				if(managed_overlays[i] != new_overlays[i])
@@ -768,19 +776,26 @@
 					break
 
 		if(!identical)
-			if (managed_overlays)
-				if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
+			var/full_control = FALSE
+			if(managed_overlays)
+				full_control = length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1)
+				if(full_control)
 					overlays = null
-					POST_OVERLAY_CHANGE(src)
 				else
 					cut_overlay(managed_overlays)
+
+			switch(length(new_overlays))
+				if(0)
+					if(full_control)
+						POST_OVERLAY_CHANGE(src)
 					managed_overlays = null
-			if(length(new_overlays))
-				if (length(new_overlays) == 1)
+				if(1)
+					add_overlay(new_overlays)
 					managed_overlays = new_overlays[1]
 				else
+					add_overlay(new_overlays)
 					managed_overlays = new_overlays
-				add_overlay(new_overlays)
+
 		. |= UPDATE_OVERLAYS
 
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
