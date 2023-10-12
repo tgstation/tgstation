@@ -54,7 +54,7 @@
 		return "/appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
 
 	if(isfilter(value))
-		var/filter/filter_value = value
+		var/datum/filter_value = value
 		return "/filter (<span class='value'>[filter_value.type] [REF(filter_value)]</span>)"
 
 	if(isfile(value))
