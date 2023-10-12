@@ -1,4 +1,4 @@
-#define MAX_MANIFEST_PENALTY 500
+#define MAX_MANIFEST_PENALTY CARGO_CRATE_VALUE * 2.5
 
 // Approved manifest.
 // +80 credits flat.
