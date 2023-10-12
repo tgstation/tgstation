@@ -46,6 +46,7 @@ GLOBAL_LIST_INIT(typecache_general_bad_hostile_attack_targets, typecacheof(list(
 	/obj/machinery/airalarm,
 	/obj/machinery/atmospherics,
 	/obj/machinery/power/apc,
+	/obj/item/door_seal,
 )))
 
 /// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to move around easily
