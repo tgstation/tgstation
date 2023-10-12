@@ -407,3 +407,81 @@
       console's display
   - bugfix: moved a garbage spawner on Tramstation that was causing random runtimes
       due to sometimes spawning in space depending on which module got loaded
+2023-10-12:
+  Ghommie:
+  - bugfix: Examining twice experiment handlers with an active fish-related experiment
+      now gives a comprehensible, correctly spaced list of scanned species rather
+      than something like "pufferfishguppyslimefishchasmchrab".
+  - bugfix: No more "line snapped" balloon messages everytime the fishing minigame
+      is over
+  - bugfix: Getting to the Master level of the fishing skill now correctly gives you
+      that slight helping hand to identify yet-to-be-caught fishes.
+  Isratosh:
+  - admin: Gondola supplypods are functional again.
+  Jacquerel:
+  - refactor: Gorillas now use the basic mob framework. Please report any unusual
+      side effects.
+  - rscadd: Adds a new lavaland ruin where you can find a unique egg.
+  - balance: Flesh Spiders heal automatically over time if they go a short time without
+      taking damage, instead of healing large chunks by clicking themselves and waiting
+      two seconds.
+  - qol: Spider egg clusters which only hatch into one kind of spider don't ask you
+      to select that one type from a radial menu with one option on it.
+  - qol: As a Flesh Spider, the game now tells you how you can heal yourself.
+  LT3:
+  - rscadd: Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA
+      to be charged wirelessly through microwave frequencies. You can Wave-charge
+      your device by placing it inside a compatible microwave and selecting the charge
+      mode.
+  - rscadd: Microwaves can be upgraded to add wireless charging
+  - rscadd: Cell-swappable microwave for the engineer on-the-go
+  - rscadd: Microwave now has a wire to swap charge/cook modes
+  - rscadd: Furnishings RCD upgrade now includes wireless microwave
+  - rscadd: Tramstation and Birdshot engineering break rooms now have microwave and
+      donk pockets. Some microwaves come pre-equipped with wireless charging and an
+      upgraded cell.
+  - bugfix: The microwave in the snowdin ruin is now real, not a fluff prop
+  - bugfix: After the untimely loss of too many novice HoPs, the Icebox "New IDs and
+      You" instructions have been moved from the icemoon wastes to the HoP's office,
+      ending this rite of passage
+  - bugfix: Added some missing firelocks in the pharmacy area. Icebox pharmacy now
+      has a shower
+  SyncIt21:
+  - code_imp: removed round robin method of transferring reagents which would result
+      in some missing reagents after transferring.
+  - code_imp: added some more rounding for reagent operations.
+  - code_imp: cleaned up some plumbing & reaction chamber code
+  - code_imp: improves the performance of `update_total()` , `clear_reagents()` &
+      `del_reagent()` procs
+  - bugfix: plumbing setups will no longer output 0 or more than maximum available
+      volume of reagents.
+  - bugfix: removing, copying, transfering reagents is now done proportionally and
+      not equally again.
+  - refactor: examining individual reagents up close will display their volumes up
+      to 4 decimal places for accuracy.
+  - qol: droppers & beakers round the amount of reagents transferred before displaying
+      them to chat for easy readibility
+  - bugfix: You cannot order with cargo budget if you don't have cargo access in the
+      Galactic Market
+  - bugfix: Private & Cargo orders no longer get mixed together in the same crate
+      if you order them interchangeably so no more embezzlement in the Galactic Market
+  - bugfix: Orders made with cargo budget come in a regular cargo crate thus allowing
+      you to open them without QM cargo budget card in the Galactic Market
+  - qol: Orders made in the Galactic Market will deduct money from your account/cargo
+      budget only after the order has been confirmed in the cargo request console
+      & after the shuttle arrives with your order. This way you drain the budget only
+      after your orders were successfully delivered and not before hand itself
+  ViktorKoL:
+  - sound: the blood cult's rise to power is now accompanied by several new sound
+      effects
+  mc-oofert:
+  - refactor: venus human traps are basicmobs now
+  - balance: venus human traps have 100 health
+  - balance: venus human traps take damage out of range of kudzu, heal near kudzu,
+      are slightly slower, attack slower, and their damage output is slightly more
+      random
+  - balance: also venus human trap tangle ability now needs you to actually move backwards
+      to pull victims
+  vinylspiders:
+  - image: you can now change the style of lipstick to be higher or lower on the face
+      by alt-clicking the lipstick tube

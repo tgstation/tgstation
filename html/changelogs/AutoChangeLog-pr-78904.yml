@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Examining twice experiment handlers with an active fish-related experiment now gives a comprehensible, correctly spaced list of scanned species rather than something like \"pufferfishguppyslimefishchasmchrab\"."
-  - bugfix: "No more \"line snapped\" balloon messages everytime the fishing minigame is over"
-  - bugfix: "Getting to the Master level of the fishing skill now correctly gives you that slight helping hand to identify yet-to-be-caught fishes."
