@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - code_imp: "basicmobs that delete on death, ghost before dying"

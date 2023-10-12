@@ -36506,7 +36506,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/aft)
 "jEU" = (
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/engine,
 /area/station/maintenance/floor1/port/aft)
 "jEX" = (
