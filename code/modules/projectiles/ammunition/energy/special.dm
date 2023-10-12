@@ -5,7 +5,7 @@
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
-	e_cost = LASER_SHOTS(4, 1200)
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/projectile/energy/declone
@@ -35,7 +35,7 @@
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/projectile/temp
 	select_name = "freeze"
-	e_cost = LASER_SHOTS(40, 10000)
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE * 10)
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/temp/hot
@@ -78,5 +78,5 @@
 /obj/item/ammo_casing/energy/fisher
 	projectile_type = /obj/projectile/energy/fisher
 	select_name = "light-buster"
-	e_cost = LASER_SHOTS(2, 500)
+	e_cost = LASER_SHOTS(2, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip
