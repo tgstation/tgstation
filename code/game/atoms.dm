@@ -756,7 +756,6 @@
 				continue
 			new_overlays[i] = maybe_not_an_atom.appearance
 		if(nulls)
-			stack_trace("Nulls should not be returned by update_overlays()")
 			for(var/i in 1 to nulls)
 				new_overlays -= null
 
