@@ -132,6 +132,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(DOING_INTERACTION(src, DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)) // patience grasshopper
+		target.balloon_alert(src, "finish current action first!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(ismecha(target))
