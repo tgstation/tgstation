@@ -528,39 +528,44 @@ Behavior that's still missing from this component that original food items had t
 	if(!ishuman(eater))
 		return FALSE
 	var/mob/living/carbon/human/gourmand = eater
+
+	if(istype(parent, /obj/item/food))
+		var/obj/item/food/food = parent
+		if(food.venue_value >= FOOD_PRICE_EXOTIC)
+			gourmand.add_mob_memory(/datum/memory/good_food, food = parent)
+
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
 		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
 			to_chat(gourmand, span_warning("You feel your throat start to itch."))
 			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+		return
 
-	else if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
+	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
 		to_chat(gourmand,span_warning("What the hell was that thing?!"))
 		gourmand.adjust_disgust(25 + 30 * fraction)
 		gourmand.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
-	else if(food_quality < 0)
+		return
+
+	if(food_quality < 0)
 		to_chat(gourmand,span_notice("That didn't taste very good..."))
 		gourmand.adjust_disgust(11 + 15 * fraction)
 		gourmand.add_mood_event("gross_food", /datum/mood_event/gross_food)
-	else if(food_quality > 0)
-		food_quality = min(food_quality, FOOD_QUALITY_TOP)
-		var/atom/owner = parent
-		var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-		var/event = GLOB.food_quality_events[food_quality]
-		gourmand.add_mood_event("quality_food", event, timeout_mod)
-		gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
-		var/quality_label = GLOB.food_quality_description[food_quality]
-		to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
+		return
 
-	if(istype(parent, /obj/item/food))
-		var/obj/item/food/food = parent
-		if(food.venue_value >= FOOD_PRICE_EXOTIC)
-			gourmand.add_mob_memory(/datum/memory/good_food, food = parent)
+	food_quality = min(food_quality, FOOD_QUALITY_TOP)
+	var/atom/owner = parent
+	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
+	var/event = GLOB.food_quality_events[food_quality]
+	gourmand.add_mood_event("quality_food", event, timeout_mod)
+	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
+	var/quality_label = GLOB.food_quality_description[food_quality]
+	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
 
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
