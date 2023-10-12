@@ -3,6 +3,7 @@
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "watermelonslice"
 	food_reagents = list(
 		/datum/reagent/water = 1,
@@ -18,6 +19,7 @@
 /obj/item/food/appleslice
 	name = "apple slice"
 	desc = "The perfect after-school snack."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "appleslice"
 	food_reagents = list(
 		/datum/reagent/water = 1,
