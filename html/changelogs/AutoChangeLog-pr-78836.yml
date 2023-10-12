@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "You cannot order with cargo budget if you don't have cargo access in the Galactic Market"
-  - bugfix: "Private & Cargo orders no longer get mixed together in the same crate if you order them interchangeably so no more embezzlement in the Galactic Market"
-  - bugfix: "Orders made with cargo budget come in a regular cargo crate thus allowing you to open them without QM cargo budget card in the Galactic Market"
-  - qol: "Orders made in the Galactic Market will deduct money from your account/cargo budget only after the order has been confirmed in the cargo request console & after the shuttle arrives with your order. This way you drain the budget only after your orders were successfully delivered and not before hand itself"

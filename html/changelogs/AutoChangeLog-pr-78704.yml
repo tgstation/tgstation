@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Flesh Spiders heal automatically over time if they go a short time without taking damage, instead of healing large chunks by clicking themselves and waiting two seconds."
-  - qol: "Spider egg clusters which only hatch into one kind of spider don't ask you to select that one type from a radial menu with one option on it."
-  - qol: "As a Flesh Spider, the game now tells you how you can heal yourself."

@@ -71,11 +71,7 @@
 	var/user_name = old_ckey
 	if(isnull(revenant.client))
 		var/mob/potential_user = get_new_user()
-		var/datum/mind/potential_mind = potential_user?.mind
-		if(isnull(potential_mind))
-			return
-
-		potential_mind.transfer_to(revenant)
+		revenant.key = potential_user.key
 		user_name = potential_user.ckey
 		qdel(potential_user)
 
@@ -102,7 +98,7 @@
 	var/mob/dead/observer/potential_client = pick(candidates)
 	if(isnull(potential_client))
 		qdel(revenant)
-		message_admins("No ckey was found for the new revenant. Oh well!")
+		message_admins("No candidate was found for the new revenant. Oh well!")
 		inert = TRUE
 		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
 		return null

@@ -9,11 +9,6 @@
 /datum/status_effect/revenant/revealed
 	id = "revenant_revealed"
 
-/datum/status_effect/revenant/revealed/on_creation(mob/living/new_owner, duration)
-	if(isnum(duration))
-		src.duration = duration
-	return ..()
-
 /datum/status_effect/revenant/revealed/on_apply()
 	. = ..()
 	if(!.)
@@ -37,11 +32,6 @@
 
 /datum/status_effect/revenant/inhibited
 	id = "revenant_inhibited"
-
-/datum/status_effect/revenant/inhibited/on_creation(mob/living/new_owner, duration)
-	if(isnum(duration))
-		src.duration = duration
-	return ..()
 
 /datum/status_effect/revenant/inhibited/on_apply()
 	. = ..()
