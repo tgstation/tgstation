@@ -17,6 +17,18 @@
 
 	return final_color
 
+/// Given a color in the format of "#RRGGBB" or "#RRGGBBAA", gives back a 4 entry list with the number values of each
+/proc/split_color(color)
+	var/list/output = list()
+	output += hex2num(copytext(color, 2, 4))
+	output += hex2num(copytext(color, 4, 6))
+	output += hex2num(copytext(color, 6, 8))
+	if(length(color) == 9)
+		output += hex2num(copytext(color, 8, 10))
+	else
+		output += 255
+	return output
+
 ///Returns a random color picked from a list, has 2 modes (0 and 1), mode 1 doesn't pick white, black or gray
 /proc/random_colour(mode = 0)
 	switch(mode)

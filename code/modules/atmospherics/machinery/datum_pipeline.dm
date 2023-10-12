@@ -310,11 +310,9 @@
 	if(gas_visuals[icon_file])
 		return gas_visuals[icon_file]
 
-	var/obj/effect/abstract/new_overlay = new
+	var/obj/effect/abstract/gas_visual/new_overlay = new
 	new_overlay.icon = icon_file
-	new_overlay.appearance_flags = RESET_COLOR | KEEP_APART
-	new_overlay.vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	new_overlay.color = gasmix_color
+	new_overlay.ChangeColor(gasmix_color)
 
 	gas_visuals[icon_file] = new_overlay
 	return new_overlay
@@ -322,8 +320,8 @@
 /// Called when the gasmix color has changed and the gas visuals need to be updated.
 /datum/pipeline/proc/UpdateGasVisuals()
 	for(var/icon/source as anything in gas_visuals)
-		var/obj/effect/abstract/overlay = gas_visuals[source]
-		animate(overlay, time=5, color=gasmix_color)
+		var/obj/effect/abstract/gas_visual/overlay = gas_visuals[source]
+		overlay.ChangeColor(gasmix_color)
 
 /// After updating, this proc handles looking at the new gas mixture and blends the colors together according to percentage of the gas mix.
 /datum/pipeline/proc/CalculateGasmixColor(datum/gas_mixture/source)
@@ -355,3 +353,31 @@
 	if(gasmix_color != current_color)
 		gasmix_color = current_color
 		UpdateGasVisuals()
+
+/obj/effect/abstract/gas_visual
+	appearance_flags  = RESET_COLOR | KEEP_APART
+	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	var/color_filter
+
+/obj/effect/abstract/gas_visual/Initialize(mapload)
+	. = ..()
+	color_filter = filter(type="color", color=matrix())
+	filters += color_filter
+	color_filter = filters[filters.len]
+
+/obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
+	var/list/split_color = split_color(new_color)
+	var/red_percent = split_color[1] / 255
+	var/grn_percent = split_color[2] / 255
+	var/blu_percent = split_color[3] / 255
+	var/alp_percent = split_color[4] / 255
+
+	var/list/new_color_matrix = list(
+		red_percent,0,0,0,
+		0,grn_percent,0,0,
+		0,0,blu_percent,0,
+		0,0,0,alp_percent,
+		0,0,0,0
+	)
+
+	animate(color_filter, color=new_color_matrix, time=5)
