@@ -125,10 +125,10 @@
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
 	var/data = list()
-	var/tank_contents[0]
+	var/tank_contents = list()
 	var/tank_current_volume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		tank_contents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+		tank_contents += list(list("name" = R.name, "volume" = R.volume)) // list in a list because Byond merges the first list...
 		tank_current_volume += R.volume
 	data["tankContents"] = tank_contents
 	data["tankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
