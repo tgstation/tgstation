@@ -14,8 +14,8 @@
 		to_chat(em_user, span_notice("You dont currently have a marked servant!"))
 		return FALSE
 	var/mob/living/purged = em_user.marked_servant?.resolve()
-	for(var/datum/reagent/chem in purged.reagents.reagent_list)
-		purged.reagents.remove_reagent(chem.type, chem.volume)
+	for(var/datum/reagent/chem in purged.reagents?.reagent_list)
+		purged.reagents?.remove_reagent(chem.type, chem.volume)
 	to_chat(em_user, "You purge the reagents of [purged].")
 	em_user.marked_servant = null
 	return TRUE
