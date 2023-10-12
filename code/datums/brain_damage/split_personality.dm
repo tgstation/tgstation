@@ -282,7 +282,8 @@
 		return
 	if(prob(30) && HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
 		owner.remove_traits(TRAIT_ADVANCEDTOOLUSER)
-		addtimer(CALLBACK(owner, PROC_REF(add_traits), TRAIT_ADVANCEDTOOLUSER, owner), 5 SECONDS)
+		owner.balloon_alert(src, "you feel less dexterous!")
+		addtimer(TRAIT_CALLBACK_ADD(owner, TRAIT_ADVANCEDTOOLUSER, TRAIT_GENERIC), 5 SECONDS)
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
