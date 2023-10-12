@@ -140,10 +140,6 @@
 /turf/open/floor/iron,
 /area/ruin)
 "eZ" = (
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
 /obj/structure/rack,
 /obj/item/food/cornuto,
 /obj/item/food/cornuto{
@@ -163,24 +159,24 @@
 	pixel_x = -6
 	},
 /obj/machinery/duct,
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 6
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin)
 "gm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/midtown_slice/directional/east,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 4
-	},
 /obj/item/food/taco{
 	pixel_x = 5
 	},
 /obj/item/food/hotdog{
 	pixel_y = 4;
 	pixel_x = -7
+	},
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/ruin)
@@ -299,10 +295,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin)
 "sn" = (
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/structure/rack,
 /obj/machinery/duct,
 /obj/item/storage/cans/sixsoda{
@@ -358,12 +350,6 @@
 /area/ruin)
 "wU" = (
 /obj/structure/table/reinforced,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
 /obj/item/food/croissant{
 	pixel_x = -4;
 	pixel_y = 4
@@ -373,6 +359,9 @@
 	pixel_y = 3
 	},
 /obj/item/food/butterbiscuit,
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/ruin)
 "xw" = (
@@ -558,9 +547,6 @@
 "QK" = (
 /obj/structure/cable,
 /obj/structure/rack,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
 /obj/machinery/door/window,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/cans/sixbeer{
@@ -670,9 +656,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/structure/rack,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/machinery/door/window,
 /obj/item/reagent_containers/condiment/yoghurt{
 	pixel_x = 10
@@ -686,6 +669,9 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/food/cheese/wheel,
 /obj/item/food/cheese/wheel,
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 9
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin)
 "WN" = (
