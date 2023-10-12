@@ -22,7 +22,7 @@
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "appleslice"
 	food_reagents = list(
-		/datum/reagent/water = 1,
+		/datum/reagent/consumable/applejuice = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 0.2,
 		/datum/reagent/consumable/nutriment = 1,
 	)
