@@ -282,7 +282,7 @@
 		return
 	if(prob(30) && HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
 		owner.remove_traits(TRAIT_ADVANCEDTOOLUSER)
-		owner.balloon_alert(src, "you feel less dexterous!")
+		owner.balloon_alert(src, "dexterity reduced temporarily!")
 		addtimer(TRAIT_CALLBACK_ADD(owner, TRAIT_ADVANCEDTOOLUSER, TRAIT_GENERIC), 5 SECONDS)
 	duration_in_seconds -= seconds_per_tick
 
