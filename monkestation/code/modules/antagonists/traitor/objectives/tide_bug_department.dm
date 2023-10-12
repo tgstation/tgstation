@@ -11,7 +11,6 @@
 	progression_minimum = 10 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(2, 3)
-	duplicate_type = /datum/traitor_objective/tide_bug_department
 
 	///What departments can we pick from mapped to their base area type
 	var/list/valid_departments = list(/datum/job_department/cargo = /area/station/cargo,
@@ -33,6 +32,11 @@
 	telecrystal_reward = list(3, 4)
 	valid_departments = list(/datum/job_department/command = /area/station/command,
 							/datum/job_department/security = /area/station/security)
+
+/datum/traitor_objective/tide_bug_department/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates))
+		return FALSE
+	return TRUE
 
 /datum/traitor_objective/tide_bug_department/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/role = generating_for.assigned_role
