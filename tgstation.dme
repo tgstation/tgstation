@@ -2937,6 +2937,7 @@
 #include "code\modules\antagonists\heretic\magic\madness_touch.dm"
 #include "code\modules\antagonists\heretic\magic\manse_link.dm"
 #include "code\modules\antagonists\heretic\magic\mansus_grasp.dm"
+#include "code\modules\antagonists\heretic\magic\mind_gate.dm"
 #include "code\modules\antagonists\heretic\magic\mirror_walk.dm"
 #include "code\modules\antagonists\heretic\magic\moon_parade.dm"
 #include "code\modules\antagonists\heretic\magic\moon_ringleader.dm"

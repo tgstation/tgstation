@@ -77,8 +77,8 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
-		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/medallion,
+		/datum/heretic_knowledge/spell/mind_gate,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
@@ -187,7 +187,7 @@
 		Bring 3  corpses to a transmutation rune anywhere in service to complete the ritual. \
 		When completed, you become a harbinger of madness, all your spells will get a lower cooldown \
 		and become stronger. You will also passivly release hallucinations, decrease sanity, and increase \
-		confusion. If their sanity is low they will gain a trauma and start taking brain damage"
+		confusion. If their sanity is low they will start taking brain damage and go blind."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
@@ -245,11 +245,10 @@
 		hallucination_duration = 20 SECONDS)
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		carbon_view.adjust_confusion(5 SECONDS)
+		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
 		if(carbon_view.mob_mood.sanity<30)
 			carbon_view.balloon_alert(carbon_view, "You feel your mind begining to rend!")
-			carbon_view.gain_trauma(/datum/brain_trauma/mild/phobia/heresy)
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 		if(carbon_view.mob_mood.sanity<10)
 			carbon_view.balloon_alert(carbon_view, "IT ECHOES THROUGH YOU!!")
