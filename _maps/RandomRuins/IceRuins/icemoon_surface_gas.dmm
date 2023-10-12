@@ -170,12 +170,10 @@
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/midtown_slice/directional/east,
 /obj/structure/window{
-	dir = 1;
-	pixel_y = 4
+	dir = 1
 	},
 /obj/structure/window{
-	dir = 4;
-	pixel_x = 4
+	dir = 4
 	},
 /obj/item/food/taco{
 	pixel_x = 5
@@ -361,12 +359,10 @@
 "wU" = (
 /obj/structure/table/reinforced,
 /obj/structure/window{
-	dir = 1;
-	pixel_y = 4
+	dir = 1
 	},
 /obj/structure/window{
-	dir = 8;
-	pixel_x = -4
+	dir = 8
 	},
 /obj/item/food/croissant{
 	pixel_x = -4;
@@ -563,8 +559,7 @@
 /obj/structure/cable,
 /obj/structure/rack,
 /obj/structure/window/reinforced/tinted/frosted{
-	dir = 4;
-	pixel_x = 4
+	dir = 4
 	},
 /obj/machinery/door/window,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -676,8 +671,7 @@
 /obj/structure/cable,
 /obj/structure/rack,
 /obj/structure/window/reinforced/tinted/frosted{
-	dir = 8;
-	pixel_x = -4
+	dir = 8
 	},
 /obj/machinery/door/window,
 /obj/item/reagent_containers/condiment/yoghurt{
