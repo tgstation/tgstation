@@ -30,7 +30,7 @@
 
 		//compute how much more is needed and round it
 		diff = FLOOR(chamber.required_reagents[required_reagent] - present_amount, CHEMICAL_QUANTISATION_LEVEL)
-		if(diff > 0)
+		if(diff > CHEMICAL_QUANTISATION_LEVEL)
 			process_request(min(diff, MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 			return
 
