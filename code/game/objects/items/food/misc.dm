@@ -15,6 +15,21 @@
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/appleslice
+	name = "apple slice"
+	desc = "The perfect after-school snack."
+	icon_state = "appleslice"
+	food_reagents = list(
+		/datum/reagent/water = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("apple" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/applejuice
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/hugemushroomslice
 	name = "huge mushroom slice"
 	desc = "A slice from a huge mushroom."
