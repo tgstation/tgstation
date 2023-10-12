@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		paying_account = null,
 		department_destination = chosen_delivery_area,
 		coupon = null,
-		manifest_can_fail = TRUE,
+		manifest_can_fail = FALSE,
 	)
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
