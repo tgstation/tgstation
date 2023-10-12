@@ -51,6 +51,8 @@
 #define COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN "keybinding_living_disable_combat_down"
 #define COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN "keybinding_mob_togglemoveintent_down"
 #define COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN "keybinding_mob_togglemoveintentalt_down"
+#define COMSIG_KB_LIVING_TOGGLERUNINTENT_DOWN "keybinding_mob_togglerunintent_down"
+#define COMSIG_KB_LIVING_TOGGLERUNINTENTALT_DOWN "keybinding_mob_togglerunintentalt_down"
 
 //Mob
 #define COMSIG_KB_MOB_FACENORTH_DOWN "keybinding_mob_facenorth_down"

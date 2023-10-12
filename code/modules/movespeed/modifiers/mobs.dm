@@ -68,6 +68,10 @@
 	var/mod = CONFIG_GET(number/movedelay/run_delay)
 	multiplicative_slowdown = isnum(mod)? mod : initial(multiplicative_slowdown)
 
+/datum/movespeed_modifier/config_walk_run/sneak/sync()
+	var/mod = CONFIG_GET(number/movedelay/sneak_delay)
+	multiplicative_slowdown = isnum(mod)? mod : initial(multiplicative_slowdown)
+
 /datum/movespeed_modifier/turf_slowdown
 	movetypes = GROUND
 	blacklisted_movetypes = (FLYING|FLOATING)

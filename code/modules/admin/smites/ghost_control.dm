@@ -18,6 +18,7 @@
 		"sit" = CALLBACK(src, PROC_REF(ghost_sit), target),
 		"run" = CALLBACK(src, PROC_REF(ghost_speed), target, MOVE_INTENT_RUN),
 		"walk" = CALLBACK(src, PROC_REF(ghost_speed), target, MOVE_INTENT_WALK),
+		"sneak" = CALLBACK(src, PROC_REF(ghost_speed), target, MOVE_INTENT_SNEAK),
 		), 7 SECONDS)
 
 	to_chat(target, span_revenwarning("You feel a ghastly presence!!!"))

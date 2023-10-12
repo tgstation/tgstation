@@ -27,9 +27,27 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
-
+		// Handles stamina regen and stamina loss from running
 		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
-			adjustStaminaLoss(-INFINITY)
+			// dont regen stamina if running, and reset stamina recovery after running (and drain stamina IF running)
+			if(move_intent != MOVE_INTENT_RUN)
+				adjustStaminaLoss(-INFINITY)
+			else
+				stam_regen_start_time = world.time + running_stamina_regen_time
+
+		// this doesn't check if your actually moving instead of just holding shift yet, please yell at me (I couldn't figure out how to tell if a player is actively putting in movement input)
+		if(move_intent == MOVE_INTENT_RUN)
+			adjustStaminaLoss(running_stamina_loss)
+
+			if(staminaloss >= max_stamina * running_minimum_stamina_factor)
+				// force stop sprinting if their exhausted
+				toggle_run_intent()
+				to_chat(src, span_notice("You're to tired to keep running..."))
+			else if (staminaloss >= max_stamina * (running_minimum_stamina_factor - 0.2))
+				// shorter sigh effect as visual effect if about to not be able to run
+				var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', src, "sigh")
+				flick_overlay_global(emote_animation, GLOB.clients, 1.0 SECONDS)
+
 
 	handle_bodyparts(seconds_per_tick, times_fired)
 

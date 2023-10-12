@@ -256,7 +256,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/mob/living/crosser = arrived
 	if(crosser.movement_type & FLYING)
 		return
-	if(crosser.move_intent == MOVE_INTENT_WALK)
+	if(crosser.move_intent == MOVE_INTENT_SNEAK)
 		return
 	if(prob(60))
 		return

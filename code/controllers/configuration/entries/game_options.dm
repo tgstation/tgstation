@@ -240,6 +240,15 @@
 	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
 	M.sync()
 
+
+/datum/config_entry/number/movedelay/sneak_delay
+	integer = FALSE
+
+/datum/config_entry/number/movedelay/sneak_delay/ValidateAndSet()
+	. = ..()
+	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/sneak)
+	M.sync()
+
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
 	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed

@@ -506,10 +506,26 @@
  * triggers an update the move intent hud as well
  */
 /mob/living/proc/toggle_move_intent(mob/user)
-	if(move_intent == MOVE_INTENT_RUN)
-		move_intent = MOVE_INTENT_WALK
+	if(move_intent == MOVE_INTENT_WALK)
+		move_intent = MOVE_INTENT_SNEAK
 	else
-		move_intent = MOVE_INTENT_RUN
+		move_intent = MOVE_INTENT_WALK
+	if(hud_used?.static_inventory)
+		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
+			selector.update_appearance()
+	update_move_intent_slowdown()
+
+// toggles running
+/mob/living/proc/toggle_run_intent(mob/user)
+	// this does nothing if they try to run while sneaking
+	if(move_intent == MOVE_INTENT_WALK)
+		// cannot run if you're too tired
+		if(staminaloss < max_stamina * running_minimum_stamina_factor)
+			move_intent = MOVE_INTENT_RUN
+
+	else if(move_intent == MOVE_INTENT_RUN)
+		move_intent = MOVE_INTENT_WALK
+
 	if(hud_used?.static_inventory)
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_appearance()

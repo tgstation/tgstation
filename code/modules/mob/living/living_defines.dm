@@ -18,8 +18,15 @@
 
 	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds. See crit_threshold)
 	var/max_stamina = 120
-	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	///Stamina damage, or exhaustion. You recover it slowly(correction: instantly. Is that intended?) naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/staminaloss = 0
+
+	// How much stamina damage is taken per life.dm tick while running
+	var/running_stamina_loss = 2
+	// if stamina loss is above this percentage of max stamina, you cannot run.
+	var/running_minimum_stamina_factor = 0.5
+	// sets stam_regen_start_time to this number if stam_regen_start_time expires and you're still running (essentially recovery time)
+	var/running_stamina_regen_time = 2
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -34,7 +41,7 @@
 	var/cloneloss = 0
 
 	/// The movement intent of the mob (run/wal)
-	var/move_intent = MOVE_INTENT_RUN
+	var/move_intent = MOVE_INTENT_WALK
 
 	/// Rate at which fire stacks should decay from this mob
 	var/fire_stack_decay_rate = -0.05

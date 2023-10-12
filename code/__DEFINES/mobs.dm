@@ -7,8 +7,10 @@
 #define PLAYER_READY_TO_PLAY 1
 
 //movement intent defines for the move_intent var
+#define MOVE_INTENT_SNEAK "sneak"
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
+
 
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150

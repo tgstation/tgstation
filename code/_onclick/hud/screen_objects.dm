@@ -330,6 +330,8 @@
 		return
 	var/mob/living/living_hud_owner = hud.mymob
 	switch(living_hud_owner.move_intent)
+		if(MOVE_INTENT_SNEAK)
+			icon_state = "sneaking"
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
