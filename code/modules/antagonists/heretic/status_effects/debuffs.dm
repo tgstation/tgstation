@@ -248,8 +248,8 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Healing based on how low their sanity is
-	owner.adjustBruteLoss(-100+owner.mob_mood.sanity)
-	owner.adjustFireLoss(-100+owner.mob_mood.sanity)
+	owner.adjustBruteLoss(-150+owner.mob_mood.sanity)
+	owner.adjustFireLoss(-150+owner.mob_mood.sanity)
 	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)

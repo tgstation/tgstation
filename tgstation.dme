@@ -2905,6 +2905,7 @@
 #include "code\modules\antagonists\heretic\knowledge\side_cosmos_ash.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_flesh_void.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_knock_flesh.dm"
+#include "code\modules\antagonists\heretic\knowledge\side_knock_moon.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_rust_cosmos.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_void_blade.dm"
 #include "code\modules\antagonists\heretic\knowledge\starting_lore.dm"

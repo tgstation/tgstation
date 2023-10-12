@@ -215,20 +215,45 @@
 
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
+	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
+	if(smile)
+		smile.cooldown_time *= 0.66 // Lower cooldown
+		smile.cast_range +=6 // Longer cast range
+
+	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
+	if(lunar_parade)
+		lunar_parade.cooldown_time *= 0.66 // Lower cooldown
+
+	var/datum/action/cooldown/spell/aoe/moon_ringleader/ringleader_rise = locate() in user.actions
+	if(ringleader_rise)
+		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
+		ringleader_rise.aoe_radius +=3 // Bigger AoE
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	for(var/mob/living/carbon/carbon_view in view(7, source))
-		if(IS_HERETIC_OR_MONSTER(carbon_view))
-			continue
-		carbon_view.adjust_confusion(5 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
-
 		visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
 		hallucination_duration = 20 SECONDS)
+		if(IS_HERETIC_OR_MONSTER(carbon_view))
+			continue
+		carbon_view.adjust_confusion(5 SECONDS)
+		carbon_view.mob_mood.set_sanity(carbon_view.mob_mood.sanity-5)
+		if(carbon_view.mob_mood.sanity<20)
+			carbon_view.balloon_alert(carbon_view, "You feel your mind begining to rend!")
+			carbon_view.gain_trauma(/datum/brain_trauma/mild/phobia/heresy)
+		if(carbon_view.mob_mood.sanity<10)
+			carbon_view.balloon_alert(carbon_view, "IT ECHOES THROUGH YOU!!")
+			visible_hallucination_pulse(
+			center = get_turf(carbon_view),
+			radius = 7,
+			hallucination_duration = 50 SECONDS)
+			carbon_view.adjust_temp_blindness(5 SECONDS)
+
+
+
 
 
 
