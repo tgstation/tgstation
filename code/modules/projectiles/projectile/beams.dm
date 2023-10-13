@@ -93,7 +93,7 @@
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 7
+	damage = 7.5
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	damage_falloff_tile = -0.45
