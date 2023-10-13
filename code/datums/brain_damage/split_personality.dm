@@ -266,11 +266,11 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/switch_personalities(reset_to_owner)
 	owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
-	owner.clear_fullscreen("fade_to_black", animated = 2 SECONDS)
+	owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)
 	. = ..()
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
-	if(current_controller == OWNER)
+	if(current_controller == OWNER && stranger_backseat)
 		switch_personalities()
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
@@ -286,6 +286,9 @@
 		//We then send a callback to automatically re-add the trait
 		addtimer(TRAIT_CALLBACK_ADD(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT), 10 SECONDS)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
+	if(prob(30))
+		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
+		owner.emote("hiccup")
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
