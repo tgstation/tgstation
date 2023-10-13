@@ -149,7 +149,7 @@
 	desc = "Delicious, creamy, and cheesy, all in one simple package."
 	icon_state = "mozzarella"
 	tastes = list("mozzarella" = 1)
-	foodtypes = DAIRY
+	foodtypes = DAIRY | KIDS
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_2
