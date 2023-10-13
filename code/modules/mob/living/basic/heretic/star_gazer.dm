@@ -79,7 +79,7 @@
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/star_gazer(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends/attack_closed_turfs(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends/attack_closed_turfs,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

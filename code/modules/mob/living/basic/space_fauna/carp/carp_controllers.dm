@@ -11,7 +11,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -38,7 +38,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
@@ -82,7 +82,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends()
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(

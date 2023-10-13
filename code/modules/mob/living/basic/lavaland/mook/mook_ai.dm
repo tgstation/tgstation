@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
