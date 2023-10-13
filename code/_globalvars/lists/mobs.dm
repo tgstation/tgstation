@@ -35,10 +35,11 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/hostile/construct,
 	/mob/living/simple_animal/hostile/guardian,
 	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/mimic,
+	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/simple_animal/hostile/retaliate,
 	/mob/living/simple_animal/hostile,
 	/mob/living/simple_animal/pet,
+	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
 ))
 
