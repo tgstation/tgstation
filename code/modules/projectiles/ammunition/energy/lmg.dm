@@ -2,5 +2,5 @@
 	projectile_type = /obj/projectile/bullet/c3d
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
-	e_cost = 20
+	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE * 0.6)
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
