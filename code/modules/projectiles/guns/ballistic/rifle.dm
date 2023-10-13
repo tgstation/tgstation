@@ -190,6 +190,7 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
 	alternative_caliber = CALIBER_REBAR_FORCED
 	alternative_ammo_misfires = TRUE
+	var draw_time = 3 SECONDS
 	bolt_wording = "bowstring"
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
@@ -211,7 +212,7 @@
 	drop_bolt(user)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
-	if(do_after(user, 3 SECONDS, target = src))
+	if(do_after(user, draw_time, target = src))
 		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 		if (user)
 			balloon_alert(user, "bowstring drawn")
@@ -238,18 +239,10 @@
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
 	initial_caliber = CALIBER_REBAR_SYNDIE
+	draw_time = 1 SECONDS
 	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
 	alternative_ammo_misfires = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
-
-/obj/item/gun/ballistic/rifle/rebarxbow/syndie/drop_bolt(mob/user = null)
-	if(do_after(user, 1 SECONDS, target = src)) //shorter delay as it wasnt made by some idiot in a closet, plus it has the 3 shots
-		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
-		if (user)
-			balloon_alert(user, "bowstring drawn")
-		chamber_round()
-		bolt_locked = FALSE
-		update_appearance()
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
 	. = ..()
