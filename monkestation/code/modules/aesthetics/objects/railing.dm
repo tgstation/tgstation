@@ -8,6 +8,8 @@
 
 	var/neighbor_status = list() ///list of smoothing we need doing
 
+/obj/structure/railing/wood
+	custom_materials = list(/datum/material/wood = 100)
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()

@@ -13,6 +13,8 @@
 	return
 
 /mob/living/carbon/stamina_stun()
+	if(HAS_TRAIT(src, TRAIT_BATON_RESISTANCE))
+		return //baton resistance can't stam crit but can still be non sprinted
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
 		return
 	if(check_stun_immunity(CANKNOCKDOWN))

@@ -151,6 +151,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define GHOST_AREA (1<<18)
 ///can we explode during rounds?
 #define NO_EXPLOSIONS_DURING (1<<19)
+///are ghosts not allowed to enter during round
+#define NO_GHOSTS_DURING_ROUND (1<<20)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

@@ -5367,6 +5367,15 @@
 /obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/bridge)
+"cRm" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "Kitchen"
+	},
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/station/service/bar)
 "cRO" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -38190,7 +38199,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -38198,6 +38206,9 @@
 	id = "kitchen";
 	dir = 1;
 	name = "Kitchen"
+	},
+/obj/machinery/smartfridge/drinks{
+	icon_state = "boozeomat"
 	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
@@ -40767,9 +40778,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "uHW" = (
-/obj/machinery/smartfridge/drinks{
-	icon_state = "boozeomat"
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "uIg" = (
@@ -64489,7 +64498,7 @@ sHS
 pIL
 pIL
 pIL
-lLc
+cRm
 aVb
 mIS
 oWO
