@@ -53,7 +53,7 @@
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 
-	RegisterSignal(H, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(monkey_attack))
+	RegisterSignal(H, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_bite))
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -61,7 +61,8 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 	UnregisterSignal(C, COMSIG_LIVING_UNARMED_ATTACK)
 
-/datum/species/monkey/proc/monkey_attack(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
+///
+/datum/species/monkey/proc/try_bite(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
 	SIGNAL_HANDLER
 
 	if(!proximity_flag)

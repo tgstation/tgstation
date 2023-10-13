@@ -143,10 +143,10 @@
 	var/door_hack_counter = 0
 
 /obj/item/mod/module/hacker/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(hack))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(hack))
 
 /obj/item/mod/module/hacker/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
