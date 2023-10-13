@@ -6,6 +6,13 @@
 /datum/tgui_window
 	var/id
 	var/client/client
+
+	// Reliability
+	/// Last sequence number sent to the client
+	var/last_sequence = 0
+	/// Timer for resending the last message if no ACK is received
+	var/reliablity_resend_timer = 0
+
 	var/pooled
 	var/pool_index
 	var/is_browser = FALSE
@@ -271,6 +278,7 @@
 			message_queue = list()
 		message_queue += list(message)
 		return
+
 	client << output(message, is_browser \
 		? "[id]:update" \
 		: "[id].browser:update")
