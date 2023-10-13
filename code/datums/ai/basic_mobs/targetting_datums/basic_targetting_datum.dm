@@ -20,7 +20,7 @@
 	///Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
 
-/datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
+/datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
 	if(isnull(our_controller))
@@ -52,8 +52,7 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
-		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_SKIP_FACTION_CHECK]
-		if(faction_check(living_mob, living_target) && !bypass_faction_check)
+		if(faction_check(our_controller, living_mob, living_target))
 			return FALSE
 		if(living_target.stat > stat_attack)
 			return FALSE
@@ -88,18 +87,11 @@
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
 /datum/targetting_datum/basic/allow_items
 
-/datum/targetting_datum/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target)
+/datum/targetting_datum/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(isitem(the_target))
 		// trust fall exercise
 		return TRUE
-
-/// Subtype which doesn't care about faction
-/// Mobs which retaliate but don't otherwise target seek should just attack anything which annoys them
-/datum/targetting_datum/basic/ignore_faction
-
-/datum/targetting_datum/basic/ignore_faction/faction_check(mob/living/living_mob, mob/living/the_target)
-	return FALSE
 
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targetting_datum/basic/of_size
@@ -108,7 +100,7 @@
 	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
 
-/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, atom/target)
+/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()

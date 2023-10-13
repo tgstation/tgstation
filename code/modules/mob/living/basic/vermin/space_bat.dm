@@ -42,7 +42,7 @@
 ///Controller for space bats, has nothing unique, just retaliation.
 /datum/ai_controller/basic_controller/space_bat
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

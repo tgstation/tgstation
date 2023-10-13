@@ -22,7 +22,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_the_blind, BB_BLIND_TARGET, BB_EYE_DAMAGE_THRESHOLD)
 
-/datum/targetting_datum/basic/eyeball/can_attack(mob/living/owner, atom/target)
+/datum/targetting_datum/basic/eyeball/can_attack(mob/living/owner, atom/target, vision_range)
 	. = ..()
 	if(!.)
 		return FALSE

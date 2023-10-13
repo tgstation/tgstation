@@ -23,7 +23,7 @@
 	src.object_type_path = object_type_path
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range, check_faction = FALSE)
+/datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)
 	if (object_type_path == null)
 		return FALSE // no op
 	if(!ismob(target))

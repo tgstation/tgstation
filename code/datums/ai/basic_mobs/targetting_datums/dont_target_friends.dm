@@ -6,7 +6,7 @@
 	var/attack_closed_turf = FALSE
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/not_friends/can_attack(mob/living/living_mob, atom/target)
+/datum/targetting_datum/not_friends/can_attack(mob/living/living_mob, atom/target, vision_range)
 	if (!target)
 		return FALSE
 	if (attack_closed_turf)
@@ -43,7 +43,7 @@
 /// Subtype that allows us to target items while deftly avoiding attacking our allies. Be careful when it comes to targetting items as an AI could get trapped targetting something it can't destroy.
 /datum/targetting_datum/basic/not_friends/allow_items
 
-/datum/targetting_datum/basic/not_friends/allow_items/can_attack(mob/living/living_mob, atom/the_target)
+/datum/targetting_datum/basic/not_friends/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(isitem(the_target))
 		// trust fall exercise

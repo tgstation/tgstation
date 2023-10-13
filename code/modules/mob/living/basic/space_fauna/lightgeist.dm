@@ -97,7 +97,7 @@
 	/// Type of limb we can heal
 	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/targetting_datum/lightgeist/can_attack(mob/living/living_mob, mob/living/target)
+/datum/targetting_datum/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
 	if (!isliving(target) || target.stat == DEAD)
 		return FALSE
 	if (!(heal_biotypes & target.mob_biotypes))
