@@ -1662,8 +1662,8 @@
 	if(!exact_match)
 		return faction_check(faction, target.faction, FALSE)
 
-	var/list/faction_src = faction.Copy()
-	var/list/faction_target = target.faction.Copy()
+	var/list/faction_src = LAZYCOPY(faction)
+	var/list/faction_target = LAZYCOPY(target.faction)
 	if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
 		faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
 	if(!("[REF(target)]" in faction_src))
