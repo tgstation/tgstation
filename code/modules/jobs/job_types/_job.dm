@@ -344,7 +344,9 @@
 				back = messenger //Department messenger bag
 			else
 				back = backpack //Department backpack
-
+	if (human.age < AGE_MINOR)
+		var/obj/item/organ/internal/tongue/tongue = H.get_organ_slot(ORGAN_SLOT_TONGUE)
+		tongue.liked_foodtypes = KIDS
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
 	if(H.jumpsuit_style == PREF_SKIRT)
