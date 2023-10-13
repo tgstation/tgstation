@@ -56,8 +56,8 @@
 		return
 
 	attacker.visible_message(\
-		span_warning("[attacker] start forcing the [airlock_target] open!"), \
-		blind_message = span_hear("You hear a metal screeching sound."), \
+		visible_message = span_warning("[attacker] starts forcing the [airlock_target] open!"),
+		blind_message = span_hear("You hear a metal screeching sound."),
 	)
 	playsound(airlock_target, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 	airlock_target.balloon_alert(attacker, "prying...")
