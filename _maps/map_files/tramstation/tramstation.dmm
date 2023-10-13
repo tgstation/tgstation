@@ -78037,19 +78037,19 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
-/mob/living/simple_animal/pet/cat/kitten{
-	name = "Blu";
-	gender = "female"
-	},
 /obj/structure/bed/dogbed{
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off.";
-	name = "cat bed"
+	name = "slime bed"
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "hydrodropoff";
 	name = "Shipment Delivery Chute Activator";
 	pixel_x = 10;
 	pixel_y = 20
+	},
+/mob/living/simple_animal/slime/pet{
+	colour = "orange";
+	name = "Happy Accident"
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
