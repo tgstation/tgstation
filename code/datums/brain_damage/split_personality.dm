@@ -264,13 +264,10 @@
 	if(prob(20))//we don't want every single splash to wake them up now do we
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/blackout/switch_personalities(reset_to_owner)
-	owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
-	owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)
-	. = ..()
-
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
-	if(current_controller == OWNER && stranger_backseat)
+	if(current_controller == OWNER && stranger_backseat)//we should only start transitioning after the other personality has entered
+		owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
+		owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)
 		switch_personalities()
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
@@ -280,6 +277,8 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
+	else if(duration_in_seconds <= 50)
+		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
 	if(prob(20) && HAS_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER))
 		REMOVE_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")
