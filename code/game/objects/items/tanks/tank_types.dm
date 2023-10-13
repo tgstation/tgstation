@@ -145,6 +145,7 @@
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	// Around ~2.5 moles?
 
 /obj/item/tank/internals/plasmaman/belt/empty/populate_gas()
 	return
@@ -173,6 +174,7 @@
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
 	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	// Around ~1.25 moles
 
 
 /obj/item/tank/internals/emergency_oxygen/empty/populate_gas()
@@ -186,6 +188,7 @@
 	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
+	// Around ~2.5 moles?
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -196,6 +199,7 @@
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
 	volume = 12 //If it's double of the above, shouldn't it be double the volume??
+	// Around ~5 moles??
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

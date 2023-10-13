@@ -37,7 +37,7 @@
 #define QUATERNARY 4
 
 //TANKS
-/// The volume of the standard handheld gas tanks on the station.
+/// The volume of the standard handheld gas tanks on the station. Around ~17.75 moles.
 #define TANK_STANDARD_VOLUME 70
 /// The minimum pressure an gas tanks release valve can be set to.
 #define TANK_MIN_RELEASE_PRESSURE 0
@@ -47,7 +47,7 @@
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 /// The default initial value gas plasmamen tanks releases valves are set to.
 #define TANK_PLASMAMAN_RELEASE_PRESSURE 4
-/// The default initial value gas flown tanks releases valves are set to.
+/// The default initial value gas clown tanks releases valves are set to.
 #define TANK_CLOWN_RELEASE_PRESSURE 20
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000

@@ -81,5 +81,209 @@
 /datum/status_effect/slimed/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")
 
+
 #undef MIN_HEALTH
 #undef MIN_WATER_STACKS
+
+#define TRAIT_SLIME_WATER_IMMUNE "gingus"
+
+/datum/status_effect/slime
+	id = "bruh"
+	var/mob/living/simple_animal/slime/slime_owner
+	var/max_duration = 420 SECONDS
+
+/datum/status_effect/slime/on_apply()
+	if(!isslime(owner))
+		stack_trace("rad slime effect on non slime????")
+		qdel(src)
+		return
+	slime_owner = owner
+	..()
+
+/datum/status_effect/slime/on_remove()
+	slime_owner = null
+	return ..()
+
+/datum/status_effect/slime/refresh(mob/living/owner, to_add)
+	. = ..()
+	src.duration += min(to_add, max_duration)
+
+#define MAXIMUM_RADIATION_TIME 60 SECONDS
+
+/atom/movable/screen/alert/status_effect/tritrated
+	name = "Tritrated Slime"
+	desc = "Your slime body has completely adapted to Tritium! It will mutate until becoming green, and you will constantly send out powerful radioactive pulses."
+	icon_state = "radiation"
+
+/datum/status_effect/slime/tritrated
+	id = "tritrated"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	max_duration = MAXIMUM_RADIATION_TIME
+	tick_interval = 2 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/tritrated
+	remove_on_fullheal = TRUE
+
+/datum/status_effect/slime/tritrated/on_apply()
+	. = ..()
+	to_chat(slime_owner, span_userdanger("You've absorbed so much tritium you've become a radiation engine!"))
+	slime_owner.AddElement(
+		/datum/element/radioactive,\
+		range = 5,\
+		threshold = RAD_HEAVY_INSULATION,\
+	)
+	slime_owner.add_filter("tritrated", 10, list("type" = "rays", "size" = 35, "color" = "#32cd32"))
+	return .
+
+/datum/status_effect/slime/tritrated/on_remove()
+	slime_owner.RemoveElement(/datum/element/radioactive)
+	slime_owner.remove_filter("tritrated")
+	return ..()
+
+
+/datum/status_effect/slime/tritrated/tick(seconds_between_ticks)
+	if(SPT_PROB(45, seconds_between_ticks))
+		slime_owner.set_colour(pick(slime_owner.slime_colours))
+		owner.apply_damage(rand(2,4) * seconds_between_ticks, damagetype = BRUTE)
+	if(SPT_PROB(25, seconds_between_ticks))
+		slime_owner.fire_nuclear_particle()
+		owner.apply_damage(rand(4, 8) * seconds_between_ticks, damagetype = BRUTE)
+		slime_owner.regenerate_icons(force_mood = pick("angry"))
+
+/datum/status_effect/slime/tritrated/update_particles()
+	if(particle_effect)
+		return
+
+	particle_effect = new(owner, /particles/slime)
+
+	// Green is radioactive and tritium and whatnot
+	particle_effect.particles.color = "[COLOR_SLIME_GREEN]a0"
+
+/datum/status_effect/slime/tritrated/get_examine_text()
+	return span_bolddanger("Its surface mass is shifting and bubbling wildly, radiation pulses beaming out!")
+
+#define MAXIMUM_STUPOR_TIME 4 MINUTES
+
+/atom/movable/screen/alert/status_effect/stupor
+	name = "Hallucinogenic Stupor"
+	desc = "You've fallen under the influence of Slime Weed, AKA BZ gas. You feel very friendly..."
+	icon_state = "???"
+
+/datum/status_effect/slime/stupor
+	id = "stupor"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	max_duration = MAXIMUM_STUPOR_TIME
+	tick_interval = 2 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/stupor
+	remove_on_fullheal = TRUE
+	var/stored_docility
+	var/stored_friends
+
+/datum/status_effect/slime/stupor/on_apply()
+	. = ..()
+	to_chat(slime_owner, span_userdanger("You've fallen into a pleasant stupor..."))
+	ADD_TRAIT(slime_owner, TRAIT_PACIFISM, REF(src))
+	slime_owner.add_filter("bz_stupor", 2, list("type" = "drop_shadow", "color" = "#9370db", "alpha" = 0, "size" = 2))
+	stored_docility = slime_owner.docile
+	stored_friends = slime_owner.Friends
+	slime_owner.docile = TRUE
+	slime_owner.clear_friends()
+	return .
+
+/datum/status_effect/slime/stupor/on_remove()
+	REMOVE_TRAIT(slime_owner, TRAIT_PACIFISM, REF(src))
+	slime_owner.remove_filter("bz_stupor")
+	slime_owner.docile = stored_docility
+	slime_owner.Friends = stored_friends
+	stored_friends = null
+	. = ..()
+
+/datum/status_effect/slime/stupor/tick(seconds_between_ticks)
+	if(SPT_PROB(15, seconds_between_ticks))
+		for(var/mob/fremb in view())
+			if(isslime(fremb))
+				continue
+			slime_owner.Friends |= fremb
+		slime_owner.visible_message("[slime_owner] looks all around it and smiles contentedly.")
+		slime_owner.regenerate_icons(force_mood = ":3")
+		slime_owner.powerlevel--
+
+/datum/status_effect/slime/stupor/get_examine_text()
+	return span_bolddanger("It is smiling contentedly.")
+
+#define MAXIMUM_NITRIUM_TIME 2.5 MINUTES
+
+/datum/status_effect/slime/nitrated
+	id = "nitrated"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	max_duration = MAXIMUM_NITRIUM_TIME
+	tick_interval = 2 SECONDS
+	remove_on_fullheal = FALSE
+
+/datum/status_effect/slime/nitrated/on_apply()
+	. = ..()
+	to_chat(slime_owner, span_userdanger("You've become supercharged!"))
+	slime_owner.add_filter("nitrated_shadow", 2, list("type" = "drop_shadow", "color" = "#a52a2a", "alpha" = 0, "size" = 2))
+	slime_owner.add_filter("nitrated_rays", 10, list("type" = "rays", "size" = 15, "color" = "#a52a2a"))
+	slime_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+
+	return .
+
+/datum/status_effect/slime/nitrated/on_remove()
+	slime_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+	slime_owner.remove_filter("nitrated_shadow")
+	slime_owner.remove_filter("nitrated_rays")
+	REMOVE_TRAIT(slime_owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src))
+	. = ..()
+
+/datum/status_effect/slime/nitrated/tick(seconds_between_ticks)
+	if(SPT_PROB(15, seconds_between_ticks))
+		slime_owner.powerlevel++
+
+/datum/status_effect/slime/nitrated/get_examine_text()
+	return span_bolddanger("It is smiling mischeviously, vibrating with unspent energy!")
+
+#define MAXIMUM_HYPERNOB_TIME 10 SECONDs
+
+/atom/movable/screen/alert/status_effect/hypernob_protection
+	name = "Hyper-Noblium Coating"
+	desc = "Your slime body has been coated with a thin layer of Hyper-Noblium. You feel... non-reactive?"
+	icon_state = "???"
+
+/datum/status_effect/slime/hypernob_protection
+	id = "hypernob_protection"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	max_duration = MAXIMUM_NITRIUM_TIME
+	alert_type = /atom/movable/screen/alert/status_effect/hypernob_protection
+	tick_interval = 2 SECONDS
+	remove_on_fullheal = FALSE
+
+/datum/status_effect/slime/hypernob_protection/on_apply()
+	. = ..()
+	to_chat(slime_owner, span_userdanger("A layer of hypernoblium forms over your body, coating it. You feel extremely stable..."))
+	slime_owner.mutation_chance = 0
+	slime_owner.add_filter("hypernob_protection", 1, list("type" = "outline", "color" = "#008080", "alpha" = 0, "size" = 1))
+	addtimer(CALLBACK(src, PROC_REF(start_glow_loop), slime_owner), 3 SECONDS)
+	slime_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium) // small slowdown as a tradeoff!
+	ADD_TRAIT(slime_owner, TRAIT_SLIME_WATER_IMMUNE, REF(src))
+
+/datum/status_effect/slime/hypernob_protection/proc/start_glow_loop(atom/movable/parent_movable)
+	var/filter = parent_movable.get_filter("hypernob_protection")
+	if (!filter)
+		return
+
+	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 2.5 SECONDS)
+
+	return .
+
+/datum/status_effect/slime/hypernob_protection/on_remove()
+	slime_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
+	REMOVE_TRAIT(slime_owner, TRAIT_SLIME_WATER_IMMUNE, REF(src))
+	. = ..()
+
+/datum/status_effect/slime/hypernob_protection/get_examine_text()
+	return span_bolddanger("It has a softly pulsating blue-white coating on its body.")
