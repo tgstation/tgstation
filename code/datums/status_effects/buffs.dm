@@ -165,7 +165,7 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 30 SECONDS
+	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
@@ -201,15 +201,15 @@
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
 	// every fitness level adds 3 seconds to the duration
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 3 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 5 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
 	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER)
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
-		new_owner.Stun(5 SECONDS)
-		new_owner.balloon_alert(new_owner, "muscles exhausted!")
-		return 0 SECONDS
+		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
+		new_owner.emote("scream")
+		return exhaustion_limit
 
 	return bonus_time
 
