@@ -485,3 +485,31 @@
   vinylspiders:
   - image: you can now change the style of lipstick to be higher or lower on the face
       by alt-clicking the lipstick tube
+2023-10-13:
+  EuSouAFazer:
+  - qol: The rollerdome is now better - the dance floor works now, and the bar is
+      groovier.
+  Jacquerel:
+  - bugfix: Dullahans can read, strip people, and utilise tools.
+  - bugfix: Dullahan brains and eyes will not decay while inside their living severed
+      head.
+  LT3:
+  - qol: Canisters can now be built in one step, no upgrading required
+  Paxilmaniac:
+  - image: Inhands for the Sakhno and related rifles will no longer be way too high
+      or big
+  Rhials:
+  - rscadd: Two new psyker-oriented virtual domains -- Crate Chaos and Infected Domain.
+  - rscadd: Map helper for cyber-police corpse spawn.
+  - rscadd: Map helper for swapping the encrypted crate in an area with a random crate
+      from that same area.
+  jlsnow301:
+  - bugfix: Fixed the errant bluescreen in the camera console.
+  mc-oofert:
+  - code_imp: basicmobs that delete on death, ghost before dying
+  san7890:
+  - bugfix: The Holy Hand Grenade's effect on revealing a revenant had its duration
+      accidentally nerfed, it is now back to 10 seconds.
+  - bugfix: Revenant midrounds should now properly run.
+  - bugfix: Revenant harvesting should now let you actually pass the final do_after
+      so you can harvest that sweet essence.
