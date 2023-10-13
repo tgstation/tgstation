@@ -8,7 +8,7 @@
 	name = "directors note"
 	default_raw_text = "<i>The research was going smooth... but the experiment did not go as planned. He convulsed and screamed as he slowly mutated into.. that thing. It started to spread everywhere, outside the lab too. There is no way we can cover up that we are not a teleport research outpost, so I locked down the lab, but they already know. They sent a squad to rescue us, but...</i>"
 
-/obj/item/paper/crumpled/bloody/fluff/meatderelict/shieldgens
+/obj/item/paper/crumpled/fluff/meatderelict/shieldgens
 	name = "shield gate marketing sketch"
 	default_raw_text = "the <b>QR-109 Shield Gate</b> is a robust hardlight machine capable of producing a strong shield to bar entry. With integration, it can be controlled from anywhere, like your ships bridge,<b>Engineering</b>, or anywhere else, from a control panel! <i>The rest is faded..</i>"
 
@@ -44,6 +44,7 @@
 	desc = "A horrible mass of meat and teeth. Can it see you? You hope not. Virtually indestructible, must be a way around."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "meatblockade"
+	opacity = TRUE
 
 /obj/structure/puzzle_blockade/meat/try_signal(datum/source, try_id)
 	SIGNAL_HANDLER
@@ -58,25 +59,49 @@
 
 /obj/lightning_thrower
 	name = "overcharged SMES"
+	desc = "An overclocked SMES, bursting with power. <b>Entering something being shocked is as bad idea.</b>"
 	anchored = TRUE
 	density = TRUE
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "smes"
+	//not for mappers go away
 	var/static/list/throw_directions_cardinal = list(NORTH,WEST,EAST,SOUTH)
 	var/static/list/throw_directions_diagonal = list(NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)
+	//use these
 	var/throw_diagonals = FALSE
 	var/shock_flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES
 	var/shock_damage = 20
+	var/list/signal_turfs = list()
 
 /obj/lightning_thrower/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSprocessing, src) 
+
+/obj/lightning_thrower/Destroy()
+	. = ..()
+	signal_turfs = null
 
 /obj/lightning_thrower/process(seconds_per_tick)
 	var/list/dirs = throw_diagonals ? throw_directions_diagonal : throw_directions_cardinal
 	throw_diagonals = !throw_diagonals
+	playsound(src, 'sound/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	for(var/direction in dirs)
 		var/victim_turf = get_step(src, direction)
 		Beam(victim_turf, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+		RegisterSignal(victim_turf, COMSIG_ATOM_ENTERED, PROC_REF(shock_victim)) //we cant move anyway
+		signal_turfs += victim_turf
 		for(var/mob/living/victim in victim_turf)
-			victim.electrocute_act(shock_damage, src, flags = shock_flags)
+			shock_victim(null, victim)
+	addtimer(CALLBACK(src, PROC_REF(clear_signals)), 0.5 SECONDS)
+
+/obj/lightning_thrower/proc/clear_signals(datum/source)
+	SIGNAL_HANDLER
+	for(var/turf in signal_turfs)
+		UnregisterSignal(turf, COMSIG_ATOM_ENTERED)
+		signal_turfs -= turf
+
+/obj/lightning_thrower/proc/shock_victim(datum/source, mob/living/victim)
+	SIGNAL_HANDLER
+	if(!istype(victim))
+		return
+	victim.electrocute_act(shock_damage, src, flags = shock_flags)

@@ -51,38 +51,32 @@
 
 /mob/living/basic/living_floor/Initialize(mapload)
 	. = ..()
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered)) //we cant move anyway
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
+	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 
-/mob/living/basic/living_floor/Destroy()
-	. = ..()
-	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
-
-/mob/living/basic/living_floor/examine(mob/user)
-	. = ..()
-	if(!Adjacent(user) && !isobserver(user))
+/mob/living/basic/living_floor/proc/look_aggro(datum/source, mob/living/victim)
+	SIGNAL_HANDLER
+	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor))
 		return
-	. += desc_aggro
+	if(victim.loc == loc) //guaranteed bite
+		var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
+		if(targetting.can_attack(src, victim)) 
+			melee_attack(victim)
+	icon_state = icon_aggro
+	desc = desc_aggro
 
-/mob/living/basic/living_floor/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
-	var/atom/target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(!isnull(target) && targetting.can_attack(src, target) && Adjacent(target)) //do this at pointblank and when we can attack
-		icon_state = icon_aggro
-	else
-		icon_state = icon_living
+/mob/living/basic/living_floor/proc/look_deaggro(datum/source, mob/living/victim)
+	SIGNAL_HANDLER
+	if(!istype(victim) && !istype(victim, /mob/living/basic/living_floor))
+		return
+	icon_state = initial(icon_state)
+	desc = initial(desc_aggro)
 
 /mob/living/basic/living_floor/med_hud_set_health()
 	return
 
 /mob/living/basic/living_floor/med_hud_set_status()
 	return
-
-/mob/living/basic/living_floor/proc/on_entered(datum/source, atom/movable/victim) // guaranteed bite on pass
-	SIGNAL_HANDLER
-	var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
-	if(targetting.can_attack(src, victim)) 
-		melee_attack(victim)
 
 /mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_CROWBAR)

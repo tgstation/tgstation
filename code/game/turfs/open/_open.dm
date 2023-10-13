@@ -124,9 +124,6 @@
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
 
-/turf/open/indestructible/plating
-	icon_state = "plating"
-
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
@@ -242,6 +239,9 @@
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_PLATING
+
+/turf/open/indestructible/plating/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
