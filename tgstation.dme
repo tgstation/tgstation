@@ -4363,6 +4363,8 @@
 #include "code\modules\mob\living\basic\clown\clown.dm"
 #include "code\modules\mob\living\basic\clown\clown_ai.dm"
 #include "code\modules\mob\living\basic\constructs\_construct.dm"
+#include "code\modules\mob\living\basic\constructs\artificer.dm"
+#include "code\modules\mob\living\basic\constructs\construct_ai.dm"
 #include "code\modules\mob\living\basic\constructs\harvester.dm"
 #include "code\modules\mob\living\basic\farm_animals\deer.dm"
 #include "code\modules\mob\living\basic\farm_animals\pig.dm"
