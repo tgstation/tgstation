@@ -5,10 +5,8 @@
 	speed = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	combat_mode = TRUE
-	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 	faction = list(ROLE_DEATHSQUAD)
-	//dodging = TRUE
+	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 
 /// A variant that calls for reinforcements on spotting a target
@@ -91,8 +89,10 @@
 
 /mob/living/basic/trooper/nanotrasen/peaceful/ranged
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire/peaceful
-	loot = list(/obj/item/gun/ballistic/automatic/wt550,
-		/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
+	loot = list(
+		/obj/item/gun/ballistic/automatic/wt550,
+		/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+	)
 	r_hand = /obj/item/gun/ballistic/automatic/wt550
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c46x30mm

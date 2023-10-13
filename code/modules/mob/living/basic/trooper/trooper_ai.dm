@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/trooper
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -13,10 +13,7 @@
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/trooper
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/trooper
-
-/datum/ai_behavior/basic_melee_attack/trooper
-	action_cooldown = 1.2 SECONDS
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/trooper
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/trooper
@@ -125,5 +122,5 @@
 
 /datum/ai_controller/basic_controller/trooper/viscerator
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
