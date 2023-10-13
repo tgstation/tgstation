@@ -128,6 +128,14 @@
 		"voice_analyzer",
 		"watering_can",
 	)
+	experiments_to_unlock = list(
+		/datum/experiment/autopsy/nonhuman,
+		/datum/experiment/scanning/random/material/medium/one,
+		/datum/experiment/scanning/random/material/medium/three,
+		/datum/experiment/scanning/random/material/hard/one,
+		/datum/experiment/scanning/random/material/hard/two,
+		/datum/experiment/scanning/people/novel_organs,
+	)
 
 /datum/techweb_node/mmi
 	id = "mmi"
@@ -630,6 +638,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	experiments_to_unlock = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -911,7 +920,7 @@
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
 	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"mmi_posi",
 	)
