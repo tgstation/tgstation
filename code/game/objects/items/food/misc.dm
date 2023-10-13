@@ -27,7 +27,7 @@
 		/datum/reagent/consumable/nutriment = 1,
 	)
 	tastes = list("apple" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | KIDS
 	food_flags = FOOD_FINGER_FOOD
 	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
