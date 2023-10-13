@@ -1,5 +1,5 @@
 /// You can't make a dragon darker than this, it'd be hard to see
-#define DARKNESS_THRESHOLD 50
+#define REJECT_DARK_COLOUR_THRESHOLD 50
 
 /**
  * Advanced stage of the space carp life cycle, spawned as a midround antagonist or via traitor transformation.
@@ -8,7 +8,7 @@
  */
 /mob/living/basic/space_dragon
 	name = "Space Dragon"
-	desc = "A serpentine leviathan whose flight defies all modern understanding of physics. Said to be the ultimate stage in the life cycle of Space Carp."
+	desc = "A serpentine leviathan whose flight defies all modern understanding of physics. Said to be the ultimate stage in the life cycle of the Space Carp."
 	icon = 'icons/mob/nonhuman-player/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
@@ -51,6 +51,10 @@
 	var/devastation_damage_min_percentage = 0.4
 	/// Maximum devastation damage dealt coefficient based on max health
 	var/devastation_damage_max_percentage = 0.75
+	/// Our fire breath action
+	var/datum/action/cooldown/mob_cooldown/fire_breath/carp/fire_breath
+	/// Our wing flap action
+	var/datum/action/cooldown/mob_cooldown/wing_buffet/buffet
 
 /mob/living/basic/space_dragon/Initialize(mapload)
 	. = ..()
@@ -62,9 +66,11 @@
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(src, COMSIG_ATOM_PRE_EX_ACT, PROC_REF(on_exploded))
 
-	var/datum/action/cooldown/mob_cooldown/fire_breath/carp/fire_breath = new(src)
+	fire_breath = new(src)
 	fire_breath.Grant(src)
-	fire_breath.set_click_ability(src) // Toggle it on as the default, you can turn it off if you want to be more careful
+
+	buffet = new(src)
+	buffet.Grant(src)
 
 /mob/living/basic/space_dragon/Login()
 	. = ..()
@@ -91,19 +97,35 @@
 		select_colour()
 		return
 	var/temp_hsv = RGBtoHSV(chosen_colour)
-	if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
+	if(ReadHSV(temp_hsv)[3] < REJECT_DARK_COLOUR_THRESHOLD)
 		to_chat(src, span_danger("Invalid colour. Your colour is not bright enough."))
 		select_colour()
 		return
 	add_atom_colour(chosen_colour, FIXED_COLOUR_PRIORITY)
 	update_appearance(UPDATE_OVERLAYS)
 
+/mob/living/basic/space_dragon/update_icon_state()
+	. = ..()
+	if (stat == DEAD)
+		return
+	if (!HAS_TRAIT(src, TRAIT_WING_BUFFET))
+		icon_state = icon_living
+		return
+	if (HAS_TRAIT(src, TRAIT_WING_BUFFET_TIRED))
+		icon_state = "spacedragon_gust_2"
+		return
+	icon_state = "spacedragon_gust"
+
 /mob/living/basic/space_dragon/update_overlays()
 	. = ..()
 	var/overlay_state = "overlay_base"
 	if (stat == DEAD)
 		overlay_state = "overlay_dead"
-	// else wings up thing
+	else if (HAS_TRAIT(src, TRAIT_WING_BUFFET_TIRED))
+		overlay_state = "overlay_gust_2"
+	else if (HAS_TRAIT(src, TRAIT_WING_BUFFET))
+		overlay_state = "overlay_gust"
+
 	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
 	overlay.appearance_flags = RESET_COLOR
 	. += overlay
@@ -117,11 +139,14 @@
 /// Before we attack something, check if we want to do something else instead
 /mob/living/basic/space_dragon/proc/pre_attack(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
-	if (!isliving(target) || target == src)
-		return // Easy to misclick yourself, let's not
+	if (!isliving(target))
+		return
+	if (target == src)
+		return COMPONENT_CANCEL_ATTACK_CHAIN  // Easy to misclick yourself, let's not
 	if (target.stat != DEAD)
 		return
 	INVOKE_ASYNC(src, PROC_REF(eat), target)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Try putting something inside us
 /mob/living/basic/space_dragon/proc/eat(mob/living/food)
@@ -133,7 +158,7 @@
 		return FALSE
 	playsound(src, 'sound/magic/demon_attack1.ogg', 60, TRUE)
 	visible_message(span_boldwarning("[src] swallows [food] whole!"))
-	food.extinguish() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
+	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
 	food.forceMove(src)
 	return TRUE
 
@@ -158,6 +183,12 @@
 	eaten.forceMove(loc)
 	eaten.Paralyze(5 SECONDS)
 
+/mob/living/basic/space_dragon/RangedAttack(atom/target, modifiers)
+	fire_breath.Trigger(target = target)
+
+/mob/living/basic/space_dragon/ranged_secondary_attack(atom/target, modifiers)
+	buffet.Trigger()
+
 /// When our stat changes, make sure we are using the correct overlay
 /mob/living/basic/space_dragon/proc/on_stat_changed()
 	SIGNAL_HANDLER
@@ -172,11 +203,6 @@
 	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 	return COMPONENT_CANCEL_EX_ACT // we handled it
 
-// right click gust
-
-// ranged left click fire breath
-
-
 /// Subtype used by the midround/event
 /mob/living/basic/space_dragon/spawn_with_antag
 
@@ -184,4 +210,4 @@
 	. = ..()
 	mind.add_antag_datum(/datum/antagonist/space_dragon)
 
-#undef DARKNESS_THRESHOLD
+#undef REJECT_DARK_COLOUR_THRESHOLD
