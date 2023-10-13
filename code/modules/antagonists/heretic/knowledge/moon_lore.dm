@@ -132,7 +132,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/space_phase,
+		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
@@ -184,7 +184,7 @@
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
 	desc = "The ascension ritual of the Path of Moon. \
-		Bring 3  corpses to a transmutation rune anywhere in service to complete the ritual. \
+		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of madness, all your spells will get a lower cooldown \
 		and become stronger. You will also passivly release hallucinations, decrease sanity, and increase \
 		confusion. If their sanity is low they will start taking brain damage and go blind."
@@ -193,22 +193,13 @@
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 	adds_sidepath_points = 1
 	route = PATH_MOON
-	/// A typepath to an area that we must finish the ritual in.
-	var/area/ritual_location = /area/station/service
 
-/datum/heretic_knowledge/ultimate/moon_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	// This map doesn't have service, for some reason??
-	// Let them complete the ritual anywhere
-	if(!GLOB.areas_by_type[ritual_location])
-		ritual_location = null
+/datum/heretic_knowledge/ultimate/moon_final/recipe_snowflake_check(mob/living/carbon/human/sacrifice, mob/living/user)
 
-/datum/heretic_knowledge/ultimate/moon_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(ritual_location)
-		var/area/our_area = get_area(loc)
-		if(!istype(our_area, ritual_location))
-			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!") // "must be in service"
-			return FALSE
+	// Checks if our target has enough brain damage
+	if(sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)<50)
+		user.balloon_alert(user, "They don't have enough brain damage!")
+		return FALSE
 
 	return ..()
 

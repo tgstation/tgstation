@@ -151,6 +151,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
@@ -177,7 +178,9 @@
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
 	adds_sidepath_points = 1
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/knock_final,
+		)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
