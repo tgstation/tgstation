@@ -690,4 +690,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	update_appearance()
 	update_name()
 
+//Select a random mode and switch to it
+/obj/machinery/airalarm/proc/select_random_mode()
+	var/list/possible_random_modes = list(
+		/datum/air_alarm_mode/filtering,
+		/datum/air_alarm_mode/contaminated,
+		/datum/air_alarm_mode/draught,
+		/datum/air_alarm_mode/refill,
+		/datum/air_alarm_mode/cycle,
+		/datum/air_alarm_mode/siphon,
+		/datum/air_alarm_mode/panic_siphon,
+		/datum/air_alarm_mode/off,
+		/datum/air_alarm_mode/flood,
+		/datum/air_alarm_mode/vent_siphon,
+	)
+
+	var/datum/air_alarm_mode/chosen_mode = possible_random_modes[rand(1, possible_random_modes.len)]
+
+	select_mode(source = src, mode_path = chosen_mode, should_apply = TRUE)
+
 #undef AIRALARM_WARNING_COOLDOWN

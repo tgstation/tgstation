@@ -21,6 +21,7 @@
 	var/authenticated = FALSE
 
 /datum/armor/machinery_computer
+	bullet = -50
 	fire = 40
 	acid = 20
 

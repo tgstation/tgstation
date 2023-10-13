@@ -577,3 +577,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 	if(COMPONENT_TRIGGERED_BY(reset_trigger, port))
 		attached_alarm?.reset()
+
+// When a bullet hits us, trigger the fire alarm, if it does enough damage also outright destroy the firealarm
+/obj/machinery/firealarm/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	// Trigger the alarm
+	if (buildstage == FIRE_ALARM_BUILD_SECURED)
+		alarm()
+
+	if (bullet.damage > 10)
+		do_sparks(number = 5, cardinal_only = FALSE, source = src)
+		atom_break()
+
+	return ..()

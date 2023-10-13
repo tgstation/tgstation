@@ -213,6 +213,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	icon_state = "intercom_command"
 	freerange = TRUE
 
+/obj/item/radio/intercom/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	//Knock if the bullet does enough damage, knock the intercom down
+	if (bullet.damage > 10)
+		knock_down()
+	else
+		return ..()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)

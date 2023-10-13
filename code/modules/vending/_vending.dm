@@ -209,6 +209,7 @@
 
 /datum/armor/machinery_vending
 	melee = 20
+	bullet = -50
 	fire = 50
 	acid = 70
 

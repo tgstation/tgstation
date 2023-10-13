@@ -8,6 +8,7 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
+	armor_type = /datum/armor/machinery_computer
 
 	///The power cell, null by default as we use the APC we're in
 	var/internal_cell = null

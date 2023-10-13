@@ -1591,6 +1591,23 @@
 	else if(istype(note, /obj/item/photo))
 		return "photo_[frame_state]"
 
+//If a bullet does enough damage, it randomly cuts some wires
+/obj/machinery/door/airlock/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	// Dont cut the wires if the airlock has been reinforced with something above iron
+	if (bullet.damage > 10 && security_level <= AIRLOCK_SECURITY_IRON)
+		do_sparks(number = 2, cardinal_only = FALSE, source = src)
+		//The number of wires a bullet will randomly cut
+		var/number_of_wires_bullet_cuts = 3
+		for (var/wire = 1 to number_of_wires_bullet_cuts)
+			src.wires.cut_random()
+
+	return ..()
+
+
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

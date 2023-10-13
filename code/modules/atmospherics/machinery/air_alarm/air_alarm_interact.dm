@@ -175,6 +175,22 @@
 	else
 		return FALSE
 
+//When a bullet hits us, if it does enough damage, choose a random mode and break
+/obj/machinery/airalarm/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	if (bullet.damage > 10)
+		//Switch to a random mode
+		select_random_mode()
+
+		do_sparks(number = 5, cardinal_only = FALSE, source = src)
+		atom_break()
+
+	return ..()
+
+
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
 	icon_state = "airalarm_electronics"

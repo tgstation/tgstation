@@ -39,6 +39,7 @@
 
 /datum/armor/structure_window
 	melee = 50
+	bullet = -100
 	fire = 80
 	acid = 100
 
@@ -470,6 +471,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 //2023 ONE YEAR TO GO! -LT3
 /datum/armor/window_reinforced
 	melee = 80
+	bullet = -75
 	bomb = 25
 	fire = 80
 	acid = 100

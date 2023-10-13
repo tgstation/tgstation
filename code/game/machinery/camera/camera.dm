@@ -578,3 +578,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 	return 1
+
+//If hit with a bullet, simply break if it does enough damge
+/obj/machinery/camera/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	if (bullet.damage > 10)
+		do_sparks(number = 2, cardinal_only = FALSE, source = src)
+		atom_break()
+
+	return ..()

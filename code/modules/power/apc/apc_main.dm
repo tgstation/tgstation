@@ -716,3 +716,22 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+//If the bullet does enough damage, shock everyone in a 3 tile radius and break
+/obj/machinery/power/apc/bullet_act(obj/projectile/bullet)
+	// Energy attacks dont do anything special
+	if (bullet.armor_flag in list(ENERGY, LASER))
+		return ..()
+
+	if (bullet.damage > 12)
+		//break and spark
+		do_sparks(number = 7, cardinal_only = FALSE, source = src)
+		atom_break()
+
+		//We zap if we are connected to the powernet and it has at least some power
+		if (main_status != APC_NO_POWER)
+			//I want to avoid energy net shenanigans, so lets just keep the zap damage constant
+			var/zap_joules = 4e6
+			tesla_zap(src, 5, zap_joules)
+
+	return ..()
