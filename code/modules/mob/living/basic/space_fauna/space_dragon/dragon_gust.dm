@@ -80,7 +80,7 @@
 		candidate.safe_throw_at(throwtarget, range = 10, speed = 1, thrower = owner)
 		candidate.Paralyze(5 SECONDS)
 
-	var/endlag_multiplier = 1 // Add some kinda exhaustion trait check here
+	var/endlag_multiplier = HAS_TRAIT(owner, TRAIT_RIFT_FAILURE) ? exhaustion_multiplier : 1
 	var/stun_time = minimum_endlag + (additional_endlag * endlag_multiplier)
 	additional_endlag += endlag_per_activation * endlag_multiplier // double dips, rough
 	ADD_TRAIT(owner, TRAIT_WING_BUFFET_TIRED, REF(src))

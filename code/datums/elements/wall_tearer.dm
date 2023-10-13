@@ -17,15 +17,18 @@
 	var/tear_time
 	/// How much longer it takes to break reinforced walls
 	var/reinforced_multiplier
+	/// What interaction key do we use for our interaction
+	var/do_after_key
 
-/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 4 SECONDS, reinforced_multiplier = 3)
+/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	src.allow_reinforced = allow_reinforced
 	src.tear_time = tear_time
 	src.reinforced_multiplier = reinforced_multiplier
-	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK), PROC_REF(rip_and_tear))
+	src.do_after_key = do_after_key
+	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK), PROC_REF(on_attacked_wall))
 
 /datum/element/wall_tearer/Detach(datum/source)
 	. = ..()
@@ -36,6 +39,9 @@
 	SIGNAL_HANDLER
 	if (!proximity_flag)
 		return
+	if (DOING_INTERACTION_WITH_TARGET(tearer, target) || (!isnull(do_after_key) && DOING_INTERACTION(tearer, do_after_key)))
+		tearer.balloon_alert(tearer, "busy!")
+		return COMPONENT_HOSTILE_NO_ATTACK
 	var/is_valid = validate_target(target, tearer)
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return is_valid == WALL_TEAR_FAIL_CANCEL_CHAIN ? COMPONENT_HOSTILE_NO_ATTACK : NONE
@@ -49,7 +55,7 @@
 		tearer.visible_message(span_warning("[tearer] begins tearing through [target]!"))
 		playsound(tearer, 'sound/machines/airlock_alien_prying.ogg', vol = 100, vary = TRUE)
 		target.balloon_alert(tearer, "tearing...")
-		if (!do_after(tearer, delay = rip_time, target = target))
+		if (!do_after(tearer, delay = rip_time, target = target, interaction_key = do_after_key))
 			tearer.balloon_alert(tearer, "interrupted!")
 			return
 	// Might have been replaced, removed, or reinforced during our do_after

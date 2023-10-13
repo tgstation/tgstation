@@ -1,5 +1,7 @@
 /// You can't make a dragon darker than this, it'd be hard to see
 #define REJECT_DARK_COLOUR_THRESHOLD 50
+/// Any interactions executed by the space dragon
+#define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
 /**
  * Advanced stage of the space carp life cycle, spawned as a midround antagonist or via traitor transformation.
@@ -61,7 +63,7 @@
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
-	AddElement(/datum/element/wall_tearer)
+	AddElement(/datum/element/wall_tearer, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddComponent(/datum/component/seethrough_mob)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
@@ -140,6 +142,9 @@
 /// Before we attack something, check if we want to do something else instead
 /mob/living/basic/space_dragon/proc/pre_attack(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
+	if (DOING_INTERACTION(source, DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION))
+		balloon_alert(source, "busy!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (!isliving(target))
 		return
 	if (target == src)
@@ -212,3 +217,4 @@
 	mind.add_antag_datum(/datum/antagonist/space_dragon)
 
 #undef REJECT_DARK_COLOUR_THRESHOLD
+#undef DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION
