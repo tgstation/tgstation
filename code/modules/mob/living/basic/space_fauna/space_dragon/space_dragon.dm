@@ -64,6 +64,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
 	AddElement(/datum/element/wall_tearer, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
+	AddElement(/datum/element/door_pryer, pry_time = 4 SECONDS, interaction_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddComponent(/datum/component/seethrough_mob)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
@@ -151,14 +152,17 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN  // Easy to misclick yourself, let's not
 	if (target.stat != DEAD)
 		return
-	INVOKE_ASYNC(src, PROC_REF(eat), target)
+	INVOKE_ASYNC(src, PROC_REF(try_eat), target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Try putting something inside us
-/mob/living/basic/space_dragon/proc/eat(mob/living/food)
+/mob/living/basic/space_dragon/proc/try_eat(mob/living/food)
 	balloon_alert(src, "swallowing...")
-	if (!do_after(src, 3 SECONDS, target = food))
-		return
+	if (do_after(src, 3 SECONDS, target = food))
+		eat(food)
+
+/// Succeed in putting something inside us
+/mob/living/basic/space_dragon/proc/eat(mob/living/food)
 	adjust_health(-food.maxHealth * 0.25)
 	if (QDELETED(food) || food.loc == src)
 		return FALSE

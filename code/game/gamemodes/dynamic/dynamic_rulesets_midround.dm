@@ -581,7 +581,7 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/simple_animal/hostile/space_dragon/S = new (pick(spawn_locs))
+	var/mob/living/basic/space_dragon/S = new (pick(spawn_locs))
 	player_mind.transfer_to(S)
 	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
 
