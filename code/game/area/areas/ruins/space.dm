@@ -598,20 +598,20 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
-/area/ruin/space/has_grav/quantumresearch
+/area/ruin/space/has_grav/powered/quantumresearch
 	name = "\improper Quantum Research Lobby"
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
-/area/ruin/space/has_grav/quantumresearch/science
+/area/ruin/space/has_grav/powered/quantumresearch/science
 	name = "\improper Quantum Research Science"
 
-/area/ruin/space/has_grav/quantumresearch/waste
+/area/ruin/space/has_grav/powered/quantumresearch/waste
 	name = "\improper Quantum Research Waste Disposal"
 
-/area/ruin/space/has_grav/quantumresearch/power
+/area/ruin/space/has_grav/powered/quantumresearch/power
 	name = "\improper Quantum Research Power Closet"
 
-/area/ruin/space/has_grav/quantumresearch/tele
+/area/ruin/space/has_grav/powered/quantumresearch/tele
 	name = "\improper Quantum Research Quantum Teleporter"
 
 // Space Ghost Kitchen

@@ -274,3 +274,69 @@
 	powered = TRUE
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, puzzle_id)
 	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
+
+//
+// literally just buttons
+//
+
+/obj/machinery/puzzle_button
+	name = "control panel"
+	desc = "A panel that controls something nearby. Im sure it being covered in hazard stripes is fine."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "lockdown0"
+	base_icon_state = "lockdown"
+	var/used = FALSE
+	var/single_use = TRUE
+	var/id = "0" //null would literally open every puzzle door without an id
+
+/obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(used && single_use)
+		return
+	used = single_use
+	update_icon_state()
+	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
+	open_doors()
+
+/obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id) //gonna use this signal anyway because range sucks and im going to probably refactor puzzle stuff or goof does it anyway
+
+/obj/machinery/puzzle_button/update_icon_state()
+	icon_state = "[base_icon_state][used]"
+	return ..()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
+
+//
+// blockade
+//
+
+//blockades destroy themselves if they receive COMSIG_GLOB_PUZZLE_COMPLETED with their ID
+/obj/structure/puzzle_blockade
+	name = "shield gate"
+	desc = "A wall of solid light, likely defending something important. Virtually indestructible, must be a way around, or to disable it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wave2"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
+	opacity = FALSE
+	density = TRUE
+	var/id
+
+/obj/structure/puzzle_blockade/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/structure/puzzle_blockade/Destroy(force)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED)
+
+/obj/structure/puzzle_blockade/proc/try_signal(datum/source, try_id)
+	SIGNAL_HANDLER
+	if(try_id != id)
+		return
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	qdel(src)

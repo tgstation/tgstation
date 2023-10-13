@@ -1,9 +1,3 @@
-/obj/item/keycard/meatderelict/final
-	name = "bloody keycard"
-	desc = "A keycard covered in chunks of blood and meat. Swallowed, or was the thing you killed a formerly a person? Looks important."
-	color = "#990000"
-	puzzle_id = "md_vault"
-
 /obj/item/keycard/meatderelict/director
 	name = "directors keycard"
 	desc = "A fancy keycard. Likely unlocks the directors office. The name tag is all smudged."
@@ -12,38 +6,77 @@
 
 /obj/item/paper/crumpled/bloody/fluff/meatderelict/directoroffice
 	name = "directors note"
-	default_raw_text = "<i>The research was going smooth... but the experiment did not go as planned. He squirmed and screamed as he slowly mutated into.. that thing. It started to spread everywhere, outside the lab too. There is no way we can cover up that we are not a teleport research outpost. I locked down the lab, but they already know. They sent a squad to rescue us, but...</i>"
+	default_raw_text = "<i>The research was going smooth... but the experiment did not go as planned. He convulsed and screamed as he slowly mutated into.. that thing. It started to spread everywhere, outside the lab too. There is no way we can cover up that we are not a teleport research outpost, so I locked down the lab, but they already know. They sent a squad to rescue us, but...</i>"
 
-/obj/machinery/door/puzzle/light/meatderelict
+/obj/item/paper/crumpled/bloody/fluff/meatderelict/shieldgens
+	name = "shield gate marketing sketch"
+	default_raw_text = "the <b>QR-109 Shield Gate</b> is a robust hardlight machine capable of producing a strong shield to bar entry. With integration, it can be controlled from anywhere, like your ships bridge,<b>Engineering</b>, or anywhere else, from a control panel! <i>The rest is faded..</i>"
+
+/obj/machinery/door/puzzle/meatderelict
 	name = "lockdown door"
 	desc = "A beaten door, still sturdy. Impervious to conventional methods of destruction, must be a way to open it nearby."
 	base_icon_state = "danger"
 	icon_state = "danger_closed"
+	puzzle_id = "md_prevault"
 
-/mob/living/basic/meteor_heart/drops_card
-	death_loot = list(/obj/effect/temp_visual/meteor_heart_death, /obj/item/keycard/meatderelict/final)
+/mob/living/basic/meteor_heart/opens_puzzle_door
+	var/id
 
-/obj/machinery/derelict_lockdown
+/mob/living/basic/meteor_heart/opens_puzzle_door/death(gibbed)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(send_signal)), 2.5 SECONDS)
+
+/mob/living/basic/meteor_heart/opens_puzzle_door/proc/send_signal()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
+
+/obj/machinery/puzzle_button/meatderelict
 	name = "lockdown panel"
 	desc = "A panel that controls the lockdown of this outpost."
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "lockdown0"
-	base_icon_state = "lockdown"
-	var/used = FALSE
-	var/id = "md_prevault"
+	id = "md_prevault"
 
-/obj/machinery/derelict_lockdown/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(used)
-		return
-	used = TRUE
-	update_icon_state()
+/obj/machinery/puzzle_button/meatderelict/open_doors()
+	..()
 	playsound(src, 'sound/effects/alert.ogg', 100, TRUE)
 	visible_message(span_warning("[src] lets out an alarm as the lockdown is lifted!"))
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, id) //gonna use this signal anyway because range sucks and im going to probably refactor puzzle stuff or goof does it anyway
 
-/obj/machinery/derelict_lockdown/update_icon_state()
-	icon_state = "[base_icon_state][used]"
-	return ..()
+/obj/structure/puzzle_blockade/meat
+	name = "mass of meat and teeth"
+	desc = "A horrible mass of meat and teeth. Can it see you? You hope not. Virtually indestructible, must be a way around."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "meatblockade"
+
+/obj/structure/puzzle_blockade/meat/try_signal(datum/source, try_id)
+	SIGNAL_HANDLER
+	if(try_id != id)
+		return
+	Shake(duration = 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open_up)), 0.5 SECONDS)
+
+/obj/structure/puzzle_blockade/meat/proc/open_up()
+	new /obj/effect/gibspawner/generic(drop_location())
+	qdel(src)
+
+/obj/lightning_thrower
+	name = "overcharged SMES"
+	anchored = TRUE
+	density = TRUE
+	icon = 'icons/obj/machines/engine/other.dmi'
+	icon_state = "smes"
+	var/static/list/throw_directions_cardinal = list(NORTH,WEST,EAST,SOUTH)
+	var/static/list/throw_directions_diagonal = list(NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)
+	var/throw_diagonals = FALSE
+	var/shock_flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES
+	var/shock_damage = 20
+
+/obj/lightning_thrower/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/lightning_thrower/process(seconds_per_tick)
+	var/list/dirs = throw_diagonals ? throw_directions_diagonal : throw_directions_cardinal
+	throw_diagonals = !throw_diagonals
+	for(var/direction in dirs)
+		var/victim_turf = get_step(src, direction)
+		Beam(victim_turf, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+		for(var/mob/living/victim in victim_turf)
+			victim.electrocute_act(shock_damage, src, flags = shock_flags)

@@ -1,6 +1,5 @@
 /datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/atom/target = weak_target?.resolve()
+	var/mob/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(!target || QDELETED(target))
 		return
 	if(target.loc != controller.pawn.loc)
@@ -25,6 +24,7 @@
 	icon_state = "floor"
 	icon_living = "floor"
 	mob_size = MOB_SIZE_HUGE
+	mob_biotypes = MOB_SPECIAL
 	status_flags = GODMODE //everything but crowbars may kill us
 	death_message = ""
 	unsuitable_atmos_damage = 0
@@ -44,6 +44,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	ai_controller = /datum/ai_controller/basic_controller/living_floor
+	melee_attack_cooldown = 0.5 SECONDS // get real
 	
 	var/icon_aggro = "floor-hostile"
 	var/desc_aggro = "This flooring is alive and filled with teeth, better not step on that. Being covered in plating, it is immune to damage. Seems vulnerable to prying though."
@@ -56,17 +57,20 @@
 	. = ..()
 	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
 
+/mob/living/basic/living_floor/examine(mob/user)
+	. = ..()
+	if(!Adjacent(user) && !isobserver(user))
+		return
+	. += desc_aggro
+
 /mob/living/basic/living_floor/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
-	var/datum/weakref/weak_target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/mob/living/target = weak_target?.resolve()
-	if(!isnull(target) && targetting.can_attack(src, target) && get_dist(src, target) <= 1) //do this at pointblank and when we can attack
+	var/atom/target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(!isnull(target) && targetting.can_attack(src, target) && Adjacent(target)) //do this at pointblank and when we can attack
 		icon_state = icon_aggro
-		desc = desc_aggro
 	else
 		icon_state = icon_living
-		desc = ""
 
 /mob/living/basic/living_floor/med_hud_set_health()
 	return
@@ -85,7 +89,7 @@
 		balloon_alert(user, "you start prying it off with all your strength...")
 		if(do_after(user, 5 SECONDS, src))
 			new /obj/effect/gibspawner/generic(loc)
-			qdel(src) //theoretically i could add ghostize but it shouldnt matter since this should never be a player mob anyway
+			qdel(src)
 	else
 		return ..()
 

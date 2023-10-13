@@ -1,1979 +1,2584 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"at" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"aN" = (
-/obj/machinery/shower/directional/north,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"aQ" = (
-/obj/machinery/door/airlock/research{
-	name = "QRS Access"
-	},
-/obj/effect/mapping_helpers/airlock_note_placer{
-	note_name = "old note";
-	note_info = "Garry, if youre still in there, watch out for the flooring. Anyways! Get fucked, I blew up your arrivals bay!"
-	},
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"bp" = (
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/gun/ballistic/revolver/c38,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"bq" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/barricade/wooden/crude,
+"af" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
 /turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"bR" = (
-/obj/structure/frame/computer,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"ck" = (
-/obj/structure/window/reinforced{
+/area/ruin/space/has_grav/powered/quantumresearch)
+"aE" = (
+/mob/living/basic/living_floor,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"aF" = (
+/obj/structure/bed{
 	dir = 4
 	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"cz" = (
-/mob/living/basic/living_floor/white,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/science)
-"du" = (
-/obj/structure/lattice,
-/obj/effect/mob_spawn/corpse/human/damaged{
-	husk = 1
-	},
-/obj/item/keycard{
-	puzzle_id = "wawa";
-	name = "research keycard"
-	},
-/turf/open/space/basic,
-/area/space)
-"dA" = (
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"dV" = (
-/obj/machinery/power/rtg/advanced{
-	power_gen = 2000
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/light/blacklight/directional/south,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"ec" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/space)
-"eo" = (
-/obj/machinery/conveyor/auto{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
+/obj/item/bedsheet/random{
 	dir = 4
 	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"eA" = (
-/obj/structure/chair/sofa/bench,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/light/blacklight/directional/north,
+/obj/item/stack/spacecash/c10,
 /turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"fu" = (
-/obj/item/stack/sheet/mineral/diamond{
-	amount = 30
-	},
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c1000,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"fO" = (
-/obj/structure/window/reinforced{
+/area/ruin/space/has_grav/powered/quantumresearch)
+"aM" = (
+/obj/structure/grille/indestructible,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"aW" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"bh" = (
+/obj/structure/sign/directions/science/directional/west,
+/obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/structure/flora/bush/grassy/style_random,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/quantumresearch/science)
-"gd" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"bi" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"ch" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/east,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"cQ" = (
+/obj/effect/spawner/random/structure/chair_comfy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"dR" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"eo" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"gp" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"gv" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"gD" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering{
-	name = "Waste Disposal"
+/turf/open/floor/plating,
+/area/template_noop)
+"ex" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/dresser,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"eA" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"eP" = (
+/obj/structure/meateor_fluff/eyeball,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"eT" = (
+/obj/item/fakeartefact,
+/obj/structure/table/wood/fancy/orange,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/obj/machinery/door/puzzle/keycard/blue_required{
-	puzzle_id = "qrs_eng"
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"fc" = (
+/obj/item/clothing/head/soft/purple,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"fm" = (
+/turf/open/indestructible/white,
+/area/template_noop)
+"fB" = (
+/obj/item/reagent_containers/cup/bucket,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/mop,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"go" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"gQ" = (
+/obj/item/ammo_casing/spent,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"hR" = (
+/obj/structure/sign/warning,
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"hW" = (
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"hX" = (
+/turf/closed/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"id" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"ij" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/machinery/door/puzzle{
+	puzzle_id = "md_42069";
+	desc = "This door only opens from the other side. It looks virtually indestructible."
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"il" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"iI" = (
+/obj/structure/chair/sofa/bench/left,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"ja" = (
+/obj/item/food/muffin/moffin{
+	preserved_food = 1
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"jo" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/template_noop)
+"jE" = (
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"jO" = (
+/turf/closed/indestructible/reinforced,
+/area/template_noop)
+"jV" = (
+/obj/structure/closet/secure_closet/medical1,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"kn" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/cold/directional/south,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"kB" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"kK" = (
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"kX" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"la" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"lm" = (
 /obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"mc" = (
+/obj/machinery/door/airlock/engineering,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"mO" = (
+/obj/structure/closet/wardrobe/pjs,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"mU" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/cold/dim/directional/south,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"ne" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/reagent_containers/hypospray/medipen/methamphetamine{
+	pixel_x = -3
+	},
+/obj/item/book/manual/wiki/research_and_development{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"nr" = (
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"nx" = (
+/obj/structure/dresser,
+/obj/item/storage/crayons{
+	pixel_y = 13
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"nY" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"oh" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"oj" = (
+/obj/machinery/door/airlock/security,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"oQ" = (
+/obj/machinery/puzzle_button/meatderelict{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"oX" = (
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"ph" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"qi" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"qw" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"qx" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"qE" = (
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"rh" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"rw" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/obj/effect/spawner/random/entertainment/plushie,
+/obj/structure/sign/poster/official/no_erp/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"rK" = (
+/obj/structure/showcase/horrific_experiment,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"sd" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"sk" = (
+/obj/structure/chair/sofa/bench/right,
+/obj/effect/mob_spawn/corpse/human/scientist{
+	brute_damage = 100;
+	corpse_description = "They were shot in the head, and heart."
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"sl" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"sL" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/plating,
+/area/template_noop)
+"tg" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/core/full/ten_commandments,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"tv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"tS" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/template_noop)
+"uc" = (
+/obj/effect/turf_decal/siding/purple/corner,
 /turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/power)
-"gG" = (
-/obj/structure/closet/l3closet,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"uq" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/template_noop)
+"uH" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/template_noop)
+"uU" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"vI" = (
+/obj/structure/sign/poster/quirk/crew/hang{
+	pixel_x = -32
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"vY" = (
+/obj/machinery/door/puzzle/keycard{
+	puzzle_id = md_director;
+	name = "Directors Office"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"wn" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
 /turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"gO" = (
-/obj/structure/chair/sofa/bench/left,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"wy" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"wM" = (
+/obj/structure/sign/warning/biohazard/directional/east,
+/turf/open/indestructible/plating,
+/area/template_noop)
+"xk" = (
+/turf/closed/mineral/random/low_chance,
+/area/template_noop)
+"xr" = (
+/obj/machinery/door/puzzle/meatderelict,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"yu" = (
+/obj/structure/dresser,
+/obj/effect/spawner/random/entertainment/dice,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"zs" = (
+/obj/structure/chair/office,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"zF" = (
+/obj/effect/mob_spawn/corpse/human/scientist{
+	brute_damage = 100;
+	corpse_description = "They were shot in the head, and heart."
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"zG" = (
+/turf/open/indestructible/plating,
+/area/template_noop)
+"An" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/table,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Av" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"AG" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"AV" = (
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/template_noop)
+"AX" = (
+/obj/machinery/light/directional/north,
+/mob/living/basic/mothroach{
+	name = "Moff"
+	},
+/obj/machinery/door/window/right/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Bk" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Br" = (
+/obj/structure/closet/l3closet/scientist,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"BA" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plating,
+/area/template_noop)
+"Cf" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"gR" = (
-/obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"gT" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"hv" = (
-/obj/machinery/conveyor/auto{
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"hG" = (
-/obj/effect/mob_spawn/corpse/human/scientist,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"jL" = (
-/obj/structure/barricade/wooden,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"ks" = (
-/mob/living/basic/living_floor/white,
-/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"CD" = (
 /turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/science)
-"ky" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch/science)
-"lq" = (
-/obj/effect/gibspawner/human,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"lD" = (
-/obj/machinery/conveyor/auto{
-	dir = 8
-	},
-/obj/machinery/disposal/delivery_chute{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"lE" = (
-/turf/open/space/basic,
-/area/space)
-"mb" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/effect/spawner/random/trash/mess,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"mo" = (
-/obj/item/disk/tech_disk/major,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"mJ" = (
-/obj/structure/door_assembly/door_assembly_vault,
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"nt" = (
-/obj/machinery/conveyor/auto{
-	dir = 8
-	},
-/obj/machinery/disposal/delivery_chute{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"nL" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/structure/cable,
-/obj/machinery/light/directional/south,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"or" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"ox" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"oP" = (
-/obj/effect/baseturf_helper{
-	baseturf = /turf/open/indestructible/plating;
-	baseturf_to_replace = /turf/open/floor/plating
-	},
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"pt" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"px" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"pI" = (
-/obj/structure/cable,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"qC" = (
-/obj/structure/window/reinforced/plasma,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/item/stack/sheet/plasteel/twenty,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"rl" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/item/paper/crumpled/bloody/fluff{
-	name = "bloody note";
-	default_raw_text = "Before we could seal the portal, a horrible being emerged from it, and started twisting its surroundings to its liking. The portal is sealed now, but the facility is lost. Turn back now."
-	},
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"rm" = (
-/obj/machinery/light/directional/south,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"rI" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1
-	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/keycard/blue{
-	puzzle_id = "qrs_eng"
-	},
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"rY" = (
-/obj/structure/statue/bone/rib{
-	dir = 4
-	},
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"sa" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"sA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"sN" = (
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"sW" = (
-/mob/living/basic/carp,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"ta" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/chair/sofa/bench{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/structure/cable,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"tg" = (
-/obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"tZ" = (
-/obj/machinery/vending/snack/teal,
-/obj/effect/turf_decal/siding/purple{
-	dir = 6
-	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"ub" = (
-/mob/living/simple_animal/hostile/imp,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"ue" = (
-/obj/machinery/door/airlock/research{
-	name = "QRS Access"
-	},
-/obj/machinery/door/puzzle/keycard{
-	puzzle_id = "wawa"
-	},
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"uf" = (
-/obj/machinery/door/puzzle/keycard/blue_required{
-	puzzle_id = "qrs_tele"
-	},
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"ug" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/quantumresearch/science)
-"uv" = (
-/obj/structure/chair/sofa/bench/right,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"uB" = (
-/obj/machinery/conveyor/auto{
-	dir = 6
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"uH" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"uZ" = (
-/obj/structure/sign/warning/biohazard/directional/east,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"vp" = (
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"vy" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"vz" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"wk" = (
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"wC" = (
-/obj/machinery/computer{
-	dir = 1
-	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"wV" = (
-/obj/machinery/conveyor/auto{
-	dir = 8
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"xe" = (
-/obj/structure/closet/toolcloset,
-/obj/item/clothing/gloves/color/yellow,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"xp" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"xJ" = (
-/mob/living/basic/living_floor,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/power)
-"yi" = (
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"yu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"yF" = (
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"yU" = (
-/obj/structure/door_assembly/door_assembly_research,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"yX" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"zl" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"zo" = (
-/obj/machinery/conveyor/auto{
-	dir = 1
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"zO" = (
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"AD" = (
-/obj/structure/chair/sofa/bench,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"BM" = (
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Ct" = (
-/obj/item/paper/crumpled/bloody/fluff{
-	name = "bloody note";
-	default_raw_text = "Everything could be alive.. Im going to stay here in my safe corner, till rescue arrives."
-	},
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Cy" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/ammo_box/c38,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"CF" = (
-/obj/machinery/conveyor/auto{
-	dir = 10;
-	flipped = 1
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"CL" = (
-/turf/open/indestructible/light,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Ds" = (
-/obj/structure/chair/sofa/bench/left,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"DD" = (
-/obj/structure/chair/sofa/bench{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"DE" = (
-/mob/living/simple_animal/hostile/ooze/gelatinous{
-	faction = list("hostile")
-	},
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"DS" = (
-/obj/machinery/conveyor/auto,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"DT" = (
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"EO" = (
-/obj/structure/chair/office{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"EU" = (
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"CN" = (
+/obj/structure/table,
+/obj/item/toy/figure/secofficer,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Df" = (
+/obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"EZ" = (
-/obj/item/wallframe/apc,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Ff" = (
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"DU" = (
+/obj/structure/chair/sofa/bench,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Ei" = (
+/obj/machinery/door/airlock/science,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Ew" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"EC" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"EN" = (
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Fv" = (
+/obj/item/food/muffin/moffin{
+	preserved_food = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"FE" = (
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"FI" = (
+/obj/item/instrument/piano_synth/headphones,
+/obj/structure/table,
+/obj/machinery/puzzle_button/directional/north{
+	used = 1;
+	id = "this does nothing"
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Gj" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Gn" = (
+/obj/structure/table,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"GC" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"GE" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Ha" = (
+/obj/item/pressure_plate/puzzle{
+	puzzle_id = "md_42069"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Hb" = (
+/obj/item/kirbyplants/organic/plant12,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/structure/sign/directions/engineering/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Hx" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"HA" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"HC" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"HF" = (
+/mob/living/basic/living_floor/white,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"IX" = (
+/obj/structure/broken_flooring/side/directional/east,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Jh" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Jo" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/mod/module/recycler/donk,
+/obj/item/mod/module/recycler,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Jx" = (
+/obj/machinery/door/airlock/vault,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Ki" = (
+/obj/machinery/light/small/dim/directional/east,
+/obj/structure/dresser,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Kl" = (
+/obj/structure/chair/sofa/bench,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Kx" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"KP" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"Lc" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/paper/pamphlet/cybernetics,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"LR" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"MH" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"ML" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"Nr" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"Nt" = (
+/obj/lightning_thrower,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"NE" = (
+/obj/structure/sign/warning/biohazard/directional/west,
+/turf/open/indestructible/plating,
+/area/template_noop)
+"NK" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"NL" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Oi" = (
+/obj/structure/sign/warning/biohazard/directional/north,
+/turf/open/indestructible/white,
+/area/template_noop)
+"Oo" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"OQ" = (
 /obj/machinery/door/airlock/vault{
 	name = "Teleportation Research"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Fo" = (
-/turf/closed/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Fp" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/tracks{
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"OW" = (
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Fx" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Gx" = (
-/obj/structure/frame/computer,
-/obj/item/shard,
-/obj/effect/decal/cleanable/glass,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"GF" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav/quantumresearch)
-"Hl" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/light/directional/north,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Ig" = (
-/obj/machinery/door/puzzle/keycard/blue_required{
-	puzzle_id = "getfucked"
-	},
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Ii" = (
-/obj/effect/spawner/random/trash/mess,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Ir" = (
-/obj/structure/statue/bone/rib{
-	dir = 8
-	},
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Is" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/structure/cable,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Iy" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/light/directional/south,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"IL" = (
-/obj/effect/decal/cleanable/glass/plasma,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Jd" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Je" = (
-/obj/structure/lattice,
-/obj/structure/girder/displaced,
-/turf/open/space/basic,
-/area/space)
-"Jx" = (
-/obj/effect/mob_spawn/corpse/human/damaged,
-/mob/living/simple_animal/hostile/imp,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Kt" = (
-/obj/structure/chair/sofa/bench/right,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"KG" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8
-	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"KX" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Le" = (
-/obj/item/clothing/mask/gas/clown_hat,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Lg" = (
-/obj/machinery/recycler/deathtrap{
-	dir = 4
-	},
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"LB" = (
-/obj/machinery/conveyor/auto{
-	dir = 10
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"LT" = (
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Ma" = (
-/obj/effect/mob_spawn/corpse/human/scientist{
-	mob_name = "Jebediah Garry"
-	},
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"MF" = (
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Pa" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/siding/purple,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 4
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"PF" = (
+/obj/structure/puzzle_blockade{
+	id = "md_tosci"
 	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"MT" = (
-/obj/structure/girder/displaced,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Nf" = (
-/obj/item/stack/rods/two,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Nh" = (
-/obj/item/restraints/legcuffs/beartrap/prearmed,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Nw" = (
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/quantumresearch/science)
-"NA" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering{
-	name = "Power Closet"
-	},
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"NC" = (
-/obj/structure/disposalpipe/trunk{
+/obj/effect/turf_decal/stripes/full,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"PT" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"PU" = (
+/turf/template_noop,
+/area/template_noop)
+"Qj" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Qw" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"QM" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
 	},
-/turf/open/misc/asteroid/airless,
-/area/space)
-"NE" = (
-/obj/structure/door_assembly/door_assembly_vault,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"NK" = (
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Op" = (
-/obj/structure/statue/bone/rib{
+/obj/structure/sign/directions/engineering/directional/east,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"RD" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Ou" = (
-/obj/machinery/power/rtg/advanced{
-	power_gen = 2000
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"OG" = (
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"OR" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Pm" = (
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"PI" = (
-/obj/effect/turf_decal/sand/plating,
-/mob/living/basic/carp,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Qg" = (
-/obj/effect/spawner/random/vending/colavend,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Qt" = (
-/obj/effect/spawner/random/vending/snackvend,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"QH" = (
-/obj/machinery/door/airlock/research{
-	name = "QRS Access Security"
-	},
-/obj/structure/barricade/wooden/crude,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
-"QJ" = (
-/turf/closed/indestructible/fakedoor{
-	icon = 'icons/obj/doors/puzzledoor/default.dmi';
-	icon_state = "door_closed";
-	name = "busted door";
-	desc = "This door is completely busted. Effectively impervious to conventional methods of destruction."
-	},
-/area/ruin/space/has_grav/quantumresearch/tele)
-"QU" = (
-/obj/effect/mob_spawn/corpse/human/engineer,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"RY" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Sn" = (
-/obj/effect/decal/cleanable/blood/tracks{
+/turf/open/floor/plating,
+/area/template_noop)
+"RQ" = (
+/obj/machinery/light/cold/directional/east,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"RS" = (
+/turf/cordon,
+/area/template_noop)
+"Sf" = (
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"SC" = (
-/turf/closed/indestructible/reinforced,
-/area/space)
-"SW" = (
-/mob/living/simple_animal/hostile/ooze/gelatinous{
-	faction = list("hostile")
-	},
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"TO" = (
-/obj/effect/gibspawner/human,
-/mob/living/simple_animal/hostile/imp,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"TX" = (
-/turf/closed/mineral/random,
-/area/space)
-"Uk" = (
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Ur" = (
-/obj/item/cardboard_cutout/xenomorph,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Ut" = (
-/obj/structure/fluff/big_chain{
-	pixel_y = 24
-	},
-/turf/closed/indestructible/opshuttle,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Uu" = (
-/obj/structure/grille,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Uz" = (
-/obj/item/pressure_plate/puzzle{
-	puzzle_id = "getfucked"
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Sz" = (
+/mob/living/basic/meteor_heart/opens_puzzle_door{
+	id = "md_heart";
+	name = "tumor heart"
 	},
 /turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"UQ" = (
-/turf/open/misc/asteroid/airless,
-/area/space)
-"Vh" = (
-/obj/machinery/recycler/deathtrap{
-	dir = 4
-	},
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Vj" = (
-/obj/effect/spawner/random/trash/mess,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Vq" = (
-/obj/effect/mob_spawn/corpse/human/scientist,
-/obj/item/keycard/yellow{
-	name = "teleporter research keycard";
-	puzzle_id = "qrs_tele"
-	},
-/obj/item/knife/combat/survival,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/power)
-"Vz" = (
-/mob/living/simple_animal/hostile/imp/slaughter{
-	sentience_type = 5
-	},
-/turf/open/indestructible/light,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"VG" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Wd" = (
-/obj/structure/lattice,
-/obj/item/stack/rods/two,
-/turf/open/space/basic,
-/area/space)
-"Wj" = (
-/obj/machinery/conveyor/auto{
-	dir = 6;
-	flipped = 1
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Ta" = (
+/obj/item/flashlight/flare{
+	icon_state = "flare-on"
 	},
 /turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Xc" = (
-/obj/structure/barricade/wooden/crude,
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"Xs" = (
-/obj/machinery/light/directional/west,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Xv" = (
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Tl" = (
+/obj/machinery/door/airlock{
+	name = "Janitors Office"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Tw" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"TP" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 1
 	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"XD" = (
-/turf/closed/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"XQ" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"XY" = (
-/mob/living/basic/living_floor/white,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/indestructible/plating,
-/area/ruin/space/has_grav/quantumresearch/science)
-"Yd" = (
-/obj/structure/window/reinforced/plasma,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/generic_assistant,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/waste)
-"Ys" = (
-/obj/effect/baseturf_helper{
-	baseturf = /turf/open/indestructible/plating;
-	baseturf_to_replace = /turf/open/floor/plating
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"YD" = (
-/obj/structure/chair/sofa/bench/left,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"YQ" = (
-/obj/item/gun/ballistic/shotgun/lethal,
-/obj/item/ammo_casing/shotgun/buckshot,
-/obj/item/ammo_casing/shotgun/buckshot,
-/obj/item/ammo_casing/shotgun/buckshot,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"TQ" = (
 /turf/open/indestructible/meat,
-/area/ruin/space/has_grav/quantumresearch/tele)
-"YZ" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
-"Zl" = (
+/area/ruin/space/has_grav/powered/quantumresearch)
+"TU" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"UN" = (
 /obj/effect/turf_decal/siding/purple{
-	dir = 8
+	dir = 10
 	},
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/has_grav/quantumresearch)
-"Zt" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
-/area/ruin/space/has_grav/quantumresearch/science)
-"ZK" = (
-/obj/machinery/light/small/broken/directional/north,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/indestructible,
-/area/ruin/space/has_grav/quantumresearch/science)
+/area/ruin/space/has_grav/powered/quantumresearch)
+"UX" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Vd" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Xe" = (
+/obj/effect/turf_decal/siding/red,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Xh" = (
+/mob/living/simple_animal/hostile/ooze,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Xl" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Xm" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/food/pancakes/chocolatechip,
+/obj/item/toy/figure/cargotech{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"Xo" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Xp" = (
+/obj/structure/puzzle_blockade/meat{
+	id = "md_heart"
+	},
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"XA" = (
+/turf/closed/mineral/random,
+/area/template_noop)
+"XO" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/no_nightlight/directional/east,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
+"XP" = (
+/turf/closed/mineral/bananium,
+/area/template_noop)
+"XQ" = (
+/obj/effect/mob_spawn/corpse/human/scientist{
+	mob_name = "Jebediah Garry"
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"Yc" = (
+/turf/closed/indestructible/meat,
+/area/ruin/space/has_grav/powered/quantumresearch/tele)
+"YD" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Zp" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/north,
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"Zs" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/quantumresearch/science)
 
 (1,1,1) = {"
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (2,1,1) = {"
-lE
-lE
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-lE
-lE
-lE
-lE
-lE
-TX
-TX
-TX
-TX
-lE
-TX
-lE
-lE
-lE
-lE
-lE
-lE
-lE
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (3,1,1) = {"
-lE
-lE
-TX
-XD
-XD
-XD
-XD
-XD
-XD
-XD
-XD
-TX
-TX
-TX
-UQ
-UQ
-UQ
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-YZ
-Je
-YZ
-YZ
-Wd
-YZ
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (4,1,1) = {"
-lE
-lE
-TX
-XD
-Ir
-OG
-gR
-OG
-OG
-gR
-XD
-XD
-Nw
-Nw
-Nw
-Nw
-Nw
-Nw
-Nw
-Nw
-GF
-GF
-GF
-KX
-KX
-YZ
-Wd
-YZ
-YZ
-Je
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (5,1,1) = {"
-lE
-TX
-TX
-XD
-OG
-OG
-OG
-XD
-OG
-OG
-Ir
-XD
-Nw
-Gx
-EO
-Nw
-gG
-Xs
-Ur
-ue
-NK
-tg
-GF
-KX
-MT
-du
-YZ
-Je
-YZ
-YZ
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (6,1,1) = {"
-lE
-TX
-XD
-XD
-OG
-XD
-XD
-XD
-OG
-OG
-OG
-XD
-Nw
-ZK
-hG
-ky
-vp
-vp
-aN
-Nw
-NK
-wC
-uH
-Jd
-KX
-Wd
-YZ
-Je
-YZ
-Wd
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (7,1,1) = {"
-lE
-TX
-XD
-rY
-OG
-XD
-Op
-XD
-XD
-ub
-XD
-XD
-Nw
-Cy
-bp
-Nw
-vp
-uZ
-aN
-Nw
-NK
-wC
-uH
-Jd
-PI
-KX
-KX
-KX
-YZ
-YZ
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (8,1,1) = {"
-TX
-TX
-XD
-OG
-OG
-OG
-OG
-OG
-OG
-OG
-XD
-Nw
-Nw
-Nw
-QH
-Nw
-aQ
-Nw
-Nw
-Nw
-NK
-gv
-GF
-vy
-Jd
-Jd
-KX
-Nf
-ec
-Je
+PU
+XA
+XA
+XA
+XA
+XA
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (9,1,1) = {"
-TX
-XD
-XD
-OG
-gR
-OG
-OG
-OG
-TO
-gR
-XD
-Nw
-Qg
-RY
-Sn
-RY
-RY
-RY
-pt
-Nw
-yU
-GF
-GF
-or
-YD
-Jd
-Jd
-KX
-KX
-ec
+PU
+XA
+XA
+XA
+XA
+XA
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (10,1,1) = {"
-TX
-XD
-Op
-lq
-OG
-XD
-XD
-Nh
-lq
-XD
-XD
-Fo
-Kt
-RY
-ks
-RY
-RY
-RY
-DD
-Nw
-EU
-Zl
-Zl
-Xv
-NK
-gd
-Jd
-PI
-GF
-TX
+XA
+XA
+XP
+XP
+XA
+XA
+XA
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (11,1,1) = {"
-TX
-XD
-OG
-ub
-XD
-XD
-XD
-NE
-XD
-XD
-XD
-Fo
-eA
-RY
-RY
-RY
-xp
-RY
-ta
-Nw
-uv
-NK
-NK
-sW
-EZ
-NK
-gd
-MF
-GF
-TX
+XA
+XA
+XP
+xk
+xk
+xk
+xk
+PU
+PU
+PU
+PU
+PU
+PU
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (12,1,1) = {"
-TX
-XD
-OG
-OG
-OG
-OG
-XD
-OG
-OG
-Ir
-XD
-Nw
-AD
-RY
-RY
-RY
-cz
-yX
-Is
-Nw
-gO
-XQ
-XQ
-XQ
-XQ
-XQ
-XQ
-tZ
-GF
-TX
+XA
+XA
+XA
+xk
+xk
+xk
+xk
+qx
+qx
+qx
+qx
+qx
+qx
+qx
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+RS
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (13,1,1) = {"
-TX
-XD
-OG
-OG
-OG
-OG
-QJ
-OG
-OG
-OG
-XD
-Nw
-Ds
-RY
-RY
-RY
-Ys
-RY
-nL
-yi
-yi
-yi
-yi
-yi
-yi
-yi
-yi
-yi
-yi
-TX
+XA
+XA
+xk
+xk
+xk
+xk
+xk
+qx
+eT
+oh
+Xm
+Tw
+tg
+qx
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+RS
+PU
+PU
+PU
+Jh
+Jh
+oj
+Jh
+Jh
+PU
+PU
+PU
+PU
+PU
+PU
 "}
 (14,1,1) = {"
-TX
-XD
-OG
-Ut
-YQ
-Ma
-BM
-OG
-gR
-OG
-OG
-Nw
-Nw
-Nw
-RY
-RY
-Zt
-Zt
-Zt
-NA
-QU
-dA
-dA
-oP
-dA
-dA
-dA
-Vj
-yi
-TX
+XA
+xk
+xk
+xk
+xk
+qx
+qx
+qx
+HC
+MH
+HF
+KP
+KP
+vY
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+Jh
+Jh
+Ei
+Jh
+oX
+gQ
+oX
+Jh
+xk
+xk
+xk
+xk
+xk
+xk
 "}
 (15,1,1) = {"
-TX
-XD
-TO
-Vz
-ub
-OG
-px
-bR
-OG
-OG
-OG
-Ff
-ox
-uf
-rl
-cz
-Zt
-RY
-fO
-yi
-zO
-dA
-dA
-dA
-dA
-dA
-dA
-dA
-yi
-TX
+xk
+xk
+xk
+xk
+xk
+qx
+il
+il
+id
+Nr
+HF
+kB
+kB
+qx
+zG
+wM
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+Br
+Xe
+jE
+eA
+oX
+zs
+Gn
+Jh
+xk
+xk
+xk
+xk
+xk
+xk
 "}
 (16,1,1) = {"
-TX
-XD
-OG
-CL
-OG
-lq
-px
-bR
-OG
-lq
-gR
-mJ
-ox
-uf
-yX
-RY
-Zt
-RY
-VG
-yi
-zO
-hv
-Pm
-Pm
-KG
-DE
-sN
-OR
-yi
-TX
+xk
+xk
+xk
+xk
+xk
+qx
+oQ
+cQ
+Lc
+oh
+dR
+kB
+EC
+EC
+EC
+EC
+xr
+hR
+EC
+EC
+EC
+zG
+zG
+zG
+zG
+Jh
+RQ
+Xe
+jE
+Jh
+FI
+CN
+Xl
+Jh
+xk
+xk
+nr
+nr
+xk
+nr
 "}
 (17,1,1) = {"
-TX
-XD
-fu
-Ut
-mo
-OG
-BM
-OG
-OG
-OG
-rm
-Nw
-Nw
-Nw
-RY
-RY
-Zt
-cz
-ug
-yi
-zO
-hv
-Pm
-IL
-at
-qC
-sN
-dA
-yi
-TX
+xk
+xk
+xk
+xk
+xk
+qx
+NK
+il
+Zs
+XO
+HF
+EC
+EC
+Yc
+Yc
+EC
+OQ
+EC
+Yc
+Yc
+EC
+EC
+zG
+zG
+zG
+Jh
+Jh
+Jh
+PF
+Jh
+af
+sl
+Jh
+Jh
+xk
+ML
+ML
+ML
+ML
+ML
 "}
 (18,1,1) = {"
-TX
-XD
-OG
-OG
-ub
-OG
-QJ
-OG
-rY
-OG
-XD
-Nw
-Qt
-RY
-RY
-RY
-Zt
-RY
-RY
-bq
-zO
-hv
-Ii
-Pm
-mb
-Yd
-sN
-dA
-yi
-TX
+xk
+xk
+xk
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+Yc
+Yc
+TU
+vI
+EN
+eP
+TU
+Yc
+Yc
+EC
+fm
+fm
+fm
+fm
+Jh
+Df
+bi
+bh
+bi
+UN
+Jh
+xk
+xk
+ML
+BA
+LR
+LR
+eo
 "}
 (19,1,1) = {"
-TX
-XD
-XD
-gR
-OG
-OG
-XD
-OG
-OG
-lq
-XD
-Fo
-RY
-RY
-RY
-cz
-Zt
-RY
-RY
-bq
-zO
-hv
-Pm
-ck
-rI
-wk
-sN
-Vj
-yi
-TX
+xk
+xk
+EC
+EC
+Jo
+AG
+AG
+PT
+EC
+Yc
+EC
+Yc
+Yc
+TU
+EN
+eP
+EN
+EN
+EN
+TU
+Yc
+EC
+fm
+fm
+fm
+fm
+Jh
+sk
+jE
+Hx
+jE
+Pa
+Jh
+jO
+jO
+ML
+tS
+AV
+AV
+kX
 "}
 (20,1,1) = {"
-TX
-TX
-XD
-lq
-lq
-OG
-XD
-XD
-OG
-OG
-XD
-Nw
-Hl
-RY
-RY
-RY
-Zt
-RY
-Iy
-yi
-zO
-hv
-Pm
-nt
-lD
-Le
-sN
-dA
-yi
-TX
+xk
+xk
+EC
+Fv
+PT
+aW
+OW
+PT
+EC
+Xo
+XQ
+TU
+Yc
+EN
+EN
+EN
+EN
+EN
+eP
+EN
+EC
+EC
+Oi
+fm
+fm
+fm
+Jh
+Kl
+zF
+Hx
+jE
+HA
+ph
+FE
+jo
+ML
+tS
+AV
+AV
+kX
 "}
 (21,1,1) = {"
-lE
-TX
-XD
-XD
-OG
-XD
-XD
-XD
-XD
-NE
-XD
-Fo
-RY
-RY
-RY
-Zt
-Zt
-RY
-vz
-yi
-Fx
-Lg
-Pm
-eo
-wV
-Pm
-Vh
-OR
-yi
-TX
+xk
+xk
+EC
+AX
+PT
+qw
+sd
+PT
+Jx
+CD
+EN
+CD
+Xp
+EN
+eP
+EN
+Sz
+eP
+EN
+EN
+OQ
+xr
+fm
+fm
+fm
+fm
+Jh
+DU
+jE
+YD
+lm
+mU
+Jh
+jO
+jO
+ML
+tS
+AV
+AV
+kX
 "}
 (22,1,1) = {"
-lE
-TX
-TX
-XD
-OG
-OG
-OG
-OG
-XD
-OG
-XD
-Nw
-RY
-RY
-RY
-gT
-RY
-XY
-Qt
-yi
-dA
-uB
-DS
-LB
-Wj
-zo
-CF
-SW
-yi
-TX
+xk
+xk
+EC
+ja
+PT
+NL
+uU
+PT
+EC
+TU
+rK
+Xo
+Yc
+EN
+EN
+EN
+EN
+EN
+EN
+eP
+EC
+hR
+fm
+fm
+fm
+fm
+Jh
+iI
+jE
+Hx
+Ew
+nY
+Qj
+Oo
+uq
+uH
+tS
+AV
+AV
+kX
 "}
 (23,1,1) = {"
-lE
-TX
-TX
-XD
-Ir
-OG
-lq
-Jx
-XD
-ub
-XD
-Nw
-Ig
-LT
-LT
-gD
-LT
-LT
-LT
-LT
-dA
-Pm
-Pm
-yu
-Pm
-Ii
-Pm
-dA
-yi
-TX
+xk
+xk
+EC
+EC
+ne
+AG
+AG
+GE
+EC
+Yc
+EC
+Yc
+Yc
+TU
+EN
+eP
+EN
+eP
+EN
+TU
+Yc
+EC
+fm
+fm
+fm
+fm
+Jh
+Hb
+Kx
+jE
+uc
+QM
+Jh
+jO
+jO
+ML
+tS
+AV
+AV
+kX
 "}
 (24,1,1) = {"
-lE
-lE
-TX
-XD
-XD
-XD
-lq
-OG
-OG
-OG
-XD
-XD
-Uz
-LT
-xe
-Fp
-sa
-sa
-yF
-LT
-LT
-yi
-yi
-sA
-yi
-yi
-yi
-yi
-yi
-TX
+xk
+xk
+xk
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+EC
+Yc
+Yc
+TU
+EN
+EN
+EN
+TU
+Yc
+Yc
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+rh
+zF
+hW
+Jh
+Jh
+xk
+xk
+ML
+sL
+Gj
+Gj
+RD
 "}
 (25,1,1) = {"
-lE
-lE
-TX
-TX
-TX
-XD
-OG
-OG
-Ir
-gR
-XD
-jL
-lq
-LT
-sa
-pI
-DT
-xJ
-zl
-dV
-LT
-TX
-TX
-NC
-UQ
-UQ
-TX
-TX
-SC
-TX
+xk
+xk
+xk
+xk
+xk
+jO
+PU
+PU
+PU
+PU
+PU
+EC
+EC
+Yc
+Yc
+EC
+OQ
+EC
+Yc
+Yc
+UX
+Jh
+Xh
+Jh
+jE
+la
+jE
+Jh
+rh
+jE
+hW
+Jh
+PU
+xk
+xk
+ML
+ML
+ML
+ML
+ML
 "}
 (26,1,1) = {"
-lE
-lE
-TX
-TX
-TX
-XD
-OG
-OG
-OG
-lq
-Xc
-jL
-OG
-LT
-gp
-xJ
-xJ
-DT
-DT
-Ou
-LT
-TX
-UQ
-lE
-lE
-lE
-lE
-TX
-SC
-TX
+xk
+xk
+xk
+xk
+xk
+jO
+PU
+PU
+PU
+PU
+PU
+PU
+EC
+EC
+EC
+hR
+xr
+EC
+EC
+UX
+Jh
+Zp
+tv
+Tl
+jE
+jE
+jE
+Qw
+TP
+jE
+kn
+Jh
+PU
+xk
+xk
+xk
+nr
+xk
+xk
+nr
 "}
 (27,1,1) = {"
-lE
-lE
-lE
-TX
-TX
-XD
-XD
-XD
-XD
-XD
-XD
-XD
-OG
-LT
-Uu
-Uk
-Uk
-Ct
-Vq
-LT
-LT
-TX
-UQ
-lE
-lE
-lE
-lE
-TX
-TX
-TX
+xk
+xk
+xk
+xk
+xk
+jO
+PU
+PU
+PU
+PU
+PU
+RS
+zG
+zG
+zG
+zG
+zG
+NE
+zG
+Jh
+fB
+ch
+fc
+Jh
+jE
+jE
+jE
+Jh
+Cf
+go
+GC
+Jh
+PU
+xk
+xk
+xk
+xk
+xk
+xk
+xk
 "}
 (28,1,1) = {"
-lE
-lE
-lE
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-XD
-XD
-LT
-LT
-LT
-LT
-LT
-LT
-LT
-TX
-TX
-UQ
-lE
-lE
-lE
-lE
-lE
-TX
-lE
+xk
+xk
+xk
+xk
+xk
+jO
+jO
+jO
+PU
+PU
+PU
+RS
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Qw
+Jh
+Jh
+Jh
+mc
+Jh
+Jh
+wy
+wy
+wy
+wy
+xk
+xk
+xk
+xk
 "}
 (29,1,1) = {"
-lE
-lE
-lE
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-TX
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
+xk
+xk
+xk
+xk
+xk
+xk
+xk
+jO
+PU
+PU
+PU
+RS
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+qi
+ex
+qi
+yu
+aF
+jE
+mO
+Jh
+qE
+kK
+qE
+An
+wy
+Av
+Vd
+wy
+PU
+PU
+PU
+PU
 "}
 (30,1,1) = {"
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
-lE
+PU
+xk
+xk
+xk
+xk
+xk
+xk
+jO
+PU
+PU
+PU
+RS
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+jE
+jE
+jE
+jE
+jE
+jE
+jV
+Jh
+qE
+qE
+qE
+qE
+ij
+Ha
+Av
+wy
+PU
+PU
+PU
+PU
+"}
+(31,1,1) = {"
+PU
+xk
+xk
+xk
+xk
+xk
+xk
+jO
+jO
+jO
+jO
+RS
+zG
+zG
+zG
+zG
+zG
+zG
+zG
+Jh
+wn
+nx
+rw
+Ki
+wn
+jE
+Jh
+Jh
+Sf
+Sf
+Sf
+Bk
+wy
+aE
+TQ
+hX
+PU
+PU
+PU
+PU
+"}
+(32,1,1) = {"
+PU
+PU
+PU
+xk
+xk
+PU
+PU
+PU
+PU
+PU
+PU
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+wy
+qE
+Nt
+qE
+wy
+wy
+IX
+wy
+wy
+PU
+PU
+PU
+PU
+"}
+(33,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+Ta
+aM
+qE
+wy
+qE
+qE
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(34,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+wy
+wy
+qE
+aM
+qE
+wy
+qE
+qE
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(35,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+qE
+qE
+qE
+Nt
+qE
+wy
+qE
+qE
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(36,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+qE
+qE
+qE
+qE
+qE
+wy
+wy
+qE
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(37,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+qE
+qE
+qE
+qE
+qE
+qE
+qE
+qE
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(38,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+wy
+wy
+wy
+wy
+wy
+wy
+wy
+wy
+wy
+wy
+PU
+PU
+PU
+PU
+PU
+"}
+(39,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+"}
+(40,1,1) = {"
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
+PU
 "}

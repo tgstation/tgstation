@@ -94,18 +94,10 @@
 /obj/item/pressure_plate/puzzle
 	protected = TRUE
 	anchored = TRUE //this prevents us from being picked up
+	active = TRUE
 	removable_signaller = FALSE
 	var/puzzle_id
-	var/check_range = 6
-	var/list/obj/machinery/door/puzzle/our_doors = list()
 
 /obj/item/pressure_plate/puzzle/trigger()
-	can_trigger = TRUE
-	for(var/obj/machinery/door/puzzle/door in our_doors)
-		door.try_puzzle_open(puzzle_id)
-
-/obj/item/pressure_plate/puzzle/Initialize(mapload)
-	. = ..()
-	for(var/obj/machinery/door/puzzle/door in range(check_range, src))
-		if(door.puzzle_id == puzzle_id)
-			our_doors += door
+	can_trigger = FALSE
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, puzzle_id)
