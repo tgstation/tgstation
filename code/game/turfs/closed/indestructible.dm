@@ -308,6 +308,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	explosive_resistance = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
+/turf/closed/indestructible/riveted/boss/wasteland
+	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
+
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE
 

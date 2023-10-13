@@ -19,3 +19,10 @@
 
 /// Above this speed we stop gliding because it looks silly
 #define END_GLIDE_SPEED 10
+
+///mook attack status flags
+#define MOOK_ATTACK_NEUTRAL 0
+#define MOOK_ATTACK_WARMUP 1
+#define MOOK_ATTACK_ACTIVE 2
+#define MOOK_ATTACK_STRIKE 3
+

@@ -61,6 +61,19 @@
 	fire = 100
 	acid = 100
 
+/obj/machinery/door/puzzle/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/machinery/door/puzzle/Destroy(force)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED)
+
+/obj/machinery/door/puzzle/proc/try_signal(datum/source, try_id)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
+
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
 
@@ -110,15 +123,6 @@
 
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
-
-/obj/machinery/door/puzzle/light/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, PROC_REF(check_mechanism))
-
-/obj/machinery/door/puzzle/light/proc/check_mechanism(datum/source, try_id)
-	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
 
 //*************************
 //***Box Pushing Puzzles***
@@ -268,5 +272,5 @@
 			return
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, puzzle_id)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, puzzle_id)
 	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
