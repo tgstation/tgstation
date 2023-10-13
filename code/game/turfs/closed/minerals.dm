@@ -205,16 +205,17 @@
 /// Will only run once, and will then be cached.
 /turf/closed/mineral/random/proc/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bananium = check_holidays(APRIL_FOOLS) ? 3 : 0,
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 40,
-		/obj/item/stack/ore/plasma = 20,
-		/obj/item/stack/ore/silver = 12,
-		/obj/item/stack/ore/titanium = 11,
-		/obj/item/stack/ore/uranium = 5,
-		/turf/closed/mineral/gibtonite = 4,
+		/obj/item/stack/ore/bananium = check_holidays(APRIL_FOOLS) ? 4 : 0,
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/ore/gold = 11,
+		/obj/item/stack/ore/iron = 41,
+		/obj/item/stack/ore/plasma = 21,
+		/obj/item/stack/ore/silver = 13,
+		/obj/item/stack/ore/titanium = 12,
+		/obj/item/stack/ore/uranium = 6,
+		/turf/closed/mineral/gibtonite = 5,
+		/turf/closed/mineral/artifact = 1,
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)
@@ -323,15 +324,16 @@
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 40,
-		/obj/item/stack/ore/plasma = 20,
-		/obj/item/stack/ore/silver = 12,
-		/obj/item/stack/ore/titanium = 11,
-		/obj/item/stack/ore/uranium = 5,
-		/turf/closed/mineral/gibtonite/volcanic = 4,
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/ore/gold = 11,
+		/obj/item/stack/ore/iron = 41,
+		/obj/item/stack/ore/plasma = 21,
+		/obj/item/stack/ore/silver = 13,
+		/obj/item/stack/ore/titanium = 12,
+		/obj/item/stack/ore/uranium = 6,
+		/turf/closed/mineral/gibtonite/volcanic = 5,
+		/turf/closed/mineral/artifact/volcanic = 1,
 	)
 
 /// A turf that can't we can't build openspace chasms on or spawn ruins in.
@@ -831,5 +833,31 @@
 
 /turf/closed/mineral/strong/ex_act(severity, target)
 	return FALSE
+
+//Artifact spawning rock
+
+/turf/closed/mineral/artifact
+	mineralAmt = 1
+	//icon_state = "rock_Gibtonite_inactive"
+	scan_state = "rock_Artifact"
+
+/turf/closed/mineral/artifact/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+	
+	if(!triggered_by_explosion) //if someone maxcaps lavaland and promptly unearths every single artifact thats gonna fuck up and activate some of them which is not good
+		new /obj/effect/artifact_spawner(src)
+
+	var/flags = NONE
+	if(defer_change)
+		flags = CHANGETURF_DEFER_CHANGE
+	var/turf/open/mined = ScrapeAway(null, flags)
+	mined.update_visuals()
+
+/turf/closed/mineral/artifact/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 #undef MINING_MESSAGE_COOLDOWN
