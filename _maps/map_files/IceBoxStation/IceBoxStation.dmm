@@ -12100,12 +12100,6 @@
 /obj/item/cultivator/rake,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
-"dAA" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Permabrig Visitation"
-	},
-/turf/closed/wall/r_wall,
-/area/station/security/prison/visit)
 "dAB" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Research Director Observation";
@@ -169800,7 +169794,7 @@ eDq
 iXh
 lWb
 hRp
-dAA
+dAZ
 wqI
 xSn
 dUO
