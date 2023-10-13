@@ -151,6 +151,13 @@
 	new_team_member.prefs.safe_transfer_prefs_to(player_mob, is_antag = TRUE)
 	if(player_mob.dna.species.outfit_important_for_life)
 		player_mob.set_species(/datum/species/human)
+
+	player_mob.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = new_team_member.mob.mind, \
+		old_body = new_team_member.mob.mind.current, \
+	)
+
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))
 		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game, ammo_type)
