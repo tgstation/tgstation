@@ -220,6 +220,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 	//Knock if the bullet does enough damage, knock the intercom down
 	if (bullet.damage > 10)
+		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		knock_down()
 	else
 		return ..()
