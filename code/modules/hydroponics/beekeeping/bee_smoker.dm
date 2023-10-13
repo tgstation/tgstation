@@ -8,6 +8,9 @@
 	desc = "A device which can be used to entrance bees!"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bee_smoker"
+	inhand_icon_state = "bee_smoker"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON
 	/// current level of fuel we have
 	var/current_herb_fuel = 50
@@ -15,6 +18,12 @@
 	var/max_herb_fuel = 50
 	/// are we currently activated?
 	var/activated = FALSE
+	/// sound to play when releasing smoke
+	var/datum/looping_sound/beesmoke/beesmoke_loop
+
+/obj/item/bee_smoker/Initialize(mapload)
+	. = ..()
+	beesmoke_loop = new(src)
 
 /obj/item/bee_smoker/attack_self(mob/user)
 	if(!activated && current_herb_fuel <= 0)
@@ -74,10 +83,12 @@
 	playsound(src, 'sound/items/welderdeactivate.ogg', 50, TRUE)
 
 	if(!activated)
+		beesmoke_loop.stop()
 		QDEL_NULL(particles)
 		STOP_PROCESSING(SSobj, src)
 		return
 
+	beesmoke_loop.start()
 	START_PROCESSING(SSobj, src)
 	particles = new /particles/smoke
 	particles.position = list(-14, 12, 0)

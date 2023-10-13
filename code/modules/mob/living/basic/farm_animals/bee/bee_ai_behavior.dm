@@ -102,7 +102,7 @@
 		return FALSE
 
 	var/atom/bee_hive = bee_ai.blackboard[BB_CURRENT_HOME]
-	if(bee_hive && get_dist(target, bee_hive) > AGGRO_DISTANCE_FROM_HIVE)
+	if(bee_hive && get_dist(target, bee_hive) > AGGRO_DISTANCE_FROM_HIVE && can_see(owner, bee_hive, 9))
 		return FALSE
 
 	return !(mob_target.bee_friendly())
@@ -133,6 +133,8 @@
 /datum/ai_behavior/swirl_around_target
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 0
+	///chance to swirl
+	var/swirl_chance = 60
 
 /datum/ai_behavior/swirl_around_target/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -153,15 +155,15 @@
 		set_movement_target(controller, target)
 		return
 
+	if(!SPT_PROB(swirl_chance, seconds_per_tick))
+		return
+
 	var/list/possible_turfs = list()
 
-	for(var/direction in GLOB.cardinals)
-		var/turf/next_turf = get_step(target, direction)
-		if(!living_pawn.Adjacent(next_turf))
+	for(var/turf/possible_turf in oview(2, target))
+		if(possible_turf.is_blocked_turf(source_atom = living_pawn))
 			continue
-		if(next_turf.is_blocked_turf(source_atom = living_pawn))
-			continue
-		possible_turfs += next_turf
+		possible_turfs += possible_turf
 
 	if(!length(possible_turfs))
 		return
@@ -232,6 +234,6 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/run_away_from_target/scatter
-	run_distance = 2
+	run_distance = 4
 
 #undef AGGRO_DISTANCE_FROM_HIVE
