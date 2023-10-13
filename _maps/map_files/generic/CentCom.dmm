@@ -2593,6 +2593,17 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/botany)
+"mZ" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/structure/sign/painting/large/library{
+	dir = 1;
+	pixel_y = -65
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/hall)
 "nb" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -5708,18 +5719,6 @@
 "BR" = (
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
-"BS" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 6
-	},
-/obj/effect/turf_decal/siding/dark/corner{
-	dir = 1
-	},
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/hall)
 "BY" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -7480,8 +7479,9 @@
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
 	},
-/obj/structure/sign/painting/library{
-	pixel_y = -32
+/obj/structure/sign/painting/large/library{
+	dir = 1;
+	pixel_y = -65
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
@@ -54485,7 +54485,7 @@ Fb
 nw
 JJ
 lD
-AF
+vh
 pG
 aa
 aa
@@ -54999,7 +54999,7 @@ Fb
 Fb
 Fb
 lD
-AF
+mZ
 pG
 aa
 aa
@@ -55256,7 +55256,7 @@ ca
 EI
 gN
 zG
-BS
+wa
 pG
 aa
 aa
