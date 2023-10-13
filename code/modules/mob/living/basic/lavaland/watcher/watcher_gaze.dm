@@ -8,10 +8,11 @@
 	button_icon_state = "gaze"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 30 SECONDS
+	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
 	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages

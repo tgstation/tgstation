@@ -41,7 +41,7 @@
 					affected_mob.adjust_nutrition(-12)
 				else
 					to_chat(affected_mob, span_warning("You feel much, MUCH lighter!"))
-					affected_mob.vomit(20, TRUE)
+					affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
 					// disease code already checks if the liver exists otherwise it is cured
 					var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 					affected_liver.Remove(affected_mob)

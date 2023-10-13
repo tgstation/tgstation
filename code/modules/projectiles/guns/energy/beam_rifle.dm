@@ -30,7 +30,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	actions_types = list(/datum/action/item_action/zoom_lock_action)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
-	canMouseDown = TRUE
 	var/aiming = FALSE
 	var/aiming_time = 12
 	var/aiming_time_fire_threshold = 5
@@ -71,8 +70,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-
-	var/mob/listeningTo
 
 /obj/item/gun/energy/beam_rifle/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -179,7 +176,6 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	listeningTo = null
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
@@ -232,30 +228,28 @@
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated()) //Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
-			set_user(null)
 		return FALSE
 	return TRUE
 
-/obj/item/gun/energy/beam_rifle/proc/process_aim()
-	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
-		var/angle = mouse_angle_from_client(current_user.client)
-		current_user.setDir(angle2dir_cardinal(angle))
-		var/difference = abs(closer_angle_difference(lastangle, angle))
-		delay_penalty(difference * aiming_time_increase_angle_multiplier)
-		lastangle = angle
+/obj/item/gun/energy/beam_rifle/proc/process_aim(params)
+	var/angle = mouse_angle_from_client(current_user?.client, params)
+	current_user.setDir(angle2dir_cardinal(angle))
+	var/difference = abs(closer_angle_difference(lastangle, angle))
+	delay_penalty(difference * aiming_time_increase_angle_multiplier)
+	lastangle = angle
 
 /obj/item/gun/energy/beam_rifle/proc/on_mob_move()
 	SIGNAL_HANDLER
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
-		process_aim()
+		process_aim(current_user?.client?.mouseParams)
 		INVOKE_ASYNC(src, PROC_REF(aiming_beam), TRUE)
 
-/obj/item/gun/energy/beam_rifle/proc/start_aiming()
+/obj/item/gun/energy/beam_rifle/proc/start_aiming(params)
 	aiming_time_left = aiming_time
 	aiming = TRUE
-	process_aim()
+	process_aim(params)
 	aiming_beam(TRUE)
 	zooming_angle = lastangle
 	start_zooming()
@@ -271,47 +265,65 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
 	if(istype(current_user))
+		unregister_client_signals(current_user)
+		UnregisterSignal(current_user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 		current_user = null
-	if(istype(user))
-		current_user = user
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
-		listeningTo = user
+	if(!istype(user))
+		return
+	current_user = user
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
+	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(register_client_signals))
+	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(unregister_client_signals))
+	if(user.client)
+		register_client_signals(user)
 
-/obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+/obj/item/gun/energy/beam_rifle/proc/register_client_signals(mob/source)
+	SIGNAL_HANDLER
+	RegisterSignal(source.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(on_mouse_down))
+
+/obj/item/gun/energy/beam_rifle/proc/unregister_client_signals(mob/source)
+	SIGNAL_HANDLER
+	stop_aiming()
+	if(QDELETED(source.client))
+		return
+	UnregisterSignal(source.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
+
+///change the aiming beam angle to that of the mouse cursor.
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_drag(client/source, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	SIGNAL_HANDLER
 	if(aiming)
-		process_aim()
-		aiming_beam()
+		process_aim(params)
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam))
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-	return ..()
 
-/obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
-	if(istype(mob))
-		set_user(mob)
-	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
+///Start aiming and charging the beam
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_down(client/source, atom/movable/object, location, control, params)
+	SIGNAL_HANDLER
+	if(source.mob.get_active_held_item() != src)
 		return
-	if((object in mob.contents) || (object == mob))
+	if(!object.IsAutoclickable() || (object in source.mob.contents) || (object == source.mob))
 		return
-	start_aiming()
-	return ..()
+	INVOKE_ASYNC(src, PROC_REF(start_aiming), params)
+	RegisterSignal(source, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(on_mouse_drag))
+	RegisterSignal(source, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_mouse_up))
 
-/obj/item/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
-	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
+///Stop aiming and fire the beam if charged enough
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_up(client/source, atom/movable/object, location, control, params)
+	SIGNAL_HANDLER
+	if(!object.IsAutoclickable())
 		return
-	process_aim()
+	process_aim(params)
+	UnregisterSignal(source, list(COMSIG_CLIENT_MOUSEDRAG, COMSIG_CLIENT_MOUSEUP))
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
 		sync_ammo()
-		var/atom/target = M.client.mouse_object_ref?.resolve()
+		var/atom/target = source.mouse_object_ref?.resolve()
 		if(target)
-			afterattack(target, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+			INVOKE_ASYNC(src, PROC_REF(afterattack), target, source.mob, FALSE, source.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	. |= AFTERATTACK_PROCESSED_ITEM

@@ -23,9 +23,7 @@
 	var/enabled = TRUE
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
 	var/acclimate_state
-	/**We can't take anything in, at least till we're emptied. Down side of the round robin chem transfer, otherwise while emptying 5u of an unreacted chem gets added,
-	and you get nasty leftovers
-	*/
+	///When conditions are met we send out the stored reagents
 	var/emptying = FALSE
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt, layer)

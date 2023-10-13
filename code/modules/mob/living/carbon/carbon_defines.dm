@@ -104,7 +104,7 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
-	/// Assoc list of BODY_ZONE -> WOUND_TYPE. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
+	/// Assoc list of BODY_ZONE -> wounding_type. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
 	var/list/body_zone_dismembered_by
 
 	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.

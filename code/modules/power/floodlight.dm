@@ -120,6 +120,12 @@
 			return
 	..()
 
+/obj/structure/floodlight_frame/completed
+	name = "floodlight frame"
+	desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+	icon_state = "floodlight_c3"
+	state = FLOODLIGHT_NEEDS_LIGHTS
+
 /obj/machinery/power/floodlight
 	name = "floodlight"
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
@@ -144,6 +150,7 @@
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	register_context()
 
 /obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
@@ -289,6 +296,11 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/power/floodlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	atom_break(ENERGY) // technically,
+	return COMSIG_SABOTEUR_SUCCESS
+
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()
 	if(!.)
@@ -297,7 +309,8 @@
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
-	new /obj/item/light/tube(loc)
+	var/obj/item/light/tube/our_light = new(loc)
+	our_light.shatter()
 
 	qdel(src)
 

@@ -20,8 +20,13 @@
 	///Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
 
-/datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	if(isturf(the_target) || !the_target) // bail out on invalids
+/datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
+	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
+
+	if(isnull(our_controller))
+		return FALSE
+
+	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
 		return FALSE
 
 	if(isobj(the_target.loc))
@@ -30,6 +35,8 @@
 			return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
+		if(living_mob.loc == the_target)
+			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive
 		var/mob/M = the_target
 		if(M.status_flags & GODMODE)
 			return FALSE
@@ -40,13 +47,17 @@
 	if(living_mob.see_invisible < the_target.invisibility) //Target's invisible to us, forget it
 		return FALSE
 
-	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech
+	if(isturf(living_mob.loc) && isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
-		var/mob/living/L = the_target
-		if(faction_check(living_mob, L)  || (L.stat > stat_attack))
+		var/mob/living/living_target = the_target
+		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_SKIP_FACTION_CHECK]
+		if(faction_check(living_mob, living_target) && !bypass_faction_check)
 			return FALSE
+		if(living_target.stat > stat_attack)
+			return FALSE
+
 		return TRUE
 
 	if(ismecha(the_target)) //Targeting vs mechas
@@ -115,3 +126,9 @@
 /datum/targetting_datum/basic/of_size/larger
 	find_smaller = FALSE
 	inclusive = FALSE
+
+/datum/targetting_datum/basic/attack_until_dead
+	stat_attack = HARD_CRIT
+
+/datum/targetting_datum/basic/attack_even_if_dead
+	stat_attack = DEAD

@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(mapping)
 			unused_turfs["[T.z]"] |= T
 			var/area/old_area = T.loc
 			old_area.turfs_to_uncontain += T
-			T.flags_1 |= UNUSED_RESERVATION_TURF
+			T.turf_flags = UNUSED_RESERVATION_TURF
 			world_contents += T
 			world_turf_contents += T
 			packet.len--
@@ -308,6 +308,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!error)
 		returning += M
 		qdel(T, TRUE)
+
+/datum/controller/subsystem/mapping/proc/get_reservation_from_turf(turf/T)
+	RETURN_TYPE(/datum/turf_reservation)
+	return used_turfs[T]
 
 /* Nuke threats, for making the blue tiles on the station go RED
 Used by the AI doomsday and the self-destruct nuke.
@@ -687,26 +691,34 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	num_of_res_levels++
 	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
-	var/datum/turf_reservation/reserve = new type
-	if(turf_type_override)
+/// Requests a /datum/turf_reservation based on the given width, height, and z_size. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
+/datum/controller/subsystem/mapping/proc/request_turf_block_reservation(
+	width,
+	height,
+	z_size = 1,
+	z_reservation = null,
+	reservation_type = /datum/turf_reservation,
+	turf_type_override = null,
+)
+	UNTIL((!z_reservation || reservation_ready["[z_reservation]"]) && !clearing_reserved_turfs)
+	var/datum/turf_reservation/reserve = new reservation_type
+	if(!isnull(turf_type_override))
 		reserve.turf_type = turf_type_override
-	if(!z)
+	if(!z_reservation)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
-			if(reserve.Reserve(width, height, i))
+			if(reserve.reserve(width, height, z_size, i))
 				return reserve
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
 		var/datum/space_level/newReserved = add_reservation_zlevel()
 		initialize_reserved_level(newReserved.z_value)
-		if(reserve.Reserve(width, height, newReserved.z_value))
+		if(reserve.reserve(width, height, z_size, newReserved.z_value))
 			return reserve
 	else
-		if(!level_trait(z, ZTRAIT_RESERVED))
+		if(!level_trait(z_reservation, ZTRAIT_RESERVED))
 			qdel(reserve)
 			return
 		else
-			if(reserve.Reserve(width, height, z))
+			if(reserve.reserve(width, height, z_size, z_reservation))
 				return reserve
 	QDEL_NULL(reserve)
 
@@ -724,7 +736,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/block = block(A, B)
 	for(var/turf/T as anything in block)
 		// No need to empty() these, because they just got created and are already /turf/open/space/basic.
-		T.flags_1 |= UNUSED_RESERVATION_TURF
+		T.turf_flags = UNUSED_RESERVATION_TURF
 		CHECK_TICK
 
 	// Gotta create these suckers if we've not done so already

@@ -47,10 +47,13 @@
 		span_userdanger("[src] heals you!"), null, COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_notice("You heal [target]!"))
 	playsound(target, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
-	target.adjustBruteLoss(-healing_amount)
-	target.adjustFireLoss(-healing_amount)
-	target.adjustOxyLoss(-healing_amount)
-	target.adjustToxLoss(-healing_amount, forced = TRUE)
+	var/need_mob_update
+	need_mob_update = target.adjustBruteLoss(-healing_amount, updating_health = FALSE)
+	need_mob_update += target.adjustFireLoss(-healing_amount, updating_health = FALSE)
+	need_mob_update += target.adjustOxyLoss(-healing_amount, updating_health = FALSE)
+	need_mob_update += target.adjustToxLoss(-healing_amount, updating_health = FALSE, forced = TRUE)
+	if(need_mob_update)
+		target.updatehealth()
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(target))
 	heal_effect.color = guardian_color
 

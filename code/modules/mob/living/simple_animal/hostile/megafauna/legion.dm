@@ -141,10 +141,9 @@
 
 ///Attack proc. Spawns a singular legion skull.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
+	var/mob/living/basic/legion_brood/minion = new(loc)
+	minion.assign_creator(src)
+	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 
 //CHARGE
 
@@ -210,7 +209,7 @@
 	var/mob/living/living_target = target
 	switch(living_target.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/legion = new(loc)
+			var/mob/living/basic/legion_brood/legion = new(loc)
 			legion.infest(living_target)
 
 

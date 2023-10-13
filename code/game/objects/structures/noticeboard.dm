@@ -26,6 +26,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 			I.forceMove(src)
 			notices++
 	update_appearance(UPDATE_ICON)
+	find_and_hang_on_wall()
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)

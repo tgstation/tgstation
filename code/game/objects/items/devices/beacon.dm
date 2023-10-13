@@ -20,14 +20,18 @@
 	GLOB.teleportbeacons -= src
 	return ..()
 
+/obj/item/beacon/proc/turn_off()
+	icon_state = "beacon-off"
+	GLOB.teleportbeacons -= src
+	SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
+
 /obj/item/beacon/attack_self(mob/user)
 	enabled = !enabled
 	if (enabled)
 		icon_state = "beacon"
 		GLOB.teleportbeacons += src
 	else
-		icon_state = "beacon-off"
-		GLOB.teleportbeacons -= src
+		turn_off()
 	to_chat(user, span_notice("You [enabled ? "enable" : "disable"] the beacon."))
 	return
 

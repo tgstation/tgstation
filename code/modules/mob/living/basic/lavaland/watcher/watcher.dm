@@ -1,4 +1,4 @@
-/// A floating eyeball which keeps its distance and plays red light/green light with you.
+/// A floating eyeball which keeps its distance and sometimes make you look away.
 /mob/living/basic/mining/watcher
 	name = "watcher"
 	desc = "A levitating, monocular creature held aloft by wing-like veins. A sharp spine of crystal protrudes from its body."
@@ -59,14 +59,10 @@
 	)
 	update_appearance(UPDATE_OVERLAYS)
 
-	var/datum/action/cooldown/mob_cooldown/watcher_overwatch/overwatch = new(src)
-	overwatch.Grant(src)
-	overwatch.projectile_type = projectile_type
-	ai_controller.set_blackboard_key(BB_WATCHER_OVERWATCH, overwatch)
-
 	var/datum/action/cooldown/mob_cooldown/watcher_gaze/gaze = new gaze_attack(src)
 	gaze.Grant(src)
-	ai_controller.set_blackboard_key(BB_WATCHER_GAZE, gaze)
+	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, gaze)
+	AddComponent(/datum/component/revenge_ability, gaze, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM])
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()

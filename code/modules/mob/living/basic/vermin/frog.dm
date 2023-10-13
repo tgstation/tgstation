@@ -17,6 +17,7 @@
 	obj_damage = 10
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	melee_attack_cooldown = 2.5 SECONDS
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "pokes"
@@ -85,19 +86,13 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/random_speech/frog,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/frog,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/frog
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/frog
-
-/datum/ai_behavior/basic_melee_attack/frog
-	action_cooldown = 2.5 SECONDS
 
 /datum/ai_controller/basic_controller/frog/trash
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/frog,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/frog,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

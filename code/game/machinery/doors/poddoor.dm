@@ -49,7 +49,7 @@
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
+	var/change_id = tgui_input_number(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", isnum(id) ? id : null, 100)
 	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id

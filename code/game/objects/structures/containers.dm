@@ -53,6 +53,7 @@
 	name = "\improper Nanotrasen shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one prominently features Nanotrasen's logo, and so presumably could be carrying anything."
 	icon_state = "nanotrasen"
+
 /obj/structure/shipping_container/nthi
 	name = "\improper Nanotrasen Heavy Industries shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from NTHI: Nanotrasen's mining and refining subdivision."

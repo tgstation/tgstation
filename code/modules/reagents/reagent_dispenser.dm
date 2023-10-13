@@ -1,3 +1,5 @@
+#define REAGENT_SPILL_DIVISOR 200
+
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
@@ -203,6 +205,15 @@
 		return TRUE
 	return FALSE
 
+/obj/structure/reagent_dispensers/proc/knock_down()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new ()
+	var/range = reagents.total_volume / REAGENT_SPILL_DIVISOR
+	smoke.attach(drop_location())
+	smoke.set_up(round(range), holder = drop_location(), location = drop_location(), carry = reagents, silent = FALSE)
+	smoke.start(log = TRUE)
+	reagents.clear_reagents()
+	qdel(src)
+
 /obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!openable)
@@ -322,6 +333,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
+	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
@@ -372,6 +384,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	reagent_id = /datum/reagent/consumable/virus_food
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
@@ -435,3 +451,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
 	accepts_rig = TRUE
+
+#undef REAGENT_SPILL_DIVISOR

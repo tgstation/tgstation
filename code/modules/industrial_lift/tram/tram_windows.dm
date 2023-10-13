@@ -36,8 +36,9 @@
 	if(fulltile)
 		return ..()
 	smoothing_junction = new_junction
-	var/smooth_left = (smoothing_junction & turn(dir, 90))
-	var/smooth_right = (smoothing_junction & turn(dir, -90))
+	var/go_off = reverse_ndir(smoothing_junction)
+	var/smooth_left = (go_off & turn(dir, 90))
+	var/smooth_right = (go_off & turn(dir, -90))
 	if(smooth_left && smooth_right)
 		icon_state = "tram_mid"
 	else if (smooth_left)

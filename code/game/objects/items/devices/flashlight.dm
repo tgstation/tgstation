@@ -23,6 +23,8 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	/// If we've been forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	/// Can we toggle this light on and off (used for contexual screentips only)
 	var/toggle_context = TRUE
 	/// The sound the light makes when it's turned on
@@ -38,6 +40,15 @@
 		on = TRUE
 	update_brightness()
 	register_context()
+	if(toggle_context)
+		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	// single use lights can be toggled on once
@@ -64,15 +75,21 @@
 	if(light_system == STATIC_LIGHT)
 		update_light()
 
-/obj/item/flashlight/proc/toggle_light()
+/obj/item/flashlight/proc/toggle_light(mob/user)
+	var/disrupted = FALSE
 	on = !on
 	playsound(src, on ? sound_on : sound_off, 40, TRUE)
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		if(user)
+			balloon_alert(user, "disrupted!")
+			on = FALSE
+			disrupted = TRUE
 	update_brightness()
 	update_item_action_buttons()
-	return TRUE
+	return !disrupted
 
 /obj/item/flashlight/attack_self(mob/user)
-	toggle_light()
+	toggle_light(user)
 
 /obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
@@ -253,6 +270,14 @@
 	. = ..()
 	if(istype(user) && dir != user.dir)
 		setDir(user.dir)
+
+/// when hit by a light disruptor - turns the light off, forces the light to be disabled for a few seconds
+/obj/item/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(on)
+		toggle_light()
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/flashlight/pen
 	name = "penlight"

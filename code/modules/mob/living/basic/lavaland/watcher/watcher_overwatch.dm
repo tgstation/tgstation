@@ -1,5 +1,6 @@
 /**
  * Automatically shoot at a target if they do anything while this is active on them.
+ * Currently not given to any mob, but retained so admins can use it.
  */
 /datum/action/cooldown/mob_cooldown/watcher_overwatch
 	name = "Overwatch"

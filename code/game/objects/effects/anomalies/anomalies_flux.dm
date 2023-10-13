@@ -66,7 +66,7 @@
 	///range in whuich we zap
 	var/zap_range = 1
 	///strength of the zappy
-	var/zap_power = 2500
+	var/zap_power = 1e6
 	///the zappy flags
 	var/zap_flags = ZAP_GENERATES_POWER | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 

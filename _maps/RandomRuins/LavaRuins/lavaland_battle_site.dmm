@@ -1,0 +1,464 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/strong/wasteland,
+/area/lavaland/surface/outdoors)
+"f" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/clothing/head/costume/crown{
+	pixel_x = 15;
+	pixel_y = 6;
+	desc = "A crown that was fit for a king, looks like it didn't get them very far.";
+	name = "dented crown"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"g" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"h" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/shield/buckler,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"j" = (
+/turf/template_noop,
+/area/template_noop)
+"m" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"n" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"p" = (
+/obj/item/stack/rods{
+	pixel_x = 10
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"q" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"s" = (
+/mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"t" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"u" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"x" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"D" = (
+/obj/structure/statue/bone/rib{
+	name = "colossal tailbone"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"F" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"G" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"H" = (
+/obj/structure/firepit,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"I" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/stack/sheet/animalhide/goliath_hide,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"J" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"K" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/stack/sheet/sinew,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"L" = (
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"M" = (
+/obj/structure/statue/bone/skull,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"O" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"P" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/shovel/spade,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"S" = (
+/obj/structure/chair/wood/wings{
+	color = "#ffff00"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"T" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/spear/bonespear{
+	pixel_x = 13;
+	pixel_y = 12
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"U" = (
+/obj/structure/statue/bone/rib,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"V" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/stack/rods{
+	pixel_x = -1;
+	pixel_y = -7
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"X" = (
+/obj/structure/stone_tile/burnt,
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Y" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/stack/rods{
+	pixel_y = -12;
+	pixel_x = 2
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+"}
+(2,1,1) = {"
+j
+j
+a
+j
+j
+j
+j
+j
+j
+j
+j
+j
+a
+j
+j
+j
+"}
+(3,1,1) = {"
+j
+a
+a
+a
+j
+j
+J
+G
+G
+G
+j
+j
+a
+a
+a
+j
+"}
+(4,1,1) = {"
+j
+j
+a
+a
+G
+K
+G
+u
+T
+x
+J
+a
+a
+a
+j
+j
+"}
+(5,1,1) = {"
+j
+j
+j
+J
+I
+G
+G
+q
+L
+G
+s
+g
+a
+G
+j
+j
+"}
+(6,1,1) = {"
+j
+j
+j
+G
+s
+x
+x
+G
+x
+G
+x
+G
+G
+D
+j
+j
+"}
+(7,1,1) = {"
+j
+j
+V
+q
+G
+p
+t
+J
+G
+q
+J
+O
+q
+G
+j
+j
+"}
+(8,1,1) = {"
+j
+j
+m
+u
+G
+q
+f
+O
+J
+O
+G
+n
+J
+x
+j
+j
+"}
+(9,1,1) = {"
+j
+j
+G
+x
+G
+M
+S
+n
+o
+n
+X
+F
+u
+G
+j
+j
+"}
+(10,1,1) = {"
+j
+j
+J
+G
+G
+u
+J
+U
+G
+U
+J
+G
+G
+G
+j
+j
+"}
+(11,1,1) = {"
+j
+j
+j
+q
+h
+G
+G
+G
+q
+G
+G
+J
+m
+q
+j
+j
+"}
+(12,1,1) = {"
+j
+j
+j
+G
+G
+x
+H
+x
+G
+G
+q
+Y
+G
+a
+j
+j
+"}
+(13,1,1) = {"
+j
+j
+a
+G
+J
+G
+G
+P
+G
+u
+G
+a
+a
+a
+a
+j
+"}
+(14,1,1) = {"
+j
+a
+a
+a
+j
+j
+G
+G
+q
+G
+j
+j
+a
+a
+j
+j
+"}
+(15,1,1) = {"
+j
+a
+a
+j
+j
+j
+j
+j
+j
+j
+j
+a
+a
+a
+j
+j
+"}
+(16,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+"}

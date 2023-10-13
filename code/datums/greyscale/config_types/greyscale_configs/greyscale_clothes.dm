@@ -497,6 +497,15 @@
 	name = "Worn Marisa Sneakers (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 
+/datum/greyscale_config/glow_shoes
+	name = "Glow Shoes"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/glow_shoes.json'
+
+/datum/greyscale_config/glow_shoes/worn
+	name = "Glow Shoes (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 //
 // ACCESSORIES
 //

@@ -1173,6 +1173,17 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_drink_apparatus
+	name = "Drink Apparatus"
+	id = "borg_upgrade_drink_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/drink_app
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+	
 /datum/design/borg_upgrade_service_apparatus
 	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"

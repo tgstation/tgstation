@@ -86,6 +86,11 @@
 /mob/living/proc/is_pepper_proof(check_flags = ALL)
 	return null
 
+/// Checks if the mob's ears (BOTH EARS, BOWMANS NEED NOT APPLY) are covered by something.
+/// Returns the atom covering the mob's ears, or null if their ears are uncovered.
+/mob/living/proc/is_ears_covered()
+	return null
+
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
@@ -164,6 +169,7 @@
 	return ..()
 
 /mob/living/fire_act()
+	. = ..()
 	adjust_fire_stacks(3)
 	ignite_mob()
 
@@ -446,7 +452,7 @@
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
+		makeNewConstruct(/mob/living/basic/construct/harvester, src, cultoverride = TRUE)
 	else
 		switch(rand(1, 4))
 			if(1)

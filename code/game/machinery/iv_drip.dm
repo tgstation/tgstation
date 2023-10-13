@@ -243,12 +243,12 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		if(isliving(attached))
-			var/mob/living/attached_mob = attached
+			var/mob/living/carbon/attached_mob = attached
 			to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
 			var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
 			chosen_limb.receive_damage(3)
-			chosen_limb.force_wound_upwards(/datum/wound/pierce/bleed/moderate, wound_source = "IV needle")
+			attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
 		else
 			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
