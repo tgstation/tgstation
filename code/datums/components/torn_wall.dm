@@ -93,3 +93,7 @@
 /datum/component/torn_wall/proc/on_turf_changed()
 	SIGNAL_HANDLER
 	qdel(src)
+
+#undef TORN_WALL_RUINED
+#undef TORN_WALL_DAMAGED
+#undef TORN_WALL_INITIAL

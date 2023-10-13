@@ -146,19 +146,20 @@
 	target.take_damage(obj_damage, BRUTE, MELEE)
 
 /// Before we attack something, check if we want to do something else instead
-/mob/living/basic/space_dragon/proc/pre_attack(mob/living/source, mob/living/target)
+/mob/living/basic/space_dragon/proc/pre_attack(mob/living/source, atom/target)
 	SIGNAL_HANDLER
+	if (target == src)
+		return COMPONENT_HOSTILE_NO_ATTACK // Easy to misclick yourself, let's not
 	if (DOING_INTERACTION(source, DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION))
 		balloon_alert(source, "busy!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_HOSTILE_NO_ATTACK
 	if (!isliving(target))
 		return
-	if (target == src)
-		return COMPONENT_CANCEL_ATTACK_CHAIN  // Easy to misclick yourself, let's not
-	if (target.stat != DEAD)
+	var/mob/living/living_target = target
+	if (living_target.stat != DEAD)
 		return
-	INVOKE_ASYNC(src, PROC_REF(try_eat), target)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(try_eat), living_target)
+	return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Try putting something inside us
 /mob/living/basic/space_dragon/proc/try_eat(mob/living/food)
