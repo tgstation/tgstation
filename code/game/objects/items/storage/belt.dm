@@ -350,6 +350,7 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
+		/obj/item/stock_parts/cell/gun
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()

@@ -34,6 +34,7 @@
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
+	can_remove_cell = FALSE
 
 /obj/item/gun/energy/laser/carbine
 	name = "laser carbine"
@@ -77,6 +78,7 @@
 	force = 10
 	ammo_x_offset = 3
 	selfcharge = 1
+	can_remove_cell = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
@@ -94,6 +96,7 @@
 	can_charge = FALSE
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	use_cyborg_cell = TRUE
+	can_remove_cell = FALSE
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return

@@ -113,13 +113,17 @@
 	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
+//used for cell_charger updates
+/obj/item/stock_parts/cell/proc/get_overlay()
+	return mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
 		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+	. += get_overlay()
 
 /obj/item/stock_parts/cell/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, charge))
@@ -479,6 +483,26 @@
 
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000
+
+
+/obj/item/stock_parts/cell/gun
+	name = "weapon power cell"
+	desc = "A power cell used for energy weapons"
+	icon_state = "gcell"
+	charge_light_type = "gun"
+	maxcharge = 1000
+
+//because stock_arts/cell overrides get_part_rating, we need to override it again. we're just returning zero
+//this makes it so weapon cells cannot fit into RPED
+/obj/item/stock_parts/cell/gun/get_part_rating()
+	return 0
+
+/obj/item/stock_parts/cell/gun/get_overlay()
+	return mutable_appearance('icons/obj/machines/cell_charger.dmi', "gcell-[charge_light_type]-o[round((percent() * 3) / 100)]")
+
+/obj/item/stock_parts/cell/gun/empty
+	empty = TRUE
+
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

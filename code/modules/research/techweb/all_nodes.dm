@@ -1535,6 +1535,7 @@
 		"seclite",
 		"zipties",
 		"inspector",
+		"basic_weapon_cell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 

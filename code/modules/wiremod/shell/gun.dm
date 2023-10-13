@@ -10,6 +10,7 @@
 	icon_state = "setup_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
 	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
+	can_remove_cell = FALSE
 	item_flags = NONE
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE

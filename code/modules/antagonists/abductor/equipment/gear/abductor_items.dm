@@ -254,6 +254,7 @@
 	pin = /obj/item/firing_pin/abductor
 	icon_state = "alienpistol"
 	inhand_icon_state = "alienpistol"
+	can_remove_cell = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/gun/energy/shrink_ray
@@ -264,6 +265,7 @@
 	pin = /obj/item/firing_pin/abductor
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
+	can_remove_cell = FALSE
 	automatic_charge_overlays = FALSE
 	fire_delay = 30
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds

@@ -540,7 +540,8 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		))
+		),
+		list(/obj/item/stock_parts/cell/gun))
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"

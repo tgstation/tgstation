@@ -7,6 +7,7 @@
 	display_empty = FALSE
 	force = 5
 	selfcharge = 1
+	can_remove_cell = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
 
 /obj/item/gun/energy/e_gun/advtaser/mounted/add_seclight_point()
@@ -20,6 +21,7 @@
 	inhand_icon_state = "armcannonlase"
 	force = 5
 	selfcharge = 1
+	can_remove_cell = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/gun/energy/laser/mounted/augment

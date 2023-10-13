@@ -5,8 +5,13 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 
 	/// What type of power cell this uses
-	var/obj/item/stock_parts/cell/cell
-	var/cell_type = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/cell/gun/cell
+	var/cell_type = /obj/item/stock_parts/cell/gun
+	///set to false to remove ability to remove cell
+	var/can_remove_cell = TRUE
+	//configurable delays for balancing different guns if needed
+	var/cell_add_delay = 60
+	var/cell_remove_delay = 20
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
@@ -144,6 +149,17 @@
 		cell = null
 		update_appearance()
 
+/obj/item/gun/energy/examine(mob/user)
+	. = ..()
+	if(cell)
+		. += "It has \a [cell] installed."
+		if(can_remove_cell)
+			. += span_info("[cell] looks like [cell.p_they()] could be removed with some <b>tools</b>.")
+		else
+			. += span_info("[cell] looks like [cell.p_theyre()] firmly locked in, [cell.p_they()] looks impossible to remove.")
+	else
+		. += "It doesn't have a <b>power cell</b> installed, and won't fire."
+
 /obj/item/gun/energy/process(seconds_per_tick)
 	if(selfcharge && cell && cell.percent() < 100)
 		charge_timer += seconds_per_tick
@@ -237,6 +253,9 @@
 	if(!automatic_charge_overlays)
 		return
 
+	if(!cell)	//makes it visually clear that the gun has no cell
+		return
+
 	var/overlay_icon_state = "[icon_state]_charge"
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -327,3 +346,52 @@
 	cell.charge = cell.maxcharge
 	recharge_newshot(no_cyborg_drain = TRUE)
 	update_appearance()
+
+/obj/item/gun/energy/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(tryremovecell(user, tool))
+		tool.play_tool_sound(src)
+	return TRUE
+
+/obj/item/gun/energy/proc/tryremovecell(mob/user, obj/item/tool)
+	if(cell && can_remove_cell)
+		user.visible_message(span_warning("[user] attempts to remove [cell] from [src] with [tool]."),
+		span_notice("You attempt to remove [cell] from [src]. (It will take [DisplayTimeText(cell_remove_delay)].)"), null, 3)
+		if(tool.use_tool(src, user, cell_remove_delay, volume = 50))
+			if(!cell) //check to see if the cell is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[cell] is removed from [src] by [user]"),
+			span_warning("You remove the cell from [src]."), null, 3)
+
+			//set cell charge to zero to attempt to discourage cannibalizing other gun's cells
+			if (cell.charge > 0)
+				to_chat(user, span_warning("The cell discharges as you remove it from [src]."))
+				do_sparks(5, FALSE, src)
+				cell.charge = 0
+
+			cell.update_appearance()
+			cell.forceMove(drop_location())
+
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/gun/energy/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stock_parts/cell))
+		if(istype(I, /obj/item/stock_parts/cell/gun))
+			if(cell)
+				to_chat(user, span_warning("[src] already has a cell!"))
+				return
+
+			user.visible_message(span_warning("[user] attempts to add [cell] to [src]."),
+			span_notice("You attempt to add [cell] to [src]. (It will take [DisplayTimeText(cell_add_delay)].)"), null, 3)
+			if(I.use_tool(src, user, cell_add_delay, volume = 50))
+				if(!I) //check to see if the cell is still there, or we can spam messages by clicking multiple times during the tool delay
+					return
+				if(!user.transferItemToLoc(I, src))
+					return
+				cell = I
+				to_chat(user, span_notice("You install a cell in [src]."))
+				update_appearance()
+				return TRUE
+		else
+			to_chat(user, span_warning("[I] is incompatible with [src]!"))
+	else
+		return ..()

@@ -18,6 +18,7 @@
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	can_remove_cell = FALSE
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
 	return
@@ -45,6 +46,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	can_remove_cell = FALSE
 
 /obj/item/gun/energy/disabler/cyborg/emp_act()
 	return

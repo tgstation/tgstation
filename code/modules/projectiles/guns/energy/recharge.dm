@@ -5,6 +5,7 @@
 	desc = "A self recharging gun. Holds one shot at a time."
 	automatic_charge_overlays = FALSE
 	cell_type = /obj/item/stock_parts/cell/emproof
+	can_remove_cell = FALSE
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
 	/// Does it hold charge when not put away?
@@ -17,6 +18,8 @@
 	var/recharge_timerid
 	/// Do we recharge slower with more of our type?
 	var/unique_frequency = FALSE
+
+
 
 /obj/item/gun/energy/recharge/apply_fantasy_bonuses(bonus)
 	. = ..()

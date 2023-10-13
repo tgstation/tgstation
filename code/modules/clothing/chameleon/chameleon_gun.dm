@@ -4,6 +4,7 @@
 	pin = /obj/item/firing_pin
 	automatic_charge_overlays = FALSE
 	can_select = FALSE
+	can_remove_cell = FALSE
 	actions_types = list(/datum/action/item_action/chameleon/change/gun)
 
 	/// The vars copied over to our projectile on fire.

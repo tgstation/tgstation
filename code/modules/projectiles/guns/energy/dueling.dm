@@ -155,6 +155,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/duel)
 	automatic_charge_overlays = FALSE
 	gun_flags = TURRET_INCOMPATIBLE
+	can_remove_cell = FALSE
 	var/unlocked = FALSE
 	var/setting = DUEL_SETTING_A
 	var/datum/duel/duel

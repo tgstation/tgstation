@@ -59,6 +59,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	can_remove_cell = FALSE
 	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/meteorgun
@@ -71,6 +72,7 @@
 	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
+	can_remove_cell = FALSE
 	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/meteorgun/pen
@@ -106,6 +108,7 @@
 	force = 12
 	sharpness = SHARP_EDGED
 	can_charge = FALSE
+	can_remove_cell = FALSE
 	gun_flags = NOT_A_REAL_GUN
 
 	heat = 3800
@@ -317,6 +320,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	can_remove_cell = FALSE
 
 /obj/item/gun/energy/printer/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -333,6 +337,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/cell/high
+	can_remove_cell = FALSE
 	pin = null
 
 /obj/item/gun/energy/temperature/security
@@ -393,6 +398,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
+	can_remove_cell = FALSE
 	/// How many coins we can have at a time. Set to 0 for infinite
 	var/max_coins = 4
 	/// How many coins we currently have available
