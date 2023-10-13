@@ -380,15 +380,15 @@
 				to_chat(user, span_warning("[src] already has a cell!"))
 				return
 
-			user.visible_message(span_warning("[user] attempts to add [cell] to [src]."),
-			span_notice("You attempt to add [cell] to [src]. (It will take [DisplayTimeText(cell_add_delay)].)"), null, 3)
+			user.visible_message(span_warning("[user] attempts to add [I] to [src]."),
+			span_notice("You attempt to add [I] to [src]. (It will take [DisplayTimeText(cell_add_delay)].)"), null, 3)
 			if(I.use_tool(src, user, cell_add_delay, volume = 50))
 				if(!I) //check to see if the cell is still there, or we can spam messages by clicking multiple times during the tool delay
 					return
 				if(!user.transferItemToLoc(I, src))
 					return
 				cell = I
-				to_chat(user, span_notice("You install a cell in [src]."))
+				to_chat(user, span_notice("You installed [I] in [src]."))
 				update_appearance()
 				return TRUE
 		else
