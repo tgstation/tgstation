@@ -1,0 +1,4 @@
+author: "bun235"
+delete-after: True
+changes:
+  - rscadd: "targetting someone's arm with *slap now has a unique message"
