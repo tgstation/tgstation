@@ -68,7 +68,6 @@
 			boulders_contained += ground_rocks
 			if(boulders_contained.len > boulders_held_max)
 				toggled_on = FALSE
-				STOP_PROCESSING(SSmachines, src)
 				boulders_contained = list()
 				update_appearance(UPDATE_ICON_STATE)
 				return PROCESS_KILL
