@@ -11,7 +11,10 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		debug_variables(locate(href_list["Vars"]))
+		var/datum/vars_target = locate(href_list["Vars"])
+		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
+			vars_target = vars_target.vars[href_list["special_varname"]]
+		debug_variables(vars_target)
 
 //Stuff below aren't in dropdowns/etc.
 

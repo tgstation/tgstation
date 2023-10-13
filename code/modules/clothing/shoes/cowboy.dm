@@ -6,6 +6,10 @@
 	custom_price = PAYCHECK_CREW
 	var/max_occupants = 4
 	can_be_tied = FALSE
+	/// Do these boots have spur sounds?
+	var/has_spurs = FALSE
+	/// The jingle jangle jingle of our spurs
+	var/list/spur_sound = list('sound/effects/footstep/spurs1.ogg'=1,'sound/effects/footstep/spurs2.ogg'=1,'sound/effects/footstep/spurs3.ogg'=1)
 
 /datum/armor/shoes_cowboy
 	bio = 90
@@ -18,6 +22,9 @@
 	if(prob(2))
 		//There's a snake in my boot
 		new /mob/living/basic/snake(src)
+
+	if(has_spurs)
+		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
@@ -97,3 +104,10 @@
 	name = "\improper Hugs-The-Feet lizard skin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
 	icon_state = "lizardboots_blue"
+
+/// Shoes for the nuke-ops cowboy fit
+/obj/item/clothing/shoes/cowboy/black/syndicate
+	name = "black spurred cowboy boots"
+	desc = "And they sing, oh, ain't you glad you're single? And that song ain't so very far from wrong."
+	armor_type = /datum/armor/shoes_combat
+	has_spurs = TRUE
