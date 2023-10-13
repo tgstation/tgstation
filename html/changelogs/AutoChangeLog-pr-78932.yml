@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes Mauna Loa, Monover, Silibinin, Granibitaluri not exiting your system on metabolism"
+  - bugfix: "Fixes holy water exiting your system at double the rate on metabolism"
+  - bugfix: "Holy Water no longer spams cultists with big text every time, it's much more tame now"
