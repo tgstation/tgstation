@@ -50,7 +50,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /datum/armor/machinery_camera
 	melee = 50
-	bullet = 20
 	laser = 20
 	energy = 20
 	fire = 90
