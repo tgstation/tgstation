@@ -17,8 +17,10 @@
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
+	icon_state = "medibot"
 	base_icon_state = "medibot"
+	var/base_screen_state
+	var/stationary_suffix = null //for icon states
 	density = FALSE
 	anchored = FALSE
 	health = 20
@@ -89,6 +91,7 @@
 	var/heal_threshold = 10
 	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
 	var/damagetype_healer = BRUTE
+	var/on = TRUE
 
 	///Flags Medbots use to decide how they should be acting.
 	var/medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_SPEAK_MODE
@@ -121,14 +124,18 @@
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
-	skin = "bezerk"
+	icon_state = "medibot_bezerk"
+	base_icon_state = "medibot_bezerk"
+	base_screen_state = "medibot"
 	damagetype_healer = "all"
 	heal_amount = 10
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
-	skin = "bezerk"
+	icon_state = "medibot_bezerk"
+	base_icon_state = "medibot_bezerk"
+	base_screen_state = "medibot"
 	damagetype_healer = "all"
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
@@ -137,7 +144,9 @@
 /mob/living/simple_animal/bot/medbot/nukie
 	name = "Oppenheimer"
 	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
-	skin = "bezerk"
+	icon_state = "medibot_bezerk"
+	base_icon_state = "medibot_bezerk"
+	base_screen_state = "medibot"
 	health = 40
 	maxHealth = 40
 	maints_access_required = list(ACCESS_SYNDICATE)
@@ -186,23 +195,32 @@
 		if(MEDBOT_PANIC_FUCK to INFINITY)
 			. += span_warning("<b>They are freaking out from being tipped over!</b>")
 
-/mob/living/simple_animal/bot/medbot/update_icon_state()
+/mob/living/simple_animal/bot/medbot/update_icon()
 	. = ..()
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		icon_state = "[base_icon_state]0"
-		return
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		icon_state = "[base_icon_state]a"
-		return
-	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[get_bot_flag(medical_mode_flags, MEDBOT_STATIONARY_MODE)]"
-		return
-	icon_state = "[base_icon_state][get_bot_flag(medical_mode_flags, MEDBOT_STATIONARY_MODE) ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+	cut_overlays()
+	var/mutable_appearance/screen_overlay = mutable_appearance(icon, null)
+	var/mutable_appearance/screen_overlay_2 = mutable_appearance(icon, null)
+	if(MEDBOT_STATIONARY_MODE) //we add the stationary suffix to the screen name, if not we don't add anythign
+		stationary_suffix = "_stationary"
 
-/mob/living/simple_animal/bot/medbot/update_overlays()
-	. = ..()
-	if(skin)
-		. += "medskin_[skin]"
+	icon_state = "[base_icon_state]"
+	screen_overlay.icon_state = null
+	screen_overlay_2.icon_state = null
+
+	if(bot_mode_flags & BOT_MODE_ON)
+		screen_overlay_2.icon_state = "[base_screen_state][stationary_suffix]_idle"
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		screen_overlay.icon_state = "[base_screen_state][stationary_suffix]_stunned"
+	if(mode == BOT_HEALING)
+		icon_state = "[base_icon_state]_base_healing"
+		screen_overlay.icon_state = "[base_icon_state][stationary_suffix]_healing"
+	if(!COOLDOWN_FINISHED(src, last_patient_message)) //when the crit patient alert cooldown is going on, we show the other healing screen
+		screen_overlay_2.icon_state = "[base_screen_state][stationary_suffix]_healing_12_crit"
+	else
+		screen_overlay_2.icon_state = "[base_screen_state][stationary_suffix]_healing_12"
+
+	add_overlay(screen_overlay)
+	add_overlay(screen_overlay_2)
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
@@ -213,11 +231,13 @@
 	prev_access = access_card.access.Copy()
 
 	if(!isnull(new_skin))
-		skin = new_skin
+		base_icon_state = new_skin
 	update_appearance()
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
-		skin = "advanced"
+		icon_state = "medibot_advanced"
+		base_icon_state = "medibot_advanced"
+		base_screen_state = "medibot"
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
 		if(prob(50))
@@ -346,6 +366,7 @@
 		)
 		var/message = pick(messagevoice)
 		speak(message)
+		flick_overlay_static("[base_screen_state][stationary_suffix]_notice", src, 2 SECONDS)
 		playsound(src, messagevoice[message], 50, FALSE)
 	return H
 
@@ -447,6 +468,7 @@
 
 	if(frustration > 8)
 		oldpatient = patient
+		flick_overlay_static("[base_screen_state][stationary_suffix]_death, src, 6 SECONDS")
 		soft_reset()
 
 	if(QDELETED(patient))
