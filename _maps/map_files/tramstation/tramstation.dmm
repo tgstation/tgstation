@@ -18024,7 +18024,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Cargo - Bitrunning Den"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "eyy" = (
