@@ -50,8 +50,10 @@
 /// Try picking up items
 /datum/element/dextrous/proc/on_hand_clicked(mob/living/hand_haver, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+	if(!proximity)
+		return NONE
 	if (!isitem(target) && hand_haver.combat_mode)
-		return
+		return NONE
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attack_hand_secondary), hand_haver, modifiers)
 	else

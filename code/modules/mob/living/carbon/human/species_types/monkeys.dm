@@ -53,51 +53,46 @@
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 
+	RegisterSignal(H, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(monkey_attack))
+
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
 	C.dna.remove_mutation(/datum/mutation/human/race)
+	UnregisterSignal(C, COMSIG_LIVING_UNARMED_ATTACK)
 
-/datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
+/datum/species/monkey/proc/monkey_attack(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity_flag)
+		return NONE
+
 	// If our hands are not blocked, dont try to bite them
-	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
-		if(!ISADVANCEDTOOLUSER(user))
-			target.attack_paw(user, modifiers)
-			return TRUE
-		return ..()
+	if(!HAS_TRAIT(source, TRAIT_HANDS_BLOCKED))
+		return NONE
 
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
+	if(source.is_muzzled())
+		return COMPONENT_CANCEL_ATTACK_CHAIN // cannot bite them if we're muzzled
+	var/obj/item/bodypart/head/mouth = source.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(mouth)) // check for them having a head, ala HARS
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	var/mob/living/carbon/victim = target
-	if(user.is_muzzled())
-		return TRUE // cannot bite them if we're muzzled
-
-	var/obj/item/bodypart/affecting
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
+	var/obj/item/bodypart/affecting = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE))
 	var/armor = victim.run_armor_check(affecting, MELEE)
 
 	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
 		victim.visible_message(
-			span_danger("[user]'s bite misses [victim]!"),
-			span_danger("You avoid [user]'s bite!"),
+			span_danger("[source]'s bite misses [victim]!"),
+			span_danger("You avoid [source]'s bite!"),
 			span_hear("You hear jaws snapping shut!"),
 			COMBAT_MESSAGE_RANGE,
-			user,
+			source,
 		)
-		to_chat(user, span_danger("Your bite misses [victim]!"))
-		return TRUE
+		to_chat(source, span_danger("Your bite misses [victim]!"))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!mouth) // check for them having a head, ala HARS
-		return TRUE
-
-	var/damage_roll = rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high)
-	victim.apply_damage(damage_roll, BRUTE, affecting, armor)
+	victim.apply_damage(rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high), BRUTE, affecting, armor)
 
 	victim.visible_message(
 		span_danger("[name] bites [victim]!"),
@@ -106,16 +101,15 @@
 		COMBAT_MESSAGE_RANGE,
 		name,
 	)
-	to_chat(user, span_danger("You bite [victim]!"))
+	to_chat(source, span_danger("You bite [victim]!"))
 
-	if(armor >= 2) // if they have basic armor on the limb we bit, don't spread diseases
-		return TRUE
-	for(var/datum/disease/bite_infection as anything in user.diseases)
-		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-			continue // ignore diseases that have special spread logic, or are not contagious
-		victim.ForceContractDisease(bite_infection)
+	if(armor < 2) // if they have basic armor on the limb we bit, don't spread diseases
+		for(var/datum/disease/bite_infection as anything in source.diseases)
+			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+				continue // ignore diseases that have special spread logic, or are not contagious
+			victim.ForceContractDisease(bite_infection)
 
-	return TRUE
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(check_holidays(MONKEYDAY))
