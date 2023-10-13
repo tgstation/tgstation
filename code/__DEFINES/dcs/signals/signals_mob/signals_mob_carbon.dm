@@ -135,8 +135,6 @@
 	#define SHIELD_BLOCK (1<<0)
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
-/// from /mob/living/carbon/human/resolve_unarmed_attack(), before resolving the attack into attack_hand.
-#define COMSIG_HUMAN_PRE_ATTACK_HAND "human_pre_attack_hand"
 
 ///from /mob/living/carbon/human/get_visible_name(), not sent if the mob has TRAIT_UNKNOWN: (identity)
 #define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"

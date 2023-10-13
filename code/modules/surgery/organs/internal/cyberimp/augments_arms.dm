@@ -381,11 +381,11 @@
 /obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(ishuman(reciever)) //Sorry, only humans
-		RegisterSignal(reciever, COMSIG_HUMAN_PRE_ATTACK_HAND, PROC_REF(on_attack_hand))
+		RegisterSignal(reciever, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
 /obj/item/organ/internal/cyberimp/arm/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_HUMAN_PRE_ATTACK_HAND)
+	UnregisterSignal(implant_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()
@@ -399,10 +399,10 @@
 	organ_flags &= ~ORGAN_FAILING
 	owner.balloon_alert(owner, "your arm stops spasming!")
 
-/obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, modifiers)
+/obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(source.get_active_hand() != hand || !source.Adjacent(target))
+	if(source.get_active_hand() != hand || !proximity)
 		return NONE
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return NONE

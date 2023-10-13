@@ -12,8 +12,19 @@
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
 		return FALSE
+	// ..So we can tier unarmed attack and allow certain events to be prioritized.
+	sigreturn |= SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
+
 	if(!right_click_attack_chain(attack_target, modifiers))
 		resolve_unarmed_attack(attack_target, modifiers)
 	return TRUE
@@ -46,13 +57,6 @@
 /mob/living/carbon/human/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	if(!ISADVANCEDTOOLUSER(src))
 		return ..()
-
-	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_PRE_ATTACK_HAND, attack_target, modifiers)
-	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
-	if(sigreturn & COMPONENT_SKIP_ATTACK)
-		return FALSE
 
 	return attack_target.attack_hand(src, modifiers)
 
@@ -302,8 +306,6 @@
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	GiveTarget(attack_target)
 	return ..()
-
-#undef LIVING_UNARMED_ATTACK_BLOCKED
 
 /*
 	New Players:

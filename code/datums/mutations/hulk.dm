@@ -29,14 +29,14 @@
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
-	RegisterSignal(owner, COMSIG_HUMAN_PRE_ATTACK_HAND, PROC_REF(on_attack_hand))
+	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 
-/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, modifiers)
+/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!source.combat_mode || !source.Adjacent(target) || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!source.combat_mode || !proximity || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return NONE
 	if(!target.attack_hulk(owner))
 		return NONE
@@ -89,7 +89,7 @@
 		part.variable_color = null
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
-	UnregisterSignal(owner, COMSIG_HUMAN_PRE_ATTACK_HAND)
+	UnregisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 
