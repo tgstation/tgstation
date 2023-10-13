@@ -42,6 +42,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"BUGS" = BUGS,
 	"GORE" = GORE,
 	"STONE" = STONE,
+	"KIDS" = KIDS,
 ))
 
 /// A list of food type names, in order of their flags
