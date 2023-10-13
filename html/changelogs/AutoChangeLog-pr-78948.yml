@@ -1,0 +1,6 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - admin: "VV can now display the contents of special byond lists like filters, or client.images"
+  - admin: "VV on images now displays the image in the header"
+  - admin: "VV can now display filters and includes their type"
