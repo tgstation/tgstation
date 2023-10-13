@@ -492,7 +492,7 @@
 	charge_light_type = "gun"
 	maxcharge = 1000
 
-//because stock_arts/cell overrides get_part_rating, we need to override it again. we're just returning zero
+//because stock_parts/cell overrides get_part_rating, we need to override it again. we're just returning zero
 //this makes it so weapon cells cannot fit into RPED
 /obj/item/stock_parts/cell/gun/get_part_rating()
 	return 0

@@ -154,7 +154,7 @@
 	if(cell)
 		. += "It has \a [cell] installed."
 		if(can_remove_cell)
-			. += span_info("[cell] looks like [cell.p_they()] could be removed with some <b>tools</b>.")
+			. += span_info("[cell] can be removed with by <b>right-clicking</b> with a <b>screwdriver</b>.")
 		else
 			. += span_info("[cell] looks like [cell.p_theyre()] firmly locked in, [cell.p_they()] looks impossible to remove.")
 	else

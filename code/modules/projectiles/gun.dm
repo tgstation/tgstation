@@ -138,7 +138,7 @@
 		if(pin)
 			. += "It has \a [pin] installed."
 			if(pin.pin_removable)
-				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
+				. += span_info("[pin] can be removed by <b>left-clicking</b> with some <b>tools</b>.")
 			else
 				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
 		else
