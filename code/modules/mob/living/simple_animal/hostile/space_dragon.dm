@@ -155,7 +155,7 @@
 	. = ..()
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
-		M.take_damage(50, BRUTE, MELEE, 1)
+		M.take_damage(50, BRUTE, MELEE)
 
 /mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
 	if(using_special)
