@@ -1603,7 +1603,7 @@
 		//The number of wires a bullet will randomly cut
 		var/number_of_wires_bullet_cuts = 3
 		for (var/wire = 1 to number_of_wires_bullet_cuts)
-			src.wires.cut_random()
+			src.wires.cut_random_dont_mend()
 
 	return ..()
 

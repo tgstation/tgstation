@@ -169,6 +169,19 @@
 /datum/wires/proc/cut_random(source)
 	cut(wires[rand(1, wires.len)], source)
 
+//Randomly cut a wire and but dont try to mend any
+/datum/wires/proc/cut_random_dont_mend(source)
+	//Create a list of all uncut wires
+	var/list/uncut_wires = list()
+	for (var/this_wire in wires)
+		if (this_wire in cut_wires)
+			continue
+		uncut_wires += this_wire
+
+	//If there are any wires we can cut, cut a random one
+	if (uncut_wires.len > 0)
+		cut(uncut_wires[rand(1, uncut_wires.len)], source)
+
 /datum/wires/proc/cut_all(source)
 	for(var/wire in wires)
 		cut(wire, source)
