@@ -36,6 +36,7 @@
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
+	winset(client, "tgui_say", "is-visible=0;size=1,1;")
 	window.subscribe(src, PROC_REF(on_message))
 	window.is_browser = TRUE
 
@@ -52,7 +53,6 @@
 			fancy = TRUE,
 			inline_css = file("tgui/public/tgui-say.bundle.css"),
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
-			hidden = TRUE,
 	);
 
 /**
@@ -64,11 +64,7 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 
-	var/params = list()
-	params["is-visible"] = "0"
-	params["pos"] = "848,500"
-	params["size"] = "231,30"
-	winset(client, "tgui_say", list2params(params))
+	winset(client, "tgui_say", "pos=848,500;size=231,30;")
 
 	window.send_message("props", list(
 		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
