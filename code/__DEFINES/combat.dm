@@ -294,6 +294,8 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 
 #define NICE_SHOT_RICOCHET_BONUS 10 //if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
 
+#define BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY 10 //Minimum damage physical bullets need to do to trigger special effects and/or destroy on some machines
+
 /// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
 #define CARBON_MAX_IMPACT_SPEED_BONUS 5
 

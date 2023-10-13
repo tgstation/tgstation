@@ -1594,11 +1594,11 @@
 //If a bullet does enough damage, it randomly cuts some wires
 /obj/machinery/door/airlock/bullet_act(obj/projectile/bullet)
 	// Energy attacks dont do anything special
-	if (bullet.armor_flag in list(ENERGY, LASER))
+	if (bullet.armor_flag != BULLET)
 		return ..()
 
 	// Dont cut the wires if the airlock has been reinforced with something above iron
-	if (bullet.damage > 10 && security_level <= AIRLOCK_SECURITY_IRON)
+	if (bullet.damage > BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY && security_level <= AIRLOCK_SECURITY_IRON)
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		//The number of wires a bullet will randomly cut
 		var/number_of_wires_bullet_cuts = 3

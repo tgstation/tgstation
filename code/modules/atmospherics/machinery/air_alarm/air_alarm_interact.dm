@@ -178,10 +178,10 @@
 //When a bullet hits us, if it does enough damage, choose a random mode and break
 /obj/machinery/airalarm/bullet_act(obj/projectile/bullet)
 	// Energy attacks dont do anything special
-	if (bullet.armor_flag in list(ENERGY, LASER))
+	if (bullet.armor_flag != BULLET)
 		return ..()
 
-	if (bullet.damage > 10)
+	if (bullet.damage >= BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY)
 		//Switch to a random mode
 		select_random_mode()
 

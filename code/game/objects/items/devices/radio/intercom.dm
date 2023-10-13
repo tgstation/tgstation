@@ -215,11 +215,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/bullet_act(obj/projectile/bullet)
 	// Energy attacks dont do anything special
-	if (bullet.armor_flag in list(ENERGY, LASER))
+	if (bullet.armor_flag != BULLET)
 		return ..()
 
 	//Knock if the bullet does enough damage, knock the intercom down
-	if (bullet.damage > 10)
+	if (bullet.damage >= BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY)
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		knock_down()
 	else

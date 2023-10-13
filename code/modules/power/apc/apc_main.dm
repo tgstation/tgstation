@@ -720,10 +720,10 @@
 //If the bullet does enough damage, shock everyone in a 3 tile radius and break
 /obj/machinery/power/apc/bullet_act(obj/projectile/bullet)
 	// Energy attacks dont do anything special
-	if (bullet.armor_flag in list(ENERGY, LASER))
+	if (bullet.armor_flag != BULLET)
 		return ..()
 
-	if (bullet.damage > 12)
+	if (bullet.damage >= BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY)
 		//break and spark
 		do_sparks(number = 7, cardinal_only = FALSE, source = src)
 		atom_break()

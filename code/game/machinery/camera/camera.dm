@@ -582,10 +582,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 //If hit with a bullet, simply break if it does enough damge
 /obj/machinery/camera/bullet_act(obj/projectile/bullet)
 	// Energy attacks dont do anything special
-	if (bullet.armor_flag in list(ENERGY, LASER))
+	if (bullet.armor_flag != BULLET)
 		return ..()
 
-	if (bullet.damage > 10)
+	if (bullet.damage >= BULLET_MINIMUM_DAMAGE_NEEDED_TO_EXECUTE_MACHINERY)
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		atom_break()
 
