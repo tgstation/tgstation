@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "\"Mirror Walk\" is once more the domain of the Maid in the Mirror rather than \"every heretic summon\""
+  - bugfix: "Heretic mobs can once again survive space"
