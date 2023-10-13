@@ -228,6 +228,6 @@
 	emote_see = speech_lines[BB_EMOTE_SEE] || list()
 	emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
 	sound = speech_lines[BB_EMOTE_SOUND] || list()
-	speech_chance = speech_lines[BB_EMOTE_CHANCE] ? speech_lines[BB_EMOTE_CHANCE] : initial(speech_chance)
+	speech_chance = speech_lines[BB_SPEAK_CHANCE] ? speech_lines[BB_SPEAK_CHANCE] : initial(speech_chance)
 
 	return ..()

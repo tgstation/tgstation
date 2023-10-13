@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	message += "<span class='info ml-1'>"
 	for(var/atom_type in required_atoms)
 		for(var/obj/item/fish/fish_path as anything in scanned[atom_type])
-			message += "[initial(fish_path.name)]"
+			message += "\n[initial(fish_path.name)]"
 	message += "</span>"
 	examine_list += message
 

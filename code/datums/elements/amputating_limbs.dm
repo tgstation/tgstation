@@ -1,4 +1,4 @@
-/// This component will intercept bare-handed attacks by the owner on critically injured carbons and amputate random limbs instead
+/// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
 /datum/element/amputating_limbs
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -68,7 +68,7 @@
 
 /// Chop one off
 /datum/element/amputating_limbs/proc/amputate(mob/living/surgeon, mob/living/carbon/victim, obj/item/bodypart/to_remove)
-	surgeon.visible_message(span_warning("[surgeon] begins [surgery_verb] [to_remove] off of [victim]!"))
+	surgeon.visible_message(span_warning("[surgeon] [surgery_verb] [to_remove] off of [victim]!"))
 	if (surgery_time > 0 && !do_after(surgeon, delay = surgery_time, target = victim))
 		return
 	to_remove.dismember()

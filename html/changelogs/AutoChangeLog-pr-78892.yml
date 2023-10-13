@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Two new psyker-oriented virtual domains -- Crate Chaos and Infected Domain."
+  - rscadd: "Map helper for cyber-police corpse spawn."
+  - rscadd: "Map helper for swapping the encrypted crate in an area with a random crate from that same area."

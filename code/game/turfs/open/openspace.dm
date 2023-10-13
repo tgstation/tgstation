@@ -132,21 +132,19 @@
 	if(!CanBuildHere())
 		return FALSE
 
-	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
-			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-			if(L)
-				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else
-				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			return list("delay" = 0, "cost" = 1)
+		else
+			return list("delay" = 0, "cost" = 3)
+
 	return FALSE
 
-/turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
-			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			return TRUE
+/turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
 	return FALSE
 
 /turf/open/openspace/rust_heretic_act()

@@ -382,8 +382,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES)))
 				speech_bubble_recipients.Add(M.client)
 			found_client = TRUE
-
-	if(voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(SStts.tts_enabled && voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN))
 		var/tts_message_to_use = tts_message
 		if(!tts_message_to_use)
 			tts_message_to_use = message_raw

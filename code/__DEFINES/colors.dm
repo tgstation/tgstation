@@ -290,6 +290,7 @@
 /// Icon filter that creates gaussian blur
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
+// Colors related to items used in construction
 #define CABLE_COLOR_BLUE "blue"
 	#define CABLE_HEX_COLOR_BLUE COLOR_STRONG_BLUE
 #define CABLE_COLOR_BROWN "brown"
@@ -308,6 +309,9 @@
 	#define CABLE_HEX_COLOR_WHITE COLOR_WHITE
 #define CABLE_COLOR_YELLOW "yellow"
 	#define CABLE_HEX_COLOR_YELLOW COLOR_YELLOW
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
 
 #define COLOR_CARP_PURPLE "#aba2ff"
 #define COLOR_CARP_PINK "#da77a8"
