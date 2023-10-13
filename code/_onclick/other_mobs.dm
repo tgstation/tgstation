@@ -293,7 +293,7 @@
 
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	GiveTarget(attack_target)
-	return ..()
+	INVOKE_ASYNC(src, PROC_REF(AttackingTarget), attack_target)
 
 #undef LIVING_UNARMED_ATTACK_BLOCKED
 

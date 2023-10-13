@@ -18755,7 +18755,7 @@
 /obj/item/clothing/gloves/color/fyellow{
 	pixel_y = 7
 	},
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /obj/machinery/camera/autoname/directional/north,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/plating,
@@ -25006,7 +25006,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "iYh" = (
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "iYj" = (

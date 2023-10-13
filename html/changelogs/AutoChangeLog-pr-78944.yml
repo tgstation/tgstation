@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes:
+  - qol: "apples can now be sliced"

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Space Dragons can now, once again, tear down walls and eat corpses. They also have regained their special damage modifier when attacking mechs."
