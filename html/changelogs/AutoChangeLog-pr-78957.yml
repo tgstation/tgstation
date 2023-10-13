@@ -1,0 +1,7 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "You can now return to your old body after being summoned by a manifest rune."
+  - qol: "You can now return to your old body after dying in CTF."
+  - qol: "You can now return to your old body after dying in the Medisim Shuttle battle area."
+  - qol: "You can no longer suicide in CTF areas, for integrity purposes."

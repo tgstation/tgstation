@@ -10,7 +10,7 @@
 /datum/ai_controller/basic_controller/carp
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 
@@ -37,7 +37,7 @@
 /datum/ai_controller/basic_controller/carp/pet
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -81,8 +81,8 @@
 /datum/ai_controller/basic_controller/carp/passive
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(

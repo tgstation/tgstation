@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - bugfix: "Space Dragon can break walls, eat corpses and destroy mechs more efficiently again"
+  - bugfix: "Player-controlled lavaland elites can once again return to their tumor after winning their fight"
