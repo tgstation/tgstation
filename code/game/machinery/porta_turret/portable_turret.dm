@@ -40,6 +40,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	// Same faction mobs will never be shot at, no matter the other settings
+	faction = list(FACTION_TURRET)
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
 	var/uses_stored = TRUE
@@ -89,8 +91,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/on = TRUE
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
-	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list(FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
@@ -206,18 +206,6 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/proc/null_gun()
 	SIGNAL_HANDLER
 	stored_gun = null
-
-/// For use in AI code and other places where we'd want to faction check as if the turret were a mob
-/obj/machinery/porta_turret/proc/faction_check_mob(mob/target, exact_match)
-	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
-		var/list/faction_src = faction.Copy()
-		var/list/faction_target = target.faction.Copy()
-		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
-			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
-		if(!("[REF(target)]" in faction_src))
-			faction_target -= "[REF(target)]" //same thing here.
-		return faction_check(faction_src, faction_target, TRUE)
-	return faction_check(faction, target.faction, FALSE)
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it

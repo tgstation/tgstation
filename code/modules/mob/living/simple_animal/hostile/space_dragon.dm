@@ -303,7 +303,7 @@
 	new /obj/effect/hotspot(fire_turf)
 	fire_turf.hotspot_expose(700,50,1)
 	for(var/mob/living/living_target in fire_turf.contents)
-		if(living_target.faction_check_mob(src) && living_target != src)
+		if(living_target.faction_check_atom(src) && living_target != src)
 			hit_list += living_target
 			start_carp_speedboost(living_target)
 		if(living_target in hit_list)
@@ -398,7 +398,7 @@
 	add_overlay(overlay)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 	for (var/mob/living/candidate in view(gust_distance, src))
-		if(candidate == src || candidate.faction_check_mob(src))
+		if(candidate == src || candidate.faction_check_atom(src))
 			continue
 		visible_message(span_boldwarning("[candidate] is knocked back by the gust!"))
 		to_chat(candidate, span_userdanger("You're knocked back by the gust!"))
