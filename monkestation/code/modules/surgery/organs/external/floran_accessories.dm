@@ -1,7 +1,7 @@
 /obj/item/organ/external/floran_leaves
 	name = "floran leaves"
 	desc = "you shouldn't see this"
-	// organ_flags = ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_UNREMOVABLE
 	icon_state = "floran_leaves"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
