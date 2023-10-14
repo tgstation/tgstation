@@ -22202,7 +22202,7 @@
 "hYz" = (
 /obj/structure/transport/linear/tram,
 /obj/machinery/transport/tram_controller,
-/obj/structure/tram/solid,
+/obj/structure/tram,
 /turf/open/floor/tram,
 /area/station/security/tram)
 "hYC" = (
@@ -41400,10 +41400,10 @@
 	dir = 1
 	},
 /obj/structure/transport/linear/tram,
-/obj/structure/tram/solid,
 /obj/machinery/transport/tram_controller{
 	configured_transport_id = "bird_2"
 	},
+/obj/structure/tram,
 /turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "oNX" = (
