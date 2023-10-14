@@ -35,7 +35,7 @@
 	if(isnull(spawn_location))
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
+	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
 	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
 	dragon.mind.special_role = ROLE_SPACE_DRAGON

@@ -9,7 +9,6 @@
 	click_to_activate = TRUE
 	cooldown_time = 2 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
 	/// If a mob is not clicked directly, inherit targetting data from this blackboard key and setting it upon this target key
 	var/ai_target_key = BB_BASIC_MOB_CURRENT_TARGET
