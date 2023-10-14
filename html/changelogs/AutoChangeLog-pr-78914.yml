@@ -1,0 +1,4 @@
+author: "starrm4nn"
+delete-after: True
+changes:
+  - bugfix: "makes the riot helmet hide hair like other sec helmets"
