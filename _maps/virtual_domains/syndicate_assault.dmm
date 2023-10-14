@@ -199,12 +199,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"fM" = (
-/obj/machinery/computer/crew/syndie{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "fV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium/red,
@@ -622,12 +616,6 @@
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"xZ" = (
-/obj/machinery/computer/camera_advanced/syndie{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "yl" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Captain's Room"
@@ -735,9 +723,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "CK" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /mob/living/basic/syndicate/ranged/smg/pilot,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -3466,13 +3451,13 @@ ru
 Kz
 ru
 Kz
+Kz
+Kz
 pz
 Kz
-xZ
-Kz
-fM
-Kz
 kI
+Kz
+Kz
 Kz
 ru
 Mm

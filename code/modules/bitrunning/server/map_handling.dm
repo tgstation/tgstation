@@ -1,17 +1,15 @@
-#define ONLY_TURF 1
-
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
 	if(isnull(generated_domain))
 		return
 
 	if(!length(avatar_connection_refs))
-		balloon_alert(user, "powering down domain...")
+		balloon_alert_to_viewers("powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 		reset()
 		return
 
-	balloon_alert(user, "notifying clients...")
+	balloon_alert_to_viewers("notifying clients...")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 100, TRUE)
 	user.visible_message(
 		span_danger("[user] begins depowering the server!"),
@@ -32,34 +30,35 @@
  *
  * This is the starting point if you have an id. Does validation and feedback on steps
  */
-/obj/machinery/quantum_server/proc/cold_boot_map(mob/user, map_key)
+/obj/machinery/quantum_server/proc/cold_boot_map(map_key)
 	if(!is_ready)
 		return FALSE
 
 	if(isnull(map_key))
-		balloon_alert(user, "no domain specified.")
+		balloon_alert_to_viewers("no domain specified.")
 		return FALSE
 
 	if(generated_domain)
-		balloon_alert(user, "stop the current domain first.")
+		balloon_alert_to_viewers("stop the current domain first.")
 		return FALSE
 
 	if(length(avatar_connection_refs))
-		balloon_alert(user, "all clients must disconnect!")
+		balloon_alert_to_viewers("all clients must disconnect!")
 		return FALSE
 
 	is_ready = FALSE
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	if(!initialize_domain(map_key) || !initialize_safehouse() || !initialize_map_items())
-		balloon_alert(user, "initialization failed.")
+	/// If any one of these fail, it reverts the entire process
+	if(!load_domain(map_key) || !load_safehouse() || !load_map_items() || !load_map_segments() || !load_mob_segments())
+		balloon_alert_to_viewers("initialization failed.")
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
 
 	is_ready = TRUE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
-	balloon_alert(user, "domain loaded.")
+	balloon_alert_to_viewers("domain loaded.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
@@ -68,26 +67,18 @@
 	return TRUE
 
 /// Initializes a new domain if the given key is valid and the user has enough points
-/obj/machinery/quantum_server/proc/initialize_domain(map_key)
-	var/datum/lazy_template/virtual_domain/to_load
-
+/obj/machinery/quantum_server/proc/load_domain(map_key)
 	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
-		if(map_key != initial(available.key) || points < initial(available.cost))
-			continue
-		to_load = available
-		break
+		if(map_key == initial(available.key) && points >= initial(available.cost))
+			generated_domain = new available()
+			RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
+			generated_domain.lazy_load()
+			return TRUE
 
-	if(isnull(to_load))
-		return FALSE
-
-	generated_domain = new to_load()
-	RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
-	generated_domain.lazy_load()
-
-	return TRUE
+	return FALSE
 
 /// Loads in necessary map items, sets mutation targets, etc
-/obj/machinery/quantum_server/proc/initialize_map_items()
+/obj/machinery/quantum_server/proc/load_map_items()
 	var/turf/goal_turfs = list()
 	var/turf/crate_turfs = list()
 
@@ -122,19 +113,67 @@
 	return TRUE
 
 /// Loads the safehouse
-/obj/machinery/quantum_server/proc/initialize_safehouse()
-	var/turf/safehouse_load_turf = list()
-	for(var/obj/effect/landmark/bitrunning/safehouse_spawn/spawner in GLOB.landmarks_list)
-		safehouse_load_turf += get_turf(spawner)
-		qdel(spawner)
-		break
+/obj/machinery/quantum_server/proc/load_safehouse()
+	var/obj/effect/landmark/bitrunning/safehouse_spawn/spawner = locate() in GLOB.landmarks_list
+	if(isnull(spawner))
+		CRASH("vdom: failed to find safehouse spawn landmark")
 
-	if(!length(safehouse_load_turf))
-		CRASH("Failed to find safehouse load landmark on map.")
+	generated_safehouse = new generated_domain.safehouse_path()
+	if(!generated_safehouse.load(get_turf(spawner)))
+		CRASH("vdom: failed to load safehouse")
 
-	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path()
-	safehouse.load(safehouse_load_turf[ONLY_TURF])
-	generated_safehouse = safehouse
+	return TRUE
+
+/// Loads in modular segments of the map
+/obj/machinery/quantum_server/proc/load_map_segments()
+	if(!length(generated_domain.room_modules))
+		return TRUE
+
+	var/current_index = 1
+	shuffle_inplace(generated_domain.room_modules)
+
+	for(var/obj/effect/landmark/bitrunning/map_segment/landmark in GLOB.landmarks_list)
+		if(current_index > length(generated_domain.room_modules))
+			CRASH("vdom: map segments are set to unique, but there are more landmarks than available segments")
+
+		var/path
+		if(generated_domain.modular_unique_rooms)
+			path = generated_domain.room_modules[current_index]
+			current_index += 1
+		else
+			path = pick(generated_domain.room_modules)
+
+		var/datum/map_template/modular/segment = new path()
+		if(!segment.load(get_turf(landmark)))
+			CRASH("vdom: failed to load map segment [segment]")
+
+		qdel(landmark)
+
+	return TRUE
+
+/// Loads in any mob segments of the map
+/obj/machinery/quantum_server/proc/load_mob_segments()
+	if(!length(generated_domain.room_modules))
+		return TRUE
+
+	var/current_index = 1
+	shuffle_inplace(generated_domain.mob_modules)
+
+	for(var/obj/effect/landmark/bitrunning/mob_segment/landmark in GLOB.landmarks_list)
+		if(current_index > length(generated_domain.mob_modules))
+			stack_trace("vdom: mobs segments are set to unique, but there are more landmarks than available segments")
+			return FALSE
+
+		var/path
+		if(generated_domain.modular_unique_mobs)
+			path = generated_domain.mob_modules[current_index]
+			current_index += 1
+		else
+			path = pick(generated_domain.mob_modules)
+
+		var/datum/modular_mob_segment/segment = new path()
+		segment.spawn_mobs(get_turf(landmark))
+		qdel(landmark)
 
 	return TRUE
 
@@ -182,4 +221,3 @@
 	mutation_candidate_refs.Cut()
 	spawned_threat_refs.Cut()
 
-#undef ONLY_TURF

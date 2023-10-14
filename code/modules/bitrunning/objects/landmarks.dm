@@ -73,7 +73,10 @@
 /obj/effect/landmark/bitrunning/crate_replacer/Initialize(mapload)
 	. = ..()
 
-	#ifndef UNIT_TESTS
+#ifdef UNIT_TESTS
+		return
+#endif
+
 	var/list/crate_list = list()
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/encrypted_crate
 	var/area/my_area = get_area(src)
@@ -100,4 +103,12 @@
 	encrypted_crate.abstract_move(selected_crate.loc)
 	selected_crate.abstract_move(original_location)
 
-	#endif
+/// A spot for a modular map to spawn
+/obj/effect/landmark/bitrunning/map_segment
+	name = "Bitrunning modular map segment"
+	icon_state = "map_segment"
+
+/// A location for mobs to spawn.
+/obj/effect/landmark/bitrunning/mob_segment
+	name = "Bitrunning modular mob segment"
+	icon_state = "mob_segment"
