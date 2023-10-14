@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Dullahans can read, strip people, and utilise tools."
-  - bugfix: "Dullahan brains and eyes will not decay while inside their living severed head."
