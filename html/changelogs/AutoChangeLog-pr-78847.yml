@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Leaning now has a small animation associated."
+  - qol: "Cyborgs can now lean against walls."
+  - bugfix: "Fixed some runtimes associated with leaning."
+  - bugfix: "Fixed being able to lean while dead or in otherwise invalid states."
