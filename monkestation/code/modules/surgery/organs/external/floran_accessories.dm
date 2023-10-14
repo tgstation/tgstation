@@ -2,12 +2,12 @@
 	name = "floran leaves"
 	desc = "you shouldn't see this"
 	organ_flags = ORGAN_UNREMOVABLE
-	icon_state = ""
+	icon_state = "goblin_ears"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_floran_leaves"
 	zone = BODY_ZONE_CHEST
-	slot = ORGAN_SLOT_EXTERNAL_ANIME_CHEST
+	slot = ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES
 
 	use_mob_sprite_as_obj_sprite = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves

@@ -1,6 +1,6 @@
 /datum/sprite_accessory/floran_leaves
 	icon = 'monkestation/icons/mob/species/floran/floran_leaves.dmi'
-	color_src = EYECOLOR
+	color_src = MUTCOLORS_SECONDARY
 
 /datum/sprite_accessory/floran_leaves/furnivour
 	name = "Furnivour"
