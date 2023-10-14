@@ -140,6 +140,9 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
+	// Deal with the source of this zombie corruption
+	// Infection organ needs to be handled separately from mutant_organs
+	// because it persists through species transitions
 	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(isnull(infection))
 		infection = new()
