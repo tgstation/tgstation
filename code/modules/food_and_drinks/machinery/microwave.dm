@@ -671,6 +671,7 @@
 	operating = FALSE
 	if(pda_failure)
 		spark()
+		pda_failure = FALSE // in case they repair it after this, reset
 		broken = REALLY_BROKEN
 		explosion(src, heavy_impact_range = 1, light_impact_range = 2, flame_range = 1)
 
