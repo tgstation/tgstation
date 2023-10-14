@@ -529,7 +529,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	scribe_delay = 120 SECONDS //how long the rune takes to create
+	scribe_delay = 80 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
 	no_scribe_boost = TRUE
