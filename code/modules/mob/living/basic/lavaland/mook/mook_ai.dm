@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 
 ///check for faction if not a ash walker, otherwise just attack
-/datum/targetting_datum/basic/mook/faction_check(mob/living/living_mob, mob/living/the_target)
+/datum/targetting_datum/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if(FACTION_ASHWALKER in living_mob.faction)
 		return FALSE
 
