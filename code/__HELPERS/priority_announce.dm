@@ -37,23 +37,25 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
+	announcement += "<br>"
+
 	if(type == "Priority")
-		announcement += "<h1 class='alert'>Priority Announcement</h1>"
+		announcement += "[span_priorityannounce("<u>Priority Announcement</u>")]"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[title]</h2>"
+			announcement += "[span_priorityannounce("<br>[title]")]"
 	else if(type == "Captain")
-		announcement += "<h1 class='alert'>Captain Announces</h1>"
+		announcement += "[span_priorityannounce("<u>Captain Announces</u>")]"
 		GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
 	else if(type == "Syndicate Captain")
-		announcement += "<h1 class='alert'>Syndicate Captain Announces</h1>"
+		announcement += "[span_priorityannounce("<u>Syndicate Captain Announces</u>")]"
 
 	else
 		if(!sender_override)
-			announcement += "<h1 class='alert'>[command_name()] Update</h1>"
+			announcement += "[span_priorityannounce("<u>[command_name()] Update</u>")]"
 		else
-			announcement += "<h1 class='alert'>[sender_override]</h1>"
+			announcement += "[span_priorityannounce("<u>[sender_override]</u>")]"
 		if (title && length(title) > 0)
-			announcement += "<br><h2 class='alert'>[title]</h2>"
+			announcement += "[span_priorityannounce("<br>[title]")]"
 
 		if(!sender_override)
 			if(title == "")
@@ -63,9 +65,10 @@
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
-		announcement += SSstation.announcer.custom_alert_message
+		announcement += "[span_priorityalert("<br>[SSstation.announcer.custom_alert_message]<br>")]"
 	else
-		announcement += "<br>[span_alert(text)]<br>"
+		announcement += "[span_priorityalert("<br>[text]<br>")]"
+
 	announcement += "<br>"
 
 	if(!players)
@@ -121,7 +124,8 @@
 		if(!target.can_hear())
 			continue
 
-		to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
+		to_chat(target, span_minorannounce(title))
+		to_chat(target, span_minoralert(message))
 		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))
