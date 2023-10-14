@@ -11620,6 +11620,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
+"csL" = (
+/obj/structure/closet{
+	name = "Evidence Closet 2"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/evidence)
 "csN" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
@@ -20677,8 +20683,8 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "fsQ" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
+/obj/structure/closet/secure_closet/evidence{
+	name = "secure evidence closet 1"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -31912,7 +31918,7 @@
 /area/station/engineering/break_room)
 "jil" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "Evidence Closet 4"
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -46731,7 +46737,7 @@
 /area/station/command/teleporter)
 "nVx" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "Evidence Closet 3"
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53805,10 +53811,10 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qnr" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/secure_closet/evidence{
+	name = "secure evidence closet 2"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "qnv" = (
@@ -55525,6 +55531,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qNA" = (
@@ -64037,7 +64044,7 @@
 /area/station/command/teleporter)
 "tyx" = (
 /obj/structure/closet{
-	name = "Evidence Closet 1"
+	name = "Evidence Closet 5"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/contraband/narcotics,
@@ -71201,6 +71208,8 @@
 "vGH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "vGI" = (
@@ -167479,7 +167488,7 @@ omm
 wPe
 tFJ
 tYg
-fsQ
+csL
 jil
 fsQ
 jKq
