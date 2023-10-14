@@ -20,7 +20,7 @@
 	var/list/scold_lines = list(
 		pick(list("CLEAN YOUR ROOM THIS INSTANT!", "IT'S TIME TO WAKE UP FOR SCHOOL!!")),
 		pick(list("YOU INSULT YOUR GRANDPARENTS!", "USELESS!")),
-		pick(list("I BROUGHT YOU INTO THIS WORLD, I CAN TAKE YOU OUT!!!", "YOURE GROUNDED!!")),
+		pick(list("I BROUGHT YOU INTO THIS WORLD, I CAN TAKE YOU OUT!!!", "YOU'RE GROUNDED!!")),
 	)
 	var/delay = 2 SECONDS
 	for(var/line in scold_lines)
