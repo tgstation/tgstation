@@ -22,6 +22,10 @@
 	response_harm_simple = "tear"
 	death_message = "implodes into itself."
 
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
+
 	combat_mode = TRUE
 	ai_controller = null
 	speak_emote = list("screams")

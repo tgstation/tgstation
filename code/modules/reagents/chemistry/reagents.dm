@@ -154,11 +154,21 @@
  *
  */
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	if(holder)
-		holder.remove_reagent(type, metabolization_rate * affected_mob.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+	if(isnull(holder))
+		return
+
+	var/metabolizing_out = metabolization_rate * seconds_per_tick
+	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
+		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
+			metabolizing_out /= affected_mob.metabolism_efficiency
+		else
+			metabolizing_out *= affected_mob.metabolism_efficiency
+
+	holder.remove_reagent(type, metabolizing_out)
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)

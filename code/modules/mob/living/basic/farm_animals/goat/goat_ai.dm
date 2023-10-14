@@ -9,6 +9,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/capricious_retaliate, // Capricious like Capra, get it?
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
