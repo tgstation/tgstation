@@ -6,7 +6,7 @@
 	var/attack_closed_turf = FALSE
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/basic/not_friends/can_attack(mob/living/living_mob, atom/target)
+/datum/targetting_datum/basic/not_friends/can_attack(mob/living/living_mob, atom/target, vision_range)
 	if(attack_closed_turf && isclosedturf(target))
 		return TRUE
 
