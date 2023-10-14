@@ -131,8 +131,13 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cZ" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
-/obj/item/ammo_box/magazine/m7mm,
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted{
+	pixel_y = 10
+	},
+/obj/item/ammo_box/magazine/mm712x82{
+	pixel_y = -4;
+	pixel_x = 3
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "da" = (
@@ -481,8 +486,10 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rH" = (
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/syndicate{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rM" = (
