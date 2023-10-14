@@ -932,6 +932,5 @@
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/throw_target = get_edge_target_turf(src, throw_direction)
-		passenger.throw_at()
 		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 		passenger.throw_at(throw_target, 400, 4, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
