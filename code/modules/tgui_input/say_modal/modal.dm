@@ -36,7 +36,7 @@
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
-	winset(client, "tgui_say", "is-visible=0;size=1,1;")
+	winset(client, "tgui_say", "size=1,1;is-visible=0;")
 	window.subscribe(src, PROC_REF(on_message))
 	window.is_browser = TRUE
 
@@ -64,7 +64,7 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 
-	winset(client, "tgui_say", "pos=848,500;size=231,30;")
+	winset(client, "tgui_say", "pos=848,500;size=231,30;is-visible=0;")
 
 	window.send_message("props", list(
 		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
@@ -88,9 +88,7 @@
 	window_open = TRUE
 	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL)
 		start_thinking()
-	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators enabled.")
-	else
+	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
 	return TRUE
 
@@ -101,9 +99,7 @@
 /datum/tgui_say/proc/close()
 	window_open = FALSE
 	stop_thinking()
-	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators enabled.")
-	else
+	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators DISABLED.")
 
 /**
