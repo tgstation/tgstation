@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Miner's Salve, Sterilizine, and Space Cleaner now all properly affect burn wounds"
