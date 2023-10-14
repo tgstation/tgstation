@@ -10,7 +10,7 @@
 		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
 	. = ..()
 
-/obj/projectile/beam/ctf/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/ctf/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))

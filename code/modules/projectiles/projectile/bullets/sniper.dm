@@ -41,7 +41,7 @@
 	mecha_damage = 100
 	var/emp_radius = 2
 
-/obj/projectile/bullet/p50/disruptor/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/p50/disruptor/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if((blocked != 100) && isliving(target))
 		var/mob/living/living_guy = target
@@ -60,7 +60,7 @@
 	object_damage = 30
 	mecha_damage = 0
 
-/obj/projectile/bullet/p50/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/p50/incendiary/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/poor_burning_dork = target

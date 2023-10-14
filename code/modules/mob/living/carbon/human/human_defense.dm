@@ -91,12 +91,6 @@
 		P.on_hit(src, 100, def_zone, piercing_hit)
 		return BULLET_ACT_HIT
 
-	if(mind)
-		if(mind.martial_art && mind.martial_art.can_use(src)) //Some martial arts users can deflect projectiles!
-			var/martial_art_result = mind.martial_art.on_projectile_hit(src, P, def_zone)
-			if(!(martial_art_result == BULLET_ACT_HIT))
-				return martial_art_result
-
 	return ..()
 
 ///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object

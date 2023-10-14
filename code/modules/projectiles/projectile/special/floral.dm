@@ -5,7 +5,7 @@
 	damage_type = TOX
 	armor_flag = ENERGY
 
-/obj/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
@@ -34,7 +34,7 @@
 	damage_type = TOX
 	armor_flag = ENERGY
 
-/obj/projectile/energy/florayield/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/florayield/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
@@ -48,7 +48,7 @@
 	damage_type = TOX
 	armor_flag = ENERGY
 
-/obj/projectile/energy/florarevolution/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/florarevolution/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target

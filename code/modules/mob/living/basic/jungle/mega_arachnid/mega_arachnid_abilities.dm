@@ -17,7 +17,7 @@
 	icon_state = "tentacle_end"
 	damage = 0
 
-/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(!iscarbon(target) || blocked >= 100)
 		return

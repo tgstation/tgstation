@@ -171,7 +171,7 @@
 	icon_state = "red_1"
 	damage_type = BURN
 
-/obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	target.animate_atom_living(firer)
 

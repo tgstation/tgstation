@@ -598,7 +598,7 @@
 		return BULLET_ACT_FORCE_PIERCE
 	if(sigreturn & COMPONENT_BULLET_BLOCKED)
 		return COMPONENT_BULLET_BLOCKED
-	if(sigreutrn & COMPONENT_BULLET_ACTED)
+	if(sigreturn & COMPONENT_BULLET_ACTED)
 		return BULLET_ACT_HIT
 
 	return hitting_projectile.on_hit(
