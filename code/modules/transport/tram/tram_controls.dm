@@ -13,6 +13,7 @@
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
+	brightness_on = 0
 	/// What sign face prefixes we have icons for
 	var/static/list/available_faces = list()
 	/// The sign face we're displaying
@@ -21,6 +22,35 @@
 	var/datum/weakref/transport_ref
 	/// The ID of the tram we're controlling
 	var/specific_transport_id = TRAMSTATION_LINE_1
+	/// If the sign is adjusted for split type tram windows
+	var/split_mode = FALSE
+
+/obj/machinery/computer/tram_controls/split
+	circuit = /obj/item/circuitboard/computer/tram_controls/split
+	split_mode = TRUE
+
+/obj/machinery/computer/tram_controls/split/directional/north
+	dir = SOUTH
+	pixel_x = -8
+	pixel_y = 32
+
+/obj/machinery/computer/tram_controls/split/directional/south
+	dir = NORTH
+	pixel_x = 8
+	pixel_y = -32
+
+/obj/machinery/computer/tram_controls/split/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/tram_controls/split/directional/west
+	dir = EAST
+	pixel_x = -32
+
+/obj/machinery/computer/tram_controls/Initialize(mapload)
+	. = ..()
+	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
+	split_mode = my_circuit.split_mode
 
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
@@ -148,17 +178,34 @@
 
 	update_appearance()
 
-/obj/machinery/computer/tram_controls/split/update_icon_state()
+/obj/machinery/computer/tram_controls/on_construction(mob/user)
 	. = ..()
-	switch(dir)
-		if(NORTH)
-			pixel_x = -8
-		if(SOUTH)
-			pixel_x = 8
-		if(EAST)
-			pixel_y = -8
-		if(WEST)
-			pixel_y = 8
+	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
+	split_mode = my_circuit.split_mode
+	if(split_mode)
+		switch(dir)
+			if(NORTH)
+				pixel_x = 8
+				pixel_y = -32
+			if(SOUTH)
+				pixel_x = -8
+				pixel_y = 32
+			if(EAST)
+				pixel_x = -32
+				pixel_y = -8
+			if(WEST)
+				pixel_x = 32
+				pixel_y = 8
+	else
+		switch(dir)
+			if(NORTH)
+				pixel_y = -32
+			if(SOUTH)
+				pixel_y = 32
+			if(EAST)
+				pixel_x = -32
+			if(WEST)
+				pixel_x = 32
 
 /obj/machinery/computer/tram_controls/update_overlays()
 	. = ..()
@@ -199,4 +246,3 @@
 					return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls/split, 32)
