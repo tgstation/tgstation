@@ -452,3 +452,8 @@ Regenerative extracts:
 		return FALSE
 
 	target.apply_status_effect(/datum/status_effect/rainbow_protection)
+
+#undef REGENERATIVE_EXTRACT_TOX_HEAL_AMOUNT
+#undef REGENERATIVE_EXTRACT_PHYSICAL_HEAL_AMOUNT
+#undef REGENERATIVE_EXTRACT_OXY_HEAL_AMOUNT
+#undef REGENERATIVE_EXTRACT_ORGAN_HEAL_AMOUNT
