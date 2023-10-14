@@ -5,7 +5,6 @@
 	button_icon_state = "lay_eggs"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 20 SECONDS
 	melee_cooldown_time = 5 SECONDS
 	shared_cooldown = NONE
