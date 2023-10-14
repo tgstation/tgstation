@@ -61,12 +61,13 @@
 
 /datum/unit_test/lungs/lungs_sanity_ashwalker/Run()
 	// Gas mix resembling one cell of lavaland's atmosphere.
+	if(SSmapping.config.map_name == "Oshan Station")
+		return
 	var/datum/gas_mixture/lavaland_test_mix = create_lavaland_mix()
 	var/obj/item/organ/internal/lungs/lavaland/test_lungs = allocate(/obj/item/organ/internal/lungs/lavaland)
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	// Test one breath of Lavaland gas mix on Ashwalker lungs.
-	if(SSmapping.config.map_name != "Oshan Station")
-		lungs_test_check_breath("Lavaland air mixture", lab_rat, test_lungs, lavaland_test_mix)
+	lungs_test_check_breath("Lavaland air mixture", lab_rat, test_lungs, lavaland_test_mix)
 
 /// Comprehensive unit test for [/obj/item/organ/internal/lungs/proc/check_breath()]
 /// If "expect_failure" is set to TRUE, the test ensures the given Human suffocated.
