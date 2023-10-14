@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Space Dragons are now basic mobs, please report any unexpected behaviour."
+  - balance: "You can now see that a space dragon is destroying a wall with a visual indicator of the wall being damaged."
+  - balance: "Space Dragons can pry open airlocks."
