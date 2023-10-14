@@ -935,7 +935,7 @@
 	/// Do we instantly revive
 	var/instant = FALSE
 	/// The maximum amount of damage we can revive from, as a ratio of max health
-	var/max_revive_damage_ratio = 2
+	var/max_revive_damage_ratio = 1.5
 
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
@@ -976,7 +976,8 @@
 		return ..()
 
 	if(HAS_TRAIT(exposed_mob, TRAIT_SUICIDED)) //they are never coming back
-		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body explodes in a shower of gore!"))
+		exposed_mob.gib(DROP_ALL_REMAINS)
 		return
 
 	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
@@ -987,7 +988,8 @@
 		return
 
 	if((exposed_mob.getBruteLoss() + exposed_mob.getFireLoss()) > (exposed_mob.getMaxHealth() * max_revive_damage_ratio))
-		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before falling still..."))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before exploding in a shower of gore!"))
+		exposed_mob.gib(DROP_ALL_REMAINS)
 		return
 
 	var/needed_to_revive = calculate_amount_needed_to_revive(exposed_mob)
