@@ -51591,7 +51591,7 @@
 /area/station/command/heads_quarters/rd)
 "rrP" = (
 /obj/structure/transport/linear/tram,
-/obj/structure/tram/solid,
+/obj/structure/tram,
 /obj/machinery/transport/tram_controller,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -56122,7 +56122,7 @@
 /area/station/engineering/break_room)
 "sZg" = (
 /obj/structure/transport/linear/tram,
-/obj/structure/tram/solid,
+/obj/structure/tram,
 /obj/structure/plaque/static_plaque/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)

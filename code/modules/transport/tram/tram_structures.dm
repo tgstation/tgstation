@@ -50,10 +50,6 @@
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
-/obj/structure/tram/solid
-	desc = "A lightweight titanium composite structure with tinted titanium silicate panels."
-	opacity = TRUE
-
 /obj/structure/tram/split
 	base_icon_state = "tram-split"
 
@@ -462,7 +458,6 @@
 	icon = 'icons/obj/tram/tram_structure.dmi'
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
 	icon_state = "tram-spoiler-retracted"
-	opacity = TRUE
 	max_integrity = 400
 	///Position of the spoiler
 	var/deployed = FALSE
