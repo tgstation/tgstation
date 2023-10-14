@@ -42,7 +42,7 @@
 
 	ass_image = 'icons/ass/asspodperson.png'
 
-/datum/species/pod/floran/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/floran/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD)
 		return
 
@@ -63,10 +63,10 @@
 		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 	..()
 
-/datum/species/floran/on_species_gain(mob/living/carbon/new_podperson, datum/species/old_species, pref_load)
+/datum/species/floran/on_species_gain(mob/living/carbon/new_floran, datum/species/old_species, pref_load)
 	. = ..()
-	if(ishuman(new_podperson))
-		update_mail_goodies(new_podperson)
+	if(ishuman(new_floran))
+		update_mail_goodies(new_floran)
 
 /datum/species/floran/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
 	if(istype(quirk, /datum/quirk/blooddeficiency))
