@@ -5,7 +5,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/quantum_server
 	req_components = list(
-		/datum/stock_part/servo = 2,
+//		/datum/stock_part/servo = 2, MONKEYSTATION EDIT ORIGINAL - We have manipulators instead of servo's
+		/datum/stock_part/manipulator = 2, // MONKEYSTATION EDIT NEW - We have manipulators instead of servo's
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/capacitor = 1,
 	)
@@ -22,7 +23,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/netpod
 	req_components = list(
-		/datum/stock_part/servo = 1,
+//		/datum/stock_part/servo = 1, MONKEYSTATION EDIT ORIGINAL - We have manipulators instead of servo's
+		/datum/stock_part/manipulator = 1, // MONKEYSTATION EDIT NEW - We have manipulators instead of servo's
 		/datum/stock_part/matter_bin = 2,
 	)
 

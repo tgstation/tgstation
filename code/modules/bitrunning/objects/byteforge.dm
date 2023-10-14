@@ -39,7 +39,8 @@
 	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay")
 	flick_overlay_view(lighting, 1 SECONDS)
 
-	set_light(l_range = 2, l_power = 1.5, l_color = LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
+//	set_light(l_range = 2, l_power = 1.5, l_color = LIGHT_COLOR_BABY_BLUE, l_on = TRUE) MONKEYSTATION EDIT ORIGINAL - We have changed lights
+	set_light(l_inner_range = 1, l_outer_range = 2, l_power = 1.5, l_color = LIGHT_COLOR_BABY_BLUE, l_on = TRUE) // MONKEYSTATION EDIT NEW
 
 /// Sparks, moves the crate to the location
 /obj/machinery/byteforge/proc/spawn_crate(obj/structure/closet/crate/secure/bitrunning/encrypted/cache)

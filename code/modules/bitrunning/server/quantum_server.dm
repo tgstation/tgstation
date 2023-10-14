@@ -92,7 +92,8 @@
 		return ..()
 
 	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
+//	set_light(l_range = 2, l_power = 1.5, l_on = TRUE) MONKEYSTATION EDIT ORIGINAL - We have changed lights
+	set_light(l_inner_range = 1, l_outer_range = 2, l_power = 1.5, l_on = TRUE) // MONKEYSTATION EDIT NEW
 
 	return ..()
 

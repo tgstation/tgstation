@@ -1622,17 +1622,9 @@
 /area/station/asteroid)
 "aeA" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/structure/sign/poster/random/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/machinery/light/neon_lining{
 	dir = 8;
 	icon_state = "pink2_1"
@@ -1641,16 +1633,7 @@
 	dir = 1;
 	icon_state = "pink2_1"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/oil/streak,
-/obj/structure/sign/poster/random/directional/north,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/machinery/byteforge,
-/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "aeB" = (
@@ -1824,12 +1807,7 @@
 /area/station/cargo/miningdock)
 "afk" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/machinery/light/neon_lining{
 	dir = 4;
 	icon_state = "pink2_1"
@@ -1838,13 +1816,9 @@
 	dir = 1;
 	icon_state = "pink2_1"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "afl" = (
