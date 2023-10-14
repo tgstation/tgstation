@@ -195,6 +195,11 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
 	. = ..()
 	path_wielder_action?.Remove(user)
 
+/obj/item/melee/cultblade/haunted/proc/debug_bebug(cekey = "carlarc")
+	var/datum/component/spirit_holding/spirit_component = GetComponent(/datum/component/spirit_holding)
+	spirit_component.bound_spirit = new(src)
+	spirit_component.bound_spirit.ckey = cekey
+
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
@@ -689,7 +694,7 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
 	var/fucked = FALSE
 	if(!IS_CULTIST(user))
 		fucked = TRUE
-		ADD_TRAIT(user, TRAIT_NOTRANSFORM, REF(src)) // keep em in place
+		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src)) // keep em in place
 		user.add_atom_colour(COLOR_CULT_RED, TEMPORARY_COLOUR_PRIORITY)
 		user.visible_message(span_cultbold("Dark tendrils appear from the ground and root [user] in place!"))
 	sleep(5 SECONDS) // can we still use these or. i mean its async
@@ -702,8 +707,9 @@ GLOBAL_LIST_INIT(heretic_paths_to_haunted_sword_abilities,list(
 		return
 	user.gib(TRUE, TRUE, TRUE) // total destruction
 	user.visible_message(span_cultbold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))
-	var/mob/living/simple_animal/hostile/construct/proteon/remnant = new(src)
+	var/mob/living/simple_animal/hostile/construct/proteon/remnant = new(get_step_rand(src))
 	remnant.name = "[user]" // no, they do not become it
+	remnant.transform *= 1.2
 
 /obj/item/cult_shift
 	name = "veil shifter"

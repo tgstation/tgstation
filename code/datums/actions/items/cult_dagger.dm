@@ -18,8 +18,9 @@
 
 /datum/action/item_action/cult_dagger/Trigger(trigger_flags)
 	for(var/obj/item/held_item as anything in owner.held_items) // In case we were already holding a dagger
-		if(istype(held_item, /obj/item/melee/cultblade/dagger))
+		if(istype(held_item, /obj/item/melee))
 			held_item.attack_self(owner)
+			return
 			return
 	var/obj/item/target_item = target
 	if(owner.can_equip(target_item, ITEM_SLOT_HANDS))

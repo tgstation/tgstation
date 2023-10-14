@@ -35,6 +35,9 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	seek_safety(user)
+
+/obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
@@ -155,6 +158,21 @@
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text), turfs_that_boost_us = /turf) // Always fast to draw!
 
+/obj/item/melee/sickly_blade/cursed/get_examine_string(mob/user, thats)
+	. = ..()
+	. += span_cultbold("To break the blade as a cultist, you need to right-click it.")
+
+/obj/item/melee/sickly_blade/cursed/attack_self(mob/user)
+	if(IS_CULTIST(user))
+		return
+	seek_safety(user)
+
+/obj/item/melee/sickly_blade/cursed/attack_self_secondary(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user))
+		return
+	seek_safety(user)
+
 /obj/item/melee/sickly_blade/cursed/check_usability(mob/living/user)
 	if(IS_HERETIC_OR_MONSTER(user) || IS_CULTIST(user))
 		return TRUE
@@ -167,7 +185,7 @@
 		affecting.receive_damage(burn = 5)
 		playsound(src, SFX_SEAR, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
-	else
+	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
 		to_chat(user, span_danger("Horrible, unintelligible utterances flood your mind!"))
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it

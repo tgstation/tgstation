@@ -276,11 +276,11 @@
 // The integrity divisions are meant to make the effects wackier and stronger until the gateway breaks apart completely.
 /obj/structure/spawner/sentient/proteon_spawner/process(seconds_per_tick)
 	. = ..()
-	take_damage(VALUE_PER(max_integrity, 2.5 MINUTES))
+	take_damage((max_integrity / 2.5 MINUTES))
 	if(get_integrity() <= 0) // avoids dividing by zero
 		deconstruct()
 
-	var/practical_integrity = min(get_integrity(), 0.1)
+	var/practical_integrity = max(get_integrity(), 0.1)
 
 	Shake(3 / practical_integrity, seconds_per_tick) // the lower integrity is, the more it rumbles
 	if(prob(25 * seconds_per_tick))
