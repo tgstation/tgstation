@@ -1,8 +1,8 @@
 /obj/item/organ/external/floran_leaves
 	name = "floran leaves"
 	desc = "you shouldn't see this"
-	organ_flags = ORGAN_UNREMOVABLE
-	icon_state = "goblin_ears"
+	// organ_flags = ORGAN_UNREMOVABLE
+	icon_state = "floran_leaves"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
 	preference = "feature_floran_leaves"
@@ -23,4 +23,6 @@
 	return sprite_datum.icon_state
 
 /datum/bodypart_overlay/mutant/floran_leaves/can_draw_on_bodypart(mob/living/carbon/human/human)
-	return TRUE
+	. = ..()
+	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
+		return FALSE
