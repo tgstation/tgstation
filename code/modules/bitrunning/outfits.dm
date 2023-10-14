@@ -33,7 +33,8 @@
 /datum/outfit/echolocator
 	name = "Bitrunning Echolocator"
 	glasses = /obj/item/clothing/glasses/blindfold
-	ears = /obj/item/radio/headset/psyker //Navigating without these is horrible.
+//	ears = /obj/item/radio/headset/psyker //Navigating without these is horrible. MONKEYSTATION EDIT ORIGINAL - we still have old psyker headsets
+	ears = /obj/item/radio/headset/syndicate/alt/psyker // MONKEYSTATION EDIT NEW
 	uniform = /obj/item/clothing/under/abductor
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

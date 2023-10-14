@@ -11,4 +11,6 @@
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/bathroom
 	forced_outfit = /datum/outfit/echolocator
-	extra_loot = list(/obj/item/radio/headset/psyker = 1) //Looks cool, might make your local burdened chaplain happy.
+//	extra_loot = list(/obj/item/radio/headset/psyker = 1) //Looks cool, might make your local burdened chaplain happy.  MONKEYSTATION EDIT ORIGINAL - we still have old psyker headsets
+	extra_loot = list(/obj/item/radio/headset/syndicate/alt/psyker = 1) // MONKEYSTATION EDIT NEW
+
