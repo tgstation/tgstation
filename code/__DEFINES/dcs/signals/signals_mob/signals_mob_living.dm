@@ -134,9 +134,8 @@
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
-/// The only reason this exists is so hulk can fire before fists of the north star, but it has other uses:
-/// This signals should generally be used for "about to attack but not yet" while the following, for "attacking" -
-/// Even though they're technically interchangeable.
+/// The only reason this exists is so hulk can fire before Fists of the North Star.
+/// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
 #define COMSIG_LIVING_EARLY_UNARMED_ATTACK "human_pre_attack_hand"
 /// from mob/living/*/UnarmedAttack(): (mob/living/source, atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"

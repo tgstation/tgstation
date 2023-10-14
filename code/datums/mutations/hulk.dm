@@ -38,6 +38,8 @@
 
 	if(!source.combat_mode || !proximity || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return NONE
+	if(!source.can_unarmed_attack())
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!target.attack_hulk(owner))
 		return NONE
 

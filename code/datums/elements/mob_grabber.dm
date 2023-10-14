@@ -13,10 +13,10 @@
 		return ELEMENT_INCOMPATIBLE
 	src.minimum_stat = minimum_stat
 	src.steal_from_others = steal_from_others
-	RegisterSignals(target, list(COMSIG_LIVING_EARLY_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(grab_mob))
+	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(grab_mob))
 
 /datum/element/mob_grabber/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_LIVING_EARLY_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(source, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	. = ..()
 
 /// Try and grab something we attacked

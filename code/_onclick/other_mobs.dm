@@ -9,36 +9,16 @@
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
 		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
-/mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return FALSE
-	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, modifiers)
-	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
-	if(sigreturn & COMPONENT_SKIP_ATTACK)
-		return FALSE
-	// ..So we can tier unarmed attack and allow certain events to be prioritized.
-	sigreturn |= SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
-	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
-	if(sigreturn & COMPONENT_SKIP_ATTACK)
-		return FALSE
+/**
+ * Checks if this mob is in a valid state to punch someone.
+ */
+/mob/living/proc/can_unarmed_attack()
+	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
 
-	if(!right_click_attack_chain(attack_target, modifiers))
-		resolve_unarmed_attack(attack_target, modifiers)
-	return TRUE
-
-/*
-	Humans:
-	Adds an exception for gloves, to allow special glove types like the ninja ones.
-
-	Otherwise pretty standard.
-*/
-/mob/living/carbon/human/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(src == attack_target)
-		check_self_for_injuries()
-		return TRUE
+/mob/living/carbon/can_unarmed_attack()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
@@ -48,6 +28,36 @@
 
 		to_chat(src, span_notice("You look at your arm and sigh."))
 		return FALSE
+
+	return TRUE
+
+/mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	// The sole reason for this signal needing to exist is making FotNS incompatible with Hulk.
+	// Note that it is send before [proc/can_unarmed_attack] is called, keep this in mind.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
+
+	if(!can_unarmed_attack(attack_target))
+		return FALSE
+
+	sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
+
+	if(!right_click_attack_chain(attack_target, modifiers))
+		resolve_unarmed_attack(attack_target, modifiers)
+	return TRUE
+
+/mob/living/carbon/human/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	// Humans can always check themself regardless of having their hands blocked or w/e
+	if(src == attack_target)
+		check_self_for_injuries()
+		return TRUE
 
 	return ..()
 
