@@ -5,8 +5,8 @@
 	button_icon_state = "lay_eggs"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	cooldown_time = 0
-	melee_cooldown_time = 0
+	cooldown_time = 20 SECONDS
+	melee_cooldown_time = 5 SECONDS
 	shared_cooldown = NONE
 	click_to_activate = FALSE
 	///How long it takes for a broodmother to lay eggs.
