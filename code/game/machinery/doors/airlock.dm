@@ -1602,8 +1602,8 @@
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		//The number of wires a bullet will randomly cut
 		var/number_of_wires_bullet_cuts = 3
-		for (var/wire = 1 to number_of_wires_bullet_cuts)
-			src.wires.cut_random_dont_mend()
+		for (var/i in 1 to number_of_wires_bullet_cuts)
+			wires.cut_random_dont_mend()
 
 	return ..()
 
