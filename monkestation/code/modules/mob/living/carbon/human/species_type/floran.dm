@@ -5,7 +5,8 @@
 	sexes = FALSE
 	species_traits = list(
 		MUTCOLORS,
-		MUTCOLORS_SECONDARY
+		MUTCOLORS_SECONDARY,
+		NO_UNDERWEAR
 	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
