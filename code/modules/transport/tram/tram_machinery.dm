@@ -16,7 +16,7 @@
 			change_platform = destination
 			break
 
-	if(!change_platform || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!change_platform || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(get_dist(change_platform, src) > 15)
