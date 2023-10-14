@@ -485,3 +485,81 @@
   vinylspiders:
   - image: you can now change the style of lipstick to be higher or lower on the face
       by alt-clicking the lipstick tube
+2023-10-13:
+  EuSouAFazer:
+  - qol: The rollerdome is now better - the dance floor works now, and the bar is
+      groovier.
+  Jacquerel:
+  - bugfix: Dullahans can read, strip people, and utilise tools.
+  - bugfix: Dullahan brains and eyes will not decay while inside their living severed
+      head.
+  LT3:
+  - qol: Canisters can now be built in one step, no upgrading required
+  Paxilmaniac:
+  - image: Inhands for the Sakhno and related rifles will no longer be way too high
+      or big
+  Rhials:
+  - rscadd: Two new psyker-oriented virtual domains -- Crate Chaos and Infected Domain.
+  - rscadd: Map helper for cyber-police corpse spawn.
+  - rscadd: Map helper for swapping the encrypted crate in an area with a random crate
+      from that same area.
+  jlsnow301:
+  - bugfix: Fixed the errant bluescreen in the camera console.
+  mc-oofert:
+  - code_imp: basicmobs that delete on death, ghost before dying
+  san7890:
+  - bugfix: The Holy Hand Grenade's effect on revealing a revenant had its duration
+      accidentally nerfed, it is now back to 10 seconds.
+  - bugfix: Revenant midrounds should now properly run.
+  - bugfix: Revenant harvesting should now let you actually pass the final do_after
+      so you can harvest that sweet essence.
+2023-10-14:
+  BlueMemesauce:
+  - bugfix: Modsuits can no longer be deepfried
+  DrDiasyl:
+  - sound: laser2.ogg sound has been changed. Now laser carbine uses it.
+  - image: Laser carbine and orange laser sprite have been improved.
+  IndieanaJones:
+  - bugfix: Space Dragon can break walls, eat corpses and destroy mechs more efficiently
+      again
+  - bugfix: Player-controlled lavaland elites can once again return to their tumor
+      after winning their fight
+  Jacquerel:
+  - bugfix: '"Mirror Walk" is once more the domain of the Maid in the Mirror rather
+      than "every heretic summon"'
+  - bugfix: Heretic mobs can once again survive space
+  - bugfix: Pete's anger management training has worn off, and he will once again
+      sometimes pick a fight with you for absolutely no reason.
+  - qol: Attacking a goat will not spam messages so frequently.
+  LT3:
+  - image: Nitrogen canisters are now yellow, antinob are grey/yellow, empty are grey,
+      hydrogen are red/white
+  MTandi:
+  - bugfix: The crew is instructed to place fax machines properly in the center of
+      a table without hanging.
+  Melbert:
+  - bugfix: Fixes Mauna Loa, Monover, Silibinin, Granibitaluri not exiting your system
+      on metabolism
+  - bugfix: Fixes holy water exiting your system at double the rate on metabolism
+  - bugfix: Holy Water no longer spams cultists with big text every time, it's much
+      more tame now
+  Rhials:
+  - qol: You can now return to your old body after being summoned by a manifest rune.
+  - qol: You can now return to your old body after dying in CTF.
+  - qol: You can now return to your old body after dying in the Medisim Shuttle battle
+      area.
+  - qol: You can no longer suicide in CTF areas, for integrity purposes.
+  bun235:
+  - rscadd: targetting someone's arm with *slap now has a unique message
+  dragomagol:
+  - qol: apples can now be sliced
+  mc-oofert:
+  - bugfix: sqdl2 query readout displays location of turfs properly
+  ninjanomnom:
+  - admin: VV can now display the contents of special byond lists like filters, or
+      client.images
+  - admin: VV on images now displays the image in the header
+  - admin: VV can now display filters and includes their type
+  san7890:
+  - bugfix: Space Dragons can now, once again, tear down walls and eat corpses. They
+      also have regained their special damage modifier when attacking mechs.

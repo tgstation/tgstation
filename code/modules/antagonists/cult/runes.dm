@@ -892,6 +892,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
+		if(ghost_to_spawn.mind && ghost_to_spawn.mind.current)
+			new_human.AddComponent( \
+				/datum/component/temporary_body, \
+				old_mind = ghost_to_spawn.mind, \
+				old_body = ghost_to_spawn.mind.current, \
+			)
 		new_human.key = ghost_to_spawn.key
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
