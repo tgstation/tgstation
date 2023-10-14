@@ -21,6 +21,8 @@
 	do
 		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i * world.tick_lag * DELTA_CALC)
+		if(Master.last_run != world.time)
+			sleep()
 		i *= 2
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 #endif
