@@ -99,6 +99,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 #undef MANUAL_JSON_ENTRY
 
+#if DM_VERSION >= 515
 #define CHECK_AND_TRY_FILE_ERROR_RECOVERY(file) \
 	var/static/in_error_recovery = FALSE; \
 	if(!fexists(##file)) { \
@@ -113,6 +114,10 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		return; \
 	}; \
 	in_error_recovery = FALSE;
+#else
+#warn Logging relies on DM_VERSION 515 for CHECK_AND_TRY_FILE_ERROR_RECOVERY to recover from errors such as files going missing. This is not blocking but logging resilence is severely impacted.
+#define CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
+#endif
 
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
