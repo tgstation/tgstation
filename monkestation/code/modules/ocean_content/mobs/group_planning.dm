@@ -18,7 +18,24 @@
 	///our current_target
 	var/atom/target
 
+/datum/group_planning/Destroy(force, ...)
+	. = ..()
+	finished_mobs = null
+	in_progress_mobs = null
+	group_mobs = null
+
+/datum/group_planning/proc/check_mobs()
+	for(var/mob/living/mob as anything in group_mobs)
+		if(!QDELETED(mob))
+			continue
+		group_mobs -= mob
+		in_progress_mobs -= mob
+		finished_mobs -= mob
+	if(!length(group_mobs))
+		qdel(src)
+
 /datum/group_planning/proc/bulk_queue()
+	check_mobs()
 	for(var/mob/living/basic/listed as anything in group_mobs)
 		if(!istype(listed) || !listed.ai_controller || listed.stat == DEAD) //cull dead members that shouldn't exist anymore
 			if(isbasicmob(listed) && listed.ai_controller && (BB_GROUP_DATUM in listed.ai_controller.blackboard))
@@ -29,6 +46,7 @@
 		in_progress_mobs |= listed
 
 /datum/group_planning/proc/decide_next_action()
+	check_mobs()
 	if(length(in_progress_mobs))
 		return /// we are still doing an action
 	if(!length(usable_behaviours))
@@ -37,11 +55,13 @@
 	fetched_behaviour = TRUE
 
 /datum/group_planning/proc/add_to_current_action(datum/ai_controller/controller)
+	check_mobs()
 	controller.queue_behavior(queued_behavior)
 	in_progress_mobs |= controller.pawn
 
 
 /datum/group_planning/proc/finish_action(datum/ai_controller/controller)
+	check_mobs()
 	if(controller.pawn in in_progress_mobs)
 		in_progress_mobs -= controller.pawn
 		finished_mobs += controller.pawn

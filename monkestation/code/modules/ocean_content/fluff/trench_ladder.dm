@@ -1,6 +1,6 @@
 /obj/item/trench_ladder_kit
 	name = "sea ladder"
-	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
+	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench. Needs to be placed over a catwalk covered trench hole."
 
 	icon = 'goon/icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
