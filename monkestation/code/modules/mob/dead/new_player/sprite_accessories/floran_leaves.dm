@@ -1,6 +1,7 @@
 /datum/sprite_accessory/floran_leaves
 	icon = 'monkestation/icons/mob/species/floran/floran_leaves.dmi'
-	color_src = MUTCOLORS_SECONDARY
+	color_src = MUTCOLORS
+	//Should be MUTCOLORS_SECONDARY, but while its not working it will be the inverse of MUTCOLORS
 
 /datum/sprite_accessory/floran_leaves/furnivour
 	name = "Furnivour"

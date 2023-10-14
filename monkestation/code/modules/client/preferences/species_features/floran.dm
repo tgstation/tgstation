@@ -9,7 +9,7 @@
 	return possible_values_for_sprite_accessory_list_for_body_part(
 		GLOB.floran_leaves_list,
 		"floran_leaves",
-		list("FRONT"),
+		list("ADJ"),
 	)
 
 /datum/preference/choiced/floran_leaves/apply_to_human(mob/living/carbon/human/target, value)

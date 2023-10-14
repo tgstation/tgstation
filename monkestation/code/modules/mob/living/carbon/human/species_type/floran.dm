@@ -6,7 +6,7 @@
 	species_traits = list(
 		MUTCOLORS,
 		MUTCOLORS_SECONDARY,
-		NO_UNDERWEAR
+		NO_UNDERWEAR,
 	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
@@ -46,22 +46,15 @@
 	if(H.stat == DEAD)
 		return
 
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
+	var/light_amount = 0
+	if(isturf(H.loc))
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		//Removed nutrition gain from sunlight, now they gotta eats
-		if(light_amount > 0.3) //if there's enough light, heal. Raised from 0.2
+		if(light_amount > 0.3) //Raised from 0.2
 			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
 			H.adjustToxLoss(-0.25 * seconds_per_tick) //Lowered to 0.25
 			H.adjustOxyLoss(-0.25 * seconds_per_tick) //Lowered to 0.25
-
-	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
-		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
-
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-	..()
 
 /datum/species/floran/on_species_gain(mob/living/carbon/new_floran, datum/species/old_species, pref_load)
 	. = ..()
@@ -105,7 +98,7 @@
 	Their primary drives are hunting, acquiring trophies, fighting, eating meat, and more hunting. \
 	It is speculated that their general casual view towards killing and consuming other intelligent species stems from not viewing \"meat\" as \"alive\" in \
 	the same sense they are. However, as the Floran spread throughout the galaxy, more and more individuals are recognizing a need to integrate, \
-	make friends, and maybe not stab anyone that slightly inconveniences them."
+	make friends, and maybe not stab anyone that slightly inconveniences them. (E.I. THIS IS NOT AN EXCUSE TO RDM)"
 
 /datum/species/floran/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -132,3 +125,22 @@
 		)
 
 	return to_add
+
+
+/obj/item/organ/external/floran_leaves
+	name = "floran leaves"
+	desc = "you shouldn't see this"
+	organ_flags = ORGAN_UNREMOVABLE
+	icon_state = "floran_leaves"
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+
+	preference = "feature_floran_leaves"
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES
+
+	use_mob_sprite_as_obj_sprite = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves
+
+/datum/bodypart_overlay/mutant/floran_leaves
+	layers = EXTERNAL_FRONT
+	feature_key = "floran_leaves"

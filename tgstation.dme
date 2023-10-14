@@ -6310,4 +6310,5 @@
 #include "monkestation\code\random_rooms\engines\kilostation.dm"
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
+#include "monkestation\code\modules\client\preferences\species_features\floran.dm"
 // END_INCLUDE
