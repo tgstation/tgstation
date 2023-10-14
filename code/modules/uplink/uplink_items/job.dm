@@ -342,3 +342,13 @@
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 7
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = TRUE
