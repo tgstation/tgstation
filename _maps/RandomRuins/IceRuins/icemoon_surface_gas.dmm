@@ -4,7 +4,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /obj/machinery/duct,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating,
 /area/ruin)
 "aR" = (
 /obj/effect/spawner/structure/window,
@@ -174,6 +174,10 @@
 	},
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron,
+/area/ruin)
+"gq" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/closed/wall,
 /area/ruin)
 "gv" = (
 /turf/template_noop,
@@ -363,7 +367,7 @@
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/fans/tiny/invisible,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating,
 /area/ruin)
 "xK" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1253,7 +1257,7 @@ HI
 wK
 yH
 qM
-oo
+gq
 gv
 gv
 gv
