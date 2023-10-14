@@ -435,8 +435,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/bullet_act(obj/projectile/Proj, def_zone)
 	. = ..()
-	updatehealth()
-	if(prob(75) && Proj.damage > 0)
+	if(prob(75) && Proj.damage > 0) // melbert todo : cringe?
 		spark_system.start()
 
 /mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

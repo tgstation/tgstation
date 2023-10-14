@@ -60,7 +60,7 @@
 	if(Proj.stun)
 		fold_in(force = TRUE)
 		src.visible_message(span_warning("The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!"))
-	. = ..(Proj)
+	. = ..(Proj) // melbert todo : cringe?
 
 /mob/living/silicon/pai/ignite_mob(silent)
 	return FALSE

@@ -188,4 +188,3 @@
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 	)
-

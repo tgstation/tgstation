@@ -302,7 +302,7 @@
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
-		Proj.on_hit(src, 0, piercing_hit)
+		Proj.on_hit(src, 0, piercing_hit) // melbert todo : cringe ?
 	else
 		. = ..(Proj)
 	. = . || BULLET_ACT_BLOCK

@@ -1444,10 +1444,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(/obj/projectile/energy/florarevolution)
 			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
 
-/datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
-	// called before a projectile hit
-	return 0
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////
