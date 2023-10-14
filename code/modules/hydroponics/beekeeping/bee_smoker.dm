@@ -5,7 +5,7 @@
 
 /obj/item/bee_smoker
 	name = "bee smoker"
-	desc = "A device which can be used to entrance bees!"
+	desc = "A device which can be used to hypnotize bees!"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bee_smoker"
 	inhand_icon_state = "bee_smoker"
