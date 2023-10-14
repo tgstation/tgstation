@@ -1143,13 +1143,17 @@
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
 
 /// Fire a projectile from this atom at another atom
-/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, list/ignore_targets = list())
 	if (!isnull(sound))
 		playsound(src, sound, vol = 100, vary = TRUE)
 
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
+	var/list/ignore = list()
+	for (var/atom/thing as anything in ignore_targets)
+		ignore[thing] = TRUE
+	bullet.impacted += ignore
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y
@@ -1157,3 +1161,4 @@
 	bullet.original = target
 	bullet.preparePixelProjectile(target, src)
 	bullet.fire()
+	return bullet

@@ -44,11 +44,6 @@
 
 	qdel(src)
 
-/// Where the crates get ported to station
-/obj/effect/landmark/bitrunning/station_reward_spawn
-	name = "Bitrunning rewards spawn"
-	icon_state = "station"
-
 /// Where the exit hololadder spawns
 /obj/effect/landmark/bitrunning/hololadder_spawn
 	name = "Bitrunning hololadder spawn"
@@ -68,3 +63,41 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn
 	name = "Bitrunning safehouse spawn"
 	icon_state = "safehouse"
+
+///Swaps the locations of an encrypted crate in the area with another randomly selected crate.
+///Randomizes names, so you have to inspect crates manually.
+/obj/effect/landmark/bitrunning/crate_replacer
+	name = "Bitrunning Goal Crate Randomizer"
+	icon_state = "crate"
+
+/obj/effect/landmark/bitrunning/crate_replacer/Initialize(mapload)
+	. = ..()
+
+	#ifndef UNIT_TESTS
+	var/list/crate_list = list()
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/encrypted_crate
+	var/area/my_area = get_area(src)
+
+	for(var/turf/area_turf as anything in my_area.get_contained_turfs())
+		for(var/obj/structure/closet/crate/crate_to_check in area_turf)
+			if(istype(crate_to_check, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+				encrypted_crate = crate_to_check
+				crate_to_check.desc += span_hypnophrase(" This feels like the crate we're looking for!")
+			else
+				crate_list += crate_to_check
+			crate_to_check.name = "Unidentified Crate"
+
+	if(!encrypted_crate)
+		stack_trace("Bitrunning Goal Crate Randomizer failed to find an encrypted crate to swap positions for.")
+		return
+	if(!length(crate_list))
+		stack_trace("Bitrunning Goal Crate Randomizer failed to find any NORMAL crates to swap positions for.")
+		return
+
+	var/original_location = encrypted_crate.loc
+	var/obj/structure/closet/crate/selected_crate = pick(crate_list)
+
+	encrypted_crate.abstract_move(selected_crate.loc)
+	selected_crate.abstract_move(original_location)
+
+	#endif

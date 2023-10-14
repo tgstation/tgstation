@@ -28,8 +28,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
-	/// Limbs we will cut off an unconscious man
-	var/static/list/target_limbs = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	/// Things we will eat if we see them (arms, chiefly)
 	var/static/list/target_foods = list(/obj/item/bodypart/arm)
 
@@ -41,8 +39,8 @@
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddElement(\
 		/datum/element/amputating_limbs,\
-		surgery_verb = "snipping",\
-		target_zones = target_limbs,\
+		surgery_verb = "begins snipping",\
+		target_zones = GLOB.arm_zones,\
 	)
 	charge = new(src)
 	charge.Grant(src)
@@ -76,7 +74,7 @@
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target, ignore_cooldown = TRUE)
-	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
 	basic_source.start_pulling(living_target)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)

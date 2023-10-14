@@ -109,7 +109,7 @@
 	new_changeling.log_message("was spawned as a midround space changeling by an event.", LOG_GAME)
 
 	var/datum/antagonist/changeling/changeling_datum = locate() in player_mind.antag_datums
-	changeling_datum.give_power(/datum/action/changeling/suit/organic_space_suit)
+	changeling_datum.give_power(/datum/action/changeling/void_adaption)
 	changeling_datum.give_power(/datum/action/changeling/weapon/arm_blade)
 	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 

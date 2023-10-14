@@ -14,17 +14,22 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_angle = 170
 	light_flags = LIGHT_IGNORE_OFFSET
+	/// is the fireplace lit?
 	var/lit = FALSE
-
+	/// the amount of fuel for the fire
 	var/fuel_added = 0
+	/// how much time is left before fire runs out of fuel
 	var/flame_expiry_timer
+	/// the looping sound effect that is played while burning
+	var/datum/looping_sound/burning/burning_loop
 
 /obj/structure/fireplace/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	burning_loop = new(src)
 
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(burning_loop)
 	. = ..()
 
 /obj/structure/fireplace/setDir(newdir)
@@ -126,7 +131,6 @@
 		put_out()
 		return
 
-	playsound(src, 'sound/effects/comfyfire.ogg',50,FALSE, FALSE, TRUE)
 	var/turf/T = get_turf(src)
 	T.hotspot_expose(700, 2.5 * seconds_per_tick)
 	update_appearance()
@@ -155,6 +159,8 @@
 		return max(0, fuel_added)
 
 /obj/structure/fireplace/proc/ignite()
+	START_PROCESSING(SSobj, src)
+	burning_loop.start()
 	lit = TRUE
 	desc = "A large stone brick fireplace, warm and cozy."
 	flame_expiry_timer = world.time + fuel_added
@@ -163,6 +169,8 @@
 	adjust_light()
 
 /obj/structure/fireplace/proc/put_out()
+	STOP_PROCESSING(SSobj, src)
+	burning_loop.stop()
 	lit = FALSE
 	update_appearance()
 	adjust_light()

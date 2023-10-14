@@ -14,7 +14,10 @@
 	/// REF() to the mind which placed us in an oven
 	var/who_baked_us
 
-/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprite)
+	/// Reagents that should be added to the result
+	var/list/added_reagents
+
+/datum/component/bakeable/Initialize(bake_result, required_bake_time, positive_result, use_large_steam_sprit, list/added_reagents)
 	. = ..()
 	if(!isitem(parent)) //Only items support baking at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -22,6 +25,7 @@
 	src.bake_result = bake_result
 	src.required_bake_time = required_bake_time
 	src.positive_result = positive_result
+	src.added_reagents = added_reagents
 
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
@@ -67,9 +71,11 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
-	if(baked_result.reagents) //make space and tranfer reagents if it has any
+	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
 		baked_result.reagents.clear_reagents()
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
+		if(added_reagents) // Add any new reagents that should be added
+			baked_result.reagents.add_reagent_list(added_reagents)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
