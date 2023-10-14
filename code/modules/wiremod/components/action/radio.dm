@@ -74,7 +74,7 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_radio_input), port)
 
 /obj/item/circuit_component/radio/proc/handle_radio_input(datum/port/input/port)
-	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+	if(!TIMER_COOLDOWN_CHECK(parent, COOLDOWN_SIGNALLER_SEND))
 		return
 
 	var/frequency = freq.value
@@ -96,7 +96,7 @@
 
 		var/loggable_string = loggable_strings.Join(" ")
 		add_to_signaler_investigate_log(loggable_string)
-		TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, signal_cooldown_time)
+		TIMER_COOLDOWN_START(parent, COOLDOWN_SIGNALLER_SEND, signal_cooldown_time)
 
 		var/datum/signal/signal = new(list("code" = signal_code, "key" = parent?.owner_id), logging_data = loggable_string)
 		radio_connection.post_signal(src, signal)
