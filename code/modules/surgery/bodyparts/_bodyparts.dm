@@ -453,7 +453,7 @@
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/hit_percent = (100-blocked)/100
+	var/hit_percent = forced ? 1 : (100-blocked)/100
 	if((!brute && !burn) || hit_percent <= 0)
 		return FALSE
 	if (!forced)
@@ -466,6 +466,8 @@
 			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
+	if (forced)
+		dmg_multi /= body_damage_coeff // If we are force applying damage across a mob, we want it to take the full damage to its overall health
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
 
