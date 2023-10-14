@@ -701,9 +701,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 		/datum/air_alarm_mode/siphon,
 		/datum/air_alarm_mode/panic_siphon,
 		/datum/air_alarm_mode/off,
-		/datum/air_alarm_mode/flood,
-		/datum/air_alarm_mode/vent_siphon,
 	)
+
+	if(obj_flags & EMAGGED)
+		possible_random_modes += list(
+			/datum/air_alarm_mode/flood,
+			/datum/air_alarm_mode/vent_siphon,
+		)
 
 	var/datum/air_alarm_mode/chosen_mode = possible_random_modes[rand(1, possible_random_modes.len)]
 
