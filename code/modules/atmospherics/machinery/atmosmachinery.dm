@@ -352,9 +352,9 @@
 	return
 
 /**
- * Similar to set_pipenet() but instead of setting a network to a pipeline, it replaces the old pipeline with a new one, called by Merge() in datum_pipeline.dm
+ * Replaces the connection to the old_pipenet with the new_pipenet
  */
-/obj/machinery/atmospherics/proc/replace_pipenet()
+/obj/machinery/atmospherics/proc/replace_pipenet(datum/pipeline/old_pipenet, datum/pipeline/new_pipenet)
 	return
 
 /**

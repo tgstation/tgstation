@@ -85,12 +85,8 @@
 #define DEFAULT_REAGENT_TEMPERATURE 300
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
-///stops floating point errors causing issues with checking reagent amounts
+///the minimum volume of reagents than can be operated on.
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
-///The smallest amount of volume allowed - prevents tiny numbers
-#define CHEMICAL_VOLUME_MINIMUM 0.001
-///Round to this, to prevent extreme decimal magic and to keep reagent volumes in line with perceived values.
-#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 ///The maximum temperature a reagent holder can attain
@@ -120,6 +116,13 @@
 #define REAGENT_CLEANS (1<<8)
 ///Does this reagent affect wounds? Used to check if some procs should be ran.
 #define REAGENT_AFFECTS_WOUNDS (1<<9)
+/// If present, when metabolizing out of a mob, we divide by the mob's metabolism rather than multiply.
+/// Without this flag: Higher metabolism means the reagent exits the system faster.
+/// With this flag: Higher metabolism means the reagent exits the system slower.
+#define REAGENT_REVERSE_METABOLISM (1<<10)
+/// If present, this reagent will not be affected by the mob's metabolism at all, meaning it exits at a fixed rate for all mobs.
+/// Supercedes [REAGENT_REVERSE_METABOLISM].
+#define REAGENT_UNAFFECTED_BY_METABOLISM (1<<11)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion

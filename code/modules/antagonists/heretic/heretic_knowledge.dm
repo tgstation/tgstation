@@ -530,6 +530,7 @@
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
+	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0

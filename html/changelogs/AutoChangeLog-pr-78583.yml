@@ -1,0 +1,6 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - rscadd: "Vent Pumps can now be overclocked, do some light reading in the air alarm to figure out what this means."
+  - balance: "Vent Pumps now have fan integrity, the damaging of which reduces their ability to move air."
+  - sound: "Overclocking sounds, including spool, stop, and loop"

@@ -117,13 +117,23 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-	if(unsuitable_atmos_damage != 0)
-		//String assoc list returns a cached list, so this is like a static list to pass into the element below.
-		habitable_atmos = string_assoc_list(habitable_atmos)
-		AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+	apply_atmos_requirements()
+	apply_temperature_requirements()
 
-	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
-		AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+/// Ensures this mob can take atmospheric damage if it's supposed to
+/mob/living/basic/proc/apply_atmos_requirements()
+	if(unsuitable_atmos_damage == 0)
+		return
+	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
+	habitable_atmos = string_assoc_list(habitable_atmos)
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+
+/// Ensures this mob can take temperature damage if it's supposed to
+/mob/living/basic/proc/apply_temperature_requirements()
+	if(unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0)
+		return
+	AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -138,6 +148,7 @@
 /mob/living/basic/death(gibbed)
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0
@@ -191,7 +202,7 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
@@ -207,10 +218,24 @@
 	melee_attack(attack_target, modifiers)
 
 /mob/living/basic/vv_edit_var(vname, vval)
+	switch(vname)
+		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
+			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+			. = TRUE
+		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
+			RemoveElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+			. = TRUE
+
 	. = ..()
-	if(vname == NAMEOF(src, speed))
-		datum_flags |= DF_VAR_EDITED
-		set_varspeed(vval)
+
+	switch(vname)
+		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
+			apply_atmos_requirements()
+		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
+			apply_temperature_requirements()
+		if(NAMEOF(src, speed))
+			datum_flags |= DF_VAR_EDITED
+			set_varspeed(vval)
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
@@ -260,3 +285,25 @@
 	else if(on_fire && !isnull(last_icon_state))
 		return last_icon_state
 	return null
+
+/mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
+	. = ..()
+	if (.)
+		update_held_items()
+
+/mob/living/basic/update_held_items()
+	. = ..()
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+		return
+	var/turf/our_turf = get_turf(src)
+	for(var/obj/item/held in held_items)
+		var/index = get_held_index_of_item(held)
+		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
+		held.screen_loc = ui_hand_position(index)
+		client.screen |= held
+
+/mob/living/basic/get_body_temp_heat_damage_limit()
+	return maximum_survivable_temperature
+
+/mob/living/basic/get_body_temp_cold_damage_limit()
+	return minimum_survivable_temperature
