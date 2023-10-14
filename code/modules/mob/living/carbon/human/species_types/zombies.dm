@@ -140,11 +140,18 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
+	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	if(isnull(infection))
+		infection = new()
+		infection.Insert(new_zombie)
+
 	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	RegisterSignal(new_zombie, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
+	UnregisterSignal(was_zombie, COMSIG_LIVING_DEATH)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -179,25 +186,11 @@
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
-//Congrats you somehow died so hard you stopped being a zombie
-/datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
-	. = ..()
-	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-	if(infection)
-		qdel(infection)
+/datum/species/zombie/infectious/proc/on_death(mob/living/carbon/source, gibbed)
+	SIGNAL_HANDLER
 
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-
-	// Deal with the source of this zombie corruption
-	// Infection organ needs to be handled separately from mutant_organs
-	// because it persists through species transitions
-	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-	if(!infection)
-		infection = new()
-		infection.Insert(C)
+	// Congrats you somehow died so hard you stopped being a zombie
+	qdel(source.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 
 // Your skin falls off
 /datum/species/human/krokodil_addict
