@@ -1,10 +1,43 @@
 /datum/round_event_control/antagonist
 	reoccurence_penalty_multiplier = 0
 	track = EVENT_TRACK_ROLESET
+	///list of required roles, needed for this to form
+	var/list/exclusive_roles
 	/// Protected roles from the antag roll. People will not get those roles if a config is enabled
 	var/list/protected_roles
 	/// Restricted roles from the antag roll
 	var/list/restricted_roles
+	/// List of enemy roles, will check if x amount of these exist exist
+	var/list/enemy_roles
+	///required number of enemies in roles to exist
+	var/required_enemies = 0
+
+/datum/round_event_control/antagonist/proc/check_required()
+	if(roundstart)
+		return TRUE ///FIX LATER
+
+	for (var/mob/M in GLOB.alive_player_list)
+		if (M.stat == DEAD)
+			continue // Dead players cannot count as passing requirements
+		if(M.mind && (M.mind.assigned_role.title in exclusive_roles))
+			return TRUE
+
+/datum/round_event_control/antagonist/proc/trim_candidates(list/candidates)
+	return candidates
+
+/datum/round_event_control/antagonist/proc/check_enemies()
+	if(roundstart)
+		return TRUE ///FIX LATER
+
+	if(!length(enemy_roles))
+		return TRUE
+	var/job_check = 0
+	for (var/mob/M in GLOB.alive_player_list)
+		if (M.stat == DEAD)
+			continue // Dead players cannot count as opponents
+		if (M.mind && (M.mind.assigned_role.title in enemy_roles))
+			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+	return job_check >= required_enemies
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -13,6 +46,11 @@
 
 /datum/round_event_control/antagonist/can_spawn_event(popchecks = TRUE, allow_magic)
 	. = ..()
+	if(!check_enemies())
+		return FALSE
+	if(!check_required())
+		return FALSE
+
 	if(!.)
 		return
 	if(!roundstart && !SSgamemode.can_inject_antags())
@@ -54,6 +92,7 @@
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, ready_newplayers = new_players_arg, living_players = living_players_arg, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles)
+	candidates = trim_candidates(candidates)
 	return candidates
 
 /datum/round_event/antagonist
@@ -83,6 +122,7 @@
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
+
 	for(var/i in 1 to antag_count)
 		if(!candidates.len)
 			break

@@ -46,8 +46,12 @@
 	var/population_min
 	/// If defined, it will not be votable if exceeding the population
 	var/population_max
+	/// has the round gotten to the point where jobs are pre-created?
+	var/round_started = FALSE
 
 /datum/storyteller/process(delta_time)
+	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
+		return
 	if(disable_distribution)
 		return
 	add_points(delta_time)

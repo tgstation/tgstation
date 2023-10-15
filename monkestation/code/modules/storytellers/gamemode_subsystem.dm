@@ -485,7 +485,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/pre_setup()
 	calculate_ready_players()
 	roll_pre_setup_points()
-	handle_pre_setup_roundstart_events()
+	//handle_pre_setup_roundstart_events()
 	return TRUE
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
