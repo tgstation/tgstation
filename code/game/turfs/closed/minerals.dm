@@ -16,11 +16,6 @@
 	plane = GAME_PLANE
 	base_icon_state = "smoothrocks"
 
-	// This is static
-	// Done like this to avoid needing to make it dynamic and save cpu time
-	// 4 to the left, 4 down
-	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
-
 	temperature = TCMB
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null

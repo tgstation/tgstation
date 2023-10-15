@@ -132,5 +132,5 @@
 	cycle_doors(OPEN_DOORS, TRUE) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/tram/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/tram/right)

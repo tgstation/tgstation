@@ -508,29 +508,29 @@
 	name = "holding cell door"
 	req_one_access = list(ACCESS_SECURITY)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/right)
 
 /obj/machinery/door/window/right
 	icon_state = "right"
 	base_state = "right"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/right)
 
 /obj/machinery/door/window/brigdoor/right
 	icon_state = "right_secure"
 	base_state = "right_secure"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/cell/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/cell/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/security/cell/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/security/cell/right)
 
 /obj/machinery/door/window/brigdoor/security/cell/right
 	icon_state = "right_secure"
 	base_state = "right_secure"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding/right, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/security/holding/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/security/holding/right)
 
 /obj/machinery/door/window/brigdoor/security/holding/right
 	icon_state = "right_secure"

@@ -15,8 +15,8 @@
 
 GLOBAL_LIST_EMPTY(split_visibility_objects)
 
-/proc/get_splitvis_object(z_offset, icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
-	var/key = "[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
+/proc/get_splitvis_object(z_offset, icon_path, junction, dir, frill = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
+	var/key = "[icon_path]-[junction]-[dir]-[frill]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
 	if(vis)
 		return vis
@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	vis.icon = icon_path
 	var/junc = junction ? junction : "0"
 	vis.icon_state = "[junc]-[dir]"
-	if(shadow)
+	if(frill)
 		vis.overlays += get_splitvis_object(z_offset, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
 	vis.alpha = alpha
 	vis.pixel_x = pixel_x
@@ -102,10 +102,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			continue
 
 		var/active_plane = GAME_PLANE
-		var/uses_shadow = FALSE
+		var/is_frill = FALSE
 		if(direction & NORTH)
 			active_plane = FRILL_PLANE
-			uses_shadow = TRUE
+			is_frill = TRUE
 
 		var/turf/operating_turf = get_step(target_turf, direction)
 		// Right up against an edge of the map eh?
@@ -119,14 +119,14 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 				vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
 				target_turf.overlays += vis
 			else
-				vis = get_splitvis_object(offset, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
+				vis = get_splitvis_object(offset, icon_path, junction, direction, is_frill, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 				operating_turf.overlays += vis
 		else
 			// I HATE the code duping, but we need to try both to ensure it's properly cleared
 			var/mutable_appearance/split_vis/vis
 			vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
 			target_turf.overlays -= vis
-			vis = get_splitvis_object(offset, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
+			vis = get_splitvis_object(offset, icon_path, junction, direction, is_frill, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 			operating_turf.overlays -= vis
 
 	for(var/direction in GLOB.diagonals)
@@ -175,6 +175,8 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 /datum/element/split_visibility/proc/on_turf_junction_change(turf/source, new_junction)
 	SIGNAL_HANDLER
+	// splitwalls use WEIRD lighting. I'm sorry
+	source.set_lighting_state("[new_junction]")
 	remove_split_vis_objects(source, source.smoothing_junction)
 	add_split_vis_objects(source, new_junction)
 

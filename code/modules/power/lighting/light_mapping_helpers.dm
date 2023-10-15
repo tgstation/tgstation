@@ -117,7 +117,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/warm)
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/no_nightlight)
 
 // ---- Dim warm light tubes
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/dim, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/light/warm/dim)
 
 // ---- Cold light tubes
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/cold)
@@ -126,7 +126,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/cold)
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/no_nightlight)
 
 // ---- Dim cold light tubes
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/dim, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/light/cold/dim)
 
 // ---- Red tubes
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/red)

@@ -36,4 +36,4 @@
 	fire = 99
 	acid = 100
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tram)

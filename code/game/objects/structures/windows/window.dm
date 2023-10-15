@@ -651,12 +651,12 @@
 
 	return TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/spawner)
 
 /obj/structure/window/unanchored
 	anchored = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/unanchored/spawner)
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
@@ -783,13 +783,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 		if(RWINDOW_BARS_CUT)
 			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/spawner)
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/unanchored/spawner)
 
 /obj/structure/window/plasma
 	name = "plasma window"
@@ -815,7 +815,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/plasma/spawner)
 
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
@@ -844,7 +844,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/plasma/spawner)
 
 /obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
@@ -854,13 +854,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	name = "tinted window"
 	icon = 'icons/obj/smooth_structures/windows/tinted_thindow.dmi'
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/spawner)
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/frosted/spawner)
 
 /// Wallening todo: I think these need to be made into fulltile windows? unless those are handled some other way? I'm confused
 /// There's two copies of this code, kyler WHY

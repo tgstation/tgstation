@@ -771,6 +771,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/computer/tram_controls)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/destination_sign/indicator, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/tram, 32)

@@ -395,6 +395,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = HIDDEN_WALL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+/atom/movable/screen/plane_master/hidden_walls/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FRILL_LAYER, relay_color = GLOB.em_block_color)
+
 /atom/movable/screen/plane_master/hidden_walls/show_to(mob/mymob)
 	. = ..()
 	if(!.)
@@ -434,6 +438,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>Is masked by a few things, the floor and client visible images"
 	plane = FRILL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/frill/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FRILL_LAYER, relay_color = GLOB.em_block_color)
 
 /atom/movable/screen/plane_master/frill/show_to(mob/mymob)
 	. = ..()
