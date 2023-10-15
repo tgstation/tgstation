@@ -336,7 +336,7 @@
 			var/new_root = params["root_category"]
 			if(GLOB.rcd_designs[new_root] != null) //is a valid category
 				root_category = new_root
-				update_static_data(ui.user, ui)
+				update_static_data_for_all_viewers()
 
 		if("design")
 			//read and validate params from UI
