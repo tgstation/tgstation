@@ -236,6 +236,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 
 	//Set news report and mode result
 	mode.set_round_result()
+	SSgamemode.round_end_report()
 
 	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
 	log_game("The round has ended.")

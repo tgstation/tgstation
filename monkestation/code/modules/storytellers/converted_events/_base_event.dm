@@ -13,6 +13,8 @@
 	var/required_enemies = 0
 
 /datum/round_event_control/antagonist/proc/check_required()
+	if(!length(exclusive_roles))
+		return TRUE
 	for (var/mob/M in GLOB.alive_player_list)
 		if (M.stat == DEAD)
 			continue // Dead players cannot count as passing requirements
@@ -96,6 +98,17 @@
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, ready_newplayers = new_players_arg, living_players = living_players_arg, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles)
 	candidates = trim_candidates(candidates)
 	return candidates
+
+/datum/round_event
+	var/excute_round_end_reports = FALSE
+
+/datum/round_event/proc/round_end_report()
+	return
+
+/datum/round_event/setup()
+	. = ..()
+	if(excute_round_end_reports)
+		SSgamemode.round_end_data |= src
 
 /datum/round_event/antagonist
 	fakeable = FALSE

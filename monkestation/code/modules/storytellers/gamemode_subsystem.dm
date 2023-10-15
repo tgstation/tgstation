@@ -110,6 +110,7 @@ SUBSYSTEM_DEF(gamemode)
 
 	var/list/control = list() //list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list() //list of all existing /datum/round_event
+	var/list/round_end_data = list() //list of all reports that need to add round end reports
 	var/list/currentrun = list()
 
 	/// List of all uncategorized events, because they were wizard or holiday events
@@ -1065,3 +1066,11 @@ SUBSYSTEM_DEF(gamemode)
 					if(new_category in EVENT_PANEL_TRACKS)
 						statistics_track_page = new_category
 			event_panel(user)
+
+/datum/controller/subsystem/gamemode/proc/round_end_report()
+	if(!length(round_end_data))
+		return
+	for(var/datum/round_event/event as anything in round_end_data)
+		if(!istype(event))
+			continue
+		event.round_end_report()
