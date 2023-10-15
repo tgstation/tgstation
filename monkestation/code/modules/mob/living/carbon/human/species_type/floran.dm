@@ -142,5 +142,5 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves
 
 /datum/bodypart_overlay/mutant/floran_leaves
-	layers = EXTERNAL_FRONT
+	layers = EXTERNAL_ADJACENT
 	feature_key = "floran_leaves"
