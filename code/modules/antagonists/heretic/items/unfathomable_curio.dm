@@ -8,11 +8,28 @@
 	icon_state = "book"
 	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
+	/// How many hits the curio has blocked
+	var/hits = 0
+	/// How many hits the curio can take before being destroyed
+	var/hits_to_block = 3
+	/// How much damage for it to be a hit
+	var/minimum_damage = 10
 
 /obj/item/unfathomable_curio/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/void_cloak/unfathomable_curio)
 	RegisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/obj/item/unfathomable_curio/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// If the incoming damage is less than or equal to 10 we ignore it
+	if (minimum_damage>=damage)
+		return
+	hits +=1
+	if (hits_to_block>=hits)
+		return
+
 
 /obj/item/unfathomable_curio/proc/on_examine(atom/source, mob/living/carbon/human/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -26,5 +43,5 @@
 
 /obj/item/unfathomable_curio/Destroy()
 	UnregisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	. = ..()
+	return ..()
 

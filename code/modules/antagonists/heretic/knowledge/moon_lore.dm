@@ -7,7 +7,7 @@
  * Grasp of Lunacy
  * Smile of the moon
  * > Sidepaths:
- *   Scorching Shark
+ *   Mind Gate§
  *   Ashen Eyes
  *
  * Mark of Moon
