@@ -40,9 +40,10 @@
 	var/static/datum/team/nuclear/nuke_team
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	var/set_leader = FALSE
+	var/required_role = ROLE_NUCLEAR_OPERATIVE
 
 /datum/round_event/antagonist/solo/nuclear_operative/add_datum_to_mind(datum/mind/antag_mind)
-	var/datum/mind/most_experienced = get_most_experienced(assigned, required_role)
+	var/datum/mind/most_experienced = get_most_experienced(setup_minds, required_role)
 	if(!most_experienced)
 		most_experienced = antag_mind
 
@@ -58,7 +59,7 @@
 	antag_mind.add_antag_datum(new_op)
 
 
-/datum/round_event/antagonist/solo/revolutionary/round_end_report()
+/datum/round_event/antagonist/solo/nuclear_operative/round_end_report()
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
