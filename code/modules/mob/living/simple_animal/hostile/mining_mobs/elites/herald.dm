@@ -227,7 +227,6 @@
 	damage = 20
 	armour_penetration = 60
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 

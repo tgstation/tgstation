@@ -26,5 +26,7 @@
 	var/obj/item/gun/energy/wormhole_projector/projector = gun.resolve()
 	if(!projector)
 		qdel(src)
-		return
+		return BULLET_ACT_BLOCK
+
+	. = ..()
 	projector.create_portal(src, get_turf(src))

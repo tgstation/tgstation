@@ -116,6 +116,12 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	// A bit cringe but silicons are immune to these effects on projectiles
+	hitting_projectile.slur = 0 SECONDS
+	hitting_projectile.stutter = 0 SECONDS
+	hitting_projectile.eyeblur = 0 SECONDS
+	hitting_projectile.jitter = 0 SECONDS
+
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
@@ -131,8 +137,6 @@
 			buckled.visible_message(span_boldwarning("[buckled] is knocked off of [src] by [hitting_projectile]!"))
 			unbuckle_mob(buckled)
 			buckled.Paralyze(4 SECONDS)
-
-	// melbert todo : test that silycones aren't affected by stun projectiles like tasers
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/static, length = 25)
 	if(affect_silicon)

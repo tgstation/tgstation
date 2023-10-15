@@ -51,7 +51,6 @@
 	if(. != BULLET_ACT_HIT)
 		return
 
-	// melbert todo testworthy
 	var/image/bullet_hole = image('icons/effects/effects.dmi', "dent", OBJ_LAYER + 0.5)
 	bullet_hole.pixel_x = p_x - 1 //offset correction
 	bullet_hole.pixel_y = p_y - 1

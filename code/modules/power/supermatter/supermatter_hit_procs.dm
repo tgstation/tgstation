@@ -34,7 +34,8 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 
-	return COMPONENT_BULLET_BLOCKED // Bullet will call Bump which will dust it afterwards regardless // melbert todo test
+	playplaysound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	return COMPONENT_BULLET_BLOCKED
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100

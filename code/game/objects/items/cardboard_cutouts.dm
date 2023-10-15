@@ -6,6 +6,7 @@
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
+	obj_flags = CAN_BE_HIT
 	item_flags = NO_PIXEL_RANDOM_DROP
 	/// If the cutout is pushed over and has to be righted
 	var/pushed_over = FALSE
@@ -35,7 +36,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
-	if(!user.combat_mode || pushed_over)
+	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
@@ -62,13 +63,18 @@
 		change_appearance(I, user)
 		return TRUE
 
-	return ..() // melbert todo : test
+	return ..()
 
 /obj/item/cardboard_cutout/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
 	var/damage_sustained = . || 0
 	if((damage_flag == BULLET || damage_flag == MELEE) && (damage_type == BRUTE) && prob(damage_sustained))
 		push_over()
+
+/obj/item/cardboard_cutout/deconstruct(disassembled)
+	if(!(flags_1 & (HOLOGRAM_1|NODECONSTRUCT_1)))
+		new /obj/item/stack/sheet/cardboard(loc, 1)
+	return ..()
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")

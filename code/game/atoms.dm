@@ -600,6 +600,8 @@
 		return BULLET_ACT_HIT
 
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
+	if(QDELETED(hitting_projectile)) // Signal deleted it?
+		return BULLET_ACT_BLOCK
 
 	return hitting_projectile.on_hit(
 		target = src,

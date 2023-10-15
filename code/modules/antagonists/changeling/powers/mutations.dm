@@ -373,27 +373,29 @@
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/projectile/tentacle/on_hit(atom/target, blocked = 0, pierce_hit) // melbert todo test
-	if(!isliving(firer))
+/obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
+	if(!isliving(firer) || !ismovable(target))
 		return ..()
 
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
 
-	if(isitem(target))
+	var/mob/living/ling = firer
+	if(isitem(target) && iscarbon(ling))
 		var/obj/item/catching = target
 		if(catching.anchored)
 			return BULLET_ACT_BLOCK
 
-		to_chat(firer, span_notice("You pull [catching] towards yourself."))
-		firer.throw_mode_on(THROW_MODE_TOGGLE)
+		var/mob/living/carbon/carbon_ling = ling
+		to_chat(carbon_ling, span_notice("You pull [catching] towards yourself."))
+		carbon_ling.throw_mode_on(THROW_MODE_TOGGLE)
 		catching.throw_at(
-			target = firer,
+			target = carbon_ling,
 			range = 10,
 			speed = 2,
-			thrower = firer,
+			thrower = carbon_ling,
 			diagonals_first = TRUE,
-			callback = CALLBACK(src, PROC_REF(reset_throw), firer),
+			callback = CALLBACK(src, PROC_REF(reset_throw), carbon_ling),
 			gentle = TRUE,
 		)
 		return BULLET_ACT_HIT
@@ -405,16 +407,16 @@
 	if(!isliving(victim) || target.anchored || victim.throwing)
 		return BULLET_ACT_BLOCK
 
-	if(!iscarbon(victim) || !ishuman(firer) || !firer.combat_mode)
+	if(!iscarbon(victim) || !ishuman(ling) || !ling.combat_mode)
 		victim.visible_message(
-			span_danger("[victim] is grabbed by [firer]'s [src]]!"),
-			span_userdanger("\A [src] grabs you and pulls you towards [firer]!"),
+			span_danger("[victim] is grabbed by [ling]'s [src]]!"),
+			span_userdanger("\A [src] grabs you and pulls you towards [ling]!"),
 		)
 		victim.throw_at(
-			target = get_step_towards(firer, victim),
+			target = get_step_towards(ling, victim),
 			range = 8,
 			speed = 2,
-			thrower = firer,
+			thrower = ling,
 			diagonals_first = TRUE,
 			gentle = TRUE,
 		)
@@ -422,7 +424,7 @@
 
 	if(LAZYACCESS(fire_modifiers, RIGHT_CLICK))
 		var/obj/item/stealing = victim.get_active_held_item()
-		if(stealing)
+		if(!isnull(stealing))
 			if(victim.dropItemToGround(stealing))
 				victim.visible_message(
 					span_danger("[stealing] is yanked off [victim]'s hand by [src]!"),
@@ -430,24 +432,24 @@
 				)
 				return on_hit(stealing) //grab the item as if you had hit it directly with the tentacle
 
-			to_chat(firer, span_warning("You can't seem to pry [stealing] off [victim]'s hands!"))
+			to_chat(ling, span_warning("You can't seem to pry [stealing] off [victim]'s hands!"))
 			return BULLET_ACT_BLOCK
 
-		to_chat(firer, span_danger("[victim] has nothing in hand to disarm!"))
+		to_chat(ling, span_danger("[victim] has nothing in hand to disarm!"))
 		return BULLET_ACT_HIT
 
-	if(firer.combat_mode)
+	if(ling.combat_mode)
 		victim.visible_message(
-			span_danger("[victim] is thrown towards [firer] by \a [src]!"),
-			span_userdanger("\A [src] grabs you and throws you towards [firer]!"),
+			span_danger("[victim] is thrown towards [ling] by \a [src]!"),
+			span_userdanger("\A [src] grabs you and throws you towards [ling]!"),
 		)
 		victim.throw_at(
-			target = get_step_towards(firer, victim),
+			target = get_step_towards(ling, victim),
 			range  = 8,
 			speed = 2,
-			thrower = firer,
+			thrower = ling,
 			diagonals_first = TRUE,
-			callback = CALLBACK(src, PROC_REF(tentacle_grab), firer, victim),
+			callback = CALLBACK(src, PROC_REF(tentacle_grab), ling, victim),
 			gentle = TRUE,
 		)
 
