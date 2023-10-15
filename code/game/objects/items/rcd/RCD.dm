@@ -290,6 +290,7 @@
 	data["root_categories"] = list()
 	for(var/category in GLOB.rcd_designs)
 		data["root_categories"] += category
+	data["selected_root"] = root_category
 
 	data["categories"] = list()
 	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
@@ -318,7 +319,6 @@
 	var/list/data = ..()
 
 	//main categories
-	data["selected_root"] = root_category
 	data["selected_category"] = design_category
 	data["selected_design"] = design_title
 

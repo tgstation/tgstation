@@ -171,6 +171,7 @@
 	data["root_categories"] = list()
 	for(var/category in GLOB.floor_designs)
 		data["root_categories"] += category
+	data["selected_root"] = root_category
 
 	data["categories"] = list()
 	for(var/sub_category as anything in GLOB.floor_designs[root_category])
@@ -188,7 +189,6 @@
 /obj/item/construction/rtd/ui_data(mob/user)
 	var/list/data = ..()
 
-	data["selected_root"] = root_category
 	data["selected_category"] = design_category
 	selected_design.fill_ui_data(data)
 
