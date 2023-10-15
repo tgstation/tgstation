@@ -392,7 +392,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/high_pop_bound = pop_scale_thresholds[track]
 		var/scale_penalty = pop_scale_penalties[track]
 
-		var/perceived_pop = min(max(low_pop_bound, active_players), high_pop_bound)
+		var/perceived_pop = max(low_pop_bound, active_players) // after max pop we start generating even more threat
 
 		var/divisor = high_pop_bound - low_pop_bound
 		/// If the bounds are equal, we'd be dividing by zero or worse, if upper is smaller than lower, we'd be increasing the factor, just make it 1 and continue.
@@ -972,7 +972,7 @@ SUBSYSTEM_DEF(gamemode)
 		dat += "<td>[event.min_players]</td>" //Minimum pop
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
-		var/weight_string = "([event.calculated_weight] /raw.[event.weight])"
+		var/weight_string = "(new.[event.calculated_weight] /raw.[event.weight])"
 		if(assoc_spawn_weight[event])
 			var/percent = round((event.calculated_weight / total_weight) * 100)
 			weight_string = "[percent]% - [weight_string]"
