@@ -11,8 +11,6 @@
 	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	//retreat_distance = 10
-	//minimum_distance = 10 //AI artificers will flee like fuck
 	attack_verb_continuous = "rams"
 	attack_verb_simple = "ram"
 	attack_sound = 'sound/weapons/punch2.ogg'
@@ -37,57 +35,19 @@
 
 /mob/living/basic/construct/artificer/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/ai_retaliate)
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
-/*
-/mob/living/basic/construct/artificer/Found(atom/thing) //what have we found here?
-	if(!isconstruct(thing)) //is it a construct?
-		return FALSE
-	var/mob/living/simple_animal/hostile/construct/cultie = thing
-	if(cultie.health < cultie.maxHealth) //is it hurt? let's go heal it if it is
-		return TRUE
-
-/mob/living/basic/construct/artificer/CanAttack(atom/the_target)
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return FALSE
-	if(Found(the_target) || ..()) //If we Found it or Can_Attack it normally, we Can_Attack it as long as it wasn't invisible
-		return TRUE //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
-	return FALSE
-
-/mob/living/basic/construct/artificer/MoveToTarget(list/possible_targets)
-	..()
-	if(!isliving(target))
-		return
-
-	var/mob/living/victim = target
-	if(isconstruct(victim) && victim.health >= victim.maxHealth) //is this target an unhurt construct? stop trying to heal it
-		LoseTarget()
-		return
-	if(victim.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
-		retreat_distance = null
-		minimum_distance = 1
-
-/mob/living/basic/construct/artificer/Aggro()
-	..()
-	if(isconstruct(target)) //oh the target is a construct no need to flee
-		retreat_distance = null
-		minimum_distance = 1
-
-/mob/living/basic/construct/artificer/LoseAggro()
-	..()
-	retreat_distance = initial(retreat_distance)
-	minimum_distance = initial(minimum_distance)
-*/
-/mob/living/basic/construct/artificer/hostile //actually hostile, will move around, hit things, heal other constructs
-	AIStatus = AI_ON
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
+/// Hostile NPC version. Heals nearby constructs and cult structures, avoids targets that aren't extremely hurt.
+/mob/living/basic/construct/artificer/hostile
+	ai_controller = /datum/ai_controller/basic_controller/artificer
+	smashes_walls = FALSE
 
 /////////////////////////////Artificer-alts/////////////////////////
 /mob/living/basic/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
 	theme = THEME_HOLY
-	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/soulstone/purified,
 		/datum/action/cooldown/spell/conjure/construct/lesser,
@@ -96,7 +56,6 @@
 	)
 /mob/living/basic/construct/artificer/mystic
 	theme = THEME_WIZARD
-	loot = list(/obj/item/ectoplasm/mystic)
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,
 		/datum/action/cooldown/spell/conjure/cult_wall,
