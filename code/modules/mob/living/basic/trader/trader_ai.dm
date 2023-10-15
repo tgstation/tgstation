@@ -66,6 +66,7 @@
 	var/obj/shop_spot = new shop_type_path(living_pawn.loc)
 	shop_spot.dir = living_pawn.dir
 	controller.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
+	playsound(living_pawn, controller.blackboard[BB_SHOP_SOUND], 50, TRUE)
 
 	var/turf/sign_turf
 
@@ -74,9 +75,14 @@
 		sign_turf = try_find_valid_spot(living_pawn.loc, turn(shop_spot.dir, 90))
 
 	if(sign_turf)
-		var/sign_type_path =  controller.blackboard[BB_SHOP_SIGN_TYPE]
-		var/obj/sign = new sign_type_path(sign_turf)
-		controller.set_blackboard_key(BB_SHOP_SIGN, sign)
+		var/obj/sign = controller.blackboard[BB_SHOP_SIGN]
+		if(QDELETED(sign))
+			var/sign_type_path =  controller.blackboard[BB_SHOP_SIGN_TYPE]
+			var/obj/new_sign = new sign_type_path(sign_turf)
+			controller.set_blackboard_key(BB_SHOP_SIGN, new_sign)
+			do_sparks(3, FALSE, new_sign)
+		else
+			do_teleport(sign,sign_turf)
 
 	finish_action(controller, TRUE, target_key)
 
