@@ -597,10 +597,30 @@
 	if(sigreturn & COMPONENT_BULLET_PIERCED)
 		return BULLET_ACT_FORCE_PIERCE
 	if(sigreturn & COMPONENT_BULLET_BLOCKED)
-		return COMPONENT_BULLET_BLOCKED
+		return BULLET_ACT_BLOCK
 	if(sigreturn & COMPONENT_BULLET_ACTED)
 		return BULLET_ACT_HIT
+/*
+	var/onhit_return = hitting_projectile.on_hit(
+		target = src,
+		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		pierce_hit = piercing_hit,
+	)
 
+	switch(onhit_return)
+		if(BULLET_ACT_FORCE_PIERCE, BULLET_ACT_BLOCK, BULLET_ACT_HIT)
+			pass() // good job!
+		if(FALSE, TRUE)
+			stack_trace("[hitting_projectile] returned invalid truthy / falsy value from on_hit()")
+		if(null)
+			stack_trace("[hitting_projectile] returned null from on_hit()")
+		else
+			stack_trace("[hitting_projectile] returned invalid value from on_hit(), [onhit_return]")
+
+	return onhit_return
+*/
 	return hitting_projectile.on_hit(
 		target = src,
 		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
