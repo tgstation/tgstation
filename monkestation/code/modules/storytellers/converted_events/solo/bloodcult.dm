@@ -42,12 +42,15 @@
 	if(!main_cult)
 		main_cult = new()
 
+/datum/round_event/antagonist/solo/start()
+	. = ..()
+	main_cult.setup_objectives()
+
 /datum/round_event/antagonist/solo/bloodcult/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/cult/new_cultist = new antag_datum()
 	new_cultist.cult_team = main_cult
 	new_cultist.give_equipment = TRUE
 	antag_mind.add_antag_datum(new_cultist)
-	main_cult.setup_objectives()
 
 /datum/round_event/antagonist/solo/bloodcult/round_end_report()
 	if(main_cult.check_cult_victory())
