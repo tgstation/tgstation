@@ -73,6 +73,9 @@
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
+	// if(chem.type == /datum/reagent/potassium)
+	// 	H.reagents.remove_reagent(chem.type, /*All of the reagent*/)
+	// 	explosion(H.loc, 0, 0, 0, 1, 1)
 	return ..()
 
 /datum/species/floran/randomize_features(mob/living/carbon/human_mob)
