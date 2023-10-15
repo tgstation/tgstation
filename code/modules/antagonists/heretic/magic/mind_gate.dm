@@ -44,5 +44,5 @@
 			custom_icon_file = owner.icon, \
 			custom_icon_state = owner.icon_state, \
 		)
-	cast_on.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 140)
+	cast_on.adjustOrganLoss(ORGAN_SLOT_BRAIN, 30, 140)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 140)

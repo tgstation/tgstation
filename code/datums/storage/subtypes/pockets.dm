@@ -193,3 +193,24 @@
 
 	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))
 	exception_hold = exception_cache
+
+/datum/storage/pockets/void_cloak/unfathomable_curio
+	max_total_storage = 10
+
+/datum/storage/pockets/void_cloak/unfathomable_curio/New()
+	. = ..()
+	set_holdable(list(
+		/obj/item/ammo_box/strilka310/lionhunter,
+		/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
+		/obj/item/clothing/neck/eldritch_amulet,
+		/obj/item/clothing/neck/heretic_focus,
+		/obj/item/codex_cicatrix,
+		/obj/item/eldritch_potion,
+		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
+		/obj/item/food/grown/harebell, // Used to reroll targets
+		/obj/item/melee/rune_carver,
+		/obj/item/melee/sickly_blade, // Normal sized, so you can only fit one.
+		/obj/item/organ, // Organs are also often used in rituals.
+		/obj/item/reagent_containers/cup/beaker/eldritch,
+		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
+	))

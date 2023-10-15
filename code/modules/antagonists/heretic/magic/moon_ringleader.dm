@@ -39,21 +39,21 @@
 	if(!ismob(victim))
 
 		if(victim.can_block_magic(antimagic_flags))
-		to_chat(victim, span_notice("Your mind feels closed."))
-		to_chat(caster, span_warning("The ring fails to form around [victim]."))
-		return FALSE
+			to_chat(victim, span_notice("Your mind feels closed."))
+			to_chat(caster, span_warning("The ring fails to form around [victim]."))
+		var/victim_sanity = victim.mob_mood.sanity
 
 		new /obj/effect/temp_visual/knockblast(get_turf(victim))
-		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100-victim.mob_mood.sanity, 160)
-		repeat_string((120-victim.mob_mood.sanity)/10,victim.cause_hallucination( \
+		victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100-victim_sanity, 160)
+		repeat_string((120-victim_sanity)/10,victim.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"ringleaders rise", \
 		) )
 
-		if(victim.mob_mood.sanity<10)
+		if(victim_sanity<10)
 			var/trauma_type = pick(/datum/brain_trauma/severe/blindness, /datum/brain_trauma/severe/paralysis/hemiplegic/right, /datum/brain_trauma/severe/paralysis/hemiplegic/left, /datum/brain_trauma/severe/monophobia, /datum/brain_trauma/severe/discoordination )
 			victim.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
-		victim.mob_mood.set_sanity(victim.mob_mood.sanity*0.5)
+		victim.mob_mood.set_sanity(victim_sanity*0.5)
 
 /obj/effect/temp_visual/knockblast
 	icon = 'icons/effects/effects.dmi'
