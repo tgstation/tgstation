@@ -88,7 +88,7 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(roundstart && world.time-SSticker.round_start_time >= 2 MINUTES)
+	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || SSgamemode.ran_roundstart))
 		return FALSE
 	if(occurrences >= max_occurrences)
 		return FALSE

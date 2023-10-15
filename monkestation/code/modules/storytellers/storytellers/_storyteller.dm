@@ -125,6 +125,7 @@
 	mode.event_track_points[track] -= total_cost
 	message_admins("Storyteller purchased and triggered [bought_event] event, on [track] track, for [total_cost] cost.")
 	if(bought_event.roundstart)
+		SSgamemode.ran_roundstart = TRUE
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost, _forced = forced)

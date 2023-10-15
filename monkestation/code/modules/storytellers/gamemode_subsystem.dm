@@ -141,6 +141,9 @@ SUBSYSTEM_DEF(gamemode)
 
 	var/wizardmode = FALSE
 
+	var/list/last_round_events = list()
+	var/ran_roundstart = FALSE
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 	// Populate event pools
 	for(var/track in event_tracks)
