@@ -153,7 +153,7 @@
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
-				update_integrity(30) //needs to be welded to fully repair but can work without
+				update_integrity(max(30, atom_integrity)) //needs to be welded to fully repair but can work without
 				set_machine_stat(machine_stat & ~(BROKEN|MAINT))
 				opened = APC_COVER_OPENED
 				update_appearance()
