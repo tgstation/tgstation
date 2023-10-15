@@ -302,6 +302,22 @@ Runs the event
 			return "<a href='?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='?src=[REF(src)];action=force_next'>Force Roundstart</a>"
 		else
 			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
+
+
+/datum/round_event_control/Topic(href, href_list)
+	. = ..()
+	if(QDELETED(src))
+		return
+	switch(href_list["action"])
+		if("schedule")
+			message_admins("[key_name_admin(usr)] scheduled event [src.name].")
+			log_admin_private("[key_name(usr)] scheduled [src.name].")
+			SSgamemode.storyteller.buy_event(src, src.track)
+		if("force_next")
+			message_admins("[key_name_admin(usr)] force scheduled event [src.name].")
+			log_admin_private("[key_name(usr)] force scheduled event [src.name].")
+			SSgamemode.forced_next_events[src.track] += src
+
 //monkestation addition ends - STORYTELLERS
 
 //Called after something followable has been spawned by an event
