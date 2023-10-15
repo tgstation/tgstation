@@ -283,3 +283,9 @@
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
+	cost = CARGO_CRATE_VALUE * 2.5
+	contains = list(/obj/item/fish_analyzer)

@@ -135,6 +135,10 @@
 	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
 
+/// More likely to intercept bullets, since you're likely to not be wearing your modsuit with this on
+/obj/item/clothing/head/cowboy/black/syndicate
+	deflect_chance = 25
+
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"
 	desc = "There are two kinds of people in the world: those with guns and those that dig. You dig?"

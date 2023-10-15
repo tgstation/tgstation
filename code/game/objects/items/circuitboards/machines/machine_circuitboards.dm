@@ -1245,9 +1245,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1529,21 +1541,3 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
-/obj/item/circuitboard/machine/quantum_server
-	name = "Quantum Server"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/quantum_server
-	req_components = list(
-		/datum/stock_part/servo = 2,
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/capacitor = 1,
-	)
-
-/obj/item/circuitboard/machine/netpod
-	name = "Netpod"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/netpod
-	req_components = list(
-		/datum/stock_part/servo = 1,
-		/datum/stock_part/matter_bin = 2,
-	)

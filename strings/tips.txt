@@ -266,5 +266,6 @@ You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to
 You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
+You can use an upgraded microwave to charge your PDA!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.

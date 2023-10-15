@@ -124,7 +124,7 @@
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		to_chat(user, span_notice("You transfer [round(trans, 0.01)] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -136,7 +136,7 @@
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 
@@ -157,7 +157,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN

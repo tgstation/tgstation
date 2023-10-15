@@ -2,7 +2,6 @@
 /datum/ai_controller/basic_controller/legion
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead/legion,
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
@@ -32,7 +31,7 @@
 /// Target nearby friendlies if they are hurt (and are not themselves Legions)
 /datum/targetting_datum/basic/attack_until_dead/legion
 
-/datum/targetting_datum/basic/attack_until_dead/legion/faction_check(mob/living/living_mob, mob/living/the_target)
+/datum/targetting_datum/basic/attack_until_dead/legion/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (!living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly))
 		return FALSE
 	if (istype(the_target, living_mob.type))

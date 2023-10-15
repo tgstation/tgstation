@@ -111,15 +111,16 @@
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
+
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -156,15 +157,16 @@
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
+
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
-	to_chat(owner, span_danger("As your [src] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -203,7 +205,7 @@
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
 
 	var/stun_time = 0
@@ -219,7 +221,7 @@
 
 	var/damage_percent_to_max = (get_damage() / max_damage)
 	if (stun_time && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
-		to_chat(owner, span_danger("Your [src]'s logic boards temporarily become unresponsive!"))
+		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
 		owner.Stun(stun_time)
 	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
 
@@ -233,7 +235,45 @@
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_BODYPART_ATTACHED)
 	return ..()
+
+/obj/item/bodypart/chest/robot/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attached))
+	RegisterSignal(src, COMSIG_BODYPART_REMOVED, PROC_REF(on_detached))
+
+/obj/item/bodypart/chest/robot/proc/on_attached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/new_owner)
+	SIGNAL_HANDLER
+
+	RegisterSignals(new_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(check_limbs))
+
+/obj/item/bodypart/chest/robot/proc/on_detached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/old_owner)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+
+/obj/item/bodypart/chest/robot/proc/check_limbs()
+	SIGNAL_HANDLER
+
+	var/all_robotic = TRUE
+	for(var/obj/item/bodypart/part in owner.bodyparts)
+		all_robotic = all_robotic && IS_ROBOTIC_LIMB(part)
+
+	if(all_robotic)
+		owner.add_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
+	else
+		owner.remove_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/stock_parts/cell))
@@ -338,9 +378,10 @@
 
 /obj/item/bodypart/head/robot/emp_act(severity)
 	. = ..()
-	if(!.)
+	if(!. || isnull(owner))
 		return
-	to_chat(owner, span_danger("Your [src]'s optical transponders glitch out and malfunction!"))
+
+	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
 
 	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
 	if (severity == EMP_HEAVY)
