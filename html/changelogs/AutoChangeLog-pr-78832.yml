@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - code_imp: "COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED is now COMSIG_GLOB_PUZZLE_COMPLETED"

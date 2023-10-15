@@ -178,7 +178,7 @@
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
+	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE

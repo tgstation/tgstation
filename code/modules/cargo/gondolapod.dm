@@ -65,11 +65,13 @@
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
+	SET_PLANE_IMPLICIT(src, GAME_PLANE)
 	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 50)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN)
 	update_appearance()
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()

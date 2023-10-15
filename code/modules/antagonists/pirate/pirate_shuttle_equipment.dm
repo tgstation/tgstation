@@ -217,9 +217,13 @@
 	var/cargo_hold_id
 	///Interface name for the ui_interact call for different subtypes.
 	var/interface_type = "CargoHoldTerminal"
+	///Typecache of things that shouldn't be sold and shouldn't have their contents sold.
+	var/static/list/nosell_typecache
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
+	if(isnull(nosell_typecache))
+		nosell_typecache = typecacheof(/mob/living/silicon/robot)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -285,7 +289,7 @@
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report)
+		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report, ignore_typecache = nosell_typecache)
 
 	for(var/datum/export/exported_datum in report.total_amount)
 		status_report += exported_datum.total_printout(report,notes = FALSE)
@@ -306,7 +310,7 @@
 	for(var/atom/movable/item_on_pad in get_turf(pad))
 		if(item_on_pad == pad)
 			continue
-		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report)
+		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache)
 
 	status_report = "Sold: "
 	var/value = 0

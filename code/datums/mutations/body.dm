@@ -254,9 +254,9 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
-	glow = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+	glow_power = -1.5
 
 /datum/mutation/human/glow/anti/get_glow_color()
 	return COLOR_BLACK
