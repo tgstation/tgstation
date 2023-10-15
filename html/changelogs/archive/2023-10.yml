@@ -563,3 +563,32 @@
   san7890:
   - bugfix: Space Dragons can now, once again, tear down walls and eat corpses. They
       also have regained their special damage modifier when attacking mechs.
+2023-10-15:
+  GPeckman:
+  - bugfix: Having all augmented limbs will make you properly spaceproof once again.
+  - bugfix: Androids are immune to crit damage again.
+  - bugfix: Surgery on robotic limbs can be canceled.
+  Iamgoofball:
+  - balance: Allows spacemen to use age-appropriate drugs by making it so you can
+      now huff N2O to get high.
+  Jacquerel:
+  - refactor: Space Dragons are now basic mobs, please report any unexpected behaviour.
+  - balance: You can now see that a space dragon is destroying a wall with a visual
+      indicator of the wall being damaged.
+  - balance: Space Dragons can pry open airlocks.
+  Melbert:
+  - qol: Leaning now has a small animation associated.
+  - qol: Cyborgs can now lean against walls.
+  - bugfix: Fixed some runtimes associated with leaning.
+  - bugfix: Fixed being able to lean while dead or in otherwise invalid states.
+  ZephyrTFA:
+  - rscadd: Vent Pumps can now be overclocked, do some light reading in the air alarm
+      to figure out what this means.
+  - balance: Vent Pumps now have fan integrity, the damaging of which reduces their
+      ability to move air.
+  - sound: Overclocking sounds, including spool, stop, and loop
+  carlarctg:
+  - qol: Bladists can now use silver *or* titanium while creating their blades
+  - bugfix: Fixes Monkey's Delight recipe
+  starrm4nn:
+  - bugfix: makes the riot helmet hide hair like other sec helmets
