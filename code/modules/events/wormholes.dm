@@ -10,6 +10,8 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	description = "Space time anomalies appear on the station, randomly teleporting people who walk into them."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/wormholes
 	announce_when = 10

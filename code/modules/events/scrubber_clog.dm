@@ -6,6 +6,8 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a scrubber."
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/scrubber_clog
 	announce_when = 10

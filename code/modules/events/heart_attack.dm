@@ -11,6 +11,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
 	///Candidates for recieving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_TARGETED)
 
 /datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()

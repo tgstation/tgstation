@@ -32,6 +32,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_TARGETED)
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()

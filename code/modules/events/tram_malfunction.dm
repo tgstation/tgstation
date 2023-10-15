@@ -11,6 +11,8 @@
 	description = "Tram crossing signals malfunction, tram collision damage is increased."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE)
 
 //Check if there's a tram we can cause to malfunction.
 /datum/round_event_control/tram_malfunction/can_spawn_event(players_amt, allow_magic = FALSE)

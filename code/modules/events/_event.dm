@@ -42,6 +42,21 @@
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
 
+	//monkestation vars starts
+	var/roundstart = FALSE // BUBBER EDIT
+	var/cost = 1 // BUBBER EDIT
+	var/reoccurence_penalty_multiplier = 0.75
+	var/shared_occurence_type
+	var/track = EVENT_TRACK_MODERATE
+	/// Last calculated weight that the storyteller assigned this event
+	var/calculated_weight = 0
+	var/tags = list() 	/// Tags of the event
+	/// List of the shared occurence types.
+	var/static/list/shared_occurences = list()
+	/// Whether a roundstart event can happen post roundstart. Very important for events which override job assignments.
+	var/can_run_post_roundstart = TRUE
+	//monkestation vars end
+
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
@@ -203,8 +218,12 @@ Runs the event
 	var/fakeable = TRUE
 	/// Whether a admin wants this event to be cancelled
 	var/cancel_event = FALSE
+	//monkestation vars starts
 	///canceled on oshan
 	var/oshan_blocked = FALSE
+	/// Whether the event called its start() yet or not.
+	var/has_started = FALSE
+	//monkestation vars end
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -227,6 +246,60 @@ Runs the event
 /datum/round_event/proc/start()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+//monkestation addition starts - STORYTELLERS
+/// This section of event processing is in a proc because roundstart events may get their start invoked.
+/datum/round_event/proc/try_start()
+	if(has_started)
+		return
+	has_started = TRUE
+	processing = FALSE
+	start()
+	processing = TRUE
+
+/datum/round_event_control/roundstart
+	roundstart = TRUE
+	earliest_start = 0
+
+///Adds an occurence. Has to use the setter to properly handle shared occurences
+/datum/round_event_control/proc/add_occurence()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		shared_occurences[shared_occurence_type]++
+	occurrences++
+
+///Subtracts an occurence. Has to use the setter to properly handle shared occurences
+/datum/round_event_control/proc/subtract_occurence()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		shared_occurences[shared_occurence_type]--
+	occurrences--
+
+///Gets occurences. Has to use the getter to properly handle shared occurences
+/datum/round_event_control/proc/get_occurences()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		return shared_occurences[shared_occurence_type]
+	return occurrences
+
+/// Prints the action buttons for this event.
+/datum/round_event_control/proc/get_href_actions()
+	if(SSticker.HasRoundStarted())
+		if(roundstart)
+			if(!can_run_post_roundstart)
+				return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a>"
+			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a>"
+		else
+			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a> <a href='?src=[REF(src)];action=force_next'>Force Next</a>"
+	else
+		if(roundstart)
+			return "<a href='?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='?src=[REF(src)];action=force_next'>Force Roundstart</a>"
+		else
+			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
+//monkestation addition ends - STORYTELLERS
 
 //Called after something followable has been spawned by an event
 //Provides ghosts a follow link to an atom if possible

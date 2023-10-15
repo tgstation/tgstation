@@ -8,6 +8,8 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
 	admin_setup = list(/datum/event_admin_setup/set_location/stray_cargo, /datum/event_admin_setup/listed_options/stray_cargo)
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL)
 
 /datum/event_admin_setup/set_location/stray_cargo
 	input_text = "Aim pod at turf we're on?"

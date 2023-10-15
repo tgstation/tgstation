@@ -1,7 +1,7 @@
 /datum/round_event_control/slasher
 	name = "Slasher"
 	typepath = /datum/round_event/ghost_role/slasher
-	weight = 0 // for now
+	weight = 14 // for now
 	max_occurrences = 3
 
 /datum/round_event/ghost_role/slasher

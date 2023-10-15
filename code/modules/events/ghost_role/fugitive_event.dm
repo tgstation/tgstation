@@ -9,6 +9,8 @@
 	category = EVENT_CATEGORY_INVASION
 	description = "Fugitives will hide on the station, followed by hunters."
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT)
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1

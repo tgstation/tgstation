@@ -19,6 +19,8 @@
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/listed_options/sandstorm)
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE)
 
 /datum/round_event/sandstorm
 	start_when = 60

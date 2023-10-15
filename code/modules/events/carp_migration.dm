@@ -10,6 +10,8 @@
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
 	admin_setup = list(/datum/event_admin_setup/carp_migration)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()

@@ -9,6 +9,8 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT)
 
 /datum/round_event_control/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
