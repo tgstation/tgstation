@@ -1,5 +1,5 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Icon, Stack, Tooltip } from '../../components';
+import { Box, Button, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -22,6 +22,8 @@ const QuirkList = (props: {
     }
   ][];
   onClick: (quirkName: string, quirk: Quirk) => void;
+  onCustomizeClick: (e: Event, quirkName: string, quirk: Quirk) => void;
+  selected: boolean;
 }) => {
   return (
     // Stack is not used here for a variety of IE flex bugs
@@ -95,6 +97,23 @@ const QuirkList = (props: {
                       'padding': '3px',
                     }}>
                     {quirk.description}
+                    {!!quirk.customizable && (
+                      <Button
+                        disabled={!props.selected}
+                        icon="cog"
+                        tooltip={
+                          !props.selected
+                            ? 'You must take this quirk before you can customize it!'
+                            : 'This quirk is customizable! Click this button to open a customization menu!'
+                        }
+                        onClick={(e: Event) => {
+                          props.onCustomizeClick(e, quirkKey, quirk);
+                        }}
+                        style={{
+                          'float': 'right',
+                        }}
+                      />
+                    )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -238,6 +257,7 @@ export const QuirksPage = (props, context) => {
 
                 <Stack.Item grow width="100%">
                   <QuirkList
+                    selected={false}
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotAdd(quirkName) !== undefined) {
                         return;
@@ -246,6 +266,11 @@ export const QuirksPage = (props, context) => {
                       setSelectedQuirks(selectedQuirks.concat(quirkName));
 
                       act('give_quirk', { quirk: quirk.name });
+                    }}
+                    onCustomizeClick={(e: Event, quirkName, quirk) => {
+                      e.stopPropagation();
+
+                      act('customize_quirk', { quirk: quirk.name });
                     }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {
@@ -287,6 +312,7 @@ export const QuirksPage = (props, context) => {
 
                 <Stack.Item grow width="100%">
                   <QuirkList
+                    selected
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotRemove(quirkName) !== undefined) {
                         return;
@@ -299,6 +325,11 @@ export const QuirksPage = (props, context) => {
                       );
 
                       act('remove_quirk', { quirk: quirk.name });
+                    }}
+                    onCustomizeClick={(e: Event, quirkName, quirk) => {
+                      e.stopPropagation();
+
+                      act('customize_quirk', { quirk: quirk.name });
                     }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {
