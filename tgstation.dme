@@ -5788,6 +5788,7 @@
 #include "monkestation\code\modules\client\preferences\alt_jobs\_job.dm"
 #include "monkestation\code\modules\client\preferences\alt_jobs\titles.dm"
 #include "monkestation\code\modules\client\preferences\species_features\arachnid.dm"
+#include "monkestation\code\modules\client\preferences\species_features\floran.dm"
 #include "monkestation\code\modules\client\preferences\species_features\goblin.dm"
 #include "monkestation\code\modules\client\preferences\species_features\ipc.dm"
 #include "monkestation\code\modules\client\preferences\species_features\secondary_mut_color.dm"
@@ -6320,5 +6321,4 @@
 #include "monkestation\code\random_rooms\engines\kilostation.dm"
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
-#include "monkestation\code\modules\client\preferences\species_features\floran.dm"
 // END_INCLUDE
