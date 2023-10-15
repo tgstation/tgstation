@@ -35,3 +35,5 @@
 
 /datum/round_event_control/antagonist/solo/malf/roundstart
 	name = "Roundstart Malf AI"
+	roundstart = TRUE
+	earliest_start = 0
