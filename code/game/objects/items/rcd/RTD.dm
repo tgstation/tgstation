@@ -195,12 +195,14 @@
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
 		if("root_category")
 			var/new_root = params["root_category"]
 			if(floor_designs[new_root] != null) //is a valid category
 				root_category = new_root
+				update_static_data_for_all_viewers()
 
 		if("set_dir")
 			var/direction = text2dir(params["dir"])
