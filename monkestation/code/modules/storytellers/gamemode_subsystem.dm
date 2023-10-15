@@ -842,11 +842,11 @@ SUBSYSTEM_DEF(gamemode)
 				var/next = 0
 				var/last_points = last_point_gains[track]
 				if(last_points)
-					next = round((upper - lower) / last_points / STORYTELLER_WAIT_TIME * 40 / 6) / 10
+					next = round(((upper - lower) / last_points / STORYTELLER_WAIT_TIME) / 60)
 				dat += "<tr style='vertical-align:top; background-color: [background_cl];'>"
-				dat += "<td>[track]</td>" //Track
+				dat += "<td>[track] - [last_points] per process.</td>" //Track
 				dat += "<td>[percent]% ([lower]/[upper])</td>" //Progress
-				dat += "<td>~[next] m.</td>" //Next
+				dat += "<td>~[next] minutes</td>" //Next
 				var/datum/round_event_control/forced_event = forced_next_events[track]
 				var/forced = forced_event ? "[forced_event.name] <a href='?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[track]'>X</a>" : ""
 				dat += "<td>[forced]</td>" //Forced
