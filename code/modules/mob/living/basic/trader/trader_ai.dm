@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/trader
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -12,10 +12,11 @@
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/trader
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trader
 
 /datum/ai_behavior/basic_ranged_attack/trader
 	action_cooldown = 3 SECONDS
+	avoid_friendly_fire = TRUE
 
 
 ///subtree to find our very first customer and set up our shop
