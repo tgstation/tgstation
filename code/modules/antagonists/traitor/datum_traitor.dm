@@ -54,6 +54,9 @@
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
 
+/datum/antagonist/traitor/infiltrator/sleeper_agent
+	name = "\improper Syndicate Sleeper Agent"
+
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
 	src.give_objectives = give_objectives
