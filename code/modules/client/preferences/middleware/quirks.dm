@@ -3,6 +3,7 @@
 	var/tainted = FALSE
 
 	action_delegations = list(
+		"customize_quirk" = PROC_REF(customize_quirk),
 		"give_quirk" = PROC_REF(give_quirk),
 		"remove_quirk" = PROC_REF(remove_quirk),
 	)
@@ -38,6 +39,7 @@
 			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
+			"customizable" = initial(quirk.customizable)
 		)
 
 	return list(
@@ -48,6 +50,17 @@
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)
 	tainted = TRUE
+
+/datum/preference_middleware/quirks/proc/customize_quirk(list/params, mob/user)
+	var/quirk_name = params["quirk"]
+
+	var/datum/quirk/quirk_instance = SSquirks.quirks[quirk_name]
+	if (isnull(quirk_instance))
+		return FALSE // something weird just happened
+	if (!quirk_instance.customizable)
+		return FALSE
+
+	return quirk_instance.start_customization()
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]

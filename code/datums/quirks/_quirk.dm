@@ -33,6 +33,10 @@
 	/// The base weight for the each quirk's mail goodies list to be selected is 5
 	/// then the item selected is determined by pick(selected_quirk.mail_goodies)
 	var/mail_goodies = list()
+	/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and apon clicking it,
+	/// will open a customization menu for the quirk.
+	var/customizable = FALSE
+
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
@@ -147,6 +151,11 @@
 /// Otherwise, it runs once on the next COMSIG_MOB_LOGIN.
 /datum/quirk/proc/post_add()
 	return
+
+/datum/quirk/proc/get_customization_options()
+	return
+
+/datum/quirk/proc/start_customization()
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk

@@ -7,6 +7,7 @@
 	lose_text = span_notice("You seem to have forgotten your second language.")
 	medical_record_text = "Patient speaks multiple languages."
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
+	customizable = TRUE
 
 /datum/quirk/bilingual/add_unique(client/client_source)
 	var/wanted_language = client_source?.prefs.read_preference(/datum/preference/choiced/language)

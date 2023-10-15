@@ -82,6 +82,7 @@ export type Quirk = {
   icon: string;
   name: string;
   value: number;
+  customizable: boolean;
 };
 
 export type QuirkInfo = {
