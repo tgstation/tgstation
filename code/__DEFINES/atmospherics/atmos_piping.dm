@@ -37,7 +37,7 @@
 #define QUATERNARY 4
 
 //TANKS
-/// The volume of the standard handheld gas tanks on the station. Around ~17.75 moles.
+/// The volume of the standard handheld gas tanks on the station. Around ~17.75 moles, at standard temperature and pressure.
 #define TANK_STANDARD_VOLUME 70
 /// The minimum pressure an gas tanks release valve can be set to.
 #define TANK_MIN_RELEASE_PRESSURE 0

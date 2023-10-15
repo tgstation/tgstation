@@ -85,18 +85,15 @@
 #undef MIN_HEALTH
 #undef MIN_WATER_STACKS
 
-#define TRAIT_SLIME_WATER_IMMUNE "gingus"
-
 /datum/status_effect/slime
 	id = "bruh"
+	/// Type of the owner so we can use slime procs.
 	var/mob/living/simple_animal/slime/slime_owner
-	var/max_duration = 420 SECONDS
+	/// Duration is forced to be at most this.
+	var/max_duration = null
 
 /datum/status_effect/slime/on_apply()
-	if(!isslime(owner))
-		stack_trace("rad slime effect on non slime????")
-		qdel(src)
-		return
+	ASSERT(isslime(owner))
 	slime_owner = owner
 	..()
 
@@ -106,9 +103,9 @@
 
 /datum/status_effect/slime/refresh(mob/living/owner, to_add)
 	. = ..()
-	src.duration += min(to_add, max_duration)
+	duration += min(to_add, max_duration)
 
-#define MAXIMUM_RADIATION_TIME 60 SECONDS
+#define MAXIMUM_TRITRATION_TIME 60 SECONDS
 
 /atom/movable/screen/alert/status_effect/tritrated
 	name = "Tritrated Slime"
@@ -119,7 +116,7 @@
 	id = "tritrated"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
-	max_duration = MAXIMUM_RADIATION_TIME
+	max_duration = MAXIMUM_TRITRATION_TIME
 	tick_interval = 2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/tritrated
 	remove_on_fullheal = TRUE
@@ -128,9 +125,9 @@
 	. = ..()
 	to_chat(slime_owner, span_userdanger("You've absorbed so much tritium you've become a radiation engine!"))
 	slime_owner.AddElement(
-		/datum/element/radioactive,\
-		range = 5,\
-		threshold = RAD_HEAVY_INSULATION,\
+		/datum/element/radioactive, \
+		range = 5, \
+		threshold = RAD_HEAVY_INSULATION, \
 	)
 	slime_owner.add_filter("tritrated", 10, list("type" = "rays", "size" = 35, "color" = "#32cd32"))
 	return .
@@ -148,7 +145,7 @@
 	if(SPT_PROB(25, seconds_between_ticks))
 		slime_owner.fire_nuclear_particle()
 		owner.apply_damage(rand(4, 8) * seconds_between_ticks, damagetype = BRUTE)
-		slime_owner.regenerate_icons(force_mood = pick("angry"))
+		slime_owner.force_mood_change(force_mood = "angry")
 
 /datum/status_effect/slime/tritrated/update_particles()
 	if(particle_effect)
@@ -161,6 +158,8 @@
 
 /datum/status_effect/slime/tritrated/get_examine_text()
 	return span_bolddanger("Its surface mass is shifting and bubbling wildly, radiation pulses beaming out!")
+
+#undef MAXIMUM_TRITRATION_TIME
 
 #define MAXIMUM_STUPOR_TIME 4 MINUTES
 
@@ -200,25 +199,29 @@
 	. = ..()
 
 /datum/status_effect/slime/stupor/tick(seconds_between_ticks)
-	if(SPT_PROB(15, seconds_between_ticks))
-		for(var/mob/fremb in view())
-			if(isslime(fremb))
-				continue
-			slime_owner.Friends |= fremb
-		slime_owner.visible_message("[slime_owner] looks all around it and smiles contentedly.")
-		slime_owner.regenerate_icons(force_mood = ":3")
-		slime_owner.powerlevel--
+	if(!SPT_PROB(15, seconds_between_ticks))
+		return
+	for(var/mob/friend in view())
+		if(isslime(friend))
+			continue
+		slime_owner.Friends |= friend
+
+	slime_owner.visible_message("[slime_owner] looks all around it and smiles contentedly.")
+	slime_owner.force_mood_change(force_mood = ":3")
+	slime_owner.powerlevel--
 
 /datum/status_effect/slime/stupor/get_examine_text()
 	return span_bolddanger("It is smiling contentedly.")
 
-#define MAXIMUM_NITRIUM_TIME 2.5 MINUTES
+#undef MAXIMUM_STUPOR_TIME
+
+#define MAXIMUM_NITRATE_TIME 2.5 MINUTES
 
 /datum/status_effect/slime/nitrated
 	id = "nitrated"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
-	max_duration = MAXIMUM_NITRIUM_TIME
+	max_duration = MAXIMUM_NITRATE_TIME
 	tick_interval = 2 SECONDS
 	remove_on_fullheal = FALSE
 
@@ -245,7 +248,9 @@
 /datum/status_effect/slime/nitrated/get_examine_text()
 	return span_bolddanger("It is smiling mischeviously, vibrating with unspent energy!")
 
-#define MAXIMUM_HYPERNOB_TIME 10 SECONDs
+#undef MAXIMUM_NITRATE_TIME
+
+#define MAXIMUM_HYPERNOB_TIME 10 SECONDS
 
 /atom/movable/screen/alert/status_effect/hypernob_protection
 	name = "Hyper-Noblium Coating"
@@ -256,7 +261,7 @@
 	id = "hypernob_protection"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
-	max_duration = MAXIMUM_NITRIUM_TIME
+	max_duration = MAXIMUM_HYPERNOB_TIME
 	alert_type = /atom/movable/screen/alert/status_effect/hypernob_protection
 	tick_interval = 2 SECONDS
 	remove_on_fullheal = FALSE
@@ -287,3 +292,5 @@
 
 /datum/status_effect/slime/hypernob_protection/get_examine_text()
 	return span_bolddanger("It has a softly pulsating blue-white coating on its body.")
+
+#undef MAXIMUM_HYPERNOB_TIME

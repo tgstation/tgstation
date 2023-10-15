@@ -188,7 +188,7 @@
 	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
-	// Around ~2.5 moles?
+	// Around ~2.5 moles
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -199,7 +199,7 @@
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
 	volume = 12 //If it's double of the above, shouldn't it be double the volume??
-	// Around ~5 moles??
+	// Around ~5 moles
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

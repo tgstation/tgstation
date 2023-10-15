@@ -136,8 +136,6 @@
 	var/effectmod //What core modification is being used.
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
-#define TRAIT_SLIME_WATER_IMMUNE "gingus"
-
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour=colour, new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
@@ -200,9 +198,7 @@
 /mob/living/simple_animal/slime/proc/random_colour()
 	set_colour(pick(slime_colours))
 
-/mob/living/simple_animal/slime/regenerate_icons(force_mood)
-	if(force_mood)
-		current_mood = force_mood
+/mob/living/simple_animal/slime/regenerate_icons()
 	cut_overlays()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
@@ -213,6 +209,10 @@
 	else
 		icon_state = icon_dead
 	..()
+
+/mob/living/simple_animal/slime/force_mood_change(force_mood)
+	current_mood = force_mood
+	return regenerate_icons()
 
 /**
  * Snowflake handling of reagent movespeed modifiers
@@ -283,7 +283,6 @@
 	return TRUE
 
 /mob/living/simple_animal/slime/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-
 	// No need for the rest yet
 	ASSERT_GAS(/datum/gas/hypernoblium, air)
 
@@ -360,10 +359,10 @@
  * On average, they should get around ~11 nutrition per second at 100% plasma, roughly the same as monkey absorption nutrition.
  */
 /mob/living/simple_animal/slime/proc/plasma_expose(current_gas_pp, datum/gas_mixture/air)
-	add_nutrition((0.11 * current_gas_pp * 0.5)) // SSair ticks every 0.5 apparently. idfk.
+	add_nutrition((0.11 * current_gas_pp * SSair.wait_time))
 	absorb_gas(air, /datum/gas/plasma, 1 * current_gas_pp)
 	air.temperature += 0.5 * (current_gas_pp * 0.25)
-	regenerate_icons(force_mood = ":3") //they love it!
+	force_mood_change(force_mood = ":3") //they love it!
 
 /**
  * Tritium-exposed slimes randomly and wildly mutate until they become green.
@@ -408,13 +407,13 @@
 		powerlevel += 2
 		if(docile)
 			docile = FALSE
-			visible_message(span_notice("[src] seems less placid."))
+			balloon_alert_to_viewers("[src] seems less placid.")
 		else if(Friends)
 			clear_friends()
-			visible_message(span_notice("[src]'s mischevious smile takes on a malicious shade!"))
+			balloon_alert_to_viewers("[src]'s mischevious smile takes on a malicious shade!")
 		else
 			rabid = TRUE
-			visible_message(span_notice("[src]'s smile turns manic!"))
+			balloon_alert_to_viewers("[src]'s smile turns manic!")
 		absorb_gas(air, /datum/gas/nitrium, 10)
 
 /**
@@ -448,7 +447,7 @@
 	adjustFireLoss(-5 * min(current_gas_pp, 15), updating_health = TRUE, forced = TRUE)
 	adjustToxLoss(-5 * min(current_gas_pp, 15), updating_health = TRUE, forced = TRUE)
 	absorb_gas(air, /datum/gas/zauker, min(current_gas_pp * 0.1, 1.5))
-	regenerate_icons(force_mood = ":33") //they REALLY love it!
+	force_mood_change(force_mood = ":33") //they REALLY love it!
 
 /**
  * Antinoblium can turn slimes sentient if there's enough in the air.
@@ -466,13 +465,13 @@
 
 /mob/living/simple_animal/slime/proc/become_sentient()
 	AddComponent(\
-		/datum/component/ghost_direct_control,\
-		poll_candidates = TRUE,\
-		poll_length = 30 SECONDS,\
-		role_name = "Anti-Noblium Slime",\
+		/datum/component/ghost_direct_control, \
+		poll_candidates = TRUE, \
+		poll_length = 30 SECONDS, \
+		role_name = "Anti-Noblium Slime", \
 		assumed_control_message = "You are a common slime infused into true life by Anti-Noblium. While a creature may have brought you to life, you may follow your own whims. You have no masters, but no enemies.",\
-		poll_ignore_key = POLL_IGNORE_SENTIENCE_POTION,\
-		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_ignore_key = POLL_IGNORE_SENTIENCE_POTION, \
+		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)), \
 	)
 
 /mob/living/simple_animal/slime/proc/became_player_controlled()
