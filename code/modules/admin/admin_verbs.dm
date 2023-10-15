@@ -354,7 +354,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-	if(!holder || !mob)
+	if(isnull(holder) || isnull(mob))
 		return
 	if(mob.invisimin)
 		mob.invisimin = FALSE
