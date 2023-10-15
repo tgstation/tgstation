@@ -1,4 +1,5 @@
 /obj/structure/chair
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/chairs.dmi'

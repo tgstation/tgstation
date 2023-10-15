@@ -15549,10 +15549,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"biN" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/commons/vacant_room/commissary)
 "biO" = (
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/structure/disposalpipe/segment{
@@ -26899,7 +26895,7 @@
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
-	req_one_access_txt = "10;24"
+	req_one_access = list(10, 24)
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -29009,7 +29005,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_one_access = list(22)
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -29025,7 +29021,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_one_access = list(22)
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
@@ -29090,7 +29086,7 @@
 "cwc" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
-	req_one_access_txt = "22;24;10;11;37"
+	req_one_access = list(22, 24, 10, 11, 37)
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -33154,11 +33150,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "fKa" = (
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/toilet)
 "fKj" = (
@@ -37050,7 +37042,7 @@
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
-	req_one_access_txt = "10;24"
+	req_one_access = list(10, 24)
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -77046,7 +77038,7 @@ bfe
 baV
 juU
 bjK
-biN
+bjK
 bie
 bie
 bjK

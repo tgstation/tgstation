@@ -534,11 +534,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	// Open panels will only display a light on the final buildstage
 	if(panel_open)
 		if(buildstage == AIR_ALARM_BUILD_COMPLETE)
-			. += mutable_appearance(icon, "light-out", layer, plane)
+			. += mutable_appearance(icon, "light-out", layer, src, plane)
 		return
 
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
-		. += mutable_appearance(icon, "light-out", layer, plane)
+		. += mutable_appearance(icon, "light-out", layer, src, plane)
 		return ..()
 
 	var/light_to_use

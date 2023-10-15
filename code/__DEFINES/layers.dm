@@ -323,3 +323,5 @@
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
+
+#define WALLENING_OFFSET 12

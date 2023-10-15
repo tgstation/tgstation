@@ -118,14 +118,6 @@
 	layer = EDGED_TURF_LAYER
 	plane = WALL_PLANE
 
-	// This is static
-	// Done like this to avoid needing to make it dynamic and save cpu time
-	// 4 to the left, 4 down
-	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
-
-	undertile_pixel_x = 4
-	undertile_pixel_y = 4
-
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 

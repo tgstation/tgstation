@@ -1,4 +1,5 @@
 /obj/structure/weightmachine
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "chest press machine"
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'icons/obj/fluff/gym_equipment.dmi'

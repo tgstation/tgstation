@@ -284,6 +284,7 @@
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
 /obj/machinery/power/shieldwallgen
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/machines/shield_generator.dmi'
