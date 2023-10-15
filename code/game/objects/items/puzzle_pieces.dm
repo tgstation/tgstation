@@ -284,6 +284,7 @@
 	desc = "A panel that controls something nearby. Im sure it being covered in hazard stripes is fine."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "lockdown0"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	base_icon_state = "lockdown"
 	var/used = FALSE
 	var/single_use = TRUE

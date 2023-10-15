@@ -19,7 +19,7 @@
 
 /mob/living/basic/living_floor
 	name = "floor"
-	desc = ""
+	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	icon_living = "floor"
@@ -56,7 +56,7 @@
 
 /mob/living/basic/living_floor/proc/look_aggro(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
-	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor))
+	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor) || victim.stat == DEAD)
 		return
 	if(victim.loc == loc) //guaranteed bite
 		var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]

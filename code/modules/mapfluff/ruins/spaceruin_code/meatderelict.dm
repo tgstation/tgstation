@@ -4,13 +4,27 @@
 	color = "#990000"
 	puzzle_id = "md_director"
 
+/obj/item/keycard/meatderelict/engpost
+	name = "post keycard"
+	desc = "A fancy keycard. Has the engineering insignia on it."
+	color = "#f0da12"
+	puzzle_id = "md_engpost"
+
 /obj/item/paper/crumpled/bloody/fluff/meatderelict/directoroffice
 	name = "directors note"
 	default_raw_text = "<i>The research was going smooth... but the experiment did not go as planned. He convulsed and screamed as he slowly mutated into.. that thing. It started to spread everywhere, outside the lab too. There is no way we can cover up that we are not a teleport research outpost, so I locked down the lab, but they already know. They sent a squad to rescue us, but...</i>"
 
 /obj/item/paper/crumpled/fluff/meatderelict/shieldgens
 	name = "shield gate marketing sketch"
-	default_raw_text = "the <b>QR-109 Shield Gate</b> is a robust hardlight machine capable of producing a strong shield to bar entry. With integration, it can be controlled from anywhere, like your ships bridge,<b>Engineering</b>, or anywhere else, from a control panel! <i>The rest is faded..</i>"
+	default_raw_text = "The <b>QR-109 Shield Gate</b> is a robust hardlight machine capable of producing a strong shield to bar entry. With integration, it can be controlled from anywhere, like your ships bridge, <b>Engineering</b>, or anywhere else, from a control panel! <i>The rest is faded..</i>"
+
+/obj/item/paper/crumpled/fluff/meatderelict
+	name = "engineer note"
+	default_raw_text = "Ive overclocked the power generators to add that needed juice to the experiment, though theyre a bit unstable."
+
+/obj/item/paper/crumpled/fluff/meatderelict/fridge
+	name = "engineer complaint"
+	default_raw_text = "Whoever keeps stealing my fucking icecream from my fridge, I swear I will actually fuck you up. It is not cheap to get this delicious icecream here, nor is it for you. <b>And dont touch my snacks in the drawer!</b>"
 
 /obj/machinery/door/puzzle/meatderelict
 	name = "lockdown door"
