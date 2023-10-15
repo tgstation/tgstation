@@ -296,8 +296,8 @@
 
 		. -= picked.get_damage() // return the net amount of damage healed
 
-		brute = round(brute - ((picked.brute_dam * picked.body_damage_coeff) - brute_was), DAMAGE_PRECISION)
-		burn = round(burn - ((picked.burn_dam * picked.body_damage_coeff) - burn_was), DAMAGE_PRECISION)
+		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
+		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
 
 		parts -= picked
 

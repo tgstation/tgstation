@@ -158,7 +158,7 @@
 		source_spell.Grant(owner)
 
 		if(source_spell.convert_damage)
-			var/damage_to_apply = owner.maxHealth * ((caster_mob.maxHealth - caster_mob.health) / caster_mob.maxHealth)
+			var/damage_to_apply = owner.maxHealth * (caster_mob.get_total_damage() / caster_mob.maxHealth)
 
 			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			owner.blood_volume = caster_mob.blood_volume
@@ -191,7 +191,7 @@
 		return
 
 	caster_mob.fully_heal(HEAL_DAMAGE) // Remove all of our damage before setting our health to a proportion of the former transformed mob's health
-	var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
+	var/damage_to_apply = caster_mob.maxHealth * (owner.get_total_damage() / owner.maxHealth)
 	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 
 	caster_mob.blood_volume = owner.blood_volume

@@ -466,8 +466,6 @@
 			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
-	if (forced)
-		dmg_multi /= body_damage_coeff // If we are force applying damage across a mob, we want it to take the full damage to its overall health
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
 
