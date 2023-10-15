@@ -583,12 +583,10 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
- *
  * @params
- * hitting_projectile - projectile
- * def_zone - zone hit
- * piercing_hit - is this hit piercing or normal?
+ * * hitting_projectile - projectile
+ * * def_zone - zone hit
+ * * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
