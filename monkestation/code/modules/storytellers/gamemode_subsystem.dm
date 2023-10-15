@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(gamemode)
 		return
 	holder.forceEvent(usr)
 
-/datum/admins/forceEvent(mob/user)
+/datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
 
