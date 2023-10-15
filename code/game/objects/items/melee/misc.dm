@@ -293,7 +293,7 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	consume_everything(hitting_projectile)
-	return BULLET_ACT_BLOCK
+	return COMPONENT_BULLET_BLOCKED
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))

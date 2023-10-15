@@ -9,14 +9,16 @@
 	SIGNAL_HANDLER
 
 	var/turf/local_turf = loc
+	if(!istype(local_turf))
+		return NONE
+
 	var/kiss_power = 0
 	switch(projectile.type)
 		if(/obj/projectile/kiss)
 			kiss_power = 60
 		if(/obj/projectile/kiss/death)
 			kiss_power = 20000
-	if(!istype(local_turf))
-		return FALSE
+
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
 	if(projectile.armor_flag != BULLET || kiss_power)
@@ -31,7 +33,8 @@
 		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
-	return BULLET_ACT_BLOCK
+
+	return COMPONENT_BULLET_BLOCKED // Bullet will call Bump which will dust it afterwards regardless // melbert todo test
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
