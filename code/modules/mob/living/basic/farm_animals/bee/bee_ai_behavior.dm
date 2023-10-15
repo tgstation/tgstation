@@ -117,17 +117,31 @@
 	required_distance = 0
 
 ///swirl around the owner in menacing fashion
-/datum/pet_command/swirl
+/datum/pet_command/point_targetting/attack/swirl
 	command_name = "Swirl"
-	command_desc = "Your pets will swirl around you."
-	speech_commands = list("swirl", "spiral")
+	command_desc = "Your pets will swirl around you and attack whoever you point at!"
+	speech_commands = list("swirl", "spiral", "swarm")
+	pointed_reaction = null
+	refuse_reaction = null
+	command_feedback = null
+	///the owner we will swarm around
+	var/key_to_swarm = BB_SWARM_TARGET
 
-/datum/pet_command/swirl/set_command_active(mob/living/parent, mob/living/commander)
-	. = ..()
-	set_command_target(parent, commander)
+/datum/pet_command/point_targetting/attack/swirl/try_activate_command(mob/living/commander)
+	var/mob/living/living_pawn = weak_parent.resolve()
+	if(isnull(living_pawn))
+		return
+	var/datum/ai_controller/basic_controller/controller = living_pawn.ai_controller
+	if(isnull(controller))
+		return
+	controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+	controller.set_blackboard_key(key_to_swarm, commander)
+	return ..()
 
-/datum/pet_command/swirl/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/swirl_around_target, BB_CURRENT_PET_TARGET)
+/datum/pet_command/point_targetting/attack/swirl/execute_action(datum/ai_controller/controller)
+	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		return ..()
+	controller.queue_behavior(/datum/ai_behavior/swirl_around_target, BB_SWARM_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/swirl_around_target
@@ -213,11 +227,6 @@
 
 /datum/pet_command/beehive/exit/check_beehive_conditions(mob/living/living_pawn, obj/structure/hive)
 	return (living_pawn in hive)
-
-/datum/pet_command/point_targetting/attack/bee
-	pointed_reaction = null
-	refuse_reaction = null
-	command_feedback = null
 
 /datum/pet_command/scatter
 	command_name = "Scatter"

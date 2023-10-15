@@ -26,11 +26,15 @@
 	beesmoke_loop = new(src)
 
 /obj/item/bee_smoker/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
 	if(!activated && current_herb_fuel <= 0)
-		user.balloon_alert(user, "no fuel")
-		return
+		user.balloon_alert(user, "no fuel!")
+		return TRUE
 	alter_state()
-	user.balloon_alert(user, "[activated ? "activated!" : "deactivated!"]")
+	user.balloon_alert(user, "[activated ? "activated" : "deactivated"]")
+	return TRUE
 
 /obj/item/bee_smoker/afterattack(atom/attacked_atom, mob/living/user, proximity)
 	. = ..()
@@ -38,12 +42,14 @@
 	if(!proximity)
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!activated)
-		user.balloon_alert(user, "not activated")
+		user.balloon_alert(user, "not activated!")
 		return
 
 	if(current_herb_fuel < SINGLE_USE_COST)
-		user.balloon_alert(user, "not enough fuel")
+		user.balloon_alert(user, "not enough fuel!")
 		return
 
 	current_herb_fuel -= SINGLE_USE_COST
@@ -51,27 +57,33 @@
 	var/turf/target_turf = get_turf(attacked_atom)
 	new /obj/effect/temp_visual/mook_dust(target_turf)
 
-	if(istype(attacked_atom, /obj/structure/beebox))
-		befriend_hive(attacked_atom, user)
-		return
-
 	for(var/mob/living/basic/bee/friend in target_turf)
 		friend.befriend(user)
 
-/obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers)
-	if(!istype(herb, /obj/item/food/grown/cannabis))
+	if(!istype(attacked_atom, /obj/structure/beebox))
 		return
+
+	var/obj/structure/beebox/hive = attacked_atom
+	for(var/mob/living/bee as anything in hive.bees)
+		bee.befriend(user)
+
+/obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!istype(herb, /obj/item/food/grown/cannabis))
+		return TRUE
 	var/obj/item/food/grown/cannabis/weed = herb
 	if(isnull(weed.wine_power))
-		return
+		return TRUE
 	if(current_herb_fuel == max_herb_fuel)
-		user.balloon_alert(user, "already at maximum fuel")
-		return
+		user.balloon_alert(user, "already at maximum fuel!")
+		return TRUE
 	var/fuel_worth = weed.wine_power * WEED_WINE_MULTIPLIER
 	current_herb_fuel = (current_herb_fuel + fuel_worth > max_herb_fuel) ? max_herb_fuel : current_herb_fuel + fuel_worth
-	user.balloon_alert(user, "fuel added")
+	user.balloon_alert(user, "fuel added!")
 	qdel(weed)
-	return ..()
+	return TRUE
 
 /obj/item/bee_smoker/process(seconds_per_tick)
 	current_herb_fuel--
@@ -90,14 +102,13 @@
 
 	beesmoke_loop.start()
 	START_PROCESSING(SSobj, src)
-	particles = new /particles/smoke
-	particles.position = list(-14, 12, 0)
-	particles.velocity = list(0, 0.2, 0)
-	particles.fadein = 6
+	particles = new /particles/smoke/bee_smoke
 
-/obj/item/bee_smoker/proc/befriend_hive(obj/structure/beebox/hive, mob/living/user)
-	for(var/mob/living/bee as anything in hive.bees)
-		bee.befriend(user)
+/particles/smoke/bee_smoke
+	lifespan = 0.7 SECONDS
+	position = list(-14, 12, 0)
+	velocity = list(0, 0.2, 0)
+	fadein = 6
 
 #undef WEED_WINE_MULTIPLIER
 #undef SINGLE_USE_COST
