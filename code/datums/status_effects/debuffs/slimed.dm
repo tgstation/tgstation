@@ -106,6 +106,7 @@
 	duration += min(to_add, max_duration)
 
 #define MAXIMUM_TRITRATION_TIME 60 SECONDS
+#define TRITRATED_FILTER "tritrated"
 
 /atom/movable/screen/alert/status_effect/tritrated
 	name = "Tritrated Slime"
@@ -129,12 +130,12 @@
 		range = 5, \
 		threshold = RAD_HEAVY_INSULATION, \
 	)
-	slime_owner.add_filter("tritrated", 10, list("type" = "rays", "size" = 35, "color" = "#32cd32"))
+	slime_owner.add_filter(TRITRATED_FILTER, 10, list("type" = "rays", "size" = 35, "color" = "#32cd32"))
 	return .
 
 /datum/status_effect/slime/tritrated/on_remove()
 	slime_owner.RemoveElement(/datum/element/radioactive)
-	slime_owner.remove_filter("tritrated")
+	slime_owner.remove_filter(TRITRATED_FILTER)
 	return ..()
 
 
@@ -160,8 +161,10 @@
 	return span_bolddanger("Its surface mass is shifting and bubbling wildly, radiation pulses beaming out!")
 
 #undef MAXIMUM_TRITRATION_TIME
+#undef TRITRATED_FILTER
 
 #define MAXIMUM_STUPOR_TIME 4 MINUTES
+#define STUPOR_FILTER "stupefied"
 
 /atom/movable/screen/alert/status_effect/stupor
 	name = "Hallucinogenic Stupor"
@@ -183,7 +186,7 @@
 	. = ..()
 	to_chat(slime_owner, span_userdanger("You've fallen into a pleasant stupor..."))
 	ADD_TRAIT(slime_owner, TRAIT_PACIFISM, REF(src))
-	slime_owner.add_filter("bz_stupor", 2, list("type" = "drop_shadow", "color" = "#9370db", "alpha" = 0, "size" = 2))
+	slime_owner.add_filter(STUPOR_FILTER, 2, list("type" = "drop_shadow", "color" = "#9370db", "alpha" = 0, "size" = 2))
 	stored_docility = slime_owner.docile
 	stored_friends = slime_owner.Friends
 	slime_owner.docile = TRUE
@@ -192,7 +195,7 @@
 
 /datum/status_effect/slime/stupor/on_remove()
 	REMOVE_TRAIT(slime_owner, TRAIT_PACIFISM, REF(src))
-	slime_owner.remove_filter("bz_stupor")
+	slime_owner.remove_filter(STUPOR_FILTER)
 	slime_owner.docile = stored_docility
 	slime_owner.Friends = stored_friends
 	stored_friends = null
@@ -214,8 +217,11 @@
 	return span_bolddanger("It is smiling contentedly.")
 
 #undef MAXIMUM_STUPOR_TIME
+#undef STUPOR_FILTER
 
 #define MAXIMUM_NITRATE_TIME 2.5 MINUTES
+#define NITRATED_FILTER_RAYS "nitrated_rays"
+#define NITRATED_FILTER_SHADOW "nitrated_shadow"
 
 /datum/status_effect/slime/nitrated
 	id = "nitrated"
@@ -228,16 +234,16 @@
 /datum/status_effect/slime/nitrated/on_apply()
 	. = ..()
 	to_chat(slime_owner, span_userdanger("You've become supercharged!"))
-	slime_owner.add_filter("nitrated_shadow", 2, list("type" = "drop_shadow", "color" = "#a52a2a", "alpha" = 0, "size" = 2))
-	slime_owner.add_filter("nitrated_rays", 10, list("type" = "rays", "size" = 15, "color" = "#a52a2a"))
+	slime_owner.add_filter(NITRATED_FILTER_SHADOW, 2, list("type" = "drop_shadow", "color" = "#a52a2a", "alpha" = 0, "size" = 2))
+	slime_owner.add_filter(NITRATED_FILTER_RAYS, 10, list("type" = "rays", "size" = 15, "color" = "#a52a2a"))
 	slime_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 
 	return .
 
 /datum/status_effect/slime/nitrated/on_remove()
 	slime_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
-	slime_owner.remove_filter("nitrated_shadow")
-	slime_owner.remove_filter("nitrated_rays")
+	slime_owner.remove_filter(NITRATED_FILTER_SHADOW)
+	slime_owner.remove_filter(NITRATED_FILTER_RAYS)
 	REMOVE_TRAIT(slime_owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src))
 	. = ..()
 
@@ -249,6 +255,8 @@
 	return span_bolddanger("It is smiling mischeviously, vibrating with unspent energy!")
 
 #undef MAXIMUM_NITRATE_TIME
+#undef NITRATED_FILTER_RAYS
+#undef NITRATED_FILTER_SHADOW
 
 #define MAXIMUM_HYPERNOB_TIME 10 SECONDS
 
