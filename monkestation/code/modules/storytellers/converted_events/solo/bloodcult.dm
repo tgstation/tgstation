@@ -42,7 +42,7 @@
 	if(!main_cult)
 		main_cult = new()
 
-/datum/round_event/antagonist/solo/start()
+/datum/round_event/antagonist/solo/bloodcult/start()
 	. = ..()
 	main_cult.setup_objectives()
 
