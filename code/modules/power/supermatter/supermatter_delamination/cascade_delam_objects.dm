@@ -83,8 +83,8 @@
 	)
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	qdel(hitting_projectile)
 	return COMPONENT_BULLET_BLOCKED
-
 
 /obj/crystal_mass/singularity_act()
 	return
