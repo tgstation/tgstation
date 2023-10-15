@@ -86,6 +86,8 @@
 		else
 			do_teleport(sign,sign_turf)
 
+	controller.clear_blackboard_key(BB_FIRST_CUSTOMER)
+
 	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
