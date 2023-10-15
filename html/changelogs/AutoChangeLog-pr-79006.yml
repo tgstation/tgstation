@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - bugfix: "The active sonar module won't attempt to create 6000000 new pings per process cycle anymore"

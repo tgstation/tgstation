@@ -2817,6 +2817,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/item/storage/box/donkpockets/donkpocketberry{
+	pixel_y = 10;
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "amA" = (
@@ -8570,6 +8574,7 @@
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "bSd" = (
@@ -14689,8 +14694,10 @@
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "dYm" = (
@@ -38902,6 +38909,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"mOJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pharmacy_shutters_2";
+	name = "Pharmacy Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "mOM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -51533,11 +51549,12 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/south{
-	dir = 8;
+	dir = 4;
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
 	},
@@ -55614,7 +55631,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron,
@@ -64512,9 +64529,7 @@
 /area/station/hallway/primary/tram/right)
 "vPo" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -166304,7 +166319,7 @@ sBr
 jyH
 dYi
 rqE
-bqg
+mOJ
 jyH
 jyH
 jyH

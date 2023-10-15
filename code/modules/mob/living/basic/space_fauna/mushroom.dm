@@ -73,7 +73,7 @@
 	stat_attack = DEAD
 
 ///we only attacked another mushrooms
-/datum/targetting_datum/basic/mushroom/faction_check(mob/living/living_mob, mob/living/the_target)
+/datum/targetting_datum/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	return !living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly)
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food

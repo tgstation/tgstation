@@ -11,6 +11,11 @@
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 
+/// Store a single or list of emotes at this key
+#define BB_EMOTE_KEY "BB_emotes"
+/// Chance to perform an emote per second
+#define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -80,6 +85,11 @@
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
+/// Chance to randomly acquire a new target
+#define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"
+/// Chance to randomly drop all of our targets
+#define BB_RANDOM_DEAGGRO_CHANCE "BB_random_deaggro_chance"
+
 /// Flag to set on if you want your mob to STOP running away
 #define BB_BASIC_MOB_STOP_FLEEING "BB_basic_stop_fleeing"
 
@@ -97,7 +107,9 @@
 #define MOD_AI_RANGE 200
 
 ///should we skip the faction check for the targetting datum?
-#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"
+#define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
+///are we in some kind of temporary state of ignoring factions when targetting? can result in volatile results if multiple behaviours touch this
+#define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
@@ -105,4 +117,4 @@
 #define BB_EMOTE_HEAR "emote_hear"
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
-#define BB_EMOTE_CHANCE "emote_chance"
+#define BB_SPEAK_CHANCE "emote_chance"

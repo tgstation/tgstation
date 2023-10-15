@@ -407,3 +407,188 @@
       console's display
   - bugfix: moved a garbage spawner on Tramstation that was causing random runtimes
       due to sometimes spawning in space depending on which module got loaded
+2023-10-12:
+  Ghommie:
+  - bugfix: Examining twice experiment handlers with an active fish-related experiment
+      now gives a comprehensible, correctly spaced list of scanned species rather
+      than something like "pufferfishguppyslimefishchasmchrab".
+  - bugfix: No more "line snapped" balloon messages everytime the fishing minigame
+      is over
+  - bugfix: Getting to the Master level of the fishing skill now correctly gives you
+      that slight helping hand to identify yet-to-be-caught fishes.
+  Isratosh:
+  - admin: Gondola supplypods are functional again.
+  Jacquerel:
+  - refactor: Gorillas now use the basic mob framework. Please report any unusual
+      side effects.
+  - rscadd: Adds a new lavaland ruin where you can find a unique egg.
+  - balance: Flesh Spiders heal automatically over time if they go a short time without
+      taking damage, instead of healing large chunks by clicking themselves and waiting
+      two seconds.
+  - qol: Spider egg clusters which only hatch into one kind of spider don't ask you
+      to select that one type from a radial menu with one option on it.
+  - qol: As a Flesh Spider, the game now tells you how you can heal yourself.
+  LT3:
+  - rscadd: Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA
+      to be charged wirelessly through microwave frequencies. You can Wave-charge
+      your device by placing it inside a compatible microwave and selecting the charge
+      mode.
+  - rscadd: Microwaves can be upgraded to add wireless charging
+  - rscadd: Cell-swappable microwave for the engineer on-the-go
+  - rscadd: Microwave now has a wire to swap charge/cook modes
+  - rscadd: Furnishings RCD upgrade now includes wireless microwave
+  - rscadd: Tramstation and Birdshot engineering break rooms now have microwave and
+      donk pockets. Some microwaves come pre-equipped with wireless charging and an
+      upgraded cell.
+  - bugfix: The microwave in the snowdin ruin is now real, not a fluff prop
+  - bugfix: After the untimely loss of too many novice HoPs, the Icebox "New IDs and
+      You" instructions have been moved from the icemoon wastes to the HoP's office,
+      ending this rite of passage
+  - bugfix: Added some missing firelocks in the pharmacy area. Icebox pharmacy now
+      has a shower
+  SyncIt21:
+  - code_imp: removed round robin method of transferring reagents which would result
+      in some missing reagents after transferring.
+  - code_imp: added some more rounding for reagent operations.
+  - code_imp: cleaned up some plumbing & reaction chamber code
+  - code_imp: improves the performance of `update_total()` , `clear_reagents()` &
+      `del_reagent()` procs
+  - bugfix: plumbing setups will no longer output 0 or more than maximum available
+      volume of reagents.
+  - bugfix: removing, copying, transfering reagents is now done proportionally and
+      not equally again.
+  - refactor: examining individual reagents up close will display their volumes up
+      to 4 decimal places for accuracy.
+  - qol: droppers & beakers round the amount of reagents transferred before displaying
+      them to chat for easy readibility
+  - bugfix: You cannot order with cargo budget if you don't have cargo access in the
+      Galactic Market
+  - bugfix: Private & Cargo orders no longer get mixed together in the same crate
+      if you order them interchangeably so no more embezzlement in the Galactic Market
+  - bugfix: Orders made with cargo budget come in a regular cargo crate thus allowing
+      you to open them without QM cargo budget card in the Galactic Market
+  - qol: Orders made in the Galactic Market will deduct money from your account/cargo
+      budget only after the order has been confirmed in the cargo request console
+      & after the shuttle arrives with your order. This way you drain the budget only
+      after your orders were successfully delivered and not before hand itself
+  ViktorKoL:
+  - sound: the blood cult's rise to power is now accompanied by several new sound
+      effects
+  mc-oofert:
+  - refactor: venus human traps are basicmobs now
+  - balance: venus human traps have 100 health
+  - balance: venus human traps take damage out of range of kudzu, heal near kudzu,
+      are slightly slower, attack slower, and their damage output is slightly more
+      random
+  - balance: also venus human trap tangle ability now needs you to actually move backwards
+      to pull victims
+  vinylspiders:
+  - image: you can now change the style of lipstick to be higher or lower on the face
+      by alt-clicking the lipstick tube
+2023-10-13:
+  EuSouAFazer:
+  - qol: The rollerdome is now better - the dance floor works now, and the bar is
+      groovier.
+  Jacquerel:
+  - bugfix: Dullahans can read, strip people, and utilise tools.
+  - bugfix: Dullahan brains and eyes will not decay while inside their living severed
+      head.
+  LT3:
+  - qol: Canisters can now be built in one step, no upgrading required
+  Paxilmaniac:
+  - image: Inhands for the Sakhno and related rifles will no longer be way too high
+      or big
+  Rhials:
+  - rscadd: Two new psyker-oriented virtual domains -- Crate Chaos and Infected Domain.
+  - rscadd: Map helper for cyber-police corpse spawn.
+  - rscadd: Map helper for swapping the encrypted crate in an area with a random crate
+      from that same area.
+  jlsnow301:
+  - bugfix: Fixed the errant bluescreen in the camera console.
+  mc-oofert:
+  - code_imp: basicmobs that delete on death, ghost before dying
+  san7890:
+  - bugfix: The Holy Hand Grenade's effect on revealing a revenant had its duration
+      accidentally nerfed, it is now back to 10 seconds.
+  - bugfix: Revenant midrounds should now properly run.
+  - bugfix: Revenant harvesting should now let you actually pass the final do_after
+      so you can harvest that sweet essence.
+2023-10-14:
+  BlueMemesauce:
+  - bugfix: Modsuits can no longer be deepfried
+  DrDiasyl:
+  - sound: laser2.ogg sound has been changed. Now laser carbine uses it.
+  - image: Laser carbine and orange laser sprite have been improved.
+  IndieanaJones:
+  - bugfix: Space Dragon can break walls, eat corpses and destroy mechs more efficiently
+      again
+  - bugfix: Player-controlled lavaland elites can once again return to their tumor
+      after winning their fight
+  Jacquerel:
+  - bugfix: '"Mirror Walk" is once more the domain of the Maid in the Mirror rather
+      than "every heretic summon"'
+  - bugfix: Heretic mobs can once again survive space
+  - bugfix: Pete's anger management training has worn off, and he will once again
+      sometimes pick a fight with you for absolutely no reason.
+  - qol: Attacking a goat will not spam messages so frequently.
+  LT3:
+  - image: Nitrogen canisters are now yellow, antinob are grey/yellow, empty are grey,
+      hydrogen are red/white
+  MTandi:
+  - bugfix: The crew is instructed to place fax machines properly in the center of
+      a table without hanging.
+  Melbert:
+  - bugfix: Fixes Mauna Loa, Monover, Silibinin, Granibitaluri not exiting your system
+      on metabolism
+  - bugfix: Fixes holy water exiting your system at double the rate on metabolism
+  - bugfix: Holy Water no longer spams cultists with big text every time, it's much
+      more tame now
+  Rhials:
+  - qol: You can now return to your old body after being summoned by a manifest rune.
+  - qol: You can now return to your old body after dying in CTF.
+  - qol: You can now return to your old body after dying in the Medisim Shuttle battle
+      area.
+  - qol: You can no longer suicide in CTF areas, for integrity purposes.
+  bun235:
+  - rscadd: targetting someone's arm with *slap now has a unique message
+  dragomagol:
+  - qol: apples can now be sliced
+  mc-oofert:
+  - bugfix: sqdl2 query readout displays location of turfs properly
+  ninjanomnom:
+  - admin: VV can now display the contents of special byond lists like filters, or
+      client.images
+  - admin: VV on images now displays the image in the header
+  - admin: VV can now display filters and includes their type
+  san7890:
+  - bugfix: Space Dragons can now, once again, tear down walls and eat corpses. They
+      also have regained their special damage modifier when attacking mechs.
+2023-10-15:
+  GPeckman:
+  - bugfix: Having all augmented limbs will make you properly spaceproof once again.
+  - bugfix: Androids are immune to crit damage again.
+  - bugfix: Surgery on robotic limbs can be canceled.
+  Iamgoofball:
+  - balance: Allows spacemen to use age-appropriate drugs by making it so you can
+      now huff N2O to get high.
+  Jacquerel:
+  - refactor: Space Dragons are now basic mobs, please report any unexpected behaviour.
+  - balance: You can now see that a space dragon is destroying a wall with a visual
+      indicator of the wall being damaged.
+  - balance: Space Dragons can pry open airlocks.
+  Melbert:
+  - qol: Leaning now has a small animation associated.
+  - qol: Cyborgs can now lean against walls.
+  - bugfix: Fixed some runtimes associated with leaning.
+  - bugfix: Fixed being able to lean while dead or in otherwise invalid states.
+  ZephyrTFA:
+  - rscadd: Vent Pumps can now be overclocked, do some light reading in the air alarm
+      to figure out what this means.
+  - balance: Vent Pumps now have fan integrity, the damaging of which reduces their
+      ability to move air.
+  - sound: Overclocking sounds, including spool, stop, and loop
+  carlarctg:
+  - qol: Bladists can now use silver *or* titanium while creating their blades
+  - bugfix: Fixes Monkey's Delight recipe
+  starrm4nn:
+  - bugfix: makes the riot helmet hide hair like other sec helmets

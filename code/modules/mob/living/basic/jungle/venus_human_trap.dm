@@ -120,13 +120,14 @@
  * The result of a kudzu flower bud, these enemies use vines to drag prey close to them for attack.
  *
  * A carnivorious plant which uses vines to catch and ensnare prey.  Spawns from kudzu flower buds.
- * Each one has a maximum of four vines, which can be attached to a variety of things.  Carbons are stunned when a vine is attached to them, and movable entities are pulled closer over time.
+ * Each one can attach up to two temporary vines to objects or mobs and drag them around with it.
  * Attempting to attach a vine to something with a vine already attached to it will pull all movable targets closer on command.
  * Once the prey is in melee range, melee attacks from the venus human trap heals itself for 10% of its max health, assuming the target is alive.
  * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
  *
  */
-/mob/living/simple_animal/hostile/venus_human_trap
+	
+/mob/living/basic/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
 	icon = 'icons/mob/spacevines.dmi'
@@ -135,24 +136,21 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	health = 50
-	maxHealth = 50
-	ranged = TRUE
-	harm_intent_damage = 5
+	health = 100
+	maxHealth = 100
 	obj_damage = 60
-	melee_damage_lower = 20
+	melee_damage_lower = 10
 	melee_damage_upper = 20
-	minbodytemp = 100
+	minimum_survivable_temperature = 100
 	combat_mode = TRUE
-	ranged_cooldown_time = 4 SECONDS
-	del_on_death = TRUE
+	basic_mob_flags = DEL_ON_DEATH
 	death_message = "collapses into bits of plant matter."
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
 	death_sound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
@@ -163,74 +161,82 @@
 	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
-	/// A list of all the plant's vines
-	var/list/vines = list()
-	/// The maximum amount of vines a plant can have at one time
-	var/max_vines = 4
-	/// How far away a plant can attach a vine to something
-	var/vine_grab_distance = 5
-	/// Whether or not this plant is ghost possessable
-	var/playable_plant = TRUE
+	speed = 1.2
+	melee_attack_cooldown = 1.2 SECONDS
+	ai_controller = /datum/ai_controller/basic_controller/human_trap
+	///how much damage we take out of weeds
+	var/no_weed_damage = 20
+	///how much do we heal in weeds
+	var/weed_heal = 10
+	///if the balloon alert was shown atleast once, reset after healing in weeds
+	var/alert_shown = FALSE
 
-/mob/living/simple_animal/hostile/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
-	pull_vines()
+	AddElement(/datum/element/lifesteal, 5)
+	var/datum/action/cooldown/vine_tangle/tangle = new(src)
+	tangle.Grant(src)
+	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
-/mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	pixel_x = base_pixel_x + (dir & (NORTH|WEST) ? 2 : -2)
-
-/mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
-	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.stat != DEAD)
-			adjustHealth(-maxHealth * 0.1)
-
-/mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)
-	for(var/datum/beam/B in vines)
-		if(B.target == the_target)
-			pull_vines()
-			ranged_cooldown = world.time + (ranged_cooldown_time * 0.5)
-			return
-	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
+/mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
+	if(!combat_mode)
 		return
-	for(var/turf/T in get_line(src,target))
-		if (T.density)
-			return
-		for(var/obj/O in T)
-			if(O.density)
-				return
+	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	if(!istype(tangle_ability))
+		return
+	tangle_ability.Trigger(target = victim)
 
-	var/datum/beam/newVine = Beam(the_target, icon_state = "vine", maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine, emissive = FALSE)
-	RegisterSignal(newVine, COMSIG_QDELETING, PROC_REF(remove_vine), newVine)
-	vines += newVine
-	if(isliving(the_target))
-		var/mob/living/L = the_target
-		L.apply_damage(85, STAMINA, BODY_ZONE_CHEST)
-		L.Knockdown(1 SECONDS)
-	ranged_cooldown = world.time + ranged_cooldown_time
+/mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+	. = ..()
+	if(!.)
+		return FALSE
 
-/mob/living/simple_animal/hostile/venus_human_trap/Destroy()
-	for(var/datum/beam/vine as anything in vines)
-		qdel(vine) // reference is automatically deleted by remove_vine
+	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
+	if(!vines_in_range && !alert_shown)
+		alert_shown = TRUE
+		balloon_alert(src, "do not leave vines!")
+	else if(vines_in_range)
+		alert_shown = FALSE
+
+	apply_damage(vines_in_range ? weed_heal : no_weed_damage, BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+
+/datum/action/cooldown/vine_tangle
+	name = "Tangle"
+	button_icon = 'icons/mob/spacevines.dmi'
+	button_icon_state = "Light1"
+	desc = "Grabs a target with a sticky vine, allowing you to pull it alongside you."
+	cooldown_time = 8 SECONDS
+	///how many vines can we handle
+	var/max_vines = 2
+	/// An assoc list of all the plant's vines (beam = leash)
+	var/list/datum/beam/vines = list()
+	/// How far away a plant can attach a vine to something
+	var/vine_grab_distance = 4
+	/// how long does a vine attached to something last (and its leash) (lasts twice as long on nonliving things)
+	var/vine_duration = 2 SECONDS
+
+/datum/action/cooldown/vine_tangle/Remove(mob/remove_from)
+	QDEL_LIST(vines)
 	return ..()
 
-/**
- * Manages how the vines should affect the things they're attached to.
- *
- * Pulls all movable targets of the vines closer to the plant
- * If the target is on the same tile as the plant, destroy the vine
- * Removes any QDELETED vines from the vines list.
- */
-/mob/living/simple_animal/hostile/venus_human_trap/proc/pull_vines()
-	for(var/datum/beam/B in vines)
-		if(istype(B.target, /atom/movable))
-			var/atom/movable/AM = B.target
-			if(!AM.anchored)
-				step(AM, get_dir(AM, src))
-		if(get_dist(src, B.target) == 0)
-			qdel(B)
+/datum/action/cooldown/vine_tangle/Activate(atom/target_atom)
+	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
+		return
+	if(length(vines) >= max_vines || get_dist(owner, target_atom) > vine_grab_distance)
+		return
+	for(var/turf/blockage in get_line(owner, target_atom))
+		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
+			return
+
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
+	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
+	vines[new_vine] = component
+	if(isliving(target_atom))
+		var/mob/living/victim = target_atom
+		victim.Knockdown(2 SECONDS)
+	StartCooldown()
+	return TRUE
 
 /**
  * Removes a vine from the list.
@@ -240,9 +246,24 @@
  * Arguments:
  * * datum/beam/vine - The vine to be removed from the list.
  */
-/mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine)
+/datum/action/cooldown/vine_tangle/proc/remove_vine(datum/beam/vine)
 	SIGNAL_HANDLER
 
+	qdel(vines[vine])
 	vines -= vine
+
+/datum/ai_controller/basic_controller/human_trap
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
 
 #undef FINAL_BUD_GROWTH_ICON

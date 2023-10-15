@@ -17,7 +17,6 @@ export const ICON_BY_CATEGORY_NAME = {
   'Devices': 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
-  'Air Sensors': 'microchip',
 };
 
 const TOOLS = [

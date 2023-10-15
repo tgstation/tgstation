@@ -426,6 +426,24 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	generate_budgets()
 	set_cooldowns()
 	log_dynamic("Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
+	SSblackbox.record_feedback(
+		"associative",
+		"dynamic_threat",
+		1,
+		list(
+			"server_name" = CONFIG_GET(string/serversqlname),
+			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
+			"threat_level" = threat_level,
+			"round_start_budget" = round_start_budget,
+			"parameters" = list(
+				"threat_curve_centre" = threat_curve_centre,
+				"threat_curve_width" = threat_curve_width,
+				"forced_extended" = GLOB.dynamic_forced_extended,
+				"no_stacking" = GLOB.dynamic_no_stacking,
+				"stacking_limit" = GLOB.dynamic_stacking_limit,
+			),
+		),
+	)
 	return TRUE
 
 /datum/game_mode/dynamic/proc/setup_shown_threat()

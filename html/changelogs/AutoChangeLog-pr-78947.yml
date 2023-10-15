@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing setups should(hopefully) no longer grind to a halt nor will overflow with excess volume of reagents."
+  - code_imp: "created defines for min & max ph. Improved some reaction_reagent code. Made synthesizer dispensable reagent list values static to save memory."
+  - refactor: "ph balancing mechanism for reaction chamber is significantly improved. Optimized it's code overall"
+  - refactor: "examining each individual reagent will display their results back to 2 decimal places again and not 4 for easy readability."

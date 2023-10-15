@@ -1,31 +1,43 @@
+//Defines for amount of material retrived from sheets & other items
+/// The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 100 Units.
+#define SHEET_MATERIAL_AMOUNT 100
+/// The amount of materials you get from half a sheet. Used in standard object quantities. 50 units.
+#define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT / 2)
+/// The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
+#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT / 5)
+/// The amount of material that goes into a coin, which determines the value of the coin.
+#define COIN_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT * 0.4)
+
+//Cable related values
+/// The maximum size of a stack object.
+#define MAX_STACK_SIZE 50
+/// Maximum amount of cable in a coil
+#define MAXCOIL 30
+
+//Category of materials
 /// Is the material from an ore? currently unused but exists atm for categorizations sake
 #define MAT_CATEGORY_ORE "ore capable"
-
 /// Hard materials, such as iron or silver
 #define MAT_CATEGORY_RIGID "rigid material"
-
 /// Materials that can be used to craft items
 #define MAT_CATEGORY_ITEM_MATERIAL "item material"
-
-///Use this flag on TRUE if you want the basic recipes
+/// Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"
 
+///Flags for map loaded materials
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD (1<<0)
 /// Used to make a material type able to be instantiated on demand after roundstart.
 #define MATERIAL_INIT_BESPOKE (1<<1)
-
-/// Makes sure only integer values are used when consuming, removing & checking for mats
-#define OPTIMAL_COST(cost)(max(1, round(cost)))
 
 //Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1<<0)
 ///If the container cannot have materials inserted through attackby().
 #define MATCONTAINER_NO_INSERT (1<<1)
-///if the user can insert mats into the container despite the intent.
+///If the user can insert mats into the container despite the intent.
 #define MATCONTAINER_ANY_INTENT (1<<2)
-///if the user won't receive a warning when attacking the container with an unallowed item.
+///If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
 
 // The following flags are for decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
@@ -59,14 +71,12 @@
 /// Applies the material greyscale color to the atom's greyscale color.
 #define MATERIAL_GREYSCALE (1<<4)
 
-/// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
-#define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
-
-#define MATERIAL_SOURCE(mat) "[mat.name]_material"
-
-///Special return values of [/datum/component/material_container/insert_item]
+//Special return values of [/datum/component/material_container/insert_item]
+/// No material was found inside them item
 #define MATERIAL_INSERT_ITEM_NO_MATS -1
+/// The container does not have the space for the item
 #define MATERIAL_INSERT_ITEM_NO_SPACE -2
+/// The item material type was not accepted or other reasons
 #define MATERIAL_INSERT_ITEM_FAILURE 0
 
 
