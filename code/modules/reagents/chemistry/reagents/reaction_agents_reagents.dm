@@ -36,7 +36,7 @@
 	if(target.ph <= ph)
 		message = "The beaker froths as the buffer is added, to no effect."
 	else
-		message = "The beaker froths as the ph changes!"
+		message = "The beaker froths as the pH changes!"
 		target.adjust_all_reagents_ph((-(amount / target.total_volume) * BUFFER_IONIZING_STRENGTH))
 
 	//give feedback & remove from holder because it's not transferred
@@ -63,7 +63,7 @@
 	if(target.ph >= ph)
 		message = "The beaker froths as the buffer is added, to no effect."
 	else
-		message = "The beaker froths as the ph changes!"
+		message = "The beaker froths as the pH changes!"
 		target.adjust_all_reagents_ph(((amount / target.total_volume) * BUFFER_IONIZING_STRENGTH))
 
 	//give feedback & remove from holder because it's not transferred
