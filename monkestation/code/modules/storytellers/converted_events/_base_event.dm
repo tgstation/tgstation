@@ -33,7 +33,10 @@
 			continue // Dead players cannot count as opponents
 		if (M.mind && (M.mind.assigned_role.title in enemy_roles))
 			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
-	return job_check >= required_enemies
+
+	if(job_check >= required_enemies)
+		return TRUE
+	return FALSE
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
