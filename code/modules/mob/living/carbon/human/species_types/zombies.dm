@@ -149,12 +149,10 @@
 		infection.Insert(new_zombie)
 
 	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
-	RegisterSignal(new_zombie, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
-	UnregisterSignal(was_zombie, COMSIG_LIVING_DEATH)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -188,12 +186,6 @@
 				iter_wound.remove_wound()
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
-
-/datum/species/zombie/infectious/proc/on_death(mob/living/carbon/source, gibbed)
-	SIGNAL_HANDLER
-
-	// Congrats you somehow died so hard you stopped being a zombie
-	qdel(source.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 
 // Your skin falls off
 /datum/species/human/krokodil_addict
