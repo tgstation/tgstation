@@ -17,7 +17,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.strength_flag = strength_flag
-	RegisterSignals(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack)) // Players
+	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack)) // Players
 	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget)) // AI
 
 	if (isanimal_or_basicmob(target))
