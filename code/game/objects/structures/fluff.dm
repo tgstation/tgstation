@@ -287,6 +287,7 @@
 
 /obj/structure/fluff/broken_canister_frame
 	name = "broken canister frame"
+	desc = "A torn apart canister. It looks like some metal can be salvaged with a wrench."
 	icon_state = "broken_canister"
 	anchored = FALSE
 	density = TRUE
