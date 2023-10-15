@@ -13,9 +13,6 @@
 	var/required_enemies = 0
 
 /datum/round_event_control/antagonist/proc/check_required()
-	if(roundstart)
-		return TRUE ///FIX LATER
-
 	for (var/mob/M in GLOB.alive_player_list)
 		if (M.stat == DEAD)
 			continue // Dead players cannot count as passing requirements
@@ -26,9 +23,6 @@
 	return candidates
 
 /datum/round_event_control/antagonist/proc/check_enemies()
-	if(roundstart)
-		return TRUE ///FIX LATER
-
 	if(!length(enemy_roles))
 		return TRUE
 	var/job_check = 0
