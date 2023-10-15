@@ -119,17 +119,22 @@
 		shift_spell.Grant(dummy)
 		shift_spell.shapeshift_type = shift_spell.possible_shapes[1]
 
+		if (istype(shift_spell, /datum/action/cooldown/spell/shapeshift/polymorph_belt))
+			var/datum/action/cooldown/spell/shapeshift/polymorph_belt/belt_spell = shift_spell
+			belt_spell.channel_time = 0 SECONDS // No do-afters
+
 		if (shift_spell.convert_damage)
 			shift_spell.Trigger()
-			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type]")
+			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type]using [shift_spell.name].")
 			var/mob/living/shifted_mob = dummy.loc
 			shifted_mob.apply_damage(shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, BRUTE, forced = TRUE)
 			TRIGGER_RESET_COOLDOWN(shift_spell)
-			TEST_ASSERT_EQUAL(dummy.get_total_damage(), dummy.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from transformed mob to original form using [shift_spell.name].")
+			TEST_ASSERT(!istype(dummy.loc, shift_spell.shapeshift_type), "Failed to unfransform from [shift_spell.shapeshift_type] using [shift_spell.name].")
+			TEST_ASSERT_EQUAL(dummy.get_total_damage(), dummy.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from [shift_spell.shapeshift_type] to original form using [shift_spell.name].")
 			TRIGGER_RESET_COOLDOWN(shift_spell)
-			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type] after taking damage.")
+			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type] after taking damage using [shift_spell.name].")
 			shifted_mob = dummy.loc
-			TEST_ASSERT_EQUAL(shifted_mob.get_total_damage(), shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from original form to transformed mob using [shift_spell.name].")
+			TEST_ASSERT_EQUAL(shifted_mob.get_total_damage(), shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from original form to [shift_spell.shapeshift_type] using [shift_spell.name].")
 			TRIGGER_RESET_COOLDOWN(shift_spell)
 
 		if (shift_spell.die_with_shapeshifted_form)

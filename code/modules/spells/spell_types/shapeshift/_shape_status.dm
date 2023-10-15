@@ -76,9 +76,12 @@
 	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_LIVING_DEATH))
 	UnregisterSignal(caster_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
-	caster_mob.forceMove(owner.loc)
-	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
+	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
+
+	var/atom/former_loc = owner.loc
+	owner.moveToNullspace()
+	caster_mob.forceMove(former_loc) // This is to avoid crushing our former cockroach body
 
 	if(kill_caster_after)
 		caster_mob.death()
