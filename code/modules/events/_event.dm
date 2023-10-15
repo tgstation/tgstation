@@ -111,7 +111,7 @@
 
 	return TRUE
 
-/datum/round_event_control/proc/preRunEvent()
+/datum/round_event_control/proc/preRunEvent(forced = FALSE)
 	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
@@ -126,9 +126,11 @@
 		if(!roundstart)
 			sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!can_spawn_event(players_amt))
+		if(!can_spawn_event(players_amt) && !forced)
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
+		if(!can_spawn_event(players_amt) && forced)
+			message_admins("Second pre-condition check for [name] failed, but event forced, running event regardless this may have issues...")
 
 	if(!triggering)
 		return EVENT_CANCELLED //admin cancelled

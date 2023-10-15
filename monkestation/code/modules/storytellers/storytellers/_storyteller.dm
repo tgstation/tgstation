@@ -80,12 +80,14 @@
 /// Find and buy a valid event from a track.
 /datum/storyteller/proc/find_and_buy_event_from_track(track)
 	. = FALSE
+	var/are_forced = FALSE
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
 	var/datum/round_event_control/picked_event
 	if(mode.forced_next_events[track]) //Forced event by admin
 		/// Dont check any prerequisites, it has been forced by an admin
 		picked_event = mode.forced_next_events[track]
 		mode.forced_next_events -= track
+		are_forced = TRUE
 	else
 		mode.update_crew_infos()
 		var/pop_required = mode.min_pop_thresholds[track]
@@ -97,7 +99,8 @@
 		var/list/valid_events = list()
 		// Determine which events are valid to pick
 		for(var/datum/round_event_control/event as anything in mode.event_pools[track])
-			if(event.can_spawn_event())
+			var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
+			if(event.can_spawn_event(players_amt))
 				valid_events[event] = event.calculated_weight
 		///If we didn't get any events, remove the points inform admins and dont do anything
 		if(!length(valid_events))
@@ -109,11 +112,11 @@
 			message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
 			stack_trace("WARNING: Storyteller picked a null from event pool.")
 			return
-	buy_event(picked_event, track)
+	buy_event(picked_event, track, are_forced)
 	. = TRUE
 
 /// Find and buy a valid event from a track.
-/datum/storyteller/proc/buy_event(datum/round_event_control/bought_event, track)
+/datum/storyteller/proc/buy_event(datum/round_event_control/bought_event, track, forced = FALSE)
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
 	// Perhaps use some bell curve instead of a flat variance?
 	var/total_cost = bought_event.cost * mode.point_thresholds[track]
@@ -122,9 +125,9 @@
 	mode.event_track_points[track] -= total_cost
 	message_admins("Storyteller purchased and triggered [bought_event] event, on [track] track, for [total_cost] cost.")
 	if(bought_event.roundstart)
-		mode.TriggerEvent(bought_event)
+		mode.TriggerEvent(bought_event, forced)
 	else
-		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost)
+		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost, _forced = forced)
 
 /// Calculates the weights of the events from a passed track.
 /datum/storyteller/proc/calculate_weights(track)

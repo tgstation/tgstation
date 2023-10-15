@@ -406,8 +406,8 @@ SUBSYSTEM_DEF(gamemode)
 
 		current_pop_scale_multipliers[track] = calculated_multiplier
 
-/datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event)
-	. = event.preRunEvent()
+/datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event, forced = FALSE)
+	. = event.preRunEvent(forced)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
@@ -426,6 +426,16 @@ SUBSYSTEM_DEF(gamemode)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
+
+/client/proc/forceGamemode()
+	set name = "Open Gamemode Panel"
+	set category = "Admin.Events"
+	if(!holder ||!check_rights(R_FUN))
+		return
+	holder.forceGamemode(usr)
+
+/datum/admins/proc/forceGamemode(mob/user)
+	SSgamemode.admin_panel(user)
 
 
 //////////////
@@ -937,9 +947,10 @@ SUBSYSTEM_DEF(gamemode)
 			event_lookup = event_pools[statistics_track_page]
 	var/list/assoc_spawn_weight = list()
 	for(var/datum/round_event_control/event as anything in event_lookup)
+		var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 		if(event.roundstart != roundstart_event_view)
 			continue
-		if(event.can_spawn_event())
+		if(event.can_spawn_event(players_amt))
 			total_weight += event.calculated_weight
 			assoc_spawn_weight[event] = event.calculated_weight
 		else
