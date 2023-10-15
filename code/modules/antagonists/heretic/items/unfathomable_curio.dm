@@ -12,12 +12,19 @@
 /obj/item/unfathomable_curio/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/void_cloak/unfathomable_curio)
+	RegisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
+/obj/item/unfathomable_curio/proc/on_examine(atom/source, mob/living/carbon/human/user, list/examine_list)
+	SIGNAL_HANDLER
 
-/obj/item/codex_cicatrix/examine(mob/living/carbon/human/user)
-	. = ..()
 	if(!IS_HERETIC(user))
 		return
 
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40, 160)
 	user.adjust_confusion(user.get_organ_loss(ORGAN_SLOT_BRAIN)/10 SECONDS)
+	examine_list += span_danger("The [source] it. It looked.")
+
+/obj/item/unfathomable_curio/Destroy()
+	UnregisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	. = ..()
+
