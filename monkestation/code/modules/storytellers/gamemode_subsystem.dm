@@ -165,6 +165,7 @@ SUBSYSTEM_DEF(gamemode)
 			uncategorized += event
 			continue
 		event_pools[event.track] += event //Add it to the categorized event pools
+
 //	return ..()
 
 
@@ -244,8 +245,8 @@ SUBSYSTEM_DEF(gamemode)
 			if(time_to_check && candidate.client.get_remaining_days(time_to_check) > 0)
 				continue
 
-		if(midround_antag_pref)
-			continue
+		//if(midround_antag_pref)
+			//continue
 
 		if(job_ban && is_banned_from(candidate.ckey, list(job_ban, ROLE_SYNDICATE)))
 			continue
@@ -738,19 +739,21 @@ SUBSYSTEM_DEF(gamemode)
 		if((storyboy.population_min && storyboy.population_min > client_amount) || (storyboy.population_max && storyboy.population_max < client_amount))
 			continue
 		choices += storyboy.name
+		choices[storyboy.name] = 0
 		///Because the vote subsystem is dumb and does not support any descriptions, we dump them into world.
 		to_chat(world, span_notice("<b>[storyboy.name]</b>"))
 		to_chat(world, span_notice("[storyboy.desc]"))
 	return choices
 
+/datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
+	for(var/storyteller_type in storytellers)
+		var/datum/storyteller/storyboy = storytellers[storyteller_type]
+		if(storyboy.name != storyteller_name)
+			continue
+		return storyboy.desc
+
+
 /datum/controller/subsystem/gamemode/proc/storyteller_vote_result(winner_name)
-	/// Find the winner
-	/// Hijacking the proc because we don't have a vote right now..
-	var/datum/storyteller/storyteller = pick(storytellers)
-	message_admins("We picked [storyteller]")
-	voted_storyteller = storyteller
-	if(storyteller)
-		return
 	for(var/storyteller_type in storytellers)
 		var/datum/storyteller/storyboy = storytellers[storyteller_type]
 		if(storyboy.name == winner_name)
@@ -758,12 +761,6 @@ SUBSYSTEM_DEF(gamemode)
 			break
 
 /datum/controller/subsystem/gamemode/proc/init_storyteller()
-		/// Hijacking the proc because we don't have a vote right now..
-	var/datum/storyteller/storyteller_pick = pick(storytellers)
-	message_admins("We picked [storyteller_pick] for this rounds storyteller, randomly.")
-	voted_storyteller = storyteller_pick
-	if(storyteller) // If this is true, then an admin bussed one, don't overwrite it
-		return
 	set_storyteller(voted_storyteller)
 
 /datum/controller/subsystem/gamemode/proc/set_storyteller(passed_type)

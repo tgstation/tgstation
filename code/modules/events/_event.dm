@@ -43,8 +43,8 @@
 	var/map_flags = NONE
 
 	//monkestation vars starts
-	var/roundstart = FALSE // BUBBER EDIT
-	var/cost = 1 // BUBBER EDIT
+	var/roundstart = FALSE
+	var/cost = 1
 	var/reoccurence_penalty_multiplier = 0.75
 	var/shared_occurence_type
 	var/track = EVENT_TRACK_MODERATE
@@ -88,6 +88,8 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	if(roundstart && world.time-SSticker.round_start_time >= 2 MINUTES)
+		return FALSE
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
