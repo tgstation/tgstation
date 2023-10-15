@@ -568,6 +568,7 @@
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit(atom/target, blocked = 0, pierce_hit)
+	SHOULD_CALL_PARENT(FALSE) // This is some snowflake stuff so whatever
 	qdel(src)
 	return BULLET_ACT_BLOCK
 

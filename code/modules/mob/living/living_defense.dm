@@ -91,22 +91,43 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+/mob/living/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
-	if(!P.is_hostile_projectile())
+	if(!hitting_projectile.is_hostile_projectile())
 		return BULLET_ACT_HIT
 
-	var/attack_direction = get_dir(P.starting, src)
 	// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
 	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
-	var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
-	armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
-	apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
-	apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor_check, P.stamina, P.jitter, P.paralyze, P.immobilize)
-	if(P.dismemberment)
-		check_projectile_dismemberment(P, def_zone)
+	var/armor_check = check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE)
+
+	apply_damage(
+		damage = hitting_projectile.damage,
+		damagetype = hitting_projectile.damage_type,
+		def_zone = def_zone,
+		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
+		wound_bonus = hitting_projectile.wound_bonus,
+		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
+		sharpness = hitting_projectile.sharpness,
+		attack_direction = get_dir(hitting_projectile.starting, src),
+	)
+	apply_effects(
+		hitting_projectile.stun,
+		hitting_projectile.knockdown,
+		hitting_projectile.unconscious,
+		hitting_projectile.slur,
+		hitting_projectile.stutter,
+		hitting_projectile.eyeblur,
+		hitting_projectile.drowsy,
+		armor_check,
+		hitting_projectile.stamina,
+		hitting_projectile.jitter,
+		hitting_projectile.paralyze,
+		hitting_projectile.immobilize,
+	)
+	if(hitting_projectile.dismemberment)
+		check_projectile_dismemberment(hitting_projectile, def_zone)
 	return BULLET_ACT_HIT
 
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)

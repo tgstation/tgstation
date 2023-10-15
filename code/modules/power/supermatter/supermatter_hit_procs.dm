@@ -5,7 +5,9 @@
 	for(var/atom/thing_to_consume as anything in tram_contents)
 		Bumped(thing_to_consume)
 
-/obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
+/obj/machinery/power/supermatter_crystal/proc/eat_bullets(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
 	var/turf/local_turf = loc
 	var/kiss_power = 0
 	switch(projectile.type)
@@ -29,7 +31,7 @@
 		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
-	return BULLET_ACT_HIT
+	return BULLET_ACT_BLOCK
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100

@@ -70,9 +70,7 @@
 
 	new /obj/crystal_mass(next_turf, get_dir(next_turf, src))
 
-/obj/crystal_mass/bullet_act(obj/projectile/projectile)
-	visible_message(span_notice("[src] is unscathed!"))
-	return BULLET_ACT_HIT
+// melbert todo : test shooting
 
 /obj/crystal_mass/singularity_act()
 	return
@@ -166,4 +164,3 @@
 			span_hear("You hear a loud crack as a small distortion passes through you."))
 
 		qdel(consumed_object)
-

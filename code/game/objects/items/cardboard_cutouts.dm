@@ -60,32 +60,15 @@
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
 		change_appearance(I, user)
-		return
-	// Why yes, this does closely resemble mob and object attack code.
-	if(I.item_flags & NOBLUDGEON)
-		return
-	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
-	else if(I.hitsound)
-		playsound(loc, I.hitsound, get_clamped_volume(), TRUE, -1)
+		return TRUE
 
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
+	return ..() // melbert todo : test
 
-	if(I.force)
-		user.visible_message(span_danger("[user] hits [src] with [I]!"), \
-			span_danger("You hit [src] with [I]!"))
-		if(prob(I.force))
-			push_over()
-
-/obj/item/cardboard_cutout/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	if(istype(P, /obj/projectile/bullet))
-		P.on_hit(src, 0, piercing_hit)
-	visible_message(span_danger("[src] is hit by [P]!"))
-	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE)
-	if(prob(P.damage))
+/obj/item/cardboard_cutout/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+	var/damage_sustained = . || 0
+	if((damage_flag == BULLET || damage_flag == MELEE) && (damage_type == BRUTE) && prob(damage_sustained))
 		push_over()
-	return BULLET_ACT_HIT
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")
