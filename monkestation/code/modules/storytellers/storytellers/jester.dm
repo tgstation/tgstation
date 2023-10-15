@@ -11,3 +11,4 @@
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	population_min = 10
+	ignores_roundstart = TRUE

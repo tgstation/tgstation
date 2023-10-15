@@ -52,6 +52,8 @@
 	var/roundstart_checks = FALSE
 	///prob of roundstart antag
 	var/roundstart_prob = 25
+	///do we ignore ran_roundstart
+	var/ignores_roundstart = FALSE
 
 /datum/storyteller/process(delta_time)
 	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
@@ -60,7 +62,8 @@
 		return
 	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
-		SSgamemode.ran_roundstart = TRUE
+		if(!ignores_roundstart)
+			SSgamemode.ran_roundstart = TRUE
 
 	add_points(delta_time)
 	handle_tracks()
@@ -133,7 +136,8 @@
 	mode.event_track_points[track] -= total_cost
 	message_admins("Storyteller purchased and triggered [bought_event] event, on [track] track, for [total_cost] cost.")
 	if(bought_event.roundstart)
-		SSgamemode.ran_roundstart = TRUE
+		if(!ignores_roundstart)
+			SSgamemode.ran_roundstart = TRUE
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost, _forced = forced)
