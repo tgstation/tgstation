@@ -44,11 +44,6 @@
 				covering_part += C
 	return covering_part
 
-/mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna?.species)
-		dna.species.on_hit(P, src)
-
-
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 
 	if(P.firer == src && P.original == src) //can't block or reflect when shooting yourself

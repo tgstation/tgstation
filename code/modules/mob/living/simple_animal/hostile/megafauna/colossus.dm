@@ -191,7 +191,7 @@
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
-/obj/projectile/colossus/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dust_mob = target

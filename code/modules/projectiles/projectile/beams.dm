@@ -57,7 +57,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
 
-/obj/projectile/beam/laser/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/beam/laser/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -146,7 +146,7 @@
 	impact_type = /obj/effect/projectile/impact/pulse
 	wound_bonus = 10
 
-/obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/beam/pulse/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
@@ -163,7 +163,7 @@
 	projectile_piercing = ALL
 	var/pierce_hits = 2
 
-/obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(pierce_hits <= 0)
 		projectile_piercing = NONE
 	pierce_hits -= 1
@@ -207,7 +207,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/projectile/beam/lasertag/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/beam/lasertag/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
@@ -249,7 +249,7 @@
 	light_color = LIGHT_COLOR_BLUE
 	var/shrink_time = 90
 
-/obj/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/beam/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
 		return

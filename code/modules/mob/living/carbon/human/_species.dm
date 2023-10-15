@@ -1434,19 +1434,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(H, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	return TRUE
 
-/*
-/datum/species/proc/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	// called when hit by a projectile
-	switch(P.type)
-		if(/obj/projectile/energy/floramut) // overwritten by plants/pods
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-		if(/obj/projectile/energy/florayield)
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-		if(/obj/projectile/energy/florarevolution)
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-
-*/
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////

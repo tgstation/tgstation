@@ -520,8 +520,8 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
-	handle_hit(target, piercing_hit)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0, pierce_hit)
+	handle_hit(target, pierce_hit)
 	return ..()
 
 /obj/projectile/beam/beam_rifle/is_hostile_projectile()
@@ -567,7 +567,7 @@
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit(atom/target, blocked = 0, pierce_hit)
 	qdel(src)
 	return BULLET_ACT_BLOCK
 

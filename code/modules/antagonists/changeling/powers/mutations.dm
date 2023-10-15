@@ -373,7 +373,7 @@
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/projectile/tentacle/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/tentacle/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/mob/living/carbon/human/H = firer
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
