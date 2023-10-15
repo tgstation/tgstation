@@ -48,12 +48,20 @@
 	var/population_max
 	/// has the round gotten to the point where jobs are pre-created?
 	var/round_started = FALSE
+	///have we done roundstart checks?
+	var/roundstart_checks = FALSE
+	///prob of roundstart antag
+	var/roundstart_prob = 25
 
 /datum/storyteller/process(delta_time)
 	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
 	if(disable_distribution)
 		return
+	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
+		roundstart_checks = TRUE
+		SSgamemode.ran_roundstart = TRUE
+
 	add_points(delta_time)
 	handle_tracks()
 
