@@ -65,6 +65,14 @@
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
 	var/prompted_picking = FALSE
 
+/datum/round_event_control/antagonist/solo/ghost/get_candidates()
+	var/round_started = SSticker.HasRoundStarted()
+	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
+
+	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, observers = TRUE, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles)
+	candidates = trim_candidates(candidates)
+	return candidates
+
 /datum/round_event_control/antagonist/solo/can_spawn_event(popchecks = TRUE, allow_magic)
 	. = ..()
 	if(!.)

@@ -6280,6 +6280,7 @@
 #include "monkestation\code\modules\storytellers\storytellers\jester.dm"
 #include "monkestation\code\modules\storytellers\storytellers\sleeper.dm"
 #include "monkestation\code\modules\storytellers\storytellers\vote.dm"
+#include "monkestation\code\modules\storytellers\storytellers\warrior.dm"
 #include "monkestation\code\modules\surgery\bodyparts\arachnid_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\clockwork_bodyparts.dm"
 #include "monkestation\code\modules\surgery\bodyparts\ipc_bodyparts.dm"
