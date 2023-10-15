@@ -417,15 +417,15 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/* /client/proc/forceEvent()
+/client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Admin.Events"
 	if(!holder ||!check_rights(R_FUN))
 		return
-	holder.forceEvent(usr) */
+	holder.forceEvent(usr)
 
-/* /datum/admins/forceEvent(mob/user)
-	SSgamemode.event_panel(user) */
+/datum/admins/forceEvent(mob/user)
+	SSgamemode.event_panel(user)
 
 
 //////////////
