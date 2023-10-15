@@ -78,7 +78,7 @@
 	to_chat(hallucinator, ALERT_BODY("Figments from an eldritch god are being summoned by [totally_real_cult_leader.real_name] \
 		into [fake_summon_area] from an unknown dimension. Disrupt the ritual at all costs!"))
 
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_SPANOMALIES]))
+	SEND_SOUND(hallucinator, 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg')
 	return ..()
 
 /datum/hallucination/station_message/meteors

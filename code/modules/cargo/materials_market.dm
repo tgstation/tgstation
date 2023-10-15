@@ -11,7 +11,7 @@
 	base_icon_state = "mat_market"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
-	var/list/exportable_material_items = list(
+	var/static/list/exportable_material_items = list(
 		/obj/item/stack/sheet/iron, //God why are we like this
 		/obj/item/stack/sheet/glass, //No really, God why are we like this
 		/obj/item/stack/sheet/mineral,
@@ -130,12 +130,18 @@
 	data["canOrderCargo"] = can_buy_via_budget
 	return data
 
-/obj/machinery/materials_market/ui_act(action, params)
+/obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(!isliving(usr))
+
+	//You must have an ID to be able to do something
+	var/mob/living/living_user = ui.user
+	var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+	if(isnull(used_id_card))
+		say("No ID Found")
 		return
+
 	switch(action)
 		if("buy")
 			var/material_str = params["material"]
@@ -149,32 +155,41 @@
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-			var/mob/living/living_user = usr
-			var/datum/bank_account/account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(ordering_private)
-				var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+
+			//if multiple users open the UI some of them may not have the required access so we recheck
+			var/is_ordering_private = ordering_private
+			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+				is_ordering_private = TRUE
+
+			var/datum/bank_account/account_payable
+			if(is_ordering_private)
 				account_payable = used_id_card.registered_account
 			else if(can_buy_via_budget)
 				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
-			var/cost = SSstock_market.materials_prices[material_bought] * quantity
+			if(!account_payable)
+				say("No bank account detected!")
+				return
 
 			sheet_to_buy = initial(material_bought.sheet_type)
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
-			if(!account_payable)
-				say("No bank account detected!")
-				return
+			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 			if(cost > account_payable.account_balance)
 				to_chat(living_user, span_warning("You don't have enough money to buy that!"))
 				return
+
 			var/list/things_to_order = list()
 			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
-			//If we already have a custom order on SSshuttle, we should add the things to order to that order
+			// If we already have a custom order on SSshuttle, we should add the things to order to that order
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
-				if(order.orderer == living_user && order.orderer_rank == "Galactic Materials Market")
+				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
+				if(order.orderer_rank == "Galactic Materials Market" && ( \
+					(!is_ordering_private && order.paying_account == null) || \
+					(is_ordering_private && order.paying_account != null && order.orderer == living_user) \
+				))
+					// Check if this order exceeded its limit
 					var/prior_stacks = 0
 					for(var/obj/item/stack/sheet/sheet as anything in order.pack.contains)
 						prior_stacks += ROUND_UP(order.pack.contains[sheet] / 50)
@@ -182,29 +197,24 @@
 							to_chat(usr, span_notice("You already have 10 stacks of sheets on order! Please wait for them to arrive before ordering more."))
 							playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
 							return
+					// Append to this order
 					order.append_order(things_to_order, cost)
-					account_payable.adjust_money(-(cost) , "Materials Market Purchase") //Add the extra price to the total
 					return
-			account_payable.adjust_money(-(CARGO_CRATE_VALUE) , "Materials Market Purchase") //Here is where we factor in the base cost of a crate
+
 			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
 			var/datum/supply_pack/custom/minerals/mineral_pack = new(
-				purchaser = living_user, \
-				cost = SSstock_market.materials_prices[material_bought] * quantity, \
+				purchaser = is_ordering_private ? living_user : "Cargo", \
+				cost = cost, \
 				contains = things_to_order, \
-				)
+			)
 			var/datum/supply_order/new_order = new(
 				pack = mineral_pack,
 				orderer = living_user,
 				orderer_rank = "Galactic Materials Market",
 				orderer_ckey = living_user.ckey,
-				reason = "",
-				paying_account = account_payable,
-				department_destination = null,
-				coupon = null,
-				charge_on_purchase = FALSE,
-				manifest_can_fail = FALSE,
+				paying_account = is_ordering_private ? account_payable : null,
 				cost_type = "credit",
-				can_be_cancelled = FALSE,
+				can_be_cancelled = FALSE
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.shopping_list += new_order
@@ -213,7 +223,6 @@
 			if(!can_buy_via_budget)
 				return
 			ordering_private = !ordering_private
-
 
 /obj/item/stock_block
 	name = "stock block"

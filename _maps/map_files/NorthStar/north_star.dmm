@@ -27647,7 +27647,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "hnH" = (
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white/textured,
@@ -36506,7 +36506,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/aft)
 "jEU" = (
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/engine,
 /area/station/maintenance/floor1/port/aft)
 "jEX" = (
@@ -71000,7 +71000,7 @@
 "sEq" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/stripes,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -71931,7 +71931,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/carbine/practice,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/range)

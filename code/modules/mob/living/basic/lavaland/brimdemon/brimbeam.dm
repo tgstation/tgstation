@@ -9,7 +9,6 @@
 	click_to_activate = TRUE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// How far does our beam go?
 	var/beam_range = 10
 	/// How long does our beam last?

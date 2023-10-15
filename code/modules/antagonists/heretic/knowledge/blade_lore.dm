@@ -13,6 +13,9 @@
  * Mark of the Blade
  * Ritual of Knowledge
  * Realignment
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -22,20 +25,20 @@
  * Furious Steel
  * > Sidepaths:
  *   Maid in the Mirror
- *   Lionhunter Rifle
+ *   Rust Charge
  *
  * Maelstrom of Silver
  */
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the Path of Blades to you. \
-		Allows you to transmute a knife with two bars of silver to create a Sundered Blade. \
+		Allows you to transmute a knife with two bars of silver or titanium to create a Sundered Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/mineral/silver = 2,
+		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 5 // It's the blade path, it's a given
