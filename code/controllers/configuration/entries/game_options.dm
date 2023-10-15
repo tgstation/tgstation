@@ -327,6 +327,8 @@
 /datum/config_entry/string/overflow_job
 	default = JOB_ASSISTANT
 
+/datum/config_entry/flag/spooktober_enabled
+
 /datum/config_entry/flag/grey_assistants
 
 /datum/config_entry/number/lavaland_budget

@@ -225,7 +225,7 @@
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 20
-	armour_penetration = 50
+	armour_penetration = 25 //was 50 changed because 50 was waay too much monkestation 20 edit
 	speed = 2
 	eyeblur = 0
 	damage_type = BRUTE
