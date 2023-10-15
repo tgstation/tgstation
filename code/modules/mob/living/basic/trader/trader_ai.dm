@@ -3,11 +3,13 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/jps
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,
+		/datum/ai_planning_subtree/prepare_travel_to_destination/trader,
+		/datum/ai_planning_subtree/travel_to_point/and_clear_target,
 		/datum/ai_planning_subtree/setup_shop,
 	)
 
@@ -51,7 +53,6 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-
 /datum/ai_behavior/setup_shop/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 
@@ -87,12 +88,12 @@
 
 	finish_action(controller, TRUE, target_key)
 
+/datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
+///Look for a spot we can place our sign on
 /datum/ai_behavior/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
 	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
 	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf))
 		return sign_turf
-
-
-/datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
