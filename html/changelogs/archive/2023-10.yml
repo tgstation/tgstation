@@ -92,3 +92,16 @@
       items at CC Kitchen.
   - rscdel: removed barkeep powergaming shotgun at CC Bar.
   - rscdel: removed Detroit.
+2023-10-14:
+  Glyphee:
+  - rscadd: Glerm
+  - rscadd: Cool Glerm
+  - rscadd: Glerm Pet Beacon
+  - rscadd: Cool Glerm Pet Beacon
+  - rscadd: Ordinary Flash
+  - rscadd: Ordinary Flash Pet Beacon
+2023-10-15:
+  KoboldCommando:
+  - rscadd: 7 new latejoin spooktober jobs!
+  wraith-54321:
+  - bugfix: clockwork armaments now actually gives weapons again
