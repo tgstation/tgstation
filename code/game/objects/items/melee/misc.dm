@@ -289,7 +289,7 @@
 
 	visible_message(
 		span_danger("[hitting_projectile] smacks into [source] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		null,
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	consume_everything(hitting_projectile)
