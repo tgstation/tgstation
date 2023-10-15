@@ -125,11 +125,11 @@
 			var/mob/living/shifted_mob = dummy.loc
 			shifted_mob.apply_damage(shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, BRUTE, forced = TRUE)
 			TRIGGER_RESET_COOLDOWN(shift_spell)
-			TEST_ASSERT_EQUAL(dummy.get_total_damage(), dummy.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from transformed mob to original form.")
+			TEST_ASSERT_EQUAL(dummy.get_total_damage(), dummy.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from transformed mob to original form using [shift_spell.name].")
 			TRIGGER_RESET_COOLDOWN(shift_spell)
 			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type] after taking damage.")
 			shifted_mob = dummy.loc
-			TEST_ASSERT_EQUAL(shifted_mob.get_total_damage(), shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from original form to transformed mob.")
+			TEST_ASSERT_EQUAL(shifted_mob.get_total_damage(), shifted_mob.maxHealth * EXPECTED_HEALTH_RATIO, "Failed to transfer damage from original form to transformed mob using [shift_spell.name].")
 			TRIGGER_RESET_COOLDOWN(shift_spell)
 
 		if (shift_spell.die_with_shapeshifted_form)
@@ -138,8 +138,8 @@
 			var/mob/living/shifted_mob = dummy.loc
 			shifted_mob.death()
 			if (shift_spell.revert_on_death)
-				TEST_ASSERT(!istype(dummy.loc, shift_spell.shapeshift_type), "Failed to untransform after death.")
-			TEST_ASSERT_EQUAL(dummy.stat, DEAD, "Failed to kill original mob when transformed mob died.")
+				TEST_ASSERT(!istype(dummy.loc, shift_spell.shapeshift_type), "Failed to untransform after death using [shift_spell.name].")
+			TEST_ASSERT_EQUAL(dummy.stat, DEAD, "Failed to kill original mob when transformed mob died using [shift_spell.name].")
 
 		qdel(shift_spell)
 
