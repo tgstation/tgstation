@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/ghost_role/slasher
 	weight = 14 // for now
 	max_occurrences = 3
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_SPOOKY, TAG_COMBAT)
 
 /datum/round_event/ghost_role/slasher
 	minimum_required = 1
