@@ -112,6 +112,9 @@
 		for(var/datum/round_event_control/event as anything in mode.event_pools[track])
 			var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 			if(event.can_spawn_event(players_amt))
+				if(QDELETED(event))
+					message_admins("[event.name] was deleted!")
+					continue
 				valid_events[event] = event.calculated_weight
 		///If we didn't get any events, remove the points inform admins and dont do anything
 		if(!length(valid_events))
@@ -120,6 +123,7 @@
 			return
 		picked_event = pick_weight(valid_events)
 		if(!picked_event)
+			message_admins("WARNING: Storyteller picked a null event from picked_events when it had a length of [length(picked_events)]")
 			message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
 			stack_trace("WARNING: Storyteller picked a null from event pool.")
 			return
