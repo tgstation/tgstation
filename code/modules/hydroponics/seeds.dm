@@ -178,6 +178,11 @@
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	copy_seed.harvest_age = harvest_age
 
+	if(istype(src, /obj/item/seeds/spliced))
+		var/obj/item/seeds/spliced/spliced_seed = src
+		var/obj/item/seeds/spliced/new_spliced_seed = S
+		new_spliced_seed.produce_list += spliced_seed.produce_list
+
 	return copy_seed
 
 /obj/item/seeds/proc/get_gene(typepath)
