@@ -17,28 +17,28 @@
 	var/list/data = list()
 
 	var/list/trackerlist = list()
-	for(var/obj/vehicle/sealed/mecha/MC in GLOB.mechas_list)
-		trackerlist += MC.trackers
+	for(var/obj/vehicle/sealed/mecha/mecha in GLOB.mechas_list)
+		trackerlist += mecha.trackers
 
 	data["mechs"] = list()
-	for(var/obj/item/mecha_parts/mecha_tracking/MT in trackerlist)
-		if(!MT.chassis)
+	for(var/obj/item/mecha_parts/mecha_tracking/tracking_beacon in trackerlist)
+		if(!tracking_beacon.chassis)
 			continue
-		var/obj/vehicle/sealed/mecha/M = MT.chassis
+		var/obj/vehicle/sealed/mecha/tracked_mecha = tracking_beacon.chassis
 		var/list/mech_data = list(
-			name = M.name,
-			integrity = round((M.get_integrity() / M.max_integrity) * 100),
-			charge = M.cell ? round(M.cell.percent()) : null,
-			airtank = M.enclosed ? M.return_pressure() : null,
-			pilot = M.return_drivers(),
-			location = get_area_name(M, TRUE),
-			emp_recharging = MT.recharging,
-			tracker_ref = REF(MT)
+			name = tracked_mecha.name,
+			integrity = round((tracked_mecha.get_integrity() / tracked_mecha.max_integrity) * 100),
+			charge = tracked_mecha.cell ? round(tracked_mecha.cell.percent()) : null,
+			airtank = tracked_mecha.enclosed ? tracked_mecha.return_pressure() : null,
+			pilot = tracked_mecha.return_drivers(),
+			location = get_area_name(tracked_mecha, TRUE),
+			emp_recharging = tracking_beacon.recharging,
+			tracker_ref = REF(tracking_beacon)
 		)
-		if(istype(M, /obj/vehicle/sealed/mecha/ripley))
-			var/obj/vehicle/sealed/mecha/ripley/RM = M
+		var/obj/vehicle/sealed/mecha/ripley/ripley = tracked_mecha
+		if(istype(ripley))
 			mech_data += list(
-				cargo_space = round((LAZYLEN(RM.cargo) / RM.cargo_capacity) * 100)
+				cargo_space = round((LAZYLEN(ripley.cargo) / ripley.cargo_capacity) * 100)
 		)
 
 		data["mechs"] += list(mech_data)
@@ -52,25 +52,25 @@
 
 	switch(action)
 		if("send_message")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/tracking_beacon = locate(params["tracker_ref"])
+			if(!istype(tracking_beacon))
 				return
 			var/message = tgui_input_text(usr, "Input message", "Transmit message")
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(trim(message) && M)
-				to_chat(M.occupants, message)
+			var/obj/vehicle/sealed/mecha/tracked_mech = tracking_beacon.chassis
+			if(trim(message) && tracked_mech)
+				to_chat(tracked_mech.occupants, message)
 				to_chat(usr, span_notice("Message sent."))
 				. = TRUE
 		if("shock")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/tracking_beacon = locate(params["tracker_ref"])
+			if(!istype(tracking_beacon))
 				return
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(M)
-				MT.shock()
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
-				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
+			var/obj/vehicle/sealed/mecha/tracked_mech = tracking_beacon.chassis
+			if(tracked_mech)
+				tracking_beacon.shock()
+				usr.log_message("has activated remote EMP on exosuit [tracked_mech], located at [loc_name(tracked_mech)], which is currently [LAZYLEN(tracked_mech.occupants) ? "occupied by [tracked_mech.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
+				usr.log_message("has activated remote EMP on exosuit [tracked_mech], located at [loc_name(tracked_mech)], which is currently [LAZYLEN(tracked_mech.occupants) ? "occupied by [tracked_mech.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
+				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [tracked_mech][ADMIN_JMP(tracked_mech)], which is currently [LAZYLEN(tracked_mech.occupants) ? "occupied by [tracked_mech.occupants.Join(",")][ADMIN_FLW(tracked_mech)]." : "without a pilot."]")
 				. = TRUE
 
 /obj/item/mecha_parts/mecha_tracking
@@ -100,9 +100,10 @@
 				<b>Cabin Pressure:</b> [chassis.enclosed ? "[round(chassis.return_pressure(), 0.01)] kPa" : "Not Sealed"]<br>
 				<b>Pilot:</b> [english_list(chassis.return_drivers(), nothing_text = "None")]<br>
 				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]"}
-	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
-		var/obj/vehicle/sealed/mecha/ripley/RM = chassis
-		answer += "<br><b>Used Cargo Space:</b> [round((LAZYLEN(RM.cargo) / RM.cargo_capacity * 100), 0.01)]%"
+
+	var/obj/vehicle/sealed/mecha/ripley/ripley = chassis
+	if(istype(ripley))
+		answer += "<br><b>Used Cargo Space:</b> [round((LAZYLEN(ripley.cargo) / ripley.cargo_capacity * 100), 0.01)]%"
 
 	return answer
 
@@ -118,12 +119,15 @@
 	chassis = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/target_mecha, attach_right = FALSE)
+	if(!(target_mecha.mecha_flags & PANEL_OPEN))
+		to_chat(user, span_warning("[target_mecha] panel must be open in order to attach [src]."))
+		return FALSE
 	if(!..())
 		return
-	M.trackers += src
-	M.diag_hud_set_mechtracking()
-	chassis = M
+	target_mecha.trackers += src
+	target_mecha.diag_hud_set_mechtracking()
+	chassis = target_mecha
 
 /**
  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
