@@ -31,7 +31,10 @@
 
 /obj/structure/spirit_board/examine()
 	. = ..()
-	. += span_notice("The planchette is currently at the letter \"[planchette]\".")
+	if(planchette)
+		. += span_notice("The planchette is currently at the letter \"[planchette]\".")
+	else
+		. += span_notice("The planchette is in the middle of the board on no particular letter.")
 
 /obj/structure/spirit_board/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -55,17 +58,18 @@
 		virgin = FALSE
 		notify_ghosts("Someone has begun playing with \a [src] in [get_area(src)]!", source = src, header = "Spirit board")
 
-	planchette = tgui_input_list(ghost, "Choose the letter.", "Seance!", ghosty_options)
-	if(isnull(planchette))
+	var/new_planchette = tgui_input_list(ghost, "Choose the letter.", "Seance!", ghosty_options)
+	if(isnull(new_planchette))
 		return
 	if(!Adjacent(ghost) || !COOLDOWN_FINISHED(src, next_use))
 		return
+	planchette = new_planchette
 	ghost.log_message("picked a letter on [src], which was \"[planchette]\".", LOG_GAME)
 	COOLDOWN_START(src, next_use, rand(3 SECONDS, 5 SECONDS))
 	lastuser = ghost.ckey
 	var/list/show_to = list()
 	for(var/mob/viewer in range(2, src))
-		if(!viewer.client)
+		if(isnull(viewer.client))
 			continue
 		if(viewer.stat != CONSCIOUS && viewer.stat != DEAD) // You gotta be awake or dead to pay the toll
 			continue
@@ -88,7 +92,7 @@
 	if(!allow_oneman_use)
 		var/users_in_range = 0
 		for(var/mob/living/player in orange(1, src))
-			if(!player.ckey || !player.client)
+			if(isnull(player.ckey) || isnull(player.client))
 				continue
 
 			if(player.client?.is_afk() || player.stat != CONSCIOUS || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))//no playing with braindeads or corpses or handcuffed dudes.
