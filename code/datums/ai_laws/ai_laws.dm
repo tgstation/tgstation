@@ -116,7 +116,7 @@ GLOBAL_VAR(round_default_lawset)
 
 	/// Zeroth law
 	/// A lawset can only have 1 zeroth law, it's the top dog.
-	/// Nothing removes it unless it's admin forced
+	/// Removed by things that remove core/inherent laws, but only if protected_zeroth is false. Otherwise, cannot be removed except by admins
 	var/zeroth = null
 	/// Zeroth borg law
 	/// It's just a zeroth law but specially themed for cyborgs
