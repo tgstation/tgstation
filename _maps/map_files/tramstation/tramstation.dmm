@@ -61878,6 +61878,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "sQY" = (
+/obj/effect/spawner/random/loafer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "sQZ" = (

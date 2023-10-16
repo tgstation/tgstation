@@ -5932,6 +5932,8 @@
 #include "monkestation\code\modules\loadouts\items\toys.dm"
 #include "monkestation\code\modules\loadouts\items\under\donator.dm"
 #include "monkestation\code\modules\loadouts\items\under\under.dm"
+#include "monkestation\code\modules\loafing\code\loaf.dm"
+#include "monkestation\code\modules\loafing\code\loafer.dm"
 #include "monkestation\code\modules\maptext\maptext_image_helper.dm"
 #include "monkestation\code\modules\mech_comp\_interface.dm"
 #include "monkestation\code\modules\mech_comp\_message.dm"
