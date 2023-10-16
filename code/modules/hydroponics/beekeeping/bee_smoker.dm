@@ -108,7 +108,7 @@
 	lifespan = 0.4 SECONDS
 	position = list(-12, 7, 0)
 	velocity = list(0, 0.15, 0)
-	fade = null
+	fade = 2
 
 #undef WEED_WINE_MULTIPLIER
 #undef SINGLE_USE_COST
