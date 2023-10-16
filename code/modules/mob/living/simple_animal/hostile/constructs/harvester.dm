@@ -39,7 +39,7 @@
 	if(stored_pulling)
 		start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
-/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget(atom/attacked_target)
 	if(!iscarbon(target))
 		return ..()
 

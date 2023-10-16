@@ -121,7 +121,7 @@
 	eaten.forceMove(loc)
 	eaten.Paralyze(5 SECONDS)
 
-/mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/space_dragon/AttackingTarget(atom/attacked_target)
 	if(using_special)
 		return
 	if(target == src)
@@ -348,7 +348,7 @@
  * Handles consuming and storing consumed things inside Space Dragon
  *
  * Plays a sound and then stores the consumed thing inside Space Dragon.
- * Used in AttackingTarget(), paired with a heal should it succeed.
+ * Used in AttackingTarget(atom/attacked_target), paired with a heal should it succeed.
  * Arguments:
  * * atom/movable/A - The thing being consumed
  */
