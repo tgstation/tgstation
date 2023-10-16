@@ -9,7 +9,7 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL)
 
-/datum/round_event_control/shuttle_catastrophe/can_spawn_event(players, allow_magic = FALSE)
+/datum/round_event_control/shuttle_catastrophe/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return .

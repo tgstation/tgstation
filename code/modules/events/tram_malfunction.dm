@@ -15,7 +15,7 @@
 	tags = list(TAG_DESTRUCTIVE)
 
 //Check if there's a tram we can cause to malfunction.
-/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if (!.)
 		return FALSE

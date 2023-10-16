@@ -9,7 +9,7 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL, TAG_SPACE)
 
-/datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return .

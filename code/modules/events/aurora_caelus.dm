@@ -9,7 +9,7 @@
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL, TAG_POSITIVE, TAG_SPACE)
 
-/datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE)
+/datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
 	if(!SSmapping.empty_space)
 		return FALSE
 	return ..()

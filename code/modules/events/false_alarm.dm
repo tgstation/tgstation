@@ -9,7 +9,7 @@
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL)
 
-/datum/round_event_control/falsealarm/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/falsealarm/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return .

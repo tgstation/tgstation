@@ -13,7 +13,7 @@
 	min_players = 35
 	max_occurrences = 1
 
-/datum/round_event_control/antagonist/solo/wizard/can_spawn_event(popchecks = TRUE, allow_magic)
+/datum/round_event_control/antagonist/solo/wizard/can_spawn_event(popchecks = TRUE, allow_magic, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return

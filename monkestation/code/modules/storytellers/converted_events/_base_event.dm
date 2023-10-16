@@ -43,7 +43,7 @@
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_roles |= protected_roles
 
-/datum/round_event_control/antagonist/can_spawn_event(popchecks = TRUE, allow_magic)
+/datum/round_event_control/antagonist/can_spawn_event(popchecks = TRUE, allow_magic, fake_check = FALSE)
 	. = ..()
 	if(!check_enemies())
 		return FALSE
@@ -78,7 +78,7 @@
 	candidates = trim_candidates(candidates)
 	return candidates
 
-/datum/round_event_control/antagonist/solo/can_spawn_event(popchecks = TRUE, allow_magic)
+/datum/round_event_control/antagonist/solo/can_spawn_event(popchecks = TRUE, allow_magic, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return

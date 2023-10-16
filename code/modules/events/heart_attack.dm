@@ -14,7 +14,7 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_TARGETED)
 
-/datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return .

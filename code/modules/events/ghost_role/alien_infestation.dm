@@ -12,7 +12,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT)
 
-/datum/round_event_control/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return .

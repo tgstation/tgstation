@@ -13,7 +13,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT)
 
-/datum/round_event_control/blob/can_spawn_event(players, allow_magic = FALSE)
+/datum/round_event_control/blob/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
 	if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // no blobs if the shuttle is past the point of no return
 		return FALSE
 
