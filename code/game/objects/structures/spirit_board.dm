@@ -67,7 +67,6 @@
 	ghost.log_message("picked a letter on [src], which was \"[planchette]\".", LOG_GAME)
 	COOLDOWN_START(src, next_use, rand(3 SECONDS, 5 SECONDS))
 	lastuser = ghost.ckey
-	var/list/show_to = list()
 	for(var/mob/viewer in range(2, src))
 		if(isnull(viewer.client))
 			continue
