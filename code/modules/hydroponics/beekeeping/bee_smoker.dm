@@ -76,7 +76,7 @@
 	if(.)
 		return
 	if(!istype(herb, /obj/item/food/grown/cannabis))
-		return TRUE
+		return 
 	var/obj/item/food/grown/cannabis/weed = herb
 	if(isnull(weed.wine_power))
 		return TRUE
