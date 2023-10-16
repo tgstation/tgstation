@@ -105,10 +105,10 @@
 	particles = new /particles/smoke/bee_smoke
 
 /particles/smoke/bee_smoke
-	lifespan = 0.7 SECONDS
-	position = list(-14, 12, 0)
-	velocity = list(0, 0.2, 0)
-	fadein = 6
+	lifespan = 0.4 SECONDS
+	position = list(-12, 7, 0)
+	velocity = list(0, 0.15, 0)
+	fade = null
 
 #undef WEED_WINE_MULTIPLIER
 #undef SINGLE_USE_COST
