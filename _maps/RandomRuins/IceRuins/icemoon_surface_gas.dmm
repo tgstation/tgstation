@@ -175,10 +175,6 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron,
 /area/ruin)
-"gq" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
-/turf/closed/wall,
-/area/ruin)
 "gv" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1257,7 +1253,7 @@ HI
 wK
 yH
 qM
-gq
+oo
 gv
 gv
 gv
