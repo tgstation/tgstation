@@ -138,9 +138,11 @@
 	if(bought_event.roundstart)
 		if(!ignores_roundstart)
 			SSgamemode.ran_roundstart = TRUE
+		SSgamemode.current_roundstart_event = bought_event
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost, _forced = forced)
+	SSgamemode.triggered_round_events |= bought_event.name
 
 /// Calculates the weights of the events from a passed track.
 /datum/storyteller/proc/calculate_weights(track)

@@ -31,6 +31,7 @@
 	min_players = 30
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
+	weight = 4
 
 /datum/round_event/antagonist/solo/bloodcult
 	excute_round_end_reports = TRUE

@@ -1,5 +1,4 @@
 /datum/round_event_control/antagonist
-	reoccurence_penalty_multiplier = 0
 	track = EVENT_TRACK_ROLESET
 	///list of required roles, needed for this to form
 	var/list/exclusive_roles

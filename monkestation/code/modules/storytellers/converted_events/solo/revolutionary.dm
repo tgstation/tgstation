@@ -32,6 +32,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
+	weight = 4
 
 /datum/antagonist/rev/head/event_trigger
 	remove_clumsy = TRUE

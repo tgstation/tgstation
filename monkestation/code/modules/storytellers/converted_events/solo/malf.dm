@@ -12,7 +12,7 @@
 	)
 	exclusive_roles = list(JOB_AI)
 	required_enemies = 4
-	weight = 2
+	weight = 4
 
 /datum/round_event_control/antagonist/solo/malf/trim_candidates(list/candidates)
 	for(var/mob/living/player in candidates)

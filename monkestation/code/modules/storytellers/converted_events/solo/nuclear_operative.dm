@@ -33,6 +33,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
+	weight = 4
 
 /datum/round_event/antagonist/solo/nuclear_operative
 	excute_round_end_reports = TRUE

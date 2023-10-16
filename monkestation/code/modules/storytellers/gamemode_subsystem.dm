@@ -141,8 +141,10 @@ SUBSYSTEM_DEF(gamemode)
 
 	var/wizardmode = FALSE
 
+	var/datum/round_event_control/current_roundstart_event
 	var/list/last_round_events = list()
 	var/ran_roundstart = FALSE
+	var/list/triggered_round_events = list()
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 	// Populate event pools
@@ -169,6 +171,8 @@ SUBSYSTEM_DEF(gamemode)
 			uncategorized += event
 			continue
 		event_pools[event.track] += event //Add it to the categorized event pools
+
+	load_roundstart_data()
 
 //	return ..()
 
@@ -1088,3 +1092,27 @@ SUBSYSTEM_DEF(gamemode)
 		if(!istype(event))
 			continue
 		event.round_end_report()
+
+
+/datum/controller/subsystem/gamemode/proc/store_roundend_data()
+	var/congealed_string = ""
+	for(var/event_name as anything in triggered_round_events)
+		congealed_string += event_name
+		congealed_string += ","
+	text2file(congealed_string, "data/last_round_events.txt")
+
+/datum/controller/subsystem/gamemode/proc/load_roundstart_data()
+	var/massive_string = trim(file2text("data/last_round_events.txt"))
+	if(fexists("data/last_round_events.txt"))
+		fdel("data/last_round_events.txt")
+	if(!massive_string)
+		return
+	last_round_events = splittext(massive_string, ",")
+
+	if(!length(last_round_events))
+		return
+	for(var/event_name as anything in last_round_events)
+		for(var/datum/round_event_control/listed as anything in control)
+			if(listed.name != event_name)
+				continue
+			listed.occurrences++
