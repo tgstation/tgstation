@@ -162,7 +162,7 @@
 	maxHealth = 5000
 	melee_damage_lower = 65
 	melee_damage_upper = 65
-	faction = list("statue","mining")
+	faction = list(FACTION_STATUE,FACTION_MINING)
 
 /mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()

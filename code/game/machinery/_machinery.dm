@@ -591,13 +591,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	var/is_dextrous = FALSE
-	if(isanimal(user))
-		var/mob/living/simple_animal/user_as_animal = user
-		if (user_as_animal.dextrous)
-			is_dextrous = TRUE
-
-	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
+	if(!issilicon(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
@@ -686,10 +680,25 @@
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user)
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	var/damage = take_damage(4, BRUTE, MELEE, 1)
-	user.visible_message(span_danger("[user] smashes [src] with [user.p_their()] paws[damage ? "." : ", without leaving a mark!"]"), null, null, COMBAT_MESSAGE_RANGE)
+	var/damage = take_damage(damage_amount = 4, damage_type = BRUTE, damage_flag = MELEE, sound_effect = TRUE, attack_dir = get_dir(user, src))
+
+	var/hit_with_what_noun = "paws"
+	var/obj/item/bodypart/arm/arm = user.get_active_hand()
+	if(!isnull(arm))
+		hit_with_what_noun = arm.appendage_noun // hit with "their hand"
+		if(user.usable_hands > 1)
+			hit_with_what_noun += plural_s(hit_with_what_noun) // hit with "their hands"
+
+	user.visible_message(
+		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [damage ? "smash" : "thud"]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+	return TRUE
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
@@ -744,7 +753,7 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
 		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()

@@ -147,7 +147,10 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
+	if(HAS_TRAIT(owner, TRAIT_HUSK))
+		adjust_stacks(-2 * seconds_between_ticks)
+	else
+		adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)

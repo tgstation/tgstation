@@ -25,6 +25,8 @@
 	if (!isnull(front))
 		SEND_SIGNAL(front, COMSIG_MOB_GAINED_CHAIN_TAIL, parent)
 		parent.AddComponent(/datum/component/leash, owner = front, distance = 1) // Handles catching up gracefully
+		var/mob/living/living_parent = parent
+		living_parent.set_glide_size(front.glide_size)
 
 /datum/component/mob_chain/Destroy(force, silent)
 	if (!isnull(front))
@@ -41,12 +43,14 @@
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
-	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_MOB_ATTACK_RANGED), PROC_REF(on_attack))
+	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ATTACK_RANGED), PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_glide_size_changed))
 	if (vary_icon_state)
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 		update_mob_appearance()
 	if (pass_damage_back)
-		RegisterSignal(parent, COMSIG_LIVING_ADJUST_DAMAGE, PROC_REF(on_adjust_damage))
+		RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_adjust_damage))
+		RegisterSignal(parent, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_adjust_stamina))
 		RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 
 	var/datum/action/cooldown/worm_contract/shrink = new(parent)
@@ -57,15 +61,20 @@
 		COMSIG_ATOM_CAN_BE_PULLED,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
 		COMSIG_CARBON_LIMB_DAMAGED,
-		COMSIG_HUMAN_EARLY_UNARMED_ATTACK,
-		COMSIG_LIVING_ADJUST_DAMAGE,
+		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
+		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
+		COMSIG_LIVING_ADJUST_CLONE_DAMAGE,
 		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
+		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE,
+		COMSIG_LIVING_ADJUST_TOX_DAMAGE,
 		COMSIG_LIVING_UNARMED_ATTACK,
 		COMSIG_MOB_ATTACK_RANGED,
 		COMSIG_MOB_CHAIN_CONTRACT,
 		COMSIG_MOB_GAINED_CHAIN_TAIL,
 		COMSIG_MOB_LOST_CHAIN_TAIL,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOVABLE_UPDATE_GLIDE_SIZE,
 		COMSIG_QDELETING,
 	))
 	qdel(parent.GetComponent(/datum/component/leash))
@@ -153,14 +162,23 @@
 		return
 	INVOKE_ASYNC(back, TYPE_PROC_REF(/mob, ClickOn), target)
 
+/// Maintain glide size backwards
+/datum/component/mob_chain/proc/on_glide_size_changed(mob/living/our_mob, new_size)
+	SIGNAL_HANDLER
+	back?.set_glide_size(new_size)
+
+/// On gain or lose stamina, adjust our tail too
+/datum/component/mob_chain/proc/on_adjust_stamina(mob/living/our_mob, type, amount, forced)
+	SIGNAL_HANDLER
+	if (forced)
+		return
+	back?.adjustStaminaLoss(amount, forced = forced)
+
 /// On damage or heal, affect our furthest segment
 /datum/component/mob_chain/proc/on_adjust_damage(mob/living/our_mob, type, amount, forced)
 	SIGNAL_HANDLER
 	if (isnull(back) || forced)
 		return
-	if (type == STAMINA)
-		back.adjustStaminaLoss(amount, forced = forced)
-		return // Pass stamina changes all the way along so we maintain consistent speed
 	switch (type)
 		if(BRUTE)
 			back.adjustBruteLoss(amount, forced = forced)

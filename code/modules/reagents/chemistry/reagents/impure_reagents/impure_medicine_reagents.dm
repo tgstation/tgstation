@@ -496,6 +496,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/need_mob_update
 	if(length(affected_mob.reagents.reagent_list) > 1)
 		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!

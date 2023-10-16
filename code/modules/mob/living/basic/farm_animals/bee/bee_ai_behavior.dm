@@ -85,7 +85,7 @@
 
 /datum/targetting_datum/basic/bee
 
-/datum/targetting_datum/basic/bee/can_attack(mob/living/owner, atom/target)
+/datum/targetting_datum/basic/bee/can_attack(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()

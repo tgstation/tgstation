@@ -2817,6 +2817,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/item/storage/box/donkpockets/donkpocketberry{
+	pixel_y = 10;
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "amA" = (
@@ -8570,6 +8574,7 @@
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "bSd" = (
@@ -10110,7 +10115,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/closed/wall,
 /area/station/science/xenobiology)
@@ -14689,8 +14694,10 @@
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "dYm" = (
@@ -15157,7 +15164,7 @@
 /area/station/service/library/lounge)
 "ejJ" = (
 /obj/structure/rack,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/carbine/practice{
 	pixel_x = 2;
 	pixel_y = 5
 	},
@@ -19727,7 +19734,7 @@
 /area/station/security/processing)
 "fWK" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen                                Supply")
+	atmos_chambers = list("o2ordance"="Oxygen                                                                Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -20301,7 +20308,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -29165,7 +29172,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -35035,7 +35042,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -38902,6 +38909,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"mOJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pharmacy_shutters_2";
+	name = "Pharmacy Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "mOM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -39125,7 +39141,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -42017,14 +42033,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "nUF" = (
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "nUM" = (
@@ -44059,7 +44070,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -45391,17 +45402,12 @@
 /turf/open/floor/plating,
 /area/station/commons/vacant_room)
 "plH" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/structure/sign/poster/random/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "plQ" = (
@@ -51543,11 +51549,12 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/south{
-	dir = 8;
+	dir = 4;
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
 	},
@@ -53577,7 +53584,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "sha" = (
-/mob/living/simple_animal/sloth/paperwork,
+/mob/living/basic/sloth/paperwork,
 /turf/open/floor/glass,
 /area/station/cargo/storage)
 "shw" = (
@@ -55624,7 +55631,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron,
@@ -60272,7 +60279,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -61790,7 +61797,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -64522,9 +64529,7 @@
 /area/station/hallway/primary/tram/right)
 "vPo" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -80997,7 +81002,7 @@ aac
 aac
 aac
 aac
-aac
+aaR
 aac
 aac
 vXM
@@ -81254,7 +81259,7 @@ aac
 aac
 aac
 aac
-aaR
+aac
 aac
 aac
 vXM
@@ -166314,7 +166319,7 @@ sBr
 jyH
 dYi
 rqE
-bqg
+mOJ
 jyH
 jyH
 jyH
