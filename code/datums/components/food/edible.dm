@@ -485,19 +485,26 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 ///Checks whether or not the eater can actually consume the food
-/datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)
+/datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
 	if(!iscarbon(eater))
 		return FALSE
-	var/mob/living/carbon/C = eater
 	var/covered = ""
-	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
+	if(eater.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
+	else if(eater.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		eater.balloon_alert(feeder, "mouth is covered!")
 		return FALSE
-	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+
+	var/atom/food = parent
+
+	if(food.flags_1 & HOLOGRAM_1)
+		to_chat(eater, span_notice("You try to take a bite out of [food], but it fades away!"))
+		qdel(food)
+		return FALSE
+
+	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, food) & COMSIG_CARBON_BLOCK_EAT)
 		return
 	return TRUE
 
