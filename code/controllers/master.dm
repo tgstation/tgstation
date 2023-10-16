@@ -284,6 +284,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	/// run votes
 	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE) // idk where else to run this lol
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /**
  * Initialize a given subsystem and handle the results.
