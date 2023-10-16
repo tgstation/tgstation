@@ -123,7 +123,7 @@
 			return
 		picked_event = pick_weight(valid_events)
 		if(!picked_event)
-			message_admins("WARNING: Storyteller picked a null event from picked_events when it had a length of [length(picked_events)]")
+			message_admins("WARNING: Storyteller picked a null event from picked_events when it had a length of [length(valid_events)]")
 			message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
 			stack_trace("WARNING: Storyteller picked a null from event pool.")
 			return
