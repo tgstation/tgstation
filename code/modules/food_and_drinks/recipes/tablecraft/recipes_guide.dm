@@ -365,6 +365,11 @@
 	result = /obj/item/food/watermelonslice
 	category = CAT_SALAD
 
+/datum/crafting_recipe/food/knife/appleslice
+	reqs = list(/obj/item/food/grown/apple = 1)
+	result = /obj/item/food/appleslice
+	category = CAT_SALAD
+
 /datum/crafting_recipe/food/knife/kamaboko_slice
 	reqs = list(/obj/item/food/kamaboko = 1)
 	result = /obj/item/food/kamaboko_slice

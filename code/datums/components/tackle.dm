@@ -445,7 +445,7 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.adjustStaminaLoss(30, updating_stamina=FALSE)
+			user.adjustStaminaLoss(30, updating_stamina = FALSE)
 			user.adjustBruteLoss(30)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
@@ -457,7 +457,7 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.adjustStaminaLoss(30, updating_stamina=FALSE)
+			user.adjustStaminaLoss(30, updating_stamina = FALSE)
 			user.adjustBruteLoss(10)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(3 SECONDS)
@@ -465,7 +465,7 @@
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.adjustStaminaLoss(20, updating_stamina=FALSE)
+			user.adjustStaminaLoss(20, updating_stamina = FALSE)
 			user.adjustBruteLoss(10)
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
@@ -545,10 +545,11 @@
 			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
 
 	owner.visible_message(span_danger("[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!"), span_userdanger("You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!"))
-	owner.adjustStaminaLoss(15 + messes.len * 2, FALSE)
-	owner.adjustBruteLoss(8 + messes.len)
+	owner.adjustStaminaLoss(15 + messes.len * 2, updating_stamina = FALSE)
+	owner.adjustBruteLoss(8 + messes.len, updating_health = FALSE)
 	owner.Paralyze(0.4 SECONDS * messes.len) // .4 seconds of paralyze for each thing you knock around
 	owner.Knockdown(2 SECONDS + 0.4 SECONDS * messes.len) // 2 seconds of knockdown after the paralyze
+	owner.updatehealth()
 
 	for(var/obj/item/I in messes)
 		var/dist = rand(1, 3)

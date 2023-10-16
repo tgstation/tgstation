@@ -605,8 +605,3 @@
 	name = "Medical Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/department_orders/medical
-
-/obj/item/circuitboard/computer/quantum_console
-	name = "Quantum Server Console"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/quantum_console

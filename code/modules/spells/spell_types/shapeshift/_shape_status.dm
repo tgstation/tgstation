@@ -115,7 +115,7 @@
 
 	// Our caster inside was gibbed, mirror the gib to our mob
 	if(gibbed)
-		owner.gib()
+		owner.gib(DROP_ALL_REMAINS)
 
 	// Otherwise our caster died, just make our mob die
 	else

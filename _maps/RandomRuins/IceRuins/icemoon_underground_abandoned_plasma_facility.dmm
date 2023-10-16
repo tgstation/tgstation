@@ -2574,7 +2574,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/canister_frame/machine,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "Tr" = (
