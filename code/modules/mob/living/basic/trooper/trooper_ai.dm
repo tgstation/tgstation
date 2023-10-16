@@ -42,7 +42,6 @@
 /datum/ai_controller/basic_controller/trooper/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
@@ -53,25 +52,11 @@
 /datum/ai_behavior/basic_ranged_attack/trooper
 	action_cooldown = 1 SECONDS
 	required_distance = 5
-
-/datum/ai_controller/basic_controller/trooper/ranged/avoid_friendly_fire
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper/avoid_friendly_fire,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
-	)
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper/avoid_friendly_fire
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper/avoid_friendly_fire
-
-/datum/ai_behavior/basic_ranged_attack/trooper/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
@@ -81,34 +66,19 @@
 
 /datum/ai_behavior/basic_ranged_attack/trooper_burst
 	action_cooldown = 3 SECONDS
-
-/datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
-	)
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper_burst/avoid_friendly_fire
-
-/datum/ai_behavior/basic_ranged_attack/trooper_burst/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
 
-/datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire/peaceful
+/datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst/avoid_friendly_fire,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)
@@ -119,6 +89,7 @@
 /datum/ai_behavior/basic_ranged_attack/trooper_shotgun
 	action_cooldown = 3 SECONDS
 	required_distance = 1
+	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/viscerator
 	blackboard = list(

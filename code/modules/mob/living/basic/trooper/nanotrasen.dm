@@ -14,7 +14,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/trooper/calls_reinforcements
 
 /mob/living/basic/trooper/nanotrasen/ranged
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/avoid_friendly_fire
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	r_hand = /obj/item/gun/ballistic/automatic/pistol/m1911
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c45
@@ -36,7 +36,7 @@
 	)
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	r_hand = /obj/item/gun/ballistic/automatic/wt550
@@ -88,7 +88,7 @@
 		potential_trooper.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
 
 /mob/living/basic/trooper/nanotrasen/peaceful/ranged
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/avoid_friendly_fire/peaceful
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
 	loot = list(
 		/obj/item/gun/ballistic/automatic/wt550,
 		/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
