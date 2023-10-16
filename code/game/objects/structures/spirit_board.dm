@@ -20,8 +20,8 @@
 		"1","2","3","4","5","6","7","8","9","0",
 		"Yes","No",
 	)
-	/// Admin only var, allows admins to bypass the check requiring multiple players
-	var/allow_oneman_use = FALSE
+	/// Number of living, willing mobs adjacent to the board required for a seance to occur.
+	var/required_user_count = 2
 
 /obj/structure/spirit_board/Initialize(mapload)
 	. = ..()
@@ -88,7 +88,7 @@
 		to_chat(ghost, span_warning("It's too bright here to use [src]!"))
 		return FALSE
 
-	if(!allow_oneman_use)
+	if(required_user_count > 0)
 		var/users_in_range = 0
 		for(var/mob/living/player in orange(1, src))
 			if(isnull(player.ckey) || isnull(player.client))
@@ -100,8 +100,8 @@
 
 			users_in_range++
 
-		if(users_in_range < 2)
-			to_chat(ghost, span_warning("There aren't enough people to use [src]!"))
+		if(users_in_range < required_user_count)
+			to_chat(ghost, span_warning("There aren't enough people around to use [src]!"))
 			return FALSE
 
 	return TRUE
