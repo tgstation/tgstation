@@ -71,7 +71,7 @@
 	owner.pixel_y = 0
 	playsound(owner, 'sound/effects/gravhit.ogg', 100, TRUE)
 	for (var/mob/living/candidate in view(gust_distance, owner))
-		if(candidate == owner || candidate.faction_check_mob(owner))
+		if(candidate == owner || candidate.faction_check_atom(owner))
 			continue
 		owner.visible_message(span_boldwarning("[candidate] is knocked back by the gust!"))
 		to_chat(candidate, span_userdanger("You're knocked back by the gust!"))

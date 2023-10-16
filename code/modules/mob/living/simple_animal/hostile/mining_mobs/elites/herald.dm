@@ -232,7 +232,7 @@
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
-		if(mob_target.faction_check_mob(firer))
+		if(mob_target.faction_check_atom(firer))
 			damage = 0
 
 	. = ..()

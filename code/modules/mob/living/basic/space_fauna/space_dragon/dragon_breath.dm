@@ -9,7 +9,7 @@
 	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/mob_cooldown/fire_breath/carp/on_burn_mob(mob/living/barbecued, mob/living/source)
-	if (!source.faction_check_mob(barbecued))
+	if (!source.faction_check_atom(barbecued))
 		return ..()
 	to_chat(barbecued, span_notice("[source]'s fiery breath fills you with energy!"))
 	barbecued.apply_status_effect(/datum/status_effect/carp_invigoration)

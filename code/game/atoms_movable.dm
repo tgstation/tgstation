@@ -15,7 +15,11 @@
 	var/tk_throw_range = 10
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder // Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
+	/// Holds all languages this mob can speak and understand
+	VAR_PRIVATE/datum/language_holder/language_holder
+	/// The list of factions this atom belongs to
+	var/list/faction
+
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -1664,3 +1668,20 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/**
+ * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.
+ *
+ * If exact match is set, then all our factions must match exactly
+ */
+/atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
+	if(!exact_match)
+		return faction_check(faction, target.faction, FALSE)
+
+	var/list/faction_src = LAZYCOPY(faction)
+	var/list/faction_target = LAZYCOPY(target.faction)
+	if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+		faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+	if(!("[REF(target)]" in faction_src))
+		faction_target -= "[REF(target)]" //same thing here.
+	return faction_check(faction_src, faction_target, TRUE)
