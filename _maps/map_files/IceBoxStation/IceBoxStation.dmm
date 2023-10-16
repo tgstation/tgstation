@@ -69576,7 +69576,9 @@
 /area/station/engineering/atmos)
 "vtk" = (
 /obj/machinery/newscaster/directional/east,
-/obj/structure/bed/pod,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
