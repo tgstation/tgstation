@@ -1,0 +1,4 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "Adds loafing mechanic"
