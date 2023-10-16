@@ -47,7 +47,7 @@
 			COMBAT_MESSAGE_RANGE,
 		)
 
-	return damage_sustained > 0 ? BULLET_ACT_BLOCK : BULLET_ACT_HIT
+	return damage_sustained > 0 ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
