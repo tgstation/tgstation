@@ -35,7 +35,7 @@
 	_alert_drones(msg, dead_can_hear, src, src, TRUE)
 
 /**
- * Wraps [/mob/living/simple_animal/drone/proc/alert_drones] as a Drone Chat
+ * Wraps [/mob/living/basic/drone/proc/alert_drones] as a Drone Chat
  *
  * Shares the same radio code with binary
  */

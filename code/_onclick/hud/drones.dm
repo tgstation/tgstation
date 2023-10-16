@@ -29,7 +29,7 @@
 /datum/hud/dextrous/drone/persistent_inventory_update()
 	if(!mymob)
 		return
-	var/mob/living/simple_animal/drone/D = mymob
+	var/mob/living/basic/drone/D = mymob
 
 	if(hud_shown)
 		if(D.internal_storage)

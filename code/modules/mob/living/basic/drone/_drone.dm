@@ -170,13 +170,9 @@
 /mob/living/basic/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	AddElement(/datum/element/dextrous)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
-
-	// Doing this hurts my soul, but simple_animal access reworks are for another day.
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
+	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), src)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -191,8 +187,6 @@
 	if(default_headwear)
 		var/obj/item/new_hat = new default_headwear(src)
 		equip_to_slot_or_del(new_hat, ITEM_SLOT_HEAD)
-
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 	shy_update()
 
@@ -228,7 +222,6 @@
 
 /mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src
-	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
 	QDEL_NULL(listener)
 	return ..()
 
@@ -368,9 +361,6 @@
 		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
 		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
-
-/mob/living/basic/drone/handle_temperature_damage()
-	return
 
 /mob/living/basic/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
