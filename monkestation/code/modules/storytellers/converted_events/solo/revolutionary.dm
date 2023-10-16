@@ -19,15 +19,13 @@
 	)
 	base_antags = 2
 	enemy_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	required_enemies = 3
+	required_enemies = 6
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
 	roundstart = TRUE
