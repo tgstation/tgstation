@@ -15601,7 +15601,10 @@
 /area/station/commons/dorms)
 "eGz" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/airlock/security/glass{
+	name = "Permabrig Visitation"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "eGA" = (
@@ -69576,7 +69579,9 @@
 /area/station/engineering/atmos)
 "vtk" = (
 /obj/machinery/newscaster/directional/east,
-/obj/structure/bed/pod,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)

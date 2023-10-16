@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Microwave will no longer get stuck turned on if a PDA has no cell"
+  - bugfix: "Silicons can no longer silently change the microwave between cook and charge"

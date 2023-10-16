@@ -513,3 +513,101 @@
   - bugfix: Revenant midrounds should now properly run.
   - bugfix: Revenant harvesting should now let you actually pass the final do_after
       so you can harvest that sweet essence.
+2023-10-14:
+  BlueMemesauce:
+  - bugfix: Modsuits can no longer be deepfried
+  DrDiasyl:
+  - sound: laser2.ogg sound has been changed. Now laser carbine uses it.
+  - image: Laser carbine and orange laser sprite have been improved.
+  IndieanaJones:
+  - bugfix: Space Dragon can break walls, eat corpses and destroy mechs more efficiently
+      again
+  - bugfix: Player-controlled lavaland elites can once again return to their tumor
+      after winning their fight
+  Jacquerel:
+  - bugfix: '"Mirror Walk" is once more the domain of the Maid in the Mirror rather
+      than "every heretic summon"'
+  - bugfix: Heretic mobs can once again survive space
+  - bugfix: Pete's anger management training has worn off, and he will once again
+      sometimes pick a fight with you for absolutely no reason.
+  - qol: Attacking a goat will not spam messages so frequently.
+  LT3:
+  - image: Nitrogen canisters are now yellow, antinob are grey/yellow, empty are grey,
+      hydrogen are red/white
+  MTandi:
+  - bugfix: The crew is instructed to place fax machines properly in the center of
+      a table without hanging.
+  Melbert:
+  - bugfix: Fixes Mauna Loa, Monover, Silibinin, Granibitaluri not exiting your system
+      on metabolism
+  - bugfix: Fixes holy water exiting your system at double the rate on metabolism
+  - bugfix: Holy Water no longer spams cultists with big text every time, it's much
+      more tame now
+  Rhials:
+  - qol: You can now return to your old body after being summoned by a manifest rune.
+  - qol: You can now return to your old body after dying in CTF.
+  - qol: You can now return to your old body after dying in the Medisim Shuttle battle
+      area.
+  - qol: You can no longer suicide in CTF areas, for integrity purposes.
+  bun235:
+  - rscadd: targetting someone's arm with *slap now has a unique message
+  dragomagol:
+  - qol: apples can now be sliced
+  mc-oofert:
+  - bugfix: sqdl2 query readout displays location of turfs properly
+  ninjanomnom:
+  - admin: VV can now display the contents of special byond lists like filters, or
+      client.images
+  - admin: VV on images now displays the image in the header
+  - admin: VV can now display filters and includes their type
+  san7890:
+  - bugfix: Space Dragons can now, once again, tear down walls and eat corpses. They
+      also have regained their special damage modifier when attacking mechs.
+2023-10-15:
+  GPeckman:
+  - bugfix: Having all augmented limbs will make you properly spaceproof once again.
+  - bugfix: Androids are immune to crit damage again.
+  - bugfix: Surgery on robotic limbs can be canceled.
+  Iamgoofball:
+  - balance: Allows spacemen to use age-appropriate drugs by making it so you can
+      now huff N2O to get high.
+  Jacquerel:
+  - refactor: Space Dragons are now basic mobs, please report any unexpected behaviour.
+  - balance: You can now see that a space dragon is destroying a wall with a visual
+      indicator of the wall being damaged.
+  - balance: Space Dragons can pry open airlocks.
+  Melbert:
+  - qol: Leaning now has a small animation associated.
+  - qol: Cyborgs can now lean against walls.
+  - bugfix: Fixed some runtimes associated with leaning.
+  - bugfix: Fixed being able to lean while dead or in otherwise invalid states.
+  ZephyrTFA:
+  - rscadd: Vent Pumps can now be overclocked, do some light reading in the air alarm
+      to figure out what this means.
+  - balance: Vent Pumps now have fan integrity, the damaging of which reduces their
+      ability to move air.
+  - sound: Overclocking sounds, including spool, stop, and loop
+  carlarctg:
+  - qol: Bladists can now use silver *or* titanium while creating their blades
+  - bugfix: Fixes Monkey's Delight recipe
+  starrm4nn:
+  - bugfix: makes the riot helmet hide hair like other sec helmets
+2023-10-16:
+  BlueMemesauce:
+  - spellcheck: Broken canisters now have a description
+  Cruix:
+  - rscadd: Added Afro (Huge) hairstyle
+  Melbert:
+  - code_imp: Removed species death and species hitby, replaced any uses with signals.
+  SyncIt21:
+  - bugfix: plumbing setups should(hopefully) no longer grind to a halt nor will overflow
+      with excess volume of reagents.
+  - code_imp: created defines for min & max ph. Improved some reaction_reagent code.
+      Made synthesizer dispensable reagent list values static to save memory.
+  - refactor: ph balancing mechanism for reaction chamber is significantly improved.
+      Optimized it's code overall
+  - refactor: examining each individual reagent will display their results back to
+      2 decimal places again and not 4 for easy readability.
+  Wallem:
+  - bugfix: The active sonar module won't attempt to create 6000000 new pings per
+      process cycle anymore
