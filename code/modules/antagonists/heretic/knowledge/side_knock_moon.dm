@@ -28,7 +28,7 @@
 		/obj/item/stack/rods = 3,
 		/obj/item/storage/box = 1,
 	)
-	result_atoms = list(/obj/item/unfathomable_curio)
+	result_atoms = list(/obj/item/storage/belt/unfathomable_curio)
 	cost = 1
 	route = PATH_SIDE
 

@@ -37,10 +37,6 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/human/victim, atom/caster)
 	if(!ismob(victim))
-
-		if(victim.can_block_magic(antimagic_flags))
-			to_chat(victim, span_notice("Your mind feels closed."))
-			to_chat(caster, span_warning("The ring fails to form around [victim]."))
 		var/victim_sanity = victim.mob_mood.sanity
 
 		new /obj/effect/temp_visual/knockblast(get_turf(victim))

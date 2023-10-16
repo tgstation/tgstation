@@ -80,3 +80,4 @@
 		user.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
 		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
 	. = ..()
+
