@@ -51,7 +51,7 @@
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
-	set_light(2, 0.75, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
+	set_light(2, 1, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
 /turf/open/floor/glass/make_plating()
 	return

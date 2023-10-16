@@ -154,7 +154,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, get_starlight_color(), l_height = LIGHTING_HEIGHT_SPACE)
+	on.set_light(2, 1, get_starlight_color(), l_height = LIGHTING_HEIGHT_SPACE)
 
 ///Gets the space color and possible changed color if space is different
 /datum/material/proc/get_starlight_color()

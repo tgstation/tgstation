@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
-	light_power = 0.75
+	light_power = 1
 	light_height = LIGHTING_HEIGHT_SPACE
 	space_lit = TRUE
 	bullet_bounce_sound = null
