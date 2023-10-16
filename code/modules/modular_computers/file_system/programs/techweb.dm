@@ -24,7 +24,7 @@
 /datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))

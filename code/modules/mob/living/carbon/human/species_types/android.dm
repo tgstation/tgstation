@@ -21,6 +21,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		TRAIT_NOCRITDAMAGE,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -50,3 +51,8 @@
 	. = ..()
 	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
 	C.set_safe_hunger_level()
+
+/datum/species/android/get_physical_attributes()
+	return "Androids are almost, but not quite, identical to fully augmented humans. \
+	Unlike those, though, they're completely immune to toxin damage, don't have blood or organs (besides their head), don't get hungry, and can reattach their limbs! \
+	That said, an EMP will devastate them and they cannot process any chemicals."
