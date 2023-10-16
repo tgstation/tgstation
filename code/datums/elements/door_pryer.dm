@@ -16,20 +16,20 @@
 		return ELEMENT_INCOMPATIBLE
 	src.pry_time = pry_time
 	src.interaction_key = interaction_key
-	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK), PROC_REF(on_attack))
+	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 
 /datum/element/door_pryer/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	UnregisterSignal(source, COMSIG_LIVING_UNARMED_ATTACK)
 
 /// If we're targetting an airlock, open it
-/datum/element/door_pryer/proc/on_attack(mob/living/basic/attacker, atom/target)
+/datum/element/door_pryer/proc/on_attack(mob/living/basic/attacker, atom/target, proximity_flag)
 	SIGNAL_HANDLER
-	if(!istype(target, /obj/machinery/door/airlock))
-		return
+	if(!proximity_flag || !istype(target, /obj/machinery/door/airlock))
+		return NONE
 	var/obj/machinery/door/airlock/airlock_target = target
 	if (!airlock_target.density)
-		return // It's already open numbnuts
+		return NONE // It's already open numbnuts
 
 	if(DOING_INTERACTION_WITH_TARGET(attacker, target) || (!isnull(interaction_key) && DOING_INTERACTION(attacker, interaction_key)))
 		attacker.balloon_alert(attacker, "busy!")
