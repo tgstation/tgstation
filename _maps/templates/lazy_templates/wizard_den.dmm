@@ -740,6 +740,14 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
+"RR" = (
+/obj/structure/table/wood,
+/obj/item/toy/figure/wizard{
+	pixel_y = 2;
+	pixel_x = -5
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "RT" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -938,7 +946,7 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "YT" = (
-/obj/structure/bookcase/random,
+/obj/structure/showcase/wizard,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "ZA" = (
@@ -1480,7 +1488,7 @@ op
 TG
 TG
 qM
-nc
+RR
 VB
 tv
 kZ
