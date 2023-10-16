@@ -448,7 +448,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_reuse(mob/show_to)
 	for(var/datum/weakref/screen_ref as anything in asset_refs_for_reuse)
 		var/atom/movable/screen/reuse = screen_ref.resolve()
-		if(!reuse)
+		if(isnull(reuse))
 			asset_refs_for_reuse -= screen_ref
 			continue
 		show_to.client.screen += reuse

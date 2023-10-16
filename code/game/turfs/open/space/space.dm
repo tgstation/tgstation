@@ -80,8 +80,8 @@ GLOBAL_LIST_EMPTY(starlight)
 	return
 
 /turf/open/space/Destroy()
-	. = ..()
 	GLOB.starlight -= src
+	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
