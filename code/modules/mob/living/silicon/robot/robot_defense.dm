@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("[src] is controlled remotely! You cannot upload new laws this way!"))
 			return
 		if(connected_ai && lawupdate)
-			to_chat(user, span_warning("[src] is received laws remotely from a synced AI!"))
+			to_chat(user, span_warning("[src] is receiving laws remotely from a synced AI!"))
 			return
 		if(emagged)
 			to_chat(user, span_warning("The law interface glitches out!"))
