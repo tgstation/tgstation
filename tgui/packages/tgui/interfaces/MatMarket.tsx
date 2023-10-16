@@ -38,17 +38,19 @@ export const MatMarket = (props, context) => {
         <Section
           title="Materials for sale"
           buttons={
-            <Button
-              icon="dollar"
-              tooltip="Place order from cargo budget."
-              color={!!orderingPrive && !!canOrderCargo ? '' : 'green'}
-              content={
-                !!orderingPrive && !!canOrderCargo
-                  ? 'Order via Cargo Budget?'
-                  : 'Ordering via Cargo Budget'
-              }
-              onClick={() => act('toggle_budget')}
-            />
+            !!canOrderCargo && (
+              <Button
+                icon="dollar"
+                tooltip="Place order from cargo budget."
+                color={orderingPrive ? '' : 'green'}
+                content={
+                  orderingPrive
+                    ? 'Order via Cargo Budget?'
+                    : 'Ordering via Cargo Budget'
+                }
+                onClick={() => act('toggle_budget')}
+              />
+            )
           }>
           Buy orders for material sheets placed here will be ordered on the next
           cargo shipment.

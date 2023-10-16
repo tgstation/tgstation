@@ -243,26 +243,26 @@ world
 
 // Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
 /icon/proc/MinColors(icon)
-	var/icon/I = new(src)
-	I.Opaque()
-	I.Blend(icon, ICON_SUBTRACT)
-	Blend(I, ICON_SUBTRACT)
+	var/icon/new_icon = new(src)
+	new_icon.Opaque()
+	new_icon.Blend(icon, ICON_SUBTRACT)
+	Blend(new_icon, ICON_SUBTRACT)
 
 // Take the maximum color of two icons; combine opacity as if blending with ICON_OR
 /icon/proc/MaxColors(icon)
-	var/icon/I
+	var/icon/new_icon
 	if(isicon(icon))
-		I = new(icon)
+		new_icon = new(icon)
 	else
 		// solid color
-		I = new(src)
-		I.Blend("#000000", ICON_OVERLAY)
-		I.SwapColor("#000000", null)
-		I.Blend(icon, ICON_OVERLAY)
-	var/icon/J = new(src)
-	J.Opaque()
-	I.Blend(J, ICON_SUBTRACT)
-	Blend(I, ICON_OR)
+		new_icon = new(src)
+		new_icon.Blend("#000000", ICON_OVERLAY)
+		new_icon.SwapColor("#000000", null)
+		new_icon.Blend(icon, ICON_OVERLAY)
+	var/icon/blend_icon = new(src)
+	blend_icon.Opaque()
+	new_icon.Blend(blend_icon, ICON_SUBTRACT)
+	Blend(new_icon, ICON_OR)
 
 // make this icon fully opaque--transparent pixels become black
 /icon/proc/Opaque(background = "#000000")
@@ -280,10 +280,10 @@ world
 	AddAlphaMask(mask)
 
 /icon/proc/AddAlphaMask(mask)
-	var/icon/M = new(mask)
-	M.Blend("#ffffff", ICON_SUBTRACT)
+	var/icon/mask_icon = new(mask)
+	mask_icon.Blend("#ffffff", ICON_SUBTRACT)
 	// apply mask
-	Blend(M, ICON_ADD)
+	Blend(mask_icon, ICON_ADD)
 
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
@@ -886,15 +886,15 @@ world
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
 
-/proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
-	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
-	for(var/V in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		var/image/I = V
-		if(I.layer>A.layer)
+/proc/getIconMask(atom/atom_to_mask)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
+	var/icon/alpha_mask = new(atom_to_mask.icon, atom_to_mask.icon_state)//So we want the default icon and icon state of atom_to_mask.
+	for(var/iterated_image in atom_to_mask.overlays)//For every image in overlays. var/image/image will not work, don't try it.
+		var/image/image = iterated_image
+		if(image.layer > atom_to_mask.layer)
 			continue//If layer is greater than what we need, skip it.
-		var/icon/image_overlay = new(I.icon,I.icon_state)//Blend only works with icon objects.
+		var/icon/image_overlay = new(image.icon, image.icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
-		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
+		alpha_mask.Blend(image_overlay, ICON_OR)//OR so they are lumped together in a nice overlay.
 	return alpha_mask//And now return the mask.
 
 /**
@@ -935,17 +935,17 @@ world
 	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
 	for(var/i in 1 to 5)//And now we add it as overlays. It's faster than creating an icon and then merging it.
-		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
+		var/image/camo_image = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
 			if(2)
-				I.pixel_x--
+				camo_image.pixel_x--
 			if(3)
-				I.pixel_x++
+				camo_image.pixel_x++
 			if(4)
-				I.pixel_y--
+				camo_image.pixel_y--
 			if(5)
-				I.pixel_y++
-		add_overlay(I)//And finally add the overlay.
+				camo_image.pixel_y++
+		add_overlay(camo_image)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety = TRUE, opacity = 0.5)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -1001,54 +1001,54 @@ world
 GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 // Pick a random animal instead of the icon, and use that instead
-/proc/getRandomAnimalImage(atom/A)
+/proc/getRandomAnimalImage(atom/animal)
 	if(!GLOB.friendly_animal_types.len)
-		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable) == FRIENDLY_SPAWN)
-				GLOB.friendly_animal_types += SA
+		for(var/typepath in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/simple_animal = typepath
+			if(initial(simple_animal.gold_core_spawnable) == FRIENDLY_SPAWN)
+				GLOB.friendly_animal_types += simple_animal
 
 
-	var/mob/living/simple_animal/SA = pick(GLOB.friendly_animal_types)
+	var/mob/living/simple_animal/simple_animal = pick(GLOB.friendly_animal_types)
 
-	var/icon = initial(SA.icon)
-	var/icon_state = initial(SA.icon_state)
+	var/icon = initial(simple_animal.icon)
+	var/icon_state = initial(simple_animal.icon_state)
 
-	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
+	var/image/final_image = image(icon, icon_state=icon_state, loc = animal)
 
-	if(ispath(SA, /mob/living/basic/butterfly))
-		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	if(ispath(simple_animal, /mob/living/basic/butterfly))
+		final_image.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 	// For debugging
-	final_image.text = initial(SA.name)
+	final_image.text = initial(simple_animal.name)
 	return final_image
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
-/proc/DrawPixel(icon/I,colour,drawX,drawY)
-	if(!I)
+/proc/DrawPixel(icon/icon_to_use, colour, drawX, drawY)
+	if(!icon_to_use)
 		return 0
 
-	var/Iwidth = I.Width()
-	var/Iheight = I.Height()
+	var/icon_width = icon_to_use.Width()
+	var/icon_height = icon_to_use.Height()
 
-	if(drawX > Iwidth || drawX <= 0)
+	if(drawX > icon_width || drawX <= 0)
 		return 0
-	if(drawY > Iheight || drawY <= 0)
+	if(drawY > icon_height || drawY <= 0)
 		return 0
 
-	I.DrawBox(colour,drawX, drawY)
-	return I
+	icon_to_use.DrawBox(colour, drawX, drawY)
+	return icon_to_use
 
 
 //Interface for easy drawing of one pixel on an atom.
 /atom/proc/DrawPixelOn(colour, drawX, drawY)
-	var/icon/I = new(icon)
-	var/icon/J = DrawPixel(I, colour, drawX, drawY)
-	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
-		icon = J
-		return J
-	return 0
+	var/icon/icon_one = new(icon)
+	var/icon/result = DrawPixel(icon_one, colour, drawX, drawY)
+	if(result) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
+		icon = result
+		return result
+	return FALSE
 
 /// # If you already have a human and need to get its flat icon, call `get_flat_existing_human_icon()` instead.
 /// For creating consistent icons for human looking simple animals.
@@ -1069,9 +1069,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		body.equipOutfit(outfit, TRUE)
 
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-	for(var/D in showDirs)
-		var/icon/partial = getFlatIcon(body, defdir=D)
-		out_icon.Insert(partial,dir=D)
+	for(var/direction in showDirs)
+		var/icon/partial = getFlatIcon(body, defdir = direction)
+		out_icon.Insert(partial, dir = direction)
 
 	humanoid_icon_cache[icon_id] = out_icon
 	dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
@@ -1316,38 +1316,38 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return SSassets.transport.get_asset_url(key)
 	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
-/proc/icon2base64html(thing)
-	if (!thing)
+/proc/icon2base64html(target)
+	if (!target)
 		return
 	var/static/list/bicon_cache = list()
-	if (isicon(thing))
-		var/icon/I = thing
-		var/icon_base64 = icon2base64(I)
+	if (isicon(target))
+		var/icon/target_icon = target
+		var/icon_base64 = icon2base64(target_icon)
 
-		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
+		if (target_icon.Height() > world.icon_size || target_icon.Width() > world.icon_size)
 			var/icon_md5 = md5(icon_base64)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
-				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
+				bicon_cache[icon_md5] = icon_base64 = icon2base64(target_icon)
 
 
 		return "<img class='icon icon-misc' src='data:image/png;base64,[icon_base64]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "[REF(A.icon)]" : A.icon]:[A.icon_state]"
+	var/atom/target_atom = target
+	var/key = "[istype(target_atom.icon, /icon) ? "[REF(target_atom.icon)]" : target_atom.icon]:[target_atom.icon_state]"
 
 
 	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
+		var/icon/target_icon = icon(target_atom.icon, target_atom.icon_state, SOUTH, 1)
+		if (ishuman(target)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = target_icon
+			target_icon = icon()
+			target_icon.Insert(temp, dir = SOUTH)
 
-		bicon_cache[key] = icon2base64(I)
+		bicon_cache[key] = icon2base64(target_icon)
 
-	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
+	return "<img class='icon icon-[target_atom.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target, sourceonly = FALSE)
@@ -1359,8 +1359,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if (isicon(thing))
 		return icon2html(thing, target)
 
-	var/icon/I = getFlatIcon(thing)
-	return icon2html(I, target, sourceonly = sourceonly)
+	var/icon/flat_icon = getFlatIcon(thing)
+	return icon2html(flat_icon, target, sourceonly = sourceonly)
 
 GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
@@ -1399,18 +1399,18 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		animate(alpha=0)
 
 	GLOB.transformation_animation_objects[src] = transformation_objects
-	for(var/A in transformation_objects)
-		vis_contents += A
-	addtimer(CALLBACK(src, PROC_REF(_reset_transformation_animation),filter_index),time)
+	for(var/transformation_object in transformation_objects)
+		vis_contents += transformation_object
+	addtimer(CALLBACK(src, PROC_REF(_reset_transformation_animation), filter_index), time)
 
 /*
  * Resets filters and removes transformation animations helper objects from vis contents.
 */
 /atom/movable/proc/_reset_transformation_animation(filter_index)
 	var/list/transformation_objects = GLOB.transformation_animation_objects[src]
-	for(var/A in transformation_objects)
-		vis_contents -= A
-		qdel(A)
+	for(var/transformation_object in transformation_objects)
+		vis_contents -= transformation_object
+		qdel(transformation_object)
 	transformation_objects.Cut()
 	GLOB.transformation_animation_objects -= src
 	if(filters && length(filters) >= filter_index)

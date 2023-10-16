@@ -195,11 +195,6 @@ if $grep 'NanoTrasen' $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
-if $grep -i 'offical' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of official detected in code, please add the missing I(s).${NC}"
-    st=1
-fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
