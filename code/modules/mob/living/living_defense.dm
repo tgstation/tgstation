@@ -113,18 +113,18 @@
 		attack_direction = get_dir(hitting_projectile.starting, src),
 	)
 	apply_effects(
-		hitting_projectile.stun,
-		hitting_projectile.knockdown,
-		hitting_projectile.unconscious,
-		hitting_projectile.slur,
-		hitting_projectile.stutter,
-		hitting_projectile.eyeblur,
-		hitting_projectile.drowsy,
-		armor_check,
-		hitting_projectile.stamina,
-		hitting_projectile.jitter,
-		hitting_projectile.paralyze,
-		hitting_projectile.immobilize,
+		stun = hitting_projectile.stun,
+		knockdown = hitting_projectile.knockdown,
+		unconscious = hitting_projectile.unconscious,
+		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.slur, // Don't want your cyborgs to slur from being ebow'd
+		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.stutter, // Don't want your cyborgs to stutter from being tazed
+		eyeblur = hitting_projectile.eyeblur,
+		drowsy = hitting_projectile.drowsy,
+		blocked = armor_check,
+		stamina = hitting_projectile.stamina,
+		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
+		paralyze = hitting_projectile.paralyze,
+		immobilize = hitting_projectile.immobilize,
 	)
 	if(hitting_projectile.dismemberment)
 		check_projectile_dismemberment(hitting_projectile, def_zone)

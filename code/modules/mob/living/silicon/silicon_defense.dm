@@ -116,12 +116,6 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
-	// A bit cringe but silicons are immune to these effects on projectiles
-	hitting_projectile.slur = 0 SECONDS
-	hitting_projectile.stutter = 0 SECONDS
-	hitting_projectile.eyeblur = 0 SECONDS
-	hitting_projectile.jitter = 0 SECONDS
-
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
