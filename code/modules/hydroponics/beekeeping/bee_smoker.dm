@@ -85,7 +85,7 @@
 		return TRUE
 	var/fuel_worth = weed.wine_power * WEED_WINE_MULTIPLIER
 	current_herb_fuel = (current_herb_fuel + fuel_worth > max_herb_fuel) ? max_herb_fuel : current_herb_fuel + fuel_worth
-	user.balloon_alert(user, "fuel added!")
+	user.balloon_alert(user, "fuel added")
 	qdel(weed)
 	return TRUE
 
