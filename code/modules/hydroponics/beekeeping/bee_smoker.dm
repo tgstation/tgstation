@@ -58,6 +58,8 @@
 	new /obj/effect/temp_visual/mook_dust(target_turf)
 
 	for(var/mob/living/basic/bee/friend in target_turf)
+		if(friend.flags_1 & HOLOGRAM_1)
+			continue
 		friend.befriend(user)
 
 	if(!istype(attacked_atom, /obj/structure/beebox))
@@ -65,6 +67,8 @@
 
 	var/obj/structure/beebox/hive = attacked_atom
 	for(var/mob/living/bee as anything in hive.bees)
+		if(bee.flags_1 & HOLOGRAM_1)
+			continue
 		bee.befriend(user)
 
 /obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers)
