@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Megafauna, lavaland elites, and abstract mobs now correctly cannot be spawned by a toolbox of ash drake summoning"
