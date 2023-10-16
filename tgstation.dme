@@ -3901,6 +3901,7 @@
 #include "code\modules\hallucination\hud_screw.dm"
 #include "code\modules\hallucination\ice_cube.dm"
 #include "code\modules\hallucination\inhand_fake_item.dm"
+#include "code\modules\hallucination\mother.dm"
 #include "code\modules\hallucination\nearby_fake_item.dm"
 #include "code\modules\hallucination\on_fire.dm"
 #include "code\modules\hallucination\screwy_health_doll.dm"
