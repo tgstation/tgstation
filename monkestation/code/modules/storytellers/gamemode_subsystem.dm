@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(gamemode)
 			message_admins("Scheduled Event: [sch_event.event] will run in [(sch_event.start_time - world.time) / 10] seconds. (<a href='?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='?src=[REF(sch_event)];action=refund'>REFUND</a>)")
 
 	if(!halted_storyteller && next_storyteller_process <= world.time && storyteller)
-				// We update crew information here to adjust population scalling and event thresholds for the storyteller.
+		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
 		update_crew_infos()
 		next_storyteller_process = world.time + STORYTELLER_WAIT_TIME
 		storyteller.process(STORYTELLER_WAIT_TIME * 0.1)

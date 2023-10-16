@@ -86,9 +86,9 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || SSgamemode.ran_roundstart))
+	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || (SSgamemode.ran_roundstart && !fake_check)))
 		return FALSE
 	if(occurrences >= max_occurrences)
 		return FALSE
@@ -126,10 +126,10 @@
 		if(!roundstart)
 			sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!can_spawn_event(players_amt) && !forced)
+		if(!can_spawn_event(players_amt, fake_check = TRUE) && !forced)
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
-		if(!can_spawn_event(players_amt) && forced)
+		if(!can_spawn_event(players_amt, fake_check = TRUE) && forced)
 			message_admins("Second pre-condition check for [name] failed, but event forced, running event regardless this may have issues...")
 
 	if(!triggering)
