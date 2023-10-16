@@ -40,21 +40,19 @@
 	if(!slot || slot & ITEM_SLOT_HANDS)
 		return
 	if(!IS_HERETIC(user))
-		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40, 160)
-		user.adjust_confusion(user.get_organ_loss(ORGAN_SLOT_BRAIN)/10 SECONDS)
 		return
 
 	//Vars used for the shield component
 	var/heretic_shield_icon = "shield-old"
-	var/max_charges = 3
-	var/recharge_start_delay = 60 SECONDS
-	var/charge_increment_delay = 30 SECONDS
+	var/max_charges = 5
+	var/recharge_start_delay = 120 SECONDS
+	var/charge_increment_delay = 20 SECONDS
 	var/charge_recovery = 1
 	var/lose_multiple_charges = FALSE
 	var/show_charge_as_alpha = TRUE
 
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, show_charge_as_alpha = show_charge_as_alpha, shield_icon = heretic_shield_icon)
+	charge_recovery = charge_recovery, show_charge_as_alpha = show_charge_as_alpha, shield_icon = heretic_shield_icon)
 
 
 /obj/item/storage/belt/unfathomable_curio/proc/on_examine(atom/source, mob/living/carbon/human/user, list/examine_list)
