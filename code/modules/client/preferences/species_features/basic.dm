@@ -1,4 +1,4 @@
-/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
+/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory, y_offset = 0)
 	var/static/icon/head_icon
 	if (isnull(head_icon))
 		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
@@ -7,8 +7,10 @@
 	var/icon/final_icon = new(head_icon)
 	if (!isnull(sprite_accessory))
 		ASSERT(istype(sprite_accessory))
-
+		
 		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		if(y_offset)
+			head_accessory_icon.Shift(NORTH, y_offset)
 		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
 		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
@@ -138,7 +140,8 @@
 	return assoc_to_keys_features(GLOB.hairstyles_list)
 
 /datum/preference/choiced/hairstyle/icon_for(value)
-	return generate_icon_with_head_accessory(GLOB.hairstyles_list[value])
+	var/datum/sprite_accessory/hair/hairstyle = GLOB.hairstyles_list[value]
+	return generate_icon_with_head_accessory(hairstyle, hairstyle?.y_offset)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)

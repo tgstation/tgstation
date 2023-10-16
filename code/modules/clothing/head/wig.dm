@@ -25,7 +25,7 @@
 	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
-	var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[hairstyle]
 	if(hair_style)
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
@@ -37,12 +37,13 @@
 	if(isinhands)
 		return
 
-	var/datum/sprite_accessory/hair = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair = GLOB.hairstyles_list[hairstyle]
 	if(!hair)
 		return
 
 	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
 	hair_overlay.color = color
+	hair_overlay.pixel_y = hair.y_offset
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.

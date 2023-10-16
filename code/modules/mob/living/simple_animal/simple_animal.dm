@@ -563,6 +563,7 @@
 	update_held_items()
 
 /mob/living/simple_animal/update_held_items()
+	. = ..()
 	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
 		return
 	var/turf/our_turf = get_turf(src)

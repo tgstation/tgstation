@@ -1,8 +1,7 @@
-/*
-	Basically just an empty shell for receiving and broadcasting radio messages. Not
-	very flexible, but it gets the job done.
-*/
-
+/**
+ * Basically just an empty shell for receiving and broadcasting radio messages. Not
+ * very flexible, but it gets the job done.
+ */
 /obj/machinery/telecomms/allinone
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
@@ -41,6 +40,6 @@
 		sleep(signal.data["slow"]) // simulate the network lag if necessary
 	signal.broadcast()
 
-/obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_MULTITOOL)
+/obj/machinery/telecomms/allinone/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		return attack_hand(user)

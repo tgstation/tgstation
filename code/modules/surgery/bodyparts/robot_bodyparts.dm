@@ -235,7 +235,45 @@
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_BODYPART_ATTACHED)
 	return ..()
+
+/obj/item/bodypart/chest/robot/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attached))
+	RegisterSignal(src, COMSIG_BODYPART_REMOVED, PROC_REF(on_detached))
+
+/obj/item/bodypart/chest/robot/proc/on_attached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/new_owner)
+	SIGNAL_HANDLER
+
+	RegisterSignals(new_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(check_limbs))
+
+/obj/item/bodypart/chest/robot/proc/on_detached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/old_owner)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+
+/obj/item/bodypart/chest/robot/proc/check_limbs()
+	SIGNAL_HANDLER
+
+	var/all_robotic = TRUE
+	for(var/obj/item/bodypart/part in owner.bodyparts)
+		all_robotic = all_robotic && IS_ROBOTIC_LIMB(part)
+
+	if(all_robotic)
+		owner.add_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
+	else
+		owner.remove_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/stock_parts/cell))

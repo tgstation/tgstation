@@ -1322,7 +1322,7 @@
 	if(!.)
 		ph = CHEMICAL_NORMAL_PH
 	else
-		ph = clamp(total_ph / total_volume, 0, 14)
+		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 	//now send the signals after the volume & ph has been computed
 	for(var/datum/reagent/deleted_reagent as anything in deleted_reagents)
@@ -1587,9 +1587,9 @@
 * Arguments:
 * * value - How much to adjust the base pH by
 */
-/datum/reagents/proc/adjust_all_reagents_ph(value, lower_limit = 0, upper_limit = 14)
+/datum/reagents/proc/adjust_all_reagents_ph(value)
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+		reagent.ph = clamp(reagent.ph + value, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 /*
 * Adjusts the base pH of a specific type
@@ -1599,14 +1599,12 @@
 * Arguments:
 * * input_reagent - type path of the reagent
 * * value - How much to adjust the base pH by
-* * lower_limit - how low the pH can go
-* * upper_limit - how high the pH can go
 */
-/datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value, lower_limit = 0, upper_limit = 14)
+/datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value)
 	var/datum/reagent/reagent = get_reagent(input_reagent)
 	if(!reagent) //We can call this with missing reagents.
 		return FALSE
-	reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+	reagent.ph = clamp(reagent.ph + value, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 /**
  * Outputs a log-friendly list of reagents based on an external reagent list.
