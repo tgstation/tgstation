@@ -182,7 +182,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/spider/giant/midwife, // We don't want the event to end instantly because of a 2 hp spiderling dying
+		/mob/living/basic/spider/growing/spiderling/midwife, // We don't want the event to end instantly because broodmothers got a bad spawn
 	)
 	flash_window = TRUE
 
