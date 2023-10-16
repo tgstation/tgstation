@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
 import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
-import { calculateProgression, getReputation, Rank } from './calculateReputationLevel';
+import { calculateProgression, getDangerLevel, Rank } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
 import type { InfernoNode } from 'inferno';
 
@@ -281,12 +281,12 @@ const ObjectiveFunction = (
   handleAbort?: (objective: Objective) => void,
   grow: boolean = false
 ) => {
-  const reputation = getReputation(objective.progression_minimum);
+  const dangerLevel = getDangerLevel(objective.progression_minimum);
   return (
     <ObjectiveElement
       name={objective.name}
       description={objective.description}
-      reputation={reputation}
+      dangerLevel={dangerLevel}
       telecrystalReward={objective.telecrystal_reward}
       telecrystalPenalty={objective.telecrystal_penalty}
       progressionReward={objective.progression_reward}
@@ -319,7 +319,7 @@ const ObjectiveFunction = (
                   content={value.name}
                   icon={value.icon}
                   tooltip={value.tooltip}
-                  className={reputation.gradient}
+                  className={dangerLevel.gradient}
                   onClick={() => {
                     handleObjectiveAction(objective, value.action);
                   }}
@@ -335,7 +335,7 @@ const ObjectiveFunction = (
 
 type ObjectiveElementProps = {
   name: string;
-  reputation: Rank;
+  dangerLevel: Rank;
   description: string;
   telecrystalReward: number;
   progressionReward: number;
@@ -355,7 +355,7 @@ type ObjectiveElementProps = {
 export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
   const {
     name,
-    reputation,
+    dangerLevel,
     description,
     uiButtons = null,
     telecrystalReward,
@@ -400,7 +400,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         <Box
           className={classes([
             'UplinkObjective__Titlebar',
-            reputation.gradient,
+            dangerLevel.gradient,
           ])}
           width="100%"
           height="100%">
@@ -452,13 +452,13 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                       'border-right': 'none',
                       'border-bottom': objectiveFinished ? 'none' : undefined,
                     }}
-                    className={reputation.gradient}
+                    className={dangerLevel.gradient}
                     py={0.5}
                     width="100%"
                     textAlign="center">
                     {telecrystalReward} TC,
                     <Box ml={1} as="span">
-                      {calculateProgression(progressionReward)} Reputation
+                      {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (
                         <Tooltip
                           content={
@@ -477,9 +477,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                                 as="span">
                                 {Math.abs(progressionDiff)}%
                               </Box>
-                              {progressionDiff > 0 ? 'less' : 'more'} reputation
-                              from this objective. This is because your
-                              reputation is{' '}
+                              {progressionDiff > 0 ? 'less' : 'more'} threat
+                              from this objective. This is because your threat
+                              level is{' '}
                               {progressionDiff > 0 ? 'ahead ' : 'behind '}
                               where it normally should be at.
                             </Box>
@@ -505,7 +505,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                 {objectiveFinished ? (
                   <Box
                     inline
-                    className={reputation.gradient}
+                    className={dangerLevel.gradient}
                     style={{
                       'border-radius': '0',
                       'border': '2px solid rgba(0, 0, 0, 0.5)',

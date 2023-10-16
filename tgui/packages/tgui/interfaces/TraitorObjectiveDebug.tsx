@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { getReputation } from './Uplink/calculateReputationLevel';
+import { getDangerLevel } from './Uplink/calculateDangerLevel';
 import type { InfernoNode } from 'inferno';
 
 type Objective = {
@@ -272,7 +272,7 @@ export const TraitorObjectiveDebug = (props, context) => {
             ))}
           </Stack>
           {player_data.map((value) => {
-            const rep = getReputation(value.progression_points);
+            const rep = getDangerLevel(value.progression_points);
             return (
               <Tooltip
                 key={value.player}
