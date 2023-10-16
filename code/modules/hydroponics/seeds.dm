@@ -178,7 +178,6 @@
 	copy_seed.reagents_add = reagents_add.Copy() // Fastetr than grabbing the list from genes.
 	copy_seed.harvest_age = harvest_age
 
-	copy_seed.harvest_age = harvest_age
 	copy_seed.species = species
 	copy_seed.icon_grow = icon_grow
 	copy_seed.icon_harvest = icon_harvest
