@@ -6273,6 +6273,8 @@
 #include "monkestation\code\modules\storytellers\converted_events\_base_event.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodcult.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\changeling.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\clockwork_cult.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\clown_operative.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\malf.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\nuclear_operative.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\revolutionary.dm"
