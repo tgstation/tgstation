@@ -121,7 +121,7 @@
  * * user: The mob we are starting zooming on.
 */
 /datum/component/scope/proc/zoom(mob/living/user)
-	if(!user.client)
+	if(isnull(user.client))
 		return
 	if(zooming)
 		return
@@ -131,8 +131,7 @@
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
 	tracker.assign_to_mob(user, range_modifier)
 	tracker_owner_ckey = user.ckey
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
-	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
+	RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
 	START_PROCESSING(SSprojectiles, src)
 	return TRUE
 
@@ -149,8 +148,7 @@
 		return
 
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
-	UnregisterSignal(user, COMSIG_QDELETING)
+	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING))
 
 	zooming = FALSE
 
