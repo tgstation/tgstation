@@ -8,8 +8,11 @@
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	/// List of factions to assign to spawned mob
 	var/list/faction
+	/// Mob typepath to spawn when expanding
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
+	/// Whether we've been wetted and are expanding
 	var/expanding = FALSE
 
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
@@ -21,11 +24,12 @@
 	if(expanding)
 		return
 
+	expanding = TRUE
+
 	if(ismob(loc))
 		var/mob/holder = loc
 		holder.dropItemToGround(src)
 
-	expanding = TRUE
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
 	if (!QDELETED(bananas))
