@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "Fixes a bug with the plasma flower core MODsuit that would cause a butterfly murder scene wherever there were turrets"
