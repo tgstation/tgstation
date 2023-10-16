@@ -303,9 +303,6 @@
 	name = "Balcony";
 	id_tag = "beach_room_x"
 	},
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dS" = (
@@ -565,7 +562,9 @@
 /obj/structure/table/bronze,
 /obj/structure/sign/poster/random/directional/east,
 /obj/machinery/button/door/directional/south{
-	id = "beach_room_10"
+	id = "beach_room_10";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/table_clock{
 	pixel_y = 4
@@ -868,7 +867,9 @@
 /area/awaymission/beach)
 "kR" = (
 /obj/machinery/button/door/directional/north{
-	id = "beach_room_12"
+	id = "beach_room_12";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -876,7 +877,7 @@
 /turf/open/floor/eighties,
 /area/awaymission/beach)
 "lb" = (
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -1177,7 +1178,9 @@
 "oX" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/button/door/directional/west{
-	id = "beach_room_7"
+	id = "beach_room_7";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/clothing/suit/apron/overalls,
 /turf/open/floor/wood,
@@ -1316,7 +1319,9 @@
 /area/awaymission/beach)
 "qC" = (
 /obj/machinery/button/door/directional/west{
-	id = "beach_room_1"
+	id = "beach_room_1";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -1456,7 +1461,9 @@
 /area/awaymission/beach)
 "tx" = (
 /obj/machinery/button/door/directional/north{
-	id = "beach_room_3"
+	id = "beach_room_3";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -1545,7 +1552,9 @@
 "um" = (
 /obj/structure/table/bronze,
 /obj/machinery/button/door/directional/south{
-	id = "beach_room_11"
+	id = "beach_room_11";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/storage/toolbox/fishing{
 	pixel_y = 2
@@ -1697,7 +1706,9 @@
 /obj/structure/table/bronze,
 /obj/structure/sign/poster/random/directional/east,
 /obj/machinery/button/door/directional/south{
-	id = "beach_room_8"
+	id = "beach_room_8";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/camera{
 	pixel_y = 5
@@ -1746,6 +1757,9 @@
 /obj/item/storage/toolbox/fishing{
 	pixel_y = -8;
 	pixel_x = -3
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/beach)
@@ -1900,7 +1914,6 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/awaymission/beach)
 "yO" = (
-/obj/effect/turf_decal/siding/wood,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 12;
@@ -1929,7 +1942,9 @@
 "yZ" = (
 /obj/machinery/space_heater,
 /obj/machinery/button/door/directional/north{
-	id = "beach_room_2"
+	id = "beach_room_2";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -2330,7 +2345,9 @@
 "DV" = (
 /obj/structure/table/bronze,
 /obj/machinery/button/door/directional/south{
-	id = "beach_room_4"
+	id = "beach_room_4";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/storage/toolbox/fishing{
 	pixel_y = 2
@@ -2413,6 +2430,9 @@
 "EF" = (
 /obj/structure/railing/corner/end{
 	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
 	},
 /turf/open/water/beach,
 /area/awaymission/beach)
@@ -2595,12 +2615,12 @@
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "FU" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
 /obj/item/cigbutt{
 	pixel_y = -6;
 	pixel_x = -12
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/beach)
@@ -3161,7 +3181,9 @@
 /area/awaymission/beach)
 "Nd" = (
 /obj/machinery/button/door/directional/south{
-	id = "beach_room_5"
+	id = "beach_room_5";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -3255,6 +3277,9 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/water/beach,
 /area/awaymission/beach)
 "OD" = (
@@ -3264,7 +3289,9 @@
 "OE" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/button/door/directional/west{
-	id = "beach_room_6"
+	id = "beach_room_6";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/clothing/suit/jacket/leather/biker,
 /turf/open/floor/wood,
@@ -3451,6 +3478,12 @@
 	pixel_x = -6
 	},
 /turf/open/floor/wood/large,
+/area/awaymission/beach)
+"Rc" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/closed/wall/mineral/wood,
 /area/awaymission/beach)
 "Rj" = (
 /turf/open/misc/beach/coast{
@@ -3886,7 +3919,9 @@
 "XV" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/button/door/directional/north{
-	id = "beach_room_9"
+	id = "beach_room_9";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/item/claymore/cutlass{
 	desc = "A piratey, foam sword used by kids to train themselves in the business of \"negotiating\" the transfer of treasure.";
@@ -14450,7 +14485,7 @@ mP
 Lg
 un
 tD
-xv
+Rc
 TX
 bi
 bi
