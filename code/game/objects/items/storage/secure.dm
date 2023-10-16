@@ -40,7 +40,7 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
+/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(can_hack_open && atom_storage.locked)
 		return ..()
 	else

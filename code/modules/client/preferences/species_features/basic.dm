@@ -1,19 +1,18 @@
-/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
+/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory, y_offset = 0)
 	var/static/icon/head_icon
 	if (isnull(head_icon))
 		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	if (isnull(sprite_accessory))
-		return head_icon
-
-	ASSERT(istype(sprite_accessory))
-
 	var/icon/final_icon = new(head_icon)
-
-	var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
-	head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-	final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
+	if (!isnull(sprite_accessory))
+		ASSERT(istype(sprite_accessory))
+		
+		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		if(y_offset)
+			head_accessory_icon.Shift(NORTH, y_offset)
+		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
+		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
 	final_icon.Crop(10, 19, 22, 31)
 	final_icon.Scale(32, 32)
@@ -141,7 +140,8 @@
 	return assoc_to_keys_features(GLOB.hairstyles_list)
 
 /datum/preference/choiced/hairstyle/icon_for(value)
-	return generate_icon_with_head_accessory(GLOB.hairstyles_list[value])
+	var/datum/sprite_accessory/hair/hairstyle = GLOB.hairstyles_list[value]
+	return generate_icon_with_head_accessory(hairstyle, hairstyle?.y_offset)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)
