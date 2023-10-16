@@ -766,9 +766,6 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		choices += storyboy.name
 		choices[storyboy.name] = 0
-		///Because the vote subsystem is dumb and does not support any descriptions, we dump them into world.
-		to_chat(world, span_notice("<b>[storyboy.name]</b>"))
-		to_chat(world, span_notice("[storyboy.desc]"))
 	return choices
 
 /datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
