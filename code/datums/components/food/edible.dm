@@ -488,12 +488,7 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
 	if(!iscarbon(eater))
 		return FALSE
-	var/covered = ""
-	if(eater.is_mouth_covered(ITEM_SLOT_HEAD))
-		covered = "headgear"
-	else if(eater.is_mouth_covered(ITEM_SLOT_MASK))
-		covered = "mask"
-	if(covered)
+	if(eater.is_mouth_covered())
 		eater.balloon_alert(feeder, "mouth is covered!")
 		return FALSE
 
