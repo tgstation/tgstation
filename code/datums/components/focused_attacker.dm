@@ -24,7 +24,7 @@
 
 /datum/component/focused_attacker/RegisterWithParent()
 	if (isliving(parent))
-		RegisterSignals(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(pre_mob_attack))
+		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(pre_mob_attack))
 	else
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_item_attack))
 
