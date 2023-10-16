@@ -84,6 +84,7 @@
 	icon_state = "dark_hos"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
+
 /obj/item/clothing/head/costume/dark_hos
 	name = "\improper Dark Head of Security Cap"
 	desc = "Slip this on and you're gonna be cutting people with that edge."
@@ -99,4 +100,30 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "lemon_bandolier"
 	body_parts_covered = CHEST
+	inhand_icon_state = null
+
+/obj/item/clothing/under/costume/whitebeard
+	name = "\improper Whitebeard's Attire"
+	desc = "The garb of a world renowned pirate."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "wbunder"
+	worn_icon_state = "wbunder"
+	inhand_icon_state = null
+	body_parts_covered = LEGS
+
+/obj/item/clothing/neck/whitebeard
+	name = "Whitebeard's Jacket"
+	desc = "The jacket of a world renowned pirate."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "wbcloak"
+	worn_icon_state = "wbcloak"
+
+/obj/item/clothing/suit/costume/beegirl
+	name = "Bee's Costume"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "beegirl"
+	body_parts_covered = CHEST|ARMS
 	inhand_icon_state = null

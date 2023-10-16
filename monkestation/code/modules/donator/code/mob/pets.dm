@@ -27,7 +27,7 @@
 	icon_dead = "[random_icon]_dead"
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/lizard/blahaj
+/mob/living/basic/pet/blahaj
 	name = "\improper Blåhaj"
 	desc = "The blue shark can swim very far, dive really deep and hear noises from almost 250 meters away."
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
@@ -37,7 +37,7 @@
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/lizard/cirno  //nobody needs to know she's a lizard
+/mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
 	icon = 'monkestation/icons/obj/plushes.dmi'
@@ -54,3 +54,53 @@
 	icon_state = "triple_snake"
 	icon_dead = ""
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/pet/dog/germanshepherd
+	name = "German Shepherd"
+	desc = "He's so cool, he's got sunglasses!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "germanshepherd"
+	icon_dead = ""
+	icon_gib = null
+	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/pet/slime/talkative
+	name = "Extroverted Slime"
+	desc = "He's got a lot to say!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "slime"
+	icon_dead = ""
+	gold_core_spawnable = NO_SPAWN
+	initial_language_holder = /datum/language_holder/slime
+	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
+					"I've seen salad that dresses better than you.",
+					"I smell smoke, are you thinking too hard again?",
+					"This one's gene pool needs more chlorine...",
+					"I expected nothing and yet I'm still disappointed.",
+					"Why is this walking participation trophy touching me?",
+					"If I throw a stick, will you leave?",)
+	var/positive_quips = list("Hey there, slime pal!",
+								"Aw thanks buddy!",)
+
+/mob/living/basic/pet/slime/talkative/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(src.stat != CONSCIOUS || (user.istate & ISTATE_HARM) || LAZYACCESS(modifiers, RIGHT_CLICK))
+		return
+
+	new /obj/effect/temp_visual/heart(src.loc)
+	if(prob(33))
+		if(isslimeperson(user) || isoozeling(user))
+			src.say(pick(positive_quips))
+		else
+			src.say(pick(quips))
+
+
+/mob/living/basic/pet/spider/dancing
+	name = "Dancin' Spider"
+	desc = "Look at him go!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "spider"
+	icon_dead = ""
+	gold_core_spawnable = NO_SPAWN
+

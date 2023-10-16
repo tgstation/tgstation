@@ -5849,6 +5849,7 @@
 #include "monkestation\code\modules\donator\code\datum\loadout.dm"
 #include "monkestation\code\modules\donator\code\item\choice_beacon.dm"
 #include "monkestation\code\modules\donator\code\item\clothing.dm"
+#include "monkestation\code\modules\donator\code\item\effects.dm"
 #include "monkestation\code\modules\donator\code\item\plush.dm"
 #include "monkestation\code\modules\donator\code\mob\pets.dm"
 #include "monkestation\code\modules\events\wizard\summon_gifts.dm"
