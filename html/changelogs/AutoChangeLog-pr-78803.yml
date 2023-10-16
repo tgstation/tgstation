@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "basic mobs will no longer runtime when trying to check the faction of a porta turret"
+  - refactor: "faction checking is now done at the atom/movable level"
