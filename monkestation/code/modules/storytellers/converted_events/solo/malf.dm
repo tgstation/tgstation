@@ -1,5 +1,6 @@
 /datum/round_event_control/antagonist/solo/malf
 	antag_datum = /datum/antagonist/malf_ai
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
 	antag_flag = ROLE_MALF
 	enemy_roles = list(
 		JOB_CHEMIST,
@@ -13,6 +14,7 @@
 	exclusive_roles = list(JOB_AI)
 	required_enemies = 4
 	weight = 4
+	max_occurrences = 1
 
 /datum/round_event_control/antagonist/solo/malf/trim_candidates(list/candidates)
 	for(var/mob/living/player in candidates)

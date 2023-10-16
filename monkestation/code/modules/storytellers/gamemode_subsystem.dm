@@ -798,6 +798,7 @@ SUBSYSTEM_DEF(gamemode)
 	dat += " <a href='?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='?src=[REF(src)];panel=main'>Refresh</a>"
 	dat += "<BR><font color='#888888'><i>Storyteller determines points gained, event chances, and is the entity responsible for rolling events.</i></font>"
 	dat += "<BR>Active Players: [active_players]   (Head: [head_crew], Sec: [sec_crew], Eng: [eng_crew], Med: [med_crew])"
+	dat += "<BR>Antagonist Count vs Maximum: [GLOB.antagonists.len] / [get_antag_cap()]"
 	dat += "<HR>"
 	dat += "<a href='?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
 	dat += " <a href='?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
@@ -936,6 +937,7 @@ SUBSYSTEM_DEF(gamemode)
 	dat += "<td width=17%><b>Name</b></td>"
 	dat += "<td width=16%><b>Tags</b></td>"
 	dat += "<td width=8%><b>Occurences</b></td>"
+	dat += "<td width=8%><b>Max Occurences</b></td>"
 	dat += "<td width=5%><b>M.Pop</b></td>"
 	dat += "<td width=5%><b>M.Time</b></td>"
 	dat += "<td width=7%><b>Can Occur</b></td>"
@@ -975,7 +977,9 @@ SUBSYSTEM_DEF(gamemode)
 		var/occurence_string = "[event.occurrences]"
 		if(event.shared_occurence_type)
 			occurence_string += " (shared: [event.get_occurences()])"
+		var/max_occurence_string = "[event.max_occurrences]"
 		dat += "<td>[occurence_string]</td>" //Occurences
+		dat += "<td>[max_occurence_string]</td>" //Max Occurences
 		dat += "<td>[event.min_players]</td>" //Minimum pop
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
@@ -987,7 +991,7 @@ SUBSYSTEM_DEF(gamemode)
 		dat += "<td>[event.get_href_actions()]</td>" //Actions
 		dat += "</tr>"
 	dat += "</table>"
-	var/datum/browser/popup = new(user, "gamemode_event_panel", "Event Panel", 1000, 600)
+	var/datum/browser/popup = new(user, "gamemode_event_panel", "Event Panel", 1100, 600)
 	popup.set_content(dat.Join())
 	popup.open()
 

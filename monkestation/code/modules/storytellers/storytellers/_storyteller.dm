@@ -145,7 +145,7 @@
 		SSgamemode.current_roundstart_event = bought_event
 		mode.TriggerEvent(bought_event, forced)
 	else
-		mode.schedule_event(bought_event, (rand(3, 4) MINUTES), total_cost, _forced = forced)
+		mode.schedule_event(bought_event, (rand(120, 240) SECONDS), total_cost, _forced = forced)
 	SSgamemode.triggered_round_events |= bought_event.name
 
 /// Calculates the weights of the events from a passed track.

@@ -1,5 +1,6 @@
 /datum/round_event_control/antagonist/solo/clown_operative
 	name = "Roundstart Clown Operative"
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop/clownop
 	typepath = /datum/round_event/antagonist/solo/clown_operative
@@ -34,6 +35,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
+	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/clown_operative
 	excute_round_end_reports = TRUE

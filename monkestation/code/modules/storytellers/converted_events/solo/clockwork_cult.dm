@@ -1,5 +1,6 @@
 /datum/round_event_control/antagonist/solo/clockcult
 	name = "Clock Cult"
+	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
 	antag_flag = ROLE_CLOCK_CULTIST
 	antag_datum = /datum/antagonist/clock_cultist
 	typepath = /datum/round_event/antagonist/solo/clockcult
@@ -31,6 +32,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
+	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/clockcult
 	end_when = 60000

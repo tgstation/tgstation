@@ -1,5 +1,6 @@
 /datum/round_event_control/antagonist/solo/wizard
 	name = "Wizard"
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
 	typepath = /datum/round_event/antagonist/solo/wizard
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard

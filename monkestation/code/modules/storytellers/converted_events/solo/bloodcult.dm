@@ -1,5 +1,6 @@
 /datum/round_event_control/antagonist/solo/bloodcult
 	name = "Blood Cult"
+	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	typepath = /datum/round_event/antagonist/solo/bloodcult
@@ -30,6 +31,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
+	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/bloodcult
 	excute_round_end_reports = TRUE
