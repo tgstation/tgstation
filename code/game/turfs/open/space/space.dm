@@ -18,6 +18,10 @@ GLOBAL_VAR_INIT(starlight_power, default_starlight_power())
 	var/turf/open/space/read_from = /turf/open/space
 	return initial(read_from.light_power)
 
+/proc/set_base_starlight(star_color = null, range = null, power = null)
+	GLOB.base_starlight_color = star_color
+	set_starlight(star_color, range, power)
+
 /proc/set_starlight(star_color = null, range = null, power = null)
 	if(isnull(star_color))
 		star_color = GLOB.starlight_color
@@ -104,7 +108,7 @@ GLOBAL_LIST_EMPTY(starlight)
 /// Updates starlight. Called when we're unsure of a turf's starlight state
 /// Returns TRUE if we succeed, FALSE otherwise
 /turf/open/space/proc/update_starlight()
-	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+	for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		// I've got a lot of cordons near spaceturfs, be good kids
 		if(isspaceturf(t) || istype(t, /turf/cordon))
 			//let's NOT update this that much pls
