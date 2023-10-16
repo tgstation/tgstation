@@ -203,7 +203,7 @@
 	if(MEDBOT_STATIONARY_MODE) //we add the stationary suffix to the screen name, if not we don't add anythign
 		stationary_suffix = "_stationary"
 
-	icon_state = "[base_icon_state]"
+	icon_state = base_icon_state
 	screen_overlay.icon_state = null
 	screen_overlay_2.icon_state = null
 
@@ -468,7 +468,7 @@
 
 	if(frustration > 8)
 		oldpatient = patient
-		flick_overlay_static("[base_screen_state][stationary_suffix]_death, src, 6 SECONDS")
+		flick_overlay_static("[base_screen_state][stationary_suffix]_death", src, 6 SECONDS)
 		soft_reset()
 
 	if(QDELETED(patient))
