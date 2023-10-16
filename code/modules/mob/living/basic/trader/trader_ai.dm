@@ -4,7 +4,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/jps
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,
@@ -99,3 +99,6 @@
 	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
 	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf))
 		return sign_turf
+
+/datum/idle_behavior/idle_random_walk/not_while_on_target/trader
+	target_key = BB_SHOP_SPOT
