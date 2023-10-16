@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Hands of cards will now properly display the last card added to the hand all the time, even when there's more than five cards in that hand."
