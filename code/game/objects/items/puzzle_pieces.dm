@@ -299,6 +299,7 @@
 	used = single_use
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
+	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
 	open_doors()
 
 /obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason

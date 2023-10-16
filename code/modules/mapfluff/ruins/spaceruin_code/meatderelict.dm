@@ -101,6 +101,8 @@
 	playsound(src, 'sound/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	for(var/direction in dirs)
 		var/victim_turf = get_step(src, direction)
+		if(isclosedturf(victim_turf))
+			continue
 		Beam(victim_turf, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
 		RegisterSignal(victim_turf, COMSIG_ATOM_ENTERED, PROC_REF(shock_victim)) //we cant move anyway
 		signal_turfs += victim_turf

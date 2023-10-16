@@ -81,6 +81,7 @@
 /mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_CROWBAR)
 		balloon_alert(user, "you start prying it off with all your strength...")
+		playsound(src, 'sound/items/crowbar.ogg', 45, TRUE)
 		if(do_after(user, 5 SECONDS, src))
 			new /obj/effect/gibspawner/generic(loc)
 			qdel(src)
