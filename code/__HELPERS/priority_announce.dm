@@ -37,12 +37,12 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
-	announcement += "<br>"
+	announcement += "<br><br>"
 
 	if(type == "Priority")
 		announcement += "[span_priorityannounce("<u>Priority Announcement</u>")]"
 		if (title && length(title) > 0)
-			announcement += "[span_priorityannounce("<br>[title]")]"
+			announcement += "[span_prioritytitle("<br>[title]")]"
 	else if(type == "Captain")
 		announcement += "[span_priorityannounce("<u>Captain Announces</u>")]"
 		GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
@@ -55,7 +55,7 @@
 		else
 			announcement += "[span_priorityannounce("<u>[sender_override]</u>")]"
 		if (title && length(title) > 0)
-			announcement += "[span_priorityannounce("<br>[title]")]"
+			announcement += "[span_prioritytitle("<br>[title]")]"
 
 		if(!sender_override)
 			if(title == "")
@@ -69,7 +69,7 @@
 	else
 		announcement += "[span_priorityalert("<br>[text]<br>")]"
 
-	announcement += "<br>"
+	announcement += "<br><br>"
 
 	if(!players)
 		players = GLOB.player_list
@@ -88,11 +88,11 @@
 	if(announce)
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
 
-	var/datum/comm_message/M = new
-	M.title = title
-	M.content = text
+	var/datum/comm_message/message = new
+	message.title = title
+	message.content = text
 
-	SScommunications.send_message(M)
+	SScommunications.send_message(message)
 
 /**
  * Sends a minor annoucement to players.
@@ -124,8 +124,8 @@
 		if(!target.can_hear())
 			continue
 
-		to_chat(target, span_minorannounce(title))
-		to_chat(target, span_minoralert(message))
+		to_chat(target, "<br>[span_minorannounce(title)]<br>")
+		to_chat(target, "[span_minoralert(message)]<br><br><br>")
 		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))
