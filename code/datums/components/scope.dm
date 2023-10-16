@@ -120,7 +120,7 @@
  * Arguments:
  * * user: The mob we are starting zooming on.
 */
-/datum/component/scope/proc/zoom(mob/living/user)
+/datum/component/scope/proc/zoom(mob/user)
 	if(isnull(user.client))
 		return
 	if(zooming)
