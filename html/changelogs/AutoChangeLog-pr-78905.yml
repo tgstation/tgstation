@@ -1,6 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Having all augmented limbs will make you properly spaceproof once again."
-  - bugfix: "Androids are immune to crit damage again."
-  - bugfix: "Surgery on robotic limbs can be canceled."
