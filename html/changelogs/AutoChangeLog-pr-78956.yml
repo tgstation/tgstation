@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - code_imp: "Got rid of a few more single-letter variables. Only over six thousand left to go, woo!"

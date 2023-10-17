@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "ghost sheets will now have the correct flags for digi sprites"

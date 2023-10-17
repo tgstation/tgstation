@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "removed unnecessary calls to `update_total()`"
