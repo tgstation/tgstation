@@ -788,6 +788,8 @@
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
 /mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
+	if(!user) // If this gets called with a null user then its going to runtime unless we check for it
+		return FALSE
 	if(new_upgrade in upgrades)
 		return FALSE
 	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
