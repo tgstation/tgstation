@@ -34,16 +34,26 @@ jobs:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-yarn-
+      - name: Restore Node cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.nvm
+          key: ${{ runner.os }}-node-${{ hashFiles('dependencies.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Restore Bootstrap cache
+        uses: actions/cache@v3
+        with:
+          path: tools/bootstrap/.cache
+          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
         uses: actions/cache@v3
         with:
           path: ~/.cargo
           key: ${{ runner.os }}-rust
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
       - name: Install Tools
         run: |
           pip3 install setuptools
@@ -60,7 +70,6 @@ jobs:
       - name: Ticked File Enforcement
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
-          set +e
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
       - name: Check Define Sanity
@@ -241,8 +250,7 @@ jobs:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-yarn-
       - name: Compile
         run: pwsh tools/ci/build.ps1
         env:

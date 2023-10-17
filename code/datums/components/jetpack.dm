@@ -84,8 +84,6 @@
 	if(!check_on_move.Invoke(TRUE))
 		return return_flag
 
-	ADD_TRAIT(user, TRAIT_JETPACKING, REF(src))
-
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
@@ -96,8 +94,6 @@
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
-
-	REMOVE_TRAIT(user, TRAIT_JETPACKING, REF(src))
 
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)

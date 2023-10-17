@@ -74,7 +74,7 @@
 		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		our_turf.atmos_spawn_air("[GAS_O2]=[amt]")
 
-/mob/living/basic/tree/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/tree/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 
 	if(!.)
@@ -107,12 +107,6 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/tree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/tree,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/tree
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/tree
-
-/datum/ai_behavior/basic_melee_attack/tree
-	action_cooldown = 2 SECONDS

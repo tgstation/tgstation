@@ -103,6 +103,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		update_appearance()
 
 	alarm_manager = new(src)
+	find_and_hang_on_wall(directional = TRUE, \
+		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
 
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
@@ -180,7 +182,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
-	return TRUE
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))

@@ -88,7 +88,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //TURF FLAGS
 /// If a turf cant be jaunted through.
 #define NOJAUNT (1<<0)
+/// If a turf is an usused reservation turf awaiting assignment
 #define UNUSED_RESERVATION_TURF (1<<1)
+/// If a turf is a reserved turf
+#define RESERVATION_TURF (1<<2)
 /// Blocks lava rivers being generated on the turf.
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
@@ -127,14 +130,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
 #define CULT_PERMITTED (1<<12)
-///Whther this area is iluminated by starlight. Used by the aurora_caelus event
-#define AREA_USES_STARLIGHT (1<<13)
 /// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<14)
+#define PERSISTENT_ENGRAVINGS (1<<13)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<15)
+#define NO_DEATH_MESSAGE (1<<14)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<16)
+#define EVENT_PROTECTED (1<<15)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

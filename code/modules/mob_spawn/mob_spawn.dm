@@ -11,8 +11,6 @@
 	var/mob_name
 	///the type of the mob, you best inherit this
 	var/mob_type = /mob/living/basic/cockroach
-	///Lazy string list of factions that the spawned mob will be in upon spawn
-	var/list/faction
 
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
@@ -32,6 +30,8 @@
 	var/facial_haircolor
 	///sets a human's skin tone
 	var/skin_tone
+	/// Weakref to the mob this spawner created - just if you needed to do something with it.
+	var/datum/weakref/spawned_mob_ref
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -44,6 +44,7 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
+	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -223,6 +224,7 @@
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
+	SEND_SIGNAL(src, COMSIG_GHOSTROLE_SPAWNED, created)
 	check_uses() // Now we check if the spawner should delete itself or not
 
 	return created
@@ -277,6 +279,11 @@
 	///burn damage this corpse will spawn with
 	var/burn_damage = 0
 
+	///what environmental storytelling script should this corpse have
+	var/corpse_description = ""
+	///optionally different text to display if the target is a clown
+	var/naive_corpse_description = ""
+
 /obj/effect/mob_spawn/corpse/Initialize(mapload, no_spawn)
 	. = ..()
 	if(no_spawn)
@@ -294,6 +301,8 @@
 	spawned_mob.adjustOxyLoss(oxy_damage)
 	spawned_mob.adjustBruteLoss(brute_damage)
 	spawned_mob.adjustFireLoss(burn_damage)
+	if (corpse_description)
+		spawned_mob.AddComponent(/datum/component/temporary_description, corpse_description, naive_corpse_description)
 
 /obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
 	. = ..()

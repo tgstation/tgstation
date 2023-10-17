@@ -1017,6 +1017,7 @@
 	)
 	tastes = list("meat" = 5, "savory sauce" = 4, "tangy pineapple" = 3, "pepper" = 2)
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/kebab/pineapple_skewer
 	name = "pineapple skewer"
@@ -1029,6 +1030,7 @@
 	)
 	tastes = list("juicy meat" = 4, "pineapple" = 3)
 	foodtypes = MEAT | FRUIT | PINEAPPLE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/futomaki_sushi_roll
 	name = "futomaki sushi roll"
@@ -1042,6 +1044,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/futomaki_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/futomaki_sushi_slice, 4, screentip_verb = "Chop")
@@ -1058,6 +1061,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/philadelphia_sushi_roll
 	name = "Philadelphia sushi roll"
@@ -1071,6 +1075,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/philadelphia_sushi_roll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/philadelphia_sushi_slice, 4, screentip_verb = "Chop")
@@ -1087,3 +1092,4 @@
 	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

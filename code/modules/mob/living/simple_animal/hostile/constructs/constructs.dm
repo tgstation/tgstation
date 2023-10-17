@@ -3,7 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_MINERAL | MOB_SPECIAL
 	speak_emote = list("hisses")
 	response_help_continuous = "thinks better of touching"
 	response_help_simple = "think better of touching"
@@ -28,7 +28,7 @@
 	maxbodytemp = INFINITY
 	faction = list(FACTION_CULT)
 	pressure_resistance = 100
-	unique_name = 1
+	unique_name = TRUE
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE

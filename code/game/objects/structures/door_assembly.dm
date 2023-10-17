@@ -293,7 +293,6 @@
 		door = new airlock_type( loc )
 	door.setDir(dir)
 	door.unres_sides = electronics.unres_sides
-	//door.req_access = req_access
 	door.electronics = electronics
 	door.heat_proof = heat_proof_finished
 	door.security_level = 0
@@ -321,9 +320,11 @@
 		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
+	door.autoclose = TRUE
+	door.close()
 	door.update_appearance()
+
 	qdel(src)
-	return door
 
 /obj/structure/door_assembly/update_overlays()
 	. = ..()
@@ -383,13 +384,11 @@
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
+		return list("delay" = 5 SECONDS, "cost" = 16)
 	return FALSE
 
-/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct [src]."))
-			qdel(src)
-			return TRUE
+/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+		qdel(src)
+		return TRUE
 	return FALSE

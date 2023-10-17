@@ -16,7 +16,7 @@
 /obj/machinery/porta_turret_cover/Destroy()
 	if(parent_turret)
 		parent_turret.cover = null
-		parent_turret.invisibility = 0
+		parent_turret.RemoveInvisibility(type)
 		parent_turret = null
 	return ..()
 
@@ -43,12 +43,12 @@
 		if(!parent_turret.anchored)
 			parent_turret.set_anchored(TRUE)
 			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
-			parent_turret.invisibility = 0
+			parent_turret.RemoveInvisibility(type)
 			parent_turret.update_appearance()
 		else
 			parent_turret.set_anchored(FALSE)
 			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
-			parent_turret.invisibility = INVISIBILITY_MAXIMUM
+			parent_turret.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 			parent_turret.update_appearance()
 			qdel(src)
 		return
@@ -66,7 +66,7 @@
 			return
 		var/obj/item/multitool/M = I
 		M.set_buffer(parent_turret)
-		to_chat(user, span_notice("You add [parent_turret] to multitool buffer."))
+		balloon_alert(user, "saved to multitool buffer")
 		return
 	return ..()
 

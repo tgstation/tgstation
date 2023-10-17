@@ -32,7 +32,7 @@
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "bP" = (
 /obj/structure/table/wood,
@@ -53,10 +53,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
-/area/misc/anomaly_research)
-"cA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "cD" = (
 /obj/effect/turf_decal/stripes/line,
@@ -217,10 +213,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
-"hh" = (
-/obj/effect/spawner/structure/window/plasma,
-/turf/open/floor/wood,
-/area/misc/anomaly_research)
 "hl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -268,8 +260,7 @@
 /area/misc/anomaly_research)
 "ii" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "ip" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -947,7 +938,7 @@
 /area/misc/anomaly_research)
 "yR" = (
 /obj/effect/spawner/structure/window,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "yS" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -1028,7 +1019,7 @@
 /area/misc/anomaly_research)
 "Cl" = (
 /obj/effect/spawner/structure/window/plasma,
-/turf/open/floor/engine,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "CI" = (
 /turf/open/floor/engine,
@@ -1217,7 +1208,7 @@
 "GG" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/duct,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "GI" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -1308,7 +1299,7 @@
 /area/misc/anomaly_research)
 "IC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/plating,
 /area/misc/anomaly_research)
 "IH" = (
 /obj/effect/spawner/random/big_anomaly,
@@ -1657,11 +1648,6 @@
 	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
-/area/misc/anomaly_research)
-"Ss" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "SQ" = (
 /obj/structure/table/reinforced,
@@ -2176,11 +2162,11 @@ dr
 xE
 xE
 AV
-Ss
-Ss
-Ss
-Ss
-Ss
+IC
+IC
+IC
+IC
+IC
 AV
 AV
 AV
@@ -3312,9 +3298,9 @@ AV
 AV
 Xo
 AV
-cA
-cA
-cA
+ii
+ii
+ii
 eW
 QP
 HT
@@ -3390,7 +3376,7 @@ sF
 Gr
 mC
 nh
-cA
+ii
 tG
 ZL
 Ng
@@ -3428,7 +3414,7 @@ kt
 En
 dy
 Gg
-cA
+ii
 Ls
 Iw
 Ff
@@ -3504,7 +3490,7 @@ uN
 vG
 lz
 ut
-cA
+ii
 Cf
 sE
 tG
@@ -3580,7 +3566,7 @@ bP
 FE
 PY
 CP
-hh
+Cl
 xE
 xE
 xE
@@ -3618,7 +3604,7 @@ UC
 LZ
 Tt
 PY
-hh
+Cl
 xE
 xE
 xE
@@ -3656,7 +3642,7 @@ TF
 ev
 Tt
 tf
-hh
+Cl
 xE
 xE
 xE

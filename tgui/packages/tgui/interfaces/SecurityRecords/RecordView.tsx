@@ -56,6 +56,7 @@ const RecordInfo = (props, context) => {
     rank,
     species,
     wanted_status,
+    voice,
   } = foundRecord;
 
   const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
@@ -167,6 +168,9 @@ const RecordInfo = (props, context) => {
                 target_ref={crew_ref}
                 text={fingerprint}
               />
+            </LabeledList.Item>
+            <LabeledList.Item label="Voice">
+              <EditableText field="voice" target_ref={crew_ref} text={voice} />
             </LabeledList.Item>
             <LabeledList.Item label="Note">
               <EditableText

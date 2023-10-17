@@ -53,14 +53,12 @@
 
 /// Creates our golem snack atom instance
 /datum/component/golem_food/proc/create_golem_snack(atom/source)
-	golem_snack = new(
-		/* loc = */ null,
-		/* starting_reagent_purity = */ null,
-		/* no_base_reagents = */ FALSE,
-		/* name = */ source.name,
-		/* consume_food = */ consume_on_eat,
-		/* food_buff = */ snack_type,
-		/* owner = */ parent,
+	golem_snack = new(null)
+	golem_snack.setup(
+		name = source.name,
+		consume_food = consume_on_eat,
+		food_buff = snack_type,
+		owner = parent,
 	)
 	RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 
@@ -90,21 +88,17 @@
 	/// Golem food buff to apply on consumption
 	var/datum/golem_food_buff/food_buff
 
-/obj/item/food/golem_food/Initialize(
-	mapload,
-	starting_reagent_purity,
-	no_base_reagents = FALSE,
+/// Set up some properties based on a passed-in item that the golem will pretend to eat
+/obj/item/food/golem_food/proc/setup(
 	name,
-	consume_food,
+	consume_food = TRUE,
 	datum/golem_food_buff/food_buff,
 	atom/owner,
 )
-	. = ..()
 	src.name = name
 	src.consume_food = consume_food
 	src.food_buff = food_buff
 	src.owner = owner
-
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_parent_destroyed))
 
 /// Clean ourselves up if our parent dies

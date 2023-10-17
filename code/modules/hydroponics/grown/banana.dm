@@ -39,7 +39,7 @@
 		desc += " The curve on this one looks particularly acute."
 
 ///Clowns will always like bananas.
-/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
@@ -167,13 +167,9 @@
 	bite_consumption_mod = 4
 	var/is_ripening = FALSE
 
-/obj/item/food/grown/banana/bunch/Initialize(
-		mapload,
-		starting_reagent_purity = null,
-		no_base_reagents = TRUE,
-		obj/item/seeds/new_seed,
-	)
+/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
+	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
 	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
 

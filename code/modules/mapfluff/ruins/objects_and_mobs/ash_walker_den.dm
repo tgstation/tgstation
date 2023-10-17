@@ -13,8 +13,8 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	max_integrity = 200
 
+	faction = list(FACTION_ASHWALKER)
 
-	var/faction = list(FACTION_ASHWALKER)
 	var/meat_counter = 6
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective
@@ -56,10 +56,10 @@
 				visible_message(span_notice("Serrated tendrils eagerly pull [H] apart, but find nothing of interest."))
 				return
 
-			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.key || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
+			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.ckey || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
 				visible_message(span_warning("Serrated tendrils carefully pull [H] to [src], absorbing the body and creating it anew."))
 				var/datum/mind/deadmind
-				if(H.key)
+				if(H.ckey)
 					deadmind = H
 				else
 					deadmind = H.get_ghost(FALSE, TRUE)
@@ -76,14 +76,14 @@
 				meat_counter++
 			visible_message(span_warning("Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs."))
 			playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
-			var/deliverykey = H.fingerprintslast //key of whoever brought the body
-			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said key
+			var/deliverykey = H.fingerprintslast //ckey of whoever brought the body
+			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
 			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
 			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (deliverykey in ashies.players_spawned) && (prob(40)))
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
 			H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-			H.gib()
+			H.gib(DROP_ALL_REMAINS)
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))

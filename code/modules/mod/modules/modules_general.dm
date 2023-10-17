@@ -209,10 +209,9 @@
 		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
 	new /obj/effect/temp_visual/jet_plume(launch_from)
 
-	if (!HAS_TRAIT(mod.wearer, TRAIT_JETPACKING))
-		var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
-		if (!isnull(linked_jetpack))
-			linked_jetpack.on_activation()
+	var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
+	if (!isnull(linked_jetpack) && !linked_jetpack.active)
+		linked_jetpack.on_activation()
 	return TRUE
 
 #undef FAILED_ACTIVATION_COOLDOWN

@@ -10,6 +10,7 @@
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
+	hardcore_random_bonus = TRUE
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)

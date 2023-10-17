@@ -78,7 +78,7 @@
 					return
 				var/obj/item/multitool/M = I
 				M.set_buffer(src)
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
+				balloon_alert(user, "saved to multitool buffer")
 				return 1
 
 		if(default_deconstruction_crowbar(I))

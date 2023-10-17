@@ -223,6 +223,8 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_green("You find this meal [quality_label].")
 	else if (quality == 0)
 		examine_list += span_notice("You find this meal edible.")
+	else if (quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
+		examine_list += span_warning("You find this meal disgusting!")
 	else
 		examine_list += span_warning("You find this meal inedible.")
 
@@ -529,25 +531,12 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-	var/food_taste_reaction
-
-	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER) && !isjellyperson(gourmand)) // it's not real food
-		food_taste_reaction = FOOD_TOXIC
-
-	if(check_liked) //Callback handling; use this as an override for special food like donuts
-		food_taste_reaction = check_liked.Invoke(fraction, gourmand)
-
-	if(!food_taste_reaction)
-		food_taste_reaction = gourmand.get_food_taste_reaction(parent, foodtypes)
-
-	if(food_taste_reaction == FOOD_TOXIC)
+	var/food_quality = get_perceived_food_quality(gourmand, parent)
+	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
 		to_chat(gourmand,span_warning("What the hell was that thing?!"))
 		gourmand.adjust_disgust(25 + 30 * fraction)
 		gourmand.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
-		return
-
-	var/food_quality = get_perceived_food_quality(gourmand, parent)
-	if(food_quality < 0)
+	else if(food_quality < 0)
 		to_chat(gourmand,span_notice("That didn't taste very good..."))
 		gourmand.adjust_disgust(11 + 15 * fraction)
 		gourmand.add_mood_event("gross_food", /datum/mood_event/gross_food)
@@ -578,10 +567,25 @@ Behavior that's still missing from this component that original food items had t
 	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		food_quality += isjellyperson(eater) ? 2 : -4
+		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+			return TOXIC_FOOD_QUALITY_THRESHOLD
+		food_quality += LIKED_FOOD_QUALITY_CHANGE
 
-	if (ishuman(eater))
-		food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())
+	if(check_liked) //Callback handling; use this as an override for special food like donuts
+		var/special_reaction = check_liked.Invoke(eater)
+		switch(special_reaction) //return early for special foods
+			if(FOOD_LIKED)
+				return LIKED_FOOD_QUALITY_CHANGE
+			if(FOOD_DISLIKED)
+				return DISLIKED_FOOD_QUALITY_CHANGE
+			if(FOOD_TOXIC)
+				return TOXIC_FOOD_QUALITY_THRESHOLD
+
+	if(ishuman(eater))
+		if(count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())) //if the food is toxic, we don't care about anything else
+			return TOXIC_FOOD_QUALITY_THRESHOLD
+		if(HAS_TRAIT(eater, TRAIT_AGEUSIA)) //if you can't taste it, it doesn't taste good
+			return 0
 		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
 		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 

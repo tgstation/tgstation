@@ -52,6 +52,9 @@
 		ASSERT_GAS_IN_LIST(gastype, gaslist)
 		gaslist[gastype][MOLES] += amount
 
+	// Ensure that minimum_pressure is actually a hard lower limit
+	target_pressure = clamp(target_pressure, minimum_pressure + (gaslist[gastype][MOLES] * 0.1), maximum_pressure)
+
 	// That last one put us over the limit, remove some of it
 	while(gasmix.return_pressure() > target_pressure)
 		gaslist[gastype][MOLES] -= gaslist[gastype][MOLES] * 0.1

@@ -27,7 +27,7 @@
 	"2. Kill.\n"+\
 	"3. Destroy."
 	default_storage = /obj/item/uplink
-	default_hatmask = /obj/item/clothing/head/helmet/swat
+	default_headwear = /obj/item/clothing/head/helmet/swat
 	hacked = TRUE
 	shy = FALSE
 	flavortext = null
@@ -49,7 +49,7 @@
 	W.implant(src, force = TRUE)
 
 /mob/living/simple_animal/drone/snowflake
-	default_hatmask = /obj/item/clothing/head/chameleon/drone
+	default_headwear = /obj/item/clothing/head/chameleon/drone
 
 /mob/living/simple_animal/drone/snowflake/Initialize(mapload)
 	. = ..()
@@ -87,7 +87,7 @@
 
 /mob/living/simple_animal/drone/polymorphed
 	default_storage = null
-	default_hatmask = null
+	default_headwear = null
 	picked = TRUE
 	flavortext = null
 
@@ -132,7 +132,7 @@
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/costume/ushanka
+	default_headwear = /obj/item/clothing/head/costume/ushanka
 	laws = \
 	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\

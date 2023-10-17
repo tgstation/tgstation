@@ -1,4 +1,4 @@
-#define REJECTION_VOMIT_FLAGS (MOB_VOMIT_BLOOD | MOB_VOMIT_STUN | MOB_VOMIT_FORCE)
+#define REJECTION_VOMIT_FLAGS (MOB_VOMIT_BLOOD | MOB_VOMIT_STUN | MOB_VOMIT_KNOCKDOWN | MOB_VOMIT_FORCE)
 
 /obj/item/organ/internal/heart/gland/heal
 	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
@@ -194,7 +194,7 @@
 	var/keep_going = FALSE
 	owner.vomit(vomit_flags = (MOB_VOMIT_BLOOD | MOB_VOMIT_FORCE), lost_nutrition = 0, distance = 3)
 	owner.Stun(15)
-	owner.adjustToxLoss(-15, TRUE, TRUE)
+	owner.adjustToxLoss(-15, forced = TRUE)
 
 	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)

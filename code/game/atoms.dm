@@ -131,6 +131,11 @@
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
 	var/base_pixel_y = 0
+	// Use SET_BASE_VISUAL_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_w and z for you
+	///Default pixel w shifting for the atom's icon.
+	var/base_pixel_w = 0
+	///Default pixel z shifting for the atom's icon.
+	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
@@ -183,6 +188,9 @@
 	var/datum/storage/atom_storage
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
+
+	VAR_PRIVATE/list/invisibility_sources
+	VAR_PRIVATE/current_invisibility_priority = -INFINITY
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -320,6 +328,8 @@
 /atom/proc/CanPass(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_TRIED_PASS, mover, border_dir) & COMSIG_COMPONENT_PERMIT_PASSAGE)
+		return TRUE
 	if(mover.movement_type & PHASING)
 		return TRUE
 	. = CanAllowThrough(mover, border_dir)
@@ -665,9 +675,9 @@
 		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
-				if(reagents.total_volume > 0)
+				if(reagents.total_volume)
 					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
-					if(user_sees_reagents) //Show each individual reagent
+					if(user_sees_reagents) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
@@ -698,6 +708,7 @@
 
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
+	SEND_SIGNAL(user, COMSIG_MOB_EXAMINING_MORE, src, .)
 
 /**
  * Updates the appearence of the icon
@@ -1026,8 +1037,8 @@
  *
  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
  */
-/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data["[RCD_DESIGN_MODE]"])
 	return FALSE
 
 /**
@@ -2163,3 +2174,71 @@
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
 	do_spin_animation(speed, loops, segments, segment, parallel)
+
+#define INVISIBILITY_VALUE 1
+#define INVISIBILITY_PRIORITY 2
+
+/atom/proc/RecalculateInvisibility()
+	PRIVATE_PROC(TRUE)
+
+	if(!invisibility_sources)
+		current_invisibility_priority = -INFINITY
+		invisibility = initial(invisibility)
+		return
+
+	var/highest_priority
+	var/list/highest_priority_invisibility_data
+	for(var/entry in invisibility_sources)
+		var/list/priority_data
+		if(islist(entry))
+			priority_data = entry
+		else
+			priority_data = invisibility_sources[entry]
+
+		var/priority = priority_data[INVISIBILITY_PRIORITY]
+		if(highest_priority > priority) // In the case of equal priorities, we use the last thing in the list so that more recent changes apply first
+			continue
+
+		highest_priority = priority
+		highest_priority_invisibility_data = priority_data
+
+	current_invisibility_priority = highest_priority
+	invisibility = highest_priority_invisibility_data[INVISIBILITY_VALUE]
+
+/**
+ * Sets invisibility according to priority.
+ * If you want to be able to undo the value you set back to what it would be otherwise,
+ * you should provide an id here and remove it using RemoveInvisibility(id)
+ */
+/atom/proc/SetInvisibility(desired_value, id, priority=0)
+	if(!invisibility_sources)
+		invisibility_sources = list()
+
+	if(id)
+		invisibility_sources[id] = list(desired_value, priority)
+	else
+		invisibility_sources += list(list(desired_value, priority))
+
+	if(current_invisibility_priority > priority)
+		return
+
+	RecalculateInvisibility()
+
+/// Removes the specified invisibility source from the tracker
+/atom/proc/RemoveInvisibility(source_id)
+	if(!invisibility_sources)
+		return
+
+	var/list/priority_data = invisibility_sources[source_id]
+	invisibility_sources -= source_id
+
+	if(length(invisibility_sources) == 0)
+		invisibility_sources = null
+
+	if(current_invisibility_priority > priority_data[INVISIBILITY_PRIORITY])
+		return
+
+	RecalculateInvisibility()
+
+#undef INVISIBILITY_VALUE
+#undef INVISIBILITY_PRIORITY
