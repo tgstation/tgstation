@@ -67,7 +67,11 @@
 		var/list/instances_list = list()
 		for(var/instance_path in item_instances)
 			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
+				var/obj/item/item = item_instances[instance_path]
+				if(item.flags_1 & HOLOGRAM_1)
+					continue
+
+				instances_list += item
 
 		requirements_list[requirement_path] = instances_list
 
@@ -107,7 +111,6 @@
 		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
 		. += AM
-
 
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
