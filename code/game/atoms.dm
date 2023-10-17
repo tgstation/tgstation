@@ -1219,7 +1219,7 @@
 		if(NAMEOF(src, light_height))
 			if(light_system == STATIC_LIGHT)
 				set_light(l_height = var_value)
-				 = TRUE
+				. = TRUE
 		if(NAMEOF(src, light_on))
 			if(light_system == STATIC_LIGHT)
 				set_light(l_on = var_value)
