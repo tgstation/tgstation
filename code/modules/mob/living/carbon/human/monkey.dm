@@ -35,6 +35,9 @@
 /mob/living/carbon/human/species/monkey/holodeck
 	race = /datum/species/monkey/holodeck
 
+/mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
+	return
+
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
 /mob/living/carbon/human/species/monkey/punpun
