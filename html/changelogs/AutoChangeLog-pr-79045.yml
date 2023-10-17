@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Distilled drink quality is fixed - can't give a mood debuff anymore"
