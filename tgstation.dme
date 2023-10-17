@@ -6280,6 +6280,7 @@
 #include "monkestation\code\modules\storytellers\converted_events\solo\revolutionary.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\traitor.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\wizard.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\wizard.dm"
 #include "monkestation\code\modules\storytellers\storytellers\_storyteller.dm"
 #include "monkestation\code\modules\storytellers\storytellers\ghost.dm"
 #include "monkestation\code\modules\storytellers\storytellers\jester.dm"

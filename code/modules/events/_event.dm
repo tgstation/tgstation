@@ -228,6 +228,8 @@ Runs the event
 	var/oshan_blocked = FALSE
 	/// Whether the event called its start() yet or not.
 	var/has_started = FALSE
+	///have we finished setup?
+	var/setup = FALSE
 	//monkestation vars end
 
 //Called first before processing.
@@ -239,6 +241,7 @@ Runs the event
 //This is really only for setting defaults which can be overridden later when New() finishes.
 /datum/round_event/proc/setup()
 	SHOULD_CALL_PARENT(FALSE)
+	setup = TRUE
 	return
 
 ///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
@@ -359,6 +362,8 @@ Runs the event
 //This proc will handle the calls to the appropiate procs.
 /datum/round_event/process()
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!setup)
+		return
 	if(!processing)
 		return
 

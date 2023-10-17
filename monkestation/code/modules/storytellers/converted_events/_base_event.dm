@@ -69,7 +69,7 @@
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
 	var/prompted_picking = FALSE
 
-/datum/round_event_control/antagonist/solo/ghost/get_candidates()
+/datum/round_event_control/antagonist/solo/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
@@ -139,18 +139,56 @@
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
+	if(prompted_picking)
+		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
 	for(var/i in 1 to antag_count)
 		if(!candidates.len)
 			break
 		var/mob/candidate = pick_n_take(candidates)
+		if(!candidate.mind)
+			candidate.mind = new /datum/mind(candidate.key)
+
 		setup_minds += candidate.mind
 		candidate.mind.special_role = antag_flag
 		candidate.mind.restricted_roles = restricted_roles
+	setup = TRUE
+
+
+/datum/round_event/antagonist/solo/ghost/setup()
+	var/datum/round_event_control/antagonist/solo/cast_control = control
+	antag_count = cast_control.get_antag_amount()
+	antag_flag = cast_control.antag_flag
+	antag_datum = cast_control.antag_datum
+	restricted_roles = cast_control.restricted_roles
+	prompted_picking = cast_control.prompted_picking
+	var/list/candidates = cast_control.get_candidates()
+	if(prompted_picking)
+		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
+
+	for(var/i in 1 to antag_count)
+		if(!candidates.len)
+			break
+		var/mob/candidate = pick_n_take(candidates)
+		if(!candidate.mind)
+			candidate.mind = new /datum/mind(candidate.key)
+
+		setup_minds += candidate.mind
+		var/mob/living/carbon/human/new_human = make_body(candidate)
+		candidate.mind.set_current(new_human)
+		candidate.mind.special_role = antag_flag
+		candidate.mind.restricted_roles = restricted_roles
+	setup = TRUE
+
 
 /datum/round_event/antagonist/solo/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
-		add_datum_to_mind(antag_mind)
+		add_datum_to_mind(antag_mind, antag_mind.current)
 
 /datum/round_event/antagonist/solo/proc/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum)
+
+/datum/round_event/antagonist/solo/ghost/start()
+	for(var/datum/mind/antag_mind as anything in setup_minds)
+		add_datum_to_mind(antag_mind)
+

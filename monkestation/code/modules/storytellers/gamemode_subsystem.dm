@@ -246,12 +246,13 @@ SUBSYSTEM_DEF(gamemode)
 			candidate_candidates += player
 
 	for(var/mob/candidate as anything in candidate_candidates)
-		if(QDELETED(candidate) || !candidate.key || !candidate.client || !candidate.mind)
+		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
-		if(no_antags && candidate.mind.special_role)
-			continue
-		if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
-			continue
+		if(!observers)
+			if(no_antags && candidate.mind.special_role)
+				continue
+			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
+				continue
 		if(be_special)
 			if(!(candidate.client.prefs) || !(be_special in candidate.client.prefs.be_special))
 				continue
