@@ -6,6 +6,14 @@
 	icon_state = "bloodred_pajamas"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/knowingclown
+	name = "Small But Knowing Clown suit"
+	desc = "Suit worn by a small but all knowing clown"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "knowing_clown"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/driscoll
 	name = "O'Driscoll outfit"
 	desc = "All you need now is a holster and six shooter..."
@@ -59,3 +67,11 @@
 /obj/item/clothing/under/rank/civilian/janitor/maid //heckin subtypes
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
+
+/obj/item/clothing/under/wonka
+	name = "wonky suit"
+	desc = "Come with me, and you'll be, in a world of OSHA violations!"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_state = "wonka"
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	worn_icon_state = "wonka"

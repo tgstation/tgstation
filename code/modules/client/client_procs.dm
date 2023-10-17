@@ -527,6 +527,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
+
+	if(!media)
+		media = new /datum/media_manager(src)
+	media.open()
+	media.update_music()
+
 	fully_created = TRUE
 
 //////////////

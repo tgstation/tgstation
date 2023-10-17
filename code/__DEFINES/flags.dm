@@ -70,6 +70,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
+/// Used for items that cannot be used directly to harm people with, ex. loafs
+#define CANNOT_ATTACK_WITH (1<<21)
+
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
 #define UPDATE_NAME (1<<0)
@@ -94,7 +97,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //TURF FLAGS
 /// If a turf cant be jaunted through.
 #define NOJAUNT (1<<0)
+/// If a turf is an usused reservation turf awaiting assignment
 #define UNUSED_RESERVATION_TURF (1<<1)
+/// If a turf is a reserved turf
+#define RESERVATION_TURF (1<<2)
 /// Blocks lava rivers being generated on the turf.
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
@@ -142,6 +148,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DEATH_MESSAGE (1<<15)
 /// This area should have extra shielding from certain event effects
 #define EVENT_PROTECTED (1<<16)
+///is this a passive area
+#define PASSIVE_AREA (1<<17)
+///is this a ghost accessible area?
+#define GHOST_AREA (1<<18)
+///can we explode during rounds?
+#define NO_EXPLOSIONS_DURING (1<<19)
+///are ghosts not allowed to enter during round
+#define NO_GHOSTS_DURING_ROUND (1<<20)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

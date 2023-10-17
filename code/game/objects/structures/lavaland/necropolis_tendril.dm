@@ -18,6 +18,7 @@
 	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
 
+	var/deconstruct_override = FALSE // Monkestation addition: override for ocean tendrils
 
 /obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/basic/mining/goliath)
@@ -40,6 +41,10 @@ GLOBAL_LIST_INIT(tendrils, list())
 	GLOB.tendrils += src
 
 /obj/structure/spawner/lavaland/deconstruct(disassembled)
+	// Monkestation addition start: override for ocean tendrils
+	if(deconstruct_override)
+		return ..()
+	// Monkestation addition end
 	new /obj/effect/collapse(loc)
 	return ..()
 

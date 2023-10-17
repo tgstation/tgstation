@@ -37,7 +37,7 @@
 	///Egg type for egg so me don't gotta create new chicken
 	var/obj/item/food/egg/egg_type
 	///Needed Rooster Type
-	var/mob/living/basic/chicken/required_rooster
+	var/required_rooster
 
 /datum/mutation/ranching/proc/cycle_requirements(atom/checkee, is_egg = FALSE)
 	if(check_happiness(checkee, is_egg) && check_temperature(checkee, is_egg) && check_pressure(checkee, is_egg) && check_food(checkee, is_egg) && check_reagent(checkee, is_egg) && check_turfs(checkee, is_egg) && check_items(checkee, is_egg) && check_breathable_atmos(checkee, is_egg) && check_players_job(checkee, is_egg) && check_liquid_depth(checkee, is_egg) && check_species(checkee, is_egg) && check_players_health(checkee, is_egg))
@@ -220,9 +220,8 @@
 /datum/mutation/ranching/chicken/proc/check_rooster(atom/checkee, is_egg)
 	var/passed_check = FALSE
 	if(required_rooster)
-		var/mob/living/basic/chicken/rooster = required_rooster
-		for(var/mob/living/basic/chicken/scanned_chicken in view(1, checkee.loc))
-			if(istype(scanned_chicken, rooster.type) && checkee.gender == MALE)
+		for(var/mob/living/basic/chicken/scanned_chicken in view(3, checkee.loc))
+			if(scanned_chicken.type == required_rooster && scanned_chicken.gender == MALE)
 				passed_check = TRUE
 		if(passed_check == FALSE)
 			return FALSE

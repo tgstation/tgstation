@@ -1,0 +1,615 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bs" = (
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"cT" = (
+/obj/structure/displaycase/noalert{
+	start_showpiece_type = /obj/item/storage/toolbox/mechanical/old/clean;
+	damage_deflection = 100
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"en" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"hk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"hm" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"hA" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/scrying
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"hD" = (
+/obj/effect/turf_decal/siding/thinplating,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"hF" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"hL" = (
+/obj/structure/statue/bone/rib,
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"iI" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"je" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/melee/energy/blade
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"jy" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"kj" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/storage/toolbox/haunted
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"mq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"nt" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"nI" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"oM" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"pp" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"ro" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"sN" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"tz" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"uF" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"vb" = (
+/obj/effect/turf_decal/siding/white/corner,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"vX" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"wr" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"wZ" = (
+/obj/structure/plaque{
+	desc = "So interesting!";
+	name = "very informative plaque"
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"xO" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"yn" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"yF" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"yW" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"zX" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"AA" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"BN" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"BT" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"Cz" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Di" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"EW" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Fz" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"FT" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"GN" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Im" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"JH" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/toy/reality_pierce
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"JN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"Ky" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Mj" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"Mr" = (
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"MZ" = (
+/obj/structure/statue/bone/skull/half,
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"Ng" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Ol" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/toy/spinningtoy
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"OK" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/storage/toolbox/fishing
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"OV" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Pl" = (
+/obj/structure/displaycase/noalert{
+	damage_deflection = 100;
+	start_showpiece_type = /obj/item/wisp_lantern
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/tdome/arena/actual)
+"SI" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"TS" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"TW" = (
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"UD" = (
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"Vl" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"VF" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/tdome/arena/actual)
+"Wh" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"Wk" = (
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"WW" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"YF" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+"YL" = (
+/obj/structure/statue/bone/skull/half{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/tdome/arena/actual)
+"ZZ" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/plastic,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+TW
+AA
+ro
+FT
+bs
+bs
+GN
+ro
+OV
+TW
+"}
+(2,1,1) = {"
+TW
+hD
+OK
+Wh
+bs
+bs
+YF
+hA
+yW
+TW
+"}
+(3,1,1) = {"
+TW
+yF
+uF
+sN
+bs
+bs
+BN
+nt
+Ng
+TW
+"}
+(4,1,1) = {"
+TW
+hD
+cT
+Wh
+bs
+bs
+YF
+Pl
+yW
+TW
+"}
+(5,1,1) = {"
+ZZ
+jy
+EW
+Di
+bs
+bs
+Cz
+EW
+Ky
+hm
+"}
+(6,1,1) = {"
+vb
+TS
+TS
+wr
+bs
+bs
+xO
+TS
+TS
+zX
+"}
+(7,1,1) = {"
+Mr
+nI
+JN
+JN
+JN
+JN
+JN
+JN
+VF
+oM
+"}
+(8,1,1) = {"
+Mr
+hF
+UD
+MZ
+Mj
+Mj
+Mj
+UD
+hk
+oM
+"}
+(9,1,1) = {"
+Mr
+hF
+UD
+UD
+UD
+yn
+UD
+wZ
+hk
+oM
+"}
+(10,1,1) = {"
+Mr
+hF
+UD
+YL
+hL
+hL
+hL
+UD
+hk
+oM
+"}
+(11,1,1) = {"
+Mr
+mq
+Im
+Im
+Im
+Im
+Im
+Im
+BT
+oM
+"}
+(12,1,1) = {"
+en
+SI
+SI
+Fz
+bs
+bs
+Vl
+SI
+SI
+vX
+"}
+(13,1,1) = {"
+ZZ
+AA
+ro
+tz
+bs
+bs
+Wk
+ro
+OV
+hm
+"}
+(14,1,1) = {"
+TW
+hD
+Ol
+Wh
+bs
+bs
+YF
+je
+yW
+TW
+"}
+(15,1,1) = {"
+TW
+yF
+uF
+pp
+bs
+bs
+BN
+uF
+iI
+TW
+"}
+(16,1,1) = {"
+TW
+hD
+JH
+Wh
+bs
+bs
+YF
+kj
+yW
+TW
+"}
+(17,1,1) = {"
+TW
+jy
+EW
+Di
+bs
+bs
+WW
+EW
+Ky
+TW
+"}

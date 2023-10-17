@@ -29,6 +29,7 @@ GLOBAL_VAR(dj_booth)
 	//tape stuff goes here
 	var/pl_index = 0
 	var/list/current_playlist = list()
+	var/list/current_namelist = list()
 
 	COOLDOWN_DECLARE(next_song_timer)
 
@@ -47,8 +48,13 @@ GLOBAL_VAR(dj_booth)
 	if(inserted_tape)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
 		if(!broadcasting)
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Play Tape"
+			context[SCREENTIP_CONTEXT_LMB] = "Play Tape"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/cassette/dj_station/examine(mob/user)
+	. = ..()
+	if(time_left > 0 || next_song_timer)
+		. += span_notice("It seems to be cooling down, you estimate it will take about [time_left ? DisplayTimeText(((time_left * 10) + 6000)) : DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))].")
 
 /obj/machinery/cassette/dj_station/process(seconds_per_tick)
 	if(waiting_for_yield)
@@ -60,16 +66,17 @@ GLOBAL_VAR(dj_booth)
 			COOLDOWN_START(src, next_song_timer, 10 MINUTES)
 		broadcasting = 0
 
-/obj/machinery/cassette/dj_station/AltClick(mob/user)
+/obj/machinery/cassette/dj_station/attack_hand(mob/user)
 	. = ..()
 	if(!inserted_tape)
 		return
 	if((!COOLDOWN_FINISHED(src, next_song_timer)) && !broadcasting)
 		to_chat(user, span_notice("The [src] feels hot to the touch and needs time to cooldown."))
+		to_chat(user, span_info("You estimate it will take about [time_left ? DisplayTimeText(((time_left * 10) + 6000)) : DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))] to cool down."))
 		return
 	start_broadcast()
 
-/obj/machinery/cassette/dj_station/ShiftClick(mob/user)
+/obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
 	if(!isliving(user) || !user.Adjacent(src))
 		return
@@ -77,7 +84,6 @@ GLOBAL_VAR(dj_booth)
 		return
 	if(broadcasting)
 		next_song()
-
 
 /obj/machinery/cassette/dj_station/CtrlClick(mob/user)
 	. = ..()
@@ -93,6 +99,7 @@ GLOBAL_VAR(dj_booth)
 	current_song_duration = 0
 	pl_index = 0
 	current_playlist = list()
+	current_namelist = list()
 	stop_broadcast(TRUE)
 
 /obj/machinery/cassette/dj_station/attackby(obj/item/weapon, mob/user, params)
@@ -116,6 +123,7 @@ GLOBAL_VAR(dj_booth)
 			current_song_duration = 0
 			pl_index = 0
 			current_playlist = list()
+			current_namelist = list()
 			insert_tape(attacked)
 			if(broadcasting)
 				stop_broadcast(TRUE)
@@ -133,6 +141,10 @@ GLOBAL_VAR(dj_booth)
 		var/list/list = inserted_tape.songs["[inserted_tape.flipped ? "side2" : "side1"]"]
 		for(var/song in list)
 			current_playlist += song
+
+		var/list/name_list = inserted_tape.song_names["[inserted_tape.flipped ? "side2" : "side1"]"]
+		for(var/song in name_list)
+			current_namelist += song
 
 /obj/machinery/cassette/dj_station/proc/stop_broadcast(soft = FALSE)
 	STOP_PROCESSING(SSprocessing, src)
@@ -155,11 +167,15 @@ GLOBAL_VAR(dj_booth)
 		people_with_signals = list()
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
-	var/choice = tgui_input_number(usr, "Choose which song number to play.", "[src]", 1, length(current_playlist), 1)
+	var/choice = tgui_input_list(usr, "Choose which song to play.", "[src]", current_namelist)
 	if(!choice)
 		return
+	var/list_index = current_namelist.Find(choice)
+	if(!list_index)
+		return
 	GLOB.dj_broadcast = TRUE
-	pl_index = choice
+	pl_index = list_index
+
 	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
 	for(var/mob/living/carbon/anything as anything in GLOB.player_list)
 		if(!(anything in people_with_signals))

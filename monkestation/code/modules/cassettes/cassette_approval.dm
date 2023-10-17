@@ -79,6 +79,8 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	)
 	var/obj/item/device/cassette_tape/submitted_tape
 
+	var/action_taken = FALSE
+
 /datum/cassette_review/Destroy(force, ...)
 	. = ..()
 	QDEL_LIST(cassette_data)
@@ -92,6 +94,13 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 
 /datum/cassette_review/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(action_taken)
+		var/choice = tgui_alert(user, "This tape has already been actioned by another admin do you wish to look it over?", "Cassette Review", list("Yes", "No"))
+		if(!choice)
+			return
+		if(choice == "No")
+			return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CassetteReview", "[submitted_ckey]'s Cassette")
@@ -117,7 +126,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			approve_review(usr)
 		if("deny")
 			to_chat(submitter, span_warning("You feel a wave of disapointment wash over you, you can tell that your cassette was denied by the Space Board of Music"))
-			qdel(src)
+			action_taken = TRUE
 
 /datum/cassette_review/proc/approve_review(mob/user)
 	if(!check_rights_for(user.client, R_FUN))
@@ -125,7 +134,8 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	submitted_tape.generate_cassette_json()
 	to_chat(submitter, span_notice("You can feel the Space Board of Music has approved your cassette:[submitted_tape.name]."))
 	submitted_tape.forceMove(get_turf(submitter))
-	qdel(src)
+	message_admins("[submitter]'s tape has been approved by [user]")
+	action_taken = TRUE
 
 /proc/fetch_review(id)
 	return GLOB.cassette_reviews[id]

@@ -66,7 +66,7 @@
 						}
 						.hotspot_locked {
 							position: absolute;
-							background: rgba(202, 78, 214, 0.6);
+							background: rgba(255, 0, 0, 0.8);
 						}
 						.key {
 							text-align: center;
@@ -88,7 +88,7 @@
 						.station { background-color: [colors["station"]]; }
 						.other { background-color: [colors["other"]]; }
 						.vent_unlocked { background-color: rgb(255, 120, 120); }
-						.vent_locked { background-color: rgb(202, 78, 214); }
+						.vent_locked { background-color: rgb(255, 0, 0); }
 					</style>
 
 				</head>
@@ -107,15 +107,6 @@
 				</body>
 			</html>
 	"}
-
-/datum/controller/subsystem/hotspots/proc/show_map(client/shower)
-	if (!shower)
-		return
-	if (!finished_map || !map)
-		return
-	shower << browse_rsc(map, "trenchmap.png")
-	shower << browse(finished_map, "window=trench_map;size=560x610;title=Trench Map")
-
 /obj/item/sea_map
 	name = "Trench Map"
 	icon = 'icons/obj/contractor_tablet.dmi'
@@ -125,4 +116,24 @@
 	. = ..()
 	if(!user.client)
 		return
-	SShotspots.show_map(user.client)
+
+	if (!SShotspots.finished_map || !SShotspots.map)
+		return
+	user.client << browse_rsc(SShotspots.map, "trenchmap.png")
+	ui_interact(user)
+
+/obj/item/sea_map/ui_interact(mob/user, datum/tgui/ui)
+	user.client << browse_rsc(SShotspots.map, "trenchmap.png")
+	if(!SSassets.cache["trenchmap.png"])
+		SSassets.transport.register_asset("trenchmap.png", SShotspots.finished_map)
+	SSassets.transport.send_assets(user, list("trenchmap.png" = SShotspots.finished_map))
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TrenchMap", name)
+		ui.open()
+
+/obj/item/sea_map/ui_data()
+	var/list/data = list()
+	data["map"] = SShotspots.finished_map
+	return data

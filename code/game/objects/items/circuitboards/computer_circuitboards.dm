@@ -535,6 +535,10 @@
 	name = "Golem Ship Equipment Vendor Console"
 	build_path = /obj/machinery/computer/order_console/mining/golem
 
+/obj/item/circuitboard/computer/order_console/bitrunning
+	name = "Bitrunning Vendor Console"
+	build_path = /obj/machinery/computer/order_console/bitrunning
+
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY

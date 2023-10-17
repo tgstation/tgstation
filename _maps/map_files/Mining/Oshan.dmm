@@ -120,6 +120,26 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
+"hs" = (
+/obj/structure/rack,
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/gps/mining{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "hC" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -169,11 +189,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
 "ip" = (
+/obj/structure/fans/tiny/forcefield,
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "garbage"
+	id = "gulag"
 	},
-/obj/structure/fans/tiny/forcefield,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "it" = (
@@ -539,6 +559,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/prisongate,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
 "yj" = (
@@ -622,7 +643,7 @@
 "By" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "garbage"
+	id = "gulag"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
@@ -668,6 +689,7 @@
 "Dn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/prisongate,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
 "DO" = (
@@ -704,7 +726,7 @@
 /area/station/security/prison/shower)
 "EP" = (
 /obj/machinery/conveyor{
-	id = "mining_internal"
+	id = "gulag"
 	},
 /turf/open/floor/plating/ocean/dark,
 /area/station/security/prison)
@@ -751,7 +773,7 @@
 "Gp" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "garbage"
+	id = "gulag"
 	},
 /turf/open/floor/plating/ocean/dark,
 /area/station/security/prison)
@@ -843,10 +865,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "KK" = (
-/obj/machinery/conveyor{
-	id = "mining_internal"
-	},
 /obj/structure/fans/tiny/forcefield,
+/obj/machinery/conveyor{
+	id = "gulag"
+	},
 /obj/structure/plasticflaps,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
@@ -987,6 +1009,11 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/white,
 /area/station/security/prison/rec)
+"Sq" = (
+/obj/item/stack/license_plates/empty/fifty,
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "SB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -1047,6 +1074,8 @@
 /area/station/security/prison)
 "VQ" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/structure/rack,
 /turf/open/floor/iron,
 /area/station/security/prison/work)
 "VU" = (
@@ -23918,8 +23947,8 @@ qu
 qu
 wF
 wF
-hX
-hX
+Sq
+Sq
 hX
 st
 Hc
@@ -24687,7 +24716,7 @@ qu
 qu
 wF
 wF
-hX
+Sq
 bd
 gn
 gn
@@ -24891,7 +24920,7 @@ mt
 nW
 nW
 nW
-bE
+hs
 Jq
 Ev
 Hv
