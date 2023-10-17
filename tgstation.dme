@@ -101,6 +101,7 @@
 #include "code\__DEFINES\fov.dm"
 #include "code\__DEFINES\generators.dm"
 #include "code\__DEFINES\ghost.dm"
+#include "code\__DEFINES\gradient.dm"
 #include "code\__DEFINES\gravity.dm"
 #include "code\__DEFINES\guardian_defines.dm"
 #include "code\__DEFINES\holiday.dm"
