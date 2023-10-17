@@ -4,7 +4,7 @@
 	ai_controller = /datum/ai_controller/monkey
 	faction = list(FACTION_NEUTRAL, FACTION_MONKEY)
 
-/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
@@ -21,7 +21,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	. = ..()
 	if(prob(10))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
