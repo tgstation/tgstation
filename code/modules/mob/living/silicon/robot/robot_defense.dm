@@ -232,8 +232,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		cell.update_appearance()
 		cell.add_fingerprint(user)
-		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
+		user.put_in_active_hand(cell)
 		update_icons()
 		diag_hud_set_borgcell()
 
