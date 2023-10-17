@@ -1,5 +1,5 @@
-#define WORKOUT_XP 5
-#define EXERCISE_STATUS_DURATION 20 SECONDS
+#define WORKOUT_XP 10
+#define EXERCISE_STATUS_DURATION 30 SECONDS
 
 /obj/structure/weightmachine
 	name = "chest press machine"
@@ -142,7 +142,7 @@
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 	animate(pixel_y = user.base_pixel_y, time = 4)
 
-	var/stamina_exhaustion = 10 - (user.mind.get_skill_level(/datum/skill/fitness))
+	var/stamina_exhaustion = 5 - (user.mind.get_skill_level(/datum/skill/fitness) * 0.5)
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE

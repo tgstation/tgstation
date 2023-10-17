@@ -165,20 +165,20 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 10 SECONDS
+	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
-	/// Having any of these reagents in your system gives extends the duration (and gives xp if sleep)
+	/// Having any of these reagents in your system extends the duration
 	var/static/list/supplementary_reagents_bonus = list(
-		/datum/reagent/consumable/ethanol/protein_blend = 15 SECONDS, // protein shakes are very robust
-		/datum/reagent/consumable/eggwhite = 10 SECONDS,
-		/datum/reagent/consumable/eggyolk = 8 SECONDS,
-		/datum/reagent/consumable/nutriment/protein = 7 SECONDS,
-		/datum/reagent/consumable/nutriment/vitamin = 5 SECONDS,
-		/datum/reagent/consumable/milk = 4 SECONDS,
-		/datum/reagent/consumable/soymilk = 2 SECONDS, // darn vegans!
+		/datum/reagent/consumable/ethanol/protein_blend = 30 SECONDS, // protein shakes are very robust
+		/datum/reagent/consumable/eggwhite = 20 SECONDS,
+		/datum/reagent/consumable/eggyolk = 15 SECONDS,
+		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
+		/datum/reagent/consumable/nutriment/vitamin = 10 SECONDS,
+		/datum/reagent/consumable/milk = 10 SECONDS,
+		/datum/reagent/consumable/soymilk = 5 SECONDS, // darn vegans!
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
@@ -200,16 +200,15 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	// every fitness level adds 3 seconds to the duration
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 5 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 10 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
-	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER)
+	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
 		new_owner.emote("scream")
-		return exhaustion_limit
+		return // exhaustion_limit
 
 	return bonus_time
 
@@ -222,7 +221,6 @@
 
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
-	duration = max(initial(duration), duration)
 
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"

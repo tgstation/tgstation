@@ -8,10 +8,12 @@
 
 /datum/skill/fitness/level_gained(datum/mind/mind, new_level, old_level, silent)
 	. = ..()
-	var/gym_size = RESIZE_DEFAULT_SIZE + (new_level == SKILL_LEVEL_LEGENDARY) ? 0.25 : 0.05
+	var/size_boost = (new_level == SKILL_LEVEL_LEGENDARY) ? 0.25 : 0.05
+	var/gym_size = RESIZE_DEFAULT_SIZE + size_boost
 	mind.current.update_transform(gym_size)
 
 /datum/skill/fitness/level_lost(datum/mind/mind, new_level, old_level, silent)
 	. = ..()
-	var/gym_size = RESIZE_DEFAULT_SIZE + (old_level == SKILL_LEVEL_LEGENDARY) ? 0.25 : 0.05
+	var/size_boost = (new_level == SKILL_LEVEL_LEGENDARY) ? 0.25 : 0.05
+	var/gym_size = RESIZE_DEFAULT_SIZE + size_boost
 	mind.current.update_transform(RESIZE_DEFAULT_SIZE / gym_size)
