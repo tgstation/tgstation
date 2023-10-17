@@ -72,7 +72,7 @@
 /mob/living/basic/mouse/examine(mob/user)
 	. = ..()
 
-	var/sameside = user.faction_check_mob(src, exact_match = TRUE)
+	var/sameside = user.faction_check_atom(src, exact_match = TRUE)
 	if(isregalrat(user))
 		if(sameside)
 			. += span_notice("This rat serves under you.")

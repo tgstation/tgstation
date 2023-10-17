@@ -592,3 +592,85 @@
   - bugfix: Fixes Monkey's Delight recipe
   starrm4nn:
   - bugfix: makes the riot helmet hide hair like other sec helmets
+2023-10-16:
+  BlueMemesauce:
+  - spellcheck: Broken canisters now have a description
+  Cruix:
+  - rscadd: Added Afro (Huge) hairstyle
+  Melbert:
+  - code_imp: Removed species death and species hitby, replaced any uses with signals.
+  SyncIt21:
+  - bugfix: plumbing setups should(hopefully) no longer grind to a halt nor will overflow
+      with excess volume of reagents.
+  - code_imp: created defines for min & max ph. Improved some reaction_reagent code.
+      Made synthesizer dispensable reagent list values static to save memory.
+  - refactor: ph balancing mechanism for reaction chamber is significantly improved.
+      Optimized it's code overall
+  - refactor: examining each individual reagent will display their results back to
+      2 decimal places again and not 4 for easy readability.
+  Wallem:
+  - bugfix: The active sonar module won't attempt to create 6000000 new pings per
+      process cycle anymore
+2023-10-17:
+  DaydreamIQ:
+  - qol: Icebox Visitation now has a door connected to brig
+  Fazzie:
+  - rscadd: The free golem ship has been swapped for a much better one, with fishing
+      equipment.
+  - rscadd: The wizard's den now has a book with the guide to wizard. Hope that helps
+      their winrate!
+  - qol: The wizard's den no longer looks like a flying cucumber and has received
+      a major overhaul. Hooray!
+  - bugfix: Fixed the doors on the Beach away mission
+  - bugfix: Fixed the railings on the Beach away mission
+  GoldenAlpharex:
+  - code_imp: Got rid of a few more single-letter variables. Only over six thousand
+      left to go, woo!
+  - code_imp: Documented a huge part of telecommunications machinery and signal code,
+      and did some minor code improvements to said code.
+  - bugfix: Hands of cards will now properly display the last card added to the hand
+      all the time, even when there's more than five cards in that hand.
+  Higgin:
+  - bugfix: Fixes respiration-transmission advanced viruses to no longer have an always-guaranteed
+      infection chance per tick.
+  Jacquerel:
+  - bugfix: Megafauna, lavaland elites, and abstract mobs now correctly cannot be
+      spawned by a toolbox of ash drake summoning
+  LT3:
+  - bugfix: The remaining survival pod bed on Icebox is now a medical bed
+  - bugfix: Fixed font scaling for announcements
+  - bugfix: Microwave will no longer get stuck turned on if a PDA has no cell
+  - bugfix: Silicons can no longer silently change the microwave between cook and
+      charge
+  Melbert:
+  - rscdel: Deleted a mapped in wrestling belt
+  - refactor: Refactored unarmed attacking mechanisms, this means dis-coordinated
+      humans will now bite people like monkeys (like how coordinated monkeys punch
+      people like humans?)
+  - refactor: Dis-coordinated humans smashing up machines now use their hands, rather
+      than their paws
+  NamelessFairy:
+  - bugfix: TGC Mana and Health bars are correctly offset on the holodeck.
+  - bugfix: Players without bodies to return to can play CTF again.
+  RedBaronFlyer:
+  - sound: added sounds for scanning valued items with an export scanner
+  Rhials:
+  - balance: Random event frequency has been adjusted to fire events more often.
+  - code_imp: The event subsystem has been prettied up with comments and longer variable
+      names.
+  SyncIt21:
+  - code_imp: removed unnecessary calls to `update_total()`
+  Thunder12345:
+  - bugfix: Delta's cargo bay has been connected to the atmos pipe networks
+  - bugfix: Fuel tanks are explosive again
+  jlsnow301:
+  - bugfix: TGUI Say should no longer flash during initialization
+  mc-oofert:
+  - rscadd: added a new hallucination, your mother
+  vinylspiders:
+  - bugfix: ghost sheets will now have the correct flags for digi sprites
+  - bugfix: basic mobs will no longer runtime when trying to check the faction of
+      a porta turret
+  - refactor: faction checking is now done at the atom/movable level
+  - bugfix: Fixes a bug with the plasma flower core MODsuit that would cause a butterfly
+      murder scene wherever there were turrets

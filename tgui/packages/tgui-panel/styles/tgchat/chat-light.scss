@@ -468,8 +468,25 @@ h2.alert {
 }
 
 .minorannounce {
+  color: #ff0000;
   font-weight: bold;
   font-size: 185%;
+}
+
+.minoralert {
+  color: #000000;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #000000;
+  font-weight: bold;
+  font-size: 210%;
+}
+
+.priorityalert {
+  color: #ff0000;
+  font-size: 140%;
 }
 
 .greenannounce {
