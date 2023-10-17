@@ -229,7 +229,7 @@
 
 /obj/machinery/netpod/attack_ghost(mob/dead/observer/our_observer)
 	var/our_target = avatar_ref?.resolve()
-	if(!our_target || our_observer.orbit(our_target))
+	if(isnull(our_target) || !our_observer.orbit(our_target))
 		return ..()
 
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
