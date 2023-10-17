@@ -68,7 +68,7 @@
 /datum/component/avatar_connection/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
 	RegisterSignal(parent, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 /datum/component/avatar_connection/UnregisterFromParent()
@@ -79,7 +79,9 @@
 
 /// Disconnects the avatar and returns the mind to the old_body.
 /datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, datum/source)
+#ifndef UNIT_TESTS
 	return_to_old_body()
+#endif
 
 	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve()
 	if(isnull(hosting_netpod) && istype(source, /obj/machinery/netpod))

@@ -29517,6 +29517,9 @@
 /obj/machinery/firealarm/directional/west,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/pdapainter/supply,
+/obj/machinery/byteforge{
+	pixel_y = 14
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "jGt" = (
