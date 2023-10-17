@@ -55,7 +55,8 @@
 
 /datum/ai_controller/basic_controller/faithless
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/faithless(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
@@ -69,6 +70,3 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
 		/datum/ai_planning_subtree/random_speech/faithless,
 	)
-
-/datum/targetting_datum/basic/faithless
-	stat_attack = UNCONSCIOUS

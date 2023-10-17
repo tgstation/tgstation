@@ -1,8 +1,9 @@
 /// Artificers
 /datum/ai_controller/basic_controller/artificer
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_wounded_only/same_faction/construct,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/same_faction/construct,
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_WOUNDED_ONLY = TRUE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -15,9 +16,9 @@
 	)
 
 /// Targetting datum that will only allow mobs that constructs can heal.
-/datum/targetting_datum/basic/attack_wounded_only/same_faction/construct
+/datum/targetting_datum/basic/same_faction/construct
 
-/datum/targetting_datum/basic/attack_wounded_only/same_faction/construct/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
+/datum/targetting_datum/basic/same_faction/construct/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
 	. = ..()
 	if(isconstruct(the_target) || istype(the_target, /mob/living/simple_animal/shade))
 		return .

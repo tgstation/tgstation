@@ -16,11 +16,11 @@
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
 	/// Minimum status to attack living beings
-	var/stat_attack = CONSCIOUS
+	//var/stat_attack = CONSCIOUS
 	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
 	/// Whether to target ONLY wounded targets
-	var/wounded_only = FALSE
+	//var/wounded_only = FALSE
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
@@ -57,9 +57,9 @@
 		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_SKIP_FACTION_CHECK]
 		if(faction_check(living_mob, living_target) && !bypass_faction_check)
 			return FALSE
-		if(living_target.stat > stat_attack)
+		if(living_target.stat > our_controller.blackboard[BB_TARGET_MINIMUM_STAT])
 			return FALSE
-		if(wounded_only && living_target.health == living_target.maxHealth)
+		if(our_controller.blackboard[BB_TARGET_WOUNDED_ONLY] && living_target.health == living_target.maxHealth)
 			return FALSE
 
 		return TRUE
@@ -131,17 +131,8 @@
 	find_smaller = FALSE
 	inclusive = FALSE
 
-/datum/targetting_datum/basic/attack_until_dead
-	stat_attack = HARD_CRIT
+/// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
+/datum/targetting_datum/basic/same_faction
 
-/datum/targetting_datum/basic/attack_even_if_dead
-	stat_attack = DEAD
-
-/datum/targetting_datum/basic/attack_wounded_only
-	wounded_only = TRUE
-
-/// Intended mainly for "medic" mobs that have healing touch or some other support ability
-/datum/targetting_datum/basic/attack_wounded_only/same_faction
-
-/datum/targetting_datum/basic/attack_wounded_only/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
+/datum/targetting_datum/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !..() // inverts logic to ONLY target mobs that share a faction
