@@ -12,7 +12,6 @@
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
 	health = 150
-	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
@@ -50,7 +49,6 @@
 	. = ..()
 	AddElement(\
 		/datum/element/change_force_on_death,\
-		move_force = MOVE_FORCE_DEFAULT,\
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(attack_intruder)))
