@@ -390,27 +390,39 @@
 		balloon_alert(user, "items inside!")
 		return
 
-	///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
+/// Returns the skin we want the medbot assembly to assume
+/obj/item/storage/medkit/proc/get_applicable_skin()
+	return null
+
+/obj/item/storage/medkit/advanced/get_applicable_skin()
+	return "medibot_advanced"
+
+/obj/item/storage/medkit/tactical/get_applicable_skin()
+	return "medibot_bezerk"
+
+/obj/item/storage/medkit/brute/get_applicable_skin()
+	return "medibot_brute"
+
+/obj/item/storage/medkit/burn/get_applicable_skin()
+	return "medibot_burn"
+
+/obj/item/storage/medkit/o2/get_applicable_skin()
+	return "medibot_o2"
+
+/obj/item/storage/medkit/toxin/get_applicable_skin()
+	return "medibot_toxin"
+
+///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
-	if (istype(src, /obj/item/storage/medkit/fire))
-		medbot_assembly.set_skin("medibot_burn")
-	else if (istype(src, /obj/item/storage/medkit/toxin))
-		medbot_assembly.set_skin("medibot_toxin")
-	else if (istype(src, /obj/item/storage/medkit/o2))
-		medbot_assembly.set_skin("medibot_o2")
-	else if (istype(src, /obj/item/storage/medkit/brute))
-		medbot_assembly.set_skin("medibot_brute")
-	else if (istype(src, /obj/item/storage/medkit/advanced))
-		medbot_assembly.set_skin("medibot_advanced")
-	else if (istype(src, /obj/item/storage/medkit/tactical))
-		medbot_assembly.set_skin("medibot_bezerk")
+	var/applicable_skin = get_applicable_skin()
+	if(!isnull(applicable_skin))
+		medbot_assembly.set_skin(applicable_skin)
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
 	medbot_assembly.medkit_type = type
 	qdel(bodypart)
 	qdel(src)
-
 /*
  * Pill Bottles
  */
