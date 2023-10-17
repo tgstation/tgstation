@@ -1,16 +1,7 @@
 #define MAGICARP_SPELL_TARGET_SEEK_RANGE 4
 
-/datum/pet_command/point_targetting/attack/carp
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/carp
-
 /datum/pet_command/point_targetting/use_ability/magicarp
 	pet_ability_key = BB_MAGICARP_SPELL
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/carp
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/carp
-
-/datum/ai_behavior/basic_melee_attack/carp
-	action_cooldown = 1.5 SECONDS
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/carp
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/carp
@@ -20,12 +11,12 @@
 
 /// As basic attack tree but interrupt if your health gets low or if your spell is off cooldown
 /datum/ai_planning_subtree/basic_melee_attack_subtree/magicarp
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/carp/magic
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/magicarp
 
 /// Interrupt your attack chain if: you have a spell, it's not on cooldown, and it has a target
-/datum/ai_behavior/basic_melee_attack/carp/magic
+/datum/ai_behavior/basic_melee_attack/magicarp
 
-/datum/ai_behavior/basic_melee_attack/carp/magic/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/basic_melee_attack/magicarp/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return ..()
@@ -43,9 +34,7 @@
 
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
-	if (QDELETED(using_action))
-		return
-	if (!using_action.IsAvailable())
+	if (!using_action?.IsAvailable())
 		return
 
 	var/spell_targetting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING]

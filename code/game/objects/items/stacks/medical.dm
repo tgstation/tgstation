@@ -159,6 +159,15 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	var/obj/item/bodypart/gauzed_bodypart
+
+/obj/item/stack/medical/gauze/Destroy(force)
+	. = ..()
+
+	if (gauzed_bodypart)
+		gauzed_bodypart.current_gauze = null
+		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
+	gauzed_bodypart = null
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
@@ -433,7 +442,7 @@
 
 	patient.emote("scream")
 	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i
+		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
@@ -474,3 +483,27 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
 	healed_mob.adjustOxyLoss(amount_healed)
+
+/obj/item/stack/medical/bandage
+	name = "first aid bandage"
+	desc = "A DeForest brand bandage designed for basic first aid on blunt-force trauma."
+	icon_state = "bandage"
+	inhand_icon_state = "bandage"
+	novariants = TRUE
+	amount = 1
+	max_amount = 1
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	heal_brute = 25
+	stop_bleeding = 0.2
+	self_delay = 3 SECONDS
+	other_delay = 1 SECONDS
+	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
+
+/obj/item/stack/medical/bandage/makeshift
+	name = "makeshift bandage"
+	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
+	icon_state = "bandage_makeshift"
+	icon_state_preview = "bandage_makeshift"
+	inhand_icon_state = "bandage"
+	novariants = TRUE

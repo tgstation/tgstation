@@ -1,5 +1,3 @@
-#define MOTH_EATING_CLOTHING_DAMAGE 15
-
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
@@ -108,10 +106,14 @@
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
-		moth_snack = new
-		moth_snack.name = name
-		moth_snack.clothing = WEAKREF(src)
+		create_moth_snack()
 	moth_snack.attack(target, user, params)
+
+/// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
+/obj/item/clothing/proc/create_moth_snack()
+	moth_snack = new
+	moth_snack.name = name
+	moth_snack.clothing = WEAKREF(src)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -543,8 +545,6 @@ BLIND     // can't see anything
 		return
 	if(prob(0.2))
 		to_chat(L, span_warning("The damaged threads on your [src.name] chafe!"))
-
-#undef MOTH_EATING_CLOTHING_DAMAGE
 
 /obj/item/clothing/apply_fantasy_bonuses(bonus)
 	. = ..()

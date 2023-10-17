@@ -51,15 +51,10 @@
 	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
 	var/datum/status_effect/food/crafted_food_buff = null
 
-/obj/item/food/Initialize(mapload, starting_reagent_purity, no_base_reagents = FALSE)
-	src.starting_reagent_purity = starting_reagent_purity
-	if(no_base_reagents)
-		food_reagents = null
+/obj/item/food/Initialize(mapload)
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
 	. = ..()
-	if(food_reagents)
-		food_reagents = string_assoc_list(food_reagents)
 	if(tastes)
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
@@ -120,7 +115,7 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 ///Requires /datum/component/germ_sensitive to detect exposure
 /obj/item/food/proc/make_germ_sensitive(mapload)
-	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+	if(!isnull(trash_type))
 		return // You don't eat the package and it protects from decomposing
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)

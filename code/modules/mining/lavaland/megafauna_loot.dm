@@ -399,7 +399,7 @@
 		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_mob(user))
+	if(soul.ckey && !soul.faction_check_atom(user))
 		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
@@ -641,9 +641,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, \
-	speed = 15 SECONDS, \
-	effectiveness = 90, \
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 15 SECONDS, \
+		effectiveness = 90, \
 	)
 
 /obj/item/melee/ghost_sword/Destroy()

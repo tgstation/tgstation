@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "If you transform into another mob and notice bugs with interacting with the game world, please create a bug report as this framework was recently refactored."

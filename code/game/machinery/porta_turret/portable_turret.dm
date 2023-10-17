@@ -40,6 +40,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	// Same faction mobs will never be shot at, no matter the other settings
+	faction = list(FACTION_TURRET)
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
 	var/uses_stored = TRUE
@@ -89,8 +91,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/on = TRUE
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
-	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list(FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
@@ -351,7 +351,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			return
 		var/obj/item/multitool/M = I
 		M.set_buffer(src)
-		to_chat(user, span_notice("You add [src] to multitool buffer."))
+		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
@@ -919,6 +919,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(built)
 		locked = FALSE
 	power_change() //Checks power and initial settings
+	find_and_hang_on_wall()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()

@@ -102,7 +102,7 @@
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
@@ -179,9 +179,10 @@
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
-	var/datum/wound/blunt/bone/severe/severe_wound_type = /datum/wound/blunt/bone/severe
-	var/datum/wound/blunt/bone/critical/critical_wound_type = /datum/wound/blunt/bone/critical
-	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10), attacking_item = src)
+	var/min_wound = head.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = src)
+	var/max_wound = head.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = src)
+
+	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
 	target.visible_message(
 		span_danger("[src] pierces through [target]'s skull, horribly mutilating their eyes!"),
 		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),

@@ -410,7 +410,7 @@
 
 /datum/chemical_reaction/drink/squirt_cider
 	results = list(/datum/reagent/consumable/ethanol/squirt_cider = 4)
-	required_reagents = list(/datum/reagent/water = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/salt = 1)
+	required_reagents = list(/datum/reagent/water/salt = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 

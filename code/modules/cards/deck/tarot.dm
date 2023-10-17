@@ -36,8 +36,16 @@
 	/// ghost notification cooldown
 	COOLDOWN_DECLARE(ghost_alert_cooldown)
 
-/obj/item/toy/cards/deck/tarot/haunted/on_wield(obj/item/source, mob/living/carbon/user)
+/obj/item/toy/cards/deck/tarot/haunted/Initialize(mapload)
 	. = ..()
+	AddComponent( \
+		/datum/component/two_handed, \
+		attacksound = 'sound/items/cardflip.ogg', \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
+
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
 
@@ -54,15 +62,8 @@
 		action = NOTIFY_ORBIT,
 	)
 
-/obj/item/toy/cards/deck/tarot/haunted/on_unwield(obj/item/source, mob/living/carbon/user)
-	. = ..()
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
-
-/obj/item/toy/cards/deck/tarot/haunted/dropped(mob/living/carbon/user, silent)
-	. = ..()
-	if(wielded)
-		REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
-		to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
 
 #undef TAROT_GHOST_TIMER

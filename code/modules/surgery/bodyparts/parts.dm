@@ -53,7 +53,7 @@
 	if(cavity_item)
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
-	..()
+	return ..()
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -113,8 +113,10 @@
 	var/datum/worn_feature_offset/worn_glove_offset
 	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
 	var/datum/worn_feature_offset/held_hand_offset
+	/// The noun to use when referring to this arm's appendage, e.g. "hand" or "paw"
+	var/appendage_noun = "hand"
 
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/arm/Destroy()
 	QDEL_NULL(worn_glove_offset)
@@ -211,6 +213,7 @@
 	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -224,6 +227,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
+	appendage_noun = "scythe-like hand"
 
 
 /obj/item/bodypart/arm/right
@@ -314,6 +318,7 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -327,6 +332,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
+	appendage_noun = "scythe-like hand"
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
@@ -346,7 +352,7 @@
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = BIO_STANDARD_JOINTED
 
 /obj/item/bodypart/leg/Destroy()
 	QDEL_NULL(worn_foot_offset)

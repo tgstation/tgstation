@@ -481,13 +481,13 @@
 			if(prob(5))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(30 to INFINITY)
 			//Higher chance to vomit. Let the horror start
 			if(prob(15))
 				to_chat(breather, span_warning("The stench of rotting carcasses is unbearable!"))
 				breather.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
-				breather.vomit()
+				breather.vomit(VOMIT_CATEGORY_DEFAULT)
 		else
 			breather.clear_mood_event("smell")
 	// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
@@ -514,6 +514,7 @@
 		if(prob(20))
 			n2o_euphoria = EUPHORIA_ACTIVE
 			breather.emote(pick("giggle", "laugh"))
+			breather.set_drugginess(30 SECONDS)
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
 		return
@@ -837,6 +838,7 @@
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
+	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5

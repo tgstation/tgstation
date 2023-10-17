@@ -21,6 +21,7 @@
 	health = 2
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	melee_attack_cooldown = 5 SECONDS
 	friendly_verb_continuous = "taps"
 	friendly_verb_simple = "tap"
 	density = FALSE
@@ -65,10 +66,10 @@
 		complete_text = "%TARGET%'s wounds mend together.",\
 	)
 
-/mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers)
-	if (isliving(target))
+/mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if (. && isliving(target))
 		faction |= REF(target) // Anyone we heal will treat us as a friend
-	return ..()
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()
@@ -86,7 +87,7 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/lightgeist, // We heal things by attacking them
+		/datum/ai_planning_subtree/basic_melee_attack_subtree, // We heal things by attacking them
 	)
 
 /// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
@@ -96,7 +97,7 @@
 	/// Type of limb we can heal
 	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/targetting_datum/lightgeist/can_attack(mob/living/living_mob, mob/living/target)
+/datum/targetting_datum/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
 	if (!isliving(target) || target.stat == DEAD)
 		return FALSE
 	if (!(heal_biotypes & target.mob_biotypes))
@@ -111,9 +112,3 @@
 			continue
 		return TRUE
 	return FALSE
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/lightgeist
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lightgeist
-
-/datum/ai_behavior/basic_melee_attack/lightgeist
-	action_cooldown = 5 SECONDS

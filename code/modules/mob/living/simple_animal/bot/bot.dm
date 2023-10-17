@@ -104,8 +104,6 @@
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
-	/// Component which allows ghosts to take over this bot
-	var/datum/component/ghost_direct_control/personality_download
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// If true we will offer this
@@ -212,7 +210,6 @@
 	GLOB.bots_list -= src
 	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
-	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
 	QDEL_NULL(path_hud)
@@ -225,14 +222,14 @@
 		return
 	can_be_possessed = TRUE
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
-	personality_download = AddComponent(\
-		/datum/component/ghost_direct_control,\
-		ban_type = ROLE_BOT,\
-		poll_candidates = can_announce,\
-		poll_ignore_key = POLL_IGNORE_BOTS,\
-		assumed_control_message = (bot_cover_flags & BOT_COVER_EMAGGED) ? get_emagged_message() : possessed_message,\
-		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)),\
-		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)),\
+	AddComponent(
+		/datum/component/ghost_direct_control, \
+		ban_type = ROLE_BOT, \
+		poll_candidates = can_announce, \
+		poll_ignore_key = POLL_IGNORE_BOTS, \
+		assumed_control_message = (bot_cover_flags & BOT_COVER_EMAGGED) ? get_emagged_message() : possessed_message, \
+		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)), \
+		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)), \
 	)
 	if (can_announce)
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
@@ -240,7 +237,7 @@
 /// Disables this bot from being possessed by ghosts
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)
 	can_be_possessed = FALSE
-	QDEL_NULL(personality_download)
+	qdel(GetComponent(/datum/component/ghost_direct_control))
 	if (isnull(key))
 		return
 	if (user)

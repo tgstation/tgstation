@@ -85,7 +85,7 @@
 
 /datum/targetting_datum/basic/bee
 
-/datum/targetting_datum/basic/bee/can_attack(mob/living/owner, atom/target)
+/datum/targetting_datum/basic/bee/can_attack(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()
@@ -93,6 +93,10 @@
 		return FALSE
 
 	var/mob/living/mob_target = target
+
+	if(mob_target.mob_biotypes & MOB_PLANT)
+		return FALSE
+
 	var/datum/ai_controller/basic_controller/bee_ai = owner.ai_controller
 	if(isnull(bee_ai))
 		return FALSE

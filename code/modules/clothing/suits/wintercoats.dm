@@ -247,8 +247,10 @@
 	icon_state = "coatjanitor"
 	inhand_icon_state = null
 	allowed = list(
+		/obj/item/access_key,
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
+		/obj/item/key/janitor,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
@@ -589,6 +591,7 @@
 	allowed = list(
 		/obj/item/storage/bag/mail,
 		/obj/item/stamp,
+		/obj/item/universal_scanner,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/cargo

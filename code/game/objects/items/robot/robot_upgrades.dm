@@ -722,6 +722,33 @@
 		if (E)
 			R.model.remove_module(E, TRUE)
 
+/obj/item/borg/upgrade/drink_app
+	name = "glass storage apparatus"
+	desc = "A supplementary drinking glass storage apparatus for service cyborgs."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/drink_app/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
+		if(E)
+			to_chat(user, span_warning("This unit has no room for additional drink storage!"))
+			return FALSE
+
+		E = new(R.model)
+		R.model.basic_modules += E
+		R.model.add_module(E, FALSE, TRUE)
+
+/obj/item/borg/upgrade/drink_app/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/borg/apparatus/beaker/drink/E = locate() in R.model.modules
+		if (E)
+			R.model.remove_module(E, TRUE)
+
 /obj/item/borg/upgrade/broomer
 	name = "experimental push broom"
 	desc = "An experimental push broom used for efficiently pushing refuse."

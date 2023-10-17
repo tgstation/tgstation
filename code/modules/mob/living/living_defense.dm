@@ -86,6 +86,11 @@
 /mob/living/proc/is_pepper_proof(check_flags = ALL)
 	return null
 
+/// Checks if the mob's ears (BOTH EARS, BOWMANS NEED NOT APPLY) are covered by something.
+/// Returns the atom covering the mob's ears, or null if their ears are uncovered.
+/mob/living/proc/is_ears_covered()
+	return null
+
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
@@ -164,6 +169,7 @@
 	return ..()
 
 /mob/living/fire_act()
+	. = ..()
 	adjust_fire_stacks(3)
 	ignite_mob()
 
@@ -303,10 +309,6 @@
 		return martial_result
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/misc/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
-		return FALSE
-
 	var/martial_result = user.apply_martial_art(src, modifiers)
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
@@ -321,6 +323,8 @@
 		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
+	if(!user.get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
 	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
 		to_chat(user, span_warning("You can't bite with your mouth covered!"))
 		return FALSE
@@ -446,7 +450,7 @@
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
+		makeNewConstruct(/mob/living/basic/construct/harvester, src, cultoverride = TRUE)
 	else
 		switch(rand(1, 4))
 			if(1)

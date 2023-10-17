@@ -38,7 +38,7 @@ env:
   PR_NUMBER: ${{ github.event.number }}
 jobs:
   test_tgs_docker:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Test TGS Docker
     runs-on: ubuntu-22.04
     concurrency:

@@ -27,45 +27,6 @@
 	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_BACKPACK|ITEM_SLOT_DEX_STORAGE))
 		update_inv_internal_storage()
 
-/mob/living/simple_animal/drone/update_held_items()
-	remove_overlay(DRONE_HANDS_LAYER)
-	var/list/hands_overlays = list()
-
-	var/obj/item/l_hand = get_item_for_held_index(1)
-	var/obj/item/r_hand = get_item_for_held_index(2)
-
-	var/y_shift = getItemPixelShiftY()
-
-	if(r_hand)
-		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(default_layer = DRONE_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
-		if(y_shift)
-			r_hand_overlay.pixel_y += y_shift
-
-		hands_overlays += r_hand_overlay
-
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE_EXPLICIT(r_hand, ABOVE_HUD_PLANE, src)
-			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
-			client.screen |= r_hand
-
-	if(l_hand)
-		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
-		if(y_shift)
-			l_hand_overlay.pixel_y += y_shift
-
-		hands_overlays += l_hand_overlay
-
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE_EXPLICIT(l_hand, ABOVE_HUD_PLANE, src)
-			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
-			client.screen |= l_hand
-
-
-	if(hands_overlays.len)
-		drone_overlays[DRONE_HANDS_LAYER] = hands_overlays
-	apply_overlay(DRONE_HANDS_LAYER)
-
-
 /mob/living/simple_animal/drone/proc/update_inv_internal_storage()
 	if(internal_storage && client && hud_used?.hud_shown)
 		internal_storage.screen_loc = ui_drone_storage

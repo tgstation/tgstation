@@ -141,7 +141,7 @@
 		span_danger("You splash the contents of [src] onto [target][punctuation]"),
 		ignored_mobs = target,
 	)
-
+	SEND_SIGNAL(target, COMSIG_ATOM_SPLASHED)
 	if (ismob(target))
 		var/mob/target_mob = target
 		target_mob.show_message(

@@ -36,7 +36,6 @@
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
-	regenerate_icons()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -71,7 +70,6 @@
 	invisibility = 0
 	set_species(species)
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
-	regenerate_icons()
 	return src
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
@@ -300,7 +298,7 @@
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
+	var/mob/living/basic/gorilla/new_gorilla = new (get_turf(src))
 	new_gorilla.set_combat_mode(TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)
@@ -374,7 +372,7 @@
 	if(!MP)
 		return FALSE //Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct) || ispath(MP, /mob/living/basic/construct))
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!

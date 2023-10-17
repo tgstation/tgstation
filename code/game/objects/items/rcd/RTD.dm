@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -165,21 +165,16 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rtd/ui_data(mob/user)
+/obj/item/construction/rtd/ui_static_data(mob/user)
 	var/list/data = ..()
-	var/floor_designs = GLOB.floor_designs
 
-	data["selected_root"] = root_category
 	data["root_categories"] = list()
-	for(var/category in floor_designs)
+	for(var/category in GLOB.floor_designs)
 		data["root_categories"] += category
-	data["selected_category"] = design_category
-
-	selected_design.fill_ui_data(data)
 
 	data["categories"] = list()
-	for(var/sub_category as anything in floor_designs[root_category])
-		var/list/target_category =  floor_designs[root_category][sub_category]
+	for(var/sub_category as anything in GLOB.floor_designs[root_category])
+		var/list/target_category =  GLOB.floor_designs[root_category][sub_category]
 
 		var/list/designs = list() //initialize all designs under this category
 		for(var/list/design as anything in target_category)
@@ -190,11 +185,16 @@
 
 	return data
 
-/obj/item/construction/rtd/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/obj/item/construction/rtd/ui_data(mob/user)
+	var/list/data = ..()
 
+	data["selected_root"] = root_category
+	data["selected_category"] = design_category
+	selected_design.fill_ui_data(data)
+
+	return data
+
+/obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
 		if("root_category")
@@ -264,7 +264,7 @@
 		return TRUE
 
 	var/delay = CONSTRUCTION_TIME(selected_design.cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
 
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))

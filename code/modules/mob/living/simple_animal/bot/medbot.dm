@@ -102,6 +102,8 @@
 	var/tipped_status = MEDBOT_PANIC_NONE
 	///The name we got when we were tipped
 	var/tipper_name
+	///The trim type that will grant additional access to this medibot
+	var/datum/id_trim/additional_access = /datum/id_trim/job/paramedic
 
 	///Last announced healing a person in critical condition
 	COOLDOWN_DECLARE(last_patient_message)
@@ -111,7 +113,7 @@
 	COOLDOWN_DECLARE(last_tipping_action_voice)
 
 /mob/living/simple_animal/bot/medbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 /mob/living/simple_animal/bot/medbot/stationary
 	medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE
@@ -144,6 +146,7 @@
 	damagetype_healer = "all"
 	heal_threshold = 0
 	heal_amount = 5
+	additional_access = /datum/id_trim/syndicom/crew
 
 /mob/living/simple_animal/bot/medbot/nukie/Initialize(mapload, new_skin)
 	. = ..()
@@ -152,6 +155,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))
 	internal_radio.set_frequency(FREQ_SYNDICATE)
 	internal_radio.freqlock = RADIO_FREQENCY_LOCKED
+	faction += ROLE_SYNDICATE //one of us
 
 /mob/living/simple_animal/bot/medbot/nukie/proc/nuke_disarm()
 	SIGNAL_HANDLER
@@ -204,13 +208,20 @@
 	. = ..()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
-	access_card.add_access(para_trim.access + para_trim.wildcard_access)
+	var/datum/id_trim/additional_trim = SSid_access.trim_singletons_by_path[additional_access]
+	access_card.add_access(additional_trim.access + additional_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
 	if(!isnull(new_skin))
 		skin = new_skin
 	update_appearance()
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
+		skin = "advanced"
+		update_appearance(UPDATE_OVERLAYS)
+		damagetype_healer = "all"
+		if(prob(50))
+			name += ", PhD."
 
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \

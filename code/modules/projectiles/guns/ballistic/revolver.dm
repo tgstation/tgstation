@@ -139,6 +139,11 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
+	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
+	//There's already a cowboy sprite in there!
+	icon_state = "lucky"
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
@@ -275,9 +280,14 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = "\improper Syndicate Revolver"
 	clumsy_check = FALSE
 	icon_state = "revolversyndie"
+
+/obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
+	. = ..()
+	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
+	name = initial(syndie_revolver.name)
+	desc = initial(syndie_revolver.desc)
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)

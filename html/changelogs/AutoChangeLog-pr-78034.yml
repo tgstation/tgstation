@@ -1,4 +1,0 @@
-author: "Deadgebert"
-delete-after: True
-changes:
-  - balance: "gas mixer output now accurate to set ratio regardless of input temperatures"

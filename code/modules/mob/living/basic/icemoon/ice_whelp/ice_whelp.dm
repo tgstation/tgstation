@@ -43,12 +43,12 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-	var/datum/action/cooldown/mob_cooldown/ice_breath/flamethrower = new(src)
-	var/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/wide_flames = new(src)
+	var/datum/action/cooldown/mob_cooldown/fire_breath/ice/flamethrower = new(src)
 	flamethrower.Grant(src)
+	ai_controller.set_blackboard_key(BB_WHELP_STRAIGHTLINE_FIRE, flamethrower)
+	var/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross/wide_flames = new(src)
 	wide_flames.Grant(src)
 	ai_controller.set_blackboard_key(BB_WHELP_WIDESPREAD_FIRE, wide_flames)
-	ai_controller.set_blackboard_key(BB_WHELP_STRAIGHTLINE_FIRE, flamethrower)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 
@@ -69,6 +69,7 @@
 	INVOKE_ASYNC(src, PROC_REF(cannibalize_victim), victim)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
 	balloon_alert(src, "sculpting...")
 	if(!do_after(src, 5 SECONDS, target = target))
@@ -80,9 +81,11 @@
 	dragon_statue.set_anchored(TRUE)
 	qdel(target)
 
+/// Gib and consume our fellow ice drakes
 /mob/living/basic/mining/ice_whelp/proc/cannibalize_victim(mob/living/target)
+	start_pulling(target)
 	balloon_alert(src, "devouring...")
 	if(!do_after(src, 5 SECONDS, target))
 		return
-	target.gib()
+	target.gib(DROP_ALL_REMAINS)
 	adjustBruteLoss(-1 * heal_on_cannibalize)

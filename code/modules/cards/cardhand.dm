@@ -29,7 +29,7 @@
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
 			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -77,7 +77,7 @@
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
+		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle cardhand into deck (if unwielded)
 			dealer_deck.insert(src)
 			user.balloon_alert_to_viewers("puts card in deck")
 			return
@@ -110,7 +110,7 @@
 		icon_state = null // we want an error icon to appear if this doesn't get qdel
 		return
 
-	var/starting_card_pos = max(1, cards.len - CARDS_MAX_DISPLAY_LIMIT) // only display the top cards in the cardhand
+	var/starting_card_pos = max(0, cards.len - CARDS_MAX_DISPLAY_LIMIT) + 1 // only display the top cards in the cardhand, +1 because list indexes start at 1
 	var/cards_to_display = min(CARDS_MAX_DISPLAY_LIMIT, cards.len)
 	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed
 	var/angle_divider = round(90/(cards_to_display - 1))
