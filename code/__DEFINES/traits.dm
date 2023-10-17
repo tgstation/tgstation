@@ -1308,9 +1308,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given by /datum/component/germ_sensitive
 #define TRAIT_GERM_SENSITIVE "germ_sensitive"
 
-///Trait on SSparallax when narsie is summoned
-#define TRAIT_NARSIE_SUMMON "narsie_summon"
-
 /// This atom can have spells cast from it if a mob is within it
 /// This means the "caster" of the spell is changed to the mob's loc
 /// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast

@@ -552,14 +552,21 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return
 
 GLOBAL_VAR_INIT(narsie_effect_last_modified, 0)
+GLOBAL_VAR_INIT(narsie_summon_count, 0)
+/proc/set_narsie_count(new_count)
+	GLOB.narsie_summon_count = new_count
+	SEND_GLOBAL_SIGNAL(COMSIG_NARSIE_SUMMON_UPDATE, GLOB.narsie_summon_count)
 
 /// When narsie begins to be summoned, slowly dim the saturation of parallax and starlight
 /proc/started_narsie_summon()
 	set waitfor = FALSE
 
+	set_narsie_count(GLOB.narsie_summon_count + 1)
+	if(GLOB.narsie_summon_count > 1)
+		return
+
 	var/started = world.time
 	GLOB.narsie_effect_last_modified = started
-	ADD_TRAIT(SSparallax, TRAIT_NARSIE_SUMMON, TRAIT_GENERIC)
 
 	var/starting_color = GLOB.starlight_color
 	var/list/target_color = ReadHSV(RGBtoHSV(starting_color))
@@ -577,9 +584,12 @@ GLOBAL_VAR_INIT(narsie_effect_last_modified, 0)
 /// Summon failed, time to work backwards
 /proc/failed_narsie_summon()
 	set waitfor = FALSE
+	set_narsie_count(GLOB.narsie_summon_count - 1)
+
+	if(GLOB.narsie_summon_count > 1)
+		return
 	var/started = world.time
 	GLOB.narsie_effect_last_modified = started
-	REMOVE_TRAIT(SSparallax, TRAIT_NARSIE_SUMMON, TRAIT_GENERIC)
 	var/starting_color = GLOB.starlight_color
 	var/end_color = GLOB.base_starlight_color
 	// We get 4 steps to fade in

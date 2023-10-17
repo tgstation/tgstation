@@ -97,3 +97,6 @@
 #define COMSIG_RELIGIOUS_SECT_CHANGED "!religious_sect_changed"
 /// Global signal sent when a religious sect is reset
 #define COMSIG_RELIGIOUS_SECT_RESET "!religious_sect_reset"
+
+/// Global signal sent when narsie summon count is updated: (new count)
+#define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"
