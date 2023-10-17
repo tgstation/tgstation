@@ -373,6 +373,16 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
+/obj/item/firing_pin/monkey
+	name = "monkeylock firing pin"
+	desc = "This firing pin prevents non-monkies from firing a gun."
+	fail_message = "not a monkey!"
+
+/obj/item/firing_pin/monkey/pin_auth(mob/living/user)
+	if(!ismonkey(user))
+		return FALSE
+	return TRUE
+
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null

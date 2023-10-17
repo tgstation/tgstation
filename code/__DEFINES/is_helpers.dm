@@ -147,6 +147,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define iscow(A) (istype(A, /mob/living/basic/cow))
 
+#define isgorilla(A) (istype(A, /mob/living/basic/gorilla))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 

@@ -378,7 +378,7 @@
 	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	species_type = /datum/species/monkey
+	species_type = /datum/species/monkey/no_mutation // Can't just use mutadone or genetics to get a free human buddy
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
