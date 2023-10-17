@@ -12,7 +12,7 @@
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
 	health = 150
-	move_resist = MOVE_RESIST_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
 	attack_sound = 'sound/weapons/rapierhit.ogg'
@@ -155,6 +155,9 @@
 
 /mob/living/basic/mining/mook/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+
+	if(.)
+		return TRUE
 
 	if(!istype(mover, /mob/living/basic/mining/mook))
 		return FALSE
