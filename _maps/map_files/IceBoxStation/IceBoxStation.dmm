@@ -3550,7 +3550,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -7408,7 +7408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -7945,7 +7945,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -32897,8 +32897,8 @@
 	id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
-	elevator_mode = 1
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator"
 	},
 /obj/machinery/lift_indicator/directional/north{
 	linked_elevator_id = "publicElevator"
@@ -33498,11 +33498,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
 /obj/effect/abstract/elevator_music_zone{
@@ -46934,9 +46934,9 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
 	elevator_mode = 1;
-	req_access = null
+	req_access = null;
+	transport_linked_id = "publicElevator"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -67271,7 +67271,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -73888,7 +73888,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{

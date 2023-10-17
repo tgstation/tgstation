@@ -46,13 +46,6 @@
 
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
-#define AIRLOCK_CLOSED 1
-#define AIRLOCK_CLOSING 2
-#define AIRLOCK_OPEN 3
-#define AIRLOCK_OPENING 4
-#define AIRLOCK_DENY 5
-#define AIRLOCK_EMAG 6
-
 #define AIRLOCK_FRAME_CLOSED "closed"
 #define AIRLOCK_FRAME_CLOSING "closing"
 #define AIRLOCK_FRAME_OPEN "open"
@@ -2473,14 +2466,6 @@
 	set_density(TRUE)
 	operating = FALSE
 	return TRUE
-
-
-#undef AIRLOCK_CLOSED
-#undef AIRLOCK_CLOSING
-#undef AIRLOCK_OPEN
-#undef AIRLOCK_OPENING
-#undef AIRLOCK_DENY
-#undef AIRLOCK_EMAG
 
 #undef AIRLOCK_SECURITY_NONE
 #undef AIRLOCK_SECURITY_IRON

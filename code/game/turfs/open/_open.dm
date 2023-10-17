@@ -391,3 +391,31 @@
 		if(istype(get_step(src, direction), /turf/open/floor))
 			return TRUE
 	return FALSE
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_transport_tiles(obj/item/stack/thermoplastic/used_tiles, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		balloon_alert(user, "no tram base!")
+		return
+	if(!used_tiles.use(1))
+		balloon_alert(user, "no tile!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new used_tiles.tile_type(src)
+
+/// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
+/turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		to_chat(user, span_warning("There is no transport frame to attach the anchor!"))
+		return
+	if(!used_stack.use(2))
+		balloon_alert(user, "not enough titanium!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new /obj/structure/girder/tram(src)
+

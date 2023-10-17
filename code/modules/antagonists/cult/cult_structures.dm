@@ -63,7 +63,7 @@
 /obj/structure/destructible/cult/proc/conceal()
 	set_density(FALSE)
 	visible_message(span_danger("[src] fades away."))
-	invisibility = INVISIBILITY_OBSERVER
+	SetInvisibility(INVISIBILITY_OBSERVER, id=type)
 	alpha = 100
 	set_light_power(0)
 	set_light_range(0)
@@ -74,7 +74,7 @@
  */
 /obj/structure/destructible/cult/proc/reveal()
 	set_density(initial(density))
-	invisibility = 0
+	RemoveInvisibility(type)
 	visible_message(span_danger("[src] suddenly appears!"))
 	alpha = initial(alpha)
 	set_light_range(initial(light_range))

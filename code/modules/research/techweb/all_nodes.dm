@@ -1243,6 +1243,19 @@
 		"s_treatment",
 	)
 
+/datum/techweb_node/tram
+	id = "tram"
+	display_name = "Tram Technology"
+	description = "Technology for linear induction transportation systems."
+	prereq_ids = list("telecomms")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	design_ids = list(
+		"tram_controller",
+		"tram_display",
+		"crossing_signal",
+		"guideway_sensor",
+	)
+
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"
 	display_name = "Integrated HUDs"
