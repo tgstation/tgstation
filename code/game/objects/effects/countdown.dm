@@ -157,7 +157,7 @@
 		return round(time_left)
 
 /obj/effect/countdown/arena
-	invisibility = 0
+	invisibility = INVISIBILITY_NONE
 	name = "arena countdown"
 
 /obj/effect/countdown/arena/get_value()

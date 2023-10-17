@@ -68,7 +68,7 @@
 	if(.)
 		trigger()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 	if(destroy_objects)
 		..()
 
-/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 	lock = new
 	lock.Grant(src)
 
-/mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget(atom/attacked_target)
 	if(src == target)
 		toggle_open()
 		return

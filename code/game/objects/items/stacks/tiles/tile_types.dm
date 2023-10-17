@@ -48,21 +48,21 @@
 	if(tile_reskin_types || tile_rotate_dirs)
 		. += span_notice("Use while in your hand to change what type of [src] you want.")
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
-		var/verb
+		var/damage_value
 		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
 			if(1 to 3)
-				verb = "superb"
+				damage_value = "superb"
 			if(4 to 6)
-				verb = "great"
+				damage_value = "great"
 			if(7 to 9)
-				verb = "good"
+				damage_value = "good"
 			if(10 to 12)
-				verb = "fairly decent"
+				damage_value = "fairly decent"
 			if(13 to 15)
-				verb = "mediocre"
-		if(!verb)
+				damage_value = "mediocre"
+		if(!damage_value)
 			return
-		. += span_notice("Those could work as a [verb] throwing weapon.")
+		. += span_notice("Those could work as a [damage_value] throwing weapon.")
 
 /**
  * Place our tile on a plating, or replace it.
@@ -1035,23 +1035,23 @@
 	turf_type = /turf/open/floor/noslip/tram
 	merge_type = /obj/item/stack/tile/noslip/tram
 
-/obj/item/stack/tile/noslip/tram_platform
+/obj/item/stack/tile/tram
 	name = "tram platform tiles"
 	singular_name = "tram platform"
 	desc = "A tile used for tram platforms."
 	icon_state = "darkiron_catwalk"
 	inhand_icon_state = "tile-neon"
-	turf_type = /turf/open/floor/noslip/tram_platform
-	merge_type = /obj/item/stack/tile/noslip/tram_platform
+	turf_type = /turf/open/floor/tram
+	merge_type = /obj/item/stack/tile/tram
 
-/obj/item/stack/tile/noslip/tram_plate
-	name = "high-traction platform tile"
-	singular_name = "high-traction platform tile"
-	desc = "A high-traction tile used for tram platforms."
+/obj/item/stack/tile/tram/plate
+	name = "linear induction tram tiles"
+	singular_name = "linear induction tram tile tile"
+	desc = "A tile with an aluminium plate for tram propulsion."
 	icon_state = "darkiron_plate"
 	inhand_icon_state = "tile-neon"
-	turf_type = /turf/open/floor/noslip/tram_plate
-	merge_type = /obj/item/stack/tile/noslip/tram_plate
+	turf_type = /turf/open/floor/tram/plate
+	merge_type = /obj/item/stack/tile/tram/plate
 
 //Circuit
 /obj/item/stack/tile/circuit

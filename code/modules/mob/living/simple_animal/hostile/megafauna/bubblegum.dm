@@ -291,7 +291,7 @@ Difficulty: Hard
 	if(!(flags_1 & ADMIN_SPAWNED_1))
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
 		recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
@@ -348,7 +348,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget(atom/attacked_target)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()

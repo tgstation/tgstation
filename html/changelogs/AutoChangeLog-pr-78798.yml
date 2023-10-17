@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "Random event frequency has been adjusted to fire events more often."
-  - code_imp: "The event subsystem has been prettied up with comments and longer variable names."

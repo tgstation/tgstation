@@ -646,6 +646,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/debug/human_spawner{
+	pixel_x = 6;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -935,6 +939,7 @@
 "dQ" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
+/obj/item/debug/human_spawner,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dR" = (
