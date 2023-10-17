@@ -66,7 +66,7 @@
 
 	if(meal.flags_1 & HOLOGRAM_1)
 		meal.balloon_alert(src, "no life energy!")
-		return
+		return FALSE
 
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
