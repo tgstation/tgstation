@@ -40,6 +40,7 @@
 		/obj/item/mcobject/messaging/storage = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/type_sensor = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/clock = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/repeater = LOW_COMPONENT_SUPPLY
 	)
 
 

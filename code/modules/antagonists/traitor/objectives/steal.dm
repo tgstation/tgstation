@@ -128,10 +128,12 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		/datum/objective_item/steal/traitor/captain_spare,
 	)
 
-/datum/traitor_objective/steal_item/most_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+//monkestation removal start, this was added with biddle traitor and then was just never removed when steal got reworked
+/*/datum/traitor_objective/steal_item/most_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/very_risky))
 		return FALSE
-	return ..()
+	return ..()*/
+//monkestation removal end
 
 /datum/traitor_objective/steal_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	for(var/datum/traitor_objective/steal_item/objective as anything in possible_duplicates)
@@ -266,7 +268,12 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		return
 
 	if(IS_TRAITOR(user))
-		if(target_object_type)
+//monkestation edit start
+		var/datum/traitor_objective/tide_bug_department/resolved_objective = objective_weakref?.resolve()
+		if(resolved_objective)
+			. += span_notice("This device must be placed by <b>using it in hand</b> inside the <b>[initial(resolved_objective.targeted_area?.name)]</b>.")
+//monkestation edit end
+		else if(target_object_type) //monkestation edit: makes this an else if
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
 
