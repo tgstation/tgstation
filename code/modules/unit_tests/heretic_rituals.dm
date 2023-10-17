@@ -104,7 +104,7 @@
 		// Finally, we checked all of our resulting atoms and cleaned them up.
 		// The nearby_atoms list should be devoid of any atom/movables now. Let's double-check that.
 		for(var/atom/thing as anything in nearby_atoms)
-			if(!ismovable(thing))
+			if(!ismovable(thing) || istype(thing, /atom/movable/lighting_object))
 				continue
 
 			// There are atoms around the rune still, and there shouldn't be.
