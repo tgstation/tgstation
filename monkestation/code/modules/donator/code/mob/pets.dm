@@ -43,7 +43,7 @@
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "cirno-happy"
 	icon_living = "cirno-happy"
-	icon_dead = ""
+	icon_dead = "cirno-happy"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
 
@@ -52,7 +52,6 @@
 	desc = "This little fella looks familiar..."
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "triple_snake"
-	icon_dead = ""
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/pet/dog/germanshepherd
@@ -60,7 +59,6 @@
 	desc = "He's so cool, he's got sunglasses!!"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "germanshepherd"
-	icon_dead = ""
 	icon_gib = null
 	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
 	gold_core_spawnable = NO_SPAWN
@@ -70,7 +68,6 @@
 	desc = "He's got a lot to say!"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "slime"
-	icon_dead = ""
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
@@ -101,6 +98,5 @@
 	desc = "Look at him go!"
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "spider"
-	icon_dead = ""
 	gold_core_spawnable = NO_SPAWN
 
