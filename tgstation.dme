@@ -3916,7 +3916,6 @@
 #include "code\modules\holodeck\holo_effect.dm"
 #include "code\modules\holodeck\holodeck_map_templates.dm"
 #include "code\modules\holodeck\items.dm"
-#include "code\modules\holodeck\mobs.dm"
 #include "code\modules\holodeck\turfs.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
 #include "code\modules\hydroponics\bouquets.dm"

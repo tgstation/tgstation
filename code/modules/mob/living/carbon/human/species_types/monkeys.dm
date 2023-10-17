@@ -192,4 +192,9 @@
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
+/datum/species/monkey/holodeck
+	knife_butcher_results = list()
+	meat = null
+	skinned_type = null
+
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

@@ -32,6 +32,9 @@
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
 
+/mob/living/carbon/human/species/monkey/holodeck
+	race = /datum/species/monkey/holodeck
+
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
 /mob/living/carbon/human/species/monkey/punpun
