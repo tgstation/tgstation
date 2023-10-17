@@ -62,7 +62,7 @@
 		return
 		examine_list += span_danger("The [source] it. It looked.")
 
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40, 160)
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 160)
 	user.adjust_temp_blindness(5 SECONDS)
 	examine_list += span_danger("The [source] it. It looked.")
 

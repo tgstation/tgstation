@@ -22,7 +22,7 @@
 	gain_text = "The manus holds many a curio, some are not meant for the mortal eye."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulette,
+		/datum/heretic_knowledge/spell/moon_parade,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/brain = 1,
@@ -33,14 +33,20 @@
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/spell/opening_blast
-	name = "Wave Of Desperation"
-	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \
-		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
-	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
+/datum/heretic_knowledge/painting
+	name = "Glimmering Arts"
+	desc = "Allows you to transmute a canvas and an additional item to create a piece of art, these paintings \
+			have different effects depending on the additional item added. Possible paintings: \
+			s\
+			s\
+			s\
+			s\
+			s\"
+	gain_text = "A wind of inspiration blows through me, past the walls and past the gate inspirations lie, yet to be depicted. \
+				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/void_cloak,
+		/datum/heretic_knowledge/spell/moon_parade,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1

@@ -153,6 +153,7 @@
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
+		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2

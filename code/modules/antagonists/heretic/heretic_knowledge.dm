@@ -29,6 +29,8 @@
 	var/list/required_atoms
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
+	/// If set this allows the heretic to add additional atoms to get different results than when only using required atoms
+	var/list/optional_atoms
 	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
@@ -130,7 +132,6 @@
 	if(ispath(item_path, /mob/living))
 		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
 	return "[initial(item_path.name)]\s"
-
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
