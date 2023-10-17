@@ -212,6 +212,11 @@
 		'sound/voice/ethereal/ethereal_scream_3.ogg',
 	)
 
+/datum/species/ethereal/get_physical_attributes()
+	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
+		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
+		However, their skin is very thin and easy to pierce with brute weaponry."
+
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \
 		separated socially by caste, and espouse a dogma of aiding the weak and \
@@ -275,7 +280,7 @@
 		TRAIT_FIXED_MUTANT_COLORS,
 		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
-		TRAIT_TENACIOUS,
+		TRAIT_TENACIOUS, // this doesn't work. tenacity is an element
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
@@ -289,6 +294,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
 	)
+
+/datum/species/ethereal/lustrous/get_physical_attributes()
+	return "Lustrous are what remains of an Ethereal after freebasing esoteric drugs. \
+		They are pressure immune, virus immune, can see bluespace tears in reality, and have a really weird scream. They remain vulnerable to physical damage."
 
 /datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(

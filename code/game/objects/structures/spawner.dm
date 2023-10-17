@@ -8,11 +8,12 @@
 	anchored = TRUE
 	density = TRUE
 
+	faction = list(FACTION_HOSTILE)
+
 	var/max_mobs = 5
 	var/spawn_time = 30 SECONDS
 	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
-	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
 	/// Is this spawner taggable with something?
 	var/scanner_taggable = FALSE
@@ -39,8 +40,12 @@
 		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
 
 /obj/structure/spawner/attackby(obj/item/item, mob/user, params)
+	. = ..()
+	if(.)
+		return TRUE
 	if(scanner_taggable && is_type_in_list(item, scanner_types))
 		gps_tag(user)
+		return TRUE
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
 /obj/structure/spawner/proc/gps_tag(mob/user)

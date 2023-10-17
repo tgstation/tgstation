@@ -177,6 +177,7 @@
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
 	if(dextrous)
+		AddElement(/datum/element/dextrous, hud_type = hud_type)
 		AddComponent(/datum/component/personal_crafting)
 		add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
@@ -447,9 +448,6 @@
 
 /mob/living/simple_animal/death(gibbed)
 	drop_loot()
-	if(dextrous)
-		drop_all_held_items()
-
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overridden in such
@@ -511,7 +509,7 @@
 			else if(!is_child && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_atom(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -560,49 +558,12 @@
 /mob/living/simple_animal/get_idcard(hand_first)
 	return (..() || access_card)
 
-/mob/living/simple_animal/can_hold_items(obj/item/I)
-	return dextrous && ..()
-
-/mob/living/simple_animal/activate_hand(selhand)
-	if(!dextrous)
-		return ..()
-	if(!selhand)
-		selhand = (active_hand_index % held_items.len)+1
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-		if(selhand == "right" || selhand == "r")
-			selhand = 2
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-	if(selhand != active_hand_index)
-		swap_hand(selhand)
-	else
-		mode()
-
-/mob/living/simple_animal/perform_hand_swap(hand_index)
-	. = ..()
-	if(!.)
-		return
-	if(!dextrous)
-		return
-	if(!hand_index)
-		hand_index = (active_hand_index % held_items.len)+1
-	var/oindex = active_hand_index
-	active_hand_index = hand_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
-		H = hud_used.hand_slots["[hand_index]"]
-		if(H)
-			H.update_appearance()
-		H = hud_used.hand_slots["[oindex]"]
-		if(H)
-			H.update_appearance()
-
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
 	update_held_items()
 
 /mob/living/simple_animal/update_held_items()
+	. = ..()
 	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
 		return
 	var/turf/our_turf = get_turf(src)

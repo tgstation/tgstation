@@ -269,14 +269,14 @@
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
 	armor_type = /datum/armor/structure_legionturret
+	//Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	faction = list(FACTION_MINING)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
 	var/shot_delay = 8
-	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
-	var/faction = list(FACTION_MINING)
 
 /datum/armor/structure_legionturret
 	laser = 100
