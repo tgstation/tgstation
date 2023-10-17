@@ -256,6 +256,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 	AddComponent(/datum/component/golem_food, consume_on_eat = FALSE, golem_food_key = /obj/item/gibtonite)
 
+/obj/item/gibtonite/examine(mob/user)
+	. = ..()
+	if(rig)
+		. += span_warning("There is some kind of device <b>rigged</b> to it!")
+	else
+		. += span_notice("You could <b>rig</b> something to it.")
+
 /obj/item/gibtonite/Destroy()
 	QDEL_NULL(rig)
 	rig_overlay = null
