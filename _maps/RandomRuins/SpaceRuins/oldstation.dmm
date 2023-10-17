@@ -5424,7 +5424,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "DK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/canister_frame/machine/unfinished_canister_frame,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "DM" = (

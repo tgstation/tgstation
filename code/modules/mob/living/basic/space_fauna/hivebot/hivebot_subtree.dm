@@ -32,7 +32,7 @@
 /datum/ai_controller/basic_controller/hivebot/ranged/rapid
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/hivebot_rapid,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/hive_communicate,
 	)

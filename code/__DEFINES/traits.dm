@@ -172,6 +172,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
+/// Trait that means you are capable of holding items in some form
+#define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// Trait which lets you clamber over a barrier
+#define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
 #define TRAIT_CHUNKYFINGERS_IGNORE_BATON "chunkyfingers_ignore_baton"
@@ -189,6 +193,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GUN_NATURAL "gunnatural"
 /// Causes death-like unconsciousness
 #define TRAIT_DEATHCOMA "deathcoma"
+/// The mob has the stasis effect.
+/// Does nothing on its own, applied via status effect.
+#define TRAIT_STASIS "in_stasis"
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
@@ -273,8 +280,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 /// Humans with this trait cannot be turned into zombies
 #define TRAIT_NO_ZOMBIFY "no_zombify"
-/// Humans with this trait cannot be affected by changeling transformation stings
-#define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
@@ -318,6 +323,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
+///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
+#define TRAIT_REVEAL_FISH "reveal_fish"
 
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
@@ -518,6 +525,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+
+/// Trait added when a revenant is visible.
+#define TRAIT_REVENANT_REVEALED "revenant_revealed"
+/// Trait added when a revenant has been inhibited (typically by the bane of a holy weapon)
+#define TRAIT_REVENANT_INHIBITED "revenant_inhibited"
 
 /// Trait which prevents you from becoming overweight
 #define TRAIT_NOFAT "cant_get_fat"
@@ -889,8 +901,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
 
+/// Trait given to a living mob to prevent wizards from making it immortal
+#define TRAIT_PERMANENTLY_MORTAL "permanently_mortal"
+
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
+
+/// Similar trait given to temporary bodies inhabited by players
+#define TRAIT_TEMPORARY_BODY "temporary_body"
 
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
@@ -905,6 +923,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+#define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -921,6 +940,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
+/// Trait given by augmented limbs
+#define AUGMENTATION_TRAIT "augments"
 /// Trait given by organ gained via abductor surgery
 #define ABDUCTOR_GLAND_TRAIT "abductor_gland"
 /// cannot be removed without admin intervention
@@ -986,6 +1007,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MOTOR_LACK_TRAIT "motor-lack"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
+/// Trait associated with ctf
+#define CTF_TRAIT "ctf"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes
@@ -1078,6 +1101,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
+#define SKILL_TRAIT "skill"
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
@@ -1141,6 +1165,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AUTOPSY_TRAIT "autopsy_trait"
 /// Trait given by [/datum/status_effect/blessing_of_insanity]
 #define MAD_WIZARD_TRAIT "mad_wizard_trait"
+/// Isn't attacked harmfully by blob structures
+#define TRAIT_BLOB_ALLY "blob_ally"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -1300,3 +1326,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
+
+/// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
+#define TRAIT_WING_BUFFET "wing_buffet"
+/// Trait given while tired after using /datum/action/cooldown/mob_cooldown/wing_buffet
+#define TRAIT_WING_BUFFET_TIRED "wing_buffet_tired"
+/// Trait given to a dragon who fails to defend their rifts
+#define TRAIT_RIFT_FAILURE "fail_dragon_loser"

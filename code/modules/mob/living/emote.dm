@@ -141,6 +141,8 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+
+		// open/close functional wings
 		if(istype(wings))
 			if(wings.wings_open)
 				open = TRUE
@@ -148,6 +150,10 @@
 			else
 				wings.open_wings()
 			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/external/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/external/wings/functional, close_wings)), wing_time)
+
+		// play moth flutter noise if moth wing
+		if(istype(wings, /obj/item/organ/external/wings/moth))
+			playsound(H, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -189,7 +195,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
+		if(human_user.physique == FEMALE)
 			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
 		else
 			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
@@ -464,7 +470,7 @@
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
-	message = "trembles in fear!"
+	message = "trembles!"
 
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)

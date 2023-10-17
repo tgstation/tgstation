@@ -540,6 +540,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/snickerdoodle
 	name = "snickerdoodle"
@@ -550,6 +551,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron
 	name = "macaron"
@@ -561,6 +563,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron/Initialize(mapload)
 	. = ..()
@@ -575,3 +578,4 @@
 	foodtypes = GRAIN | SUGAR | FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

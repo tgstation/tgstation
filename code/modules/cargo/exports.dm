@@ -35,12 +35,13 @@ Then the player gets the profit from selling his own wasted time.
 	** delete_unsold: if the items that were not sold should be deleted
 	** dry_run: if the item should be actually sold, or if its just a pirce test
 	** external_report: works as "transaction" object, pass same one in if you're doing more than one export in single go
+	** ignore_typecache: typecache containing types that should be completely ignored
 */
-/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report)
+/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache)
 	if(!GLOB.exports_list.len)
 		setupExports()
 
-	var/list/contents = exported_atom.get_all_contents()
+	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
 
 	var/datum/export_report/report = external_report
 

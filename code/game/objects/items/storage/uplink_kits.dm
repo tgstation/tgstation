@@ -747,13 +747,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
-	var/allowed = FALSE
+	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
-			allowed = TRUE
+		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+			faker = TRUE
 
-	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -788,6 +788,21 @@
 /obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
 	for(var/i in 1 to poster_count)
 		new /obj/item/poster/traitor(src)
+
+/obj/item/storage/box/syndie_kit/cowboy
+	name = "western outlaw pack"
+	desc = "Contains everything you'll need to be the rootin' tootin' cowboy you always wanted. Either play the Lone Ranger or go in with your posse of outlaws."
+
+/obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
+		/obj/item/clothing/head/cowboy/black/syndicate = 1,
+		/obj/item/storage/belt/holster/nukie/cowboy/full = 1,
+		/obj/item/clothing/under/costume/dutch/syndicate = 1,
+		/obj/item/lighter/skull = 1,
+		/obj/item/sbeacondrop/horse = 1,
+		/obj/item/food/grown/apple = 1,
+	), src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

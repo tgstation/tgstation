@@ -185,7 +185,7 @@
  * * attack_direction: For bloodsplatters, if relevant
  * * wound_source: The source of the wound, such as a weapon.
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
 
 	if (!can_be_applied_to(L, old_wound))
 		qdel(src)
@@ -198,7 +198,7 @@
 		src.wound_source = wound_source
 
 	set_victim(L.owner)
-	set_limb(L)
+	set_limb(L, replacing)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	update_descriptions()
@@ -290,7 +290,7 @@
 	. = limb
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
 		UnregisterSignal(limb, COMSIG_QDELETING)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
+		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED))
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
 		if (disabling)
@@ -302,7 +302,7 @@
 
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(gauze_state_changed))
+		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED), PROC_REF(gauze_state_changed))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
@@ -371,7 +371,7 @@
 	already_scarred = TRUE
 	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
+	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source, replacing = TRUE)
 	. = new_wound
 	qdel(src)
 
@@ -435,14 +435,14 @@
 			else
 				limp_slowdown = initial(limp_slowdown)
 				limp_chance = initial(limp_chance)
-		else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		else if(limb.body_zone in GLOB.arm_zones)
 			if(limb.current_gauze?.splint_factor)
 				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(!limb.current_gauze)
+			set_disabling(isnull(limb.current_gauze))
 
 		limb.update_wounds(replaced_or_replacing)
 

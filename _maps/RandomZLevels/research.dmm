@@ -1042,7 +1042,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "fc" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "fd" = (
@@ -1083,7 +1083,7 @@
 /area/awaymission/research/interior/cryo)
 "fh" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "fk" = (

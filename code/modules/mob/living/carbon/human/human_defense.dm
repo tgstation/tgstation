@@ -6,21 +6,21 @@
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return checkarmor(def_zone, type)
+				return check_armor(def_zone, type)
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return checkarmor(affecting, type)
+			return check_armor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		armorval += checkarmor(BP, type)
+		armorval += check_armor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, damage_type)
+/mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
 		return 0
 	var/protection = 100
@@ -32,7 +32,7 @@
 	return 100 - protection
 
 ///Get all the clothing on a specific body part
-/mob/living/carbon/human/proc/clothingonpart(obj/item/bodypart/def_zone)
+/mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
 	var/list/covering_part = list()
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
@@ -148,10 +148,6 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna?.species)
-		var/spec_return = dna.species.spec_hitby(AM, src)
-		if(spec_return)
-			return spec_return
 	var/obj/item/I
 	var/damage_type = BRUTE
 	var/throwpower = 30
@@ -260,14 +256,13 @@
 
 	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-			var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+			var/obj/item/bodypart/head/monkey_mouth = user.get_bodypart(BODY_ZONE_HEAD)
+			var/damage = HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) ? monkey_mouth.unarmed_damage_high : rand(monkey_mouth.unarmed_damage_low, monkey_mouth.unarmed_damage_high)
 			if(!damage)
-				return
+				return FALSE
 			if(check_shields(user, damage, "the [user.name]"))
 				return FALSE
-			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
+			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -412,7 +407,7 @@
 						if(EXPLODE_LIGHT)
 							SSexplosions.low_mov_atom += thing
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 				return TRUE
 			else
 				brute_loss = 500

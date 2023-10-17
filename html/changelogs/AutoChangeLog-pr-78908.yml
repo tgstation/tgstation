@@ -1,0 +1,6 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - admin: "Invisimin can now be used on mobs that are already invisible, whether through temporary or permanent effects."
+  - bugfix: "Monkeyize/Humanize mob transformations no longer permanently reveal invisible mobs if they had effects making them invisible otherwise."
+  - bugfix: "Objects with the undertile element that have been made invisible through other means are no longer revealed by being uncovered."
