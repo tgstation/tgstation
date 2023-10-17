@@ -40,7 +40,7 @@
 	requires_purchase = FALSE
 	ckeywhitelist = list("spinnermaster")
 
-/datum/loadout_item/effects/spider
+/datum/loadout_item/effects/void_mothroach
 	ckeywhitelist = list("spinnermaster")
 	name = "Void Mothroach Transformation"
 	item_path = /obj/item/effect_granter/donator/void_mothroach
