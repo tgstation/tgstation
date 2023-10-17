@@ -495,7 +495,11 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/food = parent
 
 	if(food.flags_1 & HOLOGRAM_1)
-		to_chat(eater, span_notice("You try to feed [eater] the [food], but it fades away!"))
+		if(eater == feeder)
+			to_chat(eater, span_notice("You try to take a bite out of [food], but it fades away!"))
+		else
+			to_chat(feeder, span_notice("You try to feed [eater] [food], but it fades away!"))
+
 		qdel(food)
 		return FALSE
 
