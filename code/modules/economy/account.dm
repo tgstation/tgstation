@@ -38,7 +38,13 @@
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
+	if(isnull(account_holder))
+		stack_trace("Account was created without an account holder! Assigning default.")
+		account_holder = "Unnamed"
 	account_job = job
+	if(isnull(account_job))
+		stack_trace("Account was created without an account holder! Assigning assistant.")
+		account_job = /datum/job/assistant
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
