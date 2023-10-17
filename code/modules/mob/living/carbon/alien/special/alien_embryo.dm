@@ -112,7 +112,7 @@
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
-	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 
 	sleep(0.6 SECONDS)
 
@@ -122,7 +122,7 @@
 
 	if(!isnull(new_xeno))
 		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
-		new_xeno.invisibility = 0
+		new_xeno.RemoveInvisibility(type)
 
 	if(gib_on_success)
 		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))

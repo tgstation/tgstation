@@ -302,7 +302,7 @@
 		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
 	)
 
-	invisibility = 0
+	SetInvisibility(INVISIBILITY_NONE, id=type)
 	icon_state = "revenant_draining"
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 
@@ -428,7 +428,7 @@
 	draining = FALSE
 	dormant = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
-	invisibility = INVISIBILITY_REVENANT
+	RemoveInvisibility(type)
 	alpha = 255
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)

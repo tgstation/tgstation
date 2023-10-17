@@ -1324,7 +1324,7 @@
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
-	invisibility = INVISIBILITY_ABSTRACT
+	SetInvisibility(INVISIBILITY_ABSTRACT)
 
 	var/list/item_contents = list()
 
@@ -1374,7 +1374,7 @@
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
-				new_mob.invisibility = 0
+				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
 				created_robot.connected_ai = null
