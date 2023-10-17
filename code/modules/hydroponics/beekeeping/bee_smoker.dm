@@ -1,7 +1,5 @@
 /// multiplier to decide how much fuel we add to a smoker
 #define WEED_WINE_MULTIPLIER 0.2
-/// how much using it costs
-#define SINGLE_USE_COST 5
 
 /obj/item/bee_smoker
 	name = "bee smoker"
@@ -20,6 +18,8 @@
 	var/activated = FALSE
 	/// sound to play when releasing smoke
 	var/datum/looping_sound/beesmoke/beesmoke_loop
+	///how much  fuel it costs to use this item
+	var/single_use_cost = 5
 
 /obj/item/bee_smoker/Initialize(mapload)
 	. = ..()
@@ -48,11 +48,11 @@
 		user.balloon_alert(user, "not activated!")
 		return
 
-	if(current_herb_fuel < SINGLE_USE_COST)
+	if(current_herb_fuel < single_use_cost)
 		user.balloon_alert(user, "not enough fuel!")
 		return
 
-	current_herb_fuel -= SINGLE_USE_COST
+	current_herb_fuel -= single_use_cost
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	var/turf/target_turf = get_turf(attacked_atom)
 	new /obj/effect/temp_visual/mook_dust(target_turf)
@@ -76,7 +76,7 @@
 	if(.)
 		return
 	if(!istype(herb, /obj/item/food/grown/cannabis))
-		return 
+		return
 	var/obj/item/food/grown/cannabis/weed = herb
 	if(isnull(weed.wine_power))
 		return TRUE
@@ -115,4 +115,3 @@
 	fade = 2
 
 #undef WEED_WINE_MULTIPLIER
-#undef SINGLE_USE_COST

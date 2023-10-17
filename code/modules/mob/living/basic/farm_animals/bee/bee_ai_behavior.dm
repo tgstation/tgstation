@@ -187,6 +187,8 @@
 
 
 /datum/pet_command/beehive
+	radial_icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	radial_icon_state = "beebox"
 
 /datum/pet_command/beehive/try_activate_command(mob/living/commander)
 	var/mob/living/living_pawn = weak_parent.resolve()
