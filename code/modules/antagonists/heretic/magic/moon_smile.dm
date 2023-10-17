@@ -37,8 +37,10 @@
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(moon_smile_duration SECONDS)
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 2 SECONDS)
+
 	var/obj/item/organ/internal/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
 	ears?.adjustEarDamage(0, moon_smile_duration)
+
 	cast_on.adjust_silence(moon_smile_duration SECONDS)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 	//Lowers sanity

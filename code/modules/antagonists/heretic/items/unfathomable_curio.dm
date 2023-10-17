@@ -1,4 +1,4 @@
-//Item for knock/moon heretic sidepath, it can block 5 hits of damage, acts as storage and if the heretic is examined the examiner suffers brain damage and confusion
+//Item for knock/moon heretic sidepath, it can block 5 hits of damage, acts as storage and if the heretic is examined the examiner suffers brain damage and blindness
 
 /obj/item/storage/belt/unfathomable_curio
 	name = "Unfathomable Curio"
@@ -45,8 +45,8 @@
 	//Vars used for the shield component
 	var/heretic_shield_icon = "shield-old"
 	var/max_charges = 5
-	var/recharge_start_delay = 120 SECONDS
-	var/charge_increment_delay = 20 SECONDS
+	var/recharge_start_delay = 60 SECONDS
+	var/charge_increment_delay = 60 SECONDS
 	var/charge_recovery = 1
 	var/lose_multiple_charges = FALSE
 	var/show_charge_as_alpha = TRUE
@@ -58,11 +58,12 @@
 /obj/item/storage/belt/unfathomable_curio/proc/on_examine(atom/source, mob/living/carbon/human/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(!IS_HERETIC(user))
+	if(IS_HERETIC(user))
 		return
+		examine_list += span_danger("The [source] it. It looked.")
 
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40, 160)
-	user.adjust_confusion(user.get_organ_loss(ORGAN_SLOT_BRAIN)/10 SECONDS)
+	user.adjust_temp_blindness(5 SECONDS)
 	examine_list += span_danger("The [source] it. It looked.")
 
 
