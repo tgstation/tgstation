@@ -691,7 +691,7 @@
 		amount = min(amount, 0) //Prevents oxy damage but not healing
 
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /mob/living/carbon/proc/get_interaction_efficiency(zone)
 	var/obj/item/bodypart/limb = get_bodypart(zone)
@@ -700,18 +700,19 @@
 
 /mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /**
 * Check to see if we should be passed out from oxyloss
 */
-/mob/living/carbon/proc/check_passout(oxyloss)
-	if(!isnum(oxyloss))
+/mob/living/carbon/proc/check_passout()
+	var/mob_oxyloss = getOxyLoss()
+	if(!isnum(mob_oxyloss))
 		return
-	if(oxyloss <= 50)
-		if(getOxyLoss() > 50)
+	if(mob_oxyloss >= 50)
+		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(getOxyLoss() <= 50)
+	else if(mob_oxyloss < 50)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 
 /mob/living/carbon/get_organic_health()
