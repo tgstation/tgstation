@@ -24,7 +24,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/hilbertshotel,
 		/obj/item/swapper,
 		/obj/docking_port,
-		/atom/movable/lighting_object,
 		/obj/machinery/launchpad,
 		/obj/machinery/exodrone_launcher,
 		/obj/machinery/disposal,
@@ -74,7 +73,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/area/shuttle_area as anything in areas_to_check)
 		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
 			for(var/atom/passenger in shuttle_turf.get_all_contents())
-				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port) && !istype(passenger, /atom/movable/lighting_object))
+				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					stuff_to_send_home += passenger
 
 	if(!length(stuff_to_send_home))
