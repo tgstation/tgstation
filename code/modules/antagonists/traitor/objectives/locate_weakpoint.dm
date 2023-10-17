@@ -43,13 +43,16 @@
 		/area/station/security,
 	))
 
-	var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
+//monkestation removal start
+/*	var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
 		/area/station/engineering/lobby,
 		/area/station/engineering/storage,
 		/area/station/science/lobby,
 		/area/station/science/ordnance/bomb,
 		/area/station/security/prison,
-	))
+	))*/
+//monkestation removal end
+	var/list/blacklisted_areas = typecacheof(TRAITOR_OBJECTIVE_BLACKLISTED_AREAS) //monkestation edit
 
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
@@ -119,10 +122,36 @@
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
 	var/turf/epicenter = locate(center_x, center_y, center_z)
 	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
-	if(lowpop)
+//monkestation removal start
+/*	if(lowpop)
 		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
 	else
-		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)
+		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)*/
+//monkestation removal end
+//monkestation edit start: now creates radiating(one explosion in each ring) light explosions
+	var/greatest_dist = 0
+	var/list/turfs_to_collapse = list()
+	for(var/turf/collapsed_turf as anything in GLOB.station_turfs)
+		if(istype(get_area(collapsed_turf), /area/station/ai_monitored)) //remote bombing of these areas would be bad
+			continue
+
+		var/dist = get_dist(epicenter, collapsed_turf)
+		if(dist > greatest_dist)
+			greatest_dist = dist
+
+		if(!turfs_to_collapse["[dist]"])
+			turfs_to_collapse["[dist]"] = list()
+		turfs_to_collapse["[dist]"] += collapsed_turf
+
+	for(var/iterator in 1 to greatest_dist)
+		if(!turfs_to_collapse["[iterator]"])
+			continue
+		for(var/i in 1 to (lowpop ? 1 : 2)) //if lowpop then only do one collapse per ring, otherwise do two
+			addtimer(CALLBACK(pick_n_take(turfs_to_collapse["[iterator]"]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
+																																					'sound/effects/creak2.ogg', \
+																																					'sound/effects/creak3.ogg')), \
+					2 SECONDS * iterator)
+//monkestation edit end
 	priority_announce(
 				"Attention crew, it appears that a high-power explosive charge has been detonated in your station's weakpoint, causing severe structural damage.",
 				"[command_name()] High-Priority Update"
@@ -228,7 +257,7 @@
 	inhand_icon_state = "plasticx4"
 	worn_icon_state = "x4"
 
-	boom_sizes = list(3, 6, 9)
+	boom_sizes = list(1, 2, 3) //monkestation edit: from list(3, 6, 9), now creates a bunch of light explosions across the station
 
 	/// Weakref to user's objective
 	var/datum/weakref/objective_weakref
