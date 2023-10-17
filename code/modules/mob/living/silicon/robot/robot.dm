@@ -1,4 +1,8 @@
-/mob/living/silicon/robot/Initialize(mapload)
+/**
+ * Arguments:
+ * * creator - the mob who placed the MMI/Boris module into the exoskeleton. Needed to make AI shells work.
+ */
+/mob/living/silicon/robot/Initialize(mapload, mob/creator)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -60,7 +64,8 @@
 
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
-		make_shell()
+		var/obj/item/borg/upgrade/ai/board = new(src)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/robot, add_to_upgrades), board, creator)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -828,7 +833,9 @@
  */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
 	if(!board)
-		upgrades |= new /obj/item/borg/upgrade/ai(src)
+		stack_trace("make_shell was called without a board argument! This is never supposed to happen!")
+		return FALSE // If there isn't a board than cancelling the whole shell creation process is the best option
+
 	shell = TRUE
 	braintype = "AI Shell"
 	name = "Empty AI Shell-[ident]"

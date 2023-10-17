@@ -283,7 +283,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 			if(!O)
 				return
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
@@ -352,7 +352,7 @@
 				to_chat(user, span_warning("[M] is stuck to your hand!"))
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src), user)
 
 			if(!aisync)
 				lawsync = FALSE
