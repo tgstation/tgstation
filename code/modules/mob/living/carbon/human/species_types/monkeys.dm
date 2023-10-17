@@ -194,6 +194,7 @@
 
 /// Virtual monkeys that crave virtual bananas. Everything about them is ephemeral (except that bite).
 /datum/species/monkey/holodeck
+	id = SPECIES_MONKEY_HOLODECK
 	knife_butcher_results = list()
 	meat = null
 	skinned_type = null
