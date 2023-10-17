@@ -90,6 +90,7 @@
 /obj/structure/bed/medical/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
+	update_appearance()
 
 /obj/structure/bed/medical/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
