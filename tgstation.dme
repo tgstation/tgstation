@@ -6050,6 +6050,7 @@
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\simian.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\skeletons.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\zombies.dm"
+#include "monkestation\code\modules\mob\living\simple_animal\megafauna\wendigo.dm"
 #include "monkestation\code\modules\mob\living\simple_animal\pets\bees.dm"
 #include "monkestation\code\modules\mob\living\simple_animal\pets\honk_platinum.dm"
 #include "monkestation\code\modules\modular_bartending\modglass.dm"
