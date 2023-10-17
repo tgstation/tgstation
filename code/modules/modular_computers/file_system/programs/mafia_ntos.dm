@@ -1,7 +1,7 @@
 /datum/computer_file/program/mafia
 	filename = "mafia"
 	filedesc = "Mafia"
-	program_icon_state = "arcade" // TEMPORARY HAVE TO CHANGE
+	program_icon_state = "mafia"
 	extended_desc = "A program that allows you to play the infamous Mafia game, straight from your Modular PC."
 	requires_ntnet = FALSE
 	size = 6
@@ -68,5 +68,5 @@
 /datum/computer_file/program/mafia/proc/on_game_end(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 	UnregisterSignal(game, COMSIG_MAFIA_GAME_END)
-	ui_header = initial(ui_header)
+	ui_header = null
 	update_static_data_for_all_viewers()

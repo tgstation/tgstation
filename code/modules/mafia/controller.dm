@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 /datum/mafia_controller/proc/start_game()
 	create_bodies()
+	SEND_GLOBAL_SIGNAL(COMSIG_MAFIA_GAME_START, src)
 	start_day(can_vote = FALSE)
 	send_message(span_notice("<b>The selected map is [current_map.name]!</b></br> [current_map.description]"))
 	send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
@@ -203,7 +204,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		if(!modpc)
 			continue
 		modpc.update_static_data_for_all_viewers()
-	SEND_GLOBAL_SIGNAL(COMSIG_MAFIA_GAME_START, src)
 
 /**
  * How every day starts.
