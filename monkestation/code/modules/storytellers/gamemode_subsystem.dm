@@ -222,6 +222,8 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
+		if(istype(A, /datum/antagonist/abductee))
+			continue
 		total_valid_antags++
 
 	return (get_antag_cap() > total_valid_antags)
