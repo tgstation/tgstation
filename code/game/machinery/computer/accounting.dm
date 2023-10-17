@@ -24,7 +24,7 @@
 		var/job_title = current_bank_account.account_job?.title
 		player_accounts += list(list(
 			"name" = current_bank_account.account_holder,
-			"job" = job_title ? job_title : "No Job",
+			"job" = job_title ? job_title : "No Job", // because this can be null
 			"balance" = round(current_bank_account.account_balance),
 			"modifier" = round((current_bank_account.payday_modifier * 0.9), 0.1),
 		))
