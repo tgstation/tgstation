@@ -202,6 +202,18 @@
 
 	if(ishuman(A) && in_range(src, A))
 		attempt_harvest(A)
+		return
+
+	// This is probably the most cringe place I could put this but whatever -
+	// Revenants can click on spirit boards for seances like ghosts
+	if(istype(A, /obj/structure/spirit_board) \
+		&& !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) \
+		&& !HAS_TRAIT(src, TRAIT_NO_TRANSFORM) \
+		&& !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
+
+		var/obj/structure/spirit_board/board = A
+		board.spirit_board_pick_letter(src)
+		return
 
 /mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
