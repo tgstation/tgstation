@@ -320,11 +320,14 @@
 	// No infiniloops
 	if(call_depth > 10)
 		return
-	src.caller_ref = WEAKREF(construct_from)
 	if(access)
 		src.access = access.Copy()
 	src.no_id = no_id
 
+	if(!construct_from)
+		return
+
+	src.caller_ref = WEAKREF(construct_from)
 	src.pass_flags = construct_from.pass_flags
 	src.movement_type = construct_from.movement_type
 	src.thrown = !!construct_from.throwing
