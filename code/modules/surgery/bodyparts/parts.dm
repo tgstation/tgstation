@@ -70,9 +70,6 @@
 	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
-/obj/item/bodypart/chest/monkey/holodeck
-	bodypart_flags = BODYPART_UNREMOVABLE // so you can't farm holodeck monkey organs via dismemberment
-
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'

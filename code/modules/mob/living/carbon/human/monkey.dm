@@ -38,6 +38,10 @@
 /mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
 	return
 
+/mob/living/carbon/human/species/monkey/holodeck/add_bodypart(obj/item/bodypart/new_bodypart)
+	. = ..()
+	new_bodypart.bodypart_flags |= BODYPART_UNREMOVABLE // no farming organs or limbs from these fellers. get a monkey cube
+
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
 /mob/living/carbon/human/species/monkey/punpun
