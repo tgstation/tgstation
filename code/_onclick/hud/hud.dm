@@ -439,11 +439,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/register_reuse(atom/movable/screen/reuse)
 	asset_refs_for_reuse += WEAKREF(reuse)
-	mymob.client.screen += reuse
+	mymob?.client?.screen += reuse
 
 /datum/hud/proc/unregister_reuse(atom/movable/screen/reuse)
 	asset_refs_for_reuse -= WEAKREF(reuse)
-	mymob.client.screen -= reuse
+	mymob?.client?.screen -= reuse
 
 /datum/hud/proc/update_reuse(mob/show_to)
 	for(var/datum/weakref/screen_ref as anything in asset_refs_for_reuse)
@@ -451,7 +451,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		if(isnull(reuse))
 			asset_refs_for_reuse -= screen_ref
 			continue
-		show_to.client.screen += reuse
+		show_to.client?.screen += reuse
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
