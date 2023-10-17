@@ -636,7 +636,8 @@ Behavior that's still missing from this component that original food items had t
 		doggy.manual_emote("nibbles away at \the [food].")
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
-	doggy.taste(owner.reagents) // why should carbons get all the fun?
+
+	doggy.taste(food.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
 		doggy.manual_emote(satisfaction_text)
