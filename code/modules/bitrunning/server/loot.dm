@@ -112,6 +112,9 @@
 
 	score += time_score * base
 
+	// Increases the chance for glitches to spawn based on how well they're doing
+	threat += score
+
 	switch(score)
 		if(1 to 4)
 			return "D"
@@ -123,3 +126,13 @@
 			return "A"
 		else
 			return "S"
+
+/// As the title goes - deletes and notifies. If there's someone in it, disconnect them.
+/obj/machinery/quantum_server/proc/delete_cache_and_notify(obj/cache)
+	for(var/mob/person in cache.contents)
+		SEND_SIGNAL(person, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+
+	spark_at_location(cache) // abracadabra!
+	qdel(cache) // and it's gone!
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
+	generate_loot()

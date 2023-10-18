@@ -339,7 +339,7 @@
 		return
 
 	server_ref = WEAKREF(server)
-	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded))
+	RegisterSignal(server, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_server_upgraded))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_SCRUBBED, PROC_REF(on_domain_scrubbed))
 
@@ -414,10 +414,10 @@
 	QDEL_NULL(current_avatar)
 
 /// When the server is upgraded, drops brain damage a little
-/obj/machinery/netpod/proc/on_server_upgraded(datum/source, servo_rating)
+/obj/machinery/netpod/proc/on_server_upgraded(obj/machinery/quantum_server/source)
 	SIGNAL_HANDLER
 
-	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - servo_rating)
+	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - source.servo_bonus)
 
 /// Checks the integrity, alerts occupants
 /obj/machinery/netpod/proc/on_take_damage(datum/source, damage_amount)

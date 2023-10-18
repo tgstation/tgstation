@@ -103,7 +103,7 @@ const CameraSelector = (props, context) => {
     <Stack fill vertical>
       <Stack.Item>
         <Input
-          autoFocus
+          autoFocusad
           fluid
           mt={1}
           placeholder="Search for a camera"

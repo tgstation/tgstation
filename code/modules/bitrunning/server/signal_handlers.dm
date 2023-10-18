@@ -49,24 +49,18 @@
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+	if((obj_flags & EMAGGED) && isliving(arrived))
+		var/mob/living/creature = arrived
+
+		if(isnull(creature.mind) || !creature.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch, check_subtypes = TRUE))
+			return
+
+		station_spawn(arrived)
 		return
 
-	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot_crate = arrived
-	if(!istype(loot_crate))
+	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+		delete_cache_and_notify(arrived)
 		return
-
-	for(var/mob/person in loot_crate.contents)
-		if(isnull(person.mind))
-			person.forceMove(get_turf(loot_crate))
-
-		var/datum/component/avatar_connection/connection = person.GetComponent(/datum/component/avatar_connection)
-		connection?.full_avatar_disconnect()
-
-	spark_at_location(loot_crate)
-	qdel(loot_crate)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived, generated_domain.reward_points)
-	generate_loot()
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
@@ -102,6 +96,4 @@
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
 
-	domain_threats += 1
-	spawned_threat_refs.Add(WEAKREF(threat))
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED) // notify players
+	add_threats(threat)

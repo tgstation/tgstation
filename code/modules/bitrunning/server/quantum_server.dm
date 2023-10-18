@@ -24,6 +24,8 @@
 	var/domain_threats = 0
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
+	/// Chance multipled by threat to spawn a glitch
+	var/glitch_chance = 0.005
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -46,8 +48,12 @@
 	var/server_cooldown_time = 3 MINUTES
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
+	/// Determines the glitches available to spawn, builds with completion
+	var/threat = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
+	/// Our wfc
+	var/datum/wfc/our_wfc
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -85,6 +91,11 @@
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
+
+/obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
+	glitch_chance = 0.1
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
@@ -128,8 +139,6 @@
 	return FALSE
 
 /obj/machinery/quantum_server/RefreshParts()
-	. = ..()
-
 	var/capacitor_rating = 1.15
 	var/datum/stock_part/capacitor/cap = locate() in component_parts
 	capacitor_rating -= cap.tier * 0.15
@@ -146,4 +155,4 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, servo_rating)
+	return ..()

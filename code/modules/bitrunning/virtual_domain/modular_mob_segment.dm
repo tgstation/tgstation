@@ -132,13 +132,14 @@
 		/mob/living/basic/mining/lobstrosity,
 	)
 
-/datum/modular_mob_segment/spider
+/datum/modular_mob_segment/spiders
 	total_randomized = TRUE
 	mobs = list(
-		/mob/living/basic/spider/giant,
-		/mob/living/basic/spider/nurse,
-		/mob/living/basic/spider/tarantula,
-		/mob/living/basic/spider/scout,
+		/mob/living/basic/spider/giant/ambush,
+		/mob/living/basic/spider/giant/hunter,
+		/mob/living/basic/spider/giant/nurse,
+		/mob/living/basic/spider/giant/tarantula,
+		/mob/living/basic/spider/giant/midwife,
 	)
 
 /datum/modular_mob_segment/spider/threatening

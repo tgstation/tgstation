@@ -56,6 +56,9 @@
 		is_ready = TRUE
 		return FALSE
 
+	if(prob(threat * glitch_chance))
+		addtimer(CALLBACK(src, PROC_REF(spawn_glitch)), rand(5, 10) SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+
 	is_ready = TRUE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	balloon_alert_to_viewers("domain loaded.")
@@ -221,3 +224,113 @@
 	mutation_candidate_refs.Cut()
 	spawned_threat_refs.Cut()
 
+/datum/wfc
+	var/grid_size
+	var/list/grid = list()
+	var/list/patterns = list("A", "B", "C", "D")
+	var/list/allowed_neighbors = list()
+
+/datum/wfc/New(size = 5)
+	src.grid_size = size
+
+	allowed_neighbors["A"] = list("B", "D")
+	allowed_neighbors["B"] = list("A", "C")
+	allowed_neighbors["C"] = list("B", "D")
+	allowed_neighbors["D"] = list("A", "C")
+
+	for(var/y in 1 to grid_size)
+		var/list/row = list()
+		for(var/x in 1 to grid_size)
+			row += list(patterns)
+		grid += row  // Change made here
+
+/datum/wfc/proc/observe()
+	var/min_entropy = INFINITY
+	var/target_cell_x
+	var/target_cell_y
+
+	for(var/y in 1 to grid_size)
+		for(var/x in 1 to grid_size)
+			var/list/cell = grid[y][x]
+			if(length(cell) > 1 && length(cell) < min_entropy)
+				min_entropy = length(cell)
+				target_cell_x = x
+				target_cell_y = y
+
+	// If we found a cell with the least number of possibilities
+	if(min_entropy != INFINITY)
+		// Step 3: Randomly resolve the selected cell to one of its patterns
+		var/chosen_pattern = pick(grid[target_cell_y][target_cell_x])
+		grid[target_cell_y][target_cell_x] = list(chosen_pattern)
+
+/datum/wfc/proc/propagate()
+	var/changed = TRUE
+
+	while(changed)
+		changed = FALSE
+		for(var/y in 1 to grid_size)
+			for(var/x in 1 to grid_size)
+				var/cell = grid[y][x]
+				if(length(cell) != 1)
+					continue
+
+				var/pattern = cell[1]
+				// Left neighbor
+				if(x > 1)
+					for(var/p in grid[y][x-1])
+						if(!(p in allowed_neighbors[pattern]) && (p in grid[y][x-1]))
+							grid[y][x-1] -= p
+							changed = TRUE
+				// Right neighbor
+				if(x < grid_size)
+					for(var/p in grid[y][x+1])
+						if(!(p in allowed_neighbors[pattern]) && (p in grid[y][x+1]))
+							grid[y][x+1] -= p
+							changed = TRUE
+				// Up neighbor
+				if(y > 1)
+					for(var/p in grid[y-1][x])
+						if(!(p in allowed_neighbors[pattern]) && (p in grid[y-1][x]))
+							grid[y-1][x] -= p
+							changed = TRUE
+
+				// Down neighbor
+				if(y < grid_size)
+					for(var/p in grid[y+1][x])
+						if(!(p in allowed_neighbors[pattern]) && (p in grid[y+1][x]))
+							grid[y+1][x] -= p
+							changed = TRUE
+
+/datum/wfc/proc/contradiction_exists()
+	for(var/y in 1 to grid_size)
+		for(var/x in 1 to grid_size)
+			if(!length(grid[y][x])) // If a cell has no valid patterns left
+				return TRUE
+	return FALSE
+
+/datum/wfc/proc/grids_are_equal(list/grid1, list/grid2)
+	for(var/y in 1 to grid_size)
+		for(var/x in 1 to grid_size)
+			if(grid1[y][x] != grid2[y][x])
+				return FALSE
+	return TRUE
+
+/datum/wfc/proc/create_new()
+	var/previous_grid
+	var/max_iterations = 1000
+	var/current_iteration = 1
+
+	while(TRUE)
+		previous_grid = deep_copy_list(grid)
+		observe()
+		propagate()
+
+		current_iteration++
+		if(current_iteration >= max_iterations)
+			break
+
+		if(grids_are_equal(grid, previous_grid))
+			break
+
+		if(contradiction_exists())
+			break
