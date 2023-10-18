@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.balloon_alert_to_viewers("attached rig")
 		return
 	
-	if(I.tool_behaviour == TOOL_SCREWDRIVER && rig)
+	if(I.tool_behaviour == TOOL_WRENCH && rig)
 		rig.on_found()
 		if(QDELETED(src))
 			return
