@@ -32,7 +32,7 @@
 
 	AddComponent( \
 		/datum/component/transforming, \
-		start_extended = start_extended, \
+		start_transformed = start_extended, \
 		force_on = 10, \
 		throwforce_on = 4, \
 		throw_speed_on = throw_speed, \
