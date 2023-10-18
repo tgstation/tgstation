@@ -1853,10 +1853,6 @@
 /obj/item/paper/guides/jobs/security/labor_camp,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"gU" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
-/turf/open/floor/circuit/green,
-/area/station/bitrunning/den)
 "gW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
@@ -1882,6 +1878,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/construction)
+"ip" = (
+/obj/machinery/byteforge,
+/turf/open/floor/circuit/green,
+/area/station/bitrunning/den)
 "is" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
@@ -3223,7 +3223,7 @@ aa
 aa
 aa
 pl
-gU
+Lq
 Lq
 RW
 nk
@@ -3315,8 +3315,8 @@ aa
 aa
 aa
 pl
-gU
 Lq
+ip
 RW
 nk
 pl

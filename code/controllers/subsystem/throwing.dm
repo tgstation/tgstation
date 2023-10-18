@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(throwing)
 	if (callback)
 		callback.Invoke()
 
-	if(!thrownthing.currently_z_moving) // I don't think you can zfall while thrown but hey, just in case.
+	if(!thrownthing?.currently_z_moving) // I don't think you can zfall while thrown but hey, just in case.
 		var/turf/T = get_turf(thrownthing)
 		T?.zFall(thrownthing)
 

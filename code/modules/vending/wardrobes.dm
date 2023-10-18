@@ -169,6 +169,11 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 	)
+	contraband = list(
+		/obj/item/clothing/under/wonka = 1,
+		/obj/item/clothing/head/wonka = 1,
+		/obj/item/cane = 1
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
 
