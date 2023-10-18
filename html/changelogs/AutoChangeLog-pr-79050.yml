@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "\"line snapped\" and \"rod dropped\" balloon alerts will now display when they are supposed to while fishing"
