@@ -1,9 +1,9 @@
 // please don't use these defines outside of this file in order to ensure a unified framework. unless you have a really good reason to make them global, then whatever
-#define MAJOR_ANNOUNCEMENT_TITLE(string) ("<span class='efannouncemajtitle'>" + string + "</span>")
-#define MAJOR_ANNOUNCEMENT_TEXT(string) ("<span class='efannouncemajtext'>" + string + "</span>")
+#define MAJOR_ANNOUNCEMENT_TITLE(string) ("<span class='major_announcement_title'>" + string + "</span>")
+#define MAJOR_ANNOUNCEMENT_TEXT(string) ("<span class='major_announcement_text'>" + string + "</span>")
 
-#define MINOR_ANNOUNCEMENT_TITLE(string) ("<span class='efannouncemintitle'>" + string + "</span>")
-#define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='efannouncemintext'>" + string + "</span>")
+#define MINOR_ANNOUNCEMENT_TITLE(string) ("<span class='minor_announcement_text'>" + string + "</span>")
+#define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='minor_announcement_text'>" + string + "</span>")
 
 /**
  * Make a big red text announcement to
