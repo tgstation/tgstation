@@ -70,7 +70,7 @@
 		return
 
 	//round & check to account for floating point inaccuracies
-	if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL >= current_volume)
+	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= current_volume)
 		if (product == "pill")
 			var/obj/item/reagent_containers/pill/P = new(src)
 			reagents.trans_to(P, current_volume)
