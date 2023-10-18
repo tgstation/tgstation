@@ -1,5 +1,5 @@
 /mob/living/basic/heretic_summon/star_gazer
-	name = "Star Gazer"
+	name = "\improper Star Gazer"
 	desc = "A creature that has been tasked to watch over the stars."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	icon_state = "star_gazer"
