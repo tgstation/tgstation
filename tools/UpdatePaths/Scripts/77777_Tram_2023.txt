@@ -1,0 +1,11 @@
+#comment Repathing for Transport Subsystem
+
+/obj/structure/industrial_lift : /obj/structure/transport/linear{@OLD}
+/obj/structure/industrial_lift/public : /obj/structure/transport/linear/public{@OLD}
+/obj/structure/industrial_lift/debug : /obj/structure/transport/linear/debug{@OLD}
+/obj/structure/industrial_lift/tram : /obj/structure/transport/linear/tram{@OLD}
+/obj/effect/landmark/lift_id : /obj/effect/landmark/transport/transport_id{@OLD}
+/obj/effect/landmark/tram/nav/immovable_rod : /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod{@OLD}
+/turf/open/floor/noslip/tram_plate : /turf/open/floor/tram/plate{@OLD}
+/turf/open/floor/noslip/tram_plate/energized : /turf/open/floor/tram/plate/energized{@OLD}
+/turf/open/floor/noslip/tram_platform : /turf/open/floor/tram{@OLD}

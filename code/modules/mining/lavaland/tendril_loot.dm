@@ -1051,7 +1051,7 @@
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
-	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
@@ -1065,7 +1065,7 @@
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
-	user.invisibility = 0
+	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
