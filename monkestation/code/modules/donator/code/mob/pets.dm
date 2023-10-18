@@ -36,6 +36,7 @@
 	icon_dead = "blahaj_dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
 
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
@@ -46,7 +47,7 @@
 	icon_dead = "cirno-happy"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-
+	ai_controller = /datum/ai_controller/basic_controller/
 /mob/living/basic/lizard/snake
 	name = "Three Headed Snake"
 	desc = "This little fella looks familiar..."
@@ -70,6 +71,7 @@
 	icon_state = "slime"
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
+	ai_controller = /datum/ai_controller/basic_controller/
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
 					"I've seen salad that dresses better than you.",
 					"I smell smoke, are you thinking too hard again?",
@@ -99,4 +101,4 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "spider"
 	gold_core_spawnable = NO_SPAWN
-
+	ai_controller = /datum/ai_controller/basic_controller/

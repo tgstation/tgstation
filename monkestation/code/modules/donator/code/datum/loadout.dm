@@ -68,7 +68,7 @@
 	requires_purchase = FALSE
 	ckeywhitelist = list("ruby_flamewing")
 
-/datum/loadout_item/under/syndie_pajamas
+/datum/loadout_item/under/miscellaneous/syndie_pajamas
 	name = "Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
@@ -88,7 +88,7 @@
 	requires_purchase = FALSE
 
 
-/datum/loadout_item/under/navy_uniform
+/datum/loadout_item/under/miscellaneous/navy_uniform
 	name = "Naval Officer Uniform"
 	item_path = /obj/item/clothing/under/costume/navy_uniform_gold
 	donator_only = TRUE
@@ -164,7 +164,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/whitebeard
+/datum/loadout_item/under/miscellaneous/whitebeard
 	name = "Whitebeard's attire"
 	item_path = /obj/item/clothing/under/costume/whitebeard
 	donator_only = TRUE
