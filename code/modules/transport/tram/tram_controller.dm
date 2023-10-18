@@ -724,10 +724,9 @@
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
 	if(!held_item)
-		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "open cabinet"
+		context[SCREENTIP_CONTEXT_LMB] = cover_open ? "access controls" : "open cabinet"
+		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "toggle lock"
 
-	if(istype(held_item, /obj/item/card/id/) && allowed(user) && !cover_open)
-		context[SCREENTIP_CONTEXT_LMB] = cover_locked ? "unlock cabinet" : "lock cabinet"
 
 	if(panel_open)
 		if(held_item?.tool_behaviour == TOOL_WRENCH)
@@ -760,11 +759,74 @@
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
-	if(!user.combat_mode)
-		if(weapon && istype(weapon, /obj/item/card/id) && !cover_open)
-			return try_toggle_lock(user)
+	if(user.combat_mode)
+		return ..()
+
+	if(cover_open)
+		return ..()
+
+	var/obj/item/card/id/id_card = user.get_id_in_hand()
+	if(!isnull(id_card))
+		try_toggle_lock(user, id_card)
+		return
 
 	return ..()
+
+/obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
+	. = ..()
+	if(cover_open)
+		return
+
+	if(cover_locked)
+		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+		if(isnull(id_card))
+			balloon_alert(user, "access denied")
+			return
+
+		try_toggle_lock(user, id_card)
+		return
+
+	toggle_door()
+
+/obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
+	. = ..()
+
+	if(!cover_open)
+		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+		if(isnull(id_card))
+			balloon_alert(user, "access denied")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		try_toggle_lock(user, id_card)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	toggle_door()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/transport/tram_controller/proc/toggle_door()
+	if(!cover_open)
+		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
+	else
+		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
+	cover_open = !cover_open
+	update_appearance()
+
+/obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, obj/item/card/id_card, params)
+	if(isnull(id_card))
+		id_card = user.get_idcard(TRUE)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "access controller damaged!")
+		return FALSE
+
+	else if(check_access(id_card))
+		cover_locked = !cover_locked
+		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
+		update_appearance()
+		return TRUE
+
+	else
+		balloon_alert(user, "access denied")
+		return FALSE
 
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -876,46 +938,6 @@
 	if(controller != controller_datum)
 		return
 	update_appearance()
-
-/obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
-	. = ..()
-	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked! swipe ID!")
-		return
-
-/obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
-	. = ..()
-
-	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked! swipe ID!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	toggle_door()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/transport/tram_controller/proc/toggle_door()
-	if(!cover_open)
-		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
-	else
-		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
-	cover_open = !cover_open
-	update_appearance()
-
-/obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(obj_flags & EMAGGED)
-		balloon_alert(user, "access controller damaged!")
-		return FALSE
-
-	else if(check_access(id_card))
-		cover_locked = !cover_locked
-		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
-		update_appearance()
-		return TRUE
-
-	else
-		balloon_alert(user, "access denied")
-		return FALSE
 
 /obj/machinery/transport/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
