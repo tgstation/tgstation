@@ -5,6 +5,8 @@
 #define MINOR_ANNOUNCEMENT_TITLE(string) ("<span class='minor_announcement_text'>" + string + "</span>")
 #define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='minor_announcement_text'>" + string + "</span>")
 
+#define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
+
 /**
  * Make a big red text announcement to
  *
@@ -45,8 +47,6 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
-	announcement_strings += "<div class='chat_alert_default'>"
-
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
@@ -69,9 +69,7 @@
 	else
 		announcement_strings += MAJOR_ANNOUNCEMENT_TEXT(text)
 
-	announcement_strings += "</div>"
-
-	var/finalized_announcement = announcement_strings.Join("<br>")
+	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(announcement_strings.Join("<br>"))
 	if(!players)
 		players = GLOB.player_list
 
@@ -151,3 +149,8 @@
 		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))
+
+#undef MAJOR_ANNOUNCEMENT_TITLE
+#undef MAJOR_ANNOUNCEMENT_TEXT
+#undef MINOR_ANNOUNCEMENT_TITLE
+#undef MINOR_ANNOUNCEMENT_TEXT
