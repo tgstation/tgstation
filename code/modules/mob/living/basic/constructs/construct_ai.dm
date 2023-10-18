@@ -17,6 +17,7 @@
 
 /// Targetting datum that will only allow mobs that constructs can heal.
 /datum/targetting_datum/basic/same_faction/construct
+	target_wounded_key = BB_TARGET_WOUNDED_ONLY
 
 /datum/targetting_datum/basic/same_faction/construct/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
 	. = ..()

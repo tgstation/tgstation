@@ -15,12 +15,12 @@
 /datum/targetting_datum/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
-	/// Minimum status to attack living beings
-	//var/stat_attack = CONSCIOUS
 	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
-	/// Whether to target ONLY wounded targets
-	//var/wounded_only = FALSE
+	/// Blackboard key containing the minimum stat of a living mob to target
+	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
+	/// If this blackboard key is TRUE, makes us only target wounded mobs
+	var/target_wounded_key
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
@@ -57,9 +57,9 @@
 		var/bypass_faction_check = !check_faction || our_controller.blackboard[BB_BASIC_MOB_SKIP_FACTION_CHECK]
 		if(faction_check(living_mob, living_target) && !bypass_faction_check)
 			return FALSE
-		if(living_target.stat > our_controller.blackboard[BB_TARGET_MINIMUM_STAT])
+		if(living_target.stat > our_controller.blackboard[minimum_stat_key])
 			return FALSE
-		if(our_controller.blackboard[BB_TARGET_WOUNDED_ONLY] && living_target.health == living_target.maxHealth)
+		if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 			return FALSE
 
 		return TRUE
