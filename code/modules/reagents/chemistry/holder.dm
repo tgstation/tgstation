@@ -546,7 +546,7 @@
 	var/cached_amount = amount
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount * multiplier, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
@@ -571,7 +571,7 @@
 			trans_data = copy_data(reagent)
 		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 			continue
-		transfer_amount = FLOOR(reagent.volume * part, CHEMICAL_QUANTISATION_LEVEL)
+		transfer_amount = FLOOR(reagent.volume * part * multiplier, CHEMICAL_QUANTISATION_LEVEL)
 		if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 			continue
 		if(methods)
