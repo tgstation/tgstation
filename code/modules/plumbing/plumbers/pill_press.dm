@@ -1,9 +1,3 @@
-///maximum size of a pill
-#define MAX_PILL_VOLUME 50
-///maximum size of a patch
-#define MAX_PATCH_VOLUME 40
-///maximum size of a bottle
-#define MAX_BOTTLE_VOLUME 50
 ///the minimum size of a pill or patch
 #define MIN_VOLUME 5
 ///the maximum size a pill or patch can be
@@ -18,49 +12,49 @@
 	icon_state = "pill_press"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
-	///current operating product (pills or patches)
+	/// current operating product (pills or patches)
 	var/product = "pill"
-	///selected size of the product
+	/// selected size of the product
 	var/current_volume = 10
-	///prefix for the product name
+	/// prefix for the product name
 	var/product_name = "factory"
-	///pill styles used by plumbing pill press factory format = list("id" = <id of this pill>, "class_name" = <class name inside spritesheet>)
-	var/static/list/pill_styles = null
-	///the icon_state number for the pill.
-	var/pill_number = 1
-	/// patch styles used by plumbing pill press factory format = list("style" = <string patch style>, "class_name" = <class name inside spritesheet>)
-	var/static/list/patch_styles = null
-	/// Currently selected patch style
-	var/patch_style = DEFAULT_PATCH_STYLE
-	///list of products stored in the machine, so we dont have 610 pills on one tile
+	/// All packaging types wrapped up in 1 big list
+	var/static/list/packaging_types = null
+	///The type of packaging to use
+	var/packaging_type
+	///Category of packaging
+	var/packaging_category
+	/// list of products stored in the machine, so we dont have 610 pills on one tile
 	var/list/stored_products = list()
 
 /obj/machinery/plumbing/pill_press/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	//initialize these static lists only once
-	if(!pill_styles || !patch_styles)
-		var/list/iterate
+	if(!packaging_types)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/chemmaster)
 
-		//init pill styles
-		iterate = GLOB.reagent_containers[CAT_PILLS]
-		var/len = iterate.len
-		pill_styles = list()
-		for (var/x in 1 to len)
-			var/list/SL = list()
-			SL["id"] = x
-			SL["class_name"] = assets.icon_class_name(sanitize_css_class_name("[iterate[x]]"))
-			pill_styles += list(SL)
+		var/list/types = list(
+			CAT_PILLS = GLOB.reagent_containers[CAT_PILLS],
+			CAT_PATCHES = GLOB.reagent_containers[CAT_PATCHES],
+			"Bottles" = list(/obj/item/reagent_containers/cup/bottle),
+		)
 
-		//init patch styles
-		iterate = GLOB.reagent_containers[CAT_PATCHES]
-		patch_styles = list()
-		for (var/obj/item/reagent_containers/container as anything in iterate)
-			var/list/patch_style = list()
-			patch_style["style"] = initial(container.icon_state)
-			patch_style["class_name"] = assets.icon_class_name(sanitize_css_class_name("[container]"))
-			patch_styles += list(patch_style)
+		packaging_types = list()
+		for(var/category in types)
+			var/list/packages = types[category]
+
+			var/list/category_item = list("cat_name" = category)
+			for(var/obj/item/reagent_containers/container as anything in packages)
+				var/list/package_item = list(
+					"class_name" = assets.icon_class_name(sanitize_css_class_name("[container]")),
+					"ref" = REF(container)
+				)
+				category_item["products"] += list(package_item)
+
+			packaging_types += list(category_item)
+
+	packaging_type = REF(GLOB.reagent_containers[CAT_PILLS][1])
+	_decode_category()
 
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
@@ -68,38 +62,41 @@
 	. = ..()
 	. += span_notice("The [name] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
 
+/// decoded product category from it's type path and returns the decoded typepath
+/obj/machinery/plumbing/pill_press/proc/_decode_category()
+	var/obj/item/reagent_containers/container = locate(packaging_type)
+	if(ispath(container, /obj/item/reagent_containers/pill/patch))
+		packaging_category = CAT_PATCHES
+	else if(ispath(container, /obj/item/reagent_containers/pill))
+		packaging_category = CAT_PILLS
+	else
+		packaging_category = "Bottles"
+	return container
+
 /obj/machinery/plumbing/pill_press/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 
-	//round & check to account for floating point inaccuracies
+	//shift & check to account for floating point inaccuracies
 	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= current_volume)
-		if (product == "pill")
-			var/list/pill_types = GLOB.reagent_containers[CAT_PILLS]
-			//create pill type
-			var/obj/item/reagent_containers/pill/P = pill_types[pill_number]
-			P = new P(src)
-			P.name = trim("[product_name] pill")
-			//transfer reagents & store
-			reagents.trans_to(P, current_volume)
-			stored_products += P
-		else if (product == "patch")
-			var/obj/item/reagent_containers/pill/patch/P = new(src)
-			reagents.trans_to(P, current_volume)
-			P.name = trim("[product_name] patch")
-			P.icon_state = patch_style
-			stored_products += P
-		else if (product == "bottle")
-			var/obj/item/reagent_containers/cup/bottle/P = new(src)
-			reagents.trans_to(P, current_volume)
-			P.name = trim("[product_name] bottle")
-			stored_products += P
+		var/obj/item/reagent_containers/container = locate(packaging_type)
+		container = new container(src)
+		var/suffix
+		if(packaging_category == CAT_PILLS)
+			suffix = "Pill"
+		else if(packaging_category == CAT_PATCHES)
+			suffix = "Patch"
+		else
+			suffix = "Bottle"
+		container.name = "[product_name] [suffix]"
+		reagents.trans_to(container, current_volume)
+		stored_products += container
 
 	//dispense stored products on the floor
 	if(stored_products.len)
 		var/pill_amount = 0
 		for(var/thing in loc)
-			if(!istype(thing, /obj/item/reagent_containers/cup/bottle) && !istype(thing, /obj/item/reagent_containers/pill))
+			if(!istype(thing, /obj/item/reagent_containers))
 				continue
 			pill_amount++
 			if(pill_amount >= MAX_FLOOR_PRODUCTS) //too much so just stop
@@ -124,20 +121,20 @@
 
 /obj/machinery/plumbing/pill_press/ui_static_data(mob/user)
 	var/list/data = list()
+
 	data["min_volume"] = MIN_VOLUME
 	data["max_volume"] = MAX_VOLUME
-	data["pill_styles"] = pill_styles
-	data["patch_styles"] = patch_styles
+	data["packaging_types"] = packaging_types
+
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)
 	var/list/data = list()
 
-	data["pill_style"] = pill_number
 	data["current_volume"] = current_volume
 	data["product_name"] = product_name
-	data["product"] = product
-	data["patch_style"] = patch_style
+	data["packaging_type"] = packaging_type
+	data["packaging_category"] = packaging_category
 
 	return data
 
@@ -148,37 +145,19 @@
 
 	. = TRUE
 	switch(action)
-		if("change_pill_style")
-			var/index = text2num(params["id"])
-			var/list/pills = GLOB.reagent_containers[CAT_PILLS]
-			if(pills[index])
-				pill_number = index
 		if("change_current_volume")
 			current_volume = round(clamp(text2num(params["volume"]), MIN_VOLUME, MAX_VOLUME))
 		if("change_product_name")
 			var/formatted_name = html_encode(params["name"])
 			if (length(formatted_name) > MAX_NAME_LEN)
-				product_name = copytext(formatted_name, 1, MAX_NAME_LEN+1)
+				product_name = copytext(formatted_name, 1, MAX_NAME_LEN + 1)
 			else
 				product_name = formatted_name
 		if("change_product")
-			product = params["product"]
-			var/max_volume
-			if (product == "pill")
-				max_volume = MAX_PILL_VOLUME
-			else if (product == "patch")
-				max_volume = MAX_PATCH_VOLUME
-			else if (product == "bottle")
-				max_volume = MAX_BOTTLE_VOLUME
-			else
-				return
-			current_volume = clamp(current_volume, MIN_VOLUME, max_volume)
-		if("change_patch_style")
-			patch_style = params["patch_style"]
+			packaging_type = params["ref"]
+			var/obj/item/reagent_containers/container = _decode_category()
+			current_volume = clamp(current_volume, MIN_VOLUME, initial(container.volume))
 
-#undef MAX_PILL_VOLUME
-#undef MAX_PATCH_VOLUME
-#undef MAX_BOTTLE_VOLUME
 #undef MIN_VOLUME
 #undef MAX_VOLUME
 #undef MAX_FLOOR_PRODUCTS
