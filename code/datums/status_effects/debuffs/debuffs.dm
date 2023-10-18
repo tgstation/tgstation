@@ -2,8 +2,8 @@
 #define HEALING_SLEEP_DEFAULT 0.2
 /// The sleep healing multipler for organ passive healing (since organs heal slowly)
 #define HEALING_SLEEP_ORGAN_MULTIPLIER 5
-/// The sleep multipler for workout xp conversion
-#define SLEEP_QUALITY_WORKOUT_MULTIPLER 5
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS

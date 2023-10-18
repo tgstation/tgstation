@@ -1,5 +1,5 @@
-#define WORKOUT_XP 10
-#define EXERCISE_STATUS_DURATION 30 SECONDS
+#define WORKOUT_XP 5
+#define EXERCISE_STATUS_DURATION 20 SECONDS
 
 /obj/structure/weightmachine
 	name = "chest press machine"

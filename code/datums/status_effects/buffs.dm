@@ -178,7 +178,10 @@
 		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
 		/datum/reagent/consumable/nutriment/vitamin = 10 SECONDS,
 		/datum/reagent/consumable/milk = 10 SECONDS,
+		/datum/reagent/consumable/rice = 5 SECONDS,
 		/datum/reagent/consumable/soymilk = 5 SECONDS, // darn vegans!
+		/datum/reagent/consumable/monkey_energy = 5 SECONDS, // the marketing was a lie
+		/datum/reagent/consumable/sugar = -5 SECONDS, // baaaad
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
@@ -200,7 +203,7 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 10 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 5 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
 	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time
