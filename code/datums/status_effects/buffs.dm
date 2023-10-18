@@ -177,11 +177,14 @@
 		/datum/reagent/consumable/eggyolk = 15 SECONDS,
 		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
 		/datum/reagent/consumable/nutriment/vitamin = 10 SECONDS,
+		/datum/reagent/consumable/rice = 10 SECONDS,
 		/datum/reagent/consumable/milk = 10 SECONDS,
-		/datum/reagent/consumable/rice = 5 SECONDS,
 		/datum/reagent/consumable/soymilk = 5 SECONDS, // darn vegans!
-		/datum/reagent/consumable/monkey_energy = 5 SECONDS, // the marketing was a lie
-		/datum/reagent/consumable/sugar = -5 SECONDS, // baaaad
+		/datum/reagent/consumable/nutraslop = 5 SECONDS, // prison food to bulk up with
+		// time for the bad stuff
+		/datum/reagent/consumable/sugar = -5 SECONDS,
+		/datum/reagent/consumable/monkey_energy = -5 SECONDS,
+		/datum/reagent/consumable/nutriment/fat = -5 SECONDS,
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
