@@ -36,18 +36,23 @@
 /datum/heretic_knowledge/painting
 	name = "Glimmering Arts"
 	desc = "Allows you to transmute a canvas and an additional item to create a piece of art, these paintings \
-			have different effects depending on the additional item added. Possible paintings: \
-			s\
-			s\
-			s\
-			s\
-			s\"
+			have different effects depending on the additional item added. Possible paintings:"
 	gain_text = "A wind of inspiration blows through me, past the walls and past the gate inspirations lie, yet to be depicted. \
 				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
 		/datum/heretic_knowledge/spell/moon_parade,
 	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
+	required_atoms = list(
+		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/clothing/neck/tie = 1,
+	)
+	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
+	optional_atoms = list(
+		/obj/item/organ/internal/lungs = 1,
+	)
+	optional_result_atoms = list(/obj/item/blackbox)
 	cost = 1
 	route = PATH_SIDE

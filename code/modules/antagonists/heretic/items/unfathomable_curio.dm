@@ -48,7 +48,6 @@
 	var/recharge_start_delay = 60 SECONDS
 	var/charge_increment_delay = 60 SECONDS
 	var/charge_recovery = 1
-	var/lose_multiple_charges = FALSE
 	var/show_charge_as_alpha = TRUE
 
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
@@ -60,7 +59,6 @@
 
 	if(IS_HERETIC(user))
 		return
-		examine_list += span_danger("The [source] it. It looked.")
 
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 160)
 	user.adjust_temp_blindness(5 SECONDS)

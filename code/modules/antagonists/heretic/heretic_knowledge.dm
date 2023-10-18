@@ -30,7 +30,9 @@
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
 	/// If set this allows the heretic to add additional atoms to get different results than when only using required atoms
-	var/list/optional_atoms
+	var/list/optional_atoms = list()
+	/// If set this makes the optional atoms give a different result
+	var/list/optional_result_atoms = list()
 	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
@@ -150,6 +152,11 @@
 	if(!length(result_atoms))
 		return FALSE
 	for(var/result in result_atoms)
+		// Check if we have any optional result atoms
+		if(length(optional_result_atoms)>0)
+			for(var/optional_result in optional_result_atoms)
+				new optional_result(loc)
+			return TRUE
 		new result(loc)
 	return TRUE
 
@@ -177,7 +184,7 @@
 		if(isstack(sacrificed))
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
-			for(var/requirement in required_atoms)
+			for(var/requirement in required_atoms )
 				// If it's not requirement type and type is not a list, skip over this check
 				if(!istype(sacrificed, requirement) && !islist(requirement))
 					continue
@@ -186,7 +193,15 @@
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
-
+			// Same as above, but with an additional to check to see if we actually have any optional atoms
+			if(length(optional_atoms)>0)
+				for(var/optional in optional_atoms)
+					if(!istype(sacrificed, optional) && !islist(optional))
+						continue
+					if(islist(optional) && !is_type_in_list(sacrificed, optional))
+						continue
+					how_much_to_use = min(required_atoms[optional], sac_stack.amount)
+					break
 			sac_stack.use(how_much_to_use)
 			continue
 

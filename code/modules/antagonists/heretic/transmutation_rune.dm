@@ -157,12 +157,11 @@
 	// Checks if the ritual has any optional items
 	if(optional_list > 0)
 		for(var/req_type_option in optional_list)
-			var/number_of_things_option = optional_list[req_type]
+			var/number_of_optional_things = optional_list[req_type_option]
 			// <= 0 means it's fulfilled, skip
 			if(number_of_optional_things <= 0)
-			continue
+				continue
 
-	if(len)
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
 		loc.balloon_alert(user, "ritual failed, missing components!")
