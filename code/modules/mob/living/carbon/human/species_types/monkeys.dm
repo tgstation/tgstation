@@ -197,6 +197,8 @@
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 /datum/species/monkey/no_mutation
+	id = SPECIES_MONKEY_NO_MUT
+	examine_limb_id = SPECIES_MONKEY
 	changesource_flags = null
 	monkey_mutation = FALSE
 
