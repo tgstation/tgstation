@@ -67,6 +67,10 @@
 	)
 	loot = list(/obj/item/ectoplasm/angelic)
 
+/mob/living/simple_animal/hostile/construct/wraith/angelic/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
+
 /mob/living/simple_animal/hostile/construct/wraith/mystic
 	theme = THEME_WIZARD
 	construct_spells = list(

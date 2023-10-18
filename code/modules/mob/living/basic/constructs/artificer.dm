@@ -44,7 +44,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/artificer
 	smashes_walls = FALSE
 
-/////////////////////////////Artificer-alts/////////////////////////
+// Alternate artificer themes
 /mob/living/basic/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
 	theme = THEME_HOLY
@@ -54,6 +54,11 @@
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
+
+/mob/living/basic/construct/artificer/angelic/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
+
 /mob/living/basic/construct/artificer/mystic
 	theme = THEME_WIZARD
 	construct_spells = list(
