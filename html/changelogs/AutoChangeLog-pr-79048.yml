@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a tgui bluescreen bug with the bank account console that can occur when there is bad bank account data"

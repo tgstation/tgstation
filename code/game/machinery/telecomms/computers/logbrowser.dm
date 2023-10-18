@@ -41,7 +41,7 @@
 			// Send selected server data
 			var/list/server_out = list()
 			server_out["name"] = SelectedServer.name
-			server_out["traffic"] = SelectedServer.totaltraffic
+			server_out["traffic"] = SelectedServer.total_traffic
 			// Get the messages on this server
 			var/list/packets = list()
 			for(var/datum/comm_log_entry/packet in SelectedServer.log_entries)

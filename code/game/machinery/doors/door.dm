@@ -55,7 +55,7 @@
 	/// Current elevator status for processing
 	var/elevator_status
 	/// What specific lift ID do we link with?
-	var/elevator_linked_id
+	var/transport_linked_id
 
 /datum/armor/machinery_door
 	melee = 30
@@ -78,7 +78,7 @@
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
-		if(elevator_linked_id)
+		if(transport_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else

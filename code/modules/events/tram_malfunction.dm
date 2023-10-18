@@ -18,9 +18,9 @@
 	if (!.)
 		return FALSE
 
-	for(var/tram_id in GLOB.active_lifts_by_type)
-		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
+	for(var/tram_id in SStransport.transports_by_type)
+		var/datum/transport_controller/linear/tram/tram_ref = SStransport.transports_by_type[tram_id][1]
+		if(tram_ref.specific_transport_id == TRAMSTATION_LINE_1)
 			return .
 
 	return FALSE
@@ -28,43 +28,27 @@
 /datum/round_event/tram_malfunction
 	announce_when = 1
 	end_when = TRAM_MALFUNCTION_TIME_LOWER
-	var/specific_lift_id = MAIN_STATION_TRAM
-	var/original_lethality
+	/// The ID of the tram we're going to malfunction
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /datum/round_event/tram_malfunction/setup()
 	end_when = rand(TRAM_MALFUNCTION_TIME_LOWER, TRAM_MALFUNCTION_TIME_UPPER)
 
 /datum/round_event/tram_malfunction/announce()
-	priority_announce("Our automated control system has lost contact with the tram's on board computer. Please take extra care while we diagnose and resolve the issue. Signals and emergency braking may not be available during this time.", "CentCom Engineering Division")
+	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please take extra care while engineers diagnose and resolve the issue.", "CentCom Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
-	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
-		signal.start_malfunction()
-
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.start_malfunction()
-
-	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
-		sign.malfunctioning = TRUE
-
-	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
-		original_lethality = tram.collision_lethality
-		tram.collision_lethality = original_lethality * 1.25
+	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(malfunctioning_controller.specific_transport_id == specific_transport_id)
+			malfunctioning_controller.start_malf_event()
+			return
 
 /datum/round_event/tram_malfunction/end()
-	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
-		signal.end_malfunction()
-
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.end_malfunction()
-
-	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
-		sign.malfunctioning = FALSE
-
-	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
-		tram.collision_lethality = original_lethality
-
-	priority_announce("We've successfully reset the software on the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "CentCom Engineering Division")
+	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.controller_status & COMM_ERROR)
+			malfunctioning_controller.end_malf_event()
+			priority_announce("The software on the tram has been reset, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "CentCom Engineering Division")
+			return
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
 #undef TRAM_MALFUNCTION_TIME_LOWER
