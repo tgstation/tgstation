@@ -42,4 +42,4 @@
 	if(!istype(corgi_pawn))
 		return
 
-	return corgi_pawn.access_card
+	return corgi_pawn.access_card.GetAccess()
