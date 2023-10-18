@@ -139,7 +139,7 @@
 	if(!players)
 		players = GLOB.player_list
 
-	var/minor_announcement_strings = list()
+	var/list/minor_announcement_strings = list()
 	minor_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 	minor_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
@@ -162,21 +162,23 @@
 	title = html_encode(title)
 	message = html_encode(message)
 
-	var/level_announcement_strings = list()
+	var/list/level_announcement_strings = list()
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
 	var/joined_strings = level_announcement_strings.Join("<br>")
 	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, joined_strings)
 
-	for(var/mob/target in GLOB.player_list)
+	if(!players)
+		players = GLOB.player_list
+
+	for(var/mob/target in players)
 		if(isnewplayer(target))
 			continue
 		if(!target.can_hear())
 			continue
 
-
-
+		to_chat(target, finalized_announcement)
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || 'sound/misc/notice2.ogg'
 			SEND_SOUND(target, sound(sound_to_play))
