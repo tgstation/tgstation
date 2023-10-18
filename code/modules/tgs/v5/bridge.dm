@@ -91,6 +91,8 @@
 		TGS_ERROR_LOG("Failed bridge request, bad json: [response_json]")
 		return
 
+	TGS_INFO_LOG("Received bridge JSON: [response_json]")
+
 	var/error = bridge_response[DMAPI5_RESPONSE_ERROR_MESSAGE]
 	if(error)
 		TGS_ERROR_LOG("Failed bridge request, bad request: [error]")
