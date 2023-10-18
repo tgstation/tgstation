@@ -1,3 +1,10 @@
+// please don't use these defines outside of this file in order to ensure a unified framework. unless you have a really good reason to make them global, then whatever
+#define MAJOR_ANNOUNCEMENT_TITLE(string) ("<span class='efannouncemajtitle'>" + string + "</span>")
+#define MAJOR_ANNOUNCEMENT_TEXT(string) ("<span class='efannouncemajtext'>" + string + "</span>")
+
+#define MINOR_ANNOUNCEMENT_TITLE(string) ("<span class='efannouncemintitle'>" + string + "</span>")
+#define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='efannouncemintext'>" + string + "</span>")
+
 /**
  * Make a big red text announcement to
  *
@@ -13,7 +20,7 @@
  * * text - required, the text to announce
  * * title - optional, the title of the announcement.
  * * sound - optional, the sound played accompanying the announcement
- * * type - optional, the type of the announcement, for some "preset" announcement templates. ANNOUNCEMENT_TYPE_PRIORITY, ANNOUNCEMENT_TYPE_CAPTAIN,
+ * * type - optional, the type of the announcement, for some "preset" announcement templates. See __DEFINES/announcements.dm
  * * sender_override - optional, modifies the sender of the announcement
  * * has_important_message - is this message critical to the game (and should not be overridden by station traits), or not
  * * players - a list of all players to send the message to. defaults to all players (not including new players)
