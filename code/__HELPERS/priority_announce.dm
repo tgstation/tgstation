@@ -13,7 +13,7 @@
  * * text - required, the text to announce
  * * title - optional, the title of the announcement.
  * * sound - optional, the sound played accompanying the announcement
- * * type - optional, the type of the announcement, for some "preset" announcement templates. "Priority", "Captain", "Syndicate Captain"
+ * * type - optional, the type of the announcement, for some "preset" announcement templates. ANNOUNCEMENT_TYPE_PRIORITY, ANNOUNCEMENT_TYPE_CAPTAIN,
  * * sender_override - optional, modifies the sender of the announcement
  * * has_important_message - is this message critical to the game (and should not be overridden by station traits), or not
  * * players - a list of all players to send the message to. defaults to all players (not including new players)
@@ -39,14 +39,14 @@
 
 	announcement += "<br>"
 
-	if(type == "Priority")
+	if(type == ANNOUNCEMENT_TYPE_PRIORITY)
 		announcement += "[span_priorityannounce("<u>Priority Announcement</u>")]"
 		if (title && length(title) > 0)
 			announcement += "[span_prioritytitle("<br>[title]")]"
-	else if(type == "Captain")
+	else if(type == ANNOUNCEMENT_TYPE_CAPTAIN)
 		announcement += "[span_priorityannounce("<u>Captain Announces</u>")]"
 		GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
-	else if(type == "Syndicate Captain")
+	else if(type == ANNOUNCEMENT_TYPE_SYNDICATE)
 		announcement += "[span_priorityannounce("<u>Syndicate Captain Announces</u>")]"
 
 	else
