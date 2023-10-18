@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - spellcheck: "More announcement CSS fixes, now including light mode"
