@@ -1,8 +1,4 @@
-/**
- * Arguments:
- * * creator - the mob who placed the MMI/Boris module into the exoskeleton. Needed to make AI shells work.
- */
-/mob/living/silicon/robot/Initialize(mapload, mob/creator)
+/mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -65,7 +61,8 @@
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		var/obj/item/borg/upgrade/ai/board = new(src)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/silicon/robot, add_to_upgrades), board, creator)
+		make_shell(board)
+		add_to_upgrades(board)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -786,9 +783,9 @@
 	if(gone == mmi)
 		mmi = null
 
-///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
-/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
-	if(!user) // If this gets called with a null user then its going to runtime unless we check for it
+///Called when a mob uses an upgrade on an open borg. Checks to make sure the upgrade can be applied
+/mob/living/silicon/robot/proc/apply_upgrade(obj/item/borg/upgrade/new_upgrade, mob/user)
+	if(isnull(user))
 		return FALSE
 	if(new_upgrade in upgrades)
 		return FALSE
@@ -799,6 +796,10 @@
 		new_upgrade.forceMove(loc) //gets lost otherwise
 		return FALSE
 	to_chat(user, span_notice("You apply the upgrade to [src]."))
+	add_to_upgrades(new_upgrade)
+
+///Moves the upgrade inside the robot and registers relevant signals.
+/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade)
 	to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete.\n----------------")
 	if(new_upgrade.one_use)
 		logevent("Firmware [new_upgrade] run successfully.")
@@ -834,9 +835,9 @@
  * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
  */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
-	if(!board)
+	if(isnull(board))
 		stack_trace("make_shell was called without a board argument! This is never supposed to happen!")
-		return FALSE // If there isn't a board than cancelling the whole shell creation process is the best option
+		return FALSE
 
 	shell = TRUE
 	braintype = "AI Shell"

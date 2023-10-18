@@ -352,7 +352,7 @@
 				to_chat(user, span_warning("[M] is stuck to your hand!"))
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src), user)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
 
 			if(!aisync)
 				lawsync = FALSE
