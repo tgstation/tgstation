@@ -2,7 +2,7 @@
 "ax" = (
 /obj/structure/railing/corner,
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "aT" = (
 /obj/structure/railing/corner/end/flip{
@@ -12,38 +12,38 @@
 /area/icemoon/surface/outdoors/nospawn)
 "bE" = (
 /obj/structure/flora/rock/pile,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "cO" = (
 /obj/structure/fence/door/opened{
 	dir = 1
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ds" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "eu" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "eB" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /obj/structure/flora/rock/pile/icy/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "eE" = (
 /obj/structure/railing{
 	dir = 6
 	},
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "fl" = (
 /turf/template_noop,
@@ -51,14 +51,14 @@
 "fK" = (
 /obj/structure/railing,
 /obj/structure/flora/rock/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "gv" = (
 /obj/structure/railing{
 	dir = 5
 	},
 /obj/structure/ladder,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "hM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -74,15 +74,15 @@
 	dir = 4
 	},
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "jQ" = (
 /obj/structure/fence/door,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kd" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kq" = (
 /obj/effect/turf_decal/stripes/line{
@@ -97,7 +97,10 @@
 /obj/structure/fence/corner{
 	dir = 9
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"lH" = (
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lR" = (
 /obj/structure/railing/corner/end/flip{
@@ -106,25 +109,25 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "mP" = (
 /turf/open/openspace/icemoon/ruins,
 /area/icemoon/surface/outdoors/nospawn)
 "nt" = (
 /obj/structure/flora/rock/pile/icy/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "nT" = (
 /obj/structure/flora/tree/pine,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "op" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /obj/structure/sign/warning/secure_area,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tW" = (
 /obj/structure/fence{
@@ -132,7 +135,7 @@
 	},
 /obj/structure/flora/rock/pile/icy/style_2,
 /obj/structure/sign/warning/secure_area,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "uy" = (
 /obj/effect/mob_spawn/corpse/human/minesite/overseer,
@@ -140,7 +143,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "vx" = (
 /obj/structure/flora/tree/pine/style_3,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "vJ" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -149,7 +152,7 @@
 /obj/structure/fence/cut/medium{
 	dir = 4
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "yy" = (
 /obj/structure/railing/corner/end/flip{
@@ -168,14 +171,14 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Aq" = (
 /obj/structure/flora/rock/icy/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "At" = (
 /obj/structure/flora/grass/brown/style_random,
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Bv" = (
 /turf/open/misc/snow,
@@ -186,14 +189,14 @@
 "DG" = (
 /obj/structure/flora/grass/brown/style_random,
 /obj/structure/flora/tree/pine/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Ep" = (
 /obj/structure/fence/cut/medium{
 	dir = 4
 	},
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Ff" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -205,13 +208,13 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "HU" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Ia" = (
 /obj/structure/railing/corner/end{
@@ -219,14 +222,14 @@
 	},
 /obj/structure/railing/corner/end/flip,
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "IA" = (
 /obj/item/flashlight/glowstick/red{
 	on = 1
 	},
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "KT" = (
 /obj/structure/railing{
@@ -241,7 +244,7 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Mp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -276,7 +279,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Tt" = (
 /obj/structure/flora/rock/pile/icy/style_2,
@@ -287,18 +290,18 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "UY" = (
 /obj/structure/fence/cut/large{
 	dir = 4
 	},
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wg" = (
 /obj/structure/railing,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wk" = (
 /obj/item/flashlight/glowstick/red{
@@ -311,7 +314,7 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wt" = (
 /obj/effect/turf_decal/stripes/line,
@@ -320,7 +323,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Zn" = (
 /obj/structure/fence/cut/large,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
@@ -383,7 +386,7 @@ fl
 "}
 (3,1,1) = {"
 IA
-Bv
+lH
 lo
 Zn
 Dd
@@ -415,7 +418,7 @@ Bv
 eu
 jQ
 vJ
-Bv
+lH
 Dd
 mP
 mP
@@ -475,7 +478,7 @@ Dd
 eu
 vJ
 vJ
-Bv
+lH
 eB
 mP
 mP
@@ -755,7 +758,7 @@ mP
 mP
 kd
 kd
-Bv
+lH
 wg
 "}
 (16,1,1) = {"
@@ -763,7 +766,7 @@ Dd
 Dd
 kd
 kd
-Bv
+lH
 mP
 mP
 mP
@@ -784,15 +787,15 @@ mP
 mP
 Wk
 vJ
-Bv
+lH
 At
 "}
 (17,1,1) = {"
 Ep
-Bv
+lH
 kd
 vJ
-Bv
+lH
 HU
 mP
 mP
@@ -818,7 +821,7 @@ UY
 "}
 (18,1,1) = {"
 ds
-Bv
+lH
 vx
 Tt
 vJ
@@ -842,12 +845,12 @@ mP
 mP
 Aq
 vJ
-Bv
+lH
 Sc
 "}
 (19,1,1) = {"
 Uz
-Bv
+lH
 vJ
 vJ
 vJ
@@ -906,7 +909,7 @@ wg
 (21,1,1) = {"
 tW
 kd
-Bv
+lH
 Wt
 mP
 Mp
@@ -934,7 +937,7 @@ Dd
 "}
 (22,1,1) = {"
 hS
-Bv
+lH
 Aq
 Ff
 hM

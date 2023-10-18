@@ -1,32 +1,32 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ah" = (
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "au" = (
 /obj/structure/flora/rock/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aW" = (
 /obj/structure/flora/rock/pile/icy/style_3,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ep" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mob_spawn/corpse/human/minesite,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fh" = (
 /obj/structure/frost_miner_prism,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "gk" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hp" = (
 /obj/structure/flora/rock/pile/icy/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hD" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -36,11 +36,11 @@
 /area/icemoon/underground/explored)
 "hX" = (
 /obj/effect/mob_spawn/corpse/human/minesite,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "it" = (
 /obj/structure/flora/rock/icy/style_3,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "iy" = (
 /obj/item/pickaxe/rusted,
@@ -52,7 +52,7 @@
 /area/icemoon/underground/explored)
 "jI" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kz" = (
 /obj/structure/flora/grass/brown/style_random,
@@ -60,11 +60,11 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "lh" = (
 /obj/effect/spawner/random/exotic/snow_gear,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "lL" = (
 /turf/template_noop,
@@ -78,11 +78,11 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "nE" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "nX" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -111,7 +111,7 @@
 /area/icemoon/underground/explored)
 "pJ" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qU" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -125,7 +125,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rI" = (
 /obj/effect/decal/cleanable/glass,
@@ -148,7 +148,7 @@
 	pixel_y = 4;
 	icon_state = "legion_core_decayed"
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uN" = (
 /obj/effect/decal/cleanable/glitter/blue{
@@ -189,7 +189,7 @@
 	pixel_x = -6;
 	pixel_y = 7
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zk" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -209,7 +209,7 @@
 /obj/item/flashlight/glowstick/red{
 	on = 1
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CX" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -270,7 +270,7 @@
 /area/icemoon/underground/explored)
 "Ik" = (
 /obj/item/trash/flare,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "JP" = (
 /obj/item/organ/internal/monster_core/regenerative_core/legion{
@@ -279,15 +279,15 @@
 	pixel_y = -4;
 	icon_state = "legion_core_decayed"
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Kb" = (
 /obj/structure/ladder,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "KA" = (
 /obj/structure/flora/rock/icy/style_2,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "KQ" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -297,7 +297,7 @@
 /area/icemoon/underground/explored)
 "KT" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Lz" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -333,14 +333,14 @@
 	pixel_y = 13;
 	pixel_x = -5
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Tt" = (
 /obj/structure/frost_miner_prism,
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
 /obj/effect/decal/cleanable/grand_remains,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "UB" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -353,7 +353,7 @@
 /area/icemoon/underground/explored)
 "UV" = (
 /obj/structure/frost_miner_prism,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Vz" = (
 /obj/structure/table,
@@ -371,7 +371,7 @@
 	pixel_y = 3;
 	icon_state = "legion_core_decayed"
 	},
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "WY" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -384,7 +384,7 @@
 /area/icemoon/underground/explored)
 "Yp" = (
 /obj/effect/decal/cleanable/blood/footprints,
-/turf/open/misc/snow,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "YR" = (
 /obj/effect/turf_decal/weather/snow/corner{
