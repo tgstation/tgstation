@@ -27,7 +27,7 @@
 	///pill styles used by plumbing pill press factory format = list("id" = <id of this pill>, "class_name" = <class name inside spritesheet>)
 	var/static/list/pill_styles = null
 	///the icon_state number for the pill.
-	var/pill_number = RANDOM_PILL_STYLE
+	var/pill_number = 1
 	/// patch styles used by plumbing pill press factory format = list("style" = <string patch style>, "class_name" = <class name inside spritesheet>)
 	var/static/list/patch_styles = null
 	/// Currently selected patch style
@@ -40,23 +40,26 @@
 
 	//initialize these static lists only once
 	if(!pill_styles || !patch_styles)
+		var/list/iterate
+		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/chemmaster)
+
 		//init pill styles
-		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+		iterate = GLOB.reagent_containers[CAT_PILLS]
+		var/len = iterate.len
 		pill_styles = list()
-		for (var/x in 1 to PILL_STYLE_COUNT)
+		for (var/x in 1 to len)
 			var/list/SL = list()
 			SL["id"] = x
-			SL["class_name"] = assets.icon_class_name("pill[x]")
+			SL["class_name"] = assets.icon_class_name(sanitize_css_class_name("[iterate[x]]"))
 			pill_styles += list(SL)
 
 		//init patch styles
-		var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
+		iterate = GLOB.reagent_containers[CAT_PATCHES]
 		patch_styles = list()
-		for (var/raw_patch_style in PATCH_STYLE_LIST)
-			//adding class_name for use in UI
+		for (var/obj/item/reagent_containers/container as anything in iterate)
 			var/list/patch_style = list()
-			patch_style["style"] = raw_patch_style
-			patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
+			patch_style["style"] = initial(container.icon_state)
+			patch_style["class_name"] = assets.icon_class_name(sanitize_css_class_name("[container]"))
 			patch_styles += list(patch_style)
 
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
@@ -72,16 +75,14 @@
 	//round & check to account for floating point inaccuracies
 	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= current_volume)
 		if (product == "pill")
-			var/obj/item/reagent_containers/pill/P = new(src)
-			reagents.trans_to(P, current_volume)
+			var/list/pill_types = GLOB.reagent_containers[CAT_PILLS]
+			//create pill type
+			var/obj/item/reagent_containers/pill/P = pill_types[pill_number]
+			P = new P(src)
 			P.name = trim("[product_name] pill")
+			//transfer reagents & store
+			reagents.trans_to(P, current_volume)
 			stored_products += P
-			if(pill_number == RANDOM_PILL_STYLE)
-				P.icon_state = "pill[rand(1,21)]"
-			else
-				P.icon_state = "pill[pill_number]"
-			if(P.icon_state == "pill4") //mirrored from chem masters
-				P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 		else if (product == "patch")
 			var/obj/item/reagent_containers/pill/patch/P = new(src)
 			reagents.trans_to(P, current_volume)
@@ -112,8 +113,7 @@
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/simple/pills),
-		get_asset_datum(/datum/asset/spritesheet/simple/patches),
+		get_asset_datum(/datum/asset/spritesheet/chemmaster)
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
@@ -149,7 +149,10 @@
 	. = TRUE
 	switch(action)
 		if("change_pill_style")
-			pill_number = clamp(text2num(params["id"]), 1 , PILL_STYLE_COUNT)
+			var/index = text2num(params["id"])
+			var/list/pills = GLOB.reagent_containers[CAT_PILLS]
+			if(pills[index])
+				pill_number = index
 		if("change_current_volume")
 			current_volume = round(clamp(text2num(params["volume"]), MIN_VOLUME, MAX_VOLUME))
 		if("change_product_name")

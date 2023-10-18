@@ -16,7 +16,7 @@ export const ChemPress = (props, context) => {
     patch_styles = [],
   } = data;
   return (
-    <Window width={300} height={227}>
+    <Window width={300} height={330}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -82,7 +82,6 @@ export const ChemPress = (props, context) => {
                 {pill_styles.map((pill) => (
                   <Button
                     key={pill.id}
-                    width="30px"
                     selected={pill.id === pill_style}
                     textAlign="center"
                     color="transparent"
@@ -91,7 +90,13 @@ export const ChemPress = (props, context) => {
                         id: pill.id,
                       })
                     }>
-                    <Box mx={-1} className={pill.class_name} />
+                    <Box
+                      mx={-1}
+                      className={pill.class_name}
+                      style={{
+                        transform: 'scale(1.5)',
+                      }}
+                    />
                   </Button>
                 ))}
               </LabeledList.Item>
@@ -109,7 +114,12 @@ export const ChemPress = (props, context) => {
                         patch_style: patch.style,
                       })
                     }>
-                    <Box mb={0} mt={1} className={patch.class_name} />
+                    <Box
+                      className={patch.class_name}
+                      style={{
+                        transform: 'scale(1.5)',
+                      }}
+                    />
                   </Button>
                 ))}
               </LabeledList.Item>
