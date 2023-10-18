@@ -70,7 +70,7 @@
 	else
 		announcement_strings += MAJOR_ANNOUNCEMENT_TEXT(text)
 
-	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(announcement_strings.Join("<br>"))
+	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, "<br>"))
 
 	dispatch_announcement_to_players(finalized_announcement, players, sound)
 
@@ -114,18 +114,14 @@
 		title = html_encode(title)
 		message = html_encode(message)
 
-	if(!players)
-		players = GLOB.player_list
-
 	var/list/minor_announcement_strings = list()
 	minor_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 	minor_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
-	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(minor_announcement_strings.Join("<br>"))
+	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(minor_announcement_strings, "<br>"))
 
 	var/custom_sound = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
-
 
 /// Sends an announcement about the level changing to players. Same args as previous procs here, but divcolor is the color of the div that the announcement is wrapped in.
 /proc/level_announce(message, title, alert, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, divcolor = "default")
@@ -139,8 +135,7 @@
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
-	var/joined_strings = level_announcement_strings.Join("<br>")
-	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, joined_strings)
+	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, jointext(level_announcement_strings, "<br>"))
 
 	dispatch_announcement_to_players(finalized_announcement, players, sound_override, should_play_sound)
 
@@ -156,7 +151,7 @@
 	if(length(title) > 0)
 		returnable_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 
-	return returnable_strings.Join("<br>")
+	return jointext(returnable_strings, "<br>")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
 /proc/dispatch_announcement_to_players(announcement, list/players, sound_override = null, should_play_sound = TRUE)
