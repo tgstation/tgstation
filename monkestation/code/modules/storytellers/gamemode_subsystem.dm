@@ -1136,3 +1136,4 @@ SUBSYSTEM_DEF(gamemode)
 			if(listed.name != event_name)
 				continue
 			listed.occurrences++
+			listed.occurrences++
