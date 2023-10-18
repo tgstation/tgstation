@@ -144,6 +144,21 @@
 
 	switch(action)
 		if("buy")
+			//if multiple users open the UI some of them may not have the required access so we recheck
+			var/is_ordering_private = ordering_private
+			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+				is_ordering_private = TRUE
+			var/datum/bank_account/account_payable // Handle account payable first
+			if(is_ordering_private)
+				account_payable = used_id_card.registered_account
+			else if(can_buy_via_budget)
+				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(!account_payable)
+				say("No bank account detected!")
+				return
+
+
+
 			var/material_str = params["material"]
 			var/quantity = text2num(params["quantity"])
 
@@ -156,31 +171,20 @@
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
 
-			//if multiple users open the UI some of them may not have the required access so we recheck
-			var/is_ordering_private = ordering_private
-			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
-				is_ordering_private = TRUE
-
-			var/datum/bank_account/account_payable
-			if(is_ordering_private)
-				account_payable = used_id_card.registered_account
-			else if(can_buy_via_budget)
-				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(!account_payable)
-				say("No bank account detected!")
-				return
-
 			sheet_to_buy = initial(material_bought.sheet_type)
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
+
+
+			var/list/things_to_order = list()
+			things_to_order += (sheet_to_buy)
+			things_to_order[sheet_to_buy] = quantity
+
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 			if(cost > account_payable.account_balance)
 				to_chat(living_user, span_warning("You don't have enough money to buy that!"))
 				return
 
-			var/list/things_to_order = list()
-			things_to_order += (sheet_to_buy)
-			things_to_order[sheet_to_buy] = quantity
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			// If we already have a custom order on SSshuttle, we should add the things to order to that order
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
@@ -192,6 +196,8 @@
 					// Check if this order exceeded its limit
 					var/prior_stacks = 0
 					for(var/obj/item/stack/sheet/sheet as anything in order.pack.contains)
+						if(order.pack.contains[sheet] >= SSstock_market.materials_quantity[material_bought])
+							order.pack.contains[sheet] = clamp(things_to_order[sheet_to_buy], 1, SSstock_market.materials_quantity[material_bought])
 						prior_stacks += ROUND_UP(order.pack.contains[sheet] / 50)
 						if(prior_stacks >= 10)
 							to_chat(usr, span_notice("You already have 10 stacks of sheets on order! Please wait for them to arrive before ordering more."))

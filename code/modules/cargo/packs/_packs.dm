@@ -122,3 +122,8 @@
 	name = "[purchaser]'s Materials Order"
 	src.cost = cost
 	src.contains = contains
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	. = ..()
+	//Remove our material sheets from SSstock_market's materials_quantity equal to the quantity within the crate.
+	
