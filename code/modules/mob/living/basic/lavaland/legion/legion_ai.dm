@@ -33,8 +33,8 @@
 /// Target nearby friendlies if they are hurt (and are not themselves Legions)
 /datum/targetting_datum/basic/legion
 
-/datum/targetting_datum/basic/legion/faction_check(mob/living/living_mob, mob/living/the_target)
-	if (!living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly))
+/datum/targetting_datum/basic/legion/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	if (!living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly))
 		return FALSE
 	if (istype(the_target, living_mob.type))
 		return TRUE
@@ -48,7 +48,7 @@
 
 /datum/ai_planning_subtree/flee_target/legion/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (QDELETED(target) || target.faction_check_mob(controller.pawn))
+	if (QDELETED(target) || target.faction_check_atom(controller.pawn))
 		return // Only flee if we have a hostile target
 	return ..()
 

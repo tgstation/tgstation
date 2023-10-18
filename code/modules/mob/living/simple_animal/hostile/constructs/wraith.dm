@@ -26,7 +26,7 @@
 	/// The seconds refunded when putting a target into critical
 	var/crit_refund = 5 SECONDS
 
-/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
+/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget(atom/attacked_target) //refund jaunt cooldown when attacking living targets
 	var/prev_stat
 	var/mob/living/living_target = target
 

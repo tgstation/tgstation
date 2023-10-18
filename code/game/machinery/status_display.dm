@@ -30,9 +30,9 @@
 	var/message2 = ""
 
 	/// Normal text color
-	var/text_color = "#09F"
+	var/text_color = COLOR_DISPLAY_BLUE
 	/// Color for headers, eg. "- ETA -"
-	var/header_text_color = "#2CF"
+	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
@@ -151,7 +151,7 @@
 	)
 		set_light(0)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(1.5, 0.7, LIGHT_COLOR_FAINT_CYAN) // blue light
 
 /obj/machinery/status_display/update_overlays(updates)
 	. = ..()
@@ -374,8 +374,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/supply
 	name = "supply display"
 	current_mode = SD_MESSAGE
-	text_color = "#F90"
-	header_text_color = "#FC2"
+	text_color = COLOR_DISPLAY_ORANGE
+	header_text_color = COLOR_DISPLAY_YELLOW
 
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
@@ -409,8 +409,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	current_mode = SD_MESSAGE
 	var/shuttle_id
 
-	text_color = "#0F5"
-	header_text_color = "#2FC"
+	text_color = COLOR_DISPLAY_GREEN
+	header_text_color = COLOR_DISPLAY_CYAN
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))

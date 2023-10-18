@@ -2816,9 +2816,9 @@
 "aTJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
 	id = "pharmacy_shutters";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
@@ -3550,7 +3550,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -7408,7 +7408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -7945,7 +7945,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -8252,7 +8252,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
-	dir = 8;
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
@@ -8267,9 +8266,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
 	id = "pharmacy_shutters";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
@@ -15602,7 +15601,10 @@
 /area/station/commons/dorms)
 "eGz" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/airlock/security/glass{
+	name = "Permabrig Visitation"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "eGA" = (
@@ -29739,6 +29741,16 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
+"jho" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pharmacy_shutters2";
+	name = "Pharmacy Shutters";
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "jhy" = (
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron,
@@ -32885,8 +32897,8 @@
 	id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
-	elevator_mode = 1
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator"
 	},
 /obj/machinery/lift_indicator/directional/north{
 	linked_elevator_id = "publicElevator"
@@ -33486,11 +33498,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
 /obj/effect/abstract/elevator_music_zone{
@@ -37303,8 +37315,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "lts" = (
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/directional/south,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ltE" = (
@@ -39555,8 +39568,8 @@
 /obj/machinery/chem_dispenser,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/directional/north,
-/obj/structure/sign/warning/no_smoking/directional/north,
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pharmacy)
 "meG" = (
@@ -41016,8 +41029,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "mEi" = (
-/obj/machinery/firealarm/directional/north,
-/obj/structure/tank_holder/extinguisher,
 /obj/machinery/camera{
 	c_tag = "Medbay Pharmacy";
 	dir = 9;
@@ -41026,6 +41037,17 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/shower/directional/south,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/effect/turf_decal/stripes/white/end,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "mEv" = (
@@ -41295,10 +41317,6 @@
 	dir = 4
 	},
 /area/station/service/chapel)
-"mJv" = (
-/obj/item/paper/fluff/ids_for_dummies,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers/deep)
 "mJD" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -42347,10 +42365,10 @@
 "nbd" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "nbi" = (
@@ -46916,9 +46934,9 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
 	elevator_mode = 1;
-	req_access = null
+	req_access = null;
+	transport_linked_id = "publicElevator"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -60777,6 +60795,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "sBi" = (
@@ -62575,6 +62594,11 @@
 "tfp" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutters";
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "tfu" = (
@@ -63231,16 +63255,15 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
 	base_state = "left";
-	dir = 8;
 	icon_state = "left";
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
 	id = "pharmacy_shutters2";
-	name = "Pharmacy Shutters"
+	name = "Pharmacy Shutters";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
@@ -65819,6 +65842,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "uhs" = (
@@ -67247,7 +67271,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -69555,7 +69579,9 @@
 /area/station/engineering/atmos)
 "vtk" = (
 /obj/machinery/newscaster/directional/east,
-/obj/structure/bed/pod,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
@@ -73862,7 +73888,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -78248,7 +78274,7 @@
 /area/station/engineering/main)
 "xZo" = (
 /obj/structure/table/glass,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
 	},
@@ -82018,7 +82044,7 @@ oSU
 oSU
 oSU
 oSU
-mJv
+oSU
 oSU
 oSU
 oSU
@@ -244604,7 +244630,7 @@ sIm
 hmb
 lso
 dEV
-lts
+bai
 azw
 uhn
 fTC
@@ -244861,7 +244887,7 @@ exw
 exw
 cwh
 dEV
-jyp
+lts
 azw
 mEi
 eyc
@@ -245382,7 +245408,7 @@ dip
 bHO
 azw
 tpY
-tfp
+jho
 azw
 eiY
 tZm

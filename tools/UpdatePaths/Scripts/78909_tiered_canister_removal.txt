@@ -1,0 +1,4 @@
+/obj/structure/canister_frame : /obj/structure/fluff/broken_canister_frame{@OLD}
+/obj/structure/canister_frame/machine : /obj/structure/fluff/broken_canister_frame{@OLD}
+/obj/structure/canister_frame/machine/unfinished_canister_frame : /obj/structure/fluff/broken_canister_frame{@OLD}
+/obj/structure/canister_frame/machine/finished_canister_frame : /obj/structure/fluff/broken_canister_frame{@OLD}

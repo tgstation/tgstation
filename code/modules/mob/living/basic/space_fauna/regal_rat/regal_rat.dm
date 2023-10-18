@@ -54,6 +54,7 @@
 
 	AddElement(/datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -81,7 +82,7 @@
 		return
 
 	if(ismouse(user))
-		if(user.faction_check_mob(src, exact_match = TRUE))
+		if(user.faction_check_atom(src, exact_match = TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
@@ -174,10 +175,6 @@
 	if(isnull(mind))
 		return
 
-	if(istype(target, /obj/machinery/door/airlock))
-		INVOKE_ASYNC(src, PROC_REF(pry_door), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
-
 	if(!combat_mode)
 		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
 		return COMPONENT_HOSTILE_NO_ATTACK
@@ -195,7 +192,7 @@
 		balloon_alert(src, "already dead!")
 		return FALSE
 
-	if(living_target.faction_check_mob(src, exact_match = TRUE))
+	if(living_target.faction_check_atom(src, exact_match = TRUE))
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 
@@ -235,43 +232,7 @@
 	heal_bodypart_damage(amount)
 	qdel(target)
 
-/**
- * Allows rat king to pry open an airlock if it isn't locked.
- *
- * A proc used for letting the rat king pry open airlocks instead of just attacking them.
- * This allows the rat king to traverse the station when there is a lack of vents or
- * accessible doors, something which is common in certain rat king spawn points.
- *
- * Returns TRUE if the door opens, FALSE otherwise.
- */
-/mob/living/basic/regal_rat/proc/pry_door(target)
-	if(DOING_INTERACTION(src, REGALRAT_INTERACTION))
-		return FALSE
-
-	var/obj/machinery/door/airlock/prying_door = target
-	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
-		return FALSE
-
-	visible_message(
-		span_warning("[src] begins prying open the airlock..."),
-		span_notice("You begin digging your claws into the airlock..."),
-		span_warning("You hear groaning metal..."),
-	)
-	var/time_to_open = 0.5 SECONDS
-
-	if(prying_door.hasPower())
-		time_to_open = 5 SECONDS
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
-
-	if(!do_after(src, time_to_open, prying_door, interaction_key = REGALRAT_INTERACTION))
-		return FALSE
-
-	if(!prying_door.open(BYPASS_DOOR_CHECKS))
-		balloon_alert(src, "failed to open!")
-		return FALSE
-
-	return TRUE
-
+/// Regal rat subtype which can be possessed by ghosts
 /mob/living/basic/regal_rat/controlled
 	poll_ghosts = TRUE
 

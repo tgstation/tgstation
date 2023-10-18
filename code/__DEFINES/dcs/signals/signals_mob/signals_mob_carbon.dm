@@ -33,7 +33,7 @@
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
 /// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special)
-#define COMSIG_BODYPART_ATTACHED "bodypart_removed"
+#define COMSIG_BODYPART_ATTACHED "bodypart_attached"
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
@@ -122,6 +122,8 @@
 
 // /mob/living/carbon/human signals
 
+///Applied preferences to a human
+#define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
@@ -130,10 +132,6 @@
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 ///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
-#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 ///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)

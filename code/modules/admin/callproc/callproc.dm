@@ -277,7 +277,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(named_arg)
 			named_args[named_arg] = value["value"]
 		else
-			. += value["value"]
+			. += LIST_VALUE_WRAP_LISTS(value["value"])
 	if(LAZYLEN(named_args))
 		. += named_args
 
