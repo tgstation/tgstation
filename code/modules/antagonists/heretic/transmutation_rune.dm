@@ -155,7 +155,7 @@
 		what_are_we_missing += formatted_thing
 
 	// Checks if the ritual has any optional items
-	if(optional_list > 0)
+	if(length(optional_list) > 0)
 		for(var/req_type_option in optional_list)
 			var/number_of_optional_things = optional_list[req_type_option]
 			// <= 0 means it's fulfilled, skip
