@@ -71,16 +71,8 @@
 		announcement_strings += MAJOR_ANNOUNCEMENT_TEXT(text)
 
 	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(announcement_strings.Join("<br>"))
-	if(!players)
-		players = GLOB.player_list
 
-	var/sound_to_play = sound(sound)
-	for(var/mob/target in players)
-		if(isnewplayer(target) || !target.can_hear())
-			continue
-		to_chat(target, finalized_announcement)
-		if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			SEND_SOUND(target, sound_to_play)
+	dispatch_announcement_to_players(finalized_announcement, players, sound)
 
 	if(isnull(sender_override))
 		if(length(title) > 0)
@@ -100,20 +92,6 @@
 	message.content = text
 
 	SScommunications.send_message(message)
-
-/// Proc that just generates a custom header based on variables fed into `priority_announce()`.area
-/// Will return a string.
-/proc/generate_unique_announcement_header(title, sender_override)
-	var/list/returnable_strings = list()
-	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
-	else
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
-
-	if(length(title) > 0)
-		returnable_strings += MINOR_ANNOUNCEMENT_TITLE(title)
-
-	return returnable_strings.Join("<br>")
 
 /**
  * Sends a minor annoucement to players.
@@ -145,17 +123,12 @@
 
 	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(minor_announcement_strings.Join("<br>"))
 
-	for(var/mob/target in players)
-		if(isnewplayer(target) || !target.can_hear())
-			continue
+	var/custom_sound = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
+	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
 
-		to_chat(target, finalized_announcement)
-		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
-			SEND_SOUND(target, sound(sound_to_play))
 
 /// Sends an announcement about the level changing to players. Same args as previous procs here, but divcolor is the color of the div that the announcement is wrapped in.
-/proc/level_announce(message, title, alert, html_encode = TRUE, list/players, sound_override, divcolor = "default")
+/proc/level_announce(message, title, alert, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, divcolor = "default")
 	if(!message)
 		return
 
@@ -169,20 +142,39 @@
 	var/joined_strings = level_announcement_strings.Join("<br>")
 	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, joined_strings)
 
+	dispatch_announcement_to_players(finalized_announcement, players, sound_override, should_play_sound)
+
+/// Proc that just generates a custom header based on variables fed into `priority_announce()`.area
+/// Will return a string.
+/proc/generate_unique_announcement_header(title, sender_override)
+	var/list/returnable_strings = list()
+	if(isnull(sender_override))
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+	else
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
+
+	if(length(title) > 0)
+		returnable_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+
+	return returnable_strings.Join("<br>")
+
+/// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
+/proc/dispatch_announcement_to_players(announcement, list/players, sound_override = null, should_play_sound = TRUE)
 	if(!players)
 		players = GLOB.player_list
 
+	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
+
 	for(var/mob/target in players)
-		if(isnewplayer(target))
-			continue
-		if(!target.can_hear())
+		if(isnewplayer(target) || !target.can_hear())
 			continue
 
-		to_chat(target, finalized_announcement)
+		to_chat(target, announcement)
+		if(!should_play_sound)
+			continue
+
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			var/sound_to_play = sound_override || 'sound/misc/notice2.ogg'
 			SEND_SOUND(target, sound(sound_to_play))
-
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT
