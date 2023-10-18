@@ -42,9 +42,7 @@
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
 			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
-			null,
-			null,
-			COMBAT_MESSAGE_RANGE,
+			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 
 	return damage_sustained > 0 ? BULLET_ACT_HIT : BULLET_ACT_BLOCK

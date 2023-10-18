@@ -128,19 +128,19 @@
 		return FALSE
 	return TRUE
 
-/datum/martial_art/the_sleeping_carp/proc/hit_by_projectile(mob/living/carp_user, obj/projectile/P, def_zone)
+/datum/martial_art/the_sleeping_carp/proc/hit_by_projectile(mob/living/carp_user, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
 
 	if(!can_deflect(carp_user))
 		return NONE
 
 	carp_user.visible_message(
-		span_danger("[carp_user] effortlessly swats [P] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
-		span_userdanger("You deflect [P]!"),
+		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
+		span_userdanger("You deflect [hitting_projectile]!"),
 	)
 	playsound(carp_user, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-	P.firer = carp_user
-	P.set_angle(rand(0, 360))//SHING
+	hitting_projectile.firer = carp_user
+	hitting_projectile.set_angle(rand(0, 360))//SHING
 	return COMPONENT_BULLET_PIERCED
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
