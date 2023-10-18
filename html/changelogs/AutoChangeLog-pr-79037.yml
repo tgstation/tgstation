@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixed runtime caused by simple mobs AttackingTarget() missing an arg"

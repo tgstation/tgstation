@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Revenants can now use Ouija Boards"
-  - rscadd: "Ouija Boards now have more options to select from by default (and admins can VV it to even more options)"
-  - bugfix: "Blind people are now worse at using Ouija Boards"

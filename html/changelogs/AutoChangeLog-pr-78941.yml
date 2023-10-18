@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "being killed or ghosting while being scoped will no longer cause the cursor offset to persist in a bugged state"
