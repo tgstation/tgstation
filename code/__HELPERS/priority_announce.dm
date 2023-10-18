@@ -45,7 +45,7 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
-	announcement += "<div class='chat_alert_default'>"
+	announcement_strings += "<div class='chat_alert_default'>"
 
 	var/header
 	switch(type)
@@ -61,31 +61,33 @@
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
-	else
-
-		if(!sender_override)
-			if(title == "")
-				GLOB.news_network.submit_article(text, "Central Command Update", "Station Announcements", null)
-			else
-				GLOB.news_network.submit_article(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
+	announcement_strings += header
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
-		announcement += "[span_priorityalert("<br>[SSstation.announcer.custom_alert_message]<br>")]"
+		announcement_strings += SSstation.announcer.custom_alert_message
 	else
-		announcement += "[span_priorityalert("<br>[text]<br>")]"
+		announcement_strings += MAJOR_ANNOUNCEMENT_TEXT(text)
 
-	announcement += "<br>"
+	announcement_strings += "</div>"
 
+	var/finalized_announcement = announcement_strings.Join("<br>")
 	if(!players)
 		players = GLOB.player_list
 
 	var/sound_to_play = sound(sound)
 	for(var/mob/target in players)
-		if(!isnewplayer(target) && target.can_hear())
-			to_chat(target, announcement)
-			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(target, sound_to_play)
+		if(isnewplayer(target) || !target.can_hear())
+			continue
+		to_chat(target, finalized_announcement)
+		if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			SEND_SOUND(target, sound_to_play)
+
+	if(isnull(sender_override))
+		if(length(title) > 0)
+			GLOB.news_network.submit_article(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
+		else
+			GLOB.news_network.submit_article(text, "Central Command Update", "Station Announcements", null)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
