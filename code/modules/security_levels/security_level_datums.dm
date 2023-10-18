@@ -22,7 +22,7 @@
 	/// Our announcement when lowering to this level
 	var/lowering_to_announcement
 	/// Our announcement when elevating to this level
-	var/elevating_to_announcemnt
+	var/elevating_to_announcement
 	/// Our configuration key for lowering to text, if set, will override the default lowering to announcement.
 	var/lowering_to_configuration_key
 	/// Our configuration key for elevating to text, if set, will override the default elevating to announcement.
@@ -33,7 +33,7 @@
 	if(lowering_to_configuration_key) // I'm not sure about you, but isn't there an easier way to do this?
 		lowering_to_announcement = global.config.Get(lowering_to_configuration_key)
 	if(elevating_to_configuration_key)
-		elevating_to_announcemnt = global.config.Get(elevating_to_configuration_key)
+		elevating_to_announcement = global.config.Get(elevating_to_configuration_key)
 
 /**
  * GREEN

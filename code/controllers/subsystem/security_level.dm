@@ -63,10 +63,18 @@ SUBSYSTEM_DEF(security_level)
  * * selected_level - The new security level that has been set
  */
 /datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
+	var/security_level_name = selected_level.name
+	var/color_to_use
+
+	if(get_current_level_as_number() == SEC_LEVEL_DELTA)
+		color_to_use = "purple" // HOLY FUCKING SHIT AAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHH
+	else
+		color_to_use = security_level_name // whatever lol
+
 	if(selected_level.number_level > current_security_level.number_level) // We are elevating to this level.
-		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:", sound_override = selected_level.sound)
+		level_announce(selected_level.elevating_to_announcement, "Attention! Security level elevated to [selected_level.name]:", sound_override = selected_level.sound, divcolor = color_to_use)
 	else // Going down
-		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:", sound_override = selected_level.sound)
+		level_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:", sound_override = selected_level.sound, divcolor = color_to_use)
 
 /**
  * Returns the current security level as a number

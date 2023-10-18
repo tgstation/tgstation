@@ -6,6 +6,7 @@
 #define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='minor_announcement_text'>" + string + "</span>")
 
 #define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
+#define CHAT_ALERT_COLORED_SPAN(color, string) ("<div class='chat_alert_" + color + "'>" + string + "</div>")
 
 /**
  * Make a big red text announcement to
@@ -138,19 +139,52 @@
 	if(!players)
 		players = GLOB.player_list
 
+	var/minor_announcement_strings = list()
+	minor_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+	minor_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
+
+	var/finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(minor_announcement_strings.Join("<br>"))
+
 	for(var/mob/target in players)
+		if(isnewplayer(target) || !target.can_hear())
+			continue
+
+		to_chat(target, finalized_announcement)
+		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
+			SEND_SOUND(target, sound(sound_to_play))
+
+/// Sends an announcement about the level changing to players. Same args as previous procs here, but divcolor is the color of the div that the announcement is wrapped in.
+/proc/level_announce(message, title, alert, html_encode = TRUE, list/players, sound_override, divcolor = "default")
+	if(!message)
+		return
+
+	title = html_encode(title)
+	message = html_encode(message)
+
+	var/level_announcement_strings = list()
+	level_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+	level_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
+
+	var/joined_strings = level_announcement_strings.Join("<br>")
+	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, joined_strings)
+
+	for(var/mob/target in GLOB.player_list)
 		if(isnewplayer(target))
 			continue
 		if(!target.can_hear())
 			continue
 
-		to_chat(target, "<br>[span_minorannounce(title)]<br>")
-		to_chat(target, "[span_minoralert(message)]<br><br><br>")
-		if(should_play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
+
+
+		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			var/sound_to_play = sound_override || 'sound/misc/notice2.ogg'
 			SEND_SOUND(target, sound(sound_to_play))
+
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT
 #undef MINOR_ANNOUNCEMENT_TITLE
 #undef MINOR_ANNOUNCEMENT_TEXT
+#undef CHAT_ALERT_DEFAULT_SPAN
+#undef CHAT_ALERT_COLORED_SPAN
