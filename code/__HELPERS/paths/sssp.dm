@@ -156,7 +156,7 @@
 
 	var/list/hand_around = list()
 	// We're guarenteed that hand_around will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	var/datum/callback/await = CALLBACK(GLOBAL_PROC, /proc/pathfinding_finished, hand_around)
+	var/datum/callback/await = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)
 
 	// We're gonna build a pathfind datum from our settings and set it running
 	var/datum/pathfind/sssp/based_off_us = new()
@@ -231,7 +231,7 @@
 /datum/pathfind/sssp/search_step()
 	. = ..()
 	if(!.)
-		return
+		return .
 
 	var/datum/can_pass_info/pass_info = src.pass_info
 	while(working_index < length(working_queue))

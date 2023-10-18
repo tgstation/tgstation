@@ -545,7 +545,7 @@
  */
 /mob/living/proc/get_access()
 	var/obj/item/card/id/id = get_idcard()
-	if(!id)
+	if(isnull(id))
 		return list()
 	return id.GetAccess()
 

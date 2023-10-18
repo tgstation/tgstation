@@ -161,7 +161,7 @@
 
 	while(unwind_node.previous_node)
 		var/dir_goal = get_dir(iter_turf, unwind_node.previous_node.tile)
-		for(var/i = 1 to unwind_node.jumps)
+		for(var/i in 1 to unwind_node.jumps)
 			iter_turf = get_step(iter_turf,dir_goal)
 			path.Add(iter_turf)
 		unwind_node = unwind_node.previous_node

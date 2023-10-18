@@ -53,19 +53,19 @@
 
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
-	if(direction == DOWN)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_IN_DOWN)
-				return FALSE
-		return TRUE
-	return FALSE
+	if(direction != DOWN)
+		return FALSE
+	for(var/obj/on_us in contents)
+		if(on_us.obj_flags & BLOCK_Z_IN_DOWN)
+			return FALSE
+	return TRUE
 
 //direction is direction of travel of an atom
 /turf/open/zPassOut(direction)
 	if(direction != UP)
 		return FALSE
-	for(var/obj/O in contents)
-		if(O.obj_flags & BLOCK_Z_OUT_UP)
+	for(var/obj/on_us in contents)
+		if(on_us.obj_flags & BLOCK_Z_OUT_UP)
 			return FALSE
 	return TRUE
 

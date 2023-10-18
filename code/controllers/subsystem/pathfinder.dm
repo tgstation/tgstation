@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(pathfinder)
 		return TRUE
 	return FALSE
 
-/// Initiates a swarmed pathfind. Returns true if we're good, FALSE if something's failed
+/// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
 /datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/caller, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
 	var/turf/target = get_turf(end)
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(pathfinder)
 	path_map_cache(target, empty)
 	pass_in += CALLBACK(src, PROC_REF(path_map_fill), target, empty)
 	if(!SSpathfinder.can_pass_build_map(pass_info, target, max_distance, simulated_only, exclude, pass_in))
-		return null
+		return FALSE
 	return TRUE
 
 /// We generate a path for the passed in callbacks, and then pipe it over

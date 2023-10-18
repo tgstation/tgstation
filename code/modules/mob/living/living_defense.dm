@@ -429,8 +429,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/obj/O in contents)
-		O.emp_act(severity)
+	for(var/obj/inside in contents)
+		inside.emp_act(severity)
 
 ///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
 /mob/living/singularity_act()
