@@ -358,7 +358,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	to_chat(user, span_alert("You feel quite intelligent."))
 	// Prevents wizards from being soft locked out of everything
 	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
-	ADD_TRAIT(user, list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
+	user.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 	return TRUE
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
