@@ -794,6 +794,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
+"cX" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/medical)
 "cY" = (
 /obj/structure/fake_stairs/wood/directional/east,
 /turf/open/floor/wood/large,
@@ -2327,6 +2334,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"jM" = (
+/obj/machinery/door/airlock/centcom,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/medical)
 "jP" = (
 /obj/structure/hedge,
 /turf/open/floor/carpet,
@@ -3439,6 +3450,11 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"pr" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/tactical,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "pt" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax,
@@ -4434,9 +4450,21 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "tD" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
 "tH" = (
@@ -5126,10 +5154,13 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/ghost_spawn)
 "wI" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/turf/open/floor/wood/large,
+/obj/structure/railing/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
 "wK" = (
 /obj/effect/turf_decal/siding/blue/corner{
@@ -5462,10 +5493,12 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "xV" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
 	},
-/turf/open/floor/wood/large,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/chem_heater/debug,
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
 "yb" = (
 /obj/effect/turf_decal/siding/wood{
@@ -6359,6 +6392,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"Bo" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/botany)
 "Br" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -6463,6 +6500,7 @@
 "Ca" = (
 /obj/structure/railing/wood,
 /obj/structure/table/reinforced,
+/obj/item/storage/medkit/tactical,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "Cc" = (
@@ -6701,6 +6739,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "Dr" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/box/material,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "Dt" = (
@@ -7972,6 +8011,7 @@
 /area/centcom/central_command_areas/borbop)
 "IA" = (
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "IB" = (
@@ -8334,20 +8374,11 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
 "JY" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/medical)
+/obj/effect/turf_decal/trimline/green/line,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/structure/railing/wood,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/botany)
 "Ka" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -10961,6 +10992,15 @@
 /obj/machinery/door/airlock/centcom,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/kitchen)
+"UQ" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/structure/railing/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/medical)
 "US" = (
 /obj/structure/window/plasma/spawner/directional/north,
 /turf/open/indestructible/hotelwood,
@@ -10986,7 +11026,9 @@
 /turf/open/floor/carpet/neon/simple/cyan,
 /area/centcom/central_command_areas/admin)
 "Vb" = (
-/obj/machinery/door/airlock/centcom,
+/obj/structure/railing/wood{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
 "Vc" = (
@@ -11803,7 +11845,8 @@
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/admin)
 "YB" = (
-/obj/structure/reagent_dispensers/watertank/high,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/material,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "YC" = (
@@ -50088,7 +50131,7 @@ rL
 dS
 pG
 pG
-pG
+rj
 rj
 Xb
 uQ
@@ -51103,7 +51146,7 @@ yG
 dS
 dS
 LK
-RX
+JY
 Wi
 XE
 tv
@@ -52131,7 +52174,7 @@ NJ
 ms
 dS
 LK
-RX
+JY
 Wi
 XE
 tv
@@ -53172,7 +53215,7 @@ et
 dS
 pG
 pG
-pG
+rj
 rj
 Xb
 uQ
@@ -53413,7 +53456,7 @@ aa
 aa
 aa
 gL
-YB
+Bo
 LK
 LK
 RX
@@ -57525,7 +57568,7 @@ aa
 aa
 aa
 dl
-Dr
+pr
 Nb
 Nb
 YL
@@ -57798,7 +57841,7 @@ cR
 we
 pG
 pG
-pG
+rj
 rj
 Xb
 uQ
@@ -58045,11 +58088,11 @@ Nb
 Nb
 yj
 Qm
-zp
-dl
-Kq
+vR
+Rq
+cX
 wG
-UY
+Vb
 UY
 zH
 we
@@ -58302,11 +58345,11 @@ Nb
 Nb
 yj
 CW
+vS
 zp
-Vb
 tD
 tk
-UY
+Vb
 tk
 zI
 WW
@@ -58559,11 +58602,11 @@ Nb
 YL
 yo
 NR
-zp
-dl
-OJ
+vT
+xq
+xV
 cK
-cK
+wI
 cK
 HI
 WW
@@ -59070,12 +59113,12 @@ Nb
 Zz
 dl
 Nb
-FF
+Ca
 ux
 vS
 vR
-xV
-Rq
+lH
+jM
 rP
 pw
 gz
@@ -59327,12 +59370,12 @@ Nb
 XW
 Cx
 Nb
-Ca
+FF
 Re
 vS
 vS
 IA
-JY
+dl
 rP
 kQ
 zk
@@ -59588,8 +59631,8 @@ Ca
 ux
 vS
 vT
-wI
-xq
+vW
+jM
 rP
 pw
 HW
@@ -60101,11 +60144,11 @@ Nb
 YL
 eK
 hM
-zp
-dl
-Kq
+vR
+Rq
+cX
 mr
-mr
+UQ
 mr
 hm
 WW
@@ -60358,11 +60401,11 @@ Nb
 Nb
 yj
 CW
+vS
 zp
-Vb
 tD
 tk
-UY
+Vb
 tk
 zI
 WW
@@ -60615,11 +60658,11 @@ Nb
 Nb
 yj
 Qm
-zp
-dl
-OJ
+vT
+xq
+xV
 wK
-UY
+Vb
 UY
 zH
 we
@@ -60882,7 +60925,7 @@ us
 we
 pG
 pG
-pG
+rj
 rj
 Xb
 uQ
