@@ -4,7 +4,7 @@
 	var/blood_left
 	// We will spread this blood DNA to targets!
 	var/list/blood_dna
-	// For the love of god keep this null
+	// Blood splashed around everywhere will carry these diseases. Oh no...
 	var/list/diseases
 
 /datum/component/bloody_spreader/Initialize(blood_left, list/blood_dna, list/diseases)
