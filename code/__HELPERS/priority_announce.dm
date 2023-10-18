@@ -38,31 +38,30 @@
 		if(!length(text))
 			return
 
-	var/announcement
+	var/list/announcement_strings = list()
+
 	if(!sound)
 		sound = SSstation.announcer.get_rand_alert_sound()
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
-	announcement += "<br>"
+	announcement += "<div class='chat_alert_default'>"
 
-	if(type == ANNOUNCEMENT_TYPE_PRIORITY)
-		announcement += "[span_priorityannounce("<u>Priority Announcement</u>")]"
-		if (title && length(title) > 0)
-			announcement += "[span_prioritytitle("<br>[title]")]"
-	else if(type == ANNOUNCEMENT_TYPE_CAPTAIN)
-		announcement += "[span_priorityannounce("<u>Captain Announces</u>")]"
-		GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
-	else if(type == ANNOUNCEMENT_TYPE_SYNDICATE)
-		announcement += "[span_priorityannounce("<u>Syndicate Captain Announces</u>")]"
+	var/header
+	switch(type)
+		if(ANNOUNCEMENT_TYPE_PRIORITY)
+			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
+			if(length(title) > 0)
+				header += MINOR_ANNOUNCEMENT_TITLE(title)
+		if(ANNOUNCEMENT_TYPE_CAPTAIN)
+			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
+			GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
+		if(ANNOUNCEMENT_TYPE_SYNDICATE)
+			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
+		else
+			header += generate_unique_announcement_header(title, sender_override)
 
 	else
-		if(!sender_override)
-			announcement += "[span_priorityannounce("<u>[command_name()] Update</u>")]"
-		else
-			announcement += "[span_priorityannounce("<u>[sender_override]</u>")]"
-		if (title && length(title) > 0)
-			announcement += "[span_prioritytitle("<br>[title]")]"
 
 		if(!sender_override)
 			if(title == "")
@@ -100,6 +99,20 @@
 	message.content = text
 
 	SScommunications.send_message(message)
+
+/// Proc that just generates a custom header based on variables fed into `priority_announce()`.area
+/// Will return a string.
+/proc/generate_unique_announcement_header(title, sender_override)
+	var/list/returnable_strings = list()
+	if(isnull(sender_override))
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+	else
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
+
+	if(length(title) > 0)
+		returnable_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+
+	return returnable_strings.Join("<br>")
 
 /**
  * Sends a minor annoucement to players.
