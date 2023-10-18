@@ -187,6 +187,9 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
+	VAR_PRIVATE/list/invisibility_sources
+	VAR_PRIVATE/current_invisibility_priority = -INFINITY
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -674,7 +677,7 @@
 					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
 					if(user_sees_reagents) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-							. += "&bull; [FLOOR(current_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)] units of [current_reagent.name]"
+							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
 							. += span_warning("It is currently reacting!")
 						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
@@ -2092,16 +2095,14 @@
  * For turfs this will only be used if pathing_pass_method is TURF_PATHING_PASS_PROC
  *
  * Arguments:
- * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
- * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
- * * caller- The movable we're checking pass flags for, if we're making any such checks
- * * no_id: When true, doors with public access will count as impassible
+ * * to_dir - What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * pass_info - Datum that stores info about the thing that's trying to pass us
  *
  * IMPORTANT NOTE: /turf/proc/LinkBlockedWithAccess assumes that overrides of CanAStarPass will always return true if density is FALSE
  * If this is NOT you, ensure you edit your can_astar_pass variable. Check __DEFINES/path.dm
  **/
-/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	if(caller && (caller.pass_flags & pass_flags_self))
+/atom/proc/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
 
@@ -2162,3 +2163,71 @@
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
 	do_spin_animation(speed, loops, segments, segment, parallel)
+
+#define INVISIBILITY_VALUE 1
+#define INVISIBILITY_PRIORITY 2
+
+/atom/proc/RecalculateInvisibility()
+	PRIVATE_PROC(TRUE)
+
+	if(!invisibility_sources)
+		current_invisibility_priority = -INFINITY
+		invisibility = initial(invisibility)
+		return
+
+	var/highest_priority
+	var/list/highest_priority_invisibility_data
+	for(var/entry in invisibility_sources)
+		var/list/priority_data
+		if(islist(entry))
+			priority_data = entry
+		else
+			priority_data = invisibility_sources[entry]
+
+		var/priority = priority_data[INVISIBILITY_PRIORITY]
+		if(highest_priority > priority) // In the case of equal priorities, we use the last thing in the list so that more recent changes apply first
+			continue
+
+		highest_priority = priority
+		highest_priority_invisibility_data = priority_data
+
+	current_invisibility_priority = highest_priority
+	invisibility = highest_priority_invisibility_data[INVISIBILITY_VALUE]
+
+/**
+ * Sets invisibility according to priority.
+ * If you want to be able to undo the value you set back to what it would be otherwise,
+ * you should provide an id here and remove it using RemoveInvisibility(id)
+ */
+/atom/proc/SetInvisibility(desired_value, id, priority=0)
+	if(!invisibility_sources)
+		invisibility_sources = list()
+
+	if(id)
+		invisibility_sources[id] = list(desired_value, priority)
+	else
+		invisibility_sources += list(list(desired_value, priority))
+
+	if(current_invisibility_priority > priority)
+		return
+
+	RecalculateInvisibility()
+
+/// Removes the specified invisibility source from the tracker
+/atom/proc/RemoveInvisibility(source_id)
+	if(!invisibility_sources)
+		return
+
+	var/list/priority_data = invisibility_sources[source_id]
+	invisibility_sources -= source_id
+
+	if(length(invisibility_sources) == 0)
+		invisibility_sources = null
+
+	if(current_invisibility_priority > priority_data[INVISIBILITY_PRIORITY])
+		return
+
+	RecalculateInvisibility()
+
+#undef INVISIBILITY_VALUE
+#undef INVISIBILITY_PRIORITY

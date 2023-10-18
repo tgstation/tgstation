@@ -1,0 +1,5 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - qol: "Birdshot ordnance is now equipped with a second RPD and two holofan projectors."
+  - qol: "Ordnance mishaps on Birdshot are significantly less likely to slam you into an electrified window until you die."

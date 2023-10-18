@@ -25,11 +25,11 @@
 	return ..()
 
 /// If the target is of a valid type, interrupt the attack chain to repair it instead
-/datum/element/structure_repair/proc/try_repair(mob/living/fixer, atom/target)
+/datum/element/structure_repair/proc/try_repair(mob/living/fixer, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if (!is_type_in_typecache(target, structure_types_typecache))
-		return
+	if (!proximity || !is_type_in_typecache(target, structure_types_typecache))
+		return NONE
 
 	if (target.get_integrity() >= target.max_integrity)
 		target.balloon_alert(fixer, "not damaged!")

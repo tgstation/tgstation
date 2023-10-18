@@ -436,8 +436,31 @@ em {
 }
 
 .minorannounce {
+  color: #c51e1e;
   font-weight: bold;
   font-size: 185%;
+}
+
+.minoralert {
+  color: #a4bad6;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #a4bad6;
+  font-weight: bold;
+  font-size: 225%;
+}
+
+.prioritytitle {
+  color: #6685f5;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.priorityalert {
+  color: #c51e1e;
+  font-size: 140%;
 }
 
 .greenannounce {

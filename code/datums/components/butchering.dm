@@ -257,16 +257,16 @@
 	if(!(slot & source.slot_flags))
 		return
 	butchering_enabled = TRUE
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(butcher_target))
+	RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(butcher_target))
 
 ///Same as disable_butchering but for worn items
 /datum/component/butchering/wearable/proc/worn_disable_butchering(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	butchering_enabled = FALSE
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/component/butchering/wearable/proc/butcher_target(mob/user, atom/target, proximity)
 	SIGNAL_HANDLER
 	if(!isliving(target))
-		return
-	onItemAttack(parent, target, user)
+		return NONE
+	return onItemAttack(parent, target, user)
