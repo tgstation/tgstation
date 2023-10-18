@@ -11,6 +11,12 @@ for _, state in SS13.SSlua.vars.states do
 	end
 end
 
+SS13.ckey_runner = SS13.state:get_var("ckey_last_runner")
+
+function SS13.get_runner_client()
+	return dm.global_vars:get_var("GLOB"):get_var("directory"):get(SS13.ckey_runner)
+end
+
 function SS13.istype(thing, type)
 	return dm.global_proc("_istype", thing, dm.global_proc("_text2path", type)) == 1
 end

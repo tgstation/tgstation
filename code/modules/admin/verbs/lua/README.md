@@ -138,6 +138,12 @@ The `SS13` package contains various helper functions that use code specific to t
 ### SS13.state
 A reference to the state datum (`/datum/lua_state`) handling this Lua state.
 
+### SS13.ckey_runner
+The ckey of the user who ran the lua script in the current context.
+
+### SS13.get_runner_client()
+Returns the client of the user who ran the lua script in the current context.
+
 ### SS13.global_proc
 A wrapper for the magic string used to tell `WrapAdminProcCall` to call a global proc.
 For instance, `/datum/callback` must be instantiated with `SS13.global_proc` as its first argument to specify that it will be invoking a global proc.
