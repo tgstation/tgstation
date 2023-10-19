@@ -43,6 +43,9 @@
 
 /mob/living/basic/mining/basilisk/bullet_act(obj/projectile/bullet, def_zone, piercing_hit)
 	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return
+
 	if (istype(bullet, /obj/projectile/temp))
 		var/obj/projectile/temp/heat_bullet = bullet
 		if (heat_bullet.temperature < 0)

@@ -1,7 +1,7 @@
 ///Bloodsuckers spawning a Guardian will get the Bloodsucker one instead.
 /obj/item/guardian_creator/spawn_guardian(mob/living/user, mob/dead/candidate)
 	var/list/guardians = user.get_all_linked_holoparasites()
-	if(length(guardians) && !allowmultiple)
+	if(length(guardians) &&)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		used = FALSE
 		return
@@ -12,7 +12,6 @@
 		bloodsucker_guardian.key = candidate.key
 		user.log_message("has summoned [key_name(bloodsucker_guardian)], a [bloodsucker_guardian.creator_name] holoparasite.", LOG_GAME)
 		bloodsucker_guardian.log_message("was summoned as a [bloodsucker_guardian.creator_name] holoparasite.", LOG_GAME)
-		to_chat(user, bloodsucker_guardian.magic_fluff_string)
 		to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 		bloodsucker_guardian.client?.init_verbs()
 		return
@@ -30,13 +29,6 @@
 	creator_name = "Timestop"
 	creator_desc = "Devastating close combat attacks and high damage resistance. Can smash through weak walls and stop time."
 	creator_icon = "standard"
-
-	//None of these shouldn't appear in game outside of admin intervention
-	playstyle_string = span_holoparasite("As a <b>time manipulation</b> type you can stop time and you have a damage multiplier instead of armor as-well as powerful melee attacks capable of smashing through walls.")
-	magic_fluff_string = span_holoparasite("...And draw... The World, through sheer luck or perhaps destiny, maybe even your own physiology. Manipulator of time, a guardian powerful enough to control THE WORLD!")
-	tech_fluff_string = span_holoparasite("ERROR... T$M3 M4N!PULA%I0N modules loaded. Holoparasite swarm online.")
-	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! It's imbued with the power of Carp'Sie herself. Time to rule THE WORLD!.")
-	miner_fluff_string = span_holoparasite("You encounter... The World, the controller of time and space.")
 
 /mob/living/basic/guardian/standard/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones

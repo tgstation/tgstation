@@ -173,7 +173,7 @@
 	SIGNAL_HANDLER
 	if (forced)
 		return
-	back?.adjustStaminaLoss(amount, forced = forced)
+	back?.stamina.adjust(-amount, forced)
 
 /// On damage or heal, affect our furthest segment
 /datum/component/mob_chain/proc/on_adjust_damage(mob/living/our_mob, type, amount, forced)

@@ -168,7 +168,6 @@
 
 /mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
 	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid

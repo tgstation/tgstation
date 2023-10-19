@@ -606,7 +606,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
-/obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishostile(target))
 		damage *= 2
 	return ..()

@@ -196,7 +196,7 @@
 	strike_thing()
 	..()
 
-/obj/projectile/kinetic/on_hit(atom/target)
+/obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
 	strike_thing(target)
 	. = ..()
 
@@ -594,5 +594,12 @@
 	name = "adjustable tracer bolts"
 	desc = "Causes kinetic accelerator bolts to have an adjustable-colored tracer trail and explosion. Use in-hand to change color."
 
-/obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
-	bolt_color = input(user,"","Choose Color",bolt_color) as color|null
+/obj/item/borg/upgrade/modkit/tracer/adjustable/interact(mob/user)
+	..()
+	choose_bolt_color(user)
+
+/obj/item/borg/upgrade/modkit/tracer/adjustable/proc/choose_bolt_color(mob/user)
+	set waitfor = FALSE
+
+	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
+	bolt_color = new_color || bolt_color

@@ -1,7 +1,6 @@
 /// A ranged guardian can fling shards of glass at people very very quickly. It can also enter a long-range scouting mode.
 /mob/living/basic/guardian/ranged
 	guardian_type = GUARDIAN_RANGED
-	combat_mode = FALSE
 	friendly_verb_continuous = "quietly assesses"
 	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10

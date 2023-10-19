@@ -26,7 +26,6 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	speed = 0
-	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	sight = SEE_TURFS | SEE_OBJS
@@ -182,7 +181,7 @@
 
 	for(var/holiday_name in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
-		var/obj/item/potential_hat = holiday_today.holiday_hat
+		var/obj/item/potential_hat
 		if(!isnull(potential_hat) && isnull(default_headwear)) //If our drone type doesn't start with a hat, we take the holiday one.
 			default_headwear = potential_hat
 
