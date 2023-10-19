@@ -126,6 +126,7 @@
 			message_admins("WARNING: Storyteller picked a null event from picked_events when it had a length of [length(valid_events)]")
 			message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
 			stack_trace("WARNING: Storyteller picked a null from event pool.")
+			SSgamemode.event_track_points[track] = 0
 			return
 	buy_event(picked_event, track, are_forced)
 	. = TRUE
