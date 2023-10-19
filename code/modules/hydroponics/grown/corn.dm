@@ -105,7 +105,7 @@
 	species = "peppercorn"
 	plantname = "Pepper-Corn Stalks"
 	product = /obj/item/food/grown/peppercorn
-	mutatelist = list(/obj/item/seeds/corn)
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/blackpepper = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/peppercorn
