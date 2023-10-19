@@ -288,6 +288,7 @@
 	if(prob(30))
 		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
 		owner.emote("hiccup")
+	owner.adjustStaminaLoss(-5) //too drunk to feel anything
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
