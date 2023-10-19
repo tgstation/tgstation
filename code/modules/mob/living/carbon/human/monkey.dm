@@ -38,6 +38,10 @@
 /mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
 	return
 
+/mob/living/carbon/human/species/monkey/holodeck/create_dna()
+	dna = null // just in case someone tries to futz with this
+	return
+
 /mob/living/carbon/human/species/monkey/holodeck/has_dna()
 	return null
 
