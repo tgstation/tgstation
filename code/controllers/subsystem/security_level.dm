@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(security_level)
 	if(!selected_level)
 		CRASH("set_level was called with an invalid security level([new_level])")
 
-	announce_security_level(selected_level) // We want to announce BEFORE updating to the new level
+	level_announce(selected_level, current_security_level.number_level) // We want to announce BEFORE updating to the new level
 
 	SSsecurity_level.current_security_level = selected_level
 
@@ -55,22 +55,6 @@ SUBSYSTEM_DEF(security_level)
 	SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, selected_level.number_level)
 	SSnightshift.check_nightshift()
 	SSblackbox.record_feedback("tally", "security_level_changes", 1, selected_level.name)
-
-/**
- * Handles announcements of the newly set security level
- *
- * Arguments:
- * * selected_level - The new security level that has been set
- */
-/datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
-	var/security_level_name = selected_level.name
-	var/color_to_use = selected_level.announcement_color
-	var/sound_to_use = selected_level.sound
-
-	if(selected_level.number_level > current_security_level.number_level)
-		level_announce(selected_level.elevating_to_announcement, "Attention! Security level elevated to [security_level_name]:", sound_override = sound_to_use, divcolor = color_to_use)
-	else
-		level_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [security_level_name]:", sound_override = sound_to_use, divcolor = color_to_use)
 
 /**
  * Returns the current security level as a number

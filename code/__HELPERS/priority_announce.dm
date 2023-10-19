@@ -123,21 +123,30 @@
 	var/custom_sound = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
 
-/// Sends an announcement about the level changing to players. Same args as previous procs here, but divcolor is the color of the div that the announcement is wrapped in.
-/proc/level_announce(message, title, alert, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, divcolor = "default")
-	if(!message)
-		return
+/// Sends an announcement about the level changing to players. Uses the passed in datum and the subsystem's previous security level to generate the message.
+/proc/level_announce(datum/security_level/selected_level, previous_level_number)
+	var/current_level_number = selected_level.number_level
+	var/current_level_name = selected_level.name
+	var/current_level_color = selected_level.announcement_color
+	var/current_level_sound = selected_level.sound
 
-	title = html_encode(title)
-	message = html_encode(message)
+	var/title
+	var/message
+
+	if(current_level_number > previous_level_number)
+		title = "Attention! Security level elevated to [capitalize(current_level_name)]:"
+		message = selected_level.elevating_to_announcement
+	else
+		title = "Attention! Security level lowered to [capitalize(current_level_name)]:"
+		message = selected_level.lowering_to_announcement
 
 	var/list/level_announcement_strings = list()
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
-	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(divcolor, jointext(level_announcement_strings, "<br>"))
+	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(current_level_color, jointext(level_announcement_strings, "<br>"))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound_override, should_play_sound)
+	dispatch_announcement_to_players(finalized_announcement, GLOB.player_list, current_level_sound)
 
 /// Proc that just generates a custom header based on variables fed into `priority_announce()`.area
 /// Will return a string.
