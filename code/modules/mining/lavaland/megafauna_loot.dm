@@ -399,7 +399,7 @@
 		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_mob(user))
+	if(soul.ckey && !soul.faction_check_atom(user))
 		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
@@ -649,7 +649,7 @@
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
@@ -688,10 +688,10 @@
 			continue
 		var/mob/dead/observer/G = i
 		ghost_counter++
-		G.invisibility = 0
+		G.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		current_spirits |= G
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits = current_spirits
 	return ghost_counter
 

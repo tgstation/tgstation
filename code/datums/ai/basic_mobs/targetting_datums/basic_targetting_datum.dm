@@ -81,7 +81,7 @@
 /datum/targetting_datum/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
 		return FALSE
-	return living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly)
+	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
 /// Subtype more forgiving for items.
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on

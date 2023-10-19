@@ -8,8 +8,6 @@
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-	/// List of factions to assign to spawned mob
-	var/list/faction
 	/// Mob typepath to spawn when expanding
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
 	/// Whether we've been wetted and are expanding

@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Added slapcraft recipes for: Pillow suits, pillow helmets, bone and sinew tailoring/weaponry, pipeguns, ghetto jetpacks, and pneumatic cannons."
+  - code_imp: "The base type of cowboy hats no longer looks and is named like a bounty hunter hat, clarifying the recipe for the heroic laser musket. They need cowboy hats not bounty hats."
+  - bugfix: "Fixed an issue where if a slapcraft recipe required more than one instance of its 'primary' slapcrafting item, it wouldn't show the additional instance when examining its recipes."
