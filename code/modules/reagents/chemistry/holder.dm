@@ -112,7 +112,7 @@
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
 		var/adjusted_vol = FLOOR(process_mob_reagent_purity(glob_reagent, amount, added_purity), CHEMICAL_QUANTISATION_LEVEL)
 		if(adjusted_vol <= 0) //If we're inverse or FALSE cancel addition
-			return TRUE
+			return amount
 			/* We return true here because of #63301
 			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
 			In the first two cases, we would want to return TRUE so trans_to and other similar methods actually delete the corresponding chemical from the original reagent holder.
@@ -158,7 +158,7 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
-			return TRUE
+			return amount
 
 	//otherwise make a new one
 	var/datum/reagent/new_reagent = new reagent_type(data)
@@ -187,7 +187,7 @@
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
 		handle_reactions()
-	return TRUE
+	return amount
 
 /**
  * Like add_reagent but you can enter a list.
@@ -227,7 +227,7 @@
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type == reagent_type)
-			cached_reagent.volume = FLOOR(max(cached_reagent.volume - amount, 0),  CHEMICAL_QUANTISATION_LEVEL)
+			cached_reagent.volume = FLOOR(max(cached_reagent.volume - amount, 0), CHEMICAL_QUANTISATION_LEVEL)
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
@@ -560,6 +560,7 @@
 	var/list/reagents_to_remove = list()
 
 	var/part = amount / total_volume
+	var/reagent_volume
 	var/transfer_amount
 	var/transfered_amount = 0
 
@@ -571,8 +572,10 @@
 			trans_data = copy_data(reagent)
 		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 			continue
-		transfer_amount = FLOOR(reagent.volume * part * multiplier, CHEMICAL_QUANTISATION_LEVEL)
-		if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
+		reagent_volume = reagent.volume
+		transfer_amount = FLOOR(min(reagent_volume, reagent_volume * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
+		transfer_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		if(!transfer_amount)
 			continue
 		if(methods)
 			r_to_send += reagent
