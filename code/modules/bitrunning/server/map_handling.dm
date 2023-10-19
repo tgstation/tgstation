@@ -24,12 +24,7 @@
 
 	reset()
 
-/**
- * ### Quantum Server Cold Boot
- * Procedurally links the 3 booting processes together.
- *
- * This is the starting point if you have an id. Does validation and feedback on steps
- */
+/// Links all the loading processes together - does validation for booting a map
 /obj/machinery/quantum_server/proc/cold_boot_map(map_key)
 	if(!is_ready)
 		return FALSE
@@ -56,8 +51,8 @@
 		is_ready = TRUE
 		return FALSE
 
-	if(prob(threat * glitch_chance))
-		addtimer(CALLBACK(src, PROC_REF(spawn_glitch)), rand(5, 10) SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+	if(prob(FLOOR(threat * glitch_chance, 1)))
+		addtimer(CALLBACK(src, PROC_REF(spawn_glitch)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 	is_ready = TRUE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
@@ -117,13 +112,15 @@
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/load_safehouse()
-	var/obj/effect/landmark/bitrunning/safehouse_spawn/spawner = locate() in GLOB.landmarks_list
-	if(isnull(spawner))
+	var/obj/effect/landmark/bitrunning/safehouse_spawn/landmark = locate() in GLOB.landmarks_list
+	if(isnull(landmark))
 		CRASH("vdom: failed to find safehouse spawn landmark")
 
-	generated_safehouse = new generated_domain.safehouse_path()
-	if(!generated_safehouse.load(get_turf(spawner)))
+	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
+	if(!new_safehouse.load(get_turf(landmark)))
 		CRASH("vdom: failed to load safehouse")
+
+	qdel(landmark)
 
 	return TRUE
 
@@ -131,26 +128,6 @@
 /obj/machinery/quantum_server/proc/load_map_segments()
 	if(!length(generated_domain.room_modules))
 		return TRUE
-
-	var/current_index = 1
-	shuffle_inplace(generated_domain.room_modules)
-
-	for(var/obj/effect/landmark/bitrunning/map_segment/landmark in GLOB.landmarks_list)
-		if(current_index > length(generated_domain.room_modules))
-			CRASH("vdom: map segments are set to unique, but there are more landmarks than available segments")
-
-		var/path
-		if(generated_domain.modular_unique_rooms)
-			path = generated_domain.room_modules[current_index]
-			current_index += 1
-		else
-			path = pick(generated_domain.room_modules)
-
-		var/datum/map_template/modular/segment = new path()
-		if(!segment.load(get_turf(landmark)))
-			CRASH("vdom: failed to load map segment [segment]")
-
-		qdel(landmark)
 
 	return TRUE
 
@@ -197,7 +174,6 @@
 
 	update_use_power(IDLE_POWER_USE)
 	domain_randomized = FALSE
-	domain_threats = 0
 	retries_spent = 0
 
 /// Deletes all the tile contents
@@ -220,117 +196,5 @@
 	avatar_connection_refs.Cut()
 	exit_turfs = list()
 	generated_domain = null
-	generated_safehouse = null
 	mutation_candidate_refs.Cut()
 	spawned_threat_refs.Cut()
-
-/datum/wfc
-	var/grid_size
-	var/list/grid = list()
-	var/list/patterns = list("A", "B", "C", "D")
-	var/list/allowed_neighbors = list()
-
-/datum/wfc/New(size = 5)
-	src.grid_size = size
-
-	allowed_neighbors["A"] = list("B", "D")
-	allowed_neighbors["B"] = list("A", "C")
-	allowed_neighbors["C"] = list("B", "D")
-	allowed_neighbors["D"] = list("A", "C")
-
-	for(var/y in 1 to grid_size)
-		var/list/row = list()
-		for(var/x in 1 to grid_size)
-			row += list(patterns)
-		grid += row  // Change made here
-
-/datum/wfc/proc/observe()
-	var/min_entropy = INFINITY
-	var/target_cell_x
-	var/target_cell_y
-
-	for(var/y in 1 to grid_size)
-		for(var/x in 1 to grid_size)
-			var/list/cell = grid[y][x]
-			if(length(cell) > 1 && length(cell) < min_entropy)
-				min_entropy = length(cell)
-				target_cell_x = x
-				target_cell_y = y
-
-	// If we found a cell with the least number of possibilities
-	if(min_entropy != INFINITY)
-		// Step 3: Randomly resolve the selected cell to one of its patterns
-		var/chosen_pattern = pick(grid[target_cell_y][target_cell_x])
-		grid[target_cell_y][target_cell_x] = list(chosen_pattern)
-
-/datum/wfc/proc/propagate()
-	var/changed = TRUE
-
-	while(changed)
-		changed = FALSE
-		for(var/y in 1 to grid_size)
-			for(var/x in 1 to grid_size)
-				var/cell = grid[y][x]
-				if(length(cell) != 1)
-					continue
-
-				var/pattern = cell[1]
-				// Left neighbor
-				if(x > 1)
-					for(var/p in grid[y][x-1])
-						if(!(p in allowed_neighbors[pattern]) && (p in grid[y][x-1]))
-							grid[y][x-1] -= p
-							changed = TRUE
-				// Right neighbor
-				if(x < grid_size)
-					for(var/p in grid[y][x+1])
-						if(!(p in allowed_neighbors[pattern]) && (p in grid[y][x+1]))
-							grid[y][x+1] -= p
-							changed = TRUE
-				// Up neighbor
-				if(y > 1)
-					for(var/p in grid[y-1][x])
-						if(!(p in allowed_neighbors[pattern]) && (p in grid[y-1][x]))
-							grid[y-1][x] -= p
-							changed = TRUE
-
-				// Down neighbor
-				if(y < grid_size)
-					for(var/p in grid[y+1][x])
-						if(!(p in allowed_neighbors[pattern]) && (p in grid[y+1][x]))
-							grid[y+1][x] -= p
-							changed = TRUE
-
-/datum/wfc/proc/contradiction_exists()
-	for(var/y in 1 to grid_size)
-		for(var/x in 1 to grid_size)
-			if(!length(grid[y][x])) // If a cell has no valid patterns left
-				return TRUE
-	return FALSE
-
-/datum/wfc/proc/grids_are_equal(list/grid1, list/grid2)
-	for(var/y in 1 to grid_size)
-		for(var/x in 1 to grid_size)
-			if(grid1[y][x] != grid2[y][x])
-				return FALSE
-	return TRUE
-
-/datum/wfc/proc/create_new()
-	var/previous_grid
-	var/max_iterations = 1000
-	var/current_iteration = 1
-
-	while(TRUE)
-		previous_grid = deep_copy_list(grid)
-		observe()
-		propagate()
-
-		current_iteration++
-		if(current_iteration >= max_iterations)
-			break
-
-		if(grids_are_equal(grid, previous_grid))
-			break
-
-		if(contradiction_exists())
-			break

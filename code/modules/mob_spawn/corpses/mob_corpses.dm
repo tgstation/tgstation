@@ -353,4 +353,4 @@
 
 /obj/effect/mob_spawn/corpse/human/cyber_police
 	name = "Dead Cyber Police"
-	outfit = /datum/outfit/cyber_police
+	outfit = /datum/outfit/bitrunning_glitch/cyber_police

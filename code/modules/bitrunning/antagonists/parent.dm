@@ -1,4 +1,15 @@
+/datum/job/bitrunning_glitch
+	title = ROLE_GLITCH
+
 /datum/antagonist/bitrunning_glitch
+	name = "Generic Bitrunning Glitch"
+	antagpanel_category = ANTAG_GROUP_GLITCH
+	job_rank = ROLE_GLITCH
+	preview_outfit = /datum/outfit/bitrunning_glitch/cyber_police
+	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
+	suicide_cry = "ALT F4!"
+	ui_name = "AntagInfoGlitch"
 
 /datum/antagonist/bitrunning_glitch/greet()
 	. = ..()
@@ -59,13 +70,10 @@
 	..()
 
 /datum/objective/bitrunning_glitch_fluff/check_completion()
-	var/list/servers = SSmachines.get_machines_by_type(/obj/machinery/quantum_server)
-	if(!length(servers))
-		return TRUE
+	var/list/alive = GLOB.alive_player_list.Copy()
 
-	for(var/obj/machinery/quantum_server/server as anything in servers)
-		if(!server.is_operational)
-			continue
-		return FALSE
+	for(var/mob/living/carbon/organic in alive)
+		if(organic.stat != DEAD)
+			return FALSE
 
 	return TRUE

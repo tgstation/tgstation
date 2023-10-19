@@ -65,7 +65,7 @@
 
 /// Trim for cyber police in the Virtual Domain.
 /datum/id_trim/cyber_police
-	assignment = "Cyber Police"
+	assignment = ROLE_CYBER_POLICE
 	trim_state = "trim_deathcommando"
 	department_color = COLOR_BLACK
 	subdepartment_color = COLOR_GREEN

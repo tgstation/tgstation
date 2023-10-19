@@ -49,17 +49,21 @@
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
+	var/obj/machinery/byteforge/chosen_forge = get_random_nearby_forge()
+	if(isnull(chosen_forge))
+		return
+
 	if((obj_flags & EMAGGED) && isliving(arrived))
 		var/mob/living/creature = arrived
 
 		if(isnull(creature.mind) || !creature.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch, check_subtypes = TRUE))
 			return
 
-		station_spawn(arrived)
+		INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge)
 		return
 
 	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
-		delete_cache_and_notify(arrived)
+		generate_loot(arrived, chosen_forge)
 		return
 
 /// Handles examining the server. Shows cooldown time and efficiency.

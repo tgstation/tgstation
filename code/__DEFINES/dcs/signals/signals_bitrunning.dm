@@ -19,8 +19,7 @@
 /// from /obj/machinery/quantum_server/shutdown() : (mob/living)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"
 
-// Notifies the bitrunners
-/// from /datum/antagonist/cyber_police/proc/notify() :
+/// from /obj/machinery/quantum_server/notify_threat()
 #define COMSIG_BITRUNNER_THREAT_CREATED "bitrunner_threat"
 
 // Informs the server to up the threat count

@@ -85,6 +85,11 @@
 				continue
 
 			var/datum/action/our_action = new ability_disk.granted_action()
+
+			if(locate(our_action.type) in avatar.actions)
+				failed = TRUE
+				continue
+
 			our_action.Grant(avatar)
 			continue
 
@@ -98,4 +103,4 @@
 			avatar.put_in_hands(new item_disk.granted_item())
 
 	if(failed)
-		to_chat(neo, span_warning("One of your disks failed to load. You must activate them to make a selection."))
+		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))

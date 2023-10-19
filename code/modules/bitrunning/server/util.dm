@@ -7,19 +7,6 @@
 	update_appearance()
 	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY)
 
-/// Attempts to connect to a quantum console
-/obj/machinery/quantum_server/proc/find_console()
-	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
-	if(console)
-		return console
-
-	for(var/direction in GLOB.cardinals)
-		var/obj/machinery/computer/quantum_console/nearby_console = locate(/obj/machinery/computer/quantum_console, get_step(src, direction))
-		if(nearby_console)
-			console_ref = WEAKREF(nearby_console)
-			nearby_console.server_ref = WEAKREF(src)
-			return nearby_console
-
 /// Compiles a list of available domains.
 /obj/machinery/quantum_server/proc/get_available_domains()
 	var/list/levels = list()
@@ -66,6 +53,15 @@
 
 	return hosted_avatars
 
+/// Locates any turfs with forges on them, returns a random one
+/obj/machinery/quantum_server/proc/get_random_nearby_forge()
+	var/list/nearby_forges = list()
+
+	for(var/obj/machinery/byteforge/forge in oview(MAX_DISTANCE, src))
+		nearby_forges += forge
+
+	return pick(nearby_forges)
+
 /// Gets a random available domain given the current points. Weighted towards higher cost domains.
 /obj/machinery/quantum_server/proc/get_random_domain_id()
 	if(points < 1)
@@ -91,14 +87,17 @@
 			domain_randomized = TRUE
 			return available["id"]
 
-/// Locates any turfs with forges on them
-/obj/machinery/quantum_server/proc/get_nearby_forges()
-	var/list/obj/machinery/byteforge/nearby_forges = list()
 
-	for(var/obj/machinery/byteforge/forge in oview(MAX_DISTANCE, src))
-		nearby_forges += forge
+/// Removes all blacklisted items from a mob and returns them to base state
+/obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)
+	for(var/item in person.get_contents())
+		qdel(item)
 
-	return nearby_forges
+	var/datum/antagonist/bitrunning_glitch/antag_datum = locate() in person.mind?.antag_datums
+	if(isnull(antag_datum?.preview_outfit))
+		return
+
+	person.equipOutfit(antag_datum.preview_outfit)
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/cache)

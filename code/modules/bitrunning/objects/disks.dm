@@ -33,7 +33,7 @@
 	examine_text += span_notice("It cannot make another selection.")
 
 /obj/item/bitrunning_disk/ability
-	desc = "A disk containing source code. It can be used to preload abilities into the virtual domain."
+	desc = "A disk containing source code. It can be used to preload abilities into the virtual domain. Duplicate abilities will be ignored."
 	/// The selected ability that this grants
 	var/datum/action/granted_action
 	/// The list of actions that this can grant

@@ -32,24 +32,35 @@
 	if(is_operational)
 		add_overlay(byteforge_particles)
 
-/// Begins spawning the crate - lights, overlays, etc
-/obj/machinery/byteforge/proc/start_to_spawn(obj/structure/closet/crate/secure/bitrunning/encrypted/cache)
-	addtimer(CALLBACK(src, PROC_REF(spawn_crate), cache), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
-
+/// Forge begins to process
+/obj/machinery/byteforge/proc/flicker(angry = FALSE)
 	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay")
 	flick_overlay_view(lighting, 1 SECONDS)
 
-	set_light(l_range = 2, l_power = 1.5, l_color = LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
+	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
 
-/// Sparks, moves the crate to the location
-/obj/machinery/byteforge/proc/spawn_crate(obj/structure/closet/crate/secure/bitrunning/encrypted/cache)
-	if(QDELETED(cache))
-		return
-
+/// Does some sparks after it's done
+/obj/machinery/byteforge/proc/flash(atom/movable/thing)
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, 1, loc)
 	sparks.start()
 
-	cache.forceMove(loc)
 	set_light(l_on = FALSE)
+
+/// Forge is done processing
+/obj/machinery/byteforge/proc/spawn_cache(obj/cache)
+	if(QDELETED(cache))
+		return
+
+	flash()
+
+	cache.forceMove(loc)
+
+/// Timed flash
+/obj/machinery/byteforge/proc/start_to_spawn(obj/cache)
+	flicker()
+
+	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+

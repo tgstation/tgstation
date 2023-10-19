@@ -14,18 +14,12 @@
 	var/capacitor_coefficient = 1
 	/// The loaded map template, map_template/virtual_domain
 	var/datum/lazy_template/virtual_domain/generated_domain
-	/// The loaded safehouse, map_template/safehouse
-	var/datum/map_template/safehouse/generated_safehouse
-	/// The connected console
-	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// If any threats were spawned, adds to rewards
-	var/domain_threats = 0
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
-	var/glitch_chance = 0.005
+	var/glitch_chance = 0.1
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -52,8 +46,6 @@
 	var/threat = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// Our wfc
-	var/datum/wfc/our_wfc
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -62,9 +54,6 @@
 
 /obj/machinery/quantum_server/LateInitialize()
 	. = ..()
-
-	if(isnull(console_ref))
-		find_console()
 
 	radio = new(src)
 	radio.set_frequency(FREQ_SUPPLY)
@@ -89,13 +78,12 @@
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(generated_domain)
-	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
 
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
-	glitch_chance = 0.1
+	glitch_chance = 0.2
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
