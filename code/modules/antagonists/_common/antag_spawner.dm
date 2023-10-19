@@ -378,7 +378,7 @@
 	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	species_type = /datum/species/monkey/no_mutation // Can't just use mutadone or genetics to get a free human buddy
+	species_type = /datum/species/monkey
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
@@ -396,6 +396,9 @@
 	for(var/datum/mutation/human/mutation as anything in monkey_man.dna.mutations)
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
+
+	// Extra backup!
+	ADD_TRAIT(monkey_man, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 

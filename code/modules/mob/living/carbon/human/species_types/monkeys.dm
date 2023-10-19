@@ -38,9 +38,6 @@
 
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
-	/// If FALSE, there's no monkey mutation to disable.
-	var/monkey_mutation = TRUE
-
 
 /datum/species/monkey/random_name(gender,unique,lastname)
 	var/randname = "monkey ([rand(1,999)])"
@@ -50,8 +47,6 @@
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	passtable_on(H, SPECIES_TRAIT)
-	if(!monkey_mutation)
-		return
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 	H.AddElement(/datum/element/human_biter)
@@ -59,8 +54,6 @@
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
-	if(!monkey_mutation)
-		return
 	C.dna.remove_mutation(/datum/mutation/human/race)
 	C.RemoveElement(/datum/element/human_biter)
 
@@ -195,11 +188,5 @@
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
-
-/datum/species/monkey/no_mutation
-	id = SPECIES_MONKEY_NO_MUT
-	examine_limb_id = SPECIES_MONKEY
-	changesource_flags = null
-	monkey_mutation = FALSE
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
