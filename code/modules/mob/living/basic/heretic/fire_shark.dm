@@ -1,5 +1,6 @@
 /mob/living/basic/heretic_summon/fire_shark
-	name = "fire shark"
+	name = "\improper Fire Shark"
+	real_name = "Fire Shark"
 	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"

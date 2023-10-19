@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Magic Mirrors properly prevent you from being soft locked"
+  - bugfix: "Robo customers are as robust as before"
