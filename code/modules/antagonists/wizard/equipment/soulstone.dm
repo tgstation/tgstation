@@ -451,6 +451,8 @@
 
 	var/mob/living/master = initiate_ref?.resolve()
 	var/mob/living/victim = victim_ref?.resolve()
+	initiate_ref = null
+	victim_ref = null
 
 	if(isnull(victim) || master.incapacitated() || !master.is_holding(src) || !master.CanReach(victim, src))
 		return FALSE
@@ -462,9 +464,6 @@
 	to_chat(master, "[span_info("<b>Capture successful!</b>:")] A spirit has entered [src], \
 		taking upon the identity of [victim].")
 	init_shade(victim, master, shade_controller = ghost)
-
-	initiate_ref = null
-	victim_ref = null
 
 	return TRUE
 
