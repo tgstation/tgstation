@@ -37,7 +37,7 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
-	announcement += "<br><br>"
+	announcement += "<br>"
 
 	if(type == "Priority")
 		announcement += "[span_priorityannounce("<u>Priority Announcement</u>")]"
@@ -69,7 +69,7 @@
 	else
 		announcement += "[span_priorityalert("<br>[text]<br>")]"
 
-	announcement += "<br><br>"
+	announcement += "<br>"
 
 	if(!players)
 		players = GLOB.player_list

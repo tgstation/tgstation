@@ -187,6 +187,9 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
+	VAR_PRIVATE/list/invisibility_sources
+	VAR_PRIVATE/current_invisibility_priority = -INFINITY
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -583,19 +586,33 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
- *
  * @params
- * hitting_projectile - projectile
- * def_zone - zone hit
- * piercing_hit - is this hit piercing or normal?
+ * * hitting_projectile - projectile
+ * * def_zone - zone hit
+ * * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)
+	if(sigreturn & COMPONENT_BULLET_PIERCED)
+		return BULLET_ACT_FORCE_PIERCE
+	if(sigreturn & COMPONENT_BULLET_BLOCKED)
+		return BULLET_ACT_BLOCK
+	if(sigreturn & COMPONENT_BULLET_ACTED)
+		return BULLET_ACT_HIT
+
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
-	// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
-	var/visual_armor_check = check_projectile_armor(def_zone, hitting_projectile)
-	. = hitting_projectile.on_hit(src, visual_armor_check, def_zone, piercing_hit)
+	if(QDELETED(hitting_projectile)) // Signal deleted it?
+		return BULLET_ACT_BLOCK
+
+	return hitting_projectile.on_hit(
+		target = src,
+		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		pierce_hit = piercing_hit,
+	)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -2092,16 +2109,14 @@
  * For turfs this will only be used if pathing_pass_method is TURF_PATHING_PASS_PROC
  *
  * Arguments:
- * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
- * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
- * * caller- The movable we're checking pass flags for, if we're making any such checks
- * * no_id: When true, doors with public access will count as impassible
+ * * to_dir - What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * pass_info - Datum that stores info about the thing that's trying to pass us
  *
  * IMPORTANT NOTE: /turf/proc/LinkBlockedWithAccess assumes that overrides of CanAStarPass will always return true if density is FALSE
  * If this is NOT you, ensure you edit your can_astar_pass variable. Check __DEFINES/path.dm
  **/
-/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	if(caller && (caller.pass_flags & pass_flags_self))
+/atom/proc/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
 
@@ -2162,3 +2177,71 @@
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
 	do_spin_animation(speed, loops, segments, segment, parallel)
+
+#define INVISIBILITY_VALUE 1
+#define INVISIBILITY_PRIORITY 2
+
+/atom/proc/RecalculateInvisibility()
+	PRIVATE_PROC(TRUE)
+
+	if(!invisibility_sources)
+		current_invisibility_priority = -INFINITY
+		invisibility = initial(invisibility)
+		return
+
+	var/highest_priority
+	var/list/highest_priority_invisibility_data
+	for(var/entry in invisibility_sources)
+		var/list/priority_data
+		if(islist(entry))
+			priority_data = entry
+		else
+			priority_data = invisibility_sources[entry]
+
+		var/priority = priority_data[INVISIBILITY_PRIORITY]
+		if(highest_priority > priority) // In the case of equal priorities, we use the last thing in the list so that more recent changes apply first
+			continue
+
+		highest_priority = priority
+		highest_priority_invisibility_data = priority_data
+
+	current_invisibility_priority = highest_priority
+	invisibility = highest_priority_invisibility_data[INVISIBILITY_VALUE]
+
+/**
+ * Sets invisibility according to priority.
+ * If you want to be able to undo the value you set back to what it would be otherwise,
+ * you should provide an id here and remove it using RemoveInvisibility(id)
+ */
+/atom/proc/SetInvisibility(desired_value, id, priority=0)
+	if(!invisibility_sources)
+		invisibility_sources = list()
+
+	if(id)
+		invisibility_sources[id] = list(desired_value, priority)
+	else
+		invisibility_sources += list(list(desired_value, priority))
+
+	if(current_invisibility_priority > priority)
+		return
+
+	RecalculateInvisibility()
+
+/// Removes the specified invisibility source from the tracker
+/atom/proc/RemoveInvisibility(source_id)
+	if(!invisibility_sources)
+		return
+
+	var/list/priority_data = invisibility_sources[source_id]
+	invisibility_sources -= source_id
+
+	if(length(invisibility_sources) == 0)
+		invisibility_sources = null
+
+	if(current_invisibility_priority > priority_data[INVISIBILITY_PRIORITY])
+		return
+
+	RecalculateInvisibility()
+
+#undef INVISIBILITY_VALUE
+#undef INVISIBILITY_PRIORITY
