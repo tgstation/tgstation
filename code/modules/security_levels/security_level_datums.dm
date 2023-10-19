@@ -9,6 +9,8 @@
 /datum/security_level
 	/// The name of this security level.
 	var/name = "not set"
+	/// The color of our announcement divider.
+	var/announcement_color = "default"
 	/// The numerical level of this security level, see defines for more information.
 	var/number_level = -1
 	/// The sound that we will play when this security level is set
@@ -42,6 +44,7 @@
  */
 /datum/security_level/green
 	name = "green"
+	announcement_color = "green"
 	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
@@ -54,6 +57,7 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	announcement_color = "blue"
 	sound = 'sound/misc/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
@@ -67,6 +71,7 @@
  */
 /datum/security_level/red
 	name = "red"
+	announcement_color = "red"
 	sound = 'sound/misc/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
@@ -80,6 +85,7 @@
  */
 /datum/security_level/delta
 	name = "delta"
+	announcement_color = "purple"
 	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
