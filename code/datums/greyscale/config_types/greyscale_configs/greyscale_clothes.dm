@@ -345,9 +345,9 @@
 	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json' //Ditto
 
 /datum/greyscale_config/buttondown_skirt
-	name = "Labcoat"
-	icon_file = 'icons/mob/clothing/suits/labcoat.dmi'
-	json_config = 'code/datums/greyscale/json_configs/labcoat.json'
+	name = "Buttondown with Skirt"
+	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_skirt.json'
 
 /datum/greyscale_config/buttondown_skirt/worn
 	name = "Buttondown with Skirt (Worn)"
