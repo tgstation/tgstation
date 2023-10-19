@@ -1,8 +1,8 @@
 {
-	"coat": [
+	"labcoat_job": [
 		{
 			"type": "icon_state",
-			"icon_state": "coat",
+			"icon_state": "labcoat_job",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
@@ -25,10 +25,10 @@
 			"color_ids": [ 4 ]
 		}
 	],
-	"coat_t": [
+	"labcoat_job_t": [
 		{
 			"type": "icon_state",
-			"icon_state": "coat_t",
+			"icon_state": "labcoat_job_t",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
