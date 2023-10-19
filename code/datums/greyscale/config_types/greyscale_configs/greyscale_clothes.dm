@@ -371,6 +371,7 @@
 //
 // SUITS
 //
+
 /datum/greyscale_config/ctf_standard
 	name = "CTF Standard Vest"
 	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
