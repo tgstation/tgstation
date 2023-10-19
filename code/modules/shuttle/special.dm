@@ -229,6 +229,9 @@
 		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
 
+	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
+		return TRUE
+
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
