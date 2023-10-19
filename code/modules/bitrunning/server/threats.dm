@@ -102,6 +102,9 @@
 	if(isnull(ghost_mind))
 		return
 
+	if(QDELETED(mutation_target))
+		return
+
 	var/mob/living/antag_mob
 	switch(role_name)
 		if(ROLE_CYBER_POLICE)
