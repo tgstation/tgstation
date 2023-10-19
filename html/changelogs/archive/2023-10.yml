@@ -728,3 +728,27 @@
   - bugfix: fixed runtime caused by simple mobs AttackingTarget() missing an arg
   - bugfix: being killed or ghosting while being scoped will no longer cause the cursor
       offset to persist in a bugged state
+2023-10-19:
+  LT3:
+  - spellcheck: More announcement CSS fixes, now including light mode
+  Rhials:
+  - qol: As an observer, clicking on a bitrunning pod will let you orbit it's bitrunning
+      avatar. Cool!
+  carlarctg:
+  - qol: 'Added slapcraft recipes for: Pillow suits, pillow helmets, bone and sinew
+      tailoring/weaponry, pipeguns, ghetto jetpacks, and pneumatic cannons.'
+  - code_imp: The base type of cowboy hats no longer looks and is named like a bounty
+      hunter hat, clarifying the recipe for the heroic laser musket. They need cowboy
+      hats not bounty hats.
+  - bugfix: Fixed an issue where if a slapcraft recipe required more than one instance
+      of its 'primary' slapcrafting item, it wouldn't show the additional instance
+      when examining its recipes.
+  lizardqueenlexi:
+  - qol: Birdshot ordnance is now equipped with a second RPD and two holofan projectors.
+  - qol: Ordnance mishaps on Birdshot are significantly less likely to slam you into
+      an electrified window until you die.
+  vinylspiders:
+  - bugfix: fixes a tgui bluescreen bug with the bank account console that can occur
+      when there is bad bank account data
+  - bugfix: '"line snapped" and "rod dropped" balloon alerts will now display when
+      they are supposed to while fishing'
