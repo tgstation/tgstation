@@ -17,6 +17,8 @@ export type MainData = {
   mechflag_keys: string[];
 
   can_use_overclock: boolean;
+  overclock_safety_available: boolean;
+  overclock_safety: boolean;
   overclock_mode: boolean;
   overclock_temp_percentage: number;
 
