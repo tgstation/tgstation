@@ -112,7 +112,9 @@
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
 			//head hair color takes priority, owner hair color is a backup if we lack a head or something
-			if(my_head)
+			if ((human_owner) && (human_owner.hairstyle == "Bald"))
+				draw_color = skintone2hex(human_owner.skin_tone)
+			else if(my_head)
 				draw_color = my_head.hair_color
 			else
 				draw_color = human_owner.hair_color
