@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "Fixes a bug where your mother would delete your species after calling you a disappointment, rendering you a broken husk of a mob"
