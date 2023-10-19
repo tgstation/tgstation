@@ -108,7 +108,7 @@
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
  * should_play_sound - Whether the notice sound should be played or not.
  */
-/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players = null, sound_override = null, should_play_sound = TRUE)
+/proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players = null, sound_override = null, should_play_sound = TRUE)
 	if(!message)
 		return
 
