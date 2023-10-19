@@ -439,12 +439,12 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/master = initiate_ref?.resolve()
+	initiate_ref = null
 
 	if(isnull(ghost))
 		balloon_alert(master, "the scythe is dormant!")
 		REMOVE_TRAIT(src, TRAIT_NODROP, type)
 		using = FALSE
-		initiate_ref = null
 		return
 
 	soul.ckey = ghost.ckey
@@ -455,8 +455,6 @@
 	density = TRUE
 	if(!ismob(loc))
 		reset_spin()
-
-	initiate_ref = null
 
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)

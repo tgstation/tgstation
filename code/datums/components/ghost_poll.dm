@@ -55,7 +55,7 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		var/of_what = title ? "of [lowertext(title)" : ""
+		var/of_what = title ? "of [lowertext(title)]" : ""
 		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what]", "Ghost Poll", parent)
 
 	SEND_SIGNAL(src, COMSIG_GHOSTPOLL_CONCLUDED, chosen)
