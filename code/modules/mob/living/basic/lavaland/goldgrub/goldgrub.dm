@@ -65,6 +65,8 @@
 	if(can_lay_eggs)
 		make_egg_layer()
 
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+
 /mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 	if(!.)
@@ -76,12 +78,14 @@
 	if(istype(attack_target, /obj/item/stack/ore))
 		consume_ore(attack_target)
 
-/mob/living/basic/mining/goldgrub/bullet_act(obj/projectile/bullet)
-	if(stat == DEAD)
-		return BULLET_ACT_FORCE_PIERCE
+/mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	SIGNAL_HANDLER
 
-	visible_message(span_danger("The [bullet.name] is repelled by [src]'s girth!"))
-	return BULLET_ACT_BLOCK
+	if(stat != CONSCIOUS)
+		return COMPONENT_BULLET_PIERCED
+
+	visible_message(span_danger("[hitting_projectile] is repelled by [source]'s girth!"))
+	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
@@ -188,4 +192,3 @@
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 	)
-
