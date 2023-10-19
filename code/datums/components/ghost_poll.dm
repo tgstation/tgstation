@@ -8,15 +8,19 @@
 /datum/component/ghost_poll
 	/// Prevent players with this ban from being selected
 	var/list/job_ban_list = list()
+	/// Title of the role to announce after it's done
+	var/title
 
-/datum/component/ghost_poll/Initialize(ignore_key, list/job_bans, title = "A ghost role", header = "Ghost Poll", custom_message)
+/datum/component/ghost_poll/Initialize(ignore_key, list/job_bans, title, header = "Ghost Poll", custom_message)
 	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
+	var/what = title ? capitalize(title) : "A ghost role"
+	var/message = custom_message || "[what] is looking for volunteers"
 
 	src.job_ban_list |= job_bans
+	src.title = title
 
 	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
 		action = NOTIFY_ORBIT, \
@@ -62,7 +66,8 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		deadchat_broadcast("[chosen.ckey] was selected for the role.", "Ghost Poll", parent)
+		var/of_what = title ? "of [lowertext(title)" : ""
+		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what]", "Ghost Poll", parent)
 
 	SEND_SIGNAL(src, COMSIG_GHOSTPOLL_CONCLUDED, chosen)
 	qdel(src)
