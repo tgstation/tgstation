@@ -152,17 +152,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
 	if(isnull(racechoice))
 		return TRUE
-	if(!selectable_races[racechoice])
+
+	var/new_race_path = selectable_races[racechoice]
+	if(!ispath(new_race_path, /datum/species))
 		return TRUE
 
-
-	var/datum/species/newrace = new selectable_races[racechoice]
-
+	var/datum/species/newrace = new new_race_path()
 	var/attributes_desc = newrace.get_physical_attributes()
-	qdel(newrace)
 
 	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
 	if(answer != "Yes")
+		qdel(newrace)
 		change_race(race_changer) // try again
 		return
 
