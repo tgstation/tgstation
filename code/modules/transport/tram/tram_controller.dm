@@ -73,7 +73,7 @@
  */
 /datum/tram_mfg_info/New(specific_transport_id)
 	if(GLOB.round_id)
-		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, 0)]"
+		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, "0")]"
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
 
