@@ -1,9 +1,3 @@
-
-///////////////
-//DRONE VERBS//
-///////////////
-//Drone verbs that appear in the Drone tab and on buttons
-
 /**
  * Echoes drone laws to the user
  *

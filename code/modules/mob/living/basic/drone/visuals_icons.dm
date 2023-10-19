@@ -1,10 +1,4 @@
-
-/////////////////
-//DRONE VISUALS//
-/////////////////
-//Drone overlays
-//Drone visuals
-
+// Drone overlays and visuals
 
 /mob/living/basic/drone/proc/apply_overlay(cache_index)
 	if((. = drone_overlays[cache_index]))
@@ -12,9 +6,9 @@
 
 
 /mob/living/basic/drone/proc/remove_overlay(cache_index)
-	var/I = drone_overlays[cache_index]
-	if(I)
-		cut_overlay(I)
+	var/overlay = drone_overlays[cache_index]
+	if(overlay)
+		cut_overlay(overlay)
 		drone_overlays[cache_index] = null
 
 /mob/living/basic/drone/update_clothing(slot_flags)
@@ -61,9 +55,9 @@
 	update_inv_internal_storage()
 
 /**
- * Prompt for usr to pick [/mob/living/basic/drone/var/visualAppearance]
+ * Prompt for user to pick [/mob/living/basic/drone/var/visualAppearance]
  *
- * Does nothing if there is no usr
+ * Does nothing if there is no user
  *
  * Called on [/mob/proc/Login]
  */

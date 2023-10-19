@@ -1,10 +1,4 @@
-
-/////////////////////
-//DRONE INTERACTION//
-/////////////////////
-//How drones interact with the world
-//How the world interacts with drones
-
+// Drones' interactions with other mobs
 
 /mob/living/basic/drone/attack_drone(mob/living/basic/drone/drone)
 	if(drone == src || stat != DEAD)
@@ -24,6 +18,7 @@
 				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
 				drone.adjustBruteLoss(-src.maxHealth)
 				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+				ghostize(can_reenter_corpse = FALSE)
 				qdel(src)
 			else
 				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
@@ -31,29 +26,19 @@
 /mob/living/basic/drone/attack_drone_secondary(mob/living/basic/drone/drone)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/basic/drone/attack_hand(mob/user, list/modifiers)
-	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
-			..()
-			return
-		if(user.get_active_held_item())
-			to_chat(user, span_warning("Your hands are full!"))
-			return
-		visible_message(span_warning("[user] starts picking up [src]."), \
-						span_userdanger("[user] starts picking you up!"))
-		if(!do_after(user, 20, target = src))
-			return
-		visible_message(span_warning("[user] picks up [src]!"), \
-						span_userdanger("[user] picks you up!"))
-		if(buckled)
-			to_chat(user, span_warning("[src] is buckled to [buckled] and cannot be picked up!"))
-			return
-		to_chat(user, span_notice("You pick [src] up."))
-		drop_all_held_items()
-		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
-		DH.slot_flags = worn_slot_flags
-		user.put_in_hands(DH)
+	if(isdrone(user))
+		attack_drone(user)
+	return ..()
+
+/mob/living/basic/drone/mob_try_pickup(mob/living/user, instant=FALSE)
+	if(stat == DEAD || status_flags & GODMODE)
+		return
+	return ..()
+
+/mob/living/basic/drone/mob_pickup(mob/living/user)
+	drop_all_held_items()
+	return ..()
 
 /**
  * Called when a drone attempts to reactivate a dead drone
@@ -91,9 +76,13 @@
 	else
 		to_chat(user, span_warning("You need to remain still to reactivate [src]!"))
 
-
+/// Screwdrivering repairs the drone to full hp, if it isn't dead.
 /mob/living/basic/drone/screwdriver_act(mob/living/user, obj/item/tool)
 	if(stat == DEAD)
+		if(isdrone(user))
+			user.balloon_alert(user, "reactivate instead!")
+		else
+			user.balloon_alert(user, "can't fix!")
 		return FALSE
 	if(health >= maxHealth)
 		to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
@@ -108,6 +97,7 @@
 	visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/// Wrenching un-hacks hacked drones.
 /mob/living/basic/drone/wrench_act(mob/living/user, obj/item/tool)
 	if(user == src)
 		return FALSE
@@ -133,8 +123,9 @@
 		armorval = head.get_armor_rating(type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
+/// Returns a multiplier for any head armor you wear as a drone.
 /mob/living/basic/drone/proc/get_armor_effectiveness()
-	return 0 //multiplier for whatever head armor you wear as a drone
+	return 0
 
 /**
  * Hack or unhack a drone
@@ -171,7 +162,7 @@
 		speed = 1 //gotta go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
-		if(!hacked)
+		if(!hacked || !can_unhack)
 			return
 		Stun(40)
 		visible_message(span_info("[src]'s display glows a content blue!"), \
@@ -189,15 +180,8 @@
 	update_drone_icon_hacked()
 
 /**
- *   # F R E E D R O N E
- * ### R
- * ### E
- * ### E
- * ### D
- * ### R
- * ### O
- * ### N
- * ### E
+ * Makes the drone into a Free Drone, who have no real laws and can do whatever they like.
+ * Only currently used for players wabbajacked into drones.
  */
 /mob/living/basic/drone/proc/liberate()
 	laws = "1. You are a Free Drone."

@@ -1,14 +1,7 @@
-////////////////////
-//MORE DRONE TYPES//
-////////////////////
-//Drones with custom laws
-//Drones with custom shells
-//Drones with overridden procs
-//Drones with camogear for hat related memes
-//Drone type for use with polymorph (no preloaded items, random appearance)
-
-
-//More types of drones
+/**
+* A Syndicate drone, tasked to cause chaos on the station.
+* Has a lot more health and its own uplink with 10 TC.
+*/
 /mob/living/basic/drone/syndrone
 	name = "Syndrone"
 	desc = "A modified maintenance drone. This one brings with it the feeling of terror."
@@ -29,6 +22,7 @@
 	default_storage = /obj/item/uplink
 	default_headwear = /obj/item/clothing/head/helmet/swat
 	hacked = TRUE
+	can_unhack = FALSE
 	shy = FALSE
 	flavortext = null
 
@@ -36,24 +30,6 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.set_telecrystals(10)
-
-/mob/living/basic/drone/syndrone/badass
-	name = "Badass Syndrone"
-	default_storage = /obj/item/uplink/nuclear
-
-/mob/living/basic/drone/syndrone/badass/Initialize(mapload)
-	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.set_telecrystals(30)
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
-	W.implant(src, force = TRUE)
-
-/mob/living/basic/drone/snowflake
-	default_headwear = /obj/item/clothing/head/chameleon/drone
-
-/mob/living/basic/drone/snowflake/Initialize(mapload)
-	. = ..()
-	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/effect/mob_spawn/ghost_role/drone/syndrone
 	name = "syndrone shell"
@@ -71,12 +47,32 @@
 	title = ROLE_SYNDICATE_DRONE
 	policy_index = ROLE_SYNDICATE_DRONE
 
+/// A version of the syndrone that gets a nuclear uplink, a firearms implant, and 30 TC.
+/mob/living/basic/drone/syndrone/badass
+	name = "Badass Syndrone"
+	default_storage = /obj/item/uplink/nuclear
+
+/mob/living/basic/drone/syndrone/badass/Initialize(mapload)
+	. = ..()
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
+	hidden_uplink.set_telecrystals(30)
+	var/obj/item/implant/weapons_auth/weapon_implant = new/obj/item/implant/weapons_auth(src)
+	weapon_implant.implant(src, force = TRUE)
+
 /obj/effect/mob_spawn/ghost_role/drone/syndrone/badass
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/basic/drone/syndrone/badass
 	prompt_name = "a badass syndrone"
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
+
+/// A drone that spawns with a chameleon hat for fashion purposes.
+/mob/living/basic/drone/snowflake
+	default_headwear = /obj/item/clothing/head/chameleon/drone
+
+/mob/living/basic/drone/snowflake/Initialize(mapload)
+	. = ..()
+	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	name = "snowflake drone shell"
@@ -85,6 +81,7 @@
 	prompt_name = "a drone with a holohat projector"
 	mob_type = /mob/living/basic/drone/snowflake
 
+/// A free drone that people can be turned into via wabbajack.
 /mob/living/basic/drone/polymorphed
 	default_storage = null
 	default_headwear = null
@@ -104,32 +101,16 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearance]_dead"
 
-/obj/effect/mob_spawn/ghost_role/drone/classic
-	mob_type = /mob/living/basic/drone/classic
-
+/// "Classic" drones, which are not shy and get a duffelbag of tools instead of built-in tools.
 /mob/living/basic/drone/classic
 	name = "classic drone shell"
 	shy = FALSE
 	default_storage = /obj/item/storage/backpack/duffelbag/drone
 
-/obj/effect/mob_spawn/ghost_role/drone/derelict
-	name = "derelict drone shell"
-	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	icon = 'icons/mob/silicon/drone.dmi'
-	icon_state = "drone_maint_hat"
-	mob_name = "derelict drone"
-	mob_type = /mob/living/basic/drone/derelict
-	anchored = TRUE
-	prompt_name = "a derelict drone"
-	you_are_text = "You are a drone on Kosmicheskaya Stantsiya 13."
-	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
-	important_text = "Build, repair, maintain and improve the station that housed you on activation."
-	spawner_job_path = /datum/job/derelict_drone
+/obj/effect/mob_spawn/ghost_role/drone/classic
+	mob_type = /mob/living/basic/drone/classic
 
-/datum/job/derelict_drone
-	title = ROLE_DERELICT_DRONE
-	policy_index = ROLE_DERELICT_DRONE
-
+/// Derelict drones, a ghost role tasked with repairing KS13. Get gibbed if they leave.
 /mob/living/basic/drone/derelict
 	name = "derelict drone"
 	default_headwear = /obj/item/clothing/head/costume/ushanka
@@ -152,4 +133,20 @@
 	. = ..()
 	AddComponent(/datum/component/stationstuck, PUNISHMENT_GIB, "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self-destruct activated.")
 
+/obj/effect/mob_spawn/ghost_role/drone/derelict
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	icon = 'icons/mob/silicon/drone.dmi'
+	icon_state = "drone_maint_hat"
+	mob_name = "derelict drone"
+	mob_type = /mob/living/basic/drone/derelict
+	anchored = TRUE
+	prompt_name = "a derelict drone"
+	you_are_text = "You are a drone on Kosmicheskaya Stantsiya 13."
+	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
+	important_text = "Build, repair, maintain and improve the station that housed you on activation."
+	spawner_job_path = /datum/job/derelict_drone
 
+/datum/job/derelict_drone
+	title = ROLE_DERELICT_DRONE
+	policy_index = ROLE_DERELICT_DRONE

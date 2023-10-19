@@ -1,12 +1,7 @@
-///////////////////
-//DRONES AS ITEMS//
-///////////////////
-//Drone shells
-
 /** Drone Shell: Ghost role item for drones
  *
  * A simple mob spawner item that transforms into a maintenance drone
- * Resepcts drone minimum age
+ * Respects drone minimum age
  */
 
 /obj/effect/mob_spawn/ghost_role/drone
@@ -29,9 +24,9 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
+	var/area/area = get_area(src)
+	if(area)
+		notify_ghosts("A drone shell has been created in \the [area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
 
 /obj/effect/mob_spawn/ghost_role/drone/allow_spawn(mob/user, silent = FALSE)
 	var/client/user_client = user.client
