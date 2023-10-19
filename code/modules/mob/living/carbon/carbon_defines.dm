@@ -47,7 +47,7 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon
+	/// Carbon, should only be accessed through has_dna()
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
