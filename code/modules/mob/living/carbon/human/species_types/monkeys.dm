@@ -199,14 +199,16 @@
 	meat = null
 	skinned_type = null
 	inherent_traits = list(
+		TRAIT_GENELESS,
 		TRAIT_GUN_NATURAL,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_ZOMBIFY,
 		TRAIT_NOBLOOD,
+		TRAIT_NOHUNGER,
 		TRAIT_VENTCRAWLER_NUDE,
-		TRAIT_WEAK_SOUL,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
