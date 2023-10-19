@@ -104,10 +104,10 @@
 	icon_state = "seed-peppercorn"
 	species = "peppercorn"
 	plantname = "Pepper-Corn Stalks"
-	product = /obj/item/food/grown/corn/pepper
+	product = /obj/item/food/grown/peppercorn
 	reagents_add = list(/datum/reagent/consumable/blackpepper = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/food/grown/corn/pepper
+/obj/item/food/grown/peppercorn
 	seed = /obj/item/seeds/corn/pepper
 	name = "ear of pepper-peppercorn"
 	desc = "This dusty monster needs god..."
