@@ -32,17 +32,6 @@
 
 	addtimer(CALLBACK(src, PROC_REF(end_poll)), 20 SECONDS, TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
-/datum/component/ghost_poll/Topic(href, list/href_list)
-	if(!href_list["orbit"])
-		return
-
-	var/mob/dead/observer/ghost = usr
-	if(!isobserver(ghost))
-		return
-
-	var/atom/owner = parent
-	ghost.ManualFollow(owner)
-
 /// Concludes the poll, picking one of the orbiters
 /datum/component/ghost_poll/proc/end_poll()
 	var/list/candidates = list()
