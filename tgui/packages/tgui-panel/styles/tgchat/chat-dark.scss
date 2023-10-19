@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:map';
+
 em {
   font-style: normal;
   font-weight: bold;
@@ -966,154 +968,45 @@ em {
   font-size: 125%;
 }
 
-.chat_alert_default {
-  color: #ffffff;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #292929;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #252525;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #292929 10px,
-    #292929 20px
-  );
-}
+$alert-stripe-colors: (
+  'default': #292929,
+  'green': #003d00,
+  'blue': #00283a,
+  'pink': #30001b,
+  'yellow': #574a00,
+  'orange': #593400,
+  'red': #540000,
+  'purple': #2c0030,
+);
 
-.chat_alert_green {
-  color: #ffffff;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #003800;
-  background-color: #003d00;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #003800 10px,
-    #003800 20px
-  );
-}
+$alert-background-colors: (
+  'default': #252525,
+  'green': #003800,
+  'blue': #003045,
+  'pink': #400025,
+  'yellow': #4d4100,
+  'orange': #6b4200,
+  'red': #6b0000,
+  'purple': #3a0040,
+);
 
-.chat_alert_blue {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #00283a;
-  background-color: #003045;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #00283a 10px,
-    #00283a 20px
-  );
-}
-
-.chat_alert_pink {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #30001b;
-  background-color: #400025;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #30001b 10px,
-    #30001b 20px
-  );
-}
-
-.chat_alert_yellow {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #574a00;
-  background-color: #4d4100;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #574a00 10px,
-    #574a00 20px
-  );
-}
-
-.chat_alert_orange {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #593400;
-  background-color: #6b4200;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #593400 10px,
-    #593400 20px
-  );
-}
-
-.chat_alert_red {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #540000;
-  background-color: #6b0000;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #540000 10px,
-    #540000 20px
-  );
-}
-
-.chat_alert_purple {
-  color: #ffffff;
-  padding: 0.33em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  border: 1px solid #2c0030;
-  background-color: #3a0040;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #2c0030 10px,
-    #2c0030 20px
-  );
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5em 0.5em;
+    margin-bottom: 0.5em;
+    box-shadow: none;
+    font-weight: bold;
+    border: 1px solid $color-value;
+    margin: 0.5em 0 0.5em 0;
+    padding: 0.5em 0.75em;
+    background-color: map.get($alert-background-colors, $color-name);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+  }
 }

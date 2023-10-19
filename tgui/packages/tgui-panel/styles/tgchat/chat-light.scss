@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:map';
+
 html,
 body {
   padding: 0;
@@ -998,154 +1000,45 @@ h2.alert {
   font-size: 125%;
 }
 
-.chat_alert_default {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #dedede;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #d1d1d1;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #dedede 10px,
-    #dedede 20px
-  );
-}
+$alert-stripe-colors: (
+  'default': #dedede,
+  'green': #c2ffcc,
+  'blue': #b8e6ff,
+  'pink': #ffc2f4,
+  'yellow': #ffe880,
+  'orange': #ffbb99,
+  'red': #ff99aa,
+  'purple': #d7c2ff,
+);
 
-.chat_alert_green {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #c2ffcc;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #a8ffb7;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #c2ffcc 10px,
-    #c2ffcc 20px
-  );
-}
+$alert-background-colors: (
+  'default': #d1d1d1,
+  'green': #a8ffb7,
+  'blue': #a8e1ff,
+  'pink': #ffb3f3,
+  'yellow': #fff0ad,
+  'orange': #ffc9ad,
+  'red': #ffadbb,
+  'purple': #ccb3ff,
+);
 
-.chat_alert_blue {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #b8e6ff;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #a8e1ff;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #b8e6ff 10px,
-    #b8e6ff 20px
-  );
-}
-
-.chat_alert_pink {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #ffc2f4;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #ffb3f3;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #ffc2f4 10px,
-    #ffc2f4 20px
-  );
-}
-
-.chat_alert_yellow {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #ffe880;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #fff0ad;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #ffe880 10px,
-    #ffe880 20px
-  );
-}
-
-.chat_alert_orange {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #ffbb99;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #ffc9ad;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #ffbb99 10px,
-    #ffbb99 20px
-  );
-}
-
-.chat_alert_red {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #ff99aa;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #ffadbb;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #ff99aa 10px,
-    #ff99aa 20px
-  );
-}
-
-.chat_alert_purple {
-  color: #202020;
-  padding: 0.5em 0.5em;
-  margin-bottom: 0.5em;
-  box-shadow: none;
-  font-weight: bold;
-  border: 1px solid #d7c2ff;
-  margin: 0.5em 0 0.5em 0;
-  padding: 0.5em 0.75em;
-  background-color: #ccb3ff;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    #d7c2ff 10px,
-    #d7c2ff 20px
-  );
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5em 0.5em;
+    margin-bottom: 0.5em;
+    box-shadow: none;
+    font-weight: bold;
+    border: 1px solid $color-value;
+    margin: 0.5em 0 0.5em 0;
+    padding: 0.5em 0.75em;
+    background-color: map.get($alert-background-colors, $color-name);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+  }
 }
