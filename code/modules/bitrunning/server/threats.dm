@@ -116,7 +116,7 @@
 	ghost_mind.special_role = ROLE_GLITCH
 	ghost_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
 
-	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
 	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 
@@ -152,10 +152,10 @@
 	if(ishuman(antag))
 		reset_equipment(antag)
 
-	antag.maxHealth += threat
-	antag.fully_heal()
-
-	antag.AddComponent(/datum/component/glitch, src)
+	antag.AddComponent(/datum/component/glitch, \
+		server = src, \
+		forge = chosen_forge, \
+	)
 
 	chosen_forge.flicker(angry = TRUE)
 	if(!do_after(antag, 1 SECONDS))

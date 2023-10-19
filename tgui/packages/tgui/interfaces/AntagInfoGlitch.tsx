@@ -82,11 +82,11 @@ const SpecificInfo = (props, context) => {
           </Stack.Item>
         </>
       );
-    case 'Cyber Tactical':
+    case 'Cyber Tac':
       return (
         <>
           <Stack.Item mb={2}>
-            The situation is getting out of hand. You have been outfitted with{' '}
+            You are an advanced combat unit. You have been outfitted with{' '}
             <span style={textStyles.variable}>lethal weaponry</span>.
           </Stack.Item>
           <Stack.Item grow>

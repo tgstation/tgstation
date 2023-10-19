@@ -45,16 +45,17 @@
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
 	/// If any one of these fail, it reverts the entire process
-	if(!load_domain(map_key) || !load_safehouse() || !load_map_items() || !load_map_segments() || !load_mob_segments())
+	if(!load_domain(map_key) || !load_safehouse() || !load_map_items() || !load_mob_segments())
 		balloon_alert_to_viewers("initialization failed.")
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
 
-	if(prob(FLOOR(threat * glitch_chance, 1)))
-		addtimer(CALLBACK(src, PROC_REF(spawn_glitch)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
-
 	is_ready = TRUE
+
+	if(prob(FLOOR(threat * glitch_chance, 1)))
+		spawn_glitch()
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	balloon_alert_to_viewers("domain loaded.")
 	generated_domain.start_time = world.time
@@ -75,7 +76,7 @@
 
 	return FALSE
 
-/// Loads in necessary map items, sets mutation targets, etc
+/// Loads in necessary map items like hololadder spawns, caches, etc
 /obj/machinery/quantum_server/proc/load_map_items()
 	var/turf/goal_turfs = list()
 	var/turf/crate_turfs = list()
@@ -110,30 +111,9 @@
 
 	return TRUE
 
-/// Loads the safehouse
-/obj/machinery/quantum_server/proc/load_safehouse()
-	var/obj/effect/landmark/bitrunning/safehouse_spawn/landmark = locate() in GLOB.landmarks_list
-	if(isnull(landmark))
-		CRASH("vdom: failed to find safehouse spawn landmark")
-
-	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
-	if(!new_safehouse.load(get_turf(landmark)))
-		CRASH("vdom: failed to load safehouse")
-
-	qdel(landmark)
-
-	return TRUE
-
-/// Loads in modular segments of the map
-/obj/machinery/quantum_server/proc/load_map_segments()
-	if(!length(generated_domain.room_modules))
-		return TRUE
-
-	return TRUE
-
 /// Loads in any mob segments of the map
 /obj/machinery/quantum_server/proc/load_mob_segments()
-	if(!length(generated_domain.room_modules))
+	if(!length(generated_domain.mob_modules))
 		return TRUE
 
 	var/current_index = 1
@@ -156,6 +136,21 @@
 		qdel(landmark)
 
 	return TRUE
+
+/// Loads the safehouse
+/obj/machinery/quantum_server/proc/load_safehouse()
+	var/obj/effect/landmark/bitrunning/safehouse_spawn/landmark = locate() in GLOB.landmarks_list
+	if(isnull(landmark))
+		CRASH("vdom: failed to find safehouse spawn landmark")
+
+	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
+	if(!new_safehouse.load(get_turf(landmark)))
+		CRASH("vdom: failed to load safehouse")
+
+	qdel(landmark)
+
+	return TRUE
+
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)

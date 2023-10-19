@@ -17,7 +17,6 @@
 /obj/machinery/byteforge/LateInitialize()
 	. = ..()
 
-	byteforge_particles = mutable_appearance(initial(icon), "on_particles", ABOVE_MOB_LAYER)
 	setup_particles()
 
 /obj/machinery/byteforge/update_appearance(updates)
@@ -26,15 +25,17 @@
 	setup_particles()
 
 /// Adds the particle overlays to the byteforge
-/obj/machinery/byteforge/proc/setup_particles()
+/obj/machinery/byteforge/proc/setup_particles(angry = FALSE)
 	cut_overlays()
+
+	byteforge_particles = mutable_appearance(initial(icon), "on_particles[angry ? "_angry" : ""]", ABOVE_MOB_LAYER)
 
 	if(is_operational)
 		add_overlay(byteforge_particles)
 
 /// Forge begins to process
 /obj/machinery/byteforge/proc/flicker(angry = FALSE)
-	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay")
+	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay[angry ? "_angry" : ""]")
 	flick_overlay_view(lighting, 1 SECONDS)
 
 	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)

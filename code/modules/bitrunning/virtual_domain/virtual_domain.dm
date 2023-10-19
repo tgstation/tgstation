@@ -21,16 +21,14 @@
 	var/filename = "virtual_domain.dmm"
 	/// Information given to connected clients via ability
 	var/help_text
+	/// Whether to display this as a modular map
+	var/is_modular = FALSE
 	/// Byond will look for modular mob segment landmarks then choose from here at random. You can make them unique also.
 	var/list/datum/modular_mob_segment/mob_modules = list()
-	/// On initialize, will look for map module landmarks then choose one from this list.
-	var/list/datum/map_template/modular/room_modules = list()
 	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
 	var/list/extra_loot
 	/// Forces all mob modules to only load once
 	var/modular_unique_mobs = FALSE
-	/// Forces all room modules to only load once
-	var/modular_unique_rooms = FALSE
 	// Name to show in the UI
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
@@ -39,3 +37,7 @@
 	var/start_time
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
+
+/// Generic modular map - use this if you want to use the vdom generic pool
+/obj/modular_map_root/virtual_domain
+	config_file = "strings/modular_maps/virtual_domain.toml"

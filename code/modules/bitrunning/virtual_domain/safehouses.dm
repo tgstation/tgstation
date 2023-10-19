@@ -50,5 +50,5 @@
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type
- *  filename = "your_map.dmm"
+ *  filename = "your_map"
  */

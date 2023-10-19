@@ -3300,7 +3300,6 @@
 #include "code\modules\bitrunning\server\signal_handlers.dm"
 #include "code\modules\bitrunning\server\threats.dm"
 #include "code\modules\bitrunning\server\util.dm"
-#include "code\modules\bitrunning\virtual_domain\modular_map_template.dm"
 #include "code\modules\bitrunning\virtual_domain\modular_mob_segment.dm"
 #include "code\modules\bitrunning\virtual_domain\safehouses.dm"
 #include "code\modules\bitrunning\virtual_domain\virtual_domain.dm"

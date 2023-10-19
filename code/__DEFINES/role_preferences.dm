@@ -111,7 +111,6 @@
 #define ROLE_CYBER_TACTICAL "Cyber Tac"
 #define ROLE_CYBER_BEHEMOTH "Cyber Behemoth"
 
-
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's
 /// first connection in order to play.

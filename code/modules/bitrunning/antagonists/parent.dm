@@ -5,7 +5,7 @@
 	name = "Generic Bitrunning Glitch"
 	antagpanel_category = ANTAG_GROUP_GLITCH
 	job_rank = ROLE_GLITCH
-	preview_outfit = /datum/outfit/bitrunning_glitch/cyber_police
+	preview_outfit = /datum/outfit/cyber_police
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	suicide_cry = "ALT F4!"
@@ -72,8 +72,7 @@
 /datum/objective/bitrunning_glitch_fluff/check_completion()
 	var/list/alive = GLOB.alive_player_list.Copy()
 
-	for(var/mob/living/carbon/organic in alive)
-		if(organic.stat != DEAD)
-			return FALSE
+	if(locate(/mob/living/carbon) in alive)
+		return FALSE
 
 	return TRUE
