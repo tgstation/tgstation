@@ -351,8 +351,8 @@
 	icon_state = "tarantula"
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
-	maxHealth = 360 // woah nelly
-	health = 360
+	maxHealth = 400 // woah nelly
+	health = 400
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
