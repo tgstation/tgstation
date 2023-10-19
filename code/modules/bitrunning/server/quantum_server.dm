@@ -83,7 +83,13 @@
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
+	obj_flags |= EMAGGED
 	glitch_chance = 0.2
+
+	playsound(src, 'sound/effects/sparks1.ogg', 30, 2)
+
+	balloon_alert(user, "bzzzt...")
+	to_chat(user, span_notice("You deftly swipe the emag card through the reader."))
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)

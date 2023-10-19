@@ -32,6 +32,10 @@
 
 	var/mob/dead/selected = pick(ghosties)
 
+	if(isnull(selected))
+		ghosties.Remove(selected)
+		selected = pick(ghosties)
+
 	var/datum/mind/player_mind = new(selected.key)
 	player_mind.active = TRUE
 
@@ -92,13 +96,14 @@
 	notify_ghosts("A glitch is spawning in the virtual domain.", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation")
 
 	var/datum/antagonist/bitrunning_glitch/chosen_role = get_antagonist_role()
+	var/role_name = initial(chosen_role.name)
 
 	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
 	if(isnull(ghost_mind))
 		return
 
 	var/mob/living/antag_mob
-	switch(chosen_role)
+	switch(role_name)
 		if(ROLE_CYBER_POLICE)
 			antag_mob = spawn_humanoid(mutation_target, ghost_mind)
 		if(ROLE_CYBER_TACTICAL)
@@ -106,10 +111,10 @@
 		if(ROLE_CYBER_BEHEMOTH)
 			antag_mob = spawn_megafauna(mutation_target, ghost_mind)
 
+	ghost_mind.transfer_to(antag_mob)
 	ghost_mind.add_antag_datum(chosen_role)
 	ghost_mind.special_role = ROLE_GLITCH
 	ghost_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
-	ghost_mind.transfer_to(antag_mob)
 
 	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
@@ -133,9 +138,9 @@
 		/mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain,
 	)
 
-	var/mob/living/simple_animal/hostile/megafauna/behemoth = pick(threats)
+	var/path = pick(threats)
 
-	behemoth = new(mutation_target.loc)
+	var/mob/living/simple_animal/hostile/megafauna/behemoth = new path(mutation_target.loc)
 	behemoth.crusher_loot.Cut()
 	behemoth.loot.Cut()
 	mutation_target.gib(DROP_ALL_REMAINS)
@@ -157,4 +162,4 @@
 		return
 
 	chosen_forge.flash()
-	do_teleport(antag, get_turf(chosen_forge))
+	do_teleport(antag, get_turf(chosen_forge), forced = TRUE)
