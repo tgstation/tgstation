@@ -6,7 +6,7 @@
  * * dead_can_hear - Boolean that determines if ghosts can hear the message (`FALSE` by default)
  * * source - [/atom] source that created the message
  * * faction_checked_mob - [/mob/living] to determine faction matches from
- * * exact_faction_match - Passed to [/mob/proc/faction_check_mob]
+ * * exact_faction_match - Passed to [/mob/proc/faction_check_atom]
  */
 /proc/_alert_drones(msg, dead_can_hear = FALSE, atom/source, mob/living/faction_checked_mob, exact_faction_match)
 	if (dead_can_hear && source)
@@ -17,7 +17,7 @@
 		var/mob/living/basic/drone/drone = global_drone
 		if(istype(drone) && drone.stat != DEAD)
 			if(faction_checked_mob)
-				if(drone.faction_check_mob(faction_checked_mob, exact_faction_match))
+				if(drone.faction_check_atom(faction_checked_mob, exact_faction_match))
 					to_chat(drone, msg)
 			else
 				to_chat(drone, msg)
@@ -28,7 +28,7 @@
  * Wraps [/proc/_alert_drones] with defaults
  *
  * * source - `src`
- * * faction_check_mob - `src`
+ * * faction_check_atom - `src`
  * * dead_can_hear - `TRUE`
  */
 /mob/living/basic/drone/proc/alert_drones(msg, dead_can_hear = FALSE)

@@ -63,7 +63,7 @@
 	damage = 15
 	paralyze = 10
 
-/obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	explosion(target, devastation_range = -1, light_impact_range = 1, explosion_cause = src)
 	return BULLET_ACT_HIT

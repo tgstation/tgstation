@@ -601,7 +601,7 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick(seconds_between_ticks)
-	if(owner.stat >= UNCONSCIOUS)
+	if(owner.stat >= UNCONSCIOUS || owner.incapacitated() || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return
 	if(!prob(15))
 		return
@@ -611,8 +611,6 @@
 				to_chat(owner, span_warning("Your leg spasms!"))
 				step(owner, pick(GLOB.cardinals))
 		if(2)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
@@ -641,8 +639,6 @@
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
 		if(5)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			var/list/turf/targets = list()
 			for(var/turf/nearby_turfs in oview(owner, 3))

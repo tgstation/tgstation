@@ -40,7 +40,7 @@
 	if(sigreturn & COMPONENT_SKIP_ATTACK)
 		return FALSE
 
-	if(!can_unarmed_attack(attack_target))
+	if(!can_unarmed_attack())
 		return FALSE
 
 	sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
@@ -55,7 +55,7 @@
 
 /mob/living/carbon/human/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	// Humans can always check themself regardless of having their hands blocked or w/e
-	if(src == attack_target)
+	if(src == attack_target && !combat_mode && HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		check_self_for_injuries()
 		return TRUE
 

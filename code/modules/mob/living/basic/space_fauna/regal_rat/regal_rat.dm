@@ -82,7 +82,7 @@
 		return
 
 	if(ismouse(user))
-		if(user.faction_check_mob(src, exact_match = TRUE))
+		if(user.faction_check_atom(src, exact_match = TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
@@ -192,7 +192,7 @@
 		balloon_alert(src, "already dead!")
 		return FALSE
 
-	if(living_target.faction_check_mob(src, exact_match = TRUE))
+	if(living_target.faction_check_atom(src, exact_match = TRUE))
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 
