@@ -8,7 +8,7 @@
 	var/list/available = list()
 
 	for(var/datum/antagonist/bitrunning_glitch/subtype in subtypesof(/datum/antagonist/bitrunning_glitch))
-		if(threat >= subtype.threat)
+		if(threat >= initial(subtype.threat))
 			available += subtype
 
 	shuffle_inplace(available)
@@ -91,7 +91,7 @@
 
 	mutation_target.add_overlay(mutable_appearance('icons/effects/beam.dmi', "lightning12", ABOVE_MOB_LAYER))
 
-	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flash_window = FALSE)
+	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flashwindow = FALSE)
 
 	var/datum/antagonist/bitrunning_glitch/chosen_role = get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
