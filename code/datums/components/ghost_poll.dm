@@ -14,7 +14,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/message = custom_message || "[title] is looking for volunteers"
+	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
 
 	src.job_ban_list |= job_bans
 
