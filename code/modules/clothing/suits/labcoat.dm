@@ -131,4 +131,7 @@
 /obj/item/clothing/suit/toggle/labcoat/interdyne
 	name = "interdyne labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
-	icon_state = "labcoat_robo"
+	icon_state = "coat"
+	greyscale_config = /datum/greyscale_config/labcoat
+	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
+	greyscale_colors = "#EEEEEE#88242D#88242D#39393F"
