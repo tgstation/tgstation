@@ -75,7 +75,7 @@
 	icon_state = "labcoat_job"
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
-	greyscale_colors = "#EEEEEE#D15B1B#D15B1B#E6935C"
+	greyscale_colors = "#EEEEEE#F17420#F17420#EB6F2C"
 
 /obj/item/clothing/suit/toggle/labcoat/chemist/Initialize(mapload)
 	. = ..()
