@@ -6,7 +6,8 @@ GLOBAL_LIST_EMPTY(dynamic_human_appearances)
 	if(!species_path)
 		return FALSE
 	if(!ispath(species_path))
-		CRASH("Attempted to call get_dynamic_human_appearance() with an instantiated species_path. Pass the species datum typepath instead.")
+		STACK_TRACE("Attempted to call get_dynamic_human_appearance() with an instantiated species_path. Pass the species datum typepath instead.")
+		return FALSE
 	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]"
 	if(GLOB.dynamic_human_appearances[arg_string]) //if already exists in our cache, just return that
 		return GLOB.dynamic_human_appearances[arg_string]
