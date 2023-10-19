@@ -553,6 +553,10 @@
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
+	holiday_colors = list(
+	COLOR_ENGINEERING_ORANGE,
+	COLOR_DARK,
+	)
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
