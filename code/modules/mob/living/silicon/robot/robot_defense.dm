@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("[src] already has a defibrillator!"))
 			return
 		var/obj/item/borg/upgrade/defib/backpack/B = new(null, D)
-		add_to_upgrades(B, user)
+		apply_upgrade(B, user)
 		return
 
 	if(istype(W, /obj/item/ai_module))
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!user.canUnEquip(U))
 			to_chat(user, span_warning("The upgrade is stuck to you and you can't seem to let go of it!"))
 			return
-		add_to_upgrades(U, user)
+		apply_upgrade(U, user)
 		return
 
 	if(istype(W, /obj/item/toner))
@@ -232,8 +232,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		cell.update_appearance()
 		cell.add_fingerprint(user)
-		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
+		user.put_in_active_hand(cell)
 		update_icons()
 		diag_hud_set_borgcell()
 
