@@ -5,19 +5,16 @@
 
 /// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
-	var/list/roles = list(/datum/antagonist/bitrunning_glitch/cyber_police)
+	var/list/available = list()
 
-	if(threat >= 70)
-		roles += list(/datum/antagonist/bitrunning_glitch/cyber_tactical)
+	for(var/datum/antagonist/bitrunning_glitch/subtype in subtypesof(/datum/antagonist/bitrunning_glitch))
+		if(threat >= subtype.threat)
+			available += subtype
 
-	if(threat >= 150)
-		roles += list(/datum/antagonist/bitrunning_glitch/cyber_behemoth)
+	shuffle_inplace(available)
+	var/datum/antagonist/bitrunning_glitch/chosen = pick(available)
 
-	shuffle_inplace(roles)
-
-	var/chosen = pick(roles)
-	if(istype(chosen, /datum/antagonist/bitrunning_glitch/cyber_behemoth))
-		threat -= 150
+	threat -= chosen.threat * 0.5
 
 	return chosen
 
@@ -93,16 +90,15 @@
 		CRASH("vdom: After two attempts, no valid mutation target was found.")
 
 	mutation_target.add_overlay(mutable_appearance('icons/effects/beam.dmi', "lightning12", ABOVE_MOB_LAYER))
-	notify_ghosts("A glitch is spawning in the virtual domain.", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation")
+
+	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flash_window = FALSE)
 
 	var/datum/antagonist/bitrunning_glitch/chosen_role = get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
 
 	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
-	if(isnull(ghost_mind))
-		return
-
-	if(QDELETED(mutation_target))
+	if(isnull(ghost_mind) || QDELETED(mutation_target))
+		mutation_target.cut_overlays()
 		return
 
 	var/mob/living/antag_mob

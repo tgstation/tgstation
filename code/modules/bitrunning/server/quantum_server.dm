@@ -89,7 +89,7 @@
 	playsound(src, 'sound/effects/sparks1.ogg', 30, 2)
 
 	balloon_alert(user, "bzzzt...")
-	to_chat(user, span_notice("You deftly swipe the emag card through the reader."))
+	to_chat(user, span_notice("You deftly swipe the card through the reader."))
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)

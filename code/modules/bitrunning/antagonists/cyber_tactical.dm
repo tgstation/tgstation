@@ -1,6 +1,7 @@
 /datum/antagonist/bitrunning_glitch/cyber_tactical
 	name = ROLE_CYBER_TACTICAL
 	preview_outfit = /datum/outfit/cyber_police/tactical
+	threat = 70
 
 /datum/antagonist/bitrunning_glitch/cyber_tactical/on_gain()
 	. = ..()
