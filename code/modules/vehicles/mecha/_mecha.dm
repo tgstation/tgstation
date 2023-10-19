@@ -824,7 +824,7 @@
 		if(!act)
 			continue
 		act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-		balloon_alert(occupant, "toggled overclock [overclock_mode ? "on":"off"]")
+		balloon_alert(occupant, "overclock [overclock_mode ? "on":"off"]")
 		act.build_all_button_icons()
 
 	if(overclock_mode)
