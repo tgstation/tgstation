@@ -66,7 +66,7 @@
 	product = /obj/item/food/grown/sugarcane/saltcane
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/salt = 0.25)
-	mutatelist = list(/obj/item/seeds/sugarcane)
+	mutatelist = null
 
 /obj/item/food/grown/sugarcane/saltcane
 	seed = /obj/item/seeds/sugarcane/saltcane
