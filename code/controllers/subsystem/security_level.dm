@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(security_level)
  */
 /datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
 	var/security_level_name = selected_level.name
-	var/color_to_use = selected_level.color
+	var/color_to_use = selected_level.announcement_color
 	var/sound_to_use = selected_level.sound
 
 	if(selected_level.number_level > current_security_level.number_level)
