@@ -1,22 +1,45 @@
 /**
  * A replacement for the standard poll_ghost_candidate.
- * Use this to more subtly ask players to join - it takes the orbiters.
+ * Use this to subtly ask players to join - it picks from orbiters.
+ *
+ * @params ignore_key - Required so it doesn't spam
+ * @params job_bans - You can insert a list or single items here.
  */
 /datum/component/ghost_poll
+	/// Prevent players with this ban from being selected
+	var/list/job_ban_list = list()
 
-/datum/component/ghost_poll/Initialize(ignore_key, title = "A ghost role", header = "Ghost Poll")
+/datum/component/ghost_poll/Initialize(ignore_key, list/job_bans, title = "A ghost role", header = "Ghost Poll", custom_message)
 	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	notify_ghosts("[title] is looking for volunteers. An orbiter will be chosen in twenty seconds.", \
-		source = parent, \
+	var/message = custom_message || "[title] is looking for volunteers"
+
+	src.job_ban_list |= job_bans
+
+	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
 		action = NOTIFY_ORBIT, \
-		header = "Volunteers requested"\
+		flashwindow = FALSE, \
+		header = "Volunteers requested", \
+		ignore_key = ignore_key, \
+		source = parent \
 	)
 
-	add_timer(CALLBACK(src, PROC_REF(end_poll)), 20 SECONDS, TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(end_poll)), 20 SECONDS, TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
+/datum/component/ghost_poll/Topic(href, list/href_list)
+	if(!href_list["orbit"])
+		return
+
+	var/mob/dead/observer/ghost = usr
+	if(!isobserver(ghost))
+		return
+
+	var/atom/owner = parent
+	ghost.ManualFollow(owner)
+
+/// Concludes the poll, picking one of the orbiters
 /datum/component/ghost_poll/proc/end_poll()
 	var/list/candidates = list()
 	var/atom/owner = parent
@@ -26,14 +49,20 @@
 		return
 
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
-		if(isnull(ghost.client))
+		if(QDELETED(ghost) || isnull(ghost.client))
 			continue
+		if(is_banned_from(ghost.ckey, list(job_ban_list)))
+			continue
+
 		candidates += ghost
 
 	if(!length(candidates))
 		return
 
 	var/mob/dead/observer/chosen = pick(candidates)
+
+	if(chosen)
+		deadchat_broadcast("[chosen.ckey] was selected for the role.", "Ghost Poll", parent)
 
 	SEND_SIGNAL(src, COMSIG_GHOSTPOLL_CONCLUDED, chosen)
 	qdel(src)

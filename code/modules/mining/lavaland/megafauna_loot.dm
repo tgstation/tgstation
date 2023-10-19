@@ -375,6 +375,8 @@
 	var/using = FALSE
 	/// Currently charging?
 	var/charging = FALSE
+	/// The initiate of the ghost poll.
+	var/datum/weakref/initiate_ref
 	/// Cooldown between moves
 	COOLDOWN_DECLARE(move_cooldown)
 	/// Cooldown between attacks
@@ -423,21 +425,38 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/picked_ghost = pick(candidates)
-		soul.ckey = picked_ghost.ckey
-		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		soul.faction = list("[REF(user)]")
-		balloon_alert(user, "the scythe glows up")
-		add_overlay("soulscythe_gem")
-		density = TRUE
-		if(!ismob(loc))
-			reset_spin()
-	else
-		balloon_alert(user, "the scythe is dormant!")
-	REMOVE_TRAIT(src, TRAIT_NODROP, type)
-	using = FALSE
+
+	var/datum/component/ghost_poll/poll = AddComponent(/datum/component/ghost_poll, \
+		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
+		job_bans = ROLE_PAI, \
+		title = name \
+	)
+	RegisterSignal(poll, COMSIG_GHOSTPOLL_CONCLUDED, PROC_REF(on_poll_concluded))
+	initiate_ref = WEAKREF(user)
+
+/// Ghost poll has concluded and a candidate has been chosen.
+/obj/item/soulscythe/proc/on_poll_concluded(datum/source, mob/dead/observer/ghost)
+	SIGNAL_HANDLER
+
+	var/mob/living/master = initiate_ref?.resolve()
+
+	if(isnull(ghost))
+		balloon_alert(master, "the scythe is dormant!")
+		REMOVE_TRAIT(src, TRAIT_NODROP, type)
+		using = FALSE
+		initiate_ref = null
+		return
+
+	soul.ckey = ghost.ckey
+	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
+	soul.faction = list("[REF(master)]")
+	balloon_alert(master, "the scythe glows")
+	add_overlay("soulscythe_gem")
+	density = TRUE
+	if(!ismob(loc))
+		reset_spin()
+
+	initiate_ref = null
 
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)

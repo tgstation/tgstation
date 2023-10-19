@@ -25,6 +25,10 @@
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
 	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
+	/// The iniator of the capture, used for ghost polling
+	var/datum/weakref/initiate_ref
+	/// The victim of the capture
+	var/datum/weakref/victim_ref
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -318,7 +322,18 @@
 		return TRUE
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
-	INVOKE_ASYNC(src, PROC_REF(get_ghost_to_replace_shade), victim, user)
+
+	var/datum/component/ghost_poll/poll = AddComponent(/datum/component/ghost_poll, \
+		ignore_key = POLL_IGNORE_SHADE, \
+		job_bans = ROLE_CULTIST, \
+		title = "A shade" \
+	)
+
+	RegisterSignal(poll, COMSIG_GHOSTPOLL_CONCLUDED, PROC_REF(on_poll_concluded))
+
+	initiate_ref = WEAKREF(user)
+	victim_ref = WEAKREF(victim)
+
 	return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
@@ -430,33 +445,27 @@
 		shade_datum = shade.mind.add_antag_datum(/datum/antagonist/shade_minion)
 	shade_datum.update_master(user.real_name)
 
-/**
- * Gets a ghost from dead chat to replace a missing player when a shade is created.
- *
- * Gets ran if a soulstone is used on a body that has no client to take over the shade.
- *
- * victim - the body that's being shaded
- * user - the mob shading the body
- *
- * Returns FALSE if no ghosts are available or the replacement fails.
- * Returns TRUE otherwise.
- */
-/obj/item/soulstone/proc/get_ghost_to_replace_shade(mob/living/carbon/victim, mob/user)
-	var/mob/dead/observer/chosen_ghost
-	var/list/consenting_candidates = poll_ghost_candidates("Would you like to play as a Shade?", "Cultist", ROLE_CULTIST, 5 SECONDS, POLL_IGNORE_SHADE)
-	if(length(consenting_candidates))
-		chosen_ghost = pick(consenting_candidates)
+/// Called when a ghost is chosen to become a shade.
+/obj/item/soulstone/proc/on_poll_concluded(datum/source, mob/dead/observer/ghost)
+	SIGNAL_HANDLER
 
-	if(!victim || user.incapacitated() || !user.is_holding(src) || !user.CanReach(victim, src))
+	var/mob/living/master = initiate_ref?.resolve()
+	var/mob/living/victim = victim_ref?.resolve()
+
+	if(isnull(victim) || master.incapacitated() || !master.is_holding(src) || !master.CanReach(victim, src))
 		return FALSE
-	if(!chosen_ghost || !chosen_ghost.client)
-		to_chat(user, span_danger("There were no spirits willing to become a shade."))
+	if(isnull(ghost?.client))
+		to_chat(master, span_danger("There were no spirits willing to become a shade."))
 		return FALSE
-	if(contents.len) //If they used the soulstone on someone else in the meantime
+	if(length(contents)) //If they used the soulstone on someone else in the meantime
 		return FALSE
-	to_chat(user, "[span_info("<b>Capture successful!</b>:")] A spirit has entered [src], \
+	to_chat(master, "[span_info("<b>Capture successful!</b>:")] A spirit has entered [src], \
 		taking upon the identity of [victim].")
-	init_shade(victim, user, shade_controller = chosen_ghost)
+	init_shade(victim, master, shade_controller = ghost)
+
+	initiate_ref = null
+	victim_ref = null
+
 	return TRUE
 
 /proc/make_new_construct_from_class(construct_class, theme, mob/target, mob/creator, cultoverride, loc_override)
