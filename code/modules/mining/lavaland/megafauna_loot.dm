@@ -375,8 +375,6 @@
 	var/using = FALSE
 	/// Currently charging?
 	var/charging = FALSE
-	/// The initiate of the ghost poll.
-	var/datum/weakref/initiate_ref
 	/// Cooldown between moves
 	COOLDOWN_DECLARE(move_cooldown)
 	/// Cooldown between attacks
@@ -426,21 +424,16 @@
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
 
-	var/datum/component/ghost_poll/poll = AddComponent(/datum/component/ghost_poll, \
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user)
+	AddComponent(/datum/component/ghost_poll, \
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
+		cb = to_call, \
 		title = name \
 	)
-	RegisterSignal(poll, COMSIG_GHOSTPOLL_CONCLUDED, PROC_REF(on_poll_concluded))
-	initiate_ref = WEAKREF(user)
 
 /// Ghost poll has concluded and a candidate has been chosen.
-/obj/item/soulscythe/proc/on_poll_concluded(datum/source, mob/dead/observer/ghost)
-	SIGNAL_HANDLER
-
-	var/mob/living/master = initiate_ref?.resolve()
-	initiate_ref = null
-
+/obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)
 	if(isnull(ghost))
 		balloon_alert(master, "the scythe is dormant!")
 		REMOVE_TRAIT(src, TRAIT_NODROP, type)

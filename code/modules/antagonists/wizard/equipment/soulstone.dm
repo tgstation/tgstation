@@ -25,10 +25,6 @@
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
 	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
-	/// The iniator of the capture, used for ghost polling
-	var/datum/weakref/initiate_ref
-	/// The victim of the capture
-	var/datum/weakref/victim_ref
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -323,16 +319,13 @@
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
 
-	var/datum/component/ghost_poll/poll = AddComponent(/datum/component/ghost_poll, \
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, victim)
+	AddComponent(/datum/component/ghost_poll, \
 		ignore_key = POLL_IGNORE_SHADE, \
 		job_bans = ROLE_CULTIST, \
+		cb = to_call, \
 		title = "A shade" \
 	)
-
-	RegisterSignal(poll, COMSIG_GHOSTPOLL_CONCLUDED, PROC_REF(on_poll_concluded))
-
-	initiate_ref = WEAKREF(user)
-	victim_ref = WEAKREF(victim)
 
 	return TRUE //it'll probably get someone ;)
 
@@ -446,14 +439,7 @@
 	shade_datum.update_master(user.real_name)
 
 /// Called when a ghost is chosen to become a shade.
-/obj/item/soulstone/proc/on_poll_concluded(datum/source, mob/dead/observer/ghost)
-	SIGNAL_HANDLER
-
-	var/mob/living/master = initiate_ref?.resolve()
-	var/mob/living/victim = victim_ref?.resolve()
-	initiate_ref = null
-	victim_ref = null
-
+/obj/item/soulstone/proc/on_poll_concluded(mob/living/master, mob/living/victim, mob/dead/observer/ghost)
 	if(isnull(victim) || master.incapacitated() || !master.is_holding(src) || !master.CanReach(victim, src))
 		return FALSE
 	if(isnull(ghost?.client))
