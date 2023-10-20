@@ -1784,9 +1784,10 @@
 /datum/reagent/plantnutriment/endurogrow/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
-		myseed.adjust_potency(-round(volume * 0.1))
-		myseed.adjust_yield(-round(volume * 0.075))
-		myseed.adjust_endurance(round(volume * 0.35))
+		myseed.adjust_potency(-round(volume * 0.2))
+		myseed.adjust_yield(-round(volume * 0.15))
+		myseed.adjust_endurance(round(volume * 0.55))
+		myseed.adjust_lifespan(round(volume * 0.55))
 
 /datum/reagent/plantnutriment/liquidearthquake
 	name = "Liquid Earthquake"
@@ -1802,6 +1803,7 @@
 		myseed.adjust_weed_rate(round(volume * 0.1))
 		myseed.adjust_weed_chance(round(volume * 0.3))
 		myseed.adjust_production(-round(volume * 0.075))
+		myseed.adjust_lifespan(round(volume * 0.35))
 
 // GOON OTHERS
 
@@ -2292,6 +2294,7 @@
 	mytray.adjust_plant_health(round(volume * 0.18))
 	mytray.myseed?.adjust_production(-round(volume / 10)-prob(volume % 10))
 	mytray.myseed?.adjust_potency(round(volume))
+	mytray.myseed?.adjust_weed_chance(round(volume * 0.3))
 
 /datum/reagent/lye
 	name = "Lye"
