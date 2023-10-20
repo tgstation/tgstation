@@ -26,7 +26,7 @@
 		return
 
 	// A little bit of chill to make them feel cold to the touch
-	affected_mob.adjust_bodytemperature(10 * seconds_per_tick, min_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 10)
+	affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, min_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 10)
 
 	switch(stage)
 		// early symptoms: mild shakes and dizziness
