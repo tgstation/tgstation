@@ -4473,6 +4473,7 @@
 #include "code\modules\mob\living\basic\pets\dog\corgi.dm"
 #include "code\modules\mob\living\basic\pets\dog\dog_subtypes.dm"
 #include "code\modules\mob\living\basic\pets\dog\strippable_items.dm"
+#include "code\modules\mob\living\basic\ruin_defender\flesh.dm"
 #include "code\modules\mob\living\basic\ruin_defender\living_floor.dm"
 #include "code\modules\mob\living\basic\ruin_defender\stickman.dm"
 #include "code\modules\mob\living\basic\space_fauna\ant.dm"

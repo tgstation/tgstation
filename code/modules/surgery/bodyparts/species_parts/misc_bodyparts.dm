@@ -558,3 +558,22 @@
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
+
+///flesh
+
+/obj/item/bodypart/arm/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+
+/obj/item/bodypart/arm/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE

@@ -311,6 +311,37 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 
+/obj/machinery/puzzle_keycardpad
+	name = "keycard panel"
+	desc = "A panel that controls something nearby. Accepts keycards."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "keycardpad0"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	base_icon_state = "keycardpad"
+	var/used = FALSE
+	var/id = "0"
+
+/obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/keycard) || used)
+		return
+	var/obj/item/keycard/key = attacking_item
+	var/correct_card = key.puzzle_id == id
+	balloon_alert_to_viewers("[correct_card ? "correct" : "incorrect"] card swiped[correct_card ? "" : "!"]")
+	playsound(src, 'sound/machines/card_slide.ogg', 45, TRUE)
+	if(!correct_card)
+		return
+	used = TRUE
+	update_icon_state()
+	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
+
+/obj/machinery/puzzle_keycardpad/update_icon_state()
+	icon_state = "[base_icon_state][used]"
+	return ..()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
+
 //
 // blockade
 //
