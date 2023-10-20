@@ -20,4 +20,5 @@ SUBSYSTEM_DEF(mouse_entered)
 		// which could cause problems given the heat of MouseEntered.
 		// Lummox has teased this for 515: https://www.byond.com/forum/post/2621745
 		// ...though you're most likely reading this on BYOND version 600.
+		// 515 is here he hasn't done it yet, 516?
 		hovers[hovering_client] = null

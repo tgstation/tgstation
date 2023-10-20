@@ -74,11 +74,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		output += "[uppertext(category)]: [message]"
 
 	if(flags & ENTRY_USE_DATA_W_READABLE)
-#if DM_VERSION >= 515
 		output += json_encode(data, JSON_PRETTY_PRINT)
-#else
-		output += json_encode(data)
-#endif
 	return output
 
 #define MANUAL_JSON_ENTRY(list, key, value) list.Add("\"[key]\":[(!isnull(value)) ? json_encode(value) : "null"]")
