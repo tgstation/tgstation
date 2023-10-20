@@ -47,7 +47,7 @@
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
 		if(QDELETED(ghost) || isnull(ghost.client))
 			continue
-		if(is_banned_from(ghost.ckey, list(job_bans)))
+		if(is_banned_from(ghost.ckey, job_ban_list))
 			continue
 
 		candidates += ghost
