@@ -59,19 +59,7 @@ SUBSYSTEM_DEF(sounds)
 		".aiff",
 	)
 
-	var/list/directories = list("sound/")
-	while(LAZYLEN(directories))
-		CHECK_TICK
-		var/current = directories[directories.len]
-		directories.len--
-		for(var/path in flist(current))
-			if(endswith(path, "/"))
-				directories += "[current][path]"
-				continue
-			for(var/extension in valid_file_extensions)
-				if(!endswith(path, extension))
-					continue
-				all_sounds += "[current][path]"
+	all_sounds = pathwalk("sound/", valid_file_extensions)
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)

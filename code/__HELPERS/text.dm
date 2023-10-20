@@ -1195,4 +1195,4 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /// Returns TRUE if the input_text ends with the ending
 /proc/endswith(input_text, ending)
 	var/input_length = LAZYLEN(ending)
-	return copytext(input_text, LAZYLEN(input_text) - max(0, input_length - 1)) == ending
+	return !!findtext(input_text, ending, -input_length)
