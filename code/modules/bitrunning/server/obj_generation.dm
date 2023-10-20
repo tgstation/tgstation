@@ -76,12 +76,19 @@
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)
 	var/domain_forbids_items = generated_domain.forbids_disk_items
 	var/domain_forbids_spells = generated_domain.forbids_disk_spells
-	var/failed = FALSE
 
+	var/import_ban = list()
+	var/disk_ban = list()
 	if(domain_forbids_items)
-		to_chat(neo, span_warning("This domain forbids the use of smuggled digital equipment, your disk items will not be granted!"))
-	if(domain_forbids_spells)
-		to_chat(neo, span_warning("This domain forbids the use of imported abilities, your disk powers will not be granted!"))
+		import_ban += "smuggled digital equipment"
+		disk_ban += "items"
+	if(domain_forbid_spells)
+		import_ban += "imported_abilities"
+		disk_ban += "powers"
+	if(import_ban )
+		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your disk [english_list(disk_ban)] will not be granted!")))
+
+	var/failed = FALSE
 
 	// We don't need to bother going over the disks if neither of the types can be used.
 	if(domain_forbids_spells && domain_forbids_items)
