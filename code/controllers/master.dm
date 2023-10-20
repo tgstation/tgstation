@@ -256,8 +256,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			// Loop.
 			Master.StartProcessing(0)
 
+#ifdef SPACEMAN_DMM
+	to_chat(world, span_boldannounce("SKIPPING LAZY LOADING FOR LINTERS!"))
+#else
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
+#endif
 
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
