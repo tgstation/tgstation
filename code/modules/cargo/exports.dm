@@ -27,7 +27,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/total_amount = list()
 	///export instance => total value of sold objects
 	var/list/total_value = list()
-	///only for dry runs, set to false if any objects were unscannable
+	///set to false if any objects were unscannable
 	var/all_contents_scannable = TRUE
 
 /*
