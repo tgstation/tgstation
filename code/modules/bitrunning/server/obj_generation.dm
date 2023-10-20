@@ -82,7 +82,7 @@
 	if(domain_forbids_items)
 		import_ban += "smuggled digital equipment"
 		disk_ban += "items"
-	if(domain_forbid_spells)
+	if(domain_forbids_spells)
 		import_ban += "imported_abilities"
 		disk_ban += "powers"
 	if(import_ban)
