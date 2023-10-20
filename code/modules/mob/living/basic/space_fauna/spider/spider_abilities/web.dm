@@ -6,7 +6,6 @@
 	button_icon_state = "lay_web"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE

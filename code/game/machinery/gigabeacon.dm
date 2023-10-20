@@ -13,7 +13,7 @@
 	. = ..()
 	var/turf/T = loc
 	Beacon = new(T)
-	Beacon.invisibility = INVISIBILITY_MAXIMUM
+	Beacon.SetInvisibility(INVISIBILITY_MAXIMUM)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
@@ -25,6 +25,6 @@
 	if(QDELETED(Beacon)) //Don't move it out of nullspace BACK INTO THE GAME for the love of god
 		var/turf/T = loc
 		Beacon = new(T)
-		Beacon.invisibility = INVISIBILITY_MAXIMUM
+		Beacon.SetInvisibility(INVISIBILITY_MAXIMUM)
 	else if (Beacon.loc != loc)
 		Beacon.forceMove(loc)

@@ -71,7 +71,7 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool)
+/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	. = ..()
 	if(isnull(crystal_lens) || !(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_HEMOSTAT))
 		return
