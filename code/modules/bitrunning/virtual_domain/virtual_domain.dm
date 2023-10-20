@@ -20,6 +20,10 @@
 	var/filename = "virtual_domain.dmm"
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
+	/// If this domain blocks the use of items from disks, for whatever reason
+	var/forbids_disk_items = FALSE
+	/// If this domain blocks the use of spells from disks, for whatever reason
+	var/forbids_disk_spells = FALSE
 	/// Information given to connected clients via ability
 	var/help_text
 	// Name to show in the UI

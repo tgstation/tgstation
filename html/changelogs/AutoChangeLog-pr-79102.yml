@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Blobbernauts will once again take damage when not on blob tiles."

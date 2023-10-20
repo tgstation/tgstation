@@ -60,7 +60,6 @@
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
-	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot

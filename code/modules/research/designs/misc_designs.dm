@@ -588,7 +588,6 @@
 	id = "paint_remover"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
-	reagents_list = list(/datum/reagent/acetone = 60)
 	build_path = /obj/item/paint/paint_remover
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL

@@ -45,44 +45,17 @@
 #define SYNTHFLESH_UNHUSK_AMOUNT 100
 
 //used by chem masters and pill presses
-#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
-#define RANDOM_PILL_STYLE 22 //Dont change this one though
-
-//used by chem masters and pill presses
-//update this if you add more patch icons
-#define PATCH_STYLE_LIST list(\
-	"bandaid_1", \
-	"bandaid_2", \
-	"bandaid_3", \
-	"bandaid_4", \
-	"bandaid_blank", \
-	"bandaid_both", \
-	"bandaid_brute", \
-	"bandaid_brute_2", \
-	"bandaid_burn", \
-	"bandaid_burn_2", \
-	"bandaid_clown", \
-	"bandaid_colonthree", \
-	"bandaid_exclaimationpoint", \
-	"bandaid_mix", \
-	"bandaid_monke", \
-	"bandaid_msic", \
-	"bandaid_questionmark", \
-	"bandaid_suffocation", \
-	"bandaid_suffocation_2", \
-	"bandaid_toxin", \
-	"bandaid_toxin_2", \
-) //icon_state list
+// The categories of reagent packaging
+#define CAT_CONDIMENTS "condiments"
+#define CAT_TUBES "tubes"
+#define CAT_PILLS "pills"
+#define CAT_PATCHES "patches"
 #define DEFAULT_PATCH_STYLE "bandaid_blank"
-
 //used by chem master
 #define CONDIMASTER_STYLE_AUTO "auto"
 #define CONDIMASTER_STYLE_FALLBACK "_"
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
-
-/// the default temperature at which chemicals are added to reagent holders at
-#define DEFAULT_REAGENT_TEMPERATURE 300
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 ///the minimum volume of reagents than can be operated on.
@@ -97,9 +70,10 @@
 #define BUFFER_IONIZING_STRENGTH 30
 ///The maximum temperature a reagent holder can attain
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
-
 ///The default purity of all non reacted reagents
 #define REAGENT_STANDARD_PURITY 0.75
+/// the default temperature at which chemicals are added to reagent holders at
+#define DEFAULT_REAGENT_TEMPERATURE 300
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
