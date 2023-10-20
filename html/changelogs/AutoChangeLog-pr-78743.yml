@@ -1,9 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - code_imp: "Adds 'Bloody Spreader' component that bloodies everything it touches!"
-  - code_imp: "For example inserting an item into it if it is a storage item. Or entering it if it's a turf, or bumping onto it, or... you get the point, hopefully."
-  - rscadd: "Added this component to the MEAT backpack, meat slabs, bouncy castles, meateor fluff, meateor heart, and the heretic sanguine blade."
-  - rscadd: "Gave most of these the blood walk component as well, which spreads blood if it's dragged around."
-  - rscadd: "Meat slabs contain a limited amount of both components, eventually they will 'dry out'."
-  - code_imp: "Added a signal for when an item is entered into storage."

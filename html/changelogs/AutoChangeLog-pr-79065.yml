@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Spasms won't trigger in stasis, incapacitated, if your hands are blocked, or you are immobilized."

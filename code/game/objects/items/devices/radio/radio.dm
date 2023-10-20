@@ -484,9 +484,9 @@
 	. = ..()
 	if(unscrewed)
 		return
-	if(broadcasting)
+	if(broadcasting && overlay_mic_idle)
 		. += overlay_mic_idle
-	if(listening)
+	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)

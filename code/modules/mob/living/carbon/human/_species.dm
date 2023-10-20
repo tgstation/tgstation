@@ -2334,3 +2334,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/check_head_flags(check_flags = NONE)
 	var/obj/item/bodypart/head/fake_head = bodypart_overrides[BODY_ZONE_HEAD]
 	return (initial(fake_head.head_flags) & check_flags)
+
+/datum/species/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Gained / Owned: [properly_gained ? "Yes" : "No"]"
