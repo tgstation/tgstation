@@ -185,11 +185,10 @@
 	UnregisterSignal(unfriended, COMSIG_ATOM_WAS_ATTACKED)
 
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
-	var/datum/targetting_datum/basic/targetting = controller.blackboard[BB_TARGETTING_DATUM]
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
 		return
-	if(victim.stat > targetting.stat_attack)
+	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
 	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETTING_DATUM)
