@@ -4,7 +4,7 @@ import { Component, createRef, InfernoKeyboardEvent, RefObject } from 'inferno';
 import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { byondMessages } from './timers';
 import { dragStartHandler } from 'tgui/drag';
-import { windowOpen, windowLoad, windowClose, windowSet } from './helpers';
+import { windowOpen, windowClose, windowSet } from './helpers';
 import { BooleanLike } from 'common/react';
 import { KEY } from 'common/keys';
 
@@ -68,7 +68,6 @@ export class TguiSay extends Component<{}, State> {
     Byond.subscribeTo('props', this.handleProps);
     Byond.subscribeTo('force', this.handleForceSay);
     Byond.subscribeTo('open', this.handleOpen);
-    windowLoad();
   }
 
   handleArrowKeys(direction: KEY.Up | KEY.Down) {

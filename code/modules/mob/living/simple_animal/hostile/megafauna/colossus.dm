@@ -180,7 +180,6 @@
 	damage = 25
 	armour_penetration = 100
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
@@ -191,7 +190,7 @@
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
-/obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dust_mob = target

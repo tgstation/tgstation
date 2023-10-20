@@ -2,6 +2,8 @@
 #define HEALING_SLEEP_DEFAULT 0.2
 /// The sleep healing multipler for organ passive healing (since organs heal slowly)
 #define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
@@ -163,51 +165,51 @@
 /datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = HEALING_SLEEP_DEFAULT
+		var/sleep_quality = HEALING_SLEEP_DEFAULT
 
 		// having high spirits helps us recover
 		if(owner.mob_mood)
 			switch(owner.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
-					healing = 0.2
+					sleep_quality = 0.2
 				if(SANITY_LEVEL_NEUTRAL)
-					healing = 0.1
+					sleep_quality = 0.1
 				if(SANITY_LEVEL_DISTURBED)
-					healing = 0
+					sleep_quality = 0
 				if(SANITY_LEVEL_UNSTABLE)
-					healing = 0
+					sleep_quality = 0
 				if(SANITY_LEVEL_CRAZY)
-					healing = -0.1
+					sleep_quality = -0.1
 				if(SANITY_LEVEL_INSANE)
-					healing = -0.2
+					sleep_quality = -0.2
 
 		var/turf/rest_turf = get_turf(owner)
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
 		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// sleeping in silence is always better
 		if(HAS_TRAIT(owner, TRAIT_DEAF))
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing += 0.2
+			sleep_quality += 0.2
 		else if((locate(/obj/structure/table) in owner.loc))
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// don't forget the bedsheet
 		if(locate(/obj/item/bedsheet) in owner.loc)
-			healing += 0.1
+			sleep_quality += 0.1
 
 		// you forgot the pillow
 		if(locate(/obj/item/pillow) in owner.loc)
-			healing += 0.1
+			sleep_quality += 0.1
 
 		var/need_mob_update = FALSE
-		if(healing > 0)
+		if(sleep_quality > 0)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
 				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
@@ -216,14 +218,22 @@
 						continue
 
 					// organ regeneration is very low so we crank up the healing rate to give a good bonus
-					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
+					var/healing_bonus = target_organ.healing_factor * sleep_quality * HEALING_SLEEP_ORGAN_MULTIPLIER
 					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
 
+				var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
+				if(exercised && carbon_owner.mind)
+					// the better you sleep, the more xp you gain
+					carbon_owner.mind.adjust_experience(/datum/skill/fitness, seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+					carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
+					if(prob(2))
+						to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
+
 			if(health_ratio > 0.8) // only heals minor physical damage
-				need_mob_update += owner.adjustBruteLoss(-0.4 * healing * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-				need_mob_update += owner.adjustFireLoss(-0.4 * healing * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-				need_mob_update += owner.adjustToxLoss(-0.2 * healing * seconds_between_ticks, updating_health = FALSE, forced = TRUE, required_biotype = MOB_ORGANIC)
-		need_mob_update += owner.adjustStaminaLoss(min(-0.4 * healing * seconds_between_ticks, -0.4 * HEALING_SLEEP_DEFAULT * seconds_between_ticks), updating_stamina = FALSE)
+				need_mob_update += owner.adjustBruteLoss(-0.4 * sleep_quality * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustFireLoss(-0.4 * sleep_quality * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+				need_mob_update += owner.adjustToxLoss(-0.2 * sleep_quality * seconds_between_ticks, updating_health = FALSE, forced = TRUE, required_biotype = MOB_ORGANIC)
+		need_mob_update += owner.adjustStaminaLoss(min(-0.4 * sleep_quality * seconds_between_ticks, -0.4 * HEALING_SLEEP_DEFAULT * seconds_between_ticks), updating_stamina = FALSE)
 		if(need_mob_update)
 			owner.updatehealth()
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
@@ -601,7 +611,7 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick(seconds_between_ticks)
-	if(owner.stat >= UNCONSCIOUS)
+	if(owner.stat >= UNCONSCIOUS || owner.incapacitated() || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return
 	if(!prob(15))
 		return
@@ -611,8 +621,6 @@
 				to_chat(owner, span_warning("Your leg spasms!"))
 				step(owner, pick(GLOB.cardinals))
 		if(2)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
@@ -641,8 +649,6 @@
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
 		if(5)
-			if(owner.incapacitated())
-				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			var/list/turf/targets = list()
 			for(var/turf/nearby_turfs in oview(owner, 3))
@@ -1035,3 +1041,4 @@
 
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
+#undef SLEEP_QUALITY_WORKOUT_MULTIPLER

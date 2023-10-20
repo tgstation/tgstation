@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing pill press & bottler won't stop when processing 50 unit bottles"
+  - code_imp: "made a lot of variables defines and lists static to save memory for plumbing pill press. Moved global lists to it's rightful\nplace"
+  - code_imp: "copied over chem master pill & patch designs over to plumbing pill press and removed the old designs. resized UI"

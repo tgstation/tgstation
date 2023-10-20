@@ -31,6 +31,9 @@
 /// From base of /mob/living/simple_animal/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
+/// From base of /mob/proc/update_held_items
+#define COMSIG_MOB_UPDATE_HELD_ITEMS "mob_update_held_items"
+
 /// From base of /client/Move(): (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
 	/// Should we stop the current living movement attempt

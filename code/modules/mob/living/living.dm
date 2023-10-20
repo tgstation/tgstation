@@ -540,6 +540,15 @@
 		if(held_item)
 			. = held_item.GetID()
 
+/**
+ * Returns the access list for this mob
+ */
+/mob/living/proc/get_access()
+	var/obj/item/card/id/id = get_idcard()
+	if(isnull(id))
+		return list()
+	return id.GetAccess()
+
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(!held_item)
@@ -1324,7 +1333,7 @@
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
-	invisibility = INVISIBILITY_ABSTRACT
+	SetInvisibility(INVISIBILITY_ABSTRACT)
 
 	var/list/item_contents = list()
 
@@ -1374,7 +1383,7 @@
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
-				new_mob.invisibility = 0
+				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
 				created_robot.connected_ai = null
@@ -1414,6 +1423,7 @@
 				/mob/living/basic/cow,
 				/mob/living/basic/crab,
 				/mob/living/basic/goat,
+				/mob/living/basic/gorilla,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
@@ -1431,7 +1441,6 @@
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,

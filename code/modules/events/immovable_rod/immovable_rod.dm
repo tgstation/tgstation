@@ -185,7 +185,7 @@
 	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
 	if(isobj(clong))
 		if(istramwall(clong) && !special_target)
-			rod_vs_tram_battle(clong)
+			rod_vs_tram_battle()
 			return ..()
 
 		var/obj/clong_obj = clong
@@ -301,17 +301,17 @@
  * while flying parallel.
  */
 /obj/effect/immovablerod/proc/rod_vs_tram_battle()
-	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in src.loc
+	var/obj/structure/transport/linear/tram/transport_module = locate() in src.loc
 
-	if(isnull(industrial_lift))
+	if(isnull(transport_module))
 		return
 
-	var/datum/lift_master/tram/lift_master = industrial_lift.lift_master_datum
+	var/datum/transport_controller/linear/tram/tram_controller = transport_module.transport_controller_datum
 
-	if(isnull(lift_master))
+	if(isnull(tram_controller))
 		return
 
-	var/push_target = lift_master.rod_collision(src)
+	var/push_target = tram_controller.rod_collision(src)
 
 	if(!push_target)
 		return
