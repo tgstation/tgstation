@@ -15,11 +15,11 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	name = "Food Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain foods."
 	icon = FA_ICON_SHRIMP
-	value = -3
+	value = -2
 	gain_text = span_danger("You feel your immune system shift.")
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
 	medical_record_text = "Patient's immune system responds violently to certain food."
-	hardcore_value = 2
+	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen)
 	/// Footype flags that will trigger the allergy
@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	if(target_foodtypes != NONE) // Already set, don't care
 		return
 
-	var/desired_allergy = client_source?.prefs.read_preference(/datum/preference/choiced/food_allergy)
+	var/desired_allergy = client_source?.prefs.read_preference(/datum/preference/choiced/food_allergy) || "Random"
 	if(desired_allergy != "Random")
 		target_foodtypes = GLOB.possible_food_allergies[desired_allergy]
 		if(target_foodtypes != NONE) // Got a preference, don't care
