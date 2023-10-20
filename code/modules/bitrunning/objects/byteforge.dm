@@ -26,7 +26,7 @@
 
 /// Adds the particle overlays to the byteforge
 /obj/machinery/byteforge/proc/setup_particles(angry = FALSE)
-	cut_overlays()
+	cut_overlay(byteforge_particles)
 
 	byteforge_particles = mutable_appearance(initial(icon), "on_particles[angry ? "_angry" : ""]", ABOVE_MOB_LAYER)
 
@@ -38,7 +38,7 @@
 	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay[angry ? "_angry" : ""]")
 	flick_overlay_view(lighting, 1 SECONDS)
 
-	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
+	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_PALE_PINK : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)

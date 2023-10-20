@@ -7,12 +7,13 @@
 /obj/machinery/quantum_server/proc/get_antagonist_role()
 	var/list/available = list()
 
-	for(var/datum/antagonist/bitrunning_glitch/subtype in subtypesof(/datum/antagonist/bitrunning_glitch))
+	for(var/datum/antagonist/bitrunning_glitch/subtype as anything in subtypesof(/datum/antagonist/bitrunning_glitch))
 		if(threat >= initial(subtype.threat))
 			available += subtype
 
 	shuffle_inplace(available)
 	var/datum/antagonist/bitrunning_glitch/chosen = pick(available)
+	chosen = new()
 
 	threat -= chosen.threat * 0.5
 
@@ -89,7 +90,9 @@
 	if(isnull(mutation_target))
 		CRASH("vdom: After two attempts, no valid mutation target was found.")
 
-	mutation_target.add_overlay(mutable_appearance('icons/effects/beam.dmi', "lightning12", ABOVE_MOB_LAYER))
+	var/mutable_appearance/glitch_effect = mutable_appearance('icons/effects/bitrunning.dmi', "glitch", ABOVE_MOB_LAYER, alpha = 150)
+	mutation_target.add_overlay(glitch_effect)
+	mutation_target.add_atom_colour(LIGHT_COLOR_DARK_PINK, FIXED_COLOUR_PRIORITY)
 
 	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flashwindow = FALSE)
 
@@ -98,7 +101,8 @@
 
 	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
 	if(isnull(ghost_mind) || QDELETED(mutation_target))
-		mutation_target.cut_overlays()
+		mutation_target.cut_overlay(glitch_effect)
+		mutation_target.remove_atom_colour(LIGHT_COLOR_DARK_PINK)
 		return
 
 	var/mob/living/antag_mob
