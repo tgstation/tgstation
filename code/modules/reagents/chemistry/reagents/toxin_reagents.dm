@@ -396,6 +396,19 @@
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume * 0.5))
 	mytray.adjust_weedlevel(-rand(1,2))
+	mytray.myseed?.adjust_weed_chance(-round(volume * 0.3))
+
+/datum/reagent/toxin/plantbgone/weedkiller/organic
+	name = "Organic Weed Killer"
+	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
+	color = "#6e026e" // rgb: 75, 0, 75
+	ph = 3
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/toxin/plantbgone/weedkiller/organic/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_toxic(round(volume * 0.125))
+	mytray.adjust_weedlevel(-rand(1,2))
+	mytray.myseed?.adjust_weed_chance(-round(volume * 0.2))
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
