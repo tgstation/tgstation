@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Silicons don't spark when shot by disablers"
-  - bugfix: "Changelings who fail to catch something with a tencacle will have throw mode disabled automatically"
-  - bugfix: "Fixes occasions where you can reflect with Sleeping Carp when you shouldn't be able to"
-  - bugfix: "Fixes some projectiles causing like 20x less eye blur than they should be"
-  - refactor: "Refactored bullet-mob interactions"
-  - refactor: "Nightmare \"shadow dodge\" projectile ability is now sourced from their brain"

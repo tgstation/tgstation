@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - refactor: "Holodeck monkeys have been moved to the same system as old monkeys, and should retain the similar \"ephermeal\" behavior, while being a whole lot smarter by leveraging new AI. Please report anything that is completely wack about this."
+  - balance: "Slimes can't eat holodeck monkeys anymore, because apparently they could and that is wack."

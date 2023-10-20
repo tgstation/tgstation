@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Artificer constructs have been converted to the basic mob framework. This should change very little about them, but please report any bugs. NPC artificers are now smarter, and will focus on healing nearby wounded constructs - if you see them, take them out first!"

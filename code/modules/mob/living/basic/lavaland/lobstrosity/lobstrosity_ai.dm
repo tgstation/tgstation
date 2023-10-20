@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/lobster,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0
 	)
@@ -17,9 +18,6 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
 		/datum/ai_planning_subtree/find_fingers,
 	)
-
-/datum/targetting_datum/basic/lobster
-	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster

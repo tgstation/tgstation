@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - code_imp: "Bitrunner domains can now have spells or items from disks disabled if the domain maker wants such a thing"
