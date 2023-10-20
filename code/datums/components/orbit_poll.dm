@@ -84,7 +84,7 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		deadchat_broadcast("[key_name(chosen)] was selected for the role ([role_name]).", "Ghost Poll: ", parent)
+		deadchat_broadcast("[key_name(chosen, include_name = FALSE)] was selected for the role ([role_name]).", "Ghost Poll: ", parent)
 
 	phone_home(chosen)
 
