@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix husks fire decay rate to be slower. Pyre chaplains can now use husked bodies (only caused by burns) to complete their burning sacrifice rite."

@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Ghosts will now be prompted to orbit when someone loses control due to being blackout drunk."
-  - qol: "Ghosts will now be prompted to orbit when a cultist begins inscribing a Nar'Sie rune."
