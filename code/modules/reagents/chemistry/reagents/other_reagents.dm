@@ -2294,7 +2294,6 @@
 	mytray.adjust_plant_health(round(volume * 0.18))
 	mytray.myseed?.adjust_production(-round(volume / 10)-prob(volume % 10))
 	mytray.myseed?.adjust_potency(round(volume))
-	mytray.myseed?.adjust_weed_chance(round(volume * 0.3))
 
 /datum/reagent/lye
 	name = "Lye"
