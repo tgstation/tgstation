@@ -1,4 +1,64 @@
+/datum/round_event_control
+	///do we check against the antag cap before attempting a spawn?
+	var/checks_antag_cap = FALSE
+
+/datum/round_event_control/proc/return_failure_string(players_amt)
+	var/string
+	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES))
+		string += "Roundstart"
+	if(occurrences >= max_occurrences)
+		if(string)
+			string += ","
+		string += "Cap Reached"
+	if(earliest_start >= world.time-SSticker.round_start_time)
+		if(string)
+			string += ","
+		string +="Too Soon"
+	if(players_amt < min_players)
+		if(string)
+			string += ","
+		string += "Lack of players"
+	if(holidayID && !check_holidays(holidayID))
+		if(string)
+			string += ","
+		string += "Holiday Event"
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		if(string)
+			string += ","
+		string += "Round End"
+	if(checks_antag_cap)
+		if(!roundstart && !SSgamemode.can_inject_antags())
+			if(string)
+				string += ","
+			string += "Too Many Antags"
+	return string
+
+/datum/round_event_control/antagonist/return_failure_string(players_amt)
+	. =..()
+	if(!check_enemies())
+		if(.)
+			. += ", "
+		. += "No Enemies"
+	if(!check_required())
+		if(.)
+			. += ", "
+		. += "No Required"
+	return .
+
+/datum/round_event_control/antagonist/solo/return_failure_string(players_amt)
+	. =..()
+
+	var/antag_amt = get_antag_amount()
+	var/list/candidates = get_candidates()
+	if(candidates.len < antag_amt)
+		if(.)
+			. += ", "
+		. += "Not Enough Candidates!"
+
+	return .
+
 /datum/round_event_control/antagonist
+	checks_antag_cap = TRUE
 	track = EVENT_TRACK_ROLESET
 	///list of required roles, needed for this to form
 	var/list/exclusive_roles
@@ -51,8 +111,6 @@
 
 	if(!.)
 		return
-	if(!roundstart && !SSgamemode.can_inject_antags())
-		return FALSE
 
 /datum/round_event_control/antagonist/solo
 	typepath = /datum/round_event/antagonist/solo

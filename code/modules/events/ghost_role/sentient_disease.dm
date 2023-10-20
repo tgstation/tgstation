@@ -11,6 +11,7 @@
 	max_wizard_trigger_potency = 7
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
+	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"

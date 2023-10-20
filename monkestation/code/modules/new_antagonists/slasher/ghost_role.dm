@@ -5,6 +5,7 @@
 	max_occurrences = 2
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_SPOOKY, TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/slasher
 	minimum_required = 1

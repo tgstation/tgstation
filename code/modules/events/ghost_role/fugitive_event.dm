@@ -11,6 +11,7 @@
 	map_flags = EVENT_SPACE_ONLY
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1

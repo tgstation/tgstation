@@ -957,6 +957,7 @@ SUBSYSTEM_DEF(gamemode)
 	dat += "<td width=5%><b>M.Pop</b></td>"
 	dat += "<td width=5%><b>M.Time</b></td>"
 	dat += "<td width=7%><b>Can Occur</b></td>"
+	dat += "<td width=7%><b>Failure Reason</b></td>"
 	dat += "<td width=16%><b>Weight</b></td>"
 	dat += "<td width=26%><b>Actions</b></td>"
 	dat += "</tr>"
@@ -999,6 +1000,7 @@ SUBSYSTEM_DEF(gamemode)
 		dat += "<td>[event.min_players]</td>" //Minimum pop
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
+		dat += "<td>[event.return_failure_string(active_players)]</td>" //Why can't happen?
 		var/weight_string = "(new.[event.calculated_weight] /raw.[event.weight])"
 		if(assoc_spawn_weight[event])
 			var/percent = round((event.calculated_weight / total_weight) * 100)

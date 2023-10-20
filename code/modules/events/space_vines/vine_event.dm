@@ -16,6 +16,7 @@
 	)
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMMUNAL, TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/spacevine
 	fakeable = FALSE
