@@ -179,12 +179,13 @@
 	if(length(target.contents))
 		message = "Scanned [target] and its contents"
 		if(price)
-			message += ", total value: <b>[price]</b> credits."
+			message += ", total value: <b>[price]</b> credits"
 		else
-			message += ", no export values."
+			message += ", no export values"
 			warning = TRUE
 		if(!report.all_contents_scannable)
-			message += " (Undeterminable value(s) detected, final value may differ.)"
+			message += " (Undeterminable value detected, final value may differ)"
+		message += "."	
 	else
 		if(!report.all_contents_scannable)
 			message += ", unable to determine value."
