@@ -1,0 +1,4 @@
+author: "Ical92"
+delete-after: True
+changes:
+  - bugfix: "connected Meta's Cytology equipment properly"
