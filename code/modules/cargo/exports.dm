@@ -162,7 +162,7 @@ Then the player gets the profit from selling his own wasted time.
 	///Quantity of the object in question.
 	var/export_amount = get_amount(sold_item)
 
-	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost) || (dry_run && unscannable))
+	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost) || (dry_run && !scannable))
 		return FALSE
 
 	// If we're not doing a dry run, send COMSIG_ITEM_EXPORTED to the sold item
