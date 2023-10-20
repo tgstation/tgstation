@@ -96,6 +96,12 @@
 "dR" = (
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/quantumresearch/science)
+"dW" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "eo" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/stripes{
@@ -120,6 +126,10 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "eA" = (
 /obj/machinery/door/airlock/security/glass,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "eD" = (
@@ -199,6 +209,10 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "gQ" = (
 /obj/item/ammo_casing/spent,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "gX" = (
@@ -211,8 +225,10 @@
 /turf/open/indestructible,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "hf" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/medkit/toxin,
 /turf/open/indestructible/white,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "hk" = (
 /obj/structure/aquarium/prefilled,
 /turf/open/floor/iron/dark/textured_large,
@@ -238,6 +254,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/quantumresearch/science)
+"ih" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "ij" = (
 /turf/closed/indestructible/reinforced,
 /area/ruin/space/has_grav/powered/quantumresearch)
@@ -300,8 +320,9 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "jA" = (
 /obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/white,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "jE" = (
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
@@ -332,8 +353,12 @@
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "kh" = (
-/turf/closed/indestructible/riveted/plastinum/nodiagonal,
-/area/template_noop)
+/obj/machinery/computer/terminal/meatderelict{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "ki" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -346,6 +371,7 @@
 "kn" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/light/cold/directional/south,
+/obj/structure/table/reinforced/rglass,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "kB" = (
@@ -369,9 +395,19 @@
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "lf" = (
-/mob/living/basic/living_limb_flesh,
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 8
+	},
 /turf/open/indestructible/white,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "lm" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 10
@@ -448,6 +484,13 @@
 /area/ruin/space/has_grav/powered/quantumresearch/science)
 "oj" = (
 /obj/machinery/door/airlock/security,
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "os" = (
@@ -462,6 +505,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered/quantumresearch/science)
 "oX" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "pe" = (
@@ -478,8 +522,9 @@
 	id_tag = "md_scis"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/white,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "pk" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/white{
@@ -543,6 +588,12 @@
 /turf/open/indestructible/white{
 	icon_state = "showroomfloor"
 	},
+/area/ruin/space/has_grav/powered/quantumresearch)
+"qs" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "qw" = (
 /obj/effect/turf_decal/tile/red,
@@ -623,8 +674,11 @@
 	id = "md_scis";
 	name = "safety lock control"
 	},
-/turf/template_noop,
-/area/template_noop)
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "sJ" = (
 /obj/structure/broken_flooring/corner/always_floorplane{
 	dir = 4
@@ -694,6 +748,15 @@
 	},
 /turf/open/indestructible,
 /area/ruin/space/has_grav/powered/quantumresearch)
+"ui" = (
+/obj/structure/closet/wardrobe/science_white,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "uq" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/blood/tracks,
@@ -745,6 +808,19 @@
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"vt" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
+"vF" = (
+/obj/structure/fluff/empty_cryostasis_sleeper{
+	name = "broken genetics device";
+	desc = "Depowered and broken, this machine no longer serves its purpose."
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "vI" = (
 /obj/structure/sign/poster/quirk/crew/hang{
@@ -885,6 +961,7 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "zs" = (
 /obj/structure/chair/office,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "zF" = (
@@ -896,6 +973,7 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "zL" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "zS" = (
@@ -925,7 +1003,7 @@
 "AT" = (
 /obj/structure/sign/warning,
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "AV" = (
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/plating/airless,
@@ -944,8 +1022,14 @@
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /turf/open/indestructible,
 /area/ruin/space/has_grav/powered/quantumresearch)
+"Be" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/structure/table/reinforced/rglass,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "Br" = (
 /obj/structure/closet/l3closet/scientist,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Bt" = (
@@ -982,6 +1066,7 @@
 "CN" = (
 /obj/structure/table,
 /obj/item/toy/figure/secofficer,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Df" = (
@@ -1033,7 +1118,7 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Ei" = (
 /obj/machinery/door/airlock/science,
-/turf/template_noop,
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Ew" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1089,6 +1174,7 @@
 	used = 1;
 	id = "this does nothing"
 	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Gj" = (
@@ -1104,6 +1190,8 @@
 /obj/structure/table,
 /obj/item/plate,
 /obj/item/food/burger/cheese,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "GC" = (
@@ -1113,6 +1201,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table/reinforced/rglass,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "GE" = (
@@ -1287,6 +1376,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
+"Mb" = (
+/obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/quantumresearch)
 "Mo" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/plasma/end{
 	dir = 4
@@ -1478,11 +1572,10 @@
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "QP" = (
-/obj/machinery/computer/terminal/meatderelict{
-	dir = 1
-	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/chair/office/light,
 /turf/open/indestructible/white,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "Rb" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -1510,9 +1603,11 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "RQ" = (
-/obj/machinery/light/cold/directional/east,
-/obj/structure/closet/l3closet/scientist,
-/turf/open/indestructible/dark,
+/obj/effect/decal/cleanable/glass,
+/mob/living/basic/living_limb_flesh,
+/obj/item/kirbyplants/random/dead,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "RS" = (
 /turf/cordon,
@@ -1585,8 +1680,9 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Ut" = (
 /mob/living/basic/living_limb_flesh,
+/obj/machinery/light/small/dim/directional/east,
 /turf/open/indestructible/meat,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "UD" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/indestructible,
@@ -1689,6 +1785,9 @@
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Xe" = (
 /obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/cold/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Xh" = (
@@ -1699,6 +1798,7 @@
 "Xl" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/quantumresearch)
 "Xm" = (
@@ -1764,8 +1864,9 @@
 /mob/living/basic/living_limb_flesh,
 /mob/living/basic/living_limb_flesh,
 /obj/item/keycard/meatderelict/armory,
+/obj/machinery/light/small/dim/directional/west,
 /turf/open/indestructible/meat,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/quantumresearch)
 "Ys" = (
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 1
@@ -2076,9 +2177,9 @@ PU
 PU
 PU
 PU
-kh
-kh
-kh
+Jh
+Jh
+Jh
 PU
 PU
 PU
@@ -2110,18 +2211,18 @@ PU
 PU
 PU
 PU
-PU
-PU
-PU
-PU
-PU
-PU
-PU
-kh
-kh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
+Jh
 Yr
-kh
-kh
+Jh
+Jh
 xk
 PU
 "}
@@ -2152,19 +2253,19 @@ PU
 PU
 PU
 PU
-PU
-PU
-PU
-PU
-PU
-PU
-PU
+Jh
+jE
+jE
+jE
+jE
+jE
+jE
 AT
+vF
+ih
 hf
-hf
-hf
-kh
-xk
+Jh
+Jh
 xk
 "}
 (9,1,1) = {"
@@ -2194,19 +2295,19 @@ PU
 PU
 PU
 PU
-PU
-PU
-PU
-PU
-PU
-PU
-PU
+Jh
+jE
+jE
+jE
+jE
+jE
+qs
 pj
-hf
-hf
+at
+at
 QP
 kh
-xk
+Jh
 xk
 "}
 (10,1,1) = {"
@@ -2236,19 +2337,19 @@ PU
 PU
 PU
 PU
-PU
-PU
-PU
-PU
-PU
-PU
+Jh
+jE
+jE
+jE
+at
+qs
 sp
-kh
-jA
+Jh
+RQ
 jA
 lf
-kh
-xk
+Jh
+Jh
 xk
 "}
 (11,1,1) = {"
@@ -2278,18 +2379,18 @@ RS
 RS
 RS
 RS
-PU
-PU
-PU
-PU
-PU
-PU
-PU
-kh
-kh
+Jh
+jE
+jE
+jE
+jE
+dW
+jE
+Jh
+Jh
 Ut
-kh
-kh
+Jh
+Jh
 xk
 xk
 "}
@@ -2320,17 +2421,17 @@ wy
 wy
 wy
 RS
-PU
-PU
-PU
-PU
-PU
-PU
-PU
-PU
-kh
-kh
-kh
+Jh
+jE
+jE
+jE
+jE
+dW
+at
+ui
+Jh
+Jh
+Jh
 xk
 xk
 xk
@@ -2362,15 +2463,15 @@ wy
 wy
 wy
 RS
-PU
-PU
-PU
+Jh
+jE
+jE
 Jh
 Jh
 oj
 Jh
 Jh
-xk
+Jh
 xk
 xk
 xk
@@ -2447,10 +2548,10 @@ wy
 wy
 Jh
 Br
-Xe
+Mb
 jE
 eA
-oX
+vt
 zs
 Gn
 Jh
@@ -2488,7 +2589,7 @@ wy
 wy
 wy
 Jh
-RQ
+Br
 Xe
 jE
 Jh
@@ -2616,7 +2717,7 @@ AY
 Se
 Jh
 sk
-jE
+at
 Hx
 jE
 Pa
@@ -2660,7 +2761,7 @@ Jh
 Kl
 zF
 Hx
-jE
+at
 HA
 ph
 FE
@@ -2870,7 +2971,7 @@ fc
 Jh
 rh
 jE
-hW
+Be
 Jh
 xk
 xk
