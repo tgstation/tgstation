@@ -19,13 +19,13 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/atom/owner = parent
+
 	src.to_call = cb
 	src.job_bans |= job_bans
-	src.title = title
+	src.title = title || owner.name
 
-	var/atom/owner = parent
-	var/what = title || owner.name
-	var/message = custom_message || "[capitalize(what)] is looking for volunteers"
+	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
 
 	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
 		action = NOTIFY_ORBIT, \
@@ -39,6 +39,9 @@
 
 /// Concludes the poll, picking one of the orbiters
 /datum/component/ghost_poll/proc/end_poll()
+	if(QDELETED(parent))
+		return
+
 	var/list/candidates = list()
 	var/atom/owner = parent
 
@@ -60,10 +63,8 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		var/of_what = title ? "of [title]" : ""
-		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what].", "Ghost Poll", parent)
+		deadchat_broadcast("[chosen.ckey] was selected for the role ([title]).", "Ghost Poll: ", parent)
 
-	if(!QDELETED(parent))
-		to_call.Invoke(chosen)
+	to_call.Invoke(chosen)
 
 	qdel(src)
