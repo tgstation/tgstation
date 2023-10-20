@@ -199,6 +199,9 @@
 	else
 		to_chat(user, span_notice(message))
 
+	if(price)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user
 		if(istype(target, /obj/item/bounty_cube))
