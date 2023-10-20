@@ -19,13 +19,13 @@
 		max_blood = custom_materials[custom_materials[1]],\
 	)
 
-	AddComponent(
-		/datum/component/bloody_spreader,\
-		blood_left = custom_materials[custom_materials[1]],\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
-
+	if(foodtypes & RAW)
+		AddComponent(
+			/datum/component/bloody_spreader,\
+			blood_left = custom_materials[custom_materials[1]],\
+			blood_dna = list("meaty DNA" = "MT-"),\
+			diseases = null,\
+		)
 
 /obj/item/food/meat/slab
 	name = "meat"
