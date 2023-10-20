@@ -11,13 +11,9 @@
 
 	var/mob/living/owner = parent
 
-	owner.add_atom_colour(LIGHT_COLOR_DARK_PINK, FIXED_COLOUR_PRIORITY)
-	owner.add_overlay(mutable_appearance(icon = 'icons/effects/bitrunning.dmi', icon_state = "glitch"))
-	owner.alpha = 150
 	owner.fully_heal()
 	owner.maxHealth += ROUND_UP(server.threat * 0.1)
-	owner.set_light(2, l_color = LIGHT_COLOR_PALE_PINK)
-	owner.update_appearance()
+	owner.add_digital_aura()
 
 /datum/component/glitch/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH), PROC_REF(on_death))
@@ -49,4 +45,20 @@
 	to_chat(owner, span_userdanger("You feel a strange sensation..."))
 
 	addtimer(CALLBACK(src, PROC_REF(dust_mob)), 2 SECONDS, TIMER_UNIQUE|TIMER_DELETE_ME|TIMER_STOPPABLE)
+
+/// Appearance helper proc for bitrunning glitches.
+/atom/proc/add_digital_aura()
+	add_atom_colour(LIGHT_COLOR_DARK_PINK, FIXED_COLOUR_PRIORITY)
+	add_overlay(mutable_appearance(icon = 'icons/effects/bitrunning.dmi', icon_state = "glitch"))
+	alpha = 200
+	set_light(2, l_color = LIGHT_COLOR_PALE_PINK, l_on = TRUE)
+	update_appearance()
+
+/// Removes any digital aura from the mob. Used in bitrunning glitches.
+/atom/proc/remove_digital_aura()
+	remove_atom_colour(LIGHT_COLOR_DARK_PINK)
+	cut_overlays()
+	alpha = 255
+	set_light_on(FALSE)
+	update_appearance()
 

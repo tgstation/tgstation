@@ -13,9 +13,8 @@
 
 	shuffle_inplace(available)
 	var/datum/antagonist/bitrunning_glitch/chosen = pick(available)
-	chosen = new()
 
-	threat -= chosen.threat * 0.5
+	threat -= initial(chosen.threat) * 0.5
 
 	return chosen
 
@@ -90,9 +89,7 @@
 	if(isnull(mutation_target))
 		CRASH("vdom: After two attempts, no valid mutation target was found.")
 
-	var/mutable_appearance/glitch_effect = mutable_appearance('icons/effects/bitrunning.dmi', "glitch", ABOVE_MOB_LAYER, alpha = 150)
-	mutation_target.add_overlay(glitch_effect)
-	mutation_target.add_atom_colour(LIGHT_COLOR_DARK_PINK, FIXED_COLOUR_PRIORITY)
+	mutation_target.add_digital_aura()
 
 	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flashwindow = FALSE)
 
@@ -100,9 +97,7 @@
 	var/role_name = initial(chosen_role.name)
 
 	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
-	if(isnull(ghost_mind) || QDELETED(mutation_target))
-		mutation_target.cut_overlay(glitch_effect)
-		mutation_target.remove_atom_colour(LIGHT_COLOR_DARK_PINK)
+	if(QDELETED(mutation_target) || isnull(ghost_mind) || isnull(chosen_role))
 		return
 
 	var/mob/living/antag_mob
