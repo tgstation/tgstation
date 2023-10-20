@@ -279,13 +279,13 @@
 		return
 	else if(duration_in_seconds <= 50)
 		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
-	if(prob(20) && HAS_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER))
-		REMOVE_TRAIT(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT)
+	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
+		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")
 		//We then send a callback to automatically re-add the trait
-		addtimer(TRAIT_CALLBACK_ADD(brain, TRAIT_ADVANCEDTOOLUSER, ORGAN_TRAIT), 10 SECONDS)
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT), 10 SECONDS)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
-	if(prob(30))
+	if(prob(15))
 		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
 		owner.emote("hiccup")
 	owner.adjustStaminaLoss(-5) //too drunk to feel anything
