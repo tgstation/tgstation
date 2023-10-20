@@ -14,7 +14,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/allergic_food
-	description = "My throat iches."
+	description = "My throat itches."
 	mood_change = -2
 	timeout = 4 MINUTES
 

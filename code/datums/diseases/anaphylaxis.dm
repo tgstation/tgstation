@@ -25,8 +25,8 @@
 		cure()
 		return
 
-	// A little bit of chill to make them feel cold to the touch
-	affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, min_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 10)
+	// Cool them enough to feel cold to the touch, and then some, because temperature mechanics are dumb
+	affected_mob.adjust_bodytemperature(-10 * seconds_per_tick * stage, min_temp = BODYTEMP_COLD_DAMAGE_LIMIT - 70)
 
 	switch(stage)
 		// early symptoms: mild shakes and dizziness
@@ -39,16 +39,23 @@
 				affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 1 MINUTES)
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.adjust_dizzy_up_to(5 SECONDS * seconds_per_tick, 1 MINUTES)
+			if(SPT_PROB(1, seconds_per_tick))
+				to_chat(affected_mob, span_danger("Your throat itches."))
 
 		// warning symptoms: violent shakes, dizziness, blurred vision, difficulty breathing
 		if(2)
+			affected_mob.apply_damage(0.33 * seconds_per_tick, TOX, spread_damage = TRUE)
+
 			if(affected_mob.num_hands >= 1 && SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel your hand[affected_mob.num_hands == 1 ? "":"s"] shake violently."))
 				affected_mob.adjust_jitter_up_to(8 SECONDS * seconds_per_tick, 1 MINUTES)
+				if(prob(20))
+					affected_mob.drop_all_held_items()
 			if(affected_mob.num_legs >= 1 && SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel your leg[affected_mob.num_hands == 1 ? "":"s"] shake violently."))
 				affected_mob.adjust_jitter_up_to(8 SECONDS * seconds_per_tick, 1 MINUTES)
-
+				if(prob(40) && affected_mob.getStaminaLoss() < 75)
+					affected_mob.adjustStaminaLoss(15)
 			if(affected_mob.get_organ_slot(ORGAN_SLOT_EYES) && SPT_PROB(4, seconds_per_tick))
 				affected_mob.adjust_eye_blur(4 SECONDS * seconds_per_tick)
 				to_chat(affected_mob, span_warning("It's getting harder to see clearly."))
@@ -62,15 +69,15 @@
 				affected_mob.adjust_dizzy_up_to(5 SECONDS * seconds_per_tick, 1 MINUTES)
 				affected_mob.adjust_confusion_up_to(1 SECONDS * seconds_per_tick, 10 SECONDS)
 			if(SPT_PROB(2, seconds_per_tick))
-				affected_mob.vomit()
+				affected_mob.vomit(MOB_VOMIT_MESSAGE|MOB_VOMIT_HARM)
+				affected_mob.Stun(2 SECONDS) // The full 20 second vomit stun would be lethal
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your throat feels sore."))
-			affected_mob.apply_damage(0.33 * seconds_per_tick, TOX, spread_damage = TRUE)
 
 		// "you are too late" symptoms: death.
 		if(3)
-			affected_mob.Unconscious(3 SECONDS * seconds_per_tick)
 			affected_mob.apply_damage(3 * seconds_per_tick, TOX, spread_damage = TRUE)
 			affected_mob.apply_damage(1 * seconds_per_tick, OXY)
+			affected_mob.Unconscious(3 SECONDS * seconds_per_tick)
