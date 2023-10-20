@@ -115,7 +115,6 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	}; \
 	in_error_recovery = FALSE;
 #else
-#warn Logging relies on DM_VERSION 515 for CHECK_AND_TRY_FILE_ERROR_RECOVERY to recover from errors such as files going missing. This is not blocking but logging resilence is severely impacted.
 #define CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 #endif
 
