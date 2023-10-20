@@ -13,7 +13,7 @@
 	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/unholy_determination
 	/// How much to heal every second
-	var/heal_per_second = 1
+	var/heal_per_second = 0.25
 
 /datum/status_effect/unholy_determination/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
