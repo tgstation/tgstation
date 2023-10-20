@@ -256,10 +256,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			// Loop.
 			Master.StartProcessing(0)
 
-#if !defined(SPACEMAN_DMM)
+	#ifndef SPACEMAN_DMM
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
-#endif
+	#endif
 
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
