@@ -58,7 +58,7 @@ Then the player gets the profit from selling his own wasted time.
 			if(export.applies_to(thing, apply_elastic))
 				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 					break
-				if(!export.scannable)
+				if(dry_run && !export.scannable)
 					report.all_contents_scannable = FALSE
 					break
 				sold = export.sell_object(thing, report, dry_run, apply_elastic)
