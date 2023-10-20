@@ -1373,7 +1373,7 @@
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
-	return round(total_volume, 0.01) >= maximum_volume
+	return total_volume + 0.01 >= maximum_volume
 
 /**
  * Get the amount of this reagent or the sum of all its subtypes if specified
