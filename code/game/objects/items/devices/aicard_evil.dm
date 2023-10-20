@@ -28,6 +28,7 @@
 	finding_candidate = FALSE
 	return TRUE
 
+/// Sets up the ghost poll
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/op_datum = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(isnull(op_datum))
@@ -42,6 +43,7 @@
 		title = "Nuclear Operative Modsuit AI" \
 	)
 
+/// Poll has concluded with a ghost, create the AI
 /obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
 	if(isnull(ghost))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))

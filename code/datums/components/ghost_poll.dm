@@ -23,8 +23,9 @@
 	src.job_bans |= job_bans
 	src.title = title
 
-	var/what = title ? capitalize(title) : "A ghost role"
-	var/message = custom_message || "[what] is looking for volunteers"
+	var/atom/owner = parent
+	var/what = title || owner.name
+	var/message = custom_message || "[capitalize(what)] is looking for volunteers"
 
 	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
 		action = NOTIFY_ORBIT, \
@@ -59,8 +60,8 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		var/of_what = title ? "of [lowertext(title)]" : ""
-		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what]", "Ghost Poll", parent)
+		var/of_what = title ? "of [title]" : ""
+		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what].", "Ghost Poll", parent)
 
 	if(!QDELETED(parent))
 		to_call.Invoke(chosen)

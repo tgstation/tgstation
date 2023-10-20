@@ -429,7 +429,6 @@
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
 		cb = to_call, \
-		title = name \
 	)
 
 /// Ghost poll has concluded and a candidate has been chosen.
