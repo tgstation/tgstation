@@ -38,7 +38,7 @@
 	var/mutable_appearance/lighting = mutable_appearance(initial(icon), "on_overlay[angry ? "_angry" : ""]")
 	flick_overlay_view(lighting, 1 SECONDS)
 
-	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_PALE_PINK : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
+	set_light(l_range = 2, l_power = 1.5, l_color = angry ? LIGHT_COLOR_BUBBLEGUM : LIGHT_COLOR_BABY_BLUE, l_on = TRUE)
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)

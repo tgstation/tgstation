@@ -89,7 +89,7 @@
 	if(isnull(mutation_target))
 		CRASH("vdom: After two attempts, no valid mutation target was found.")
 
-	mutation_target.add_digital_aura()
+	mutation_target.AddElement(/datum/element/digital_aura)
 
 	notify_ghosts("A glitch is spawning in the virtual domain.", enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = mutation_target, action = NOTIFY_JUMP, header = "Data Mutation", flashwindow = FALSE)
 
@@ -97,7 +97,11 @@
 	var/role_name = initial(chosen_role.name)
 
 	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
-	if(QDELETED(mutation_target) || isnull(ghost_mind) || isnull(chosen_role))
+	if(QDELETED(mutation_target))
+		return
+
+	if(isnull(ghost_mind))
+		mutation_target.RemoveElement(/datum/element/digital_aura)
 		return
 
 	var/mob/living/antag_mob

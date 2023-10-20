@@ -3278,6 +3278,7 @@
 #include "code\modules\bitrunning\antagonists\parent.dm"
 #include "code\modules\bitrunning\components\avatar_connection.dm"
 #include "code\modules\bitrunning\components\bitrunning_points.dm"
+#include "code\modules\bitrunning\components\digital_aura.dm"
 #include "code\modules\bitrunning\components\glitch.dm"
 #include "code\modules\bitrunning\components\netpod_healing.dm"
 #include "code\modules\bitrunning\objects\byteforge.dm"
