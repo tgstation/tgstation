@@ -54,7 +54,7 @@
 			packaging_types += list(category_item)
 
 	packaging_type = REF(GLOB.reagent_containers[CAT_PILLS][1])
-	_decode_category()
+	decode_category()
 
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
@@ -63,7 +63,7 @@
 	. += span_notice("The [name] currently has [stored_products.len] stored. There needs to be less than [MAX_FLOOR_PRODUCTS] on the floor to continue dispensing.")
 
 /// decode product category from it's type path and returns the decoded typepath
-/obj/machinery/plumbing/pill_press/proc/_decode_category()
+/obj/machinery/plumbing/pill_press/proc/decode_category()
 	var/obj/item/reagent_containers/container = locate(packaging_type)
 	if(ispath(container, /obj/item/reagent_containers/pill/patch))
 		packaging_category = CAT_PATCHES
@@ -95,9 +95,7 @@
 	//dispense stored products on the floor
 	if(stored_products.len)
 		var/pill_amount = 0
-		for(var/thing in loc)
-			if(!istype(thing, /obj/item/reagent_containers))
-				continue
+		for(var/obj/item/reagent_containers/thing in loc)
 			pill_amount++
 			if(pill_amount >= MAX_FLOOR_PRODUCTS) //too much so just stop
 				break
@@ -155,7 +153,7 @@
 				product_name = formatted_name
 		if("change_product")
 			packaging_type = params["ref"]
-			var/obj/item/reagent_containers/container = _decode_category()
+			var/obj/item/reagent_containers/container = decode_category()
 			current_volume = clamp(current_volume, MIN_VOLUME, initial(container.volume))
 
 #undef MIN_VOLUME
