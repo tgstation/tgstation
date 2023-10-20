@@ -25,11 +25,10 @@
 	src.title = title || owner.name
 	src.to_call = cb
 
-	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
+	var/message = custom_message || "[capitalize(src.title)] is looking for volunteers"
 
 	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
-		action = NOTIFY_ORBIT, \
-		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
+		enter_link = "<a href='?src=[REF(usr)];follow=[REF(owner)]'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
 		flashwindow = FALSE, \
 		header = "Volunteers requested", \
 		ignore_key = ignore_key, \
@@ -78,7 +77,7 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		deadchat_broadcast("[chosen.ckey] was selected for the role ([title]).", "Ghost Poll: ", parent)
+		deadchat_broadcast("[key_name(chosen)] was selected for the role ([title]).", "Ghost Poll: ", parent)
 
 	phone_home(chosen)
 
