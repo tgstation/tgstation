@@ -58,7 +58,7 @@
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), awakener)
-	parent.AddComponent(/datum/component/ghost_poll, \
+	parent.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
 		cb = to_call, \

@@ -195,8 +195,8 @@
 		return
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), factory)
-	factory.AddComponent(/datum/component/ghost_poll, \
-		ignore_key = ROLE_BLOB, \
+	factory.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_BLOB, \
 		job_bans = ROLE_BLOB, \
 		cb = to_call, \
 		title = "Blobbernaut", \
@@ -213,7 +213,6 @@
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
 	assume_direct_control(blobber)
 	factory.assign_blobbernaut(blobber)
-
 	blobber.assign_key(ghost.key, blobstrain)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 

@@ -45,15 +45,24 @@
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner), owner)
 
+/// Tries an orbit poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
-		friend_initialized = TRUE
-	else
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(add_friend))
+	owner.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
+		job_bans = ROLE_PAI, \
+		title = "[owner.real_name]'s imaginary friend", \
+		cb = to_call, \
+	)
+
+/// Yay more friends!
+/datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	friend.key = ghost.key
+	friend_initialized = TRUE
 
 /mob/camera/imaginary_friend
 	name = "imaginary friend"

@@ -36,7 +36,7 @@
 		return
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, op_datum)
-	AddComponent(/datum/component/ghost_poll, \
+	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_SYNDICATE, \
 		job_bans = ROLE_OPERATIVE, \
 		cb = to_call, \

@@ -92,7 +92,7 @@
 	bursting = TRUE
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), gib_on_success)
-	owner.AddComponent(/datum/component/ghost_poll, \
+	owner.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_ALIEN_LARVA, \
 		job_bans = ROLE_ALIEN, \
 		cb = to_call, \

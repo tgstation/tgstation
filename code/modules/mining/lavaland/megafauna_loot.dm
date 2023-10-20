@@ -425,7 +425,7 @@
 	ADD_TRAIT(src, TRAIT_NODROP, type)
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user)
-	AddComponent(/datum/component/ghost_poll, \
+	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
 		cb = to_call, \

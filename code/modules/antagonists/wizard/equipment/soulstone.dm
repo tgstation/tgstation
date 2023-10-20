@@ -320,7 +320,7 @@
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, victim)
-	AddComponent(/datum/component/ghost_poll, \
+	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_SHADE, \
 		job_bans = ROLE_CULTIST, \
 		cb = to_call, \
