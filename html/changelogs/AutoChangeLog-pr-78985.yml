@@ -1,0 +1,5 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - qol: "Nonhuman autopsy, Tier Two Lasers, and several other experiments can now be completed earlier."
+  - balance: "Advanced robotics techweb node no longer requires neural programming node."
