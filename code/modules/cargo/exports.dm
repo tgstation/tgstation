@@ -162,7 +162,7 @@ Then the player gets the profit from selling his own wasted time.
 	///Quantity of the object in question.
 	var/export_amount = get_amount(sold_item)
 
-	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost))
+	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost) || (dry_run && unscannable))
 		return FALSE
 
 	// If we're not doing a dry run, send COMSIG_ITEM_EXPORTED to the sold item
@@ -172,9 +172,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	// If the signal handled adding it to the report, don't do it now
 	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
-		// If we're doing a dry run, don't add hidden values
-		if(!(dry_run && !scannable))
-			report.total_value[src] += export_value
+		report.total_value[src] += export_value
 		report.total_amount[src] += export_amount * amount_report_multiplier
 
 	if(!dry_run)
