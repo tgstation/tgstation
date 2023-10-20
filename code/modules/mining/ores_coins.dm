@@ -272,6 +272,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	if(gone == rig)
 		rig = null
+		attacher = null
+		cut_overlays(rig_overlay)
+		UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/item/gibtonite/IsSpecialAssembly()
 	return TRUE
@@ -303,9 +306,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.balloon_alert_to_viewers("detached rig")
 		user.log_message("detached [rig] from [src].", LOG_GAME)
 		user.put_in_hands(rig)
-		attacher = null
-		cut_overlays(rig_overlay)
-		UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 		return
 
 	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
