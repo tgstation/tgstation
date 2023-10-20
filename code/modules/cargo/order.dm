@@ -139,7 +139,7 @@
 		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
 			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
 		else
-			for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
 				var/missing_item = pick(container_contents)
 				container_contents[missing_item]--
 				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
