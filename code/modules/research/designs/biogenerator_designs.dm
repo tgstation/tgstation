@@ -130,6 +130,14 @@
 	make_reagent = /datum/reagent/toxin/plantbgone/weedkiller
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
+/datum/design/org_weed_killer
+	name = "Organic Weed Killer"
+	id = "org_weed_killer"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 0.5)
+	make_reagent = /datum/reagent/toxin/plantbgone/weedkiller/organic
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
+
 /datum/design/pest_spray
 	name = "Pest Killer"
 	id = "pest_spray"
