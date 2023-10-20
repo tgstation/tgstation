@@ -596,7 +596,7 @@ Behavior that's still missing from this component that original food items had t
 				return FOOD_QUALITY_DANGEROUS
 
 	if(ishuman(eater))
-		if(count_matching_foodtypes(foodtypes, eater.get_allergic_foodtypes()))
+		if(foodtypes & eater.get_allergic_foodtypes())
 			return FOOD_QUALITY_DANGEROUS
 		if(count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())) //if the food is toxic, we don't care about anything else
 			return TOXIC_FOOD_QUALITY_THRESHOLD

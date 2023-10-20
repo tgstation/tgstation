@@ -21,9 +21,15 @@
 	if(!.)
 		return
 
+	if(HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER)) // You are no fun
+		cure()
+		return
+
+	// A little bit of chill to make them feel cold to the touch
 	affected_mob.adjust_bodytemperature(10 * seconds_per_tick, min_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 10)
 
 	switch(stage)
+		// early symptoms: mild shakes and dizziness
 		if(1)
 			if(affected_mob.num_hands >= 1 && SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel your hand[affected_mob.num_hands == 1 ? "":"s"] start to shake."))
@@ -34,6 +40,7 @@
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.adjust_dizzy_up_to(5 SECONDS * seconds_per_tick, 1 MINUTES)
 
+		// warning symptoms: violent shakes, dizziness, blurred vision, difficulty breathing
 		if(2)
 			if(affected_mob.num_hands >= 1 && SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel your hand[affected_mob.num_hands == 1 ? "":"s"] shake violently."))
@@ -48,7 +55,7 @@
 			if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH) && SPT_PROB(4, seconds_per_tick))
 				affected_mob.apply_damage(2 * seconds_per_tick, OXY)
 				affected_mob.losebreath += (2 * seconds_per_tick)
-				to_chat(affected_mob, span_warning("You feel as if it's getting harder to breathe."))
+				to_chat(affected_mob, span_warning("It's getting harder to breathe."))
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.adjust_drowsiness_up_to(3 SECONDS * seconds_per_tick, 30 SECONDS)
 			if(SPT_PROB(2, seconds_per_tick))
@@ -62,6 +69,7 @@
 				to_chat(affected_mob, span_danger("Your throat feels sore."))
 			affected_mob.apply_damage(0.33 * seconds_per_tick, TOX, spread_damage = TRUE)
 
+		// "you are too late" symptoms: death.
 		if(3)
 			affected_mob.Unconscious(3 SECONDS * seconds_per_tick)
 			affected_mob.apply_damage(3 * seconds_per_tick, TOX, spread_damage = TRUE)
