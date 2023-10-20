@@ -60,6 +60,7 @@ Then the player gets the profit from selling his own wasted time.
 					break
 				if(!export.scannable)
 					report.all_contents_scannable = FALSE
+					break
 				sold = export.sell_object(thing, report, dry_run, apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
@@ -162,7 +163,7 @@ Then the player gets the profit from selling his own wasted time.
 	///Quantity of the object in question.
 	var/export_amount = get_amount(sold_item)
 
-	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost) || (dry_run && !scannable))
+	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost))
 		return FALSE
 
 	// If we're not doing a dry run, send COMSIG_ITEM_EXPORTED to the sold item
