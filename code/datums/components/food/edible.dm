@@ -558,6 +558,9 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("gross_food", /datum/mood_event/gross_food)
 		return
 
+	if(food_quality == 0)
+		return // meh
+
 	food_quality = min(food_quality, FOOD_QUALITY_TOP)
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
