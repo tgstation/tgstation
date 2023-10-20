@@ -161,6 +161,8 @@ SUBSYSTEM_DEF(gamemode)
 		var/datum/round_event_control/event = new type()
 		if(!event.typepath || !event.name)
 			continue //don't want this one! leave it for the garbage collector
+		if(!event.valid_for_map())
+			continue // event isn't good for this map no point in trying to add it to the list
 		control += event //add it to the list of all events (controls)
 	getHoliday()
 
