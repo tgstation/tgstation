@@ -853,6 +853,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 
+/// Trait given to angelic constructs to let them purge cult runes
+#define TRAIT_ANGELIC "angelic"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"

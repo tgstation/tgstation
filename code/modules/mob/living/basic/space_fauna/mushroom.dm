@@ -58,6 +58,7 @@
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mushroom,
+		BB_TARGET_MINIMUM_STAT = DEAD,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -70,7 +71,6 @@
 
 
 /datum/targetting_datum/basic/mushroom
-	stat_attack = DEAD
 
 ///we only attacked another mushrooms
 /datum/targetting_datum/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)

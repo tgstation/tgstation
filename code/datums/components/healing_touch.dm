@@ -159,7 +159,7 @@
 
 	if(show_health && !iscarbon(target))
 		var/formatted_string = format_string("%TARGET% now has <b>[target.health]/[target.maxHealth] health.</b>", healer, target)
-		healer.visible_message(span_danger(formatted_string))
+		to_chat(healer, span_danger(formatted_string))
 
 /// Reformats the passed string with the replacetext keys
 /datum/component/healing_touch/proc/format_string(string, atom/source, atom/target)

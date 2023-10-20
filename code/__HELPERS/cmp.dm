@@ -170,3 +170,17 @@
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/// Passed a list of assoc lists, sorts them by the list's "name" keys.
+/proc/cmp_assoc_list_name(list/A, list/B)
+	return sorttext(B["name"], A["name"])
+
+/// Used by /datum/achievement_data/load_all_achievements() to determine in which order awards have to be loaded.
+/proc/cmp_award_priority(type_a, type_b)
+	var/datum/award/award_a = SSachievements.awards[type_a]
+	var/datum/award/award_b = SSachievements.awards[type_b]
+	return award_b?.load_priority - award_a?.load_priority
+
+/// Orders mobs by health
+/proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
+	return mob_b.health - mob_a.health

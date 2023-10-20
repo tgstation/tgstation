@@ -3,7 +3,8 @@
  */
 /datum/ai_controller/basic_controller/brimdemon
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/brimdemon,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_traits = PAUSE_DURING_DO_AFTER
@@ -15,9 +16,6 @@
 		/datum/ai_planning_subtree/move_to_cardinal/brimdemon,
 		/datum/ai_planning_subtree/targeted_mob_ability/brimbeam,
 	)
-
-/datum/targetting_datum/basic/brimdemon
-	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/move_to_cardinal/brimdemon
 	move_behaviour = /datum/ai_behavior/move_to_cardinal/brimdemon

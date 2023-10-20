@@ -68,6 +68,10 @@
 	theme = THEME_HOLY
 	loot = list(/obj/item/ectoplasm/angelic)
 
+/mob/living/simple_animal/hostile/construct/juggernaut/angelic/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
+
 /mob/living/simple_animal/hostile/construct/juggernaut/mystic
 	theme = THEME_WIZARD
 	loot = list(/obj/item/ectoplasm/mystic)

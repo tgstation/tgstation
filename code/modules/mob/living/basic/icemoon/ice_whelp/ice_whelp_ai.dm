@@ -1,7 +1,8 @@
 #define ENRAGE_ADDITION 25
 /datum/ai_controller/basic_controller/ice_whelp
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_WHELP_ENRAGED = 0,
 	)
 
