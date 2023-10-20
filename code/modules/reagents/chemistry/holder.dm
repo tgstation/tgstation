@@ -491,7 +491,7 @@
  * Arguments:
  * * obj/target - Target to attempt transfer to
  * * amount - amount of reagent volume to transfer
- * * multiplier - multiplies amount of each reagent by this number
+ * * multiplier - multiplies each reagent amount by this number well byond their available volume before transfering. used to create reagents from thin air if you ever need to
  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
  * * mob/transferred_by - used for logging
@@ -560,9 +560,9 @@
 	var/list/reagents_to_remove = list()
 
 	var/part = amount / total_volume
-	var/reagent_volume
 	var/transfer_amount
-	var/transfered_amount = 0
+	var/transfered_amount
+	var/total_transfered_amount = 0
 
 	//first add reagents to target
 	for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -572,15 +572,14 @@
 			trans_data = copy_data(reagent)
 		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 			continue
-		reagent_volume = reagent.volume
-		transfer_amount = FLOOR(min(reagent_volume, reagent_volume * part * multiplier), CHEMICAL_QUANTISATION_LEVEL)
-		transfer_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
-		if(!transfer_amount)
+		transfer_amount = reagent.volume * part
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		if(!transfered_amount)
 			continue
 		if(methods)
 			r_to_send += reagent
 		reagents_to_remove += list(list("R" = reagent, "T" = transfer_amount))
-		transfered_amount += transfer_amount
+		total_transfered_amount += transfered_amount
 
 	//expose target to reagent changes
 	target_holder.expose_multiple(r_to_send, isorgan(target_atom) ? target : target_atom, methods, part, show_message)
@@ -603,7 +602,7 @@
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
-	return transfered_amount
+	return FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Transfer a specific reagent id to the target object
