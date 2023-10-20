@@ -8,9 +8,9 @@
  */
 /datum/component/orbit_poll
 	/// Prevent players with this ban from being selected
-	var/list/job_bans = list()
+	var/list/ineligible_roles = list()
 	/// Title of the role to announce after it's done
-	var/title
+	var/role_name
 	/// Proc to invoke whenever the poll is complete
 	var/datum/callback/to_call
 
@@ -21,14 +21,14 @@
 
 	var/atom/owner = parent
 
-	src.job_bans |= job_bans
-	src.title = title || owner.name
-	src.to_call = cb
+	ineligible_roles |= job_bans
+	role_name = title || owner.name
+	to_call = cb
 
-	var/message = custom_message || "[capitalize(src.title)] is looking for volunteers"
+	var/message = custom_message || "[capitalize(role_name)] is looking for volunteers"
 
 	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
-		enter_link = "<a href='?src=[REF(usr)];follow=[REF(owner)]'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
+		enter_link = "<a href='?src=[REF(src)];orbit=1'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
 		flashwindow = FALSE, \
 		header = "Volunteers requested", \
 		ignore_key = ignore_key, \
@@ -38,16 +38,23 @@
 	addtimer(CALLBACK(src, PROC_REF(end_poll)), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /datum/component/orbit_poll/Topic(href, list/href_list)
-	if(!href_list["ignore"])
+	if(href_list["orbit"])
+		var/mob/dead/observer/ghost = usr
+		var/atom/owner = parent
+
+		if(istype(ghost))
+			ghost.ManualFollow(owner)
+
 		return
 
-	var/mob/user = usr
-	var/ignore_key = href_list["ignore"]
+	if(href_list["ignore"])
+		var/mob/user = usr
 
-	if(tgui_alert(user, "Ignore further [title] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
-		return
+		var/ignore_key = href_list["ignore"]
+		if(tgui_alert(user, "Ignore further [role_name] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
+			return
 
-	GLOB.poll_ignore[ignore_key] |= user.ckey
+		GLOB.poll_ignore[ignore_key] |= user.ckey
 
 /// Concludes the poll, picking one of the orbiters
 /datum/component/orbit_poll/proc/end_poll()
@@ -65,7 +72,7 @@
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
 		if(QDELETED(ghost) || isnull(ghost.client))
 			continue
-		if(is_banned_from(ghost.ckey, job_bans))
+		if(is_banned_from(ghost.ckey, ineligible_roles))
 			continue
 
 		candidates += ghost
@@ -77,7 +84,7 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		deadchat_broadcast("[key_name(chosen)] was selected for the role ([title]).", "Ghost Poll: ", parent)
+		deadchat_broadcast("[key_name(chosen)] was selected for the role ([role_name]).", "Ghost Poll: ", parent)
 
 	phone_home(chosen)
 
