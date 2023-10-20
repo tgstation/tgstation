@@ -116,7 +116,7 @@
 	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
-	tesla_zap(src, 10, power, zap_flags)
+	tesla_zap(src, 10, power, 1e3, zap_flags)
 	zap_buckle_check(power)
 
 /obj/machinery/power/energy_accumulator/grounding_rod

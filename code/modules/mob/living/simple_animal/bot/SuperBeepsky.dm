@@ -12,6 +12,9 @@
 
 	var/block_chance = 50
 
+/mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
 /mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!
 	name = "Genewul Bweepskee"
@@ -21,10 +24,15 @@
 	baton_type = /obj/item/toy/sword
 	weapon_force = 0
 
-/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
-	visible_message(span_warning("[src] deflects [P] with its energy swords!"))
-	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
-	return BULLET_ACT_BLOCK
+/mob/living/simple_animal/bot/secbot/grievous/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	SIGNAL_HANDLER
+
+	if(stat != CONSCIOUS)
+		return NONE
+
+	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
+	playsound(source, 'sound/weapons/blade1.ogg', 50, TRUE)
+	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
 	. = ..()

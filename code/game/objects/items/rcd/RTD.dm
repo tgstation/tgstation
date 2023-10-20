@@ -171,6 +171,7 @@
 	data["root_categories"] = list()
 	for(var/category in GLOB.floor_designs)
 		data["root_categories"] += category
+	data["selected_root"] = root_category
 
 	data["categories"] = list()
 	for(var/sub_category as anything in GLOB.floor_designs[root_category])
@@ -188,19 +189,20 @@
 /obj/item/construction/rtd/ui_data(mob/user)
 	var/list/data = ..()
 
-	data["selected_root"] = root_category
 	data["selected_category"] = design_category
 	selected_design.fill_ui_data(data)
 
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
 		if("root_category")
 			var/new_root = params["root_category"]
 			if(floor_designs[new_root] != null) //is a valid category
 				root_category = new_root
+				update_static_data_for_all_viewers()
 
 		if("set_dir")
 			var/direction = text2dir(params["dir"])

@@ -86,6 +86,8 @@
 		. += cavity_item
 		cavity_item = null
 
+	return .
+
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)

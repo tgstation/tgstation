@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - rscdel: "Protolathe/circuit imprinter/techfab designs costing reagents is now totally deprecated."

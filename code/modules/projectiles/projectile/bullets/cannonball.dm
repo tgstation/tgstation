@@ -22,7 +22,7 @@
 	/// How much our object damage decreases on hit, similar to normal damage.
 	var/object_damage_decrease_on_hit = 0
 
-/obj/projectile/bullet/cannonball/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/cannonball/on_hit(atom/target, blocked = 0, pierce_hit)
 	damage -= damage_decrease_on_hit
 	if(object_damage_decreases)
 		object_damage -= min(damage, object_damage_decrease_on_hit)
@@ -46,7 +46,7 @@
 	projectile_piercing = NONE
 	damage = 40 //set to 30 before first mob impact, but they're gonna be gibbed by the explosion
 
-/obj/projectile/bullet/cannonball/explosive/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/cannonball/explosive/on_hit(atom/target, blocked = 0, pierce_hit)
 	explosion(target, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src)
 	. = ..()
 
@@ -56,7 +56,7 @@
 	projectile_piercing = NONE
 	damage = 15 //very low
 
-/obj/projectile/bullet/cannonball/emp/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/cannonball/emp/on_hit(atom/target, blocked = 0, pierce_hit)
 	empulse(src, 4, 10)
 	. = ..()
 
@@ -65,7 +65,7 @@
 	icon_state = "biggest_one"
 	damage = 70 //low pierce
 
-/obj/projectile/bullet/cannonball/biggest_one/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/cannonball/biggest_one/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(projectile_piercing == NONE)
 		explosion(target, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, explosion_cause = src)
 	. = ..()
