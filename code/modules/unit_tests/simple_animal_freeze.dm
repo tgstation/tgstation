@@ -41,7 +41,6 @@
 		/mob/living/simple_animal/drone/snowflake/bardrone,
 		/mob/living/simple_animal/drone/syndrone,
 		/mob/living/simple_animal/drone/syndrone/badass,
-		/mob/living/simple_animal/holodeck_monkey,
 		/mob/living/simple_animal/hostile,
 		/mob/living/simple_animal/hostile/alien,
 		/mob/living/simple_animal/hostile/alien/drone,

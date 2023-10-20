@@ -101,7 +101,3 @@
 	if(help_verb)
 		remove_verb(holder_living, help_verb)
 	return
-
-///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.
-/datum/martial_art/proc/on_projectile_hit(mob/living/attacker, obj/projectile/P, def_zone)
-	return BULLET_ACT_HIT
