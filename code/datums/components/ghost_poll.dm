@@ -4,6 +4,7 @@
  *
  * @params ignore_key - Required so it doesn't spam
  * @params job_bans - You can insert a list or single items here.
+ * @params cb - Invokes this proc and appends the poll winner as the last argument, mob/dead/observer/ghost
  */
 /datum/component/ghost_poll
 	/// Prevent players with this ban from being selected
@@ -18,7 +19,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.callback = cb
+	src.to_call = cb
 	src.job_bans |= job_bans
 	src.title = title
 
@@ -61,6 +62,7 @@
 		var/of_what = title ? "of [lowertext(title)]" : ""
 		deadchat_broadcast("[chosen.ckey] was selected for the role[of_what]", "Ghost Poll", parent)
 
-	to_call.Invoke(chosen)
-	qdel(src)
+	if(!QDELETED(parent))
+		to_call.Invoke(chosen)
 
+	qdel(src)
