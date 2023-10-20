@@ -124,6 +124,16 @@
 	restricted = TRUE
 	refundable = TRUE
 
+/datum/uplink_item/reinforcement/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	purchasable_from = UPLINK_CLOWN_OPS
+	restricted = TRUE
+	refundable = TRUE
+
 /datum/uplink_item/mech/honker
 	name = "Dark H.O.N.K."
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."

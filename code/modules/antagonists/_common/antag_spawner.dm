@@ -399,6 +399,7 @@
 
 	// Extra backup!
 	ADD_TRAIT(monkey_man, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
+	// Anything else requires enough effort that they deserve it.
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 

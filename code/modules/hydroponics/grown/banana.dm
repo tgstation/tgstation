@@ -197,12 +197,12 @@
 
 /obj/item/food/grown/banana/bunch/monkeybomb/examine(mob/user)
 	. = ..()
-	if(!ismonkey(user))
+	if(!is_simian(user))
 		. += span_notice("There's a banana label on one of the 'nanas you can't quite make out the details of.")
 		return
 	. += span_notice("The banana label on this bunch indicates that monkeys can use this as a sonic grenade with a 3 second timer!")
 
 /obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
-	if(!ismonkey(user))
+	if(!is_simian(user))
 		return to_chat(user, span_notice("You don't really know what to do with this."))
 	else start_ripening()

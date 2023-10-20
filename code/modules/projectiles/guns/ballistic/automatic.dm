@@ -151,7 +151,7 @@
 /obj/item/gun/ballistic/automatic/mini_uzi/chimpgun
 	name = "\improper MONK-10"
 	desc = "Developed by Syndicate monkeys, for syndicate Monkeys. Despite the name, this weapon resembles an Uzi significantly more than a MAC-10. Uses 9mm rounds. There's a label on the other side of the gun that says \"Do what comes natural.\""
-	projectile_damage_multiplier = 0.3
+	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
 	// Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
@@ -241,7 +241,7 @@
 	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
 	fire_delay = 2
 	rof = 0.2 SECONDS
-	projectile_damage_multiplier = 0.3
+	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
 	// Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
