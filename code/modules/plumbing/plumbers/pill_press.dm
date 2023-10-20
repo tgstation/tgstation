@@ -82,12 +82,13 @@
 		var/obj/item/reagent_containers/container = locate(packaging_type)
 		container = new container(src)
 		var/suffix
-		if(packaging_category == CAT_PILLS)
-			suffix = "Pill"
-		else if(packaging_category == CAT_PATCHES)
-			suffix = "Patch"
-		else
-			suffix = "Bottle"
+		switch(packaging_category)
+			if(CAT_PILLS)
+				suffix = "Pill"
+			if(CAT_PATCHES)
+				suffix = "Patch"
+			else
+				suffix = "Bottle"
 		container.name = "[product_name] [suffix]"
 		reagents.trans_to(container, current_volume)
 		stored_products += container
