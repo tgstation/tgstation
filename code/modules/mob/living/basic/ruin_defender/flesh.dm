@@ -46,7 +46,7 @@
 		return
 	var/mob/living/carbon/human/victim = current_bodypart.owner
 	if(prob(100*SPT_PROB_RATE(0.03, SSMOBS_DT)))
-		to_chat(victim, span_warning("The thing posing as your arm makes you feel funny...")) //warn em
+		to_chat(victim, span_warning("The thing posing as your limb makes you feel funny...")) //warn em
 	//firstly as a sideeffect we drain nutrition from our host
 	victim.adjust_nutrition(-1.5)
 
