@@ -39,7 +39,7 @@
 	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_SYNDICATE, \
 		job_bans = ROLE_OPERATIVE, \
-		cb = to_call, \
+		to_call = to_call, \
 		title = "Nuclear Operative Modsuit AI" \
 	)
 

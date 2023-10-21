@@ -6,7 +6,7 @@
  * @params ignore_key - Required so it doesn't spam
  * @params job_bans - You can insert a list or single items here.
  * @params cb - Invokes this proc and appends the poll winner as the last argument, mob/dead/observer/ghost
- * @params title - Optional. Useful if the parent doesn't have the name you want to use.
+ * @params title - Optional. Useful if the role name does not match the parent.
  *
  * @usage
  * ```
@@ -20,16 +20,16 @@
  */
 /datum/component/orbit_poll
 	/// Prevent players with this ban from being selected
-	var/list/ineligible_roles = list()
+	var/list/job_bans = list()
 	/// Title of the role to announce after it's done
-	var/role_name
+	var/title
 	/// Proc to invoke whenever the poll is complete
 	var/datum/callback/to_call
 
 /datum/component/orbit_poll/Initialize( \
 	ignore_key, \
 	list/job_bans, \
-	datum/callback/cb, \
+	datum/callback/to_call, \
 	title, \
 	header = "Ghost Poll", \
 	custom_message, \
@@ -41,11 +41,11 @@
 
 	var/atom/owner = parent
 
-	ineligible_roles |= job_bans
-	role_name = title || owner.name
-	to_call = cb
+	src.job_bans |= job_bans
+	src.title = title || owner.name
+	src.to_call = to_call
 
-	var/message = custom_message || "[capitalize(role_name)] is looking for volunteers"
+	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
 
 	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].", \
 		enter_link = "<a href='?src=[REF(src)];orbit=1'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
@@ -71,7 +71,7 @@
 		var/mob/user = usr
 
 		var/ignore_key = href_list["ignore"]
-		if(tgui_alert(user, "Ignore further [role_name] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
+		if(tgui_alert(user, "Ignore further [title] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
 			return
 
 		GLOB.poll_ignore[ignore_key] |= user.ckey
@@ -92,7 +92,7 @@
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
 		if(QDELETED(ghost) || isnull(ghost.client))
 			continue
-		if(is_banned_from(ghost.ckey, ineligible_roles))
+		if(is_banned_from(ghost.ckey, job_bans))
 			continue
 
 		candidates += ghost
@@ -104,7 +104,7 @@
 	var/mob/dead/observer/chosen = pick(candidates)
 
 	if(chosen)
-		deadchat_broadcast("[key_name(chosen, include_name = FALSE)] was selected for the role ([role_name]).", "Ghost Poll: ", parent)
+		deadchat_broadcast("[key_name(chosen, include_name = FALSE)] was selected for the role ([title]).", "Ghost Poll: ", parent)
 
 	phone_home(chosen)
 

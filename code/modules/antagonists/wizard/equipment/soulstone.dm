@@ -323,7 +323,7 @@
 	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_SHADE, \
 		job_bans = ROLE_CULTIST, \
-		cb = to_call, \
+		to_call = to_call, \
 		title = "A shade" \
 	)
 

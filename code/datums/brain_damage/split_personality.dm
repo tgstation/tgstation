@@ -39,7 +39,7 @@
 		ignore_key = POLL_IGNORE_SPLITPERSONALITY, \
 		job_bans = ROLE_PAI, \
 		title = "[owner.real_name]'s [poll_role]", \
-		cb = to_call, \
+		to_call = to_call, \
 	)
 
 /// Ghost poll has concluded

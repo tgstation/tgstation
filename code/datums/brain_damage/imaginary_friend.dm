@@ -52,7 +52,7 @@
 		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
 		job_bans = ROLE_PAI, \
 		title = "[owner.real_name]'s imaginary friend", \
-		cb = to_call, \
+		to_call = to_call, \
 	)
 
 /// Yay more friends!

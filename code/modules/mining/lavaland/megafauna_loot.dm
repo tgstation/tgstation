@@ -428,7 +428,7 @@
 	AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
-		cb = to_call, \
+		to_call = to_call, \
 	)
 
 /// Ghost poll has concluded and a candidate has been chosen.

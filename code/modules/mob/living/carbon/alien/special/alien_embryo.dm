@@ -95,7 +95,7 @@
 	owner.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_ALIEN_LARVA, \
 		job_bans = ROLE_ALIEN, \
-		cb = to_call, \
+		to_call = to_call, \
 		custom_message = "An alien is bursting out of [owner.real_name]", \
 		title = "alien larva" \
 	)

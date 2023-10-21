@@ -709,7 +709,7 @@
 	dumb_mob.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_SENTIENCE_POTION, \
 		job_bans = ROLE_SENTIENCE, \
-		cb = to_call, \
+		to_call = to_call, \
 	)
 
 /// Assign the chosen ghost to the mob
