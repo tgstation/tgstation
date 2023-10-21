@@ -828,14 +828,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"dc" = (
-/obj/machinery/door/poddoor/shutters/indestructible/preopen,
-/obj/machinery/door/airlock/centcom{
-	dir = 4;
-	name = "Ook's Streamer Den"
-	},
-/turf/closed/indestructible/fakeglass,
-/area/centcom/central_command_areas/admin)
 "dd" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line{
@@ -3218,6 +3210,10 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
+"oj" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/admin)
 "ok" = (
 /obj/structure/fight_button,
 /obj/machinery/light/floor/has_bulb,
@@ -8168,6 +8164,11 @@
 /obj/structure/fake_stairs/wood/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"Je" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/admin)
 "Jg" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /obj/structure/table/reinforced,
@@ -43324,7 +43325,7 @@ On
 On
 On
 bO
-dc
+IS
 On
 On
 On
@@ -43583,13 +43584,13 @@ Mc
 Mc
 Mc
 Mc
-Mc
-Mc
-Mc
-Mc
-Mc
-Mc
-Mc
+oj
+oj
+oj
+oj
+oj
+oj
+oj
 Mc
 Mc
 Mc
@@ -43840,13 +43841,13 @@ Mc
 dQ
 Mc
 Mc
-Mc
-Mc
-Mc
-dQ
-Mc
-Mc
-Mc
+oj
+oj
+oj
+Je
+oj
+oj
+oj
 Mc
 Mc
 dQ
@@ -44097,13 +44098,13 @@ Mc
 Mc
 Mc
 Mc
-Mc
-Mc
-Mc
-Mc
-Mc
-Mc
-Mc
+oj
+oj
+oj
+oj
+oj
+oj
+oj
 Mc
 Mc
 Mc
