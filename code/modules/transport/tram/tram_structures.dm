@@ -585,31 +585,25 @@
 		return FALSE
 
 	if(atom_integrity >= max_integrity)
-		if(malfunctioning)
-			to_chat(user, span_warning("You begin to repair \the [src], allowing movement."))
-			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-				malfunctioning = FALSE
-				user.visible_message(span_warning("[user] repairs the damage to \the [src] with [tool]."), \
-					span_warning("You unweld \the [src], it can move freely again!"), null, COMBAT_MESSAGE_RANGE)
-				update_appearance()
+		to_chat(user, span_warning("You begin to weld \the [src], [malfunctioning ? "repairing damage" : "preventing retraction"]."))
+		if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+			return
+		malfunctioning = !malfunctioning
+		user.visible_message(span_warning("[user] [malfunctioning ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
+			span_warning("You finish welding \the [src], [malfunctioning ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
 
-		else
-			to_chat(user, span_warning("You begin to weld \the [src], preventing retraction."))
-			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-				malfunctioning = TRUE
-				user.visible_message(span_warning("[user] locks \the [src] in place with [tool]."), \
-					span_warning("You weld \the [src], it will remain deployed!"), null, COMBAT_MESSAGE_RANGE)
-				deploy_spoiler()
+		if(malfunctioning)
+			deploy_spoiler()
 
 		update_appearance()
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing [src]..."))
-	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src]."))
-		update_appearance()
-
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src]."))
+	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/tram/spoiler/update_overlays()
