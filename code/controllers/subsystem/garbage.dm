@@ -267,7 +267,6 @@ SUBSYSTEM_DEF(garbage)
 		return
 	var/queue_time = world.time
 
-	var/refid = D
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
 
