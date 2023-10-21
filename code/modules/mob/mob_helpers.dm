@@ -296,7 +296,7 @@
 
 	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
 
-	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound)
+	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
 
 /// Used in notify_ghosts to create a screen alert
 /proc/ghost_screen_alert(mob/dead/observer/ghost, header, message, action, atom/source, mutable_appearance/alert_overlay)
