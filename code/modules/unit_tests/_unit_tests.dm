@@ -197,6 +197,7 @@
 #include "organ_set_bonus.dm"
 #include "organs.dm"
 #include "outfit_sanity.dm"
+#include "oxyloss_suffocation.dm"
 #include "paintings.dm"
 #include "pills.dm"
 #include "plane_double_transform.dm"
