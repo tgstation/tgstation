@@ -101,6 +101,8 @@
 	var/shock_damage = 20
 	/// list of turfs that are currently shocked so we can unregister the signal
 	var/list/signal_turfs = list()
+	/// how long do we shock
+	var/shock_duration = 0.5 SECONDS
 
 /obj/lightning_thrower/Initialize(mapload)
 	. = ..()
@@ -118,12 +120,12 @@
 		var/victim_turf = get_step(src, direction)
 		if(isclosedturf(victim_turf))
 			continue
-		Beam(victim_turf, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+		Beam(victim_turf, icon_state="lightning[rand(1,12)]", time = shock_duration)
 		RegisterSignal(victim_turf, COMSIG_ATOM_ENTERED, PROC_REF(shock_victim)) //we cant move anyway
 		signal_turfs += victim_turf
 		for(var/mob/living/victim in victim_turf)
 			shock_victim(null, victim)
-	addtimer(CALLBACK(src, PROC_REF(clear_signals)), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(clear_signals)), shock_duration)
 
 /obj/lightning_thrower/proc/clear_signals(datum/source)
 	SIGNAL_HANDLER
