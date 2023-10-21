@@ -23,14 +23,29 @@
 
 	return TRUE
 
-/obj/bullet_act(obj/projectile/P)
+/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
-	playsound(src, P.hitsound, 50, TRUE)
-	var/damage
+	if(. != BULLET_ACT_HIT)
+		return .
+
+	playsound(src, hitting_projectile.hitsound, 50, TRUE)
+	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration)
-	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
+		damage_sustained = take_damage(
+			hitting_projectile.damage * hitting_projectile.demolition_mod,
+			hitting_projectile.damage_type,
+			hitting_projectile.armor_flag,
+			FALSE,
+			REVERSE_DIR(hitting_projectile.dir),
+			hitting_projectile.armour_penetration,
+		)
+	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
+		visible_message(
+			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+
+	return damage_sustained > 0 ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()

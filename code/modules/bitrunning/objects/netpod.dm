@@ -227,6 +227,11 @@
 
 	return FALSE
 
+/obj/machinery/netpod/attack_ghost(mob/dead/observer/our_observer)
+	var/our_target = avatar_ref?.resolve()
+	if(isnull(our_target) || !our_observer.orbit(our_target))
+		return ..()
+
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
 	if(isnull(occupant) || state_open || connected)
@@ -302,7 +307,7 @@
 			return
 		current_avatar = server.generate_avatar(wayout, netsuit)
 		avatar_ref = WEAKREF(current_avatar)
-		server.stock_gear(current_avatar, neo)
+		server.stock_gear(current_avatar, neo, generated_domain)
 
 	neo.set_static_vision(3 SECONDS)
 	protect_occupant(occupant)

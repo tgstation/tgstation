@@ -130,9 +130,10 @@
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	set_density(!density)
 	air_update_turf(TRUE, !density)
-	invisibility = initial(invisibility)
 	if(!density)
-		invisibility = INVISIBILITY_OBSERVER
+		SetInvisibility(INVISIBILITY_OBSERVER, id=type)
+	else
+		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"

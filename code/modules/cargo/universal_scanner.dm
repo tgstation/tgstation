@@ -175,6 +175,7 @@
 		price += report.total_value[exported_datum]
 	if(price)
 		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
 	else
 		to_chat(user, span_warning("Scanned [target], no export value."))
 

@@ -53,9 +53,6 @@
 	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
-		//do reactions and stuff
-		reagents.handle_reactions()
-
 		//adjust temperature of final solution
 		var/temp_diff = target_temperature - reagents.chem_temp
 		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
@@ -174,7 +171,13 @@
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	while(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
+		//no power
 		if(machine_stat & NOPOWER)
+			return
+
+		//nothing to react with
+		var/num_of_reagents = length(reagents.reagent_list)
+		if(!num_of_reagents)
 			return
 
 		/**
@@ -186,13 +189,14 @@
 		if(!buffer.total_volume)
 			return
 
-		//transfer buffer and handle reactions, not a proven math but looks logical
-		var/transfer_amount = FLOOR((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)) * seconds_per_tick, CHEMICAL_QUANTISATION_LEVEL)
-		if(transfer_amount <= CHEMICAL_QUANTISATION_LEVEL || !buffer.trans_to(reagents, transfer_amount))
+		//transfer buffer and handle reactions
+		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
+		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
 			return
 
 		//some power for accurate ph balancing
-		use_power(active_power_usage * 0.2 * seconds_per_tick)
+		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

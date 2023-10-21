@@ -54,6 +54,16 @@
 	var/icon_base = "bee"
 	///the bee is a queen?
 	var/is_queen = FALSE
+	///commands we follow
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/beehive/enter,
+		/datum/pet_command/beehive/exit,
+		/datum/pet_command/follow/bee,
+		/datum/pet_command/point_targetting/attack/swirl,
+		/datum/pet_command/scatter,
+	)
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()
@@ -62,6 +72,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
