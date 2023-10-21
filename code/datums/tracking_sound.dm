@@ -138,8 +138,8 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	if(get_dist(listener, source) > max_distance)
 		stop_sound_for(listener)
 		return
-	var/expected_offset = (REALTIMEOFDAY - start_time) * 0.1
 
+	var/expected_offset = (REALTIMEOFDAY - start_time)
 	var/listener_offset = listeners[listener] - 1
 	if(!listener_offset)
 		var/sound/existing_sound = null
