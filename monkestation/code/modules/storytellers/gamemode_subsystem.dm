@@ -224,6 +224,10 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
+		if(A.owner.state = DEAD)
+			continue
+		if(istype(A, /datum/antagonist/hypnotized))
+			continue
 		if(istype(A, /datum/antagonist/abductee))
 			continue
 		total_valid_antags++
@@ -807,6 +811,12 @@ SUBSYSTEM_DEF(gamemode)
 	total_valid_antags = 0
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
+			continue
+		if(A.owner.state = DEAD)
+			continue
+		if(istype(A, /datum/antagonist/hypnotized))
+			continue
+		if(istype(A, /datum/antagonist/abductee))
 			continue
 		total_valid_antags++
 
