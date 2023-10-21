@@ -291,11 +291,15 @@
 		if(isnull(source))
 			continue
 
-		ghost.throw_alert( \
+		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert( \
 			category = "[REF(source)]_notify_action", \
-			type = new /atom/movable/screen/alert/notify_action(action = action, target = source), \
+			type = /atom/movable/screen/alert/notify_action, \
 			new_master = source, \
 		)
+		toast.action = action
+		toast.desc = "Click to [action]."
+		toast.name = header
+		toast.target = source
 
 	var/orbit_link
 	if(source && action == NOTIFY_ORBIT)
