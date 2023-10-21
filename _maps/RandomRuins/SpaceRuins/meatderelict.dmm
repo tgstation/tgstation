@@ -1144,7 +1144,7 @@
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "vY" = (
 /obj/machinery/door/puzzle/keycard{
-	puzzle_id = md_director;
+	puzzle_id = "md_director";
 	name = "Directors Office"
 	},
 /turf/open/floor/carpet,
