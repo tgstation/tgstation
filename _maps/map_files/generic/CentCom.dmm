@@ -608,6 +608,7 @@
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
 "cp" = (
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "cq" = (
@@ -1364,6 +1365,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "fA" = (
 /obj/item/fish/chasm_crab,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "fB" = (
@@ -1381,6 +1383,15 @@
 	name = "sv_cheats 1";
 	desc = "god";
 	color = "#fcba03"
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/item/tank/internals/oxygen/yellow{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/tank/internals/oxygen/yellow{
+	pixel_y = -7;
+	pixel_x = 7
 	},
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
@@ -1417,6 +1428,7 @@
 /area/centcom/central_command_areas/borbop)
 "fL" = (
 /obj/effect/gibspawner/human/bodypartless,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "fQ" = (
@@ -1902,6 +1914,7 @@
 /area/centcom/central_command_areas/borbop)
 "hF" = (
 /obj/structure/falsewall/reinforced,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "hH" = (
@@ -2602,6 +2615,7 @@
 	dir = 4;
 	name = "Glyphee's Garbage Dump"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "lm" = (
@@ -4015,6 +4029,7 @@
 /obj/machinery/computer/camera_advanced{
 	dir = 4
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "rW" = (
@@ -4494,6 +4509,7 @@
 /area/centcom/central_command_areas/kitchen)
 "tM" = (
 /obj/effect/gibspawner/human/bodypartless,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "tW" = (
@@ -5410,6 +5426,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "xE" = (
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "xG" = (
@@ -6287,6 +6304,12 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/hall)
+"AZ" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "Ba" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
@@ -6391,6 +6414,8 @@
 /obj/structure/sign/painting/library{
 	pixel_x = 32
 	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Br" = (
@@ -6887,13 +6912,11 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
 "Ef" = (
-/obj/structure/sign/painting/large/library{
-	pixel_y = 28
-	},
 /obj/structure/table/wood,
 /obj/item/mod/control/pre_equipped/chrono{
 	desc = "It smells freshly laundered."
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Eh" = (
@@ -7204,6 +7227,13 @@
 /obj/effect/landmark/basketball/game_area,
 /turf/open/space/basic,
 /area/space)
+"Fk" = (
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/admin)
 "Fm" = (
 /obj/structure/table/reinforced/plastitaniumglass{
 	name = "Andrea's Desk"
@@ -7236,6 +7266,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "Fy" = (
+/obj/structure/fans/tiny/invisible,
 /turf/open/chasm,
 /area/centcom/central_command_areas/admin)
 "FA" = (
@@ -8090,6 +8121,7 @@
 /area/centcom/central_command_areas/kitchen)
 "IP" = (
 /obj/item/clothing/mask/facehugger/dead,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "IR" = (
@@ -9272,6 +9304,7 @@
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/recycler/deathtrap,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "MW" = (
@@ -9598,6 +9631,7 @@
 /obj/structure/chair/comfy/lime{
 	dir = 8
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Ox" = (
@@ -10189,6 +10223,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "Rl" = (
 /obj/effect/spawner/random/trash/garbage,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "Rm" = (
@@ -10361,11 +10396,16 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "RR" = (
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "RS" = (
 /obj/structure/disposalpipe/loafer{
 	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/light/very_dim/directional{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
@@ -10451,6 +10491,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Sq" = (
@@ -10898,6 +10939,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "Ud" = (
 /obj/effect/decal/cleanable/garbage,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Uf" = (
@@ -11131,13 +11173,12 @@
 	pixel_y = 4;
 	color = "#fcba03"
 	},
-/obj/item/melee/powerfist{
-	name = "Steel";
-	desc = "What do you get?";
-	force = 1000;
-	pixel_y = -5;
-	color = "#fcba03"
+/obj/structure/fans/tiny/invisible,
+/obj/item/tank/internals/oxygen/yellow{
+	pixel_y = -7;
+	pixel_x = 8
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Vp" = (
@@ -11159,6 +11200,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/delivery_chute,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "Vs" = (
@@ -11228,6 +11270,8 @@
 "VD" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/structure/closet_maintenance,
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/light/very_dim/directional,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "VE" = (
@@ -11502,6 +11546,7 @@
 	name = "Glyphee's Fax Machine";
 	fax_name = "Glyphee's Spam Mail"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "WP" = (
@@ -11610,6 +11655,7 @@
 	name = "Glyphee's Secret Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Xj" = (
@@ -11737,6 +11783,8 @@
 	dir = 4;
 	desc = "A specialized console to connect to gaming computers to be able to broadcast live. Seriously, where does Ook find this stuff?"
 	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "XI" = (
@@ -41739,7 +41787,7 @@ hp
 On
 cp
 Bq
-Bq
+Fk
 Bq
 cp
 On
@@ -42253,7 +42301,7 @@ yw
 On
 hF
 On
-VD
+AZ
 tM
 Fy
 On
