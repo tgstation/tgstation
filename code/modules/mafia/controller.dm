@@ -2,6 +2,9 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles_by_name())
 
 GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
+///How many votes are needed to unlock the 'Universally Hated' achievement.
+#define UNIVERSALLY_HATED_REQUIREMENT 12
+
 /**
  * The mafia controller handles the mafia minigame in progress.
  * It is first created when the first ghost signs up to play.
@@ -253,7 +256,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
 	var/loser_votes = get_vote_count(loser, "Day")
 	if(loser)
-		if(loser_votes > 12)
+		if(loser_votes > UNIVERSALLY_HATED_REQUIREMENT)
 			award_role(/datum/award/achievement/mafia/universally_hated, loser)
 		//refresh the lists
 		judgement_abstain_votes = list()
@@ -393,8 +396,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	var/client/role_client = rewarded.body.client
-	role_client?.give_award(award, rewarded.body)
+	rewarded.body?.client?.give_award(award, rewarded.body)
+	if(!rewarded.player_pda)
+		return
+	for(var/datum/tgui/window as anything in rewarded.player_pda.open_uis)
+		window.user?.client?.give_award(award, rewarded.body)
 
 /**
  * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
@@ -624,7 +630,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	if(usr.client?.holder)
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
-	data["is_observer"] = !!isobserver(user)
+	data["is_observer"] = isobserver(user)
 	data["all_roles"] = current_setup_text
 
 	if(phase == MAFIA_PHASE_SETUP)
@@ -1121,6 +1127,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
 	owner.role_messages += text
+	if(!owner.body.client)
+		return
 	maptext = MAPTEXT("<span style='color: [COLOR_RED]; text-align: center; font-size: 24pt'> [text]</span>")
 	maptext_width = view_to_pixels(owner.body.client?.view_size.getView())[1]
 	owner.body.client?.screen += src
@@ -1139,3 +1147,5 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		QDEL_NULL(GLOB.mafia_game)
 	var/datum/mafia_controller/new_controller = new()
 	return new_controller
+
+#undef UNIVERSALLY_HATED_REQUIREMENT
