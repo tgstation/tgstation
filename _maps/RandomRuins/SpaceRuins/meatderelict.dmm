@@ -1136,12 +1136,6 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
-"vI" = (
-/obj/structure/sign/poster/quirk/crew/hang{
-	pixel_x = -32
-	},
-/turf/open/indestructible/meat,
-/area/ruin/space/has_grav/powered/biooutpost/vault)
 "vY" = (
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "md_director";
@@ -3390,7 +3384,7 @@ re
 Yc
 Yc
 TU
-vI
+EN
 EN
 eP
 TU
