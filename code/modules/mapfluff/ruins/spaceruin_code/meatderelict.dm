@@ -108,6 +108,7 @@
 /obj/lightning_thrower/Destroy()
 	. = ..()
 	signal_turfs = null
+	STOP_PROCESSING(SSprocessing, src)
 
 /obj/lightning_thrower/process(seconds_per_tick)
 	var/list/dirs = throw_diagonals ? GLOB.diagonals : GLOB.cardinals
