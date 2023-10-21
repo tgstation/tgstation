@@ -58,7 +58,7 @@
 
 /mob/living/basic/node_drone/examine(mob/user)
 	. = ..()
-	var/sameside = user.faction_check_mob(src, exact_match = FALSE)
+	var/sameside = user.faction_check_atom(src, exact_match = FALSE)
 	if(sameside)
 		. += span_notice("This drone is currently attached to a mineral vent. You should protect it from harm to secure the mineral vent.")
 	else
