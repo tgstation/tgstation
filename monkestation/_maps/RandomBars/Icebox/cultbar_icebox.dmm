@@ -635,10 +635,6 @@
 /obj/item/toy/toy_dagger,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"Ha" = (
-/obj/structure/constructshell,
-/turf/open/floor/cult,
-/area/station/service/bar/backroom)
 "HO" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/food/pie/cream{
@@ -1297,7 +1293,7 @@ EK
 HZ
 QV
 rf
-Ha
+rf
 TV
 xc
 zG

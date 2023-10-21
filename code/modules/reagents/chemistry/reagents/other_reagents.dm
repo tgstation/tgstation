@@ -1415,6 +1415,7 @@
 	taste_description = "slime"
 	penetrates_skin = NONE
 	ph = 11
+	restricted = TRUE //so they cant roll on maint pills, if this has other sides effects then this can be reworked to a global blacklist
 
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
