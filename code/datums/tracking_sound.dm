@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	listeners[listener] = TRUE
 
 /datum/sound_spatial_tracker/proc/release_listener(mob/listener)
-	if(!(listener in listeners))
+	if(!listeners[listener])
 		return
 	listeners -= listener
 	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
