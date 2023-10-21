@@ -82,7 +82,9 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	return ..()
 
 /datum/sound_spatial_tracker/process(seconds_per_tick)
-	listeners -= leavers
+	for(var/mob/listent as anything in leavers)
+		release_listener(listent)
+	leavers.Cut()
 
 /datum/sound_spatial_tracker/proc/on_source_moved()
 	SIGNAL_HANDLER
