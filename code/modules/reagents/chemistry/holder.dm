@@ -694,7 +694,7 @@
 		target_holder = target.reagents
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount * multiplier, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return
 
@@ -702,15 +702,17 @@
 	var/part = amount / total_volume
 	var/transfer_amount
 	var/transfered_amount = 0
+	var/total_transfered_amount = 0
 	var/trans_data = null
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		transfer_amount = FLOOR(reagent.volume * part, CHEMICAL_QUANTISATION_LEVEL)
+		transfer_amount = FLOOR(reagent.volume * part * multiplier, CHEMICAL_QUANTISATION_LEVEL)
 		if(preserve_data)
 			trans_data = reagent.data
-		if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT))
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		if(!transfered_amount)
 			continue
-		transfered_amount += transfer_amount
+		total_transfered_amount += transfered_amount
 
 	if(!no_react)
 		// pass over previous ongoing reactions before handle_reactions is called
@@ -719,7 +721,7 @@
 		target_holder.update_total()
 		target_holder.handle_reactions()
 
-	return transfered_amount
+	return total_transfered_amount
 
 /**
  * Multiplies the reagents inside this holder by a specific amount
