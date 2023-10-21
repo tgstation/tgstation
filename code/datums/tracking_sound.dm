@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 
 /datum/sound_spatial_tracker/proc/update_listener(mob/listener)
 	var/sound/existing_sound = null
-	for(var/sound/playing as anything in listener.client.SoundQuery())
+	for(var/sound/playing as anything in listener.client?.SoundQuery())
 		if(playing.channel != channel)
 			continue
 		existing_sound = playing
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	var/list/new_args = playsound_local_args.Copy()
 	new_args["turf_source"] = get_turf(source)
 
-	var/sound/new_sound = sound(existing_sound.file)
+	var/sound/new_sound = sound(new_args["soundin"])
 	new_sound.offset = (world.timeofday - start_time) * 0.1
 	new_args["sound_to_use"] = new_sound
 
