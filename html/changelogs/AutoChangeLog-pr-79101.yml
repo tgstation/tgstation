@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscadd: "Gygax type mechs now have an option to disable overclock when overheated."
+  - bugfix: "Fixed overclocking having no effect on Ripley."
