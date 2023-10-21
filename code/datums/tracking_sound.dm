@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 		existing_sound = playing
 
 	var/expected_offset = (world.timeofday - start_time) * 0.1
-	if(!qdel_scheduled) // couldn't do it before, but we can now
+	if(!qdel_scheduled && !isnull(existing_sound)) // couldn't do it before, but we can now
 		schedule_qdel((existing_sound.len - expected_offset) + 1)
 
 	var/list/new_args = playsound_local_args.Copy()
