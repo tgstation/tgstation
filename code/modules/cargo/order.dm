@@ -201,6 +201,13 @@
 			pack.contains[i] = new_contents[i]
 	pack.cost += cost_increase
 
+/// special class of order just to override how the final price is computed
+/datum/supply_order/materials_order
+
+/// no coupons, no private purchase multiplier. just raw cost
+/datum/supply_order/materials_order/get_final_cost()
+	return pack.get_cost()
+
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
 #undef MANIFEST_ERROR_CONTENTS

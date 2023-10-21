@@ -186,19 +186,30 @@
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
 				if(order.orderer_rank == "Galactic Materials Market" && ( \
-					(!is_ordering_private && order.paying_account == null) || \
-					(is_ordering_private && order.paying_account != null && order.orderer == living_user) \
+					(!is_ordering_private && isnull(order.paying_account)) || \
+					(is_ordering_private && !isnull(order.paying_account) && order.orderer == living_user) \
 				))
 					// Check if this order exceeded its limit
 					var/prior_stacks = 0
 					for(var/obj/item/stack/sheet/sheet as anything in order.pack.contains)
 						prior_stacks += ROUND_UP(order.pack.contains[sheet] / 50)
 						if(prior_stacks >= 10)
-							to_chat(usr, span_notice("You already have 10 stacks of sheets on order! Please wait for them to arrive before ordering more."))
+							say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
 							playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
 							return
+
+					// Prevents you from ordering more than the available budget
+					var/datum/bank_account/paying_account = account_payable
+					if(!isnull(order.paying_account)) //order is already being paid by another account
+						paying_account = order.paying_account
+					var/final_cost = order.pack.get_cost()
+					if(final_cost + cost > paying_account.account_balance)
+						say("This order worth [final_cost] cr would exceed the available budget by [cost] cr!. Please send it before purchasing more.")
+						return
+
 					// Append to this order
 					order.append_order(things_to_order, cost)
+					say("Order appended, total cost is [order.pack.get_cost()] cr.")
 					return
 
 			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
@@ -207,13 +218,13 @@
 				cost = cost, \
 				contains = things_to_order, \
 			)
-			var/datum/supply_order/new_order = new(
+			var/datum/supply_order/materials_order/new_order = new(
 				pack = mineral_pack,
 				orderer = living_user,
 				orderer_rank = "Galactic Materials Market",
 				orderer_ckey = living_user.ckey,
 				paying_account = is_ordering_private ? account_payable : null,
-				cost_type = "credit",
+				cost_type = "cr",
 				can_be_cancelled = FALSE
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")

@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/value = 0
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
+	var/list/rejected_orders = list() //list of all orders that exceeded the available budget and are uncancelable
 
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
@@ -186,6 +187,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
 						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+					if(!spawning_order.can_be_cancelled) //only if it absolutly cannot be canceled by the player do we cancel it for them
+						rejected_orders += spawning_order
 					continue
 
 		if(spawning_order.paying_account)
@@ -216,6 +219,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(spawning_order.pack.dangerous)
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
+
+	//clear out all rejected uncancellable orders
+	for(var/datum/supply_order/rejected_order in rejected_orders)
+		SSshuttle.shopping_list -= rejected_order
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
