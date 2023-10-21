@@ -7829,20 +7829,20 @@
 /area/station/engineering/atmos)
 "bVK" = (
 /obj/structure/table,
-/mob/living/basic/mouse/brown/tom,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/mob/living/basic/mouse/brown/tom,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "bVQ" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
-/mob/living/simple_animal/parrot/poly,
 /obj/machinery/computer/security/telescreen/engine{
 	name = "Engineering and atmospherics monitor"
 	},
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/command/heads_quarters/ce)
 "bVT" = (
@@ -11135,8 +11135,8 @@
 /turf/open/floor/carpet/neon/simple/pink/nodots,
 /area/station/maintenance/floor2/port/fore)
 "cOS" = (
-/mob/living/simple_animal/bot/cleanbot,
 /obj/machinery/light/small/directional/north,
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cPg" = (
@@ -14705,11 +14705,11 @@
 /area/station/service/library)
 "dNw" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/basic/pet/fox/renault,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
+/mob/living/basic/pet/fox/renault,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "dNx" = (
@@ -15180,10 +15180,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/paramedic)
 "dUq" = (
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "dUr" = (
@@ -16268,7 +16268,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
+	preset_destination_names = list("2" = "Supply-Engi        Floor", "3" = "Med-Sci        Floor", "4" = "Service        Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -16442,17 +16442,17 @@
 "ejT" = (
 /obj/structure/table/reinforced,
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
 	name = "stick of 'medicated' butter";
 	pixel_y = 8
 	},
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
 	name = "stick of 'medicated' butter";
 	pixel_y = 3
 	},
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
 	name = "stick of 'medicated' butter";
 	pixel_y = -2
 	},
@@ -17821,6 +17821,7 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/aquarium_kit,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "eDe" = (
@@ -23720,7 +23721,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "com_vator";
 	pixel_x = 24;
-	preset_destination_names = list("3"="Medsci","4"="Service","5"="Command")
+	preset_destination_names = list("3" = "Medsci", "4" = "Service", "5" = "Command")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor2/fore)
@@ -29277,8 +29278,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/structure/chair/sofa/middle/brown,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/carpet/green,
 /area/station/service/bar/atrium)
 "hJD" = (
@@ -30708,11 +30709,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard/fore)
 "idf" = (
-/mob/living/basic/sloth/paperwork,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/mob/living/basic/sloth/paperwork,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "idn" = (
@@ -33447,11 +33448,11 @@
 "iOy" = (
 /obj/structure/table/reinforced,
 /obj/item/food/cake/chocolate{
-	food_reagents = list(/datum/reagent/consumable/nutriment=20,/datum/reagent/drug/space_drugs=10);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/drug/space_drugs = 10);
 	name = "large pot brownie"
 	},
 /obj/item/food/cake/chocolate{
-	food_reagents = list(/datum/reagent/consumable/nutriment=20,/datum/reagent/drug/space_drugs=10);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/drug/space_drugs = 10);
 	name = "large pot brownie";
 	pixel_y = 6
 	},
@@ -36153,13 +36154,13 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/mob/living/basic/lizard{
-	name = "Allad Minsa"
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Custodial Closet"
 	},
 /obj/item/radio/intercom/directional/west,
+/mob/living/basic/lizard{
+	name = "Allad Minsa"
+	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "jzN" = (
@@ -43545,7 +43546,6 @@
 /area/station/command/meeting_room)
 "ltD" = (
 /obj/structure/bed/dogbed/lia,
-/mob/living/basic/carp/pet/lia,
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Security's Desk";
 	name = "Head of Security Requests Console"
@@ -43553,6 +43553,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "ltH" = (
@@ -52293,31 +52294,31 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
+	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
 	name = "strange pill";
 	pixel_x = 9
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
+	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
 	name = "strange pill"
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
+	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
 	name = "strange pill";
 	pixel_x = -9;
 	pixel_y = -8
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
+	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
 	name = "strange pill";
 	pixel_y = -8
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
+	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
 	name = "strange pill";
 	pixel_x = -9
 	},
@@ -53642,7 +53643,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
+	preset_destination_names = list("2" = "Supply-Engi        Floor", "3" = "Med-Sci        Floor", "4" = "Service        Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -54458,8 +54459,8 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment2)
 "ofI" = (
-/mob/living/basic/butterfly,
 /obj/machinery/light/small/directional/east,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
 "ogc" = (
@@ -55660,11 +55661,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/science/xenobiology/hallway)
 "owC" = (
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "owI" = (
@@ -65176,10 +65177,10 @@
 /turf/open/floor/iron/kitchen,
 /area/station/command/heads_quarters/rd)
 "qXQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/carbon/human/species/monkey{
 	name = "Banana"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "qXW" = (
@@ -76886,8 +76887,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
-/mob/living/basic/pet/dog/pug/mcgriff,
 /obj/machinery/light/directional/east,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "ufI" = (
@@ -78076,10 +78077,10 @@
 "uwI" = (
 /obj/structure/cable,
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "uwP" = (
@@ -78803,9 +78804,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "uGT" = (
-/mob/living/simple_animal/bot/floorbot,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
+/mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "uHa" = (
@@ -91748,10 +91749,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xVl" = (
-/mob/living/basic/crab,
 /obj/structure/railing{
 	dir = 1
 	},
+/mob/living/basic/crab,
 /turf/open/misc/beach/sand,
 /area/station/hallway/floor2/fore)
 "xVn" = (
@@ -92708,13 +92709,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/floor2/aft)
 "yiA" = (
-/mob/living/basic/pig{
-	desc = "The best friend of any cytologist.";
-	name = "Oug"
-	},
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
+	},
+/mob/living/basic/pig{
+	desc = "The best friend of any cytologist.";
+	name = "Oug"
 	},
 /turf/open/floor/grass,
 /area/station/science/cytology)
