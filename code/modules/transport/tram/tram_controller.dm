@@ -834,7 +834,7 @@
 			return
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "unsecured")
-		deconstruct(user)
+		deconstruct()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/screwdriver_act_secondary(mob/living/user, obj/item/tool)
@@ -847,7 +847,7 @@
 	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE, mob/living/user)
+/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 
