@@ -448,6 +448,9 @@
 	if(!ismob(loc))
 		reset_spin()
 
+	REMOVE_TRAIT(src, TRAIT_NODROP, type)
+	using = FALSE
+
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)
 		return
