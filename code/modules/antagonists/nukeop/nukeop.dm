@@ -528,9 +528,6 @@
 /// Returns whether or not syndicate operatives escaped.
 /proc/is_infiltrator_docked_at_syndiebase()
 	var/obj/docking_port/mobile/infiltrator/infiltrator_port = SSshuttle.getShuttle("syndicate")
+	var/obj/docking_port/stationary/transit/infiltrator_dock = locate() in infiltrator_port.loc
 
-	for(var/datum/turf_reservation/loaded_area as anything in nukie_template.reservations)
-		var/infiltrator_turf = get_turf(infiltrator_port)
-		if(infiltrator_turf in loaded_area.reserved_turfs)
-			return TRUE
-	return FALSE
+	return infiltrator_port && (is_centcom_level(infiltrator_port.z) || infiltrator_dock)
