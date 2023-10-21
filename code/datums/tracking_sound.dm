@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	if(GLOB.sound_spatial_trackers[channel] == src)
 		GLOB.sound_spatial_trackers[channel] = null
 	spatial_tracker = null
+	cells.Cut()
 	return ..()
 
 /datum/sound_spatial_tracker/process(seconds_per_tick)
