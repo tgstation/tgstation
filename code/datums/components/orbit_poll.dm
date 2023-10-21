@@ -1,10 +1,22 @@
 /**
  * A replacement for the standard poll_ghost_candidate.
  * Use this to subtly ask players to join - it picks from orbiters.
+ * Please use named arguments for this.
  *
  * @params ignore_key - Required so it doesn't spam
  * @params job_bans - You can insert a list or single items here.
  * @params cb - Invokes this proc and appends the poll winner as the last argument, mob/dead/observer/ghost
+ * @params title - Optional. Useful if the parent doesn't have the name you want to use.
+ *
+ * @usage
+ * ```
+ * var/datum/callback/cb = CALLBACK(src, PROC_REF(do_stuff), arg1, arg2)
+ * AddComponent(/datum/component/orbit_poll, \
+ *   ignore_key = POLL_IGNORE_EXAMPLE, \
+ *   job_bans = ROLE_EXAMPLE or list(ROLE_EXAMPLE, ROLE_EXAMPLE2), \
+ *   title = "Use this if you want something other than the parent name", \
+ *   cb = cb, \
+ * )
  */
 /datum/component/orbit_poll
 	/// Prevent players with this ban from being selected
@@ -14,7 +26,15 @@
 	/// Proc to invoke whenever the poll is complete
 	var/datum/callback/to_call
 
-/datum/component/orbit_poll/Initialize(ignore_key, list/job_bans, datum/callback/cb, title, header = "Ghost Poll", custom_message)
+/datum/component/orbit_poll/Initialize( \
+	ignore_key, \
+	list/job_bans, \
+	datum/callback/cb, \
+	title, \
+	header = "Ghost Poll", \
+	custom_message, \
+	timeout = 20 SECONDS \
+)
 	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -35,7 +55,7 @@
 		source = parent \
 	)
 
-	addtimer(CALLBACK(src, PROC_REF(end_poll)), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(end_poll)), timeout, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /datum/component/orbit_poll/Topic(href, list/href_list)
 	if(href_list["orbit"])
