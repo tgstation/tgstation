@@ -1,12 +1,6 @@
+// Drones' interactions with other mobs
 
-/////////////////////
-//DRONE INTERACTION//
-/////////////////////
-//How drones interact with the world
-//How the world interacts with drones
-
-
-/mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/drone)
+/mob/living/basic/drone/attack_drone(mob/living/basic/drone/drone)
 	if(drone == src || stat != DEAD)
 		return FALSE
 	var/input = tgui_alert(drone, "Perform which action?", "Drone Interaction", list("Reactivate", "Cannibalize"))
@@ -24,36 +18,27 @@
 				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
 				drone.adjustBruteLoss(-src.maxHealth)
 				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+				ghostize(can_reenter_corpse = FALSE)
 				qdel(src)
 			else
 				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
 
-/mob/living/simple_animal/drone/attack_drone_secondary(mob/living/simple_animal/drone/drone)
+/mob/living/basic/drone/attack_drone_secondary(mob/living/basic/drone/drone)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/simple_animal/drone/attack_hand(mob/user, list/modifiers)
-	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
-			..()
-			return
-		if(user.get_active_held_item())
-			to_chat(user, span_warning("Your hands are full!"))
-			return
-		visible_message(span_warning("[user] starts picking up [src]."), \
-						span_userdanger("[user] starts picking you up!"))
-		if(!do_after(user, 20, target = src))
-			return
-		visible_message(span_warning("[user] picks up [src]!"), \
-						span_userdanger("[user] picks you up!"))
-		if(buckled)
-			to_chat(user, span_warning("[src] is buckled to [buckled] and cannot be picked up!"))
-			return
-		to_chat(user, span_notice("You pick [src] up."))
-		drop_all_held_items()
-		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
-		DH.slot_flags = worn_slot_flags
-		user.put_in_hands(DH)
+/mob/living/basic/drone/attack_hand(mob/user, list/modifiers)
+	if(isdrone(user))
+		attack_drone(user)
+	return ..()
+
+/mob/living/basic/drone/mob_try_pickup(mob/living/user, instant=FALSE)
+	if(stat == DEAD || status_flags & GODMODE)
+		return
+	return ..()
+
+/mob/living/basic/drone/mob_pickup(mob/living/user)
+	drop_all_held_items()
+	return ..()
 
 /**
  * Called when a drone attempts to reactivate a dead drone
@@ -64,7 +49,7 @@
  * Arguments:
  * * user - The [/mob/living] attempting to reactivate the drone
  */
-/mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
+/mob/living/basic/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
 		var/list/faux_gadgets = list(
@@ -91,9 +76,13 @@
 	else
 		to_chat(user, span_warning("You need to remain still to reactivate [src]!"))
 
-
-/mob/living/simple_animal/drone/screwdriver_act(mob/living/user, obj/item/tool)
+/// Screwdrivering repairs the drone to full hp, if it isn't dead.
+/mob/living/basic/drone/screwdriver_act(mob/living/user, obj/item/tool)
 	if(stat == DEAD)
+		if(isdrone(user))
+			user.balloon_alert(user, "reactivate instead!")
+		else
+			user.balloon_alert(user, "can't fix!")
 		return FALSE
 	if(health >= maxHealth)
 		to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
@@ -108,7 +97,8 @@
 	visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/mob/living/simple_animal/drone/wrench_act(mob/living/user, obj/item/tool)
+/// Wrenching un-hacks hacked drones.
+/mob/living/basic/drone/wrench_act(mob/living/user, obj/item/tool)
 	if(user == src)
 		return FALSE
 	user.visible_message(
@@ -123,18 +113,19 @@
 		update_drone_hack(FALSE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/mob/living/simple_animal/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
+/mob/living/basic/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
 	return !(item.type in drone_item_whitelist_flat) && ..()
 
-/mob/living/simple_animal/drone/getarmor(def_zone, type)
+/mob/living/basic/drone/getarmor(def_zone, type)
 	var/armorval = 0
 
 	if(head)
 		armorval = head.get_armor_rating(type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
-/mob/living/simple_animal/drone/proc/get_armor_effectiveness()
-	return 0 //multiplier for whatever head armor you wear as a drone
+/// Returns a multiplier for any head armor you wear as a drone.
+/mob/living/basic/drone/proc/get_armor_effectiveness()
+	return 0
 
 /**
  * Hack or unhack a drone
@@ -148,7 +139,7 @@
  * Arguments
  * * hack - Boolean if the drone is being hacked or unhacked
  */
-/mob/living/simple_animal/drone/proc/update_drone_hack(hack)
+/mob/living/basic/drone/proc/update_drone_hack(hack)
 	if(!mind)
 		return
 	if(hack)
@@ -171,7 +162,7 @@
 		speed = 1 //gotta go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
-		if(!hacked)
+		if(!hacked || !can_unhack)
 			return
 		Stun(40)
 		visible_message(span_info("[src]'s display glows a content blue!"), \
@@ -189,17 +180,10 @@
 	update_drone_icon_hacked()
 
 /**
- *   # F R E E D R O N E
- * ### R
- * ### E
- * ### E
- * ### D
- * ### R
- * ### O
- * ### N
- * ### E
+ * Makes the drone into a Free Drone, who have no real laws and can do whatever they like.
+ * Only currently used for players wabbajacked into drones.
  */
-/mob/living/simple_animal/drone/proc/liberate()
+/mob/living/basic/drone/proc/liberate()
 	laws = "1. You are a Free Drone."
 	set_shy(FALSE)
 	to_chat(src, laws)
@@ -208,12 +192,12 @@
  * Changes the icon state to a hacked version
  *
  * See also
- * * [/mob/living/simple_animal/drone/var/visualAppearance]
+ * * [/mob/living/basic/drone/var/visualAppearance]
  * * [MAINTDRONE]
  * * [REPAIRDRONE]
  * * [SCOUTDRONE]
  */
-/mob/living/simple_animal/drone/proc/update_drone_icon_hacked() //this is hacked both ways
+/mob/living/basic/drone/proc/update_drone_icon_hacked() //this is hacked both ways
 	var/static/hacked_appearances = list(
 		SCOUTDRONE = SCOUTDRONE_HACKED,
 		REPAIRDRONE = REPAIRDRONE_HACKED,

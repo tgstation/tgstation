@@ -238,6 +238,14 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"KO" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "Ow" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
@@ -517,7 +525,7 @@ Cg
 Cg
 ce
 uN
-Ky
+KO
 Ow
 KJ
 od

@@ -63,9 +63,9 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/parrot,
 	)),
 	"conspiracies" = typecacheof(list(
-		/mob/living/simple_animal/bot/secbot,
-		/mob/living/simple_animal/drone,
+		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
+		/mob/living/simple_animal/bot/secbot,
 	)),
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"heresy" = typecacheof(list(
@@ -78,10 +78,10 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 	"robots" = typecacheof(list(
+		/mob/living/basic/drone,
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
-		/mob/living/simple_animal/drone,
 	)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
