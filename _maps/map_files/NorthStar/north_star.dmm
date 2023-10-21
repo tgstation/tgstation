@@ -18412,7 +18412,6 @@
 /area/station/commons/toilet)
 "eMj" = (
 /obj/effect/turf_decal/tile/green/full,
-/obj/machinery/infuser,
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)

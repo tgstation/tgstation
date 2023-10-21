@@ -12046,7 +12046,6 @@
 	c_tag = "Service - Hydroponics"
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cAd" = (

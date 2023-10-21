@@ -52628,7 +52628,6 @@
 /area/station/science/cytology)
 "sRb" = (
 /obj/structure/table,
-/obj/machinery/infuser,
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
