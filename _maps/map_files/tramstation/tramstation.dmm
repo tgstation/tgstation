@@ -1622,17 +1622,9 @@
 /area/station/asteroid)
 "aeA" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/structure/sign/poster/random/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/machinery/light/neon_lining{
 	dir = 8;
 	icon_state = "pink2_1"
@@ -1641,6 +1633,7 @@
 	dir = 1;
 	icon_state = "pink2_1"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "aeB" = (
@@ -1814,12 +1807,7 @@
 /area/station/cargo/miningdock)
 "afk" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/machinery/light/neon_lining{
 	dir = 4;
 	icon_state = "pink2_1"
@@ -1828,6 +1816,9 @@
 	dir = 1;
 	icon_state = "pink2_1"
 	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "afl" = (
@@ -2245,11 +2236,7 @@
 "agx" = (
 /obj/structure/filingcabinet,
 /obj/structure/window/spawner/directional/north,
-/obj/item/paper/monitorkey,
-/obj/item/areaeditor/blueprints{
-	name = "Station Layout";
-	desc = "A crude mapping of the station layout based on leaked internal documents and orbital snapshots taken during construction. I'm not sure how up-to-date this is anymore..."
-	},
+/obj/item/paper/crumpled,
 /turf/open/floor/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "agy" = (
@@ -8614,10 +8601,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "bxd" = (
-/obj/machinery/computer/message_monitor{
+/obj/structure/sign/calendar/directional/south,
+/obj/machinery/computer/old{
 	dir = 1
 	},
-/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "bxr" = (
@@ -9656,6 +9643,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "bNx" = (
@@ -10260,7 +10248,6 @@
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/item/stack/sheet/mineral/bananium/five,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "bXr" = (
@@ -12059,7 +12046,6 @@
 	c_tag = "Service - Hydroponics"
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cAd" = (
@@ -18028,6 +18014,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
 	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Cargo - Bitrunning Den"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "eyy" = (
@@ -20096,7 +20085,7 @@
 /obj/item/ammo_box/a357,
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/gun/ballistic/revolver/russian,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "fkg" = (
@@ -25254,10 +25243,10 @@
 /area/station/medical/break_room)
 "gWk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/syndicate,
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/mod,
+/obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "gWo" = (
@@ -25514,6 +25503,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
+"hbN" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/ai)
 "hbQ" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Civilian - Holodeck Controls"
@@ -29262,6 +29256,7 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "iqZ" = (
@@ -31769,7 +31764,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "jfu" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "jfD" = (
@@ -33339,9 +33334,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/industrial,
-/obj/item/mod/control/pre_equipped/cosmohonk,
-/obj/item/mod/module/insignia/clown,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "jFu" = (
@@ -39125,7 +39118,6 @@
 "lwy" = (
 /obj/machinery/porta_turret/ai,
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "lwB" = (
@@ -49007,8 +48999,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/random/decoration/ornament,
-/obj/item/stack/sheet/mineral/bananium/five,
 /obj/item/reagent_containers/cup/beaker,
+/obj/item/grown/bananapeel/bluespace,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "oMZ" = (
@@ -61415,7 +61407,8 @@
 /area/station/commons/dorms)
 "sJp" = (
 /obj/structure/sign/clock/directional/south,
-/obj/machinery/computer/camera_advanced/syndie{
+/obj/item/paper/crumpled/bloody,
+/obj/structure/frame/computer{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
@@ -61887,6 +61880,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "sQY" = (
+/obj/effect/spawner/random/loafer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "sQZ" = (
@@ -62181,6 +62175,7 @@
 	},
 /obj/machinery/holopad/secure,
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "sVA" = (
@@ -63694,10 +63689,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tsR" = (
-/obj/item/paper{
-	default_raw_text = "Congradulations, agent 'INSERT NAME HERE'! You have been assigned reconnaissance duty among the orbiting rocks of Indecipheres! As this location was previously scouted as a potential build site for a Nanotrasen outpost, one of our benefactors has taken the oppertunity to pre-emptively construct a listening outpost within the region! You have been tasked with monitoring the potentially active future crew and logging all events onboard. If you are a Nanotrasen official who has stumbled upon this outpost before it could be properly established: Please ignore this entire paper.";
-	name = "initiation paperwork"
-	},
 /obj/machinery/computer/records/medical/syndie{
 	dir = 1;
 	req_access = list("syndicate")
@@ -63832,9 +63823,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engi-entrance"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Engineering3"
 	},
@@ -64907,7 +64895,7 @@
 	c_tag = "Secure - AI Upper External North";
 	network = list("aicore")
 	},
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/engine/hull/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "tNJ" = (
@@ -78042,19 +78030,19 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
-/mob/living/simple_animal/pet/cat/kitten{
-	name = "Blu";
-	gender = "female"
-	},
 /obj/structure/bed/dogbed{
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off.";
-	name = "cat bed"
+	name = "slime bed"
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "hydrodropoff";
 	name = "Shipment Delivery Chute Activator";
 	pixel_x = 10;
 	pixel_y = 20
+	},
+/mob/living/simple_animal/slime/pet{
+	colour = "orange";
+	name = "Happy Accident"
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
@@ -193311,7 +193299,7 @@ jfu
 lwy
 sVz
 bNr
-aoh
+hbN
 fyX
 ffe
 mgi

@@ -70,6 +70,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
+/// Used for items that cannot be used directly to harm people with, ex. loafs
+#define CANNOT_ATTACK_WITH (1<<21)
+
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
 #define UPDATE_NAME (1<<0)

@@ -163,6 +163,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/bronze/filled,
 /area/station/service/bar/backroom)
 "hS" = (
@@ -576,6 +577,10 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/station/service/bar)
+"Fm" = (
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
 "FS" = (
 /obj/machinery/restaurant_portal/bar,
 /turf/open/floor/bronze/filled,
@@ -654,6 +659,10 @@
 /obj/structure/closet/secure_closet/bar,
 /turf/open/floor/bronze/filled,
 /area/station/service/bar/backroom)
+"Ky" = (
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
 "KP" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/bronze,
@@ -966,7 +975,7 @@ EK
 "}
 (5,1,1) = {"
 nZ
-YM
+Fm
 SW
 OY
 Pz
@@ -1016,7 +1025,7 @@ oC
 oC
 oC
 ux
-ZP
+Ky
 nl
 EK
 "}

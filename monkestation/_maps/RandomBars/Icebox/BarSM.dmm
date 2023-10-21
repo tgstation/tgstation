@@ -24,17 +24,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
-"aZ" = (
-/obj/structure/bed/dogbed{
-	name = "pet bed";
-	desc = "A comfy-looking pet bed. You can even strap your pet in, in case the gravity turns off."
-	},
-/mob/living/simple_animal/pet/cat/kitten{
-	gender = "female";
-	name = "Blu"
-	},
-/turf/open/floor/carpet/neon/simple/yellow/nodots,
-/area/station/service/bar/backroom)
 "bo" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass/critical{
@@ -591,8 +580,6 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/vending_refill/cigarette,
 /obj/structure/table/reinforced,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/beanbag,
 /turf/open/floor/carpet/neon/simple/yellow/nodots,
 /area/station/service/bar/backroom)
 "uo" = (
@@ -905,18 +892,6 @@
 "Ec" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/autolathe,
-/obj/item/stack/sheet/iron/ten,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
 /turf/open/floor/pod/light,
 /area/station/service/bar)
 "Eu" = (
@@ -1212,11 +1187,9 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/stack/cable_coil,
-/obj/item/mod/control/pre_equipped/engineering{
-	name = "Barkeeper MODsuit"
-	},
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/mod/control/pre_equipped/empty,
 /turf/open/floor/carpet/neon/simple/yellow/nodots,
 /area/station/service/bar/backroom)
 "KG" = (
@@ -1233,6 +1206,7 @@
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/cup/rag,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/pod/light,
 /area/station/service/bar)
 "KL" = (
@@ -1873,7 +1847,7 @@ EK
 "}
 (17,1,1) = {"
 Kf
-aZ
+Ix
 Ix
 qu
 wG
