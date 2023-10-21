@@ -64,11 +64,11 @@
 				if(TRANSPORT_IN_USE)
 					say("The tram is tramversing the station, please wait.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecoms access to reset the controller.")
+					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 				if(NO_CALL_REQUIRED) //already here
 					say("The tram is already here. Please board the tram and select a destination.")
 				else
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecoms access to reset the controller.")
+					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 
 /obj/item/assembly/control/transport/call_button/activate()
 	if(cooldown)
