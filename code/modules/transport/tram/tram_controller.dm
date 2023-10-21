@@ -759,10 +759,7 @@
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
-	if(user.combat_mode)
-		return ..()
-
-	if(cover_open)
+	if(user.combat_mode || cover_open)
 		return ..()
 
 	var/obj/item/card/id/id_card = user.get_id_in_hand()
@@ -780,7 +777,7 @@
 	if(cover_locked)
 		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 		if(isnull(id_card))
-			balloon_alert(user, "access denied")
+			balloon_alert(user, "access denied!")
 			return
 
 		try_toggle_lock(user, id_card)
@@ -794,7 +791,7 @@
 	if(!cover_open)
 		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 		if(isnull(id_card))
-			balloon_alert(user, "access denied")
+			balloon_alert(user, "access denied!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		try_toggle_lock(user, id_card)
@@ -818,15 +815,14 @@
 		balloon_alert(user, "access controller damaged!")
 		return FALSE
 
-	else if(check_access(id_card))
+	if(check_access(id_card))
 		cover_locked = !cover_locked
 		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
 		update_appearance()
 		return TRUE
 
-	else
-		balloon_alert(user, "access denied")
-		return FALSE
+	balloon_alert(user, "access denied!")
+	return FALSE
 
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

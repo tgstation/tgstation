@@ -503,7 +503,7 @@
 /obj/structure/tram/spoiler/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The electronics panel is appears tampered with, sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
+		. += span_warning("The electronics panel is sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
 
 	if(malfunctioning)
 		. += span_warning("The spoiler is [EXAMINE_HINT("welded")] in place!")
@@ -600,8 +600,8 @@
 				user.visible_message(span_warning("[user] locks \the [src] in place with [tool]."), \
 					span_warning("You weld \the [src], it will remain deployed!"), null, COMBAT_MESSAGE_RANGE)
 				deploy_spoiler()
-				update_appearance()
 
+		update_appearance()
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing [src]..."))
