@@ -233,8 +233,7 @@
 
 /datum/bounty/item/assistant/fish/fluid/New()
 	..()
-	// sulph water and air are a bit too rare right now
-	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER)
+	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_SULPHWATEVER)
 	name = "[fluid_type] Fish"
 	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or from fish cases will only be paid half as much."
 
