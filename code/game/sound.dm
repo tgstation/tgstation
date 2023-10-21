@@ -79,37 +79,46 @@
 		if(below_turf && istransparentturf(turf_source))
 			listeners += get_hearers_in_view(maxdistance, below_turf)
 
-	// haha, yes this sucks.
-	var/list/playsound_local_args = list(
-		"turf_source" = turf_source,
-		"soundin" = soundin,
-		"vol" = vol,
-		"vary" = vary,
-		"frequency" = frequency,
-		"falloff_exponent" = falloff_exponent,
-		"channel" = channel,
-		"pressure_affected" = pressure_affected,
-		"sound_to_use" = S,
-		"max_distance" = maxdistance,
-		"falloff_distance" = falloff_distance,
-		"distance_multiplier" = 1,
-		"use_reverb" = use_reverb,
-	)
-
 	var/known_length = 0 // this is in seconds, for some byond reason
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
 		if(isnull(listening_mob.client))
 			continue
 		if(get_dist(listening_mob, turf_source) <= maxdistance)
-			listening_mob.playsound_local(arglist(playsound_local_args))
+			listening_mob.playsound_local(
+				turf_source,
+				soundin,
+				vol,
+				vary,
+				frequency,
+				falloff_exponent,
+				channel,
+				pressure_affected,
+				S,
+				maxdistance,
+				falloff_distance,
+				1,
+				use_reverb,
+			)
 			. += listening_mob
 			if(!known_length)
 				for(var/sound/playing as anything in listening_mob.client.SoundQuery())
 					if(playing.channel != channel)
 						continue
 					known_length = playing.len
+
 	if(use_spatial_tracking)
-		new /datum/sound_spatial_tracker(source, channel, maxdistance, known_length * 10, playsound_local_args)
+		new /datum/sound_spatial_tracker(
+			source,
+			soundin,
+			vol,
+			falloff_exponent,
+			channel,
+			pressure_affected,
+			maxdistance,
+			falloff_distance,
+			use_reverb,
+			known_length * 10,
+		)
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
 	if(!client || !can_hear())

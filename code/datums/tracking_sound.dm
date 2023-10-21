@@ -2,16 +2,19 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 
 /// A sound source that tracks listeners and the source of the sound.
 /datum/sound_spatial_tracker
-	/// The channel of the sound played, tracked here to easily update listeners.
+	// vars for playsound_local passthrough
+	var/atom/source
+	var/sound/sound // this one is only for restarting a sound if the client loses it
+	var/base_volume
+	var/falloff_exponent
 	var/channel
+	var/pressure_affected
+	var/max_distance
+	var/falloff_distance
+	var/use_reverb
+
 	/// world.timeofday we started playing the sound.
 	var/start_time
-	/// The atom playing the sound.
-	var/atom/source
-	/// The range of the sound.
-	var/range
-	/// The arguments passed to playsound_local.
-	var/list/playsound_local_args
 	/// The listeners of the sound.
 	var/list/mob/listeners = list()
 	/// The spatial tracker for the sound.
@@ -19,14 +22,31 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	/// Set to true if we were able to track sound length for self deletion.
 	var/qdel_scheduled = FALSE
 
-/datum/sound_spatial_tracker/New(source, channel, range, sound_length, playsound_local_args)
+/datum/sound_spatial_tracker/New(
+	source,
+	sound,
+	base_volume,
+	falloff_exponent,
+	channel,
+	pressure_affected,
+	max_distance,
+	falloff_distance,
+	use_reverb,
+	sound_length,
+)
 	src.source = source
-	start_time = REALTIMEOFDAY
+	src.sound = sound
+	src.base_volume = base_volume
+	src.falloff_exponent = falloff_exponent
 	src.channel = channel
-	src.range = range
-	src.playsound_local_args = playsound_local_args
+	src.pressure_affected = pressure_affected
+	src.max_distance = max_distance
+	src.falloff_distance = falloff_distance
+	src.use_reverb = use_reverb
+
+	start_time = REALTIMEOFDAY
 	GLOB.sound_spatial_trackers[channel] = src
-	spatial_tracker = new(range, range)
+	spatial_tracker = new(max_distance, max_distance)
 	update_spatial_tracker()
 	if(sound_length)
 		schedule_qdel(sound_length)
@@ -39,7 +59,6 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 
 /datum/sound_spatial_tracker/Destroy(force, ...)
 	source = null
-	playsound_local_args.Cut()
 	for(var/mob/listener as anything in listeners)
 		release_listener(listener)
 	listeners.Cut()
@@ -98,14 +117,19 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	if(!isnull(existing_sound)) // couldn't do it before, but we can now
 		schedule_qdel(actual_len - expected_offset)
 
-	var/list/new_args = playsound_local_args.Copy()
-	new_args["turf_source"] = get_turf(source)
-
-	var/sound/new_sound = existing_sound || sound(new_args["soundin"])
-	new_sound.offset = expected_offset
-	new_args["sound_to_use"] = new_sound
-
-	listener.playsound_local(arglist(new_args))
+	var/sound/sound_to_use = existing_sound || sound(sound)
+	sound_to_use.offset = expected_offset
+	listener.playsound_local(
+		get_turf(source),
+		vol = base_volume,
+		falloff_exponent = falloff_exponent,
+		channel = channel,
+		pressure_affected = pressure_affected,
+		max_distance = max_distance,
+		falloff_distance = falloff_distance,
+		use_reverb = use_reverb,
+		sound_to_use = sound_to_use,
+	)
 
 /datum/sound_spatial_tracker/proc/on_listener_moved(mob/movable)
 	SIGNAL_HANDLER
