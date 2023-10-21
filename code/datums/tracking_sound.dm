@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 
 /datum/sound_spatial_tracker/New(source, channel, range, sound_length, playsound_local_args)
 	src.source = source
-	start_time = world.timeofday
+	start_time = REALTIMEOFDAY
 	src.channel = channel
 	src.range = range
 	src.playsound_local_args = playsound_local_args
@@ -42,7 +42,8 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	for(var/mob/listener as anything in listeners)
 		release_listener(listener)
 	listeners.Cut()
-	GLOB.sound_spatial_trackers -= "[channel]"
+	if(GLOB.sound_spatial_trackers["[channel]"] == src)
+		GLOB.sound_spatial_trackers -= "[channel]"
 	spatial_tracker = null
 	return ..()
 
@@ -84,15 +85,16 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 			continue
 		existing_sound = playing
 
-	var/expected_offset = (world.timeofday - start_time) * 0.1
+	var/expected_offset = (REALTIMEOFDAY - start_time) * 0.1
 	if(!qdel_scheduled && !isnull(existing_sound)) // couldn't do it before, but we can now
-		schedule_qdel((existing_sound.len - expected_offset) + 1)
+		var/actual_len = existing_sound.len * 10 // WHY IS THIS IN SECONDS
+		schedule_qdel(actual_len - expected_offset)
 
 	var/list/new_args = playsound_local_args.Copy()
 	new_args["turf_source"] = get_turf(source)
 
 	var/sound/new_sound = sound(new_args["soundin"])
-	new_sound.offset = (world.timeofday - start_time) * 0.1
+	new_sound.offset = expected_offset
 	new_args["sound_to_use"] = new_sound
 
 	listener.playsound_local(arglist(new_args))
@@ -105,11 +107,6 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	SIGNAL_HANDLER
 	for(var/mob/listener as anything in entered_contents)
 		link_to_listener(listener)
-
-/datum/sound_spatial_tracker/proc/left_cell(datum/cell, list/left_contents)
-	SIGNAL_HANDLER
-	for(var/mob/listener as anything in left_contents)
-		release_listener(listener)
 
 /mob/verb/TEST_SPATIAL_SOUND(obj/target as obj in view())
 	playsound(target, 'sound/magic/clockwork/ark_activation_sequence.ogg', vol = 100, use_spatial_tracking = TRUE)
