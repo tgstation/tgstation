@@ -15,10 +15,19 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 
 	/// world.timeofday we started playing the sound.
 	var/start_time
+
+	/// sound length
+	var/sound_length
+
 	/// The listeners of the sound.
 	var/list/mob/listeners = list()
+
+	/// Mobs who have left the cell
+	var/list/mob/leavers = list()
+
 	/// The spatial tracker for the sound.
 	var/datum/cell_tracker/spatial_tracker
+
 	/// Set to true if we were able to track sound length for self deletion.
 	var/qdel_scheduled = FALSE
 
@@ -48,6 +57,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	GLOB.sound_spatial_trackers[channel] = src
 	spatial_tracker = new(max_distance, max_distance)
 	update_spatial_tracker()
+	src.sound_length = sound_length
 	if(sound_length)
 		schedule_qdel(sound_length)
 	return ..()
@@ -106,19 +116,19 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 		existing_sound = playing
 
 	var/expected_offset = (REALTIMEOFDAY - start_time) * 0.1
-	var/actual_len = existing_sound.len * 10 // WHY IS THIS IN SECONDS
-
-	if(expected_offset >= actual_len)
+	if(sound_length && (expected_offset >= sound_length))
 		qdel(src)
 		if(qdel_scheduled)
 			deltimer(qdel_scheduled)
 		return
 
-	if(!isnull(existing_sound)) // couldn't do it before, but we can now
-		schedule_qdel(actual_len - expected_offset)
+	if(!isnull(existing_sound) && !sound_length) // couldn't do it before, but we can now
+		sound_length = existing_sound.len * 10
+		schedule_qdel(sound_length - expected_offset)
 
 	var/sound/sound_to_use = existing_sound || sound(sound)
-	sound_to_use.offset = expected_offset
+	if(isnull(existing_sound)) // starting over from no sound, so we need to guess the offset
+		sound_to_use.offset = expected_offset
 	listener.playsound_local(
 		get_turf(source),
 		vol = base_volume,
