@@ -23,8 +23,12 @@ SUBSYSTEM_DEF(sounds)
 	/// higher reserve position - decremented and incremented to reserve sound channels, anything above this is reserved. The channel at this index is the highest unreserved channel.
 	var/channel_reserve_high
 
+	/// All valid sound files in the sound directory
+	var/list/all_sounds
+
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
+	find_all_available_sounds()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
@@ -36,6 +40,26 @@ SUBSYSTEM_DEF(sounds)
 		channel_list += i
 	channel_random_low = 1
 	channel_reserve_high = length(channel_list)
+
+/datum/controller/subsystem/sounds/proc/find_all_available_sounds()
+	all_sounds = list()
+	// Put more common extensions first to speed this up a bit
+	var/static/list/valid_file_extensions = list(
+		".ogg",
+		".wav",
+		".mid",
+		".midi",
+		".mod",
+		".it",
+		".s3m",
+		".xm",
+		".oxm",
+		".raw",
+		".wma",
+		".aiff",
+	)
+
+	all_sounds = pathwalk("sound/", valid_file_extensions)
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)
@@ -78,7 +102,7 @@ SUBSYSTEM_DEF(sounds)
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
-		return FALSE
+		CRASH("No more sound channels can be reserved")
 	var/text_channel = num2text(.)
 	using_channels[text_channel] = D
 	LAZYINITLIST(using_channels_by_datum[D])

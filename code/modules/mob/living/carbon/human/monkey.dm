@@ -4,7 +4,7 @@
 	ai_controller = /datum/ai_controller/monkey
 	faction = list(FACTION_NEUTRAL, FACTION_MONKEY)
 
-/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
@@ -21,7 +21,7 @@
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
+/mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	. = ..()
 	if(prob(10))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
@@ -31,6 +31,20 @@
 	var/obj/item/clothing/head/helmet/toggleable/justice/escape/helmet = new(src)
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
+
+/mob/living/carbon/human/species/monkey/holodeck
+	race = /datum/species/monkey/holodeck
+
+/mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
+	return
+
+/mob/living/carbon/human/species/monkey/holodeck/has_dna()
+	return null
+
+/mob/living/carbon/human/species/monkey/holodeck/create_bodyparts(list/overrides) // done like this in case people add more limbs to monkeys or something
+	. = ..()
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		limb.bodypart_flags |= BODYPART_UNREMOVABLE // no farming organs or limbs from these fellers. get a monkey cube
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 

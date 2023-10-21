@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "B.O.R.I.S. modules can once again be properly applied to the unformatted borg created when you reset an AI shell."

@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "You should be revived properly when entering the mansus realm following a heretic sacrifice"
+  - bugfix: "The buff which is supposed to heal you in the mansus realm will now do that instead of unavoidably damaging you"
+  - balance: "The mansus realm's healing buff heals for 25% as much as it did before it was broken"
