@@ -222,6 +222,8 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/can_inject_antags()
 	total_valid_antags = 0
 	for(var/mob/checked_mob in GLOB.mob_list)
+		if(!checked_mob.mind)
+			continue
 		if(!checked_mob.mind.special_role)
 			continue
 		if(checked_mob.stat == DEAD)
@@ -807,6 +809,8 @@ SUBSYSTEM_DEF(gamemode)
 	update_crew_infos()
 	total_valid_antags = 0
 	for(var/mob/checked_mob in GLOB.mob_list)
+		if(!checked_mob.mind)
+			continue
 		if(!checked_mob.mind.special_role)
 			continue
 		if(checked_mob.stat == DEAD)
