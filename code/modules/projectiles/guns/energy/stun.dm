@@ -40,6 +40,26 @@
 		overlay_x = 15, \
 		overlay_y = 10)
 
+/obj/item/gun/energy/disabler/smg
+	name = "disabler smg"
+	desc = "An automatic disabler variant, as opposed to the conventional model, boasts a higher ammunition capacity at the cost of slightly reduced beam effectiveness and larger size."
+	icon_state = "disabler_smg"
+	w_class = WEIGHT_CLASS_BULKY
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smg)
+	shaded_charge = 1
+	var/allow_akimbo = FALSE
+
+/obj/item/gun/energy/disabler/smg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = allow_akimbo)
+
+/obj/item/gun/energy/disabler/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 7)
+
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
