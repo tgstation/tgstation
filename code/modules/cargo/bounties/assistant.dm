@@ -209,3 +209,74 @@
 	description = "We have a moth infestation, send a flamethrower to help deal with the situation."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/item/flamethrower = TRUE)
+
+/datum/bounty/item/assistant/fish
+	name = "Fish"
+	description = "We need fish to populate our aquariums with. Fishes that are dead or from fish cases will only be paid half as much."
+	reward = CARGO_CRATE_VALUE * 9
+	required_count = 4
+	wanted_types = list(/obj/item/fish = TRUE)
+
+/datum/bounty/item/assistant/fish/ship(obj/shipped)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/fish/fishie = shipped
+	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
+		reward -= initial(reward) * 0.5 / required_count
+
+///A subtype of the fish bounty that requires fish with a specific fluid type
+/datum/bounty/item/assistant/fish/fluid
+	reward = CARGO_CRATE_VALUE * 11
+	///The required fluid type of the fish for it to be shipped
+	var/fluid_type
+
+/datum/bounty/item/assistant/fish/fluid/New()
+	..()
+	// sulph water and air are a bit too rare right now
+	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER)
+	name = "[fluid_type] Fish"
+	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or from fish cases will only be paid half as much."
+
+/datum/bounty/item/assistant/fish/fluid/applies_to(obj/shipped)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/fish/fishie = shipped
+	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)
+
+///A subtype of the fish bounty that requires specific fish types. The higher their rarity, the better the pay.
+/datum/bounty/item/assistant/fish/specific
+	description = "Our prestigious fish collection is currently lacking a few specific species. Fishes that are dead or from fish cases will only be paid half as much."
+	reward = CARGO_CRATE_VALUE * 16
+	required_count = 3
+	wanted_types = list()
+
+/datum/bounty/item/assistant/fish/specific/New()
+	var/static/list/choosable_fishes
+	if(!choosable_fishes)
+		choosable_fishes = list()
+		for(var/obj/item/fish/prototype in subtypesof(/obj/item/fish))
+			if(initial(prototype.experisci_scannable) && initial(prototype.show_in_catalog))
+				choosable_fishes += prototype
+
+	var/list/fishes_copylist = choosable_fishes.Copy()
+	///Used to calculate the extra reward
+	var/total_rarity = 0
+	for(var/i in 1 to rand(2,3))
+		var/obj/item/fish/chosen_path = pick_n_take(fishes_copylist)
+		wanted_types[chosen_path] = TRUE
+		total_rarity += initial(chosen_path.random_case_rarity) / 3
+	name = english_list(wanted_types)
+
+	..()
+
+	switch(total_rarity)
+		if(FISH_RARITY_NOPE to FISH_RARITY_GOOD_LUCK_FINDING_THIS)
+			reward += CARGO_CRATE_VALUE * 14
+		if(FISH_RARITY_GOOD_LUCK_FINDING_THIS to FISH_RARITY_VERY_RARE)
+			reward += CARGO_CRATE_VALUE * 6.5
+		if(FISH_RARITY_VERY_RARE to FISH_RARITY_RARE)
+			reward += CARGO_CRATE_VALUE * 3
+		if(FISH_RARITY_RARE to FISH_RARITY_BASIC-1)
+			reward += CARGO_CRATE_VALUE * 1
