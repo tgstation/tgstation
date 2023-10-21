@@ -1,0 +1,8 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Maintenance Drones now use the basic mob framework. This shouldn't come with any noticeable gameplay changes, but please report any bugs."
+  - bugfix: "Drones can now interact normally with electrified doors."
+  - bugfix: "Drones' built-in tools can no longer be placed in storage objects and/or thrown on the floor."
+  - bugfix: "Drones can now perform right-click interactions correctly, such as deconstructing reinforced windows."
+  - bugfix: "Drones can now reboot or cannibalize other drones without being in combat mode."
