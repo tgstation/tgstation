@@ -812,7 +812,7 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		if(A.owner.state = DEAD)
+		if(A.owner.stat = DEAD)
 			continue
 		if(istype(A, /datum/antagonist/hypnotized))
 			continue
