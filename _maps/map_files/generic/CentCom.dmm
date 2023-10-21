@@ -5310,7 +5310,6 @@
 /area/centcom/syndicate_mothership/control)
 "qD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "qE" = (
