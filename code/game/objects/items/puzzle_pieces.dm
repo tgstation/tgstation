@@ -286,8 +286,11 @@
 	icon_state = "lockdown0"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	base_icon_state = "lockdown"
+	/// have we been pressed already?
 	var/used = FALSE
+	/// can we be pressed only once?
 	var/single_use = TRUE
+	/// puzzle id we send on press
 	var/id = "0" //null would literally open every puzzle door without an id
 
 /obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
@@ -318,7 +321,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	icon_state = "keycardpad0"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	base_icon_state = "keycardpad"
+	/// were we used successfully?
 	var/used = FALSE
+	/// puzzle id we send if the correct card is swiped
 	var/id = "0"
 
 /obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
@@ -356,6 +361,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	move_resist = MOVE_FORCE_OVERPOWERING
 	opacity = FALSE
 	density = TRUE
+	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
 
 /obj/structure/puzzle_blockade/Initialize(mapload)

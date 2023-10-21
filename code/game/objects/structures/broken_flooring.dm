@@ -38,35 +38,30 @@
 	icon_state = "singular"
 
 /obj/structure/broken_flooring/singular/always_floorplane
-	icon_state = "singular"
 	always_floorplane = TRUE
 
 /obj/structure/broken_flooring/pile
 	icon_state = "pile"
 
 /obj/structure/broken_flooring/pile/always_floorplane
-	icon_state = "pile"
 	always_floorplane = TRUE
 
 /obj/structure/broken_flooring/side
 	icon_state = "side"
 
 /obj/structure/broken_flooring/side/always_floorplane
-	icon_state = "side"
 	always_floorplane = TRUE
 
 /obj/structure/broken_flooring/corner
 	icon_state = "corner"
 
 /obj/structure/broken_flooring/corner/always_floorplane
-	icon_state = "corner"
 	always_floorplane = TRUE
 
 /obj/structure/broken_flooring/plating
 	icon_state = "plating"
 
 /obj/structure/broken_flooring/plating/always_floorplane
-	icon_state = "plating"
 	always_floorplane = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular, 0)

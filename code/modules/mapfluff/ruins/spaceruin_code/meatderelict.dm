@@ -48,6 +48,7 @@
 	puzzle_id = "md_prevault"
 
 /mob/living/basic/meteor_heart/opens_puzzle_door
+	///the puzzle id we send on death
 	var/id
 
 /mob/living/basic/meteor_heart/opens_puzzle_door/death(gibbed)
@@ -92,9 +93,13 @@
 	density = TRUE
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "smes"
+	/// do we currently want to shock diagonal tiles? if not, we shock cardinals
 	var/throw_diagonals = FALSE
+	/// flags we apply to the shock
 	var/shock_flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES
+	/// damage of the shock
 	var/shock_damage = 20
+	/// list of turfs that are currently shocked so we can unregister the signal
 	var/list/signal_turfs = list()
 
 /obj/lightning_thrower/Initialize(mapload)

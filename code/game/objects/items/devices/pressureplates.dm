@@ -96,6 +96,7 @@
 	anchored = TRUE //this prevents us from being picked up
 	active = TRUE
 	removable_signaller = FALSE
+	/// puzzle id we send if stepped on
 	var/puzzle_id
 
 /obj/item/pressure_plate/puzzle/trigger()

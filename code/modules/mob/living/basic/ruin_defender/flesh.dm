@@ -135,7 +135,6 @@
 		return
 	var/turf/our_location = get_turf(src)
 	our_location.visible_message(span_warning("[current_bodypart.owner][current_bodypart.owner.p_s()] [current_bodypart] begins to convulse wildly!"))
-	detach_self()
 
 /mob/living/basic/living_limb_flesh/proc/owner_died(datum/source, gibbed)
 	SIGNAL_HANDLER
