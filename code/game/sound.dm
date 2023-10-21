@@ -96,7 +96,7 @@
 		"use_reverb" = use_reverb,
 	)
 
-	var/known_length = 0
+	var/known_length = 0 // this is in seconds, for some byond reason
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
 		if(isnull(listening_mob.client))
 			continue
@@ -109,7 +109,7 @@
 						continue
 					known_length = playing.len
 	if(use_spatial_tracking)
-		new /datum/sound_spatial_tracker(source, channel, maxdistance, known_length, playsound_local_args)
+		new /datum/sound_spatial_tracker(source, channel, maxdistance, known_length * 10, playsound_local_args)
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
 	if(!client || !can_hear())
