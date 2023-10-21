@@ -216,6 +216,12 @@
 	reward = CARGO_CRATE_VALUE * 9
 	required_count = 4
 	wanted_types = list(/obj/item/fish = TRUE)
+	///the penalty for shipping dead/bought fish, which can drain up to half reward in total.
+	var/shipping_penalty
+
+/datum/bounty/item/assistant/fish/New()
+	..()
+	shipping_penalty = reward * 0.5 / required_count
 
 /datum/bounty/item/assistant/fish/ship(obj/shipped)
 	. = ..()
@@ -223,7 +229,7 @@
 		return
 	var/obj/item/fish/fishie = shipped
 	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
-		reward -= initial(reward) * 0.5 / required_count
+		reward -= shipping_penalty
 
 ///A subtype of the fish bounty that requires fish with a specific fluid type
 /datum/bounty/item/assistant/fish/fluid
