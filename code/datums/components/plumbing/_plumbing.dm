@@ -75,7 +75,7 @@
 	if(!demand_connects || !reagents)
 		return PROCESS_KILL
 
-	if(reagents.total_volume < reagents.maximum_volume)
+	if(!reagents.holder_full())
 		for(var/D in GLOB.cardinals)
 			if(D & demand_connects)
 				send_request(D)

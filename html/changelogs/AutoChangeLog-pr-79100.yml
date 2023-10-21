@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "[Tramstation] fixed an unlinked Disposals Bin in the Pod Bay"

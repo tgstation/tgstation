@@ -1,0 +1,5 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "Scream for me, the spell, now works"
+  - bugfix: "Non-random puncture wounds can now be applied"
