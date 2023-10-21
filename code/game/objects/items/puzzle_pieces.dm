@@ -361,6 +361,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	move_resist = MOVE_FORCE_OVERPOWERING
 	opacity = FALSE
 	density = TRUE
+	anchored = TRUE
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
 
