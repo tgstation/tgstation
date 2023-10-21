@@ -26,10 +26,14 @@
 	shy = FALSE
 	flavortext = null
 
+	/// The number of telecrystals to put in the drone's uplink
+	var/telecrystal_count = 10
+
+
 /mob/living/basic/drone/syndrone/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.set_telecrystals(10)
+	hidden_uplink.set_telecrystals(telecrystal_count)
 
 /obj/effect/mob_spawn/ghost_role/drone/syndrone
 	name = "syndrone shell"
@@ -51,11 +55,10 @@
 /mob/living/basic/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_storage = /obj/item/uplink/nuclear
+	telecrystal_count = 30
 
 /mob/living/basic/drone/syndrone/badass/Initialize(mapload)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.set_telecrystals(30)
 	var/obj/item/implant/weapons_auth/weapon_implant = new/obj/item/implant/weapons_auth(src)
 	weapon_implant.implant(src, force = TRUE)
 
