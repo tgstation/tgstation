@@ -21,13 +21,13 @@
 	if(!manifest_can_fail)
 		return
 
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(prob(MANIFEST_ERROR_CHANCE) && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //Too confusing if station name gets changed
 		errors |= MANIFEST_ERROR_NAME
 		investigate_log("Supply order #[order_id] generated a manifest with an incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
 		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
-	if(prob(MANIFEST_ERROR_CHANCE))
+	else if(prob(MANIFEST_ERROR_CHANCE)) //Content and item errors could remove the same items, so only one at a time
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
@@ -136,11 +136,15 @@
 	for(var/atom/movable/AM in container.contents - manifest_paper)
 		container_contents[AM.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
-		for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
-			var/missing_item = pick(container_contents)
-			container_contents[missing_item]--
-			if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
-				container_contents -= missing_item
+		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
+		else
+			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+				var/missing_item = pick(container_contents)
+				container_contents[missing_item]--
+				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+					container_contents -= missing_item
+
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
