@@ -53,10 +53,7 @@
 
 /mob/living/basic/meteor_heart/opens_puzzle_door/death(gibbed)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(send_signal)), 2.5 SECONDS)
-
-/mob/living/basic/meteor_heart/opens_puzzle_door/proc/send_signal()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
+	addtimer(CALLBACK(src, GLOBAL_PROC_REF(complete_puzzle), id), 2.5 SECONDS)
 
 /obj/machinery/puzzle_button/meatderelict
 	name = "lockdown panel"
