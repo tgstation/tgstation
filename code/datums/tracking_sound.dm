@@ -34,6 +34,9 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	/// Set to true if we were able to track sound length for self deletion.
 	var/qdel_scheduled = FALSE
 
+	/// Map of client ckeys to their expected offset, offset
+	var/list/client_offsets = list()
+
 /datum/sound_spatial_tracker/New(
 	source,
 	sound,
@@ -47,7 +50,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	sound_length,
 )
 	src.source = source
-	src.sound = sound
+	src.sound = sound(file = sound, channel = channel)
 	src.base_volume = base_volume
 	src.falloff_exponent = falloff_exponent
 	src.channel = channel
@@ -96,7 +99,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	var/list/new_and_old_cells = spatial_tracker.recalculate_cells(get_turf(source))
 	for(var/datum/spatial_grid_cell/new_cell as anything in new_and_old_cells[1])
 		RegisterSignal(new_cell, enter_signal, PROC_REF(entered_cell))
-		RegisterSignal(new_cell, leave_signal, PROC_REF(left_cell))
+		RegisterSignal(new_cell, leave_signal, PROC_REF(exited_cell))
 		for(var/mob/listener as anything in new_cell.client_contents)
 			link_to_listener(listener)
 		cells[new_cell] = TRUE
@@ -129,30 +132,39 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	SEND_SOUND(listener.client, null_sound)
 
 /datum/sound_spatial_tracker/proc/update_listener(mob/listener)
+	if(isnull(listener.client))
+		return
+
 	if(get_dist(listener, source) > max_distance)
 		stop_sound_for(listener)
 		return
-
-	var/sound/existing_sound = null
-	for(var/sound/playing as anything in listener.client?.SoundQuery())
-		if(playing.channel != channel)
-			continue
-		existing_sound = playing
-
 	var/expected_offset = (REALTIMEOFDAY - start_time) * 0.1
+
+	var/listener_offset = listeners[listener] - 1
+	if(!listener_offset)
+		var/sound/existing_sound = null
+		for(var/sound/playing as anything in listener.client?.SoundQuery())
+			if(playing.channel != channel)
+				continue
+			existing_sound = playing
+		if(isnull(existing_sound))
+			break
+		if(!sound_length)
+			sound_length = existing_sound.len * 10
+			schedule_qdel(sound_length - expected_offset)
+
+		// client took X deciseconds to recieve the message
+		listener_offset = expected_offset - (existing_sound.offset * 10)
+		listeners[listener] = listener_offset + 1
+
 	if(sound_length && (expected_offset >= sound_length))
 		qdel(src)
 		if(qdel_scheduled)
 			deltimer(qdel_scheduled)
 		return
 
-	if(!isnull(existing_sound) && !sound_length) // couldn't do it before, but we can now
-		sound_length = existing_sound.len * 10
-		schedule_qdel(sound_length - expected_offset)
-
-	var/sound/sound_to_use = existing_sound || sound(sound)
-	if(isnull(existing_sound)) // starting over from no sound, so we need to guess the offset
-		sound_to_use.offset = expected_offset
+	// offset by the amount of deciseconds we expect the client to take to recieve the message
+	sound.offset = expected_offset + listener_offset
 	listener.playsound_local(
 		get_turf(source),
 		vol = base_volume,
@@ -162,7 +174,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 		max_distance = max_distance,
 		falloff_distance = falloff_distance,
 		use_reverb = use_reverb,
-		sound_to_use = sound_to_use,
+		sound_to_use = sound,
 	)
 
 /datum/sound_spatial_tracker/proc/on_listener_moved(mob/movable)
