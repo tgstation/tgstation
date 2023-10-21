@@ -118,7 +118,6 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
@@ -155,9 +154,9 @@
 		what_are_we_missing += formatted_thing
 
 	// Checks if the ritual has any optional items
-	if(length(optional_list) > 0)
-		for(var/req_type_option in optional_list)
-			var/number_of_optional_things = optional_list[req_type_option]
+	if(length(optional_list))
+		for(var/optional_type_option in optional_list)
+			var/number_of_optional_things = optional_list[optional_type_option]
 			// <= 0 means it's fulfilled, skip
 			if(number_of_optional_things <= 0)
 				continue

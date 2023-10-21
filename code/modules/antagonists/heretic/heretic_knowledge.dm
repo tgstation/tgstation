@@ -153,7 +153,7 @@
 		return FALSE
 	for(var/result in result_atoms)
 		// Check if we have any optional result atoms
-		if(length(optional_result_atoms)>0)
+		if(length(optional_result_atoms))
 			for(var/optional_result in optional_result_atoms)
 				new optional_result(loc)
 			return TRUE
@@ -194,13 +194,13 @@
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
 			// Same as above, but with an additional to check to see if we actually have any optional atoms
-			if(length(optional_atoms)>0)
+			if(length(optional_atoms))
 				for(var/optional in optional_atoms)
 					if(!istype(sacrificed, optional) && !islist(optional))
 						continue
 					if(islist(optional) && !is_type_in_list(sacrificed, optional))
 						continue
-					how_much_to_use = min(required_atoms[optional], sac_stack.amount)
+					how_much_to_use = min(optional_atoms[optional], sac_stack.amount)
 					break
 			sac_stack.use(how_much_to_use)
 			continue
@@ -557,7 +557,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)

@@ -40,7 +40,7 @@
 	soundloop = new(src,  TRUE)
 	. = ..()
 
-/obj/projectile/moon_parade/on_hit(atom/hit, pierce_hit)
+/obj/projectile/moon_parade/on_hit(atom/hit, blocked=0, pierce_hit)
 	. = ..()
 	if(isliving(hit) && isliving(firer))
 		var/mob/living/caster = firer
