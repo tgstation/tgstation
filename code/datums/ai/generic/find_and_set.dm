@@ -135,3 +135,14 @@
 
 	if (nearby_bodies.len)
 		return pick(nearby_bodies)
+
+/**
+ * A variant that looks for a human who is not dead or incapacitated, and has a mind
+ */
+/datum/ai_behavior/find_and_set/conscious_person
+
+/datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
+		if(IS_DEAD_OR_INCAP(target) || !target.mind)
+			continue
+		return target

@@ -30,7 +30,7 @@
 
 	//if we don't have a costurmer to greet, look for one
 	if(!controller.blackboard_key_exists(BB_FIRST_CUSTOMER))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_FIRST_CUSTOMER, /mob/living/carbon/human)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/conscious_person, BB_FIRST_CUSTOMER, /mob/living/carbon/human)
 		return
 
 	//we have our first customer, time to tell them about incredible deals
