@@ -221,16 +221,13 @@ SUBSYSTEM_DEF(gamemode)
 /// Whether events can inject more antagonists into the round
 /datum/controller/subsystem/gamemode/proc/can_inject_antags()
 	total_valid_antags = 0
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/mob/checked_mob in GLOB.mob_list)
+		if(!checked_mob.mind.special_role)
 			continue
-		if(A.owner.state = DEAD)
-			continue
-		if(istype(A, /datum/antagonist/hypnotized))
-			continue
-		if(istype(A, /datum/antagonist/abductee))
+		if(checked_mob.stat == DEAD)
 			continue
 		total_valid_antags++
+
 
 	return (get_antag_cap() > total_valid_antags)
 
@@ -809,14 +806,10 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/admin_panel(mob/user)
 	update_crew_infos()
 	total_valid_antags = 0
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/mob/checked_mob in GLOB.mob_list)
+		if(!checked_mob.mind.special_role)
 			continue
-		if(A.owner.stat = DEAD)
-			continue
-		if(istype(A, /datum/antagonist/hypnotized))
-			continue
-		if(istype(A, /datum/antagonist/abductee))
+		if(checked_mob.stat == DEAD)
 			continue
 		total_valid_antags++
 
