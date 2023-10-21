@@ -33,8 +33,9 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	return ..()
 
 /datum/sound_spatial_tracker/proc/schedule_qdel(length)
-	QDEL_IN(src, length)
-	qdel_scheduled = TRUE
+	if(qdel_scheduled)
+		return
+	qdel_scheduled = QDEL_IN_STOPPABLE(src, length)
 
 /datum/sound_spatial_tracker/Destroy(force, ...)
 	source = null
@@ -86,14 +87,21 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 		existing_sound = playing
 
 	var/expected_offset = (REALTIMEOFDAY - start_time) * 0.1
-	if(!qdel_scheduled && !isnull(existing_sound)) // couldn't do it before, but we can now
-		var/actual_len = existing_sound.len * 10 // WHY IS THIS IN SECONDS
+	var/actual_len = existing_sound.len * 10 // WHY IS THIS IN SECONDS
+
+	if(expected_offset >= actual_len)
+		qdel(src)
+		if(qdel_scheduled)
+			deltimer(qdel_scheduled)
+		return
+
+	if(!isnull(existing_sound)) // couldn't do it before, but we can now
 		schedule_qdel(actual_len - expected_offset)
 
 	var/list/new_args = playsound_local_args.Copy()
 	new_args["turf_source"] = get_turf(source)
 
-	var/sound/new_sound = sound(new_args["soundin"])
+	var/sound/new_sound = existing_sound || sound(new_args["soundin"])
 	new_sound.offset = expected_offset
 	new_args["sound_to_use"] = new_sound
 
