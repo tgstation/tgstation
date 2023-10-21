@@ -8,6 +8,7 @@ type Data = {
   orderingPrive: BooleanLike; // you will need to import this
   canOrderCargo: BooleanLike;
   creditBalance: number;
+  orderBalance: number;
   materials: Material[];
   catastrophe: BooleanLike;
 };
@@ -28,6 +29,7 @@ export const MatMarket = (props, context) => {
     orderingPrive,
     canOrderCargo,
     creditBalance,
+    orderBalance,
     materials = [],
     catastrophe,
   } = data; // better to destructure here (style nit)
@@ -63,7 +65,8 @@ export const MatMarket = (props, context) => {
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
           <Section>
-            Current credit balance: <b>{creditBalance || 'zero'}</b> cr.
+            Current credit balance: <b>{creditBalance || 'zero'}</b> cr. Current
+            Order Amount: <b>{orderBalance || 'zero'}</b> cr.
           </Section>
         </Section>
         {materials.map((material) => (

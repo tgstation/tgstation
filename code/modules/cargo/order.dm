@@ -89,7 +89,7 @@
 /datum/supply_order/proc/get_final_cost()
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
-		cost -= (cost * applied_coupon.discount_pct_off)
+		cost *= (1 - applied_coupon.discount_pct_off)
 	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
 		cost *= 1.1
 	return cost
@@ -200,6 +200,13 @@
 			pack.contains += i
 			pack.contains[i] = new_contents[i]
 	pack.cost += cost_increase
+
+/// a special subtype for materials order just to compute the correct total cost
+/datum/supply_order/materials_order
+
+/// it's not a goodie so it's always multiplied by 1.1
+/datum/supply_order/materials_order/get_final_cost()
+	return pack.get_cost() * 1.1
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME

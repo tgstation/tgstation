@@ -22,8 +22,6 @@
 	)
 	/// Are we ordering sheets from our own card balance or the cargo budget?
 	var/ordering_private = TRUE
-	/// Currently, can we order sheets from our own card balance or the cargo budget?
-	var/can_buy_via_budget = FALSE
 
 /obj/machinery/materials_market/update_icon_state()
 	if(panel_open)
@@ -40,11 +38,17 @@
 	default_unfasten_wrench(user, tool, time = 1.5 SECONDS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/materials_market/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/materials_market/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/materials_market/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", O))
-		return
-	else if(default_deconstruction_crowbar(O))
-		return
 	if(is_type_in_list(O, exportable_material_items))
 		var/amount = 0
 		var/value = 0
@@ -62,6 +66,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
 			return TRUE
 		qdel(exportable)
+
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 		new_block.export_value = amount * value * MARKET_PROFIT_MODIFIER
 		new_block.export_mat = material_to_export
@@ -104,12 +109,17 @@
 			"color" = color_string,
 			))
 
-	can_buy_via_budget = FALSE
+	var/can_buy_via_budget = FALSE
 	var/obj/item/card/id/used_id_card
 	if(isliving(user))
 		var/mob/living/living_user = user
 		used_id_card = living_user.get_idcard(TRUE)
-		can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
+		if(!isnull(used_id_card))
+			can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
+
+	var/is_ordering_private = ordering_private
+	if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+		is_ordering_private = TRUE
 
 	var/balance = 0
 	if(!ordering_private)
@@ -119,6 +129,16 @@
 	else
 		balance = used_id_card?.registered_account?.account_balance
 
+	var/current_order_cost = 0
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
+		if(order.orderer_rank == "Galactic Materials Market" && ( \
+			(!is_ordering_private && isnull(order.paying_account)) || \
+			(is_ordering_private && !isnull(order.paying_account) && order.orderer == user) \
+		))
+			current_order_cost = order.get_final_cost()
+			break
+
 	var/market_crashing = FALSE
 	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		market_crashing = TRUE
@@ -126,6 +146,7 @@
 	data["catastrophe"] = market_crashing
 	data["materials"] = material_data
 	data["creditBalance"] = balance
+	data["orderBalance"] = current_order_cost
 	data["orderingPrive"] = ordering_private
 	data["canOrderCargo"] = can_buy_via_budget
 	return data
@@ -141,6 +162,7 @@
 	if(isnull(used_id_card))
 		say("No ID Found")
 		return
+	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
 	switch(action)
 		if("buy")
@@ -218,7 +240,7 @@
 				cost = cost, \
 				contains = things_to_order, \
 			)
-			var/datum/supply_order/new_order = new(
+			var/datum/supply_order/materials_order/new_order = new(
 				pack = mineral_pack,
 				orderer = living_user,
 				orderer_rank = "Galactic Materials Market",
