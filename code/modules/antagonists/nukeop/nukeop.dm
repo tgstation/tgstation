@@ -529,10 +529,6 @@
 /proc/is_infiltrator_docked_at_syndiebase()
 	var/obj/docking_port/mobile/infiltrator/infiltrator_port = SSshuttle.getShuttle("syndicate")
 
-	var/datum/lazy_template/nukie_base/nukie_template = GLOB.lazy_templates[LAZY_TEMPLATE_KEY_NUKIEBASE]
-	if(!nukie_template)
-		return FALSE // if its not even loaded, cant be docked
-
 	for(var/datum/turf_reservation/loaded_area as anything in nukie_template.reservations)
 		var/infiltrator_turf = get_turf(infiltrator_port)
 		if(infiltrator_turf in loaded_area.reserved_turfs)
