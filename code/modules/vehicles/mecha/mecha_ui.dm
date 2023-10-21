@@ -82,6 +82,8 @@
 	data["internal_damage"] = internal_damage
 
 	data["can_use_overclock"] = can_use_overclock
+	data["overclock_safety_available"] = overclock_safety_available
+	data["overclock_safety"] = overclock_safety
 	data["overclock_mode"] = overclock_mode
 	data["overclock_temp_percentage"] = overclock_temp / overclock_temp_danger
 
@@ -210,9 +212,8 @@
 			toggle_lights(user = usr)
 		if("toggle_overclock")
 			toggle_overclock()
-			var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
-			act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-			act.build_all_button_icons()
+		if("toggle_overclock_safety")
+			overclock_safety = !overclock_safety
 		if("repair_int_damage")
 			try_repair_int_damage(usr, params["flag"])
 			return FALSE
