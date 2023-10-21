@@ -27,7 +27,7 @@
 
 /obj/structure/centcom_teleporter/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!user.client || !check_rights_for(user.client, needed_rights))
+	if(!user.client || (needed_rights != RIGHTS_NONE && !check_rights_for(user.client, needed_rights)))
 		return
 
 	var/list/choice_list = list()
@@ -36,6 +36,9 @@
 			choice_list += all_teleporters[teleporter_list]
 
 	var/obj/structure/centcom_teleporter/choice = tgui_input_list(user, "Where do you want to teleport to?", "Teleporter", choice_list)
+	if(!istype(choice))
+		return
+
 	if((choice.needed_rights != RIGHTS_NONE) && !check_rights_for(user.client, choice.needed_rights))
 		to_chat(user, span_warning("You dont have the admin rights to teleport here."))
 		message_admins("[user][ADMIN_LOOKUPFLW(user)] is trying to use a centcom teleporter they dont have access to.") //these should not be visible to them so tell admins
@@ -55,8 +58,6 @@
 
 /obj/structure/centcom_teleporter/admin_offices
 	name = "admin offices teleporter"
-
-/obj/structure/centcom_teleporter/firing_range
-	name = "firing range teleporter"
+	needed_rights = R_ADMIN
 
 #undef RIGHTS_NONE

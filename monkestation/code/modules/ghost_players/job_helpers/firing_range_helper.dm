@@ -1,4 +1,4 @@
-/obj/structure/gun_and_ammo_creator
+/obj/structure/centcom_item_spawner/gun_and_ammo_creator
 	name = "firing range fabrication device"
 	desc = "Able to print most guns and ammo your heart could ever desire.(not liable for any damages)"
 	resistance_flags = INDESTRUCTIBLE
@@ -6,23 +6,21 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	blacklisted_items = list(
+		/obj/item/gun/ballistic,
+		/obj/item/gun/ballistic/automatic,
 		/obj/item/gun/blastcannon,
-		/obj/item/gun/medbeam,
-		/obj/item/gun/energy/e_gun/dragnet,
-		/obj/item/gun/energy/laser/instakill,
-		/obj/item/gun/energy/meteorgun,
+		/obj/item/gun/energy,
 		/obj/item/gun/energy/minigun, //might runtime
 		/obj/item/gun/energy/pulse/prize, //dont spam ghosts
 		/obj/item/gun/energy/shrink_ray,
-		/obj/item/gun/energy/xray,
 		/obj/item/gun/energy/mindflayer,
+		/obj/item/gun/energy/recharge,
+		/obj/item/gun/energy/wiremod_gun,
+		/obj/item/gun/energy/xray,
+		/obj/item/gun/magic,
 		/obj/item/gun/magic/bloodchill,
-		/obj/item/gun/magic/wand/safety,
-		/obj/item/gun/magic/wand/teleport,
-		/obj/item/gun/magic/wand/polymorph,
-		/obj/item/gun/magic/wand/death,
-		/obj/item/gun/magic/tentacle,
-		/obj/item/gun/magic/wand/door,
+		/obj/item/gun/magic/staff,
+		/obj/item/gun/magic/staff/animate,
 		/obj/item/gun/magic/staff/change,
 		/obj/item/gun/magic/staff/chaos,
 		/obj/item/gun/magic/staff/door,
@@ -30,13 +28,42 @@
 		/obj/item/gun/magic/staff/honk,
 		/obj/item/gun/magic/staff/necropotence,
 		/obj/item/gun/magic/staff/wipe,
-		/obj/item/ammo_box/magazine/internal,
+		/obj/item/gun/magic/tentacle,
+		/obj/item/gun/magic/wand,
+		/obj/item/gun/magic/wand/door,
+		/obj/item/gun/magic/wand/polymorph,
+		/obj/item/gun/magic/wand/teleport,
 		/obj/item/ammo_box/c38/trac,
 		/obj/item/ammo_box/magazine/m556/phasic,
-		/obj/item/ammo_box/magazine/sniper_rounds/penetrator
+		/obj/item/ammo_box/magazine/sniper_rounds/penetrator,
+		/obj/item/ammo_box/magazine,
+		/obj/item/ammo_box/magazine/toy,
 	)
-/obj/item/ammo_box/magazine
-/obj/item/ammo_box/magazine/toy
+	blacklisted_types = list(
+		/obj/item/ammo_box/magazine/internal,
+		/obj/item/gun/energy/e_gun/dragnet,
+		/obj/item/gun/energy/ionrifle,
+		/obj/item/gun/energy/laser/instakill,
+		/obj/item/gun/energy/meteorgun,
+		/obj/item/gun/energy/wormhole_projector,
+		/obj/item/gun/magic/staff/chaos,
+		/obj/item/gun/magic/wand/death,
+		/obj/item/gun/magic/wand/safety,
+		/obj/item/gun/medbeam,
+	)
+
+/obj/structure/centcom_item_spawner/gun_and_ammo_creator/build_items_to_spawn()
+	items_to_spawn["Ballistic"] = subtypesof(/obj/item/gun/ballistic)
+	items_to_spawn["Energy"] = subtypesof(/obj/item/gun/energy)
+	items_to_spawn["Magic"] = subtypesof(/obj/item/gun/magic)
+	items_to_spawn["Ammo"] = subtypesof(/obj/item/ammo_box)
+	items_to_spawn["Other"] = list(
+		/obj/item/gun/chem,
+		/obj/item/gun/grenadelauncher,
+		/obj/structure/training_machine,
+		/mob/living/carbon/human) + typesof(/obj/item/gun/syringe, /obj/item/target)
+	. = ..()
+
 //blocks passage if you have a gun
 /obj/effect/gun_check_blocker
 	name = "anti gun barrier"
@@ -45,6 +72,7 @@
 	icon_state = "shieldw"
 	color = COLOR_RED
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 
 /obj/effect/gun_check_blocker/CanPass(atom/movable/mover, border_dir)
 	if(istype(mover, /obj/item/gun))
