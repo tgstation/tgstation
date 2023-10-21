@@ -64,13 +64,13 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 			release_listener(listener)
 
 /datum/sound_spatial_tracker/proc/link_to_listener(mob/listener)
-	if(listener in listeners)
+	if(listeners[listener])
 		return
 	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_listener_moved))
 	listeners[listener] = TRUE
 
 /datum/sound_spatial_tracker/proc/release_listener(mob/listener)
-	if(!(listener in listeners))
+	if(!listeners[listener])
 		return
 	listeners -= listener
 	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
