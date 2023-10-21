@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(garbage)
 			fail_counts[i] = 0
 
 // 1 from the hard reference in the queue, and 1 from the variable used before this
-#define IS_DELETED(datum, _) (refcount(##datum) == 2)
+#define IS_DELETED(datum) (refcount(##datum) == 2)
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_FILTER)
 	if (level == GC_QUEUE_FILTER)
@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(garbage)
 
 		var/datum/D = L[GC_QUEUE_ITEM_REF]
 
-		if (IS_DELETED(D, GCd_at_time)) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		if (IS_DELETED(D)) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
@@ -218,7 +218,7 @@ SUBSYSTEM_DEF(garbage)
 				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
 				message = "[message] (ref count of [refcount(D)])"
 				log_world(message)
-				
+
 				var/detail = D.dump_harddel_info()
 				if(detail)
 					LAZYADD(I.extra_details, detail)
