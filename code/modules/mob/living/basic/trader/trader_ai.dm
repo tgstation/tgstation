@@ -20,22 +20,16 @@
 	action_cooldown = 3 SECONDS
 	avoid_friendly_fire = TRUE
 
-
-///subtree to find our very first customer and set up our shop
+///subtree to find our very first customer and set up our shop after walking right into their face
 /datum/ai_planning_subtree/setup_shop
 
 /datum/ai_planning_subtree/setup_shop/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-
-	var/obj/shop_spot = controller.blackboard[BB_SHOP_SPOT]
-
-	//we still have our shop, don't set it up again
-	if(!QDELETED(shop_spot))
+	//if we already have a shop spot, return
+	if(controller.blackboard_key_exists(BB_SHOP_SPOT))
 		return
 
-	var/mob/living/carbon/first_customer = controller.blackboard[BB_FIRST_CUSTOMER]
-
-	//we haven't set our first customer yet
-	if(QDELETED(first_customer))
+	//if we don't have a costurmer to greet, look for one
+	if(!controller.blackboard_key_exists(BB_FIRST_CUSTOMER))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_FIRST_CUSTOMER, /mob/living/carbon/human)
 		return
 
@@ -56,12 +50,12 @@
 /datum/ai_behavior/setup_shop/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 
-	var/atom/target = controller.blackboard[target_key]
-	var/mob/living/basic/living_pawn = controller.pawn
-
-	if(QDELETED(target))
+	//we lost track of our costumer, abort
+	if(!controller.blackboard_key_exists(target_key))
 		finish_action(controller, FALSE, target_key)
 		return
+
+	var/mob/living/basic/living_pawn = controller.pawn
 
 	living_pawn.say("Welcome to my shop, friend!")
 	var/shop_type_path =  controller.blackboard[BB_SHOP_SPOT_TYPE]

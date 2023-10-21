@@ -3,7 +3,7 @@
 ///The target is taken from the blackboard. This one always requires a specific implementation.
 /datum/ai_planning_subtree/prepare_travel_to_destination
 	var/target_key
-	var/location_key = BB_TRAVEL_DESTINATION
+	var/travel_destination_key = BB_TRAVEL_DESTINATION
 
 /datum/ai_planning_subtree/prepare_travel_to_destination/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/target = controller.blackboard[target_key]
@@ -13,7 +13,7 @@
 		return
 
 	//Already set with this value, return
-	if(controller.blackboard[target_key] == controller.blackboard[location_key])
+	if(controller.blackboard[target_key] == controller.blackboard[travel_destination_key])
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/set_travel_destination, target_key)
