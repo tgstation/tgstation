@@ -97,6 +97,7 @@
 	var/list/message_strings = list()
 	if(isnull(holder))
 		message_strings += get_general_adminwho_information(list_of_admins)
+		message_strings += NO_ADMINS_ONLINE_MESSAGE
 	else
 		message_strings += get_sensitive_adminwho_information(list_of_admins)
 
