@@ -30,7 +30,7 @@
 		/obj/item/chainsaw,
 		/obj/item/melee/energy/sword/saber,
 		/obj/item/book/granter/martial/cqc/fast_read,
-		/obj/item/gravity_gun,
+		/obj/item/gun/ballistic/revolver,
 		/obj/item/melee/energy/axe,
 	)
 
