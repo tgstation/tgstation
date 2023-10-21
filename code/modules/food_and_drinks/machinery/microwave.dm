@@ -35,6 +35,8 @@
 	var/wire_disabled = FALSE
 	/// Wire cut to run mode backwards
 	var/wire_mode_swap = FALSE
+	/// Fail due to inserted PDA
+	var/pda_failure = FALSE
 	var/operating = FALSE
 	/// How dirty is it?
 	var/dirty = 0
@@ -123,8 +125,8 @@
 		else if(held_item && istype(held_item, /obj/item/stock_parts/cell))
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Insert cell"
 
-	if(!anchored && held_item?.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "Install/Secure"
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unsecure" : "Install/Secure"]"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(broken > NOT_BROKEN)
@@ -469,6 +471,9 @@
 
 		vampire_charging_enabled = !vampire_charging_enabled
 		balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
+		if(issilicon(user))
+			visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 
 /obj/machinery/microwave/CtrlClick(mob/user)
 	. = ..()
@@ -571,6 +576,9 @@
 	for(var/atom/movable/potential_fooditem as anything in ingredients)
 		if(IS_EDIBLE(potential_fooditem))
 			non_food_ingedients--
+		if(istype(potential_fooditem, /obj/item/modular_computer/pda) && prob(75))
+			pda_failure = TRUE
+			notify_ghosts("[cooker] has overheated their PDA!", source = src, action = NOTIFY_JUMP, flashwindow = FALSE, header = "Hunger Games: Catching Fire")
 
 	// If we're cooking non-food items we can fail randomly
 	if(length(non_food_ingedients) && prob(min(dirty * 5, 100)))
@@ -662,15 +670,15 @@
  */
 /obj/machinery/microwave/proc/loop_finish(mob/cooker)
 	operating = FALSE
+	if(pda_failure)
+		spark()
+		pda_failure = FALSE // in case they repair it after this, reset
+		broken = REALLY_BROKEN
+		explosion(src, heavy_impact_range = 1, light_impact_range = 2, flame_range = 1)
 
 	var/cursed_chef = cooker && HAS_TRAIT(cooker, TRAIT_CURSED)
 	var/metal_amount = 0
 	for(var/obj/item/cooked_item in ingredients)
-		if(istype(cooked_item, /obj/item/modular_computer/pda) && prob(75))
-			spark()
-			broken = REALLY_BROKEN
-			explosion(src, heavy_impact_range = 1, light_impact_range = 2, flame_range = 1)
-
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)
 			if(isstack(cooked_item))
@@ -734,7 +742,6 @@
  * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
  */
 /obj/machinery/microwave/proc/vampire(mob/cooker)
-	wzhzhzh()
 	var/obj/item/modular_computer/pda/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -742,11 +749,12 @@
 		return
 
 	vampire_cell = vampire_pda.internal_cell
-	if(isnull(vampire_pda))
+	if(isnull(vampire_cell))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
 		return
 
+	wzhzhzh()
 	var/vampire_charge_amount = vampire_cell.maxcharge - vampire_cell.charge
 	charge_loop(vampire_charge_amount, cooker = cooker)
 

@@ -1,7 +1,3 @@
-///used whenever the drake generates a hotspot
-#define DRAKE_FIRE_TEMP 500
-///used whenever the drake generates a hotspot
-#define DRAKE_FIRE_EXPOSURE 50
 ///used to see if the drake is enraged or not
 #define DRAKE_ENRAGED (health < maxHealth*0.5)
 
@@ -175,36 +171,6 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	set_light_range(initial(light_range))
 
-//fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
-	var/list/hit_list = list()
-	for(var/turf/T in turfs)
-		if(isclosedturf(T))
-			break
-		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
-		if(frozen)
-			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
-		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
-		for(var/mob/living/L in T.contents)
-			if(L in hit_list || istype(L, source.type))
-				continue
-			hit_list += L
-			if(!frozen)
-				L.adjustFireLoss(20)
-				to_chat(L, span_userdanger("You're hit by [source]'s fire breath!"))
-				continue
-			L.adjustFireLoss(10)
-			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
-			to_chat(L, span_userdanger("You're hit by [source]'s freezing breath!"))
-
-		// deals damage to mechs
-		for(var/obj/vehicle/sealed/mecha/M in T.contents)
-			if(M in hit_list)
-				continue
-			hit_list += M
-			M.take_damage(45, BRUTE, MELEE, 1)
-		sleep(0.15 SECONDS)
-
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
 		return FALSE
@@ -222,7 +188,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
 	if(!swooping)
 		return ..()
 
@@ -371,8 +337,5 @@
 	return
 
 #undef DRAKE_ENRAGED
-#undef DRAKE_FIRE_EXPOSURE
-#undef DRAKE_FIRE_TEMP
-
 #undef SWOOP_DAMAGEABLE
 #undef SWOOP_INVULNERABLE

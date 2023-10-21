@@ -462,7 +462,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/servo = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -513,7 +513,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -601,7 +601,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -1380,6 +1380,21 @@
 		/obj/item/stack/cable_coil = 5,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/card_reader = 1)
+
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/transport/crossing_signal
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/guideway_sensor
+	name = "Guideway Sensor"
+	build_path = /obj/machinery/transport/guideway_sensor
+	req_components = list(
+		/obj/item/assembly/prox_sensor = 1,
+	)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier

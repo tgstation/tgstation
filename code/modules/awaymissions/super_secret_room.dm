@@ -28,7 +28,7 @@
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
 			for(var/obj/structure/signpost/salvation/sign in orange(7))
-				sign.invisibility = 0
+				sign.SetInvisibility(INVISIBILITY_NONE)
 				var/datum/effect_system/fluid_spread/smoke/smoke = new
 				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()

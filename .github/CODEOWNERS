@@ -142,6 +142,7 @@
 /code/datums/armor/ @ZephyrTFA
 /code/modules/admin/verbs/ @ZephyrTFA
 /code/modules/logging/ @ZephyrTFA
+/tools/ci/check_grep.sh @ZephyrTFA
 
 
 # CONTRIBUTORS

@@ -3,7 +3,8 @@
 
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -18,9 +19,6 @@
 		/datum/ai_planning_subtree/goliath_find_diggable_turf,
 		/datum/ai_planning_subtree/goliath_dig,
 	)
-
-/datum/targetting_datum/basic/allow_items/goliath
-	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/goliath
 	operational_datums = list(/datum/component/ai_target_timer)

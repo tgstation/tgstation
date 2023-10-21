@@ -137,9 +137,10 @@
 	if(!istype(location))
 		return FALSE
 
+	var/datum/can_pass_info/info = new(no_id = TRUE)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, no_id = TRUE))
+		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!

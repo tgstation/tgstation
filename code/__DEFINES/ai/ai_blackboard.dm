@@ -43,6 +43,10 @@
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
+#define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// Flag for whether to target only wounded mobs
+#define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 
 /// Blackboard key storing how long your targetting datum has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -85,6 +89,11 @@
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
+/// Chance to randomly acquire a new target
+#define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"
+/// Chance to randomly drop all of our targets
+#define BB_RANDOM_DEAGGRO_CHANCE "BB_random_deaggro_chance"
+
 /// Flag to set on if you want your mob to STOP running away
 #define BB_BASIC_MOB_STOP_FLEEING "BB_basic_stop_fleeing"
 
@@ -102,7 +111,9 @@
 #define MOD_AI_RANGE 200
 
 ///should we skip the faction check for the targetting datum?
-#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"
+#define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
+///are we in some kind of temporary state of ignoring factions when targetting? can result in volatile results if multiple behaviours touch this
+#define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"

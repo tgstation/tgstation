@@ -46,6 +46,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_circuits,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
+	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -354,16 +355,16 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-	if(holder && mob)
-		if(initial(mob.invisibility) == INVISIBILITY_OBSERVER)
-			to_chat(mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
-			return
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
-			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-		else
-			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+	if(isnull(holder) || isnull(mob))
+		return
+	if(mob.invisimin)
+		mob.invisimin = FALSE
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
+		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
+	else
+		mob.invisimin = TRUE
+		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
@@ -509,7 +510,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_STEALTHMODE, INVISIBILITY_PRIORITY_ADMIN)
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -523,7 +524,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/disable_stealth_mode()
 	holder.fakekey = null
 	if(isobserver(mob))
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
