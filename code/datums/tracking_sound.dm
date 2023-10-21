@@ -22,11 +22,14 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	/// The listeners of the sound.
 	var/list/mob/listeners = list()
 
-	/// Mobs who have left the cell
+	/// Mobs who have left any cells we care about
 	var/list/mob/leavers = list()
 
 	/// The spatial tracker for the sound.
 	var/datum/cell_tracker/spatial_tracker
+
+	/// List of cells we're tracking
+	var/list/cells = list()
 
 	/// Set to true if we were able to track sound length for self deletion.
 	var/qdel_scheduled = FALSE
@@ -77,20 +80,31 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	spatial_tracker = null
 	return ..()
 
+/datum/sound_spatial_tracker/process(seconds_per_tick)
+	listeners -= leavers
+
 /datum/sound_spatial_tracker/proc/on_source_moved()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(update_spatial_tracker))
 
 /datum/sound_spatial_tracker/proc/update_spatial_tracker()
+	var/enter_signal = SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
+	var/leave_signal = SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 	var/list/new_and_old_cells = spatial_tracker.recalculate_cells(get_turf(source))
 	for(var/datum/spatial_grid_cell/new_cell as anything in new_and_old_cells[1])
-		RegisterSignal(new_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(entered_cell))
+		RegisterSignal(new_cell, enter_signal, PROC_REF(entered_cell))
+		RegisterSignal(new_cell, leave_signal, PROC_REF(left_cell))
 		for(var/mob/listener as anything in new_cell.client_contents)
 			link_to_listener(listener)
+		cells[new_cell] = TRUE
 	for(var/datum/spatial_grid_cell/old_cell as anything in new_and_old_cells[2])
-		UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS))
+		UnregisterSignal(old_cell, enter_signal)
+		UnregisterSignal(old_cell, leave_signal)
 		for(var/mob/listener as anything in old_cell.client_contents)
 			release_listener(listener)
+		cells -= old_cell
+	for(var/mob/listener as anything in listeners)
+		update_listener(listener)
 
 /datum/sound_spatial_tracker/proc/link_to_listener(mob/listener)
 	if(listeners[listener])
@@ -105,10 +119,17 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
 	if(isnull(listener.client))
 		return
+	stop_sound_for(listener)
+
+/datum/sound_spatial_tracker/proc/stop_sound_for(mob/listener)
 	var/sound/null_sound = sound(null, channel = channel)
 	SEND_SOUND(listener.client, null_sound)
 
 /datum/sound_spatial_tracker/proc/update_listener(mob/listener)
+	if(get_dist(listener, source) > max_distance)
+		stop_sound_for(listener)
+		return
+
 	var/sound/existing_sound = null
 	for(var/sound/playing as anything in listener.client?.SoundQuery())
 		if(playing.channel != channel)
@@ -149,6 +170,14 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	SIGNAL_HANDLER
 	for(var/mob/listener as anything in entered_contents)
 		link_to_listener(listener)
+
+/datum/sound_spatial_tracker/proc/exited_cell(datum/cell, list/exited_contents)
+	SIGNAL_HANDLER
+	for(var/mob/listener as anything in exited_contents)
+		if(cells[SSspatial_grid.get_cell_of(listener)])
+			continue
+		leavers[listener] = TRUE
+		stop_sound_for(listener)
 
 /mob/verb/TEST_SPATIAL_SOUND(obj/target as obj in view())
 	playsound(target, 'sound/magic/clockwork/ark_activation_sequence.ogg', vol = 100, use_spatial_tracking = TRUE)
