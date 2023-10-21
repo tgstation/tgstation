@@ -607,6 +607,9 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
+"cp" = (
+/turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/admin)
 "cq" = (
 /obj/structure/railing/wood,
 /turf/open/floor/glass/reinforced,
@@ -633,7 +636,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "cu" = (
-/obj/structure/organ_creator,
+/obj/structure/organ_creator{
+	name = "all in one organic medical fabricator"
+	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
@@ -822,6 +827,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"dc" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen,
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Ook's Streamer Den"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/central_command_areas/admin)
 "dd" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line{
@@ -869,6 +882,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"dp" = (
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/admin)
 "dq" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -877,12 +896,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
-"ds" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen/fourcolor,
-/turf/open/floor/stone,
-/area/centcom/central_command_areas/admin)
 "dt" = (
 /obj/structure/window/reinforced/tinted/frosted,
 /obj/structure/closet/mini_fridge,
@@ -1349,11 +1362,27 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"fA" = (
+/obj/item/fish/chasm_crab,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "fB" = (
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
 "fC" = (
-/turf/open/floor/stone,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/door/window/left/directional/west{
+	name = "Secret Stuff";
+	req_access = list("robotics");
+	dir = 4
+	},
+/obj/item/reagent_containers/pill/adminordrazine{
+	list_reagents = list(/datum/reagent/medicine/adminordrazine = 99999);
+	name = "sv_cheats 1";
+	desc = "god";
+	color = "#fcba03"
+	},
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "fD" = (
 /obj/machinery/light/neon_lining{
@@ -1386,6 +1415,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
+"fL" = (
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "fQ" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark{
@@ -1868,9 +1901,8 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "hF" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/records/medical/laptop,
-/turf/open/floor/stone,
+/obj/structure/falsewall/reinforced,
+/turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "hH" = (
 /turf/open/floor/holofloor/hyperspace,
@@ -2566,10 +2598,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
 "ll" = (
-/obj/machinery/door/airlock/wood{
-	name = "Gabbie's Office"
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Glyphee's Garbage Dump"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "lm" = (
 /obj/structure/window/plasma/spawner/directional/north,
@@ -2809,12 +2842,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/borbop)
-"mv" = (
-/obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	dir = 4
-	},
-/turf/closed/indestructible/fakeglass,
-/area/centcom/central_command_areas/admin)
 "my" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
@@ -3714,7 +3741,6 @@
 /area/centcom/central_command_areas/medical)
 "qD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "qE" = (
@@ -3918,11 +3944,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"rD" = (
-/obj/structure/table/wood,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/admin)
 "rF" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
@@ -3990,6 +4011,12 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/borbop)
+"rV" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/admin)
 "rW" = (
 /obj/structure/railing{
 	dir = 8;
@@ -4465,6 +4492,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+"tM" = (
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "tW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -5378,11 +5409,8 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
-"xF" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/turf/open/floor/stone,
+"xE" = (
+/turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
 "xG" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -6359,6 +6387,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"Bq" = (
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/admin)
 "Br" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -6853,9 +6887,14 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
 "Ef" = (
+/obj/structure/sign/painting/large/library{
+	pixel_y = 28
+	},
 /obj/structure/table/wood,
-/obj/machinery/computer/security/wooden_tv,
-/turf/open/floor/carpet/red,
+/obj/item/mod/control/pre_equipped/chrono{
+	desc = "It smells freshly laundered."
+	},
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Eh" = (
 /obj/effect/turf_decal/siding/dark{
@@ -7319,14 +7358,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
-"FQ" = (
-/obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Gabbie's Fax";
-	name = "Gabbie's Fax Machine"
-	},
-/turf/open/floor/stone,
-/area/centcom/central_command_areas/admin)
 "FS" = (
 /obj/machinery/computer/records/medical/laptop{
 	dir = 4
@@ -8057,6 +8088,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
+"IP" = (
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "IR" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/effect/turf_decal/siding/wood,
@@ -9233,6 +9268,12 @@
 	dir = 10
 	},
 /area/centcom/central_command_areas/hall)
+"MU" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/maintenance/two,
+/obj/machinery/recycler/deathtrap,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "MW" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/light/directional/west,
@@ -9554,11 +9595,10 @@
 	},
 /area/centcom/central_command_areas/hall)
 "Ou" = (
-/obj/structure/table/wood,
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/structure/chair/comfy/lime{
 	dir = 8
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Ox" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
@@ -10147,6 +10187,10 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
+"Rl" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "Rm" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
@@ -10316,6 +10360,15 @@
 /obj/structure/hedge,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
+"RR" = (
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
+"RS" = (
+/obj/structure/disposalpipe/loafer{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "RT" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
@@ -10394,6 +10447,12 @@
 /obj/structure/chair/sofa/corp,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
+"So" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "Sq" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -10837,6 +10896,10 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
+"Ud" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "Uf" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -11052,7 +11115,30 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "Vo" = (
-/turf/open/floor/carpet/red,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/window/reinforced/survival_pod/spawner/directional{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Secret Stuff";
+	req_access = list("robotics");
+	dir = 4
+	},
+/obj/item/melee/powerfist{
+	name = "Iron";
+	desc = "You load sixteen tons...";
+	force = 1000;
+	pixel_y = 4;
+	color = "#fcba03"
+	},
+/obj/item/melee/powerfist{
+	name = "Steel";
+	desc = "What do you get?";
+	force = 1000;
+	pixel_y = -5;
+	color = "#fcba03"
+	},
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Vp" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
@@ -11068,6 +11154,13 @@
 /obj/structure/mannequin,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/hall)
+"Vq" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/delivery_chute,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/admin)
 "Vs" = (
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /obj/structure/table/wood/fancy/royalblue,
@@ -11133,7 +11226,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/botany)
 "VD" = (
-/turf/closed/wall/mineral/iron,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "VE" = (
 /obj/structure/table/reinforced,
@@ -11401,6 +11496,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"WO" = (
+/obj/structure/table/wood,
+/obj/machinery/fax{
+	name = "Glyphee's Fax Machine";
+	fax_name = "Glyphee's Spam Mail"
+	},
+/turf/open/floor/carpet/green,
+/area/centcom/central_command_areas/admin)
 "WP" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -11502,9 +11605,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
 "Xi" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/records/security/laptop,
-/turf/open/floor/stone,
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Glyphee's Secret Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "Xj" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -11547,9 +11653,6 @@
 /obj/machinery/computer/monitor,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
-"Xq" = (
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/admin)
 "Xr" = (
 /obj/machinery/keycard_auth/directional/south,
 /obj/structure/table/reinforced,
@@ -11630,10 +11733,11 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
 "XG" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
+/obj/machinery/modular_computer/console/preset/id/centcom{
+	dir = 4;
+	desc = "A specialized console to connect to gaming computers to be able to broadcast live. Seriously, where does Ook find this stuff?"
 	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/admin)
 "XI" = (
 /obj/structure/table/abductor,
@@ -11778,13 +11882,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"Yl" = (
-/obj/machinery/door/airlock/wood{
-	name = "Gabbie's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/admin)
 "Yn" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/supplypod)
@@ -40869,10 +40966,10 @@ aa
 aa
 aa
 On
-Zf
-Zf
-Zf
-Zf
+On
+On
+On
+On
 On
 On
 On
@@ -41126,9 +41223,9 @@ aa
 aa
 aa
 On
-Vo
+WO
 XG
-Vo
+rV
 Vo
 fC
 On
@@ -41384,10 +41481,10 @@ Zf
 On
 On
 Ef
-rD
+cp
 Ou
-Vo
-fC
+cp
+cp
 On
 lm
 Zn
@@ -41640,11 +41737,11 @@ nO
 uk
 hp
 On
-fC
-xF
-Vo
-Vo
-fC
+cp
+Bq
+Bq
+Bq
+cp
 On
 TQ
 AS
@@ -41898,10 +41995,10 @@ uk
 RK
 On
 Xi
-fC
-Vo
-fC
-ds
+On
+On
+On
+On
 On
 TQ
 FI
@@ -42155,10 +42252,10 @@ RZ
 yw
 On
 hF
-fC
-Vo
-fC
-FQ
+On
+VD
+tM
+Fy
 On
 TQ
 FI
@@ -42411,10 +42508,10 @@ Ji
 uk
 xP
 On
-VD
-VD
-Yl
-VD
+So
+IP
+fL
+fA
 VD
 On
 TQ
@@ -42668,11 +42765,11 @@ Ji
 uk
 uk
 On
-Fy
-Fy
-Xq
-Fy
-Fy
+RS
+RR
+xE
+xE
+Ud
 On
 TQ
 AS
@@ -42925,11 +43022,11 @@ Ji
 uk
 dU
 On
-Fy
-Fy
-Xq
-Fy
-Fy
+Vq
+Rl
+xE
+fL
+MU
 On
 aO
 qx
@@ -43179,15 +43276,15 @@ On
 On
 On
 bO
-IS
+dc
 On
 On
-mv
-mv
+On
+On
 ll
-mv
-mv
-bF
+On
+On
+dp
 qZ
 qZ
 qZ
