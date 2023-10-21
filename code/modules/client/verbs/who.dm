@@ -73,11 +73,11 @@
 	set category = "Admin"
 	set name = "Adminwho"
 
-	span_bold("Current Admins:")
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()
 	var/header
-	if(payload_string = NO_ADMINS_ONLINE_MESSAGE)
+
+	if(payload_string == NO_ADMINS_ONLINE_MESSAGE)
 		header = "No Admins Currently Online"
 	else
 		header = "Current Admins:"
@@ -100,7 +100,7 @@
 	else
 		message_strings += get_sensitive_adminwho_information(list_of_admins)
 
-	return jointext(message_strings, "\n\t")
+	return jointext(message_strings, "\n")
 
 /// Proc that returns a list of cliented admins. Remember that this list can contain nulls!
 /// Also, will return null if we don't have any admins.
@@ -117,9 +117,6 @@
 
 /// Proc that will return the applicable display name, linkified or not, based on the input client reference.
 /proc/get_linked_admin_name(client/admin)
-	if(isnull(admin))
-		continue // valid case because client moment
-
 	var/feedback_link = admin.holder.feedback_link()
 	return isnull(feedback_link) ? admin : "<a href=[feedback_link]>[admin]</a>"
 
@@ -132,7 +129,7 @@
 		if(admin.is_afk() || !isnull(admin.holder.fakekey))
 			continue //Don't show afk or fakekeyed admins to adminwho
 
-		returnable_list += "[get_linked_admin_name(admin)] is a [client.holder.rank_names()]"
+		returnable_list += "[get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
 
 	return returnable_list
 
@@ -146,8 +143,8 @@
 
 		admin_strings += "[get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
 
-		if(client.holder.fakekey)
-			admin_strings += "<i>(as [client.holder.fakekey])</i>"
+		if(admin.holder.fakekey)
+			admin_strings += "<i>(as [admin.holder.fakekey])</i>"
 
 		if(isobserver(admin.mob))
 			admin_strings += "- Observing"
@@ -163,7 +160,7 @@
 		else
 			admin_strings += "- Playing"
 
-		if(client.is_afk())
+		if(admin.is_afk())
 			admin_strings += "(AFK)"
 
 		returnable_list += jointext(admin_strings, " ")
