@@ -830,10 +830,12 @@
 	if(panel_open && cover_open)
 		balloon_alert(user, "unsecuring...")
 		tool.play_tool_sound(src)
-		if(tool.use_tool(src, user, 6 SECONDS))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
-			balloon_alert(user, "unsecured")
-			deconstruct()
+		if(!tool.use_tool(src, user, 6 SECONDS))
+			return
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		balloon_alert(user, "unsecured")
+		deconstruct(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -845,15 +847,17 @@
 	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
+/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE, mob/living/user)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
+
+	var/turf/drop_location = find_obstruction_free_location(1, src)
+
 	if(disassembled)
-		new /obj/item/wallframe/tram/controller(drop_location())
+		new /obj/item/wallframe/tram/controller(drop_location)
 	else
-		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
-		new /obj/item/stack/sheet/iron(drop_location(), 1)
-		new /obj/item/shard(drop_location())
+		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
+		new /obj/item/stack/sheet/iron(drop_location, 1)
 	qdel(src)
 
 /**
