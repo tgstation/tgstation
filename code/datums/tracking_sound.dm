@@ -147,15 +147,14 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 			if(playing.channel != channel)
 				continue
 			existing_sound = playing
-		if(isnull(existing_sound))
-			break
-		if(!sound_length)
-			sound_length = existing_sound.len * 10
-			schedule_qdel(sound_length - expected_offset)
+		if(!isnull(existing_sound)) // bReAk: NoT iN a LoOp
+			if(!sound_length)
+				sound_length = existing_sound.len * 10
+				schedule_qdel(sound_length - expected_offset)
 
-		// client took X deciseconds to recieve the message
-		listener_offset = expected_offset - (existing_sound.offset * 10)
-		listeners[listener] = listener_offset + 1
+			// client took X deciseconds to recieve the message
+			listener_offset = expected_offset - (existing_sound.offset * 10)
+			listeners[listener] = listener_offset + 1
 
 	if(sound_length && (expected_offset >= sound_length))
 		qdel(src)
