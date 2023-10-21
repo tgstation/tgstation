@@ -15,10 +15,14 @@
 	var/datum/outfit/forced_outfit
 	/// The description of the map for the console UI
 	var/desc = "A map."
-	/// The 'difficulty' of the map, which affects the ui and ability to scan info.
+	/// Affects the ui and ability to scan info.
 	var/difficulty = BITRUNNER_DIFFICULTY_NONE
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
+	/// If this domain blocks the use of items from disks, for whatever reason
+	var/forbids_disk_items = FALSE
+	/// If this domain blocks the use of spells from disks, for whatever reason
+	var/forbids_disk_spells = FALSE
 	/// Information given to connected clients via ability
 	var/help_text
 	/// Whether to display this as a modular map

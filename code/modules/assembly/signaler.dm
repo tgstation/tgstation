@@ -10,15 +10,20 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
+	/// The code sent by this signaler.
 	var/code = DEFAULT_SIGNALER_CODE
+	/// The frequency this signaler is set to.
 	var/frequency = FREQ_SIGNALER
+	/// How long of a cooldown exists on this signaller.
+	var/cooldown_length = 1 SECONDS
+	/// The radio frequency connection this signaler is using.
 	var/datum/radio_frequency/radio_connection
-	///Holds the mind that commited suicide.
+	/// Holds the mind that commited suicide.
 	var/datum/mind/suicider
-	///Holds a reference string to the mob, decides how much of a gamer you are.
+	/// Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
+	/// How many tiles away can you hear when this signaler is used or gets activated.
 	var/hearing_range = 1
-
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
 
@@ -77,23 +82,26 @@
 /obj/item/assembly/signaler/ui_data(mob/user)
 	var/list/data = list()
 	data["frequency"] = frequency
+	data["cooldown"] = cooldown_length
 	data["code"] = code
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/obj/item/assembly/signaler/ui_act(action, params)
+/obj/item/assembly/signaler/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 
 	switch(action)
 		if("signal")
-			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
-				to_chat(usr, span_warning("[src] is still recharging..."))
-				return
-			TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
+			if(cooldown_length > 0)
+				if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+					balloon_alert(ui.user, "recharging!")
+					return
+				TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, cooldown_length)
 			INVOKE_ASYNC(src, PROC_REF(signal))
+			balloon_alert(ui.user, "signaled")
 			. = TRUE
 		if("freq")
 			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)
@@ -141,10 +149,8 @@
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 
-	var/logging_data
-	if(usr)
-		logging_data = "[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
-		GLOB.lastsignalers.Add(logging_data)
+	var/logging_data = "[time] <B>:</B> [key_name(usr)] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
+	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
 	radio_connection.post_signal(src, signal)

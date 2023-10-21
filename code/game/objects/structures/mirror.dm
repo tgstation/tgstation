@@ -152,17 +152,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
 	if(isnull(racechoice))
 		return TRUE
-	if(!selectable_races[racechoice])
+
+	var/new_race_path = selectable_races[racechoice]
+	if(!ispath(new_race_path, /datum/species))
 		return TRUE
 
-
-	var/datum/species/newrace = new selectable_races[racechoice]
-
+	var/datum/species/newrace = new new_race_path()
 	var/attributes_desc = newrace.get_physical_attributes()
-	qdel(newrace)
 
 	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
 	if(answer != "Yes")
+		qdel(newrace)
 		change_race(race_changer) // try again
 		return
 
@@ -358,7 +358,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	to_chat(user, span_alert("You feel quite intelligent."))
 	// Prevents wizards from being soft locked out of everything
 	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
-	ADD_TRAIT(user, list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
+	user.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 	return TRUE
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)

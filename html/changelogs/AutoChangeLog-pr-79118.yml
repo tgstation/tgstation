@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Food Allergies as a -2 quirk. You can select which food you're allergic to or rock a random option."

@@ -307,7 +307,7 @@
 			return
 		current_avatar = server.generate_avatar(wayout, netsuit)
 		avatar_ref = WEAKREF(current_avatar)
-		server.stock_gear(current_avatar, neo)
+		server.stock_gear(current_avatar, neo, generated_domain)
 
 	neo.set_static_vision(3 SECONDS)
 	protect_occupant(occupant)
