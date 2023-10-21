@@ -77,5 +77,5 @@
 /obj/effect/client_image_holder/hallucination/your_mother/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
 	var/mob/living/carbon/hallucinator = parent.hallucinator
-	image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/yourmother, hallucinator.dna.species))
+	image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/yourmother, hallucinator.dna.species.type))
 	regenerate_image()
