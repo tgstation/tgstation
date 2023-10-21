@@ -3840,11 +3840,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
-"qD" = (
-/obj/structure/table/reinforced,
-/obj/machinery/infuser,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/botany)
 "qE" = (
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
@@ -7345,7 +7340,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -49852,7 +49846,7 @@ aa
 aa
 dS
 rd
-qD
+yZ
 xH
 uE
 dS
