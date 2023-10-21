@@ -27,7 +27,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/total_amount = list()
 	///export instance => total value of sold objects
 	var/list/total_value = list()
-	///set to false if any objects were unscannable
+	///set to false if any objects in a dry run were unscannable
 	var/all_contents_scannable = TRUE
 
 /*
@@ -58,6 +58,7 @@ Then the player gets the profit from selling his own wasted time.
 			if(export.applies_to(thing, apply_elastic))
 				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 					break
+				//Don't add value of unscannable items for a dry run report
 				if(dry_run && !export.scannable)
 					report.all_contents_scannable = FALSE
 					break
