@@ -15,7 +15,7 @@
  *   ignore_key = POLL_IGNORE_EXAMPLE, \
  *   job_bans = ROLE_EXAMPLE or list(ROLE_EXAMPLE, ROLE_EXAMPLE2), \
  *   title = "Use this if you want something other than the parent name", \
- *   cb = cb, \
+ *   to_call = cb, \
  * )
  */
 /datum/component/orbit_poll
@@ -45,10 +45,11 @@
 	src.title = title || owner.name
 	src.to_call = to_call
 
-	var/message = custom_message || "[capitalize(title)] is looking for volunteers"
+	var/message = custom_message || "[capitalize(src.title)] is looking for volunteers"
 
-	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].", \
-		enter_link = "<a href='?src=[REF(src)];orbit=1'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
+	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n", \
+		action = NOTIFY_ORBIT, \
+		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
 		flashwindow = FALSE, \
 		header = "Volunteers requested", \
 		ignore_key = ignore_key, \
@@ -58,23 +59,16 @@
 	addtimer(CALLBACK(src, PROC_REF(end_poll)), timeout, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /datum/component/orbit_poll/Topic(href, list/href_list)
-	if(href_list["orbit"])
-		var/mob/dead/observer/ghost = usr
-		var/atom/owner = parent
-
-		if(istype(ghost))
-			ghost.ManualFollow(owner)
-
+	if(!href_list["ignore"])
 		return
 
-	if(href_list["ignore"])
-		var/mob/user = usr
+	var/mob/user = usr
 
-		var/ignore_key = href_list["ignore"]
-		if(tgui_alert(user, "Ignore further [title] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
-			return
+	var/ignore_key = href_list["ignore"]
+	if(tgui_alert(user, "Ignore further [title] alerts?", "Ignore Alert", list("Yes", "No"), 20 SECONDS, TRUE) != "Yes")
+		return
 
-		GLOB.poll_ignore[ignore_key] |= user.ckey
+	GLOB.poll_ignore[ignore_key] |= user.ckey
 
 /// Concludes the poll, picking one of the orbiters
 /datum/component/orbit_poll/proc/end_poll()
