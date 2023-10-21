@@ -30,10 +30,12 @@
 	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
 	var/obj/item/bodypart/current_bodypart
 
-/mob/living/basic/living_limb_flesh/Initialize(mapload)
+/mob/living/basic/living_limb_flesh/Initialize(mapload, limb)
 	. = ..()
-	AddComponent(/datum/component/swarming, 8, 8) //max_x, max_y
+	AddComponent(/datum/component/swarming, max_x = 8, max_y = 8)
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	if(!isnull(limb))
+		register_to_limb(limb)
 
 /mob/living/basic/living_limb_flesh/Destroy(force)
 	. = ..()
@@ -68,8 +70,7 @@
 		if(isnull(candidate))
 			return
 		victim.start_pulling(candidate, supress_message = TRUE)
-		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling 
-		[candidate]!"))
+		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling [candidate]!"))
 		return
 
 	if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
@@ -117,15 +118,16 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 	
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
-	current_bodypart = new part_type()
-	ADD_TRAIT(current_bodypart, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	current_bodypart = new part_type(dont_spawn_flesh = TRUE)
 	current_bodypart.replace_limb(target, TRUE)
 	forceMove(current_bodypart)
+	register_to_limb(current_bodypart)
 
+/mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
 	ai_controller.set_ai_status(AI_STATUS_OFF)
-	RegisterSignal(current_bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
-	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
-	RegisterSignal(target, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
+	RegisterSignal(part, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
+	RegisterSignal(part.owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
+	RegisterSignal(part.owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
 
 /mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, source, siemens_coeff, flags)
 	SIGNAL_HANDLER
