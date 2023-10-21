@@ -101,4 +101,4 @@
 
 /obj/item/pressure_plate/puzzle/trigger()
 	can_trigger = FALSE
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, puzzle_id)
+	complete_puzzle(puzzle_id)

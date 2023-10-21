@@ -1,4 +1,8 @@
 //Every time you got lost looking for keycards, increment: 2
+
+/proc/complete_puzzle(id) //so its 1 source only
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
+
 //**************
 //*****Keys*******************
 //************** **  **
@@ -64,10 +68,6 @@
 /obj/machinery/door/puzzle/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
-
-/obj/machinery/door/puzzle/Destroy(force)
-	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED)
 
 /obj/machinery/door/puzzle/proc/try_signal(datum/source, try_id)
 	SIGNAL_HANDLER
@@ -272,7 +272,7 @@
 			return
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, puzzle_id)
+	complete_puzzle(puzzle_id)
 	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
 
 //
@@ -306,7 +306,7 @@
 	open_doors()
 
 /obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id) //gonna use this signal anyway because range sucks and im going to probably refactor puzzle stuff or goof does it anyway
+	complete_puzzle(id)
 
 /obj/machinery/puzzle_button/update_icon_state()
 	icon_state = "[base_icon_state][used]"
@@ -339,7 +339,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	used = TRUE
 	update_icon_state()
 	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
+	complete_puzzle(id)
 
 /obj/machinery/puzzle_keycardpad/update_icon_state()
 	icon_state = "[base_icon_state][used]"
@@ -367,10 +367,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
-
-/obj/structure/puzzle_blockade/Destroy(force)
-	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED)
 
 /obj/structure/puzzle_blockade/proc/try_signal(datum/source, try_id)
 	SIGNAL_HANDLER
