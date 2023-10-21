@@ -487,19 +487,25 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 ///Checks whether or not the eater can actually consume the food
-/datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)
+/datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
 	if(!iscarbon(eater))
 		return FALSE
-	var/mob/living/carbon/C = eater
-	var/covered = ""
-	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
-		covered = "headgear"
-	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
-		covered = "mask"
-	if(covered)
+	if(eater.is_mouth_covered())
 		eater.balloon_alert(feeder, "mouth is covered!")
 		return FALSE
-	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+
+	var/atom/food = parent
+
+	if(food.flags_1 & HOLOGRAM_1)
+		if(eater == feeder)
+			to_chat(eater, span_notice("You try to take a bite out of [food], but it fades away!"))
+		else
+			to_chat(feeder, span_notice("You try to feed [eater] [food], but it fades away!"))
+
+		qdel(food)
+		return FALSE
+
+	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, food) & COMSIG_CARBON_BLOCK_EAT)
 		return
 	return TRUE
 
@@ -636,24 +642,29 @@ Behavior that's still missing from this component that original food items had t
 		qdel(parent)
 
 ///Ability to feed food to puppers
-/datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
+/datum/component/edible/proc/UseByAnimal(datum/source, mob/living/basic/pet/dog/doggy)
 	SIGNAL_HANDLER
 
-	var/atom/owner = parent
-
-	if(!isdog(user))
+	if(!isdog(doggy))
 		return
-	var/mob/living/L = user
+
+	var/atom/food = parent
+
+	if(food.flags_1 & HOLOGRAM_1)
+		to_chat(doggy, span_notice("You try to take a bite out of [food], but it fades away!"))
+		qdel(food)
+		return
+
 	if(bitecount == 0 || prob(50))
-		L.manual_emote("nibbles away at \the [parent].")
+		doggy.manual_emote("nibbles away at \the [food].")
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
-	L.taste(owner.reagents) // why should carbons get all the fun?
-	if(bitecount >= 5)
-		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [parent] was.")
-		L.manual_emote(satisfaction_text)
-		qdel(parent)
 
+	doggy.taste(food.reagents) // why should carbons get all the fun?
+	if(bitecount >= 5)
+		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
+		doggy.manual_emote(satisfaction_text)
+		qdel(food)
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -676,10 +687,16 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/on_ooze_eat(datum/source, mob/eater, edible_flags)
 	SIGNAL_HANDLER
 
+	var/atom/food = parent
+
+	if(food.flags_1 & HOLOGRAM_1)
+		to_chat(eater, span_notice("You try to take a bite out of [food], but it fades away!"))
+		qdel(food)
+		return COMPONENT_ATOM_EATEN
+
 	if(foodtypes & edible_flags)
-		var/atom/eaten_food = parent
-		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
+		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
+		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
-		qdel(eaten_food)
+		qdel(food)
 		return COMPONENT_ATOM_EATEN
