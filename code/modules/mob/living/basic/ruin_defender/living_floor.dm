@@ -26,7 +26,7 @@
 	icon_living = "floor"
 	mob_size = MOB_SIZE_HUGE
 	mob_biotypes = MOB_SPECIAL
-	status_flags = GODMODE //everything but crowbars may kill us
+	status_flags = GODMODE //nothing but crowbars may kill us
 	death_message = ""
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
@@ -80,14 +80,14 @@
 	return
 
 /mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_CROWBAR)
-		balloon_alert(user, "you start prying it off with all your strength...")
-		playsound(src, 'sound/items/crowbar.ogg', 45, TRUE)
-		if(do_after(user, 5 SECONDS, src))
-			new /obj/effect/gibspawner/generic(loc)
-			qdel(src)
-	else
+	if(weapon.tool_behaviour != TOOL_CROWBAR)
 		return ..()
+	balloon_alert(user, "prying...")
+	playsound(src, 'sound/items/crowbar.ogg', 45, TRUE)
+	if(!do_after(user, 5 SECONDS, src))
+		return
+	new /obj/effect/gibspawner/generic(loc)
+	qdel(src)
 
 /mob/living/basic/living_floor/white
 	icon_state = "white"

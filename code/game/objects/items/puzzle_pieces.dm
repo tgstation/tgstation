@@ -281,7 +281,7 @@
 
 /obj/machinery/puzzle_button
 	name = "control panel"
-	desc = "A panel that controls something nearby. Im sure it being covered in hazard stripes is fine."
+	desc = "A panel that controls something nearby. I'm sure it being covered in hazard stripes is fine."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "lockdown0"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
@@ -346,7 +346,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 // blockade
 //
 
-//blockades destroy themselves if they receive COMSIG_GLOB_PUZZLE_COMPLETED with their ID
+///blockades destroy themselves if they receive COMSIG_GLOB_PUZZLE_COMPLETED with their ID
 /obj/structure/puzzle_blockade
 	name = "shield gate"
 	desc = "A wall of solid light, likely defending something important. Virtually indestructible, must be a way around, or to disable it."

@@ -24,7 +24,7 @@
 	maxHealth = 20
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	attack_verb_continuous = "tries desperatedly to attach to"
+	attack_verb_continuous = "tries desperately to attach to"
 	attack_verb_simple = "try to attach to"
 	ai_controller = /datum/ai_controller/basic_controller/living_limb_flesh
 	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
@@ -43,7 +43,7 @@
 	. = ..()
 	if(stat == DEAD)
 		return
-	if(isnull(current_bodypart) || !current_bodypart.owner)
+	if(isnull(current_bodypart) || isnull(current_bodypart.owner))
 		return
 	var/mob/living/carbon/human/victim = current_bodypart.owner
 	if(prob(100*SPT_PROB_RATE(0.03, SSMOBS_DT)))
@@ -68,10 +68,14 @@
 		if(isnull(candidate))
 			return
 		victim.start_pulling(candidate, supress_message = TRUE)
-		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling [candidate]!"))
-	else if(!HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
-		step(victim, pick(GLOB.cardinals))
-		to_chat(victim, span_warning("Your [current_bodypart] moves on its own!"))
+		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling 
+		[candidate]!"))
+		return
+
+	if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
+		return
+	step(victim, pick(GLOB.cardinals))
+	to_chat(victim, span_warning("Your [current_bodypart] moves on its own!"))
 	
 
 /mob/living/basic/living_limb_flesh/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
@@ -96,10 +100,10 @@
 	
 	var/target_zone = pick(zone_candidates)
 	var/obj/item/bodypart/target_part = target.get_bodypart(target_zone)
-	if(target_part)
-		target_part.dismember()
+	if(isnull(target_part))
+		target.emote("scream") // dismember already makes them scream so only do this if we aren't doing that
 	else
-		target.emote("scream") //since dismember already makes them scream it would make them scream twice
+		target_part.dismember()
 
 	var/part_type
 	switch(target_zone)
