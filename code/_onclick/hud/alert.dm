@@ -779,9 +779,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Body created"
 	desc = "A body was created. You can enter it."
 	icon_state = "template"
-	timeout = 300
+	timeout = 30 SECONDS
+	/// The target to use the action on
 	var/atom/target = null
+	/// Which on click action to use
 	var/action = NOTIFY_JUMP
+
+/atom/movable/screen/alert/notify_action/Initialize(mapload, datum/hud/hud_owner, action, atom/target)
+	. = ..()
+	src.action = action
+	src.target = target
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()

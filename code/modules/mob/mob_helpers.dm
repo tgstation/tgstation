@@ -287,8 +287,15 @@
 
 		if(flashwindow)
 			window_flash(ghost.client)
-		if(source)
-			ghost_screen_alert(ghost, header, message, action, source, alert_overlay)
+
+		if(isnull(source))
+			continue
+
+		ghost.throw_alert( \
+			category = "[REF(source)]_notify_action", \
+			type = new /atom/movable/screen/alert/notify_action(action = action, target = source), \
+			new_master = source, \
+		)
 
 	var/orbit_link
 	if(source && action == NOTIFY_ORBIT)
@@ -297,44 +304,6 @@
 	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
 
 	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
-
-/// Used in notify_ghosts to create a screen alert
-/proc/ghost_screen_alert(mob/dead/observer/ghost, header, message, action, atom/source, mutable_appearance/alert_overlay)
-	var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-	var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-
-	if(ui_style)
-		alert.icon = ui_style2icon(ui_style)
-	if (header)
-		alert.name = header
-
-	alert.desc = message
-	alert.action = action
-	alert.target = source
-
-	if(!alert_overlay)
-		alert_overlay = new(source)
-		alert_overlay.pixel_x = 0
-		alert_overlay.pixel_y = 0
-		var/icon/size_check = icon(source.icon, source.icon_state)
-		var/scale = 1
-		var/width = size_check.Width()
-		var/height = size_check.Height()
-		if(width > world.icon_size)
-			alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-		if(height > world.icon_size)
-			alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-		if(width > world.icon_size || height > world.icon_size)
-			if(width >= height)
-				scale = world.icon_size / width
-			else
-				scale = world.icon_size / height
-		alert_overlay.transform = alert_overlay.transform.Scale(scale)
-
-	alert_overlay.appearance_flags |= TILE_BOUND
-	alert_overlay.layer = FLOAT_LAYER
-	alert_overlay.plane = FLOAT_PLANE
-	alert.add_overlay(alert_overlay)
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
