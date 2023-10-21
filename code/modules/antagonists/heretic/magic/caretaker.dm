@@ -24,12 +24,16 @@
 /datum/action/cooldown/spell/caretaker/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/caretaker/cast(atom/cast_on)
+/datum/action/cooldown/spell/caretaker/cast(mob/living/cast_on)
 	. = ..()
 	for(var/mob/living/alive in orange(5, owner))
 		if(alive.stat != DEAD && alive.client)
 			owner.balloon_alert(owner, "other minds nearby!")
 			return FALSE
+	
+	if(locate(/obj/item/disk/nuclear) in cast_on.get_contents())
+		owner.balloon_alert(owner, "may not enter refuge with the nuke disk!")
+		return FALSE
 
 	var/mob/living/carbon/carbon_user = owner
 	if(carbon_user.has_status_effect(/datum/status_effect/caretaker_refuge))
