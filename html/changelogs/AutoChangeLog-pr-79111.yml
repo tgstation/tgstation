@@ -1,0 +1,6 @@
+author: "xXPawnStarrXx"
+delete-after: True
+changes:
+  - rscadd: "Most pies can now be sliced rather than being consumed whole."
+  - rscadd: "Rootdough can be crafted using soy milk in place of eggs."
+  - rscadd: "Two new lizard-safe rootbread sandwiches can be crafted."
