@@ -26,11 +26,52 @@
 	attack_verb_continuous = "tries desperatedly to attach to"
 	attack_verb_simple = "try to attach to"
 	ai_controller = /datum/ai_controller/basic_controller/living_limb_flesh
+	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
+	var/obj/item/bodypart/current_bodypart
 
 /mob/living/basic/living_limb_flesh/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/swarming, 8, 8) //max_x, max_y
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+
+/mob/living/basic/living_limb_flesh/Destroy(force)
+	. = ..()
+	QDEL_NULL(current_bodypart)
+
+/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+	. = ..()
+	if(stat == DEAD)
+		return
+	if(isnull(current_bodypart) || !current_bodypart.owner)
+		return
+	var/mob/living/carbon/human/victim = current_bodypart.owner
+	if(prob(100*SPT_PROB_RATE(0.03, SSMOBS_DT)))
+		to_chat(victim, span_warning("The thing posing as your arm makes you feel funny...")) //warn em
+	//firstly as a sideeffect we drain nutrition from our host
+	victim.adjust_nutrition(-1.5)
+
+	if(!prob(100*SPT_PROB_RATE(0.015, SSMOBS_DT)))
+		return
+
+	if(istype(current_bodypart, /obj/item/bodypart/arm))
+		var/list/candidates = list()
+		for(var/atom/movable/movable in orange(victim, 1))
+			if(movable.anchored)
+				continue
+			if(movable == victim)
+				continue
+			if(!victim.CanReach(movable))
+				continue
+			candidates += movable
+		var/atom/movable/candidate = pick(candidates)
+		if(isnull(candidate))
+			return
+		victim.start_pulling(candidate, supress_message = TRUE)
+		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling [candidate]!"))
+	else if(!HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
+		step(victim, pick(GLOB.cardinals))
+		to_chat(victim, span_warning("Your [current_bodypart] moves on its own!"))
+	
 
 /mob/living/basic/living_limb_flesh/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -56,6 +97,9 @@
 	var/obj/item/bodypart/target_part = target.get_bodypart(target_zone)
 	if(target_part)
 		target_part.dismember()
+	else
+		target.emote("scream") //since dismember already makes them scream it would make them scream twice
+
 	var/part_type
 	switch(target_zone)
 		if(BODY_ZONE_L_ARM)
@@ -67,22 +111,50 @@
 		if(BODY_ZONE_R_LEG)
 			part_type = /obj/item/bodypart/leg/right/flesh
 	
-	target.visible_message(span_danger("[src] [target_part ? "attaches itself" : "tears off and attaches itself"] to where [target]s limb used to be!"))
-	var/obj/item/bodypart/new_part = new part_type()
-	ADD_TRAIT(new_part, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
-	new_part.replace_limb(target, TRUE)
-	forceMove(new_part)
-	ai_controller.set_ai_status(AI_STATUS_OFF) //todo some sideeffect to these limbs?
-	RegisterSignal(new_part, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
+	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
+	current_bodypart = new part_type()
+	ADD_TRAIT(current_bodypart, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+	current_bodypart.replace_limb(target, TRUE)
+	forceMove(current_bodypart)
+
+	ai_controller.set_ai_status(AI_STATUS_OFF)
+	RegisterSignal(current_bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
+	RegisterSignal(target, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(owner_shocked)) //detach if we are shocked, not beneficial for the host but hey its a sideeffect
+
+/mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, source, siemens_coeff, flags)
+	SIGNAL_HANDLER
+	if(shock_damage < 10)
+		return
+	if(!detach_self())
+		return
+	var/turf/our_location = get_turf(src)
+	our_location.visible_message(span_warning("[current_bodypart.owner][current_bodypart.owner.p_s()] [current_bodypart] begins to convulse wildly!"))
+	detach_self()
+
+/mob/living/basic/living_limb_flesh/proc/owner_died(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(gibbed)
+		return
+	addtimer(CALLBACK(src, PROC_REF(detach_self)), 1 SECONDS) //we need new hosts, dead people suck!
+
+/mob/living/basic/living_limb_flesh/proc/detach_self()
+	if(isnull(current_bodypart))
+		return FALSE
+	current_bodypart.dismember()
+	return TRUE//on_limb_lost should be called after that
 
 /mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, dismembered)
 	SIGNAL_HANDLER
-	to_chat(world, "[old_owner], [source]")
-	forceMove(old_owner.drop_location())
-	qdel(source)
-	addtimer(CALLBACK(src, PROC_REF(wake_up)), 2 SECONDS)
+	UnregisterSignal(source, COMSIG_BODYPART_REMOVED)
+	UnregisterSignal(old_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	UnregisterSignal(old_owner, COMSIG_LIVING_DEATH)
+	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS)
 
-/mob/living/basic/living_limb_flesh/proc/wake_up()
+/mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
 	ai_controller.set_ai_status(AI_STATUS_ON)
+	forceMove(limb.drop_location())
+	current_bodypart = null
+	qdel(limb)
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)

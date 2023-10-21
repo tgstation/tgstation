@@ -387,7 +387,6 @@
 	suffix = "meatderelict.dmm"
 	name = "Quantum Research Outpost"
 	description = "A quantum teleportation experiment gone wrong."
-	always_place = TRUE //remember to remove
 
 /datum/map_template/ruin/space/ghost_restaurant
 	id = "space_ghost_restaurant.dmm"

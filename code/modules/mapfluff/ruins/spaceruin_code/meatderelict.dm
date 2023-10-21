@@ -33,8 +33,12 @@
 	default_raw_text = "Whoever keeps stealing my fucking icecream from my fridge, I swear I will actually fuck you up. It is not cheap to get this delicious icecream here, nor is it for you. <b>And dont touch my snacks in the drawer!</b>"
 
 /obj/machinery/computer/terminal/meatderelict
-	content = list("todo \
-	todo.")
+	upperinfo = "COPYRIGHT 2500 NANOSOFT-TM - DO NOT REDISTRIBUTE - Now with audio!" //not that old
+	content = list(
+		"Experimental Test Satellite 37B<br/>Nanotrasen™️ approved deep space experimentation lab<br/><br/>Entry 1:<br/><br/>Subject - \[Species 501-C-12\]<br/>Date - \[REDACTED\]<br/>We have acquired a biological sample of unknown origins \[Species 501-C-12\] from an NT outpost on the far reaches. Initial experiments have determined the sample to be of an unknown creature never previously recorded. It weighs approximately 7 grams and seems to be docile. Initial examinations determine that it is an extremely fast replicating creature that can alter its physiology to take multiple differing shapes. \[Recording Terminated\]<br/>- Dr. Phil Cornelius",
+		"Entry 2:<br/><br/>Subject - \[Species 501-C-12\]<br/>Date - \[REDACTED\]<br/>The creature responds to electrical stimuli. It has failed to respond to Light, Heat, Cold, Oxygen, Plasma, CO2, Nitrogen. It, within moments, seemed to have generated muscle tissue within its otherwise shapeless form and moved away from the source of electricity. Feeding the creature has been a simple matter, it consumed just about any form of protein. It appears to rapidly digest and convert forms of protein into more of itself. Any undigestible products are simply left alone. Will continue to monitor creature and provide reports to Nanotrasen Central Command. \[Recording Terminated\]<br/>- Dr. Phil Cornelius",
+		"Entry 3:<br/><br/>Subject - \[Species 501-C-12\]<br/>Date - \[REDACTED\]<br/>Any attempts at contacting Nanotrasen has failed. I've never seen anything like it. I... I don't think I'm going to survive much longer, I can hear it pushing on my room door. If anyone reads this, let my family know that I- \[Loud crash\]<br/>GET BACK \[Gunshots\]<br/>AHHHHHHHHHHHH \[Recording Terminated\]<br/>- Dr. Phil Cornelius"
+	)
 
 /obj/machinery/door/puzzle/meatderelict
 	name = "lockdown door"
@@ -88,10 +92,6 @@
 	density = TRUE
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "smes"
-	//not for mappers go away
-	var/static/list/throw_directions_cardinal = list(NORTH,WEST,EAST,SOUTH)
-	var/static/list/throw_directions_diagonal = list(NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)
-	//use these
 	var/throw_diagonals = FALSE
 	var/shock_flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES
 	var/shock_damage = 20
@@ -106,7 +106,7 @@
 	signal_turfs = null
 
 /obj/lightning_thrower/process(seconds_per_tick)
-	var/list/dirs = throw_diagonals ? throw_directions_diagonal : throw_directions_cardinal
+	var/list/dirs = throw_diagonals ? GLOB.diagonals : GLOB.cardinals
 	throw_diagonals = !throw_diagonals
 	playsound(src, 'sound/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	for(var/direction in dirs)
