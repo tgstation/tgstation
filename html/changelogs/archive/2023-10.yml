@@ -809,3 +809,66 @@
   vinylspiders:
   - bugfix: Fixes a bug where your mother would delete your species after calling
       you a disappointment, rendering you a broken husk of a mob
+2023-10-21:
+  Ben10Omintrix:
+  - rscadd: added a new syndicate item - the bee smoker
+  GPeckman:
+  - qol: Nonhuman autopsy, Tier Two Lasers, and several other experiments can now
+      be completed earlier.
+  - balance: Advanced robotics techweb node no longer requires neural programming
+      node.
+  - rscdel: Protolathe/circuit imprinter/techfab designs costing reagents is now totally
+      deprecated.
+  Ical92:
+  - bugfix: connected Meta's Cytology equipment properly
+  Jacquerel:
+  - bugfix: Blobbernauts will once again take damage when not on blob tiles.
+  LT3, san7890:
+  - rscadd: Announcements have gotten a fresh coat of paint! They should be popping
+      with splendid new colors and should have a lot less ugly linebreaks, while still
+      managing to keep your attention at the screen.
+  OrionTheFox:
+  - bugfix: '[Tramstation] fixed an unlinked Disposals Bin in the Pod Bay'
+  Paxilmaniac:
+  - code_imp: Bitrunner domains can now have spells or items from disks disabled if
+      the domain maker wants such a thing
+  Pickle-Coding:
+  - bugfix: Fixed tesla coil zaps cutting off too early.
+  SyncIt21:
+  - bugfix: plumbing pill press & bottler won't stop when processing 50 unit bottles
+  - code_imp: 'made a lot of variables defines and lists static to save memory for
+      plumbing pill press. Moved global lists to it''s rightful
+
+      place'
+  - code_imp: copied over chem master pill & patch designs over to plumbing pill press
+      and removed the old designs. resized UI
+  - bugfix: RCD & RTD ui updates when switching between root categories
+  Watermelon914:
+  - admin: Added SS13.get_runner_ckey() and SS13.get_runner_client() which stores
+      the ckey and returns the client of the user who ran the lua script. Can be unreliable
+      if accessed after sleeping.
+  - admin: Added timer loop helpers to the SS13.lua module, check the docs
+  - admin: The SS13.lua module can now be made local without causing any errors.
+  lizardqueenlexi:
+  - refactor: Artificer constructs have been converted to the basic mob framework.
+      This should change very little about them, but please report any bugs. NPC artificers
+      are now smarter, and will focus on healing nearby wounded constructs - if you
+      see them, take them out first!
+  mc-oofert:
+  - bugfix: making assembly activated bombs works again
+  nikothedude:
+  - bugfix: Scream for me, the spell, now works
+  - bugfix: Non-random puncture wounds can now be applied
+  ninjanomnom:
+  - balance: It damages your eyes to look at the supermatter singularity
+  san7890:
+  - refactor: Holodeck monkeys have been moved to the same system as old monkeys,
+      and should retain the similar "ephermeal" behavior, while being a whole lot
+      smarter by leveraging new AI. Please report anything that is completely wack
+      about this.
+  - balance: Slimes can't eat holodeck monkeys anymore, because apparently they could
+      and that is wack.
+  timothymtorres:
+  - rscadd: Add new fitness skill and mechanics for weight machines and punching bags.  Working
+      out with a proper diet and good sleep will result in massive fitness gains.  As
+      your fitness increases, so does your mass.
