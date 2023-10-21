@@ -47,7 +47,7 @@
 
 	var/message = custom_message || "[capitalize(role_name)] is looking for volunteers"
 
-	notify_ghosts("[message]. An orbiter will be chosen in twenty seconds.", \
+	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].", \
 		enter_link = "<a href='?src=[REF(src)];orbit=1'>(Orbit)</a> <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
 		flashwindow = FALSE, \
 		header = "Volunteers requested", \
