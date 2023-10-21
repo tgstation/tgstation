@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - rscadd: "New dream that plays sound at you"
