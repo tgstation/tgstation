@@ -69,10 +69,7 @@
 /// A drone that spawns with a chameleon hat for fashion purposes.
 /mob/living/basic/drone/snowflake
 	default_headwear = /obj/item/clothing/head/chameleon/drone
-
-/mob/living/basic/drone/snowflake/Initialize(mapload)
-	. = ..()
-	desc += " This drone appears to have a complex holoprojector built on its 'head'."
+	desc = "A maintenance drone, an expendable robot built to perform station repairs. This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	name = "snowflake drone shell"
