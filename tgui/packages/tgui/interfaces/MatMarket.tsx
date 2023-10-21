@@ -65,7 +65,7 @@ export const MatMarket = (props, context) => {
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
           <Section>
-            Current credit balance: <b>{creditBalance || 'zero'}</b> cr. Current
+            Current Credit Balance: <b>{creditBalance || 'zero'}</b> cr. Current
             Order Amount: <b>{orderBalance || 'zero'}</b> cr.
           </Section>
         </Section>
