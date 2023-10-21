@@ -202,7 +202,7 @@
 					var/datum/bank_account/paying_account = account_payable
 					if(!isnull(order.paying_account)) //order is already being paid by another account
 						paying_account = order.paying_account
-					var/final_cost = order.pack.get_cost()
+					var/final_cost = order.get_final_cost()
 					if(final_cost + cost > paying_account.account_balance)
 						say("This order worth [final_cost] cr would exceed the available budget by [cost] cr!. Please send it before purchasing more.")
 						return
