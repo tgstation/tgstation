@@ -747,6 +747,7 @@
 	. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
 	if(panel_open)
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+		. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
 	else
 		. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
 
@@ -755,7 +756,7 @@
 		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
 		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
 	else
-		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Right-click.")]")
+		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
@@ -826,13 +827,22 @@
 
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	if(panel_open)
+	if(panel_open && cover_open)
 		balloon_alert(user, "unsecuring...")
 		tool.play_tool_sound(src)
 		if(tool.use_tool(src, user, 6 SECONDS))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 			balloon_alert(user, "unsecured")
 			deconstruct()
+
+/obj/machinery/transport/tram_controller/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!cover_open)
+		return
+
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
