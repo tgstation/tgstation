@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 		return
 
 	// offset by the amount of deciseconds we expect the client to take to recieve the message
-	sound.offset = expected_offset + listener_offset
+	sound.offset = (expected_offset + listener_offset) * 0.1 // thanks byond
 	listener.playsound_local(
 		get_turf(source),
 		vol = base_volume,
