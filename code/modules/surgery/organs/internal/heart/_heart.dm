@@ -73,19 +73,19 @@
 
 		if(owner.health <= owner.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			owner.playsound_local(get_turf(owner), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			owner.playsound_local(get_turf(owner), slowbeat, 40, 0, channel = SOUND_CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			to_chat(owner, span_notice("You feel your heart slow down..."))
 		if(beat == BEAT_SLOW && owner.health > owner.crit_threshold)
-			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+			owner.stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 		if(owner.has_status_effect(/datum/status_effect/jitter))
 			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = SOUND_CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 
 		else if(beat == BEAT_FAST)
-			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+			owner.stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 	if(organ_flags & ORGAN_FAILING && owner.can_heartattack() && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart

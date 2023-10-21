@@ -468,7 +468,7 @@
 /obj/machinery/jukebox/proc/dance_over()
 	for(var/datum/weakref/weak_to_hide_from as anything in rangers)
 		var/mob/to_hide_from = weak_to_hide_from?.resolve()
-		to_hide_from?.stop_sound_channel(CHANNEL_JUKEBOX)
+		to_hide_from?.stop_sound_channel(SOUND_CHANNEL_JUKEBOX)
 
 	rangers.Cut()
 
@@ -486,7 +486,7 @@
 			var/mob/to_hide_from = weak_to_hide_from?.resolve()
 			if(!HAS_JUKEBOX_PREF(to_hide_from) || get_dist(src, get_turf(to_hide_from)) > 10)
 				rangers -= weak_to_hide_from
-				to_hide_from?.stop_sound_channel(CHANNEL_JUKEBOX)
+				to_hide_from?.stop_sound_channel(SOUND_CHANNEL_JUKEBOX)
 
 		// Collect mobs to play the song to, stores weakrefs of them in rangers
 		for(var/mob/to_play_to in range(world.view, src))
@@ -498,7 +498,7 @@
 			rangers[weak_playing_to] = TRUE
 			// This plays the sound directly underneath the mob because otherwise it'd get stuck in their left ear or whatever
 			// Would be neat if it sourced from the box itself though
-			to_play_to.playsound_local(get_turf(to_play_to), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
+			to_play_to.playsound_local(get_turf(to_play_to), null, volume, channel = SOUND_CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 
 	else if(active)
 		active = FALSE

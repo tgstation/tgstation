@@ -469,10 +469,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	var/area/my_area = get_area(src)
 
 	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
-		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = SOUND_CHANNEL_BUZZ))
 		return
 
-	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
+	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = SOUND_CHANNEL_BUZZ))
 
 
 /**

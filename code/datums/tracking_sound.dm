@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
+GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new /list(SOUND_CHANNEL_MAX))
 
 /// A sound source that tracks listeners and the source of the sound.
 /datum/sound_spatial_tracker
@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	src.channel = channel
 	src.range = range
 	src.playsound_local_args = playsound_local_args
-	GLOB.sound_spatial_trackers["[channel]"] = src
+	GLOB.sound_spatial_trackers[channel] = src
 	spatial_tracker = new(range, range)
 	update_spatial_tracker()
 	if(sound_length)
@@ -43,8 +43,8 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 	for(var/mob/listener as anything in listeners)
 		release_listener(listener)
 	listeners.Cut()
-	if(GLOB.sound_spatial_trackers["[channel]"] == src)
-		GLOB.sound_spatial_trackers -= "[channel]"
+	if(GLOB.sound_spatial_trackers[channel] == src)
+		GLOB.sound_spatial_trackers[channel] = null
 	spatial_tracker = null
 	return ..()
 

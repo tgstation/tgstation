@@ -887,7 +887,7 @@
 		REMOVE_TRAIT(src, TRAIT_SUICIDED, REF(src))
 
 	updatehealth()
-	stop_sound_channel(CHANNEL_HEARTBEAT)
+	stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
 /**

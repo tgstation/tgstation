@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
-	stop_sound_channel(CHANNEL_HEARTBEAT)
+	stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 	var/obj/item/organ/internal/heart/H = get_organ_slot(ORGAN_SLOT_HEART)
 	if(H)
 		H.beat = BEAT_NONE

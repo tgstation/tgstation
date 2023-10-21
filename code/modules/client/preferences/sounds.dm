@@ -74,7 +74,7 @@
 
 /datum/preference/toggle/sound_jukebox/apply_to_client_updated(client/client, value)
 	if (!value)
-		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
+		client.mob.stop_sound_channel(SOUND_CHANNEL_JUKEBOX)
 
 /// Controls hearing lobby music
 /datum/preference/toggle/sound_lobby
@@ -86,7 +86,7 @@
 	if (value && isnewplayer(client.mob))
 		client.playtitlemusic()
 	else
-		client.mob.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		client.mob.stop_sound_channel(SOUND_CHANNEL_LOBBYMUSIC)
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi

@@ -149,7 +149,7 @@
 	if(GLOB.vox_sounds[word])
 
 		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
+		var/sound/voice = sound(sound_file, wait = 1, channel = SOUND_CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
 	// If there is no single listener, broadcast to everyone in the same z level
