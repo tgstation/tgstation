@@ -843,6 +843,7 @@
 	tool.play_tool_sound(src)
 	panel_open = !panel_open
 	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
