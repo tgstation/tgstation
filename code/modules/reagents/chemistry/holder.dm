@@ -667,7 +667,7 @@
  * Arguments
  *
  * * [target][obj] - the target to transfer reagents to
- * * multiplier - the multiplier applied on all reagent volumes before transfering
+ * * multiplier - multiplies each reagent amount by this number well byond their available volume before transfering. used to create reagents from thin air if you ever need to
  * * preserve_data - preserve user data of all reagents after transfering
  * * no_react - if TRUE will not handle reactions
  */
@@ -706,7 +706,7 @@
 	var/trans_data = null
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		transfer_amount = FLOOR(reagent.volume * part * multiplier, CHEMICAL_QUANTISATION_LEVEL)
+		transfer_amount = reagent.volume * part * multiplier
 		if(preserve_data)
 			trans_data = reagent.data
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
@@ -721,7 +721,7 @@
 		target_holder.update_total()
 		target_holder.handle_reactions()
 
-	return total_transfered_amount
+	return FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Multiplies the reagents inside this holder by a specific amount
