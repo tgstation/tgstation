@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker)
 
 /datum/sound_spatial_tracker/proc/on_source_moved()
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(update_spatial_tracker))
 
 /datum/sound_spatial_tracker/proc/update_spatial_tracker()
 	var/list/new_and_old_cells = spatial_tracker.recalculate_cells(get_turf(source))
