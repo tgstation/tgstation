@@ -118,7 +118,7 @@
 			can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
 	var/is_ordering_private = ordering_private
-	if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+	if(!can_buy_via_budget) //no cargo access then force private purchase
 		is_ordering_private = TRUE
 
 	var/balance = 0
@@ -180,7 +180,7 @@
 
 			//if multiple users open the UI some of them may not have the required access so we recheck
 			var/is_ordering_private = ordering_private
-			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
+			if(!can_buy_via_budget) //no cargo access then force private purchase
 				is_ordering_private = TRUE
 
 			var/datum/bank_account/account_payable
