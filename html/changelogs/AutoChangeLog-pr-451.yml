@@ -1,7 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - rscdel: "Lots of weirdly placed powerful gear is gone now."
-  - qol: "singularity engine cameras are now emp-proof"
-  - bugfix: "tramstation ai solars have been remodeled to function."
-  - bugfix: "all bars now have the proper holosign emitters"

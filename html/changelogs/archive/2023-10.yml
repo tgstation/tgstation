@@ -132,3 +132,14 @@
       be solved solo.
   lmenvs:
   - rscadd: Adds loafing mechanic
+2023-10-21:
+  CL0WNE:
+  - rscadd: A new fart line "_____ unleashes their animal spirit!"
+  - rscadd: Flashlights to kinetic crusher variants (machete,spear,hammer,etc.)
+  KittyNoodle:
+  - rscdel: Lots of weirdly placed powerful gear is gone now.
+  - qol: singularity engine cameras are now emp-proof
+  - bugfix: tramstation ai solars have been remodeled to function.
+  - bugfix: all bars now have the proper holosign emitters
+  KoboldCommando:
+  - rscadd: The botany infuser and splicer are merged into one machine
