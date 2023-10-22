@@ -36,6 +36,7 @@
 				CRASH("Could not find a spot to spawn a modular mob segment!")
 
 			for(var/turf/open/spot in view(current_distance, location))
+				var/failed = FALSE
 				for(var/atom/thing in spot.contents)
 					if(thing.density)
 						failed = TRUE
@@ -165,6 +166,15 @@
 	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/venus_human_trap,
+	)
+
+/datum/modular_mob_segment/xenos
+	pick_random_of = 3
+	mobs = list(
+		/mob/living/carbon/alien/adult/hunter,
+		/mob/living/carbon/alien/adult/sentinel,
+		/mob/living/carbon/alien/adult/drone,
+
 	)
 
 #undef SPAWN_ALWAYS
