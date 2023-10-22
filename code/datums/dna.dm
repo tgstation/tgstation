@@ -502,6 +502,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(ispath(mrace))
 		new_race = new mrace
 	else if(istype(mrace))
+		if(QDELING(mrace))
+			CRASH("someone is calling set_species() and is passing it a qdeling species datum, this is VERY bad, stop it")
 		new_race = mrace
 	else
 		CRASH("set_species called with an invalid mrace [mrace]")

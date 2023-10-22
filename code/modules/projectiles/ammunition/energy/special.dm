@@ -20,15 +20,15 @@
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/flora/yield
-	projectile_type = /obj/projectile/energy/florayield
+	projectile_type = /obj/projectile/energy/flora/yield
 	select_name = "yield"
 
 /obj/item/ammo_casing/energy/flora/mut
-	projectile_type = /obj/projectile/energy/floramut
+	projectile_type = /obj/projectile/energy/flora/mut
 	select_name = "mutation"
 
 /obj/item/ammo_casing/energy/flora/revolution
-	projectile_type = /obj/projectile/energy/florarevolution
+	projectile_type = /obj/projectile/energy/flora/evolution
 	select_name = "revolution"
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 

@@ -334,6 +334,13 @@
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
 
+/datum/uplink_item/role_restricted/bee_smoker
+	name = "Bee Smoker"
+	desc = "A device that runs on cannabis, turning it into a gas that can hypnotize bees to follow our commands."
+	item = /obj/item/bee_smoker
+	cost = 4
+	restricted_roles = list(JOB_BOTANIST)
+
 /datum/uplink_item/role_restricted/monkey_agent
 	name = "Simian Agent Reinforcements"
 	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \

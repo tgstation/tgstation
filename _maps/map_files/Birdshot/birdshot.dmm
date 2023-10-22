@@ -34561,10 +34561,6 @@
 "mmf" = (
 /obj/structure/table,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 3;
-	pixel_y = -2
-	},
 /obj/item/assembly/timer{
 	pixel_x = -3;
 	pixel_y = 9
@@ -34574,6 +34570,11 @@
 	},
 /obj/machinery/light_switch/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/holosign_creator/atmos,
+/obj/item/holosign_creator/atmos{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "mmi" = (
@@ -45934,7 +45935,10 @@
 "qiH" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/west,
-/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser{
+	pixel_x = 3;
+	pixel_y = -1
+	},
 /obj/item/assembly/timer{
 	pixel_x = -3;
 	pixel_y = 13
@@ -45950,6 +45954,9 @@
 /obj/item/transfer_valve{
 	pixel_x = 4;
 	pixel_y = 17
+	},
+/obj/item/pipe_dispenser{
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
@@ -55527,6 +55534,10 @@
 	},
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "tns" = (
@@ -56569,7 +56580,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "tDM" = (
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
