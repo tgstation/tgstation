@@ -45,7 +45,6 @@
 		return
 
 	current_target = target
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_clear_target))
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
 	if (!isnull(alpha_on_aggro))

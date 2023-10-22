@@ -619,6 +619,7 @@ multiple modular subtrees with behaviors
 			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
 			else if(associated_value == source)
 				next_to_clear -= inner_value
+				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
 
 		index += 1
 
