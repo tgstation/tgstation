@@ -11,15 +11,14 @@
 /// VDOM
 
 /area/virtual_domain
-	name = "Virtual Domain"
+	name = "Virtual Domain Ruins"
+	icon_state = "bit_ruin"
 	icon = 'icons/area/areas_station.dmi'
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 	has_gravity = STANDARD_GRAVITY
-
-/area/virtual_domain/powered
-	name = "Virtual Domain Ruins"
-	icon_state = "bit_ruin"
 	requires_power = FALSE
+
+/area/virtual_domain/fullbright
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 

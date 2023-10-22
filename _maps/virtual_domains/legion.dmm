@@ -646,7 +646,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "zo" = (
 /obj/effect/turf_decal/mining/survival,
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -1183,7 +1183,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "UD" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1

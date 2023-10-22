@@ -1,3 +1,8 @@
+#define SPAWN_ALWAYS 100
+#define SPAWN_LIKELY 75
+#define SPAWN_UNLIKELY 25
+#define SPAWN_RARE 10
+
 /datum/modular_mob_segment
 	/// If you want the total to be randomized
 	var/total_randomized = FALSE
@@ -5,9 +10,14 @@
 	var/pick_random_of = 0
 	/// The list of mobs to spawn
 	var/list/mob/living/mobs = list()
+	/// Chance this will spawn (1 - 100)
+	var/probability = SPAWN_LIKELY
 
 /// Spawns mobs in a circle around the location
 /datum/modular_mob_segment/proc/spawn_mobs(turf/location)
+	if(!prob(probability))
+		return
+
 	var/spawned
 	var/current_distance = 1
 	var/current_index = 1
@@ -151,3 +161,8 @@
 	mobs = list(
 		/mob/living/basic/venus_human_trap,
 	)
+
+#undef SPAWN_ALWAYS
+#undef SPAWN_LIKELY
+#undef SPAWN_UNLIKELY
+#undef SPAWN_RARE

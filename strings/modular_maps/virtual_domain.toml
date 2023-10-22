@@ -1,0 +1,7 @@
+directory = "_maps/virtual_domains/_generic"
+
+[rooms.station_small]
+modules = ["station_small_1", "station_small_2", "station_small_3"]
+
+[rooms.station_medium]
+modules = ["station_medium_1", "station_medium_2", "station_medium_3"]

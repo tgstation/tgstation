@@ -1,0 +1,126 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/iron,
+/area/space)
+"e" = (
+/turf/template_noop,
+/area/space)
+"j" = (
+/turf/closed/wall,
+/area/space)
+"u" = (
+/obj/machinery/light/small/blacklight/directional/north,
+/turf/template_noop,
+/area/space)
+"v" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/space)
+"O" = (
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/template_noop,
+/area/space)
+"Z" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron,
+/area/space)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+"}
+(2,1,1) = {"
+e
+j
+j
+v
+j
+v
+j
+j
+e
+"}
+(3,1,1) = {"
+e
+j
+a
+a
+a
+a
+a
+j
+e
+"}
+(4,1,1) = {"
+O
+j
+a
+a
+a
+a
+a
+j
+e
+"}
+(5,1,1) = {"
+e
+Z
+a
+a
+a
+a
+a
+Z
+e
+"}
+(6,1,1) = {"
+e
+j
+a
+a
+a
+a
+a
+j
+u
+"}
+(7,1,1) = {"
+e
+j
+a
+a
+a
+a
+a
+j
+e
+"}
+(8,1,1) = {"
+e
+j
+j
+v
+j
+v
+j
+j
+e
+"}
+(9,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+"}

@@ -51,7 +51,7 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/indestructible/hierophant,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "S" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/indestructible/hierophant,
