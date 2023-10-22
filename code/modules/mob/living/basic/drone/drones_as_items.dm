@@ -1,12 +1,7 @@
-///////////////////
-//DRONES AS ITEMS//
-///////////////////
-//Drone shells
-
 /** Drone Shell: Ghost role item for drones
  *
  * A simple mob spawner item that transforms into a maintenance drone
- * Resepcts drone minimum age
+ * Respects drone minimum age
  */
 
 /obj/effect/mob_spawn/ghost_role/drone
@@ -18,7 +13,7 @@
 	density = FALSE
 	mob_name = "drone"
 	///Type of drone that will be spawned
-	mob_type = /mob/living/simple_animal/drone
+	mob_type = /mob/living/basic/drone
 	role_ban = ROLE_DRONE
 	show_flavor = FALSE
 	prompt_name = "maintenance drone"
@@ -29,13 +24,13 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
+	var/area/area = get_area(src)
+	if(area)
+		notify_ghosts("A drone shell has been created in \the [area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
 
 /obj/effect/mob_spawn/ghost_role/drone/allow_spawn(mob/user, silent = FALSE)
 	var/client/user_client = user.client
-	var/mob/living/simple_animal/drone/drone_type = mob_type
+	var/mob/living/basic/drone/drone_type = mob_type
 	if(!initial(drone_type.shy) || isnull(user_client) || !CONFIG_GET(flag/use_exp_restrictions_other))
 		return ..()
 	var/required_role = CONFIG_GET(string/drone_required_role)

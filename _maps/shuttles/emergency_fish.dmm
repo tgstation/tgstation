@@ -216,7 +216,7 @@
 /area/shuttle/escape)
 "nY" = (
 /obj/structure/table/wood,
-/obj/item/book/fish_catalog{
+/obj/item/book/manual/fish_catalog{
 	pixel_y = 2
 	},
 /turf/open/floor/wood/tile,

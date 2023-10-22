@@ -266,11 +266,11 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/turf/T = get_turf(loc)
 
 	if(lavaland_equipment_pressure_check(T))
-		movedelay = fast_pressure_step_in
+		movedelay = !overclock_mode ? fast_pressure_step_in : fast_pressure_step_in / overclock_coeff
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in flat_equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown) * 0.5
 
 	else
-		movedelay = slow_pressure_step_in
+		movedelay = !overclock_mode ? slow_pressure_step_in : slow_pressure_step_in / overclock_coeff
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in flat_equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)
