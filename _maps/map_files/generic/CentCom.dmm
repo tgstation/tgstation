@@ -2756,6 +2756,16 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"mj" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/white/herringbone,
+/area/centcom/central_command_areas/kitchen)
 "mk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -6710,10 +6720,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
-"Dp" = (
-/obj/machinery/vending/dinnerware,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/kitchen)
 "Dr" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
@@ -54210,7 +54216,7 @@ mQ
 mQ
 Rm
 Ac
-RN
+mj
 Nx
 ZX
 mQ
@@ -54727,7 +54733,7 @@ IV
 IV
 IV
 Vx
-Dp
+mQ
 MO
 IO
 SK
