@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/projectile/beam/wormhole
-	e_cost = 0
+	e_cost = 0 // Can't use the macro
 	harmful = FALSE
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	select_name = "blue"

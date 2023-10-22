@@ -128,7 +128,7 @@ Slimecrossing Weapons
 	icon_state = "pulse0_bl"
 	hitsound = 'sound/effects/splat.ogg'
 
-/obj/projectile/magic/bloodchill/on_hit(mob/living/target)
+/obj/projectile/magic/bloodchill/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bloodchill)

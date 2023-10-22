@@ -64,7 +64,7 @@
 		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
-			nutrition_change += consumption_amount * consumable.get_nutriment_factor()
+			nutrition_change += consumption_amount * consumable.get_nutriment_factor(src)
 		reagents.remove_reagent(reagent.type, consumption_amount)
 	adjust_ooze_nutrition(nutrition_change)
 
@@ -78,6 +78,8 @@
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eat_target, silent)
+	if(isnull(eat_target))
+		return
 	if(SEND_SIGNAL(eat_target, COMSIG_OOZE_EAT_ATOM, src, edible_food_types) & COMPONENT_ATOM_EATEN)
 		return
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything

@@ -5,7 +5,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	icon = 'icons/turf/floors.dmi'
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
-
+	light_height = LIGHTING_HEIGHT_FLOOR
+	
 	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
 	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
 	var/mob/oranges_ear/assigned_oranges_ear
@@ -156,8 +157,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
-		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		add_overlay(overlay)
+		add_overlay(GLOB.starlight_overlays[GET_TURF_PLANE_OFFSET(src) + 1])
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
@@ -296,20 +296,21 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			return TRUE
 	return FALSE
 
-//zPassIn doesn't necessarily pass an atom!
-//direction is direction of travel of air
-/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+//The zpass procs exist to be overriden, not directly called
+//use can_z_pass for that
+///If we'd allow anything to travel into us
+/turf/proc/zPassIn(direction)
 	return FALSE
 
-//direction is direction of travel of air
-/turf/proc/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
+///If we'd allow anything to travel out of us
+/turf/proc/zPassOut(direction)
 	return FALSE
 
 //direction is direction of travel of air
 /turf/proc/zAirIn(direction, turf/source)
 	return FALSE
 
-//direction is direction of travel of air
+//direction is direction of travel
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
@@ -521,9 +522,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-				O.singularity_act()
+		for(var/obj/on_top in contents) //this is for deleting things like wires contained in the turf
+			if(HAS_TRAIT(on_top, TRAIT_T_RAY_VISIBLE))
+				on_top.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
 
@@ -722,19 +723,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
  *
  * Arguments:
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
- * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
+ * * access: A list that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
  * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(atom/movable/caller, ID, simulated_only, no_id = FALSE)
+/turf/proc/reachableAdjacentTurfs(atom/movable/caller, list/access, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
+	var/datum/can_pass_info/pass_info = new(caller, access, no_id)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
 			continue
-		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID, no_id = no_id))
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, pass_info))
 			continue
 		. += turf_to_check
 
