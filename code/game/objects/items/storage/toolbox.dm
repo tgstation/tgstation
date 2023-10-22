@@ -459,7 +459,7 @@
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))
 		return
-	. = ..()
+	return ..()
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self_secondary(mob/user, modifiers)
 	attack_self(user, modifiers)
@@ -468,7 +468,7 @@
 /obj/item/storage/toolbox/guncase/monkeycase/attack_hand(mob/user, list/modifiers)
 	if(!monkey_check(user))
 		return
-	. = ..()
+	return ..()
 
 /obj/item/storage/toolbox/guncase/monkeycase/proc/monkey_check(mob/user)
 	if(atom_storage.locked == STORAGE_NOT_LOCKED)

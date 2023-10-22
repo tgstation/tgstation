@@ -331,16 +331,16 @@
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
 	var/list/baddie_candidates = poll_ghost_candidates("Do you want to play as a [role_to_play]?", poll_role_check, poll_role_check, 10 SECONDS, poll_ignore_category)
-	if(LAZYLEN(baddie_candidates))
-		if(QDELETED(src) || !check_usability(user))
-			return
-		used = TRUE
-		var/mob/dead/observer/G = pick(baddie_candidates)
-		spawn_antag(G.client, get_turf(src), user)
-		do_sparks(4, TRUE, src)
-		qdel(src)
-	else
+	if(!LAZYLEN(baddie_candidates))
 		to_chat(user, span_warning(fail_text))
+		return
+	if(QDELETED(src) || !check_usability(user))
+		return
+	used = TRUE
+	var/mob/dead/observer/ghostie = pick(baddie_candidates)
+	spawn_antag(ghostie.client, get_turf(src), user)
+	do_sparks(4, TRUE, src)
+	qdel(src)
 
 // For subtypes to do special things to the summoned dude.
 /obj/item/antag_spawner/loadout/proc/do_special_things(mob/living/carbon/human/spawned_mob, mob/user)

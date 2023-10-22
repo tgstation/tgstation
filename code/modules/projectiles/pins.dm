@@ -375,11 +375,11 @@
 
 /obj/item/firing_pin/monkey
 	name = "monkeylock firing pin"
-	desc = "This firing pin prevents non-monkies from firing a gun."
+	desc = "This firing pin prevents non-monkeys from firing a gun."
 	fail_message = "not a monkey!"
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
-	if(!ismonkey(user))
+	if(!is_simian(user))
 		return FALSE
 	return TRUE
 

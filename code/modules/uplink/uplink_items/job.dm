@@ -354,4 +354,4 @@
 	limited_stock = 3
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	restricted = TRUE
-	refundable = TRUE
+	refundable = FALSE

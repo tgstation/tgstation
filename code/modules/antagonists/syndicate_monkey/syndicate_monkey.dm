@@ -12,11 +12,11 @@
 	monky_master = owner.enslaved_to?.resolve()
 	if(monky_master)
 		forge_objectives(monky_master)
-	. = ..()
+	return ..()
 
 /datum/antagonist/syndicate_monkey/Destroy()
 	monky_master = null
-	. = ..()
+	return ..()
 
 /datum/antagonist/syndicate_monkey/greet()
 	. = ..()

@@ -234,8 +234,10 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, rof)
 
-// Weak tommygun for syndicate chimps. It comes in a 4 TC kit.
-
+/**
+ * Weak tommygun for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
 /obj/item/gun/ballistic/automatic/tommygun/chimpgun
 	name = "\improper Typewriter"
 	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
@@ -244,7 +246,6 @@
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
-	// Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
