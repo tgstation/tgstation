@@ -27,6 +27,8 @@
 	var/poster_icon = "holiday_unfinished"
 	/// Color scheme for this holiday
 	var/list/holiday_colors
+	/// The default pattern of the holiday, if the requested pattern is null.
+	var/holiday_pattern = PATTERN_DEFAULT
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -78,7 +80,7 @@
 	return FALSE
 
 /// Procs to return holiday themed colors for recoloring atoms
-/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = holiday_pattern)
 	if(!holiday_colors)
 		return
 	switch(pattern)
@@ -86,8 +88,13 @@
 			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
 		if(PATTERN_VERTICAL_STRIPE)
 			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
+		if(PATTERN_DIAGONAL_STRIPE)
+			var/position = (thing_to_color.x - thing_to_color.y) % holiday_colors.len
+			if(position < 0)
+				position = holiday_colors.len - position
+			return holiday_colors[position + 1]
 
-/proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+/proc/request_holiday_colors(atom/thing_to_color, pattern)
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
@@ -98,7 +105,9 @@
 		return
 	for(var/holiday_key in GLOB.holidays)
 		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
-		return holiday_real.get_holiday_colors(thing_to_color, pattern)
+		if(!holiday_real.holiday_colors)
+			continue
+		return holiday_real.get_holiday_colors(thing_to_color, pattern || holiday_real.holiday_pattern)
 
 // The actual holidays
 
@@ -132,6 +141,12 @@
 	timezones = list(TIMEZONE_NZDT, TIMEZONE_CHADT)
 	begin_day = 6
 	begin_month = FEBRUARY
+	holiday_colors = list(
+	  COLOR_UNION_JACK_BLUE,
+	  COLOR_WHITE,
+	  COLOR_UNION_JACK_RED,
+	  COLOR_WHITE,
+	)
 
 /datum/holiday/nz/getStationPrefix()
 	return pick("Aotearoa","Kiwi","Fish 'n' Chips","Kākāpō","Southern Cross")
@@ -160,6 +175,7 @@
 	poster_name = "station birthday poster"
 	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
 	poster_icon = "holiday_cake" // is a lie
+	holiday_colors = list(COLOR_CENTCOM_BLUE, COLOR_WHITE)
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -222,6 +238,12 @@
 	begin_day = 17
 	begin_month = MARCH
 	holiday_hat = /obj/item/clothing/head/soft/green
+	holiday_colors = list(
+	  COLOR_IRISH_GREEN,
+	  COLOR_WHITE,
+	  COLOR_IRISH_ORANGE,
+	)
+	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
@@ -264,6 +286,11 @@
 	begin_day = 20
 	begin_month = APRIL
 	holiday_hat = /obj/item/clothing/head/rasta
+	holiday_colors = list(
+	  COLOR_ETHIOPIA_GREEN,
+	  COLOR_ETHIOPIA_YELLOW,
+	  COLOR_ETHIOPIA_RED,
+	)
 
 /datum/holiday/fourtwenty/getStationPrefix()
 	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
@@ -325,6 +352,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
+	holiday_colors = list(COLOR_GOLD, COLOR_PRISONER_BLACK)
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -366,12 +394,12 @@
 	begin_day = 23
 	end_day = 29
 	holiday_colors = list(
-	COLOR_PRIDE_PURPLE,
-	COLOR_PRIDE_BLUE,
-	COLOR_PRIDE_GREEN,
-	COLOR_PRIDE_YELLOW,
-	COLOR_PRIDE_ORANGE,
-	COLOR_PRIDE_RED,
+	  COLOR_PRIDE_PURPLE,
+	  COLOR_PRIDE_BLUE,
+	  COLOR_PRIDE_GREEN,
+	  COLOR_PRIDE_YELLOW,
+	  COLOR_PRIDE_ORANGE,
+	  COLOR_PRIDE_RED,
 	)
 
 // JULY
@@ -398,6 +426,14 @@
 	begin_month = JULY
 	mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
+	holiday_colors = list(
+	  COLOR_OLD_GLORY_BLUE,
+	  COLOR_OLD_GLORY_RED,
+	  COLOR_WHITE,
+	  COLOR_OLD_GLORY_RED,
+	  COLOR_WHITE,
+	)
+
 
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
@@ -414,9 +450,15 @@
 	begin_month = JULY
 	holiday_hat = /obj/item/clothing/head/beret
 	mail_holiday = TRUE
+	holiday_colors = list(
+	  COLOR_FRENCH_BLUE,
+	  COLOR_WHITE,
+	  COLOR_FRENCH_RED
+	)
+	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
 /datum/holiday/france/getStationPrefix()
-	return pick("Francais","Fromage", "Zut", "Merde")
+	return pick("Francais","Fromage", "Zut", "Merde", "Sacrebleu")
 
 /datum/holiday/france/greet()
 	return "Do you hear the people sing?"
@@ -463,6 +505,7 @@
 	name = "Independence Day of Ukraine"
 	begin_month = AUGUST
 	begin_day = 24
+	holiday_colors = list(COLOR_TRUE_BLUE, COLOR_TANGERINE_YELLOW)
 
 /datum/holiday/ukraine/getStationPrefix()
 	return pick("Kyiv", "Ukraine")
@@ -487,6 +530,7 @@
 	begin_month = SEPTEMBER
 	begin_day = 9
 	end_day = 10
+	holiday_colors = list(COLOR_TAN_ORANGE, COLOR_WHITE)
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
@@ -499,6 +543,7 @@
 	begin_day = 19
 	begin_month = SEPTEMBER
 	holiday_hat = /obj/item/clothing/head/costume/pirate
+	holiday_colors = list(COLOR_NEARLY_ALL_BLACK) //Jolly Roger, without the skull.
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -540,6 +585,7 @@
 	name = "Anniversary of the Foundation of the United Nations"
 	begin_month = OCTOBER
 	begin_day = 24
+	holiday_colors = list(COLOR_WHITE, COLOR_SKY_BLUE)
 
 /datum/holiday/un_day/greet()
 	return "On this day in 1945, the United Nations was founded, laying the foundation for humanity's united government!"
@@ -575,6 +621,11 @@
 	begin_day = 6
 	begin_month = NOVEMBER
 	end_day = 7
+	holiday_colors = list(
+	  COLOR_MEDIUM_DARK_RED,
+	  COLOR_GOLD,
+	  COLOR_MEDIUM_DARK_RED,
+	)
 
 /datum/holiday/october_revolution/getStationPrefix()
 	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
@@ -661,6 +712,12 @@
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
+	holiday_colors = list(
+	  COLOR_CHRISTMAS_GREEN,
+	  COLOR_WHITE,
+	  COLOR_CHRISTMAS_RED,
+	  COLOR_WHITE,
+	 )
 
 /datum/holiday/xmas/getStationPrefix()
 	return pick(
@@ -717,6 +774,8 @@
 
 /datum/holiday/programmers
 	name = "Programmers' Day"
+	holiday_colors = list(COLOR_MAGENTA, COLOR_NEARLY_ALL_BLACK)
+	holiday_pattern = PATTERN_DIAGONAL_STRIPE
 
 /datum/holiday/programmers/shouldCelebrate(dd, mm, yyyy, ddd) //Programmer's day falls on the 2^8th day of the year
 	if(mm == 9)

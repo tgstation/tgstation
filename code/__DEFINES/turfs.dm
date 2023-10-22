@@ -101,6 +101,8 @@
 #define PATTERN_DEFAULT "default"
 /// Generate vertical striped color turf decals
 #define PATTERN_VERTICAL_STRIPE "vertical"
+/// Generate diagonal stripes from left to right
+#define PATTERN_DIAGONAL_STRIPE "diagonal"
 /// Generate random color turf decals
 #define PATTERN_RANDOM "random"
 /// Generate rainbow color turf decals
