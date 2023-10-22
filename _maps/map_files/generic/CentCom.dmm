@@ -2588,6 +2588,10 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"ls" = (
+/obj/machinery/telecomms/allinone/nuclear,
+/turf/open/floor/circuit/red/telecomms,
+/area/centcom/central_command_areas/admin)
 "lu" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -2748,6 +2752,16 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"mj" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/white/herringbone,
+/area/centcom/central_command_areas/kitchen)
 "mk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -3706,15 +3720,11 @@
 "qz" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "qD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "qE" = (
@@ -4949,6 +4959,7 @@
 /area/centcom/central_command_areas/medical)
 "vT" = (
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "vW" = (
@@ -6359,6 +6370,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"Bq" = (
+/obj/machinery/vending/medical,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/medical)
 "Br" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -6701,6 +6716,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "Dr" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "Dt" = (
@@ -10944,6 +10960,12 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
+"UH" = (
+/obj/structure/railing/wood,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "UI" = (
 /obj/effect/turf_decal/siding/green{
 	dir = 4
@@ -11914,6 +11936,7 @@
 /obj/structure/table/reinforced,
 /obj/item/knife,
 /obj/item/knife,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "Zb" = (
@@ -43169,7 +43192,7 @@ oJ
 lo
 oM
 iF
-aa
+ls
 On
 On
 GZ
@@ -54194,7 +54217,7 @@ mQ
 mQ
 Rm
 Ac
-RN
+mj
 Nx
 ZX
 mQ
@@ -59594,7 +59617,7 @@ Nb
 FV
 dl
 Nb
-Ca
+UH
 ux
 vS
 vT
@@ -59849,7 +59872,7 @@ fE
 AO
 fE
 we
-we
+Bq
 Nb
 YL
 Wv

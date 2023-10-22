@@ -4982,6 +4982,7 @@
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "bMY" = (
@@ -53306,6 +53307,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/west,
 /obj/structure/sign/poster/random/directional/south,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tck" = (
