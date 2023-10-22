@@ -93,7 +93,6 @@
 	opacity = TRUE
 
 /obj/structure/puzzle_blockade/meat/try_signal(datum/source)
-	SIGNAL_HANDLER
 	Shake(duration = 0.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(open_up)), 0.5 SECONDS)
 
