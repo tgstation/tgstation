@@ -815,7 +815,8 @@
 			carbon_target.set_eye_blur_if_lower(6 SECONDS)
 			carbon_target.adjust_temp_blindness(2 SECONDS)
 		if(carbon_target.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
-			carbon_target.apply_effects(eyeblur = 5, jitter = 10)
+			carbon_target.adjust_jitter(1 SECONDS)
+			carbon_target.adjust_eye_blur(0.5 SECONDS)
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target

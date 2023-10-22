@@ -419,7 +419,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Zf" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
+/mob/living/basic/drone/snowflake/bardrone,
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "Zo" = (

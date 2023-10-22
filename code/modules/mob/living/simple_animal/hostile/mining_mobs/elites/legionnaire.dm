@@ -149,7 +149,7 @@
 	var/throwtarget = get_edge_target_turf(src, move_dir)
 	for(var/mob/living/trample_target in T.contents - hit_things - src)
 		hit_things += trample_target
-		if(faction_check_mob(trample_target))
+		if(faction_check_atom(trample_target))
 			continue
 		visible_message(span_boldwarning("[src] tramples and kicks [trample_target]!"))
 		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))

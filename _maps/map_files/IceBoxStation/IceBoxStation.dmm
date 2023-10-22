@@ -1889,11 +1889,11 @@
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/east,
 /mob/living/simple_animal/bot/mulebot{
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aEU" = (
@@ -3550,7 +3550,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -3558,7 +3558,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                Level")
+	preset_destination_names = list("3" = "Icemoon                                                                                                                                                                                                                                                                Level", "4" = "Station                                                                                                                                                                                                                                                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -7408,7 +7408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -7945,7 +7945,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -15601,7 +15601,10 @@
 /area/station/commons/dorms)
 "eGz" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/airlock/security/glass{
+	name = "Permabrig Visitation"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "eGA" = (
@@ -32894,8 +32897,8 @@
 	id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
-	elevator_mode = 1
+	elevator_mode = 1;
+	transport_linked_id = "publicElevator"
 	},
 /obj/machinery/lift_indicator/directional/north{
 	linked_elevator_id = "publicElevator"
@@ -33495,11 +33498,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
+/obj/effect/landmark/transport/transport_id{
+	specific_transport_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
 /obj/effect/abstract/elevator_music_zone{
@@ -46931,9 +46934,9 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
 	elevator_mode = 1;
-	req_access = null
+	req_access = null;
+	transport_linked_id = "publicElevator"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -47652,6 +47655,7 @@
 	c_tag = "Service Hallway - Upper West"
 	},
 /obj/structure/table,
+/obj/item/aquarium_kit,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "oBs" = (
@@ -67268,7 +67272,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{
@@ -68902,7 +68906,7 @@
 "vhr" = (
 /mob/living/basic/goat/pete{
 	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
-	habitable_atmos = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
+	habitable_atmos = list("min_oxy" = 1, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0);
 	minimum_survivable_temperature = 150;
 	name = "Snowy Pete"
 	},
@@ -73885,7 +73889,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/industrial_lift{
+/obj/structure/transport/linear{
 	radial_travel = 0
 	},
 /obj/structure/railing{

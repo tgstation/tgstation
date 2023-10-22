@@ -425,6 +425,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/skeleton_key,
 	))
 
 
