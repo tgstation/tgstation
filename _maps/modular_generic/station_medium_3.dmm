@@ -5,35 +5,35 @@
 "b" = (
 /obj/machinery/light/small/blacklight/directional/west,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "c" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "i" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "j" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "o" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "r" = (
 /turf/closed/wall,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "A" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "B" = (
 /obj/machinery/light/small/blacklight/directional/north,
 /turf/template_noop,
@@ -42,15 +42,19 @@
 /obj/effect/spawner/random/trash/bin,
 /obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
+"F" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall,
+/area/virtual_domain)
 "G" = (
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "I" = (
 /obj/structure/table,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "M" = (
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/template_noop,
@@ -58,48 +62,48 @@
 "N" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "O" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "P" = (
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "Q" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "R" = (
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "T" = (
 /obj/structure/sign/poster/random/directional/east,
 /obj/machinery/light/small/blacklight/directional/east,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "U" = (
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "V" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "W" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "Y" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 
 (1,1,1) = {"
 a
@@ -120,7 +124,7 @@ r
 N
 r
 r
-r
+F
 a
 "}
 (3,1,1) = {"

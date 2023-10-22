@@ -19,7 +19,7 @@
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
-	var/glitch_chance = 0.05
+	var/glitch_chance = 0.03
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -84,21 +84,18 @@
 	. = ..()
 
 	obj_flags |= EMAGGED
-	glitch_chance = 0.1
+	glitch_chance = 0.06
 
-	playsound(src, 'sound/effects/sparks1.ogg', 30, 2)
-
+	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
 	balloon_alert(user, "bzzzt...")
-	to_chat(user, span_notice("You deftly swipe the card through the reader."))
+	playsound(src, 'sound/effects/sparks1.ogg', 35, 2)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
 		set_light(l_on = FALSE)
 		return ..()
 
-	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
-
+	set_light(l_range = 2, l_power = 1.5, l_color = is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE, l_on = TRUE)
 	return ..()
 
 /obj/machinery/quantum_server/update_icon_state()

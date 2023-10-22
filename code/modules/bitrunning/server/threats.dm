@@ -23,11 +23,15 @@
 	var/datum/weakref/target_ref = pick(mutation_candidate_refs)
 	var/mob/living/resolved = target_ref.resolve()
 
-	if(isnull(resolved))
-		mutation_candidate_refs.Remove(target_ref)
-		target_ref = pick(mutation_candidate_refs)
-		resolved = target_ref.resolve()
+	if(resolved)
+		return resolved
 
+	mutation_candidate_refs.Remove(target_ref)
+	if(!length(mutation_candidate_refs))
+		return
+
+	target_ref = pick(mutation_candidate_refs)
+	resolved = target_ref.resolve()
 	return resolved
 
 /// Finds any mobs with minds in the zones and gives them the bad news
@@ -125,7 +129,7 @@
 	if(ishuman(antag))
 		reset_equipment(antag)
 	else
-		radio.talk_into(src, "ERROR: Fabrication protocols have crashed unexpectedly. Evacuate.", RADIO_CHANNEL_COMMON)
+		radio.talk_into(src, "ERROR: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_COMMON)
 
 	do_teleport(antag, get_turf(chosen_forge), forced = TRUE)
 
