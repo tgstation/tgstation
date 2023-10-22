@@ -1,11 +1,11 @@
 #define SPAWN_ALWAYS 100
-#define SPAWN_LIKELY 75
-#define SPAWN_UNLIKELY 25
+#define SPAWN_LIKELY 85
+#define SPAWN_UNLIKELY 35
 #define SPAWN_RARE 10
 
 /datum/modular_mob_segment
 	/// If you want the total to be randomized
-	var/total_randomized = FALSE
+	var/total_randomized = TRUE
 	/// If you want to spawn a rando
 	var/pick_random_of = 0
 	/// The list of mobs to spawn
@@ -22,13 +22,18 @@
 	var/current_distance = 1
 	var/current_index = 1
 
-	var/randomized_amount = total_randomized ? rand(1, 6) : pick_random_of
-
-	var/amount_to_spawn = randomized_amount || length(mobs)
+	var/total_amount
+	if(pick_random_of > 0)
+		total_amount = pick_random_of
+	else
+		if(!total_randomized)
+			total_amount = length(mobs)
+		else
+			total_amount = rand(1, 6)
 
 	shuffle_inplace(mobs)
 
-	for(var/index in 1 to amount_to_spawn)
+	for(var/index in 1 to total_amoun)
 		spawned = FALSE
 
 		while(!spawned)
@@ -99,6 +104,7 @@
 	)
 
 /datum/modular_mob_segment/bees
+	total_randomized = FALSE
 	mobs = list(
 		/mob/living/basic/bee,
 		/mob/living/basic/bee,
@@ -108,25 +114,21 @@
 	)
 
 /datum/modular_mob_segment/bees_toxic
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/bee/toxin,
 	)
 
 /datum/modular_mob_segment/blob_spores
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/blob_minion,
 	)
 
 /datum/modular_mob_segment/carps
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/carp,
 	)
 
 /datum/modular_mob_segment/hivebots
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/hivebot,
 		/mob/living/basic/hivebot/range,
@@ -149,7 +151,6 @@
 	)
 
 /datum/modular_mob_segment/spiders
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/spider/giant/ambush,
 		/mob/living/basic/spider/giant/hunter,
@@ -163,13 +164,11 @@
 	pick_random_of = 6
 
 /datum/modular_mob_segment/venus_trap
-	total_randomized = TRUE
 	mobs = list(
 		/mob/living/basic/venus_human_trap,
 	)
 
 /datum/modular_mob_segment/xenos
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/carbon/alien/adult/hunter,
 		/mob/living/carbon/alien/adult/sentinel,
