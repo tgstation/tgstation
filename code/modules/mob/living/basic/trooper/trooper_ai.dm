@@ -2,6 +2,7 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!"
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -25,7 +26,7 @@
 /datum/ai_controller/basic_controller/trooper/calls_reinforcements
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
+		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
@@ -34,7 +35,7 @@
 /datum/ai_controller/basic_controller/trooper/peaceful
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
+		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
@@ -72,7 +73,7 @@
 /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/call_reinforcements/nanotrasen,
+		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
 	)

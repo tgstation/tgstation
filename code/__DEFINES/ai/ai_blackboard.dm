@@ -16,6 +16,11 @@
 /// Chance to perform an emote per second
 #define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
 
+/// Something the mob will say when calling reinforcements
+#define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
+/// Something the mob will remote when calling reinforcements
+#define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 

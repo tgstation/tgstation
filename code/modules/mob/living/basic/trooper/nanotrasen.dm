@@ -84,31 +84,8 @@
 /mob/living/basic/trooper/nanotrasen/peaceful/proc/ai_retaliate_behaviour(mob/living/attacker)
 	if (!istype(attacker))
 		return
-	for (var/mob/living/basic/trooper/nanotrasen/peaceful/potential_trooper in oview(src, 7))
+	for (var/mob/living/basic/trooper/nanotrasen/potential_trooper in oview(src, 7))
 		potential_trooper.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
 
-/mob/living/basic/trooper/nanotrasen/peaceful/ranged
+/mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
-	loot = list(
-		/obj/item/gun/ballistic/automatic/wt550,
-		/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
-	)
-	r_hand = /obj/item/gun/ballistic/automatic/wt550
-	/// Type of bullet we use
-	var/casingtype = /obj/item/ammo_casing/c46x30mm
-	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/gun/smg/shot.ogg'
-	/// number of burst shots
-	var/burst_shots = 3
-	/// Time between taking shots
-	var/ranged_cooldown = 3 SECONDS
-
-/mob/living/basic/trooper/nanotrasen/peaceful/ranged/Initialize(mapload)
-	. = ..()
-	AddComponent(\
-		/datum/component/ranged_attacks,\
-		casing_type = casingtype,\
-		projectile_sound = projectilesound,\
-		cooldown_time = ranged_cooldown,\
-		burst_shots = burst_shots,\
-	)
