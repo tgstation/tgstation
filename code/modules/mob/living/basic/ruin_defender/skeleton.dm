@@ -1,38 +1,32 @@
-/mob/living/simple_animal/hostile/skeleton
+/mob/living/basic/skeleton
 	name = "reanimated skeleton"
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
 	gender = NEUTER
 	icon = 'icons/mob/simple/simple_human.dmi'
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	turns_per_move = 5
 	speak_emote = list("rattles")
-	emote_see = list("rattles")
-	combat_mode = TRUE
+	//emote_see = list("rattles")
 	maxHealth = 40
 	health = 40
-	speed = 1
-	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	minbodytemp = 0
-	maxbodytemp = 1500
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 5
-	robust_searching = 1
-	stat_attack = HARD_CRIT
+	//stat_attack = HARD_CRIT
 	faction = list(FACTION_SKELETON)
 	// Going for a sort of pale bluegreen here, shooting for boneish
 	lighting_cutoff_red = 15
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 35
-	footstep_type = FOOTSTEP_MOB_SHOE
 	death_message = "collapses into a pile of bones!"
 	del_on_death = TRUE
-	loot = list(/obj/effect/decal/remains/human)
+	/// Loot this mob drops on death.
+	var/loot = list(/obj/effect/decal/remains/human)
 	/// Path of the outfit we give to the mob's visuals.
 	var/outfit = null
 	/// Path of the species we give to the mob's visuals.
@@ -40,13 +34,17 @@
 	/// Path of the held item we give to the mob's visuals.
 	var/held_item
 
-/mob/living/simple_animal/hostile/skeleton/Initialize(mapload)
+/mob/living/basic/hostile/skeleton/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, outfit, species, r_hand = held_item)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	if(LAZYLEN(loot))
+		loot = string_list(loot)
+		AddElement(/datum/element/death_drops, loot)
 
-/mob/living/simple_animal/hostile/skeleton/eskimo
-	name = "undead eskimo"
-	desc = "The reanimated remains of some poor traveler."
+/mob/living/basic/hostile/skeleton/settler
+	name = "undead settler"
+	desc = "The reanimated remains of some poor settler."
 	maxHealth = 55
 	health = 55
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -59,15 +57,15 @@
 		/obj/item/clothing/shoes/winterboots,
 		/obj/item/clothing/suit/hooded/wintercoat,
 	)
-	outfit = /datum/outfit/eskimo
+	outfit = /datum/outfit/settler
 	held_item = /obj/item/spear
 
-/datum/outfit/eskimo
-	name = "Eskimo"
+/datum/outfit/settler
+	name = "Settler"
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
 
-/mob/living/simple_animal/hostile/skeleton/templar
+/mob/living/basic/hostile/skeleton/templar
 	name = "undead templar"
 	desc = "The reanimated remains of a holy templar knight."
 	maxHealth = 150
@@ -95,7 +93,7 @@
 	suit = /obj/item/clothing/suit/chaplainsuit/armor/templar
 	r_hand = /obj/item/claymore/weak
 
-/mob/living/simple_animal/hostile/skeleton/ice
+/mob/living/basic/hostile/skeleton/ice
 	name = "ice skeleton"
 	desc = "A reanimated skeleton protected by a thick sheet of natural ice armor. Looks slow, though."
 	speed = 5
@@ -105,7 +103,7 @@
 	color = rgb(114,228,250)
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})
 
-/mob/living/simple_animal/hostile/skeleton/plasmaminer
+/mob/living/basic/hostile/skeleton/plasmaminer
 	name = "shambling miner"
 	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma."
 	icon_state = "plasma_miner"
@@ -123,7 +121,7 @@
 	outfit = /datum/outfit/plasma_miner
 	species = /datum/species/plasmaman
 
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer
+/mob/living/basic/hostile/skeleton/plasmaminer/jackhammer
 	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma. They seem to still have their mining tool in their hand, gripping tightly."
 	icon_state = "plasma_miner_tool"
 	icon_living = "plasma_miner_tool"
