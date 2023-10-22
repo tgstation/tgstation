@@ -88,11 +88,6 @@
 			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
 		if(PATTERN_VERTICAL_STRIPE)
 			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
-		if(PATTERN_DIAGONAL_STRIPE)
-			var/position = (thing_to_color.x - thing_to_color.y) % holiday_colors.len
-			if(position < 0)
-				position = holiday_colors.len - position
-			return holiday_colors[position + 1]
 
 /proc/request_holiday_colors(atom/thing_to_color, pattern)
 	switch(pattern)
@@ -175,7 +170,6 @@
 	poster_name = "station birthday poster"
 	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
 	poster_icon = "holiday_cake" // is a lie
-	holiday_colors = list(COLOR_CENTCOM_BLUE, COLOR_WHITE)
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -352,7 +346,6 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	holiday_colors = list(COLOR_GOLD, COLOR_PRISONER_BLACK)
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -530,7 +523,6 @@
 	begin_month = SEPTEMBER
 	begin_day = 9
 	end_day = 10
-	holiday_colors = list(COLOR_TAN_ORANGE, COLOR_WHITE)
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
@@ -543,7 +535,6 @@
 	begin_day = 19
 	begin_month = SEPTEMBER
 	holiday_hat = /obj/item/clothing/head/costume/pirate
-	holiday_colors = list(COLOR_NEARLY_ALL_BLACK) //Jolly Roger, without the skull.
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -585,7 +576,6 @@
 	name = "Anniversary of the Foundation of the United Nations"
 	begin_month = OCTOBER
 	begin_day = 24
-	holiday_colors = list(COLOR_WHITE, COLOR_SKY_BLUE)
 
 /datum/holiday/un_day/greet()
 	return "On this day in 1945, the United Nations was founded, laying the foundation for humanity's united government!"
@@ -774,8 +764,6 @@
 
 /datum/holiday/programmers
 	name = "Programmers' Day"
-	holiday_colors = list(COLOR_MAGENTA, COLOR_NEARLY_ALL_BLACK)
-	holiday_pattern = PATTERN_DIAGONAL_STRIPE
 
 /datum/holiday/programmers/shouldCelebrate(dd, mm, yyyy, ddd) //Programmer's day falls on the 2^8th day of the year
 	if(mm == 9)
