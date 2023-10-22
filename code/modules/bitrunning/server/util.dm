@@ -22,6 +22,7 @@
 			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
 			"difficulty" = initial(domain.difficulty),
 			"id" = initial(domain.key),
+			"is_modular" = initial(domain.is_modular),
 			"name" = can_view ? initial(domain.name) : REDACTED,
 			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
 		))

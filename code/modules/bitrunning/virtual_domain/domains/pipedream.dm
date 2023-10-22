@@ -7,8 +7,13 @@
 	help_text = "Not long ago, this place was thriving with activity. The workers \
 	seemed to have left in a hurry, and now productivity is in the bin. Something \
 	must have trashed the place, but what?"
+	is_modular = TRUE
 	key = "pipedream"
 	map_name = "pipedream"
+	mob_modules = list(
+		/datum/modular_mob_segment/hivebots,
+		/datum/modular_mob_segment/hivebots_strong
+	)
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/shuttle
 

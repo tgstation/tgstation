@@ -57,7 +57,7 @@
 /// Where you want the crate to spawn
 /obj/effect/landmark/bitrunning/cache_spawn
 	name = "Bitrunning crate spawn"
-	icon_state = "spawn"
+	icon_state = "crate"
 
 /// Where the safehouse will spawn
 /obj/effect/landmark/bitrunning/safehouse_spawn
@@ -102,11 +102,6 @@
 
 	encrypted_crate.abstract_move(selected_crate.loc)
 	selected_crate.abstract_move(original_location)
-
-/// A spot for a modular map to spawn
-/obj/effect/landmark/bitrunning/map_segment
-	name = "Bitrunning modular map segment"
-	icon_state = "map_segment"
 
 /// A location for mobs to spawn.
 /obj/effect/landmark/bitrunning/mob_segment

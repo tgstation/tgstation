@@ -37,6 +37,7 @@ type Domain = {
   desc: string;
   difficulty: number;
   id: string;
+  is_modular: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -164,7 +165,7 @@ const AccessView = (props, context) => {
 
 const DomainEntry = (props: DomainEntryProps, context) => {
   const {
-    domain: { cost, desc, difficulty, id, name, reward },
+    domain: { cost, desc, difficulty, id, is_modular, name, reward },
   } = props;
   const { act, data } = useBackend<Data>(context);
   if (!isConnected(data)) {
@@ -203,11 +204,14 @@ const DomainEntry = (props: DomainEntryProps, context) => {
         <>
           {name}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
+          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
         </>
       }>
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
+          {!!is_modular && ' (Modular)'}
+          {difficulty === Difficulty.High && ' (Hard)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
@@ -316,7 +320,7 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">No bandwidth</TableCell>;
+    return <TableCell color="label">None</TableCell>;
   }
 
   if (typeof amount === 'string') {

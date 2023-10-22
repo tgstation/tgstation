@@ -1291,6 +1291,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Mc" = (
