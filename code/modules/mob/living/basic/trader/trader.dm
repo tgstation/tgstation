@@ -59,6 +59,8 @@
 	icon_state = "mrbones"
 	gender = MALE
 
+	ai_controller = /datum/ai_controller/basic_controller/trader/jumpscare
+
 	sell_sound = 'sound/voice/hiss2.ogg'
 	species_path = /datum/species/skeleton
 	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
