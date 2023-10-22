@@ -123,11 +123,14 @@
 			return
 		picked_event = pick_weight(valid_events)
 		if(!picked_event)
-			message_admins("WARNING: Storyteller picked a null event from picked_events when it had a length of [length(valid_events)]")
-			message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
-			stack_trace("WARNING: Storyteller picked a null from event pool.")
-			SSgamemode.event_track_points[track] = 0
-			return
+			if(length(valid_events))
+				stack_trace("WARNING: Storyteller picked a null from event pool, defaulting to option 1, look at weights.")
+				picked_event = valid_events[1]
+			else
+				message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
+				stack_trace("WARNING: Storyteller picked a null from event pool.")
+				SSgamemode.event_track_points[track] = 0
+				return
 	buy_event(picked_event, track, are_forced)
 	. = TRUE
 
