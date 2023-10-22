@@ -142,10 +142,10 @@
 	begin_day = 6
 	begin_month = FEBRUARY
 	holiday_colors = list(
-	  COLOR_UNION_JACK_BLUE,
-	  COLOR_WHITE,
-	  COLOR_UNION_JACK_RED,
-	  COLOR_WHITE,
+		COLOR_UNION_JACK_BLUE,
+		COLOR_WHITE,
+		COLOR_UNION_JACK_RED,
+		COLOR_WHITE,
 	)
 
 /datum/holiday/nz/getStationPrefix()
@@ -239,9 +239,9 @@
 	begin_month = MARCH
 	holiday_hat = /obj/item/clothing/head/soft/green
 	holiday_colors = list(
-	  COLOR_IRISH_GREEN,
-	  COLOR_WHITE,
-	  COLOR_IRISH_ORANGE,
+		COLOR_IRISH_GREEN,
+		COLOR_WHITE,
+		COLOR_IRISH_ORANGE,
 	)
 	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
@@ -287,9 +287,9 @@
 	begin_month = APRIL
 	holiday_hat = /obj/item/clothing/head/rasta
 	holiday_colors = list(
-	  COLOR_ETHIOPIA_GREEN,
-	  COLOR_ETHIOPIA_YELLOW,
-	  COLOR_ETHIOPIA_RED,
+		COLOR_ETHIOPIA_GREEN,
+		COLOR_ETHIOPIA_YELLOW,
+		COLOR_ETHIOPIA_RED,
 	)
 
 /datum/holiday/fourtwenty/getStationPrefix()
@@ -394,12 +394,12 @@
 	begin_day = 23
 	end_day = 29
 	holiday_colors = list(
-	  COLOR_PRIDE_PURPLE,
-	  COLOR_PRIDE_BLUE,
-	  COLOR_PRIDE_GREEN,
-	  COLOR_PRIDE_YELLOW,
-	  COLOR_PRIDE_ORANGE,
-	  COLOR_PRIDE_RED,
+		COLOR_PRIDE_PURPLE,
+		COLOR_PRIDE_BLUE,
+		COLOR_PRIDE_GREEN,
+		COLOR_PRIDE_YELLOW,
+		COLOR_PRIDE_ORANGE,
+		COLOR_PRIDE_RED,
 	)
 
 // JULY
@@ -427,11 +427,11 @@
 	mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
 	holiday_colors = list(
-	  COLOR_OLD_GLORY_BLUE,
-	  COLOR_OLD_GLORY_RED,
-	  COLOR_WHITE,
-	  COLOR_OLD_GLORY_RED,
-	  COLOR_WHITE,
+		COLOR_OLD_GLORY_BLUE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
 	)
 
 
@@ -451,9 +451,9 @@
 	holiday_hat = /obj/item/clothing/head/beret
 	mail_holiday = TRUE
 	holiday_colors = list(
-	  COLOR_FRENCH_BLUE,
-	  COLOR_WHITE,
-	  COLOR_FRENCH_RED
+		COLOR_FRENCH_BLUE,
+		COLOR_WHITE,
+		COLOR_FRENCH_RED
 	)
 	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
@@ -622,9 +622,9 @@
 	begin_month = NOVEMBER
 	end_day = 7
 	holiday_colors = list(
-	  COLOR_MEDIUM_DARK_RED,
-	  COLOR_GOLD,
-	  COLOR_MEDIUM_DARK_RED,
+		COLOR_MEDIUM_DARK_RED,
+		COLOR_GOLD,
+		COLOR_MEDIUM_DARK_RED,
 	)
 
 /datum/holiday/october_revolution/getStationPrefix()
@@ -713,10 +713,10 @@
 	holiday_hat = /obj/item/clothing/head/costume/santa
 	mail_holiday = TRUE
 	holiday_colors = list(
-	  COLOR_CHRISTMAS_GREEN,
-	  COLOR_WHITE,
-	  COLOR_CHRISTMAS_RED,
-	  COLOR_WHITE,
+		COLOR_CHRISTMAS_GREEN,
+		COLOR_WHITE,
+		COLOR_CHRISTMAS_RED,
+		COLOR_WHITE,
 	 )
 
 /datum/holiday/xmas/getStationPrefix()
