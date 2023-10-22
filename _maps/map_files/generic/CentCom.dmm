@@ -2135,10 +2135,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"iV" = (
-/obj/machinery/chem_heater/debug,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/medical)
 "iW" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
@@ -3724,9 +3720,6 @@
 "qz" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
@@ -4966,6 +4959,7 @@
 /area/centcom/central_command_areas/medical)
 "vT" = (
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "vW" = (
@@ -6722,6 +6716,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "Dr" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "Dt" = (
@@ -10965,6 +10960,12 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
+"UH" = (
+/obj/structure/railing/wood,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "UI" = (
 /obj/effect/turf_decal/siding/green{
 	dir = 4
@@ -58849,7 +58850,7 @@ YL
 uw
 vS
 zp
-iV
+we
 we
 aU
 lZ
@@ -59616,7 +59617,7 @@ Nb
 FV
 dl
 Nb
-Ca
+UH
 ux
 vS
 vT
