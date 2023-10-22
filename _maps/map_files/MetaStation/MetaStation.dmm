@@ -9742,11 +9742,11 @@
 "dHe" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
-/mob/living/simple_animal/bot/floorbot,
 /obj/structure/sign/departments/telecomms/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "dHg" = (
@@ -25212,10 +25212,10 @@
 "jgs" = (
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "jgt" = (
@@ -26040,6 +26040,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/aquarium_kit,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "juj" = (
@@ -30670,8 +30671,8 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance/office)
 "kZf" = (
-/mob/living/carbon/human/species/monkey,
 /obj/structure/window/reinforced/spawner/directional/north,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "kZk" = (
@@ -36254,8 +36255,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/cleanbot/autopatrol,
 /obj/effect/turf_decal/tile/neutral,
+/mob/living/simple_animal/bot/cleanbot/autopatrol,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mZL" = (
@@ -38436,8 +38437,8 @@
 "nMF" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
-/mob/living/simple_animal/bot/cleanbot,
 /obj/effect/turf_decal/tile/blue,
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nMK" = (
@@ -39819,12 +39820,12 @@
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "onU" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/south,
 /mob/living/basic/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
-/obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "oog" = (
@@ -47362,8 +47363,8 @@
 /area/station/medical/psychology)
 "qXw" = (
 /obj/structure/filingcabinet/chestdrawer,
-/mob/living/simple_animal/parrot/poly,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "qXB" = (
@@ -49681,10 +49682,10 @@
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 26
 	},
-/mob/living/basic/pet/dog/pug/mcgriff,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 9
 	},
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "rOF" = (
@@ -50446,10 +50447,10 @@
 /turf/open/floor/plating,
 /area/station/science/server)
 "sbL" = (
-/mob/living/simple_animal/bot/medbot/autopatrol,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -52447,8 +52448,8 @@
 /area/station/medical/medbay/central)
 "sOw" = (
 /obj/structure/sink/directional/south,
-/mob/living/basic/mouse/brown/tom,
 /obj/machinery/light/small/dim/directional/west,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "sOF" = (
@@ -59243,8 +59244,8 @@
 /area/station/engineering/supermatter)
 "vfm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "vfv" = (

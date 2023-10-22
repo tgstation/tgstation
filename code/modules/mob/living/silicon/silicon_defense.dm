@@ -80,13 +80,13 @@
 			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
 
-/mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+/mob/living/silicon/attack_drone(mob/living/basic/drone/user)
+	if(user.combat_mode)
 		return
 	return ..()
 
-/mob/living/silicon/attack_drone_secondary(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+/mob/living/silicon/attack_drone_secondary(mob/living/basic/drone/user)
+	if(user.combat_mode)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

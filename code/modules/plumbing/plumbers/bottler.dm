@@ -79,7 +79,7 @@
 		return PROCESS_KILL
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
-	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= wanted_amount && anchored && length(inputspot.contents))
+	if(reagents.total_volume + 0.01 >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
