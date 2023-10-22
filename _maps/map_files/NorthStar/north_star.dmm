@@ -6790,11 +6790,9 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint)
 "bDO" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4
-	},
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "bDU" = (
@@ -47245,10 +47243,6 @@
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningoffice)
 "mvg" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/machinery/camera{
 	c_tag = "Supermatter Foyer Cam #4";
 	network = list("ss13","engine")
@@ -83315,13 +83309,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"wfl" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "wfx" = (
 /obj/machinery/door/window/brigdoor/left/directional/west,
 /obj/structure/cable,
@@ -138400,8 +138387,8 @@ vap
 lQD
 juf
 klY
-kfo
-wfl
+xgW
+xgW
 dEc
 uhx
 uov
@@ -138657,7 +138644,7 @@ uyD
 uyD
 uyD
 bDO
-kfo
+xgW
 mvg
 dEc
 ggX
