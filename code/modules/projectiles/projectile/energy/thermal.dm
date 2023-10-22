@@ -10,10 +10,10 @@
 	bare_wound_bonus = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
-/obj/projectile/energy/inferno/on_hit(atom/target, blocked, pierce_hit)
-	..()
+/obj/projectile/energy/inferno/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
 	if(!ishuman(target))
-		return
+		return BULLET_ACT_HIT
 
 	var/mob/living/carbon/cold_target = target
 	var/how_cold_is_target = cold_target.bodytemperature
@@ -35,10 +35,10 @@
 	wound_bonus = 0
 	bare_wound_bonus = 10
 
-/obj/projectile/energy/cryo/on_hit(atom/target, blocked, pierce_hit)
-	..()
+/obj/projectile/energy/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
 	if(!ishuman(target))
-		return
+		return BULLET_ACT_HIT
 
 	var/mob/living/carbon/hot_target = target
 	var/how_hot_is_target = hot_target.bodytemperature
