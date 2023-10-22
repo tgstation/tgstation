@@ -60,7 +60,6 @@
 	revert_appearance(parent)
 
 /datum/component/appearance_on_aggro/proc/revert_appearance(mob/living/source)
-	UnregisterSignal(current_target, COMSIG_QDELETING)
 	current_target = null
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
