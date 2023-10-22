@@ -16184,7 +16184,6 @@
 /area/station/hallway/primary/fore)
 "dRK" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "dRO" = (
@@ -24675,6 +24674,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
+"fXc" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "fXi" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/plaques/kiddie/badger{
@@ -25828,8 +25836,6 @@
 /area/station/security/courtroom)
 "glb" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -37227,11 +37233,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"jcg" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "jcl" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/sink/directional/east,
@@ -75182,14 +75183,12 @@
 /turf/open/floor/iron,
 /area/station/security/warden)
 "sst" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "ssy" = (
@@ -87523,10 +87522,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "vrs" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -119399,8 +119394,8 @@ tqa
 gnw
 lFQ
 mWF
-jcg
-jcg
+mWF
+mWF
 sst
 pgY
 gAw
@@ -119658,7 +119653,7 @@ sHT
 glb
 dRK
 wcP
-yeO
+fXc
 nbZ
 gAw
 ifw
