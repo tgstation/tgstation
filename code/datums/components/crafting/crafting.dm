@@ -67,11 +67,7 @@
 		var/list/instances_list = list()
 		for(var/instance_path in item_instances)
 			if(ispath(instance_path, requirement_path))
-				var/obj/item/item = item_instances[instance_path]
-				if(item.flags_1 & HOLOGRAM_1)
-					continue
-
-				instances_list += item
+				instances_list += item_instances[instance_path]
 
 		requirements_list[requirement_path] = instances_list
 
