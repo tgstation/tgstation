@@ -4622,7 +4622,6 @@
 #include "code\modules\mob\living\carbon\alien\special\alien_embryo.dm"
 #include "code\modules\mob\living\carbon\alien\special\facehugger.dm"
 #include "code\modules\mob\living\carbon\human\_species.dm"
-#include "code\modules\mob\living\carbon\human\damage_procs.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"
 #include "code\modules\mob\living\carbon\human\dummy.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"

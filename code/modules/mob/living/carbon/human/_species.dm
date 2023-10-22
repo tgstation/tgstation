@@ -1370,59 +1370,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
-	var/hit_percent = (100-(damage_modifier+blocked))/100
-	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
-
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone))
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = H.get_random_valid_zone(def_zone)
-			BP = H.get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = H.bodyparts[1]
-
-	switch(damagetype)
-		if(BRUTE)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brute_mod
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction, damage_source = attacking_item))
-					H.update_damage_overlays()
-			else//no bodypart, we deal damage with a more general method.
-				H.adjustBruteLoss(damage_amount)
-		if(BURN)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.burn_mod
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction, damage_source = attacking_item))
-					H.update_damage_overlays()
-			else
-				H.adjustFireLoss(damage_amount)
-		if(TOX)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
-			H.adjustToxLoss(damage_amount)
-		if(OXY)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.oxy_mod
-			H.adjustOxyLoss(damage_amount)
-		if(CLONE)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod
-			H.adjustCloneLoss(damage_amount)
-		if(STAMINA)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod
-			H.adjustStaminaLoss(damage_amount)
-		if(BRAIN)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
-	SEND_SIGNAL(H, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
-	return TRUE
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////

@@ -1,44 +1,44 @@
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
+/mob/living/carbon/human/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
 
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone)) //we specified a bodypart object
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = get_random_valid_zone(def_zone)
-			BP = get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = bodyparts[1]
+	// Automatically check string def zones into bodyparts to pass into parent call
+	if(!isbodypart(def_zone))
+		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
+		def_zone = get_bodypart(random_zone) || bodyparts[1]
 
-	var/damage_amount = forced ? damage : damage * hit_percent
-	switch(damagetype)
-		if(BRUTE)
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
-		if(BURN)
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else
-				adjustFireLoss(damage_amount, forced = forced)
-		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
-		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
-		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
-		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
-	return TRUE
+	// Applies appropriate modifiers to the blocked var to pass into parent call
+	if(!forced)
+		blocked += dna?.species.damage_modifier
+		blocked += physiology.damage_resistance
+
+		switch(damagetype)
+			if(BRUTE)
+				blocked += physiology.brute_mod
+			if(BURN)
+				blocked += physiology.burn_mod
+			if(TOX)
+				blocked += physiology.tox_mod
+			if(OXY)
+				blocked += physiology.oxy_mod
+			if(CLONE)
+				blocked += physiology.clone_mod
+			if(STAMINA)
+				blocked += physiology.stamina_mod
+			if(BRAIN)
+				blocked += physiology.brain_mod
+
+	return ..()
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/getBruteLoss()

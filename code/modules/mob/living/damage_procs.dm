@@ -1,40 +1,98 @@
 
 /**
- * Applies damage to this mob
+ * Applies damage to this mob.
  *
  * Sends [COMSIG_MOB_APPLY_DAMAGE]
  *
  * Arguuments:
- * * damage - amount of damage
- * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
- * * def_zone - zone that is being hit if any
- * * blocked - armor value applied
- * * forced - bypass hit percentage
- * * spread_damage - used in overrides
+ * * damage - Amount of damage
+ * * damagetype - What type of damage to do. one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA], [BRAIN].
+ * * def_zone - What body zone is being hit. Or a reference to what bodypart is being hit.
+ * * blocked - Percent modifier to damage. 100 = 100% less damage dealt, 50% = 50% less damage dealt.
+ * * forced - "Force" exactly the damage dealt. This means it skips damage modifier from blocked.
+ * * spread_damage - For carbons, spreads the damage across all bodyparts rather than just the targeted zone.
+ * * wound_bonus - Bonus modifier for wound chance.
+ * * bare_wound_bonus - Bonus modifier for wound chance on bare skin.
+ * * sharpness - Sharpness of the weapon.
+ * * attack_direction - Direction of the attack from the attacker to [src].
+ * * attacking_item - Item that is attacking [src].
  *
- * Returns TRUE if damage applied
+ * Returns the amount of damage dealt.
  */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return FALSE
-	var/damage_amount = forced ? damage : damage * hit_percent
+/mob/living/proc/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	if(damage <= 0)
+		return 0
+	var/damage_amount = damage
+	if(!forced)
+		damage_amount *= ((100 - blocked) / 100)
+		if(damage_amount <= 0)
+			return 0
+
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+
+	var/damage_dealt = 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage_amount, forced = forced)
+			if(!spread_damage && isbodypart(def_zone))
+				var/obj/item/bodypart/actual_hit = def_zone
+				var/delta = actual_hit.get_damage()
+				if(actual_hit.receive_damage(
+					brute = damage_amount,
+					burn = 0,
+					wound_bonus = wound_bonus,
+					bare_wound_bonus = bare_wound_bonus,
+					sharpness = sharpness,
+					attack_direction = attack_direction,
+					damage_source = attacking_item,
+				))
+					update_damage_overlays()
+				damage_dealt = delta - actual_hit.get_damage()
+				damageoverlaytemp += damage_dealt
+			else
+				damage_dealt = adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			adjustFireLoss(damage_amount, forced = forced)
+			if(!spread_damage && isbodypart(def_zone))
+				var/obj/item/bodypart/actual_hit = def_zone
+				var/delta = actual_hit.get_damage()
+				if(actual_hit.receive_damage(
+					brute = 0,
+					burn = damage_amount,
+					wound_bonus = wound_bonus,
+					bare_wound_bonus = bare_wound_bonus,
+					sharpness = sharpness,
+					attack_direction = attack_direction,
+					damage_source = attacking_item,
+				))
+					update_damage_overlays()
+				damage_dealt = delta - actual_hit.get_damage()
+				damageoverlaytemp += damage_dealt
+			else
+				damage_dealt = adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
+			damage_dealt = adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
+			damage_dealt = adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
+			damage_dealt = adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
-	return TRUE
+			damage_dealt = adjustStaminaLoss(damage_amount, forced = forced)
+		if(BRAIN)
+			damage_dealt = adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
+
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	return damage_dealt
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE)
