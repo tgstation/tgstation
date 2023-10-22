@@ -16,7 +16,7 @@
 /datum/hallucination/station_message/shuttle_dock
 
 /datum/hallucination/station_message/shuttle_dock/start()
-	priority_announce("[SSshuttle.emergency] has docked with the station. You have 3 minutes to board the Emergency Shuttle.", \
+	priority_announce("[SSshuttle.emergency || "The Emergency Shuttle"] has docked with the station. You have 3 minutes to board the Emergency Shuttle.", \
 		null, ANNOUNCER_SHUTTLEDOCK, ANNOUNCEMENT_TYPE_PRIORITY, players = list(hallucinator))
 	return ..()
 
