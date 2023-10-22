@@ -89,7 +89,7 @@
 	if(!iscarbon(player))
 		return
 
-	if((HAS_TRAIT(player, TRAIT_UI_BLOCKED) && !player.resting) || !Adjacent(player) || !player.Adjacent(target) || !ISADVANCEDTOOLUSER(player) || !is_operational)
+	if((HAS_TRAIT(player, TRAIT_UI_BLOCKED) && !player.resting) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational)
 		return
 
 	close_machine(target)
@@ -142,9 +142,14 @@
 	open_machine()
 
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
-	unprotect_and_signal()
 	playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_opening", src)
+
+	var/datum/component/netpod_healing/healing_eff = occupant?.GetComponent(/datum/component/netpod_healing)
+	if(healing_eff)
+		qdel(healing_eff)
+
+	update_use_power(IDLE_POWER_USE)
 
 	return ..()
 
@@ -155,10 +160,6 @@
 	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	..()
-
-	if(!iscarbon(occupant))
-		open_machine()
-		return
 
 	enter_matrix()
 
@@ -184,6 +185,7 @@
 
 	if(do_after(pryer, 15 SECONDS, src))
 		if(!state_open)
+			SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 			open_machine()
 
 	return TRUE
@@ -231,6 +233,23 @@
 	var/our_target = avatar_ref?.resolve()
 	if(isnull(our_target) || !our_observer.orbit(our_target))
 		return ..()
+
+/// Puts the occupant in netpod stasis, basically short-circuiting environmental conditions
+/obj/machinery/netpod/proc/add_healing(mob/living/target)
+	if(target != occupant)
+		return
+
+	target.AddComponent(/datum/component/netpod_healing, \
+		brute_heal = 4, \
+		burn_heal = 4, \
+		toxin_heal = 4, \
+		clone_heal = 4, \
+		blood_heal = 4, \
+	)
+
+	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
+	target.extinguish_mob()
+	update_use_power(ACTIVE_POWER_USE)
 
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
@@ -310,7 +329,7 @@
 		server.stock_gear(current_avatar, neo, generated_domain)
 
 	neo.set_static_vision(3 SECONDS)
-	protect_occupant(occupant)
+	add_healing(occupant)
 	if(!do_after(neo, 2 SECONDS, src))
 		return
 
@@ -372,11 +391,11 @@
 /obj/machinery/netpod/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
+	if(occupant && connected)
+		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+
 	if(!state_open)
 		open_machine()
-
-	if(occupant)
-		unprotect_and_signal()
 
 /// Puts points on the current occupant's card account
 /obj/machinery/netpod/proc/on_domain_complete(datum/source, atom/movable/crate, reward_points)
@@ -437,36 +456,6 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
-
-/// Puts the occupant in netpod stasis, basically short-circuiting environmental conditions
-/obj/machinery/netpod/proc/protect_occupant(mob/living/target)
-	if(target != occupant)
-		return
-
-	target.AddComponent(/datum/component/netpod_healing, \
-		brute_heal = 4, \
-		burn_heal = 4, \
-		toxin_heal = 4, \
-		clone_heal = 4, \
-		blood_heal = 4, \
-	)
-
-	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
-	target.extinguish_mob()
-	update_use_power(ACTIVE_POWER_USE)
-
-/// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/unprotect_and_signal()
-	unprotect_occupant(occupant)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
-
-/// Removes the occupant from netpod stasis
-/obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
-	var/datum/component/netpod_healing/healing_eff = target?.GetComponent(/datum/component/netpod_healing)
-	if(healing_eff)
-		qdel(healing_eff)
-
-	update_use_power(IDLE_POWER_USE)
 
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)
