@@ -242,7 +242,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
@@ -291,4 +291,4 @@
 
 /datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
 	SIGNAL_HANDLER
-	SEND_SIGNAL(owner, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, attemptee) //ok lets just mansus grasp this nerd
+	return COMSIG_CARBON_CUFF_PREVENT
