@@ -2135,6 +2135,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"iV" = (
+/obj/machinery/chem_heater/debug,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/medical)
 "iW" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
@@ -2588,6 +2592,10 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"ls" = (
+/obj/machinery/telecomms/allinone/nuclear,
+/turf/open/floor/circuit/red/telecomms,
+/area/centcom/central_command_areas/admin)
 "lu" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -3714,7 +3722,6 @@
 /area/centcom/central_command_areas/medical)
 "qD" = (
 /obj/structure/table/reinforced,
-/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "qE" = (
@@ -6359,6 +6366,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"Bq" = (
+/obj/machinery/vending/medical,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/medical)
 "Br" = (
 /obj/structure/railing/wood{
 	dir = 8
@@ -6699,6 +6710,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
+"Dp" = (
+/obj/machinery/vending/dinnerware,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/kitchen)
 "Dr" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
@@ -11914,6 +11929,7 @@
 /obj/structure/table/reinforced,
 /obj/item/knife,
 /obj/item/knife,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "Zb" = (
@@ -43169,7 +43185,7 @@ oJ
 lo
 oM
 iF
-aa
+ls
 On
 On
 GZ
@@ -54711,7 +54727,7 @@ IV
 IV
 IV
 Vx
-mQ
+Dp
 MO
 IO
 SK
@@ -58827,7 +58843,7 @@ YL
 uw
 vS
 zp
-we
+iV
 we
 aU
 lZ
@@ -59849,7 +59865,7 @@ fE
 AO
 fE
 we
-we
+Bq
 Nb
 YL
 Wv
