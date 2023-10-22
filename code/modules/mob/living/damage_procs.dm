@@ -32,6 +32,7 @@
 	attack_direction = null,
 	attacking_item,
 )
+	SHOULD_CALL_PARENT(TRUE)
 	if(damage <= 0)
 		return 0
 	var/damage_amount = damage
@@ -45,7 +46,7 @@
 	var/damage_dealt = 0
 	switch(damagetype)
 		if(BRUTE)
-			if(!spread_damage && isbodypart(def_zone))
+			if(isbodypart(def_zone))
 				var/obj/item/bodypart/actual_hit = def_zone
 				var/delta = actual_hit.get_damage()
 				if(actual_hit.receive_damage(
@@ -58,12 +59,11 @@
 					damage_source = attacking_item,
 				))
 					update_damage_overlays()
-				damage_dealt = delta - actual_hit.get_damage()
-				damageoverlaytemp += damage_dealt
+				damage_dealt = delta - actual_hit.get_damage() // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
 			else
 				damage_dealt = adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			if(!spread_damage && isbodypart(def_zone))
+			if(isbodypart(def_zone))
 				var/obj/item/bodypart/actual_hit = def_zone
 				var/delta = actual_hit.get_damage()
 				if(actual_hit.receive_damage(
@@ -76,8 +76,7 @@
 					damage_source = attacking_item,
 				))
 					update_damage_overlays()
-				damage_dealt = delta - actual_hit.get_damage()
-				damageoverlaytemp += damage_dealt
+				damage_dealt = delta - actual_hit.get_damage() // See above
 			else
 				damage_dealt = adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)

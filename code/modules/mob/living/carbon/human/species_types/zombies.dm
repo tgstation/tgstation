@@ -149,10 +149,12 @@
 		infection.Insert(new_zombie)
 
 	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	RegisterSignal(new_zombie, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_sustained))
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
+	UnregisterSignal(was_zombie, COMSIG_MOB_APPLY_DAMAGE)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -160,10 +162,9 @@
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
 
-/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, spread_damage = FALSE, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	. = ..()
-	if(.)
-		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
+/datum/species/zombie/infectious/proc/damage_sustained(...)
+	SIGNAL_HANDLER
+	COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()

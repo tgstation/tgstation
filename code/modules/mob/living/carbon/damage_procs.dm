@@ -25,7 +25,10 @@
 	if(!forced && !isnull(dna?.species))
 		blocked += dna.species.damage_modifier
 
-	return ..()
+	. = ..()
+	// Taking brute or burn to bodyparts gives a damage flash
+	if(def_zone && (damagetype == BRUTE || damagetype == BURN))
+		damageoverlaytemp += .
 
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
