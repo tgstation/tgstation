@@ -608,10 +608,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
-"bL" = (
-/obj/machinery/vending/medical,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/medical)
 "bM" = (
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/evacuation)
@@ -1919,7 +1915,6 @@
 /area/centcom/central_command_areas/medical)
 "fF" = (
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/machinery/chem_heater/debug,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "fH" = (
@@ -3306,8 +3301,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "jM" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "jN" = (
@@ -3593,12 +3587,6 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
-"kQ" = (
-/obj/structure/railing/wood{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/medical)
 "kS" = (
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/carpet,
@@ -4079,12 +4067,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
-"ms" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 6
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/botany)
 "mt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -5153,9 +5135,6 @@
 "pw" = (
 /obj/effect/turf_decal/trimline/blue,
 /obj/machinery/light/floor/has_bulb,
-/obj/structure/railing/wood{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/medical)
 "px" = (
@@ -5887,6 +5866,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/structure/railing/wood,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/medical)
 "rQ" = (
@@ -9045,9 +9025,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
 "Bu" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/structure/table/reinforced,
+/obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "Bv" = (
@@ -10813,9 +10791,6 @@
 /turf/open/floor/carpet/executive,
 /area/centcom/central_command_areas/admin)
 "GR" = (
-/obj/structure/railing/wood{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
@@ -14306,7 +14281,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/hedge,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
 "Rf" = (
@@ -16131,9 +16106,6 @@
 /turf/open/floor/circuit/telecomms,
 /area/centcom/central_command_areas/admin)
 "WJ" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
@@ -16715,6 +16687,19 @@
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/wizard_station)
+"Yw" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = 10;
+	pixel_x = -10
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "Yx" = (
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -57184,7 +57169,7 @@ dS
 kh
 Fg
 NJ
-ms
+dS
 dS
 LK
 RX
@@ -63095,7 +63080,7 @@ aa
 aa
 aa
 dl
-jM
+Yw
 Nb
 Nb
 Nb
@@ -64390,7 +64375,7 @@ vS
 IA
 JY
 rP
-kQ
+zk
 zk
 Lc
 Ar
@@ -64895,7 +64880,7 @@ fE
 AO
 fE
 we
-bL
+we
 Nb
 YL
 Wv

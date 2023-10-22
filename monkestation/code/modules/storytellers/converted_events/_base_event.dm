@@ -104,8 +104,6 @@
 
 /datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
-	if(!check_enemies())
-		return FALSE
 	if(!check_required())
 		return FALSE
 
