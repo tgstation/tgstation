@@ -45,9 +45,6 @@
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/stack/sheet/glass = 2,
-		/obj/item/clothing/neck/tie = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
 	optional_atoms = list(
