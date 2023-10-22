@@ -4,9 +4,9 @@
 #define SPAWN_RARE 10
 
 /datum/modular_mob_segment
-	/// If you want the total to be randomized
-	var/total_randomized = TRUE
-	/// If you want to spawn a rando
+	/// Set this to false if you want explicitly what's in the list to spawn
+	var/randomized = TRUE
+	/// Spawn a random amount from the list
 	var/pick_random_of = 0
 	/// The list of mobs to spawn
 	var/list/mob/living/mobs = list()
@@ -26,7 +26,7 @@
 	if(pick_random_of > 0)
 		total_amount = pick_random_of
 	else
-		if(!total_randomized)
+		if(!randomized)
 			total_amount = length(mobs)
 		else
 			total_amount = rand(1, 6)
@@ -160,7 +160,6 @@
 	)
 
 /datum/modular_mob_segment/spider/threatening
-	total_randomized = FALSE
 	pick_random_of = 6
 
 /datum/modular_mob_segment/venus_trap
