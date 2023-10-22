@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - image: "Colored labcoats have been GAGSed! Please report any weird oddities on Github."
-  - bugfix: "The coroners lab coat is no longer offset by one pixel."

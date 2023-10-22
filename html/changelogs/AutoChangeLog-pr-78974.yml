@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - qol: "signalers now tell you their cooldown and also use balloon alerts"
