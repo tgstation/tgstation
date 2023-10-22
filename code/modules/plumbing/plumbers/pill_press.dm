@@ -78,7 +78,7 @@
 		return
 
 	//shift & check to account for floating point inaccuracies
-	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= current_volume)
+	if(reagents.total_volume + 0.01 >= current_volume)
 		var/obj/item/reagent_containers/container = locate(packaging_type)
 		container = new container(src)
 		var/suffix

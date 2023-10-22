@@ -284,7 +284,7 @@
 	// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
-	return FOOD_DISLIKED
+	return FOOD_ALLERGIC
 
 /**
 * Callback to be used with the edible component.

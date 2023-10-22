@@ -776,22 +776,24 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	dead_owner.reenter_corpse()
 
 /atom/movable/screen/alert/notify_action
-	name = "Body created"
-	desc = "A body was created. You can enter it."
+	name = "Something interesting is happening!"
+	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
-	timeout = 300
-	var/atom/target = null
+	timeout = 30 SECONDS
+	/// The target to use the action on
+	var/atom/target
+	/// Which on click action to use
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-	if(!.)
+	if(isnull(target))
 		return
-	if(!target)
-		return
+
 	var/mob/dead/observer/ghost_owner = owner
 	if(!istype(ghost_owner))
 		return
+
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(ghost_owner)
