@@ -1,0 +1,323 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Auxiliary Tool Storage Maintenance"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"c" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/corner,
+/area/virtual_domain)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 2
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/structure/sign/poster/official/random/directional/east,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"g" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"h" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/item/stack/sheet/iron/five,
+/obj/item/stack/rods/ten,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/virtual_domain)
+"k" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"l" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"o" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/anticorner,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/virtual_domain)
+"t" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/corner{
+	dir = 8
+	},
+/area/virtual_domain)
+"u" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/corner{
+	dir = 4
+	},
+/area/virtual_domain)
+"y" = (
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron/edge{
+	dir = 2
+	},
+/area/virtual_domain)
+"z" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Auxiliary Tool Storage"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"A" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"E" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/fyellow{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/color/fyellow{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"H" = (
+/obj/item/stack/tile/iron{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"M" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"N" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"O" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"Q" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"R" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"T" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Auxiliary Tool Storage"
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"U" = (
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"X" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall,
+/area/virtual_domain)
+
+(1,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(2,1,1) = {"
+U
+g
+g
+T
+l
+z
+g
+X
+U
+"}
+(3,1,1) = {"
+U
+g
+d
+F
+E
+H
+u
+l
+U
+"}
+(4,1,1) = {"
+U
+g
+i
+M
+o
+c
+y
+l
+U
+"}
+(5,1,1) = {"
+U
+g
+t
+h
+A
+e
+p
+l
+U
+"}
+(6,1,1) = {"
+U
+g
+g
+a
+g
+g
+g
+g
+U
+"}
+(7,1,1) = {"
+U
+k
+J
+N
+Q
+O
+V
+R
+U
+"}
+(8,1,1) = {"
+U
+g
+g
+g
+g
+g
+g
+g
+U
+"}
+(9,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}

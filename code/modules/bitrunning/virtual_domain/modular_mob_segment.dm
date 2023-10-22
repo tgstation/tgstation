@@ -33,7 +33,7 @@
 
 	shuffle_inplace(mobs)
 
-	for(var/index in 1 to total_amoun)
+	for(var/index in 1 to total_amount)
 		spawned = FALSE
 
 		while(!spawned)
@@ -51,7 +51,7 @@
 					continue
 
 				var/path
-				if(randomized_amount)
+				if(randomized)
 					path = pick(mobs)
 				else
 					path = mobs[current_index]
@@ -104,7 +104,7 @@
 	)
 
 /datum/modular_mob_segment/bees
-	total_randomized = FALSE
+	randomized = FALSE
 	mobs = list(
 		/mob/living/basic/bee,
 		/mob/living/basic/bee,

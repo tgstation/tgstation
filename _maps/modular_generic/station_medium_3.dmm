@@ -1,206 +1,285 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
-"b" = (
-/obj/machinery/light/small/blacklight/directional/west,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"c" = (
-/obj/structure/table,
-/obj/effect/spawner/random/engineering/toolbox,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"i" = (
-/obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"j" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"o" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"r" = (
-/turf/closed/wall,
-/area/virtual_domain)
-"A" = (
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"B" = (
-/obj/machinery/light/small/blacklight/directional/north,
-/turf/template_noop,
-/area/template_noop)
-"C" = (
-/obj/effect/spawner/random/trash/bin,
-/obj/machinery/light/small/blacklight/directional/north,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"F" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
-"G" = (
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"I" = (
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"M" = (
-/obj/machinery/light/small/blacklight/directional/south,
-/turf/template_noop,
-/area/template_noop)
-"N" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"O" = (
-/obj/effect/spawner/random/trash/mess,
-/turf/open/floor/iron,
+"b" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/utility/chefhat{
+	pixel_y = 6;
+	pixel_x = 1
+	},
+/obj/item/clothing/suit/apron/chef{
+	pixel_y = -15;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
-"P" = (
-/obj/effect/spawner/random/structure/chair_maintenance{
+"d" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/salad,
+/obj/effect/spawner/random/trash/bacteria,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/virtual_domain)
+"e" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"g" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/virtual_domain)
+"k" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
+/obj/item/knife/kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"m" = (
+/obj/machinery/computer/arcade/amputation,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"n" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"o" = (
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Q" = (
-/obj/effect/spawner/random/structure/crate,
-/obj/machinery/light/small/blacklight/directional/north,
-/turf/open/floor/iron,
+"p" = (
+/turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
-"R" = (
-/turf/open/floor/iron,
+"q" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/donuts,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/spawner/random/trash/bacteria,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
 /area/virtual_domain)
-"T" = (
-/obj/structure/sign/poster/random/directional/east,
-/obj/machinery/light/small/blacklight/directional/east,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"U" = (
-/obj/effect/spawner/random/trash/caution_sign,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"V" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
+"s" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Cafeteria"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"W" = (
-/obj/effect/spawner/random/structure/crate,
+"v" = (
+/obj/item/chair/stool/bar,
+/obj/effect/spawner/random/trash/bacteria,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"y" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Cafeteria"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"z" = (
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"A" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"B" = (
+/obj/item/food/deadmouse/moldy,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"I" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/meat/slab/gorilla,
+/obj/item/food/grown/tomato,
+/obj/item/food/grown/corn,
+/obj/effect/spawner/random/trash/bacteria,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"K" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"L" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"M" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Q" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall,
+/area/virtual_domain)
+"R" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/dinner,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/virtual_domain)
+"S" = (
+/obj/machinery/griddle,
+/obj/item/food/meat/steak/chicken{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/food/meat/steak/plain{
+	pixel_x = 3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
+"U" = (
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/obj/machinery/oven/range,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain)
 "Y" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plating,
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
 /area/virtual_domain)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
+U
+U
+U
+U
+U
+U
+U
+U
+U
 "}
 (2,1,1) = {"
+U
+k
 a
-r
-r
-r
-N
-r
-r
-F
 a
+k
+a
+a
+Q
+U
 "}
 (3,1,1) = {"
-a
-r
-C
+U
+k
+l
 I
-c
-b
-P
-r
-a
+q
+Y
+n
+y
+U
 "}
 (4,1,1) = {"
-M
-r
-G
+U
+k
+w
+p
 R
-R
-R
-P
-r
-a
+L
+z
+o
+U
 "}
 (5,1,1) = {"
+U
+e
+b
+A
+d
+M
+K
 a
-Y
-j
-V
-R
-R
-R
-Y
-a
+U
 "}
 (6,1,1) = {"
-a
-r
-W
-o
-A
-i
-O
-r
+U
+k
 B
+w
+g
+v
+n
+s
+U
 "}
 (7,1,1) = {"
-a
-r
-Q
-o
-R
-T
 U
-r
-a
+k
+X
+S
+k
+m
+n
+o
+U
 "}
 (8,1,1) = {"
+U
+k
+k
+k
+k
 a
-r
-r
-r
-N
-r
-r
-r
 a
+k
+U
 "}
 (9,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
+U
+U
+U
+U
+U
+U
+U
+U
+U
 "}

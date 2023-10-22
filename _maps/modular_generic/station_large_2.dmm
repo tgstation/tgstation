@@ -1,0 +1,558 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"b" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"c" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"d" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/entertainment/toy,
+/obj/effect/spawner/random/entertainment/toy,
+/obj/effect/spawner/random/entertainment/toy,
+/obj/item/poster/random_contraband,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"h" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Warehouse Maintenance"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"i" = (
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"k" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"l" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"m" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"n" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"o" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/closed/wall,
+/area/virtual_domain)
+"p" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"q" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"r" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"s" = (
+/turf/closed/wall/rust,
+/area/virtual_domain)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"u" = (
+/obj/machinery/door/airlock/mining{
+	name = "Warehouse"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"v" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"w" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/item/stack/sheet/iron/five,
+/obj/item/stack/rods/ten,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/box,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"z" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/material_rare,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"A" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall,
+/area/virtual_domain)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/obj/item/poster/random_contraband,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"E" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/material_rare,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"F" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"G" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"H" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"J" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"K" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"L" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"M" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"N" = (
+/obj/effect/spawner/random/maintenance,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain)
+"P" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Q" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/virtual_domain)
+"S" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"T" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/bin,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"V" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"W" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"X" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Y" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Z" = (
+/obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/north,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+"}
+(2,1,1) = {"
+e
+e
+T
+T
+T
+s
+s
+s
+T
+e
+e
+"}
+(3,1,1) = {"
+e
+e
+T
+l
+X
+H
+W
+k
+T
+e
+e
+"}
+(4,1,1) = {"
+e
+T
+s
+V
+b
+n
+q
+E
+o
+A
+e
+"}
+(5,1,1) = {"
+e
+o
+I
+m
+N
+p
+D
+y
+R
+u
+e
+"}
+(6,1,1) = {"
+e
+T
+Z
+g
+M
+w
+Q
+z
+U
+s
+e
+"}
+(7,1,1) = {"
+e
+h
+t
+B
+v
+O
+J
+i
+a
+u
+e
+"}
+(8,1,1) = {"
+e
+T
+T
+K
+d
+G
+Y
+L
+T
+T
+e
+"}
+(9,1,1) = {"
+e
+e
+T
+c
+F
+P
+S
+r
+T
+e
+e
+"}
+(10,1,1) = {"
+e
+e
+T
+s
+o
+T
+s
+s
+T
+e
+e
+"}
+(11,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+"}

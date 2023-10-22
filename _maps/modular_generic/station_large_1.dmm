@@ -1,0 +1,541 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/bacteria,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"b" = (
+/obj/structure/table/optable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"c" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"d" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Morgue Maintenance"
+	},
+/obj/effect/spawner/random/structure/barricade,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"e" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"g" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"h" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"i" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"j" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/virtual_domain)
+"k" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"l" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"m" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/spawner/random/medical/surgery_tool,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"n" = (
+/obj/structure/rack,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/memeorgans{
+	spawn_loot_count = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/virtual_domain)
+"o" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"p" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/patient_stretcher,
+/obj/machinery/iv_drip,
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/virtual_domain)
+"r" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/spawner/random/medical/memeorgans,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/virtual_domain)
+"s" = (
+/obj/structure/bodycontainer/morgue,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"t" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/railing,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
+/obj/structure/sign/poster/official/random/directional/west,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"v" = (
+/obj/item/stack/tile/iron/dark{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"w" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/virtual_domain)
+"x" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"z" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/machinery/computer/operating,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"A" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/barricade,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"B" = (
+/obj/item/stack/tile/iron/dark/textured_half{
+	pixel_x = -7;
+	pixel_y = -9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"C" = (
+/obj/item/stack/tile/iron/dark{
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/obj/effect/spawner/random/trash/grime,
+/obj/structure/railing/corner/end/flip{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"D" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/item/stack/rods{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"E" = (
+/obj/structure/sign/poster/official/random/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/virtual_domain)
+"F" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/virtual_domain)
+"G" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"H" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"I" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/railing/corner/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"J" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"L" = (
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/virtual_domain)
+"M" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/stack/rods{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/effect/mapping_helpers/dead_body_placer{
+	bodycount = 9
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"N" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Morgue Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"O" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"P" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Q" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/virtual_domain)
+"R" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/medical/surgery_tool_advanced,
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/virtual_domain)
+"T" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/surgery_tray/full/morgue,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"U" = (
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/item/stack/sheet/iron/ten{
+	pixel_x = -5
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"W" = (
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/virtual_domain)
+"X" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured_half,
+/area/virtual_domain)
+"Y" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall,
+/area/virtual_domain)
+"Z" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/effect/mapping_helpers/damaged_window{
+	integrity_damage_min = 0.6;
+	integrity_damage_max = 0.9
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+
+(1,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(2,1,1) = {"
+U
+e
+e
+e
+d
+e
+e
+e
+e
+Y
+U
+"}
+(3,1,1) = {"
+U
+e
+w
+Q
+R
+x
+u
+y
+f
+e
+U
+"}
+(4,1,1) = {"
+U
+e
+w
+W
+t
+p
+p
+p
+o
+e
+U
+"}
+(5,1,1) = {"
+U
+e
+z
+j
+C
+V
+s
+s
+l
+e
+U
+"}
+(6,1,1) = {"
+U
+e
+b
+L
+J
+M
+B
+c
+X
+e
+U
+"}
+(7,1,1) = {"
+U
+e
+T
+r
+I
+P
+O
+k
+a
+h
+U
+"}
+(8,1,1) = {"
+U
+e
+F
+W
+m
+v
+G
+i
+D
+Z
+U
+"}
+(9,1,1) = {"
+U
+e
+F
+S
+H
+E
+n
+q
+g
+A
+U
+"}
+(10,1,1) = {"
+U
+e
+e
+e
+N
+e
+e
+e
+e
+e
+U
+"}
+(11,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
