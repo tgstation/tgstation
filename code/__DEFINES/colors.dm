@@ -265,7 +265,7 @@
 #define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
-/// Nearly red. rgb(206, 24, 72)
+/// Nearly red. rgb(226, 78, 118)
 #define LIGHT_COLOR_BUBBLEGUM "#e24e76"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits

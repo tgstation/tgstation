@@ -10,6 +10,7 @@
 	forge.setup_particles(angry = TRUE)
 
 	var/mob/living/owner = parent
+	server.spawned_threat_refs.Remove(WEAKREF(owner))
 
 	var/current_max = owner.maxHealth + ROUND_UP(server.threat * 0.1)
 	owner.maxHealth = clamp(current_max, 200, 1000)

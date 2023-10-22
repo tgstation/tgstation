@@ -53,7 +53,7 @@
 
 	is_ready = TRUE
 
-	if(prob(FLOOR(threat * glitch_chance, 1)))
+	if(prob(clamp((threat * glitch_chance), 1, 10)))
 		spawn_glitch()
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
@@ -151,7 +151,6 @@
 
 	return TRUE
 
-
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
@@ -186,7 +185,7 @@
 		if(isnull(creature))
 			continue
 
-		creature.dust() // sometimes mobs just don't die
+		creature.dust(just_ash = TRUE, force = TRUE) // sometimes mobs just don't die
 
 	avatar_connection_refs.Cut()
 	exit_turfs = list()

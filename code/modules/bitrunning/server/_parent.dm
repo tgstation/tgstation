@@ -19,7 +19,7 @@
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
-	var/glitch_chance = 0.1
+	var/glitch_chance = 0.05
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -84,7 +84,7 @@
 	. = ..()
 
 	obj_flags |= EMAGGED
-	glitch_chance = 0.2
+	glitch_chance = 0.1
 
 	playsound(src, 'sound/effects/sparks1.ogg', 30, 2)
 
