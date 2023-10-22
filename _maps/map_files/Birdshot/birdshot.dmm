@@ -65897,9 +65897,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
-"wBQ" = (
-/turf/open/space/basic,
-/area/station/construction/mining)
 "wCa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -82000,7 +81997,7 @@ dDB
 dDB
 blb
 dDB
-wBQ
+dDB
 dDB
 blb
 dDB
