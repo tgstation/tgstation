@@ -176,24 +176,13 @@
 		heal_brute = 25,\
 		heal_burn = 25,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		self_targetting = HEALING_TOUCH_SELF,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-
-	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 20,\
-		heal_burn = 20,\
-		heal_time = 2 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
-		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
-		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
-		action_text = "%SOURCE% begins mending themselves...",\
-		complete_text = "%SOURCE%'s wounds mend together.",\
-	)
 
 /**
  * ### Tangle Spider
