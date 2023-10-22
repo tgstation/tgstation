@@ -5,6 +5,7 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
+	/// list of ability buttons
 	var/list/shared_action_buttons = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
@@ -484,3 +485,14 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/leaper
+	can_force_unbuckle = FALSE
+
+/datum/component/riding/creature/leaper/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(17, 46), TEXT_SOUTH = list(17,51), TEXT_EAST = list(27, 46), TEXT_WEST = list(6, 46)))
+	set_rider_dir_plane(SOUTH, GAME_PLANE_UPPER)
+	set_rider_dir_plane(NORTH, GAME_PLANE)
+	set_rider_dir_plane(EAST, GAME_PLANE_UPPER)
+	set_rider_dir_plane(WEST, GAME_PLANE_UPPER)

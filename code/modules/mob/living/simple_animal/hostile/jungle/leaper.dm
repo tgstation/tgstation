@@ -3,6 +3,20 @@
 //Huge, carnivorous toads that spit an immobilizing toxin at its victims before leaping onto them.
 //It has no melee attack, and its damage comes from the toxin in its bubbles and its crushing leap.
 //Its eyes will turn red to signal an imminent attack!
+
+/obj/item/frog_statue
+	name = "frog statue"
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	icon_state = "frog"
+
+
+/obj/item/frog_contract
+	name = "Frog Contract"
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	icon_state = "frog"
+
+
+
 /mob/living/simple_animal/hostile/jungle/leaper
 	name = "leaper"
 	desc = "Commonly referred to as 'leapers', the Geron Toad is a massive beast that spits out highly pressurized bubbles containing a unique toxin, knocking down its prey and then crushing it with its girth."
@@ -30,6 +44,137 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
+/mob/living/basic/leaper
+	name = "leaper"
+	desc = "Commonly referred to as 'leapers', the Geron Toad is a massive beast that spits out highly pressurized bubbles containing a unique toxin, knocking down its prey and then crushing it with its girth."
+	icon = 'icons/mob/simple/jungle/leaper.dmi'
+	icon_state = "leaper"
+	icon_living = "leaper"
+	icon_dead = "leaper_dead"
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	maxHealth = 500
+	health = 500
+	speed = 10
+
+	pixel_x = -16
+	base_pixel_x = -16
+
+	faction = list(FACTION_JUNGLE)
+	obj_damage = 30
+
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
+
+	status_flags = NONE
+	lighting_cutoff_red = 5
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 25
+	mob_size = MOB_SIZE_LARGE
+
+
+/mob/living/basic/leaper/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
+	AddElement(/datum/element/wall_smasher)
+	var/datum/action/cooldown/mob_cooldown/blood_rain/volley = new(src)
+	volley.Grant(src)
+	var/datum/action/cooldown/mob_cooldown/belly_flop/flop = new(src)
+	flop.Grant(src)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/leaper)
+
+/mob/living/basic/leaper/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, LEAPING_TRAIT)
+	return ..()
+
+/mob/living/basic/leaper/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LEAPING_TRAIT)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/leaper_bubble
+	name = "Fire Leaper Bubble"
+	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	button_icon_state = "leaper"
+	desc = "Fires a poisonous leaper bubble towards the victim!"
+	cooldown_time = 1.5 SECONDS
+	projectile_type = /obj/projectile/leaper
+	projectile_sound = 'sound/effects/snap.ogg'
+
+/datum/action/cooldown/mob_cooldown/blood_rain
+	name = "Blood Rain"
+	button_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "blood_effect_falling"
+	desc = "Rain down poisonous dropplets of blood!"
+	cooldown_time = 10 SECONDS
+	/// how many droplets we will fire
+	var/volley_count = 8
+	/// time between each droplet launched
+	var/fire_interval = 0.4 SECONDS
+
+/datum/action/cooldown/mob_cooldown/blood_rain/Activate(mob/living/firer, atom/target)
+	var/list/possible_turfs = list()
+	for(var/turf/possible_turf in oview(5, owner))
+		if(possible_turf.is_blocked_turf())
+			continue
+		if(locate(/obj/structure/leaper_bubble) in possible_turf)
+			continue
+		possible_turfs += possible_turf
+
+	if(!length(possible_turfs))
+		return FALSE
+
+	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
+	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
+	StartCooldown()
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_rain/proc/fire_droplets(list/possible_turfs)
+	shuffle_inplace(possible_turfs)
+
+	for(var/i in 0 to volley_count)
+		if(!length(possible_turfs))
+			break
+		var/turf/selected_turf = pick_n_take(possible_turfs)
+		new /obj/effect/temp_visual/blood_drop_falling(selected_turf)
+		var/obj/effect/temp_visual/falling_shadow = new /obj/effect/temp_visual/shadow_telegraph(selected_turf)
+		animate(falling_shadow, transform = matrix().Scale(0.1, 0.1), time = falling_shadow.duration)
+
+/datum/action/cooldown/mob_cooldown/belly_flop
+	name = "Belly Flop"
+	desc = "Belly flop your enemy!"
+	cooldown_time = 14 SECONDS
+	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
+	/// maximum flopping distance
+	var/maximum_distance = 6
+
+/datum/action/cooldown/mob_cooldown/belly_flop/Activate(atom/target)
+	if(get_dist(target, owner) > maximum_distance)
+		owner.balloon_alert(owner, "too far!")
+		return FALSE
+	var/turf/target_turf = get_turf(target)
+	if(isclosedturf(target_turf) || isspaceturf(target_turf))
+		owner.balloon_alert(owner, "base not suitable!")
+		return FALSE
+	new /obj/effect/temp_visual/leaper_crush(target_turf)
+	owner.throw_at(target = target_turf, range = 7, speed = 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(flop_on_turf), target_turf))
+	StartCooldown()
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/belly_flop/proc/flop_on_turf(turf/target, original_pixel_y)
+	playsound(get_turf(owner), 'sound/effects/meteorimpact.ogg', 200, TRUE)
+	for(var/mob/living/victim in oview(1, owner))
+		if(victim in owner.buckled_mobs)
+			continue
+		victim.adjustBruteLoss(35)
+		if(QDELETED(victim)) // Some mobs are deleted on death
+			continue
+		var/throw_dir = victim.loc == owner.loc ? get_dir(owner, victim) : pick(GLOB.alldirs)
+		var/throwtarget = get_edge_target_turf(victim, throw_dir)
+		victim.throw_at(target = throwtarget, range = 3, speed = 1)
+		victim.visible_message(span_warning("[victim] is thrown clear of [owner]!"))
+
 /obj/projectile/leaper
 	name = "leaper bubble"
 	icon_state = "leaper"
@@ -56,9 +201,8 @@
 		bubbled.adjustBruteLoss(25)
 
 /obj/projectile/leaper/on_range()
-	var/turf/T = get_turf(src)
-	..()
-	new /obj/structure/leaper_bubble(T)
+	new /obj/structure/leaper_bubble(get_turf(src))
+	return ..()
 
 /obj/effect/temp_visual/leaper_projectile_impact
 	name = "leaper bubble"
@@ -71,6 +215,42 @@
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
 	. = ..()
 	new /obj/effect/decal/cleanable/leaper_sludge(get_turf(src))
+
+/obj/effect/temp_visual/blood_drop_rising
+	name = "leaper bubble"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "leaper"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/blood_drop_rising/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_y = base_pixel_y + 150, time = duration)
+
+/obj/effect/temp_visual/blood_drop_falling
+	name = "leaper bubble"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "blood_effect_falling"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	duration = 0.7 SECONDS
+	pixel_y = 60
+
+/obj/effect/temp_visual/blood_drop_falling/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(create_blood_structure)), duration)
+	animate(src, pixel_y = 0, time = duration)
+
+/obj/effect/temp_visual/blood_drop_falling/proc/create_blood_structure()
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+	new /obj/structure/leaper_bubble(get_turf(src))
+
+/obj/effect/temp_visual/shadow_telegraph
+	name = "shadow"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shadow_telegraph"
+	duration = 1.5 SECONDS
 
 /obj/effect/decal/cleanable/leaper_sludge
 	name = "leaper sludge"
@@ -103,7 +283,7 @@
 
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
-	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
+	playsound(src,'sound/effects/snap.ogg', 50, TRUE)
 	return ..()
 
 /obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/bubbled)
@@ -112,7 +292,7 @@
 		return
 	var/mob/living/bubbled_mob = bubbled
 
-	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
+	playsound(src, 'sound/effects/snap.ogg',50, TRUE)
 	bubbled_mob.Paralyze(50)
 	if(iscarbon(bubbled_mob))
 		bubbled_mob.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
@@ -133,9 +313,10 @@
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	. = ..()
-	if(volume >= 10)
-		if(M.adjustToxLoss(5 * REM * seconds_per_tick, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
+	if(volume < 10)
+		return
+	if(M.adjustToxLoss(5 * REM * seconds_per_tick, updating_health = FALSE))
+		return UPDATE_MOB_HEALTH
 
 /obj/effect/temp_visual/leaper_crush
 	name = "grim tidings"
