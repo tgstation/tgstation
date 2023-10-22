@@ -53307,6 +53307,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/west,
 /obj/structure/sign/poster/random/directional/south,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tck" = (
