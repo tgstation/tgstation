@@ -107,6 +107,7 @@
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
  * should_play_sound - Whether the notice sound should be played or not.
+ * color_override - optional, use the passed color instead of the default notice color.
  */
 /proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
 	if(!message)
