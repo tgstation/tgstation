@@ -274,8 +274,6 @@
 		total_rarity += initial(chosen_path.random_case_rarity) / 3
 	name = english_list(wanted_types)
 
-	..()
-
 	switch(total_rarity)
 		if(FISH_RARITY_NOPE to FISH_RARITY_GOOD_LUCK_FINDING_THIS)
 			reward += CARGO_CRATE_VALUE * 14
@@ -285,3 +283,5 @@
 			reward += CARGO_CRATE_VALUE * 3
 		if(FISH_RARITY_RARE to FISH_RARITY_BASIC-1)
 			reward += CARGO_CRATE_VALUE * 1
+
+	..()
