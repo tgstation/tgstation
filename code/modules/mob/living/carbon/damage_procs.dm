@@ -1,3 +1,32 @@
+/mob/living/carbon/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	// Spread damage should always have def zone be null
+	if(spread_damage)
+		def_zone = null
+
+	// Otherwise if def zone is null, we'll get a random bodypart / zone to hit.
+	// ALso we'll automatically covnert string def zones into bodyparts to pass into parent call.
+	else if(!isbodypart(def_zone))
+		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
+		def_zone = get_bodypart(random_zone) || bodyparts[1]
+
+	// Pass in species flat damage mod into blocked to be passed into parent call
+	if(!forced && !isnull(dna?.species))
+		blocked += dna.species.damage_modifier
+
+	return ..()
+
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
 	damagetype = BRUTE,
@@ -12,14 +41,8 @@
 	attacking_item,
 )
 
-	// Automatically check string def zones into bodyparts to pass into parent call
-	if(!isbodypart(def_zone))
-		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
-		def_zone = get_bodypart(random_zone) || bodyparts[1]
-
-	// Applies appropriate modifiers to the blocked var to pass into parent call
-	if(!forced)
-		blocked += dna?.species.damage_modifier
+	// Applies appropriate physiology mods into blocked to be passed into parent call
+	if(!forced && !isnull(physiology))
 		blocked += physiology.damage_resistance
 
 		switch(damagetype)

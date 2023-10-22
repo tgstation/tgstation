@@ -102,6 +102,7 @@
 	chest.remove_bodypart_overlay(roach_shell)
 	human_owner.update_body_parts()
 
+// melbert todo
 /**
  * Signal proc for [COMSIG_MOB_APPLY_DAMAGE]
  *
