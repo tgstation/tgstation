@@ -101,13 +101,10 @@
 	// If there's nobody to witness the misfortune, make it less likely.
 	// This way, we allow for people to be able to get into hilarious situations without making the game nigh unplayable most of the time.
 
-	var/has_watchers
-	for(var/mob/M in view(world.view, get_turf(src)))
-		if(!M.client)
-			continue
-		has_watchers = TRUE
-	if(has_watchers == FALSE)
-		effective_luck *= 0.5
+	for(var/mob/viewer in viewers(our_guy, world.view))
+		if(viewer.client)
+			effective_luck *= 0.5
+			break
 
 	if(!prob(8 * effective_luck))
 		return
