@@ -12046,6 +12046,12 @@
 	c_tag = "Service - Hydroponics"
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/plantgenes,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cAd" = (
@@ -52525,12 +52531,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/item/botanical_lexicon,
-/obj/machinery/plantgenes,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "pQY" = (
