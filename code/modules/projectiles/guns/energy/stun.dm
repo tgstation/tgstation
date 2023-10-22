@@ -57,7 +57,7 @@
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 15, \
-		overlay_y = 7)
+		overlay_y = 13)
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
