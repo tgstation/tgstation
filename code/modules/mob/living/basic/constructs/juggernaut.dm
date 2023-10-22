@@ -23,8 +23,7 @@
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
 		/datum/action/innate/cult/create_rune/wall,
 	)
-	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
-						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
+	playstyle_string = span_bold("You are a Juggernaut. Though slow, your shell can withstand heavy punishment, create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.")
 
 	smashes_walls = TRUE
 
@@ -40,8 +39,10 @@
 		return ..()
 
 	apply_damage(bullet.damage * 0.5, bullet.damage_type)
-	visible_message(span_danger("The [bullet.name] is reflected by [src]'s armored shell!"), \
-					span_userdanger("The [bullet.name] is reflected by your armored shell!"))
+	visible_message(
+		span_danger("The [bullet.name] is reflected by [src]'s armored shell!"),
+		span_userdanger("The [bullet.name] is reflected by your armored shell!"),
+	)
 
 	bullet.reflect(src)
 
