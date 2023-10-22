@@ -61,7 +61,7 @@
 	name = "pack of saltcane seeds"
 	desc = "These seeds grow into saltcane."
 	icon_state = "seed-saltcane"
-	species = "sugarcane"
+	species = "saltcane"
 	plantname = "Saltcane"
 	product = /obj/item/food/grown/sugarcane/saltcane
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
