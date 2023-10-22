@@ -1264,6 +1264,7 @@
 #include "code\datums\elements\ai_flee_while_injured.dm"
 #include "code\datums\elements\ai_held_item.dm"
 #include "code\datums\elements\ai_retaliate.dm"
+#include "code\datums\elements\ai_swap_combat_mode.dm"
 #include "code\datums\elements\ai_target_damagesource.dm"
 #include "code\datums\elements\amputating_limbs.dm"
 #include "code\datums\elements\animal_variety.dm"

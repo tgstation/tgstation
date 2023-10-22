@@ -391,8 +391,11 @@
 ///Is the trader conscious?
 /datum/component/trader/proc/can_trade(mob/customer)
 	var/mob/living/trader = parent
+	if(trader.combat_mode)
+		trader.balloon_alert(customer, "in combat!")
+		return
 	if(IS_DEAD_OR_INCAP(trader))
-		customer.balloon_alert(trader, "indisposed!")
+		trader.balloon_alert(customer, "indisposed!")
 		return
 	return TRUE
 
