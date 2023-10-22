@@ -18,8 +18,9 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	//min_players = 20
+	min_players = 20
 	weight = 5
+	maximum_antags = 2
 
 /datum/round_event_control/antagonist/solo/bloodsucker/roundstart
 	name = "Bloodsuckers"
