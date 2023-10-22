@@ -169,7 +169,17 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
 
-	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
+	department_order = new(
+		pack = pack,
+		orderer = name,
+		orderer_rank = rank,
+		orderer_ckey = ckey,
+		reason = "",
+		paying_account = null,
+		department_destination = chosen_delivery_area,
+		coupon = null,
+		manifest_can_fail = FALSE,
+	)
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))

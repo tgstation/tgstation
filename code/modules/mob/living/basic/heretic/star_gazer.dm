@@ -1,5 +1,5 @@
 /mob/living/basic/heretic_summon/star_gazer
-	name = "Star Gazer"
+	name = "\improper Star Gazer"
 	desc = "A creature that has been tasked to watch over the stars."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	icon_state = "star_gazer"
@@ -78,8 +78,9 @@
 
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/star_gazer(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends/attack_closed_turfs(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends/attack_closed_turfs,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -91,9 +92,6 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
-/datum/targetting_datum/basic/star_gazer
-	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
