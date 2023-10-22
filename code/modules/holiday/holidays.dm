@@ -717,7 +717,7 @@
 		COLOR_WHITE,
 		COLOR_CHRISTMAS_RED,
 		COLOR_WHITE,
-	 )
+	)
 
 /datum/holiday/xmas/getStationPrefix()
 	return pick(
