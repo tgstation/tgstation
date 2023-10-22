@@ -176,7 +176,6 @@
 		heal_brute = 25,\
 		heal_burn = 25,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		self_targetting = HEALING_TOUCH_SELF,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
