@@ -1,23 +1,17 @@
+// Drone overlays and visuals
 
-/////////////////
-//DRONE VISUALS//
-/////////////////
-//Drone overlays
-//Drone visuals
-
-
-/mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
+/mob/living/basic/drone/proc/apply_overlay(cache_index)
 	if((. = drone_overlays[cache_index]))
 		add_overlay(.)
 
 
-/mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
-	var/I = drone_overlays[cache_index]
-	if(I)
-		cut_overlay(I)
+/mob/living/basic/drone/proc/remove_overlay(cache_index)
+	var/overlay = drone_overlays[cache_index]
+	if(overlay)
+		cut_overlay(overlay)
 		drone_overlays[cache_index] = null
 
-/mob/living/simple_animal/drone/update_clothing(slot_flags)
+/mob/living/basic/drone/update_clothing(slot_flags)
 	if(slot_flags & ITEM_SLOT_HEAD)
 		update_worn_head()
 	if(slot_flags & ITEM_SLOT_MASK)
@@ -27,13 +21,13 @@
 	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_BACKPACK|ITEM_SLOT_DEX_STORAGE))
 		update_inv_internal_storage()
 
-/mob/living/simple_animal/drone/proc/update_inv_internal_storage()
+/mob/living/basic/drone/proc/update_inv_internal_storage()
 	if(internal_storage && client && hud_used?.hud_shown)
 		internal_storage.screen_loc = ui_drone_storage
 		client.screen += internal_storage
 
 
-/mob/living/simple_animal/drone/update_worn_head()
+/mob/living/basic/drone/update_worn_head()
 	remove_overlay(DRONE_HEAD_LAYER)
 
 	if(head)
@@ -50,10 +44,10 @@
 
 	apply_overlay(DRONE_HEAD_LAYER)
 
-/mob/living/simple_animal/drone/update_worn_mask()
+/mob/living/basic/drone/update_worn_mask()
 	update_worn_head()
 
-/mob/living/simple_animal/drone/regenerate_icons()
+/mob/living/basic/drone/regenerate_icons()
 	// Drones only have 4 slots, which in this specific instance
 	// is a small blessing.
 	update_held_items()
@@ -61,13 +55,13 @@
 	update_inv_internal_storage()
 
 /**
- * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
+ * Prompt for user to pick [/mob/living/basic/drone/var/visualAppearance]
  *
- * Does nothing if there is no usr
+ * Does nothing if there is no user
  *
  * Called on [/mob/proc/Login]
  */
-/mob/living/simple_animal/drone/proc/pickVisualAppearance()
+/mob/living/basic/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/list/drone_icons = list(
 		"Maintenance Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[MAINTDRONE]_grey"),
@@ -111,14 +105,14 @@
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
  */
-/mob/living/simple_animal/drone/proc/check_menu()
+/mob/living/basic/drone/proc/check_menu()
 	if(!istype(src))
 		return FALSE
 	if(incapacitated())
 		return FALSE
 	return TRUE
 
-/mob/living/simple_animal/drone/proc/getItemPixelShiftY()
+/mob/living/basic/drone/proc/getItemPixelShiftY()
 	switch(visualAppearance)
 		if(MAINTDRONE)
 			. = 0

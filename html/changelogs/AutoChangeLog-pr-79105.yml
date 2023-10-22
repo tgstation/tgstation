@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "Adds a subtle ghost poll. This pings in dead chat and gives a screen alert, but no TGUI popup. Orbit the point of interest to be selected for the role."
-  - refactor: "A number of ghost spawns now feature this alert. Write an issue report if anything breaks."

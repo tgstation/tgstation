@@ -1,6 +1,0 @@
-author: "BlueMemesauce"
-delete-after: True
-changes:
-  - balance: "Export scanner no longer shows value of shipping manifests, now you actually have to read them."
-  - balance: "Shipping manifest penalty is now only half crate cost as well as capped to 500 credits."
-  - balance: "Shipping manifests for private orders or locked crates can no longer have the incorrect contents error. Shipping manifests for departmental orders can n longer have any error."
