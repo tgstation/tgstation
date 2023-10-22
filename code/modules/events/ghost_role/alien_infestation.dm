@@ -37,7 +37,7 @@
 	announce_when = rand(announce_when, announce_when + 50)
 	if(prob(50))
 		spawncount++
-
+	setup = TRUE
 /datum/round_event/ghost_role/alien_infestation/announce(fake)
 	var/living_aliens = FALSE
 	for(var/mob/living/carbon/alien/A in GLOB.player_list)

@@ -37,6 +37,7 @@
 
 	loan_control.run_situations.Add(situation)
 	situation = new situation()
+	setup = TRUE
 
 /datum/round_event/shuttle_loan/announce(fake)
 	priority_announce("Cargo: [situation.announcement_text]", situation.sender)

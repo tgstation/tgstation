@@ -41,6 +41,7 @@
 			break
 	if(!insurance_evaluation)
 		insurance_evaluation = 5000 //gee i dunno
+	setup = TRUE
 
 /datum/round_event/shuttle_insurance/start()
 	insurance_message = new("Shuttle Insurance", "Hey, pal, this is the [ship_name]. Can't help but notice you're rocking a wild and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've done a quick evaluation on your rates in this sector and we're offering [insurance_evaluation] to cover for your shuttle in case of any disaster.", list("Purchase Insurance.","Reject Offer."))

@@ -37,6 +37,7 @@
 
 /datum/round_event/carp_migration/setup()
 	start_when = rand(40, 60)
+	setup = TRUE
 
 /datum/round_event/carp_migration/announce(fake)
 	priority_announce("[fluff_signal] have been detected near [station_name()], please stand-by.", "Lifesign Alert")

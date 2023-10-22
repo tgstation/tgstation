@@ -68,6 +68,7 @@
 		hostiles_spawn += get_random_station_turf()
 
 	next_boss_spawn = start_when + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
+	setup = TRUE
 
 /datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0

@@ -42,6 +42,7 @@
 	end_when = rand(300, 600)
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10, 15)
+	setup = TRUE
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()

@@ -68,6 +68,7 @@
 			var/datum/supply_pack/pack_type = pack
 			if(initial(pack_type.special))
 				stray_spawnable_supply_packs -= pack
+	setup = TRUE
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()

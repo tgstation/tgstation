@@ -102,6 +102,7 @@
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
+	setup = TRUE
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
@@ -257,6 +258,7 @@
 
 /datum/round_event/disease_outbreak/advance/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
+	setup = TRUE
 
 /**
  * Generate advanced virus

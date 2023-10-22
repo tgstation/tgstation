@@ -16,6 +16,7 @@
 	start_when = 3
 	end_when = start_when + 1
 	announce_when = 1
+	setup = TRUE
 
 /datum/round_event/radiation_storm/announce(fake)
 	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert", ANNOUNCER_RADIATION)
