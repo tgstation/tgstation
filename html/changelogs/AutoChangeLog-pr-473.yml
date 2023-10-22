@@ -1,0 +1,13 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscadd: "Readded missing water tank for Botany on Metastation"
+  - rscadd: "Readded a missing helper for the disposals system on Metastation"
+  - rscadd: "plantgenes machine in the seed vaults!"
+  - rscdel: "ALL SM gas filters for gas synthesis are removed, but the space is still there if folk want to setup such filters for their operations."
+  - qol: "moved the plantgenes machine and all the botany lexicons on Tram to a different table so its not stacked."
+  - rscdel: "reverted the \"clown asteroid\" on Tramstation down to 99% stock. It should still play clown.wmv when over there, because you still are a clown if you wanna use the place."
+  - rscadd: "dinnerware, nanomed vendors added to Centcom"
+  - rscadd: "readded the missing tcomm server so syndie comms work again. it was on centcom, its now back on centcom."
+  - qol: "fixed some of the busted disposals."
+  - qol: "zones for rooms in Oshan Medical are redone. Medbay Central is now a \"common sense\" location so cargo crates can be opened properly."
