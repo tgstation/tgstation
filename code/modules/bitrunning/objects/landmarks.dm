@@ -74,7 +74,7 @@
 	. = ..()
 
 #ifdef UNIT_TESTS
-		return
+	return
 #endif
 
 	var/list/crate_list = list()
