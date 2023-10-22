@@ -1,6 +1,10 @@
 /datum/round_event_control
 	///do we check against the antag cap before attempting a spawn?
 	var/checks_antag_cap = FALSE
+	/// List of enemy roles, will check if x amount of these exist exist
+	var/list/enemy_roles
+	///required number of enemies in roles to exist
+	var/required_enemies = 0
 
 /datum/round_event_control/proc/return_failure_string(players_amt)
 	var/string
@@ -66,10 +70,6 @@
 	var/list/protected_roles
 	/// Restricted roles from the antag roll
 	var/list/restricted_roles
-	/// List of enemy roles, will check if x amount of these exist exist
-	var/list/enemy_roles
-	///required number of enemies in roles to exist
-	var/required_enemies = 0
 
 /datum/round_event_control/antagonist/proc/check_required()
 	if(!length(exclusive_roles))
@@ -83,7 +83,7 @@
 /datum/round_event_control/antagonist/proc/trim_candidates(list/candidates)
 	return candidates
 
-/datum/round_event_control/antagonist/proc/check_enemies()
+/datum/round_event_control/proc/check_enemies()
 	if(!length(enemy_roles))
 		return TRUE
 	var/job_check = 0

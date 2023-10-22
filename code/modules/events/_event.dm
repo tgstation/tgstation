@@ -109,6 +109,8 @@
 	if(checks_antag_cap)
 		if(!roundstart && !SSgamemode.can_inject_antags())
 			return FALSE
+	if(!check_enemies())
+		return FALSE
 	//monkestation edit end - STORYTELLERS
 
 	var/datum/game_mode/dynamic/dynamic = SSticker.mode
