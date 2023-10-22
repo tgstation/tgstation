@@ -50,10 +50,30 @@
 /mob/living/basic/meteor_heart/opens_puzzle_door
 	///the puzzle id we send on death
 	var/id
+	///queue size, must match
+	var/queue_size = 2
 
-/mob/living/basic/meteor_heart/opens_puzzle_door/death(gibbed)
+/mob/living/basic/meteor_heart/opens_puzzle_door/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, GLOBAL_PROC_REF(complete_puzzle), id), 2.5 SECONDS)
+	new /obj/effect/puzzle_death_signal_holder(loc, src, id, queue_size)
+
+/obj/effect/puzzle_death_signal_holder // ok apparently registering signals on qdeling stuff is not very functional
+	///delay
+	var/delay = 2.5 SECONDS
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/puzzle_death_signal_holder/Initialize(mapload, mob/listened, id, queue_size = 2)
+	. = ..()
+	RegisterSignal(listened, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	SSqueuelinks.add_to_queue(src, id, queue_size)
+
+/obj/effect/puzzle_death_signal_holder/proc/on_death(datum/source)
+	SIGNAL_HANDLER
+	addtimer(CALLBACK(src, PROC_REF(send_sig)), delay)
+
+/obj/effect/puzzle_death_signal_holder/proc/send_sig()
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+	qdel(src)
 
 /obj/machinery/puzzle_button/meatderelict
 	name = "lockdown panel"
@@ -72,10 +92,8 @@
 	icon_state = "meatblockade"
 	opacity = TRUE
 
-/obj/structure/puzzle_blockade/meat/try_signal(datum/source, try_id)
+/obj/structure/puzzle_blockade/meat/try_signal(datum/source)
 	SIGNAL_HANDLER
-	if(try_id != id)
-		return
 	Shake(duration = 0.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(open_up)), 0.5 SECONDS)
 

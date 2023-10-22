@@ -133,7 +133,7 @@
 	SIGNAL_HANDLER
 	if(shock_damage < 10)
 		return
-	var/part_owner = current_bodypart.owner
+	var/mob/living/carbon/human/part_owner = current_bodypart.owner
 	if(!detach_self())
 		return
 	var/turf/our_location = get_turf(src)

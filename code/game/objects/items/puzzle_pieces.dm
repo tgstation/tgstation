@@ -1,11 +1,8 @@
 //Every time you got lost looking for keycards, increment: 2
 
-/proc/complete_puzzle(id) //so its 1 source only
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PUZZLE_COMPLETED, id)
-
 //**************
-//*****Keys*******************
-//************** **  **
+//*****Keys*****
+//**************
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
@@ -49,8 +46,10 @@
 	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	can_open_with_hands = FALSE
-	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
+	/// Make sure that the puzzle has the same puzzle_id as the keycard door! (If this is null, queuelinks dont happen!)
 	var/puzzle_id = null
+	/// must match with all connected stuff, like 1 button 1 door = 2 queue size, if this is 0, assume we do not use queuelinks!
+	var/queue_size = 2
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
@@ -67,12 +66,17 @@
 
 /obj/machinery/door/puzzle/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
+	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
+
+/obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
 
 /obj/machinery/door/puzzle/proc/try_signal(datum/source, try_id)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
+	puzzle_id = null //honestly these cant be closed anyway and im not fucking around with door code anymore
+	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), null)
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
@@ -101,6 +105,7 @@
 
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
+	queue_size = 0
 
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -203,6 +208,8 @@
 	)
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
+	/// queue size, everything inside must match
+	var/queue_size = 2
 
 /datum/armor/structure_light_puzzle
 	melee = 100
@@ -224,6 +231,7 @@
 		var/position = !!(generated_board & (1<<i))
 		light_list[i+1] = position
 	update_icon(UPDATE_OVERLAYS)
+	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
 
 /obj/structure/light_puzzle/update_overlays()
 	. = ..()
@@ -272,7 +280,7 @@
 			return
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
-	complete_puzzle(puzzle_id)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
 
 //
@@ -292,6 +300,14 @@
 	var/single_use = TRUE
 	/// puzzle id we send on press
 	var/id = "0" //null would literally open every puzzle door without an id
+	/// queue size, everything inside must match
+	var/queue_size = 2
+
+/obj/machinery/puzzle_button/Initialize(mapload)
+	. = ..()
+	if(used) //already used on init? this button is probably fluff!!
+		return
+	SSqueuelinks.add_to_queue(src, id, queue_size)
 
 /obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -306,7 +322,7 @@
 	open_doors()
 
 /obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason
-	complete_puzzle(id)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 
 /obj/machinery/puzzle_button/update_icon_state()
 	icon_state = "[base_icon_state][used]"
@@ -325,6 +341,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	var/used = FALSE
 	/// puzzle id we send if the correct card is swiped
 	var/id = "0"
+	/// queue size, everything inside must match
+	var/queue_size = 2
+
+/obj/machinery/puzzle_keycardpad/Initialize(mapload)
+	. = ..()
+	SSqueuelinks.add_to_queue(src, id, queue_size)
 
 /obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -339,7 +361,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	used = TRUE
 	update_icon_state()
 	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
-	complete_puzzle(id)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 
 /obj/machinery/puzzle_keycardpad/update_icon_state()
 	icon_state = "[base_icon_state][used]"
@@ -364,15 +386,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	anchored = TRUE
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
+	/// queue size, everything inside must match
+	var/queue_size = 2
 
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_PUZZLE_COMPLETED, PROC_REF(try_signal))
+	SSqueuelinks.add_to_queue(src, id, queue_size)
 
-/obj/structure/puzzle_blockade/proc/try_signal(datum/source, try_id)
+/obj/structure/puzzle_blockade/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/structure/puzzle_blockade/proc/try_signal(datum/source)
 	SIGNAL_HANDLER
-	if(try_id != id)
-		return
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)

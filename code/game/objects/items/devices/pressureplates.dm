@@ -98,7 +98,13 @@
 	removable_signaller = FALSE
 	/// puzzle id we send if stepped on
 	var/puzzle_id
+	/// queue size must match
+	var/queue_size = 2
+
+/obj/item/pressure_plate/puzzle/Initialize(mapload)
+	. = ..()
+	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
 
 /obj/item/pressure_plate/puzzle/trigger()
 	can_trigger = FALSE
-	complete_puzzle(puzzle_id)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)

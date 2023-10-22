@@ -322,7 +322,8 @@
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "hN" = (
 /obj/structure/puzzle_blockade{
-	id = "md_toeng"
+	id = "md_toeng";
+	queue_size = 4
 	},
 /obj/effect/turf_decal/stripes/full,
 /turf/open/indestructible,
@@ -734,7 +735,8 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "oQ" = (
 /obj/machinery/puzzle_button/meatderelict{
-	pixel_y = 32
+	pixel_y = 32;
+	queue_size = 4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
@@ -1243,7 +1245,9 @@
 /turf/open/indestructible,
 /area/ruin/space/has_grav/powered/biooutpost)
 "xr" = (
-/obj/machinery/door/puzzle/meatderelict,
+/obj/machinery/door/puzzle/meatderelict{
+	queue_size = 4
+	},
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "xA" = (
@@ -1432,7 +1436,9 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
 "Bt" = (
-/obj/machinery/door/puzzle/meatderelict,
+/obj/machinery/door/puzzle/meatderelict{
+	queue_size = 4
+	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
@@ -1795,7 +1801,8 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "IK" = (
 /obj/structure/puzzle_blockade{
-	id = "md_armory"
+	id = "md_armory";
+	queue_size = 5
 	},
 /obj/effect/turf_decal/stripes/full,
 /turf/open/indestructible/white,
@@ -1890,7 +1897,8 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "KC" = (
 /obj/machinery/puzzle_button/directional/north{
-	id = "md_toeng"
+	id = "md_toeng";
+	queue_size = 4
 	},
 /obj/structure/chair/office{
 	dir = 8
@@ -2134,12 +2142,14 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "PQ" = (
 /obj/structure/puzzle_blockade{
-	id = "md_armory"
+	id = "md_armory";
+	queue_size = 5
 	},
 /obj/effect/turf_decal/stripes/full,
 /obj/machinery/puzzle_keycardpad/directional/south{
 	id = "md_armory";
-	name = "armory authentication pad"
+	name = "armory authentication pad";
+	queue_size = 5
 	},
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
