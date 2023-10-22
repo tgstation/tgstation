@@ -17808,9 +17808,6 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/assembly/flash,
-/obj/item/assembly/flash,
-/obj/item/assembly/flash,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -17819,6 +17816,18 @@
 	},
 /obj/item/book/manual/wiki/experimentor,
 /obj/item/book/manual/wiki/robotics_cyborgs,
+/obj/item/assembly/flash/handheld{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/assembly/flash/handheld{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/assembly/flash/handheld{
+	pixel_x = 6;
+	pixel_y = 13
+	},
 /turf/open/floor/noslip{
 	icon_state = "textured_white";
 	color = "#D381C9"
