@@ -484,20 +484,20 @@
 	return FALSE
 
 /obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()
-	switch(rand(1, 100))
-		if(1 to 33)
+	switch(rand(1, 3))
+		if(1)
 			// Uzi with a boxcutter.
 			new /obj/item/gun/ballistic/automatic/mini_uzi/chimpgun(src)
 			new /obj/item/ammo_box/magazine/uzim9mm(src)
 			new /obj/item/ammo_box/magazine/uzim9mm(src)
 			new /obj/item/boxcutter/extended(src)
-		if(34 to 67)
+		if(2)
 			// Thompson with a boxcutter.
 			new /obj/item/gun/ballistic/automatic/tommygun/chimpgun(src)
 			new /obj/item/ammo_box/magazine/tommygunm45(src)
 			new /obj/item/ammo_box/magazine/tommygunm45(src)
 			new /obj/item/boxcutter/extended(src)
-		if(68 to 100)
+		if(3)
 			// M1911 with a switchblade and an extra banana bomb.
 			new /obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun(src)
 			new /obj/item/ammo_box/magazine/m45(src)

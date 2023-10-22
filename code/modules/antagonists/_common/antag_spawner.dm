@@ -309,7 +309,9 @@
 	var/poll_role_check = ROLE_TRAITOR
 	/// The mind's special role.
 	var/role_to_play = ROLE_SYNDICATE_MONKEY
+	/// What category to ignore the poll
 	var/poll_ignore_category = POLL_IGNORE_SYNDICATE
+	/// text given when device fails to secure candidates
 	var/fail_text = "Unable to connect to Syndicate command. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/proc/check_usability(mob/user)
@@ -371,8 +373,6 @@
 	spawned_mob.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
-#define MONKEY_AGENT_NAMES list("Al Chimpone", "Agent 9", "Agent Banana", "Agent Potassium", "Agent Ape","Aldo", "Banana Bond", "Bonobo Assassin", "Caesar", "Solid Simian", "Tony Bananas", "Murderous George", "Monkey Business", "Hit-Monkey")
-
 /obj/item/antag_spawner/loadout/monkey_man
 	name = "monkey agent beacon"
 	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
@@ -389,7 +389,7 @@
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 
-	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(MONKEY_AGENT_NAMES))
+	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
 
 	monkey_man.dna.add_mutation(/datum/mutation/human/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.

@@ -17,6 +17,7 @@
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = null
+	/// Starts open if true
 	var/start_extended = FALSE
 
 /obj/item/boxcutter/get_all_tool_behaviours()

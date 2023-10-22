@@ -228,6 +228,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	empty_indicator = TRUE
 	show_bolt_icon = FALSE
+	/// Rate of fire, set on initialize only
 	var/rof = 0.1 SECONDS
 
 /obj/item/gun/ballistic/automatic/tommygun/Initialize(mapload)
