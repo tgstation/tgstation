@@ -599,11 +599,11 @@
 	name = "\improper Derelict Sulaco"
 
 /area/ruin/space/has_grav/powered/biooutpost
-	name = "\improper Biological Research Outpost"
+	name = "\improper Bioresearch Outpost"
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /area/ruin/space/has_grav/powered/biooutpost/vault
-	name = "\improper Biological Research Outpost Secure Testing"
+	name = "\improper Bioresearch Outpost Secure Testing"
 
 // Space Ghost Kitchen
 /area/ruin/space/space_ghost_restaurant

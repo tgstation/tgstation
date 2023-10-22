@@ -385,8 +385,8 @@
 /datum/map_template/ruin/space/meatstation
 	id = "meatderelict"
 	suffix = "meatderelict.dmm"
-	name = "Quantum Research Outpost"
-	description = "A quantum teleportation experiment gone wrong."
+	name = "Bioresearch Outpost"
+	description = "A bioresearch experiment gone wrong."
 
 /datum/map_template/ruin/space/ghost_restaurant
 	id = "space_ghost_restaurant.dmm"

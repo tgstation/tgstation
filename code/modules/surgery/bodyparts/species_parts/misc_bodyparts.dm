@@ -568,7 +568,7 @@
 /obj/item/bodypart/arm/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
 	. = ..()
 	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src)
+		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
 
 /obj/item/bodypart/arm/right/flesh
@@ -578,7 +578,7 @@
 /obj/item/bodypart/arm/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
 	. = ..()
 	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src)
+		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
 
 /obj/item/bodypart/leg/left/flesh
@@ -588,7 +588,7 @@
 /obj/item/bodypart/leg/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
 	. = ..()
 	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src)
+		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
 
 /obj/item/bodypart/leg/right/flesh
@@ -598,5 +598,5 @@
 /obj/item/bodypart/leg/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
 	. = ..()
 	if(!dont_spawn_flesh)
-		new /mob/living/basic/living_limb_flesh(src)
+		new /mob/living/basic/living_limb_flesh(src, src)
 	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)

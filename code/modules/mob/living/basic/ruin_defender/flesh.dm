@@ -30,7 +30,7 @@
 	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
 	var/obj/item/bodypart/current_bodypart
 
-/mob/living/basic/living_limb_flesh/Initialize(mapload, limb)
+/mob/living/basic/living_limb_flesh/Initialize(mapload, obj/item/bodypart/limb)
 	. = ..()
 	AddComponent(/datum/component/swarming, max_x = 8, max_y = 8)
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
@@ -118,7 +118,7 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 	
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
-	current_bodypart = new part_type(dont_spawn_flesh = TRUE)
+	current_bodypart = new part_type(TRUE) //dont_spawn_flesh, we cant use named arguments here
 	current_bodypart.replace_limb(target, TRUE)
 	forceMove(current_bodypart)
 	register_to_limb(current_bodypart)
@@ -133,10 +133,11 @@
 	SIGNAL_HANDLER
 	if(shock_damage < 10)
 		return
+	var/part_owner = current_bodypart.owner
 	if(!detach_self())
 		return
 	var/turf/our_location = get_turf(src)
-	our_location.visible_message(span_warning("[current_bodypart.owner][current_bodypart.owner.p_s()] [current_bodypart] begins to convulse wildly!"))
+	our_location.visible_message(span_warning("[part_owner][part_owner.p_s()] [current_bodypart] begins to convulse wildly!"))
 
 /mob/living/basic/living_limb_flesh/proc/owner_died(datum/source, gibbed)
 	SIGNAL_HANDLER
