@@ -291,10 +291,10 @@
 		if(isnull(source))
 			continue
 
-		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert( \
-			category = "[REF(source)]_notify_action", \
-			type = /atom/movable/screen/alert/notify_action, \
-			new_master = source, \
+		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
+			category = "[REF(source)]_notify_action",
+			type = /atom/movable/screen/alert/notify_action,
+			new_master = source,
 		)
 		toast.action = action
 		toast.desc = "Click to [action]."
