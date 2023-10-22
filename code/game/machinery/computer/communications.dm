@@ -823,11 +823,9 @@
 	// Pirates / Fugitives have enough lead in time that there's no point summoning them if the shuttle is called
 	// Both of these events also summon space ships and so cannot run on planetary maps
 	if (EMERGENCY_IDLE_OR_RECALLED && !SSmapping.is_planetary())
-		/*
 		// Pirates require ghosts for the pirates obviously
 		if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES)
 			hack_options += HACK_PIRATE
-		*/
 		// Fugitives require ghosts for both fugitives and hunters (Please no waldo)
 		if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES)
 			hack_options += HACK_FUGITIVES
