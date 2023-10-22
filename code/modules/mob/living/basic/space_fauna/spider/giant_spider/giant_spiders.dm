@@ -42,7 +42,7 @@
 	melee_damage_upper = 30
 	speed = 5
 	player_speed_modifier = -3.1
-	menu_description = "Slow spider variant specializing in stalking and ambushing prey, above avarage health and damage with a strong grip."
+	menu_description = "Slow spider, with a strong disarming pull and above avarage health and damage."
 
 /mob/living/basic/spider/giant/ambush/Initialize(mapload)
 	. = ..()
@@ -73,7 +73,7 @@
 	obj_damage = 45
 	speed = 5
 	player_speed_modifier = -4
-	menu_description = "Tanky and strong for the defense of the nest and other spiders."
+	menu_description = "Tanky and strong able to shed a carcass for protection."
 
 /mob/living/basic/spider/giant/guard/Initialize(mapload)
 	. = ..()
@@ -101,7 +101,7 @@
 	poison_per_bite = 5
 	speed = 3
 	player_speed_modifier = -3.1
-	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
+	menu_description = "Fast spider with toxin injection, but has less health and damage."
 
 /mob/living/basic/spider/giant/hunter/Initialize(mapload)
 	. = ..()
@@ -130,7 +130,7 @@
 	speed = 2.8
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
-	menu_description = "Fast spider variant specializing in scouting and alerting of prey, with the ability to travel in vents."
+	menu_description = "Fast spider able to see enemies through walls, send messages to the nest and the ability to travel in vents."
 
 /mob/living/basic/spider/giant/scout/Initialize(mapload)
 	. = ..()
@@ -163,7 +163,7 @@
 	player_speed_modifier = -3.1
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
-	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
+	menu_description = "Avarage speed spider able to heal other spiders and itself together with a fast web laying capability, has low damage and health."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
@@ -182,6 +182,18 @@
 	)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 20,\
+		heal_burn = 20,\
+		heal_time = 2 SECONDS,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
 
 /**
  * ### Tangle Spider
@@ -210,7 +222,7 @@
 	speed = 4
 	player_speed_modifier = -3.1
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
-	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
+	menu_description = "Avarage speed spider with self healing abilities and multiple web types to reinforce the nest with little to no damage and low health."
 
 /mob/living/basic/spider/giant/tangle/Initialize(mapload)
 	. = ..()
@@ -266,7 +278,7 @@
 	obj_damage = 15
 	speed = 5
 	player_speed_modifier = -4
-	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain and heal it."
+	menu_description = "Extremly tanky with very little damage able to self heal and lay reflective silk screens."
 
 /mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
@@ -324,7 +336,7 @@
 	speed = 5
 	player_speed_modifier = -4
 	sight = SEE_TURFS
-	menu_description = "Atmos resistant with the ability to destroy walls and limbs alike."
+	menu_description = "Atmos resistant with the ability to destroy walls and limbs alike, with the ability to send warnings to the nest."
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
