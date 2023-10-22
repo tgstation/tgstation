@@ -1,6 +1,0 @@
-author: "JohnFulpWillard, sprites by CoiledLamb"
-delete-after: True
-changes:
-  - rscadd: "You can now play Mafia on your PDA."
-  - balance: "Mafia changelings can now only talk to eachother during the night."
-  - bugfix: "Mafia abilities can't be repeatedly used on people."
