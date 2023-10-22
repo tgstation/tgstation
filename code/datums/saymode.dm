@@ -96,17 +96,3 @@
 		AI.holopad_talk(message, language)
 		return FALSE
 	return TRUE
-
-/datum/saymode/mafia
-	key = "j"
-	mode = MODE_MAFIA
-
-/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mafia_controller/MF = GLOB.mafia_game
-	if (!MF)
-		return TRUE
-	var/datum/mafia_role/R = MF.player_role_lookup[user]
-	if(!R || R.team != "mafia")
-		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), "mafia")
-	return FALSE

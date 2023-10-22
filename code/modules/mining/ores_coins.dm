@@ -236,35 +236,77 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
+	/// if the gibtonite is currently primed for explosion
 	var/primed = FALSE
-	var/det_time = 100
-	var/quality = GIBTONITE_QUALITY_LOW //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
-	var/attacher = "UNKNOWN"
+	/// how long does it take for this to detonate
+	var/det_time = 10 SECONDS
+	/// the timer
 	var/det_timer
+	/// How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	var/quality = GIBTONITE_QUALITY_LOW
+	/// who attached the rig to us
+	var/attacher
+	/// the assembly rig
+	var/obj/item/assembly_holder/rig
+	/// the rig overlay
+	var/mutable_appearance/rig_overlay
 
 /obj/item/gibtonite/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 	AddComponent(/datum/component/golem_food, consume_on_eat = FALSE, golem_food_key = /obj/item/gibtonite)
 
+/obj/item/gibtonite/examine(mob/user)
+	. = ..()
+	if(rig)
+		. += span_warning("There is some kind of device <b>rigged</b> to it!")
+	else
+		. += span_notice("You could <b>rig</b> something to it.")
+
 /obj/item/gibtonite/Destroy()
-	qdel(wires)
-	set_wires(null)
+	QDEL_NULL(rig)
+	rig_overlay = null
 	return ..()
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && isigniter(I))
-		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
-		set_wires(new /datum/wires/explosive/gibtonite(src))
-		attacher = key_name(user)
-		qdel(I)
-		add_overlay("Gibtonite_igniter")
-		return
+/obj/item/gibtonite/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == rig)
+		rig = null
+		attacher = null
+		cut_overlays(rig_overlay)
+		UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
-	if(wires && !primed)
-		if(is_wire_tool(I))
-			wires.interact(user)
+/obj/item/gibtonite/IsSpecialAssembly()
+	return TRUE
+
+/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/assembly_holder) && !rig)
+		var/obj/item/assembly_holder/holder = I
+		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
+			return ..()
+		if(!user.transferItemToLoc(holder, src))
 			return
+		add_fingerprint(user)
+		rig = holder
+		holder.master = src
+		holder.on_attach()
+		rig_overlay = holder
+		rig_overlay.pixel_y -= 5
+		add_overlay(rig_overlay)
+		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
+		log_bomber(user, "attached [holder] to ", src)
+		attacher = key_name(user)
+		user.balloon_alert_to_viewers("attached rig")
+		return
+	
+	if(I.tool_behaviour == TOOL_WRENCH && rig)
+		rig.on_found()
+		if(QDELETED(src))
+			return
+		user.balloon_alert_to_viewers("detached rig")
+		user.log_message("detached [rig] from [src].", LOG_GAME)
+		user.put_in_hands(rig)
+		return
 
 	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user, "A resonator has primed for detonation a")
@@ -341,6 +383,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/mob/living/hit_mob = hit_atom
 	hit_mob.Paralyze(1.5 SECONDS)
 	hit_mob.Knockdown(8 SECONDS)
+
+/obj/item/gibtonite/proc/igniter_prime()
+	SIGNAL_HANDLER
+	GibtoniteReaction(null, "An attached rig has primed a")
 
 /obj/item/stack/ore/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()

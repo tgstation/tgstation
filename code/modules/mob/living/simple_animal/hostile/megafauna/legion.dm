@@ -202,7 +202,7 @@
 
 
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconscious.
-/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!. || !ishuman(target))
 		return
@@ -324,7 +324,6 @@
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
-	eyeblur = 0
 	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion

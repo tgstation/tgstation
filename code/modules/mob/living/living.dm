@@ -540,6 +540,15 @@
 		if(held_item)
 			. = held_item.GetID()
 
+/**
+ * Returns the access list for this mob
+ */
+/mob/living/proc/get_access()
+	var/obj/item/card/id/id = get_idcard()
+	if(isnull(id))
+		return list()
+	return id.GetAccess()
+
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(!held_item)
@@ -825,7 +834,7 @@
 	// If they happen to be dead too, try to revive them - if possible.
 	if(stat == DEAD && can_be_revived())
 		// If the revive is successful, show our revival message (if present).
-		if(revive(FALSE, FALSE, 10) && revive_message)
+		if(revive(excess_healing = 10) && revive_message)
 			visible_message(revive_message)
 
 	// Finally update health again after we're all done
@@ -1324,7 +1333,7 @@
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
-	invisibility = INVISIBILITY_ABSTRACT
+	SetInvisibility(INVISIBILITY_ABSTRACT)
 
 	var/list/item_contents = list()
 
@@ -1374,7 +1383,7 @@
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
-				new_mob.invisibility = 0
+				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
 				created_robot.connected_ai = null

@@ -86,6 +86,14 @@
 	return tongue.toxic_foodtypes
 
 /**
+ * Gets food this mob is allergic to
+ * Essentially toxic food+, not only disgusting but outright lethal
+ */
+/mob/living/proc/get_allergic_foodtypes()
+	var/datum/quirk/item_quirk/food_allergic/allergy = get_quirk(/datum/quirk/item_quirk/food_allergic)
+	return allergy?.target_foodtypes || NONE
+
+/**
  * Gets the food reaction a mob would normally have from the given food item,
  * assuming that no check_liked callback was used in the edible component.
  *
