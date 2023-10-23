@@ -1,7 +1,7 @@
 /mob/living/basic/trader
 	name = "Trader"
 	desc = "Come buy some!"
-	unique_name = TRUE
+	unique_name = FALSE
 	icon = 'icons/mob/simple/simple_human.dmi'
 	maxHealth = 200
 	health = 200
