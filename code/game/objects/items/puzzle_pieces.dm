@@ -48,8 +48,8 @@
 	can_open_with_hands = FALSE
 	/// Make sure that the puzzle has the same puzzle_id as the keycard door! (If this is null, queuelinks dont happen!)
 	var/puzzle_id = null
-	/// must match with all connected stuff, like 1 button 1 door = 2 queue size, if this is 0, assume we do not use queuelinks!
-	var/queue_size = 2
+	/// do we use queue_links?
+	var/uses_queuelinks = TRUE
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
@@ -66,7 +66,8 @@
 
 /obj/machinery/door/puzzle/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
+	if(uses_queuelinks)
+		SSqueuelinks.add_to_queue(src, puzzle_id)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
@@ -105,7 +106,7 @@
 
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
-	queue_size = 0
+	uses_queuelinks = FALSE
 
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -208,7 +209,7 @@
 	)
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
-	/// queue size, everything inside must match
+	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
 
 /datum/armor/structure_light_puzzle
@@ -300,7 +301,7 @@
 	var/single_use = TRUE
 	/// puzzle id we send on press
 	var/id = "0" //null would literally open every puzzle door without an id
-	/// queue size, everything inside must match
+	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
 
 /obj/machinery/puzzle_button/Initialize(mapload)
@@ -341,7 +342,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 	var/used = FALSE
 	/// puzzle id we send if the correct card is swiped
 	var/id = "0"
-	/// queue size, everything inside must match
+	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
 
 /obj/machinery/puzzle_keycardpad/Initialize(mapload)
@@ -386,12 +387,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	anchored = TRUE
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
-	/// queue size, everything inside must match
-	var/queue_size = 2
 
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, id, queue_size)
+	SSqueuelinks.add_to_queue(src, id)
 
 /obj/structure/puzzle_blockade/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
