@@ -5,7 +5,8 @@
  * If attaching this to something:
  * Set deploy_time to a number in seconds for the deploy delay
  * Set thing_to_be_deployed to an obj path for the thing that gets spawned
- * Lastly, set delete_on_use to TRUE or FALSE if you want the object you're deploying with to get deleted when used
+ * Multiple deployments and deployments work together to allow a thing to be placed down several times. If multiple deployments is false then don't worry about deployments
+ * Direction setting true means the object spawned will face the direction of the person who deployed it, false goes to the default direction
  */
 
 /datum/component/deployable
@@ -15,7 +16,7 @@
 	var/obj/thing_to_be_deployed
 	/// Can the parent be deployed multiple times
 	var/multiple_deployments
-	/// How many times we can deploy the parent, set to -1 for infinite
+	/// How many times we can deploy the parent, if multiple deployments is set to true and this gets below zero, the parent will be deleted
 	var/deployments
 	/// If the component adds a little bit into the parent's description
 	var/add_description_hint
