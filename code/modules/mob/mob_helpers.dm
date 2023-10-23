@@ -252,10 +252,8 @@
  * * source The source of the notification
  * * alert_overlay The alert overlay to show in the alert message
  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
  * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(
@@ -265,27 +263,25 @@
 	atom/source,
 	mutable_appearance/alert_overlay,
 	action = NOTIFY_JUMP,
-	flashwindow = TRUE,
-	ignore_mapload = TRUE,
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	ignore_key,
 	header,
-	notify_suiciders = TRUE,
 	notify_volume = 100
 )
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
 	var/list/viewers = list()
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
 		viewers += ghost // This mob will see the alert
 
-		if(flashwindow)
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
 			window_flash(ghost.client)
 
 		if(isnull(source))
@@ -306,8 +302,8 @@
 		orbit_link = " <a href='?src=[REF(usr)];follow=[REF(source)]'>(Orbit)</a>"
 
 	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
-
-	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
+	if(notify_flags & GHOST_NOTIFY_MAKE_ANNOUNCEMENT)
+		minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
