@@ -21,14 +21,12 @@
 		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
 		def_zone = get_bodypart(random_zone) || bodyparts[1]
 
-	// Pass in species flat damage mod into blocked to be passed into parent call
-	if(!forced && !isnull(dna?.species))
-		blocked += dna.species.damage_modifier
-
 	. = ..()
 	// Taking brute or burn to bodyparts gives a damage flash
 	if(def_zone && (damagetype == BRUTE || damagetype == BURN))
 		damageoverlaytemp += .
+
+	return .
 
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
@@ -44,27 +42,38 @@
 	attacking_item,
 )
 
-	// Applies appropriate physiology mods into blocked to be passed into parent call
-	if(!forced && !isnull(physiology))
-		blocked += physiology.damage_resistance
-
-		switch(damagetype)
-			if(BRUTE)
-				blocked += (1 - physiology.brute_mod) * 100
-			if(BURN)
-				blocked += (1 - physiology.burn_mod) * 100
-			if(TOX)
-				blocked += (1 - physiology.tox_mod) * 100
-			if(OXY)
-				blocked += (1 - physiology.oxy_mod) * 100
-			if(CLONE)
-				blocked += (1 - physiology.clone_mod) * 100
-			if(STAMINA)
-				blocked += (1 - physiology.stamina_mod) * 100
-			if(BRAIN)
-				blocked += (1 - physiology.brain_mod) * 100
-
+	// Add relevant DR modifiers into blocked value to pass to parent
+	blocked += physiology?.damage_resistance
+	blocked += dna?.species?.damage_modifier
 	return ..()
+
+/mob/living/carbon/human/get_incoming_damage_modifier(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	var/final_mod = ..()
+
+	switch(damagetype)
+		if(BRUTE)
+			final_mod *= physiology.brute_mod
+		if(BURN)
+			final_mod *= physiology.burn_mod
+		if(TOX)
+			final_mod *= physiology.tox_mod
+		if(OXY)
+			final_mod *= physiology.oxy_mod
+		if(CLONE)
+			final_mod *= physiology.clone_mod
+		if(STAMINA)
+			final_mod *= physiology.stamina_mod
+		if(BRAIN)
+			final_mod *= physiology.brain_mod
+
+	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/getBruteLoss()

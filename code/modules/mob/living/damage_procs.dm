@@ -33,11 +33,10 @@
 	attacking_item,
 )
 	SHOULD_CALL_PARENT(TRUE)
-	if(damage <= 0)
-		return 0
 	var/damage_amount = damage
 	if(!forced)
 		damage_amount *= ((100 - blocked) / 100)
+		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 		if(damage_amount <= 0)
 			return 0
 
@@ -90,8 +89,30 @@
 		if(BRAIN)
 			damage_dealt = adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	return damage_dealt
+
+/**
+ * Used in tandem with [proc/apply_damage] to calculate modifier applied into incoming damage
+ */
+/mob/living/proc/get_incoming_damage_modifier(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	var/list/damage_mods = list()
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+
+	var/final_mod = 1
+	for(var/new_mod in damage_mods)
+		final_mod *= new_mod
+	return final_mod
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE)

@@ -90,11 +90,16 @@
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
 
-
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+/// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
+/// not sent if the apply damage call was forced
+#define COMSIG_MOB_APPLY_DAMAGE_MODIFIERS "mob_apply_damage_modifiers"
+/// from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// works like above but after the damage is actually inflicted
 #define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
+
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)

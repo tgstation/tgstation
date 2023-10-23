@@ -1053,9 +1053,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
-/datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
-	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
-
 /**
  * Equip the outfit required for life. Replaces items currently worn.
  */
@@ -1291,12 +1288,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if((weapon.item_flags & SURGICAL_TOOL) && !user.combat_mode && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
 		modified_wound_bonus = CANT_WOUND
 
-	var/final_damage = weapon.force * check_species_weakness(weapon, user)
 	human.send_item_attack_message(weapon, user, hit_area, affecting)
 	var/damage_dealt = human.apply_damage(
-		damage = final_damage,
+		damage = weapon.force,
 		damagetype = weapon.damtype,
-		def_zone = affecting.def_zone, // Yes, we go from def zone to bodypart back to def zone so we can go back to bodypart.
+		def_zone = affecting,
 		blocked = armor_block,
 		wound_bonus = modified_wound_bonus,
 		bare_wound_bonus = weapon.bare_wound_bonus,
