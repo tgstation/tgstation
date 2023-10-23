@@ -125,6 +125,7 @@
 		if(!picked_event)
 			if(length(valid_events))
 				stack_trace("WARNING: Storyteller picked a null from event pool, defaulting to option 1, look at weights.")
+				shuffle_inplace(valid_events)
 				picked_event = valid_events[1]
 			else
 				message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
@@ -149,7 +150,7 @@
 		SSgamemode.current_roundstart_event = bought_event
 		mode.TriggerEvent(bought_event, forced)
 	else
-		mode.schedule_event(bought_event, (rand(120, 240) SECONDS), total_cost, _forced = forced)
+		mode.schedule_event(bought_event, 3 MINUTES, total_cost, _forced = forced)
 	SSgamemode.triggered_round_events |= bought_event.name
 
 /// Calculates the weights of the events from a passed track.
