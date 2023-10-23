@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "the bank machine cannot print holochips worth 0 credits now"

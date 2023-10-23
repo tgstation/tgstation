@@ -67,6 +67,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	find_and_hang_on_wall()
 
 /obj/structure/camera_assembly/update_icon_state()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"

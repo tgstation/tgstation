@@ -1,5 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - rscadd: "There's a new space ruin in town, be on the lookout for a hidden supply cache."
-  - rscadd: "Added a new type of wall which can only be destroyed by blowing it up."

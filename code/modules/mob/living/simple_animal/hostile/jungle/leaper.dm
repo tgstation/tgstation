@@ -40,7 +40,7 @@
 	nondirectional_sprite = TRUE
 	impact_effect_type = /obj/effect/temp_visual/leaper_projectile_impact
 
-/obj/projectile/leaper/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/leaper/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	if (!isliving(target))
 		return
@@ -132,9 +132,10 @@
 	taste_mult = 1.3
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
 	if(volume >= 10)
-		M.adjustToxLoss(5 * REM * seconds_per_tick, 0)
-	..()
+		if(M.adjustToxLoss(5 * REM * seconds_per_tick, updating_health = FALSE))
+			. = UPDATE_MOB_HEALTH
 
 /obj/effect/temp_visual/leaper_crush
 	name = "grim tidings"
@@ -169,7 +170,7 @@
 	if(hop_cooldown <= world.time)
 		Hop(player_hop = TRUE)
 
-/mob/living/simple_animal/hostile/jungle/leaper/AttackingTarget()
+/mob/living/simple_animal/hostile/jungle/leaper/AttackingTarget(atom/attacked_target)
 	if(isliving(target))
 		return
 	return ..()

@@ -108,4 +108,6 @@
 
 #define COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
 
+#define COOLDOWN_STARTED(cd_source, cd_index) (cd_source.cd_index != 0)
+
 #define COOLDOWN_TIMELEFT(cd_source, cd_index) (max(0, cd_source.cd_index - world.time))

@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fixes tesla coils duplicating the power of >7GeV supermatter zaps."

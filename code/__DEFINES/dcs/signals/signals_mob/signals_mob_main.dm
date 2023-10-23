@@ -7,6 +7,8 @@
 #define COMSIG_MOB_LOGIN "mob_login"
 ///from base of /mob/Logout(): ()
 #define COMSIG_MOB_LOGOUT "mob_logout"
+///from base of /mob/mind_initialize
+#define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
 ///from base of mob/reagent_check(): (datum/reagent/chem, seconds_per_tick, times_fired)
@@ -28,6 +30,9 @@
 	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 /// From base of /mob/living/simple_animal/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
+
+/// From base of /mob/proc/update_held_items
+#define COMSIG_MOB_UPDATE_HELD_ITEMS "mob_update_held_items"
 
 /// From base of /client/Move(): (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"

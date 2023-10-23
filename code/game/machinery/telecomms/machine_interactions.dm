@@ -1,15 +1,13 @@
-
-/*
-
-	All telecommunications interactions:
-
-*/
+// This file is separate from telecommunications.dm to isolate the implementation
+// of basic interactions with the machines.
 
 /obj/machinery/telecomms
-	var/temp = "" // output message
+	/// The current temporary frequency used to add new filtered frequencies
+	/// options.
 	var/tempfreq = FREQ_COMMON
+	/// The current mob operating the machine.
 	var/mob/living/operator
-	///Illegal frequencies that can't be listened to by telecommunication servers.
+	/// Illegal frequencies that can't be listened to by telecommunication servers.
 	var/list/banned_frequencies = list(
 		FREQ_SYNDICATE,
 		FREQ_CENTCOM,
@@ -19,7 +17,7 @@
 		FREQ_CTF_BLUE,
 	)
 
-/obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
+/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, params)
 
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
@@ -27,13 +25,13 @@
 		icon_closed = "[initial(icon_state)]_off"
 		icon_open = "[initial(icon_state)]_o_off"
 
-	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
+	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, attacking_item))
 		return
 	// Using a multitool lets you access the receiver's interface
-	else if(P.tool_behaviour == TOOL_MULTITOOL)
+	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		attack_hand(user)
 
-	else if(default_deconstruction_crowbar(P))
+	else if(default_deconstruction_crowbar(attacking_item))
 		return
 	else
 		return ..()
@@ -122,8 +120,8 @@
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
-					for(var/obj/machinery/telecomms/T in links)
-						remove_link(T)
+					for(var/obj/machinery/telecomms/linked_machine in links)
+						remove_link(linked_machine)
 					network = params["value"]
 					links = list()
 					operator.log_message("has changed the network for [src] to [network].", LOG_GAME)
@@ -145,13 +143,13 @@
 			operator.log_message("removed frequency [params["value"]] for [src].", LOG_GAME)
 			. = TRUE
 		if("unlink")
-			var/obj/machinery/telecomms/T = links[text2num(params["value"])]
-			if(T)
-				. = remove_link(T, operator)
+			var/obj/machinery/telecomms/machine_to_unlink = links[text2num(params["value"])]
+			if(machine_to_unlink)
+				. = remove_link(machine_to_unlink, operator)
 		if("link")
 			if(heldmultitool)
-				var/obj/machinery/telecomms/T = heldmultitool.buffer
-				. = add_new_link(T, operator)
+				var/obj/machinery/telecomms/machine_to_link = heldmultitool.buffer
+				. = add_new_link(machine_to_link, operator)
 		if("buffer")
 			heldmultitool.set_buffer(src)
 			. = TRUE
@@ -162,7 +160,7 @@
 	add_act(action, params)
 	. = TRUE
 
-///adds new_connection to src's links list AND vice versa. also updates links_by_telecomms_type
+/// Adds new_connection to src's links list AND vice versa. Also updates `links_by_telecomms_type`.
 /obj/machinery/telecomms/proc/add_new_link(obj/machinery/telecomms/new_connection, mob/user)
 	if(!istype(new_connection) || new_connection == src)
 		return FALSE
@@ -180,7 +178,7 @@
 		user.log_message("linked [src] for [new_connection].", LOG_GAME)
 	return TRUE
 
-///removes old_connection from src's links list AND vice versa. also updates links_by_telecomms_type
+/// Removes old_connection from src's links list AND vice versa. Also updates `links_by_telecomms_type`.
 /obj/machinery/telecomms/proc/remove_link(obj/machinery/telecomms/old_connection, mob/user)
 	if(!istype(old_connection) || old_connection == src)
 		return FALSE
@@ -198,6 +196,11 @@
 
 	return TRUE
 
+/**
+ * Wrapper for adding additional options to a machine's interface.
+ *
+ * Returns a list, or `null` if it wasn't implemented by the machine.
+ */
 /obj/machinery/telecomms/proc/add_option()
 	return
 
@@ -214,7 +217,14 @@
 	data["receiving"] = receiving
 	return data
 
+/**
+ * Wrapper for adding another time of action for `ui_act()`, rather than
+ * having you override `ui_act` yourself.
+ *
+ * Returns `TRUE` if the action was handled, nothing if not.
+ */
 /obj/machinery/telecomms/proc/add_act(action, params)
+	return
 
 /obj/machinery/telecomms/relay/add_act(action, params)
 	switch(action)
@@ -236,20 +246,19 @@
 				else
 					change_frequency = 0
 
-// Returns a multitool from a user depending on their mobtype.
-
+/// Returns a multitool from a user depending on their mobtype.
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/P = null
+	var/obj/item/multitool/multitool = null
 	// Let's double check
 	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		P = user.get_active_held_item()
+		multitool = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
+		multitool = U.aiMulti
 	else if(iscyborg(user) && in_range(user, src))
 		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			P = user.get_active_held_item()
-	return P
+			multitool = user.get_active_held_item()
+	return multitool
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))

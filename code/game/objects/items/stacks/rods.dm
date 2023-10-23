@@ -55,6 +55,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod) // snatcher prod isn't here as a spoopy secret
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
 		target.attackby(src, user, click_parameters)

@@ -3,6 +3,7 @@
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "watermelonslice"
 	food_reagents = list(
 		/datum/reagent/water = 1,
@@ -13,6 +14,22 @@
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/appleslice
+	name = "apple slice"
+	desc = "The perfect after-school snack."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "appleslice"
+	food_reagents = list(
+		/datum/reagent/consumable/applejuice = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("apple" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hugemushroomslice
@@ -66,7 +83,7 @@
 	)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	trash_type = /obj/item/trash/popcorn/
+	trash_type = /obj/item/trash/popcorn
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope
@@ -491,7 +508,7 @@
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
-/obj/item/food/pickle/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
 		return FOOD_LIKED
@@ -550,6 +567,7 @@
 	tastes = list("cooked eggplant" = 5, "cheese" = 4, "ground meat" = 3, "veggies" = 2)
 	foodtypes = VEGETABLES | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/moussaka
 	name = "moussaka"
@@ -562,6 +580,7 @@
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
 	foodtypes = MEAT | DAIRY | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/moussaka/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/moussaka_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -577,6 +596,7 @@
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
 	foodtypes = MEAT | DAIRY | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/candied_pineapple
 	name = "candied pineapple"
@@ -591,6 +611,7 @@
 	foodtypes = FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/candied_pineapple/Initialize(mapload)
 	. = ..()
@@ -608,6 +629,7 @@
 	tastes = list("dough" = 2)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/raw_pita_bread/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -627,6 +649,7 @@
 	tastes = list("pita bread" = 2)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/tzatziki_sauce
 	name = "tzatziki sauce"
@@ -639,6 +662,7 @@
 	tastes = list("garlic" = 4, "cucumber" = 2, "olive oil" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/tzatziki_and_pita_bread
 	name = "tzatziki and pita bread"
@@ -651,6 +675,7 @@
 	tastes = list("pita bread" = 4, "tzatziki sauce" = 2, "olive oil" = 2)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/grilled_beef_gyro
 	name = "grilled beef gyro"
@@ -664,6 +689,7 @@
 	tastes = list("pita bread" = 4, "tender meat" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
 	foodtypes = VEGETABLES | GRAIN | MEAT
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/vegetarian_gyro
 	name = "vegetarian gyro"
@@ -676,3 +702,4 @@
 	tastes = list("pita bread" = 4, "cucumber" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_4

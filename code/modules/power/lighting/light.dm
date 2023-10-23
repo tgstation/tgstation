@@ -116,6 +116,7 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -687,6 +688,20 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
+
+/**
+ * All the effects that occur when a light falls off a wall that it was hung onto.
+ */
+/obj/machinery/light/proc/knock_down()
+	new /obj/item/wallframe/light_fixture(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+	if(status != LIGHT_BROKEN)
+		break_light_tube(FALSE)
+	if(status != LIGHT_EMPTY)
+		drop_light_tube()
+	if(cell)
+		cell.forceMove(drop_location())
+	qdel(src)
 
 /obj/machinery/light/floor
 	name = "floor light"

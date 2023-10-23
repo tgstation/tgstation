@@ -168,6 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hidden_item = new /obj/item/food/urinalcake
+	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -589,6 +590,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	anchored = TRUE
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+
+/obj/structure/water_source/Initialize(mapload)
+	. = ..()
+
+	create_reagents(INFINITY, NO_REACT)
+	reagents.add_reagent(dispensedreagent, INFINITY)
 
 /obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

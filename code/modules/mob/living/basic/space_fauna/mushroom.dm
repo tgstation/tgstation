@@ -58,30 +58,23 @@
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mushroom,
+		BB_TARGET_MINIMUM_STAT = DEAD,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/mushroom,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/mushroom_food,
 	)
 
 
 /datum/targetting_datum/basic/mushroom
-	stat_attack = DEAD
 
 ///we only attacked another mushrooms
-/datum/targetting_datum/basic/mushroom/faction_check(mob/living/living_mob, mob/living/the_target)
-	return !living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly)
-
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/mushroom
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/mushroom
-
-/datum/ai_behavior/basic_melee_attack/mushroom
-	action_cooldown = 2 SECONDS
+/datum/targetting_datum/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	return !living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET

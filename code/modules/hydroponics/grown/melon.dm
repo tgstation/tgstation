@@ -17,7 +17,7 @@
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.gib()
+	user.gib(DROP_ALL_REMAINS)
 	new product(drop_location())
 	qdel(src)
 	return MANUAL_SUICIDE
@@ -78,7 +78,7 @@
  * Checks whether or not the person eating the holymelon
  * is a holy_role (chaplain), as chaplains love holymelons.
  */
-/obj/item/food/grown/holymelon/proc/check_holyness(fraction, mob/mob_eating)
+/obj/item/food/grown/holymelon/proc/check_holyness(mob/mob_eating)
 	if(!ishuman(mob_eating))
 		return
 	var/mob/living/carbon/human/holy_person = mob_eating

@@ -147,7 +147,8 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
+	var/decay_multiplier = HAS_TRAIT(owner, TRAIT_HUSK) ? 2 : 1 // husks decay twice as fast
+	adjust_stacks(owner.fire_stack_decay_rate * decay_multiplier * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)

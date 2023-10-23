@@ -160,9 +160,12 @@ GLOBAL_LIST_INIT(food_buffs, list(
 ))
 
 /// Food quality change according to species diet
-#define TOXIC_FOOD_QUALITY_CHANGE -4
 #define DISLIKED_FOOD_QUALITY_CHANGE -2
 #define LIKED_FOOD_QUALITY_CHANGE 2
+/// Threshold for food to give a toxic reaction
+#define TOXIC_FOOD_QUALITY_THRESHOLD -8
+/// Food is dangerous to consume
+#define FOOD_QUALITY_DANGEROUS -100
 
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
 #define FOOD_IN_CONTAINER (1<<0)
@@ -194,6 +197,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define FOOD_LIKED 1
 #define FOOD_DISLIKED 2
 #define FOOD_TOXIC 3
+#define FOOD_ALLERGIC 4
 
 ///Venue reagent requirement
 #define VENUE_BAR_MINIMUM_REAGENTS 10

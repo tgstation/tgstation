@@ -112,6 +112,13 @@
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
+	// No subtypes
+	if(type != /obj/item/radio)
+		return
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
+	)
+
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
@@ -477,9 +484,9 @@
 	. = ..()
 	if(unscrewed)
 		return
-	if(broadcasting)
+	if(broadcasting && overlay_mic_idle)
 		. += overlay_mic_idle
-	if(listening)
+	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)

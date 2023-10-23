@@ -46,7 +46,7 @@
 	desc = "When linked to a tram's on board computer systems, this device allows the user to manipulate the controls remotely. \
 		Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
 		Perfect for running someone over in the name of a tram malfunction!"
-	item = /obj/item/tram_remote
+	item = /obj/item/assembly/control/transport/remote
 	cost = 2
 
 /datum/uplink_item/device_tools/thermal
@@ -263,3 +263,9 @@
 			bright lights. Effective, affordable, and nigh undetectable."
 	item = /obj/item/syndicate_contacts
 	cost = 3
+
+/datum/uplink_item/device_tools/syndicate_climbing_hook
+	name = "Syndicate Climbing Hook"
+	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
+	item = /obj/item/climbing_hook/syndicate
+	cost = 1

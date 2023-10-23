@@ -370,7 +370,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, action = "released", name = "sheets")
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)

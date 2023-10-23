@@ -129,6 +129,12 @@
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/storage/medkit/toxin)
 
+/datum/supply_pack/goody/bandagebox_singlepack
+	name = "Box of Bandages Single-Pack"
+	desc = "A single box of DeForest brand bandages. For when you don't want to see your doctor."
+	cost = PAYCHECK_CREW * 3
+	contains = list(/obj/item/storage/box/bandages)
+
 /datum/supply_pack/goody/toolbox // mostly just to water down coupon probability
 	name = "Mechanical Toolbox"
 	desc = "A fully stocked mechanical toolbox, for when you're too lazy to just print them out."
@@ -242,6 +248,18 @@
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/fishing_rod/telescopic)
 
+/datum/supply_pack/goody/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
+	cost = PAYCHECK_CREW * 2.5
+	contains = list(/obj/item/fish_analyzer)
+
+/datum/supply_pack/goody/fish_catalog
+	name = "Fishing Catalog"
+	desc = "A catalog containing all the fishy info you'll ever need."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/book/manual/fish_catalog)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug"
 	desc = "A bog standard coffee mug, for drinking coffee."
@@ -271,3 +289,9 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+/datum/supply_pack/goody/climbing_hook
+	name = "Climbing hook"
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/climbing_hook)

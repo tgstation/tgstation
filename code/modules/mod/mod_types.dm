@@ -260,6 +260,12 @@
 		/obj/item/mod/module/jump_jet,
 	)
 
+/obj/item/mod/control/pre_equipped/nuclear/no_jetpack
+
+/obj/item/mod/control/pre_equipped/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
+	applied_modules -= list(/obj/item/mod/module/jetpack/advanced, /obj/item/mod/module/jump_jet)
+	return ..()
+
 /obj/item/mod/control/pre_equipped/nuclear/plasmaman
 
 /obj/item/mod/control/pre_equipped/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)

@@ -109,12 +109,12 @@
 			damage = rand(20, 35)
 		return attack_threshold_check(damage)
 
-/mob/living/basic/attack_drone(mob/living/simple_animal/drone/attacking_drone)
+/mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
-/mob/living/basic/attack_drone_secondary(mob/living/simple_animal/drone/attacking_drone)
+/mob/living/basic/attack_drone_secondary(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
@@ -148,7 +148,7 @@
 				apply_damage(500, damagetype = BRUTE)
 			else
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			var/bloss = 60
@@ -165,6 +165,9 @@
 	return TRUE
 
 /mob/living/basic/blob_act(obj/structure/blob/attacking_blob)
+	. = ..()
+	if (!.)
+		return
 	apply_damage(20, damagetype = BRUTE)
 
 /mob/living/basic/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)

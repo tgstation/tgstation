@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes a bug that would cause grown inedible plant seeds (like tower cap) to vanish from existence upon being added to the seed extractor"
-  - bugfix: "fixes a issue that would cause fruit wine to bug out when trying to blend its reagent color"

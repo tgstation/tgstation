@@ -110,8 +110,7 @@
 	faction = list(FACTION_STICKMAN)
 	melee_damage_lower = 1
 	melee_damage_upper = 5
-
-	ai_controller = /datum/ai_controller/basic_controller/wizard_copy
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
@@ -140,18 +139,6 @@
 	else
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 		qdel(src) //I see through your ruse!
-
-/datum/ai_controller/basic_controller/wizard_copy
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 //fancy effects
 /obj/effect/temp_visual/paper_scatter

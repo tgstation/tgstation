@@ -331,6 +331,20 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls"
 	build_path = /obj/machinery/computer/tram_controls
+	var/split_mode = FALSE
+
+/obj/item/circuitboard/computer/tram_controls/split
+	split_mode = TRUE
+
+/obj/item/circuitboard/computer/tram_controls/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
+	split_mode = !split_mode
+	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
+	return TRUE
 
 /obj/item/circuitboard/computer/terminal
 	name = "Terminal"
@@ -539,6 +553,10 @@
 /obj/item/circuitboard/computer/order_console/mining/golem
 	name = "Golem Ship Equipment Vendor Console"
 	build_path = /obj/machinery/computer/order_console/mining/golem
+
+/obj/item/circuitboard/computer/order_console/bitrunning
+	name = "Bitrunning Vendor Console"
+	build_path = /obj/machinery/computer/order_console/bitrunning
 
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"

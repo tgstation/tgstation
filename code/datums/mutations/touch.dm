@@ -38,7 +38,7 @@
 	///This var decides if the spell should chain, dictated by presence of power chromosome
 	var/chain = FALSE
 	///Affects damage, should do about 1 per limb
-	var/zap_power = 7500
+	var/zap_power = 3e6
 	///Range of tesla shock bounces
 	var/zap_range = 7
 	///flags that dictate what the tesla shock can interact with, Can only damage mobs, Cannot damage machines or generate energy

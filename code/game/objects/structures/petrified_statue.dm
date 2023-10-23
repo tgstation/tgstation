@@ -94,7 +94,7 @@
 
 /mob/proc/petrify(statue_timer)
 
-/mob/living/carbon/human/petrify(statue_timer, save_brain)
+/mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
 	if(!isturf(loc))
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
@@ -102,6 +102,8 @@
 	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	if(colorlist)
+		newcolor = colorlist
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 

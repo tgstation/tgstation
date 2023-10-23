@@ -6,21 +6,21 @@
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return checkarmor(def_zone, type)
+				return check_armor(def_zone, type)
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return checkarmor(affecting, type)
+			return check_armor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		armorval += checkarmor(BP, type)
+		armorval += check_armor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, damage_type)
+/mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
 		return 0
 	var/protection = 100
@@ -32,7 +32,7 @@
 	return 100 - protection
 
 ///Get all the clothing on a specific body part
-/mob/living/carbon/human/proc/clothingonpart(obj/item/bodypart/def_zone)
+/mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
 	var/list/covering_part = list()
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
@@ -44,59 +44,47 @@
 				covering_part += C
 	return covering_part
 
-/mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna?.species)
-		dna.species.on_hit(P, src)
-
-
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	if(dna?.species)
-		var/spec_return = dna.species.bullet_act(P, src)
-		if(spec_return)
-			return spec_return
 
-	//MARTIAL ART STUFF
-	if(mind)
-		if(mind.martial_art && mind.martial_art.can_use(src)) //Some martial arts users can deflect projectiles!
-			var/martial_art_result = mind.martial_art.on_projectile_hit(src, P, def_zone)
-			if(!(martial_art_result == BULLET_ACT_HIT))
-				return martial_art_result
+	if(P.firer == src && P.original == src) //can't block or reflect when shooting yourself
+		return ..()
 
-	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(P.reflectable & REFLECT_NORMAL)
-			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-				visible_message(span_danger("The [P.name] gets reflected by [src]!"), \
-								span_userdanger("The [P.name] gets reflected by [src]!"))
-				// Finds and plays the block_sound of item which reflected
-				for(var/obj/item/I in held_items)
-					if(I.IsReflect(def_zone))
-						playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
-				// Find a turf near or on the original location to bounce to
-				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-					loc.bullet_act(P, def_zone, piercing_hit)
-					return BULLET_ACT_HIT
-				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/turf/curloc = get_turf(src)
+	if(P.reflectable & REFLECT_NORMAL)
+		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			visible_message(
+				span_danger("The [P.name] gets reflected by [src]!"),
+				span_userdanger("The [P.name] gets reflected by [src]!"),
+			)
+			// Finds and plays the block_sound of item which reflected
+			for(var/obj/item/I in held_items)
+				if(I.IsReflect(def_zone))
+					playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
+			// Find a turf near or on the original location to bounce to
+			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
+				P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
+				loc.bullet_act(P, def_zone, piercing_hit)
+				return BULLET_ACT_HIT
+			if(P.starting)
+				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/turf/curloc = get_turf(src)
 
-					// redirect the projectile
-					P.original = locate(new_x, new_y, P.z)
-					P.starting = curloc
-					P.firer = src
-					P.yo = new_y - curloc.y
-					P.xo = new_x - curloc.x
-					var/new_angle_s = P.Angle + rand(120,240)
-					while(new_angle_s > 180) // Translate to regular projectile degrees
-						new_angle_s -= 360
-					P.set_angle(new_angle_s)
+				// redirect the projectile
+				P.original = locate(new_x, new_y, P.z)
+				P.starting = curloc
+				P.firer = src
+				P.yo = new_y - curloc.y
+				P.xo = new_x - curloc.x
+				var/new_angle_s = P.Angle + rand(120,240)
+				while(new_angle_s > 180) // Translate to regular projectile degrees
+					new_angle_s -= 360
+				P.set_angle(new_angle_s)
 
-				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
-			P.on_hit(src, 100, def_zone, piercing_hit)
-			return BULLET_ACT_HIT
+	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
+		P.on_hit(src, 100, def_zone, piercing_hit)
+		return BULLET_ACT_HIT
 
 	return ..()
 
@@ -148,10 +136,6 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna?.species)
-		var/spec_return = dna.species.spec_hitby(AM, src)
-		if(spec_return)
-			return spec_return
 	var/obj/item/I
 	var/damage_type = BRUTE
 	var/throwpower = 30
@@ -260,14 +244,13 @@
 
 	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-			var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+			var/obj/item/bodypart/head/monkey_mouth = user.get_bodypart(BODY_ZONE_HEAD)
+			var/damage = HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) ? monkey_mouth.unarmed_damage_high : rand(monkey_mouth.unarmed_damage_low, monkey_mouth.unarmed_damage_high)
 			if(!damage)
-				return
+				return FALSE
 			if(check_shields(user, damage, "the [user.name]"))
 				return FALSE
-			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
+			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -412,7 +395,7 @@
 						if(EXPLODE_LIGHT)
 							SSexplosions.low_mov_atom += thing
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-				gib()
+				gib(DROP_ALL_REMAINS)
 				return TRUE
 			else
 				brute_loss = 500
@@ -482,7 +465,7 @@
 
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.
-/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
 	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
 	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
 		if(gloves && gloves.siemens_coefficient <= 0)
@@ -511,7 +494,8 @@
 			var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 			if(heart.Restart() && stat == CONSCIOUS)
 				to_chat(src, span_notice("You feel your heart beating again!"))
-	electrocution_animation(40)
+	if (!(flags & SHOCK_NO_HUMAN_ANIM))
+		electrocution_animation(4 SECONDS)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
 	var/list/damaged = list()

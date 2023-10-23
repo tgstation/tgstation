@@ -260,10 +260,6 @@
 			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
 			balloon_alert(user, "cell removed")
 			user.put_in_hands(cell)
-			cell.update_appearance()
-			cell = null
-			charging = APC_NOT_CHARGING
-			update_appearance()
 		return
 	if((machine_stat & MAINT) && !opened) //no board; no interface
 		return

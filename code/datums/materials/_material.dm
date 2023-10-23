@@ -33,8 +33,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
+	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	var/minimum_value_override = null
+	///Is this material traded on the stock market?
+	var/tradable = FALSE
+	///If this material is tradable, what is the base quantity of the material on the stock market?
+	var/tradable_base_quantity = 0
+
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
@@ -154,11 +162,17 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, get_starlight_color())
+	if(!starlight_color)
+		on.RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, TYPE_PROC_REF(/turf, material_starlight_changed))
+		RegisterSignal(on, COMSIG_QDELETING, PROC_REF(lit_turf_deleted))
+	on.set_light(2, 1, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
-///Gets the space color and possible changed color if space is different
-/datum/material/proc/get_starlight_color()
-	return starlight_color || GLOB.starlight_color
+/turf/proc/material_starlight_changed(datum/source, old_star, new_star)
+	if(light_color == old_star)
+		set_light_color(new_star)
+
+/datum/material/proc/lit_turf_deleted(turf/source)
+	source.set_light(0, 0, null)
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)
@@ -212,6 +226,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	if(alpha < 255)
 		T.RemoveElement(/datum/element/turf_z_transparency)
+		// yeets glow
+		T.UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+		T.set_light(0, 0, null)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.

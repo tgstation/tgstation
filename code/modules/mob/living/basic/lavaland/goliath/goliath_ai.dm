@@ -3,13 +3,14 @@
 
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles,
@@ -18,9 +19,6 @@
 		/datum/ai_planning_subtree/goliath_find_diggable_turf,
 		/datum/ai_planning_subtree/goliath_dig,
 	)
-
-/datum/targetting_datum/basic/allow_items/goliath
-	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/goliath
 	operational_datums = list(/datum/component/ai_target_timer)
@@ -96,8 +94,7 @@
 	var/target_key = BB_GOLIATH_HOLE_TARGET
 
 /datum/ai_planning_subtree/goliath_dig/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(target_turf))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	controller.queue_behavior(/datum/ai_behavior/goliath_dig, target_key)
 	return SUBTREE_RETURN_FINISH_PLANNING

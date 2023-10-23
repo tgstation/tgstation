@@ -334,7 +334,7 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
 	return
 
@@ -348,6 +348,11 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/// Returns true if we have a blackboard key with the provided key and it is not qdeleting
+/datum/ai_controller/proc/blackboard_key_exists(key)
+	var/datum/key_value = blackboard[key]
+	return !QDELETED(key_value)
 
 /**
  * Used to manage references to datum by AI controllers

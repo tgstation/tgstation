@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:map';
+
 html,
 body {
   padding: 0;
@@ -468,8 +470,31 @@ h2.alert {
 }
 
 .minorannounce {
+  color: #ff0000;
   font-weight: bold;
   font-size: 185%;
+}
+
+.minoralert {
+  color: #000000;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #000000;
+  font-weight: bold;
+  font-size: 225%;
+}
+
+.prioritytitle {
+  color: #0000ff;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.priorityalert {
+  color: #ff0000;
+  font-size: 140%;
 }
 
 .greenannounce {
@@ -593,6 +618,10 @@ h2.alert {
 }
 
 .blob {
+  color: #ee4000;
+}
+
+.blobannounce {
   color: #323f1c;
   font-weight: bold;
   font-size: 185%;
@@ -945,4 +974,71 @@ h2.alert {
 .tooltip {
   font-style: italic;
   border-bottom: 1px dashed #000;
+}
+
+.major_announcement_title {
+  color: #ff0066;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 175%;
+}
+
+.major_announcement_text {
+  color: #202020;
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.minor_announcement_title {
+  color: #007ee6;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.minor_announcement_text {
+  color: #202020;
+  font-size: 125%;
+}
+
+$alert-stripe-colors: (
+  'default': #dedede,
+  'green': #c2ffcc,
+  'blue': #b8e6ff,
+  'pink': #ffc2f4,
+  'yellow': #ffe880,
+  'orange': #ffbb99,
+  'red': #ff99aa,
+  'purple': #d7c2ff,
+);
+
+$alert-background-colors: (
+  'default': #d1d1d1,
+  'green': #a8ffb7,
+  'blue': #a8e1ff,
+  'pink': #ffb3f3,
+  'yellow': #fff0ad,
+  'orange': #ffc9ad,
+  'red': #ffadbb,
+  'purple': #ccb3ff,
+);
+
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5em 0.5em;
+    margin-bottom: 0.5em;
+    box-shadow: none;
+    font-weight: bold;
+    border: 1px solid $color-value;
+    margin: 0.5em 0 0.5em 0;
+    padding: 0.5em 0.75em;
+    background-color: map.get($alert-background-colors, $color-name);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+  }
 }

@@ -288,6 +288,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		// You aren't the source? don't change yourself
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
+	RegisterSignal(SSdcs, COMSIG_NARSIE_SUMMON_UPDATE, PROC_REF(narsie_modified))
+	if(GLOB.narsie_summon_count >= 1)
+		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
@@ -331,6 +334,33 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/parallax/check_outside_bounds()
 	// If we're outside bounds AND we're the 0th plane, we need to show cause parallax is hacked to hell
 	return offset != 0 && is_outside_bounds
+
+/// Starts the narsie animation midway, so we can catch up to everyone else quickly
+/atom/movable/screen/plane_master/parallax/proc/narsie_start_midway(start_time)
+	var/time_elapsed = world.time - start_time
+	narsie_summoned_effect(max(16 SECONDS - time_elapsed, 0))
+
+/// Starts the narsie animation, make us grey, then red
+/atom/movable/screen/plane_master/parallax/proc/narsie_modified(datum/source, new_count)
+	SIGNAL_HANDLER
+	if(new_count >= 1)
+		narsie_summoned_effect(16 SECONDS)
+	else
+		narsie_unsummoned()
+
+/atom/movable/screen/plane_master/parallax/proc/narsie_summoned_effect(animate_time)
+	if(GLOB.narsie_summon_count >= 2)
+		var/static/list/nightmare_parallax = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0)
+		animate(src, color = nightmare_parallax, time = animate_time)
+		return
+
+	var/static/list/grey_parallax = list(0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0,0,0,1, -0.1,-0.1,-0.1,0)
+	// We're gonna animate ourselves grey
+	// Then, once it's done, about 40 seconds into the event itself, we're gonna start doin some shit. see below
+	animate(src, color = grey_parallax, time = animate_time)
+
+/atom/movable/screen/plane_master/parallax/proc/narsie_unsummoned()
+	animate(src, color = null, time = 8 SECONDS)
 
 /atom/movable/screen/plane_master/gravpulse
 	name = "Gravpulse"

@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Flares and candles no longer sound like flashlights when being turned on."
-  - bugfix: "Getting shot by an SC/FISHER now disables PDA lights for consistency's sake."
