@@ -138,7 +138,7 @@
 	creation_time = 1.5 SECONDS
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg
-	var/shock = 0
+	var/shock = FALSE
 
 /obj/item/holosign_creator/cyborg/attack_self(mob/user)
 	if(iscyborg(user))
@@ -147,18 +147,18 @@
 		if(shock)
 			to_chat(user, span_notice("You clear all active holograms, and reset your projector to normal."))
 			holosign_type = /obj/structure/holosign/barrier/cyborg
-			creation_time = 5
+			creation_time = 0.5 SECONDS
 			for(var/obj/structure/holosign/hologram in signs)
 				qdel(hologram)
-			shock = 0
+			shock = FALSE
 			return
 		if(borg.emagged && !shock)
 			to_chat(user, span_warning("You clear all active holograms, and overload your energy projector!"))
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
-			creation_time = 30
+			creation_time = 3 SECONDS
 			for(var/obj/structure/holosign/hologram in signs)
 				qdel(hologram)
-			shock = 1
+			shock = TRUE
 			return
 	for(var/obj/structure/holosign/hologram as anything in signs)
 		qdel(hologram)
