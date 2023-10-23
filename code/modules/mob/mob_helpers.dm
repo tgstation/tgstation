@@ -293,7 +293,7 @@
 			new_master = source,
 		)
 		toast.action = action
-		toast.desc = "Click to [action]."
+		toast.desc = "[message] -- Click to [action]."
 		toast.name = header
 		toast.target = source
 
@@ -304,6 +304,10 @@
 	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
 	if(notify_flags & GHOST_NOTIFY_MAKE_ANNOUNCEMENT)
 		minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
+	else
+		if(ghost_sound)
+			for(var/mob/dead/observer/ghost in GLOB.player_list)
+				SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume)) //We still want the sound to play if no announcement is made.
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
