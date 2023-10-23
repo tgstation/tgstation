@@ -189,8 +189,10 @@
 		flinch_chance = 80
 
 	if(prob(flinch_chance))
-		shooter.visible_message(span_danger("[shooter] flinches!"), \
-			span_danger("You flinch!"))
+		source.visible_message(
+			span_danger("[source] flinches!"),
+			span_danger("You flinch!"),
+		)
 		INVOKE_ASYNC(src, PROC_REF(trigger_reaction))
 
 #undef GUNPOINT_DELAY_STAGE_2

@@ -50,19 +50,19 @@
 
 		switch(damagetype)
 			if(BRUTE)
-				blocked += physiology.brute_mod
+				blocked += (1 - physiology.brute_mod) * 100
 			if(BURN)
-				blocked += physiology.burn_mod
+				blocked += (1 - physiology.burn_mod) * 100
 			if(TOX)
-				blocked += physiology.tox_mod
+				blocked += (1 - physiology.tox_mod) * 100
 			if(OXY)
-				blocked += physiology.oxy_mod
+				blocked += (1 - physiology.oxy_mod) * 100
 			if(CLONE)
-				blocked += physiology.clone_mod
+				blocked += (1 - physiology.clone_mod) * 100
 			if(STAMINA)
-				blocked += physiology.stamina_mod
+				blocked += (1 - physiology.stamina_mod) * 100
 			if(BRAIN)
-				blocked += physiology.brain_mod
+				blocked += (1 - physiology.brain_mod) * 100
 
 	return ..()
 

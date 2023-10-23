@@ -99,10 +99,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
-	/**
-	 * Percentage modifier for overall defense of the race, or less defense, if it's negative
-	 * THIS MODIFIES ALL DAMAGE TYPES.
-	 **/
+	/// Flat modifier on all damage taken via [proc/apply_damage] (so being punched, shot, etc.)
+	/// IE: 10 = 10% less damage taken.
 	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
@@ -1277,30 +1275,37 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						span_userdanger("You block [weapon]!"))
 		return FALSE
 
-	var/hit_area
-	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		affecting = human.bodyparts[1]
+	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
+	var/hit_area = affecting.plaintext_zone
+	var/armor_block = min(human.run_armor_check(
+		def_zone = affecting,
+		attack_flag = MELEE,
+		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
+		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+		armour_penetration = weapon.armour_penetration,
+		weak_against_armour = weapon.weak_against_armour,
+	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
 
-	hit_area = affecting.plaintext_zone
-	var/def_zone = affecting.body_zone
-
-	var/armor_block = human.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)
-	armor_block = min(ARMOR_MAX_BLOCK, armor_block) //cap damage reduction at 90%
-	var/Iwound_bonus = weapon.wound_bonus
-
+	var/modified_wound_bonus = weapon.wound_bonus
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
 	if((weapon.item_flags & SURGICAL_TOOL) && !user.combat_mode && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		Iwound_bonus = CANT_WOUND
+		modified_wound_bonus = CANT_WOUND
 
-	var/weakness = check_species_weakness(weapon, user)
-
+	var/final_damage = weapon.force * check_species_weakness(weapon, user)
 	human.send_item_attack_message(weapon, user, hit_area, affecting)
+	var/damage_dealt = human.apply_damage(
+		damage = final_damage,
+		damagetype = weapon.damtype,
+		def_zone = affecting.def_zone, // Yes, we go from def zone to bodypart back to def zone so we can go back to bodypart.
+		blocked = armor_block,
+		wound_bonus = modified_wound_bonus,
+		bare_wound_bonus = weapon.bare_wound_bonus,
+		sharpness = weapon.get_sharpness(),
+		attack_direction = get_dir(user, human),
+		attacking_item = weapon,
+	)
 
-
-	var/attack_direction = get_dir(user, human)
-	apply_damage(weapon.force * weakness, weapon.damtype, def_zone, armor_block, human, wound_bonus = Iwound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness(), attack_direction = attack_direction, attacking_item = weapon)
-
-	if(!weapon.force)
+	if(damage_dealt <= 0)
 		return FALSE //item force is zero
 	var/bloody = FALSE
 	if(weapon.damtype != BRUTE)
@@ -1649,11 +1654,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
-			else
+			if(HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
+			else
+				var/pressure_damage = min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
@@ -1677,7 +1683,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
-				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+				var/pressure_damage = LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 
