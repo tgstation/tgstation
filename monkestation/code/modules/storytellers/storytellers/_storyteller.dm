@@ -124,7 +124,10 @@
 		picked_event = pick_weight(valid_events)
 		if(!picked_event)
 			if(length(valid_events))
-				stack_trace("WARNING: Storyteller picked a null from event pool, defaulting to option 1, look at weights.")
+				var/added_string = ""
+				for(var/datum/round_event_control/item as anything in valid_events)
+					added_string += "[item.name]:[valid_events[item]]; "
+				stack_trace("WARNING: Storyteller picked a null from event pool, defaulting to option 1, look at weights:[added_string]")
 				shuffle_inplace(valid_events)
 				picked_event = valid_events[1]
 			else
