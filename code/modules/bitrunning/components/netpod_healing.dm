@@ -60,3 +60,5 @@
 	name = "Embryonic Stasis"
 	icon_state = "netpod_stasis"
 	desc = "You feel like you're in a dream."
+
+#undef BASE_HEAL
