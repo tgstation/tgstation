@@ -524,13 +524,6 @@
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
 			deployable.key = user.key
 
-
-/obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
-	if(href_list["play"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			attack_ghost(ghost)
-
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
 	activation_method = ACTIVATE_TOUCH
