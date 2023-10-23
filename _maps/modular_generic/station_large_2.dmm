@@ -64,6 +64,10 @@
 	dir = 4
 	},
 /area/virtual_domain)
+"j" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "k" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -196,10 +200,6 @@
 /obj/effect/turf_decal/bot_red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
-"A" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
 /area/virtual_domain)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
@@ -424,7 +424,7 @@ e
 e
 e
 e
-e
+j
 "}
 (2,1,1) = {"
 e
@@ -462,7 +462,7 @@ n
 q
 E
 o
-A
+T
 e
 "}
 (5,1,1) = {"

@@ -156,6 +156,10 @@
 /obj/structure/hedge,
 /turf/open/misc/snow,
 /area/virtual_domain)
+"yc" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "yg" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -258,10 +262,6 @@
 	},
 /obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/snow,
-/area/virtual_domain)
-"Jb" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
 /area/virtual_domain)
 "JF" = (
 /obj/structure/flora/grass/green/style_random,
@@ -468,7 +468,7 @@ jO
 jO
 jO
 jO
-jO
+yc
 "}
 (2,1,1) = {"
 jO
@@ -480,7 +480,7 @@ Yn
 hA
 hA
 hA
-Jb
+hA
 jO
 "}
 (3,1,1) = {"

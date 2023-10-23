@@ -9,5 +9,4 @@
 		/datum/modular_mob_segment/gondolas,
 		/datum/modular_mob_segment/corgis,
 	)
-	modular_unique_mobs = TRUE
-	// test_only = TRUE
+	test_only = TRUE

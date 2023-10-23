@@ -291,6 +291,10 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"K" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "L" = (
 /obj/structure/chair/office/tactical{
 	dir = 1
@@ -383,10 +387,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_half,
 /area/virtual_domain)
-"Y" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "Z" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/effect/mapping_helpers/damaged_window{
@@ -407,7 +407,7 @@ U
 U
 U
 U
-U
+K
 "}
 (2,1,1) = {"
 U
@@ -419,7 +419,7 @@ e
 e
 e
 e
-Y
+e
 U
 "}
 (3,1,1) = {"

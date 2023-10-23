@@ -35,12 +35,12 @@
 	avatar.key = old_body.key
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
-	RegisterSignals(old_body, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH), PROC_REF(on_sever_connection))
+	RegisterSignals(old_body, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED), PROC_REF(on_sever_connection))
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
-	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
-	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
 #ifndef UNIT_TESTS
@@ -68,13 +68,13 @@
 
 /datum/component/avatar_connection/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
-	RegisterSignal(parent, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
+	RegisterSignal(parent, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 /datum/component/avatar_connection/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
-	UnregisterSignal(parent, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_SEVER_CONNECTION)
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 
@@ -114,7 +114,7 @@
 	var/mob/living/carbon/old_body = old_body_ref?.resolve()
 
 	if(isnull(old_body) || damage_type == STAMINA || damage_type == OXYLOSS)
-		return
+		return/atom/movable/screen/alert/bitrunning/qserver_domain_complete
 
 	if(damage >= (old_body.health + MAX_LIVING_HEALTH))
 		full_avatar_disconnect(forced = TRUE)
@@ -144,34 +144,32 @@
 
 	var/mob/living/avatar = parent
 	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, TRUE)
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_CROWBAR,
-		/atom/movable/screen/alert/bitrunning/netpod_crowbar,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = intruder
 	)
+	alert.name = "Netpod Breached"
+	alert.desc = "Someone is prying open the netpod. Find an exit."
 
 /// Triggers when the netpod is taking damage and is under 50%
 /datum/component/avatar_connection/proc/on_netpod_damaged(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_INTEGRITY,
-		/atom/movable/screen/alert/bitrunning/netpod_damaged,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = source
 	)
+	alert.name = "Integrity Compromised"
+	alert.desc = "The netpod is damaged. Find an exit."
 
-/// Safely exits without forced variables, etc
-/datum/component/avatar_connection/proc/on_safe_disconnect(datum/source)
+/// Received message to sever connection
+/datum/component/avatar_connection/proc/on_sever_connection(datum/source, forced = FALSE)
 	SIGNAL_HANDLER
 
-	full_avatar_disconnect()
-
-/// Helper for calling sever with forced variables
-/datum/component/avatar_connection/proc/on_sever_connection(datum/source)
-	SIGNAL_HANDLER
-
-	full_avatar_disconnect(forced = TRUE, source = source)
+	full_avatar_disconnect(forced, source)
 
 /// Triggers when the server is shutting down
 /datum/component/avatar_connection/proc/on_shutting_down(datum/source, mob/living/hackerman)
@@ -179,22 +177,26 @@
 
 	var/mob/living/avatar = parent
 	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, TRUE)
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_SHUTDOWN,
-		/atom/movable/screen/alert/bitrunning/qserver_shutting_down,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = hackerman,
 	)
+	alert.name = "Domain Rebooting"
+	alert.desc = "The domain is rebooting. Find an exit."
 
 /// Server has spawned a ghost role threat
 /datum/component/avatar_connection/proc/on_threat_created(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_THREAT,
-		/atom/movable/screen/alert/bitrunning/qserver_threat_spawned,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = source,
 	)
+	alert.name = "Threat Detected"
+	alert.desc = "Data stream abnormalities present."
 
 /// Returns the mind to the old body
 /datum/component/avatar_connection/proc/return_to_old_body()

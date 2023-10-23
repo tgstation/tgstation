@@ -1,3 +1,20 @@
+/// Attempts to spawn a crate twice based on the list of available locations
+/obj/machinery/quantum_server/proc/attempt_spawn_cache(list/possible_turfs)
+	if(!length(possible_turfs))
+		return
+
+	shuffle_inplace(possible_turfs)
+	var/turf/chosen_turf = validate_turf(pick(possible_turfs))
+
+	if(isnull(chosen_turf))
+		possible_turfs.Remove(chosen_turf)
+		chosen_turf = validate_turf(pick(possible_turfs))
+		if(isnull(chosen_turf))
+			return
+
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/cache = new(chosen_turf)
+	return cache
+
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
@@ -71,6 +88,32 @@
 	retries_spent += 1
 
 	return wayout
+
+/// Loads in any mob segments of the map
+/obj/machinery/quantum_server/proc/load_mob_segments()
+	if(!length(generated_domain.mob_modules))
+		return TRUE
+
+	var/current_index = 1
+	shuffle_inplace(generated_domain.mob_modules)
+
+	for(var/obj/effect/landmark/bitrunning/mob_segment/landmark in GLOB.landmarks_list)
+		if(current_index > length(generated_domain.mob_modules))
+			stack_trace("vdom: mobs segments are set to unique, but there are more landmarks than available segments")
+			return FALSE
+
+		var/path
+		if(generated_domain.modular_unique_mobs)
+			path = generated_domain.mob_modules[current_index]
+			current_index += 1
+		else
+			path = pick(generated_domain.mob_modules)
+
+		var/datum/modular_mob_segment/segment = new path()
+		segment.spawn_mobs(get_turf(landmark))
+		qdel(landmark)
+
+	return TRUE
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)

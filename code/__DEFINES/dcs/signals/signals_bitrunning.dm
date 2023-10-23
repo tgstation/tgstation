@@ -10,11 +10,8 @@
 /// from /obj/machinery/netpod/on_take_damage()
 #define COMSIG_BITRUNNER_NETPOD_INTEGRITY "bitrunner_netpod_damage"
 
-/// from /obj/structure/hololadder and complete alert
-#define COMSIG_BITRUNNER_SAFE_DISCONNECT "bitrunner_disconnect"
-
-/// from /obj/machinery/netpod/open_machine(), /obj/machinery/quantum_server, etc (obj/machinery/netpod)
-#define COMSIG_BITRUNNER_SEVER_AVATAR "bitrunner_sever"
+/// from multiple sources, (boolean)
+#define COMSIG_BITRUNNER_SEVER_CONNECTION "bitrunner_sever"
 
 /// from /obj/machinery/quantum_server/shutdown() : (mob/living)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"

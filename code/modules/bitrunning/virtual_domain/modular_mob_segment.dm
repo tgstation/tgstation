@@ -41,13 +41,7 @@
 				CRASH("Could not find a spot to spawn a modular mob segment!")
 
 			for(var/turf/open/spot in view(current_distance, location))
-				var/failed = FALSE
-				for(var/atom/thing in spot.contents)
-					if(thing.density)
-						failed = TRUE
-						break
-
-				if(failed)
+				if(spot.is_blocked_turf())
 					continue
 
 				var/path

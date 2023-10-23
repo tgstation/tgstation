@@ -24,7 +24,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/confetti,
 /obj/item/reagent_containers/spray/chemsprayer/party,
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "e" = (
@@ -149,6 +148,10 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"z" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/sand,
@@ -345,7 +348,7 @@ M
 M
 M
 M
-M
+z
 "}
 (2,1,1) = {"
 M

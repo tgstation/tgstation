@@ -38,14 +38,16 @@
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
 	for(var/datum/weakref/baddie_ref as anything in spawned_threat_refs)
 		var/mob/living/baddie = baddie_ref.resolve()
-		if(isnull(baddie) || baddie.stat >= UNCONSCIOUS || isnull(baddie.mind))
+		if(isnull(baddie?.mind) || baddie.stat >= UNCONSCIOUS)
 			continue
 
-		baddie.throw_alert(
+		var/atom/movable/screen/alert/bitrunning/alert = baddie.throw_alert(
 			ALERT_BITRUNNER_RESET,
-			/atom/movable/screen/alert/bitrunning/qserver_threat_deletion,
+			/atom/movable/screen/alert/bitrunning,
 			new_master = src,
 		)
+		alert.name = "Queue Deletion"
+		alert.desc = "The server is resetting. Oblivion awaits."
 
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
@@ -85,8 +87,8 @@
 	var/role_name = initial(chosen_role.name)
 	var/mob/living/antag_mob
 	switch(role_name)
-		if(ROLE_CYBER_BEHEMOTH)
-			antag_mob = new /mob/living/basic/cyber_behemoth(mutation_target.loc)
+		if(ROLE_NETGUARDIAN)
+			antag_mob = new /mob/living/basic/netguardian(mutation_target.loc)
 		else // any other humanoid mob
 			antag_mob = new /mob/living/carbon/human(mutation_target.loc)
 

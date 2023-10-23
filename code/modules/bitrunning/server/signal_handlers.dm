@@ -5,7 +5,7 @@
 	if(isnull(generated_domain))
 		return
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_CONNECTION)
 
 /// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
@@ -18,7 +18,7 @@
 	SIGNAL_HANDLER
 
 	if(generated_domain)
-		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_CONNECTION)
 		scrub_vdom()
 
 	if(is_ready)

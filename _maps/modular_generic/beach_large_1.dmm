@@ -14,6 +14,10 @@
 	icon_state = "asteroid0"
 	},
 /area/virtual_domain/fullbright)
+"aJ" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "bT" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
@@ -638,10 +642,6 @@
 	icon_state = "asteroid8"
 	},
 /area/virtual_domain/fullbright)
-"Yc" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
 "YD" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
@@ -694,7 +694,7 @@ ZO
 ZO
 ZO
 ZO
-ZO
+aJ
 "}
 (2,1,1) = {"
 ZO
@@ -706,7 +706,7 @@ Jy
 oX
 mP
 Ua
-Yc
+Ua
 ZO
 "}
 (3,1,1) = {"

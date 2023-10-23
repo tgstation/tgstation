@@ -57,11 +57,6 @@
 /obj/structure/railing,
 /turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
-"dV" = (
-/obj/structure/flora/bush/ferny/style_random,
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
 "ez" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -287,6 +282,10 @@
 	},
 /turf/open/water/jungle,
 /area/virtual_domain/fullbright)
+"vG" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "vY" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/water/jungle,
@@ -574,7 +573,7 @@ rJ
 rJ
 rJ
 rJ
-rJ
+vG
 "}
 (2,1,1) = {"
 rJ
@@ -586,7 +585,7 @@ Pb
 gL
 Ij
 JF
-dV
+jk
 rJ
 "}
 (3,1,1) = {"

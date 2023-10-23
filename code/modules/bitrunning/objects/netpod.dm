@@ -458,7 +458,7 @@
 /// On unbuckle or break, make sure the occupant ref is null
 /obj/machinery/netpod/proc/unprotect_and_signal()
 	unprotect_occupant(occupant)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_CONNECTION)
 
 /// Removes the occupant from netpod stasis
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)

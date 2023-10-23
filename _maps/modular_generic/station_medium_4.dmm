@@ -20,9 +20,9 @@
 /turf/open/floor/iron/smooth,
 /area/virtual_domain)
 "d" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
+/obj/machinery/light/small/directional/north,
+/turf/template_noop,
+/area/template_noop)
 "e" = (
 /obj/machinery/light/broken/directional/north,
 /obj/effect/turf_decal/bot,
@@ -43,9 +43,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/virtual_domain)
+"g" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "h" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "j" = (
 /obj/structure/rack,
 /obj/item/paper_bin/carbon,
@@ -71,8 +75,8 @@
 /turf/open/floor/iron/smooth,
 /area/virtual_domain)
 "o" = (
-/obj/structure/shipping_container/nanotrasen,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/shipping_container,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "p" = (
@@ -213,7 +217,7 @@ h
 h
 h
 h
-h
+g
 "}
 (2,1,1) = {"
 h
@@ -223,7 +227,7 @@ t
 t
 t
 t
-d
+t
 h
 "}
 (3,1,1) = {"
@@ -257,7 +261,7 @@ z
 z
 L
 t
-h
+d
 "}
 (6,1,1) = {"
 h

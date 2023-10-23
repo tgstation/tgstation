@@ -2,10 +2,6 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "d" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -40,13 +36,11 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "q" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/spawner/random/sakhno/ammo,
 /obj/effect/spawner/random/medical/injector,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
 "r" = (
@@ -110,26 +104,21 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "F" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/entertainment/money_large,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
 "G" = (
 /turf/closed/wall/r_wall,
 /area/virtual_domain)
 "J" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted,
-/obj/effect/landmark/bitrunning/cache_spawn,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
 "K" = (
@@ -147,6 +136,10 @@
 /obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"R" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "T" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/siding/red/corner{
@@ -196,7 +189,7 @@ a
 a
 a
 a
-a
+R
 "}
 (2,1,1) = {"
 a
@@ -206,7 +199,7 @@ G
 G
 m
 m
-b
+m
 a
 "}
 (3,1,1) = {"

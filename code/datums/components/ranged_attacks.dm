@@ -17,7 +17,7 @@
 	/// Tracks time between shots
 	COOLDOWN_DECLARE(fire_cooldown)
 
-/datum/component/ranged_attacks/Initialize(
+/datum/component/ranged_attacks/Initialize(  
 	casing_type,
 	projectile_type,
 	projectile_sound = 'sound/weapons/gun/pistol/shot.ogg',

@@ -79,7 +79,7 @@
 /// Loads in necessary map items like hololadder spawns, caches, etc
 /obj/machinery/quantum_server/proc/load_map_items()
 	var/turf/goal_turfs = list()
-	var/turf/crate_turfs = list()
+	var/turf/cache_turfs = list()
 
 	for(var/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
@@ -96,7 +96,7 @@
 			continue
 
 		if(istype(thing, /obj/effect/landmark/bitrunning/cache_spawn))
-			crate_turfs += get_turf(thing)
+			cache_turfs += get_turf(thing)
 			qdel(thing)
 			continue
 
@@ -105,35 +105,8 @@
 	if(!length(goal_turfs))
 		CRASH("Failed to find send turfs on generated domain.")
 
-	if(length(crate_turfs))
-		shuffle_inplace(crate_turfs)
-		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
-
-	return TRUE
-
-/// Loads in any mob segments of the map
-/obj/machinery/quantum_server/proc/load_mob_segments()
-	if(!length(generated_domain.mob_modules))
-		return TRUE
-
-	var/current_index = 1
-	shuffle_inplace(generated_domain.mob_modules)
-
-	for(var/obj/effect/landmark/bitrunning/mob_segment/landmark in GLOB.landmarks_list)
-		if(current_index > length(generated_domain.mob_modules))
-			stack_trace("vdom: mobs segments are set to unique, but there are more landmarks than available segments")
-			return FALSE
-
-		var/path
-		if(generated_domain.modular_unique_mobs)
-			path = generated_domain.mob_modules[current_index]
-			current_index += 1
-		else
-			path = pick(generated_domain.mob_modules)
-
-		var/datum/modular_mob_segment/segment = new path()
-		segment.spawn_mobs(get_turf(landmark))
-		qdel(landmark)
+	if(!attempt_spawn_cache(cache_turfs))
+		CRASH("Failed to spawn a cache on generated domain.")
 
 	return TRUE
 
@@ -155,7 +128,7 @@
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_CONNECTION)
 
 	if(!fast)
 		notify_spawned_threats()
@@ -172,7 +145,7 @@
 
 /// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) /// just in case someone's connected
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_CONNECTION) /// just in case someone's connected
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
 
 	if(length(generated_domain.reservations))

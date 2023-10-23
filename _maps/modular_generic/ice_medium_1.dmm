@@ -27,6 +27,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
+"f" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "i" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/effect/spawner/random/trash/bin,
@@ -137,10 +141,6 @@
 /obj/machinery/light/cold/dim/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain)
-"J" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "K" = (
 /obj/structure/railing{
 	dir = 4
@@ -238,7 +238,7 @@ D
 D
 D
 D
-D
+f
 "}
 (2,1,1) = {"
 D
@@ -248,7 +248,7 @@ a
 j
 c
 a
-J
+a
 D
 "}
 (3,1,1) = {"

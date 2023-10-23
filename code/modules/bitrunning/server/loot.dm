@@ -17,7 +17,7 @@
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
 	for(var/mob/person in cache.contents)
-		SEND_SIGNAL(person, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+		SEND_SIGNAL(person, COMSIG_BITRUNNER_SEVER_CONNECTION, FALSE)
 
 	spark_at_location(cache) // abracadabra!
 	qdel(cache) // and it's gone!

@@ -23,6 +23,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"e" = (
+/obj/machinery/light/small/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "g" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -44,6 +48,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"n" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -73,10 +81,6 @@
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
-"x" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "y" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -91,6 +95,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"C" = (
+/obj/machinery/light/small/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "D" = (
 /obj/structure/chair/stool/bar/directional/north{
 	pixel_y = 6
@@ -191,13 +199,13 @@
 (1,1,1) = {"
 T
 T
+C
 T
 T
 T
 T
 T
-T
-T
+n
 "}
 (2,1,1) = {"
 T
@@ -207,7 +215,7 @@ y
 l
 y
 a
-x
+a
 T
 "}
 (3,1,1) = {"
@@ -283,7 +291,7 @@ T
 T
 T
 T
-T
+e
 T
 T
 "}

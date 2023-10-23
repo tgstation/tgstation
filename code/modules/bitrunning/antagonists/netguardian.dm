@@ -1,9 +1,10 @@
-/datum/antagonist/bitrunning_glitch/cyber_behemoth
-	name = ROLE_CYBER_BEHEMOTH
+/datum/antagonist/bitrunning_glitch/netguardian
+	name = ROLE_NETGUARDIAN
 	threat = 150
 
-/mob/living/basic/cyber_behemoth
-	name = "cyber behemoth"
+/mob/living/basic/netguardian
+	name = "netguardian prime"
+	desc = "The last line of defense against organic intrusion. It doesn't appear happy to see you."
 	icon_state = "old"
 	icon_living = "old"
 	icon_dead = "old_dead"
@@ -44,13 +45,28 @@
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = TCMB
-	ai_controller = /datum/ai_controller/basic_controller/behemoth
+	ai_controller = /datum/ai_controller/basic_controller/netguardian
 
-/mob/living/basic/behemoth/death(gibbed)
+/mob/living/basic/netguardian/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/ranged_attacks, \
+	casing_type = /obj/item/ammo_casing/c9mm, \
+	projectile_sound = 'sound/misc/bang.ogg', \
+	burst_shots = 5, \
+	)
+
+	AddComponent(/datum/component/ranged_attacks, \
+	projectile_type = CALIBER_84MM, \
+	projectile_sound = 'sound/weapons/gun/general/rocket_launch.ogg', \
+	burst_shots = 3, \
+	cooldown_time = 15 SECONDS \
+	)
+
+/mob/living/basic/netguardian/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
 	return ..()
 
-/datum/ai_controller/basic_controller/behemoth
+/datum/ai_controller/basic_controller/netguardian
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
@@ -58,8 +74,17 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_wounded_target,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree,
+		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/netguardian
+
+/datum/ai_behavior/basic_ranged_attack/netguardian
+	action_cooldown = 1 SECONDS
+	avoid_friendly_fire = TRUE

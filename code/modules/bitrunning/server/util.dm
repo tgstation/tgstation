@@ -107,5 +107,14 @@
 	sparks.set_up(5, 1, get_turf(cache))
 	sparks.start()
 
+/// Returns a turf if it's not dense, else will find a neighbor.
+/obj/machinery/quantum_server/proc/validate_turf(turf/chosen_turf)
+	if(!chosen_turf.is_blocked_turf())
+		return chosen_turf
+
+	for(var/turf/tile in get_adjacent_open_turfs(chosen_turf))
+		if(!tile.is_blocked_turf())
+			return chosen_turf
+
 #undef REDACTED
 #undef MAX_DISTANCE

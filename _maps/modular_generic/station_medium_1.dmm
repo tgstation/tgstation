@@ -105,6 +105,10 @@
 	dir = 4
 	},
 /area/virtual_domain)
+"w" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "y" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -217,10 +221,6 @@
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"X" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 
 (1,1,1) = {"
 U
@@ -231,7 +231,7 @@ U
 U
 U
 U
-U
+w
 "}
 (2,1,1) = {"
 U
@@ -241,7 +241,7 @@ T
 l
 z
 g
-X
+g
 U
 "}
 (3,1,1) = {"

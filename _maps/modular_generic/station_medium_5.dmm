@@ -65,6 +65,10 @@
 	dir = 1
 	},
 /area/virtual_domain)
+"n" = (
+/obj/machinery/light/small/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "o" = (
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -89,6 +93,10 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/virtual_domain)
+"v" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "w" = (
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 1
@@ -160,10 +168,6 @@
 /obj/structure/sign/flag/terragov/directional/north,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
-"M" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "N" = (
 /obj/structure/chair/stool/directional/west{
 	pixel_x = 5
@@ -226,7 +230,7 @@ z
 z
 z
 z
-z
+v
 "}
 (2,1,1) = {"
 z
@@ -236,7 +240,7 @@ K
 K
 T
 K
-M
+K
 z
 "}
 (3,1,1) = {"
@@ -309,7 +313,7 @@ z
 z
 z
 z
-z
+n
 z
 z
 z

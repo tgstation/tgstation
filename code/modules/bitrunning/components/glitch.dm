@@ -12,6 +12,9 @@
 	var/mob/living/owner = parent
 	server.spawned_threat_refs.Remove(WEAKREF(owner))
 
+	owner.faction.Cut()
+	owner.faction += list(ROLE_GLITCH)
+
 	var/current_max = owner.maxHealth + ROUND_UP(server.threat * 0.1)
 	owner.maxHealth = clamp(current_max, 200, 1000)
 	owner.fully_heal()
@@ -34,8 +37,7 @@
 	owner.dust()
 
 	var/obj/machinery/byteforge/forge = forge_ref.resolve()
-	if(forge)
-		forge.setup_particles()
+	forge?.setup_particles()
 
 /// We don't want digital entities just lingering around as corpses.
 /datum/component/glitch/proc/on_death()

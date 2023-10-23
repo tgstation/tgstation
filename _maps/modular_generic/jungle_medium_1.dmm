@@ -83,6 +83,10 @@
 /obj/effect/mob_spawn/corpse/human/pirate,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
+"n" = (
+/obj/modular_map_root,
+/turf/template_noop,
+/area/template_noop)
 "p" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -214,10 +218,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
-"I" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/mineral/wood,
 /area/virtual_domain/fullbright)
 "J" = (
 /obj/effect/turf_decal/siding/wood,
@@ -353,7 +353,7 @@ a
 a
 a
 a
-a
+n
 "}
 (2,1,1) = {"
 a
@@ -363,7 +363,7 @@ y
 W
 s
 y
-I
+y
 a
 "}
 (3,1,1) = {"

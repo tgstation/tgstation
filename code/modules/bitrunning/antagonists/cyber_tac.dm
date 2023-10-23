@@ -1,9 +1,9 @@
-/datum/antagonist/bitrunning_glitch/cyber_tactical
-	name = ROLE_CYBER_TACTICAL
+/datum/antagonist/bitrunning_glitch/cyber_tac
+	name = ROLE_CYBER_TAC
 	preview_outfit = /datum/outfit/cyber_police/tactical
 	threat = 70
 
-/datum/antagonist/bitrunning_glitch/cyber_tactical/on_gain()
+/datum/antagonist/bitrunning_glitch/cyber_tac/on_gain()
 	. = ..()
 
 	if(!ishuman(owner.current))
@@ -17,7 +17,7 @@
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 
 /datum/outfit/cyber_police/tactical
-	name = ROLE_CYBER_TACTICAL
+	name = ROLE_CYBER_TAC
 	back = /obj/item/mod/control/pre_equipped/glitch
 	l_hand = /obj/item/gun/ballistic/automatic/m90
 

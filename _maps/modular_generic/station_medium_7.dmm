@@ -31,6 +31,10 @@
 "r" = (
 /turf/closed/wall,
 /area/virtual_domain)
+"w" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "z" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron/cafeteria,
@@ -47,10 +51,6 @@
 /obj/effect/spawner/random/trash/bin,
 /obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/iron,
-/area/virtual_domain)
-"F" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
 /area/virtual_domain)
 "G" = (
 /obj/structure/sign/poster/random/directional/north,
@@ -128,7 +128,7 @@ a
 a
 a
 a
-a
+w
 "}
 (2,1,1) = {"
 a
@@ -138,7 +138,7 @@ r
 N
 r
 r
-F
+r
 a
 "}
 (3,1,1) = {"
