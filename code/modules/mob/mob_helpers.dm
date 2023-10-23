@@ -288,13 +288,14 @@
 		if(ghost_sound)
 			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
 
+		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
+			continue
+
 		var/custom_link = enter_link ? " [enter_link]" : ""
 		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
-
-		if(isnull(source))
-			continue
 
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
