@@ -230,7 +230,7 @@
 
 					// Append to this order
 					order.append_order(things_to_order, cost)
-					say("Order appended, total cost is [order.pack.get_cost()] cr.")
+					say("Order appended, total cost is [order.get_final_cost()] cr.")
 					return
 
 			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
