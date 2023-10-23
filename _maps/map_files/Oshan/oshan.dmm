@@ -8810,7 +8810,6 @@
 /area/station/maintenance/department/electrical)
 "eDF" = (
 /obj/structure/table,
-/obj/machinery/infuser,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -8924,7 +8923,8 @@
 	},
 /area/station/science/lobby)
 "eGh" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
 /turf/open/floor/carpet/neon/simple/orange/nodots,
 /area/station/bitrunning/den)
 "eGI" = (
@@ -34464,6 +34464,9 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
+"rwd" = (
+/turf/open/floor/carpet/neon/simple/orange/nodots,
+/area/station/bitrunning/den)
 "rwi" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
@@ -68631,7 +68634,7 @@ kXk
 iSl
 wUo
 btg
-eGh
+rwd
 eGh
 pEa
 wsx

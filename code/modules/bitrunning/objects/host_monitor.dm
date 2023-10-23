@@ -1,11 +1,11 @@
 /obj/item/bitrunning_host_monitor
 	name = "host monitor"
-
-	custom_materials = list(/datum/material/iron = 200)
-	desc = "A complex medical device that, when attached to an avatar's data stream, can detect the user of their host's health."
+//	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2) // MONKEYSTATION EDIT ORIGINAL - we use the other material system
+	custom_materials = list(/datum/material/iron = 200) // MONKEYSTATION EDIT NEW
+	desc = "A complex electronic that will analyze the connection health between host and avatar."
 	flags_1 = CONDUCT_1
-	icon = 'icons/obj/telescience.dmi'
-	icon_state = "gps-b"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "host_monitor"
 	inhand_icon_state = "electronic"
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
