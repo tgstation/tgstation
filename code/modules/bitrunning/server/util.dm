@@ -100,6 +100,13 @@
 
 	person.equipOutfit(antag_datum.preview_outfit)
 
+/// Severs any connected users
+/obj/machinery/quantum_server/proc/sever_connections()
+	if(isnull(generated_domain) || !length(avatar_connection_refs))
+		return
+
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_QSRV_SEVER)
+
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/cache)
 	playsound(cache, 'sound/magic/blink.ogg', 50, TRUE)

@@ -51,8 +51,8 @@
 
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
-/// Procedurally links all the spawning procs together.
-/obj/machinery/quantum_server/proc/spawn_glitch()
+/// Selects the role and waits for a ghost orbiter
+/obj/machinery/quantum_server/proc/setup_glitch()
 	if(!length(mutation_candidate_refs))
 		return
 
@@ -67,7 +67,7 @@
 	var/datum/antagonist/bitrunning_glitch/chosen_role = get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
 
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(poll_concluded), chosen_role, mutation_target)
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(spawn_glitch), chosen_role, mutation_target)
 	mutation_target.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_GLITCH, \
 		job_bans = ROLE_GLITCH, \
@@ -76,7 +76,7 @@
 	)
 
 /// Orbit poll has concluded - spawn the antag
-/obj/machinery/quantum_server/proc/poll_concluded(datum/antagonist/bitrunning_glitch/chosen_role, mob/living/mutation_target, mob/dead/observer/ghost)
+/obj/machinery/quantum_server/proc/spawn_glitch(datum/antagonist/bitrunning_glitch/chosen_role, mob/living/mutation_target, mob/dead/observer/ghost)
 	if(QDELETED(mutation_target))
 		return
 
@@ -105,13 +105,6 @@
 	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 
 	add_threats(antag_mob)
-
-/// Spawns a humanoid on the target
-/obj/machinery/quantum_server/proc/spawn_antag(mob/living/mutation_target, typepath)
-	var/mob/living/new_antag = new typepath(mutation_target.loc)
-	mutation_target.gib(DROP_ALL_REMAINS)
-
-	return new_antag
 
 /// Oh boy - transports the antag station side
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)

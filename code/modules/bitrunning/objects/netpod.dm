@@ -121,11 +121,6 @@
 	if(!state_open && gone == occupant)
 		container_resist_act(gone)
 
-/obj/machinery/netpod/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(!state_open && gone == occupant)
-		container_resist_act(gone)
-
 /obj/machinery/netpod/relaymove(mob/living/user, direction)
 	if(!state_open)
 		container_resist_act(user)
@@ -176,7 +171,7 @@
 
 	if(do_after(pryer, 15 SECONDS, src))
 		if(!state_open)
-			SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+			sever_connection()
 			open_machine()
 
 	return TRUE
@@ -246,7 +241,7 @@
 	open_machine()
 
 /// Handles occupant post-disconnection effects like damage, sounds, etc
-/obj/machinery/netpod/proc/disconnect_occupant(forced = FALSE)
+/obj/machinery/netpod/proc/disconnect_occupant(cause_damage = FALSE)
 	connected = FALSE
 
 	var/mob/living/mob_occupant = occupant
@@ -268,7 +263,7 @@
 		heal_time = (mob_occupant.stat + 2) * 5
 	addtimer(CALLBACK(src, PROC_REF(auto_disconnect)), heal_time SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
-	if(!forced)
+	if(!cause_damage)
 		return
 
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
@@ -373,10 +368,7 @@
 /obj/machinery/netpod/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	if(isnull(occupant) || !connected)
-		return
-
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connection()
 
 /// Checks the integrity, alerts occupants
 /obj/machinery/netpod/proc/on_damage_taken(datum/source, damage_amount)
@@ -444,7 +436,7 @@
 		open_machine()
 		return
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connection()
 
 /// When the server is upgraded, drops brain damage a little
 /obj/machinery/netpod/proc/on_server_upgraded(obj/machinery/quantum_server/source)
@@ -457,6 +449,13 @@
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit))
 		return path
+
+/// Severs the connection with the current avatar
+/obj/machinery/netpod/proc/sever_connection()
+	if(isnull(occupant) || !connected)
+		return
+
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_NETPOD_SEVER)
 
 /// Closes the machine without shoving in an occupant
 /obj/machinery/netpod/proc/shut_pod()

@@ -64,7 +64,6 @@
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(src, COMSIG_BITRUNNER_SPAWN_GLITCH, PROC_REF(on_threat_created))
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))

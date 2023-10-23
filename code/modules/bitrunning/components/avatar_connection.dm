@@ -35,12 +35,18 @@
 	avatar.key = old_body.key
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
+	/**
+	 * Things that will disconnect forcefully:
+	 * - Server shutdown / broken
+	 * - Netpod power loss / broken
+	 * - Pilot dies/ is moved / falls unconscious
+	 */
 	RegisterSignals(old_body, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STATUS_UNCONSCIOUS), PROC_REF(on_sever_connection))
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
-	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
+	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
-	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
+	RegisterSignal(server, COMSIG_BITRUNNER_QSRV_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
 #ifndef UNIT_TESTS
@@ -68,18 +74,26 @@
 
 /datum/component/avatar_connection/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
-	RegisterSignal(parent, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
+	/**
+	 * Things that cause safe disconnection:
+	 * - Click the alert
+	 * - Mailed in a cache
+	 * - Click / Stand on the ladder
+	 */
+	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 /datum/component/avatar_connection/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
-	UnregisterSignal(parent, COMSIG_BITRUNNER_SEVER_CONNECTION)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_ALERT_SEVER)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_CACHE_SEVER)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_LADDER_SEVER)
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Disconnects the avatar and returns the mind to the old_body.
-/datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, datum/source)
+/datum/component/avatar_connection/proc/full_avatar_disconnect(cause_damage = FALSE, datum/source)
 #ifndef UNIT_TESTS
 	return_to_old_body()
 #endif
@@ -88,7 +102,7 @@
 	if(isnull(hosting_netpod) && istype(source, /obj/machinery/netpod))
 		hosting_netpod = source
 
-	hosting_netpod?.disconnect_occupant(forced)
+	hosting_netpod?.disconnect_occupant(cause_damage)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	server?.avatar_connection_refs.Remove(WEAKREF(src))
@@ -112,12 +126,11 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/old_body = old_body_ref?.resolve()
-
 	if(isnull(old_body) || damage_type == STAMINA || damage_type == OXYLOSS)
-		return/atom/movable/screen/alert/bitrunning/qserver_domain_complete
+		return
 
 	if(damage >= (old_body.health + MAX_LIVING_HEALTH))
-		full_avatar_disconnect(forced = TRUE)
+		full_avatar_disconnect(cause_damage = TRUE)
 		return
 
 	if(damage > 30 && prob(30))
@@ -126,7 +139,7 @@
 	old_body.apply_damage(damage, damage_type, def_zone, blocked, forced, wound_bonus = CANT_WOUND)
 
 	if(old_body.stat > SOFT_CRIT) // KO!
-		full_avatar_disconnect(forced = TRUE)
+		full_avatar_disconnect(cause_damage = TRUE)
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/component/avatar_connection/proc/on_mind_transfer(datum/mind/source, mob/living/previous_body)
@@ -165,11 +178,17 @@
 	alert.name = "Integrity Compromised"
 	alert.desc = "The netpod is damaged. Find an exit."
 
-/// Received message to sever connection
-/datum/component/avatar_connection/proc/on_sever_connection(datum/source, forced = FALSE)
+/// Triggers when a safe disconnect is called
+/datum/component/avatar_connection/proc/on_safe_disconnect(datum/source)
 	SIGNAL_HANDLER
 
-	full_avatar_disconnect(forced, source)
+	full_avatar_disconnect()
+
+/// Received message to sever connection
+/datum/component/avatar_connection/proc/on_sever_connection(datum/source)
+	SIGNAL_HANDLER
+
+	full_avatar_disconnect(cause_damage = TRUE, source = source)
 
 /// Triggers when the server is shutting down
 /datum/component/avatar_connection/proc/on_shutting_down(datum/source, mob/living/hackerman)
