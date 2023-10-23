@@ -111,7 +111,7 @@
 	if(!user.can_speak() || user.oxyloss >= 50)
 		return //stop the sound if oxyloss too high/cant speak
 	if(istype(carbon_user)) // For masks that give unique death sounds
-		if(isclothing(carbon_user.wear_mask) && ((carbon_user.wear_mask.visor_flags & UNIQUE_DEATH_SOUND) || (carbon_user.wear_mask.clothing_flags & UNIQUE_DEATH_SOUND)))
+		if(isclothing(carbon_user.wear_mask) && (carbon_user.wear_mask.unique_death))
 			playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
 			return
 	if(. && user.death_sound)

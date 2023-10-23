@@ -87,8 +87,6 @@
 #define INEDIBLE_CLOTHING (1<<17)
 /// Headgear/helmet allows internals
 #define HEADINTERNALS (1<<18)
-/// If wearing this gives you a unique death sound
-#define UNIQUE_DEATH_SOUND (1<<19)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
