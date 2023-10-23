@@ -1,0 +1,7 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - rscadd: "Non-lethal and less than lethal options for autorifles have been made available."
+  - balance: "Autorifles have been moved to imports and made more expensive."
+  - balance: "Higher technologies are now needed to access autorifle ammo."
+  - refactor: "Autorifle code has been modularized"
