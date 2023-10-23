@@ -119,20 +119,6 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/mob/living/basic/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE, actuallydamage = TRUE)
-	var/temp_damage = damage
-	if(!damage_coeff[damagetype])
-		temp_damage = 0
-	else
-		temp_damage *= damage_coeff[damagetype]
-	if(temp_damage >= 0 && temp_damage <= force_threshold)
-		visible_message(span_warning("[src] looks unharmed!"))
-		return FALSE
-	else
-		if(actuallydamage)
-			apply_damage(damage, damagetype, blocked = getarmor(null, armorcheck))
-		return TRUE
-
 /mob/living/basic/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0
 

@@ -7,8 +7,7 @@
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
-	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
-		spark_system.start()
+
 	return ..()
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)

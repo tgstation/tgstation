@@ -33,19 +33,10 @@
 )
 	SIGNAL_HANDLER
 
-	if(damage <= 0)
+	if(damage <= 0) // Already handled
 		return NONE
 
-	var/damage_mult = 1
-	// We take count simple/basic damage coefficients, but not armor. Whatever
-	if(isanimal(source))
-		var/mob/living/simple_animal/animal = source
-		damage_mult = animal.damage_coeff[damage_type] || 1
-	if(isbasicmob(source))
-		var/mob/living/basic/animal = source
-		damage_mult = animal.damage_coeff[damage_type] || 1
-
-	if(damage * damage_mult <= force_threshold)
+	if(damage <= force_threshold)
 		var/obj/item/item_hitting = hitby
 		var/tap_vol = istype(item_hitting) ? item_hitting.get_clamped_volume() : 50
 		source.visible_message(
