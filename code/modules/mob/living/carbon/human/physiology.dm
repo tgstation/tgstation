@@ -2,7 +2,7 @@
 /datum/physiology
 	/// Multiplier to brute damage received.
 	/// IE: A brute mod of 0.9 = 10% less brute damage.
-	/// Only applies to damage dealt via [proc/apply_damage] unless factored in manually.
+	/// Only applies to damage dealt via [apply_damage][/mob/living/proc/apply_damage] unless factored in manually.
 	var/brute_mod = 1
 	/// Multiplier to burn damage received
 	var/burn_mod = 1

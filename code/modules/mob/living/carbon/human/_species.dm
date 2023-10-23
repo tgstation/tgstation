@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
-	/// Flat modifier on all damage taken via [proc/apply_damage] (so being punched, shot, etc.)
+	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
 	/// IE: 10 = 10% less damage taken.
 	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
