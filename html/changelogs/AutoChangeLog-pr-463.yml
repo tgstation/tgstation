@@ -1,0 +1,4 @@
+author: "OtieBoy"
+delete-after: True
+changes:
+  - bugfix: "fixed the Tramstation incinerator room atmospherics so that air supply and scrubbing pipenets are connected properly from roundstart"
