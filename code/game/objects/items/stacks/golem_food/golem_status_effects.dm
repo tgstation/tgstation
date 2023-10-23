@@ -343,7 +343,7 @@
 	if (!.)
 		return FALSE
 	var/mob/living/carbon/human/human_owner = owner
-	RegisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_punched))
+	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
 	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if (arm.limb_id != SPECIES_GOLEM)
@@ -354,10 +354,10 @@
 /datum/status_effect/golem/titanium/proc/on_punched(mob/living/puncher, atom/punchee, proximity)
 	SIGNAL_HANDLER
 	if (!proximity || !isliving(punchee))
-		return
+		return NONE
 	var/mob/living/victim = punchee
 	if (victim.body_position == LYING_DOWN || (!(FACTION_MINING in victim.faction) && !(FACTION_BOSS in victim.faction)))
-		return
+		return NONE
 	victim.apply_damage(mining_bonus, BRUTE)
 
 /// Make the targeted arm big and strong
@@ -370,7 +370,7 @@
 
 /datum/status_effect/golem/titanium/on_remove()
 	var/mob/living/carbon/human/human_owner = owner
-	UnregisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		debuff_arm(arm)

@@ -129,7 +129,7 @@
 			continue
 		if (living_pawn.see_invisible < dead_pal.invisibility)
 			continue
-		if (!living_pawn.faction_check_mob(dead_pal))
+		if (!living_pawn.faction_check_atom(dead_pal))
 			continue
 		nearby_bodies += dead_pal
 

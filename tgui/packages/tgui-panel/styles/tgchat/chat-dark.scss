@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:map';
+
 em {
   font-style: normal;
   font-weight: bold;
@@ -436,8 +438,31 @@ em {
 }
 
 .minorannounce {
+  color: #c51e1e;
   font-weight: bold;
   font-size: 185%;
+}
+
+.minoralert {
+  color: #a4bad6;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #a4bad6;
+  font-weight: bold;
+  font-size: 225%;
+}
+
+.prioritytitle {
+  color: #6685f5;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.priorityalert {
+  color: #c51e1e;
+  font-size: 140%;
 }
 
 .greenannounce {
@@ -917,4 +942,71 @@ em {
 .tooltip {
   font-style: italic;
   border-bottom: 1px dashed #fff;
+}
+
+.major_announcement_title {
+  color: #ff0066;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 175%;
+}
+
+.major_announcement_text {
+  color: #eaeaea;
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.minor_announcement_title {
+  color: #33d5ff;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.minor_announcement_text {
+  color: #eaeaea;
+  font-size: 125%;
+}
+
+$alert-stripe-colors: (
+  'default': #292929,
+  'green': #003d00,
+  'blue': #00283a,
+  'pink': #30001b,
+  'yellow': #574a00,
+  'orange': #593400,
+  'red': #540000,
+  'purple': #2c0030,
+);
+
+$alert-background-colors: (
+  'default': #252525,
+  'green': #003800,
+  'blue': #003045,
+  'pink': #400025,
+  'yellow': #4d4100,
+  'orange': #6b4200,
+  'red': #6b0000,
+  'purple': #3a0040,
+);
+
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5em 0.5em;
+    margin-bottom: 0.5em;
+    box-shadow: none;
+    font-weight: bold;
+    border: 1px solid $color-value;
+    margin: 0.5em 0 0.5em 0;
+    padding: 0.5em 0.75em;
+    background-color: map.get($alert-background-colors, $color-name);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+  }
 }

@@ -161,7 +161,7 @@
 "O" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/hatchet/wooden,
-/obj/item/storage/belt/champion/wrestling,
+/obj/item/storage/belt/champion,
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "P" = (
