@@ -266,12 +266,13 @@
 		if(body_position == LYING_DOWN)
 			zone_hit_chance += 10
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
+	var/targeting_human_readable = parse_zone(targeting)
 
 	var/armor_block = min(run_armor_check(
 			def_zone = targeting,
 			attack_flag = MELEE,
-			absorb_text = span_notice("Your armor has protected your [hit_area]!"),
-			soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+			absorb_text = span_notice("Your armor has protected your [targeting_human_readable]!"),
+			soften_text = span_warning("Your armor has softened a hit to your [targeting_human_readable]!"),
 			armour_penetration = attacking_item.armour_penetration,
 			weak_against_armour = attacking_item.weak_against_armour,
 		), ARMOR_MAX_BLOCK)
@@ -289,11 +290,11 @@
 		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 			return FALSE
 
-	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
+	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(ishuman(src) || client)
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(targeting))
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
 
 	if(!damage)
 		return FALSE
@@ -380,9 +381,9 @@
 
 				// rev deconversion through blunt trauma.
 				// this can be signalized to the rev datum
-				if(mind && stat == CONSCIOUS && src != user && prob(damage_done + ((100 - health) * 0.5)))
+				if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((100 - health) * 0.5)))
 					var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
-					rev?.remove_revolutionary(user)
+					rev?.remove_revolutionary(attacker)
 
 		if(BODY_ZONE_CHEST)
 			if(.)
