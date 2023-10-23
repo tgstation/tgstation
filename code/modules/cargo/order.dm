@@ -201,13 +201,6 @@
 			pack.contains[i] = new_contents[i]
 	pack.cost += cost_increase
 
-/// a special subtype for materials order just to compute the correct total cost
-/datum/supply_order/materials_order
-
-/// it's not a goodie so it's always multiplied by 1.1
-/datum/supply_order/materials_order/get_final_cost()
-	return pack.get_cost() * 1.1
-
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
 #undef MANIFEST_ERROR_CONTENTS
