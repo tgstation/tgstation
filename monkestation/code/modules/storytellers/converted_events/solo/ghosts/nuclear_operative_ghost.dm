@@ -68,7 +68,7 @@
 	antag_mind.add_antag_datum(new_op)
 
 
-/datum/round_event/antagonist/solo/from_ghosts/nuclear_operative/round_end_report()
+/datum/round_event/antagonist/solo/ghost/nuclear_operative/round_end_report()
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
