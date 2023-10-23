@@ -24,10 +24,11 @@
 			var/datum/job/current = job
 			if(!current.allow_bureaucratic_error)
 				continue
-			current.total_positions = 0
+			var/ran = rand(-2,4)
+			current.total_positions = max(current.total_positions + ran, 1)
 	else // Adds/removes a random amount of job slots from all jobs.
 		for(var/datum/job/current as anything in jobs)
 			if(!current.allow_bureaucratic_error)
 				continue
 			var/ran = rand(-2,4)
-			current.total_positions = max(current.total_positions + ran, 0)
+			current.total_positions = max(current.total_positions + ran, 1)
