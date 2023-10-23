@@ -5469,7 +5469,6 @@
 #include "interface\skin.dmf"
 #include "monkestation\code\__DEFINES\projectile.dm"
 #include "monkestation\code\__HELPERS\_lists.dm"
-#include "monkestation\code\__HELPERS\mobs.dm"
 #include "monkestation\code\__HELPERS\reagents.dm"
 #include "monkestation\code\__HELPERS\turfs.dm"
 #include "monkestation\code\_onclick\hud\alert.dm"
