@@ -976,69 +976,131 @@ h2.alert {
   border-bottom: 1px dashed #000;
 }
 
+$alert-stripe-colors: (
+  'default': #a099ff,
+  'green': #80ff93,
+  'blue': #80d2ff,
+  'pink': #ff80e8,
+  'yellow': #ffe880,
+  'orange': #ff9966,
+  'red': #ff6680,
+  'purple': #ab80ff,
+);
+
+$alert-stripe-alternate-colors: (
+  'default': #aaa3ff,
+  'green': #99ffa8,
+  'blue': #999999,
+  'pink': #999999,
+  'yellow': #999999,
+  'orange': #999999,
+  'red': #999999,
+  'purple': #999999,
+);
+
+$alert-major-header-colors: (
+  'default': #000d57,
+  'green': #00570d,
+  'blue': #999999,
+  'pink': #999999,
+  'yellow': #999999,
+  'orange': #999999,
+  'red': #999999,
+  'purple': #999999,
+);
+
+$alert-minor-header-colors: (
+  'default': #005499,
+  'green': #005c0e,
+  'blue': #999999,
+  'pink': #999999,
+  'yellow': #999999,
+  'orange': #999999,
+  'red': #999999,
+  'purple': #999999,
+);
+
 .major_announcement_title {
-  color: #ff0066;
-  text-decoration: underline;
-  font-weight: bold;
   font-size: 175%;
+  padding: 0.25em 0.25em;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
 }
 
 .major_announcement_text {
   color: #202020;
-  font-weight: bold;
-  font-size: 125%;
+  background-color: #ffffff;
+  font-weight: normal;
+  font-size: 100%;
+  text-align: left;
+  padding: 0.25em 0.5em;
+  padding-bottom: 0.5em;
+  width: 100%;
+  height: 100%;
 }
 
 .minor_announcement_title {
-  color: #007ee6;
+  background-color: #ffffff;
   font-weight: bold;
+  padding: 0em 0.25em;
+  padding-top: 0.25em;
+  width: 100%;
+  height: 100%;
+  text-align: left;
   font-size: 150%;
 }
 
 .minor_announcement_text {
+  background-color: #ffffff;
   color: #202020;
-  font-size: 125%;
+  padding: 0.25em 0.25em;
+  text-align: left;
+  font-size: 100%;
 }
 
-$alert-stripe-colors: (
-  'default': #dedede,
-  'green': #c2ffcc,
-  'blue': #b8e6ff,
-  'pink': #ffc2f4,
-  'yellow': #ffe880,
-  'orange': #ffbb99,
-  'red': #ff99aa,
-  'purple': #d7c2ff,
-);
+$border-width: 4;
 
-$alert-background-colors: (
-  'default': #d1d1d1,
-  'green': #a8ffb7,
-  'blue': #a8e1ff,
-  'pink': #ffb3f3,
-  'yellow': #fff0ad,
-  'orange': #ffc9ad,
-  'red': #ffadbb,
-  'purple': #ccb3ff,
-);
+$border-width-px: $border-width * 1px;
 
 @each $color-name, $color-value in $alert-stripe-colors {
   .chat_alert_#{$color-name} {
     color: #ffffff;
     padding: 0.5em 0.5em;
-    margin-bottom: 0.5em;
     box-shadow: none;
     font-weight: bold;
-    border: 1px solid $color-value;
-    margin: 0.5em 0 0.5em 0;
-    padding: 0.5em 0.75em;
-    background-color: map.get($alert-background-colors, $color-name);
-    background-image: repeating-linear-gradient(
+    margin: 1em 0 1em 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-image: repeating-linear-gradient(
       -45deg,
-      transparent,
-      transparent 10px,
+      map.get($alert-stripe-alternate-colors, $color-name),
+      map.get($alert-stripe-alternate-colors, $color-name) 10px,
       $color-value 10px,
       $color-value 20px
     );
+    border-image-slice: $border-width fill;
+    border-width: $border-width-px;
+    border-image-width: $border-width-px;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: repeat repeat;
+    border-style: solid;
   }
+
+  .chat_alert_#{$color-name} .major_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_title {
+    color: map.get($alert-minor-header-colors, $color-name);
+  }
+}
+
+.chat_alert_deadchat .minor_announcement_text {
+  color: #5c00e6;
+  padding-left: 0;
+  font-weight: bold;
+  text-align: left;
+  font-size: 100%;
 }

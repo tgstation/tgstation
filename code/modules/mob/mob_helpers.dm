@@ -268,7 +268,7 @@
 	flashwindow = TRUE,
 	ignore_mapload = TRUE,
 	ignore_key,
-	header,
+	header = "",
 	notify_suiciders = TRUE,
 	notify_volume = 100
 )
@@ -307,7 +307,7 @@
 
 	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
 
-	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
+	minor_announce(text, title = "", players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "deadchat")
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)

@@ -945,7 +945,7 @@ em {
 }
 
 .major_announcement_title {
-  color: #ff0066;
+  color: #ff0000;
   text-decoration: underline;
   font-weight: bold;
   font-size: 175%;
@@ -997,16 +997,19 @@ $alert-background-colors: (
     margin-bottom: 0.5em;
     box-shadow: none;
     font-weight: bold;
-    border: 1px solid $color-value;
+    border-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        $color-value 10px,
+        $color-value 20px
+      )
+      0.5em;
     margin: 0.5em 0 0.5em 0;
     padding: 0.5em 0.75em;
     background-color: map.get($alert-background-colors, $color-name);
-    background-image: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 10px,
-      $color-value 10px,
-      $color-value 20px
-    );
   }
+}
+
+.chat_alert_deadchat {
 }
