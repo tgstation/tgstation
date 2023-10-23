@@ -99,7 +99,7 @@
 			"What a shame, tell me if you changed your mind."
 		),
 		ITEM_SELLING_ACCEPTED_PHRASE = list(
-		"Pleasure doing business with you."
+			"Pleasure doing business with you."
 		),
 		INTERESTED_PHRASE = list(
 			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
