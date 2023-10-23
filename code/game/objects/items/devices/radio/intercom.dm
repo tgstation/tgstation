@@ -189,7 +189,7 @@
 	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -210,6 +210,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	command = TRUE
 	icon_off = "intercom_command-p"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
