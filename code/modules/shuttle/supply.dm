@@ -166,6 +166,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		var/price = spawning_order.pack.get_cost()
 		if(spawning_order.applied_coupon)
 			price *= (1 - spawning_order.applied_coupon.discount_pct_off)
+		price = round(price)
 
 		var/datum/bank_account/paying_for_this
 
@@ -183,6 +184,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
+			price = round(price)
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
