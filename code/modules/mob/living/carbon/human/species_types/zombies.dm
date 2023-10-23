@@ -154,7 +154,7 @@
 		brute_per_second = 0.5, \
 		burn_per_second = 0.5, \
 		tox_per_second = 0.5, \
-		oxy_per_second = 0.5, \
+		oxy_per_second = 0.25, \
 		heals_wounds = TRUE, \
 	)
 

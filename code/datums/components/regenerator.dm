@@ -72,9 +72,7 @@
 	if (damagetype in ignore_damage_types)
 		return
 	stop_regenerating()
-	if(regeneration_start_timer)
-		deltimer(regeneration_start_timer)
-	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
+	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()
@@ -82,7 +80,8 @@
 		return
 	var/mob/living/living_parent = parent
 	living_parent.visible_message(span_notice("[living_parent]'s wounds begin to knit closed!"))
-	START_PROCESSING(SSmobs, src)
+	START_PROCESSING(SSobj, src)
+	regeneration_start_timer = null
 	if (!outline_colour)
 		return
 	living_parent.add_filter(REGENERATION_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
@@ -91,7 +90,7 @@
 	animate(alpha = 0, time = 0.5 SECONDS)
 
 /datum/component/regenerator/proc/stop_regenerating()
-	STOP_PROCESSING(SSmobs, src)
+	STOP_PROCESSING(SSobj, src)
 	var/mob/living/living_parent = parent
 	var/filter = living_parent.get_filter(REGENERATION_FILTER)
 	animate(filter)
@@ -110,13 +109,13 @@
 	if(brute_per_second)
 		need_mob_update += living_parent.adjustBruteLoss(-1 * heal_mod * brute_per_second * seconds_per_tick, updating_health = FALSE)
 	if(burn_per_second)
-		need_mob_update += living_parent.adjustBurnLoss(-1 * heal_mod * burn_per_second * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += living_parent.adjustFireLoss(-1 * heal_mod * burn_per_second * seconds_per_tick, updating_health = FALSE)
 	if(tox_per_second)
 		need_mob_update += living_parent.adjustToxLoss(-1 * heal_mod * tox_per_second * seconds_per_tick, updating_health = FALSE)
 	if(oxy_per_second)
 		need_mob_update += living_parent.adjustOxyLoss(-1 * heal_mod * oxy_per_second * seconds_per_tick, updating_health = FALSE)
 
-	if(heals_wounds && iscarbon(who))
+	if(heals_wounds && iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = living_parent
 		for(var/datum/wound/iter_wound as anything in carbon_parent.all_wounds)
 			if(SPT_PROB(2 - (iter_wound.severity / 2), seconds_per_tick))
