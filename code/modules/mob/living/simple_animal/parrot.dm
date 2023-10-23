@@ -332,14 +332,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..() //goodbye immortal parrots
-
 	if(client)
 		return
 
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(user.melee_damage_upper > 0 && !stat)
+	if(. > 0 && stat == CONSCIOUS)
 		set_parrot_interest(user)
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living

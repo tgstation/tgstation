@@ -96,12 +96,6 @@
 		if(.)
 			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage, attacking_larva.max_grown)
 
-/mob/living/basic/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		return attack_threshold_check(damage, user.melee_damage_type)
-
 /mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)

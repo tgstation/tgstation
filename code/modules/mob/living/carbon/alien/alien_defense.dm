@@ -67,25 +67,6 @@ In all, this is a lot like the monkey code. /N
 			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
-
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		switch(user.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
-			if(TOX)
-				adjustToxLoss(damage)
-			if(OXY)
-				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
-			if(STAMINA)
-				adjustStaminaLoss(damage)
-
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)

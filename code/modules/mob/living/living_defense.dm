@@ -295,25 +295,60 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
-	user.face_atom(src)
+	if(.)
+		return FALSE // looks wrong, but if the attack chain was cancelled we don't propogate it up to children calls. Yeah it's cringe.
+
 	if(user.melee_damage_upper == 0)
 		if(user != src)
-			visible_message(span_notice("\The [user] [user.friendly_verb_continuous] [src]!"), \
-							span_notice("\The [user] [user.friendly_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+			visible_message(
+				span_notice("\The [user] [user.friendly_verb_continuous] [src]!"),
+				span_notice("\The [user] [user.friendly_verb_continuous] you!"),
+				null,
+				COMBAT_MESSAGE_RANGE,
+				user,
+			)
 			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
 		return FALSE
+
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
+	var/damage_done = rand(user.melee_damage_lower, user.melee_damage_upper)
+	if(check_block(user, damage_done, "[user]'s [user.attack_verb_simple]", MELEE_ATTACK/*or UNARMED_ATTACK?*/, user.armour_penetration, user.melee_damage_type))
+		return FALSE
+
 	if(user.attack_sound)
-		playsound(loc, user.attack_sound, 50, TRUE, TRUE)
+		playsound(src, user.attack_sound, 50, TRUE, TRUE)
+
 	user.do_attack_animation(src)
-	visible_message(span_danger("\The [user] [user.attack_verb_continuous] [src]!"), \
-					span_userdanger("\The [user] [user.attack_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	visible_message(
+		span_danger("[user] [user.attack_verb_continuous] [src]!"),
+		span_userdanger("[user] [user.attack_verb_continuous] you!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+		user,
+	)
+
+	var/dam_zone = dismembering_strike(user, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	if(!dam_zone) //Dismemberment successful
+		return FALSE
+
+	var/armor_block = run_armor_check(user.zone_selected, MELEE, armour_penetration = user.armour_penetration)
+
 	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
 	log_combat(user, src, "attacked")
-	return TRUE
+	var/damage_done = apply_damage(
+		damage = damage_done,
+		damagetype = user.melee_damage_type,
+		def_zone = user.zone_selected,
+		blocked = armor_block,
+		wound_bonus = user.wound_bonus,
+		bare_wound_bonus = user.bare_wound_bonus,
+		sharpness = user.sharpness,
+		attack_direction = get_dir(user, src),
+	)
+	return damage_done
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
