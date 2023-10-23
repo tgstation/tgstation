@@ -58,7 +58,7 @@
 					damage_source = attacking_item,
 				))
 					update_damage_overlays()
-				damage_dealt = delta - actual_hit.get_damage() // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
+				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
 			else
 				damage_dealt = adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
