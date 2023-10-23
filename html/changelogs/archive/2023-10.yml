@@ -958,3 +958,13 @@
   - rscadd: Most pies can now be sliced rather than being consumed whole.
   - rscadd: Rootdough can be crafted using soy milk in place of eggs.
   - rscadd: Two new lizard-safe rootbread sandwiches can be crafted.
+2023-10-23:
+  SyncIt21:
+  - bugfix: items that require reagent containers & the reagents inside it for crafting(e.g.
+      molotov) now crafts properly.
+  - bugfix: most crafting recipes should work now
+  jlsnow301:
+  - rscadd: Just in time for Halloween- ghost notifications have been upgraded to
+      their own announcements. Boo!
+  san7890:
+  - qol: Adminwho messages are now in an examine block for heightened clarity.
