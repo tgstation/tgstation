@@ -22,6 +22,7 @@
 /obj/item/holosign_creator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/item/holosign_creator, on_color_change))
 
 /obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	afterattack(target, user, proximity_flag, click_parameters)
@@ -73,16 +74,24 @@
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 
+/obj/item/holosign_creator/proc/on_color_change(obj/item/holosign_creator, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
+	SIGNAL_HANDLER
+	if(!spraycan.actually_paints)
+		return
+
+	if(LAZYLEN(signs))
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			hologram.color = color
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -133,24 +142,24 @@
 
 /obj/item/holosign_creator/cyborg/attack_self(mob/user)
 	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
+		var/mob/living/silicon/robot/borg = user
 
 		if(shock)
 			to_chat(user, span_notice("You clear all active holograms, and reset your projector to normal."))
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
-			for(var/sign in signs)
-				qdel(sign)
+			for(var/obj/structure/holosign/hologram in signs)
+				qdel(hologram)
 			shock = 0
 			return
-		if(R.emagged && !shock)
+		if(borg.emagged && !shock)
 			to_chat(user, span_warning("You clear all active holograms, and overload your energy projector!"))
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
-			for(var/sign in signs)
-				qdel(sign)
+			for(var/obj/structure/holosign/hologram in signs)
+				qdel(hologram)
 			shock = 1
 			return
-	for(var/sign in signs)
-		qdel(sign)
+	for(var/obj/structure/holosign/hologram as anything in signs)
+		qdel(hologram)
 	balloon_alert(user, "holograms cleared")
