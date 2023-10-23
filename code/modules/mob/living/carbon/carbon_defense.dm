@@ -175,10 +175,10 @@
 	return TRUE
 
 
-/mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone(mob/living/basic/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone_secondary(mob/living/basic/drone/user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

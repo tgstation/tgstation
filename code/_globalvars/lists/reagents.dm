@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 	)),
 	CAT_PATCHES = typecacheof(list(
 		/obj/item/reagent_containers/pill/patch/style
-	))
+	)),
 ))
 
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff

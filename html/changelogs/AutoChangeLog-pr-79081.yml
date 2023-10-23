@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - admin: "Added SS13.get_runner_ckey() and SS13.get_runner_client() which stores the ckey and returns the client of the user who ran the lua script. Can be unreliable if accessed after sleeping."
-  - admin: "Added timer loop helpers to the SS13.lua module, check the docs"
-  - admin: "The SS13.lua module can now be made local without causing any errors."

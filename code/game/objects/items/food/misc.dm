@@ -83,7 +83,7 @@
 	)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	trash_type = /obj/item/trash/popcorn/
+	trash_type = /obj/item/trash/popcorn
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope

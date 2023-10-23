@@ -1,15 +1,9 @@
-
-///////////////
-//DRONE VERBS//
-///////////////
-//Drone verbs that appear in the Drone tab and on buttons
-
 /**
  * Echoes drone laws to the user
  *
- * See [/mob/living/simple_animal/drone/var/laws]
+ * See [/mob/living/basic/drone/var/laws]
  */
-/mob/living/simple_animal/drone/verb/check_laws()
+/mob/living/basic/drone/verb/check_laws()
 	set category = "Drone"
 	set name = "Check Laws"
 
@@ -27,7 +21,7 @@
  *
  * Attaches area name to message
  */
-/mob/living/simple_animal/drone/verb/drone_ping()
+/mob/living/basic/drone/verb/drone_ping()
 	set category = "Drone"
 	set name = "Drone ping"
 

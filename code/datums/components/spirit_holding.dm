@@ -57,21 +57,30 @@
 	attempting_awakening = TRUE
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
-	var/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	if(!LAZYLEN(candidates))
-		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
-		attempting_awakening = FALSE
-		return
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), awakener)
+	parent.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
+		job_bans = ROLE_PAI, \
+		to_call = to_call, \
+		title = "Spirit of [awakener.real_name]'s blade", \
+	)
 
 	//Immediately unregister to prevent making a new spirit
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
-	var/mob/dead/observer/chosen_spirit = pick(candidates)
-	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
-		to_chat(chosen_spirit, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+/// On conclusion of the ghost poll
+/datum/component/spirit_holding/proc/affix_spirit(mob/awakener, mob/dead/observer/ghost)
+	if(isnull(ghost))
+		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
+		attempting_awakening = FALSE
 		return
+
+	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
+		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		return
+
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	bound_spirit.ckey = ghost.ckey
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")
 	bound_spirit.status_flags |= GODMODE
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
