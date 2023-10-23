@@ -145,22 +145,22 @@
  * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
- * * has_optional - TRUE or FALSE, if the ritual has any optional result.
+ * * optional_selected_atoms - an list of optional atoms chosen as part of this ritual.
  *
  * Returns: TRUE, if the ritual should cleanup afterwards, or FALSE, to avoid calling cleanup after.
  */
-/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, has_optional)
+/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, list/optional_selected_atoms)
 	if(!length(result_atoms))
 		return FALSE
-	// Check if we have any optional result atoms
-	if(has_optional==TRUE)
+
+	// List comparison
+	if(length(optional_selected_atoms)==length(optional_atoms))
 		for(var/optional_result in optional_result_atoms)
 			new optional_result(loc)
-		return TRUE
 	else
 		for(var/result in result_atoms)
 			new result(loc)
-		return TRUE
+	return TRUE
 
 /**
  * Called after on_finished_recipe returns TRUE
@@ -195,8 +195,8 @@
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
-			// Same as above, but with an additional to check to see if we actually have any optional atoms
-			if(length(optional_atoms))
+			// Same as above, but with an additional to check to see if we actually got the optional_result atoms
+			if(length(optional_atoms & selected_atoms)==length(optional_atoms))
 				for(var/optional in optional_atoms)
 					if(!istype(sacrificed, optional) && !islist(optional))
 						continue

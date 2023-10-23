@@ -95,6 +95,8 @@
 	var/list/optional_list = ritual.optional_atoms.Copy()
 	// A list of all atoms we've selected to use in this recipe.
 	var/list/selected_atoms = list()
+	// A list of all our optional atoms, used later for a check
+	var/list/optional_selected_atoms = list()
 
 	// Do the snowflake check to see if we can continue or not.
 	// selected_atoms is passed and can be modified by this proc.
@@ -119,7 +121,7 @@
 				if(nearby_atom.type in banned_atom_types)
 					continue
 			// This item is a valid type. Add it to our selected atoms list.
-			selected_atoms += nearby_atom
+			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
 			// as our requirements may want more than one item of a stack
 			if(isstack(nearby_atom))
@@ -148,7 +150,9 @@
 					if(nearby_atom.type in banned_atom_types)
 						continue
 				// This item is a valid type. Add it to our selected atoms list.
-				selected_atoms += nearby_atom
+				selected_atoms |= nearby_atom
+				// Since its an optional atom, also add it to our optional_selected_atoms list.
+				optional_selected_atoms |= nearby_atom
 				// If it's a stack, we gotta see if it has more than one inside,
 				// as our requirements may want more than one item of a stack
 				if(isstack(nearby_atom))
@@ -206,13 +210,7 @@
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
 	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
-
-	var/ritual_result = FALSE
-	if(length(optional_list))
-		if(optional_list==initial_selected_atoms-requirements_list)
-			ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc, TRUE)
-	else
-		ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
+	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc, optional_selected_atoms)
 
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
