@@ -25,7 +25,7 @@
 	death_message = "collapses into a pile of bones!"
 	ai_controller = /datum/ai_controller/basic_controller/skeleton
 	/// Loot this mob drops on death.
-	var/loot = list(/obj/effect/decal/remains/human)
+	var/list/loot = list(/obj/effect/decal/remains/human)
 	/// Path of the outfit we give to the mob's visuals.
 	var/outfit = null
 	/// Path of the species we give to the mob's visuals.
