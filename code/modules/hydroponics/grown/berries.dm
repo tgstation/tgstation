@@ -209,6 +209,7 @@
 	genes = list(/datum/plant_gene/trait/glow/yellow)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/sulfur = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/consumable/liquidelectricity = 0.07)
+	graft_gene = /datum/plant_gene/trait/glow/yellow
 
 /obj/item/food/grown/lanternfruit
 	seed = /obj/item/seeds/lanternfruit
