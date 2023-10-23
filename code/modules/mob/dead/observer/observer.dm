@@ -743,10 +743,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 
 		if(href_list["jump"])
-			var/atom/movable/target = locate(href_list["jump"])
-			if(istype(target) && (target != src))
-				abstract_move(get_turf(target))
-				return
+			var/turf/target_turf = get_turf(href_list["jump"])
+			if(target_turf && isturf(target_turf))
+				abstract_move(target_turf)
 
 		if(href_list["play"])
 			var/atom/movable/target = locate(href_list["play"])
