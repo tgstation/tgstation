@@ -1,6 +1,7 @@
 /datum/antagonist/bitrunning_glitch/netguardian
 	name = ROLE_NETGUARDIAN
 	threat = 150
+	show_in_antagpanel = TRUE
 
 /mob/living/basic/netguardian
 	name = "netguardian prime"
