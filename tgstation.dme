@@ -5685,6 +5685,8 @@
 #include "monkestation\code\modules\antimatter\code\shielding.dm"
 #include "monkestation\code\modules\ballpit\ballbit_sink.dm"
 #include "monkestation\code\modules\ballpit\ballpit.dm"
+#include "monkestation\code\modules\bitrunners\code\ability_disks.dm"
+#include "monkestation\code\modules\bitrunners\code\combat_gear_disks.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker_assets.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_conversion.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_datum.dm"
