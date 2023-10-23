@@ -145,20 +145,22 @@
  * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
+ * * has_optional - TRUE or FALSE, if the ritual has any optional result.
  *
  * Returns: TRUE, if the ritual should cleanup afterwards, or FALSE, to avoid calling cleanup after.
  */
-/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, has_optional)
 	if(!length(result_atoms))
 		return FALSE
-	for(var/result in result_atoms)
-		// Check if we have any optional result atoms
-		if(length(optional_result_atoms))
-			for(var/optional_result in optional_result_atoms)
-				new optional_result(loc)
-			return TRUE
-		new result(loc)
-	return TRUE
+	// Check if we have any optional result atoms
+	if(has_optional==TRUE)
+		for(var/optional_result in optional_result_atoms)
+			new optional_result(loc)
+		return TRUE
+	else
+		for(var/result in result_atoms)
+			new result(loc)
+		return TRUE
 
 /**
  * Called after on_finished_recipe returns TRUE
