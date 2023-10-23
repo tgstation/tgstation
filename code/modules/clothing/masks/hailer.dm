@@ -48,15 +48,16 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	inhand_icon_state = "sechailer"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING | UNIQUE_DEATH_SOUND
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | UNIQUE_DEATH_SOUND
 	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	unique_death = 'sound/voice/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
