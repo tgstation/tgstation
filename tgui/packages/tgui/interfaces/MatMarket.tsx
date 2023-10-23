@@ -3,6 +3,7 @@ import { Section, Stack, Button, Modal } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
+import { formatMoney } from '../format';
 
 type Data = {
   orderingPrive: BooleanLike; // you will need to import this
@@ -65,8 +66,8 @@ export const MatMarket = (props, context) => {
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
           <Section>
-            Current Credit Balance: <b>{creditBalance || 'zero'}</b> cr. Current
-            Order Amount: <b>{orderBalance || 'zero'}</b> cr.
+            Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
+            Current Order Amount: <b>{formatMoney(orderBalance)}</b> cr.
           </Section>
         </Section>
         {materials.map((material) => (
