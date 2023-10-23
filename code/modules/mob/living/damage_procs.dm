@@ -107,7 +107,7 @@
 	SHOULD_BE_PURE(TRUE)
 
 	var/list/damage_mods = list()
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 
 	var/final_mod = 1
 	for(var/new_mod in damage_mods)

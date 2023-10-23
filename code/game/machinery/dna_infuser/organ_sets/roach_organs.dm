@@ -105,7 +105,7 @@
  *
  * Adds a 0.5 modifier to attacks from the back
  */
-/obj/item/organ/internal/heart/roach/proc/modify_damage(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/internal/heart/roach/proc/modify_damage(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(!is_blocking(source, damage_amount, damagetype, attack_direction))
@@ -118,21 +118,21 @@
  *
  * Does a special effect if we blocked damage with our back
  */
-/obj/item/organ/internal/heart/roach/proc/do_block_effect(datum/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/internal/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(!is_blocking(source, damage_dealt, damagetype, attack_direction))
 		return
 
 	if(COOLDOWN_FINISHED(src, harden_effect_cd))
-		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
-		playsound(human_owner, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		source.visible_message(span_warning("[source]'s back hardens against the blow!"))
+		playsound(source, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, harden_effect_cd, 5 SECONDS) // Cooldown resets EVERY time we get hit
 
 /// Checks if the passed mob is in a valid state to be blocking damage with the roach shell
 /obj/item/organ/internal/heart/roach/proc/is_blocking(mob/living/carbon/human/blocker, damage_amount, damagetype, attack_direction)
-	if(damage_amount < 5 || damagetype != DAM_BRUTE || !attack_direction)
+	if(damage_amount < 5 || damagetype != BRUTE || !attack_direction)
 		return
 	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
 		return FALSE

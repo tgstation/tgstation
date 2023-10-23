@@ -55,11 +55,11 @@
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 
-/datum/species/moth/proc/check_species_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/datum/species/moth/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
-		additional_modifiers += (10 / attacking_item.force)
+		damage_mods += 10 // Yes, a 10x damage modifier
 
 /datum/species/moth/randomize_features()
 	var/list/features = ..()
