@@ -357,6 +357,7 @@
 /obj/effect/abstract/gas_visual
 	appearance_flags  = RESET_COLOR | KEEP_APART
 	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	var/color_matrix
 	var/color_filter
 
 /obj/effect/abstract/gas_visual/Initialize(mapload)
@@ -364,6 +365,8 @@
 	color_filter = filter(type="color", color=matrix())
 	filters += color_filter
 	color_filter = filters[filters.len]
+	if(color_matrix)
+		animate(color_filter, color=new_color_matrix, time=5)
 
 /obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
 	var/list/split_color = split_color(new_color)
@@ -379,5 +382,11 @@
 		0,0,0,alp_percent,
 		0,0,0,0
 	)
+
+	color_matrix = new_color_matrix
+
+	if(isnull(color_filter))
+		// Called before init
+		return
 
 	animate(color_filter, color=new_color_matrix, time=5)
