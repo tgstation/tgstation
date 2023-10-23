@@ -41,12 +41,6 @@
 // Iconnery
 
 /**
- * Called by update_icon(), used individually by each component to determine the icon state without the pipe in consideration
- */
-/obj/machinery/atmospherics/components/proc/update_icon_nopipes()
-	return
-
-/**
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
@@ -66,9 +60,21 @@
 	color = null
 	SET_PLANE_IMPLICIT(src, showpipe ? GAME_PLANE : FLOOR_PLANE)
 
-	if(!showpipe)
-		return ..()
+	if(showpipe)
+		underlays = update_icon_underlays(underlays)
 
+	return ..()
+
+/**
+ * Called by update_icon(), used individually by each component to determine the icon state without the pipe in consideration
+ */
+/obj/machinery/atmospherics/components/proc/update_icon_nopipes()
+	return
+
+/**
+ * Called by update_icon(), used individually by each component to determine the pipe underlay icons
+ */
+/obj/machinery/atmospherics/components/proc/update_icon_underlays(var/tmp/list/underlays)
 	var/connected = 0 //Direction bitset
 
 	var/underlay_pipe_layer = shift_underlay_only ? piping_layer : 3
@@ -91,7 +97,8 @@
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
-	return ..()
+
+	return underlays
 
 // Pipenet stuff; housekeeping
 
