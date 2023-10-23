@@ -366,7 +366,7 @@
 	filters += color_filter
 	color_filter = filters[filters.len]
 	if(color_matrix)
-		animate(color_filter, color=new_color_matrix, time=5)
+		animate(color_filter, color=color_matrix, time=5)
 
 /obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
 	var/list/split_color = split_color(new_color)
