@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Entering a virtual domain should no longer give you a message that it doesn't forbid items"

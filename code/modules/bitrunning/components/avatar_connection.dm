@@ -35,7 +35,7 @@
 	avatar.key = old_body.key
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
-	RegisterSignals(old_body, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED), PROC_REF(on_sever_connection))
+	RegisterSignals(old_body, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STATUS_UNCONSCIOUS), PROC_REF(on_sever_connection))
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
 	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_CONNECTION, PROC_REF(on_sever_connection))
