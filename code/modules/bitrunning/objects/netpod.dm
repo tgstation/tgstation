@@ -237,14 +237,7 @@
 	if(target != occupant)
 		return
 
-	target.AddComponent(/datum/component/netpod_healing, \
-		pod = src, \
-		brute_heal = 4, \
-		burn_heal = 4, \
-		toxin_heal = 4, \
-		clone_heal = 4, \
-		blood_heal = 4, \
-	)
+	target.AddComponent(/datum/component/netpod_healing, pod = src)
 
 	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, vary = TRUE)
 	target.extinguish_mob()
