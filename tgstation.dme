@@ -5482,6 +5482,7 @@
 #include "monkestation\code\datums\ai\monkey\dukeman_controller.dm"
 #include "monkestation\code\datums\ai_laws\laws_monke.dm"
 #include "monkestation\code\datums\announcers\duke.dm"
+#include "monkestation\code\datums\brain_damage\magic.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\multi_hit.dm"
 #include "monkestation\code\datums\components\throw_bounce.dm"
