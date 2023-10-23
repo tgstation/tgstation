@@ -1,0 +1,5 @@
+author: "SeeBeeSee"
+delete-after: True
+changes:
+  - rscadd: "Added new quirk that applies a permanent Extra-Sensory Paranoia - no lobotomies for this one."
+  - rscadd: "Added a new version of ESP that summons 10 stalkers by default, and can be called by an admin for more."
