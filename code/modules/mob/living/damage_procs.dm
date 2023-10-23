@@ -37,8 +37,8 @@
 	if(!forced)
 		damage_amount *= ((100 - blocked) / 100)
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
-		if(damage_amount <= 0)
-			return 0
+	if(damage_amount <= 0)
+		return 0
 
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 
