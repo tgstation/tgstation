@@ -38,7 +38,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "fx" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "fN" = (
@@ -195,6 +195,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"nB" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "ob" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -208,7 +215,7 @@
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/plasma,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "or" = (
@@ -598,6 +605,7 @@
 "NS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/directions/ptl/directional/east,
+/obj/machinery/light/blacklight/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "OT" = (
@@ -1212,8 +1220,8 @@ LD
 oK
 xG
 xG
+nB
 kI
-re
 NS
 oe
 RN
@@ -1235,8 +1243,8 @@ rW
 Qn
 nb
 dq
+nb
 mS
-zs
 zs
 fx
 Ar
