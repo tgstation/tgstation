@@ -172,16 +172,20 @@
 			var/amount = initial(cur_recipe.reqs[reagent_ingredient])
 			string_ingredient_list += "[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]\n"
 
-		// Redundant!
-		if(parent.type == valid_type)
-			continue
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
+
+		// If we're about to describe the ingredient that the component is based on, lower the described amount by 1 or remove it outright.
+		if(parent.type == valid_type)
+			if(amount > 1)
+				amount--
+			else
+				continue
 		string_ingredient_list += "[amount > 1 ? ("[amount]" + " of") : "a"] [initial(ingredient.name)]\n"
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		to_chat(user, span_boldnotice("Ingredients:"))
+		to_chat(user, span_boldnotice("Extra Ingredients:"))
 		to_chat(user, examine_block(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""

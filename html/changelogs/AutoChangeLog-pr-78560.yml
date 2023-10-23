@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - rscadd: "Added the BEPIS' minor rewards as purchasable products to the bitrunning order console."
-  - rscdel: "Removed the base BEPIS disk from the bitrunner console"

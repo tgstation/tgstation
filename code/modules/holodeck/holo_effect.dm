@@ -61,6 +61,7 @@
 		mobtype = pick(mobtype)
 	our_mob = new mobtype(loc)
 	our_mob.flags_1 |= HOLOGRAM_1
+	ADD_TRAIT(our_mob, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
@@ -101,7 +102,7 @@
 	mobtype = /mob/living/basic/bee/toxin
 
 /obj/effect/holodeck_effect/mobspawner/monkey
-	mobtype = /mob/living/simple_animal/holodeck_monkey
+	mobtype = /mob/living/carbon/human/species/monkey/holodeck
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/basic/pet/penguin/emperor/neuter

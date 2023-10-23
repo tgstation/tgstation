@@ -1,5 +1,0 @@
-author: "CoiledLamb"
-delete-after: True
-changes:
-  - rscdel: "removes surgical duffelbags"
-  - bugfix: "the surgery supply order now comes with a surgery tray"

@@ -34,7 +34,7 @@
 
 /mob/living/basic/legion_brood/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
@@ -49,7 +49,7 @@
 	if (ishuman(target) && target.stat > SOFT_CRIT)
 		infest(target)
 		return
-	if (isliving(target) && faction_check_mob(target) && !istype(target, created_by?.type))
+	if (isliving(target) && faction_check_atom(target) && !istype(target, created_by?.type))
 		visible_message(span_warning("[src] melds with [target]'s flesh!"))
 		target.apply_status_effect(/datum/status_effect/regenerative_core)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)

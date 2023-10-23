@@ -9,22 +9,22 @@
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
-		TRAIT_NO_ZOMBIFY,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_ZOMBIFY,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
-		TRAIT_NO_TRANSFORMATION_STING,
 		// HIGH FUNCTIONING UNIQUE
 		TRAIT_NOBLOOD,
 		TRAIT_SUCCUMB_OVERRIDE,
@@ -66,6 +66,10 @@
 		return TRUE
 	return ..()
 
+/datum/species/zombie/get_physical_attributes()
+	return "Zombies are undead, and thus completely immune to any enviromental hazard, or any physical threat besides blunt force trauma and burns. \
+		Their limbs are easy to pop off their joints, but they can somehow just slot them back in."
+
 /datum/species/zombie/get_species_description()
 	return "A rotting zombie! They descend upon Space Station Thirteen Every year to spook the crew! \"Sincerely, the Zombies!\""
 
@@ -104,11 +108,12 @@
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_LIVERLESS_METABOLISM,
+		TRAIT_NO_DNA_COPY,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -135,6 +140,14 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
+	// Deal with the source of this zombie corruption
+	// Infection organ needs to be handled separately from mutant_organs
+	// because it persists through species transitions
+	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	if(isnull(infection))
+		infection = new()
+		infection.Insert(new_zombie)
+
 	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
@@ -152,48 +165,31 @@
 	if(.)
 		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
 
-/datum/species/zombie/infectious/spec_life(mob/living/carbon/C, seconds_per_tick, times_fired)
+/datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()
-	C.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
+	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
 
 	//Zombies never actually die, they just fall down until they regenerate enough to rise back up.
 	//They must be restrained, beheaded or gibbed to stop being a threat.
 	if(COOLDOWN_FINISHED(src, regen_cooldown))
 		var/heal_amt = heal_rate
-		if(HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION))
+		if(HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION))
 			heal_amt *= 2
-		C.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick)
-		C.adjustToxLoss(-heal_amt * seconds_per_tick)
-		for(var/i in C.all_wounds)
+		var/need_mob_update = FALSE
+		need_mob_update += carbon_mob.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += carbon_mob.adjustToxLoss(-heal_amt * seconds_per_tick, updating_health = FALSE)
+		if(need_mob_update)
+			carbon_mob.updatehealth()
+		for(var/i in carbon_mob.all_wounds)
 			var/datum/wound/iter_wound = i
 			if(SPT_PROB(2-(iter_wound.severity/2), seconds_per_tick))
 				iter_wound.remove_wound()
-	if(!HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
-		playsound(C, pick(spooks), 50, TRUE, 10)
-
-//Congrats you somehow died so hard you stopped being a zombie
-/datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
-	. = ..()
-	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-	if(infection)
-		qdel(infection)
-
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-
-	// Deal with the source of this zombie corruption
-	// Infection organ needs to be handled separately from mutant_organs
-	// because it persists through species transitions
-	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
-	if(!infection)
-		infection = new()
-		infection.Insert(C)
+	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
+		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
 // Your skin falls off
 /datum/species/human/krokodil_addict
-	name = "\improper Human"
+	name = "\improper Krokodil Human"
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

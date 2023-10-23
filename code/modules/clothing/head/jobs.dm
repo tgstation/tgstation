@@ -154,6 +154,13 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/chaplain/habit_veil
+	name = "nun veil"
+	desc = "No nunsene clothing."
+	icon_state = "nun_hood_alt"
+	flags_inv = HIDEHAIR | HIDEEARS
+	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
+
 /obj/item/clothing/head/chaplain/bishopmitre
 	name = "bishop mitre"
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
@@ -336,8 +343,20 @@
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
-	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
+	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge. Looks a bit stout."
 	icon_state = "hoscap"
+
+/obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
+	. = ..()
+	// Give it a little publicity
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/sturdy_shako,\
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /datum/armor/hats_hos
 	melee = 40

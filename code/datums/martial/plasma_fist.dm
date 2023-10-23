@@ -68,7 +68,7 @@
 	log_combat(attacker, defender, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(defender)
 	defender.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
-	defender.gib()
+	defender.gib(DROP_ALL_REMAINS)
 	if(nobomb)
 		return
 	if(!hasclient)

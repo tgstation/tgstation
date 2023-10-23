@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Throwing things at cyborgs will now slow them down, as intended"
-  - balance: "Adjusted the calculation of throwforce -> slowdown for cyborgs such that it is simply a flat duration for anything above a certain damage threshold (the value of throwing iron rods)"

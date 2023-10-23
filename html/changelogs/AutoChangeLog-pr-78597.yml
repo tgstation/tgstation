@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Valentines and ERTs will no longer get mood boosts from traitor moodener items"

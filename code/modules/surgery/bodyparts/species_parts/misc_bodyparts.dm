@@ -387,6 +387,25 @@
 	burn_modifier = 1.25
 	speed_modifier = 0.75 //big fungus big fungus
 
+/// Dullahan head preserves organs inside it
+/obj/item/bodypart/head/dullahan
+	throwforce = 25 // It's also a potent weapon
+	show_organs_on_examine = FALSE
+	speech_span = null
+
+/obj/item/bodypart/head/dullahan/Entered(obj/item/organ/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if (!isorgan(arrived))
+		return
+	arrived.organ_flags |= ORGAN_FROZEN
+
+/obj/item/bodypart/head/dullahan/Exited(obj/item/organ/gone, direction)
+	. = ..()
+	if (!isorgan(gone))
+		return
+	gone.organ_flags &= ~ORGAN_FROZEN
+
+
 //GOLEM
 /obj/item/bodypart/head/golem
 	icon = 'icons/mob/human/species/golems.dmi'

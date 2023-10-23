@@ -12,6 +12,7 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
+	has_gas_visuals = FALSE
 
 	///Reference to all the nodes in the front
 	var/list/front_nodes

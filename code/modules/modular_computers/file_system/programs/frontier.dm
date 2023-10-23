@@ -18,14 +18,11 @@
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
 
-/datum/computer_file/program/scipaper_program/New()
+/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	paper_to_be = new
-
-/datum/computer_file/program/scipaper_program/on_start(mob/living/user)
-	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, computer)
 
 /datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))

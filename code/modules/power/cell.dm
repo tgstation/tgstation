@@ -23,7 +23,7 @@
 	///Current charge in cell units
 	var/charge = 0
 	///Maximum charge in cell units
-	var/maxcharge = 1000
+	var/maxcharge = STANDARD_CELL_CHARGE
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
@@ -31,7 +31,7 @@
 	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/corrupted = FALSE
 	///how much power is given every tick in a recharger
-	var/chargerate = 100
+	var/chargerate = STANDARD_CELL_CHARGE * 0.1
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -51,7 +51,7 @@
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
-	rating = max(round(maxcharge / 10000, 1), 1)
+	rating = max(round(maxcharge / (STANDARD_CELL_CHARGE * 10), 1), 1)
 	if(!charge)
 		charge = maxcharge
 	if(empty)
@@ -82,7 +82,7 @@
 	. = COMPONENT_ITEM_CHARGED
 
 	if(prob(80))
-		maxcharge -= 200
+		maxcharge -= STANDARD_CELL_CHARGE * 0.2
 
 	if(maxcharge <= 1) // Div by 0 protection
 		maxcharge = 1
@@ -281,7 +281,7 @@
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	maxcharge = 500
+	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/crap/empty
@@ -290,18 +290,18 @@
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
-	maxcharge = 2500
+	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	chargerate = 1000
+	chargerate = STANDARD_CELL_CHARGE
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
 	desc = "A power cell with an even higher capacity than the base model!"
-	maxcharge = 5000
+	maxcharge = STANDARD_CELL_CHARGE * 5
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
+	maxcharge = STANDARD_CELL_CHARGE * 0.6
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/secborg/empty
@@ -309,38 +309,38 @@
 
 /obj/item/stock_parts/cell/mini_egun
 	name = "miniature energy gun power cell"
-	maxcharge = 600
+	maxcharge = STANDARD_CELL_CHARGE * 0.6
 
 /obj/item/stock_parts/cell/hos_gun
 	name = "X-01 multiphase energy gun power cell"
-	maxcharge = 1200
+	maxcharge = STANDARD_CELL_CHARGE * 1.2
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 40000
-	chargerate = 1500
+	maxcharge = STANDARD_CELL_CHARGE * 40
+	chargerate = STANDARD_CELL_CHARGE * 1.5
 
 /obj/item/stock_parts/cell/pulse/carbine //25 pulse shots
 	name = "pulse carbine power cell"
-	maxcharge = 5000
+	maxcharge = STANDARD_CELL_CHARGE * 5
 
 /obj/item/stock_parts/cell/pulse/pistol //10 pulse shots
 	name = "pulse pistol power cell"
-	maxcharge = 2000
+	maxcharge = STANDARD_CELL_CHARGE * 2
 
 /obj/item/stock_parts/cell/ninja
 	name = "black power cell"
 	icon_state = "bscell"
-	maxcharge = 10000
+	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = 2000
+	chargerate = STANDARD_CELL_CHARGE * 2
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
-	maxcharge = 10000
+	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = 1500
+	chargerate = STANDARD_CELL_CHARGE * 1.5
 
 /obj/item/stock_parts/cell/high/empty
 	empty = TRUE
@@ -348,9 +348,9 @@
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
-	maxcharge = 20000
+	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
-	chargerate = 2000
+	chargerate = STANDARD_CELL_CHARGE * 2
 
 /obj/item/stock_parts/cell/super/empty
 	empty = TRUE
@@ -358,9 +358,9 @@
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
-	maxcharge = 30000
+	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
-	chargerate = 3000
+	chargerate = STANDARD_CELL_CHARGE * 3
 
 /obj/item/stock_parts/cell/hyper/empty
 	empty = TRUE
@@ -369,9 +369,9 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
-	maxcharge = 40000
+	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
-	chargerate = 4000
+	chargerate = STANDARD_CELL_CHARGE * 4
 
 /obj/item/stock_parts/cell/bluespace/empty
 	empty = TRUE
@@ -392,7 +392,7 @@
 	desc = "An alien power cell that produces energy seemingly out of nowhere."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "cell"
-	maxcharge = 50000
+	maxcharge = STANDARD_CELL_CHARGE * 50
 	ratingdesc = FALSE
 
 /obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload)
@@ -405,7 +405,7 @@
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	charge = 100
-	maxcharge = 300
+	maxcharge = STANDARD_CELL_CHARGE * 0.3
 	charge_light_type = null
 	connector_type = null
 	custom_materials = null
@@ -415,7 +415,7 @@
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."
-	maxcharge = 500
+	maxcharge = STANDARD_CELL_CHARGE * 0.5
 
 /obj/item/stock_parts/cell/emproof/Initialize(mapload)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
@@ -433,15 +433,15 @@
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow slime extract"
 	custom_materials = null
-	maxcharge = 5000
+	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null
 	connector_type = "slimecore"
 
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
-	maxcharge = 50000
-	chargerate = 5000 //Extremely energy intensive
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	chargerate = STANDARD_CELL_CHARGE * 5 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return
@@ -455,7 +455,7 @@
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."
-	maxcharge = 120 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
+	maxcharge = STANDARD_CELL_CHARGE * 0.12 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*0.2)
 	w_class = WEIGHT_CLASS_TINY
 
@@ -470,7 +470,7 @@
 	name = "crystal power cell"
 	desc = "A very high power cell made from crystallized plasma"
 	icon_state = "crystal_cell"
-	maxcharge = 50000
+	maxcharge = STANDARD_CELL_CHARGE * 50
 	chargerate = 0
 	charge_light_type = null
 	connector_type = "crystal"
@@ -478,7 +478,7 @@
 	grind_results = null
 
 /obj/item/stock_parts/cell/inducer_supply
-	maxcharge = 5000
+	maxcharge = STANDARD_CELL_CHARGE * 5
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

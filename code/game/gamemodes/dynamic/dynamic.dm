@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Modify the threat level for station traits before dynamic can be Initialized. List(instance = threat_reduction)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
+/// Rulesets which have been forcibly enabled or disabled
+GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
 /datum/game_mode/dynamic
 	// Threat logging vars
@@ -424,6 +426,24 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	generate_budgets()
 	set_cooldowns()
 	log_dynamic("Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
+	SSblackbox.record_feedback(
+		"associative",
+		"dynamic_threat",
+		1,
+		list(
+			"server_name" = CONFIG_GET(string/serversqlname),
+			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
+			"threat_level" = threat_level,
+			"round_start_budget" = round_start_budget,
+			"parameters" = list(
+				"threat_curve_centre" = threat_curve_centre,
+				"threat_curve_width" = threat_curve_width,
+				"forced_extended" = GLOB.dynamic_forced_extended,
+				"no_stacking" = GLOB.dynamic_no_stacking,
+				"stacking_limit" = GLOB.dynamic_stacking_limit,
+			),
+		),
+	)
 	return TRUE
 
 /datum/game_mode/dynamic/proc/setup_shown_threat()
@@ -634,8 +654,10 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 		if(rule.persistent)
 			current_rules += rule
 		new_snapshot(rule)
+		rule.forget_startup()
 		return TRUE
 	rule.clean_up() // Refund threat, delete teams and so on.
+	rule.forget_startup()
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -683,9 +705,11 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
+				new_rule.forget_startup()
 				return TRUE
 		else if (forced)
 			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	new_rule.forget_startup()
 	return FALSE
 
 /datum/game_mode/dynamic/process()

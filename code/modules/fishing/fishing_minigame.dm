@@ -43,8 +43,12 @@
 	var/fish_ai = FISH_AI_DUMB
 	/// Rule modifiers (eg weighted bait)
 	var/special_effects = NONE
-	/// Did the game get past the baiting phase, used to track if bait should be consumed afterwards
-	var/bait_taken = FALSE
+	/// A list of possible active minigame effects. If not empty, one will be picked from time to time.
+	var/list/active_effects
+	/// The cooldown between switching active effects
+	COOLDOWN_DECLARE(active_effect_cd)
+	/// The current active effect
+	var/current_active_effect
 	/// Result path
 	var/reward_path = FISHING_DUD
 	/// Minigame difficulty
@@ -61,6 +65,8 @@
 	var/obj/effect/fishing_lure/lure
 	/// Background icon state from fishing_hud.dmi
 	var/background = "background_default"
+	/// Fish icon state from fishing_hud.dmi
+	var/fish_icon = "fish"
 
 	/// Fishing line visual
 	var/datum/beam/fishing_line
@@ -168,7 +174,10 @@
 		RegisterSignal(user, COMSIG_MOB_FISHING_REWARD_DISPENSED, PROC_REF(hurt_fish))
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
-	difficulty = round(difficulty)
+	difficulty = clamp(round(difficulty), 1, 100)
+
+	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH) || (user.mind && HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)))
+		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
 
 	/**
 	 * If the chances are higher than 1% (100% at maximum difficulty), they'll scale
@@ -194,6 +203,8 @@
 	if(!completed)
 		complete(win = FALSE)
 	if(fishing_line)
+		//Stops the line snapped message from appearing everytime the minigame is over.
+		UnregisterSignal(fishing_line, COMSIG_QDELETING)
 		QDEL_NULL(fishing_line)
 	if(lure)
 		QDEL_NULL(lure)
@@ -207,19 +218,21 @@
 	lure_turf?.balloon_alert(user, message)
 
 /datum/fishing_challenge/proc/on_spot_gone(datum/source)
+	SIGNAL_HANDLER
 	send_alert("fishing spot gone!")
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/interrupt_challenge(datum/source, reason)
 	if(reason)
 		send_alert(reason)
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
-	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(interrupt))
+	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
@@ -227,6 +240,13 @@
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
 	playsound(lure, 'sound/effects/splash.ogg', 100)
+
+/datum/fishing_challenge/proc/on_line_deleted(datum/source)
+	SIGNAL_HANDLER
+	fishing_line = null
+	///The lure may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.
+	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
+	interrupt()
 
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
@@ -241,12 +261,9 @@
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Challenge interrupted by something external
-/datum/fishing_challenge/proc/interrupt(datum/source, balloon_alert = TRUE)
-	SIGNAL_HANDLER
+/datum/fishing_challenge/proc/interrupt()
 	if(!completed)
 		experience_multiplier *= 0.5
-		if(balloon_alert)
-			send_alert(user.is_holding(used_rod) ? "line snapped" : "tool dropped")
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/on_attack_self(obj/item/source, mob/user)
@@ -278,7 +295,8 @@
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /datum/fishing_challenge/proc/start_baiting_phase()
 	deltimer(next_phase_timer)
@@ -294,7 +312,30 @@
 	phase = BITING_PHASE
 	// Trashing animation
 	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
-	send_alert("!!!")
+	if(HAS_TRAIT(user, TRAIT_REVEAL_FISH) || (user.mind && HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)))
+		switch(fish_icon)
+			if(FISH_ICON_DEF)
+				send_alert("fish!!!")
+			if(FISH_ICON_HOSTILE)
+				send_alert("hostile!!!")
+			if(FISH_ICON_STAR)
+				send_alert("starfish!!!")
+			if(FISH_ICON_CHUNKY)
+				send_alert("round fish!!!")
+			if(FISH_ICON_JELLYFISH)
+				send_alert("jellyfish!!!")
+			if(FISH_ICON_SLIME)
+				send_alert("slime!!!")
+			if(FISH_ICON_COIN)
+				send_alert("valuable!!!")
+			if(FISH_ICON_GEM)
+				send_alert("ore!!!")
+			if(FISH_ICON_CRAB)
+				send_alert("crustacean!!!")
+			if(FISH_ICON_BONE)
+				send_alert("bones!!!")
+	else
+		send_alert("!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	// Setup next phase
@@ -307,7 +348,7 @@
 ///The player is no longer around to play the minigame, so we interrupt it.
 /datum/fishing_challenge/proc/on_user_logout(datum/source)
 	SIGNAL_HANDLER
-	interrupt(balloon_alert = FALSE)
+	interrupt()
 
 /datum/fishing_challenge/proc/win_anyway()
 	if(!completed)
@@ -345,6 +386,9 @@
 	RegisterSignal(user.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_reeling))
 	RegisterSignal(user.client, COMSIG_CLIENT_MOUSEUP, PROC_REF(stop_reeling))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(on_user_logout))
+	if(length(active_effects))
+		// Give the player a moment to prepare for active minigame effects
+		COOLDOWN_START(src, active_effect_cd, rand(5, 9) SECONDS)
 	START_PROCESSING(SSfishing, src)
 
 ///Stop processing and remove references to the minigame hud
@@ -369,10 +413,43 @@
 
 ///Update the state of the fish, the bait and the hud
 /datum/fishing_challenge/process(seconds_per_tick)
+	if(length(active_effects) && COOLDOWN_FINISHED(src, active_effect_cd))
+		select_active_effect()
 	move_fish(seconds_per_tick)
 	move_bait(seconds_per_tick)
 	if(!QDELETED(fishing_hud))
 		update_visuals()
+
+///The proc that handles fancy effects like flipping the hud or skewing movement
+/datum/fishing_challenge/proc/select_active_effect()
+	///bring forth an active effect
+	if(isnull(current_active_effect))
+		current_active_effect = pick(active_effects)
+		switch(current_active_effect)
+			if(FISHING_MINIGAME_RULE_ANTIGRAV)
+				fishing_hud.icon_state = "background_antigrav"
+				SEND_SOUND(user, sound('sound/effects/arcade_jump.ogg', volume = 50))
+				COOLDOWN_START(src, active_effect_cd, rand(6, 9) SECONDS)
+			if(FISHING_MINIGAME_RULE_FLIP)
+				fishing_hud.icon_state = "background_flip"
+				fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
+				SEND_SOUND(user, sound('sound/effects/boing.ogg'))
+				COOLDOWN_START(src, active_effect_cd, rand(5, 6) SECONDS)
+		return
+
+	///go back to normal
+	switch(current_active_effect)
+		if(FISHING_MINIGAME_RULE_ANTIGRAV)
+			var/sound/inverted_sound = sound('sound/effects/arcade_jump.ogg', volume = 50)
+			inverted_sound.frequency = -1
+			SEND_SOUND(user, inverted_sound)
+			COOLDOWN_START(src, active_effect_cd, rand(10, 13) SECONDS)
+		if(FISHING_MINIGAME_RULE_FLIP)
+			fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
+			COOLDOWN_START(src, active_effect_cd, rand(8, 12) SECONDS)
+
+	fishing_hud.icon_state = background
+	current_active_effect = null
 
 ///The proc that moves the fish around, just like in the old TGUI, mostly.
 /datum/fishing_challenge/proc/move_fish(seconds_per_tick)
@@ -464,6 +541,9 @@
 
 	velocity_change = round(velocity_change)
 
+	if(current_active_effect == FISHING_MINIGAME_RULE_ANTIGRAV)
+		velocity_change = -velocity_change
+
 	/**
 	 * Pull the brake on the velocity if the current velocity and the acceleration
 	 * have different directions, making the bait less slippery, thus easier to control
@@ -524,7 +604,7 @@
 	icon_state = challenge.background
 	add_overlay("frame")
 	hud_bait = new(null, null, challenge)
-	hud_fish = new
+	hud_fish = new(null, null, challenge)
 	hud_completion = new(null, null, challenge)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
@@ -556,6 +636,11 @@
 	icon = 'icons/hud/fishing_hud.dmi'
 	icon_state = "fish"
 	vis_flags = VIS_INHERIT_ID
+
+/atom/movable/screen/hud_fish/Initialize(mapload, datum/hud/hud_owner, datum/fishing_challenge/challenge)
+	. = ..()
+	if(challenge)
+		icon_state = challenge.fish_icon
 
 /atom/movable/screen/hud_completion
 	icon = 'icons/hud/fishing_hud.dmi'

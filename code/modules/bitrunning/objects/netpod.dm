@@ -33,6 +33,7 @@
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE
+	find_server()
 
 	RegisterSignals(src, list(
 		COMSIG_QDELETING,
@@ -188,7 +189,7 @@
 	return TRUE
 
 /obj/machinery/netpod/ui_interact(mob/user, datum/tgui/ui)
-	if(!is_operational)
+	if(!is_operational || occupant)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -226,6 +227,11 @@
 
 	return FALSE
 
+/obj/machinery/netpod/attack_ghost(mob/dead/observer/our_observer)
+	var/our_target = avatar_ref?.resolve()
+	if(isnull(our_target) || !our_observer.orbit(our_target))
+		return ..()
+
 /// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
 /obj/machinery/netpod/proc/auto_disconnect()
 	if(isnull(occupant) || state_open || connected)
@@ -241,20 +247,12 @@
 	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
 	open_machine()
 
-/**
- * ### Disconnect occupant
- * If this goes smoothly, should reconnect a receiving mind to the occupant's body
- *
- * This is the second stage of the process -  if you want to disconn avatars start at the mind first
- */
+/// Handles occupant post-disconnection effects like damage, sounds, etc
 /obj/machinery/netpod/proc/disconnect_occupant(forced = FALSE)
-	var/mob/living/mob_occupant = occupant
-	if(isnull(occupant) || !isliving(occupant))
-		return
-
 	connected = FALSE
 
-	if(mob_occupant.stat == DEAD)
+	var/mob/living/mob_occupant = occupant
+	if(isnull(occupant) || !isliving(occupant) || mob_occupant.stat == DEAD)
 		open_machine()
 		return
 
@@ -309,7 +307,7 @@
 			return
 		current_avatar = server.generate_avatar(wayout, netsuit)
 		avatar_ref = WEAKREF(current_avatar)
-		server.stock_gear(current_avatar, neo)
+		server.stock_gear(current_avatar, neo, generated_domain)
 
 	neo.set_static_vision(3 SECONDS)
 	protect_occupant(occupant)
@@ -346,8 +344,9 @@
 		return
 
 	server_ref = WEAKREF(server)
-	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded), override = TRUE)
-	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete), override = TRUE)
+	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded))
+	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
+	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_SCRUBBED, PROC_REF(on_domain_scrubbed))
 
 	return server
 
@@ -394,6 +393,7 @@
 
 	account.bitrunning_points += reward_points * 100
 
+/// User inspects the machine
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
@@ -408,10 +408,15 @@
 	examine_text += span_notice("It is currently occupied by [occupant].")
 	examine_text += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
 
-/// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/unprotect_and_signal()
-	unprotect_occupant(occupant)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR, src)
+/// The domain has been fully purged, so we should double check our avatar is deleted
+/obj/machinery/netpod/proc/on_domain_scrubbed(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/current_avatar = avatar_ref?.resolve()
+	if(isnull(current_avatar))
+		return
+
+	QDEL_NULL(current_avatar)
 
 /// When the server is upgraded, drops brain damage a little
 /obj/machinery/netpod/proc/on_server_upgraded(datum/source, servo_rating)
@@ -449,6 +454,11 @@
 	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
+
+/// On unbuckle or break, make sure the occupant ref is null
+/obj/machinery/netpod/proc/unprotect_and_signal()
+	unprotect_occupant(occupant)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 /// Removes the occupant from netpod stasis
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)

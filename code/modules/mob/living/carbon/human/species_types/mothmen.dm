@@ -16,6 +16,7 @@
 	mutanteyes = /obj/item/organ/internal/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
+	death_sound = 'sound/voice/moth/moth_death.ogg'
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
@@ -51,12 +52,17 @@
 		return 10 //flyswatters deal 10x damage to moths
 	return 1
 
-/datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
-	randomize_external_organs(human_mob)
+/datum/species/moth/randomize_features()
+	var/list/features = ..()
+	features["moth_markings"] = pick(GLOB.moth_markings_list)
+	return features
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
 	return 'sound/voice/moth/scream_moth.ogg'
+
+/datum/species/moth/get_physical_attributes()
+	return "Moths have large and fluffy wings, which help them navigate the station if gravity is offline by pushing the air around them. \
+		Due to that, it isn't of much use out in space. Their eyes are very sensitive."
 
 /datum/species/moth/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
