@@ -78,7 +78,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
@@ -100,6 +100,7 @@
 	variance = 25
 	projectiles_per_shot = 5
 	fire_sound = 'sound/weapons/taser2.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -173,6 +174,7 @@
 	equip_cooldown = 8
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/weapons/taser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
