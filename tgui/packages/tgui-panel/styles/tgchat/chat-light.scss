@@ -1134,6 +1134,7 @@ $border-width-px: $border-width * 1px;
 }
 
 .chat_alert_deadchat .minor_announcement_text {
+  background-color: transparent;
   color: #5c00e6;
   padding-left: 0;
   font-weight: bold;
