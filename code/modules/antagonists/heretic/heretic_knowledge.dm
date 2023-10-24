@@ -177,9 +177,11 @@
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
-				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
+				// If it's not requirement type and type is not a list, skip over this check
+				if(!istype(sacrificed, requirement) && !islist(requirement))
 					continue
-				if(!istype(sacrificed, requirement))
+				// If requirement *is* a list and the stack *is* in the list, skip over this check
+				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
@@ -539,7 +541,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)

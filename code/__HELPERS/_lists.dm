@@ -429,9 +429,9 @@
 		return
 	var/list/result = new
 	if(skiprep)
-		for(var/e in first)
-			if(!(e in result) && !(e in second))
-				UNTYPED_LIST_ADD(result, e)
+		for(var/entry in first)
+			if(!(entry in result) && !(entry in second))
+				UNTYPED_LIST_ADD(result, entry)
 	else
 		result = first - second
 	return result
@@ -765,9 +765,9 @@
 			inserted_list.Cut(to_index, to_index + 1)
 	else
 		if(to_index > from_index)
-			var/a = to_index
+			var/temp = to_index
 			to_index = from_index
-			from_index = a
+			from_index = temp
 
 		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)

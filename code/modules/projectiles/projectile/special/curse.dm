@@ -18,6 +18,7 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	handedness = prob(50)
 	icon_state = "[base_icon_state][handedness]"
 

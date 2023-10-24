@@ -27,20 +27,30 @@ const prevNextCamera = (
   cameras: Camera[],
   activeCamera: Camera & { status: BooleanLike }
 ) => {
-  if (!activeCamera) {
+  if (!activeCamera || cameras.length < 2) {
     return [];
   }
+
   const index = cameras.findIndex((camera) => camera.ref === activeCamera.ref);
 
-  if (index === 0) {
-    return [cameras[cameras.length - 1].ref, cameras[index + 1].ref];
-  }
+  switch (index) {
+    case -1: // Current camera is not in the list
+      return [cameras[cameras.length - 1].ref, cameras[0].ref];
 
-  if (index === cameras.length - 1) {
-    return [cameras[index - 1].ref, cameras[0].ref];
-  }
+    case 0: // First camera
+      if (cameras.length === 2) return [cameras[1].ref, cameras[1].ref]; // Only two
 
-  return [cameras[index - 1].ref, cameras[index + 1].ref];
+      return [cameras[cameras.length - 1].ref, cameras[index + 1].ref];
+
+    case cameras.length - 1: // Last camera
+      if (cameras.length === 2) return [cameras[0].ref, cameras[0].ref];
+
+      return [cameras[index - 1].ref, cameras[0].ref];
+
+    default:
+      // Middle camera
+      return [cameras[index - 1].ref, cameras[index + 1].ref];
+  }
 };
 
 /**

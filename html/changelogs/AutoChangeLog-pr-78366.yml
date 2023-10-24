@@ -1,0 +1,7 @@
+author: "DrDiasyl"
+delete-after: True
+changes:
+  - qol: "The Command intercom now has a High-Volume setting like command headsets"
+  - qol: "A memo telling frequencies of station radio channels are now present near the Command intercom and T-Comms room"
+  - image: "Station, Command, and Prison intercoms have received new sprites"
+  - spellcheck: "Station and Command intercom descriptions have been changed to tell about their functionality"

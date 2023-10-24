@@ -34,8 +34,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "A canister for the storage of gas."
 	icon = 'icons/obj/pipes_n_cables/canisters.dmi'
 	icon_state = "#mapme"
-	greyscale_config = /datum/greyscale_config/canister/hazard
-	greyscale_colors = "#ffff00#000000"
+	greyscale_config = /datum/greyscale_config/canister
+	greyscale_colors = "#6b6b80"
 	density = TRUE
 	volume = 2000
 	armor_type = /datum/armor/portable_atmospherics_canister
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = /datum/gas/antinoblium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
-	greyscale_colors = "#9b5d7f#368bff"
+	greyscale_colors = "#333333#fefb30"
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
@@ -167,8 +167,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
 	gas_type = /datum/gas/carbon_dioxide
-	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#4e4c48"
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#4e4c48#eaeaea"
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
@@ -202,8 +202,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	name = "Hydrogen canister"
 	gas_type = /datum/gas/hydrogen
 	filled = 1
-	greyscale_config = /datum/greyscale_config/canister/stripe
-	greyscale_colors = "#bdc2c0#ffffff"
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#eaeaea#be3455"
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
@@ -215,8 +215,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
 	gas_type = /datum/gas/nitrogen
-	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#d41010"
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#e9ff5c#f4fce8"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"

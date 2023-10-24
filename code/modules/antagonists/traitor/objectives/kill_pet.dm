@@ -26,9 +26,9 @@
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
 		JOB_QUARTERMASTER = list(
+			/mob/living/basic/gorilla/cargorilla,
 			/mob/living/basic/sloth/citrus,
 			/mob/living/basic/sloth/paperwork,
-			/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
 		)
 	)
 	/// The head that we are targetting

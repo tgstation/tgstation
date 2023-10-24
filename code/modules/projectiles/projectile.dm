@@ -159,13 +159,15 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+
 	// Status effects applied on hit
-	var/stun = 0
-	var/knockdown = 0
-	var/paralyze = 0
-	var/immobilize = 0
-	var/unconscious = 0
-	var/eyeblur = 0
+	var/stun = 0 SECONDS
+	var/knockdown = 0 SECONDS
+	var/paralyze = 0 SECONDS
+	var/immobilize = 0 SECONDS
+	var/unconscious = 0 SECONDS
+	/// Seconds of blurry eyes applied on projectile hit
+	var/eyeblur = 0 SECONDS
 	/// Drowsiness applied on projectile hit
 	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
@@ -241,12 +243,22 @@
 /**
  * Called when the projectile hits something
  *
- * @params
- * target - thing hit
- * blocked - percentage of hit blocked
- * pierce_hit - are we piercing through or regular hitting
+ * By default parent call will always return [BULLET_ACT_HIT] (unless qdeleted)
+ * so it is save to assume a successful hit in children (though not necessarily successfully damaged - it could've been blocked)
+ *
+ * Arguments
+ * * target - thing hit
+ * * blocked - percentage of hit blocked (0 to 100)
+ * * pierce_hit - boolean, are we piercing through or regular hitting
+ *
+ * Returns
+ * * Returns [BULLET_ACT_HIT] if we hit something. Default return value.
+ * * Returns [BULLET_ACT_BLOCK] if we were hit but sustained no effects (blocked it). Note, Being "blocked" =/= "blocked is 100".
+ * * Returns [BULLET_ACT_FORCE_PIERCE] to have the projectile keep going instead of "hitting", as if we were not hit at all.
  */
-/obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/proc/on_hit(atom/target, blocked = 0, pierce_hit)
+	SHOULD_CALL_PARENT(TRUE)
+
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/hit_limb_zone
@@ -258,7 +270,7 @@
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
-		return
+		return BULLET_ACT_BLOCK
 	var/turf/target_turf = get_turf(target)
 
 	var/hitx
@@ -331,7 +343,6 @@
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(living_target.is_blind())
 				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
-		living_target.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
@@ -1143,13 +1154,17 @@
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
 
 /// Fire a projectile from this atom at another atom
-/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, list/ignore_targets = list())
 	if (!isnull(sound))
 		playsound(src, sound, vol = 100, vary = TRUE)
 
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
+	var/list/ignore = list()
+	for (var/atom/thing as anything in ignore_targets)
+		ignore[thing] = TRUE
+	bullet.impacted += ignore
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y
@@ -1157,3 +1172,4 @@
 	bullet.original = target
 	bullet.preparePixelProjectile(target, src)
 	bullet.fire()
+	return bullet

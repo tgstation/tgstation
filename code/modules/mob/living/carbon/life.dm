@@ -689,7 +689,7 @@
 		var/datum/reagent/bits = bile
 		if(istype(bits, /datum/reagent/consumable))
 			var/datum/reagent/consumable/goodbit = bile
-			fullness += goodbit.get_nutriment_factor() * goodbit.volume / goodbit.metabolization_rate
+			fullness += goodbit.get_nutriment_factor(src) * goodbit.volume / goodbit.metabolization_rate
 			continue
 		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
 
@@ -711,7 +711,7 @@
 ///Check to see if we have the liver, if not automatically gives you last-stage effects of lacking a liver.
 
 /mob/living/carbon/proc/handle_liver(seconds_per_tick, times_fired)
-	if(!dna)
+	if(isnull(has_dna()))
 		return
 
 	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)

@@ -114,7 +114,7 @@
 /obj/item/food/grown/proc/ferment()
 	var/reagent_purity = seed.get_reagent_purity()
 	var/purity_above_base = clamp((reagent_purity - 0.5) * 2, 0, 1)
-	var/quality_min = 0
+	var/quality_min = DRINK_NICE
 	var/quality_max = DRINK_FANTASTIC
 	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
