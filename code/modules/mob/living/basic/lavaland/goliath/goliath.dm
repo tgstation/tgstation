@@ -55,6 +55,13 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_force = MOVE_FORCE_DEFAULT,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+		pull_force = PULL_FORCE_DEFAULT,\
+	)
+
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
@@ -91,20 +98,6 @@
 	. = ..()
 	if (saddled)
 		. += span_info("Someone appears to have attached a saddle to this one.")
-
-/mob/living/basic/mining/goliath/revive(full_heal_flags, excess_healing, force_grab_ghost)
-	. = ..()
-	if (!.)
-		return
-	move_force = initial(move_force)
-	move_resist = initial(move_resist)
-	pull_force = initial(pull_force)
-
-/mob/living/basic/mining/goliath/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
-	move_resist = MOVE_RESIST_DEFAULT
-	pull_force = PULL_FORCE_DEFAULT
-	return ..()
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
 /mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)

@@ -1,0 +1,6 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - qol: "improves blackout drunk character gameplay"
+  - bugfix: "fixed improper prob() placement that caused blackout character to be forced sleep"
+  - sound: "added hiccup sound"

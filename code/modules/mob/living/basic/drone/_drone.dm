@@ -1,6 +1,6 @@
 
 /**
- * # Maintenance Drone
+ * Maintenance Drone
  *
  * Small player controlled fixer-upper
  *
@@ -13,7 +13,7 @@
  * They have laws to prevent them from doing anything else.
  *
  */
-/mob/living/simple_animal/drone
+/mob/living/basic/drone
 	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
 	icon = 'icons/mob/silicon/drone.dmi'
@@ -23,9 +23,8 @@
 	health = 45
 	maxHealth = 45
 	unsuitable_atmos_damage = 0
-	minbodytemp = 0
-	maxbodytemp = 0
-	wander = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
 	speed = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
@@ -43,7 +42,6 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
-	dextrous = TRUE
 	hud_type = /datum/hud/dextrous/drone
 	// Going for a sort of pale green here
 	lighting_cutoff_red = 30
@@ -52,7 +50,6 @@
 
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
-	held_items = list(null, null)
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
 	var/picked = FALSE
 	/// Stored drone color, restored when unhacked
@@ -71,9 +68,9 @@
 	var/obj/item/internal_storage
 	/// Headwear slot
 	var/obj/item/head
-	/// Default [/mob/living/simple_animal/drone/var/internal_storage] item
+	/// Default [/mob/living/basic/drone/var/internal_storage] item
 	var/obj/item/default_storage = /obj/item/storage/drone_tools
-	/// Default [/mob/living/simple_animal/drone/var/head] item
+	/// Default [/mob/living/basic/drone/var/head] item
 	var/obj/item/default_headwear
 	/**
 	  * icon_state of drone from icons/mobs/drone.dmi
@@ -86,9 +83,11 @@
 	  * - [CLOCKDRONE]
 	  */
 	var/visualAppearance = MAINTDRONE
-	/// Hacked state, see [/mob/living/simple_animal/drone/proc/update_drone_hack]
+	/// Hacked state, see [/mob/living/basic/drone/proc/update_drone_hack]
 	var/hacked = FALSE
-	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/simple_animal/drone/proc/set_shy] to set)
+	/// Whether this drone can be un-hacked. Used for subtypes that cannot be meaningfully "fixed".
+	var/can_unhack = TRUE
+	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/basic/drone/proc/set_shy] to set)
 	var/shy = TRUE
 	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \
@@ -169,19 +168,16 @@
 		/obj/machinery/atmospherics/components/unary/vent_scrubber,
 	)
 
-/mob/living/simple_animal/drone/Initialize(mapload)
+/mob/living/basic/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
-
-	// Doing this hurts my soul, but simple_animal access reworks are for another day.
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
+	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 
 	if(default_storage)
-		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, ITEM_SLOT_DEX_STORAGE)
+		var/obj/item/storage = new default_storage(src)
+		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
 
 	for(var/holiday_name in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
@@ -193,8 +189,6 @@
 		var/obj/item/new_hat = new default_headwear(src)
 		equip_to_slot_or_del(new_hat, ITEM_SLOT_HEAD)
 
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
 	shy_update()
 
 	alert_drones(DRONE_NET_CONNECT)
@@ -202,7 +196,7 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER), INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -210,16 +204,16 @@
 	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
-/mob/living/simple_animal/drone/med_hud_set_health()
+/mob/living/basic/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
+	var/icon/hud_icon = icon(icon, icon_state, dir)
+	holder.pixel_y = hud_icon.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
-/mob/living/simple_animal/drone/med_hud_set_status()
+/mob/living/basic/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
+	var/icon/hud_icon = icon(icon, icon_state, dir)
+	holder.pixel_y = hud_icon.Height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated())
@@ -227,13 +221,12 @@
 	else
 		holder.icon_state = "hudstat"
 
-/mob/living/simple_animal/drone/Destroy()
+/mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src
-	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
 	QDEL_NULL(listener)
 	return ..()
 
-/mob/living/simple_animal/drone/Login()
+/mob/living/basic/drone/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
@@ -245,14 +238,14 @@
 	if(!picked)
 		pickVisualAppearance()
 
-/mob/living/simple_animal/drone/auto_deadmin_on_login()
+/mob/living/basic/drone/auto_deadmin_on_login()
 	if(!client?.holder)
 		return TRUE
 	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
 		return client.holder.auto_deadmin()
 	return ..()
 
-/mob/living/simple_animal/drone/death(gibbed)
+/mob/living/basic/drone/death(gibbed)
 	..(gibbed)
 	if(internal_storage)
 		dropItemToGround(internal_storage)
@@ -262,10 +255,10 @@
 	alert_drones(DRONE_NET_DISCONNECT)
 
 
-/mob/living/simple_animal/drone/gib()
+/mob/living/basic/drone/gib()
 	dust()
 
-/mob/living/simple_animal/drone/examine(mob/user)
+/mob/living/basic/drone/examine(mob/user)
 	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
@@ -306,11 +299,11 @@
 	. += "</span>"
 
 
-/mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
+/mob/living/basic/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
 	return -10
 
 
-/mob/living/simple_animal/drone/emp_act(severity)
+/mob/living/basic/drone/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -320,32 +313,32 @@
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
-/mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+/mob/living/basic/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
-/mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+/mob/living/basic/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
-/mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
+/mob/living/basic/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
 	SIGNAL_HANDLER
 	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
 
-/mob/living/simple_animal/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
+/mob/living/basic/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
 	SIGNAL_HANDLER
 	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_INTERACT_WIRES
 
 
-/mob/living/simple_animal/drone/proc/set_shy(new_shy)
+/mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy
 	shy_update()
 
-/mob/living/simple_animal/drone/proc/shy_update()
+/mob/living/basic/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 
@@ -353,7 +346,7 @@
 	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
 	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
 
-	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
+	var/static/list/not_shy_of = typecacheof(list(/mob/living/basic/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
@@ -370,16 +363,13 @@
 		qdel(GetComponent(/datum/component/itempicky))
 		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
-/mob/living/simple_animal/drone/handle_temperature_damage()
-	return
-
-/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+/mob/living/basic/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
 
-/mob/living/simple_animal/drone/bee_friendly()
+/mob/living/basic/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return TRUE
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
+/mob/living/basic/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
 	return FALSE //So they don't die trying to fix wiring

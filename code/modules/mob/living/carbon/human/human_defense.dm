@@ -44,46 +44,32 @@
 				covering_part += C
 	return covering_part
 
-/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+/mob/living/carbon/human/bullet_act(obj/projectile/bullet, def_zone, piercing_hit = FALSE)
 
-	if(P.firer == src && P.original == src) //can't block or reflect when shooting yourself
+	if(bullet.firer == src && bullet.original == src) //can't block or reflect when shooting yourself
 		return ..()
 
-	if(P.reflectable & REFLECT_NORMAL)
+	if(bullet.reflectable & REFLECT_NORMAL)
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message(
-				span_danger("The [P.name] gets reflected by [src]!"),
-				span_userdanger("The [P.name] gets reflected by [src]!"),
+				span_danger("The [bullet.name] gets reflected by [src]!"),
+				span_userdanger("The [bullet.name] gets reflected by [src]!"),
 			)
 			// Finds and plays the block_sound of item which reflected
-			for(var/obj/item/I in held_items)
-				if(I.IsReflect(def_zone))
-					playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
+			for(var/obj/item/held_item in held_items)
+				if(held_item.IsReflect(def_zone))
+					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-				P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-				loc.bullet_act(P, def_zone, piercing_hit)
+				bullet.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
+				loc.bullet_act(bullet, def_zone, piercing_hit)
 				return BULLET_ACT_HIT
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(src)
-
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				var/new_angle_s = P.Angle + rand(120,240)
-				while(new_angle_s > 180) // Translate to regular projectile degrees
-					new_angle_s -= 360
-				P.set_angle(new_angle_s)
+			bullet.reflect(src)
 
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
-		P.on_hit(src, 100, def_zone, piercing_hit)
+	if(check_shields(bullet, bullet.damage, "the [bullet.name]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
+		bullet.on_hit(src, 100, def_zone, piercing_hit)
 		return BULLET_ACT_HIT
 
 	return ..()
