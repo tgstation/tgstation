@@ -55,11 +55,11 @@
 	INVOKE_ASYNC(src, PROC_REF(deploy), source, user, location, direction)
 
 /datum/component/deployable/proc/deploy(obj/source, mob/user, location, direction) //If there's no user, location and direction are used
-	/// The object we are going to create
+	// The object we are going to create
 	var/atom/deployed_object
-	/// The turf our object is going to be deployed to
+	// The turf our object is going to be deployed to
 	var/turf/deploy_location
-	/// What direction will the deployed object be placed facing
+	// What direction will the deployed object be placed facing
 	var/new_direction
 
 	if(user)
