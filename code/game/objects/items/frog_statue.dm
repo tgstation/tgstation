@@ -121,3 +121,8 @@
 	if(selected_name)
 		new_frog.name = selected_name
 	qdel(src)
+
+
+#undef STATUE_FILTER
+#undef FILTER_COLOR
+#undef RECALL_DURATION
