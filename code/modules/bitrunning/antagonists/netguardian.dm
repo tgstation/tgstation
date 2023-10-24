@@ -9,15 +9,15 @@
 	icon_state = "old"
 	icon_living = "old"
 	icon_dead = "old_dead"
-	basic_mob_flags = DEL_ON_DEATH
+
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
 	mob_size = MOB_SIZE_HUGE
 
 	health = 1000
 	maxHealth = 1000
-	melee_damage_lower = 25
-	melee_damage_upper = 45
+	melee_damage_lower = 45
+	melee_damage_upper = 65
 
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drills"
@@ -42,7 +42,7 @@
 
 	combat_mode = TRUE
 	speech_span = SPAN_ROBOT
-	death_message = "blows apart!"
+	death_message = "malfunctions!"
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = TCMB
@@ -51,21 +51,29 @@
 /mob/living/basic/netguardian/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ranged_attacks, \
-	casing_type = /obj/item/ammo_casing/c9mm, \
-	projectile_sound = 'sound/misc/bang.ogg', \
-	burst_shots = 5, \
+	casing_type = /obj/item/ammo_casing/c46x30mm, \
+	projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
+	burst_shots = 7 \
 	)
 
-	AddComponent(/datum/component/ranged_attacks, \
-	projectile_type = CALIBER_84MM, \
-	projectile_sound = 'sound/weapons/gun/general/rocket_launch.ogg', \
-	burst_shots = 3, \
-	cooldown_time = 15 SECONDS \
-	)
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/rockets = new(src)
+	rockets.Grant(src)
+	ai_controller.set_blackboard_key(BB_NETGUARDIAN_ROCKET_ABILITY, rockets)
+
+	AddElement(/datum/element/simple_flying)
 
 /mob/living/basic/netguardian/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian
+	name = "2E Rocket Launcher"
+	button_icon = 'icons/obj/weapons/guns/ammo.dmi'
+	button_icon_state = "rocketbundle"
+	cooldown_time = 30 SECONDS
+	default_projectile_spread = 15
+	projectile_type = /obj/projectile/bullet/rocket
+	shot_count = 3
 
 /datum/ai_controller/basic_controller/netguardian
 	blackboard = list(
@@ -75,12 +83,9 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian
@@ -89,3 +94,6 @@
 /datum/ai_behavior/basic_ranged_attack/netguardian
 	action_cooldown = 1 SECONDS
 	avoid_friendly_fire = TRUE
+
+/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets
+	ability_key = BB_NETGUARDIAN_ROCKET_ABILITY

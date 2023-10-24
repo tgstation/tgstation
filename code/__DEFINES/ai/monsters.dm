@@ -191,3 +191,7 @@
 #define BB_MOOK_MUSIC_AUDIENCE "music_audience"
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+
+//netguardians
+/// rocket launcher
+#define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
