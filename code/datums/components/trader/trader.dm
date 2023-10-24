@@ -236,7 +236,7 @@
 		if(sell_item(customer, an_item))
 			sold_item = TRUE
 			break
-	if(!sold_item && !can_trade(customer)) //don't talk if you are dead or fighting
+	if(!sold_item && can_trade(customer)) //only talk if you are not dead or in combat
 		trader.say(trader_data.return_trader_phrase(ITEM_REJECTED_PHRASE))
 
 
