@@ -6508,6 +6508,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/analysis_bin,
+/obj/item/pen,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "cAr" = (
@@ -17001,6 +17004,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/machinery/artifact_zapper{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "ggW" = (
@@ -21647,6 +21653,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
+/obj/machinery/artifact_xray,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "hKw" = (
@@ -24083,7 +24090,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "iEG" = (
@@ -30623,6 +30632,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/caution/stand_clear/white,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kYG" = (
@@ -37675,6 +37685,9 @@
 	},
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "nuT" = (
@@ -50581,6 +50594,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "rLr" = (
@@ -52295,7 +52311,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "snn" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "sny" = (
@@ -52784,7 +52800,9 @@
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "svG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "svP" = (
@@ -57778,6 +57796,11 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
+/obj/structure/table,
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = 3
+	},
+/obj/item/wrench,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "ucr" = (
@@ -58408,6 +58431,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "umz" = (

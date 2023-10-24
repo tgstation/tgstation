@@ -4542,10 +4542,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "aFj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/landmark/blobstart,
-/obj/machinery/rnd/experimentor{
-	pixel_x = -10
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -8588,7 +8586,6 @@
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "bUI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -11033,12 +11030,13 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "cJS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "testlab";
-	name = "Test Chamber Blast Door"
+/obj/effect/artifact_spawner,
+/obj/effect/turf_decal/stripes/end,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/station/science/explab)
 "cJX" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -12766,10 +12764,10 @@
 /area/station/bitrunning/den)
 "dpv" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Test Chamber"
+	name = "Artifact Science"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "dpB" = (
@@ -12956,6 +12954,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"dsR" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/item/analysis_bin,
+/obj/item/pen,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "dsZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/door/airlock/research{
@@ -15413,13 +15421,8 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "epJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/preopen{
-	id = "testlab";
-	name = "Test Chamber Blast Door"
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/station/science/explab)
 "epP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -16208,6 +16211,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"eFq" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/explab)
 "eFr" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -22617,9 +22626,15 @@
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/entertainment)
 "hde" = (
-/obj/machinery/sparker/directional/west{
-	id = "testigniter"
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "hdn" = (
@@ -23939,6 +23954,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"hDW" = (
+/obj/machinery/artifact_zapper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "hDZ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/box,
@@ -24992,10 +25018,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "hYg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/landmark/blobstart,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "hYn" = (
@@ -36780,6 +36807,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
+"lYK" = (
+/obj/machinery/artifact_xray,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "lYZ" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -40522,6 +40554,14 @@
 	c_tag = "Science - Testing Chamber";
 	network = list("test","rd")
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "nsy" = (
@@ -43269,7 +43309,14 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "osN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "osT" = (
@@ -44495,6 +44542,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
+"oWg" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/telescience,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "oWq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45724,9 +45782,7 @@
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/command/nuke_storage)
 "pth" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/sign/warning/secure_area/directional/north,
-/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "ptn" = (
@@ -48441,13 +48497,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "qnA" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
 	dir = 4
 	},
+/obj/effect/artifact_spawner,
+/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/engine,
 /area/station/science/explab)
 "qnL" = (
 /obj/machinery/light/directional/east,
@@ -48583,8 +48641,11 @@
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
 "qqv" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "qqw" = (
@@ -49392,6 +49453,20 @@
 /obj/structure/transit_tube/crossing,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"qGB" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "qGE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -57428,19 +57503,6 @@
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance/storage)
 "tyi" = (
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "testlab";
-	name = "Test Chamber Blast Doors";
-	pixel_x = 4;
-	pixel_y = 2;
-	req_access = list("xenobiology")
-	},
-/obj/machinery/button/ignition{
-	id = "testigniter";
-	pixel_x = -6;
-	pixel_y = 2
-	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "typ" = (
@@ -117500,13 +117562,13 @@ abM
 abM
 abM
 sQZ
-bOV
+dsR
 hde
-owO
-owO
-cJS
+lYK
+aFj
+nhj
 tyi
-qnA
+cVU
 oRz
 fQX
 sQZ
@@ -117757,13 +117819,13 @@ abM
 abM
 sQZ
 sQZ
+qnA
 owO
 owO
-owO
-nhj
-cJS
-nhj
-hYg
+eFq
+sQZ
+sQZ
+cVU
 oRz
 rUr
 sQZ
@@ -118015,9 +118077,9 @@ abM
 sQZ
 qqv
 osN
-aFj
-osN
-dpv
+owO
+bOV
+epJ
 epJ
 dpv
 hYg
@@ -118274,9 +118336,9 @@ sQZ
 nsv
 owO
 owO
-nhj
-cJS
-nhj
+epJ
+sQZ
+sQZ
 cVU
 oRz
 ipP
@@ -118528,11 +118590,11 @@ qxm
 abM
 abM
 sQZ
-owO
-owO
-owO
-owO
+qGB
+oWg
+hDW
 cJS
+nhj
 iih
 cVU
 cFW

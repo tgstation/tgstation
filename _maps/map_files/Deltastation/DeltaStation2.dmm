@@ -8714,10 +8714,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "ccY" = (
-/obj/item/relic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/cardboard,
-/obj/item/book/manual/wiki/experimentor,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
@@ -11658,12 +11656,9 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "cPa" = (
-/obj/machinery/rnd/experimentor,
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 8
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 9
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -18802,26 +18797,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "eGw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/rack,
-/obj/effect/turf_decal/bot,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/item/book/manual/wiki/telescience{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/book/manual/wiki/experimentor,
-/obj/machinery/door/poddoor/preopen{
-	id = "sci_experimentor";
-	name = "Experimentor Blast Door"
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/engine,
 /area/station/science/explab)
 "eGy" = (
 /obj/effect/turf_decal/stripes/line,
@@ -23774,7 +23751,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/table,
+/obj/item/multitool,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "fRO" = (
@@ -30371,7 +30349,6 @@
 "hxT" = (
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random/directional/south,
-/obj/item/relic,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
@@ -31755,24 +31732,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/maintenance/solars/starboard/fore)
-"hSf" = (
-/obj/structure/table,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/item/relic,
-/obj/item/assembly/signaler{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "sci_experimentor";
-	name = "Experimentor Blast Door"
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/explab)
 "hSi" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Xenobiology - Killroom Chamber";
@@ -37495,8 +37454,6 @@
 /area/station/command/heads_quarters/qm)
 "jmx" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/floor,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "jmA" = (
@@ -38106,8 +38063,8 @@
 /area/station/security/execution/transfer)
 "juM" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/floor,
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "juP" = (
@@ -43713,6 +43670,10 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
+	dir = 8
+	},
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kRn" = (
@@ -47510,6 +47471,13 @@
 	dir = 5
 	},
 /obj/machinery/status_display/ai/directional/north,
+/obj/structure/table,
+/obj/item/bodypart/arm/right/robot{
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = -3
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "lLy" = (
@@ -53501,15 +53469,27 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "nqw" = (
+/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
+	},
+/obj/item/assembly/signaler{
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "sci_experimentor";
 	name = "Experimentor Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/taperecorder,
+/obj/item/tape/random,
+/obj/item/tape/random,
+/obj/item/book/manual/wiki/telescience{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "nqD" = (
@@ -54173,6 +54153,8 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/table,
+/obj/item/wrench,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "nzP" = (
@@ -54769,7 +54751,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/artifact_zapper{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "nIb" = (
@@ -57862,20 +57846,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "oyZ" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/table,
-/obj/item/taperecorder,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "sci_experimentor";
-	name = "Experimentor Blast Door"
-	},
-/obj/item/tape/random,
-/obj/item/tape/random,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/closed/wall/r_wall,
 /area/station/science/explab)
 "ozm" = (
 /obj/structure/tank_holder/extinguisher,
@@ -64165,23 +64136,14 @@
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "pZM" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/disposal/bin{
-	layer = 3.21
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/door/firedoor/border_only{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "sci_experimentor";
-	name = "Experimentor Blast Door"
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/engine,
 /area/station/science/explab)
 "qaq" = (
 /obj/structure/table,
@@ -69268,12 +69230,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/lobby)
 "roB" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "roF" = (
@@ -73079,6 +73036,9 @@
 	},
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "slE" = (
@@ -77636,6 +77596,9 @@
 	network = list("ss13","rd")
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/structure/table,
+/obj/item/analysis_bin,
+/obj/item/pen,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "tuk" = (
@@ -77887,7 +77850,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/artifact_xray,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "txi" = (
@@ -82349,9 +82312,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "uBI" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -82361,6 +82321,12 @@
 	name = "Experimentor Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/disposal/bin{
+	layer = 3.21
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "uBM" = (
@@ -83228,10 +83194,10 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "uMs" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 4
+/obj/machinery/light/floor,
+/obj/structure/chair/office{
+	dir = 1
 	},
-/obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "uMu" = (
@@ -88357,7 +88323,10 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "wdv" = (
@@ -126684,7 +126653,7 @@ pTC
 slC
 wdu
 nIa
-hSf
+rUj
 ffb
 cMn
 bUz
@@ -126938,7 +126907,7 @@ wFE
 qcM
 uDk
 pTC
-nzM
+pZM
 cPa
 juM
 oyZ
@@ -127196,7 +127165,7 @@ kbN
 eHn
 pTC
 kRk
-uMs
+eGw
 aNE
 nqw
 ffb
@@ -127969,7 +127938,7 @@ pTC
 nzM
 uMs
 jmx
-eGw
+oyZ
 ffb
 dBJ
 hwS
@@ -128226,7 +128195,7 @@ pTC
 lLa
 fRK
 txc
-pZM
+rUj
 ffb
 dqP
 nlp
