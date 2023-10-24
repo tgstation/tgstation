@@ -106,7 +106,9 @@
 /area/virtual_domain)
 "h" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/virtual_domain)
 "i" = (
 /obj/structure/table/reinforced,

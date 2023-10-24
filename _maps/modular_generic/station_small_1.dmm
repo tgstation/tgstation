@@ -28,10 +28,6 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"i" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall,
-/area/virtual_domain)
 "m" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -154,7 +150,7 @@ G
 "}
 (2,1,1) = {"
 V
-i
+y
 m
 m
 m

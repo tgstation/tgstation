@@ -255,6 +255,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"D" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "E" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -383,7 +387,7 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/north{
-	id = s;
+	id = "custodialwagon";
 	name = "Custodial Bay Toggle";
 	pixel_x = 8;
 	req_access = list("janitor")
@@ -469,7 +473,6 @@
 /area/virtual_domain)
 "Y" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -507,7 +510,7 @@ a
 a
 a
 a
-a
+D
 "}
 (2,1,1) = {"
 a
