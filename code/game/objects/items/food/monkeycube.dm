@@ -8,7 +8,6 @@
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-	var/faction
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
 
 /obj/item/food/monkeycube/proc/Expand()
@@ -48,7 +47,7 @@
 		return
 	Expand()
 	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
-	user.gib(null, TRUE, null, TRUE)
+	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
 
 /obj/item/food/monkeycube/syndicate
 	faction = list(FACTION_NEUTRAL, ROLE_SYNDICATE)
@@ -62,7 +61,7 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 	)
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/gorilla
+	spawned_mob = /mob/living/basic/gorilla
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"

@@ -23,7 +23,7 @@
 	. = ..()
 	var/area/init_area = get_area(src)
 	if(!mapload && init_area)
-		notify_ghosts("\A golem shell has been completed in \the [init_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
+		notify_ghosts("\A golem shell has been completed in \the [init_area.name].", source = src, action = NOTIFY_PLAY, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
 	if(forced_name || !iscarbon(spawned_mob))

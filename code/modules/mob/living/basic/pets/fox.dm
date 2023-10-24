@@ -38,9 +38,9 @@
 
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -60,12 +60,6 @@
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/random_speech/fox,
 	)
-
-// Foxes will attack other station pets regardless of faction.
-/datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction
-
-/datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction/faction_check(mob/living/living_mob, mob/living/the_target)
-	return FALSE
 
 // The captain's fox, Renault
 /mob/living/basic/pet/fox/renault

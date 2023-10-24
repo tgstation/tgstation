@@ -766,7 +766,7 @@
 	assignment = "Prisoner"
 	trim_state = "trim_warden"
 	department_color = COLOR_PRISONER_BLACK
-	subdepartment_color = COLOR_PRISONER_ORANGE
+	subdepartment_color = COLOR_PRISONER_BLACK
 	sechud_icon_state = SECHUD_PRISONER
 	template_access = list(
 		ACCESS_CAPTAIN,

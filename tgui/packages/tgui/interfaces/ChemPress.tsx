@@ -1,27 +1,26 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
+import { capitalizeAll } from 'common/string';
 import { Window } from '../layouts';
 
+type Product = {
+  ref: string;
+  class_name: string;
+};
+
+type Category = {
+  cat_name: string;
+  products: Product[];
+};
+
 type Data = {
-  current_volume: number;
+  current_volume: Number;
   product_name: string;
-  pill_style: string;
-  pill_styles: Pill[];
-  product: string;
-  min_volume: number;
-  max_volume: number;
-  patch_style: string;
-  patch_styles: Patch[];
-};
-
-type Pill = {
-  id: string;
-  class_name: string;
-};
-
-type Patch = {
-  style: string;
-  class_name: string;
+  min_volume: Number;
+  max_volume: Number;
+  packaging_category: string;
+  packaging_types: Category[];
+  packaging_type: string;
 };
 
 export const ChemPress = (props, context) => {
@@ -29,47 +28,34 @@ export const ChemPress = (props, context) => {
   const {
     current_volume,
     product_name,
-    pill_style,
-    pill_styles = [],
-    product,
     min_volume,
     max_volume,
-    patch_style,
-    patch_styles = [],
+    packaging_category,
+    packaging_types,
+    packaging_type,
   } = data;
+  const [categoryName, setCategoryName] = useLocalState(
+    context,
+    'categoryName',
+    packaging_category
+  );
+  const shownCategory =
+    packaging_types.find((category) => category.cat_name === categoryName) ||
+    packaging_types[0];
   return (
-    <Window width={300} height={227}>
+    <Window width={300} height={330}>
       <Window.Content>
         <Section>
           <LabeledList>
             <LabeledList.Item label="Product">
-              <Button.Checkbox
-                content="Pills"
-                checked={product === 'pill'}
-                onClick={() =>
-                  act('change_product', {
-                    product: 'pill',
-                  })
-                }
-              />
-              <Button.Checkbox
-                content="Patches"
-                checked={product === 'patch'}
-                onClick={() =>
-                  act('change_product', {
-                    product: 'patch',
-                  })
-                }
-              />
-              <Button.Checkbox
-                content="Bottles"
-                checked={product === 'bottle'}
-                onClick={() =>
-                  act('change_product', {
-                    product: 'bottle',
-                  })
-                }
-              />
+              {packaging_types.map((category, i) => (
+                <Button.Checkbox
+                  key={category.cat_name}
+                  content={capitalizeAll(category.cat_name)}
+                  checked={category.cat_name === shownCategory.cat_name}
+                  onClick={() => setCategoryName(category.cat_name)}
+                />
+              ))}
             </LabeledList.Item>
             <LabeledList.Item label="Volume">
               <NumberInput
@@ -97,45 +83,27 @@ export const ChemPress = (props, context) => {
                   })
                 }
               />
-              <Box as="span">{product}</Box>
             </LabeledList.Item>
-            {product === 'pill' && (
-              <LabeledList.Item label="Style">
-                {pill_styles.map((pill) => (
-                  <Button
-                    key={pill.id}
-                    width="30px"
-                    selected={pill.id === pill_style}
-                    textAlign="center"
-                    color="transparent"
-                    onClick={() =>
-                      act('change_pill_style', {
-                        id: pill.id,
-                      })
-                    }>
-                    <Box mx={-1} className={pill.class_name} />
-                  </Button>
-                ))}
-              </LabeledList.Item>
-            )}
-            {product === 'patch' && (
-              <LabeledList.Item label="Style">
-                {patch_styles.map((patch) => (
-                  <Button
-                    key={patch.style}
-                    selected={patch.style === patch_style}
-                    textAlign="center"
-                    color="transparent"
-                    onClick={() =>
-                      act('change_patch_style', {
-                        patch_style: patch.style,
-                      })
-                    }>
-                    <Box mb={0} mt={1} className={patch.class_name} />
-                  </Button>
-                ))}
-              </LabeledList.Item>
-            )}
+            <LabeledList.Item label="Styles">
+              {shownCategory.products.map((design, j) => (
+                <Button
+                  key={j}
+                  selected={design.ref === packaging_type}
+                  color="transparent"
+                  onClick={() =>
+                    act('change_product', {
+                      ref: design.ref,
+                    })
+                  }>
+                  <Box
+                    className={design.class_name}
+                    style={{
+                      transform: 'scale(1.5)',
+                    }}
+                  />
+                </Button>
+              ))}
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>

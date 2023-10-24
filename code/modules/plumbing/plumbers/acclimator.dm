@@ -3,6 +3,9 @@
 #define HEATING "Heating"
 #define NEUTRAL "Neutral"
 
+///cool/heat power. converts temperature into joules
+#define HEATER_COEFFICIENT 0.05
+
 ///this the plumbing version of a heater/freezer.
 /obj/machinery/plumbing/acclimator
 	name = "chemical acclimator"
@@ -17,15 +20,11 @@
 	var/target_temperature = 300
 	///I cant find a good name for this. Basically if target is 300, and this is 10, it will still target 300 but will start emptying itself at 290 and 310.
 	var/allowed_temperature_difference = 1
-	///cool/heat power
-	var/heater_coefficient = 0.05
 	///Are we turned on or off? this is from the on and off button
 	var/enabled = TRUE
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
 	var/acclimate_state
-	/**We can't take anything in, at least till we're emptied. Down side of the round robin chem transfer, otherwise while emptying 5u of an unreacted chem gets added,
-	and you get nasty leftovers
-	*/
+	///When conditions are met we send out the stored reagents
 	var/emptying = FALSE
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt, layer)
@@ -54,7 +53,7 @@
 			emptying = TRUE
 
 	if(!emptying) //suspend heating/cooling during emptying phase
-		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * HEATER_COEFFICIENT * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
 		use_power(active_power_usage * seconds_per_tick)
 	else if(acclimate_state != NEUTRAL)
@@ -111,3 +110,4 @@
 #undef COOLING
 #undef HEATING
 #undef NEUTRAL
+#undef HEATER_COEFFICIENT

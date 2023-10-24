@@ -21,7 +21,7 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
 
-[Running on the server](.github/guides/RUNNING_A_SERVER.md)
+[Running a server](.github/guides/RUNNING_A_SERVER.md)
 
 [Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
 

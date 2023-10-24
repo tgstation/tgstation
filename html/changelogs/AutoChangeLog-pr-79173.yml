@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "Universal scanners are now capable of recognizing the account owners and assigned profit splits on barcodes. Cargo technicians are asked to do their due diligence when matters call for it."

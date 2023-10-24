@@ -71,6 +71,10 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/req_keyword = FALSE
 	/// The actual keyword for the rune
 	var/keyword
+	/// Global proc to call while the rune is being created
+	var/started_creating
+	/// Global proc to call if the rune fails to be created
+	var/failed_to_create
 
 /obj/effect/rune/Initialize(mapload, set_keyword)
 	. = ..()
@@ -108,7 +112,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isshade(user) || isconstruct(user))
-		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
+		if(HAS_TRAIT(user, TRAIT_ANGELIC))
 			to_chat(user, span_warning("You purge the rune!"))
 			qdel(src)
 		else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
@@ -118,11 +122,11 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
 	visible_message(span_danger("[src] fades away."))
-	invisibility = INVISIBILITY_OBSERVER
+	SetInvisibility(INVISIBILITY_OBSERVER, id=type)
 	alpha = 100 //To help ghosts distinguish hidden runes
 
 /obj/effect/rune/proc/reveal() //for talisman of revealing/hiding
-	invisibility = 0
+	RemoveInvisibility(type)
 	visible_message(span_danger("[src] suddenly appears!"))
 	alpha = initial(alpha)
 
@@ -370,7 +374,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
-		sacrificial.gib()
+		sacrificial.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /obj/effect/rune/empower
@@ -534,6 +538,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	log_when_erased = TRUE
 	no_scribe_boost = TRUE
 	erase_time = 5 SECONDS
+	// We're gonna do some effects with starlight and parallax to make things... spooky
+	started_creating = /proc/started_narsie_summon
+	failed_to_create = /proc/failed_narsie_summon
 	///Has the rune been used already?
 	var/used = FALSE
 
@@ -543,6 +550,55 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
+
+GLOBAL_VAR_INIT(narsie_effect_last_modified, 0)
+GLOBAL_VAR_INIT(narsie_summon_count, 0)
+/proc/set_narsie_count(new_count)
+	GLOB.narsie_summon_count = new_count
+	SEND_GLOBAL_SIGNAL(COMSIG_NARSIE_SUMMON_UPDATE, GLOB.narsie_summon_count)
+
+/// When narsie begins to be summoned, slowly dim the saturation of parallax and starlight
+/proc/started_narsie_summon()
+	set waitfor = FALSE
+
+	set_narsie_count(GLOB.narsie_summon_count + 1)
+	if(GLOB.narsie_summon_count > 1)
+		return
+
+	var/started = world.time
+	GLOB.narsie_effect_last_modified = started
+
+	var/starting_color = GLOB.starlight_color
+	var/list/target_color = ReadHSV(RGBtoHSV(starting_color))
+	target_color[2] = target_color[2] * 0.4
+	target_color[3] = target_color[3] * 0.5
+	var/mid_color = HSVtoRGB(hsv(target_color[1], target_color[2], target_color[3]))
+	var/end_color = "#c21d57"
+	for(var/i in 1 to 9)
+		if(GLOB.narsie_effect_last_modified > started)
+			return
+		var/starlight_color = hsv_gradient(i, 1, starting_color, 3, mid_color, 6, mid_color, 9, end_color)
+		set_starlight(starlight_color)
+		sleep(8 SECONDS)
+
+/// Summon failed, time to work backwards
+/proc/failed_narsie_summon()
+	set waitfor = FALSE
+	set_narsie_count(GLOB.narsie_summon_count - 1)
+
+	if(GLOB.narsie_summon_count > 1)
+		return
+	var/started = world.time
+	GLOB.narsie_effect_last_modified = started
+	var/starting_color = GLOB.starlight_color
+	var/end_color = GLOB.base_starlight_color
+	// We get 4 steps to fade in
+	for(var/i in 1 to 4)
+		if(GLOB.narsie_effect_last_modified > started)
+			return
+		var/starlight_color = hsv_gradient(i, 1, starting_color, 4, end_color)
+		set_starlight(starlight_color)
+		sleep(8 SECONDS)
 
 /obj/effect/rune/narsie/invoke(list/invokers)
 	if(used)
@@ -646,7 +702,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else
 			fail_invoke()
 			return
-	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult.ogg')
+	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cultlarge("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
 	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
 								  span_cultlarge("You awaken suddenly from the void. You're alive!"))
@@ -697,7 +753,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	barrier.Toggle()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		C.apply_damage(2, BRUTE, pick(GLOB.arm_zones))
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -892,6 +948,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
+		if(ghost_to_spawn.mind && ghost_to_spawn.mind.current)
+			new_human.AddComponent( \
+				/datum/component/temporary_body, \
+				old_mind = ghost_to_spawn.mind, \
+				old_body = ghost_to_spawn.mind.current, \
+			)
 		new_human.key = ghost_to_spawn.key
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
@@ -946,8 +1008,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		affecting = null
 		rune_in_use = FALSE
 
-/mob/living/carbon/human/cult_ghost/spill_organs(no_brain, no_organs, no_bodyparts) //cult ghosts never drop a brain
-	no_brain = TRUE
+/mob/living/carbon/human/cult_ghost/spill_organs(drop_bitflags=NONE)
+	drop_bitflags &= ~DROP_BRAIN //cult ghosts never drop a brain
 	. = ..()
 
 /mob/living/carbon/human/cult_ghost/get_organs_for_zone(zone, include_children)
@@ -1017,7 +1079,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"human_apoc",TRUE), duration)
 			images += A
-			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
+			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult/bloodcult_gain.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
 			var/construct = pick("wraith","artificer","juggernaut")
 			var/image/B = image('icons/mob/nonhuman-player/cult.dmi',M,construct, ABOVE_MOB_LAYER)

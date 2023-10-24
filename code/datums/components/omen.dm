@@ -88,17 +88,10 @@
 		INVOKE_ASYNC(src, PROC_REF(slam_airlock), darth_airlock)
 		return
 
-	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
-		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
-		if(future_tram_victim.toast(living_guy))
-			if(!permanent)
-				qdel(src)
-			return
-
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
 		if(istype(the_turf, /turf/open/floor/glass/reinforced/tram)) // don't fall off the tram bridge, we want to hit you instead
 			return
-		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
+		if(living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 			if(!permanent)
@@ -238,7 +231,7 @@
 		return ..()
 
 	death_explode(our_guy)
-	our_guy.gib()
+	our_guy.gib(DROP_ALL_REMAINS)
 
 /**
  * The quirk omen. Permanent.
@@ -259,7 +252,7 @@
 
 /datum/component/omen/quirk/check_death(mob/living/our_guy)
 	if(!iscarbon(our_guy))
-		our_guy.gib()
+		our_guy.gib(DROP_ALL_REMAINS)
 		return
 
 	// Don't explode if buckled to a stasis bed
@@ -270,7 +263,7 @@
 
 	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
-	player.spread_bodyparts(skip_head = TRUE)
+	player.spread_bodyparts()
 	player.spawn_gibs()
 
 	return

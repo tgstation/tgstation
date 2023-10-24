@@ -433,10 +433,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!can_insert(to_insert, user, force = force))
 		return FALSE
 
+	SEND_SIGNAL(resolve_location, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+
 	to_insert.item_flags |= IN_STORAGE
 	to_insert.forceMove(resolve_location)
 	item_insertion_feedback(user, to_insert, override)
 	resolve_location.update_appearance()
+	SEND_SIGNAL(to_insert, COMSIG_ITEM_STORED)
 	return TRUE
 
 /**

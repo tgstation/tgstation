@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The Infected Domain should no longer fill up with smelly, poisonous gas over time."

@@ -32,6 +32,8 @@
 #define CAN_ACT_WHILE_DEAD (1<<1)
 /// Stop processing while in a progress bar
 #define PAUSE_DURING_DO_AFTER (1<<2)
+/// Continue processing while in stasis
+#define CAN_ACT_IN_STASIS (1<<3)
 
 //Base Subtree defines
 
@@ -46,3 +48,14 @@
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
 ///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
 #define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+
+GLOBAL_LIST_INIT(all_radial_directions, list(
+	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+	"NORTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHEAST),
+	"EAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
+	"SOUTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHEAST),
+	"SOUTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
+	"SOUTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHWEST),
+	"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
+	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
+))

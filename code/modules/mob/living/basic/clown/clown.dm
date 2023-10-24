@@ -37,7 +37,7 @@
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'), //WE LOVE TO PARTY
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 	///do we waddle (honk)
 	var/waddles = TRUE
@@ -150,9 +150,9 @@
 		),
 		BB_EMOTE_HEAR = list("honks", "contemplates its existence"),
 		BB_EMOTE_SEE = list("sweats", "jiggles"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
-	
+
 /mob/living/basic/clown/fleshclown/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -185,7 +185,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("YA-HONK!!!"),
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
-		BB_EMOTE_CHANCE = 60,
+		BB_SPEAK_CHANCE = 60,
 	)
 
 /mob/living/basic/clown/clownhulk
@@ -221,7 +221,7 @@
 		BB_EMOTE_SAY = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
 		BB_EMOTE_SEE = list("sweats"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/clownhulk/chlown
@@ -252,7 +252,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?"),
 		BB_EMOTE_SEE = list("asserts his dominance", "emasculates everyone implicitly"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/clownhulk/honkmunculus
@@ -318,7 +318,7 @@
 		BB_EMOTE_SAY = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "parce mihi ad beatus honkmother placet mihi ut peccata committere,", "DIE!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
 		BB_EMOTE_SEE = list("sweats"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/mutant
@@ -354,7 +354,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("aaaaaahhhhuuhhhuhhhaaaaa", "AAAaaauuuaaAAAaauuhhh", "huuuuuh... hhhhuuuooooonnnnkk", "HuaUAAAnKKKK"),
 		BB_EMOTE_SEE = list("squirms", "writhes", "pulsates", "froths", "oozes"),
-		BB_EMOTE_CHANCE = 10,
+		BB_SPEAK_CHANCE = 10,
 	)
 
 /mob/living/basic/clown/mutant/slow

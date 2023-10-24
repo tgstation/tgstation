@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The nanites inside of thermal pistols are once again angry, and aggressively want to burn/puncture people."

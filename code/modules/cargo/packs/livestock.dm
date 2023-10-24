@@ -140,7 +140,7 @@
 	name = "Goat Crate"
 	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	contains = list(/mob/living/basic/goat)
 	crate_name = "goat crate"
 
 /datum/supply_pack/critter/rabbit
@@ -223,3 +223,34 @@
 	. = ..()
 	for(var/i in 1 to 2)
 		new /mob/living/basic/garden_gnome(.)
+
+/datum/supply_pack/critter/fish
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/critter/fish/aquarium_fish
+	name = "Aquarium Fish Case"
+	desc = "An aquarium fish bundle handpicked by monkeys from our collection. Contains two random fish."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random = 2)
+	crate_name = "aquarium fish crate"
+
+/datum/supply_pack/critter/fish/freshwater_fish
+	name = "Freshwater Fish Case"
+	desc = "Aquarium fish that have had most of their mud cleaned off."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/freshwater = 2)
+	crate_name = "freshwater fish crate"
+
+/datum/supply_pack/critter/fish/saltwater_fish
+	name = "Saltwater Fish Case"
+	desc = "Aquarium fish that fill the room with the smell of salt."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/saltwater = 2)
+	crate_name = "saltwater fish crate"
+
+/datum/supply_pack/critter/fish/tiziran_fish
+	name = "Tiziran Fish Case"
+	desc = "Tiziran saltwater fish imported from the Zagos Sea."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/tiziran = 2)
+	crate_name = "tiziran fish crate"

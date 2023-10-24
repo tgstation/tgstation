@@ -6181,7 +6181,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "st" = (
-/mob/living/simple_animal/hostile/skeleton/ice,
+/mob/living/basic/skeleton/ice,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -6420,7 +6420,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tt" = (
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tu" = (
@@ -6438,7 +6438,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "tz" = (
-/mob/living/simple_animal/hostile/skeleton/ice,
+/mob/living/basic/skeleton/ice,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tB" = (
@@ -6617,7 +6617,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "uK" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/mob/living/basic/skeleton/plasmaminer,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/cavern1)
 "uM" = (
@@ -6643,7 +6643,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "uS" = (
-/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/mob/living/basic/skeleton/plasmaminer,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
@@ -6724,7 +6724,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "vi" = (
-/mob/living/simple_animal/hostile/skeleton/templar,
+/mob/living/basic/skeleton/templar,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -7289,7 +7289,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/skeleton/ice{
+/mob/living/basic/skeleton/ice{
 	name = "Privateer Jones"
 	},
 /turf/open/misc/asteroid/snow{
@@ -7556,7 +7556,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -8003,7 +8003,7 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/cave)
 "AA" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "AC" = (
@@ -9729,7 +9729,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "IV" = (
 /obj/structure/table,
-/obj/structure/showcase/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
@@ -10301,7 +10301,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "Ma" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -11020,7 +11020,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -11428,7 +11428,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Sb" = (
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Sd" = (
@@ -11730,7 +11730,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "TA" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "TD" = (
@@ -11775,7 +11775,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "TW" = (
-/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/mob/living/basic/skeleton/plasmaminer,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "TY" = (
@@ -11927,7 +11927,7 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "UM" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -11964,7 +11964,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "Ve" = (
-/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/mob/living/basic/skeleton/plasmaminer,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Vf" = (
@@ -12298,7 +12298,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Xb" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "Xd" = (
@@ -12690,7 +12690,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/post/minipost)
 "Zv" = (
-/mob/living/simple_animal/hostile/skeleton/ice{
+/mob/living/basic/skeleton/ice{
 	name = "Captain Bones"
 	},
 /turf/open/misc/asteroid/snow{

@@ -114,15 +114,13 @@
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
-	if(user == dropped_atom && isliving(dropped_atom))
-		var/mob/living/living_target = dropped_atom
-		if(isanimal(living_target))
-			var/mob/living/simple_animal/animal = dropped_atom
-			if (!animal.dextrous)
-				return
-		if(living_target.mobility_flags & MOBILITY_MOVE)
-			INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
-			return
+	if(user != dropped_atom || !isliving(dropped_atom))
+		return
+	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
+		return
+	var/mob/living/living_target = dropped_atom
+	if(living_target.mobility_flags & MOBILITY_MOVE)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/try_speedrun(datum/source, mob/bumpee)

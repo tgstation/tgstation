@@ -789,6 +789,21 @@
 	for(var/i in 1 to poster_count)
 		new /obj/item/poster/traitor(src)
 
+/obj/item/storage/box/syndie_kit/cowboy
+	name = "western outlaw pack"
+	desc = "Contains everything you'll need to be the rootin' tootin' cowboy you always wanted. Either play the Lone Ranger or go in with your posse of outlaws."
+
+/obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
+		/obj/item/clothing/head/cowboy/black/syndicate = 1,
+		/obj/item/storage/belt/holster/nukie/cowboy/full = 1,
+		/obj/item/clothing/under/costume/dutch/syndicate = 1,
+		/obj/item/lighter/skull = 1,
+		/obj/item/sbeacondrop/horse = 1,
+		/obj/item/food/grown/apple = 1,
+	), src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

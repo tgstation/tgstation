@@ -200,7 +200,7 @@
 	yolk.underwear = "Nude"
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
-	yolk.gib()
+	yolk.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(egg)
 	return ..()
 
@@ -253,7 +253,7 @@
 	eggshell.egg = src
 	src.forceMove(eggshell)
 	if(spawner_area)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [spawner_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [spawner_area.name].", source = src, action = NOTIFY_PLAY, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
 /datum/outfit/ashwalker
 	name = "Ash Walker"
