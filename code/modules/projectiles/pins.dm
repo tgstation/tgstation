@@ -380,6 +380,7 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!is_simian(user))
+		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
 		return FALSE
 	return TRUE
 
