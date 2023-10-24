@@ -1,9 +1,8 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
+import { Box, Button, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { getRandomization, PreferenceList } from './MainPage';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -120,22 +119,27 @@ const QuirkList = (props: {
                         }}
                       />
                     )}
-                    {!!quirk.customization_expanded && (
-                      <Popper
-                        popperContent={
-                          <PreferenceList
-                            act={act}
-                            preferences={quirk.customization_options}
-                            randomizations={getRandomization(
-                              quirk.customization_options,
-                              props.serverData,
-                              props.randomBodyEnabled,
-                              props.context
-                            )}
-                          />
-                        }
-                      />
-                    )}
+                    {props.serverData.toString()}
+                    {quirk.name.toString()}
+                    {quirk.customization_options}
+                    {/*
+                    HEY FUCKO GUESS WHAT ITS THE CUSTOMIZATION OPTIONS BEING NULL */}
+                    {props.context.toString()}
+                    {props.randomBodyEnabled.toString()}
+                    {/* <Popper
+                      popperContent={
+                        <PreferenceList
+                          act={act}
+                          preferences={quirk.customization_options}
+                          randomizations={getRandomization(
+                            quirk.customization_options,
+                            props.serverData,
+                            props.randomBodyEnabled,
+                            props.context
+                          )}
+                        />
+                      }
+                    />*/}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
