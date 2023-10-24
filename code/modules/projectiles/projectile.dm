@@ -1150,6 +1150,25 @@
 /obj/projectile/proc/can_embed_into(atom/hit)
 	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
 
+/// Reflects the projectile off of something
+/obj/projectile/proc/reflect(atom/hit_atom)
+	if(!starting)
+		return
+	var/new_x = starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/new_y = starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/turf/current_tile = get_turf(hit_atom)
+
+	// redirect the projectile
+	original = locate(new_x, new_y, z)
+	starting = current_tile
+	firer = hit_atom
+	yo = new_y - current_tile.y
+	xo = new_x - current_tile.x
+	var/new_angle_s = Angle + rand(120,240)
+	while(new_angle_s > 180) // Translate to regular projectile degrees
+		new_angle_s -= 360
+	set_angle(new_angle_s)
+
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
 

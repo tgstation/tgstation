@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you may not enter knock path caretakers last refuge with the nuke disk"
+  - bugfix: "you can no longer cuff knock heretics in refuge"
