@@ -76,6 +76,21 @@
 		return TRUE
 	return ..()
 
+/**
+ * Find the order purchased either privatly or by cargo budget
+ * Arguments
+ * * [user][mob] - the user who placed this order
+ * * is_ordering_private - is the player ordering privatly. If FALSE it means they are using cargo budget
+ */
+/obj/machinery/materials_market/proc/find_order(mob/user, is_ordering_private)
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
+		if(order.orderer_rank == "Galactic Materials Market" && ( \
+			(!is_ordering_private && isnull(order.paying_account)) || \
+			(is_ordering_private && !isnull(order.paying_account) && order.orderer == user) \
+		))
+			return order
+	return null
 
 /obj/machinery/materials_market/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -129,24 +144,19 @@
 	else
 		balance = used_id_card?.registered_account?.account_balance
 
-	var/current_order_cost = 0
-	for(var/datum/supply_order/order in SSshuttle.shopping_list)
-		// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
-		if(order.orderer_rank == "Galactic Materials Market" && ( \
-			(!is_ordering_private && isnull(order.paying_account)) || \
-			(is_ordering_private && !isnull(order.paying_account) && order.orderer == user) \
-		))
-			current_order_cost = order.get_final_cost()
-			break
-
 	var/market_crashing = FALSE
 	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		market_crashing = TRUE
 
+	var/current_cost = 0
+	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
+	if(!isnull(current_order))
+		current_cost = current_order.get_final_cost()
+
 	data["catastrophe"] = market_crashing
 	data["materials"] = material_data
 	data["creditBalance"] = balance
-	data["orderBalance"] = current_order_cost
+	data["orderBalance"] = current_cost
 	data["orderingPrive"] = ordering_private
 	data["canOrderCargo"] = can_buy_via_budget
 	return data
@@ -162,7 +172,12 @@
 	if(isnull(used_id_card))
 		say("No ID Found")
 		return
+
+	//if multiple users open the UI some of them may not have the required access so we recheck
 	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
+	var/is_ordering_private = ordering_private
+	if(!can_buy_via_budget) //no cargo access then force private purchase
+		is_ordering_private = TRUE
 
 	switch(action)
 		if("buy")
@@ -177,11 +192,6 @@
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-
-			//if multiple users open the UI some of them may not have the required access so we recheck
-			var/is_ordering_private = ordering_private
-			if(!can_buy_via_budget) //no cargo access then force private purchase
-				is_ordering_private = TRUE
 
 			var/datum/bank_account/account_payable
 			if(is_ordering_private)
@@ -205,35 +215,31 @@
 			things_to_order[sheet_to_buy] = quantity
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			// If we already have a custom order on SSshuttle, we should add the things to order to that order
-			for(var/datum/supply_order/order in SSshuttle.shopping_list)
-				// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
-				if(order.orderer_rank == "Galactic Materials Market" && ( \
-					(!is_ordering_private && isnull(order.paying_account)) || \
-					(is_ordering_private && !isnull(order.paying_account) && order.orderer == living_user) \
-				))
-					// Check if this order exceeded its limit
-					var/prior_stacks = 0
-					for(var/obj/item/stack/sheet/sheet as anything in order.pack.contains)
-						prior_stacks += ROUND_UP(order.pack.contains[sheet] / 50)
-						if(prior_stacks >= 10)
-							say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
-							playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
-							return
-
-					// Prevents you from ordering more than the available budget
-					var/datum/bank_account/paying_account = account_payable
-					if(!isnull(order.paying_account)) //order is already being paid by another account
-						paying_account = order.paying_account
-					if(order.get_final_cost() + cost > paying_account.account_balance)
-						say("Order exceeds available budget!. Please send it before purchasing more.")
+			var/datum/supply_order/current_order = find_order(living_user, is_ordering_private)
+			if(!isnull(current_order))
+				// Check if this order exceeded its limit
+				var/prior_stacks = 0
+				for(var/obj/item/stack/sheet/sheet as anything in current_order.pack.contains)
+					prior_stacks += ROUND_UP(current_order.pack.contains[sheet] / 50)
+					if(prior_stacks >= 10)
+						say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
+						playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
 						return
 
-					// Append to this order
-					order.append_order(things_to_order, cost)
-					say("Order appended, total cost is [order.get_final_cost()] cr.")
+				// Prevents you from ordering more than the available budget
+				var/datum/bank_account/paying_account = account_payable
+				if(!isnull(current_order.paying_account)) //order is already being paid by another account
+					paying_account = current_order.paying_account
+				if(current_order.get_final_cost() + cost > paying_account.account_balance)
+					say("Order exceeds available budget!. Please send it before purchasing more.")
 					return
 
-			//Now we need to add a cargo order for quantity sheets of material_bought.sheet_type
+				// Append to this order
+				current_order.append_order(things_to_order, cost)
+				say("Order appended, total cost is [current_order.get_final_cost()] cr.")
+				return
+
+			//Place a new order
 			var/datum/supply_pack/custom/minerals/mineral_pack = new(
 				purchaser = is_ordering_private ? living_user : "Cargo", \
 				cost = cost, \
@@ -250,11 +256,16 @@
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.shopping_list += new_order
-			return
+
 		if("toggle_budget")
 			if(!can_buy_via_budget)
 				return
 			ordering_private = !ordering_private
+
+		if("clear")
+			var/datum/supply_order/current_order = find_order(living_user, is_ordering_private)
+			if(!isnull(current_order))
+				SSshuttle.shopping_list -= current_order
 
 /obj/item/stock_block
 	name = "stock block"

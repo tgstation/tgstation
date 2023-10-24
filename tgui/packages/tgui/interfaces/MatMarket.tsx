@@ -68,6 +68,13 @@ export const MatMarket = (props, context) => {
           <Section>
             Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
             Current Order Amount: <b>{formatMoney(orderBalance)}</b> cr.
+            <Button
+              icon="times"
+              color="transparent"
+              content="Clear"
+              ml={20}
+              onClick={() => act('clear')}
+            />
           </Section>
         </Section>
         {materials.map((material) => (
