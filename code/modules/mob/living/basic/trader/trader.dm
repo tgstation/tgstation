@@ -12,7 +12,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 2.5
-	combat_mode = TRUE
+	combat_mode = FALSE
 	move_resist = MOVE_FORCE_STRONG
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
@@ -31,7 +31,7 @@
 	///The loot we drop when we die
 	var/loot = list(/obj/effect/mob_spawn/corpse/human/generic_assistant)
 	///Casing used to shoot during retaliation
-	var/ranged_attack_casing =/obj/item/ammo_casing/shotgun/buckshot
+	var/ranged_attack_casing = /obj/item/ammo_casing/shotgun/buckshot
 	///Sound to make while doing a retalitory attack
 	var/ranged_attack_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	///Weapon path, for visuals
@@ -42,8 +42,8 @@
 
 /mob/living/basic/trader/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/trader, trader_data_path)
 	apply_dynamic_human_appearance(src, species_path = species_path, mob_spawn_path = spawner_path, r_hand = held_weapon_visual)
+	AddComponent(/datum/component/trader, trader_data_path)
 	AddComponent(/datum/component/ranged_attacks, casing_type = ranged_attack_casing, projectile_sound = ranged_attack_sound, cooldown_time = 3 SECONDS)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, "Thief!", "A discount I call death.")

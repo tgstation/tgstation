@@ -28,8 +28,10 @@
 
 /datum/element/ai_swap_combat_mode/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_AI_BLACKBOARD_KEY_SET(target_key))
-	UnregisterSignal(source, COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key))
+	UnregisterSignal(source, list(
+		COMSIG_AI_BLACKBOARD_KEY_SET(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key),
+	))
 
 /// When the mob gains a target, and it was not already in combat mode, enter it
 /datum/element/ai_swap_combat_mode/proc/on_target_gained(mob/living/source)
@@ -51,7 +53,7 @@
 
 ///If the combat mode would be changed into a different state, updates it and returns TRUE, otherwise returns FALSE
 /datum/element/ai_swap_combat_mode/proc/swap_mode(mob/living/source, new_mode)
-	if(source.combat_mode==new_mode)
+	if(source.combat_mode == new_mode)
 		return FALSE
 	source.set_combat_mode(new_mode)
 	return TRUE

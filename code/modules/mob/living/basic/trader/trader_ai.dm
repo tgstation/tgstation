@@ -113,8 +113,9 @@
 ///Look for a spot we can place our sign on
 /datum/ai_behavior/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
 	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
-	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf))
+	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf) && sign_turf.is_blocked_turf())
 		return sign_turf
+	return null
 
 /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
 	target_key = BB_SHOP_SPOT

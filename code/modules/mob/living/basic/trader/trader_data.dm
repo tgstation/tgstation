@@ -20,44 +20,44 @@
 	///The speech data of the trader
 	var/list/say_phrases = list(
 		ITEM_REJECTED_PHRASE = list(
-			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.",
 		),
 		ITEM_SELLING_CANCELED_PHRASE = list(
-			"What a shame, tell me if you changed your mind."
+			"What a shame, tell me if you changed your mind.",
 		),
 		ITEM_SELLING_ACCEPTED_PHRASE = list(
-		"Pleasure doing business with you."
+			"Pleasure doing business with you.",
 		),
 		INTERESTED_PHRASE = list(
-			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
+			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?",
 		),
 		BUY_PHRASE = list(
-			"Pleasure doing business with you."
+			"Pleasure doing business with you.",
 		),
 		NO_CASH_PHRASE = list(
-			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!"
+			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!",
 		),
 		NO_STOCK_PHRASE = list(
-			"Sorry adventurer, but that item is not in stock at the moment."
+			"Sorry adventurer, but that item is not in stock at the moment.",
 		),
 		NOT_WILLING_TO_BUY_PHRASE = list(
-			"I don't want to buy that item for the time being, check back another time."
+			"I don't want to buy that item for the time being, check back another time.",
 		),
 		ITEM_IS_WORTHLESS_PHRASE = list(
-			"This item seems to be worthless on a closer look, I won't buy this."
+			"This item seems to be worthless on a closer look, I won't buy this.",
 		),
 		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
-			"I already bought enough of this for the time being."
+			"I already bought enough of this for the time being.",
 		),
 		TRADER_LORE_PHRASE = list(
 			"Hello! I am the test trader.",
-			"Oooooooo~!"
+			"Oooooooo~!",
 		),
 		TRADER_NOT_BUYING_ANYTHING = list(
-			"I'm currently buying nothing at the moment."
+			"I'm currently buying nothing at the moment.",
 		),
 		TRADER_NOT_SELLING_ANYTHING = list(
-			"I'm currently selling nothing at the moment."
+			"I'm currently selling nothing at the moment.",
 		),
 	)
 
@@ -93,46 +93,46 @@
 
 	say_phrases = list(
 		ITEM_REJECTED_PHRASE = list(
-			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.",
 		),
 		ITEM_SELLING_CANCELED_PHRASE = list(
-			"What a shame, tell me if you changed your mind."
+			"What a shame, tell me if you changed your mind.",
 		),
 		ITEM_SELLING_ACCEPTED_PHRASE = list(
-			"Pleasure doing business with you."
+			"Pleasure doing business with you.",
 		),
 		INTERESTED_PHRASE = list(
-			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
+			"Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?",
 		),
 		BUY_PHRASE = list(
-			"Bone appetit!"
+			"Bone appetit!",
 		),
 		NO_CASH_PHRASE = list(
-			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!"
+			"Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!",
 		),
 		NO_STOCK_PHRASE = list(
-			"Sorry adventurer, but that item is not in stock at the moment."
+			"Sorry adventurer, but that item is not in stock at the moment.",
 		),
 		NOT_WILLING_TO_BUY_PHRASE = list(
-			"I don't want to buy that item for the time being, check back another time."
+			"I don't want to buy that item for the time being, check back another time.",
 		),
 		ITEM_IS_WORTHLESS_PHRASE = list(
-			"This item seems to be worthless on a closer look, I won't buy this."
+			"This item seems to be worthless on a closer look, I won't buy this.",
 		),
 		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
-			"I already bought enough of this for the time being."
+			"I already bought enough of this for the time being.",
 		),
 		TRADER_LORE_PHRASE = list(
 			"Hello, I am Mr. Bones!",
 			"The ride never ends!",
 			"I'd really like a refreshing carton of milk!",
 			"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
-			"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
+			"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!",
 		),
 		TRADER_NOT_BUYING_ANYTHING = list(
-			"I'm currently buying nothing at the moment."
+			"I'm currently buying nothing at the moment.",
 		),
 		TRADER_NOT_SELLING_ANYTHING = list(
-			"I'm currently selling nothing at the moment."
+			"I'm currently selling nothing at the moment.",
 		),
 	)

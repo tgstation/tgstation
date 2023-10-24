@@ -28,7 +28,7 @@
 	 * This list is filled by Initialize(), if you want to change the starting products, modify initial_products()
 	 * *
 	 */
-	var/list/products = list()
+	var/list/obj/item/products = list()
 	/**
 	 * A list of wanted items that the trader would wish to buy, each typepath has a assigned value, quantity and additional flavor text
 	 *
@@ -60,12 +60,10 @@
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/trader = parent
-	if (!trader.ai_controller)
-		return COMPONENT_INCOMPATIBLE
 	if (!trader_data_path)
 		CRASH("Initialised trader component with no trader data.")
 
-	trader_data = new trader_data_path()
+	trader_data = new trader_data_path
 
 	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, trader_data.shop_spot_type)
 	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, trader_data.sign_type)
@@ -99,13 +97,13 @@
 	if(!can_trade(customer) || customer.combat_mode)
 		return
 	var/list/npc_options = list()
-	if(products.len)
+	if(length(products))
 		npc_options["Buy"] = radial_icons_cache[TRADER_RADIAL_BUY]
-	if(wanted_items.len)
+	if(length(wanted_items))
 		npc_options["Sell"] = radial_icons_cache[TRADER_RADIAL_SELL]
 	if(length(trader_data.say_phrases))
 		npc_options["Talk"] = radial_icons_cache[TRADER_RADIAL_TALK]
-	if(!npc_options.len)
+	if(!length(npc_options))
 		return
 
 	living_trader.face_atom(customer)
@@ -154,12 +152,15 @@
 /datum/component/trader/proc/buy_item(mob/customer)
 	if(!can_trade(customer))
 		return
+
 	if(!LAZYLEN(products))
 		return
+
 	var/mob/living/trader = parent
 	var/list/display_names = list()
 	var/list/items = list()
 	var/list/product_info
+
 	for(var/obj/item/thing as anything in products)
 		display_names["[initial(thing.name)]"] = thing
 
@@ -168,30 +169,40 @@
 
 		var/image/item_image = radial_icons_cache[thing]
 		product_info = products[thing]
+
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //out of stock
 			item_image.overlays += radial_icons_cache[TRADER_RADIAL_OUT_OF_STOCK]
+
 		items += list("[initial(thing.name)]" = item_image)
+
 	var/pick = show_radial_menu(customer, trader, items, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(!pick || !can_trade(customer))
 		return
+
 	var/obj/item/item_to_buy = display_names[pick]
 	trader.face_atom(customer)
 	product_info = products[item_to_buy]
+
 	if(!product_info[TRADER_PRODUCT_INFO_QUANTITY])
 		trader.say("[initial(item_to_buy.name)] appears to be out of stock.")
 		return
+
 	trader.say("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?")
 	var/list/npc_options = list(
 		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
 		"No" = radial_icons_cache[TRADER_RADIAL_NO],
 	)
+
 	var/buyer_will_buy = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(buyer_will_buy != "Yes" || !can_trade(customer))
 		return
+
 	trader.face_atom(customer)
+
 	if(!spend_buyer_offhand_money(customer, product_info[TRADER_PRODUCT_INFO_PRICE]))
 		trader.say(trader_data.return_trader_phrase(NO_CASH_PHRASE))
 		return
+
 	item_to_buy = new item_to_buy(get_turf(customer))
 	customer.put_in_hands(item_to_buy)
 	playsound(trader, trader_data.sell_sound, 50, TRUE)
@@ -238,7 +249,7 @@
 /datum/component/trader/proc/sell_item(mob/customer, obj/item/selling)
 	var/mob/living/trader = parent
 	var/cost
-	if(!selling)
+	if(isnull(selling))
 		return FALSE
 	var/list/product_info
 	//Keep track of the typepath; rather mundane but it's required for correctly modifying the wanted_items
@@ -249,10 +260,12 @@
 		typepath_for_product_info = selling.type
 	else //Assume wanted_items is setup in the correct way; read wanted_items documentation for more info
 		for(var/typepath in wanted_items)
-			if(istype(selling, typepath))
-				product_info = wanted_items[typepath]
-				typepath_for_product_info = typepath
-				break
+			if(!istype(selling, typepath))
+				continue
+
+			product_info = wanted_items[typepath]
+			typepath_for_product_info = typepath
+			break
 
 	if(!product_info) //Nothing interesting to sell
 		return FALSE
@@ -349,7 +362,7 @@
 	if(!can_trade(customer))
 		return
 	var/mob/living/trader = parent
-	if(!wanted_items.len)
+	if(!length(wanted_items))
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
 		return
 	var/list/product_info
@@ -367,7 +380,7 @@
 	if(!can_trade(customer))
 		return
 	var/mob/living/trader = parent
-	if(!products.len)
+	if(!length(products))
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_SELLING_ANYTHING))
 		return
 	var/list/product_info
@@ -388,15 +401,15 @@
 /datum/component/trader/proc/renew_item_demands()
 	wanted_items = trader_data.initial_wanteds.Copy()
 
-///Is the trader conscious?
+///Returns if the trader is conscious and its combat mode is disabled.
 /datum/component/trader/proc/can_trade(mob/customer)
 	var/mob/living/trader = parent
 	if(trader.combat_mode)
 		trader.balloon_alert(customer, "in combat!")
-		return
+		return FALSE
 	if(IS_DEAD_OR_INCAP(trader))
 		trader.balloon_alert(customer, "indisposed!")
-		return
+		return FALSE
 	return TRUE
 
 #undef TRADER_RADIAL_BUY
