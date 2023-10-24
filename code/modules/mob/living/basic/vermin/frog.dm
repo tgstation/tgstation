@@ -84,10 +84,13 @@
 	maxHealth = 5
 	health = 5
 	ai_controller = /datum/ai_controller/basic_controller/frog/suicide_frog
+	///how long do we exist for
+	var/existence_period = 15 SECONDS
 
 /mob/living/basic/frog/frog_suicide/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/explode_on_attack, mob_type_dont_bomb = typecacheof(list(/mob/living/basic/frog, /mob/living/basic/leaper)))
+	AddElement(/datum/element/temporary_atom, life_time = existence_period)
 
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(

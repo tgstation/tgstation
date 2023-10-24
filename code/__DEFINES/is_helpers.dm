@@ -73,6 +73,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
+#define iswaterturf(A) (istype(A, /turf/open/water))
+
 GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 	/turf/closed/mineral,
 	/turf/open/misc/asteroid,

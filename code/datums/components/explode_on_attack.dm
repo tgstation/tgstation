@@ -9,7 +9,7 @@
 	/// list of mobs we wont bomb on attack
 	var/list/mob_type_dont_bomb
 
-/datum/component/explode_on_attack/Initialize(impact_range = 2, destroy_on_explode = TRUE, list/mob_type_dont_bomb = list())
+/datum/component/explode_on_attack/Initialize(impact_range = 1, destroy_on_explode = TRUE, list/mob_type_dont_bomb = list())
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.impact_range = impact_range

@@ -3,6 +3,8 @@
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	button_icon_state = "leaper"
 	desc = "Fires a poisonous leaper bubble towards the victim!"
+	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	cooldown_time = 1.5 SECONDS
 	projectile_type = /obj/projectile/leaper
 	projectile_sound = 'sound/effects/snap.ogg'
@@ -37,7 +39,7 @@
 	if(!length(possible_turfs))
 		return FALSE
 
-	playsound(src, 'sound/magic/fireball.ogg', 70, TRUE)
+	playsound(owner, 'sound/magic/fireball.ogg', 70, TRUE)
 	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
 	StartCooldown()
@@ -95,6 +97,8 @@
 	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
 	summon_type = list(/mob/living/basic/frog/frog_suicide)
+	summon_radius = 2
+	summon_amount = 2
 	max_summons = 2
 
 /datum/action/cooldown/spell/conjure/limit_summons/create_suicide_toads/post_summon(atom/summoned_object, atom/cast_on)

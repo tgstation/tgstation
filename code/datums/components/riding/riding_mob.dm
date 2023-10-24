@@ -41,8 +41,6 @@
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(check_emote))
 	if(can_be_driven)
 		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move)) // this isn't needed on riding humans or cyborgs since the rider can't control them
-	if(just_friends)
-		RegisterSignal(parent, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_friends))
 
 /// Creatures need to be logged when being mounted
 /datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
@@ -64,6 +62,8 @@
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
+		. = FALSE
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
 		. = FALSE
 
 	if(. || !consequences)
@@ -160,12 +160,6 @@
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
 		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
-
-/datum/component/riding/creature/proc/check_friends(mob/living/source, mob/living/buckler)
-	SIGNAL_HANDLER
-
-	if(source.faction.Find(REF(buckler)))
-		return COMPONENT_BLOCK_BUCKLE
 
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
@@ -500,7 +494,7 @@
 /datum/component/riding/creature/leaper
 	can_force_unbuckle = FALSE
 	can_use_abilities = TRUE
-	just_friends = TRUE
+	ride_check_flags = JUST_FRIEND_RIDERS
 
 /datum/component/riding/creature/leaper/handle_specials()
 	. = ..()
