@@ -59,12 +59,11 @@
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/mob/living/trader = parent
 	if (!trader_data_path)
 		CRASH("Initialised trader component with no trader data.")
 
 	trader_data = new trader_data_path
-
+	var/mob/living/trader = parent
 	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, trader_data.shop_spot_type)
 	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, trader_data.sign_type)
 	trader.ai_controller.set_blackboard_key(BB_SHOP_SOUND, trader_data.sell_sound)
@@ -93,7 +92,6 @@
 ///If our trader is alive, and the customer left clicks them with an empty hand without combat mode
 /datum/component/trader/proc/on_attack_hand(atom/source, mob/living/carbon/customer)
 	SIGNAL_HANDLER
-	var/mob/living/living_trader = parent
 	if(!can_trade(customer) || customer.combat_mode)
 		return
 	var/list/npc_options = list()
@@ -106,7 +104,8 @@
 	if(!length(npc_options))
 		return
 
-	living_trader.face_atom(customer)
+	var/mob/living/trader = parent
+	trader.face_atom(customer)
 
 	INVOKE_ASYNC(src, PROC_REF(open_npc_options), customer, npc_options)
 
@@ -156,7 +155,6 @@
 	if(!LAZYLEN(products))
 		return
 
-	var/mob/living/trader = parent
 	var/list/display_names = list()
 	var/list/items = list()
 	var/list/product_info
@@ -175,11 +173,12 @@
 
 		items += list("[initial(thing.name)]" = item_image)
 
-	var/pick = show_radial_menu(customer, trader, items, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(customer, parent, items, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(!pick || !can_trade(customer))
 		return
 
 	var/obj/item/item_to_buy = display_names[pick]
+	var/mob/living/trader = parent
 	trader.face_atom(customer)
 	product_info = products[item_to_buy]
 
@@ -230,13 +229,13 @@
 /datum/component/trader/proc/try_sell(mob/customer)
 	if(!can_trade(customer))
 		return
-	var/mob/living/trader = parent
 	var/sold_item = FALSE
 	for(var/obj/item/an_item in customer.held_items)
 		if(sell_item(customer, an_item))
 			sold_item = TRUE
 			break
 	if(!sold_item && can_trade(customer)) //only talk if you are not dead or in combat
+		var/mob/living/trader = parent
 		trader.say(trader_data.return_trader_phrase(ITEM_REJECTED_PHRASE))
 
 
@@ -247,14 +246,13 @@
  * * selling - (Item REF) The item being sold
  */
 /datum/component/trader/proc/sell_item(mob/customer, obj/item/selling)
-	var/mob/living/trader = parent
-	var/cost
 	if(isnull(selling))
 		return FALSE
 	var/list/product_info
 	//Keep track of the typepath; rather mundane but it's required for correctly modifying the wanted_items
 	//should a product be sellable because even if it doesn't have a entry because it's a child of a parent that is present on the list
 	var/typepath_for_product_info
+
 	if(selling.type in wanted_items)
 		product_info = wanted_items[selling.type]
 		typepath_for_product_info = selling.type
@@ -269,26 +267,34 @@
 
 	if(!product_info) //Nothing interesting to sell
 		return FALSE
+
+	var/mob/living/trader = parent
+
 	if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0)
 		trader.say(trader_data.return_trader_phrase(TRADER_HAS_ENOUGH_ITEM_PHRASE))
 		return FALSE
-	cost = apply_sell_price_mods(selling, product_info[TRADER_PRODUCT_INFO_PRICE])
+
+	var/cost = apply_sell_price_mods(selling, product_info[TRADER_PRODUCT_INFO_PRICE])
 	if(cost <= 0)
 		trader.say(trader_data.return_trader_phrase(ITEM_IS_WORTHLESS_PHRASE))
 		return FALSE
+
 	trader.say(trader_data.return_trader_phrase(INTERESTED_PHRASE))
 	trader.say("You will receive [cost] [trader_data.currency_name] for the [selling].")
 	var/list/npc_options = list(
 		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
 		"No" = radial_icons_cache[TRADER_RADIAL_NO],
 	)
+
 	trader.face_atom(customer)
+
 	var/npc_result = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(!can_trade(customer))
 		return
 	if(npc_result != "Yes")
 		trader.say(trader_data.return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
+
 	trader.say(trader_data.return_trader_phrase(ITEM_SELLING_ACCEPTED_PHRASE))
 	playsound(trader, trader_data.sell_sound, 50, TRUE)
 	log_econ("[selling] has been sold to [trader] (typepath used for product info; [typepath_for_product_info]) by [customer] for [cost] cash.")
@@ -340,7 +346,6 @@
 
 ///Talk about what items are being sold/wanted by the trader and in what quantity or lore
 /datum/component/trader/proc/discuss(mob/customer)
-	var/mob/living/trader = parent
 	var/list/npc_options = list(
 		"Lore" = radial_icons_cache[TRADER_RADIAL_LORE],
 		"Selling?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_SELL],
@@ -351,6 +356,7 @@
 		return
 	switch(pick)
 		if("Lore")
+			var/mob/living/trader = parent
 			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
 		if("Buying?")
 			trader_buys_what(customer)
@@ -361,8 +367,8 @@
 /datum/component/trader/proc/trader_buys_what(mob/customer)
 	if(!can_trade(customer))
 		return
-	var/mob/living/trader = parent
 	if(!length(wanted_items))
+		var/mob/living/trader = parent
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
 		return
 	var/list/product_info
