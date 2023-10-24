@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "You will no longer be asked to construct meteor shields on stations which cannot be hit by meteors."
