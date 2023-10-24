@@ -8189,7 +8189,7 @@
 /area/station/command/heads_quarters/cmo)
 "emU" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Four";
+	name = "Departures";
 	space_dir = 4
 	},
 /turf/open/floor/engine,
@@ -23135,7 +23135,7 @@
 /area/station/maintenance/port/central)
 "lJV" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod One"
+	name = "Departures"
 	},
 /turf/open/floor/engine,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -23183,13 +23183,6 @@
 /obj/machinery/light/directional/south,
 /turf/closed/wall,
 /area/station/service/bar)
-"lLl" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	space_dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/hallway/secondary/exit/departure_lounge)
 "lLz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24015,7 +24008,7 @@
 /area/station/engineering/atmos)
 "mkE" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Two";
+	name = "Departures";
 	space_dir = 1
 	},
 /turf/open/floor/engine,
@@ -95572,7 +95565,7 @@ meJ
 tSn
 emU
 tSn
-lLl
+mkE
 tSn
 uKm
 lZu
