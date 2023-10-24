@@ -146,15 +146,16 @@
 	mag_display = TRUE
 	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 
-// Weak uzi for syndicate chimps. It comes in a 4 TC kit.
-
+/**
+ * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
 /obj/item/gun/ballistic/automatic/mini_uzi/chimpgun
 	name = "\improper MONK-10"
 	desc = "Developed by Syndicate monkeys, for syndicate Monkeys. Despite the name, this weapon resembles an Uzi significantly more than a MAC-10. Uses 9mm rounds. There's a label on the other side of the gun that says \"Do what comes natural.\""
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
-	// Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
