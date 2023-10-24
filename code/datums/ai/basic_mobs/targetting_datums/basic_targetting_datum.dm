@@ -15,10 +15,12 @@
 /datum/targetting_datum/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
-	/// Minimum status to attack living beings
-	var/stat_attack = CONSCIOUS
-	///Whether we care for seeing the target or not
+	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
+	/// Blackboard key containing the minimum stat of a living mob to target
+	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
+	/// If this blackboard key is TRUE, makes us only target wounded mobs
+	var/target_wounded_key
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
@@ -54,7 +56,9 @@
 		var/mob/living/living_target = the_target
 		if(faction_check(our_controller, living_mob, living_target))
 			return FALSE
-		if(living_target.stat > stat_attack)
+		if(living_target.stat > our_controller.blackboard[minimum_stat_key])
+			return FALSE
+		if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 			return FALSE
 
 		return TRUE
@@ -81,7 +85,7 @@
 /datum/targetting_datum/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
 		return FALSE
-	return living_mob.faction_check_mob(the_target, exact_match = check_factions_exactly)
+	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
 /// Subtype more forgiving for items.
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
@@ -121,8 +125,8 @@
 	find_smaller = FALSE
 	inclusive = FALSE
 
-/datum/targetting_datum/basic/attack_until_dead
-	stat_attack = HARD_CRIT
+/// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
+/datum/targetting_datum/basic/same_faction
 
-/datum/targetting_datum/basic/attack_even_if_dead
-	stat_attack = DEAD
+/datum/targetting_datum/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
+	return !..() // inverts logic to ONLY target mobs that share a faction

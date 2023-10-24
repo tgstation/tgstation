@@ -73,11 +73,29 @@
 	return wayout
 
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
-/obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo)
+/obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)
+	var/domain_forbids_items = generated_domain.forbids_disk_items
+	var/domain_forbids_spells = generated_domain.forbids_disk_spells
+
+	var/import_ban = list()
+	var/disk_ban = list()
+	if(domain_forbids_items)
+		import_ban += "smuggled digital equipment"
+		disk_ban += "items"
+	if(domain_forbids_spells)
+		import_ban += "imported_abilities"
+		disk_ban += "powers"
+
+	if(length(import_ban))
+		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your disk [english_list(disk_ban)] will not be granted!"))
+
 	var/failed = FALSE
 
+	// We don't need to bother going over the disks if neither of the types can be used.
+	if(domain_forbids_spells && domain_forbids_items)
+		return
 	for(var/obj/item/bitrunning_disk/disk in neo.get_contents())
-		if(istype(disk, /obj/item/bitrunning_disk/ability))
+		if(istype(disk, /obj/item/bitrunning_disk/ability) && !domain_forbids_spells)
 			var/obj/item/bitrunning_disk/ability/ability_disk = disk
 
 			if(isnull(ability_disk.granted_action))
@@ -88,7 +106,7 @@
 			our_action.Grant(avatar)
 			continue
 
-		if(istype(disk, /obj/item/bitrunning_disk/item))
+		if(istype(disk, /obj/item/bitrunning_disk/item) && !domain_forbids_items)
 			var/obj/item/bitrunning_disk/item/item_disk = disk
 
 			if(isnull(item_disk.granted_item))

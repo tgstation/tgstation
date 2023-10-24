@@ -1750,7 +1750,7 @@
 "Gs" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
-/obj/item/book/fish_catalog{
+/obj/item/book/manual/fish_catalog{
 	pixel_x = -4
 	},
 /obj/item/food/grown/poppy/lily{

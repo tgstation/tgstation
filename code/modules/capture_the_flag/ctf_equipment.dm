@@ -10,7 +10,7 @@
 		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
 	. = ..()
 
-/obj/projectile/beam/ctf/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/ctf/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))
@@ -176,7 +176,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	light_color = LIGHT_COLOR_PURPLE
 
-/obj/projectile/beam/instakill/on_hit(atom/target)
+/obj/projectile/beam/instakill/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/target_mob = target

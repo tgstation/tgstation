@@ -144,11 +144,3 @@
 /datum/wires/explosive/pizza/explode()
 	var/obj/item/pizzabox/P = holder
 	P.bomb.detonate()
-
-
-/datum/wires/explosive/gibtonite
-	holder_type = /obj/item/gibtonite
-
-/datum/wires/explosive/gibtonite/explode()
-	var/obj/item/gibtonite/P = holder
-	P.GibtoniteReaction(null, "A wire signal has primed a")

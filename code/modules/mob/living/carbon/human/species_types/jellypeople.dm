@@ -206,6 +206,7 @@
 	// so if someone mindswapped into them, they'd still be shared.
 	bodies = null
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
+	UnregisterSignal(C, COMSIG_LIVING_DEATH)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -221,20 +222,25 @@
 		else
 			bodies |= C
 
-/datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
-	if(slime_split)
-		if(!H.mind || !H.mind.active)
-			return
+	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(on_death_move_body))
 
-		var/list/available_bodies = (bodies - H)
-		for(var/mob/living/L in available_bodies)
-			if(!swap_body.can_swap(L))
-				available_bodies -= L
+/datum/species/jelly/slime/proc/on_death_move_body(mob/living/carbon/human/source, gibbed)
+	SIGNAL_HANDLER
 
-		if(!LAZYLEN(available_bodies))
-			return
+	if(!slime_split)
+		return
+	if(!source.mind?.active)
+		return
 
-		swap_body.swap_to_dupe(H.mind, pick(available_bodies))
+	var/list/available_bodies = bodies - source
+	for(var/mob/living/other_body as anything in available_bodies)
+		if(!swap_body.can_swap(other_body))
+			available_bodies -= other_body
+
+	if(!length(available_bodies))
+		return
+
+	swap_body.swap_to_dupe(source.mind, pick(available_bodies))
 
 //If you're cloned you get your body pool back
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
