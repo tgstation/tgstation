@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 /datum/quirk_static_data/New()
 	. = ..()
 
-	if (!abstract)
+	if (abstract_type != type)
 		if (isnull(associated_typepath))
 			stack_trace("associated_typepath null - please set it! occured on: [src.type]")
 
@@ -47,7 +47,9 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 			stack_trace("get_customization_data was called before instantiation of [pref_type]!")
 			continue // it might have been a fluke
 
-		customization_data[pref_type] = GLOB.preferences_datums
+		customization_data[pref_type] = pref_instance.savefile_key
+
+	return customization_data
 
 /datum/quirk_static_data/Destroy(force, ...)
 	var/error_message = "[src], a singleton wound static data instance, was destroyed! This should not happen!"
@@ -60,4 +62,4 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 
 	. = ..()
 
-	GLOB.all_quirk_static_data[wound_path_to_generate] = new src.type //recover
+	GLOB.all_quirk_static_data[associated_typepath] = new src.type //recover

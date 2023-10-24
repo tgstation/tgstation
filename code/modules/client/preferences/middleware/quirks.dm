@@ -55,15 +55,7 @@
 	tainted = TRUE
 
 /datum/preference_middleware/quirks/proc/customize_quirk(list/params, mob/user)
-	var/quirk_name = params["quirk"]
-
-	var/datum/quirk/quirk_instance = SSquirks.quirks[quirk_name]
-	if (isnull(quirk_instance))
-		return FALSE // something weird just happened
-	if (!quirk_instance.customizable)
-		return FALSE
-
-	return quirk_instance.start_customization()
+	return // TODO EXPAND LATER
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]

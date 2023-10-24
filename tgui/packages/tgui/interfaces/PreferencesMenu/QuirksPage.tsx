@@ -1,9 +1,9 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Button, Icon, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData, Quirk } from './data';
+import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
+import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { PreferenceList } from './MainPage';
+import { getRandomization, PreferenceList } from './MainPage';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -25,7 +25,12 @@ const QuirkList = (props: {
   onClick: (quirkName: string, quirk: Quirk) => void;
   onCustomizeClick: (e: Event, quirkName: string, quirk: Quirk) => void;
   selected: boolean;
+  serverData: ServerData;
+  randomBodyEnabled: boolean;
+  context;
 }) => {
+  const { act, data } = useBackend<PreferencesMenuData>(props.context);
+
   return (
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
@@ -115,6 +120,22 @@ const QuirkList = (props: {
                         }}
                       />
                     )}
+                    {!!quirk.customization_expanded && (
+                      <Popper
+                        popperContent={
+                          <PreferenceList
+                            act={act}
+                            preferences={quirk.customization_options}
+                            randomizations={getRandomization(
+                              quirk.customization_options,
+                              props.serverData,
+                              props.randomBodyEnabled,
+                              props.context
+                            )}
+                          />
+                        }
+                      />
+                    )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -148,6 +169,12 @@ const StatDisplay: StatelessComponent<{}> = (props) => {
 
 export const QuirksPage = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
+
+  const randomToggleEnabled = false;
+
+  const randomBodyEnabled = false;
+  /* data.character_preferences.non_contextual.random_body !==
+      RandomSetting.Disabled || randomToggleEnabled;*/
 
   const [selectedQuirks, setSelectedQuirks] = useLocalState(
     context,
@@ -271,11 +298,6 @@ export const QuirksPage = (props, context) => {
                     onCustomizeClick={(e: Event, quirkName, quirk) => {
                       e.stopPropagation();
 
-                      <PreferenceList
-                        act={act}
-                        preferences={quirk.customization_options}
-                        randomizations={}
-                      />;
                       if (Object.keys(quirk.customization_options).length > 0) {
                       }
 
@@ -294,6 +316,9 @@ export const QuirksPage = (props, context) => {
                           },
                         ];
                       })}
+                    serverData={server_data}
+                    randomBodyEnabled={randomBodyEnabled}
+                    context={context}
                   />
                 </Stack.Item>
               </Stack>
@@ -338,6 +363,8 @@ export const QuirksPage = (props, context) => {
                     onCustomizeClick={(e: Event, quirkName, quirk) => {
                       e.stopPropagation();
 
+                      quirk.customization_expanded = true;
+
                       act('customize_quirk', { quirk: quirk.name });
                     }}
                     quirks={quirks
@@ -353,6 +380,9 @@ export const QuirksPage = (props, context) => {
                           },
                         ];
                       })}
+                    serverData={server_data}
+                    randomBodyEnabled={randomBodyEnabled}
+                    context={context}
                   />
                 </Stack.Item>
               </Stack>
