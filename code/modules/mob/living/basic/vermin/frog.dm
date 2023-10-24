@@ -75,6 +75,20 @@
 		if(L.mob_size > MOB_SIZE_TINY)
 			playsound(src, stepped_sound, 50, TRUE)
 
+/mob/living/basic/frog/frog_suicide
+	name = "suicide frog"
+	desc = "Driven by sheer will."
+	icon_state = "frog_trash"
+	icon_living = "frog_trash"
+	icon_dead = "frog_trash_dead"
+	maxHealth = 5
+	health = 5
+	ai_controller = /datum/ai_controller/basic_controller/frog/suicide_frog
+
+/mob/living/basic/frog/frog_suicide/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/explode_on_attack, mob_type_dont_bomb = typecacheof(list(/mob/living/basic/frog, /mob/living/basic/leaper)))
+
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
@@ -93,6 +107,12 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/frog,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+/datum/ai_controller/basic_controller/frog/suicide_frog
+	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

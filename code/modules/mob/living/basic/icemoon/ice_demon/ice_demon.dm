@@ -34,7 +34,7 @@
 	var/datum/action/cooldown/mob_cooldown/ice_demon_teleport/demon_teleport = new(src)
 	demon_teleport.Grant(src)
 	ai_controller.set_blackboard_key(BB_DEMON_TELEPORT_ABILITY, demon_teleport)
-	var/datum/action/cooldown/spell/conjure/create_afterimages/afterimage = new(src)
+	var/datum/action/cooldown/spell/conjure/limit_summons/create_afterimages/afterimage = new(src)
 	afterimage.Grant(src)
 	ai_controller.set_blackboard_key(BB_DEMON_CLONE_ABILITY, afterimage)
 	AddComponent(\

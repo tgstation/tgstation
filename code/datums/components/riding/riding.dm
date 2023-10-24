@@ -296,6 +296,6 @@
 /datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
 	SIGNAL_HANDLER
 
-	if(can_force_unbuckle || living_hitter in source.buckled_mobs)
+	if(can_force_unbuckle || (living_hitter in source.buckled_mobs))
 		return
 	return COMPONENT_CANCEL_ATTACK_CHAIN
