@@ -13,7 +13,7 @@
 /obj/projectile/energy/inferno/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ishuman(target))
-		return ..()
+		return
 
 	var/mob/living/carbon/cold_target = target
 	var/how_cold_is_target = cold_target.bodytemperature
