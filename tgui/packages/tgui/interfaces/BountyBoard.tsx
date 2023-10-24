@@ -4,7 +4,7 @@ import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-type BountyBoardContext = {
+type Data = {
   accountName: string;
   requests: Request[];
   applicants: Applicant[];
@@ -42,7 +42,7 @@ export const BountyBoard = (props, context) => {
 };
 
 export const BountyBoardContent = (props, context) => {
-  const { act, data } = useBackend<BountyBoardContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     accountName,
     requests = [],

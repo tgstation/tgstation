@@ -4,7 +4,7 @@ import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 
-type EightBallVoteContext = {
+type Data = {
   shaking: BooleanLike;
   question: string;
   answers: Answer[];
@@ -17,7 +17,7 @@ type Answer = {
 };
 
 export const EightBallVote = (props, context) => {
-  const { act, data } = useBackend<EightBallVoteContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const { shaking } = data;
   return (
     <Window width={400} height={600}>
@@ -31,7 +31,7 @@ export const EightBallVote = (props, context) => {
 };
 
 const EightBallVoteQuestion = (props, context) => {
-  const { act, data } = useBackend<EightBallVoteContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const { question, answers = [] } = data;
   return (
     <Section>

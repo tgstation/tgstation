@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-type SmokeMachineContext = {
+type Data = {
   tankContents: Reagent[];
   tankCurrentVolume: number;
   tankMaxVolume: number;
@@ -18,7 +18,7 @@ type Reagent = {
 };
 
 export const SmokeMachine = (props, context) => {
-  const { act, data } = useBackend<SmokeMachineContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     tankContents,
     tankCurrentVolume,

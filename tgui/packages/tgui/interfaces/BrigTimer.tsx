@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
-type BrigTimerContext = {
+type Data = {
   timing: BooleanLike;
   minutes: number;
   seconds: number;
@@ -11,7 +11,7 @@ type BrigTimerContext = {
 };
 
 export const BrigTimer = (props, context) => {
-  const { act, data } = useBackend<BrigTimerContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const { timing, minutes, seconds, flash_charging } = data;
   return (
     <Window width={300} height={138}>

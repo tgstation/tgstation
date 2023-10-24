@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Button, Stack, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
-type SignalerContext = {
+type Data = {
   code: number;
   frequency: number;
   minFrequency: number;
@@ -22,7 +22,7 @@ export const Signaler = (props, context) => {
 };
 
 export const SignalerContent = (props, context) => {
-  const { act, data } = useBackend<SignalerContext>(context);
+  const { act, data } = useBackend<Data>(context);
   const { code, frequency, minFrequency, maxFrequency } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(0, 0, 69, 0.5)';
