@@ -71,7 +71,7 @@
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
-#define NOTIFY_ATTACK "attack"
+#define NOTIFY_PLAY "play"
 #define NOTIFY_ORBIT "orbit"
 
 /// cooldown for being shown the images for any particular data hud
