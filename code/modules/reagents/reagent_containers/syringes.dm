@@ -145,7 +145,9 @@
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
-	. += update_reagent_overlay()
+	var/list/reagent_overlays = update_reagent_overlay()
+	if(reagent_overlays)
+		. += reagent_overlays
 
 /// Returns a list of overlays to add that relate to the reagents inside the syringe
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()

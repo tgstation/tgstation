@@ -19,14 +19,14 @@
 		BT.on_death()
 
 /mob/living/carbon/proc/inflate_gib() // Plays an animation that makes mobs appear to inflate before finally gibbing
-	addtimer(CALLBACK(src, PROC_REF(gib), null, null, TRUE, TRUE), 25)
+	addtimer(CALLBACK(src, PROC_REF(gib), DROP_BRAIN|DROP_ORGANS|DROP_ITEMS), 25)
 	var/matrix/M = matrix()
 	M.Scale(1.8, 1.2)
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
 
-/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, safe_gib = FALSE)
+/mob/living/carbon/gib(drop_bitflags=NONE)
 	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
-	if(safe_gib) // If you want to keep all the mob's items and not have them deleted
+	if(drop_bitflags & DROP_ITEMS)
 		for(var/obj/item/W in src)
 			dropItemToGround(W)
 			if(prob(50))
@@ -37,39 +37,33 @@
 		visible_message(span_danger("[M] bursts out of [src]!"))
 	return ..()
 
-/mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/spill_organs(drop_bitflags=NONE)
 	var/atom/Tsec = drop_location()
-	if(!no_bodyparts)
-		if(no_organs)//so the organs don't get transferred inside the bodyparts we'll drop.
-			for(var/organ in organs)
-				if(no_brain || !istype(organ, /obj/item/organ/internal/brain))
-					qdel(organ)
-		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
-			for(var/obj/item/organ/organ as anything in organs)
-				if(no_brain && istype(organ, /obj/item/organ/internal/brain))
-					qdel(organ) //so the brain isn't transferred to the head when the head drops.
-					continue
-				var/org_zone = check_zone(organ.zone) //both groin and chest organs.
-				if(org_zone == BODY_ZONE_CHEST)
-					organ.Remove(src)
-					organ.forceMove(Tsec)
-					organ.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-	else
-		for(var/obj/item/organ/organ as anything in organs)
-			if(no_brain && istype(organ, /obj/item/organ/internal/brain))
-				qdel(organ)
-				continue
-			if(no_organs && !istype(organ, /obj/item/organ/internal/brain))
-				qdel(organ)
-				continue
+
+	for(var/obj/item/organ/organ as anything in organs)
+		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/internal/brain))
+			if(drop_bitflags & DROP_BODYPARTS)
+				continue // the head will drop, so the brain should stay inside
+
 			organ.Remove(src)
 			organ.forceMove(Tsec)
-			organ.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			continue
 
-/// Launches all bodyparts away from the mob. skip_head will keep the head attached.
-/mob/living/carbon/spread_bodyparts(skip_head = FALSE)
+		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/internal/brain))
+			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST))
+				continue // only chest & groin organs will be ejected
+
+			organ.Remove(src)
+			organ.forceMove(Tsec)
+			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			continue
+
+		qdel(organ)
+
+/mob/living/carbon/spread_bodyparts(drop_bitflags=NONE)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(skip_head && part.body_zone == BODY_ZONE_HEAD)
+		if(!(drop_bitflags & DROP_BRAIN) && part.body_zone == BODY_ZONE_HEAD)
 			continue
 		else if(part.body_zone == BODY_ZONE_CHEST)
 			continue

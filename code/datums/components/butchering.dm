@@ -167,7 +167,7 @@
 	butcher_callback?.Invoke(butcher, target)
 	target.harvest(butcher)
 	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
-	target.gib(FALSE, FALSE, TRUE)
+	target.gib(DROP_BRAIN|DROP_ORGANS)
 
 ///Enables the butchering mechanic for the mob who has equipped us.
 /datum/component/butchering/proc/enable_butchering(datum/source)
@@ -257,16 +257,16 @@
 	if(!(slot & source.slot_flags))
 		return
 	butchering_enabled = TRUE
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(butcher_target))
+	RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(butcher_target))
 
 ///Same as disable_butchering but for worn items
 /datum/component/butchering/wearable/proc/worn_disable_butchering(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	butchering_enabled = FALSE
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/component/butchering/wearable/proc/butcher_target(mob/user, atom/target, proximity)
 	SIGNAL_HANDLER
 	if(!isliving(target))
-		return
-	onItemAttack(parent, target, user)
+		return NONE
+	return onItemAttack(parent, target, user)

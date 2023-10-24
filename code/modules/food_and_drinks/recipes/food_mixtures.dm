@@ -45,10 +45,9 @@
 	if(resulting_food_path)
 		var/atom/location = holder.my_atom.drop_location()
 		for(var/i in 1 to created_volume)
+			var/obj/item/food/result = new resulting_food_path(location)
 			if(ispath(resulting_food_path, /obj/item/food) && !isnull(resulting_reagent_purity))
-				new resulting_food_path(location, resulting_reagent_purity)
-			else
-				new resulting_food_path(location)
+				result.reagents?.set_all_reagents_purity(resulting_reagent_purity)
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)

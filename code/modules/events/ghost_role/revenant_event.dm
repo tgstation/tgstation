@@ -54,11 +54,12 @@
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
+	var/mob/living/basic/revenant/revvie = new(pick(spawn_locs))
 	revvie.key = selected.key
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie
+	qdel(selected)
 	return SUCCESSFUL_SPAWN
 
 #undef REVENANT_SPAWN_THRESHOLD

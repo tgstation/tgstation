@@ -7,7 +7,7 @@
 	var/zap_range = 3
 	var/power = 4e6
 
-/obj/projectile/energy/tesla/on_hit(atom/target)
+/obj/projectile/energy/tesla/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	tesla_zap(src, zap_range, power, zap_flags)
 	qdel(src)
@@ -32,7 +32,7 @@
 	speed = 1.5
 	var/shock_damage = 5
 
-/obj/projectile/energy/tesla_cannon/on_hit(atom/target)
+/obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/victim = target

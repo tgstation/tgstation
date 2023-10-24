@@ -60,29 +60,29 @@
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 5)
+			return list("delay" = 2 SECONDS, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
 			var/cost = 0
 			var/delay = 0
-			if(the_rcd.window_type  == /obj/structure/window/fulltile)
+
+			if(the_rcd.rcd_design_path  == /obj/structure/window/fulltile)
 				cost = 8
 				delay = 3 SECONDS
-			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
+			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced/fulltile)
 				cost = 12
 				delay = 4 SECONDS
 			if(!cost)
 				return FALSE
 
 			return rcd_result_with_memory(
-				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
+				list("delay" = delay, "cost" = cost),
 				get_turf(src), RCD_MEMORY_WINDOWGRILLE,
 			)
 	return FALSE
 
-/obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
+/obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the grille."))
 			qdel(src)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
@@ -95,12 +95,12 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = the_rcd.window_type
+			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
 				return FALSE
-			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
+			var/obj/structure/window/WD = new window_path(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
 	return FALSE
@@ -175,10 +175,12 @@
 	if(!. && isprojectile(mover))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	. = !density
-	if(caller)
-		. = . || (caller.pass_flags & PASSGRILLE)
+/obj/structure/grille/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(!density)
+		return TRUE
+	if(pass_info.pass_flags & PASSGRILLE)
+		return TRUE
+	return FALSE
 
 /obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)

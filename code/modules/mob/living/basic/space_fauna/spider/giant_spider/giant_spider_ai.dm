@@ -30,7 +30,7 @@
 /// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	planning_subtrees = list(
@@ -45,7 +45,6 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller(), // Hunt mobs our size
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
-		BB_BASIC_MOB_FLEEING = TRUE,
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

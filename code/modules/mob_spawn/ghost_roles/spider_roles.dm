@@ -41,8 +41,9 @@
 	color = rgb(148, 0, 211)
 
 /obj/structure/spider/eggcluster/bloody
+	icon = 'icons/mob/simple/meteor_heart.dmi'
+	icon_state = "eggs"
 	name = "bloody egg cluster"
-	color = rgb(255, 0, 0)
 
 /obj/structure/spider/eggcluster/midwife
 	name = "midwife egg cluster"
@@ -72,6 +73,8 @@
 	var/cluster_type = /obj/structure/spider/eggcluster
 	/// Physical structure housing the spawner
 	var/obj/structure/spider/eggcluster/egg
+	/// Which antag datum do we grant?
+	var/granted_datum = /datum/antagonist/spider
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/nurse,
@@ -124,10 +127,11 @@
 
 /obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/spider/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.directive = directive
+	if (isspider(spawned_mob))
+		spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
-	var/datum/antagonist/spider/spider_antag = new(directive)
+	var/datum/antagonist/spider/spider_antag = new granted_datum(directive)
 	spawned_mob.mind.add_antag_datum(spider_antag)
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
@@ -144,15 +148,18 @@
 
 /obj/effect/mob_spawn/ghost_role/spider/bloody
 	name = "bloody egg cluster"
-	color = rgb(255, 0, 0)
-	you_are_text = "You are a bloody spider."
+	icon = 'icons/mob/simple/meteor_heart.dmi'
+	icon_state = "eggs"
+	you_are_text = "You are a flesh spider."
 	flavour_text = "An abomination of nature set upon the station by changelings. Your only goal is to kill, terrorize, and survive."
-	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
+	faction = list()
+	directive = null
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/basic/spider/giant/hunter/flesh,
+		/mob/living/basic/flesh_spider,
 	)
 	flash_window = TRUE
+	granted_datum = /datum/antagonist/spider/flesh
 
 /obj/effect/mob_spawn/ghost_role/spider/midwife
 	name = "midwife egg cluster"
@@ -175,6 +182,14 @@
  * * newname - If set, renames the mob to this name
  */
 /obj/effect/mob_spawn/ghost_role/spider/create(mob/user, newname)
+	var/chosen_spider = length(potentialspawns) > 1 ? get_radial_choice(user) : potentialspawns[1]
+	if(QDELETED(src) || QDELETED(user) || isnull(chosen_spider))
+		return FALSE
+	mob_type = chosen_spider
+	return ..()
+
+/// Pick a spider type from a radial menu
+/obj/effect/mob_spawn/ghost_role/spider/proc/get_radial_choice(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
@@ -196,9 +211,6 @@
 
 		display_spiders[initial(spider.name)] = option
 	sort_list(display_spiders)
+
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
-	chosen_spider = spider_list[chosen_spider]
-	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
-		return FALSE
-	mob_type = chosen_spider
-	return ..()
+	return spider_list[chosen_spider]

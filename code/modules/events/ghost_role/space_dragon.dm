@@ -31,7 +31,7 @@
 	if(isnull(spawn_location))
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
+	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
