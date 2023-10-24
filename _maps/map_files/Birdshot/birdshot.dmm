@@ -30633,6 +30633,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/caution/stand_clear/white,
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kYG" = (
@@ -37688,6 +37689,7 @@
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad{
 	dir = 4
 	},
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "nuT" = (
