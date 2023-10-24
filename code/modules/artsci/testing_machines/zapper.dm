@@ -37,7 +37,6 @@
 
 /obj/machinery/artifact_zapper/ui_act(action, params)
 	. = ..()
-	to_chat(world, "[action]")
 	if(.)
 		return
 	switch(action)
