@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 
-import { Box, Section, ProgressBar, Button } from '../components';
+import { Section, Button } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactForm = (props, context) => {

@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Box, Button, Divider } from '../components';
+import { useBackend } from '../backend';
+import { Section, Box, Button } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactPanel = (props, context) => {
