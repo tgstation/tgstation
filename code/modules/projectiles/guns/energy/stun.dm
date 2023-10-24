@@ -46,18 +46,19 @@
 	icon_state = "disabler_smg"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smg)
 	shaded_charge = 1
-	var/allow_akimbo = FALSE
 
 /obj/item/gun/energy/disabler/smg/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = allow_akimbo)
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
 
 /obj/item/gun/energy/disabler/add_seclight_point()
-	AddComponent(/datum/component/seclite_attachable, \
+	AddComponent(\
+		/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 15, \
-		overlay_y = 13)
+		overlay_y = 13, \
+	)
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
