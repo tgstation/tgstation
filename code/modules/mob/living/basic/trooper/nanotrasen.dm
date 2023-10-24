@@ -81,11 +81,17 @@
 	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
 	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 
-/mob/living/basic/trooper/nanotrasen/peaceful/proc/ai_retaliate_behaviour(mob/living/attacker)
+/mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful
+	desc = "An officer of Nanotrasen's private security force."
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
+
+/mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful/Initialize(mapload)
+	. = ..()
+	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
+	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
+
+/mob/living/basic/trooper/nanotrasen/proc/ai_retaliate_behaviour(mob/living/attacker)
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/trooper/nanotrasen/potential_trooper in oview(src, 7))
 		potential_trooper.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
-
-/mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
