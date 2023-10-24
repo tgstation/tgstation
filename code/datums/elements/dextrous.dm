@@ -52,7 +52,7 @@
 	SIGNAL_HANDLER
 	if (!isitem(target) && (hand_haver.istate & ISTATE_HARM))
 		return
-	if (istate & ISTATE_SECONDARY)
+	if (hand_haver.istate & ISTATE_SECONDARY)
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attack_hand_secondary), hand_haver, modifiers)
 	else
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attack_hand), hand_haver, modifiers)

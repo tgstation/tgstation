@@ -31,7 +31,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = list(/mob/living/basic/syndicate/ranged)
+	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
 
 /obj/structure/spawner/skeleton
