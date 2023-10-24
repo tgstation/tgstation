@@ -3,6 +3,7 @@ import { Box, Button, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { PreferenceList } from './MainPage';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -156,8 +157,8 @@ export const QuirksPage = (props, context) => {
 
   return (
     <ServerPreferencesFetcher
-      render={(data) => {
-        if (!data) {
+      render={(server_data) => {
+        if (!server_data) {
           return <Box>Loading quirks...</Box>;
         }
 
@@ -165,7 +166,7 @@ export const QuirksPage = (props, context) => {
           max_positive_quirks: maxPositiveQuirks,
           quirk_blacklist: quirkBlacklist,
           quirk_info: quirkInfo,
-        } = data.quirks;
+        } = server_data.quirks;
 
         const quirks = Object.entries(quirkInfo);
         quirks.sort(([_, quirkA], [__, quirkB]) => {
@@ -269,6 +270,14 @@ export const QuirksPage = (props, context) => {
                     }}
                     onCustomizeClick={(e: Event, quirkName, quirk) => {
                       e.stopPropagation();
+
+                      <PreferenceList
+                        act={act}
+                        preferences={quirk.customization_options}
+                        randomizations={}
+                      />;
+                      if (Object.keys(quirk.customization_options).length > 0) {
+                      }
 
                       act('customize_quirk', { quirk: quirk.name });
                     }}
