@@ -111,7 +111,7 @@
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
 		// Things that are supposed to be worn being held in hand - don't count
-		if((worn_thing.slot_flags & CLOTHING_ITEM_SLOTS) && (worn_thing in held_items))
+		if(isclothing(worn_thing) && (worn_thing in held_items))
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
@@ -120,6 +120,7 @@
 
 	return FALSE
 
+/// This can be signallized
 /mob/living/carbon/human/proc/check_martial_art_block()
 	if(isnull(mind?.martial_art))
 		return FALSE

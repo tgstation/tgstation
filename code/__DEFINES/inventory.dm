@@ -70,10 +70,6 @@
 #define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
-/// Slots generally only occupied by clothing items. Discludes belt and back, which can often be occupied by weapons
-#define CLOTHING_ITEM_SLOTS (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
-	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_NECK )
-
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.
 #define HIDEGLOVES (1<<0)
