@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Replaced error spaghetti in thunderdome kitchen with regular cooked spaghetti"

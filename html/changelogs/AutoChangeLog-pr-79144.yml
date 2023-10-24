@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plastic sheet produces 4 tiles via the tiles option without using the crafting menu"
