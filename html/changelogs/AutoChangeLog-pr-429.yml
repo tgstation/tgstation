@@ -1,6 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "Split the technology tab into gear and abilities tabs on the bitrunner console"
-  - qol: "The bitrunning disks were split into their individual abilities, no more wasting points on virtual toilets"
-  - image: "All the abilities and combat gear in bitrunner's stolen now has unique sprites"
