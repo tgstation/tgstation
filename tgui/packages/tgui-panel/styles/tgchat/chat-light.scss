@@ -978,47 +978,47 @@ h2.alert {
 }
 
 $alert-stripe-colors: (
-  'default': #00283a,
-  'green': #003d00,
-  'blue': #00283a,
-  'pink': #30001b,
-  'yellow': #574a00,
-  'orange': #593400,
-  'red': #540000,
-  'purple': #2c0030,
+  'default': #b3bfff,
+  'green': #adffad,
+  'blue': #b3bfff,
+  'pink': #ffb3df,
+  'yellow': #fff3b3,
+  'orange': #ffe2b3,
+  'red': #ffb3b3,
+  'purple': #fac2ff,
 );
 
 $alert-stripe-alternate-colors: (
-  'default': #003045,
-  'green': #003800,
-  'blue': #003045,
-  'pink': #400025,
-  'yellow': #4d4100,
-  'orange': #6b4200,
-  'red': #6b0000,
-  'purple': #141314,
+  'default': #bdc8ff,
+  'green': #bdffbd,
+  'blue': #bdc8ff,
+  'pink': #ffc2e5,
+  'yellow': #fff5c2,
+  'orange': #ffe8c2,
+  'red': #ffc2c2,
+  'purple': #fbd1ff,
 );
 
 $alert-major-header-colors: (
-  'default': #33d5ff,
-  'green': #00ff80,
-  'blue': #33d5ff,
-  'pink': #ff4791,
-  'yellow': #ffb947,
-  'orange': #f8ae87,
-  'red': #ff4791,
-  'purple': #bc8ff5,
+  'default': #003061,
+  'green': #005229,
+  'blue': #003061,
+  'pink': #800033,
+  'yellow': #754900,
+  'orange': #823208,
+  'red': #800029,
+  'purple': #450d8c,
 );
 
 $alert-subheader-header-colors: (
-  'default': #ff579a,
-  'green': #ff579a,
-  'blue': #ff579a,
-  'pink': #33d5ff,
-  'yellow': #33d5ff,
-  'orange': #33d5ff,
-  'red': #33d5ff,
-  'purple': #33d5ff,
+  'default': #6b0020,
+  'green': #6b0020,
+  'blue': #6b0020,
+  'pink': #002c85,
+  'yellow': #002c85,
+  'orange': #002c85,
+  'red': #002c85,
+  'purple': #002c85,
 );
 
 $border-width: 4;
@@ -1046,8 +1046,8 @@ $border-width-px: $border-width * 1px;
 }
 
 .major_announcement_text {
-  color: #eaeaea;
-  background-color: #131313;
+  color: #131313;
+  background-color: #eaeaea;
   font-weight: bold;
   font-size: 100%;
   text-align: left;
@@ -1068,8 +1068,8 @@ $border-width-px: $border-width * 1px;
 }
 
 .minor_announcement_text {
-  background-color: #202020;
-  color: #eaeaea;
+  background-color: #eaeaea;
+  color: #202020;
   padding: 0.5rem 0.5rem;
   text-align: left;
   font-size: 100%;
@@ -1119,11 +1119,17 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: lighten(
+      map.get($alert-stripe-alternate-colors, $color-name),
+      5
+    );
   }
 
   .chat_alert_#{$color-name} .major_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: lighten(
+      map.get($alert-stripe-alternate-colors, $color-name),
+      5
+    );
   }
 }
 
