@@ -121,11 +121,11 @@
 	var/smoke = FALSE // if false deliver via foam instead
 
 /datum/component/artifact/bomb/chemical/setup()
-	 . = ..()
-	 single_use = prob(70)
-	 smoke = prob(50)
-	 initial_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"
-	 */
+	. = ..()
+	single_use = prob(70)
+	smoke = prob(50)
+	initial_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"
+*/
 
 /obj/structure/artifact/bomb/gas
 	assoc_comp = /datum/component/artifact/bomb/gas
@@ -140,8 +140,8 @@
 	var/datum/gas/payload_gas
 
 /datum/component/artifact/bomb/gas/setup()
-	 . = ..()
-	 payload_gas = pick(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/tritium, /datum/gas/hydrogen)
+	. = ..()
+	payload_gas = pick(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/tritium, /datum/gas/hydrogen)
 
 /datum/component/artifact/bomb/gas/payload()
 	if(!..())

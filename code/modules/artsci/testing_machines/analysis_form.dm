@@ -203,10 +203,10 @@
 		form.add_fingerprint(user)
 		form.forceMove(user.loc)
 		user.put_in_hands(form)
-		balloon_alert(user, span_warning("took form"))
+		balloon_alert(user, "took form")
 		update_appearance()
 	else
-		balloon_alert(user, span_warning("empty"))
+		balloon_alert(user, "empty!")
 	add_fingerprint(user)
 	return ..()
 
@@ -215,7 +215,7 @@
 		if(!user.transferItemToLoc(item, src))
 			return
 		qdel(item)
-		balloon_alert(user, span_warning("form returned"))
+		balloon_alert(user, "form returned")
 		forms++
 		update_appearance()
 	else

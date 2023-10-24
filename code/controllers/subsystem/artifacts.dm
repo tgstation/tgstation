@@ -1,4 +1,4 @@
-/proc/spawn_artifact(turf/loc,var/forced_origin)
+/proc/spawn_artifact(turf/loc, forced_origin)
 	if (!loc)
 		return
 

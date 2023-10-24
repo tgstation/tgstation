@@ -39,7 +39,7 @@
 	///we store our analysis form var here
 	var/obj/item/sticker/analysis_form/analysis
 
-/datum/component/artifact/Initialize(var/forced_origin = null)
+/datum/component/artifact/Initialize(forced_origin = null)
 	. = ..()
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -146,7 +146,7 @@
 	if(!QDELETED(holder))
 		qdel(holder) // if it isnt already...
 // Stimuli stuff
-/datum/component/artifact/proc/Stimulate(var/stimuli,var/severity = 0)
+/datum/component/artifact/proc/Stimulate(stimuli, severity = 0)
 	if(!stimuli || active)
 		return
 	for(var/datum/artifact_trigger/trigger in triggers)
@@ -162,7 +162,7 @@
 			else
 				Activate()
 
-/datum/component/artifact/proc/Touched(atom/source,mob/living/user)
+/datum/component/artifact/proc/Touched(atom/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(!user.Adjacent(holder))
 		return

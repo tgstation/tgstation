@@ -56,13 +56,6 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, Deactivate)), shield_time)
 	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
 
-/*/datum/component/artifact/RegisterWithParent()
-	. = ..()
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(Destroyed))
-
-/datum/component/artifact/UnregisterFromParent()
-	 . = ..()
-	 UnregisterSignal(parent, COMSIG_QDELETING)*/
 /datum/component/artifact/forcegen/effect_deactivate()
 	holder.anchored = FALSE
 	for(var/obj/field in projected_forcefields)
