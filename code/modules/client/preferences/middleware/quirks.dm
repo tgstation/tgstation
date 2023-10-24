@@ -42,7 +42,7 @@
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
 			"customizable" = initial(quirk.customizable),
-			"customization_data" = customization_data
+			"customization_options" = customization_data
 		)
 
 	return list(
