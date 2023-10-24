@@ -5630,10 +5630,7 @@
 /area/station/maintenance/port/central)
 "cXs" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "maintenance access";
-	space_dir = 4
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "cXO" = (
@@ -38225,11 +38222,8 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/robotics/lab)
 "tsb" = (
-/obj/machinery/door/airlock/external{
-	name = "maintenance access";
-	space_dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "tso" = (
