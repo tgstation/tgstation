@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "Railings now have Examine hints for how to deconstruct them"

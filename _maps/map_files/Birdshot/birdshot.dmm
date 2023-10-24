@@ -21781,16 +21781,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
-"hPR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/screwdriver{
-	pixel_y = 5
-	},
-/obj/machinery/camera/autoname/directional/east,
-/obj/item/wrench,
-/turf/open/floor/circuit,
-/area/station/tcommsat/server)
 "hPW" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external{
@@ -35184,6 +35174,15 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"mzb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/item/radio/intercom/command,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
+/turf/open/floor/carpet/executive,
+/area/station/command/meeting_room)
 "mzc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -37204,14 +37203,6 @@
 "nla" = (
 /turf/closed/wall,
 /area/station/commons/storage/art)
-"nlb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/table/glass,
-/obj/item/radio/intercom/command,
-/turf/open/floor/carpet/executive,
-/area/station/command/meeting_room)
 "nle" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -41180,6 +41171,17 @@
 /obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /turf/open/floor/iron/white/side,
 /area/station/science/research)
+"oJv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/screwdriver{
+	pixel_y = 5
+	},
+/obj/machinery/camera/autoname/directional/east,
+/obj/item/wrench,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
+/turf/open/floor/circuit,
+/area/station/tcommsat/server)
 "oJz" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
@@ -65897,9 +65899,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
-"wBQ" = (
-/turf/open/space/basic,
-/area/station/construction/mining)
 "wCa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -82000,7 +81999,7 @@ dDB
 dDB
 blb
 dDB
-wBQ
+dDB
 dDB
 blb
 dDB
@@ -93493,7 +93492,7 @@ dDB
 sUy
 uOP
 gIG
-nlb
+mzb
 gTi
 pUy
 sUy
@@ -119787,7 +119786,7 @@ eXo
 eXo
 eXo
 xhM
-hPR
+oJv
 nVF
 msJ
 xQj

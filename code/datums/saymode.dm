@@ -77,8 +77,8 @@
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
 	if(isdrone(user))
-		var/mob/living/simple_animal/drone/D = user
-		D.drone_chat(message)
+		var/mob/living/basic/drone/drone_user = user
+		drone_user.drone_chat(message)
 		return FALSE
 	if(user.binarycheck())
 		user.robot_talk(message)

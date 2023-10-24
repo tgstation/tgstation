@@ -90,7 +90,7 @@
 	max_integrity = 150
 	max_mobs = 15
 	spawn_time = 15 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
+	mob_types = list(/mob/living/basic/skeleton)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_SKELETON)
 	mob_gps_id = "SKL" // skeletons
