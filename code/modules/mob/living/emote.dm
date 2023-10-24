@@ -108,13 +108,13 @@
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
 	var/mob/living/carbon/carbon_user = user
-	if(!user.can_speak() || user.oxyloss >= 50)
+	if(!. && !user.can_speak() || user.getOxyLoss() >= 50)
 		return //stop the sound if oxyloss too high/cant speak
 	if(istype(carbon_user)) // For masks that give unique death sounds
 		if(isclothing(carbon_user.wear_mask) && (carbon_user.wear_mask.unique_death))
 			playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
 			return
-	if(. && user.death_sound)
+	if(user.death_sound)
 		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
