@@ -177,3 +177,9 @@
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/analysis_bin
+	name = "Analysis bin Crate"
+	desc = "Two analysis bins, to analyze artifacts. For those who research a lot of artifacts."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/analysis_bin = 2)
