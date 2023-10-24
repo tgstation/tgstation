@@ -37,7 +37,6 @@
 	/// will open a customization menu for the quirk.
 	var/customizable = FALSE
 
-
 /datum/quirk/Destroy()
 	if(quirk_holder)
 		remove_from_current_holder()
@@ -151,11 +150,6 @@
 /// Otherwise, it runs once on the next COMSIG_MOB_LOGIN.
 /datum/quirk/proc/post_add()
 	return
-
-/datum/quirk/proc/get_customization_options()
-	return
-
-/datum/quirk/proc/start_customization()
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk

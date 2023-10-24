@@ -345,7 +345,7 @@ const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
   return feature?.name;
 });
 
-const PreferenceList = (props: {
+export const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;

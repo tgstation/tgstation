@@ -83,6 +83,7 @@ export type Quirk = {
   name: string;
   value: number;
   customizable: boolean;
+  customization_options: Record<string, string>;
 };
 
 export type QuirkInfo = {
