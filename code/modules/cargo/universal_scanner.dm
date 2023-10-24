@@ -207,12 +207,12 @@
 			return
 		var/obj/item/barcode/our_code = parcel.sticker
 		to_chat(user, span_notice("Export barcode detected! This parcel, upon export, will pay out to [our_code.payments_acc.account_holder], \
-		with a [our_code.cut_multiplier * 100]% split to them (already reflected in above recorded value)."))
+			with a [our_code.cut_multiplier * 100]% split to them (already reflected in above recorded value)."))
 
 	if(istype(target, /obj/item/barcode))
 		var/obj/item/barcode/our_code = target
 		to_chat(user, span_notice("Export barcode detected! This barcode, if attached to a parcel, will pay out to [our_code.payments_acc.account_holder], \
-		with a [our_code.cut_multiplier * 100]% split to them."))
+			with a [our_code.cut_multiplier * 100]% split to them."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user
