@@ -52,14 +52,11 @@
 	update_appearance()
 
 /obj/machinery/artifact_zapper/proc/shock()
-	to_chat(world, "1")
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
 		return
 	var/turf/target_turf = get_step(src,dir)
 	var/datum/component/artifact/component
-	to_chat(world, "2")
 	for(var/obj/object in target_turf)
-		to_chat(world, "3")
 		component = object.GetComponent(/datum/component/artifact)
 		if(component)
 			break
@@ -67,7 +64,6 @@
 	if(!component)
 		return
 	
-	to_chat(world, "4")
 	Beam(component.parent, icon_state="lightning[rand(1,12)]", time = pulse_cooldown_time)
 	playsound(get_turf(src), 'sound/magic/lightningshock.ogg', 60, TRUE, extrarange = 2)
 	use_power(chosen_level)
