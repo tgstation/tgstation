@@ -44,7 +44,7 @@
 		/datum/heretic_knowledge/spell/moon_parade,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/canvas = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
 	optional_atoms = list(

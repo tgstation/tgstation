@@ -2902,6 +2902,7 @@
 #include "code\modules\antagonists\heretic\knife_effect.dm"
 #include "code\modules\antagonists\heretic\rust_effect.dm"
 #include "code\modules\antagonists\heretic\transmutation_rune.dm"
+#include "code\modules\antagonists\heretic\components\eldritch_view.dm"
 #include "code\modules\antagonists\heretic\items\eldritch_flask.dm"
 #include "code\modules\antagonists\heretic\items\eldritch_painting.dm"
 #include "code\modules\antagonists\heretic\items\forbidden_book.dm"
