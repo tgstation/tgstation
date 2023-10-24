@@ -38,7 +38,7 @@
 /obj/projectile/energy/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ishuman(target))
-		return ..()
+		return
 
 	var/mob/living/carbon/hot_target = target
 	var/how_hot_is_target = hot_target.bodytemperature
