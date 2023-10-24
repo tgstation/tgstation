@@ -1,8 +1,11 @@
 /datum/round_event_control/slasher
 	name = "Slasher"
 	typepath = /datum/round_event/ghost_role/slasher
-	weight = 0 // for now
-	max_occurrences = 3
+	weight = 14 // for now
+	max_occurrences = 2
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_SPOOKY, TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/slasher
 	minimum_required = 1

@@ -42,6 +42,9 @@ Behavior that's still missing from this component that original food items had t
 	var/list/tastes
 	///The buffs these foods give when eaten
 	var/food_buffs
+	///how many bites we can get
+	var/total_bites = 0
+	var/current_mask
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -73,6 +76,7 @@ Behavior that's still missing from this component that original food items had t
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
 	src.check_liked = check_liked
+
 
 	setup_initial_reagents(initial_reagents)
 
@@ -213,6 +217,8 @@ Behavior that's still missing from this component that original food items had t
 			owner.reagents.add_reagent(rid, amount, tastes.Copy())
 		else
 			owner.reagents.add_reagent(rid, amount)
+
+	total_bites = round(owner.reagents.total_volume / bite_consumption)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -443,6 +449,14 @@ Behavior that's still missing from this component that original food items had t
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 	bitecount++
+	var/desired_mask = (total_bites / bitecount)
+	desired_mask = round(desired_mask)
+	desired_mask = max(1,desired_mask)
+	desired_mask = min(desired_mask, 4)
+
+	if(desired_mask != current_mask)
+		current_mask = desired_mask
+		parent.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
 	checkLiked(fraction, eater)
 	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
@@ -570,6 +584,15 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount == 0 || prob(50))
 		L.manual_emote("nibbles away at \the [parent].")
 	bitecount++
+	var/desired_mask = (total_bites / bitecount)
+	desired_mask = round(desired_mask)
+	desired_mask = max(1,desired_mask)
+	desired_mask = min(desired_mask, 4)
+
+	if(desired_mask != current_mask)
+		current_mask = desired_mask
+		src.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
+
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
