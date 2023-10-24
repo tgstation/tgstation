@@ -7,7 +7,7 @@ modules = ["station_small_1.dmm"]
 modules = ["station_medium_1.dmm", "station_medium_2.dmm", "station_medium_3.dmm", "station_medium_4.dmm", "station_medium_5.dmm", "station_medium_6.dmm", "station_medium_7.dmm", "station_medium_8.dmm"]
 
 [rooms.station_large]
-modules = ["station_large_1.dmm", "station_large_2.dmm", "station_large_3.dmm", "station_large_4.dmm"]
+modules = ["station_large_1.dmm", "station_large_2.dmm", "station_large_3.dmm", "station_large_4.dmm", "station_large_5.dmm", "station_large_6.dmm", "station_large_7.dmm"]
 
 [rooms.beach_small]
 modules = []
@@ -34,4 +34,4 @@ modules = ["ice_small_1.dmm"]
 modules = ["ice_medium_1.dmm"]
 
 [rooms.ice_large]
-modules = ["ice_large_1.dmm"]
+modules = ["ice_large_1.dmm", "ice_large_2.dmm"]
