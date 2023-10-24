@@ -39153,6 +39153,7 @@
 "lwy" = (
 /obj/machinery/porta_turret/ai,
 /obj/machinery/light/directional/north,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "lwB" = (
