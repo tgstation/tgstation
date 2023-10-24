@@ -15,8 +15,8 @@
 	owner.faction.Cut()
 	owner.faction += list(ROLE_GLITCH)
 
-	var/current_max = owner.maxHealth + ROUND_UP(server.threat * 0.1)
-	owner.maxHealth = clamp(current_max, 200, 1000)
+	var/current_max = owner.maxHealth + ROUND_UP(server.threat * 0.2)
+	owner.maxHealth = clamp(current_max, 200, 500)
 	owner.fully_heal()
 
 	owner.AddElement(/datum/element/digital_aura)

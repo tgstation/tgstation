@@ -14,8 +14,8 @@
 	mob_biotypes = MOB_ROBOTIC
 	mob_size = MOB_SIZE_HUGE
 
-	health = 1000
-	maxHealth = 1000
+	health = 500
+	maxHealth = 500
 	melee_damage_lower = 45
 	melee_damage_upper = 65
 
@@ -83,9 +83,12 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
+		/datum/ai_planning_subtree/simple_find_wounded_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian
@@ -97,3 +100,4 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/fire_rockets
 	ability_key = BB_NETGUARDIAN_ROCKET_ABILITY
+	finish_planning = FALSE
