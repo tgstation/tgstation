@@ -2,9 +2,12 @@
 
 // these four are just text spans that furnish the TEXT itself with the appropriate CSS classes
 #define MAJOR_ANNOUNCEMENT_TITLE(string) ("<span class='major_announcement_title'>" + string + "</span>")
+#define SUBHEADER_ANNOUNCEMENT_TITLE(string) ("<span class='subheader_announcement_text'>" + string + "</span>")
 #define MAJOR_ANNOUNCEMENT_TEXT(string) ("<span class='major_announcement_text'>" + string + "</span>")
 #define MINOR_ANNOUNCEMENT_TITLE(string) ("<span class='minor_announcement_title'>" + string + "</span>")
 #define MINOR_ANNOUNCEMENT_TEXT(string) ("<span class='minor_announcement_text'>" + string + "</span>")
+
+#define ANNOUNCEMENT_HEADER(string) ("<span class='announcement_header'>" + string + "</span>")
 
 // these two are the ones that actually give the striped background
 #define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
@@ -55,7 +58,7 @@
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
 			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
 			if(length(title) > 0)
-				header += MINOR_ANNOUNCEMENT_TITLE(title)
+				header += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 		if(ANNOUNCEMENT_TYPE_CAPTAIN)
 			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
 			GLOB.news_network.submit_article(text, "Captain's Announcement", "Station Announcements", null)
@@ -64,7 +67,7 @@
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
-	announcement_strings += header
+	announcement_strings += ANNOUNCEMENT_HEADER(header)
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
@@ -119,7 +122,7 @@
 
 	var/list/minor_announcement_strings = list()
 	if(title != null && title != "")
-		minor_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+		minor_announcement_strings += ANNOUNCEMENT_HEADER(MINOR_ANNOUNCEMENT_TITLE(title))
 	minor_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
 	var/finalized_announcement
@@ -149,7 +152,7 @@
 		message = selected_level.lowering_to_announcement
 
 	var/list/level_announcement_strings = list()
-	level_announcement_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+	level_announcement_strings += ANNOUNCEMENT_HEADER(MINOR_ANNOUNCEMENT_TITLE(title))
 	level_announcement_strings += MINOR_ANNOUNCEMENT_TEXT(message)
 
 	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(current_level_color, jointext(level_announcement_strings, ""))
@@ -166,7 +169,7 @@
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 
 	if(length(title) > 0)
-		returnable_strings += MINOR_ANNOUNCEMENT_TITLE(title)
+		returnable_strings += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 
 	return jointext(returnable_strings, "")
 

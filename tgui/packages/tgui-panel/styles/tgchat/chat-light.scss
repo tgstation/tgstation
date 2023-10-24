@@ -4,6 +4,7 @@
  */
 
 @use 'sass:map';
+@use 'sass:color';
 
 html,
 body {
@@ -977,74 +978,89 @@ h2.alert {
 }
 
 $alert-stripe-colors: (
-  'default': #a099ff,
-  'green': #80ff93,
-  'blue': #80d2ff,
-  'pink': #ff80e8,
-  'yellow': #ffe880,
-  'orange': #ff9966,
-  'red': #ff6680,
-  'purple': #ab80ff,
+  'default': #00283a,
+  'green': #003d00,
+  'blue': #00283a,
+  'pink': #30001b,
+  'yellow': #574a00,
+  'orange': #593400,
+  'red': #540000,
+  'purple': #2c0030,
 );
 
 $alert-stripe-alternate-colors: (
-  'default': #aaa3ff,
-  'green': #99ffa8,
-  'blue': #999999,
-  'pink': #999999,
-  'yellow': #999999,
-  'orange': #999999,
-  'red': #999999,
-  'purple': #999999,
+  'default': #003045,
+  'green': #003800,
+  'blue': #003045,
+  'pink': #400025,
+  'yellow': #4d4100,
+  'orange': #6b4200,
+  'red': #6b0000,
+  'purple': #141314,
 );
 
 $alert-major-header-colors: (
-  'default': #000d57,
-  'green': #00570d,
-  'blue': #999999,
-  'pink': #999999,
-  'yellow': #999999,
-  'orange': #999999,
-  'red': #999999,
-  'purple': #999999,
+  'default': #33d5ff,
+  'green': #00ff80,
+  'blue': #33d5ff,
+  'pink': #ff4791,
+  'yellow': #ffb947,
+  'orange': #f8ae87,
+  'red': #ff4791,
+  'purple': #bc8ff5,
 );
 
-$alert-minor-header-colors: (
-  'default': #005499,
-  'green': #005c0e,
-  'blue': #999999,
-  'pink': #999999,
-  'yellow': #999999,
-  'orange': #999999,
-  'red': #999999,
-  'purple': #999999,
+$alert-subheader-header-colors: (
+  'default': #ff579a,
+  'green': #ff579a,
+  'blue': #ff579a,
+  'pink': #33d5ff,
+  'yellow': #33d5ff,
+  'orange': #33d5ff,
+  'red': #33d5ff,
+  'purple': #33d5ff,
 );
+
+$border-width: 4;
+
+$border-width-px: $border-width * 1px;
 
 .major_announcement_title {
   font-size: 175%;
-  padding: 0.25em 0.25em;
+  padding: 0rem 0.5rem;
+  line-height: 100%;
   text-align: left;
   text-decoration: none;
   width: 100%;
 }
 
+.subheader_announcement_text {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0.25rem;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 125%;
+}
+
 .major_announcement_text {
-  color: #202020;
-  background-color: #ffffff;
-  font-weight: normal;
+  color: #eaeaea;
+  background-color: #131313;
+  font-weight: bold;
   font-size: 100%;
   text-align: left;
-  padding: 0.25em 0.5em;
-  padding-bottom: 0.5em;
+  padding: 0.5rem 0.5rem;
   width: 100%;
   height: 100%;
 }
 
 .minor_announcement_title {
-  background-color: #ffffff;
   font-weight: bold;
-  padding: 0em 0.25em;
-  padding-top: 0.25em;
+  padding: 0 0.5rem;
+  padding-top: 0;
+  line-height: 100%;
   width: 100%;
   height: 100%;
   text-align: left;
@@ -1052,24 +1068,26 @@ $alert-minor-header-colors: (
 }
 
 .minor_announcement_text {
-  background-color: #ffffff;
-  color: #202020;
-  padding: 0.25em 0.25em;
+  background-color: #202020;
+  color: #eaeaea;
+  padding: 0.5rem 0.5rem;
   text-align: left;
   font-size: 100%;
 }
 
-$border-width: 4;
-
-$border-width-px: $border-width * 1px;
+.announcement_header {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
 
 @each $color-name, $color-value in $alert-stripe-colors {
   .chat_alert_#{$color-name} {
     color: #ffffff;
-    padding: 0.5em 0.5em;
+    padding: 0.5rem 0.5rem;
     box-shadow: none;
     font-weight: bold;
-    margin: 1em 0 1em 0;
+    margin: 1rem 0 1rem 0;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -1093,7 +1111,19 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_title {
-    color: map.get($alert-minor-header-colors, $color-name);
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .subheader_announcement_text {
+    color: map.get($alert-subheader-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_text {
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_text {
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
   }
 }
 
