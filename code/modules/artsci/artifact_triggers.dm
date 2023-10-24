@@ -38,7 +38,6 @@
 	max_amount = 35
 
 /datum/artifact_trigger/force/New()
-		..()
 		base_amount = rand(2,15)
 
 /datum/artifact_trigger/heat
@@ -48,19 +47,7 @@
 	max_amount = 15000
 
 /datum/artifact_trigger/heat/New()
-		..()
 		base_amount = rand(320,950)
-
-/*/datum/artifact_trigger/cold
-	name = "Cold"
-	needed_stimulus = STIMULUS_HEAT
-	hint_range = 20
-	stimulus_operator = "<="
-	max_amount = 300
-
-/datum/artifact_trigger/cold/New()
-		..()
-		base_amount = rand(43,270)*/
 
 /datum/artifact_trigger/shock
 	name = "Electricity"
@@ -69,7 +56,6 @@
 	hint_range = 500
 
 /datum/artifact_trigger/shock/New()
-		..()
 		base_amount = rand(400,1200)
 
 /datum/artifact_trigger/radiation
