@@ -1,3 +1,5 @@
+#define MAX_ALLOWED_STICKERS 12
+
 /// parent type for all other stickers. do not spawn directly
 /obj/item/sticker
 	name = "sticker"
@@ -45,6 +47,9 @@
 
 ///Sticks this sticker to the target, with the pixel offsets being px and py.
 /obj/item/sticker/proc/stick(atom/target, mob/living/user, px,py)
+	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_ALLOWED_STICKERS)
+		target.balloon_alert(user, "sticker won't stick!")
+		return FALSE
 	sticker_overlay = mutable_appearance(icon, icon_state , layer = target.layer + 1, appearance_flags = RESET_COLOR | PIXEL_SCALE)
 	sticker_overlay.pixel_x = px
 	sticker_overlay.pixel_y = py
@@ -82,11 +87,13 @@
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	RegisterSignal(attached, COMSIG_QDELETING, PROC_REF(on_attached_qdel))
+	ADD_TRAIT(attached, TRAIT_STICKERED, REF(src))
 
 //Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_QDELETING))
+	REMOVE_TRAIT(attached, TRAIT_STICKERED, REF(src))
 	if(signal_turf)
 		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 		signal_turf = null
@@ -227,3 +234,5 @@
 /obj/item/sticker/syndicate/trap
 	name = "bear trap sticker"
 	icon_state = "trap"
+
+#undef MAX_ALLOWED_STICKERS
