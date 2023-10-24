@@ -21,9 +21,9 @@
 /mob/living/basic/construct/wraith/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
-	if(!jaunt)
+	if(isnull(jaunt))
 		return .
-	AddElement(/datum/element/recharging_attacks, recharged_action = jaunt)
+	AddComponent(/datum/component/recharging_attacks, recharged_action = jaunt)
 
 /// Hostile NPC version. Attempts to kill the lowest-health mob it can see.
 /mob/living/basic/construct/wraith/hostile
@@ -48,5 +48,3 @@
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic,
 		/datum/action/innate/cult/create_rune/tele,
 	)
-
-/mob/living/basic/construct/wraith/noncult

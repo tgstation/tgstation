@@ -22,7 +22,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	melee_attack_cooldown = 1 SECONDS
+	melee_attack_cooldown = CLICK_CD_MELEE
 
 	// Vivid red, cause cult theme
 	lighting_cutoff_red = 30

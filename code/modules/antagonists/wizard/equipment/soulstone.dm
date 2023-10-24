@@ -465,7 +465,7 @@
 				if(THEME_HOLY)
 					makeNewConstruct(/mob/living/basic/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/basic/construct/juggernaut/noncult, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
@@ -476,7 +476,7 @@
 				if(THEME_HOLY)
 					makeNewConstruct(/mob/living/basic/construct/wraith/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/basic/construct/wraith/noncult, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc

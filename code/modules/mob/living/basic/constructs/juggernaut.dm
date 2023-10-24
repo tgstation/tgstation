@@ -59,5 +59,3 @@
 
 /mob/living/basic/construct/juggernaut/mystic
 	theme = THEME_WIZARD
-
-/mob/living/basic/construct/juggernaut/noncult
