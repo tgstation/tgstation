@@ -29,6 +29,9 @@
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
+	if(HAS_TRAIT(affected_mob, TRAIT_HYPOSPRAYIMMUNE))
+		to_chat(user, span_warning("[affected_mob] skin is too tough for [src]!"))
+		return FALSE
 	if(!iscarbon(affected_mob))
 		return FALSE
 
