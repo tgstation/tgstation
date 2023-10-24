@@ -238,3 +238,8 @@
 	duration = 15 SECONDS
 	affects_others = TRUE
 	random_hallucination_weight = 0
+
+/datum/hallucination/delusion/preset/heretic
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic))
+	delusion_name = "heretic"
+	duration = -1
