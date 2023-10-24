@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 		if (isnull(associated_typepath))
 			stack_trace("associated_typepath null - please set it! occured on: [src.type]")
 
-/datum/quirk_static_data/proc/get_customization_data()
+/datum/quirk_static_data/proc/get_customization_data(datum/preferences/prefs, mob/user)
 	RETURN_TYPE(/list)
 
 	var/list/customization_data = list()
@@ -47,7 +47,10 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 			stack_trace("get_customization_data was called before instantiation of [pref_type]!")
 			continue // it might have been a fluke
 
-		customization_data[pref_type] = pref_instance.savefile_key
+		var/value = prefs.read_preference(pref_type.type)
+		var/data = pref_instance.compile_ui_data(user, value)
+
+		customization_data[pref_instance.savefile_key] = data
 
 	return customization_data
 
