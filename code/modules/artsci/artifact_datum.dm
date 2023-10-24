@@ -154,7 +154,7 @@
 			break
 		if(trigger.needed_stimulus == stimuli)
 			if(trigger.check_amount)
-				if(severity >= trigger.amount && severity <= trigger.range)
+				if(ISINRANGE(severity, trigger.amount, trigger.range))
 					Activate()
 				else if(hint_text && (trigger.hint_range > abs(severity - (trigger.hint_range + trigger.range)) || trigger.hint_range > abs(severity - trigger.hint_range)))
 					if(prob(trigger.hint_prob))
