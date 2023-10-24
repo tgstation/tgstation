@@ -958,3 +958,39 @@
   - rscadd: Most pies can now be sliced rather than being consumed whole.
   - rscadd: Rootdough can be crafted using soy milk in place of eggs.
   - rscadd: Two new lizard-safe rootbread sandwiches can be crafted.
+2023-10-23:
+  SyncIt21:
+  - bugfix: items that require reagent containers & the reagents inside it for crafting(e.g.
+      molotov) now crafts properly.
+  - bugfix: most crafting recipes should work now
+  jlsnow301:
+  - rscadd: Just in time for Halloween- ghost notifications have been upgraded to
+      their own announcements. Boo!
+  san7890:
+  - qol: Adminwho messages are now in an examine block for heightened clarity.
+2023-10-24:
+  DrDiasyl:
+  - qol: The Command intercom now has a High-Volume setting like command headsets
+  - qol: A memo telling frequencies of station radio channels are now present near
+      the Command intercom and T-Comms room
+  - image: Station, Command, and Prison intercoms have received new sprites
+  - spellcheck: Station and Command intercom descriptions have been changed to tell
+      about their functionality
+  Fikou:
+  - bugfix: surgical trays no longer animate when opened
+  Ghommie:
+  - bugfix: The polymorphic belt shouldn't work on animated objects. Logically wouldn't
+      have DNA.
+  Jacquerel:
+  - bugfix: Food created by mixing chemicals once again has a reagent purity based
+      on the component chemicals.
+  SyncIt21:
+  - bugfix: plastic sheet produces 4 tiles via the tiles option without using the
+      crafting menu
+  cnleth:
+  - bugfix: Replaced error spaghetti in thunderdome kitchen with regular cooked spaghetti
+  exdal:
+  - bugfix: hallucination announcements use new announcement style
+  jlsnow301:
+  - bugfix: Entering a virtual domain should no longer give you a message that it
+      doesn't forbid items
