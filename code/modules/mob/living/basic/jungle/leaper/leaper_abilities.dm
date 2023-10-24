@@ -5,7 +5,7 @@
 	desc = "Fires a poisonous leaper bubble towards the victim!"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 7 SECONDS
 	projectile_type = /obj/projectile/leaper
 	projectile_sound = 'sound/effects/snap.ogg'
 	shared_cooldown = NONE

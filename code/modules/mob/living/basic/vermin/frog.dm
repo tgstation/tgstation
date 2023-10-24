@@ -104,6 +104,7 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/random_speech/frog,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/go_for_swim,
 	)
 
 /datum/ai_controller/basic_controller/frog/trash

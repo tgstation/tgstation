@@ -503,3 +503,20 @@
 	set_rider_dir_plane(NORTH, GAME_PLANE)
 	set_rider_dir_plane(EAST, GAME_PLANE_UPPER)
 	set_rider_dir_plane(WEST, GAME_PLANE_UPPER)
+
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	. = ..()
+	RegisterSignal(riding_mob, COMSIG_MOB_POINTED, PROC_REF(attack_pointed))
+
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
+	SIGNAL_HANDLER
+	var/mob/living/basic/basic_parent = parent
+	if(!isclosedturf(pointed))
+		return
+	if(!basic_parent.CanReach(pointed))
+		return
+	basic_parent.melee_attack(pointed)
+
+/datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
+	. = ..()
+	UnregisterSignal(rider,  COMSIG_MOB_POINTED)

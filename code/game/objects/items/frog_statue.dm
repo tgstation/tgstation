@@ -4,6 +4,7 @@
 
 /obj/item/frog_statue
 	name = "frog statue"
+	desc = "Are they really comfortable living in this thing?"
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "frog_statue"
 	item_flags = NOBLUDGEON
@@ -33,6 +34,7 @@
 	return TRUE
 
 /obj/item/frog_statue/proc/recall_frog(mob/user)
+	playsound(src, 'sound/items/frog_statue_release.ogg', 20)
 	user.Beam(contained_frog, icon_state = "lichbeam", time = RECALL_DURATION)
 	animate(contained_frog, transform = matrix().Scale(0.3, 0.3), time = RECALL_DURATION)
 	addtimer(CALLBACK(contained_frog, TYPE_PROC_REF(/atom/movable, forceMove), src), RECALL_DURATION)
@@ -54,11 +56,14 @@
 	frog.transform = frog.transform.Scale(0.3, 0.3)
 	contained_frog = frog
 	animate_filter()
-	RegisterSignals(frog, COMSIG_QDELETING, PROC_REF(render_obsolete))
+	RegisterSignal(frog, COMSIG_QDELETING, PROC_REF(render_obsolete))
 
 /obj/item/frog_statue/proc/render_obsolete(datum/source)
+	SIGNAL_HANDLER
+
 	contained_frog = null
 	playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -91,7 +96,8 @@
 	clear_filters()
 
 /obj/item/frog_contract
-	name = "Frog Contract"
+	name = "frog contract"
+	desc = "Become a friend of the frogs!"
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "scroll"
 
@@ -106,6 +112,7 @@
 	var/selected_name =  sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
 	var/toad_color  = input(user, "Select your frog's color!" , "Pet toad color") as color|null
 	var/obj/item/frog_statue/statue = new(get_turf(user))
+	user.put_in_hands(statue)
 	var/mob/living/basic/leaper/new_frog = new(statue)
 	statue.set_new_frog(new_frog)
 	new_frog.befriend(user)
