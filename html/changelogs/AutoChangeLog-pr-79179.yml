@@ -1,0 +1,4 @@
+author: "exdal"
+delete-after: True
+changes:
+  - bugfix: "hallucination announcements use new announcement style"
