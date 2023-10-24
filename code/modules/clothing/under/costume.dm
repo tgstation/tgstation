@@ -359,6 +359,11 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+// For the nuke-ops cowboy fit. Sadly no Lone Ranger fit & I don't wanna bloat costume files further.
+/obj/item/clothing/under/costume/dutch/syndicate
+	desc = "You can feel a <b>god damn plan</b> coming on, and the armor lining in this suit'll do wonders in makin' it work."
+	armor_type = /datum/armor/clothing_under/syndicate
+
 /obj/item/clothing/under/costume/osi
 	name = "O.S.I. jumpsuit"
 	icon_state = "osi_jumpsuit"

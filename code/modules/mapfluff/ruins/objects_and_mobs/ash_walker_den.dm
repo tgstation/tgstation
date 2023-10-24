@@ -13,8 +13,8 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	max_integrity = 200
 
+	faction = list(FACTION_ASHWALKER)
 
-	var/faction = list(FACTION_ASHWALKER)
 	var/meat_counter = 6
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective
@@ -83,7 +83,7 @@
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
 			H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-			H.gib()
+			H.gib(DROP_ALL_REMAINS)
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))

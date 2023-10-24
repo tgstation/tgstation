@@ -460,7 +460,7 @@
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
-				user.gib()
+				user.gib(DROP_ALL_REMAINS)
 				return
 			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))
 
@@ -705,19 +705,28 @@
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-	if(!LAZYLEN(candidates))
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, dumb_mob)
+	dumb_mob.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_SENTIENCE_POTION, \
+		job_bans = ROLE_SENTIENCE, \
+		to_call = to_call, \
+	)
+
+/// Assign the chosen ghost to the mob
+/obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		balloon_alert(user, "try again later!")
 		being_used = FALSE
-		return ..()
+		return
 
-	var/mob/dead/observer/C = pick(candidates)
-	dumb_mob.key = C.key
+	dumb_mob.key = ghost.key
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+
 	if(isanimal(dumb_mob))
 		var/mob/living/simple_animal/smart_animal = dumb_mob
 		smart_animal.sentience_act()
+
 	dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
 	balloon_alert(user, "success")
 	after_success(user, dumb_mob)

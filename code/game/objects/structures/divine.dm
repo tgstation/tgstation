@@ -18,7 +18,7 @@
 		return
 	to_chat(user, span_notice("Invoking the sacred ritual, you sacrifice [L]."))
 	L.investigate_log("has been sacrificially gibbed on an altar.", INVESTIGATE_DEATHS)
-	L.gib()
+	L.gib(DROP_ALL_REMAINS)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
 
 /obj/structure/healingfountain

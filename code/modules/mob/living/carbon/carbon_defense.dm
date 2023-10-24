@@ -175,10 +175,10 @@
 	return TRUE
 
 
-/mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone(mob/living/basic/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone_secondary(mob/living/basic/drone/user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -703,15 +703,14 @@
 	check_passout()
 
 /**
-* Check to see if we should be passed out from oyxloss
+* Check to see if we should be passed out from oxyloss
 */
 /mob/living/carbon/proc/check_passout()
-	if(!isnum(oxyloss))
-		return
-	if(oxyloss <= 50)
-		if(getOxyLoss() > 50)
+	var/mob_oxyloss = getOxyLoss()
+	if(mob_oxyloss >= 50)
+		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(getOxyLoss() <= 50)
+	else if(mob_oxyloss < 50)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 
 /mob/living/carbon/get_organic_health()

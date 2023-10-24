@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Hostile skeleton NPCs now use the basic mob framework. They're a little smarter, and they also have a slightly improved set of attack effects and sounds. They love to drink milk, but will be harmed greatly if any heartless spaceman tricks them into drinking soymilk instead. Please report any bugs."

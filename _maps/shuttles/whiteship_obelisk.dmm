@@ -598,7 +598,7 @@
 /area/shuttle/abandoned)
 "HU" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile,
+/mob/living/basic/construct/juggernaut/hostile,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "rune4";
 	paint_colour = "#DC143C"

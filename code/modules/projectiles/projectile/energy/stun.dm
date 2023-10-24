@@ -11,7 +11,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 
-/obj/projectile/energy/electrode/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/electrode/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		do_sparks(1, TRUE, src)

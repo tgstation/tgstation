@@ -8,6 +8,8 @@
 	var/maximum_distance = 6
 	/// How far do we look for our target?
 	var/view_distance = 10
+	/// the run away behavior we will use
+	var/run_away_behavior = /datum/ai_behavior/step_away
 
 /datum/ai_planning_subtree/maintain_distance/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
@@ -16,11 +18,14 @@
 		return // Don't run away from cucumbers, they're not snakes
 	var/range = get_dist(controller.pawn, target)
 	if (range < minimum_distance)
-		controller.queue_behavior(/datum/ai_behavior/step_away, target_key)
+		controller.queue_behavior(run_away_behavior, target_key, minimum_distance)
 		return
 	if (range > maximum_distance)
 		controller.queue_behavior(/datum/ai_behavior/pursue_to_range, target_key, maximum_distance)
 		return
+
+/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance
+	run_away_behavior = /datum/ai_behavior/cover_minimum_distance
 
 /// Take one step away
 /datum/ai_behavior/step_away
@@ -79,4 +84,33 @@
 	var/atom/current_target = controller.blackboard[target_key]
 	if (!QDELETED(current_target) && get_dist(controller.pawn, current_target) > range)
 		return
+	finish_action(controller, succeeded = TRUE)
+
+///instead of taking a single step, we cover the entire distance
+/datum/ai_behavior/cover_minimum_distance
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	required_distance = 0
+	action_cooldown = 0.2 SECONDS
+
+/datum/ai_behavior/cover_minimum_distance/setup(datum/ai_controller/controller, target_key, minimum_distance)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	var/required_distance = minimum_distance - get_dist(controller.pawn, target) //the distance we need to move
+	var/distance = 0
+	var/turf/chosen_turf
+	for(var/turf/open/potential_turf in oview(required_distance, controller.pawn))
+		var/new_distance_from_target = get_dist(potential_turf, target)
+		if(potential_turf.is_blocked_turf())
+			continue
+		if(new_distance_from_target > distance)
+			chosen_turf = potential_turf
+			distance = new_distance_from_target
+	if(isnull(chosen_turf))
+		return FALSE
+	set_movement_target(controller, target = chosen_turf)
+
+/datum/ai_behavior/cover_minimum_distance/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
 	finish_action(controller, succeeded = TRUE)

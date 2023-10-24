@@ -44,7 +44,7 @@
 /// Play stupid games, win stupid prizes
 /obj/item/coupon/proc/curse_heart(mob/living/cursed)
 	if(!iscarbon(cursed))
-		cursed.gib()
+		cursed.gib(DROP_ALL_REMAINS)
 		return TRUE
 
 	var/mob/living/carbon/player = cursed

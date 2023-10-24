@@ -20,6 +20,8 @@
 	// we never want to hide a turf because it's not lit
 	// We can rely on the lighting plane to handle that for us
 	see_in_dark = 1e6
+	// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
+	faction = list(FACTION_NEUTRAL)
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
@@ -144,9 +146,6 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction = list(FACTION_NEUTRAL)
-
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
 
@@ -215,3 +214,6 @@
 	var/active_thinking_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
+
+	/// Whether invisimin is enabled on this mob
+	var/invisimin = FALSE

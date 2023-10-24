@@ -482,7 +482,7 @@
 	prey.investigate_log("has been sacrificed by [src].", INVESTIGATE_DEATHS)
 	if (isliving(prey))
 		var/mob/living/living_sacrifice = prey
-		living_sacrifice.gib()
+		living_sacrifice.gib(DROP_ALL_REMAINS)
 	else
 		qdel(prey)
 

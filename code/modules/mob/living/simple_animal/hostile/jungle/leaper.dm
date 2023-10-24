@@ -40,7 +40,7 @@
 	nondirectional_sprite = TRUE
 	impact_effect_type = /obj/effect/temp_visual/leaper_projectile_impact
 
-/obj/projectile/leaper/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/leaper/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	if (!isliving(target))
 		return
@@ -170,7 +170,7 @@
 	if(hop_cooldown <= world.time)
 		Hop(player_hop = TRUE)
 
-/mob/living/simple_animal/hostile/jungle/leaper/AttackingTarget()
+/mob/living/simple_animal/hostile/jungle/leaper/AttackingTarget(atom/attacked_target)
 	if(isliving(target))
 		return
 	return ..()

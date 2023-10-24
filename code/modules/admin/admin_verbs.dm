@@ -46,6 +46,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_circuits,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
+	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -53,6 +54,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/admin_enable_shuttle,  /*undoes the above*/
 	/client/proc/admin_ghost, /*allows us to ghost/reenter body at will*/
 	/client/proc/admin_hostile_environment, /*Allows admins to prevent the emergency shuttle from leaving, also lets admins clear hostile environments if theres one stuck*/
+	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
+	/client/proc/check_ai_laws, /*shows AI and borg laws*/
+	/client/proc/check_antagonists, /*shows all antags*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
@@ -63,9 +67,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_subtle_message, /*send a message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_change_command_name,
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/check_ai_laws, /*shows AI and borg laws*/
-	/client/proc/check_antagonists, /*shows all antags*/
+	/client/proc/create_mob_worm,
 	/client/proc/fax_panel, /*send a paper to fax*/
 	/client/proc/force_load_lazy_template,
 	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
@@ -229,6 +231,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/unload_ctf,
 	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
+	/client/proc/GeneratePipeSpritesheet,
 	/client/proc/view_runtimes,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
@@ -352,16 +355,16 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-	if(holder && mob)
-		if(initial(mob.invisibility) == INVISIBILITY_OBSERVER)
-			to_chat(mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
-			return
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
-			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-		else
-			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+	if(isnull(holder) || isnull(mob))
+		return
+	if(mob.invisimin)
+		mob.invisimin = FALSE
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
+		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
+	else
+		mob.invisimin = TRUE
+		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
@@ -507,7 +510,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_STEALTHMODE, INVISIBILITY_PRIORITY_ADMIN)
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -521,7 +524,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/disable_stealth_mode()
 	holder.fakekey = null
 	if(isobserver(mob))
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
@@ -1138,3 +1141,48 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		holder.library_manager = new()
 	holder.library_manager.ui_interact(usr)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Library Management") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
+/client/proc/create_mob_worm()
+	set category = "Admin.Fun"
+	set name = "Create Mob Worm"
+	set desc = "Attached a linked list of mobs to a marked mob"
+	if (!check_rights(R_FUN))
+		return
+	if(isnull(holder))
+		return
+	if(!isliving(holder.marked_datum))
+		to_chat(usr, span_warning("Error: Please mark a mob to attach mobs to."))
+		return
+	var/mob/living/head = holder.marked_datum
+
+	var/attempted_target_path = tgui_input_text(
+		usr,
+		"Enter typepath of a mob you'd like to make your chain from.",
+		"Typepath",
+		"[/mob/living/basic/pet/dog/corgi/ian]",
+	)
+
+	if (isnull(attempted_target_path))
+		return //The user pressed "Cancel"
+
+	var/desired_mob = text2path(attempted_target_path)
+	if(!ispath(desired_mob))
+		var/static/list/mob_paths = make_types_fancy(subtypesof(/mob/living))
+		desired_mob = pick_closest_path(attempted_target_path, mob_paths)
+	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
+		return //The user pressed "Cancel"
+
+	var/amount = tgui_input_number(usr, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
+	if (isnull(amount) || amount < 1 || QDELETED(head))
+		return
+	head.AddComponent(/datum/component/mob_chain)
+	var/mob/living/previous = head
+	for (var/i in 1 to amount)
+		var/mob/living/segment = new desired_mob(head.drop_location())
+		if (QDELETED(segment)) // ffs mobs which replace themselves with other mobs
+			i--
+			continue
+		ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+		QDEL_NULL(segment.ai_controller)
+		segment.AddComponent(/datum/component/mob_chain, front = previous)
+		previous = segment

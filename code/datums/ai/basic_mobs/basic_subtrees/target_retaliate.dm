@@ -41,21 +41,25 @@
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
+	var/list/shitlist = controller.blackboard[shitlist_key]
+	var/atom/existing_target = controller.blackboard[target_key]
+
+	if (!check_faction)
+		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
+
+	if (!QDELETED(existing_target) && (locate(existing_target) in shitlist) && targetting_datum.can_attack(living_mob, existing_target, vision_range))
+		finish_action(controller, succeeded = TRUE, check_faction = check_faction)
+		return
 
 	var/list/enemies_list = list()
-
-	for(var/mob/living/potential_target as anything in controller.blackboard[shitlist_key])
-		if(!targetting_datum.can_attack(living_mob, potential_target, vision_range, check_faction))
+	for(var/mob/living/potential_target as anything in shitlist)
+		if(!targetting_datum.can_attack(living_mob, potential_target, vision_range))
 			continue
 		enemies_list += potential_target
 
-
 	if(!length(enemies_list))
+		controller.clear_blackboard_key(target_key)
 		finish_action(controller, succeeded = FALSE, check_faction = check_faction)
-		return
-
-	if (controller.blackboard[target_key] in enemies_list) // Don't bother changing
-		finish_action(controller, succeeded = TRUE, check_faction = check_faction)
 		return
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
@@ -72,9 +76,9 @@
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	return pick(enemies_list)
 
-
-/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key, check_faction)
+/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, check_faction)
 	. = ..()
-	if(check_faction)
+	if (succeeded || check_faction)
 		return
-	controller.set_blackboard_key(BB_BASIC_MOB_SKIP_FACTION_CHECK, succeeded)
+	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
+	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)

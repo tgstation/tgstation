@@ -218,7 +218,10 @@
 	if(!eyeobj)
 		return
 	eyeobj.mouse_opacity = state ? MOUSE_OPACITY_ICON : initial(eyeobj.mouse_opacity)
-	eyeobj.invisibility = state ? INVISIBILITY_OBSERVER : initial(eyeobj.invisibility)
+	if(state)
+		eyeobj.SetInvisibility(INVISIBILITY_OBSERVER, id=type)
+	else
+		eyeobj.RemoveInvisibility(type)
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"

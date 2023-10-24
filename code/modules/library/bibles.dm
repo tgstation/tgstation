@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
 			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
 			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
-			user.gib()
+			user.gib(DROP_ALL_REMAINS)
 		else
 			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
 			user.AddComponent(/datum/component/omen/bible)
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				make_new_altar(bible_smacked, user)
 				return
 			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.invisibility = 0
+				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 
 	if(user.mind?.holy_role)
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))
