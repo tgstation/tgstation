@@ -32,12 +32,14 @@
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to hurt [src]!"))
 			return
+		if(check_block(user, harm_intent_damage, "[user]'s punch", UNARMED_ATTACK, 0, BRUTE))
+			return
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
 						span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 		playsound(loc, attacked_sound, 25, TRUE, -1)
-		attack_threshold_check(harm_intent_damage)
+		apply_damage(harm_intent_damage)
 		log_combat(user, src, "attacked")
 		updatehealth()
 		return TRUE
@@ -55,9 +57,7 @@
 /mob/living/simple_animal/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
-			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
+			return apply_damage(rand(1, 3))
 	if (!user.combat_mode)
 		if (health > 0)
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
@@ -80,24 +80,23 @@
 							span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You slash at [src]!"))
 			playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-			attack_threshold_check(damage)
+			apply_damage(damage)
 			log_combat(user, src, "attacked")
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
-		var/damage = rand(5, 10)
-		. = attack_threshold_check(damage)
-		if(.)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+		var/damage_done = apply_damage(rand(L.melee_damage_lower, L.melee_damage_upper), BRUTE)
+		if(damage_done)
+			L.amount_grown = min(L.amount_grown + damage_done, L.max_grown)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(user.is_adult)
 			damage = rand(20, 35)
-		return attack_threshold_check(damage)
+		return apply_damage(damage, user.melee_damage_type)
 
 /mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
 	if(user.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.

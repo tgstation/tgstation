@@ -10,12 +10,6 @@
 
 	return ..()
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(user, "You cannot attack people before the game has started.")
-		return
-	..()
-
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	return //immune to slimes
 

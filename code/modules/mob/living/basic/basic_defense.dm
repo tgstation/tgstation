@@ -22,28 +22,29 @@
 		return TRUE
 
 	if(!user.combat_mode)
-		if (stat == DEAD)
-			return
-		visible_message(span_notice("[user] [response_help_continuous] [src]."), \
-						span_notice("[user] [response_help_continuous] you."), null, null, user)
-		to_chat(user, span_notice("You [response_help_simple] [src]."))
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	else
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to hurt [src]!"))
-			return
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
-						span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
-		playsound(loc, attacked_sound, 25, TRUE, -1)
-		var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-		var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
-
-		attack_threshold_check(damage)
-		log_combat(user, src, "attacked")
-		updatehealth()
+		if (stat != DEAD)
+			visible_message(span_notice("[user] [response_help_continuous] [src]."), \
+							span_notice("[user] [response_help_continuous] you."), null, null, user)
+			to_chat(user, span_notice("You [response_help_simple] [src]."))
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		return TRUE
+
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt [src]!"))
+		return TRUE
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+	if(check_block(user, damage, "[user]'s punch", UNARMED_ATTACK, 0, BRUTE))
+		return
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
+					span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
+	playsound(loc, attacked_sound, 25, TRUE, -1)
+	apply_damage(damage)
+	log_combat(user, src, "attacked")
+	updatehealth()
+	return TRUE
 
 /mob/living/basic/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -58,9 +59,8 @@
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
-			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
+			return apply_damage(rand(1, 3))
+
 	if (!user.combat_mode)
 		if (health > 0)
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
@@ -85,23 +85,22 @@
 		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You slash at [src]!"))
 	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-	attack_threshold_check(damage)
+	apply_damage(damage)
 	log_combat(user, src, "attacked")
 
 /mob/living/basic/attack_larva(mob/living/carbon/alien/larva/attacking_larva, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
-		var/damage = rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper)
-		. = attack_threshold_check(damage)
-		if(.)
-			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage, attacking_larva.max_grown)
+		var/damage_done = apply_damage(rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper), BRUTE)
+		if(damage_done)
+			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, attacking_larva.max_grown)
 
 /mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)
-		return attack_threshold_check(damage)
+		return apply_damage(damage, M.melee_damage_type)
 
 /mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.

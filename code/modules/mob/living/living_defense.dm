@@ -272,10 +272,6 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
 	if(M.buckled)
 		if(M in buckled_mobs)
 			M.Feedstop()
@@ -285,6 +281,9 @@
 		to_chat(M, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
+	if(check_block(src, M.melee_damage_upper, "[M]'s glomp", MELEE_ATTACK, M.armour_penetration, M.melee_damage_type))
+		return FALSE
+
 	if (stat != DEAD)
 		log_combat(M, src, "attacked")
 		M.do_attack_animation(src)
@@ -292,6 +291,8 @@
 						span_userdanger("\The [M.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, span_danger("You glomp [src]!"))
 		return TRUE
+
+	return FALSE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
@@ -352,6 +353,8 @@
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+	if(.)
+		return TRUE
 
 	for(var/datum/surgery/operations as anything in surgeries)
 		if(user.combat_mode)
@@ -364,6 +367,8 @@
 	var/martial_result = user.apply_martial_art(src, modifiers)
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
+
+	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	var/martial_result = user.apply_martial_art(src, modifiers)
@@ -385,6 +390,10 @@
 	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
 		to_chat(user, span_warning("You can't bite with your mouth covered!"))
 		return FALSE
+
+	if(check_block(user, 1, "[user]'s bite", UNARMED_ATTACK, 0, BRUTE))
+		return FALSE
+
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 	if (HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || prob(75))
 		log_combat(user, src, "attacked")
@@ -404,7 +413,10 @@
 	if(L.combat_mode)
 		if(HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(L, span_warning("You don't want to hurt anyone!"))
-			return
+			return FALSE
+
+		if(check_block(L, 1, "[L]'s bite", UNARMED_ATTACK, 0, BRUTE))
+			return FALSE
 
 		L.do_attack_animation(src)
 		if(prob(90))
@@ -418,29 +430,34 @@
 			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
 							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_warning("Your bite misses [src]!"))
-	else
-		visible_message(span_notice("[L.name] rubs its head against [src]."), \
-						span_notice("[L.name] rubs its head against you."), null, null, L)
-		to_chat(L, span_notice("You rub your head against [src]."))
-		return FALSE
+			return FALSE
+
+	visible_message(span_notice("[L.name] rubs its head against [src]."), \
+					span_notice("[L.name] rubs its head against you."), null, null, L)
+	to_chat(L, span_notice("You rub your head against [src]."))
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(check_block(user, 0, "[user]'s tackle", MELEE_ATTACK, 0, BRUTE))
+			return FALSE
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
+
 	if(user.combat_mode)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to hurt anyone!"))
 			return FALSE
+		if(check_block(user, user.melee_damage_upper, "[user]'s slash", MELEE_ATTACK, 0, BRUTE))
+			return FALSE
 		user.do_attack_animation(src)
 		return TRUE
-	else
-		visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
-						span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
-		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
-		return FALSE
+
+	visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
+					span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
+	to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
+	return FALSE
 
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	..()
