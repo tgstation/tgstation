@@ -418,4 +418,3 @@
 	belt = /obj/item/lighter/skull
 	r_hand = /obj/item/food/grown/banana
 
-#undef MONKEY_AGENT_NAMES
