@@ -84,25 +84,32 @@
 			return
 		attempt_grow()
 
-///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
+/// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
-	if(!owner || bursting)
+	if(QDELETED(owner) || bursting)
 		return
 
 	bursting = TRUE
 
-	var/list/candidates = poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), gib_on_success)
+	owner.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_ALIEN_LARVA, \
+		job_bans = ROLE_ALIEN, \
+		to_call = to_call, \
+		custom_message = "An alien is bursting out of [owner.real_name]", \
+		title = "alien larva" \
+	)
 
-	if(QDELETED(src) || QDELETED(owner))
+/// Poll has concluded with a suitor
+/obj/item/organ/internal/body_egg/alien_embryo/proc/on_poll_concluded(gib_on_success, mob/dead/observer/ghost)
+	if(QDELETED(owner))
 		return
 
-	if(!candidates.len || !owner)
+	if(isnull(ghost))
 		bursting = FALSE
 		stage = 5 // If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time)
 		return
-
-	var/mob/dead/observer/ghost = pick(candidates)
 
 	var/mutable_appearance/overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)

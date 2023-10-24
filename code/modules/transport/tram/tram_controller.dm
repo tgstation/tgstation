@@ -73,7 +73,7 @@
  */
 /datum/tram_mfg_info/New(specific_transport_id)
 	if(GLOB.round_id)
-		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, 0)]"
+		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, "0")]"
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
 
@@ -724,10 +724,9 @@
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
 	if(!held_item)
-		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "open cabinet"
+		context[SCREENTIP_CONTEXT_LMB] = cover_open ? "access controls" : "open cabinet"
+		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "toggle lock"
 
-	if(istype(held_item, /obj/item/card/id/) && allowed(user) && !cover_open)
-		context[SCREENTIP_CONTEXT_LMB] = cover_locked ? "unlock cabinet" : "lock cabinet"
 
 	if(panel_open)
 		if(held_item?.tool_behaviour == TOOL_WRENCH)
@@ -748,6 +747,7 @@
 	. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
 	if(panel_open)
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+		. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
 	else
 		. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
 
@@ -756,35 +756,108 @@
 		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
 		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
 	else
-		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Right-click.")]")
+		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
-	if(!user.combat_mode)
-		if(weapon && istype(weapon, /obj/item/card/id) && !cover_open)
-			return try_toggle_lock(user)
+	if(user.combat_mode || cover_open)
+		return ..()
+
+	var/obj/item/card/id/id_card = user.get_id_in_hand()
+	if(!isnull(id_card))
+		try_toggle_lock(user, id_card)
+		return
 
 	return ..()
 
+/obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
+	. = ..()
+	if(cover_open)
+		return
+
+	if(cover_locked)
+		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+		if(isnull(id_card))
+			balloon_alert(user, "access denied!")
+			return
+
+		try_toggle_lock(user, id_card)
+		return
+
+	toggle_door()
+
+/obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
+	. = ..()
+
+	if(!cover_open)
+		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+		if(isnull(id_card))
+			balloon_alert(user, "access denied!")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		try_toggle_lock(user, id_card)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	toggle_door()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/transport/tram_controller/proc/toggle_door()
+	if(!cover_open)
+		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
+	else
+		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
+	cover_open = !cover_open
+	update_appearance()
+
+/obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, obj/item/card/id_card, params)
+	if(isnull(id_card))
+		id_card = user.get_idcard(TRUE)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "access controller damaged!")
+		return FALSE
+
+	if(check_access(id_card))
+		cover_locked = !cover_locked
+		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
+		update_appearance()
+		return TRUE
+
+	balloon_alert(user, "access denied!")
+	return FALSE
+
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	if(panel_open)
+	if(panel_open && cover_open)
 		balloon_alert(user, "unsecuring...")
 		tool.play_tool_sound(src)
-		if(tool.use_tool(src, user, 6 SECONDS))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
-			balloon_alert(user, "unsecured")
-			deconstruct()
+		if(!tool.use_tool(src, user, 6 SECONDS))
+			return
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		balloon_alert(user, "unsecured")
+		deconstruct()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/transport/tram_controller/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!cover_open)
+		return
+
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
+
+	var/turf/drop_location = find_obstruction_free_location(1, src)
+
 	if(disassembled)
-		new /obj/item/wallframe/tram/controller(drop_location())
+		new /obj/item/wallframe/tram/controller(drop_location)
 	else
-		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
-		new /obj/item/stack/sheet/iron(drop_location(), 1)
-		new /obj/item/shard(drop_location())
+		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
+		new /obj/item/stack/sheet/iron(drop_location, 1)
 	qdel(src)
 
 /**
@@ -876,46 +949,6 @@
 	if(controller != controller_datum)
 		return
 	update_appearance()
-
-/obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
-	. = ..()
-	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked! swipe ID!")
-		return
-
-/obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
-	. = ..()
-
-	if(!cover_open && cover_locked)
-		balloon_alert(user, "it's locked! swipe ID!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	toggle_door()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/transport/tram_controller/proc/toggle_door()
-	if(!cover_open)
-		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
-	else
-		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
-	cover_open = !cover_open
-	update_appearance()
-
-/obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(obj_flags & EMAGGED)
-		balloon_alert(user, "access controller damaged!")
-		return FALSE
-
-	else if(check_access(id_card))
-		cover_locked = !cover_locked
-		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
-		update_appearance()
-		return TRUE
-
-	else
-		balloon_alert(user, "access denied")
-		return FALSE
 
 /obj/machinery/transport/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

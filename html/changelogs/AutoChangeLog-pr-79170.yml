@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Juggernaut constructs now use the basic mob framework. Please report any bugs."
