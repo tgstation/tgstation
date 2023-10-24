@@ -3,6 +3,7 @@ import { Box, Button, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { filterMap } from 'common/collections';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -12,6 +13,21 @@ const getValueClass = (value: number): string => {
   } else {
     return 'neutral';
   }
+};
+
+const getCorrespondingPreferences = (
+  customization_options: Record<string, string>,
+  all_preferences: Record<string, string>
+): Record<string, unknown> => {
+  return Object.fromEntries(
+    filterMap(Object.keys(all_preferences), (key) => {
+      if (customization_options[key] === undefined) {
+        return undefined;
+      }
+
+      return [key, all_preferences[key]];
+    })
+  );
 };
 
 const QuirkList = (props: {
@@ -31,8 +47,15 @@ const QuirkList = (props: {
   const { act, data } = useBackend<PreferencesMenuData>(props.context);
 
   return (
+    <Stack>
+      <Stack.Item>{Objects.keys(props.quirks)}</Stack.Item>
+    </Stack>
+  );
+
+  return (
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
+      {Object.keys(props.quirks).toString()}
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -119,27 +142,30 @@ const QuirkList = (props: {
                         }}
                       />
                     )}
-                    {props.serverData.toString()}
+                    {/* {props.serverData.toString()}
                     {quirk.name.toString()}
-                    {quirk.customization_options}
-                    {/*
-                    HEY FUCKO GUESS WHAT ITS THE CUSTOMIZATION OPTIONS BEING NULL */}
+                    {quirk.customization_options.toString()}
                     {props.context.toString()}
-                    {props.randomBodyEnabled.toString()}
-                    {/* <Popper
-                      popperContent={
-                        <PreferenceList
-                          act={act}
-                          preferences={quirk.customization_options}
-                          randomizations={getRandomization(
+                      {props.randomBodyEnabled.toString()}*/}
+                    {Object.entries(quirk.customization_options).toString()}
+                    {/* Object.entries(quirk.customization_options).length > 0 && (
+                      <PreferenceList
+                        act={act}
+                        preferences={getCorrespondingPreferences(
+                          quirk.customization_options,
+                          data.character_preferences.all_preferences
+                        )}
+                        randomizations={getRandomization(
+                          getCorrespondingPreferences(
                             quirk.customization_options,
-                            props.serverData,
-                            props.randomBodyEnabled,
-                            props.context
-                          )}
-                        />
-                      }
-                    />*/}
+                            data.character_preferences.all_preferences
+                          ),
+                          props.serverData,
+                          props.randomBodyEnabled,
+                          props.context
+                        )}
+                      />
+                          ) */}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -301,9 +327,6 @@ export const QuirksPage = (props, context) => {
                     }}
                     onCustomizeClick={(e: Event, quirkName, quirk) => {
                       e.stopPropagation();
-
-                      if (Object.keys(quirk.customization_options).length > 0) {
-                      }
 
                       act('customize_quirk', { quirk: quirk.name });
                     }}

@@ -167,6 +167,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		tainted_character_profiles = FALSE
 
 	data["character_preferences"] = compile_character_preferences(user)
+	data["all_preferences"] = compile_character_preferences(user, FALSE)
 
 	data["active_slot"] = default_slot
 
@@ -307,19 +308,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return character_preview_view
 
-/datum/preferences/proc/compile_character_preferences(mob/user)
+/datum/preferences/proc/compile_character_preferences(mob/user, discriminate_between_categories = TRUE)
 	var/list/preferences = list()
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.is_accessible(src))
 			continue
 
-		LAZYINITLIST(preferences[preference.category])
-
 		var/value = read_preference(preference.type)
 		var/data = preference.compile_ui_data(user, value)
 
-		preferences[preference.category][preference.savefile_key] = data
+		if (discriminate_between_categories)
+			LAZYINITLIST(preferences[preference.category])
+			preferences[preference.category][preference.savefile_key] = data
+		else
+			preferences[preference.savefile_key] = data
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/list/append_character_preferences = preference_middleware.get_character_preferences(user)
