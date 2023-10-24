@@ -16,7 +16,7 @@ export const Signaler = (props, context) => {
 
 export const SignalerContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const { code, frequency, minFrequency, maxFrequency } = data;
+  const { code, frequency, cooldown, minFrequency, maxFrequency } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
@@ -94,6 +94,7 @@ export const SignalerContent = (props, context) => {
           <Button
             mb={-0.1}
             fluid
+            tooltip={cooldown && `Cooldown: ${cooldown * 0.1} seconds`}
             icon="arrow-up"
             content="Send Signal"
             textAlign="center"

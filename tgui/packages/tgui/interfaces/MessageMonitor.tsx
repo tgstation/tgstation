@@ -28,7 +28,7 @@ type Request = {
   ref: string;
   message: string;
   stamp: string;
-  send_dpt: string;
+  sender_department: string;
   id_auth: string;
 };
 
@@ -75,7 +75,7 @@ const RequestLogsScreen = (props, context) => {
                 </Table.Cell>
                 <Table.Cell>{request.message}</Table.Cell>
                 <Table.Cell>{request.stamp}</Table.Cell>
-                <Table.Cell>{request.send_dpt}</Table.Cell>
+                <Table.Cell>{request.sender_department}</Table.Cell>
                 <Table.Cell>{request.id_auth}</Table.Cell>
               </Table.Row>
             ))}
