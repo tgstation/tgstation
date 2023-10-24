@@ -7,8 +7,6 @@
 	var/can_use_abilities = FALSE
 	/// list of ability buttons
 	var/list/shared_action_buttons = list()
-	/// only friends can ride us
-	var/just_friends = FALSE
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
