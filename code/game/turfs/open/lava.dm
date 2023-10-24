@@ -387,7 +387,7 @@
 	var/mob/living/carbon/human/burn_human = burn_living
 
 	var/list/immune_parts = list() // Parts we can't transform because they're not organic or can't be dismembered
-	var/list/transform_parts = list()// Parts we want to transform
+	var/list/transform_parts = list() // Parts we want to transform
 
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
 		if(!IS_ORGANIC_LIMB(burn_limb) || !burn_limb.can_dismember())
