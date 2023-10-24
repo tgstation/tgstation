@@ -131,7 +131,8 @@
 
 /obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
 	. = ..()
-	if(prob(40/severity) && loaded_projectile)
+	if(isnull(loaded_projectile) || !prob(40/severity))
+		return
 		name = "malfunctioning laser shell"
 		desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
 		projectile_type = /obj/projectile/beam/scatter/pathetic
