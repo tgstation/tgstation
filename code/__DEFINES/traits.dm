@@ -1341,6 +1341,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WING_BUFFET_TIRED "wing_buffet_tired"
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
-
-///if the atom has a sticker attached to it
-#define TRAIT_STICKERED "stickered"

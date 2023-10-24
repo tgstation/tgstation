@@ -11,7 +11,9 @@
 	circuit = null
 	density = TRUE
 	anchored = FALSE
-	ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, /datum/component/artifact/generator, SSmachines)
+	var/datum/component/artifact/assoc_comp = /datum/component/artifact/generator
+
+ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 
 /datum/component/artifact/generator
 	associated_object = /obj/machinery/power/generator_artifact

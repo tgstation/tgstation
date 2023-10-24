@@ -12,8 +12,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/special_cooldown_time
 	var/special
+	var/datum/component/artifact/assoc_comp = /datum/component/artifact/melee
 	COOLDOWN_DECLARE(special_cooldown)
-	ARTIFACT_SETUP(/obj/item/melee/artifact, /datum/component/artifact/melee, SSobj)
+	
+ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj)
 
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
 	SIGNAL_HANDLER

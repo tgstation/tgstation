@@ -11,6 +11,7 @@ export const ArtifactPanel = (props, context) => {
         {data.artifacts.map((artifact_data) => (
           <Section
             title={artifact_data.name}
+			key={artifact_data.ref}
             buttons={
               <>
                 <Button

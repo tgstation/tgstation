@@ -33,6 +33,7 @@
 
 /obj/machinery/artifact_xray/update_icon_state()
 	icon_state = "[base_icon_state]-[state_open]"
+	return ..()
 
 /obj/machinery/artifact_xray/AltClick(mob/user)
 	. = ..()

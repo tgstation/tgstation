@@ -6,7 +6,9 @@
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	anchored = FALSE
 	density = TRUE
-	ARTIFACT_SETUP(/obj/structure/artifact, /datum/component/artifact, SSobj)
+	var/datum/component/artifact/assoc_comp
+
+ARTIFACT_SETUP(/obj/structure/artifact, SSobj)
 
 /obj/effect/artifact_spawner
 	name = "Random Artifact Spawner"

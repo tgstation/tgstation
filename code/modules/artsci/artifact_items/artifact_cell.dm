@@ -4,7 +4,9 @@
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	ratingdesc = FALSE
 	charge_light_type = null
-	ARTIFACT_SETUP(/obj/item/stock_parts/cell/artifact, /datum/component/artifact/cell, SSobj)
+	var/datum/component/artifact/assoc_comp = /datum/component/artifact/cell
+
+ARTIFACT_SETUP(/obj/item/stock_parts/cell/artifact, SSobj)
 
 
 /datum/component/artifact/cell

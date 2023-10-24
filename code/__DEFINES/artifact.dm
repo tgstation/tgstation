@@ -22,8 +22,7 @@
 #define ARTIFACT_VERYRARE 140
 
 //cuts down on boiler plate code 
-#define ARTIFACT_SETUP(X,type,subsystem) var##type/assoc_comp = ##type;\
-##X/Initialize(mapload, var/forced_origin = null){\
+#define ARTIFACT_SETUP(X,subsystem) ##X/Initialize(mapload, var/forced_origin = null){\
 	. = ..();\
 	START_PROCESSING(subsystem, src);\
 	assoc_comp = AddComponent(assoc_comp, forced_origin);\
