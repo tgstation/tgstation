@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
 	load_wall_engravings()
-	load_statue_engravings()
+	load_statues()
 	load_prisoner_tattoos()
 	load_trophies()
 	load_recent_maps()
@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
 	save_prisoner_tattoos()
+	collect_statues()
 	collect_trophies()
 	collect_maps()
 	save_photo_persistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
@@ -146,7 +147,7 @@ SUBSYSTEM_DEF(persistence)
 	return json
 
 ///Loads all statue engravings, and places a select amount in maintenance and the prison.
-/datum/controller/subsystem/persistence/proc/load_statue_engravings()
+/datum/controller/subsystem/persistence/proc/load_statues()
 	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
 	if(!fexists(json_file))
 		return
@@ -487,6 +488,43 @@ statues fixes:
 		data.message = trophy_case.trophy_message
 		data.placer_key = trophy_case.placer_key
 		saved_trophies += data
+
+///Collects trophies from all existing trophy cases.
+/datum/controller/subsystem/persistence/proc/collect_statues()
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && istype(SSshuttle.selected, datum/map_template/shuttle/escape/fame))
+		for(var/obj/structure/statue/custom/custom_statue in GLOB.custom_statues)
+			if(custom_statue.onCentCom() || custom_statue.onSyndieBase()))
+				// is statue engraved? is statue named?
+
+
+
+isshuttleturf
+EMERGENCY_ESCAPED_OR_ENDGAMED
+/area/shuttle/escape
+
+var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
+var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
+if (!istype(shuttle))
+	return
+
+
+
+
+	for(var/trophy_case in GLOB.trophy_cases)
+		save_trophy(trophy_case)
+
+	var/json_file = file("data/trophy_items.json")
+	var/list/file_data = list()
+	var/list/converted_data = list()
+
+	for(var/datum/trophy_data/data in saved_trophies)
+		converted_data += list(data.to_json())
+
+	converted_data = remove_duplicate_trophies(converted_data)
+
+	file_data["data"] = converted_data
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 ///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()
