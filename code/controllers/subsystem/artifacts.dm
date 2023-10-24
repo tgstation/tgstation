@@ -19,8 +19,11 @@ SUBSYSTEM_DEF(artifacts)
 
 	///Currently existing artifacts with a component (key = obj artifact, value = component artifact)
 	var/list/artifacts = list()
+	/// typepaths of artifact components
 	var/list/datum/component/artifact/artifact_types = list()
+	/// names of all artifact subtype type_name
 	var/list/artifact_type_names = list()
+	/// artifact typepath from type_name
 	var/list/artifact_types_from_name = list()
 	/// instances of origins
 	var/list/artifact_origins = list()
@@ -32,6 +35,7 @@ SUBSYSTEM_DEF(artifacts)
 	var/list/artifact_origins_names = list()
 	/// artifact rarities for weighted picking
 	var/list/artifact_rarities = list()
+	/// get an artifact trigger typepath by name
 	var/list/artifact_trigger_name_to_type = list()
 
 /datum/controller/subsystem/artifacts/New()
