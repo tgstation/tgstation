@@ -201,4 +201,5 @@
 			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
+	to_chat(world, "Ruin loader finished with [mineral_budget] left to spend.")
 	log_world("Ruin loader finished with [budget] left to spend.")
