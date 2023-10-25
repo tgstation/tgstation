@@ -101,7 +101,7 @@
 	// If there's nobody to witness the misfortune, make it less likely.
 	// This way, we allow for people to be able to get into hilarious situations without making the game nigh unplayable most of the time.
 
-	has_watchers = FALSE
+	var/has_watchers = FALSE
 	for(var/mob/viewer in viewers(our_guy, world.view))
 		if(viewer.client)
 			has_watchers = TRUE
