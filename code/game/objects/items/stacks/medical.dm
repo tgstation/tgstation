@@ -33,9 +33,12 @@
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
 
-/obj/item/stack/medical/attack(mob/living/patient, mob/user)
-	. = ..()
+/obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+
 	try_heal(patient, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/medical/apply_fantasy_bonuses(bonus)
 	. = ..()

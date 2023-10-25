@@ -13,14 +13,17 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.30, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.20)
 
-/obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
-	if(user.stat || !user.can_read(src) || user.is_blind())
-		return
+/obj/item/slime_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!user.can_read(src) || user.is_blind())
+		return TOOL_ACT_SIGNAL_BLOCKING
 	if (!isslime(M))
 		to_chat(user, span_warning("This device can only scan slimes!"))
-		return
+		return TOOL_ACT_SIGNAL_BLOCKING
 	var/mob/living/simple_animal/slime/T = M
 	slime_scan(T, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
