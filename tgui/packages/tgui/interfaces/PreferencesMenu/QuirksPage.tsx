@@ -172,7 +172,8 @@ const QuirkList = (props: {
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                    maxWidth="300px">
+                    maxWidth="300px"
+                    backgroundColor="black">
                     <Stack.Item>
                       <PreferenceList
                         act={act}

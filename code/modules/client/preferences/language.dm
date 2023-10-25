@@ -1,5 +1,5 @@
 /datum/preference/choiced/language
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_NON_APPLICABLE
 	savefile_key = "language"
 	savefile_identifier = PREFERENCE_CHARACTER
 
