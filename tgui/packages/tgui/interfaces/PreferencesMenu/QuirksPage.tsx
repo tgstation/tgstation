@@ -47,12 +47,6 @@ const QuirkList = (props: {
   const { act, data } = useBackend<PreferencesMenuData>(props.context);
 
   return (
-    <Stack>
-      <Stack.Item>{Objects.keys(props.quirks)}</Stack.Item>
-    </Stack>
-  );
-
-  return (
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {Object.keys(props.quirks).toString()}
