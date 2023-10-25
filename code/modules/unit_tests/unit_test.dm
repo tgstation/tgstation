@@ -311,7 +311,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
 	returnable_list += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
-	returnable_list += typesof(/obj/structure/industrial_lift)
+	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
