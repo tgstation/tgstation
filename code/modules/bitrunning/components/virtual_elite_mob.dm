@@ -7,8 +7,9 @@
 
 	var/mob/living/simple_animal/hostile/megafauna/boss = target
 
-	boss.health = ROUND_UP(boss.health * 0.5)
-	boss.maxHealth = ROUND_UP(boss.maxHealth * 0.5)
+	var/new_max = FLOOR(ROUND_UP(boss.maxHealth * 0.5), 500)
+	boss.maxHealth = new_max
+	boss.health = new_max
 	boss.true_spawn = FALSE
 
 	if(istype(target, /mob/living/simple_animal/hostile/megafauna/legion)) // Sorry, legion has a weird loot system
