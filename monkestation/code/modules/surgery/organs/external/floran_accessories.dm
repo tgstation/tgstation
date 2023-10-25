@@ -15,6 +15,7 @@
 /datum/bodypart_overlay/mutant/floran_leaves
 	layers = EXTERNAL_ADJACENT
 	feature_key = "floran_leaves"
+	// color_source = ORGAN_COLOR_MUTSECONDARY
 
 	var/color_swapped_layer = EXTERNAL_ADJACENT//Remove when MUTCOLORS_SECONDARY works
 	var/color_inverse_base = 255//Remove when MUTCOLORS_SECONDARY works
