@@ -1,0 +1,4 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "votable story tellers"

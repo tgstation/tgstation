@@ -161,3 +161,32 @@
   - qol: fixed some of the busted disposals.
   - qol: zones for rooms in Oshan Medical are redone. Medbay Central is now a "common
       sense" location so cargo crates can be opened properly.
+2023-10-24:
+  Gboster-0:
+  - rscadd: Added a lot more SMES
+  - bugfix: Singularity to PTL connection on kilo was always broken, now its not so
+      much broken
+  - rscadd: Split the technology tab into gear and abilities tabs on the bitrunner
+      console
+  - qol: The bitrunning disks were split into their individual abilities, no more
+      wasting points on virtual toilets
+  - image: All the abilities and combat gear in bitrunner's stolen now has unique
+      sprites
+  KittyNoodle:
+  - bugfix: Syndicate laser muskets can now be worn on armor again
+  - rscadd: Non-lethal and less than lethal options for autorifles have been made
+      available.
+  - balance: Autorifles have been moved to imports and made more expensive.
+  - balance: Higher technologies are now needed to access autorifle ammo.
+  - refactor: Autorifle code has been modularized
+  OtieBoy:
+  - bugfix: fixed the Tramstation incinerator room atmospherics so that air supply
+      and scrubbing pipenets are connected properly from roundstart
+  SeeBeeSee:
+  - rscadd: Added new quirk that applies a permanent Extra-Sensory Paranoia - no lobotomies
+      for this one.
+  - rscadd: Added a new version of ESP that summons 10 stalkers by default, and can
+      be called by an admin for more.
+  lmenvs:
+  - rscadd: Adds donator items for Senri, Mjolnir, Random and Spinnermaster! Thank
+      you guys!

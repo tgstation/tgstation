@@ -80,24 +80,25 @@
 #define SKINTONES 12
 #define ANIME 13
 #define MUTCOLORS_SECONDARY 14
+#define SPECIES_FUR 15
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 15
-#define AGENDER 16
+#define DYNCOLORS 16
+#define AGENDER 17
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 17
+#define NOEYESPRITES 18
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 18
+#define HAS_MARKINGS 19
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 19
+#define NOBLOODOVERLAY 20
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 20
+#define NOAUGMENTS 21
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 21
+#define BLOOD_CLANS 22
 
-#define REVIVESBYHEALING 22
-#define NOHUSK 23
-#define NOMOUTH 24
+#define REVIVESBYHEALING 23
+#define NOHUSK 24
+#define NOMOUTH 25
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
