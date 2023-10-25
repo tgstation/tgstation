@@ -403,6 +403,17 @@
 					SSshuttle.shopping_list -= order
 					var/distance = get_dist(spawning_turf, picked_point)
 					new_atom.throw_at(picked_point, distance + 4, 2)
+
+				if(prob(25))
+					create_mail()
+					if(SSeconomy.mail_crate)
+						var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
+						var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+						SSeconomy.mail_crate.forceMove(spawning_turf)
+						var/distance = get_dist(spawning_turf, picked_point)
+						SSeconomy.mail_crate.throw_at(picked_point, distance + 4, 2)
+						SSeconomy.mail_crate = null
+
 				currently_sending = FALSE
 
 			. = TRUE
