@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "items that require reagent containers & the reagents inside it for crafting(e.g. molotov) now crafts properly."
-  - bugfix: "most crafting recipes should work now"
