@@ -104,7 +104,10 @@
 	var/chance_to_cause_hallucination = 1
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	if(SPT_PROB(0.5 * chance_to_cause_hallucination, seconds_per_tick))
+		owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	else
+		chance_to_cause_hallucination +=0.2
 
 /datum/brain_trauma/severe/weeping/on_gain()
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")

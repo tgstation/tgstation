@@ -249,6 +249,5 @@
 	duration = 600 SECONDS
 
 /datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
-	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, /mob/living/carbon/human))
-
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, /datum/species/human))
 	return ..()
