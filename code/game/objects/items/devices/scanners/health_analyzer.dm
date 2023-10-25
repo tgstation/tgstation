@@ -98,7 +98,7 @@
 	if(!user.can_read(src) || user.is_blind())
 		return TOOL_ACT_SIGNAL_BLOCKING
 
-	chemscan(user, victim)
+	chemscan(user, interacting_with)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/healthanalyzer/add_item_context(

@@ -134,22 +134,26 @@
 	LAZYREMOVE(update_overlays_on_z, sparks)
 	target.cut_overlay(sparks)
 
-/obj/item/weldingtool/attack(mob/living/carbon/human/attacked_humanoid, mob/living/user)
-	if(!istype(attacked_humanoid))
-		return ..()
+/obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!ishuman(interacting_with))
+		return NONE
+	if(user.combat_mode) // melbert todo : consider if this is necessary
+		return NONE
 
+	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
+		return TOOL_ACT_SIGNAL_BLOCKING
 
-	if(affecting && IS_ROBOTIC_LIMB(affecting) && !user.combat_mode)
-		if(src.use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
-			if(user == attacked_humanoid)
-				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
-					span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-				if(!do_after(user, 5 SECONDS, attacked_humanoid))
-					return
-			item_heal_robotic(attacked_humanoid, user, 15, 0)
-	else
-		return ..()
+	. = TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
+		if(user == attacked_humanoid)
+			user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
+				span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+			if(!do_after(user, 5 SECONDS, attacked_humanoid))
+				return
+		item_heal_robotic(attacked_humanoid, user, 15, 0)
 
 /obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, proximity)
 	. = ..()
