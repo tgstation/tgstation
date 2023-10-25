@@ -27,7 +27,7 @@
 
 /datum/unit_test/shapeshift_spell/Run()
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 	dummy.mind_initialize()
 
 	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
@@ -81,7 +81,7 @@
 
 /datum/unit_test/shapeshift_holoparasites/Run()
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 
 	var/datum/action/cooldown/spell/shapeshift/wizard/shift = new(dummy)
 	shift.shapeshift_type = shift.possible_shapes[1]
@@ -112,7 +112,7 @@
 
 /datum/unit_test/shapeshift_health/Run()
 	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
-		var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+		var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 		var/datum/action/cooldown/spell/shapeshift/shift_spell = new spell_type(dummy)
 		shift_spell.Grant(dummy)
 		shift_spell.shapeshift_type = shift_spell.possible_shapes[1]
@@ -139,6 +139,7 @@
 			TRIGGER_RESET_COOLDOWN(shift_spell)
 			TEST_ASSERT(istype(dummy.loc, shift_spell.shapeshift_type), "Failed to transform into [shift_spell.shapeshift_type]")
 			var/mob/living/shifted_mob = dummy.loc
+			shifted_mob.health = 0 // Fucking megafauna
 			shifted_mob.death()
 			if (shift_spell.revert_on_death)
 				TEST_ASSERT(!istype(dummy.loc, shift_spell.shapeshift_type), "Failed to untransform after death using [shift_spell.name].")
