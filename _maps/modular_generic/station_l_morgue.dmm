@@ -35,7 +35,6 @@
 /area/virtual_domain)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/dark/textured_half,
 /area/virtual_domain)
 "g" = (

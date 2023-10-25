@@ -1,0 +1,193 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/structure/flora/bush/jungle/a/style_2{
+	pixel_y = 10;
+	pixel_x = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/virtual_domain)
+"m" = (
+/obj/structure/flora/grass/jungle/a/style_2,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"n" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"o" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/virtual_domain)
+"p" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"u" = (
+/obj/structure/flora/tree/jungle/small{
+	pixel_x = -25
+	},
+/turf/open/floor/grass,
+/area/virtual_domain)
+"B" = (
+/obj/structure/flora/bush/flowers_br/style_2{
+	pixel_x = 6
+	},
+/obj/item/plant_analyzer{
+	pixel_y = -2;
+	pixel_x = -3
+	},
+/turf/open/floor/grass,
+/area/virtual_domain)
+"G" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+	dir = 10
+	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/spray/pestspray{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/virtual_domain)
+"H" = (
+/obj/structure/flora/bush/jungle/b/style_2,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"I" = (
+/turf/closed/wall,
+/area/virtual_domain)
+"J" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"O" = (
+/obj/structure/flora/rock/pile/jungle/style_2{
+	pixel_y = -4
+	},
+/obj/item/storage/bag/plants/portaseeder{
+	pixel_y = 11
+	},
+/turf/open/floor/grass,
+/area/virtual_domain)
+"P" = (
+/obj/structure/flora/grass/jungle/b/style_4{
+	pixel_y = 8
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Q" = (
+/obj/structure/flora/bush/flowers_br/style_3{
+	pixel_x = 4
+	},
+/turf/open/floor/grass,
+/area/virtual_domain)
+"R" = (
+/obj/structure/flora/rock/pile/jungle/style_5{
+	pixel_y = -3
+	},
+/turf/open/floor/grass,
+/area/virtual_domain)
+"U" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -12;
+	pixel_y = -4
+	},
+/obj/item/cultivator/rake{
+	pixel_x = 6
+	},
+/obj/structure/flora/bush/sparsegrass/style_2,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Y" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/effect/spawner/random/food_or_drink/seed{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/effect/spawner/random/food_or_drink/seed_rare{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/virtual_domain)
+"Z" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+	dir = 10
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/virtual_domain)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+p
+"}
+(2,1,1) = {"
+a
+u
+o
+o
+I
+I
+a
+"}
+(3,1,1) = {"
+a
+m
+R
+B
+n
+J
+a
+"}
+(4,1,1) = {"
+a
+H
+P
+f
+U
+J
+a
+"}
+(5,1,1) = {"
+a
+I
+G
+Q
+O
+o
+a
+"}
+(6,1,1) = {"
+a
+I
+Y
+Z
+o
+o
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}

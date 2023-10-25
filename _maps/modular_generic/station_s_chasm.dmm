@@ -1,0 +1,146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/transfer_valve{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/structure/table_frame,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"b" = (
+/obj/structure/broken_flooring/side/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"d" = (
+/obj/structure/holosign/wetsign,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"e" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"f" = (
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"j" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/open/chasm/true,
+/area/virtual_domain)
+"n" = (
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/virtual_domain)
+"o" = (
+/obj/structure/lattice,
+/turf/open/chasm/true,
+/area/virtual_domain)
+"t" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"C" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/obj/structure/broken_flooring/corner/directional/north,
+/obj/item/tank/internals/plasma/empty,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"E" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"N" = (
+/turf/open/chasm/true,
+/area/virtual_domain)
+"P" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"T" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/south,
+/turf/open/chasm/true,
+/area/virtual_domain)
+"V" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+V
+V
+V
+V
+V
+V
+C
+"}
+(2,1,1) = {"
+V
+P
+N
+n
+D
+e
+V
+"}
+(3,1,1) = {"
+V
+b
+N
+N
+j
+E
+V
+"}
+(4,1,1) = {"
+V
+N
+N
+N
+o
+d
+V
+"}
+(5,1,1) = {"
+V
+N
+T
+N
+N
+N
+V
+"}
+(6,1,1) = {"
+V
+f
+t
+N
+N
+a
+V
+"}
+(7,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+"}

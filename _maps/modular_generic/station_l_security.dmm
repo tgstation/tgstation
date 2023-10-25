@@ -48,6 +48,10 @@
 /obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"bO" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "ds" = (
 /obj/structure/closet/secure_closet/contraband/armory,
 /obj/effect/turf_decal/bot_red,
@@ -405,7 +409,7 @@ ys
 bf
 bf
 bf
-bf
+bO
 "}
 (2,1,1) = {"
 bf

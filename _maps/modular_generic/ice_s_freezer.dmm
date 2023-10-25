@@ -69,10 +69,6 @@
 	},
 /turf/open/floor/fake_snow,
 /area/virtual_domain)
-"s" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/ice,
-/area/virtual_domain)
 "t" = (
 /obj/machinery/door/airlock/maintenance/external,
 /obj/structure/barricade/wooden/crude/snow,
@@ -140,7 +136,7 @@ L
 "}
 (2,1,1) = {"
 G
-s
+N
 N
 W
 W

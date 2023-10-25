@@ -13,16 +13,10 @@
 	dir = 4
 	},
 /area/virtual_domain)
-"b" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/floor/plating,
-/area/virtual_domain)
 "c" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/bitrunning/cache_spawn,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/rust,
 /area/virtual_domain)
 "d" = (
@@ -251,8 +245,8 @@
 /area/virtual_domain)
 "H" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/bitrunning/cache_spawn,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "I" = (
@@ -457,7 +451,7 @@ e
 T
 s
 V
-b
+H
 n
 q
 E

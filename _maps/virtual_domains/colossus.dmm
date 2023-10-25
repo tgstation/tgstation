@@ -30,7 +30,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "p" = (
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/colossus,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
