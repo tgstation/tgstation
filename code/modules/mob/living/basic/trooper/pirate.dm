@@ -10,6 +10,13 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
 
+	/// The amount of money to steal with a melee attack
+	var/plunder_credits = 25
+
+/mob/living/basic/trooper/pirate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plundering_attacks, plunder_amount = plunder_credits)
+
 /mob/living/basic/trooper/pirate/melee
 	name = "Pirate Swashbuckler"
 	melee_damage_lower = 30
@@ -29,6 +36,7 @@
 	)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee
 	r_hand = /obj/item/melee/energy/sword/pirate
+	plunder_amount = 50 //they hit hard so they steal more
 
 /mob/living/basic/trooper/pirate/melee/space
 	name = "Space Pirate Swashbuckler"
