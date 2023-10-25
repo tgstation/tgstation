@@ -4,6 +4,7 @@ import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { filterMap } from 'common/collections';
+import { getRandomization, PreferenceList } from './MainPage';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -16,12 +17,12 @@ const getValueClass = (value: number): string => {
 };
 
 const getCorrespondingPreferences = (
-  customization_options: Record<string, string>,
+  customization_options: string[],
   all_preferences: Record<string, string>
 ): Record<string, unknown> => {
   return Object.fromEntries(
     filterMap(Object.keys(all_preferences), (key) => {
-      if (customization_options[key] === undefined) {
+      if (!customization_options.includes(key)) {
         return undefined;
       }
 
@@ -49,7 +50,6 @@ const QuirkList = (props: {
   return (
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
-      {Object.keys(props.quirks).toString()}
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -136,13 +136,7 @@ const QuirkList = (props: {
                         }}
                       />
                     )}
-                    {/* {props.serverData.toString()}
-                    {quirk.name.toString()}
-                    {quirk.customization_options.toString()}
-                    {props.context.toString()}
-                      {props.randomBodyEnabled.toString()}*/}
-                    {Object.entries(quirk.customization_options).toString()}
-                    {/* Object.entries(quirk.customization_options).length > 0 && (
+                    {Object.entries(quirk.customization_options).length > 0 && (
                       <PreferenceList
                         act={act}
                         preferences={getCorrespondingPreferences(
@@ -159,7 +153,7 @@ const QuirkList = (props: {
                           props.context
                         )}
                       />
-                          ) */}
+                    )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>

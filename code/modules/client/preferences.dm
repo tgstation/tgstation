@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		tainted_character_profiles = FALSE
 
 	data["character_preferences"] = compile_character_preferences(user)
-	data["all_preferences"] = compile_character_preferences(user, FALSE)
+	data["character_preferences"]["all_preferences"] = compile_character_preferences(user, FALSE)
 
 	data["active_slot"] = default_slot
 
