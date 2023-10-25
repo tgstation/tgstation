@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - refactor: "Hostile Nanotrasen mobs now use the basic mob framework. This should make them a little smarter and more dangerous. Please report any bugs."
-  - bugfix: "Russian mobs will now actually use those knives they're holding."
