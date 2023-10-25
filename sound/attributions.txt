@@ -85,3 +85,6 @@ https://freesound.org/people/aboxinghelena/sounds/401139/
 
 car_crash.ogg is adapted from squareal's "Car Crash" (CC 0)
 https://freesound.org/people/squareal/sounds/237375/
+
+statue_horror_sting.ogg is from Kevin MacLeod: Right Behind You (CC BY 3.0)
+https://www.youtube.com/watch?v=dRdpJq6nmWw
